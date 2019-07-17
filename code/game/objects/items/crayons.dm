@@ -157,9 +157,7 @@
 			update_icon()
 
 /obj/item/toy/crayon/proc/staticDrawables()
-	var/list/data = list()
 
-	data["drawables"] = list()
 	. = list()
 
 	var/list/g_items = list()
@@ -182,7 +180,6 @@
 	for(var/D in drawings)
 		D_items += list(list("item" = D))
 
-
 	var/list/O_items = list()
 	. += list(list(name = "Oriented", "items" = O_items))
 	for(var/O in oriented)
@@ -198,8 +195,6 @@
 	for(var/i in randoms)
 		rand_items += list(list("item" = i))
 
-	data["selected_stencil"] = drawtype
-	data["text_buffer"] = text_buffer
 
 /obj/item/toy/crayon/ui_data()
 
