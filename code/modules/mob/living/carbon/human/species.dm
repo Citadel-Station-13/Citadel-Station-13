@@ -1019,13 +1019,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_BELT)
 			if(H.belt)
 				return FALSE
-
-			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return FALSE
+			if(!CHECK_BITFIELD(I.obj_flags, NO_UNIFORM_REQUIRED))
+				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
+				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_BELT))
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
@@ -1062,12 +1061,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_WEAR_ID)
 			if(H.wear_id)
 				return FALSE
-
-			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return FALSE
+			if(!CHECK_BITFIELD(I.obj_flags, NO_UNIFORM_REQUIRED))
+				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
+				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ID) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
