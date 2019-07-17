@@ -5,7 +5,7 @@
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move unemcumbered by heavy objects."
 	helptext = "The strain will make us stronger, and we can bear heavy weights effortlessly. Standard weight restrictions, like hardsuits, do not apply. Cannot be used in lesser form."
-	chemical_cost = 5
+	chemical_cost = 1
 	dna_cost = 1
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
