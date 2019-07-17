@@ -363,6 +363,7 @@
 
 //Warp Whistle: Provides uncontrolled long distance teleportation.
 
+/*
 /obj/item/warpwhistle
 	name = "warp whistle"
 	desc = "One toot on this whistle will send you to a far away land!"
@@ -422,6 +423,8 @@
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
 		end_effect(last_user)
 	return ..()
+
+*/
 
 /obj/effect/temp_visual/tornado
 	icon = 'icons/obj/wizard.dmi'
