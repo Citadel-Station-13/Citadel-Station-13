@@ -97,7 +97,7 @@
 		/obj/item/gun/energy/e_gun/stun=1)
 
 /datum/outfit/ert/security/alert/red
-	name = "ERT Security - Red Alert
+	name = "ERT Security - Red Alert"
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
