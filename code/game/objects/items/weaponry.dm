@@ -609,7 +609,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
-	total_mass = 0
 
 /obj/item/slapper
 	name = "slapper"
@@ -621,7 +620,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
-	total_mass = 0
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))

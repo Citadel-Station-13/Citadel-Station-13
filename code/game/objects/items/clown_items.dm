@@ -111,7 +111,6 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	total_mass = 0
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
