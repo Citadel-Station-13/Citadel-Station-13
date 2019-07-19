@@ -73,7 +73,7 @@
 	construction_time = 100
 	build_path = /obj/item/pipe_dispenser
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/rcd_ammo
 	name = "Compressed Matter Cartridge"
