@@ -53,3 +53,34 @@
 	construction_time = 100
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+
+/datum/design/rcd
+	name = "Rapid Construction Device (RCD)"
+	id = "rcd"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 30000)
+	construction_time = 100
+	build_path = /obj/item/construction/rcd
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rpd
+	name = "Rapid Pipe Dispenser (RPD)"
+	id = "rpd"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 75000, MAT_GLASS = 37500)
+	construction_time = 100
+	build_path = /obj/item/pipe_dispenser
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_ammo
+	name = "Compressed Matter Cartridge"
+	id = "rcd_ammo"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
+	construction_time = 25
+	build_path = /obj/item/rcd_ammo
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

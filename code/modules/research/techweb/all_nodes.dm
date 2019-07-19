@@ -156,6 +156,7 @@
 	export_price = 5000
 
 /////////////////////////engineering tech/////////////////////////
+
 /datum/techweb_node/engineering
 	id = "engineering"
 	display_name = "Industrial Engineering"
@@ -164,7 +165,16 @@
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod",
 	"apc_control", "cell_charger", "power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics", "cell_charger", "stack_console", "stack_machine")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
+/datum/techweb_node/engineering
+	id = "rapid_construction"
+	display_name = "Rapid Construction"
+	description = "Quick and almost miraculous tools that let you build things fast and easy."
+	design_ids = list("rcd","rpd","rcd_ammo")
+	prereq_ids = list("engineering")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
 /datum/techweb_node/adv_engi

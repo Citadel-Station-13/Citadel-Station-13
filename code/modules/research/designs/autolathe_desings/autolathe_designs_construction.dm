@@ -98,11 +98,3 @@
 	materials = list(MAT_METAL = 450, MAT_GLASS = 190)
 	build_path = /obj/item/conveyor_switch_construct
 	category = list("initial", "Construction")
-
-/datum/design/rcd_ammo
-	name = "Compressed Matter Cartridge"
-	id = "rcd_ammo"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
-	build_path = /obj/item/rcd_ammo
-	category = list("initial","Construction")
