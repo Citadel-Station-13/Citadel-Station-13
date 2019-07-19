@@ -11,8 +11,8 @@
 
 /obj/item/nullrod/rosary/Initialize()
 	.=..()
-	if(SSreligion.religion)
-		deity_name = SSreligion.deity
+	if(GLOB.religion)
+		deity_name = GLOB.deity
 
 /obj/item/nullrod/rosary/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))

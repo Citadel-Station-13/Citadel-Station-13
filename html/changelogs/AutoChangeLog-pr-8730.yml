@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by Tlaltecuhtli and nicbn)"
+delete-after: True
+changes: 
+  - rscadd: "alt click to eject beakers from chem masters + chem dispensers + grinders + chem heaters"
+  - rscadd: "hit chem master + chem dispenser + chem heaters with a beaker and if its loaded with another it swaps em"
+  - rscadd: "All-In-One Blender UI uses a radial menu now. You can see the contents and reagents by examining."

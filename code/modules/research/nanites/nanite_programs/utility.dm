@@ -190,13 +190,13 @@
 	if(!iscarbon(host_mob))
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_WELL_FED)
+	if(C.nutrition <= NUTRITION_LEVEL_STARVING)
 		return FALSE
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
 	host_mob.nutrition -= 0.5
-	nanites.adjust_nanites(0.5)
+	nanites.adjust_nanites(src, 0.5)
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"
@@ -237,7 +237,11 @@
 	if(prob(10))
 		var/list/mob/living/target_hosts = list()
 		for(var/mob/living/L in oview(5, host_mob))
+			if(!(MOB_ORGANIC in L.mob_biotypes) && !(MOB_UNDEAD in L.mob_biotypes))
+				continue
 			target_hosts += L
+		if(!target_hosts.len)
+			return
 		var/mob/living/infectee = pick(target_hosts)
 		if(prob(100 - (infectee.get_permeability_protection() * 100)))
 			//this will potentially take over existing nanites!

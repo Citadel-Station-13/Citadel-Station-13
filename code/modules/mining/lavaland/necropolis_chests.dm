@@ -143,7 +143,7 @@
 
 //Rod of Asclepius
 /obj/item/rod_of_asclepius
-	name = "Rod of Asclepius"
+	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
@@ -189,7 +189,8 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -273,23 +274,12 @@
 		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		user.update_sight()
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
-
-		var/mob/target
-		if(wisp.orbiting)
-			target = wisp.orbiting.orbiting
-		wisp.stop_orbit()
-		wisp.forceMove(src)
-
-		if (istype(target))
-			target.update_sight()
-			to_chat(target, "<span class='notice'>Your vision returns to normal.</span>")
-
 		icon_state = "lantern-blue"
+		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/wisp_lantern/Initialize()
@@ -302,7 +292,7 @@
 			qdel(wisp)
 		else
 			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
-	..()
+	return ..()
 
 /obj/effect/wisp
 	name = "friendly wisp"
@@ -313,6 +303,25 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	var/sight_flags = SEE_MOBS
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
+/obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
+	. = ..()
+	if(ismob(thing))
+		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
+		var/mob/being = thing
+		being.update_sight()
+		to_chat(thing, "<span class='notice'>The wisp enhances your vision.</span>")
+
+/obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
+	. = ..()
+	if(ismob(orbits.parent))
+		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
+		to_chat(orbits.parent, "<span class='notice'>Your vision returns to normal.</span>")
+
+/obj/effect/wisp/proc/update_user_sight(mob/user)
+	user.sight |= sight_flags
+	if(!isnull(lighting_alpha))
+		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -781,19 +790,17 @@
 	var/turf/T = get_turf(src)
 	var/list/contents = T.GetAllContents()
 	var/mob/dead/observer/current_spirits = list()
-	var/list/orbiters = list()
 	for(var/thing in contents)
 		var/atom/A = thing
-		if (A.orbiters)
-			orbiters += A.orbiters
+		A.transfer_observers_to(src)
 
-	for(var/thing in orbiters)
-		var/datum/orbit/O = thing
-		if (isobserver(O.orbiter))
-			var/mob/dead/observer/G = O.orbiter
-			ghost_counter++
-			G.invisibility = 0
-			current_spirits |= G
+	for(var/i in orbiters?.orbiters)
+		if(!isobserver(i))
+			continue
+		var/mob/dead/observer/G = i
+		ghost_counter++
+		G.invisibility = 0
+		current_spirits |= G
 
 	for(var/mob/dead/observer/G in spirits - current_spirits)
 		G.invisibility = GLOB.observer_default_invisibility

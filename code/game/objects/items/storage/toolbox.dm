@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
+
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
@@ -16,21 +18,25 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	var/latches = "single_latch"
 	var/has_latches = TRUE
+	var/can_rubberify = TRUE
 
-/obj/item/storage/toolbox/Initialize()
+/obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
 			if(prob(1))
 				latches = "triple_latch"
+	if(mapload && can_rubberify && prob(5))
+		rubberify()
 	update_icon()
 
 /obj/item/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
 	if(has_latches)
-		add_overlay(latches)
+		var/icon/I = icon('icons/obj/storage.dmi', latches)
+		add_overlay(I)
 
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
@@ -39,8 +45,6 @@
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
-	icon_state = "red"
-	item_state = "toolbox_red"
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -59,6 +63,7 @@
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
+	can_rubberify = FALSE
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -77,6 +82,7 @@
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
+	can_rubberify = FALSE
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "old, robust toolbox" //this will be named "X family toolbox"
@@ -151,6 +157,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("robusted", "crushed", "smashed")
+	can_rubberify = FALSE
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
@@ -183,16 +190,17 @@
 	slab_type = /obj/item/clockwork/slab/debug
 	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
 
-/obj/item/storage/toolbox/durasteel
-	name = "durasteel toolbox"
-	desc = "A toolbox made out of durasteel. Probably packs a massive punch."
+/obj/item/storage/toolbox/plastitanium
+	name = "plastitanium toolbox"
+	desc = "A toolbox made out of plastitanium. Probably packs a massive punch."
 	total_mass = 5
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 	w_class = WEIGHT_CLASS_HUGE		//heyo no bohing this!
 	force = 18		//spear damage
+	can_rubberify = FALSE
 
-/obj/item/storage/toolbox/durasteel/afterattack(atom/A, mob/user, proximity)
+/obj/item/storage/toolbox/plastitanium/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(proximity && isobj(A) && !isitem(A))
 		var/obj/O = A
@@ -204,7 +212,7 @@
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
-	item_state = "artistic_toolbox"
+	item_state = "toolbox_green"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
@@ -253,9 +261,55 @@
 
 /obj/item/storage/toolbox/gold_fake // used in crafting
 	name = "golden toolbox"
-	desc = "A gold plated toolbox, fancy and harmless do to the gold plating being on cardboard!"
+	desc = "A gold plated toolbox, fancy and harmless due to the gold plating being on cardboard!"
 	icon_state = "gold"
 	item_state = "gold"
 	has_latches = FALSE
 	force = 0
 	throwforce = 0
+	can_rubberify = FALSE
+
+/obj/item/storage/toolbox/proc/rubberify()
+	name = "rubber [name]"
+	desc = replacetext(desc, "Danger", "Bouncy")
+	desc = replacetext(desc, "robust", "safe")
+	desc = replacetext(desc, "heavier", "bouncier")
+	DISABLE_BITFIELD(flags_1, CONDUCT_1)
+	materials = null
+	damtype = STAMINA
+	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.
+	throwforce += 3
+	attack_verb += "bounced"
+	hitsound = 'sound/effects/clownstep1.ogg'
+	if(!GLOB.rubber_toolbox_icons[icon_state])
+		generate_rubber_toolbox_icon()
+	icon = GLOB.rubber_toolbox_icons[icon_state]
+	AddComponent(/datum/component/bouncy)
+	. = ..()
+
+/obj/item/storage/toolbox/proc/generate_rubber_toolbox_icon()
+	var/icon/new_icon = icon(icon, icon_state)
+	var/icon/smooth = icon('icons/obj/storage.dmi', "rubber_toolbox_blend")
+	new_icon.Blend(smooth, ICON_MULTIPLY)
+	new_icon = fcopy_rsc(new_icon)
+	GLOB.rubber_toolbox_icons[icon_state] = new_icon
+
+/obj/item/storage/toolbox/rubber
+	name = "rubber toolbox"
+	desc = "Bouncy. Very safe."
+	flags_1 = null
+	materials = null
+	damtype = STAMINA
+	force = 17
+	throwforce = 17
+	attack_verb = list("robusted", "bounced")
+	can_rubberify = FALSE //we are already the future.
+
+/obj/item/storage/toolbox/rubber/Initialize()
+	icon_state = pick("blue", "red", "yellow", "green")
+	item_state = "toolbox_[icon_state]"
+	if(!GLOB.rubber_toolbox_icons[icon_state])
+		generate_rubber_toolbox_icon()
+	icon = GLOB.rubber_toolbox_icons[icon_state]
+	. = ..()
+	AddComponent(/datum/component/bouncy)

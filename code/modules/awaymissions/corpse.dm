@@ -68,12 +68,17 @@
 		GLOB.poi_list |= src
 		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
 
+
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
-	LAZYREMOVE(GLOB.mob_spawners[job_description ? job_description : name], src)
-	if(!LAZYLEN(GLOB.mob_spawners[job_description ? job_description : name]))
-		GLOB.mob_spawners -= job_description ? job_description : name
+	var/job_name = job_description ? job_description : name
+	LAZYREMOVE(GLOB.mob_spawners[job_name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[job_name]))
+		GLOB.mob_spawners -= job_name
 	return ..()
+
+/obj/effect/mob_spawn/proc/can_latejoin() //If it can be taken from the lobby.
+	return ghost_usable
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return

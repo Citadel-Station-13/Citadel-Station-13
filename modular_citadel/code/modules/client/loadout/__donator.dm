@@ -404,3 +404,33 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/commjacket
 	ckeywhitelist = list("sadisticbatter")
+
+/datum/gear/mw2_russian_para
+	name = "Russian Paratrooper Jumper"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mw2_russian_para
+	ckeywhitelist = list("investigator77")
+
+/datum/gear/longblackgloves
+	name = "Luna's Gauntlets"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/longblackgloves
+	ckeywhitelist = list("bigmanclancy")
+
+/datum/gear/trendy_fit
+	name = "Trendy Fit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/trendy_fit
+	ckeywhitelist = list("midgetdragon")
+
+/datum/gear/singery
+	name = "Yellow Performer Outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/singery
+	ckeywhitelist = list("maxlynchy")
+
+/datum/gear/csheet
+	name = "NT Bedsheet"
+	category = SLOT_NECK
+	path = /obj/item/bedsheet/captain
+	ckeywhitelist = list("tikibomb")
