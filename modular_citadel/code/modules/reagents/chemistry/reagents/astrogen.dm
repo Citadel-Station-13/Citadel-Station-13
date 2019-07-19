@@ -72,10 +72,11 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			do_teleport(G, M.loc)
 	M.reagents.remove_reagent(id, current_cycle/10, FALSE)//exponent
 	sleepytime+=5
-	if(G.mind)
-		if(G.stat == DEAD || G.pseudo_death == TRUE)
-			G.mind.transfer_to(M)
-			qdel(G)
+	if(G)//This is a mess because of how slow qdel is, so this is all to stop runtimes.
+		if(G.mind)
+			if(G.stat == DEAD || G.pseudo_death == TRUE)
+				G.mind.transfer_to(M)
+				qdel(G)
 	else
 		M.Sleeping(20, 0)
 		M.reagents.remove_reagent(id, 2, FALSE)
