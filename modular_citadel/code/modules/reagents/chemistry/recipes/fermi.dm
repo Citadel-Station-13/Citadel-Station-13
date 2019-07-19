@@ -125,7 +125,7 @@
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!
 	var/turf/T = get_turf(my_atom)
-	var/mob/living/simple_animal/slime/S = new(T,"grey")
+	var/mob/living/simple_animal/slime/S = new(T,"green")
 	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	S.name = "Living teratoma"
 	S.real_name = "Living teratoma"
@@ -484,14 +484,14 @@
 	ExplodeTemp 		= (OptimalTempMax+rand(20, 200))
 	OptimalpHMin 		+= rand(1, 10)
 	OptimalpHMax 		= (OptimalpHMin + rand(1, 5))
-	ReactpHLim 			+= rand(-1.8, 2)
+	ReactpHLim 			+= rand(-1.5, 2.5)
 	CurveSharpT 		+= (rand(1, 500)/100)
 	CurveSharppH 		+= (rand(1, 500)/100)
 	ThermicConstant		+= rand(-20, 20)
 	HIonRelease 		+= (rand(-25, 25)/100)
 	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
-	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
+	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "uranium", "milk")
 	required_reagents[pick(additions)] = rand(0.1, 0.5)//weird
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)
@@ -506,7 +506,7 @@
 	catto.name = "Chemcat"
 	catto.desc = "A cute chem cat, created by a lot of compicated and confusing chemistry!"
 	catto.color = "#770000"
-	my_atom.reagents.remove_any(10)
+	my_atom.reagents.remove_all(5)
 
 /datum/chemical_reaction/fermi/yamerol//done test
 	name = "Yamerol"

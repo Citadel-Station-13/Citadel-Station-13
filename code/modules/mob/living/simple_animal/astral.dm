@@ -22,6 +22,10 @@
 	speak_emote = list("echos")
 	movement_type = FLYING
 	var/pseudo_death = FALSE
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
+	minbodytemp = 0
+	maxbodytemp = 100000
 
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"

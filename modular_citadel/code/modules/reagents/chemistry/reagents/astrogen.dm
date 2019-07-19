@@ -40,6 +40,18 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	ghost.mind.transfer_to(origin)
 	qdel(src)
 
+/datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/fakespace)
+	..()
+
+/datum/reagent/fermi/astral/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/bedsheet))
+		new /obj/item/bedsheet/cosmos(get_turf(O))
+		qdel(O)
+
+
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
 	originalmind = M.mind
@@ -58,10 +70,12 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(id, current_cycle/6, FALSE)//exponent
+	M.reagents.remove_reagent(id, current_cycle/8, FALSE)//exponent
 	sleepytime+=5
 	if(G.stat == DEAD || !G || G.pseudo_death == TRUE)
-		originalmind.transfer_to(M)
+		G.mind.transfer_to(M)
+		qdel(G)
+	if(!G)
 		M.Sleeping(10, 0)
 	..()
 

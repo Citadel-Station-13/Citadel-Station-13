@@ -576,6 +576,8 @@
 
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(owner.client?.prefs.lewdchem == FALSE)
+		return
 	if (cTriggered > 0)
 		return
 	var/mob/living/carbon/C = owner
