@@ -1196,3 +1196,14 @@
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
 	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
+
+/obj/item/storage/box/secbat
+	name = "Secbat box"
+	desc = "Contained inside is a secbat for use with law enforcement."
+
+/obj/item/storage/box/attack_self(mob/user)
+	new /mob/living/simple_animal/bat/secbat(user.loc)
+	to_chat(user, "<span class='notice'>You open the box, releasing the secbat!</span>")
+	var/obj/item/I = new foldable
+	qdel(src)
+	user.put_in_hands(I)
