@@ -1197,13 +1197,19 @@
 	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
 
-/obj/item/storage/box/secbat
+//Where do I put this?
+/obj/item/secbat
 	name = "Secbat box"
 	desc = "Contained inside is a secbat for use with law enforcement."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "box"
+	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
-/obj/item/storage/box/attack_self(mob/user)
+/obj/item/secbat/attack_self(mob/user)
 	new /mob/living/simple_animal/bat/secbat(user.loc)
 	to_chat(user, "<span class='notice'>You open the box, releasing the secbat!</span>")
-	var/obj/item/I = new foldable
+	var/obj/item/I = new /obj/item/stack/sheet/cardboard
 	qdel(src)
 	user.put_in_hands(I)
