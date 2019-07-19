@@ -1208,7 +1208,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
 /obj/item/secbat/attack_self(mob/user)
-	new /mob/living/simple_animal/bat/secbat(user.loc)
+	new /mob/living/simple_animal/hostile/retaliate/bat/secbat(user.loc)
 	to_chat(user, "<span class='notice'>You open the box, releasing the secbat!</span>")
 	var/obj/item/I = new /obj/item/stack/sheet/cardboard
 	qdel(src)
