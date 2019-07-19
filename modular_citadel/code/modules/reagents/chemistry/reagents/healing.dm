@@ -57,8 +57,19 @@
 			to_chat(C, "<span class='notice'>You feel your lungs reform in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
 
-
 	..()
+
+/datum/reagent/fermi/yamerol/reaction_mob(var/mob/living/L)
+	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity == 1)
+		var/mob/living/simple_animal/pet/cat/custom_cat/catto = L
+		if(catto.origin)
+			var/mob/living/carbon/human/H = catto.origin
+			H.stat = CONSCIOUS
+			log_game("FERMICHEM: [catto] ckey: [catto.key] has returned to normal from Yamerol.")
+			to_chat(catto, "<span class='notice'>Your body shifts back to normal from the Yamerol.</span>")
+			H.forceMove(catto.loc)
+			catto.mind.transfer_to(H)
+			qdel(L)
 
 /datum/reagent/fermi/yamerol_tox
 	name = "Yamerol"

@@ -130,11 +130,11 @@ Creating a chem with a low purity will make you permanently fall in love with so
 */
 
 /datum/reagent/fermi/enthrall
-	name = "MKUltra"
-	id = "enthrall"
-	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
-	color = "#660015" // rgb: , 0, 255
-	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
+	name = "Politi-aid"
+	id = "politi-aid"
+	description = "A forbidden deep purple mixture that aids the political influence of creator upon the subject. When taken by the creator, it will enhance the power of their words to those affected by it."
+	color = "#660055"
+	taste_description = "politics"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
 	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
@@ -169,6 +169,22 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	creatorGender = data.["creatorGender"]
 	creatorName = data.["creatorName"]
 	creator = get_mob_by_key(creatorID)
+
+/datum/reagent/fermi/enthrall/mkultra
+	name = "MKUltra"
+	id = "enthrall"
+	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	color = "#660015" // rgb: , 0, 255
+	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
+
+
+/datum/reagent/fermi/enthrall/mkultra/on_mob_add(mob/living/carbon/M)
+	if(M.client?.prefs.lewdchem)
+		..()
+
+/datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+	if(M.client?.prefs.lewdchem)
+		..()
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()

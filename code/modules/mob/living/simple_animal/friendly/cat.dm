@@ -310,6 +310,7 @@
 	emote_see = list("looks at you eagerly for pets!", "wiggles enthusiastically.")
 	gold_core_spawnable = NO_SPAWN
 	var/pseudo_death = FALSE
+	var/mob/living/carbon/human/origin
 
 /mob/living/simple_animal/pet/cat/custom_cat/death()
 	if (pseudo_death == TRUE) //secret cat chem
