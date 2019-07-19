@@ -76,7 +76,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/rcd_ammo
-	name = "Compressed Matter Cartridge"
+	name = "Compressed Matter Cartridge (RCD Ammo)"
 	id = "rcd_ammo"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
