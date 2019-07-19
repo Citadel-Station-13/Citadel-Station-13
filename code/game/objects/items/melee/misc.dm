@@ -44,6 +44,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "impaled", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
 	. = ..()
@@ -67,6 +68,7 @@
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
+	total_mass = 3.4
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -147,8 +149,9 @@
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_- 
+	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
 	attack_verb = list("slashed", "cut", "pierces", "pokes")
+	total_mass = 3.4
 
 /obj/item/melee/rapier/Initialize()
 	. = ..()
@@ -230,6 +233,7 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+	total_mass = TOTAL_MASS_SMALL_ITEM
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -390,6 +394,7 @@
 	var/static/list/ovens
 	var/on = FALSE
 	var/datum/beam/beam
+	total_mass = 2.5
 
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()

@@ -279,6 +279,7 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
+	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
 	item_color = "green"
 	light_color = "#00ff00"//green
@@ -290,8 +291,10 @@
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
-	total_mass = 0.375 //Survival flashlights typically weigh around 5 ounces.
-	var/total_mass_on = 3.4 //The typical medieval sword, on the other hand, weighs roughly 3 pounds. //Values copied from the regular e-sword
+	var/list/rainbow_colors = list(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+	var/spinnable = TRUE
+	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
+	var/total_mass_on = 3.4
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -353,7 +356,7 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
-	if((wielded) && prob(50))
+	if(spinnable && (wielded) && prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
@@ -406,10 +409,13 @@
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+			rainbow_process()
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/twohanded/dualsaber/proc/rainbow_process()
+	light_color = pick(rainbow_colors)
 
 /obj/item/twohanded/dualsaber/IsReflect()
 	if(wielded)
@@ -428,7 +434,8 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	INVOKE_ASYNC(src, .proc/jedi_spin, user)
+	if(spinnable)
+		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/green
 	possible_colors = list("green")

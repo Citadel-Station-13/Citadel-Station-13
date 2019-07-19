@@ -14,6 +14,7 @@
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/gun/magic/bloodchill/Initialize()
 	. = ..()

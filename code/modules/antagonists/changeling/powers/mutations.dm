@@ -166,6 +166,7 @@
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
 	var/fake = FALSE
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()

@@ -184,3 +184,14 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
+
+//items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
+#define TOTAL_MASS_TINY_ITEM		1.25
+#define TOTAL_MASS_SMALL_ITEM		2.5
+#define TOTAL_MASS_NORMAL_ITEM		3.75
+#define TOTAL_MASS_BULKY_ITEM		5
+#define TOTAL_MASS_HUGE_ITEM		6.25
+#define TOTAL_MASS_GIGANTIC_ITEM	7.5
+
+#define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
+#define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
