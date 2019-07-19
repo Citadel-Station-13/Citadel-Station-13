@@ -70,25 +70,29 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(id, current_cycle/8, FALSE)//exponent
+	M.reagents.remove_reagent(id, current_cycle/10, FALSE)//exponent
 	sleepytime+=5
-	if(G.stat == DEAD || !G || G.pseudo_death == TRUE)
-		G.mind.transfer_to(M)
-		qdel(G)
-	if(!G)
-		M.Sleeping(10, 0)
+	if(G.mind)
+		if(G.stat == DEAD || G.pseudo_death == TRUE)
+			G.mind.transfer_to(M)
+			qdel(G)
+	else
+		M.Sleeping(20, 0)
+		M.reagents.remove_reagent(id, 2, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	if(!G)
 		originalmind.transfer_to(M)
-	else
+	else if(G.mind)
 		G.mind.transfer_to(origin)
-	qdel(G)
+		qdel(G)
 	if(overdosed)
 		to_chat(M, "<span class='warning'>The high volume of Astrogren you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
 		M.Sleeping(sleepytime, 0)
 	antiGenetics = 255
+	if(G)//just in case
+		qdel(G)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.

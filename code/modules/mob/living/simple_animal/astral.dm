@@ -10,8 +10,8 @@
 	response_disarm = "wafts"
 	friendly = "communes with"
 	loot = null
-	maxHealth = 5
-	health = 5
+	maxHealth = 10
+	health = 10
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	obj_damage = 0
@@ -41,5 +41,7 @@
 	if(pseudo_death == FALSE)
 		if(isliving(A))
 			var/message = html_decode(stripped_input(src, "Enter a message to send to [A]", MAX_MESSAGE_LEN))
-			to_chat(A, "[src] projects into your mind, <b><i> \"[message].\"</b></i>")
+			if(!message)
+				return
+			to_chat(A, "[src] projects into your mind, <b><i> \"[message]\"</b></i>")
 			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")
