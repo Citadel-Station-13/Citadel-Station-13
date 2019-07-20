@@ -471,6 +471,18 @@
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
 
+/datum/supply_pack/security/secbat
+	name = "Security Bat Crate"
+	desc = "Contains five security bats, perfect to Bat-up any security officer."
+	cost = 1000
+	access = FALSE
+	contains = list(/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat)
+	crate_name = "security bat crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Armory //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2775,4 +2787,3 @@
 					/obj/item/toner,
 					/obj/item/toner)
 	crate_name = "toner crate"
-
