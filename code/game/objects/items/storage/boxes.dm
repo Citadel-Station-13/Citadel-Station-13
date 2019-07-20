@@ -227,6 +227,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 
+/obj/item/storage/box/beakers/large
+	name = "box of large beakers"
+	illustration = "beaker"
+
+/obj/item/storage/box/beakers/large/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/glass/beaker/large(src)
+
+
+
 /obj/item/storage/box/medsprays
 	name = "box of medical sprayers"
 	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
