@@ -699,7 +699,7 @@
 	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
 	cost = 3500
 	contains = list(/obj/item/gun/ballistic/shotgun,
-					/obj/item/gun/ballistic/shotgun.
+					/obj/item/gun/ballistic/shotgun,
 					/obj/item/gun/ballistic/shotgun)
 	crate_name = "woodstock shotguns crate"
 
