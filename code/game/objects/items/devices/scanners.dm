@@ -341,9 +341,19 @@ SLIME SCANNER
 		if(M.reagents)
 			var/msg = "<span class='info'>*---------*\n"
 			if(M.reagents.reagent_list.len)
-				msg += "<span class='notice'>Subject contains the following reagents:</span>\n"
+				var/list/datum/reagent/reagents = list()
 				for(var/datum/reagent/R in M.reagents.reagent_list)
-					msg += "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+					if(R.invisible)
+						continue
+					reagents += R
+
+				if(length(reagents))
+					msg += "<span class='notice'>Subject contains the following reagents:</span>\n"
+					for(var/datum/reagent/R in reagents)
+						msg += "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+				else
+					msg += "<span class='notice'>Subject contains no reagents.</span>\n"
+
 			else
 				msg += "<span class='notice'>Subject contains no reagents.</span>\n"
 			if(M.reagents.addiction_list.len)
