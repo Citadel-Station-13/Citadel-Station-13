@@ -1210,6 +1210,6 @@
 /obj/item/secbat/attack_self(mob/user)
 	new /mob/living/simple_animal/hostile/retaliate/bat/secbat(user.loc)
 	to_chat(user, "<span class='notice'>You open the box, releasing the secbat!</span>")
-	var/obj/item/I = new /obj/item/stack/sheet/cardboard
+	var/obj/item/stack/sheet/cardboard/I = new(user.drop_location())
 	qdel(src)
 	user.put_in_hands(I)
