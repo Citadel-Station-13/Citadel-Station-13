@@ -10,7 +10,7 @@
 
 /obj/item/melee/transforming/energy/Initialize()
 	. = ..()
-	total_mass_on = w_class_on * 0.75
+	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
 	if(active)
 		set_light(brightness_on)
 		START_PROCESSING(SSobj, src)
