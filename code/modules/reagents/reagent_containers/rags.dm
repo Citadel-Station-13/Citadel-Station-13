@@ -72,10 +72,12 @@
 		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]</span>")
 		if(do_after(user, 30, TRUE, src))
 			to_chat(user, "<span class='notice'>You squeeze \the [src] dry.</span>")
-			var/turf/T = get_turf(src)
-			if(T)
-				reagents.reaction(T, TOUCH)
-				reagents.clear_reagents()
+			var/atom/react_loc = get_turf(src)
+			if(ismob(react_loc))
+				react_loc = react_loc.loc
+			if(react_loc)
+				reagents.reaction(react_loc, TOUCH)
+			reagents.clear_reagents()
 
 /obj/item/reagent_containers/rag/towel
 	name = "towel"
