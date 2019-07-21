@@ -18,6 +18,11 @@
 	user.visible_message("<span class='suicide'>[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
+/obj/item/reagent_containers/rag/examine(mob/user)
+	. = ..()
+	if(reagents.total_volume)
+		to_chat(user, "<span class='notice'>Alt-Click to squeeze the liquids out of it.</span>")
+
 /obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
 	. = ..()
 	if(!proximity)
@@ -69,8 +74,8 @@
 
 /obj/item/reagent_containers/rag/AltClick(mob/user)
 	. = ..()
-	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]</span>")
+	if(reagents.total_volume && user.canUseTopic(src, BE_CLOSE))
+		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]...</span>")
 		if(do_after(user, 30, TRUE, src))
 			to_chat(user, "<span class='notice'>You squeeze \the [src] dry.</span>")
 			var/atom/react_loc = get_turf(src)
