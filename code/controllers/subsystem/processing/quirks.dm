@@ -34,7 +34,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	for(var/V in quirks)
 		user.add_quirk(V, spawn_effects)
 	if(!silent)
-		to_chat(to_chat_target || user, "<span class='boldwarning'>The following quirks were cut during assignment either due to a job restriction or another reason: [english_list(cut)].</span>")
+		to_chat(to_chat_target || user, "<span class='boldwarning'>All of your non-neutral character quirks have been cut due to these quirks conflicting with your job assignment: [english_list(cut)].</span>")
 
 /datum/controller/subsystem/processing/quirks/proc/quirk_path_by_name(name)
 	return quirks[name]
@@ -81,7 +81,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(cut.len)
 		for(var/i in quirks)
 			if(quirk_points_by_name(i) != 0)
-				cut += i
+				//cut += i		-- Commented out: Only show the ones that triggered the quirk purge.
 				quirks -= i
 
 	return cut
