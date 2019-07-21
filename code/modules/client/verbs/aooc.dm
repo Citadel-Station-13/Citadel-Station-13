@@ -1,6 +1,3 @@
-GLOBAL_VAR_INIT(AOOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
-GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
-
 /client/verb/aooc(msg as text)
 	set name = "AOOC"
 	set desc = "An OOC channel exclusive to antagonists."
@@ -53,7 +50,7 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.aooccolor ? prefs.aooccolor : GLOB.normal_aooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
+			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.antag_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 
 	var/antaglisting = list()
@@ -77,27 +74,23 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 				else
 					to_chat(C, "<span class='adminobserverooc'><span class='prefix'>Antag OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span>")
 			else
-				if(GLOB.AOOC_COLOR)
-					to_chat(C, "<font color='[GLOB.AOOC_COLOR]'><b><span class='prefix'>Antag OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font>")
-				else
-					to_chat(C, "<span class='antagooc'><span class='prefix'>Antag OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></span>")
+				to_chat(C, "<font color='[GLOB.antag_ooc_colour]'><span class='ooc'><span class='prefix'>Antag OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></span></font>")
 		else if(!(key in C.prefs.ignoring))
-			if(GLOB.AOOC_COLOR)
-				to_chat(C, "<font color='[GLOB.AOOC_COLOR]'><b><span class='prefix'>Antag OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>")
-			else
-				to_chat(C, "<span class='antagooc'><span class='prefix'>Antag OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span>")
+			to_chat(C, "<font color='[GLOB.antag_ooc_colour]'><span class='ooc'><span class='prefix'>Antag OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span></font>")
+
+GLOBAL_VAR_INIT(antag_ooc_colour, AOOC_COLOR)
 
 /client/proc/set_aooc(newColor as color)
 	set name = "Set Antag OOC Color"
 	set desc = "Modifies antag OOC Color"
 	set category = "Fun"
-	GLOB.AOOC_COLOR = sanitize_ooccolor(newColor)
+	GLOB.antag_ooc_colour = sanitize_ooccolor(newColor)
 
 /client/proc/reset_aooc()
 	set name = "Reset Antag OOC Color"
 	set desc = "Returns antag OOC Color to default"
 	set category = "Fun"
-	GLOB.AOOC_COLOR = null
+	GLOB.antag_ooc_colour = AOOC_COLOR
 
 /proc/toggle_aooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
