@@ -10,7 +10,7 @@ html, body {
 	color: #000000;
 }
 body {
-	background: #fff;
+	background: #f0f0f0;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
     line-height: 1.2;
@@ -261,6 +261,7 @@ h1.alert, h2.alert		{color: #000000;}
 em						{font-style: normal;	font-weight: bold;}
 
 .ooc					{color: #002eb8;	font-weight: bold;}
+.looc					{color: #6699CC;	font-weight: bold;}
 .antagooc				{color: #b8002e;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}

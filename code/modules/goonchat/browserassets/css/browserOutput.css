@@ -265,6 +265,7 @@ h1.alert, h2.alert		{color: #a4bad6;}
 em						{font-style: normal;	font-weight: bold;}
 
 .ooc					{color: #cca300;	font-weight: bold;}
+.looc					{color: #d8b555;	font-weight: bold;}
 .antagooc				{color: #ce254f;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #3d5bc3;	font-weight: bold;}
@@ -326,8 +327,8 @@ h1.alert, h2.alert		{color: #99aab5;}
 .blue					{color: #215cff}
 .green				{color: #059223;}
 .nicegreen				{color: #059223;}
-.userlove				{color: #FF1493;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #ff6dbc;}
-.love					{color: #ff006a;	font-style: italic;	text-shadow: 0 0 6px #ff6d6d;}
+.userlove				{color: #ff42a6;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #82365e;}
+.love					{color: #ff4591;	font-style: italic;	text-shadow: 0 0 6px #994449;}
 .shadowling			{color: #8e8a99;}
 .cult					{color: #aa1c1c;}
 
