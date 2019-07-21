@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - rscadd: "Gamemode voting results are displayed at the end-round screen."

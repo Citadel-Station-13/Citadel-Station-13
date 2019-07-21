@@ -664,6 +664,27 @@
 	item_state = "box"
 	attack_verb = list("open", "closed", "packed", "hidden", "rigged", "bombed", "sent", "gave")
 
+/obj/item/toy/plush/slaggy
+	name = "slag plushie"
+	desc = "A piece of slag with some googly eyes and a drawn on mouth."
+	icon_state = "slaggy"
+	item_state = "slaggy"
+	attack_verb = list("melted", "refined", "stared")
+
+/obj/item/toy/plush/mr_buckety
+	name = "bucket plushie"
+	desc = "A bucket that is missing its handle with some googly eyes and a drawn on mouth."
+	icon_state = "mr_buckety"
+	item_state = "mr_buckety"
+	attack_verb = list("filled", "dumped", "stared")
+
+/obj/item/toy/plush/dr_scanny
+	name = "scanner plushie"
+	desc = "A old outdated scanner that has been modified to have googly eyes, a dawn on mouth and, heart."
+	icon_state = "dr_scanny"
+	item_state = "dr_scanny"
+	attack_verb = list("scanned", "beeped", "stared")
+
 /obj/item/toy/plush/borgplushie
 	name = "robot plushie"
 	desc = "An adorable stuffed toy of a robot."

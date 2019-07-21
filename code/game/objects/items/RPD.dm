@@ -435,6 +435,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, transit_build_speed, target = A))
+					for(var/obj/structure/c_transit_tube/tube in A)
+						if(tube.dir == queued_p_dir || (queued_p_flipped && (tube.dir == turn(queued_p_dir, 45))))
+							to_chat(user, "<span class='warning'>[src]'s error light flickers; there's already a pipe in the way!</span>")
+							return
 					activate()
 					if(queued_p_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)

@@ -44,6 +44,7 @@
 	var/DoNotSplit			= FALSE		// If impurity is handled within the main chem itself
 	var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
 	var/metabolizing = FALSE
+	var/invisible = FALSE //Set to true if it doesn't appear on handheld health analyzers.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
