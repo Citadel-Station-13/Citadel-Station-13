@@ -13,8 +13,6 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	var/knockdown_duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
-	var/broken_force = 9
-	var/broken_throwforce = 5
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
@@ -43,8 +41,6 @@
 		if(prob(33))
 			new/obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, 1)
-		B.force = broken_force
-		B.throwforce = broken_throwforce
 	else
 		B.force = 0
 		B.throwforce = 0
@@ -201,8 +197,6 @@
 	force = 18
 	throwforce = 18
 	knockdown_duration = 18
-	broken_force = 12
-	broken_throwforce = 8
 
 /obj/item/reagent_containers/food/drinks/bottle/holyoil/empty
 	list_reagents = list("holyoil" = 0)
