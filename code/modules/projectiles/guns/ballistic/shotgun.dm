@@ -212,14 +212,43 @@
 						)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	name = "compact combat shotgun"
-	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	name = "warden's combat shotgun"
+	desc = "A modified version of the semi automatic combat shotgun with a collapsible stock. For close encounters."
 	icon_state = "cshotgunc"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_NORMAL
-	unique_reskin = list("Tatical" = "cshotgunc",
-						"Slick" = "cshotgunc_slick"
+	var/stock = FALSE
+	recoil = 5
+	spread = 2
+	unique_reskin = list("Unfolded" = "cshotgun",
+						"Folded" = "cshotgunc"
 						)
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	toggle_stock(user)
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to toggle the stock.</span>")
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/proc/toggle_stock(mob/living/user)
+	stock = !stock
+	if(stock)
+		current_skin = "Unfolded"
+		w_class = WEIGHT_CLASS_HUGE
+		to_chat(user, "You unfold the stock.")
+		recoil = 1
+		spread = 0
+		update_icon()
+	else
+		current_skin = "Folded"
+		w_class = WEIGHT_CLASS_NORMAL
+		to_chat(user, "You fold the stock.")
+		recoil = 5
+		spread = 2
+		update_icon()
 
 //Dual Feed Shotgun
 
