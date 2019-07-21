@@ -67,7 +67,8 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/rag/attack_self(mob/user)
+/obj/item/reagent_containers/rag/AltClick(mob/user)
+	. = ..()
 	if(reagents.total_volume)
 		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]</span>")
 		if(do_after(user, 30, TRUE, src))
@@ -129,7 +130,7 @@
 	body_parts_covered = NONE
 	flags_inv = NONE
 
-/obj/item/reagent_containers/rag/towel/rightclick_attack_self(mob/user)
+/obj/item/reagent_containers/rag/towel/attack_self(mob/user)
 	if(!user.CanReach(src) || !user.dropItemToGround(src))
 		return
 	to_chat(user, "<span class='notice'>You lay out \the [src] flat on the ground.</span>")
