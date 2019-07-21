@@ -51,16 +51,31 @@
 			user.visible_message("<span class='warning'>\The [user] uses \the [src] to pat out [M == user ? "[user.p_their()]" : "\the [M]'s"] flames!</span>")
 			if(hitsound)
 				playsound(M, hitsound, 25, 1)
-			M.adjust_fire_stacks(-extinguish_efficiency)
+			M.adjust_fire_stacks(-min(extinguish_efficiency, M.fire_stacks))
 		else
+			if(reagents.total_volume)
+				to_chat(user, "<span class='warning'>\The [src] is too drenched to be used to dry [user == M ? "yourself" : "\the [M]"] off.</span>")
+				return TRUE
 			user.visible_message("<span class='notice'>\The [user] starts drying [M == user ? "[user.p_them()]self" : "\the [M]"] off with \the [src]...</span>")
 			if(do_mob(user, M, 3 SECONDS))
 				user.visible_message("<span class='notice'>\The [user] dries [M == user ? "[user.p_them()]self" : "\the [M]"] off with \the [src].</span>")
 				if(wipe_sound)
 					playsound(M, wipe_sound, 25, 1)
-				M.adjust_fire_stacks(-soak_efficiency)
+				if(M.fire_stacks)
+					var/minus_plus = M.fire_stacks < 0 ? 1 : -1
+					M.adjust_fire_stacks(minus_plus * min(abs(M.fire_stacks), soak_efficiency))
 		return TRUE
 	return ..()
+
+/obj/item/reagent_containers/rag/attack_self(mob/user)
+	if(reagents.total_volume)
+		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]</span>")
+		if(do_after(user, 30, TRUE, src))
+			to_chat(user, "<span class='notice'>You squeeze \the [src] dry.</span>")
+			var/turf/T = get_turf(src)
+			if(T)
+				reagents.reaction(T, TOUCH)
+				reagents.clear_reagents()
 
 /obj/item/reagent_containers/rag/towel
 	name = "towel"
@@ -81,6 +96,12 @@
 	extinguish_efficiency = 2
 	var/flat_icon = "towel_flat"
 	var/folded_icon = "towel"
+	var/list/possible_colors
+
+/obj/item/reagent_containers/rag/towel/Initialize()
+	. = ..()
+	if(possible_colors)
+		add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
 
 /obj/item/reagent_containers/rag/towel/attack(mob/living/M, mob/living/user)
 	if(user.a_intent == INTENT_HARM)
@@ -106,19 +127,27 @@
 	body_parts_covered = NONE
 	flags_inv = NONE
 
-/obj/item/reagent_containers/rag/towel/attack_self(mob/user)
+/obj/item/reagent_containers/rag/towel/rightclick_attack_self(mob/user)
 	if(!user.CanReach(src) || !user.dropItemToGround(src))
 		return
 	to_chat(user, "<span class='notice'>You lay out \the [src] flat on the ground.</span>")
 	icon_state = flat_icon
 	layer = BELOW_OBJ_LAYER
-	qdel(src)
 
 /obj/item/reagent_containers/rag/towel/pickup(mob/living/user)
 	. = ..()
 	icon_state = folded_icon
 	layer = initial(layer)
 
-/obj/item/reagent_containers/rag/towel/random/Initialize()
-	. = ..()
-	add_atom_colour(pick("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"), FIXED_COLOUR_PRIORITY)
+/obj/item/reagent_containers/rag/towel/on_reagent_change(changetype)
+	force = initial(force) + round(reagents.total_volume * 0.5)
+
+/obj/item/reagent_containers/rag/towel/random
+	possible_colors = list("#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8F00FF")
+
+/obj/item/reagent_containers/rag/towel/syndicate
+	name = "syndicate towel"
+	desc = "Truly a weapon of mass destruction."
+	possible_colors = list("#DD1A1A", "#DB4325", "#E02700")
+	force = 4
+	volume = 20
