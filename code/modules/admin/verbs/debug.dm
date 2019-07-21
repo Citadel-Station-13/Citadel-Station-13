@@ -1030,6 +1030,10 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	GLOB.error_cache.show_to(src)
 
+	message_admins("<span class='adminnotice'>[key_name(src)] checked runtimes.</span>")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "View Runtimes")
+	log_admin("[key_name(src)] checked runtimes.")
+
 /client/proc/pump_random_event()
 	set category = "Debug"
 	set name = "Pump Random Event"
