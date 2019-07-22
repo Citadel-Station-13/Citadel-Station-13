@@ -354,8 +354,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
 
 		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
-		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
-		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
+		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may submit another ticket.</font>")
+		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps. Assume that the admin has not seen any related events, and clearly state the character names or byond keys of anybody you are reporting.")
 
 	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "rejected")
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
@@ -369,9 +369,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
-	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-	msg += "<font color='red'>It is also possible that your ahelp is unable to be answered properly, due to events occurring in the round.</font>"
+	var/msg = "<font color='red' size='4'><b>- Your AdminHelp has been marked as IC issue! -</b></font><br>"
+	msg += "<font color='red'><b>An admin has carefully looked at the issue that you submitted and has deemed that the actions of the reported individual or incident is valid.</b></font><br>"
+	msg += "<font color='red'>Some actions by users, while appearing malicious, can actually be legitimate due to their status or given situation in the round.</font>"
+	msg += "<font color='red'>Please do not be discouraged from reporting similar instances in the future. While not all actions are invalid, not all actions are valid.</font>"
 	if(initiator)
 		to_chat(initiator, msg)
 
@@ -387,7 +388,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please be patient.</span>"
+	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please wait as the admin types their response.</span>"
 
 	if(initiator)
 		to_chat(initiator, msg)
