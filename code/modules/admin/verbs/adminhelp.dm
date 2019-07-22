@@ -370,7 +370,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 
 	var/msg = "<font color='red' size='4'><b>- Your AdminHelp has been marked as IC issue! -</b></font><br>"
-	msg += "<font color='red'><b>An admin has carefully looked at the issue that you submitted and has determined that the reported incident is valid.</b></font><br>"
+	msg += "<font color='red'><b>An admin has carefully looked at the submitted issue and has determined that the reported incident is valid.</b></font><br>"
 	msg += "<font color='red'>Some actions by users, while appearing malicious, can actually be legitimate due to their status or given situation in the round.</font>"
 	msg += "<font color='red'>Please do not be discouraged from reporting similar instances in the future. While not all actions are invalid, not all actions are valid.</font>"
 	if(initiator)
@@ -388,7 +388,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please wait while they type their response.</span>"
+	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please wait while they type their response and gather relevant information.</span>"
 
 	if(initiator)
 		to_chat(initiator, msg)
