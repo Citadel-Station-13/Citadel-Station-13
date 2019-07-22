@@ -34,9 +34,7 @@
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
 	var/metabolizing = FALSE
-
-
-
+	var/invisible = FALSE //Set to true if it doesn't appear on handheld health analyzers.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

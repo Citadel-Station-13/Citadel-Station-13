@@ -95,6 +95,12 @@
 			var/obj/item/toy/crayon/CR = WM.color_source
 			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
+/obj/item/reagents_containers/glass/rag/towel/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		if(istype(WM.color_source, /obj/item/toy/crayon))
+			var/obj/item/toy/crayon/CR = WM.color_source
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
+
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
 
