@@ -354,3 +354,21 @@
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
 		qdel(src)
+
+/datum/quirk/blindness
+	name = "Blind"
+	desc = "You are completely blind, nothing can counteract this."
+	value = -4
+	gain_text = "<span class='danger'>You can't see anything.</span>"
+	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
+	medical_record_text = "Subject has permanent blindness."
+
+/datum/quirk/blindness/add()
+	quirk_holder.become_blind(ROUNDSTART_TRAIT)
+
+/datum/quirk/blindness/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/glasses/sunglasses/blindfold/white/glasses = new(get_turf(H))
+	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes eyes
+		H.put_in_hands(glasses)
+	H.regenerate_icons()
