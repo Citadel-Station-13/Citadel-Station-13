@@ -199,7 +199,7 @@
 					/obj/item/clothing/suit/apron/purple_bartender = 2,
 					/obj/item/clothing/head/soft/black = 4,
 					/obj/item/clothing/shoes/sneakers/black = 4,
-					/obj/item/reagent_containers/glass/rag = 4,
+					/obj/item/reagent_containers/rag = 4,
 					/obj/item/storage/box/beanbag = 1,
 					/obj/item/clothing/suit/armor/vest/alt = 1,
 					/obj/item/circuitboard/machine/dish_drive = 1,
@@ -227,7 +227,7 @@
 					/obj/item/clothing/suit/toggle/chef = 2,
 					/obj/item/clothing/under/rank/chef = 2,
 					/obj/item/clothing/head/chefhat = 2,
-					/obj/item/reagent_containers/glass/rag = 3)
+					/obj/item/reagent_containers/rag = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 
 /obj/item/vending_refill/wardrobe/chef_wardrobe

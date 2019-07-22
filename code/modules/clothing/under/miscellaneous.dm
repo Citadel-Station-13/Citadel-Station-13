@@ -753,14 +753,13 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
-
 /obj/item/clothing/under/bb_sweater
 	name = "cream sweater"
 	desc = "Why trade style for comfort? Now you can go commando down south and still be cozy up north."
 	icon_state = "bb_turtle"
 	item_state = "w_suit"
 	item_color = "bb_turtle"
-	body_parts_covered = CHEST|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = TRUE
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 

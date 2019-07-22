@@ -437,7 +437,7 @@ SUBSYSTEM_DEF(job)
 		if(job.custom_spawn_text)
 			to_chat(M, "<b>[job.custom_spawn_text]</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
+			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 
 	if(job && H)
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
