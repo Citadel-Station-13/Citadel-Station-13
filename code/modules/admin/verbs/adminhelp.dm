@@ -388,7 +388,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please wait as the admin types their response.</span>"
+	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please wait while they type their response.</span>"
 
 	if(initiator)
 		to_chat(initiator, msg)
