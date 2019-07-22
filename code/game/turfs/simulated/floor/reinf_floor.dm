@@ -108,6 +108,9 @@
 	name = "plasma floor"
 	initial_gas_mix = "plasma=70000;TEMP=293.15"
 
+/turf/open/floor/engine/plasma/one_atmos
+	initial_gas_mix = "plasma=100;TEMP=293.15"
+
 /turf/open/floor/engine/o2
 	name = "\improper O2 floor"
 	initial_gas_mix = "o2=100000;TEMP=293.15"
