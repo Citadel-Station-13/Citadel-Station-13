@@ -56,14 +56,14 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "EngLoad"
+	id = "garbagestacked"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aah" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "EngLoad"
+	id = "garbagestacked"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -106,6 +106,22 @@
 /obj/effect/landmark/start/lawyer,
 /turf/open/floor/wood,
 /area/lawoffice)
+"aam" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -17239,22 +17255,6 @@
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
-"aPg" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "aPi" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -107515,7 +107515,7 @@ aLn
 aNT
 aaf
 aai
-aPg
+aam
 aRu
 srZ
 aLm
