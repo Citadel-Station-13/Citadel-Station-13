@@ -92,6 +92,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"aal" = (
+/obj/structure/chair/comfy/black,
+/obj/structure/sign/plaques/kiddie{
+	desc = "An embossed piece of paper from the Third University of Harvard.";
+	name = "\improper 'Diploma' frame";
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/obj/effect/landmark/start/lawyer,
+/turf/open/floor/wood,
+/area/lawoffice)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -61767,19 +61781,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
-"xJy" = (
-/obj/structure/chair/comfy/black,
-/obj/structure/sign/plaques/kiddie{
-	desc = "An embossed piece of paper from the Third University of Harvard.";
-	name = "\improper 'Diploma' frame";
-	pixel_y = 32
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
-/turf/open/floor/wood,
-/area/lawoffice)
 "xKc" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
@@ -81802,7 +81803,7 @@ ajM
 aiu
 aiu
 gSH
-xJy
+aal
 sJr
 sJr
 sJr
