@@ -370,7 +370,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 
 	var/msg = "<font color='red' size='4'><b>- Your AdminHelp has been marked as IC issue! -</b></font><br>"
-	msg += "<font color='red'><b>An admin has carefully looked at the issue that you submitted and has deemed that the actions of the reported individual or incident is valid.</b></font><br>"
+	msg += "<font color='red'><b>An admin has carefully looked at the issue that you submitted and has determined that the reported incident is valid.</b></font><br>"
 	msg += "<font color='red'>Some actions by users, while appearing malicious, can actually be legitimate due to their status or given situation in the round.</font>"
 	msg += "<font color='red'>Please do not be discouraged from reporting similar instances in the future. While not all actions are invalid, not all actions are valid.</font>"
 	if(initiator)
