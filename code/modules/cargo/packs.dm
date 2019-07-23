@@ -2204,6 +2204,17 @@
 					/mob/living/simple_animal/hostile/retaliate/poison/snake)
 	crate_name = "snake crate"
 
+/datum/supply_pack/critter/secbat
+	name = "Security Bat Crate"
+	desc = "Contains five security bats, perfect to Bat-up any security officer."
+	cost = 2500
+	contains = list(/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat)
+	crate_name = "security bat crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Costumes & Toys /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2775,4 +2786,3 @@
 					/obj/item/toner,
 					/obj/item/toner)
 	crate_name = "toner crate"
-
