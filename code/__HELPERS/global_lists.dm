@@ -64,7 +64,8 @@
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
-		GLOB.genitals_list[initial(G.name)] = gpath
+		if(!CHECK_BITFIELD(initial(G.genital_flags), GENITAL_BLACKLISTED))
+			GLOB.genitals_list[initial(G.name)] = gpath
 //END OF CIT CHANGES
 
 	//Species

@@ -5,6 +5,7 @@
 	icon = 'modular_citadel/icons/obj/genitals/ovipositor.dmi'
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_PENIS
+	genital_flags = GENITAL_BLACKLISTED //unimplemented
 	shape = "knotted"
 	size = 3
 	layer_index = PENIS_LAYER_INDEX

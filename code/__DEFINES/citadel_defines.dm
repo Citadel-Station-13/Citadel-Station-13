@@ -25,7 +25,9 @@
 
 #define GENITAL_LAYER_INDEX_LENGTH 4 //keep it updated with each new index added, thanks.
 
-#define MASTURBATE_LINKED_ORGAN 2 //special value used to pass our mission to the linked organ
+//genital flags
+#define GENITAL_BLACKLISTED (1 << 0) //for genitals that shouldn't be added to GLOB.genitals_list.
+#define MASTURBATE_LINKED_ORGAN (1<<1) //used to pass our mission to the linked organ
 
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_MAX		20

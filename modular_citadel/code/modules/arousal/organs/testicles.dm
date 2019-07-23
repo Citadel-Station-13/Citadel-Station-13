@@ -7,12 +7,13 @@
 	slot = ORGAN_SLOT_TESTICLES
 	size = BALLS_SIZE_MIN
 	linked_organ_slot = ORGAN_SLOT_PENIS
+	genital_flags = MASTURBATE_LINKED_ORGAN
 	var/size_name = "average"
 	shape = "single"
 	var/sack_size = BALLS_SACK_SIZE_DEF
 	fluid_id = "semen"
 	producing = TRUE
-	can_masturbate_with = MASTURBATE_LINKED_ORGAN
+	can_masturbate_with = TRUE
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
 	var/size_linked = FALSE

@@ -5,6 +5,7 @@
 	icon = 'modular_citadel/icons/obj/genitals/ovipositor.dmi'
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_TESTICLES
+	genital_flags = GENITAL_BLACKLISTED //unimplemented
 	linked_organ_slot = ORGAN_SLOT_PENIS
 	color = null //don't use the /genital color since it already is colored
 	internal = TRUE

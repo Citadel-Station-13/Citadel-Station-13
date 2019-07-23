@@ -209,7 +209,7 @@
 	var/datum/reagents/fluid_source = G.climaxable(src)
 	if(!fluid_source)
 		return
-	var/obj/item/organ/genital/PP = G.can_masturbate_with == MASTURBATE_LINKED_ORGAN ? G.linked_organ : G
+	var/obj/item/organ/genital/PP = CHECK_BITFIELD(G.genital_flags, MASTURBATE_LINKED_ORGAN) ? G.linked_organ : G
 	if(!PP)
 		to_chat(src, "<span class='warning'>You shudder, unable to cum with your [name].</span>")
 	if(mb_time)
@@ -274,7 +274,7 @@
 
 	for(var/obj/item/organ/genital/G in internal_organs)
 		if(G.can_masturbate_with && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
-			if(G.can_masturbate_with == MASTURBATE_LINKED_ORGAN && !G.linked_organ)
+			if(CHECK_BITFIELD(G.genital_flags, MASTURBATE_LINKED_ORGAN) && !G.linked_organ)
 				continue
 			genitals_list += G
 	if(genitals_list.len)

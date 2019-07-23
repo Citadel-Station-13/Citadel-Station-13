@@ -1,28 +1,28 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	w_class 					= WEIGHT_CLASS_NORMAL
-	var/shape					= "human"
-	var/sensitivity				= AROUSAL_START_VALUE
-	var/list/genital_flags		= list()
-	var/can_masturbate_with 	= FALSE
-	var/masturbation_verb		= "masturbate"
-	var/orgasm_verb				= "cumming" //present continous
-	var/can_climax				= FALSE
-	var/fluid_transfer_factor	= 0 //How much would a partner get in them if they climax using this?
-	var/size					= 2 //can vary between num or text, just used in icon_state strings
-	var/fluid_id				= null
-	var/fluid_max_volume		= 50
-	var/fluid_efficiency		= 1
-	var/fluid_rate				= 1
-	var/fluid_mult				= 1
-	var/producing				= FALSE
-	var/aroused_state			= FALSE //Boolean used in icon_state strings
-	var/aroused_amount			= 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
+	w_class = WEIGHT_CLASS_NORMAL
+	var/shape = "human"
+	var/sensitivity = AROUSAL_START_VALUE
+	var/genital_flags
+	var/can_masturbate_with = FALSE
+	var/masturbation_verb = "masturbate"
+	var/orgasm_verb = "cumming" //present continous
+	var/can_climax = FALSE
+	var/fluid_transfer_factor = 0 //How much would a partner get in them if they climax using this?
+	var/size = 2 //can vary between num or text, just used in icon_state strings
+	var/fluid_id = null
+	var/fluid_max_volume = 50
+	var/fluid_efficiency = 1
+	var/fluid_rate = 1
+	var/fluid_mult = 1
+	var/producing = FALSE
+	var/aroused_state = FALSE //Boolean used in icon_state strings
+	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //only one of the two organs needs this to be set up. update_link() will handle linking the rest.
-	var/through_clothes			= FALSE
-	var/internal				= FALSE
-	var/hidden					= FALSE
+	var/through_clothes = FALSE
+	var/internal = FALSE
+	var/hidden = FALSE
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 
 /obj/item/organ/genital/Initialize()
