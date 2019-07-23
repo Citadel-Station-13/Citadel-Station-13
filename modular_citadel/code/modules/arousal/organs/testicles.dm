@@ -36,7 +36,9 @@
 		to_chat(owner, msg)
 		return TRUE
 
-/obj/item/organ/genital/testicles/update_appearance()
+/obj/item/organ/genital/testicles/update_size(new_size)
+	if(new_size)
+		size = CLAMP(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
 	switch(size)
 		if(BALLS_SIZE_MIN)
 			size_name = "average"
@@ -47,8 +49,9 @@
 		else
 			size_name = "nonexistant"
 
+/obj/item/organ/genital/testicles/update_appearance()
+	. = ..()
 	desc = "You see an [size_name] pair of testicles."
-
 	if(owner)
 		var/string
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])

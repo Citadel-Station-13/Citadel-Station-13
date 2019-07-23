@@ -17,6 +17,7 @@
 	fluid_transfer_factor = 0.5
 
 /obj/item/organ/genital/breasts/update_appearance()
+	. = ..()
 	var/lowershape = lowertext(shape)
 	switch(lowershape)
 		if("pair")

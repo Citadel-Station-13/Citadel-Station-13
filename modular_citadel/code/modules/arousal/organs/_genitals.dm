@@ -113,6 +113,8 @@
 	return
 
 /obj/item/organ/genital/proc/update_appearance()
+	if(!owner || owner.stat == DEAD)
+		aroused_state = FALSE
 	return
 
 /obj/item/organ/genital/on_life()
@@ -142,12 +144,16 @@
 	return FALSE
 
 /obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
-	..()
-	update()
+	. = ..()
+	if(.)
+		update()
+		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
 /obj/item/organ/genital/Remove(mob/living/carbon/M, special = 0)
-	..()
-	update(TRUE)
+	. = ..()
+	if(.)
+		update(TRUE)
+		UnregisterSignal(M, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA

@@ -16,7 +16,7 @@
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
-		return
+		return FALSE
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
@@ -33,6 +33,7 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
+	return TRUE
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
@@ -46,6 +47,7 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(M)
+	return TRUE
 
 
 /obj/item/organ/proc/on_find(mob/living/finder)

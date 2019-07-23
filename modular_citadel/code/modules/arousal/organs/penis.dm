@@ -16,27 +16,27 @@
 	var/girth = 0
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
-	var/list/dickflags = list()
 	var/list/knotted_types = list("knotted", "barbed, knotted")
 
 /obj/item/organ/genital/penis/update_size()
 	if(length == cached_length)
 		return
+	var/new_size
 	switch(length)
 		if(-INFINITY to 5)
-			size = 1
+			new_size = 1
 		if(5 to 9)
-			size = 2
+			new_size = 2
 		if(15 to INFINITY)
-			size = 3//no new sprites for anything larger yet
-/*		if(9 to 15)
-			size = 3
-		if(15 to INFINITY)
-			size = 3*/
+			new_size = 3 //no new sprites for anything larger yet.
 	girth = (length * girth_ratio)
 	cached_length = length
+	if(linked_organ)
+		linked_organ.update_size(new_size - size)
+	size = new_size
 
 /obj/item/organ/genital/penis/update_appearance()
+	. = ..()
 	var/string
 	var/lowershape = lowertext(shape)
 	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."

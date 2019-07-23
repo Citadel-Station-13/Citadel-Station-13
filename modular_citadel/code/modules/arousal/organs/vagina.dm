@@ -20,6 +20,7 @@
 	var/list/vag_types = list("tentacle", "dentata", "hairy", "spade", "furred")
 
 /obj/item/organ/genital/vagina/update_appearance()
+	. = ..()
 	var/string //Keeping this code here, so making multiple sprites for the different kinds is easier.
 	var/lowershape = lowertext(shape)
 	var/details
