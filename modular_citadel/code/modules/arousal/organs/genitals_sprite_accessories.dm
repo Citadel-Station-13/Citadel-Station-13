@@ -5,11 +5,9 @@
 //DICKS,COCKS,PENISES,WHATEVER YOU WANT TO CALL THEM
 /datum/sprite_accessory/penis
 	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
-	icon_state = null
 	name = "penis"			//the preview name of the accessory
-	gender_specific = 0	//Might be needed somewhere down the list.
 	color_src = "cock_color"
-	locked = 0
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/penis/human
 	icon_state = "human"
@@ -62,27 +60,21 @@
 	icon_state = "testicle"
 	name = "testicle"		//the preview name of the accessory
 	color_src = "balls_color"
-	locked = 0
 
 /datum/sprite_accessory/testicles/hidden
-	icon_state = "hidden"
+	icon_state = "none"
 	name = "Hidden"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/testicles/single
 	icon_state = "single"
 	name = "Single"
-	alt_aroused = TRUE
 
 //Vaginas
 /datum/sprite_accessory/vagina
 	icon = 'modular_citadel/icons/obj/genitals/vagina_onmob.dmi'
 	icon_state = null
 	name = "vagina"
-	gender_specific = 0
 	color_src = "vag_color"
-	locked = 0
-	alt_aroused = FALSE //if this is TRUE, then the genitals will use an alternate sprite for aroused states
 
 /datum/sprite_accessory/vagina/human
 	icon_state = "human"
@@ -114,35 +106,28 @@
 //BREASTS BE HERE
 /datum/sprite_accessory/breasts
 	icon = 'modular_citadel/icons/obj/genitals/breasts_onmob.dmi'
-	icon_state = null
 	name = "breasts"
-	gender_specific = 0
 	color_src = "breasts_color"
-	locked = 0
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/breasts/pair
 	icon_state = "pair"
 	name = "Pair"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/breasts/quad
 	icon_state = "quad"
 	name = "Quad"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
-	alt_aroused = TRUE
 
 //OVIPOSITORS BE HERE
 /datum/sprite_accessory/ovipositor
 	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
 	icon_state = null
 	name = "Ovipositor"			//the preview name of the accessory
-	gender_specific = 0			//Might be needed somewhere down the list.
 	color_src = "cock_color"
-	locked = 0
 
 /datum/sprite_accessory/ovipositor/knotted
 	icon_state = "knotted"

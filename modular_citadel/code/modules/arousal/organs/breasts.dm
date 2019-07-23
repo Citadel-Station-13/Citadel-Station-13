@@ -1,38 +1,20 @@
 /obj/item/organ/genital/breasts
-	name 					= "breasts"
-	desc 					= "Female milk producing organs."
-	icon_state 				= "breasts"
-	icon 					= 'modular_citadel/icons/obj/genitals/breasts.dmi'
-	zone 					= "chest"
-	slot 					= "breasts"
-	size 					= BREASTS_SIZE_DEF
-	fluid_id				= "milk"
-	var/amount				= 2
-	producing				= TRUE
-	shape					= "pair"
-	can_masturbate_with		= TRUE
-	masturbation_verb 		= "massage"
-	can_climax				= TRUE
-	fluid_transfer_factor 	= 0.5
-
-/obj/item/organ/genital/breasts/Initialize()
-	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
-
-/obj/item/organ/genital/breasts/on_life()
-	if(QDELETED(src))
-		return
-	if(!reagents || !owner)
-		return
-	reagents.maximum_volume = fluid_max_volume
-	if(fluid_id && producing)
-		generate_milk()
-
-/obj/item/organ/genital/breasts/proc/generate_milk()
-	if(owner.stat == DEAD)
-		return FALSE
-	reagents.isolate_reagent(fluid_id)
-	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))
+	name = "breasts"
+	desc = "Female milk producing organs."
+	icon_state = "breasts"
+	icon = 'modular_citadel/icons/obj/genitals/breasts.dmi'
+	zone = BODY_ZONE_CHEST
+	slot = ORGAN_SLOT_BREASTS
+	size = BREASTS_SIZE_DEF
+	fluid_id = "milk"
+	var/amount = 2
+	producing = TRUE
+	shape = "pair"
+	can_masturbate_with = TRUE
+	masturbation_verb = "massage"
+	orgasm_verb = "leaking"
+	can_climax = TRUE
+	fluid_transfer_factor = 0.5
 
 /obj/item/organ/genital/breasts/update_appearance()
 	var/lowershape = lowertext(shape)
@@ -65,3 +47,13 @@
 			var/mob/living/carbon/human/H = owner
 			icon_state = sanitize_text(string)
 			H.update_genitals()
+
+/obj/item/organ/genital/breasts/get_features(mob/living/carbon/human/H)
+	var/datum/dna/D = H.dna
+	if(D.species.use_skintones && D.features["genitals_use_skintone"])
+		color = "#[skintone2hex(H.skin_tone)]"
+	else
+		color = "#[D.features["breasts_color"]]"
+	size = D.features["breasts_size"]
+	shape = D.features["breasts_shape"]
+	fluid_id = D.features["breasts_fluid"]

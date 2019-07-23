@@ -1,22 +1,23 @@
 /obj/item/organ/genital/penis
-	name 					= "penis"
-	desc 					= "A male reproductive organ."
-	icon_state 				= "penis"
-	icon 					= 'modular_citadel/icons/obj/genitals/penis.dmi'
-	zone 					= "groin"
-	slot 					= ORGAN_SLOT_PENIS
-	can_masturbate_with 	= TRUE
-	masturbation_verb 		= "stroke"
-	can_climax 				= TRUE
-	fluid_transfer_factor	= 0.5
-	size 					= 2 //arbitrary value derived from length and girth for sprites.
-	var/length 				= 6	//inches
-	var/cached_length			//used to detect a change in length
-	var/girth  				= 0
-	var/girth_ratio 		= COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
-	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
-	var/list/dickflags 		= list()
-	var/list/knotted_types 	= list("knotted", "barbed, knotted")
+	name = "penis"
+	desc = "A male reproductive organ."
+	icon_state = "penis"
+	icon = 'modular_citadel/icons/obj/genitals/penis.dmi'
+	zone = BODY_ZONE_PRECISE_GROIN
+	slot = ORGAN_SLOT_PENIS
+	can_masturbate_with = TRUE
+	masturbation_verb = "stroke"
+	can_climax = TRUE
+	fluid_transfer_factor = 0.5
+	size = 2 //arbitrary value derived from length and girth for sprites.
+	layer_index = PENIS_LAYER_INDEX
+	var/length = 6	//inches
+	var/cached_length //used to detect a change in length
+	var/girth = 0
+	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
+	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
+	var/list/dickflags = list()
+	var/list/knotted_types = list("knotted", "barbed, knotted")
 
 /obj/item/organ/genital/penis/update_size()
 	if(length == cached_length)
@@ -38,7 +39,7 @@
 /obj/item/organ/genital/penis/update_appearance()
 	var/string
 	var/lowershape = lowertext(shape)
-	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."
+	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."
 
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
@@ -54,13 +55,12 @@
 			icon_state = sanitize_text(string)
 			H.update_genitals()
 
-/obj/item/organ/genital/penis/update_link()
-	if(owner)
-		linked_organ = (owner.getorganslot("testicles"))
-		if(linked_organ)
-			linked_organ.linked_organ = src
-			linked_organ.size = size
+/obj/item/organ/genital/penis/get_features(mob/living/carbon/human/H)
+	var/datum/dna/D = H.dna
+	if(D.species.use_skintones && D.features["genitals_use_skintone"])
+		color = "#[skintone2hex(H.skin_tone)]"
 	else
-		if(linked_organ)
-			linked_organ.linked_organ = null
-		linked_organ = null
+		color = "#[D.features["cock_color"]]"
+	length = D.features["cock_length"]
+	girth_ratio = D.features["cock_girth_ratio"]
+	shape = D.features["cock_shape"]

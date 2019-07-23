@@ -1,24 +1,23 @@
 /obj/item/organ/genital/vagina
-	name 					= "vagina"
-	desc 					= "A female reproductive organ."
-	icon					= 'modular_citadel/icons/obj/genitals/vagina.dmi'
-	icon_state 				= "vagina"
-	zone 					= "groin"
-	slot 					= "vagina"
-	size					= 1 //There is only 1 size right now
-	can_masturbate_with		= TRUE
-	masturbation_verb 	= "finger"
-	can_climax 				= TRUE
+	name = "vagina"
+	desc = "A female reproductive organ."
+	icon = 'modular_citadel/icons/obj/genitals/vagina.dmi'
+	icon_state = ORGAN_SLOT_VAGINA
+	zone = BODY_ZONE_PRECISE_GROIN
+	slot = "vagina"
+	size = 1 //There is only 1 size right now
+	can_masturbate_with = TRUE
+	masturbation_verb = "finger"
+	can_climax = TRUE
 	fluid_transfer_factor = 0.1 //Yes, some amount is exposed to you, go get your AIDS
-	w_class 				= 3
-	var/cap_length		= 8//D   E   P   T   H (cap = capacity)
-	var/cap_girth		= 12
+	layer_index = VAGINA_LAYER_INDEX
+	var/cap_length = 8//D   E   P   T   H (cap = capacity)
+	var/cap_girth = 12
 	var/cap_girth_ratio = 1.5
-	var/clits				= 1
-	var/clit_diam 			= 0.25
-	var/clit_len			= 0.25
+	var/clits = 1
+	var/clit_diam = 0.25
+	var/clit_len = 0.25
 	var/list/vag_types = list("tentacle", "dentata", "hairy", "spade", "furred")
-
 
 /obj/item/organ/genital/vagina/update_appearance()
 	var/string //Keeping this code here, so making multiple sprites for the different kinds is easier.
@@ -63,12 +62,10 @@
 			icon_state = sanitize_text(string)
 			H.update_genitals()
 
-/obj/item/organ/genital/vagina/update_link()
-	if(owner)
-		linked_organ = (owner.getorganslot("womb"))
-		if(linked_organ)
-			linked_organ.linked_organ = src
+/obj/item/organ/genital/vagina/get_features(mob/living/carbon/human/H)
+	var/datum/dna/D = H.dna
+	if(D.species.use_skintones && D.features["genitals_use_skintone"])
+		color = "#[skintone2hex(H.skin_tone)]"
 	else
-		if(linked_organ)
-			linked_organ.linked_organ = null
-		linked_organ = null
+		color = "[D.features["vag_color"]]"
+	shape = "[D.features["vag_shape"]]"

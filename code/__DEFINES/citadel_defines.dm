@@ -18,6 +18,15 @@
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
 
 //organ defines
+#define VAGINA_LAYER_INDEX		1
+#define TESTICLES_LAYER_INDEX	2
+#define GENITAL_LAYER_INDEX		3
+#define PENIS_LAYER_INDEX		4
+
+#define GENITAL_LAYER_INDEX_LENGTH 4 //keep it updated with each new index added, thanks.
+
+#define MASTURBATE_LINKED_ORGAN 2 //special value used to pass our mission to the linked organ
+
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_MAX		20
 

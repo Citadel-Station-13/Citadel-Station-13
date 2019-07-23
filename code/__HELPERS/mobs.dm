@@ -154,7 +154,6 @@
 		"xenodorsal" 		= "Standard",
 		"xenohead" 			= "Standard",
 		"xenotail" 			= "Xenomorph Tail",
-		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= pick(GLOB.cock_shapes_list),

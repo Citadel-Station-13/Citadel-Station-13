@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	20
+#define SAVEFILE_VERSION_MAX	21
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -49,6 +49,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_style = "mono"
 	if(current_version < 20)
 		pda_color = "#808000"
+	if(current_version < 21 && S["feature_exhibitionist"])
+		var/datum/quirk/exhibitionism/E
+		var/quirk_name = initial(E.name)
+		neutral_quirks += quirk_name
+		all_quirks += quirk_name
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

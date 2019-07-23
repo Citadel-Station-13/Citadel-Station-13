@@ -94,6 +94,41 @@
 	lose_text = "<span class='notice'>You don't feel as prudish as before.</span>"
 	medical_record_text = "Patient exhibits a special gene that makes them immune to Crocin and Hexacrocin."
 
+/datum/quirk/libido
+	name = "Nymphomania"
+	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."
+	value = 0
+	mob_trait = TRAIT_NYMPHO
+	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
+	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
+
+/datum/quirk/libido/add()
+	var/mob/living/M = quirk_holder
+	M.min_arousal = 16
+	M.arousal_rate = 3
+
+/datum/quirk/libido/remove()
+	var/mob/living/M = quirk_holder
+	M.min_arousal = initial(M.min_arousal)
+	M.arousal_rate = initial(M.arousal_rate)
+
+/datum/quirk/maso
+	name = "Masochism"
+	desc = "You are aroused by pain."
+	value = 0
+	mob_trait = TRAIT_MASO
+	gain_text = "<span class='notice'>You desire to be hurt.</span>"
+	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
+
+/datum/quirk/exhibitionism
+	name = "Exhibitionism"
+	desc = "You don't mind showing off your bare body to strangers, in fact you find it quite satistying. Not the best excuse to break Space Law anyway." //as if they'd care anyway.
+	value = 0
+	medical_record_text = "Patient has been diagnosed with exhibitionistic disorder."
+	mob_trait = TRAIT_EXHIBITIONIST
+	gain_text = "<span class='notice'>You feel like exposing yourself to the world.</span>"
+	lose_text = "<span class='notice'>Indecent exposure doesn't sound as charming to you anymore.</span>"
+
 /datum/quirk/assblastusa
 	name = "Buns of Steel"
 	desc = "You've never skipped ass day. With this trait, you are completely immune to all forms of ass slapping and anyone who tries to slap your rock hard ass usually gets a broken hand."

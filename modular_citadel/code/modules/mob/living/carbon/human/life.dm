@@ -1,7 +1,7 @@
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds, times_fired)
 		//citadel code
 	if(stat != DEAD)
-		handle_arousal()
+		handle_arousal(times_fired)
 	. = ..()
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)

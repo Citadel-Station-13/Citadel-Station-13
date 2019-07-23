@@ -78,42 +78,30 @@
 		else
 			H.facial_hair_style = "Shaved"
 		//handle normal hair
-		var/new_style = input(owner, "Select a hair style", "Hair Alterations")  as null|anything in GLOB.hair_styles_list
+		var/new_style = input(owner, "Select a hair style", "Hair Alterations") as null|anything in GLOB.hair_styles_list
 		if(new_style)
 			H.hair_style = new_style
 			H.update_hair()
 	else if (select_alteration == "Genitals")
-		var/list/organs = list()
 		var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add sexual organ", "remove sexual organ", "cancel")
 		switch(operation)
 			if("add sexual organ")
-				var/new_organ = input("Select sexual organ:", "Organ Manipulation") in list("Penis", "Testicles", "Breasts", "Vagina", "Womb", "Cancel")
-				if(new_organ == "Penis")
-					H.give_penis()
-				else if(new_organ == "Testicles")
-					H.give_balls()
-				else if(new_organ == "Breasts")
-					H.give_breasts()
-				else if(new_organ == "Vagina")
-					H.give_vagina()
-				else if(new_organ == "Womb")
-					H.give_womb()
-				else
+				var/new_organ = input("Select sexual organ:", "Organ Manipulation") as null|anything in GLOB.genitals_list
+				if(!new_organ)
 					return
+				H.give_genital(GLOB.genitals_list[new_organ])
+
 			if("remove sexual organ")
+				var/list/organs = list()
 				for(var/obj/item/organ/genital/X in H.internal_organs)
 					var/obj/item/organ/I = X
 					organs["[I.name] ([I.type])"] = I
-				var/obj/item/organ = input("Select sexual organ:", "Organ Manipulation", null) in organs
-				organ = organs[organ]
-				if(!organ)
+				var/obj/item/O = input("Select sexual organ:", "Organ Manipulation", null) as null|anything in organs
+				var/obj/item/organ/genital/G = organs[O]
+				if(!G)
 					return
-				var/obj/item/organ/genital/O
-				if(isorgan(organ))
-					O = organ
-					O.Remove(H)
-				organ.forceMove(get_turf(H))
-				qdel(organ)
+				G.forceMove(get_turf(H))
+				qdel(G)
 				H.update_genitals()
 
 	else if (select_alteration == "Ears")
@@ -203,8 +191,8 @@
 		if(new_shape)
 			H.dna.features["cock_shape"] = new_shape
 		H.update_genitals()
-		H.give_balls()
-		H.give_penis()
+		H.give_genital(/obj/item/organ/genital/testicles)
+		H.give_genital(/obj/item/organ/genital/penis)
 		H.apply_overlay()
 
 
@@ -216,8 +204,8 @@
 		if(new_shape)
 			H.dna.features["vag_shape"] = new_shape
 		H.update_genitals()
-		H.give_womb()
-		H.give_vagina()
+		H.give_genital(/obj/item/organ/genital/womb)
+		H.give_genital(/obj/item/organ/genital/vagina)
 		H.apply_overlay()
 
 	else if (select_alteration == "Penis Length")
@@ -229,8 +217,8 @@
 			H.dna.features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
 		H.update_genitals()
 		H.apply_overlay()
-		H.give_balls()
-		H.give_penis()
+		H.give_genital(/obj/item/organ/genital/testicles)
+		H.give_genital(/obj/item/organ/genital/penis)
 
 	else if (select_alteration == "Breast Size")
 		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
@@ -241,7 +229,7 @@
 			H.dna.features["breasts_size"] = new_size
 		H.update_genitals()
 		H.apply_overlay()
-		H.give_breasts()
+		H.give_genital(/obj/item/organ/genital/breasts)
 
 	else if (select_alteration == "Breast Shape")
 		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
@@ -252,7 +240,7 @@
 			H.dna.features["breasts_shape"] = new_shape
 		H.update_genitals()
 		H.apply_overlay()
-		H.give_breasts()
+		H.give_genital(/obj/item/organ/genital/breasts)
 
 	else
 		return
