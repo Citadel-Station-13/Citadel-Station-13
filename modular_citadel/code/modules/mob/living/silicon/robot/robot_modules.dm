@@ -39,7 +39,8 @@
 		/obj/item/analyzer/nose,
 		/obj/item/dogborg/sleeper/K9,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/pinpointer/crew)
+		/obj/item/pinpointer/crew,
+		/obj/item/knot_module)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -92,7 +93,8 @@
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/pinpointer/crew,
-		/obj/item/sensor_device)
+		/obj/item/sensor_device,
+		/obj/item/knot_module)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -135,7 +137,8 @@
 		/obj/item/soap/tongue/scrubpup,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/extinguisher/mini,
-		/obj/item/dogborg/sleeper/compactor)
+		/obj/item/dogborg/sleeper/compactor,
+		/obj/item/knot_module)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/janitor,
@@ -171,7 +174,7 @@
 		/obj/item/healthanalyzer,
 		/obj/item/extinguisher/mini,
 		/obj/item/borg/cyborghug)
-	emag_modules = list(/obj/item/dogborg/pounce)
+	emag_modules = list(/obj/item/dogborg/pounce,/obj/item/knot_module)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
 		/obj/item/clockwork/weapon/ratvarian_spear,
