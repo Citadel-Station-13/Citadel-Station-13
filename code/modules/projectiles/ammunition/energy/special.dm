@@ -62,3 +62,8 @@
 	e_cost = 200
 	select_name = "stun"
 	projectile_type = /obj/item/projectile/energy/tesla/revolver
+
+/obj/item/ammo_casing/energy/emitter
+	fire_sound = 'sound/weapons/emitter.ogg'
+	e_cost = 5000
+	projectile_type = /obj/item/projectile/beam/emitter

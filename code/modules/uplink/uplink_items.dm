@@ -1837,6 +1837,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/clothing/shoes/clown_shoes/taeclowndo
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/emitter_cannon
+	name = "Emitter Cannon"
+	desc = "A small emitter fitted into a gun case, do to size constraints and safety it can only shoot about four times when fully charged."
+	cost = 5 //Low ammo, and deals same as 10mm but emp-able
+	item = /obj/item/gun/energy/emitter
+	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
