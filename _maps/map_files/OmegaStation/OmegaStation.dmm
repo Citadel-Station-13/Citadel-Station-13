@@ -16170,11 +16170,13 @@
 "aCs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aCw" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aCz" = (
@@ -37660,6 +37662,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "gcw" = (
@@ -37965,6 +37968,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "hTn" = (
@@ -38412,6 +38416,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/miner/toxins,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "kiw" = (
