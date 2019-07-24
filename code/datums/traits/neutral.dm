@@ -122,7 +122,7 @@
 
 /datum/quirk/exhibitionism
 	name = "Exhibitionism"
-	desc = "You don't mind showing off your bare body to strangers, in fact you find it quite satistying. Not the best excuse to break Space Law anyway." //as if they'd care anyway.
+	desc = "You don't mind showing off your bare body to strangers, in fact you find it quite satistying."
 	value = 0
 	medical_record_text = "Patient has been diagnosed with exhibitionistic disorder."
 	mob_trait = TRAIT_EXHIBITIONIST
