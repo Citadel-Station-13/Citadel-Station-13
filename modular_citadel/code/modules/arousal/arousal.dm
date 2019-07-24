@@ -182,13 +182,13 @@
 				to_chat(src, "<span class='notice'>You aren't aroused enough for that.</span>")
 
 /obj/item/organ/genital/proc/climaxable(mob/living/carbon/human/H, silent = FALSE) //returns the fluid source (ergo reagents holder) if found.
-	if(producing)
+	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 		. = reagents
 	else
 		if(linked_organ)
 			. = linked_organ.reagents
-		else if(!silent)
-			to_chat(H, "<span class='warning'>Your [name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+	if(!. && !silent)
+		to_chat(H, "<span class='warning'>Your [name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
 
 /mob/living/carbon/human/proc/do_climax(datum/reagents/R, atom/target, obj/item/organ/genital/G, spill = TRUE)
 	if(!G)
@@ -273,7 +273,7 @@
 	var/list/worn_stuff = get_equipped_items()
 
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(G.can_masturbate_with && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
+		if(CHECK_BITFIELD(G.genital_flags, CAN_MASTURBATE_WITH) && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
 			if(CHECK_BITFIELD(G.genital_flags, MASTURBATE_LINKED_ORGAN) && !G.linked_organ)
 				continue
 			genitals_list += G
@@ -287,7 +287,7 @@
 	var/list/worn_stuff = get_equipped_items()
 
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(G.can_climax && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
+		if(CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH) && G.is_exposed(worn_stuff)) //filter out what you can't masturbate with
 			genitals_list += G
 	if(genitals_list.len)
 		var/obj/item/organ/genital/ret_organ = input(src, "with what?", "Climax", null)  as null|obj in genitals_list
@@ -352,7 +352,7 @@
 			return
 		if(forced_climax) //Something forced us to cum, this is not a masturbation thing and does not progress to the other checks
 			for(var/obj/item/organ/genital/G in internal_organs)
-				if(!G.can_climax) //Skip things like wombs and testicles
+				if(!CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH)) //Skip things like wombs and testicles
 					continue
 				var/mob/living/partner
 				var/check_target

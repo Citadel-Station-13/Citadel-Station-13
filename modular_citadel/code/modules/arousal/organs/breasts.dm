@@ -7,13 +7,10 @@
 	slot = ORGAN_SLOT_BREASTS
 	size = BREASTS_SIZE_DEF
 	fluid_id = "milk"
-	var/amount = 2
-	producing = TRUE
 	shape = "pair"
-	can_masturbate_with = TRUE
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION
 	masturbation_verb = "massage"
 	orgasm_verb = "leaking"
-	can_climax = TRUE
 	fluid_transfer_factor = 0.5
 
 /obj/item/organ/genital/breasts/update_appearance()
@@ -32,7 +29,7 @@
 		desc += " You estimate that they're [uppertext(size)]-cups."
 	else
 		desc += " You wouldn't measure them in cup sizes."
-	if(producing && aroused_state)
+	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION) && aroused_state)
 		desc += " They're leaking [fluid_id]."
 	var/string
 	if(owner)

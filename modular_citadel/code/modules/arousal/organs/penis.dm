@@ -5,9 +5,8 @@
 	icon = 'modular_citadel/icons/obj/genitals/penis.dmi'
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_PENIS
-	can_masturbate_with = TRUE
 	masturbation_verb = "stroke"
-	can_climax = TRUE
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
 	fluid_transfer_factor = 0.5
 	size = 2 //arbitrary value derived from length and girth for sprites.
 	layer_index = PENIS_LAYER_INDEX

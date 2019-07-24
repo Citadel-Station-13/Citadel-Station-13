@@ -5,7 +5,6 @@
 	icon_state = "womb"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_WOMB
-	internal = TRUE
+	genital_flags = GENITAL_INTERNAL|GENITAL_FUID_PRODUCTION
 	fluid_id = "femcum"
-	producing = TRUE
 	linked_organ_slot = ORGAN_SLOT_VAGINA

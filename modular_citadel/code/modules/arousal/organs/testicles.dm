@@ -7,13 +7,11 @@
 	slot = ORGAN_SLOT_TESTICLES
 	size = BALLS_SIZE_MIN
 	linked_organ_slot = ORGAN_SLOT_PENIS
-	genital_flags = MASTURBATE_LINKED_ORGAN
+	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
 	var/size_name = "average"
 	shape = "single"
 	var/sack_size = BALLS_SACK_SIZE_DEF
 	fluid_id = "semen"
-	producing = TRUE
-	can_masturbate_with = TRUE
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
 	var/size_linked = FALSE
@@ -77,9 +75,7 @@
 	sack_size = D.features["balls_sack_size"]
 	shape = D.features["balls_shape"]
 	if(D.features["balls_shape"] == "Hidden")
-		internal = TRUE
-	else
-		internal = FALSE
+		ENABLE_BITFIELD(genital_flags, GENITAL_INTERNAL)
 	fluid_id = D.features["balls_fluid"]
 	fluid_rate = D.features["balls_cum_rate"]
 	fluid_mult = D.features["balls_cum_mult"]

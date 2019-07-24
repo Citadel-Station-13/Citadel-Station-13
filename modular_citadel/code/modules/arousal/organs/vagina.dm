@@ -6,9 +6,8 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = "vagina"
 	size = 1 //There is only 1 size right now
-	can_masturbate_with = TRUE
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
 	masturbation_verb = "finger"
-	can_climax = TRUE
 	fluid_transfer_factor = 0.1 //Yes, some amount is exposed to you, go get your AIDS
 	layer_index = VAGINA_LAYER_INDEX
 	var/cap_length = 8//D   E   P   T   H (cap = capacity)

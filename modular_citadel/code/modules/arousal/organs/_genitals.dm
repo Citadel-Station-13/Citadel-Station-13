@@ -3,11 +3,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/shape = "human"
 	var/sensitivity = AROUSAL_START_VALUE
-	var/genital_flags
-	var/can_masturbate_with = FALSE
+	var/genital_flags //see citadel_defines.dm
 	var/masturbation_verb = "masturbate"
 	var/orgasm_verb = "cumming" //present continous
-	var/can_climax = FALSE
 	var/fluid_transfer_factor = 0 //How much would a partner get in them if they climax using this?
 	var/size = 2 //can vary between num or text, just used in icon_state strings
 	var/fluid_id = null
@@ -15,21 +13,17 @@
 	var/fluid_efficiency = 1
 	var/fluid_rate = 1
 	var/fluid_mult = 1
-	var/producing = FALSE
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //only one of the two organs needs this to be set up. update_link() will handle linking the rest.
-	var/through_clothes = FALSE
-	var/internal = FALSE
-	var/hidden = FALSE
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 
 /obj/item/organ/genital/Initialize()
 	. = ..()
 	if(fluid_id)
 		create_reagents(fluid_max_volume)
-		if(producing)
+		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 			reagents.add_reagent(fluid_id, fluid_max_volume)
 	update()
 
@@ -53,9 +47,9 @@
 	var/list/exposed_genitals = list() //Keeping track of them so we don't have to iterate through every genitalia and see if exposed
 
 /obj/item/organ/genital/proc/is_exposed()
-	if(!owner || hidden || internal)
+	if(!owner || CHECK_BITFIELD(genital_flags, GENITAL_INTERNAL|GENITAL_HIDDEN))
 		return FALSE
-	if(through_clothes)
+	if(CHECK_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES))
 		return TRUE
 
 	switch(zone) //update as more genitals are added
@@ -69,18 +63,18 @@
 /obj/item/organ/genital/proc/toggle_visibility(visibility)
 	switch(visibility)
 		if("Always visible")
-			through_clothes = TRUE
-			hidden = FALSE
+			ENABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
+			DISABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
 			if(!(src in owner.exposed_genitals))
 				owner.exposed_genitals += src
 		if("Hidden by clothes")
-			through_clothes = FALSE
-			hidden = TRUE
+			DISABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
+			DISABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
 			if(src in owner.exposed_genitals)
 				owner.exposed_genitals -= src
 		if("Always hidden")
-			through_clothes = FALSE
-			hidden = TRUE
+			DISABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
+			ENABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
 			if(src in owner.exposed_genitals)
 				owner.exposed_genitals -= src
 
@@ -97,7 +91,7 @@
 	for(var/obj/item/organ/O in internal_organs)
 		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
-			if(!G.internal)
+			if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
 				genital_list += G
 	if(!genital_list.len) //There is nothing to expose
 		return
@@ -121,7 +115,7 @@
 	if(!reagents || !owner)
 		return
 	reagents.maximum_volume = fluid_max_volume
-	if(fluid_id && producing)
+	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 		generate_fluid()
 
 /obj/item/organ/genital/proc/generate_fluid()
@@ -235,8 +229,6 @@
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/genital/G in H.internal_organs)
-		if(G.hidden)
-			return	//we're gunna just hijack this for updates.
 		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 			LAZYADD(genitals_to_add[G.layer_index], G)
 	//Now we added all genitals that aren't internal and should be rendered
