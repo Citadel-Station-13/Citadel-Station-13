@@ -107,6 +107,9 @@
 /datum/language_holder/monkey
 	languages = list(/datum/language/monkey)
 
+/datum/language_holder/mouse
+	languages = list(/datum/language/mouse)
+
 /datum/language_holder/swarmer
 	languages = list(/datum/language/swarmer)
 

@@ -23,6 +23,7 @@
 	var/last_turn = 0
 	var/move_delay = 0
 	var/area			= null
+	var/time_died_as_mouse = null
 
 		///////////////
 		//SOUND STUFF//
