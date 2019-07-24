@@ -269,6 +269,7 @@
 	unwieldsound = 'sound/weapons/neboff.ogg'
 	hitsound = "swing_hit"
 	armour_penetration = 60
+	slowdown = 1
 	light_color = "#37FFF7"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
 	block_chance = 75
@@ -424,6 +425,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	slowdown = 0
 	force_unwielded = 0
 	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
