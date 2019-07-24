@@ -621,7 +621,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/mason
 	name = "M.A.S.O.N RIG"
-	desc = "The Multi-Augmented Severe Operations Networked Resource Integration Gear is an man-portable tank designed for extreme environmental situations. It is excessively bulky, but rated for all but the most atomic of hazards. The specialized armor is surprisingly weak to conventional weaponry. The exo slot can attach most storge bags on to the suit."
+	desc = "The Multi-Augmented Severe Operations Networked Resource Integration Gear is an man-portable tank designed for extreme environmental situations. It is excessively bulky, but rated for all but the most atomic of hazards. The specialized armor is surprisingly weak to conventional weaponry. The suit has a special anchor point for duffelbags."
 	icon_state = "hardsuit-ancient"
 	item_state = "anc_hardsuit"
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
