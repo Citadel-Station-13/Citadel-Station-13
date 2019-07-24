@@ -28,6 +28,8 @@
 	var/force_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
+	var/slowdown_wielded = 0
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
@@ -55,7 +57,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	return
+	slowdown -= slowdown_wielded
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -85,7 +87,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	return
+	slowdown += slowdown_wielded
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()

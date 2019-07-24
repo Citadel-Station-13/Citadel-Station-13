@@ -263,11 +263,11 @@
 	wieldsound = 'sound/weapons/nebon.ogg'
 	unwieldsound = 'sound/weapons/neboff.ogg'
 	hitsound_on = 'sound/weapons/nebhit.ogg'
+	slowdown_wielded = 1
 	armour_penetration = 60
 	light_color = "#37FFF7"
 	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
-	item_flags = SLOWS_WHILE_IN_HAND
 	spinnable = FALSE
 	total_mass_on = 4
 
@@ -279,14 +279,6 @@
 	if(istype(user))
 		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
 	return TRUE
-
-/obj/item/twohanded/dualsaber/hypereutactic/wield()
-	. = ..()
-	slowdown = 0.5
-
-/obj/item/twohanded/dualsaber/hypereutactic/unwield()
-	. = ..()
-	slowdown = initial(slowdown)
 
 /obj/item/twohanded/dualsaber/hypereutactic/update_icon()
 	var/mutable_appearance/blade_overlay = mutable_appearance('modular_citadel/icons/eutactic/item/hypereutactic.dmi', "hypereutactic_blade")
@@ -355,7 +347,8 @@
 	force_unwielded = 0
 	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
-	total_mass_on = 2.4
+	total_mass_on = TOTAL_MASS_TOY_SWORD
+	slowdown_wielded = 0
 
 /obj/item/twohanded/dualsaber/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE

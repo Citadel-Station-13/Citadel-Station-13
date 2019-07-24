@@ -195,3 +195,4 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
+#define TOTAL_MASS_TOY_SWORD 1.5

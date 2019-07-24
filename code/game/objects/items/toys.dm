@@ -30,7 +30,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
-	total_mass = 1.25
+	total_mass = TOTAL_MASS_TINY_ITEM
 
 
 /*
@@ -223,7 +223,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = FALSE
 	total_mass = 0.4
-	var/total_mass_on = 2
+	var/total_mass_on = TOTAL_MASS_TOY_SWORD
 
 /obj/item/toy/sword/attack_self(mob/user)
 	active = !( active )
@@ -329,13 +329,13 @@
 	force_unwielded = 0
 	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
-	total_mass_on = 2.4
+	total_mass_on = TOTAL_MASS_TOY_SWORD
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+	return FALSE
 
 /obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+	return FALSE
 
 /obj/item/toy/katana
 	name = "replica katana"
