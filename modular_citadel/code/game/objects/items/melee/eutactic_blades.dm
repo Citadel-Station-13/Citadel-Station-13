@@ -153,6 +153,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("poked", "jabbed", "hit")
 	light_color = "#37FFF7"
+	total_mass = 1.5		//It's a toy.
 	var/light_brightness = 3
 	actions_types = list()
 
@@ -423,6 +424,7 @@
 	desc = "A supermassive toy envisioned to cleave the very fabric of space and time itself in twain. Realistic visuals and sounds! Ages 8 and up."
 	force = 0
 	throwforce = 0
+	total_mass = 1.5		//it's a toy.
 	throw_speed = 3
 	throw_range = 5
 	slowdown = 0
