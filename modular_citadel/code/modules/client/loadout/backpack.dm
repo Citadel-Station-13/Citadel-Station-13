@@ -23,11 +23,6 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/plush/lampplushie
 
-/datum/gear/plushrng
-	name = "Random plushie"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/plush/random
-
 /datum/gear/tennis
 	name = "Classic Tennis Ball"
 	category = SLOT_IN_BACKPACK
@@ -84,8 +79,24 @@
 	path = /obj/item/toy/katana
 	cost = 3
 
-//datum/gear/lumeyes
-//	name = "Luminescent eye auto surgeon"
-//	category = SLOT_IN_BACKPACK
-//	path = /obj/item/autosurgeon/gloweyes
-//	cost = 4
+/datum/gear/box
+	name = "Spare box"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/storage/box
+	cost = 2
+
+/datum/gear/crowbar
+	name = "Pocket Crowbar"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/crowbar
+	cost = 2
+
+/datum/gear/tapeplayer
+	name = "Taperecorder"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/taperecorder
+
+/datum/gear/tape
+	name = "Spare cassette tape"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/tape/random

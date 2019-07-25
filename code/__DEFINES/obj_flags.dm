@@ -26,6 +26,7 @@
 #define ABSTRACT				(1<<8) 	// for all things that are technically items but used for various different stuff
 #define IMMUTABLE_SLOW          (1<<9) //When players should not be able to change the slowdown of the item (Speed potions, ect)
 #define SURGICAL_TOOL			(1<<10)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
+#define NO_UNIFORM_REQUIRED		(1<<11) // Can be worn on certain slots (currently belt and id) that would otherwise require an uniform.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
