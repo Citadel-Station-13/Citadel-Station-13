@@ -172,15 +172,11 @@ proc/get_top_level_mob(var/mob/S)
 	user.log_message(message, INDIVIDUAL_EMOTE_LOG)
 	message = "<b>[user]</b> " + "<i>[message]</i>"
 
-	for(var/mob/M)
-		if(M in list(/mob/living))
-			M.show_message(message)
-
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(message=message,hearing_distance=1)
+		user.audible_message(message=message,hearing_distance=1, noghosts = TRUE)
 	else
-		user.visible_message(message=message,self_message=message,vision_distance=1)
-	log_emote("[key_name(user)] : [message]")
+		user.visible_message(message=message,self_message=message,vision_distance=1, noghosts = TRUE)
+	log_emote("[key_name(user)] : (SUBTLER) [message]")
 
 	message = null
 
