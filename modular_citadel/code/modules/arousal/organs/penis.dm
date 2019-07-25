@@ -22,11 +22,11 @@
 		return
 	var/new_size
 	switch(length)
-		if(-INFINITY to 5)
+		if(-INFINITY to 6)
 			new_size = 1
-		if(5 to 9)
+		if(6 to 12)
 			new_size = 2
-		if(15 to INFINITY)
+		if(12 to INFINITY)
 			new_size = 3 //no new sprites for anything larger yet.
 	girth = (length * girth_ratio)
 	cached_length = length

@@ -9,7 +9,7 @@
 	linked_organ_slot = ORGAN_SLOT_PENIS
 	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
 	var/size_name = "average"
-	shape = "single"
+	shape = "Single"
 	var/sack_size = BALLS_SACK_SIZE_DEF
 	fluid_id = "semen"
 	masturbation_verb = "massage"
@@ -20,19 +20,15 @@
 	if(!linked_organ && !update_link())
 		return FALSE
 	. = ..()
-	if(.)
-		send_full_message()
+	if(. && reagents.holder_full())
+		to_chat(owner, "Your balls finally feel full, again.")
 
 /obj/item/organ/genital/testicles/update_link(removing = FALSE)
 	. = ..()
 	if(. && !size_linked)
 		size = linked_organ.size
+		update()
 		size_linked = TRUE
-
-/obj/item/organ/genital/testicles/proc/send_full_message(msg = "Your balls finally feel full, again.")
-	if(owner && istext(msg))
-		to_chat(owner, msg)
-		return TRUE
 
 /obj/item/organ/genital/testicles/update_size(new_size)
 	if(new_size)
@@ -71,7 +67,6 @@
 		color = "#[skintone2hex(H.skin_tone)]"
 	else
 		color = "#[D.features["balls_color"]]"
-	size = D.features["balls_size"]
 	sack_size = D.features["balls_sack_size"]
 	shape = D.features["balls_shape"]
 	if(D.features["balls_shape"] == "Hidden")

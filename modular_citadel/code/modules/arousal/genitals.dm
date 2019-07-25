@@ -47,7 +47,7 @@
 	var/list/exposed_genitals = list() //Keeping track of them so we don't have to iterate through every genitalia and see if exposed
 
 /obj/item/organ/genital/proc/is_exposed()
-	if(!owner || CHECK_BITFIELD(genital_flags, GENITAL_INTERNAL|GENITAL_HIDDEN))
+	if(!owner || CHECK_BITFIELD(genital_flags, GENITAL_INTERNAL) || CHECK_BITFIELD(genital_flags, GENITAL_HIDDEN))
 		return FALSE
 	if(CHECK_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES))
 		return TRUE
@@ -57,8 +57,6 @@
 			return owner.is_chest_exposed()
 		if(BODY_ZONE_PRECISE_GROIN)
 			return owner.is_groin_exposed()
-
-	return FALSE
 
 /obj/item/organ/genital/proc/toggle_visibility(visibility)
 	switch(visibility)
@@ -119,7 +117,7 @@
 		generate_fluid()
 
 /obj/item/organ/genital/proc/generate_fluid()
-	if(owner.stat != DEAD && reagents.total_volume < reagents.maximum_volume)
+	if(reagents.total_volume < reagents.maximum_volume)
 		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
 		reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
 		return TRUE
@@ -137,13 +135,13 @@
 		linked_organ = null
 	return FALSE
 
-/obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/genital/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(.)
 		update()
-		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
+		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update)
 
-/obj/item/organ/genital/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(.)
 		update(TRUE)
@@ -176,12 +174,11 @@
 /mob/living/carbon/human/proc/give_genital(obj/item/organ/genital/G)
 	if(!dna || (NOGENITALS in dna.species.species_traits) || getorganslot(initial(G.slot)))
 		return FALSE
-	G = new
-	if(istype(G, /obj/item/organ/genital)) //badminnery-proofing.
-		G.get_features(src)
+	G = new G
+	G.get_features(src)
 	G.Insert(src)
 
-/obj/item/organ/genital/proc/get_features(datum/dna/D)
+/obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/genitals_layertext(layer)
@@ -217,7 +214,6 @@
 	if(!LAZYLEN(H.internal_organs) || (NOGENITALS in species_traits) || HAS_TRAIT(H, TRAIT_HUSK))
 		return
 
-	var/list/genitals_to_add[GENITAL_LAYER_INDEX_LENGTH]
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/list/standing = list()
 	var/size
@@ -228,15 +224,22 @@
 
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
+
+	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
+	var/list/genitals_to_add
 	for(var/obj/item/organ/genital/G in H.internal_organs)
 		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
-			LAZYADD(genitals_to_add[G.layer_index], G)
+			LAZYADD(gen_index[G.layer_index], G)
+	for(var/L in gen_index)
+		if(L) //skip nulls
+			LAZYADD(genitals_to_add, L)
 	//Now we added all genitals that aren't internal and should be rendered
 
 	//start applying overlays
 	for(var/layer in relevant_layers)
-		var/layertext = flatten_list(genitals_layertext(layer))
-		for(var/obj/item/organ/genital/G in genitals_to_add)
+		var/layertext = genitals_layertext(layer)
+		for(var/A in genitals_to_add)
+			var/obj/item/organ/genital/G = A
 			var/datum/sprite_accessory/S
 			size = G.size
 			aroused_state = G.aroused_state

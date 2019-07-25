@@ -158,18 +158,20 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/proc/is_groin_exposed(var/list/L)
+/mob/living/carbon/proc/is_groin_exposed(list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/obj/item/I in L)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.body_parts_covered & GROIN)
 			return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/is_chest_exposed(var/list/L)
+/mob/living/carbon/proc/is_chest_exposed(list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/obj/item/I in L)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.body_parts_covered & CHEST)
 			return FALSE
 	return TRUE
