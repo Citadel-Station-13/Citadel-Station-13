@@ -908,5 +908,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(host)
 		host.ckey = src.ckey
-		to_chat(host, "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>")
+		to_chat(host, "<span class='info'>You are now a mouse. Try not to get killed and try to stay out of sight.</span>")
 
