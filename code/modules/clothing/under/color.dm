@@ -56,7 +56,7 @@
 
 /obj/item/clothing/under/color/black/ghost/Initialize()
 	. = ..()
-	ADD_TRAIT(src, NODROP, DROPDEL)
+	ADD_TRAIT(src, TRAIT_NODROP, DROPDEL)
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
