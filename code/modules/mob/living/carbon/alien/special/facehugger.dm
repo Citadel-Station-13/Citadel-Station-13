@@ -38,11 +38,13 @@
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
 	item_state = "facehugger_inactive"
+	sterile = 1
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
 	item_state = "facehugger_impregnated"
+	sterile = 1
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
