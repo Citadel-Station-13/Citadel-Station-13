@@ -69,10 +69,8 @@
 				amt_nude++
 		if(amt_nude)
 			var/watchers = 0
-			for(var/mob/living/L in view(world.view, src))
-				if(!istype(L))
-					continue
-				if(L.client && !L.stat && !L.eye_blind && (locate(src) in viewers(world.view, L)))
+			for(var/mob/living/L in view(src))
+				if(L.client && !L.stat && !L.eye_blind && (src in view(L)))
 					watchers++
 			if(watchers)
 				our_loss += (amt_nude * watchers) + S.arousal_gain_rate
