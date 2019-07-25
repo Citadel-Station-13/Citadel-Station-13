@@ -33,7 +33,7 @@
 		C.adjustBruteLoss(-5)
 		C.adjustFireLoss(-5)
 		C.adjustOxyLoss(-5)
-		C.adjustToxLoss(-5)
+		C.adjustToxLoss(-5, forced = TRUE)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
 		if(namedatum)
 			H.color = namedatum.colour
