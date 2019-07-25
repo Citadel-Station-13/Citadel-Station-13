@@ -86,6 +86,14 @@
 	toolspeed = 0.5
 	random_color = FALSE
 
+/obj/item/screwdriver/bronze
+	name = "bronze screwdriver"
+	desc = "A screwdriver plated with bronze."
+	icon_state = "screwdriver_brass"
+	item_state = "screwdriver_brass"
+	toolspeed = 0.95
+	random_color = FALSE
+
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."

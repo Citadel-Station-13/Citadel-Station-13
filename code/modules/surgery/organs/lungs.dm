@@ -288,51 +288,52 @@
 		gas_breathed = breath_gases[/datum/gas/stimulum]
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount("stimulum")
-			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
+			H.reagents.add_reagent("stimulum", max(0, 5 - existing))
 		breath_gases[/datum/gas/stimulum]-=gas_breathed
 
 	// Miasma
 		if (breath_gases[/datum/gas/miasma])
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma])
+			if(miasma_pp > MINIMUM_MOLES_DELTA_TO_MOVE)
 
-			//Miasma sickness
-			if(prob(0.5 * miasma_pp))
-				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
-				miasma_disease.name = "Unknown"
-				miasma_disease.try_infect(owner)
+				//Miasma sickness
+				if(prob(0.05 * miasma_pp))
+					var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+					miasma_disease.name = "Unknown"
+					miasma_disease.try_infect(owner)
 
-			// Miasma side effects
-			switch(miasma_pp)
-				if(1 to 5)
-					// At lower pp, give out a little warning
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
-					if(prob(5))
-						to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
-				if(5 to 15)
-					//At somewhat higher pp, warning becomes more obvious
-					if(prob(15))
-						to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
-				if(15 to 30)
-					//Small chance to vomit. By now, people have internals on anyway
-					if(prob(5))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
-				if(30 to INFINITY)
-					//Higher chance to vomit. Let the horror start
-					if(prob(15))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
-				else
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				// Miasma side effects
+				switch(miasma_pp)
+					if(1 to 5)
+						// At lower pp, give out a little warning
+						SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+						if(prob(5))
+							to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+					if(5 to 15)
+						//At somewhat higher pp, warning becomes more obvious
+						if(prob(15))
+							to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+							SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+					if(15 to 30)
+						//Small chance to vomit. By now, people have internals on anyway
+						if(prob(5))
+							to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+							SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+							owner.vomit()
+					if(30 to INFINITY)
+						//Higher chance to vomit. Let the horror start
+						if(prob(15))
+							to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+							SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+							owner.vomit()
+					else
+						SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
-			// Then again, this is a purely hypothetical scenario and hardly reachable
-			owner.adjust_disgust(0.1 * miasma_pp)
+				// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
+				// Then again, this is a purely hypothetical scenario and hardly reachable
+				owner.adjust_disgust(0.1 * miasma_pp)
 
-			breath_gases[/datum/gas/miasma]-=gas_breathed
+				breath_gases[/datum/gas/miasma]-=gas_breathed
 
 		// Clear out moods when no miasma at all
 		else
@@ -442,3 +443,14 @@
 	heat_level_1_threshold = 400 // better adapted for heat, obv. Lavaland standard is 300
 	heat_level_2_threshold = 600 // up 200 from level 1, 1000 is silly but w/e for level 3
 
+/obj/item/organ/lungs/slime
+	name = "vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses."
+
+	safe_toxins_max = 0 //We breathe this to gain POWER.
+
+/obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
+	. = ..()
+	if (breath.gases[/datum/gas/plasma])
+		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma])
+		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
