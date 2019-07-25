@@ -6,7 +6,7 @@
 	exclaim_verb = "squicks"
 	key = "p"
 	space_chance = 100
-	syllables = list("squeak", "squirk", "eep", "eek", "squick", "ee")
-	default_priority = 80
+	syllables = list("squeak", "squeek", "squirk", "eep", "eek", "squick", "ee")
+	default_priority = 120
 
 	icon_state = "cheese"

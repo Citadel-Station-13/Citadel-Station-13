@@ -4,9 +4,7 @@
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
-	speak = list("Squeak!","SQUEAK!","Squeak?")
-	speak_emote = list("squeaks")
-	emote_hear = list("squeaks.")
+	speak = list("Cheese!","Got any food?","Hello.","Hey.","Don't eat me.","Yo.")
 	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
@@ -25,6 +23,7 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	initial_language_holder = /datum/language_holder/mouse
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()

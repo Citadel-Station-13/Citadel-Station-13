@@ -108,7 +108,8 @@
 	languages = list(/datum/language/monkey)
 
 /datum/language_holder/mouse
-	languages = list(/datum/language/mouse)
+	languages = list(/datum/language/common, /datum/language/mouse)
+	only_speaks_language = /datum/language/mouse
 
 /datum/language_holder/swarmer
 	languages = list(/datum/language/swarmer)
