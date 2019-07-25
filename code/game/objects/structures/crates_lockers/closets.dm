@@ -34,6 +34,8 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
+	var/obj/structure/closet/eigen_target //Where you go to.
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -148,7 +150,12 @@
 	if(contents.len >= storage_capacity)
 		return -1
 	if(insertion_allowed(AM))
-		AM.forceMove(src)
+		if(eigen_teleport) // For teleporting people with linked lockers.
+			do_teleport(AM, get_turf(eigen_target), 0)
+			if(eigen_target.opened == FALSE)
+				eigen_target.open()
+		else
+			AM.forceMove(src)
 		return TRUE
 	else
 		return FALSE
