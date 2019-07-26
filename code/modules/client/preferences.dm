@@ -29,7 +29,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = null
+	var/ooccolor = "#c43b23"
+	var/aooccolor = "#ce254f"
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
@@ -77,6 +78,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/socks = "Nude"					//socks type
 	var/socks_color = "#FFFFFF"
 	var/backbag = DBACKPACK				//backpack type
+	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -686,6 +688,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(UNDIE_COLORABLE(GLOB.socks_list[socks]))
 				dat += "<b>Socks Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks_color;task=input'>[socks_color]</a>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
+			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
 			dat += "</td>"
 
@@ -774,6 +777,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					dat += "<b>Antag OOC Color:</b> <span style='border: 1px solid #161616; background-color: [aooccolor ? aooccolor : GLOB.normal_aooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=aooccolor;task=input'>Change</a><br>"
+
 			dat += "</td>"
 			if(user.client.holder)
 				dat +="<td width='300px' height='300px' valign='top'>"
@@ -1420,6 +1425,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					skin_tone = random_skin_tone()
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
+				if("suit")
+					jumpsuit_style = pick(GLOB.jumpsuitlist)
 				if("all")
 					random_character()
 
@@ -1951,10 +1958,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_ooccolor)
 						ooccolor = new_ooccolor
 
+				if("aooccolor")
+					var/new_aooccolor = input(user, "Choose your Antag OOC colour:", "Game Preference",ooccolor) as color|null
+					if(new_aooccolor)
+						aooccolor = new_aooccolor
+
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in GLOB.backbaglist
 					if(new_backbag)
 						backbag = new_backbag
+
+				if("suit")
+					if(jumpsuit_style == PREF_SUIT)
+						jumpsuit_style = PREF_SKIRT
+					else
+						jumpsuit_style = PREF_SUIT
+
 
 				if("uplink_loc")
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
@@ -2276,6 +2295,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 	character.backbag = backbag
+	character.jumpsuit_style = jumpsuit_style
 
 	var/datum/species/chosen_species
 	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))

@@ -46,9 +46,9 @@
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
 	RegisterSignal(parent, COMSIG_NANITE_SCAN, .proc/nanite_scan)
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 
 	if(isliving(parent))
-		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
 		RegisterSignal(parent, COMSIG_MOB_ALLOWED, .proc/check_access)
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
@@ -169,23 +169,19 @@
 	holder.icon_state = "nanites[nanite_percent]"
 
 /datum/component/nanites/proc/on_emp(datum/source, severity)
-	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
-	adjust_nanites(null, -(rand(5, 50)))		//Lose 5-50 flat nanite volume
-	if(prob(40/severity))
-		cloud_id = 0
+	adjust_nanites(null, -(nanite_volume * 0.3 + 50))		//Lose 30% variable and 50 flat nanite volume.
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
 
 /datum/component/nanites/proc/on_shock(datum/source, shock_damage)
-	nanite_volume *= (rand(0.45, 0.80))		//Lose 20-55% of nanites
-	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
+	adjust_nanites(null, -(nanite_volume * (shock_damage * 0.005) + shock_damage)) //0.5% of shock damage (@ 50 damage it'd drain 25%) + shock damage flat volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
-	adjust_nanites(null, -(rand(5, 15)))			//Lose 5-15 flat nanite volume
+	adjust_nanites(null, -25)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()

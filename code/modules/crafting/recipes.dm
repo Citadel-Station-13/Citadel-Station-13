@@ -68,7 +68,7 @@
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/reagent_containers/glass/rag = 1,
+	reqs = list(/obj/item/reagent_containers/rag = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
 	time = 40
