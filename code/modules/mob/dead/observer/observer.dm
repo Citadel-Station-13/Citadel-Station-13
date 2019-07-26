@@ -874,31 +874,36 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var mouse_respawn_time = 5
 
 	if(GLOB.disable_player_mice)
-		src << "<span class='warning'>Spawning as a mouse is currently disabled.</span>"
+		to_chat(src, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
 		return
 
 	var/area/T = get_area(src)
 	if(T.noteleport)
-		src << "<span class='warning'>You may not spawn as a mouse on this Z-level.</span>"
+		to_chat(src, "<span class='warning'>You may not spawn as a mouse on this Z-level.</span>")
+		return
+
+	if(!src.can_reenter_round)
+		to_chat(src, "<span class='warning'>You are unable to reenter the round.</span>")
 		return
 
 	var/timedifference = world.time - client.time_died_as_mouse
 	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
 		var/timedifference_text
 		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
-		src << "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		to_chat(src, "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
-	if(response != "Squeek!") return  //Hit the wrong key...again.
+	var/response = alert(src, "Are you -sure- you want to become a mouse? You will NOT be able to re-enter your body or be revived!","Are you sure you want to squeek?","Squeek!","Nope!")
+	if(response != "Squeek!") 
+		return  //Hit the wrong key...again.
 
 
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
 	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_found
 	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in world)
-		if(!v.welded && v.z == src.z)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in GLOB.machines)
+		if(!v.welded && v.z == z)
 			found_vents.Add(v)
 	if(found_vents.len)
 		vent_found = pick(found_vents)
@@ -907,6 +912,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>Unable to find any unwelded vents to spawn mice at.</span>")
 
 	if(host)
-		host.ckey = src.ckey
+		host.ckey = ckey
 		to_chat(host, "<span class='info'>You are now a mouse. Try not to get killed and try to stay out of sight.</span>")
 
