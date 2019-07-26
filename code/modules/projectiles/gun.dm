@@ -32,9 +32,10 @@
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
-	var/weapon_weight = WEAPON_LIGHT
+	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/inaccuracy_modifier = 1
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -538,3 +539,13 @@
 	if(A == chambered)
 		chambered = null
 		update_icon()
+
+/obj/item/gun/proc/getinaccuracy(mob/living/user)
+	if(!iscarbon(user))
+		return FALSE
+	else
+		var/mob/living/carbon/holdingdude = user
+		if(istype(holdingdude) && holdingdude.combatmode)
+			return (max((holdingdude.lastdirchange + weapon_weight * 25) - world.time,0) * inaccuracy_modifier)
+		else
+			return ((weapon_weight * 25) * inaccuracy_modifier)

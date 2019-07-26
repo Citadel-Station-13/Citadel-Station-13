@@ -38,8 +38,11 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
 
-/datum/gas_mixture/turf/heat_capacity()
-	. = ..()
+/datum/gas_mixture/turf/heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
+	var/list/cached_gases = gases
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	for(var/id in cached_gases)
+		. += cached_gases[id] * cached_gasheats[id]
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
@@ -331,22 +334,19 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
-	if(!cached_gases.len)
+	if(!length(cached_gases))
 		return
-	var/possible
+	var/list/reactions = list()
 	for(var/I in cached_gases)
-		if(GLOB.nonreactive_gases[I])
-			continue
-		possible = TRUE
-		break
-	if(!possible)
+		reactions += SSair.gas_reactions[I]
+	if(!length(reactions))
 		return
 	reaction_results = new
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
 	reaction_loop:
-		for(var/r in SSair.gas_reactions)
+		for(var/r in reactions)
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
@@ -376,14 +376,11 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
-
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)
 		GAS_GARBAGE_COLLECT(gases)
-		if(temperature < TCMB) //just for safety
-			temperature = TCMB
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
