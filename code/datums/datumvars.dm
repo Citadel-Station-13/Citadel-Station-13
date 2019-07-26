@@ -1351,8 +1351,8 @@
 
 			if(amount != 0)
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
-				message_admins(msg)
+				var/msg = "[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
+				message_admins("<span class='notice'>[msg]</span>")
 				admin_ticket_log(L, msg)
 				vv_update_display(L, Text, "[newamt]")
 		else if(href_list["copyoutfit"])

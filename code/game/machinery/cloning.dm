@@ -6,7 +6,7 @@
 #define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
-#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
+#define SPEAK(message) radio.talk_into(src, message, radio_channel)
 
 /obj/machinery/clonepod
 	name = "cloning pod"
@@ -163,15 +163,8 @@
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
-	if(efficiency > 2)
-		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
-	if(efficiency > 5 && prob(20))
-		H.randmutvg()
-	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
-		if(ismob(M))
-			H = M
+	if(prob(50 - efficiency*10)) //Chance to give a bad mutation.
+		H.randmutb() //100% bad mutation. Can be cured with mutadone.
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H

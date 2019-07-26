@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Normal mops now only use 2 stamina to mop a tile, nerfed from their previous value of 5 stamina per tile mopped."
+  - balance: "Advanced mops now only use 1 stamina to mop turfs, from their former value of 2 stam."

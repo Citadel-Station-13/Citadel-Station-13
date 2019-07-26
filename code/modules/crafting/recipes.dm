@@ -68,7 +68,7 @@
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/reagent_containers/glass/rag = 1,
+	reqs = list(/obj/item/reagent_containers/rag = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
 	time = 40
@@ -787,6 +787,56 @@
 				/obj/item/stack/cable_coil = 10,
 				/obj/item/stack/sheet/mineral/gold = 1,
 				/obj/item/stock_parts/cell = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC
+
+/datum/crafting_recipe/bronze_driver
+	name = "Bronze Plated Screwdriver"
+	result = /obj/item/screwdriver/bronze
+	reqs = list(/obj/item/screwdriver = 1,
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/tile/bronze = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC
+
+/datum/crafting_recipe/bronze_welder
+	name = "Bronze Plated Welding Tool"
+	result = /obj/item/weldingtool/bronze
+	reqs = list(/obj/item/weldingtool = 1,
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/tile/bronze = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC
+
+/datum/crafting_recipe/bronze_wirecutters
+	name = "Bronze Plated Wirecutters"
+	result = /obj/item/wirecutters/bronze
+	reqs = list(/obj/item/wirecutters = 1,
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/tile/bronze = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC
+
+/datum/crafting_recipe/bronze_crowbar
+	name = "Bronze Plated Crowbar"
+	result = /obj/item/crowbar/bronze
+	reqs = list(/obj/item/crowbar = 1,
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/tile/bronze = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC
+
+/datum/crafting_recipe/bronze_wrench
+	name = "Bronze Plated Wrench"
+	result = /obj/item/wrench/bronze
+	reqs = list(/obj/item/wrench = 1,
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/tile/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	category = CAT_MISC
