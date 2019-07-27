@@ -1,4 +1,3 @@
-
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -13,3 +12,11 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+
+/obj/item/clothing/shoes/space_ninja/equipped(mob/user, slot)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_SILENT_STEP, "ninja_shoes_[REF(src)]")
+
+/obj/item/clothing/shoes/space_ninja/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SILENT_STEP, "ninja_shoes_[REF(src)]")
