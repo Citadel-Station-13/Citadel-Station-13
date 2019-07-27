@@ -15,7 +15,8 @@
 
 /obj/item/clothing/shoes/space_ninja/equipped(mob/user, slot)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_SILENT_STEP, "ninja_shoes_[REF(src)]")
+	if(slot == SLOT_SHOES)
+		ADD_TRAIT(user, TRAIT_SILENT_STEP, "ninja_shoes_[REF(src)]")
 
 /obj/item/clothing/shoes/space_ninja/dropped(mob/user)
 	. = ..()
