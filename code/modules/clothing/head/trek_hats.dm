@@ -11,7 +11,6 @@
 	desc = "An officer's cap that demands discipline from the one who wears it."
 	icon_state = "fedcapofficer"
 	item_state = "fedcapofficer"
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 0, "fire" = 10, "acid" = 0)
 
 /obj/item/clothing/head/trek/medsci
 	icon_state = "fedcapsci"
@@ -24,6 +23,8 @@
 /obj/item/clothing/head/trek/sec
 	icon_state = "fedcapsec"
 	item_state = "fedcapsec"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 0, "fire" = 10, "acid" = 0)
+
 
 /obj/item/clothing/head/trek/black
 	icon_state = "fedcapblack"

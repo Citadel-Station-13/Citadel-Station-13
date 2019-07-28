@@ -7,7 +7,6 @@
 // I made the Voy and DS9 stuff tho. - Poojy
 
 /obj/item/clothing/suit/trek
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
 	allowed = list(
 		/obj/item/flashlight, /obj/item/analyzer,
 		/obj/item/radio, /obj/item/tank/internals/emergency_oxygen,
@@ -66,8 +65,8 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
+	if(!usr.incapacitated())
+		return FALSE
 
 	switch(unbuttoned)
 		if(0)
@@ -84,16 +83,18 @@
 
 	//Variants
 /obj/item/clothing/suit/trek/fedcoat/medsci
-		icon_state = "fedblue"
-		item_state = "fedblue"
+	icon_state = "fedblue"
+	item_state = "fedblue"
 
 /obj/item/clothing/suit/trek/fedcoat/eng
-		icon_state = "fedeng"
-		item_state = "fedeng"
+	icon_state = "fedeng"
+	item_state = "fedeng"
 
 /obj/item/clothing/suit/trek/fedcoat/capt
-		icon_state = "fedcapt"
-		item_state = "fedcapt"
+	icon_state = "fedcapt"
+	item_state = "fedcapt"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
+
 
 //"modern" ones for fancy
 
@@ -115,3 +116,5 @@
 /obj/item/clothing/suit/trek/modernfedcoat/sec
 	icon_state = "fedmodernsec"
 	item_state = "fedmodernsec"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
+
