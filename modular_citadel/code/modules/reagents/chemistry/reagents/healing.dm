@@ -7,7 +7,7 @@
 	pH = 8.6
 	overdose_threshold = 35
 	ImpureChem 			= "yamerol_tox"
-	InverseChemVal 		= 0.3
+	InverseChemVal 		= 0.4
 	InverseChem 		= "yamerol_tox"
 	can_synth = TRUE
 
@@ -76,7 +76,7 @@
 		T.adjustTongueLoss(C, 1)
 	if(L)
 		L.adjustLungLoss(4, C)
-		C.adjustOxyLoss(2)
+		C.adjustOxyLoss(3)
 	else
 		C.adjustOxyLoss(10)
 	..()

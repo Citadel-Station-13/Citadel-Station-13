@@ -137,15 +137,6 @@ SLIME SCANNER
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
-		var/obj/item/organ/liver/L = M.getorganslot("liver")
-		if(L.swelling > 20)
-			to_chat(user, "<span class='danger'>Subject is suffering from an enlarged liver.</span>") //i.e. shrink their liver or give them a transplant.
-		var/obj/item/organ/tongue/T = M.getorganslot("tongue")
-		if(!T || T.damage > 40)
-			to_chat(user, "<span class='danger'>Subject is suffering from necrotic tissue on their tongue./span>") //i.e. their tongue is shot
-		var/obj/item/organ/lungs/Lung = M.getorganslot("lungs")
-		if(Lung.damage > 150)
-			to_chat(user, "<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>") //i.e. Their lungs are shot
 
 	var/msg = "<span class='info'>*---------*\nAnalyzing results for [M]:\n\tOverall status: [mob_status]\n"
 
@@ -173,6 +164,26 @@ SLIME SCANNER
 	else if (M.getBrainLoss() >= 45)
 		msg += "\t<span class='alert'>Brain damage detected.</span>\n"
 	if(iscarbon(M))
+		var/obj/item/organ/liver/L = M.getorganslot("liver")
+		if(L)
+			if(L.swelling > 20)
+				msg += "\t<span class='danger'>Subject is suffering from an enlarged liver.</span>\n" //i.e. shrink their liver or give them a transplant.
+		var/obj/item/organ/tongue/T = M.getorganslot("tongue")
+		if(!T || T.damage > 40)
+			msg += "\t<span class='danger'>Subject is suffering from severe burn tissue on their tongue.</span>\n" //i.e. their tongue is shot
+		var/obj/item/organ/lungs/Lung = M.getorganslot("lungs")
+		if(L)
+			if(Lung.damage > 150)
+				msg += "\t<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>\n" //i.e. Their lungs are shot
+		var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+		if(P)
+			if(P.length>20)
+				msg += "\t<span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>\n"
+		var/obj/item/organ/genital/breasts/Br = M.getorganslot("breasts")
+		if(Br)
+			if(Br.cached_size>5)
+				msg += "\t<span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>\n"
+
 		var/mob/living/carbon/C = M
 		if(LAZYLEN(C.get_traumas()))
 			var/list/trauma_text = list()
@@ -267,6 +278,7 @@ SLIME SCANNER
 			msg += "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>\n"
 			for(var/obj/item/bodypart/org in damaged)
 				msg += "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]\n"
+
 
 	// Species and body temperature
 	if(ishuman(M))

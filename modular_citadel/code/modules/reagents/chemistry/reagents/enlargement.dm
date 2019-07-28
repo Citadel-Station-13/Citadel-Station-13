@@ -71,8 +71,12 @@
 		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
 		if(HAS_TRAIT(M, TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling+= 0.05
-			return..()
+			if(L)
+				L.swelling+= 0.05
+				return..()
+			else
+				M.adjustToxLoss(1)
+				return..()
 
 		//otherwise proceed as normal
 		var/obj/item/organ/genital/breasts/nB = new
@@ -245,8 +249,12 @@
 		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
 		if(HAS_TRAIT(M, TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling+= 0.05
-			return..()
+			if(L)
+				L.swelling+= 0.05
+				return..()
+			else
+				M.adjustToxLoss(1)
+				return..()
 
 		//otherwise proceed as normal
 		var/obj/item/organ/genital/penis/nP = new

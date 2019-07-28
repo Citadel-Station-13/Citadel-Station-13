@@ -119,6 +119,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			M.alpha--
 			antiGenetics--
 			ADD_TRAIT(M, TRAIT_NOCLONE, "astral") //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
+			M.hellbound = TRUE
 		if(180)
 			to_chat(M, "<span class='notice'>You feel fear build up in yourself as more and more of your body and consciousness begins to fade.</b></span>")
 			M.alpha--
@@ -135,7 +136,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
 			M.alpha--
 			antiGenetics--
-		if(0 to 30)
+		if(-INFINITY to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
 			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag, you do not remember the afterlife IC)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
 			deadchat_broadcast("<span class='warning'>[M] has become one with the universe, meaning that their IC conciousness is continuous in a new life. If they find a way back to life, they are allowed to remember their previous life. Be careful what you say. If they abuse this, bwoink the FUCK outta them.</span>")

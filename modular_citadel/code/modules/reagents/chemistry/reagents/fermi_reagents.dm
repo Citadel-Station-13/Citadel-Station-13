@@ -129,6 +129,19 @@
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
 
+/datum/reagent/fermi/furranium/reaction_mob(mob/living/carbon/human/M, method=INJECT, reac_volume)
+	var/turf/T = get_turf(M)
+	var/obj/item/toy/plush/random/P = new /obj/item/toy/plush/random
+	var/list/seen = viewers(8, T)
+	for(var/mob/S in seen)
+		to_chat(S, "<span class='warning'>A [P] suddenly flies out of [M]!</b></span>")
+	var/T2 = get_random_station_turf()
+	M.adjustBruteLoss(5)
+	M.Knockdown(50)
+	M.Stun(50)
+	P.throw_at(T2, 8, 1)
+	..()
+
 /datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
 
 	switch(current_cycle)

@@ -692,12 +692,8 @@
 		return
 
 	//Make sure things are limited.
-	if (pH > 14)
-		pH = 14
-	else if (pH < 0)
-		pH = 0
-		//some beakers melt at extremes. This proc is called in add_reagent
-
+	pH = CLAMP(pH, 0, 14)
+	
 	//return said amount to compare for next step.
 	return (reactedVol)
 

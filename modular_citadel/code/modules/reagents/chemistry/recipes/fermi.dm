@@ -512,7 +512,7 @@
 	name = "Yamerol"
 	id = "yamerol"
 	results = list("yamerol" = 1.5)
-	required_reagents = list("perfluorodecalin" = 0.5, "furranium" = 0.5, "water" = 0.5)
+	required_reagents = list("perfluorodecalin" = 0.5, "salbutamol" = 0.5, "water" = 0.5)
 	//FermiChem vars:
 	OptimalTempMin 	= 300
 	OptimalTempMax 	= 500
