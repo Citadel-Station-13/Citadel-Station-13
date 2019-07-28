@@ -134,6 +134,7 @@
 	M.adjustOxyLoss(15)
 	M.Knockdown(50)
 	M.Stun(50)
+	M.emote("cough")
 	var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))
 	new P(T)
 	var/list/seen = viewers(8, T)
