@@ -130,7 +130,8 @@
 			L.update_arousal_hud() //Removes the old icon
 
 /datum/mind/proc/store_memory(new_text)
-	memory += "[new_text]<BR>"
+	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
+		memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
 	memory = null
