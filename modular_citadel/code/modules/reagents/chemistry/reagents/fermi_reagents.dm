@@ -131,10 +131,11 @@
 
 /datum/reagent/fermi/furranium/reaction_mob(mob/living/carbon/human/M, method=INJECT, reac_volume)
 	var/turf/T = get_turf(M)
-	var/obj/item/toy/plush/random/P = new /obj/item/toy/plush/random
+	var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))
+	new P(T)
 	var/list/seen = viewers(8, T)
 	for(var/mob/S in seen)
-		to_chat(S, "<span class='warning'>A [P] suddenly flies out of [M]!</b></span>")
+		to_chat(S, "<span class='warning'>[M] suddenly coughs up a [P.name]!</b></span>")
 	var/T2 = get_random_station_turf()
 	M.adjustBruteLoss(5)
 	M.Knockdown(50)
