@@ -204,3 +204,9 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+
+/obj/structure/bed/invisible
+	name = "invisible bed"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
