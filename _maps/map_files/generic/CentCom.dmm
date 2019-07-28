@@ -3730,6 +3730,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"jA" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/item/soap/syndie,
+/turf/open/floor/plasteel/freezer,
+/area/syndicate_mothership)
 "jB" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -4214,6 +4221,14 @@
 /area/syndicate_mothership)
 "ku" = (
 /turf/closed/indestructible/fakeglass,
+/area/syndicate_mothership)
+"kv" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/rag/towel/syndicate,
+/turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
 "kw" = (
 /turf/open/floor/plasteel/yellowsiding,
@@ -8413,10 +8428,6 @@
 	req_access_txt = ""
 	},
 /turf/open/floor/plating,
-/area/syndicate_mothership)
-"tg" = (
-/obj/item/soap/syndie,
-/turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
 "tl" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -17430,12 +17441,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Rl" = (
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel/freezer,
-/area/syndicate_mothership)
 "Rm" = (
 /obj/structure/chair/wood/wings{
 	dir = 3
@@ -37823,8 +37828,8 @@ nx
 mA
 Tz
 ku
-tg
-Rl
+jA
+kv
 uM
 QV
 wp

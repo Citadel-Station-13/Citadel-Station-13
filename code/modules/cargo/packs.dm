@@ -252,6 +252,17 @@
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/emergency/spacejets
+	name = "Spare EVA Jetpacks"
+	desc = "Contains three EVA grade jectpaks. Requires EVA access to open."
+	cost = 2000
+	access = ACCESS_EVA
+	contains = list(/obj/item/tank/jetpack/carbondioxide/eva,
+					/obj/item/tank/jetpack/carbondioxide/eva,
+					/obj/item/tank/jetpack/carbondioxide/eva)
+	crate_name = "eva jetpacks crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
 	desc = "(*!&@#TOO CHEAP FOR THAT NULL_ENTRY, HUH OPERATIVE? WELL, THIS LITTLE ORDER CAN STILL HELP YOU OUT IN A PINCH. CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, AN INCENDIARY GRENADE, AND A \"SLEEPY PEN\" FULL OF NICE TOXINS!#@*$"
@@ -339,15 +350,6 @@
 	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
 
-/datum/supply_pack/security/sechardsuit
-	name = "Sec Hardsuit"
-	desc = "One Sec Hardsuit with a small air tank and mask."
-	cost = 3000 // half of SWAT gear for have the armor and half the gear
-	contains = list(/obj/item/clothing/suit/space/hardsuit/security,
-					/obj/item/tank/internals/air,
-					/obj/item/clothing/mask/gas)
-	crate_name = "sec hardsuit crate"
-
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
 	desc = "Contains three standard-issue brain buckets. Requires Security access to open."
@@ -365,6 +367,55 @@
 					/obj/item/gun/energy/laser,
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
+
+/datum/supply_pack/security/russianclothing
+	name = "Russian Surplus Clothing"
+	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
+	contraband = TRUE
+	cost = 5000 // Its basicly sec suits, good boots/gloves
+	contains = list(/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas)
+	crate_name = "surplus russian clothing"
+	crate_type = /obj/structure/closet/crate/internals
+
+/datum/supply_pack/security/russianmosin
+	name = "Russian Minutemen Gear"
+	desc = "An old russian Minutemen crate, comes with a full russian outfit, a mosin and a stripper clip."
+	contraband = TRUE
+	access = FALSE
+	cost = 5000 //
+	contains = list(/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/mask/gas,
+					/obj/item/gun/ballistic/shotgun/boltaction,
+					/obj/item/ammo_box/a762)
+	crate_name = "surplus russian gear"
+	crate_type = /obj/structure/closet/crate/internals
+
+/datum/supply_pack/security/sechardsuit
+	name = "Sec Hardsuit"
+	desc = "One Sec Hardsuit with a small air tank and mask."
+	cost = 3000 // half of SWAT gear for have the armor and half the gear
+	contains = list(/obj/item/clothing/suit/space/hardsuit/security,
+					/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas)
+	crate_name = "sec hardsuit crate"
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
@@ -429,28 +480,6 @@
 					/obj/item/melee/baton/loaded,
 					/obj/item/melee/baton/loaded)
 	crate_name = "stun baton crate"
-
-/datum/supply_pack/security/russianclothing
-	name = "Russian Surplus Clothing"
-	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
-	contraband = TRUE
-	cost = 5000 // Its basicly sec suits, good boots/gloves
-	contains = list(/obj/item/clothing/suit/security/officer/russian,
-					/obj/item/clothing/suit/security/officer/russian,
-					/obj/item/clothing/shoes/combat,
-					/obj/item/clothing/shoes/combat,
-					/obj/item/clothing/head/ushanka,
-					/obj/item/clothing/head/ushanka,
-					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/head/helmet/alt,
-					/obj/item/clothing/head/helmet/alt,
-					/obj/item/clothing/gloves/combat,
-					/obj/item/clothing/gloves/combat,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas)
-	crate_name = "surplus russian clothing"
-	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
@@ -664,6 +693,15 @@
 	contains = list(/obj/item/gun/energy/e_gun/stun,
 					/obj/item/gun/energy/e_gun/stun)
 	crate_name = "swat taser crate"
+
+/datum/supply_pack/security/armory/woodstock
+	name = "Classic WoodStock Shotguns Crate"
+	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
+	cost = 3500
+	contains = list(/obj/item/gun/ballistic/shotgun,
+					/obj/item/gun/ballistic/shotgun,
+					/obj/item/gun/ballistic/shotgun)
+	crate_name = "woodstock shotguns crate"
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Semi-Auto Rifle Crate"
@@ -2204,6 +2242,17 @@
 					/mob/living/simple_animal/hostile/retaliate/poison/snake)
 	crate_name = "snake crate"
 
+/datum/supply_pack/critter/secbat
+	name = "Security Bat Crate"
+	desc = "Contains five security bats, perfect to Bat-up any security officer."
+	cost = 2500
+	contains = list(/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+					/mob/living/simple_animal/hostile/retaliate/bat/secbat)
+	crate_name = "security bat crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Costumes & Toys /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2775,4 +2824,3 @@
 					/obj/item/toner,
 					/obj/item/toner)
 	crate_name = "toner crate"
-
