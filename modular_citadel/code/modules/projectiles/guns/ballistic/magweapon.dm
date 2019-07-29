@@ -86,7 +86,7 @@
 /obj/item/ammo_box/magazine/mmag/small
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "nlmagmag"
+	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmags
 	caliber = "mags"
 	max_ammo = 15
