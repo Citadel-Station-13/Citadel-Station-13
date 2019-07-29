@@ -102,12 +102,9 @@
 		updateUsrDialog()
 		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
-		if(bottle)
-			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
-			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		bottle = I
+		replace_pillbottle(user, I)
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		updateUsrDialog()
 	else
@@ -131,12 +128,23 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/chem_master/on_deconstruction()
-	replace_beaker(usr)
+/obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
 		bottle.forceMove(drop_location())
-		adjust_item_drop_location(bottle)
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(bottle)
+	if(new_bottle)
+		bottle = new_bottle
+	else
 		bottle = null
+	update_icon()
+	return TRUE
+
+/obj/machinery/chem_master/on_deconstruction()
+	replace_beaker(usr)
+	replace_pillbottle(usr)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -195,11 +203,8 @@
 			. = TRUE
 
 		if("ejectp")
-			if(bottle)
-				bottle.forceMove(drop_location())
-				adjust_item_drop_location(bottle)
-				bottle = null
-				. = TRUE
+			replace_pillbottle(usr)
+			. = TRUE
 
 		if("transferToBuffer")
 			if(beaker)
@@ -247,14 +252,14 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
-				var/target_loc = drop_location()
+				var/target_loc = bottle ? bottle : drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
 					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
-				for(var/i = 0; i < amount; i++)
+				for(var/i in 1 to amount)
 					if(i < drop_threshold)
 						P = new(target_loc)
 					else
