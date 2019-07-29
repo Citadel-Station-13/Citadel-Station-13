@@ -3019,7 +3019,6 @@
 #include "modular_citadel\code\modules\projectiles\bullets\bullets\smg.dm"
 #include "modular_citadel\code\modules\projectiles\guns\pumpenergy.dm"
 #include "modular_citadel\code\modules\projectiles\guns\toys.dm"
-#include "modular_citadel\code\modules\projectiles\guns\ballistic\flechette.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\handguns.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\magweapon.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\magweapon_energy.dm"

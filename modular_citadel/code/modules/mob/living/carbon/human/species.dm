@@ -80,10 +80,21 @@
 		else
 			target.Move(target_shove_turf, shove_dir)
 			if(get_turf(target) == target_oldturf)
-				target_table = locate(/obj/structure/table) in target_shove_turf.contents
-				shove_blocked = TRUE
+				var/thoushallnotpass = FALSE
+				for(var/obj/O in target_shove_turf)
+					if(O.density)
+						shove_blocked = TRUE
+						if(istype(O, /obj/structure/table))
+							target_table = O
+						else
+							thoushallnotpass = TRUE
+				if(thoushallnotpass)
+					target_table = null
 
-		if(shove_blocked && !target.is_shove_knockdown_blocked())
+		if(target.is_shove_knockdown_blocked())
+			return
+
+		if(shove_blocked)
 			var/directional_blocked = FALSE
 			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
 				var/target_turf = get_turf(target)

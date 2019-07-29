@@ -40,6 +40,7 @@
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 3,
 					/obj/item/clothing/under/rank/nursesuit = 3,
 					/obj/item/clothing/head/nursehat = 3,
+					/obj/item/clothing/under/rank/medical/skirt= 5,
 					/obj/item/clothing/under/rank/medical/blue = 2,
 					/obj/item/clothing/under/rank/medical/green = 2,
 					/obj/item/clothing/under/rank/medical/purple = 2,
@@ -67,6 +68,7 @@
 					/obj/item/storage/backpack/satchel/eng = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
 					/obj/item/clothing/under/rank/engineer = 5,
+					/obj/item/clothing/under/rank/engineer/skirt = 5,
 					/obj/item/clothing/suit/hazardvest = 5,
 					/obj/item/clothing/shoes/workboots = 5,
 					/obj/item/clothing/head/hardhat = 5)
@@ -87,6 +89,7 @@
 					/obj/item/storage/backpack/industrial = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 5,
 					/obj/item/clothing/under/rank/atmospheric_technician = 5,
+					/obj/item/clothing/under/rank/atmospheric_technician/skirt = 5,
 					/obj/item/clothing/shoes/sneakers/black = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 
@@ -101,6 +104,7 @@
 	vend_reply = "Thank you for using the CargoDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
 					/obj/item/clothing/under/rank/cargotech = 5,
+					/obj/item/clothing/under/rank/cargotech/skirt = 5,
 					/obj/item/clothing/shoes/sneakers/black = 5,
 					/obj/item/clothing/gloves/fingerless = 5,
 					/obj/item/clothing/head/soft = 5,
@@ -118,6 +122,7 @@
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
 					/obj/item/clothing/under/rank/roboticist = 3,
+					/obj/item/clothing/under/rank/roboticist/skirt = 3,
 					/obj/item/clothing/suit/toggle/labcoat = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3,
 					/obj/item/clothing/gloves/fingerless = 3,
@@ -140,6 +145,7 @@
 					/obj/item/storage/backpack/satchel/tox = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/scientist = 4,
+					/obj/item/clothing/under/rank/scientist/skirt = 4,
 					/obj/item/clothing/suit/toggle/labcoat/science = 4,
 					/obj/item/clothing/shoes/sneakers/white = 4,
 					/obj/item/radio/headset/headset_sci = 4,
@@ -161,6 +167,7 @@
 					/obj/item/clothing/suit/apron = 3,
 					/obj/item/clothing/suit/apron/overalls = 5,
 					/obj/item/clothing/under/rank/hydroponics = 5,
+					/obj/item/clothing/under/rank/hydroponics/skirt = 5,
 					/obj/item/clothing/mask/bandana = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 
@@ -175,6 +182,9 @@
 	vend_reply = "Thank you for using the CuraDrobe!"
 	products = list(/obj/item/clothing/head/fedora/curator = 2,
 					/obj/item/clothing/suit/curator = 2,
+					/obj/item/clothing/under/rank/curator/skirt = 2,
+					/obj/item/clothing/under/gimmick/rank/captain/suit/skirt = 2,
+					/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit/skirt = 2,
 					/obj/item/clothing/under/rank/curator/treasure_hunter = 2,
 					/obj/item/clothing/shoes/workboots/mining = 2,
 					/obj/item/storage/backpack/satchel/explorer = 2,
@@ -194,6 +204,7 @@
 					/obj/item/radio/headset/headset_srv = 3,
 					/obj/item/clothing/under/sl_suit = 3,
 					/obj/item/clothing/under/rank/bartender = 3,
+					/obj/item/clothing/under/rank/bartender/skirt = 2,
 					/obj/item/clothing/under/rank/bartender/purple = 2,
 					/obj/item/clothing/accessory/waistcoat = 3,
 					/obj/item/clothing/suit/apron/purple_bartender = 2,
@@ -226,6 +237,7 @@
 					/obj/item/circuitboard/machine/dish_drive = 1,
 					/obj/item/clothing/suit/toggle/chef = 2,
 					/obj/item/clothing/under/rank/chef = 2,
+					/obj/item/clothing/under/rank/chef/skirt = 2,
 					/obj/item/clothing/head/chefhat = 2,
 					/obj/item/reagent_containers/rag = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -240,6 +252,7 @@
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(/obj/item/clothing/under/rank/janitor = 2,
+					/obj/item/clothing/under/rank/janitor/skirt = 2,
 					/obj/item/cartridge/janitor = 3,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
@@ -265,10 +278,19 @@
 	icon_state = "lawdrobe"
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
 	vend_reply = "Thank you for using the LawDrobe!"
-	products = list(/obj/item/clothing/under/lawyer/female = 3,
-					/obj/item/clothing/under/lawyer/black = 3,
+	products = list(/obj/item/clothing/under/lawyer/bluesuit/skirt = 3,
+					/obj/item/clothing/under/lawyer/purpsuit/skirt = 3,
+					/obj/item/clothing/under/lawyer/blacksuit/skirt = 3,
+					/obj/item/clothing/under/lawyer/female = 3,
+					/obj/item/clothing/under/lawyer/female/skirt = 3,
+					/obj/item/clothing/under/lawyer/really_black = 3,
+					/obj/item/clothing/under/lawyer/really_black/skirt = 3,
+					/obj/item/clothing/under/lawyer/blue = 3,
+					/obj/item/clothing/under/lawyer/blue/skirt = 3,
 					/obj/item/clothing/under/lawyer/red = 3,
-					/obj/item/clothing/under/lawyer/bluesuit = 3,
+					/obj/item/clothing/under/lawyer/red/skirt = 3,
+					/obj/item/clothing/under/lawyer/black = 3,
+					/obj/item/clothing/under/lawyer/black/skirt = 3,
 					/obj/item/clothing/suit/toggle/lawyer = 3,
 					/obj/item/clothing/under/lawyer/purpsuit = 3,
 					/obj/item/clothing/suit/toggle/lawyer/purple = 3,
@@ -291,6 +313,7 @@
 					/obj/item/storage/backpack/cultpack = 2,
 					/obj/item/clothing/accessory/pocketprotector/cosmetology = 2,
 					/obj/item/clothing/under/rank/chaplain = 2,
+					/obj/item/clothing/under/rank/chaplain/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/clothing/suit/nun = 2,
 					/obj/item/clothing/head/nun_hood = 2,
@@ -308,6 +331,7 @@
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(/obj/item/clothing/under/rank/chemist = 3,
+					/obj/item/clothing/under/rank/chemist/skirt = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 3,
 					/obj/item/storage/backpack/chemistry = 3,
@@ -325,6 +349,7 @@
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(/obj/item/clothing/under/rank/geneticist = 3,
+					/obj/item/clothing/under/rank/geneticist/skirt = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 3,
 					/obj/item/storage/backpack/genetics = 3,
@@ -341,6 +366,7 @@
 	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(/obj/item/clothing/under/rank/virologist = 3,
+					/obj/item/clothing/under/rank/virologist/skirt = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/clothing/suit/toggle/labcoat/virologist = 3,
 					/obj/item/clothing/mask/surgical = 3,
