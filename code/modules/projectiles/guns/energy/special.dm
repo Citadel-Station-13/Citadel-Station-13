@@ -309,7 +309,7 @@
 
 /obj/item/gun/energy/emitter
 	name = "Emitter Carbine"
-	desc = "A small emitter fitted into a handgun case, do to size constraints and safety it can only shoot about four times when fully charged."
+	desc = "A small emitter fitted into a handgun case, do to size constraints and safety it can only shoot about ten times when fully charged."
 	icon_state = "emitter_carbine"
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
