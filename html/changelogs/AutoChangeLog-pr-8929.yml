@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixing CX Shredder guns not accepting standard flechette mags."
+  - bugfix: "Fixing missing magpistol magazines icon states."

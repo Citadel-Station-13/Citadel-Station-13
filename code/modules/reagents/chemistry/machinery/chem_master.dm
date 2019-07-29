@@ -348,10 +348,10 @@
 				return
 
 			var/amount_full = 0
-			var/vol_part = min(reagents.total_volume, 30)
+			var/vol_part = min(reagents.total_volume, 60)
 			if(text2num(many))
-				amount_full = round(reagents.total_volume / 30)
-				vol_part = reagents.total_volume % 30
+				amount_full = round(reagents.total_volume / 60)
+				vol_part = reagents.total_volume % 60
 			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
@@ -361,7 +361,7 @@
 				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
 				P.name = trim("[name] hypovial")
 				adjust_item_drop_location(P)
-				reagents.trans_to(P, 30)
+				reagents.trans_to(P, 60)
 
 			if(vol_part)
 				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
