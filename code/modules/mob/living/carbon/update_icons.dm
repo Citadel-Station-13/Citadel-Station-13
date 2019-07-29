@@ -176,7 +176,7 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/restraints.dmi', handcuffed.onmob_state, -HANDCUFF_LAYER)
+		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/restraints.dmi', handcuffed.item_state, -HANDCUFF_LAYER)
 		cuffs.color = handcuffed.color
 
 		overlays_standing[HANDCUFF_LAYER] = cuffs
@@ -186,7 +186,7 @@
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.onmob_state, -LEGCUFF_LAYER)
+		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
 		legcuffs.color = handcuffed.color
 
 		overlays_standing[HANDCUFF_LAYER] = legcuffs
