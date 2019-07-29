@@ -41,8 +41,6 @@
 	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
 		return FALSE
-	if(!user.can_read(src))
-		return FALSE
 	if(already_known(user))
 		return FALSE
 	if(used && oneuse)
@@ -83,6 +81,31 @@
 	var/datum/action/G = new granted_action
 	G.Grant(user)
 	onlearned(user)
+
+/obj/item/book/granter/action/drink_fling
+	granted_action = /datum/action/innate/drink_fling
+	name = "Tapper: This One's For You"
+	desc = "A seminal work on the dying art of booze sliding."
+	icon_state = "barbook"
+	actionname = "drink flinging"
+	oneuse = FALSE
+	remarks = list("The trick is keeping a low center of gravity it seems...", "The viscosity of the liquid is important...", "Accounting for crosswinds... really?", "Drag coefficients of various popular drinking glasses...", "What the heck is laminar flow and why does it matter here?", "Greasing the bar seems like it'd be cheating...", "I don't think I'll be working with superfluids...")
+
+/datum/action/innate/drink_fling
+	name = "Drink Flinging"
+	desc = "Toggles your ability to satisfyingly throw glasses without spilling them."
+	button_icon_state = "drinkfling_off"
+	check_flags = 0
+
+/datum/action/innate/drink_fling/Activate()
+	button_icon_state = "drinkfling_on"
+	active = TRUE
+	UpdateButtonIcon()
+
+/datum/action/innate/drink_fling/Deactivate()
+	button_icon_state = "drinkfling_off"
+	active = FALSE
+	UpdateButtonIcon()
 
 /obj/item/book/granter/action/origami
 	granted_action = /datum/action/innate/origami
@@ -181,9 +204,9 @@
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
-		user.set_nutrition(200)
+		user.nutrition = 200
 		if(user.nutrition <= 0)
-			user.set_nutrition(0)
+			user.nutrition = 0
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -315,7 +338,6 @@
 	var/martialname = "bug jitsu"
 	var/greet = "You feel like you have mastered the art in breaking code. Nice work, jackass."
 
-
 /obj/item/book/granter/martial/already_known(mob/user)
 	if(!martial)
 		return TRUE
@@ -408,4 +430,4 @@
 	for(var/crafting_recipe_type in crafting_recipe_types)
 		var/datum/crafting_recipe/R = crafting_recipe_type
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
-to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
+		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
