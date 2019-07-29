@@ -20374,7 +20374,7 @@
 	dir = 4
 	},
 /obj/machinery/keycard_auth{
-	step_y = 23
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)

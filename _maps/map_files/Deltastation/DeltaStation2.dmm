@@ -1011,10 +1011,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aez" = (
-/obj/machinery/keycard_auth{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/machinery/keycard_auth,
 /turf/closed/wall,
 /area/quartermaster/qm)
 "aeB" = (
