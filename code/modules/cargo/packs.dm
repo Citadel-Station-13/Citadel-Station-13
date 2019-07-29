@@ -2833,7 +2833,7 @@
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/nullrod/silver_shortblade,
-					/obj/item/storage/book/bible/booze,
+					/obj/item/storage/fancy/candle_box,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
