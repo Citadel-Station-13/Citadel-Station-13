@@ -707,7 +707,7 @@
 
 /obj/item/nullrod/silver_shortblade //Its not ment for combat.
 	name = "eloquent silver blade"
-	desc = "A dull blade made of silver, has a few rosary beads imbedded into the handle. Seems to be ment for pray rather then melee..."
+	desc = "A dull blade made of silver, has a few rosary beads embedded into the handle. Seems to be meant for pray rather than melee..."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "silvershortblade"
 	slot_flags = ITEM_SLOT_BELT
