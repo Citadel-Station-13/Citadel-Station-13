@@ -2824,3 +2824,17 @@
 					/obj/item/toner,
 					/obj/item/toner)
 	crate_name = "toner crate"
+
+/datum/supply_pack/misc/zelus_supplies
+	name = "Zelus Religious Supplies Crate"
+	desc = "Keep the forces from byond at bay, this blessed crate has a sword of prayer, two bottles of bleed water, some candles to let you see the gods light and some holy hoodies."
+	cost = 8000	// Has a null rod + holy water
+	access = ACCESS_THEATRE
+	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/nullrod/silver_shortblade,
+					/obj/item/storage/book/bible/booze,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie
+					)
+	crate_name = "religious armorments crate"

@@ -180,6 +180,7 @@
 
 /obj/item/storage/box/holy/follower/PopulateContents()
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+	new /obj/item/nullrod/silver_shortblade(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
@@ -290,8 +291,6 @@
 /obj/item/nullrod/godhand/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-
-
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
@@ -512,7 +511,6 @@
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 
-
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
 	item_state = "hammeron"
@@ -685,7 +683,6 @@
 /obj/item/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
 
-
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -707,3 +704,14 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/silver_shortblade //Its not ment for combat.
+	name = "eloquent silver blade"
+	desc = "A dull blade made of silver, has a few rosary beads imbedded into the handle. Seems to be ment for pray rather then melee..."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "silvershortblade"
+	slot_flags = ITEM_SLOT_BELT
+	force = 6
+	throwforce = 4
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("slashed", "poked")

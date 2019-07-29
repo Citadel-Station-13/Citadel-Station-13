@@ -147,7 +147,7 @@
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_- 
+	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
 	attack_verb = list("slashed", "cut", "pierces", "pokes")
 
 /obj/item/melee/rapier/Initialize()
