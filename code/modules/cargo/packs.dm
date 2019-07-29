@@ -2827,7 +2827,7 @@
 
 /datum/supply_pack/misc/zelus_supplies
 	name = "Zelus Religious Supplies Crate"
-	desc = "Keep the forces from byond at bay, this blessed crate has a sword of prayer, two bottles of bleed water, some candles to let you see the gods light and some holy hoodies."
+	desc = "Keep the forces from byond at bay, this blessed crate has a sword of prayer, two bottles of blessed water, some candles to let you see the gods light and some holy hoodies."
 	cost = 8000	// Has a null rod + holy water
 	access = ACCESS_THEATRE
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
