@@ -176,9 +176,22 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		overlays_standing[HANDCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
+		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/restraints.dmi', handcuffed.onmob_state, -HANDCUFF_LAYER)
+		cuffs.color = handcuffed.color
+
+		overlays_standing[HANDCUFF_LAYER] = cuffs
 		apply_overlay(HANDCUFF_LAYER)
 
+/mob/living/carbon/update_inv_legcuffed()
+	remove_overlay(LEGCUFF_LAYER)
+	clear_alert("legcuffed")
+	if(legcuffed)
+		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.onmob_state, -LEGCUFF_LAYER)
+		legcuffs.color = handcuffed.color
+
+		overlays_standing[HANDCUFF_LAYER] = legcuffs
+		apply_overlay(LEGCUFF_LAYER)
+		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = legcuffed)
 
 //mob HUD updates for items in our inventory
 
