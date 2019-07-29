@@ -242,13 +242,13 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		air_contents.react(src)
-		//Citadel Edit: removing extra react for "balance"
+		air_contents.react(src) //we're readding this extra react because holy fuck the sqrt's heavy
 		pressure = air_contents.return_pressure()
-		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+		var/range = (sqrt(sqrt((pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE)))*TANK_FRAGMENT_MULT //squirt, squirt, KABOOM
 		var/turf/epicenter = get_turf(loc)
 
 
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5), ignorecap = TRUE)
 		if(istype(src.loc, /obj/item/transfer_valve))
 			qdel(src.loc)
 		else
