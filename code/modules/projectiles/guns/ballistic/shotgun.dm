@@ -220,9 +220,6 @@
 	var/stock = FALSE
 	recoil = 5
 	spread = 2
-	unique_reskin = list("Unfolded" = "cshotgun",
-						"Folded" = "cshotgunc"
-						)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -237,18 +234,19 @@
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/proc/toggle_stock(mob/living/user)
 	stock = !stock
 	if(stock)
-		current_skin = "Unfolded"
 		w_class = WEIGHT_CLASS_HUGE
 		to_chat(user, "You unfold the stock.")
 		recoil = 1
 		spread = 0
 	else
-		current_skin = "Folded"
 		w_class = WEIGHT_CLASS_NORMAL
 		to_chat(user, "You fold the stock.")
 		recoil = 5
 		spread = 2
 	update_icon()
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon()
+	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
 
 //Dual Feed Shotgun
 
