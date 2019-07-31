@@ -5,6 +5,7 @@
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
+GLOBAL_VAR_INIT(war_declared, FALSE)
 
 /obj/item/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
@@ -62,6 +63,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
+	GLOB.war_declared = TRUE
 	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS + CEILING(PLAYER_SCALING * GLOB.player_list.len, 1))
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
