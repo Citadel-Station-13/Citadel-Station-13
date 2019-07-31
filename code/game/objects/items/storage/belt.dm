@@ -661,7 +661,7 @@
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 	content_overlays = TRUE
-	worn_overlays = FALSE
+	worn_overlays = TRUE
 	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
 	var/starting_sword = /obj/item/melee/sabre
 
