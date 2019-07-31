@@ -33,7 +33,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		cut = filter_quirks(quirks, job)
 	for(var/V in quirks)
 		user.add_quirk(V, spawn_effects)
-	if(!silent)
+	if(!silent && LAZYLEN(cut))
 		to_chat(to_chat_target || user, "<span class='boldwarning'>All of your non-neutral character quirks have been cut due to these quirks conflicting with your job assignment: [english_list(cut)].</span>")
 
 /datum/controller/subsystem/processing/quirks/proc/quirk_path_by_name(name)
