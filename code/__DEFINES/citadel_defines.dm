@@ -128,9 +128,8 @@
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
 //Citadel toggles because bitflag memes
-#define MEDIHOUND_SLEEPER 1
-#define EATING_NOISES	2
-#define DIGESTION_NOISES 4
+#define EATING_NOISES	1
+#define DIGESTION_NOISES 2
 
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
 
