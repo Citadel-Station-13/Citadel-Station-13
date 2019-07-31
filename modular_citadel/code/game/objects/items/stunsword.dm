@@ -7,6 +7,12 @@
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 
+/obj/item/melee/baton/stunsword/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "stunsword")
+
+/obj/item/melee/baton/stunsword/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "-stunsword")
+
 /obj/item/ssword_kit
 	name = "stunsword kit"
 	desc = "a modkit for making a stunbaton into a stunsword"
