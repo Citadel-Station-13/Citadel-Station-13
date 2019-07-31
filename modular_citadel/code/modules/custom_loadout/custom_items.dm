@@ -73,8 +73,8 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
-	var/list/fitting_swords = list(/obj/item/toy/darksabre)
-	var/starting_sword = /obj/item/toy/darksabre
+	fitting_swords = list(/obj/item/toy/darksabre)
+	starting_sword = /obj/item/toy/darksabre
 
 /obj/item/clothing/suit/armor/vest/darkcarapace
 	name = "Dark Armor"
