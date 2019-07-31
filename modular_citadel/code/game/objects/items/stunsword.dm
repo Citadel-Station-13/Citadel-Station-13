@@ -8,7 +8,9 @@
 	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 
 /obj/item/melee/baton/stunsword/get_belt_overlay()
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "stunsword")
+	if(istype(loc, /obj/item/storage/belt/sabre))
+		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "stunsword")
+	return ..()
 
 /obj/item/melee/baton/stunsword/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-stunsword")
