@@ -608,7 +608,8 @@
 	var/has_antags = FALSE
 	if(client.prefs.be_special.len > 0)
 		has_antags = TRUE
-	if(client.prefs.job_preferences.len == 0)
+	var/datum/preferences/P = client.prefs
+	if(!P.job_civilian_high && !P.job_civilian_med && !P.job_civilian_low && !P.job_medsci_high && !P.job_medsci_med && !P.job_medsci_low && !P.job_engsec_high && !P.job_engsec_med && !P.job_engsec_low)
 		if(!ineligible_for_roles)
 			to_chat(src, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
 		ineligible_for_roles = TRUE
