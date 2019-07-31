@@ -1,15 +1,3 @@
-/datum/techweb_node/bluespace_basic/New()
-	. = ..()
-	design_ids += "xenobio_monkeys"
-
-/datum/techweb_node/practical_bluespace/New()
-	. = ..()
-	design_ids += "xenobio_slimebasic"
-
-/datum/techweb_node/adv_bluespace/New()
-	. = ..()
-	design_ids += "xenobio_slimeadv"
-
 /datum/techweb_node/ballistic_weapons/New()
 	. = ..()
 	design_ids += "mag_oldsmg_rubber"
