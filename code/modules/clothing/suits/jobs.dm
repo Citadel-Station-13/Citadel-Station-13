@@ -188,6 +188,7 @@
 	item_state = "techpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/hooded/techpriest
 	name = "techpriest's hood"
