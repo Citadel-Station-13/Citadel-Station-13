@@ -429,7 +429,19 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
+
+	var/level = "green"
+	switch(GLOB.security_level)
+		if(SEC_LEVEL_BLUE)
+			level = "blue"
+		if(SEC_LEVEL_AMBER)
+			level = "amber"
+		if(SEC_LEVEL_RED)
+			level = "red"
+		if(SEC_LEVEL_DELTA)
+			level = "delta"	
+
+	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]<br>Alert Level: [capitalize(level)]</div>"
 
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -438,7 +450,10 @@
 			if(SHUTTLE_CALL)
 				if(!SSshuttle.canRecall())
 					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+	
 
+	
+		
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
