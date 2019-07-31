@@ -450,10 +450,7 @@
 			if(SHUTTLE_CALL)
 				if(!SSshuttle.canRecall())
 					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
-	
 
-	
-		
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
