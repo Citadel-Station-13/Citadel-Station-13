@@ -1210,7 +1210,7 @@
 	if(prob(66))
 		new /obj/item/reagent_containers/food/snacks/salad/boiledrice(src)
 	else
-		/obj/item/reagent_containers/food/snacks/salad/ricebowl(src)
+		new /obj/item/reagent_containers/food/snacks/salad/ricebowl(src)
 	new /obj/item/reagent_containers/food/snacks/burger/tofu(src)
 	new /obj/item/reagent_containers/food/snacks/salad/fruit(src)
 	new /obj/item/reagent_containers/food/snacks/cracker(src)
