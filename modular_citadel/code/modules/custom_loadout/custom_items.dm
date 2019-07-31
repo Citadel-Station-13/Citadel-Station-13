@@ -49,7 +49,7 @@
 	item_color = "steele"
 	medaltype = "medal-silver"
 
-/obj/item/toy/sword/darksabre
+/obj/item/toy/darksabre
 	name = "Kiara's Sabre"
 	desc = "This blade looks as dangerous as its owner."
 	icon = 'icons/obj/custom.dmi'
@@ -58,9 +58,13 @@
 	item_state = "darksabre"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
-	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 
+/obj/item/toy/darksabre/get_belt_overlay()
+	return mutable_appearance('icons/obj/custom.dmi', "darksheath-darksabre")
+
+/obj/item/toy/darksabre/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "darksheath-darksabre")
 
 /obj/item/storage/belt/sabre/darksabre
 	name = "Ornate Sheathe"
@@ -69,32 +73,8 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
-	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 1
-	STR.rustle_sound = FALSE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/toy/sword/darksabre
-		))
-
-/obj/item/storage/belt/sabre/darksabre/update_icon()
-	icon_state = "darksheath"
-	item_state = "darksheath"
-	if(contents.len)
-		icon_state += "-darksabre"
-		item_state += "-darksabre"
-	if(loc && isliving(loc))
-		var/mob/living/L = loc
-		L.regenerate_icons()
-	..()
-
-/obj/item/storage/belt/sabre/darksabre/PopulateContents()
-	new /obj/item/toy/sword/darksabre(src)
-	update_icon()
+	var/list/fitting_swords = list(/obj/item/toy/darksabre)
+	var/starting_sword = /obj/item/toy/darksabre
 
 /obj/item/clothing/suit/armor/vest/darkcarapace
 	name = "Dark Armor"
