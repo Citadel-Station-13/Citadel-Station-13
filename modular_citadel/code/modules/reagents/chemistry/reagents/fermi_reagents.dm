@@ -171,7 +171,7 @@
 			T.Remove(M)
 			nT.Insert(M)
 			T.moveToNullspace()//To valhalla
-			to_chat(M, "<span class='notice'>Your tongue feels... weally fwuffy!!</span>")
+			to_chat(M, "<span class='big warning'>Your tongue feels... weally fwuffy!!</span>")
 		if(17 to INFINITY)
 			if(prob(5))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
