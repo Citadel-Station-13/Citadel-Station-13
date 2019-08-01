@@ -12,7 +12,7 @@
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
-	mutantrace_variation == NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	..()
@@ -47,7 +47,7 @@
 	var/brightness_on = 4 //luminosity when the light is on
 	var/on = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	mutantrace_variation == NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	on = !on
