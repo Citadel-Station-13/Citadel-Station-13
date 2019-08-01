@@ -17,9 +17,9 @@
 //BOT MOBS
 
 /mob/living/simple_animal/bot
-	devourable = FASLE
-	digestable = FASLE
-	feeding = FASLE
+	devourable = FALSE
+	digestable = FALSE
+	feeding = FALSE
 
 //NUETRAL MOBS
 /mob/living/simple_animal/crab
