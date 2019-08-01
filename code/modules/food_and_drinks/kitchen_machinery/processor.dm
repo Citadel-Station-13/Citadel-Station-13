@@ -21,21 +21,30 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
+/obj/machinery/processor/examine(mob/user)
+	. = ..()
+	if(LAZYLEN(contents))
+		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
+
+/obj/machinery/processor/AltClick(mob/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE, FALSE))
+		empty(user)
+
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	if (recipe.output && loc && !QDELETED(src))
-		for(var/i = 0, i < rating_amount, i++)
-			new recipe.output(drop_location())
+	if (!QDELETED(src))
+		recipe.make_results(src, what)
 	if (ismob(what))
 		var/mob/themob = what
 		themob.gib(TRUE,TRUE,TRUE)
 	else
 		qdel(what)
 
-/obj/machinery/processor/proc/select_recipe(X)
-	for (var/type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
-		var/datum/food_processor_process/recipe = new type()
-		if (!istype(X, recipe.input) || !istype(src, recipe.required_machine))
-			continue
+/obj/machinery/processor/proc/select_recipe(atom/movable/X, mob/user)
+	if(!X)
+		return
+	var/datum/food_processor_process/recipe = GLOB.food_processor_recipes[X.type]
+	if(recipe?.check_requirements(src, X, user))
 		return recipe
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
@@ -58,7 +67,7 @@
 		var/obj/item/storage/T = O
 		var/loaded = 0
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
-			var/datum/food_processor_process/P = select_recipe(S)
+			var/datum/food_processor_process/P = select_recipe(S, user)
 			if(P)
 				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 					loaded++
@@ -67,7 +76,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 		return
 
-	var/datum/food_processor_process/P = select_recipe(O)
+	var/datum/food_processor_process/P = select_recipe(O, user)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
 			"You put [O] into [src].")
@@ -84,7 +93,7 @@
 	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
-	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling))
+	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling, user))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
@@ -103,7 +112,7 @@
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	use_power(500)
 	var/total_time = 0
-	for(var/O in src.contents)
+	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
@@ -129,14 +138,15 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	empty()
+	empty(usr)
 	add_fingerprint(usr)
 
-/obj/machinery/processor/proc/empty()
-	for (var/obj/O in src)
-		O.forceMove(drop_location())
-	for (var/mob/M in src)
-		M.forceMove(drop_location())
+/obj/machinery/processor/proc/empty(mob/user)
+	if(LAZYLEN(contents))
+		for (var/i in src)
+			var/atom/movable/A
+			A.forceMove(drop_location())
+		to_chat(user, "<span class='notice'>You empty \the [src] of its contents.</span>")
 
 /obj/machinery/processor/container_resist(mob/living/user)
 	user.forceMove(drop_location())
@@ -145,11 +155,7 @@
 /obj/machinery/processor/slime
 	name = "slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
-
-/obj/machinery/processor/slime/Initialize()
-	. = ..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor/slime(null)
-	B.apply_default_parts(src)
+	circuit = /obj/item/circuitboard/machine/processor/slime
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/AM)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
@@ -173,7 +179,7 @@
 		if(slime.loc == src)
 			continue
 		if(istype(slime, /mob/living/simple_animal/slime))
-			if(slime.stat)
+			if(slime.stat == DEAD)
 				picked_slime = slime
 				break
 	if(!picked_slime)
@@ -187,14 +193,11 @@
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	var/mob/living/simple_animal/slime/S = what
-	if (istype(S))
-		var/C = S.cores
-		if(S.stat != DEAD)
-			S.forceMove(drop_location())
-			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
-			return
-		for(var/i in 1 to (C+rating_amount-1))
-			var/atom/movable/item = new S.coretype(drop_location())
-			adjust_item_drop_location(item)
-			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
-	..()
+	if (!istype(S))
+		return ..()
+	var/C = S.cores
+	for(var/i in 1 to (C+rating_amount-1))
+		var/atom/movable/item = new S.coretype(drop_location())
+		adjust_item_drop_location(item)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
+		S.gib(TRUE,TRUE,TRUE)

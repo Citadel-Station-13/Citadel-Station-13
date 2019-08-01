@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(materials_list)				//list of all /datum/material datums indexe
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list)				//list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(crafting_recipes)				//list of all table craft recipes
+GLOBAL_LIST_EMPTY(food_processor_recipes)		//food processor recipes
 GLOBAL_LIST_EMPTY(rcd_list)					//list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(apcs_list)					//list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
 GLOBAL_LIST_EMPTY(tracked_implants)			//list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
