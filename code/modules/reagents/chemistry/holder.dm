@@ -167,30 +167,44 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, method = null, show_message = TRUE)
+	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
 	if(amount < 0)
 		return
 
+	var/atom/target_atom
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
+		target_atom = R.my_atom
 	else
 		if(!target.reagents)
 			return
 		R = target.reagents
+		target_atom = target
+
+	if(transfered_by && target_atom)
+		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
+		log_combat(transfered_by, target_atom, "transferred reagents ([log_list()]) from [my_atom] to")
+
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
+		if(remove_blacklisted && !T.can_synth)
+			continue
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
-		remove_reagent(T.id, transfer_amount)
+		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		if(method)
+			R.react_single(T, target_atom, method, part, show_message)
+			T.on_transfer(target_atom, method, transfer_amount * multiplier)
+		remove_reagent(T.type, transfer_amount)
 
 	update_total()
 	R.update_total()
@@ -198,6 +212,7 @@
 		R.handle_reactions()
 		src.handle_reactions()
 	return amount
+
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	var/list/cached_reagents = reagent_list
