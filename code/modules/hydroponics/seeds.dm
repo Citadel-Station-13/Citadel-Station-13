@@ -105,8 +105,6 @@
 	if(prob(traitmut))
 		add_random_traits(1, 1)
 
-
-
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/item/projectile/energy/florayield))
 		var/rating = 1
@@ -121,7 +119,6 @@
 	else
 		return ..()
 
-
 // Harvest procs
 /obj/item/seeds/proc/getYield()
 	var/return_yield = yield
@@ -134,7 +131,6 @@
 			return_yield *= (parent.yieldmod)
 
 	return return_yield
-
 
 /obj/item/seeds/proc/harvest(mob/user)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
@@ -155,7 +151,6 @@
 
 	return result
 
-
 /obj/item/seeds/proc/prepare_result(var/obj/item/reagent_containers/food/snacks/grown/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
@@ -171,7 +166,6 @@
 			data = T.tastes
 
 		T.reagents.add_reagent(rid, amount, data)
-
 
 /// Setters procs ///
 /obj/item/seeds/proc/adjust_yield(adjustamt)
@@ -272,7 +266,6 @@
 	if(C)
 		C.value = weed_chance
 
-
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
 	var/text = ""
 	if(!get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && !get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
@@ -319,12 +312,6 @@
 
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
-
-
-
-
-
-
 
 // Checks plants for broken tray icons. Use Advanced Proc Call to activate.
 // Maybe some day it would be used as unit test.

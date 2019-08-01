@@ -1487,6 +1487,15 @@
 					/obj/item/integrated_electronics/wirer)
 	crate_name = "circuitry starter pack crate"
 
+/datum/supply_pack/science/elemolenseed
+	name = "Elemolen Seed Crate"
+	desc = "A crate with one seed in for a Elemolen. Needs Hydroponics access to open."
+	cost = 7500
+	access = ACCESS_HYDROPONICS
+	contains = list(/obj/item/seeds/elemelon)
+	crate_name = "exotic seed crate"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
 	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Toxins access to open."

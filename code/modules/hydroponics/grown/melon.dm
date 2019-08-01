@@ -61,3 +61,118 @@
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE) //deliver us from evil o melon god
+
+//ELEMELONS
+
+/obj/item/seeds/elemelon
+	name = "pack of elemelon seeds"
+	desc = "Rare unknown seeds that grow into large melons."
+	icon_state = "seed-elermelon"
+	species = "elermelon"
+	plantname = "Elemelon Vines"
+	product = /obj/item/reagent_containers/food/snacks/grown/elemelon
+	lifespan = 90
+	endurance = 1 //Lives long, endures none
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_dead = "watermelon-dead"
+	genes = list()
+	mutatelist = list(/obj/item/seeds/elemelon/air, /obj/item/seeds/elemelon/hell, /obj/item/seeds/elemelon/h2o, /obj/item/seeds/elemelon/earth)
+	reagents_add = list("liquid_dark_matter" = 0.1, "singulo" = 0.2)
+
+/obj/item/reagent_containers/food/snacks/grown/elemelon
+	seed = /obj/item/seeds/elemelon
+	name = "elemelon"
+	desc = "This large black fruit is said to be as old as time itself..."
+	icon_state = "elermelon"
+	filling_color = "#000000"
+	dried_type = null
+	wine_power = 50
+	wine_flavor = "fabrics"
+
+/obj/item/seeds/elemelon/hell
+	name = "pack of elemelon seeds"
+	desc = "Rare unknown seeds that grow into large melons."
+	icon_state = "seed-firemelon"
+	species = "elermelon"
+	plantname = "Elemelon Vines"
+	product = /obj/item/reagent_containers/food/snacks/grown/elemelon/fire
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_dead = "watermelon-dead"
+	mutatelist = list()
+	reagents_add = list("hell_water" = 0.1, "condensedcapsaicin" = 0.3, "hell_ramen" = 0.5, "clf3" = 0.01) //Better have fire proof gloves
+
+/obj/item/reagent_containers/food/snacks/grown/elemelon/fire
+	seed = /obj/item/seeds/elemelon/hell
+	name = "hell elemelon"
+	desc = "This red fruit is said to be as from a different plan... Never found on lava land for some reason"
+	icon_state = "firemelon"
+	filling_color = "#000000"
+	dried_type = null
+	wine_power = 50 //Not bad not good.
+	wine_flavor = "brimstone"
+
+/obj/item/seeds/elemelon/air
+	name = "pack of elemelon seeds"
+	desc = "Rare unknown seeds that grow into large melons."
+	icon_state = "seed-airmelon"
+	species = "elermelon"
+	plantname = "Elemelon Vines"
+	product = /obj/item/reagent_containers/food/snacks/grown/elemelon/air
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_dead = "watermelon-dead"
+	mutatelist = list()
+	reagents_add = list("oxygen" = 0.1, "hydrogen" = 0.03, "co2" = 0.01, "nitrous_oxide" = 0.01, "nitrogen" = 0.35) //Lots of gasses
+
+/obj/item/reagent_containers/food/snacks/grown/elemelon/air
+	seed = /obj/item/seeds/elemelon/air
+	name = "air elemelon"
+	desc = "This transparent blueish fruit is said to be as from a clouds."
+	icon_state = "airmelon"
+	filling_color = "#000000"
+	dried_type = null
+	wine_power = 30 //Hard to get drunk off air
+	wine_flavor = "thin"
+
+/obj/item/seeds/elemelon/h2o
+	name = "pack of elemelon seeds"
+	desc = "Rare unknown seeds that grow into large melons."
+	icon_state = "seed-h_two_o_melon"
+	species = "elermelon"
+	plantname = "Elemelon Vines"
+	product = /obj/item/reagent_containers/food/snacks/grown/elemelon/h2o
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_dead = "watermelon-dead"
+	mutatelist = list()
+	reagents_add = list("water" = 0.4, "hell_water" = 0.04, "holywater" = 0.03, "unholywater" = 0.03, "oxygen" = 0.2, "hydrogen" = 0.1)
+
+/obj/item/reagent_containers/food/snacks/grown/elemelon/h2o
+	seed = /obj/item/seeds/elemelon/h2o
+	name = "water elemelon"
+	desc = "This dark blue fruit is said to be as from a from bluesea pocket"
+	icon_state = "h_two_o_melon"
+	filling_color = "#000000"
+	dried_type = null
+	wine_power = 1 //Its water
+	wine_flavor = "watered down"
+
+/obj/item/seeds/elemelon/earth
+	name = "pack of elemelon seeds"
+	desc = "Rare unknown seeds that grow into large melons."
+	icon_state = "seed-earthmelon"
+	species = "elermelon"
+	plantname = "Elemelon Vines"
+	product = /obj/item/reagent_containers/food/snacks/grown/elemelon/earth
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_dead = "watermelon-dead"
+	mutatelist = list()
+	reagents_add = list("iron" = 0.1, "nutriment" = 0.5, "sodiumchloride" = 0.03, "vitamin" = 0.2)
+
+/obj/item/reagent_containers/food/snacks/grown/elemelon/earth
+	seed = /obj/item/seeds/elemelon/earth
+	name = "soil elemelon"
+	desc = "This brown fruit is said to be from a massive meteor core that was able to sustain life inside of it before NT mind into it..."
+	icon_state = "earthmelon"
+	filling_color = "#000000"
+	dried_type = null
+	wine_power = 100 //Real salt of the earth
+	wine_flavor = "dirt"
