@@ -171,15 +171,15 @@
 			T.Remove(M)
 			nT.Insert(M)
 			T.moveToNullspace()//To valhalla
-			to_chat(M, "<span class='notice'>Youw tongue feews... weally fwuffy!!</span>")
+			to_chat(M, "<span class='notice'>Your tongue feels... weally fwuffy!!</span>")
 		if(17 to INFINITY)
-			if(prob(10))
+			if(prob(5))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
 				M.emote("nya")
-			if(prob(10))
+			if(prob(5))
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
-			if(prob(20))
+			if(prob(5))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
 					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
@@ -189,7 +189,7 @@
 	..()
 
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
-	if(purity < 0.9)//Only permanent if you're a good chemist.
+	if(purity < 1)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
 		nT.Remove(M)
 		qdel(nT)
@@ -198,6 +198,7 @@
 		M.say("Pleh!")
 	else
 		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal

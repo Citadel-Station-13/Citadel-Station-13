@@ -171,6 +171,8 @@ SLIME SCANNER
 		var/obj/item/organ/tongue/T = M.getorganslot("tongue")
 		if(!T || T.damage > 40)
 			msg += "\t<span class='danger'>Subject is suffering from severe burn tissue on their tongue.</span>\n" //i.e. their tongue is shot
+		if(T.name == "fluffy tongue")
+			msg += "\t<span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>\n"
 		var/obj/item/organ/lungs/Lung = M.getorganslot("lungs")
 		if(L)
 			if(Lung.damage > 150)

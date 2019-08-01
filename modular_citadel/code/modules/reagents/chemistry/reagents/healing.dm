@@ -22,6 +22,19 @@
 		C.adjustOxyLoss(-2)
 	else
 		C.adjustOxyLoss(-10)
+
+	if(T)
+		if(T.name == "fluffy tongue")
+			var/obj/item/organ/tongue/nT
+			if(C.dna && C.dna.species && C.dna.species.mutanttongue)
+				nT = new C.dna.species.mutanttongue()
+			else
+				nT = new()
+			T.Remove(C)
+			qdel(T)
+			nT.Insert(C)
+			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
+			holder.remove_reagent(src.id, "10")
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
@@ -40,7 +53,6 @@
 		else
 			if((oT.name == "fluffy tongue") && (purity == 1))
 				var/obj/item/organ/tongue/T
-
 				if(C.dna && C.dna.species && C.dna.species.mutanttongue)
 					T = new C.dna.species.mutanttongue()
 				else
