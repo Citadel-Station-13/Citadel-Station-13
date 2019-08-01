@@ -46,13 +46,18 @@
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 4 //luminosity when the light is on
 	var/on = FALSE
+	var/light_overlay = "envirohelm-light"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
+	if(!light_overlay)
+		return
 	on = !on
-	icon_state = "[initial(icon_state)][on ? "-light":""]"
-	item_state = icon_state
+	if(!on)
+		remove_overlay(light_overlay)
+	else
+		add_overlay(light_overlay)
 	user.update_inv_head() //So the mob overlay updates
 
 	if(on)
@@ -63,6 +68,11 @@
 	for(var/X in actions)
 		var/datum/action/A=X
 		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(!isinhands && on)
+		. += mutable_appearance(icon_file, light_overlay)
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
@@ -193,6 +203,7 @@
 	desc = "A slight modification on a tradiational voidsuit helmet, this helmet was Nano-Trasen's first solution to the *logistical problems* that come with employing plasmamen. Despite their limitations, these helmets still see use by historian and old-styled plasmamen alike."
 	icon_state = "prototype_envirohelm"
 	item_state = "prototype_envirohelm"
+	light_overlay = null
 	actions_types = list()
 
 /obj/item/clothing/head/helmet/space/plasmaman/botany
@@ -212,9 +223,11 @@
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. It's not very colourful."
 	icon_state = "mime_envirohelm"
 	item_state = "mime_envirohelm"
+	light_overlay = "mime_envirohelm-light"
 
 /obj/item/clothing/head/helmet/space/plasmaman/clown
 	name = "clown envirosuit helmet"
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. <i>'HONK!'</i>"
 	icon_state = "clown_envirohelm"
 	item_state = "clown_envirohelm"
+	light_overlay = "clown_envirohelm-light"
