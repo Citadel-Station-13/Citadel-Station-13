@@ -2,34 +2,36 @@
 	name = "blood bank generator"
 	desc = "Generates universally applicable synthetics for all blood types. Add regular blood to convert quickly."
 	icon = 'icons/obj/machines/biogenerator.dmi'
-	icon_state = "biogen-empty"
+	icon_state = "bloodbank-off"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	circuit = /obj/item/circuitboard/machine/bloodbankgen
 	var/processing = FALSE
-	var/obj/item/reagent_containers/blood = null
-	var/points = 0
+	var/obj/item/reagent_containers/blood/bag = null
+	var/obj/item/reagent_containers/blood/outbag = null
+	var/bloodstored = 0
+	var/maxbloodstored = 1000
 	var/menustat = "menu"
 	var/efficiency = 0
 	var/productivity = 0
-	var/max_items = 40
-	var/datum/techweb/stored_research
-	var/list/show_categories = list("Blood")
 
 /obj/machinery/bloodbankgen/Initialize()
 	. = ..()
-	stored_research = new /datum/techweb/specialized/autounlocking/bloodbankgen
 	create_reagents(1000)
+	update_icon()
 
 /obj/machinery/bloodbankgen/Destroy()
 	QDEL_NULL(bag)
+	QDEL_NULL(outbag)
 	return ..()
 
 /obj/machinery/bloodbankgen/contents_explosion(severity, target)
 	..()
 	if(bag)
 		bag.ex_act(severity, target)
+	if(outbag)
+		outbag.ex_act(severity, target)
 
 /obj/machinery/bloodbankgen/handle_atom_del(atom/A)
 	..()
@@ -37,33 +39,110 @@
 		bag = null
 		update_icon()
 		updateUsrDialog()
+	if(A == outbag)
+		outbag = null
+		update_icon()
+		updateUsrDialog()
 
 /obj/machinery/bloodbankgen/RefreshParts()
 	var/E = 0
 	var/P = 0
-	var/max_storage = 40
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		P += B.rating
-		max_storage = 40 * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E
 	productivity = P
-	max_items = max_storage
-
-/obj/machinery/bloodbankgen/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
-	update_icon()
 
 /obj/machinery/bloodbankgen/update_icon()
+	cut_overlays()
+	if(is_operational())
+		icon_state = "bloodbank-on"
+
 	if(panel_open)
-		icon_state = "biogen-empty-o"
-	else if(!src.bag)
-		icon_state = "biogen-empty"
-	else if(!src.processing)
-		icon_state = "biogen-stand"
-	else
-		icon_state = "biogen-work"
+		add_overlay("bloodbank-panel")
+
+	if(src.bag)
+		add_overlay("bloodbag-input")
+		if(bag.reagents.total_volume)
+			var/mutable_appearance/filling_overlay = mutable_appearance(icon, "input-reagent")
+
+			var/percent = round((bag.reagents.total_volume / bag.volume) * 100)
+			switch(percent)
+				if(0 to 9)
+					filling_overlay.icon_state = "input-reagent0"
+				if(10 to 24)
+					filling_overlay.icon_state = "input-reagent10"
+				if(25 to 49)
+					filling_overlay.icon_state = "input-reagent25"
+				if(50 to 74)
+					filling_overlay.icon_state = "input-reagent50"
+				if(75 to 79)
+					filling_overlay.icon_state = "input-reagent75"
+				if(80 to 90)
+					filling_overlay.icon_state = "input-reagent80"
+				if(91 to INFINITY)
+					filling_overlay.icon_state = "input-reagent100"
+
+			filling_overlay.color = list(mix_color_from_reagents(bag.reagents.reagent_list))
+			add_overlay(filling_overlay)
+
+	if(src.outbag)
+		add_overlay("bloodbag-output")
+		if(outbag.reagents.total_volume)
+			var/mutable_appearance/filling_overlay = mutable_appearance(icon, "output-reagent")
+
+			var/percent = round((outbag.reagents.total_volume / outbag.volume) * 100)
+			switch(percent)
+				if(0 to 9)
+					filling_overlay.icon_state = "input-reagent0"
+				if(10 to 24)
+					filling_overlay.icon_state = "input-reagent10"
+				if(25 to 49)
+					filling_overlay.icon_state = "input-reagent25"
+				if(50 to 74)
+					filling_overlay.icon_state = "input-reagent50"
+				if(75 to 79)
+					filling_overlay.icon_state = "input-reagent75"
+				if(80 to 90)
+					filling_overlay.icon_state = "input-reagent80"
+				if(91 to INFINITY)
+					filling_overlay.icon_state = "input-reagent100"
+
+			filling_overlay.color = list(mix_color_from_reagents(outbag.reagents.reagent_list))
+			add_overlay(filling_overlay)
 	return
+
+/obj/machinery/bloodbankgen/process()
+	if(!is_operational())
+		return PROCESS_KILL
+
+	var/transfer_amount = 20
+	var/efficent_amount = ((transfer_amount * 0.5) * (1.5 * efficiency))
+	if(bag)
+		if(bag.reagents)
+			var/datum/reagent/blood/B = bag.reagents.has_reagent("blood")
+			if(B)
+				var/amount = reagents.maximum_volume - reagents.total_volume //monitor the machine's internal storage
+				amount = min(amount, 4)
+				if(!amount)
+					return
+				var/list/bloodtypes = list("A+", "A-", "B+", "B-", "O+", "O-", "L", "X*", "HF", "GEL", "U")
+				for(var/blood in bloodtypes[bag.blood_type])
+					if(blood) //no infinite loops using synthetics.
+						src.add_reagent("syntheticblood", efficent_amount)
+					else
+						src.add_reagent("syntheticblood", transfer_amount)
+				bag.reagents.remove_reagent(B,transfer_amount)
+				update_icon()
+
+	if(outbag)
+		var/amount = outbag.reagents.maximum_volume - outbag.reagents.total_volume //monitor the output bag's internal storage
+		amount = min(amount, 4)
+		if(!amount)
+			return
+		if(bloodstored <= 0)
+			return
+		reagents.trans_to(outbag, transfer_amount)
+		update_icon()
 
 /obj/machinery/bloodbankgen/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -73,11 +152,15 @@
 		to_chat(user, "<span class='warning'>The generator is currently processing.</span>")
 		return
 
-	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
+	if(default_deconstruction_screwdriver(user, "bloodbank-off", "bloodbank-off", O))
 		if(bag)
 			var/obj/item/reagent_containers/blood/B = bag
 			B.forceMove(drop_location())
 			bag = null
+		if(outbag)
+			var/obj/item/reagent_containers/blood/B = outbag
+			B.forceMove(drop_location())
+			outbag = null
 		update_icon()
 		return
 
@@ -87,62 +170,26 @@
 	if(istype(O, /obj/item/reagent_containers/blood))
 		. = 1 //no afterattack
 		if(!panel_open)
-			if(bag)
-				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
-			else
+			if(bag && outbag)
+				to_chat(user, "<span class='warning'>This machine already has bags attached.</span>")
+			else if(!bag)
 				if(!user.transferItemToLoc(O, src))
 					return
 				bag = O
-				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
+				to_chat(user, "<span class='notice'>You add the container to the machine's input slot.</span>")
+				update_icon()
+				updateUsrDialog()
+			else if(!outbag)
+				if(!user.transferItemToLoc(O, src))
+					return
+				outbag = O
+				to_chat(user, "<span class='notice'>You add the container to the machine's output slot.</span>")
 				update_icon()
 				updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
 		return
 
-	else if(istype(O, /obj/item/storage/bag/plants))
-		var/obj/item/storage/bag/plants/PB = O
-		var/i = 0
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
-			i++
-		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The bloodbankgen is already full! Activate it.</span>")
-		else
-			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
-				if(i >= max_items)
-					break
-				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
-					i++
-			if(i<max_items)
-				to_chat(user, "<span class='info'>You empty the plant bag into the bloodbankgen.</span>")
-			else if(PB.contents.len == 0)
-				to_chat(user, "<span class='info'>You empty the plant bag into the bloodbankgen, filling it to its capacity.</span>")
-			else
-				to_chat(user, "<span class='info'>You fill the bloodbankgen to its capacity.</span>")
-		return TRUE //no afterattack
-
-	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
-		var/i = 0
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
-			i++
-		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The bloodbankgen is full! Activate it.</span>")
-		else
-			if(user.transferItemToLoc(O, src))
-				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
-		return TRUE //no afterattack
-	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("[user] begins to load \the [O] in \the [src]...",
-			"You begin to load a design from \the [O]...",
-			"You hear the chatter of a floppy drive.")
-		processing = TRUE
-		var/obj/item/disk/design_disk/D = O
-		if(do_after(user, 10, target = src))
-			for(var/B in D.blueprints)
-				if(B)
-					stored_research.add_design(B)
-		processing = FALSE
-		return TRUE
 	else
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
@@ -152,49 +199,38 @@
 	. = ..()
 	var/dat
 	if(processing)
-		dat += "<div class='statusDisplay'>bloodbankgen is processing! Please wait...</div><BR>"
+		dat += "<div class='statusDisplay'>The blood generator is processing! Please wait...</div><BR>"
 	else
 		switch(menustat)
-			if("nopoints")
-				dat += "<div class='statusDisplay'>You do not have enough biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
+			if("noblood")
+				dat += "<div class='statusDisplay'>You do not have enough blood product to create synthetics.</div>"
 				menustat = "menu"
 			if("complete")
 				dat += "<div class='statusDisplay'>Operation complete.</div>"
 				menustat = "menu"
-			if("void")
-				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
-				menustat = "menu"
 			if("nobagspace")
-				dat += "<div class='statusDisplay'>Not enough space left in container. Unable to create product.</div>"
+				dat += "<div class='statusDisplay'>Not enough space left in container. Please replace receptical.</div>"
 				menustat = "menu"
 		if(bag)
-			var/categories = show_categories.Copy()
-			for(var/V in categories)
-				categories[V] = list()
-			for(var/V in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[V]
-				for(var/C in categories)
-					if(C in D.category)
-						categories[C] += D
-
-			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
-			dat += "<A href='?src=[REF(src)];activate=1'>Activate</A><A href='?src=[REF(src)];detach=1'>Detach Container</A>"
-			for(var/cat in categories)
-				dat += "<h3>[cat]:</h3>"
-				dat += "<div class='statusDisplay'>"
-				for(var/V in categories[cat])
-					var/datum/design/D = V
-					dat += "[D.name]: <A href='?src=[REF(src)];create=[REF(D)];amount=1'>Make</A>"
-					if(cat in timesFiveCategories)
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=5'>x5</A>"
-					if(ispath(D.build_path, /obj/item/stack))
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=10'>x10</A>"
-					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
-				dat += "</div>"
+			data["isBagLoaded"] = bag ? TRUE : FALSE
+			var/bagContents = list()
+			if(bag && bag.reagents && bag.reagents.reagent_list.len)
+				for(var/datum/reagent/R in bag.reagents.reagent_list)
+					bagContents += list(list("name" = R.name, "volume" = R.volume))
+			data["bagContents"] = bagContents
+			return data
+		if(outbag)
+			data["isOutbagLoaded"] = outbag ? TRUE : FALSE
+			var/outbagContents = list()
+			if(outbag && outbag.reagents && outbag.reagents.reagent_list.len)
+				for(var/datum/reagent/R in outbag.reagents.reagent_list)
+					outbagContents += list(list("name" = R.name, "volume" = R.volume))
+			data["outbagContents"] = outbagContents
+			return data
 		else
-			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
+			dat += "<div class='statusDisplay'>No containers inside, please insert container.</div>"
 
-	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
+	var/datum/browser/popup = new(user, "bloodbank", name, 350, 520)
 	popup.set_content(dat)
 	popup.open()
 
@@ -207,11 +243,12 @@
 		to_chat(usr, "<span class='warning'>The bloodbankgen is in the process of working.</span>")
 		return
 	var/S = 0
-	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
+	if(reagents)
+		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
-			points += 1*productivity
-		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
+		if(B.reagents.get_reagent_amount("blood") < 0.1)
+			bloodstored += 2*productivity
+		else bloodstored += B.reagents.get_reagent_amount("nutriment")*10*productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
@@ -225,15 +262,15 @@
 	else
 		menustat = "void"
 
-/obj/machinery/bloodbankgen/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
+/obj/machinery/bloodbankgen/proc/check_cost(list/materials, multiplier = 1, remove_bloodstored = 1)
 	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
 		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
-		menustat = "nopoints"
+	if (materials[MAT_BIOMASS]*multiplier/efficiency > bloodstored)
+		menustat = "noblood"
 		return FALSE
 	else
-		if(remove_points)
-			points -= materials[MAT_BIOMASS]*multiplier/efficiency
+		if(remove_bloodstored)
+			bloodstored -= materials[MAT_BIOMASS]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE
@@ -244,47 +281,22 @@
 		sum_reagents += reagents[R]
 	sum_reagents *= multiplier
 
-	if(bag.reagents.total_volume + sum_reagents > bag.reagents.maximum_volume)
+	if(outbag.reagents.total_volume + sum_reagents > outbag.reagents.maximum_volume)
 		menustat = "nobagspace"
 		return FALSE
 
 	return TRUE
 
-/obj/machinery/bloodbankgen/proc/create_product(datum/design/D, amount)
-	if(!bag || !loc)
-		return FALSE
-
-	if(ispath(D.build_path, /obj/item/stack))
-		if(!check_container_volume(D.make_reagents, amount))
-			return FALSE
-		if(!check_cost(D.materials, amount))
-			return FALSE
-
-		new D.build_path(drop_location(), amount)
-		for(var/R in D.make_reagents)
-			bag.reagents.add_reagent(R, D.make_reagents[R]*amount)
-	else
-		var/i = amount
-		while(i > 0)
-			if(!check_container_volume(D.make_reagents))
-				return .
-			if(!check_cost(D.materials))
-				return .
-			if(D.build_path)
-				new D.build_path(loc)
-			for(var/R in D.make_reagents)
-				bag.reagents.add_reagent(R, D.make_reagents[R])
-			. = 1
-			--i
-
-	menustat = "complete"
-	update_icon()
-	return .
-
-/obj/machinery/bloodbankgen/proc/detach()
+/obj/machinery/bloodbankgen/proc/detachinput()
 	if(bag)
 		bag.forceMove(drop_location())
 		bag = null
+		update_icon()
+
+/obj/machinery/bloodbankgen/proc/detachoutput()
+	if(outbag)
+		outbag.forceMove(drop_location())
+		outbag = null
 		update_icon()
 
 /obj/machinery/bloodbankgen/Topic(href, href_list)
@@ -297,18 +309,10 @@
 		activate()
 		updateUsrDialog()
 
-	else if(href_list["detach"])
-		detach()
+	else if(href_list["detachinput"])
+		detachinput()
 		updateUsrDialog()
 
-	else if(href_list["create"])
-		var/amount = (text2num(href_list["amount"]))
-		//Can't be outside these (if you change this keep a sane limit)
-		amount = CLAMP(amount, 1, 50)
-		var/datum/design/D = locate(href_list["create"])
-		create_product(D, amount)
-		updateUsrDialog()
-
-	else if(href_list["menu"])
-		menustat = "menu"
+	else if(href_list["detachoutput"])
+		detachoutput()
 		updateUsrDialog()
