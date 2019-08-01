@@ -149,13 +149,13 @@
 							C.ForceContractDisease(D)
 					if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 						if((blood_data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
-							C.reagents.add_reagent("toxin", amount * 1.5) //filthy xenos bloooood
+							C.reagents.add_reagent("bonehurtingjuice", amount * 1.5) //filthy xenos bloooood
 						else if((blood_data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
-							C.reagents.add_reagent("toxin", amount * 1)	//don't fucking put oil in people
+							C.reagents.add_reagent("bonehurtingjuice", amount * 1)	//don't fucking put oil in people
 						else if((blood_data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
-							C.reagents.add_reagent("toxin", amount * 1.5) //acid blooood
+							C.reagents.add_reagent("sacid", amount * 1.5) //acid blooood
 						else
-							C.reagents.add_reagent("toxin", amount * 0.5)
+							C.reagents.add_reagent("bonehurtingjuice", amount * 0.5)
 					else
 						C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
 						return 1

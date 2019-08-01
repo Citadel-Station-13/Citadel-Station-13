@@ -29,6 +29,10 @@
 							"fly",
 							"moth",
 							"plasmaman",
+							"mammal",
+							"aquatic",
+							"insect",
+							"xenoperson",
 							"other"
 							)
 
