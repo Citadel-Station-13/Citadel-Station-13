@@ -55,7 +55,7 @@
 		return
 	on = !on
 	if(!on)
-		remove_overlay(light_overlay)
+		cut_overlay(light_overlay)
 	else
 		add_overlay(light_overlay)
 	user.update_inv_head() //So the mob overlay updates
