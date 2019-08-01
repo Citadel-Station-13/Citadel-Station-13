@@ -477,7 +477,7 @@
 
 	var/available_ghosts = 0
 	for(var/spawner in GLOB.mob_spawners)
-    if(!LAZYLEN(spawner))
+		if(!LAZYLEN(spawner))
 			continue
 		var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
 		if(!istype(S) || !S.can_latejoin())
