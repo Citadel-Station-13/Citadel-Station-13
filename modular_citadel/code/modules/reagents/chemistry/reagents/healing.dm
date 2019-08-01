@@ -39,7 +39,7 @@
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
 	var/obj/item/organ/tongue/oT = C.getorganslot(ORGAN_SLOT_TONGUE)
-	if(current_cycle = 1)
+	if(current_cycle == 1)
 		to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and lungs.</span>")
 	if(current_cycle > 10)
 		if(!C.getorganslot(ORGAN_SLOT_TONGUE))
