@@ -14,6 +14,12 @@
 	REFER TO code/modules/mob/living/simple_animal/simple_animal_vr.dm for Var information!
 */
 
+//BOT MOBS
+
+/mob/living/simple_animal/bot
+	devourable = FASLE
+	digestable = FASLE
+	feeding = FASLE
 
 //NUETRAL MOBS
 /mob/living/simple_animal/crab
