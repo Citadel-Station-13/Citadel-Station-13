@@ -275,7 +275,7 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
 		inv.update_icon()
-
+/*
 	if(!shoes && bloody_feet)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
 		if(dna.features["taur"] != "None")
@@ -300,7 +300,7 @@ There are several things that need to be remembered:
 				else if(has_right_leg())
 					bloody_overlay.icon_state = "bloodyfeet_right"
 
-		overlays_standing[GLOVES_LAYER] = bloody_overlay
+		overlays_standing[GLOVES_LAYER] = bloody_overlay*/
 
 	if(shoes)
 		var/obj/item/clothing/shoes/S = shoes
