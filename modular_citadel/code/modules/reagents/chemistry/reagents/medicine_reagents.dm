@@ -46,7 +46,6 @@
 	reagent_state = LIQUID
 	color = "#B6D2F2"
 	overdose_threshold = 25
-	reagent_weight = 0.6
 
 /datum/reagent/medicine/rhigoxane/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-2*REM, 0.)
@@ -88,7 +87,7 @@
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if(L.failing || !L)
 		return
-	conversion_amount = trans_volume * (min(100 -C.getLiverLoss(), 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = trans_volume * 1 //liver damage got nothin on us lmao
 	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()
@@ -102,7 +101,6 @@
 	. = 1
 
 /datum/reagent/medicine/thializid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
 	M.adjust_disgust(3)
 	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, 0.225 * REM)
 	..()
@@ -135,7 +133,6 @@
 	return ..()
 
 /datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
 	M.adjust_disgust(3)
 	..()
 	. = 1
