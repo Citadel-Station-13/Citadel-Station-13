@@ -16,7 +16,7 @@
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(T)
-		T.adjustTongueLoss(C, -2)
+		T.adjustTongueLoss(C, -2)//Fix the inputs me!
 	if(L)
 		L.adjustLungLoss(-5, C)
 		C.adjustOxyLoss(-2)
@@ -39,7 +39,8 @@
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
 	var/obj/item/organ/tongue/oT = C.getorganslot(ORGAN_SLOT_TONGUE)
-
+	if(current_cycle = 1)
+		to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and lungs.</span>")
 	if(current_cycle > 10)
 		if(!C.getorganslot(ORGAN_SLOT_TONGUE))
 			var/obj/item/organ/tongue/T
@@ -69,7 +70,7 @@
 			to_chat(C, "<span class='notice'>You feel your lungs reform in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
 
-
+	C.adjustOxyLoss(-3)
 	..()
 
 /datum/reagent/fermi/yamerol_tox
