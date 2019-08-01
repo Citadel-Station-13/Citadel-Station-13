@@ -15,7 +15,6 @@
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 160 //a notch brighter so it blends better.
-	liked_food = MEAT
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
