@@ -404,7 +404,7 @@
 
 /obj/item/clothing/shoes/add_blood(mob/living/carbon/M)
 	. = ..()
-	transfer_blood = rand(2, 4)
+//	transfer_blood = rand(2, 4)
 	return TRUE
 
 /turf/add_blood(list/blood_dna)
@@ -431,9 +431,9 @@
 	if(shoes)
 		var/obj/item/clothing/shoes/S = shoes
 		S.add_blood(blood_dna)
-	else
-		transfer_blood_dna(blood_dna)
-		bloody_feet = rand(2, 4)
+//	else
+//		transfer_blood_dna(blood_dna)
+//		bloody_feet = rand(2, 4)
 	update_inv_shoes() // get them feet messy for prints!
 	return TRUE
 

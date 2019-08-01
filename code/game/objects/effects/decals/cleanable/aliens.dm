@@ -10,12 +10,19 @@
 
 /obj/effect/decal/cleanable/blood/gibs/xeno
 	color = BLOOD_COLOR_XENO
-	guts_colors = BLOOD_COLOR_XENO
-	racial = "alien"
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidxenogibs", 5)
+	update_icon()
+
+/obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
+	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+	cut_overlays()
+	var/mutable_appearance/flesh = mutable_appearance(icon, "[icon_state]x_flesh")
+	flesh.appearance_flags = RESET_COLOR
+	flesh.color = body_colors
+	add_overlay(flesh)
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/streak(list/directions)
 	set waitfor = 0
@@ -34,35 +41,27 @@
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/down
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/body
 	random_icon_states = list("gibhead", "gibtorso")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/torso
 	random_icon_states = list("gibtorso")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/limb
 	random_icon_states = list("gibleg", "gibarm")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/larva
 	random_icon_states = list("xgiblarva1", "xgiblarva2")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/larva/body
 	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
-	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/xtracks
 	icon_state = "tracks"

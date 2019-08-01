@@ -72,7 +72,7 @@
 /obj/effect/decal/cleanable/Crossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
+		if(H.shoes && blood_state && bloodiness && (!HAS_TRAIT(H,TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
 			var/obj/item/clothing/shoes/S = H.shoes
 			var/add_blood = 0
 			if(bloodiness >= BLOOD_GAIN_PER_STEP)

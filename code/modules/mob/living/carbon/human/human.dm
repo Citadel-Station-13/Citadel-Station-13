@@ -696,9 +696,9 @@
 		if(H.bloody_hands)
 			H.bloody_hands = 0
 			H.update_inv_gloves()
-		if(H.bloody_feet)
+/*		if(H.bloody_feet)
 			H.bloody_feet = 0
-			H.update_inv_shoes()
+			H.update_inv_shoes()*/
 
 	update_icons()	//apply the now updated overlays to the mob
 
