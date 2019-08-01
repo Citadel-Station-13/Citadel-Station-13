@@ -12,7 +12,7 @@
 #define ui_boxcraft "EAST-4:22,SOUTH+1:6"
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
-#define ui_boxvore	"EAST-4:22,SOUTH+1:6"
+#define ui_boxvore	"EAST-5:22,SOUTH+1:6"
 
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
@@ -33,8 +33,8 @@
 #define BALLS_VOLUME_MULT	1
 
 #define BALLS_SIZE_MIN		1
-#define BALLS_SIZE_DEF	3
-#define BALLS_SIZE_MAX		7
+#define BALLS_SIZE_DEF		2
+#define BALLS_SIZE_MAX		3
 
 #define BALLS_SACK_SIZE_MIN 1
 #define BALLS_SACK_SIZE_DEF	8

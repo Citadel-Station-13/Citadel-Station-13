@@ -171,9 +171,12 @@ Contains:
 	item_color = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	item_flags = NODROP
 	brightness_on = 7
 	resistance_flags = ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team suit"
@@ -237,8 +240,6 @@ Contains:
 	item_state = "hardsuit0-ert_commander-alert"
 	item_color = "ert_commander-alert"
 	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	strip_delay = 130
-	item_flags = NODROP
 	brightness_on = 8
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -248,11 +249,8 @@ Contains:
 	icon_state = "ert_command-alert"
 	item_state = "ert_command-alert"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
-	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
@@ -342,8 +340,12 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	item_flags = NODROP
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"

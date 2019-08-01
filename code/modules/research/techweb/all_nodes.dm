@@ -69,7 +69,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker", "healthanalyzer_advanced","harvester","holobarrier_med")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker", "healthanalyzer_advanced","harvester","holobarrier_med","smartdartgun","medicinalsmartdart")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -115,7 +115,7 @@
 	display_name = "Advanced Surgery"
 	description = "When simple medicine doesn't cut it."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("surgery_lobotomy", "surgery_reconstruction")
+	design_ids = list("surgery_lobotomy", "surgery_reconstruction", "organbox")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -203,6 +203,24 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
+/datum/techweb_node/basic_meteor_defense
+	id = "basic_meteor_defense"
+	display_name = "Meteor Defense Research"
+	description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
+	prereq_ids = list("adv_engi", "high_efficiency")
+	design_ids = list("meteor_defence", "meteor_console")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
+//datum/techweb_node/adv_meteor_defense
+	//id = "adv_meteor_defense"
+	//display_name = "Meteor Defense Research"
+	//description = "New and improved coding and lock on tech for meteor defence!"
+	//prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
+	//design_ids = list("meteor_disk")
+	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	//export_price = 5000
+
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
 	id = "bluespace_basic"
@@ -213,23 +231,22 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/adv_bluespace
-	id = "adv_bluespace"
-	display_name = "Advanced Bluespace Research"
-	description = "Deeper understanding of how the Bluespace dimension works"
-	prereq_ids = list("practical_bluespace", "high_efficiency")
-	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole",  "bluespace_crystal", "wormholeprojector")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
-	export_price = 5000
-
 /datum/techweb_node/practical_bluespace
 	id = "practical_bluespace"
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","biobag_holding","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	design_ids = list("bs_rped","biobag_holding","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "bluespacesmartdart")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
+/datum/techweb_node/adv_bluespace
+	id = "adv_bluespace"
+	display_name = "Advanced Bluespace Research"
+	description = "Deeper understanding of how the Bluespace dimension works"
+	prereq_ids = list("practical_bluespace", "high_efficiency")
+	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "bluespace_crystal")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 
 /datum/techweb_node/bluespace_power
@@ -241,7 +258,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/bluespace_holding //Bluespace-memery
+/datum/techweb_node/bluespace_holding
 	id = "bluespace_holding"
 	display_name = "Bluespace Pockets"
 	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
@@ -249,6 +266,25 @@
 	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5500)
 	export_price = 5000
+
+/datum/techweb_node/bluespace_portal
+	id = "bluespace_portal"
+	display_name = "Bluespace Portals"
+	description = "Allows for Bluespace Tech to be used tandem with Wormhole tech."
+	prereq_ids = list("adv_weaponry", "adv_bluespace")
+	design_ids = list("wormholeprojector")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/bluespace_warping
+	id = "bluespace_warping"
+	display_name = "Bluespace Teleportation tech"
+	description = "Traversing through space at an instant with Bluespace."
+	prereq_ids = list("adv_power", "adv_bluespace")
+	design_ids = list( "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console", "teleconsole", "roastingstick")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /////////////////////////plasma tech/////////////////////////
 /datum/techweb_node/basic_plasma
 	id = "basic_plasma"
@@ -527,7 +563,7 @@
 	display_name = "Advanced Mining Technology"
 	description = "Efficiency Level 127"	//dumb mc references
 	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
-	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter_adv")
+	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter_adv", "ore_silo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

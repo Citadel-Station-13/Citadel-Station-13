@@ -8,6 +8,7 @@
 	slot_flags = ITEM_SLOT_GLOVES
 	attack_verb = list("challenged")
 	var/transfer_prints = FALSE
+	var/transfer_blood = 0
 	strip_delay = 20
 	equip_delay_other = 40
 

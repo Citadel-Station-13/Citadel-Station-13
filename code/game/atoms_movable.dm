@@ -14,6 +14,7 @@
 	var/verb_exclaim = "exclaims"
 	var/verb_whisper = "whispers"
 	var/verb_yell = "yells"
+	var/speech_span
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0
@@ -31,6 +32,8 @@
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
+	var/datum/component/orbiter/orbiting
+	var/can_be_z_moved = TRUE
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -295,14 +298,7 @@
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
 
-	if (orbiters)
-		for (var/thing in orbiters)
-			var/datum/orbit/O = thing
-			O.Check()
-	if (orbiting)
-		orbiting.Check()
-
-	return 1
+	return TRUE
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(proximity_monitor)
@@ -323,6 +319,10 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
+
+	if(orbiting)
+		orbiting.end_orbit(src)
+		orbiting = null
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()

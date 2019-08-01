@@ -134,6 +134,31 @@
 	speed_process = TRUE
 	var/kill_range = 14
 
+/obj/machinery/satellite/meteor_shield/sci
+	name = "\improper Meteor Shield Satellite"
+	desc = "A station made meteor point-defense satellite."
+	mode = "M-SHIELD"
+
+/obj/item/disk/meteor
+	name = "Meteor Shield Upgrade Disk"
+	desc = "A floppy disk that allows meteor shields to fire at longer ranges and lowers meteor drawing from gravitational fields.."
+
+/obj/machinery/satellite/meteor_shield/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/disk/meteor))
+		to_chat(user, "<span class='notice'>The disk uploads better tracking and rang modification software.</span>")
+		kill_range = 17
+	else
+		return ..()
+
+/obj/machinery/satellite/meteor_shield/sci/toggle(user)
+	if(!..(user))
+		return FALSE
+	if(obj_flags & EMAGGED)
+		if(active)
+			change_meteor_chance(8)
+		else
+			change_meteor_chance(0.125)
+
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
 		if(!isspaceturf(T))
@@ -177,4 +202,4 @@
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
 	if(active)
-		change_meteor_chance(2)
+		change_meteor_chance(4)

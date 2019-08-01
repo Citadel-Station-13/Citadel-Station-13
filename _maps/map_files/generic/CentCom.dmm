@@ -2248,6 +2248,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
+"fR" = (
+/obj/item/paicard,
+/obj/structure/table/wood,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "fS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2935,6 +2940,22 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
+"hH" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/seclite,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paicard,
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3709,6 +3730,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"jA" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/item/soap/syndie,
+/turf/open/floor/plasteel/freezer,
+/area/syndicate_mothership)
 "jB" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -4193,6 +4221,14 @@
 /area/syndicate_mothership)
 "ku" = (
 /turf/closed/indestructible/fakeglass,
+/area/syndicate_mothership)
+"kv" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/rag/towel/syndicate,
+/turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
 "kw" = (
 /turf/open/floor/plasteel/yellowsiding,
@@ -8393,10 +8429,6 @@
 	},
 /turf/open/floor/plating,
 /area/syndicate_mothership)
-"tg" = (
-/obj/item/soap/syndie,
-/turf/open/floor/plasteel/freezer,
-/area/syndicate_mothership)
 "tl" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
@@ -11369,21 +11401,6 @@
 /obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
-"AL" = (
-/obj/structure/table/reinforced,
-/obj/item/flashlight/seclite,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AM" = (
 /obj/machinery/shuttle_manipulator,
@@ -15116,7 +15133,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -17424,12 +17441,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Rl" = (
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel/freezer,
-/area/syndicate_mothership)
 "Rm" = (
 /obj/structure/chair/wood/wings{
 	dir = 3
@@ -25222,7 +25233,7 @@ lI
 lI
 lI
 Ax
-qZ
+EW
 qZ
 qZ
 Ax
@@ -25480,7 +25491,7 @@ lI
 lI
 Ax
 ra
-qZ
+Bf
 qZ
 tX
 qZ
@@ -25736,7 +25747,7 @@ lI
 lI
 lI
 Ax
-qZ
+fR
 qZ
 qZ
 Ax
@@ -37817,8 +37828,8 @@ nx
 mA
 Tz
 ku
-tg
-Rl
+jA
+kv
 uM
 QV
 wp
@@ -56332,7 +56343,7 @@ yr
 sw
 sw
 Ad
-AL
+hH
 Bx
 sw
 Cv

@@ -34,6 +34,12 @@
 	icon_state = "crowbar_brass"
 	toolspeed = 0.5
 
+/obj/item/crowbar/bronze
+	name = "bronze plated crowbar"
+	desc = "A bronze plated crowbar."
+	icon_state = "crowbar_brass"
+	toolspeed = 0.95
+
 /obj/item/crowbar/abductor
 	name = "alien crowbar"
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
@@ -41,7 +47,6 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "crowbar"
 	toolspeed = 0.1
-
 
 /obj/item/crowbar/large
 	name = "crowbar"

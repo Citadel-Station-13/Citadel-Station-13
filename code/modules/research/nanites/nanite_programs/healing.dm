@@ -70,9 +70,13 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
-	if(!host_mob.getBrainLoss())
-		return FALSE
-	return ..()
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		if(length(C.get_traumas()))
+			return ..()
+	if(host_mob.getBrainLoss())
+		return ..()
+	return FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
 	host_mob.adjustBrainLoss(-1, TRUE)
@@ -187,10 +191,14 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
-	if(!host_mob.getBrainLoss())
-		return FALSE
-	return ..()
-
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		if(length(C.get_traumas()))
+			return ..()
+	if(host_mob.getBrainLoss())
+		return ..()
+	return FALSE
+	
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustBrainLoss(-2, TRUE)
 	if(iscarbon(host_mob) && prob(10))
@@ -215,7 +223,7 @@
 	if(!iscarbon(host_mob)) //nonstandard biology
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.suiciding || C.has_trait(TRAIT_NOCLONE) || C.hellbound) //can't revive
+	if(C.suiciding || HAS_TRAIT(C, TRAIT_NOCLONE) || C.hellbound) //can't revive
 		return FALSE
 	if((world.time - C.timeofdeath) > 1800) //too late
 		return FALSE

@@ -62,13 +62,13 @@
 
 
 /obj/effect/proc_holder/changeling/sting/transformation
-	name = "Transformation Sting"
-	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human. This ability is loud, and might cause our blood to react violently to heat."
+	name = "Temporary Transformation Sting"
+	desc = "We silently sting a human, injecting a chemical that forces them to transform into a chosen being for a limited time. Additional stings extend the duration."
+	helptext = "The victim will transform much like a changeling would for a limited time. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human. This ability is loud, and might cause our blood to react violently to heat."
 	sting_icon = "sting_transform"
-	chemical_cost = 50
-	dna_cost = 3
-	loudness = 2
+	chemical_cost = 10
+	dna_cost = 2
+	loudness = 1
 	var/datum/changelingprofile/selected_dna = null
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_transform"
@@ -91,25 +91,25 @@
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.has_trait(TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
-	var/datum/dna/NewDNA = selected_dna.dna
+
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
 	var/mob/living/carbon/C = target
 	. = TRUE
 	if(istype(C))
-		C.real_name = NewDNA.real_name
-		NewDNA.transfer_identity(C)
-		if(ismonkey(C))
-			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
-		C.updateappearance(mutcolor_update=1)
+		if(C.reagents.has_reagent("changeling_sting_real"))
+			C.reagents.add_reagent("changeling_sting_real",120)
+			log_combat(user, target, "stung", "transformation sting", ", extending the duration.")
+		else
+			C.reagents.add_reagent("changeling_sting_real",120,list("desired_dna" = selected_dna.dna))
+			log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade
@@ -134,7 +134,7 @@
 		return
 	if(isliving(target))
 		var/mob/living/L = target
-		if((L.has_trait(TRAIT_HUSK)) || !L.has_dna())
+		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
 			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 			return 0
 	return 1

@@ -541,6 +541,25 @@
 		/obj/item/ammo_casing/shotgun
 		))
 
+/obj/item/storage/belt/medolier
+	name = "medolier"
+	desc = "A medical bandolier for holding smartdarts."
+	icon_state = "medolier"
+	item_state = "medolier"
+
+/obj/item/storage/belt/medolier/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 15
+	STR.display_numerical_stacking = FALSE
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/syringe/dart
+		))
+
+/obj/item/storage/belt/medolier/full/PopulateContents()
+	for(var/i in 1 to 16)
+		new /obj/item/reagent_containers/syringe/dart/(src)
+
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
 	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
@@ -557,6 +576,8 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
+		/obj/item/toy/gun,
+		/obj/item/gun/energy/e_gun/mini
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
@@ -632,6 +653,9 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
+	var/starting_sword = /obj/item/melee/sabre
+	var/sword_overlay
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
@@ -639,9 +663,7 @@
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/melee/sabre
-		))
+	STR.can_hold = typecacheof(fitting_swords)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	..()
@@ -660,16 +682,42 @@
 		to_chat(user, "[src] is empty.")
 
 /obj/item/storage/belt/sabre/update_icon()
-	icon_state = "sheath"
-	item_state = "sheath"
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
+	sword_overlay = null
 	if(contents.len)
-		icon_state += "-sabre"
-		item_state += "-sabre"
+		var/obj/item/I = contents[1]
+		sword_overlay = initial(I.icon_state)
+		add_overlay("-[sword_overlay]")
+		item_state += "-[I.icon_state]"
 	if(loc && isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
 
+/obj/item/storage/belt/sabre/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += mutable_appearance(icon_file, "-[sword_overlay]")
+
 /obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
+	new starting_sword(src)
 	update_icon()
+
+/obj/item/storage/belt/sabre/rapier
+	name = "rapier sheath"
+	desc = "A black, thin sheath that looks to house only a long thin blade. Feels like its made of metal."
+	icon_state = "rsheath"
+	item_state = "rsheath"
+	force = 5
+	throwforce = 15
+	block_chance = 30
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("bashed", "slashes", "prods", "pokes")
+	fitting_swords = list(/obj/item/melee/rapier)
+	starting_sword = /obj/item/melee/rapier
+
+/obj/item/storage/belt/sabre/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //To thin to block bullets
+	return ..()

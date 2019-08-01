@@ -403,13 +403,16 @@ There are several things that need to be remembered:
 
 	if(wear_suit)
 		var/obj/item/clothing/suit/S = wear_suit
+		var/no_taur_thanks = FALSE
+		if(!istype(S))
+			no_taur_thanks = TRUE
 		wear_suit.screen_loc = ui_oclothing
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		if(S.mutantrace_variation) //Just make sure we've got this checked too
+		if(!no_taur_thanks && S.mutantrace_variation) //Just make sure we've got this checked too
 			if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
 			else
@@ -430,7 +433,7 @@ There are several things that need to be remembered:
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
-		if(S.center)
+		if(!no_taur_thanks && S.center)
 			suit_overlay = center_image(suit_overlay, S.dimension_x, S.dimension_y)
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_hair()
@@ -686,8 +689,10 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-[BP.dmg_overlay_type]"
 		if(BP.body_markings)
 			. += "-[BP.body_markings]"
+		else
+			. += "-no_marking"
 
-	if(has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache()
@@ -729,7 +734,7 @@ generate/load female uniform sprites matching all previously decided variables
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
 
-	if(HD && !(has_trait(TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		// lipstick
 		if(lip_style && (LIPS in dna.species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)

@@ -123,7 +123,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.has_trait(TRAIT_MUTE)) || H.silent)
+					if((HAS_TRAIT(H, TRAIT_MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue
@@ -244,20 +244,21 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
 		return 0
-	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie.</a> Or you could choose to continue resisting and suffer a fate worse than death...</span>")
+	to_chat(convertee, "<span class='cult italic'><b>The world goes red. All at once you are aware of an evil, eldritch truth taking roots into your mind.\n\
+	<a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie</a></b>, or suffer a fate worse than death.</span>")
+	INVOKE_ASYNC(src, .proc/optinalert, convertee)
 	currentconversionman = convertee
-	conversiontimeout = world.time + (10 SECONDS)
-	convertee.Stun(100)
-	convertee.add_trait(TRAIT_MUTE, "conversionrune")
+	conversiontimeout = world.time + (14 SECONDS)
+	convertee.Stun(140)
+	ADD_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
+	flash_color(convertee, list("#960000", "#960000", "#960000", rgb(0,0,0)), 50)
 	conversionresult = FALSE
 	while(world.time < conversiontimeout && convertee && !conversionresult)
 		stoplag(1)
 	currentconversionman = null
 	if(!convertee)
 		return FALSE
-	convertee.remove_trait(TRAIT_MUTE, "conversionrune")
+	REMOVE_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
 	if(get_turf(convertee) != get_turf(src))
 		return FALSE
 	if(!conversionresult)
@@ -282,6 +283,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.stuttering = 0
 		H.cultslurring = 0
 	return 1
+
+/obj/effect/rune/convert/proc/optinalert(mob/living/convertee)
+	var/alert = alert(convertee, "Will you embrace the Geometer of Blood or perish in futile resistance?", "Choose your own fate", "Join the Blood Cult", "Suffer a horrible demise")
+	if(alert == "Join the Blood Cult")
+		signmeup(convertee)
+
+/obj/effect/rune/convert/proc/signmeup(mob/living/convertee)
+	if(currentconversionman == usr)
+		conversionresult = TRUE
+	else
+		to_chat(usr, "<span class='cult italic'>Your fate has already been set in stone.</span>")
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
 	var/mob/living/first_invoker = invokers[1]
@@ -335,11 +347,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/convert/Topic(href, href_list)
 	if(href_list["signmeup"])
-		if(currentconversionman == usr)
-			conversionresult = TRUE
-		else
-			to_chat(usr, "<span class='cult italic'><b>Your fate has already been set in stone.</b></span>")
-
+		signmeup(usr)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"

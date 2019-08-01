@@ -297,15 +297,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
-			ASSERT_GAS(id, total)
-			total_gases[id][MOLES] += S_gases[id][MOLES]
+			total_gases[id] += S_gases[id]
 		total.temperature += S.air.temperature
 
 	air.copy_from(total)
 
 	var/list/air_gases = air.gases
 	for(var/id in air_gases)
-		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+		air_gases[id] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
 	SSair.add_to_active(src)

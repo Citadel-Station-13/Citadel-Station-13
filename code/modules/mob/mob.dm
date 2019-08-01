@@ -67,8 +67,8 @@
 	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
-		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
+		if(gas)
+			t+="<span class='notice'>[GLOB.meta_gas_names[id]]: [gas] \n</span>"
 
 	to_chat(usr, t)
 
@@ -155,7 +155,7 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -163,6 +163,8 @@
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( msg, 2, deaf_message, 1)
 
 // Show a message to all mobs in earshot of this atom
@@ -171,11 +173,13 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
+/atom/proc/audible_message(message, deaf_message, hearing_distance, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/Life()
@@ -784,7 +788,7 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
@@ -871,13 +875,7 @@
 	return
 
 /mob/proc/update_sight()
-	for(var/O in orbiters)
-		var/datum/orbit/orbit = O
-		var/obj/effect/wisp/wisp = orbit.orbiter
-		if (istype(wisp))
-			sight |= wisp.sight_flags
-			if(!isnull(wisp.lighting_alpha))
-				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 
 	sync_lighting_plane_alpha()
 

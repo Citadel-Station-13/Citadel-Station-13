@@ -6,7 +6,7 @@
 #define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
-#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
+#define SPEAK(message) radio.talk_into(src, message, radio_channel)
 
 /obj/machinery/clonepod
 	name = "cloning pod"
@@ -163,15 +163,8 @@
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
-	if(efficiency > 2)
-		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
-	if(efficiency > 5 && prob(20))
-		H.randmutvg()
-	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
-		if(ismob(M))
-			H = M
+	if(prob(50 - efficiency*10)) //Chance to give a bad mutation.
+		H.randmutb() //100% bad mutation. Can be cured with mutadone.
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
@@ -182,11 +175,11 @@
 
 	//Get the clone body ready
 	maim_clone(H)
-	H.add_trait(TRAIT_STABLEHEART, "cloning")
-	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
-	H.add_trait(TRAIT_MUTE, "cloning")
-	H.add_trait(TRAIT_NOBREATH, "cloning")
-	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	ADD_TRAIT(H, TRAIT_STABLEHEART, "cloning")
+	ADD_TRAIT(H, TRAIT_EMOTEMUTE, "cloning")
+	ADD_TRAIT(H, TRAIT_MUTE, "cloning")
+	ADD_TRAIT(H, TRAIT_NOBREATH, "cloning")
+	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
@@ -361,11 +354,11 @@
 	if(!mob_occupant)
 		return
 
-	mob_occupant.remove_trait(TRAIT_STABLEHEART, "cloning")
-	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_MUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOBREATH, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_NOBREATH, "cloning")
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
@@ -452,7 +445,7 @@
 
 	// brain function, they also have no limbs or internal organs.
 
-	if(!H.has_trait(TRAIT_NODISMEMBER))
+	if(!HAS_TRAIT(H, TRAIT_NODISMEMBER))
 		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 		for(var/zone in zones)
 			var/obj/item/bodypart/BP = H.get_bodypart(zone)

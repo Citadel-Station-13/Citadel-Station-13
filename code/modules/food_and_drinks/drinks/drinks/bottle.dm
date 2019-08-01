@@ -57,7 +57,7 @@
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
-	if(user.has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return
 
@@ -73,7 +73,7 @@
 
 		var/mob/living/carbon/human/H = target
 		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, "melee","","",armour_penetration) // For normal attack damage
+		armor_block = H.run_armor_check(affecting, "melee", null, null,armour_penetration) // For normal attack damage
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
@@ -202,6 +202,19 @@
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list("hell_water" = 100)
 
+/obj/item/reagent_containers/food/drinks/holyoil
+	name = "flask of zelus oil"
+	desc = "A brass flask of Zelus oil, a viscous fluid scenting of brass. Can be thrown to deal damage from afar."
+	icon_state = "zelusflask"
+	list_reagents = list("holyoil" = 30) //Powerfull
+	volume = 30
+	foodtype = NONE
+	force = 12 //Same as a toolbox
+	throwforce = 18
+
+/obj/item/reagent_containers/food/drinks/holyoil/null
+	list_reagents = list("holyoil" = 0)
+
 /obj/item/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye vermouth"
 	desc = "Sweet, sweet dryness~"
@@ -329,6 +342,33 @@
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
 	list_reagents = list("fernet" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/applejack
+	name = "Buckin' Bronco's Applejack"
+	desc = "Kicks like a horse, tastes like an apple!"
+	icon_state = "applejack_bottle"
+	list_reagents = list("applejack" = 100)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne
+	name = "Eau d' Dandy Brut Champagne"
+	desc = "Finely sourced from only the most pretentious French vineyards."
+	icon_state = "champagne_bottle"
+	list_reagents = list("champagne" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/blazaam
+	name = "Ginbad's Blazaam"
+	desc = "You feel like you should give the bottle a good rub before opening."
+	icon_state = "blazaambottle"
+	list_reagents = list("blazaam" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/trappist
+	name = "Mont de Requin Trappistes Bleu"
+	desc = "Brewed in space-Belgium. Fancy!"
+	icon_state = "trappistbottle"
+	volume = 50
+	list_reagents = list("trappist" = 50)
+
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 

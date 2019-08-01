@@ -191,6 +191,32 @@
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/ears/human/bigwolf
+	name = "Big Wolf"
+	icon_state = "bigwolf"
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/ears/human/bigwolfinner
+	name = "Big Wolf (ALT)"
+	icon_state = "bigwolfinner"
+	hasinner = 1
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/ears/human/bigwolfdark
+	name = "Dark Big Wolf"
+	icon_state = "bigwolfdark"
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/ears/human/bigwolfinnerdark
+	name = "Dark Big Wolf (ALT)"
+	icon_state = "bigwolfinnerdark"
+	hasinner = 1
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
+
 /datum/sprite_accessory/ears/human/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -959,6 +985,13 @@
 	name = "Eevee"
 	icon_state = "eevee"
 
+
+/datum/sprite_accessory/mam_ears/elf
+	name = "Elf"
+	icon_state = "elf"
+	color_src = MUTCOLORS3
+
+
 /datum/sprite_accessory/mam_ears/elephant
 	name = "Elephant"
 	icon_state = "elephant"
@@ -1496,6 +1529,12 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Cow"
 	icon_state = "cow"
 	taur_mode = HOOF_TAURIC
+
+/datum/sprite_accessory/taur/deer
+	name = "Deer"
+	icon_state = "deer"
+	taur_mode = HOOF_TAURIC
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/taur/drake
 	name = "Drake"

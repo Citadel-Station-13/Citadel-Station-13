@@ -49,14 +49,14 @@
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee += 50
+		H.physiology.armor.melee += 35
 		H.physiology.armor.bullet += 35
 
 /datum/nanite_program/hardening/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee -= 50
+		H.physiology.armor.melee -= 35
 		H.physiology.armor.bullet -= 35
 
 /datum/nanite_program/refractive
@@ -69,14 +69,14 @@
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser += 50
+		H.physiology.armor.laser += 35
 		H.physiology.armor.energy += 35
 
 /datum/nanite_program/refractive/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser -= 50
+		H.physiology.armor.laser -= 35
 		H.physiology.armor.energy -= 35
 
 /datum/nanite_program/coagulating
@@ -106,11 +106,11 @@
 
 /datum/nanite_program/conductive/enable_passive_effect()
 	. = ..()
-	host_mob.add_trait(TRAIT_SHOCKIMMUNE, "nanites")
+	ADD_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/conductive/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_SHOCKIMMUNE, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/mindshield
 	name = "Mental Barrier"
@@ -121,10 +121,10 @@
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
 	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev)) //won't work if on a rev, to avoid having implanted revs
-		host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
+		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
 		host_mob.sec_hud_set_implants()
 
 /datum/nanite_program/mindshield/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_MINDSHIELD, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
 	host_mob.sec_hud_set_implants()

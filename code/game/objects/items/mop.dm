@@ -15,7 +15,7 @@
 	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 5
-	var/stamusage = 5
+	var/stamusage = 2
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
@@ -94,7 +94,7 @@
 	force = 6
 	throwforce = 8
 	throw_range = 4
-	stamusage = 2
+	stamusage = 1
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
 	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING

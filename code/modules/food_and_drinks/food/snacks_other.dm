@@ -340,36 +340,6 @@
 	tastes = list("melon" = 1)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/snacks/spacefreezy
-	name = "space freezy"
-	desc = "The best icecream in space."
-	icon_state = "spacefreezy"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "bluecherryjelly" = 5, "vitamin" = 4)
-	filling_color = "#87CEFA"
-	tastes = list("blue cherries" = 2, "ice cream" = 2)
-	foodtype = FRUIT | DAIRY
-
-/obj/item/reagent_containers/food/snacks/sundae
-	name = "sundae"
-	desc = "A classic dessert."
-	icon_state = "sundae"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
-	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
-	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "banana" = 1)
-	foodtype = FRUIT | DAIRY | SUGAR
-
-/obj/item/reagent_containers/food/snacks/honkdae
-	name = "honkdae"
-	desc = "The clown's favorite dessert."
-	icon_state = "honkdae"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "banana" = 10, "vitamin" = 4)
-	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-	foodtype = FRUIT | DAIRY | SUGAR
-
 /obj/item/reagent_containers/food/snacks/nachos
 	name = "nachos"
 	desc = "Chips from Space Mexico."
@@ -588,3 +558,19 @@
 	list_reagents = list("nutriment" = 6, "sodiumchloride" = 2)
 	tastes = list("rice" = 3, "salt" = 1)
 	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/cannedpeaches
+	name = "Canned Peaches"
+	desc = "Just a nice can of ripe peaches swimming in their own juices."
+	icon_state = "peachcan"
+	list_reagents = list("peachjuice" = 20, "sugar" = 8, "nutriment" = 2)
+	filling_color = "#ffdf26"
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("peaches" = 7, "tin" = 1)
+	foodtype = FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/cannedpeaches/maint
+	name = "Maintenance Peaches"
+	desc = "I have a mouth and I must eat."
+	icon_state = "peachcanmaint"
+	tastes = list("peaches" = 1, "tin" = 7)

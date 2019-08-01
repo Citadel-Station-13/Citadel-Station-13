@@ -187,7 +187,7 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/loc_gases = O.air.gases
-			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
+			if(loc_gases[/datum/gas/oxygen] > 13)
 				return TRUE
 	return FALSE
 

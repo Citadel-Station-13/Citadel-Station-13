@@ -9,7 +9,6 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
-	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
 	var/amount = 30
@@ -52,7 +51,8 @@
 //these become available once upgraded.
 	var/list/upgrade_reagents = list(
 		"oil",
-		"ammonia"
+		"ammonia",
+		"ash"
 	)
 
 	var/list/upgrade_reagents2 = list(
@@ -79,7 +79,6 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	cell = new cell_type
 	dispensable_reagents = sortList(dispensable_reagents)
 	update_icon()
 
@@ -250,13 +249,8 @@
 				work_animation()
 				. = TRUE
 		if("eject")
-			if(beaker)
-				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
-					usr.put_in_hands(beaker)
-				beaker = null
-				update_icon()
-				. = TRUE
+			replace_beaker(usr)
+			. = TRUE //no afterattack
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
 				return
@@ -269,7 +263,7 @@
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
+					var/actual = min(max(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
 						if(!cell.use(actual / powerefficiency))
 							say("Not enough energy to complete operation!")
@@ -322,14 +316,12 @@
 		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
-		. = 1 //no afterattack
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
+		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
-		beaker = B
+		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
@@ -381,7 +373,17 @@
 			dispensable_reagents |= upgrade_reagents3
 	powerefficiency = round(newpowereff, 0.01)
 
-
+/obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null
@@ -416,6 +418,12 @@
 		var/list/fuck = splittext(reagents, "=")
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
+
+/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
@@ -480,9 +488,16 @@
 		"tomatojuice",
 		"lemonjuice",
 		"menthol"
-	) //prevents the soda machine from obtaining chemical upgrades. .
-	upgrade_reagents = null
-	upgrade_reagents2 = null
+	)
+	upgrade_reagents = list(
+		"mushroomhallucinogen",
+		"nothing",
+		"cryoxadone"
+	)
+	upgrade_reagents2 = list(
+		"banana",
+		"berryjuice"
+	)
 	upgrade_reagents3 = null
 	emagged_reagents = list(
 		"thirteenloko",
@@ -534,19 +549,21 @@
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
-	)//prevents the booze machine from obtaining chemical upgrades.
-	upgrade_reagents = null
+		"sake",
+		"applejack"
+	)
+	upgrade_reagents = list(
+		"ethanol",
+		"fernet"
+	)
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	emagged_reagents = list(
-		"ethanol",
 		"iron",
 		"alexander",
 		"clownstears",
 		"minttoxin",
 		"atomicbomb",
-		"fernet",
 		"aphro",
 		"aphro+"
 	)
