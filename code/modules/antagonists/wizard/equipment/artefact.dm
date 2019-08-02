@@ -385,9 +385,11 @@
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
 		return
+	var/turf/T = get_turf(user)
+	if(!T)
+		return
 	on_cooldown = TRUE
 	last_user = user
-	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
 	user.canmove = FALSE
 	new /obj/effect/temp_visual/tornado(T)
@@ -402,6 +404,8 @@
 		return
 	var/breakout = 0
 	while(breakout < 50)
+		if(!T)
+			break
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			user.forceMove(potential_T)

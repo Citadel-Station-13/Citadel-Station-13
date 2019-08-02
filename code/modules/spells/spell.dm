@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
 		action.UpdateButtonIcon()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
 	switch(charge_type)
@@ -430,13 +430,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(CHECK_BITFIELD(magic_gear, SPELL_SKIP_ALL_REQS))
 		return TRUE
 
-	if(player_lock)
-		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
-			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
-			return FALSE
-	else
-		if(!(src in user.mob_spell_list))
-			return FALSE
+	if(player_lock && (!user.mind || !(src in user.mind.spell_list)))
+		to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
+		return FALSE
+	if(!(src in user.mob_spell_list))
+		return FALSE
 
 	if(!CHECK_BITFIELD(magic_gear, SPELL_SKIP_CENTCOM))
 		var/turf/T = get_turf(user)
@@ -459,8 +457,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(clothes_req && !CHECK_MULTIPLE_BITFIELDS(magic_gear, clothes_req) && !CHECK_BITFIELD(magic_gear, SPELL_SKIP_CLOTHES))
 		var/the_many_hats = CHECK_BITFIELD(clothes_req, SPELL_WIZARD_HAT|SPELL_CULT_HELMET)
 		var/the_many_suits = CHECK_BITFIELD(clothes_req, SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR)
-		var/without_hat_robe = CHECK_BITFIELD(magic_gear, the_many_suits) ? "without a proper headwear" : CHECK_BITFIELD(magic_gear, the_many_hats) ? "without a proper suit" : "to cast this spell yet"
-		to_chat(user, "<span class='notice'>I don't feel strong enough [without_hat_robe].</span>")
+		var/without_hat_robe = CHECK_BITFIELD(magic_gear, the_many_suits) ? "a proper headwear" : CHECK_BITFIELD(magic_gear, the_many_hats) ? "a proper suit" : "the required garments to cast this spell"
+		to_chat(user, "<span class='notice'>I don't feel strong enough without [without_hat_robe].</span>")
 		return FALSE
 
 	if(!CHECK_BITFIELD(magic_gear, SPELL_SKIP_VOCAL) && (invocation_type in list("whisper", "shout")) && isliving(user))

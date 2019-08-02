@@ -40,6 +40,88 @@
 /obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
+"aaf" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aag" = (
+/obj/machinery/mineral/stacking_unit_console{
+	dir = 2;
+	machinedir = 8;
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbagestacked"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aah" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbagestacked"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aai" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aaj" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aak" = (
+/obj/machinery/recycler,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aal" = (
+/obj/structure/chair/comfy/black,
+/obj/structure/sign/plaques/kiddie{
+	desc = "An embossed piece of paper from the Third University of Harvard.";
+	name = "\improper 'Diploma' frame";
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/obj/effect/landmark/start/lawyer,
+/turf/open/floor/wood,
+/area/lawoffice)
+"aam" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -16687,13 +16769,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
-"aNV" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "EngLoad"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "aNX" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -17180,22 +17255,6 @@
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
-"aPg" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "aPi" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -17558,16 +17617,6 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aQo" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -21118,7 +21167,7 @@
 "aYf" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -51263,14 +51312,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"cvf" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
-/obj/machinery/recycler,
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "cvg" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/brflowers,
@@ -53693,19 +53734,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
-"eFG" = (
-/obj/machinery/mineral/stacking_unit_console{
-	dir = 2;
-	machinedir = 8;
-	pixel_x = -32;
-	pixel_y = 32
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "EngLoad"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "eHI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
@@ -59043,14 +59071,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
-"rax" = (
-/obj/machinery/conveyor{
-	icon_state = "conveyor_map";
-	dir = 1;
-	id = "EngLoad"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "reH" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/disposalpipe/segment{
@@ -61508,13 +61528,6 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
-"xer" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "xeB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -61768,19 +61781,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
-"xJy" = (
-/obj/structure/chair/comfy/black,
-/obj/structure/sign/plaques/kiddie{
-	desc = "An embossed piece of paper from the Third University of Harvard.";
-	name = "\improper 'Diploma' frame";
-	pixel_y = 32
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
-/turf/open/floor/wood,
-/area/lawoffice)
 "xKc" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
@@ -81803,7 +81803,7 @@ ajM
 aiu
 aiu
 gSH
-xJy
+aal
 sJr
 sJr
 sJr
@@ -107513,9 +107513,9 @@ aaa
 aaa
 aLn
 aNT
-xer
-aQo
-aPg
+aaf
+aai
+aam
 aRu
 srZ
 aLm
@@ -107771,7 +107771,7 @@ aaa
 aLm
 aLm
 aNU
-aNV
+aaj
 dqY
 aRv
 sZh
@@ -108027,8 +108027,8 @@ aaa
 aaa
 aLm
 aME
-eFG
-aNV
+aag
+aaj
 dqY
 aRw
 sqQ
@@ -108284,9 +108284,9 @@ aaa
 aaa
 aLo
 aMF
-aNV
-aNV
-cvf
+aah
+aaj
+aak
 aQn
 sqQ
 aSm
@@ -108542,8 +108542,8 @@ aaa
 aLo
 aMG
 aNX
-aNV
-rax
+aaj
+aaf
 aRy
 aSn
 aSn
