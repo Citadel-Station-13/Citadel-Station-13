@@ -1487,10 +1487,10 @@
 					/obj/item/integrated_electronics/wirer)
 	crate_name = "circuitry starter pack crate"
 
-/datum/supply_pack/science/elemolenseed
-	name = "Elemolen Seed Crate"
-	desc = "A crate with one seed in for a Elemolen. Needs Hydroponics access to open."
-	cost = 7500
+/datum/supply_pack/science/elemelonseed
+	name = "Elemelon Seed Crate"
+	desc = "A crate with one seed in for a Elemelon. Needs Hydroponics access to open."
+	cost = 8500
 	access = ACCESS_HYDROPONICS
 	contains = list(/obj/item/seeds/elemelon)
 	crate_name = "exotic seed crate"
