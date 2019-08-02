@@ -83,7 +83,7 @@
 		E.emote_list[E.key] = E
 
 	//Food processor
-	for(var/path in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
+	for(var/path in subtypesof(/datum/food_processor_process) - list(/datum/food_processor_process/mob, /datum/food_processor_process/mob/sausage))
 		var/datum/food_processor_process/P = new path()
 		for(var/typecache in P.input)
 			if(P.blacklisted_inputs && is_type_in_typecache(typecache, P.blacklisted_inputs))

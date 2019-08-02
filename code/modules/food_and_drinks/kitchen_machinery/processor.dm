@@ -31,6 +31,13 @@
 	if(user.canUseTopic(src, BE_CLOSE, FALSE))
 		empty(user)
 
+/obj/machinery/processor/emag_act(mob/user)
+	. = ..()
+	if(CHECK_BITFIELD(obj_flags, EMAGGED))
+		return
+	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	to_chat(user, "<span class='notice'>You activate \the [src]'s emergency humanitarian protocols.</span>")
+
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (!QDELETED(src))
 		recipe.make_results(src, what)
@@ -94,9 +101,6 @@
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
 	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling, user))
-		if(user.grab_state < GRAB_AGGRESSIVE)
-			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
-			return
 		var/mob/living/pushed_mob = user.pulling
 		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
 		pushed_mob.forceMove(src)
@@ -112,21 +116,29 @@
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	use_power(500)
 	var/total_time = 0
-	for(var/O in contents)
-		var/datum/food_processor_process/P = select_recipe(O)
+	var/list/processing_recipes
+	for(var/i in contents)
+		var/atom/movable/A = i
+		var/datum/food_processor_process/P = select_recipe(A)
 		if (!P)
-			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
+			log_admin("DEBUG: [A] was found inside food processor while not having a suitable recipe.")
+			A.forceMove(drop_location())
 			continue
 		total_time += P.time
+		LAZYSET(processing_recipes, P, A)
+		if(ismob(A)) //prevent sprinting out and exploding into gibs the next room cases.
+			var/mob/M = A
+			M.death(TRUE)
+			M.ghostize()
+	if(!processing_recipes)
+		return
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
-	sleep(total_time / rating_speed)
-	for(var/atom/movable/O in src.contents)
-		var/datum/food_processor_process/P = select_recipe(O)
-		if (!P)
-			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
-			continue
-		process_food(P, O)
+	addtimer(CALLBACK(src, .proc/finish_food, processing_recipes), total_time / rating_speed)
+
+/obj/machinery/processor/proc/finish_food(list/processing_recipes)
+	for(var/A in processing_recipes)
+		process_food(A, processing_recipes[A])
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	processing = FALSE
 	visible_message("\The [src] finishes processing.")
@@ -136,7 +148,7 @@
 	set name = "Eject Contents"
 	set src in oview(1)
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	empty(usr)
 	add_fingerprint(usr)
@@ -190,14 +202,3 @@
 
 	visible_message("[picked_slime] is sucked into [src].")
 	picked_slime.forceMove(src)
-
-/obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/S = what
-	if (!istype(S))
-		return ..()
-	var/C = S.cores
-	for(var/i in 1 to (C+rating_amount-1))
-		var/atom/movable/item = new S.coretype(drop_location())
-		adjust_item_drop_location(item)
-		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
-		S.gib(TRUE,TRUE,TRUE)
