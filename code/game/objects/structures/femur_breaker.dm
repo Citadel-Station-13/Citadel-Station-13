@@ -33,7 +33,7 @@
 
 	msg += "It is [anchored ? "secured to the floor." : "unsecured."]<br/>"
 
-	if (breaker_status == BREAKER_SLAT_RAISED)
+	if (slat_status == BREAKER_SLAT_RAISED)
 		msg += "The breaker slat is in a neutral position."
 	else
 		msg += "The breaker slat is lowered, and must be raised."
@@ -87,8 +87,8 @@
 				icon_state = "breaker_drop"
 				addtimer(CALLBACK(src, .proc/drop_slat), BREAKER_ANIMATION_LENGTH)
 
-/obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/victim)
-		H.apply_damage(200, BRUTE, leg)
+/obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
+		H.apply_damage(200, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!")
 
 /obj/structure/femur_breaker/proc/raise_slat()
@@ -102,13 +102,8 @@
 		if (!H)
 			return
 
-		var/obj/item/bodypart/leg = H.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-
-		if (QDELETED(leg))
-			return
-
 		playsound(src, 'sound/effects/femur_breaker.ogg', 100, 1)
-		addtimer(CALLBACK(src, .proc/damage_leg, h), 32, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/damage_leg, H), 32, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
 		unbuckle_all_mobs()
 
