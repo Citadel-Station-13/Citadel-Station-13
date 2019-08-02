@@ -102,10 +102,9 @@
 		if (!H)
 			return
 
-		playsound(src, 'sound/effects/femur_breaker.ogg', 100, 1)
+		playsound(src, 'sound/effects/femur_breaker.ogg', 100, FALSE)
 		addtimer(CALLBACK(src, .proc/damage_leg, H), 32, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
-		unbuckle_all_mobs()
 
 	slat_status = BREAKER_SLAT_DROPPED
 	icon_state = "breaker"
