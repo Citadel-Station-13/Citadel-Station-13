@@ -660,6 +660,15 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
 
+/datum/crafting_recipe/femur_breaker
+	name = "Femur Breaker"
+	result = /obj/structure/femur_breaker
+	time = 150 
+	reqs = list(/obj/item/stack/sheet/metal = 20,
+		        /obj/item/stack/cable_coil = 30)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	category = CAT_MISC
+	
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
