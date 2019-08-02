@@ -104,7 +104,7 @@
 /obj/item/reagent_containers/food/snacks/grown/elemelon/fire
 	seed = /obj/item/seeds/elemelon/hell
 	name = "hell elemelon"
-	desc = "This red fruit is said to be as from a different plan... Never found on lava land for some reason"
+	desc = "This red fruit is said to originate from the infernal plane, however it can't be found on Lavaland."
 	icon_state = "firemelon"
 	filling_color = "#000000"
 	dried_type = null
@@ -126,7 +126,7 @@
 /obj/item/reagent_containers/food/snacks/grown/elemelon/air
 	seed = /obj/item/seeds/elemelon/air
 	name = "air elemelon"
-	desc = "This transparent blueish fruit is said to be as from a clouds."
+	desc = "This translucent, blueish fruit is said to only grow among clouds."
 	icon_state = "airmelon"
 	filling_color = "#000000"
 	dried_type = null
@@ -148,7 +148,7 @@
 /obj/item/reagent_containers/food/snacks/grown/elemelon/h2o
 	seed = /obj/item/seeds/elemelon/h2o
 	name = "water elemelon"
-	desc = "This dark blue fruit is said to be as from a from bluesea pocket"
+	desc = "This navy blue fruit is said to originate from an oceanic bluespace pocket."
 	icon_state = "h_two_o_melon"
 	filling_color = "#000000"
 	dried_type = null
@@ -170,7 +170,7 @@
 /obj/item/reagent_containers/food/snacks/grown/elemelon/earth
 	seed = /obj/item/seeds/elemelon/earth
 	name = "soil elemelon"
-	desc = "This brown fruit is said to be from a massive meteor core that was able to sustain life inside of it before NT mind into it..."
+	desc = "This brown fruit is fabled to be from a massive hollow meteor able to sustain life within its interior."
 	icon_state = "earthmelon"
 	filling_color = "#000000"
 	dried_type = null
