@@ -72,7 +72,7 @@
 						current_action = 0
 						slat_status = BREAKER_SLAT_MOVING
 						icon_state = "breaker_drop"
-						addtimer(CALLBACK(src, .proc/drop_slat, user), BREAKER_ANIMATION_LENGTH - 2)
+						drop_slat(user)
 					else
 						current_action = 0
 				else
@@ -88,8 +88,8 @@
 				addtimer(CALLBACK(src, .proc/drop_slat), BREAKER_ANIMATION_LENGTH)
 
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
+		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!", forced = "femur broken")
 		H.apply_damage(200, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!")
 
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED
