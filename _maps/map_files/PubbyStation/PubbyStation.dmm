@@ -2,126 +2,12 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
-"aab" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm3Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aac" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm2Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
-"aae" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm1Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aaf" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aag" = (
-/obj/machinery/mineral/stacking_unit_console{
-	dir = 2;
-	machinedir = 8;
-	pixel_x = -32;
-	pixel_y = 32
-	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbagestacked"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aah" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbagestacked"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aai" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aaj" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aak" = (
-/obj/machinery/recycler,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aal" = (
-/obj/structure/chair/comfy/black,
-/obj/structure/sign/plaques/kiddie{
-	desc = "An embossed piece of paper from the Third University of Harvard.";
-	name = "\improper 'Diploma' frame";
-	pixel_y = 32
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
-/obj/effect/landmark/start/lawyer,
-/turf/open/floor/wood,
-/area/lawoffice)
-"aam" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbage"
-	},
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -8719,6 +8605,16 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
+"ave" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm3Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "avf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -10161,6 +10057,17 @@
 	name = "Dorm Shutters"
 	},
 /turf/open/floor/plating,
+/area/crew_quarters/dorms)
+"ayj" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm2Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayk" = (
 /obj/machinery/light/small{
@@ -11608,6 +11515,17 @@
 	name = "Dorm Shutters"
 	},
 /turf/open/floor/plating,
+/area/crew_quarters/dorms)
+"aBM" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm1Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aBN" = (
 /obj/machinery/light/small{
@@ -16769,6 +16687,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"aNV" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbagestacked"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "aNX" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -17255,6 +17180,22 @@
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"aPg" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "aPi" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -17617,6 +17558,16 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"aQo" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -24158,6 +24109,10 @@
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -51312,6 +51267,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
+"cvf" = (
+/obj/machinery/recycler,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "cvg" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/brflowers,
@@ -52118,6 +52081,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+"cyp" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "cyy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -53734,6 +53704,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"eFG" = (
+/obj/machinery/mineral/stacking_unit_console{
+	dir = 2;
+	machinedir = 8;
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbagestacked"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "eHI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
@@ -61528,6 +61511,13 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"xer" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "xeB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -61781,6 +61771,20 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
+"xJy" = (
+/obj/structure/chair/comfy/black,
+/obj/structure/sign/plaques/kiddie{
+	desc = "An embossed piece of paper from the Third University of Harvard.";
+	name = "\improper 'Diploma' frame";
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/obj/effect/landmark/start/lawyer,
+/turf/open/floor/wood,
+/area/lawoffice)
 "xKc" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
@@ -81803,7 +81807,7 @@ ajM
 aiu
 aiu
 gSH
-aal
+xJy
 sJr
 sJr
 sJr
@@ -99272,13 +99276,13 @@ ale
 asb
 coe
 apX
-aab
+ave
 awn
 apX
-aac
+ayj
 azr
 apX
-aae
+aBM
 aDb
 apX
 oFo
@@ -101105,7 +101109,7 @@ aTm
 bbE
 bbE
 bbE
-dps
+bbE
 bbE
 bbE
 aEj
@@ -101364,7 +101368,7 @@ bcA
 bdF
 beJ
 bfB
-bbE
+dps
 aZv
 aUC
 biz
@@ -107513,9 +107517,9 @@ aaa
 aaa
 aLn
 aNT
-aaf
-aai
-aam
+xer
+aQo
+aPg
 aRu
 srZ
 aLm
@@ -107771,7 +107775,7 @@ aaa
 aLm
 aLm
 aNU
-aaj
+cyp
 dqY
 aRv
 sZh
@@ -108027,8 +108031,8 @@ aaa
 aaa
 aLm
 aME
-aag
-aaj
+eFG
+cyp
 dqY
 aRw
 sqQ
@@ -108284,9 +108288,9 @@ aaa
 aaa
 aLo
 aMF
-aah
-aaj
-aak
+aNV
+cyp
+cvf
 aQn
 sqQ
 aSm
@@ -108542,8 +108546,8 @@ aaa
 aLo
 aMG
 aNX
-aaj
-aaf
+cyp
+xer
 aRy
 aSn
 aSn
