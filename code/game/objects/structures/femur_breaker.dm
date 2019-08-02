@@ -87,6 +87,10 @@
 				icon_state = "breaker_drop"
 				addtimer(CALLBACK(src, .proc/drop_slat), BREAKER_ANIMATION_LENGTH)
 
+/obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/victim)
+		H.apply_damage(200, BRUTE, leg)
+		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!")
+
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED
 	icon_state = "breaker_raised"
@@ -103,9 +107,8 @@
 		if (QDELETED(leg))
 			return
 
-		playsound(src, 'sound/weapons/femur_breaker.ogg', 100, 1)
-		H.apply_damage(200, BRUTE, leg)
-		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!")
+		playsound(src, 'sound/effects/femur_breaker.ogg', 100, 1)
+		addtimer(CALLBACK(src, .proc/damage_leg, h), 32, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
 		unbuckle_all_mobs()
 
