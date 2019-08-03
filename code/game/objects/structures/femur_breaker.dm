@@ -82,10 +82,9 @@
 						H.regenerate_icons()
 
 					unbuckle_all_mobs()
-			else
-				slat_status = BREAKER_SLAT_MOVING
+			else //HERE
+				slat_status = BREAKER_SLAT_DROPPED
 				icon_state = "breaker_drop"
-				addtimer(CALLBACK(src, .proc/drop_slat), BREAKER_ANIMATION_LENGTH)
 
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
 		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!", forced = "femur broken")
