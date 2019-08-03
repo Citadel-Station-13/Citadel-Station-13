@@ -1,8 +1,8 @@
-#define BREAKER_ANIMATION_LENGTH 9 // How many deciseconds the animation is
+#define BREAKER_ANIMATION_LENGTH 9
 #define BREAKER_SLAT_RAISED     1
 #define BREAKER_SLAT_MOVING     2
 #define BREAKER_SLAT_DROPPED    3
-#define BREAKER_ACTIVATE_DELAY   30 // Delay for activation
+#define BREAKER_ACTIVATE_DELAY   30
 #define BREAKER_WRENCH_DELAY     10
 #define BREAKER_ACTION_INUSE      5
 #define BREAKER_ACTION_WRENCH     6
@@ -49,7 +49,7 @@
 /obj/structure/femur_breaker/attack_hand(mob/user)
 	add_fingerprint(user)
 
-	// Currently being used by something
+	// Currently being used
 	if (current_action)
 		return
 
@@ -88,7 +88,7 @@
 
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
 		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!", forced = "femur broken")
-		H.apply_damage(75, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		H.apply_damage(150, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED
@@ -102,7 +102,7 @@
 			return
 
 		playsound(src, 'sound/effects/femur_breaker.ogg', 100, FALSE)
-		H.stun(32)
+		H.Stun(32)
 		addtimer(CALLBACK(src, .proc/damage_leg, H), 32, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
 
