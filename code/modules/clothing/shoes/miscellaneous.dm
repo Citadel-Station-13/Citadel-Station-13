@@ -221,7 +221,7 @@
 
 	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
 		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-		addtimer(src, VARSET_CALLBACK(src, recharging_time, world.time + recharging_rate))
+		recharging_time = world.time + recharging_rate
 		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
