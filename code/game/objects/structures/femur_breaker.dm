@@ -88,7 +88,7 @@
 
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
 		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!", forced = "femur broken")
-		H.apply_damage(200, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		H.apply_damage(75, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED
@@ -102,6 +102,7 @@
 			return
 
 		playsound(src, 'sound/effects/femur_breaker.ogg', 100, FALSE)
+		H.stun(32)
 		addtimer(CALLBACK(src, .proc/damage_leg, H), 32, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
 
