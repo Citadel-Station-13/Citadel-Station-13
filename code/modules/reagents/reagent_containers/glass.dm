@@ -53,7 +53,7 @@
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	. = ..()
-	if((!proximity) || !spillable || !check_allowed_items(target,target_self=1))
+	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
 	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
