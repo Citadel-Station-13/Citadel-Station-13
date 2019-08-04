@@ -278,9 +278,9 @@
 	screen_loc = ui_internal
 
 /obj/screen/internals/Click()
-	if(!ishuman(usr))
+	if(!iscarbon(usr))
 		return
-	var/mob/living/carbon/human/C = usr
+	var/mob/living/carbon/C = usr
 	if(C.incapacitated())
 		return
 

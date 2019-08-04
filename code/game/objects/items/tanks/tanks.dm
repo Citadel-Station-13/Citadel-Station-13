@@ -23,7 +23,7 @@
 	toggle_internals(user)
 
 /obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/H = user
 	if(!istype(H))
 		return
 
