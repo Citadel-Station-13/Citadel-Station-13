@@ -26,6 +26,14 @@
 		return
 	reagents.maximum_volume = fluid_max_volume
 	if(fluid_id && producing)
+		if(reagents.total_volume == 0) // Apparently, 0.015 gets rounded down to zero and no reagents are created if we don't start it with 0.1 in the tank.
+			fluid_rate = 0.1
+		else
+			fluid_rate = CUM_RATE
+		if(reagents.total_volume >= 5)
+			fluid_mult = 0.5
+		else
+			fluid_mult = 1
 		generate_milk()
 
 /obj/item/organ/genital/breasts/proc/generate_milk()
