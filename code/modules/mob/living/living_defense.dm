@@ -332,10 +332,10 @@
 	if(shock_damage > 0)
 		if(!illusion)
 			adjustFireLoss(shock_damage)
-				if(HAS_TRAIT(H, TRAIT_MASO))
-					adjustArousalLoss(shock_damage)
-						if(H.getArousalLoss()>= 100 && ishuman(H) && H.has_dna())
-							H.mob_climax(forced_climax=TRUE)
+			if(HAS_TRAIT(src, TRAIT_MASO))
+				adjustArousalLoss(shock_damage)
+				if(src.getArousalLoss()>= 100 && ishuman(src) && src.has_dna())
+					src.mob_climax(forced_climax=TRUE)
 		visible_message(
 			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
