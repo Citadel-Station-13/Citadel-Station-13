@@ -502,4 +502,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			. = BLOOD_COLOR_OIL
 		if("GEL")// slimepeople blood, rgb 0, 255, 144
 			. = BLOOD_COLOR_SLIME
+		if("BUG")
+			. = "#a37c0f"
 		//add more stuff to the switch if you have more blood colors for different types

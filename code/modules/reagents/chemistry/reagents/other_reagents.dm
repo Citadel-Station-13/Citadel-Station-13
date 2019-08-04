@@ -30,13 +30,13 @@
 			if(C.get_blood_id() == bluhduh)
 				if(method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits)))
 					if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-						C.reagents.add_reagent("toxin", reac_volume * 0.5)
+						C.reagents.add_reagent("bonehurtingjuice", reac_volume * 0.5)
 					if(data && (data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
-						C.reagents.add_reagent("toxin", reac_volume * 1.5) //filthy xenos bloooood
+						C.reagents.add_reagent("bonehurtingjuice", reac_volume * 1.5) //filthy xenos bloooood
 					if(data && (data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
-						C.reagents.add_reagent("toxin", reac_volume * 1)	//don't fucking put oil in people
+						C.reagents.add_reagent("bonehurtingjuice", reac_volume * 1)	//don't drink oil, silly vampire
 					if(data && (data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
-						C.reagents.add_reagent("toxin", reac_volume * 1.5) //acid blooood
+						C.reagents.add_reagent("sacid", reac_volume * 1.5) //acid blooood, dumb vampire
 					else
 						C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
@@ -465,7 +465,7 @@
 //We only get 30u to start with...
 
 /datum/reagent/fuel/holyoil/reaction_obj(obj/O, reac_volume)
-	. = ..() 
+	. = ..()
 	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		reac_volume = min(reac_volume, M.amount)

@@ -168,6 +168,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
+	exotic_bloodtype = "BUG"
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

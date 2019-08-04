@@ -15,6 +15,7 @@
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
+	exotic_bloodtype = "BUG"
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()

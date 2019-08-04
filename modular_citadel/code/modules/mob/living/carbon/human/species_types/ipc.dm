@@ -12,6 +12,7 @@
 	default_features = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	mutanttongue = /obj/item/organ/tongue/robot/ipc
+	mutant_heart = /obj/item/organ/heart/ipc
 
 	exotic_blood = "oilblood"
 	exotic_bloodtype = "HF"

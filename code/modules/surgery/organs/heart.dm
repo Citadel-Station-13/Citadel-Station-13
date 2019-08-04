@@ -45,7 +45,7 @@
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
-	S.icon_state = "heart-off"
+	S.icon_state = "[icon_base]-off"
 	return S
 
 /obj/item/organ/heart/on_life()
@@ -69,6 +69,12 @@
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
+
+obj/item/organ/heart/slime
+	name = "slime heart"
+	desc = "It seems we've gotten to the slimy core of the matter."
+	icon_state = "heart-s-on"
+	icon_base = "heart-s"
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -160,6 +166,19 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
+
+/obj/item/organ/heart/ipc
+	name = "IPC heart"
+	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
+	icon_state = "heart-c"
+	synthetic = TRUE
+
+/obj/item/organ/heart/ipc/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	Stop()
+	addtimer(CALLBACK(src, .proc/Restart), 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
