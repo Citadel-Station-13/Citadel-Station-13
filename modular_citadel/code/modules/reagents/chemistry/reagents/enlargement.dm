@@ -173,12 +173,14 @@
 
 /datum/reagent/fermi/BEsmaller_hypo/on_mob_add(mob/living/carbon/M)
 	. = ..()
-	if(M.dna.features["has_vag"])
-		var/obj/item/organ/genital/vagina/nV = new
-		nV.Insert(M)
-	if(M.dna.features["has_womb"])
-		var/obj/item/organ/genital/womb/nW = new
-		nW.Insert(M)
+	if(!M.getorganslot("vagina"))
+		if(M.dna.features["has_vag"])
+			var/obj/item/organ/genital/vagina/nV = new
+			nV.Insert(M)
+	if(!M.getorganslot("womb"))
+		if(M.dna.features["has_womb"])
+			var/obj/item/organ/genital/womb/nW = new
+			nW.Insert(M)
 
 /datum/reagent/fermi/BEsmaller_hypo/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
@@ -342,15 +344,16 @@
 
 /datum/reagent/fermi/PEsmaller_hypo/on_mob_add(mob/living/carbon/M)
 	. = ..()
-	if(M.dna.features["has_balls"])
-		var/obj/item/organ/genital/testicles/nT = new
-		nT.Insert(M)
+	if(!M.getorganslot("testicles"))
+		if(M.dna.features["has_balls"])
+			var/obj/item/organ/genital/testicles/nT = new
+			nT.Insert(M)
 
 /datum/reagent/fermi/PEsmaller_hypo/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
 		return ..()
-	if(!M.dna.features["has_penis"])//Fast fix for those who don't want it.
+	if(!M.dna.features["has_cock"])//Fast fix for those who don't want it.
 		P.cached_length = P.cached_length - 0.2
 		P.update()
 	else if(P.cached_length > (M.dna.features["cock_length"]+0.1))
