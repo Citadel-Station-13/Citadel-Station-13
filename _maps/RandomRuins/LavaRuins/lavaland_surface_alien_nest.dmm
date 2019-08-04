@@ -147,7 +147,7 @@
 /area/ruin/unpowered/xenonest)
 "aH" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/footprints/tracks/wheels,
+/obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aI" = (

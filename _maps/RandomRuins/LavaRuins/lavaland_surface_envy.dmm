@@ -34,7 +34,7 @@
 	},
 /area/ruin/unpowered)
 "g" = (
-/obj/effect/decal/cleanable/blood/footprints/tracks/wheels,
+/obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
