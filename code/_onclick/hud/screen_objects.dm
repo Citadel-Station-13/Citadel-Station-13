@@ -293,7 +293,7 @@
 			var/obj/item/clothing/check
 			var/internals = FALSE
 
-			for(check in C.get_internal_slots())
+			for(check in GET_INTERNAL_SLOTS(C))
 				if(istype(check, /obj/item/clothing/mask))
 					var/obj/item/clothing/mask/M = check
 					if(M.mask_adjusted)

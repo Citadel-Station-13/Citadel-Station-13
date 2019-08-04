@@ -140,9 +140,3 @@
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
 	var/index = get_held_index_of_item(I)
 	return index && hand_bodyparts[index]
-
-/mob/living/carbon/proc/get_internal_slots()
-	return list(
-		head,
-		wear_mask,
-		)

@@ -306,12 +306,8 @@
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	var/obj/item/clothing/check
 	var/internals = FALSE
-	var/internalslots = list(
-		head,
-		wear_mask,
-		)
 
-	for(check in internalslots)
+	for(check in GET_INTERNAL_SLOTS(src))
 		if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
 			internals = TRUE
 	if(internal)

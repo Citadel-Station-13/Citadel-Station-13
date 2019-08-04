@@ -230,3 +230,6 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/toy)))
+
+//Internals checker
+#define GET_INTERNAL_SLOTS(C) list(C.head, C.wear_mask)
