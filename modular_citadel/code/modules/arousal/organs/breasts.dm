@@ -15,10 +15,6 @@
 	can_climax				= TRUE
 	fluid_transfer_factor 	= 0.5
 
-/obj/item/organ/genital/breasts/Initialize()
-	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
-
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))
 		return

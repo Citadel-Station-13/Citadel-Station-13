@@ -9,10 +9,6 @@
 	fluid_id 		= "femcum"
 	producing		= TRUE
 
-/obj/item/organ/genital/womb/Initialize()
-	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
-
 /obj/item/organ/genital/womb/on_life()
 	if(QDELETED(src))
 		return

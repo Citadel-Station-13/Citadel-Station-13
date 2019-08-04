@@ -16,10 +16,6 @@
 	can_climax				= TRUE
 	var/sent_full_message	= TRUE //defaults to 1 since they're full to start
 
-/obj/item/organ/genital/testicles/Initialize()
-	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
-
 /obj/item/organ/genital/testicles/on_life()
 	if(QDELETED(src))
 		return
