@@ -476,12 +476,12 @@
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
-		if(ishuman(src) && has_dna())
-			var/mob/living/carbon/human/M = src
-			if(HAS_TRAIT(M, TRAIT_MASO))
-				M.adjustArousalLoss(shock_damage)
-				if(M.getArousalLoss()>= 100)
-					M.mob_climax(forced_climax=TRUE)
+
+	if(has_dna())
+		if(HAS_TRAIT(src, TRAIT_MASO))
+			adjustArousalLoss(shock_damage)
+			if(getArousalLoss()>= 100)
+				mob_climax(forced_climax=TRUE)
 
 
 /mob/living/carbon/human/emp_act(severity)
