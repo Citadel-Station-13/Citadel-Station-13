@@ -318,7 +318,7 @@
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if (internals == FALSE && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		else if (!internals && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
 			update_internals_hud_icon(0)
 		else
