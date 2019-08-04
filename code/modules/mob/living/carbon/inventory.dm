@@ -144,5 +144,5 @@
 /mob/living/carbon/proc/get_internal_slots()
 	return list(
 		head,
-		wear_mask,
+		wear_mask
 		)
