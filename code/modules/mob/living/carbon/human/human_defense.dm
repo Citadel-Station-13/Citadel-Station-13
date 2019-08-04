@@ -476,6 +476,12 @@
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
+		if(ishuman(src) && has_dna())
+			var/mob/living/carbon/human/M = src
+			if(HAS_TRAIT(M, TRAIT_MASO))
+				M.adjustArousalLoss(shock_damage)
+				if(M.getArousalLoss()>= 100)
+					M.mob_climax(forced_climax=TRUE)
 
 
 /mob/living/carbon/human/emp_act(severity)
@@ -748,7 +754,6 @@
 
 			if(roundstart_quirks.len)
 				to_send += "<span class='notice'>You have these quirks: [get_trait_string()].</span>\n"
-			
 			to_chat(src, to_send)
 		else
 			if(wear_suit)
