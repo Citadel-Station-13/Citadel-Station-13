@@ -1,13 +1,15 @@
 /obj/machinery/bloodbankgen
 	name = "blood bank generator"
-	desc = "Generates universally applicable synthetics for all blood types. Add regular blood to convert quickly."
-	icon = 'icons/obj/machines/biogenerator.dmi'
+	desc = "Generates universally applicable synthetics for all blood types. Add regular blood to convert."
+	icon = 'icons/obj/bloodbank.dmi'
 	icon_state = "bloodbank-off"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	circuit = /obj/item/circuitboard/machine/bloodbankgen
-	var/processing = FALSE
+	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON
+	var/draining = FALSE
+	var/filling = FALSE
 	var/obj/item/reagent_containers/blood/bag = null
 	var/obj/item/reagent_containers/blood/outbag = null
 	var/bloodstored = 0
@@ -93,19 +95,19 @@
 			var/percent = round((outbag.reagents.total_volume / outbag.volume) * 100)
 			switch(percent)
 				if(0 to 9)
-					filling_overlay.icon_state = "input-reagent0"
+					filling_overlay.icon_state = "output-reagent0"
 				if(10 to 24)
-					filling_overlay.icon_state = "input-reagent10"
+					filling_overlay.icon_state = "output-reagent10"
 				if(25 to 49)
-					filling_overlay.icon_state = "input-reagent25"
+					filling_overlay.icon_state = "output-reagent25"
 				if(50 to 74)
-					filling_overlay.icon_state = "input-reagent50"
+					filling_overlay.icon_state = "output-reagent50"
 				if(75 to 79)
-					filling_overlay.icon_state = "input-reagent75"
+					filling_overlay.icon_state = "output-reagent75"
 				if(80 to 90)
-					filling_overlay.icon_state = "input-reagent80"
+					filling_overlay.icon_state = "output-reagent80"
 				if(91 to INFINITY)
-					filling_overlay.icon_state = "input-reagent100"
+					filling_overlay.icon_state = "output-reagent100"
 
 			filling_overlay.color = list(mix_color_from_reagents(outbag.reagents.reagent_list))
 			add_overlay(filling_overlay)
@@ -115,42 +117,76 @@
 	if(!is_operational())
 		return PROCESS_KILL
 
-	var/transfer_amount = 20
-	var/efficent_amount = ((transfer_amount * 0.5) * (1.5 * efficiency))
-	if(bag)
-		if(bag.reagents)
-			var/datum/reagent/blood/B = bag.reagents.has_reagent("blood")
-			if(B)
-				var/amount = reagents.maximum_volume - reagents.total_volume //monitor the machine's internal storage
-				amount = min(amount, 4)
-				if(!amount)
-					return
-				var/list/bloodtypes = list("A+", "A-", "B+", "B-", "O+", "O-", "L", "X*", "HF", "GEL", "U")
-				for(var/blood in bloodtypes[bag.blood_type])
-					if(blood) //no infinite loops using synthetics.
-						src.add_reagent("syntheticblood", efficent_amount)
-					else
-						src.add_reagent("syntheticblood", transfer_amount)
-				bag.reagents.remove_reagent(B,transfer_amount)
-				update_icon()
+	bloodstored = reagents.total_volume
 
-	if(outbag)
-		var/amount = outbag.reagents.maximum_volume - outbag.reagents.total_volume //monitor the output bag's internal storage
-		amount = min(amount, 4)
-		if(!amount)
+	var/transfer_amount = 20
+
+	if(draining)
+		if(reagents.total_volume >= reagents.maximum_volume)
+			draining = FALSE
 			return
-		if(bloodstored <= 0)
+
+		if(bag)
+			if(bag.reagents.total_volume)
+				var/datum/reagent/blood/B = bag.reagents.has_reagent("blood")
+				if(B)
+					var/amount = reagents.maximum_volume - reagents.total_volume //monitor the machine's internal storage
+					amount = min(amount, transfer_amount)
+					if(!amount)
+						draining = FALSE
+						updateUsrDialog()
+						visible_message("[src] beeps loudly.")
+						playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+						return
+
+					if(bag.blood_type == "SY") //no infinite loops using synthetics.
+						reagents.add_reagent("syntheticblood", amount)
+					else
+						reagents.add_reagent("syntheticblood", (amount+(5*efficiency)))
+
+					if(bag.reagents.total_volume >= amount)
+						bag.reagents.remove_reagent("blood", amount)
+					else
+						visible_message("[src] beeps loudly.")
+						playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+						draining = FALSE
+
+					bag.update_icon()
+					update_icon()
+					updateUsrDialog()
+		else
+			draining = FALSE
+			updateUsrDialog()
 			return
-		reagents.trans_to(outbag, transfer_amount)
-		update_icon()
+
+	if(filling)
+		if(!reagents || !reagents.total_volume)
+			filling = FALSE //there ain't anything in the machine yo.
+			return
+		if(outbag && outbag.reagents.total_volume < outbag.reagents.maximum_volume)
+			var/amount = outbag.reagents.maximum_volume - outbag.reagents.total_volume //monitor the output bag's internal storage
+			amount = min(amount, transfer_amount)
+			if(!amount)
+				filling = FALSE
+				visible_message("[src] pings.")
+				playsound(loc, 'sound/machines/beep.ogg', 50, 1)
+				updateUsrDialog()
+				return
+
+			reagents.trans_to(outbag, amount)
+			outbag.update_icon()
+			update_icon()
+			updateUsrDialog()
+		else
+			visible_message("[src] pings.")
+			playsound(loc, 'sound/machines/beep.ogg', 50, 1)
+			filling = FALSE
+			updateUsrDialog()
+			return
 
 /obj/machinery/bloodbankgen/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-
-	if(processing)
-		to_chat(user, "<span class='warning'>The generator is currently processing.</span>")
-		return
 
 	if(default_deconstruction_screwdriver(user, "bloodbank-off", "bloodbank-off", O))
 		if(bag)
@@ -191,89 +227,66 @@
 		return
 
 	else
-		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
+		to_chat(user, "<span class='warning'>You cannot put this in [src]!</span>")
 
 /obj/machinery/bloodbankgen/ui_interact(mob/user)
-	if(stat & BROKEN || panel_open)
-		return
 	. = ..()
-	var/dat
-	if(processing)
-		dat += "<div class='statusDisplay'>The blood generator is processing! Please wait...</div><BR>"
-	else
-		switch(menustat)
-			if("noblood")
-				dat += "<div class='statusDisplay'>You do not have enough blood product to create synthetics.</div>"
-				menustat = "menu"
-			if("complete")
-				dat += "<div class='statusDisplay'>Operation complete.</div>"
-				menustat = "menu"
-			if("nobagspace")
-				dat += "<div class='statusDisplay'>Not enough space left in container. Please replace receptical.</div>"
-				menustat = "menu"
-		if(bag)
-			data["isBagLoaded"] = bag ? TRUE : FALSE
-			var/bagContents = list()
-			if(bag && bag.reagents && bag.reagents.reagent_list.len)
-				for(var/datum/reagent/R in bag.reagents.reagent_list)
-					bagContents += list(list("name" = R.name, "volume" = R.volume))
-			data["bagContents"] = bagContents
-			return data
-		if(outbag)
-			data["isOutbagLoaded"] = outbag ? TRUE : FALSE
-			var/outbagContents = list()
-			if(outbag && outbag.reagents && outbag.reagents.reagent_list.len)
-				for(var/datum/reagent/R in outbag.reagents.reagent_list)
-					outbagContents += list(list("name" = R.name, "volume" = R.volume))
-			data["outbagContents"] = outbagContents
-			return data
-		else
-			dat += "<div class='statusDisplay'>No containers inside, please insert container.</div>"
 
-	var/datum/browser/popup = new(user, "bloodbank", name, 350, 520)
+	if(!is_operational())
+		return
+
+	var/dat
+	switch(menustat)
+		if("noblood")
+			dat += "<div class='statusDisplay'>You do not have enough blood product to create synthetics.</div>"
+			menustat = "menu"
+		if("complete")
+			dat += "<div class='statusDisplay'>Operation complete.</div>"
+			menustat = "menu"
+		if("nobagspace")
+			dat += "<div class='statusDisplay'>Not enough space left in container. Please replace receptical.</div>"
+			menustat = "menu"
+
+	dat+= "<br><B>Current Synthetics stockpile: [reagents.total_volume] units.</B><HR>"
+
+	dat += "<br>Supply Bag<HR>"
+	if(bag)
+		dat += "<br>Current Capacity: [bag.reagents.total_volume] of [bag.reagents.maximum_volume]"
+		if(bag.reagents && bag.reagents.total_volume)
+			dat += "<br><a href='?src=\ref[src];activateinput=1'>Drain</a>"
+
+		dat += "<br><a href='?src=\ref[src];detachinput=1'>Detach</a>"
+
+
+	dat += "<br><br>Synthetics Bag<HR>"
+	if(outbag)
+		dat += "<br>Current Capacity:[outbag.reagents.total_volume] of [outbag.reagents.maximum_volume]"
+		if(!(outbag.reagents.total_volume >= outbag.reagents.maximum_volume))
+			dat += "<br><a href='?src=\ref[src];activateoutput=1'>Fill</a>"
+		dat += "<br><a href='?src=\ref[src];detachoutput=1'>Detach</a>"
+
+	if(!bag && !outbag)
+		dat += "<div class='statusDisplay'>No containers inside, please insert container.</div>"
+
+	var/datum/browser/popup = new(user, "bloodbankgen", name, 350, 520)
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/bloodbankgen/proc/activate()
-	if (usr.stat != CONSCIOUS)
-		return
-	if (src.stat != NONE) //NOPOWER etc
-		return
-	if(processing)
-		to_chat(usr, "<span class='warning'>The bloodbankgen is in the process of working.</span>")
-		return
-	var/S = 0
-	if(reagents)
-		var/datum/reagent/blood/B = reagents.has_reagent("blood")
-		S += 5
-		if(B.reagents.get_reagent_amount("blood") < 0.1)
-			bloodstored += 2*productivity
-		else bloodstored += B.reagents.get_reagent_amount("nutriment")*10*productivity
-		qdel(I)
-	if(S)
-		processing = TRUE
-		update_icon()
-		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
-		use_power(S*30)
-		sleep(S+15/productivity)
-		processing = FALSE
+/obj/machinery/bloodbankgen/proc/activateinput()
+	if(bag)
+		draining = TRUE
 		update_icon()
 	else
-		menustat = "void"
+		to_chat(usr, "<span class='warning'>There is no blood bag in the input slot.</span>")
+		return
 
-/obj/machinery/bloodbankgen/proc/check_cost(list/materials, multiplier = 1, remove_bloodstored = 1)
-	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
-		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > bloodstored)
-		menustat = "noblood"
-		return FALSE
-	else
-		if(remove_bloodstored)
-			bloodstored -= materials[MAT_BIOMASS]*multiplier/efficiency
+/obj/machinery/bloodbankgen/proc/activateoutput()
+	if(outbag)
+		filling = TRUE
 		update_icon()
-		updateUsrDialog()
-		return TRUE
+	else
+		to_chat(usr, "<span class='warning'>There is no blood bag in the output slot.</span>")
+		return
 
 /obj/machinery/bloodbankgen/proc/check_container_volume(list/reagents, multiplier = 1)
 	var/sum_reagents = 0
@@ -305,12 +318,16 @@
 
 	usr.set_machine(src)
 
-	if(href_list["activate"])
-		activate()
+	if(href_list["activateinput"])
+		activateinput()
 		updateUsrDialog()
 
 	else if(href_list["detachinput"])
 		detachinput()
+		updateUsrDialog()
+
+	else if(href_list["activateoutput"])
+		activateoutput()
 		updateUsrDialog()
 
 	else if(href_list["detachoutput"])

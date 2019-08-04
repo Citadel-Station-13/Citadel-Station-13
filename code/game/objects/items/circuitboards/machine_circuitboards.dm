@@ -33,7 +33,7 @@
 
 /obj/item/circuitboard/machine/bloodbankgen
 	name = "Blood Bank Generator (Machine Board)"
-	build_path = obj/machinery/bloodbankgen
+	build_path = /obj/machinery/bloodbankgen
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
