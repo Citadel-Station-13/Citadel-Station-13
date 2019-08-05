@@ -262,20 +262,61 @@
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
-	overdose_threshold = 80
+	addiction_threshold = 30
+	overdose_threshold = 60
 	taste_description = "bitterness"
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of coffee"
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M)
-	M.Jitter(5)
+	var/datum/disease/D = new /datum/disease/heart_failure
+	if(!M.HasDisease(D))
+		M.ForceContractDisease(D)
+	if(prob(10))
+		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there.</span>")
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+	if(M.canmove && !ismovableatom(M.loc))
+		for(var/i in 1 to 2)
+			step(M, pick(GLOB.cardinals))
+	if(prob(5))
+		M.visible_message("<span class='danger'>[M] tweaks out and their hands spaz everywhere!</span>")
+		M.drop_all_held_items()
+
+/datum/reagent/consumable/coffee/addiction_act_stage1(mob/living/M)
+	if(prob(33))
+		M.adjustStaminaLoss(3)
+		M.losebreath += 1
+		. = 1
+	..()
+
+/datum/reagent/consumable/coffee/addiction_act_stage2(mob/living/M)
+	if(prob(33))
+		M.adjustStaminaLoss(4)
+		M.losebreath += 1
+		. = 1
+	..()
+
+/datum/reagent/consumable/coffee/addiction_act_stage3(mob/living/M)
+	if(prob(33))
+		M.adjustStaminaLoss(5)
+		M.losebreath += 2
+		. = 1
+	..()
+
+/datum/reagent/consumable/coffee/addiction_act_stage4(mob/living/M)
+	if(prob(33))
+		M.adjustStaminaLoss(6)
+		M.losebreath += 2
+		. = 1
 	..()
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
+	M.Jitter(5)
+	M.adjustStaminaLoss(-1)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	if(holder.has_reagent("frostoil"))
