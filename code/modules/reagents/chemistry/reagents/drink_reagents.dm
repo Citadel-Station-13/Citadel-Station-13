@@ -270,7 +270,7 @@
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M)
-	var/datum/disease/D = new /datum/disease/heart_failure
+	var/datum/disease/heart_failure/D = /datum/disease/heart_failure
 	if(!M.HasDisease(D))
 		M.ForceContractDisease(D)
 	if(prob(10))
