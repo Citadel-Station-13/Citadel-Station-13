@@ -2006,7 +2006,8 @@
 					/obj/item/storage/box/mre/menu1/safe,
 					/obj/item/storage/box/mre/menu2/safe,
 					/obj/item/storage/box/mre/menu2/safe,
-					/obj/item/storage/box/mre/menu3)
+					/obj/item/storage/box/mre/menu3,
+					/obj/item/storage/box/mre/menu4/safe)
 	crate_name = "MRE crate (emergency rations)"
 
 /datum/supply_pack/organic/pizza
