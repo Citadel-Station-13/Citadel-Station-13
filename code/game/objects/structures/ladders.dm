@@ -229,8 +229,3 @@
 /obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
 	id = "unlinked_binary"
 	area_to_place = null
-
-
-/obj/structure/ladder/unbreakable/binary/space
-	id = "space_binary"
-	area_to_place = /area/space
