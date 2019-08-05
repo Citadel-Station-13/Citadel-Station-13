@@ -67,13 +67,6 @@
 	layer = FLY_LAYER
 	bullet_bounce_sound = null
 
-
-/turf/closed/indestructible/blackspace
-	name = "void wall"
-	icon_state = "blackspace"
-
-
-
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
 	if(SStitle.icon)

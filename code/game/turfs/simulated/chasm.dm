@@ -111,16 +111,6 @@
 	light_range = 1.9
 	light_power = 0.65
 
-
-/turf/open/chasm/magic/updated
-	name = "bluespace"
-	desc = "HURR BUG."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "bluespace_real"
-	smooth = SMOOTH_FALSE
-	baseturfs = /turf/open/chasm/magic/updated
-
-
 /turf/open/chasm/magic/Initialize()
 	. = ..()
 	var/turf/T = safepick(get_area_turfs(/area/fabric_of_reality))

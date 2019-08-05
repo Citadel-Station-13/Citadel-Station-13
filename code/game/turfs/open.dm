@@ -144,12 +144,6 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/airblock
 
-
-/turf/open/indestructible/airblock/bluespace
-	name = "bluespace"
-	icon_state = "bluespace_real"
-
-
 /turf/open/indestructible/clock_spawn_room
 	name = "cogmetal floor"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
@@ -278,7 +272,7 @@
 				return 0
 			if(ishuman(C) && (lube&NO_SLIP_WHEN_WALKING))
 				var/mob/living/carbon/human/H = C
-				if(!H.sprinting && H.getStaminaLoss() >= 20)
+				if(!H.sprinting && H.getStaminaLoss() <= 20)
 					return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
