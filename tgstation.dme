@@ -2884,7 +2884,6 @@
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\projectiles\tracer.dm"
 #include "modular_citadel\code\game\objects\items\balls.dm"
 #include "modular_citadel\code\game\objects\items\boombox.dm"
-#include "modular_citadel\code\game\objects\items\handcuffs.dm"
 #include "modular_citadel\code\game\objects\items\holy_weapons.dm"
 #include "modular_citadel\code\game\objects\items\honk.dm"
 #include "modular_citadel\code\game\objects\items\meat.dm"
