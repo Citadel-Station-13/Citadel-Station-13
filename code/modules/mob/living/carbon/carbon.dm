@@ -699,10 +699,9 @@
 		clear_fullscreen("critvision")
 
 	//Oxygen damage overlay
-	var/windedup = getOxyLoss() + getStaminaLoss() * 0.2 + stamdamageoverlaytemp
-	if(windedup)
+	if(oxyloss)
 		var/severity = 0
-		switch(windedup)
+		switch(oxyloss)
 			if(10 to 20)
 				severity = 1
 			if(20 to 25)
