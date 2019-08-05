@@ -1,4 +1,4 @@
-#define BREAKER_ANIMATION_LENGTH 9
+#define BREAKER_ANIMATION_LENGTH 32
 #define BREAKER_SLAT_RAISED     1
 #define BREAKER_SLAT_MOVING     2
 #define BREAKER_SLAT_DROPPED    3
@@ -21,10 +21,6 @@
 	layer = ABOVE_MOB_LAYER
 	var/slat_status = BREAKER_SLAT_RAISED
 	var/current_action = 0 // What's currently happening to the femur breaker
-
-/obj/structure/femur_breaker/Initialize()
-	LAZYINITLIST(buckled_mobs)
-	. = ..()
 
 /obj/structure/femur_breaker/examine(mob/user)
 	..()
@@ -102,8 +98,8 @@
 			return
 
 		playsound(src, 'sound/effects/femur_breaker.ogg', 100, FALSE)
-		H.Stun(32)
-		addtimer(CALLBACK(src, .proc/damage_leg, H), 32, TIMER_UNIQUE)
+		H.Stun(BREAKER_ANIMATION_LENGTH)
+		addtimer(CALLBACK(src, .proc/damage_leg, H), BREAKER_ANIMATION_LENGTH, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
 
 	slat_status = BREAKER_SLAT_DROPPED
