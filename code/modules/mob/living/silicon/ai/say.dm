@@ -140,11 +140,11 @@
 		play_vox_word(word, src.z, null, voxType)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener)
+/proc/play_vox_word(word, z_level, mob/only_listener, voxType = "female")
 
 	word = lowertext(word)
 
-	if( (GLOB.vox_sounds[word] && voxType == "female") || (GLOB.vox_sounds_male[word] &&voxType == "male") )
+	if( (GLOB.vox_sounds[word] && voxType == "female") || (GLOB.vox_sounds_male[word] && voxType == "male") )
 
 		var/sound_file
 
