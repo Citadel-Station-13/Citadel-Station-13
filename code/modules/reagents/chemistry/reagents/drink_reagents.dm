@@ -263,7 +263,7 @@
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	addiction_threshold = 30
-	overdose_threshold = 60
+	overdose_threshold = 61
 	taste_description = "bitterness"
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of coffee"
