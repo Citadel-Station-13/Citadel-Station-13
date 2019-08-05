@@ -26,10 +26,13 @@
 		if(isbelly(M.loc))
 			if(world.time > M.next_preyloop)
 				if(is_wet)
+					if(!M.client)
+						continue
 					M.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
-					var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
-					M.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)
-					M.next_preyloop = world.time + 52 SECONDS
+					if(M.client.prefs.cit_toggles & DIGESTION_NOISES)
+						var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+						M.playsound_local(get_turf(src),preyloop, 80,0, channel = CHANNEL_PREYLOOP)
+						M.next_preyloop = (world.time + 52 SECONDS)
 
 
 /////////////////////////// Exit Early ////////////////////////////
@@ -63,12 +66,12 @@
 			if(prob(25))
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, source))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
+				for(var/mob/living/H in hearing_mobs)
 					if(!isbelly(H.loc))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
 					else if(H in contents)
@@ -100,12 +103,12 @@
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, source))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
+				for(var/mob/living/H in hearing_mobs)
 					if(!isbelly(H.loc))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
 					else if(H in contents)
@@ -135,12 +138,12 @@
 			if(prob(25))
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, source))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
+				for(var/mob/living/H in hearing_mobs)
 					if(!isbelly(H.loc))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
 					else if(H in contents)
@@ -159,12 +162,12 @@
 		if(prob(35))
 			if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 				LAZYCLEARLIST(hearing_mobs)
-				for(var/mob/H in get_hearers_in_view(3, source))
+				for(var/mob/living/H in get_hearers_in_view(3, source))
 					if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 						continue
 					LAZYADD(hearing_mobs, H)
 				last_hearcheck = world.time
-			for(var/mob/H in hearing_mobs)
+			for(var/mob/living/H in hearing_mobs)
 				if(!isbelly(H.loc))
 					H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
 				else if(H in contents)
@@ -179,12 +182,12 @@
 			if(prob(10))//Less often than gurgles. People might leave this on forever.
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, source))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
+				for(var/mob/living/H in hearing_mobs)
 					if(!isbelly(H.loc))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
 					else if(H in contents)
@@ -221,12 +224,12 @@
 			if(prob(55)) //if you're hearing this, you're a vore ho anyway.
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, source))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
+				for(var/mob/living/H in hearing_mobs)
 					if(!isbelly(H.loc))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
 					else if(H in contents)
@@ -254,12 +257,12 @@
 				M.visible_message("<span class='notice'>You watch as [owner]'s guts loudly rumble as it finishes off a meal.</span>")
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, source))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
+				for(var/mob/living/H in hearing_mobs)
 					if(!isbelly(H.loc))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
 					else if(H in contents)

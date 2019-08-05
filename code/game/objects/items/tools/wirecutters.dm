@@ -82,7 +82,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cutters"
 	toolspeed = 0.1
-
 	random_color = FALSE
 
 /obj/item/wirecutters/cyborg
@@ -126,3 +125,11 @@
 		return
 	else
 		..()
+
+/obj/item/wirecutters/advanced
+	name = "advanced wirecutters"
+	desc = "A set of reproduction alien wirecutters, they have a silver handle with an exceedingly sharp blade."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "cutters"
+	toolspeed = 0.2
+	random_color = FALSE

@@ -6,7 +6,7 @@ Research Director
 	flag = RD_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
-	head_announce = list("Science")
+	head_announce = list(RADIO_CHANNEL_SCIENCE)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
