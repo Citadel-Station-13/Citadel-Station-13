@@ -105,6 +105,9 @@
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user) || user.stat) return
 
+	if(!vore_active)
+		return
+
 	if(vore_selected.digest_mode == DM_HOLD)
 		var/confirm = alert(usr, "Enabling digestion on [name] will cause it to digest all stomach contents. Using this to break OOC prefs is against the rules. Digestion will disable itself after 20 minutes.", "Enabling [name]'s Digestion", "Enable", "Cancel")
 		if(confirm == "Enable")
