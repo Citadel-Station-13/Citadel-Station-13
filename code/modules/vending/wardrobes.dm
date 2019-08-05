@@ -239,7 +239,8 @@
 					/obj/item/clothing/under/rank/chef = 2,
 					/obj/item/clothing/under/rank/chef/skirt = 2,
 					/obj/item/clothing/head/chefhat = 2,
-					/obj/item/reagent_containers/rag = 3)
+					/obj/item/reagent_containers/rag = 3,
+					/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 
 /obj/item/vending_refill/wardrobe/chef_wardrobe
