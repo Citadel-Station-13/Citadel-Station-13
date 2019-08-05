@@ -88,9 +88,9 @@ Shaft Miner
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
-	r_pocket = /obj/item/flashlight/seclite
+	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
-		/obj/item/storage/bag/ore=1,\
+		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/mining_voucher=1,\
 		/obj/item/suit_voucher=1,\
@@ -116,7 +116,7 @@ Shaft Miner
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
-		/obj/item/storage/bag/ore=1,
+		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,
 		/obj/item/mining_voucher=1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser=1,

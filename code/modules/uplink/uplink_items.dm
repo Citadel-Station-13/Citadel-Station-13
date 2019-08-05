@@ -430,8 +430,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/rapier
 	name = "Rapier"
 	desc = "A fancy rapier with a diamond tip piercing anything that it comes into contack with. \
-			The rapier comes with its own shielf, this is rather noticeable as only the captain is known to carry a shielf. \
-			The shielf itself can be used to block melee attacks only. Its also jet black colours."
+			The rapier comes with its own sheath, this is rather noticeable as only the captain is known to carry a sheath. \
+			The sheath itself can be used to block melee attacks only. Its also jet black colours."
 	item = /obj/item/storage/belt/sabre/rapier
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -1842,6 +1842,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 14
 	item = /obj/item/clothing/shoes/clown_shoes/taeclowndo
 	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/emitter_cannon
+	name = "Emitter Cannon"
+	desc = "A small emitter fitted into a gun case, do to size constraints and safety it can only shoot about ten times when fully charged."
+	cost = 5 //Low ammo, and deals same as 10mm but emp-able
+	item = /obj/item/gun/energy/emitter
+	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
 // Pointless
 /datum/uplink_item/badass

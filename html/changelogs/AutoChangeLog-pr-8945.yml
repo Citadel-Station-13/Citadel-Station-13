@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Pubby's disposal conveyor belts and lack of a second lawyer spawner."

@@ -434,3 +434,11 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/bedsheet/captain
 	ckeywhitelist = list("tikibomb")
+
+/datum/gear/borgplush
+	name = "Robot Plush"
+	category = SLOT_IN_BACKPACK
+	/obj/item/toy/plush/borgplushie
+	ckeywhitelist = list("nicholaiavenicci")
+
+
