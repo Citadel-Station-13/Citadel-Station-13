@@ -58,6 +58,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 	. = ..()
 
+/mob/living/simple_animal/hostile/guardian/CtrlClickOn(atom/A)
+	return
+
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
 		var/image/holder = hud_list[HEALTH_HUD]
