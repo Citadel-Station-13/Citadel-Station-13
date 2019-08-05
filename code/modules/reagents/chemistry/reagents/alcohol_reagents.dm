@@ -2102,7 +2102,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/M)
 	if(M.drunkenness > 40)
 		if(stored_teleports)
-			do_teleport(M, get_turf(M), rand(1,3))
+			do_teleport(M, get_turf(M), rand(1,3), channel = TELEPORT_CHANNEL_WORMHOLE)
 			stored_teleports--
 		if(prob(10))
 			stored_teleports += rand(2,6)

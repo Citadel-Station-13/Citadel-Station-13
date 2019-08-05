@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by ShizCalev and bobbahbrown)"
+delete-after: True
+changes: 
+  - rscadd: "Headsets now dynamically show in their description how to speak on any channels they can use when held or worn."
+  - code_imp: "Radio channels names and keys now use defines."
+  - tweak: "The head arrival announcement will now be broadcast to the supply for the quartermaster."

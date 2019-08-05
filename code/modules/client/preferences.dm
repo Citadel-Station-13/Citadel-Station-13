@@ -1413,13 +1413,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					facial_hair_style = random_facial_hair_style(gender)
 				if("underwear")
 					underwear = random_underwear(gender)
-					undie_color = random_color()
+					undie_color = random_short_color()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
-					shirt_color = random_color()
+					shirt_color = random_short_color()
 				if("socks")
 					socks = random_socks()
-					socks_color = random_color()
+					socks_color = random_short_color()
 				if(BODY_ZONE_PRECISE_EYES)
 					eye_color = random_eye_color()
 				if("s_tone")
@@ -1534,7 +1534,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("undie_color")
 					var/n_undie_color = input(user, "Choose your underwear's color.", "Character Preference", undie_color) as color|null
 					if(n_undie_color)
-						undie_color = n_undie_color
+						undie_color = sanitize_hexcolor(n_undie_color, include_crunch= TRUE)
 
 				if("undershirt")
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
@@ -1544,7 +1544,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("shirt_color")
 					var/n_shirt_color = input(user, "Choose your undershirt's color.", "Character Preference", shirt_color) as color|null
 					if(n_shirt_color)
-						shirt_color = n_shirt_color
+						shirt_color = sanitize_hexcolor(n_shirt_color, include_crunch= TRUE)
 
 				if("socks")
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
@@ -1554,7 +1554,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("socks_color")
 					var/n_socks_color = input(user, "Choose your socks' color.", "Character Preference", socks_color) as color|null
 					if(n_socks_color)
-						socks_color = n_socks_color
+						socks_color = sanitize_hexcolor(n_socks_color, include_crunch= TRUE)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null

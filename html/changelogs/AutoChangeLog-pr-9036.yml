@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "shoes can have a different icon used for their item and mob icons"
+  - bugfix: "combat gloves plus having no mob icon"

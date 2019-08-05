@@ -351,7 +351,7 @@
 //We only get 30u to start with...
 
 /datum/reagent/fuel/holyoil/reaction_obj(obj/O, reac_volume)
-	. = ..() 
+	. = ..()
 	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		reac_volume = min(reac_volume, M.amount)
@@ -1013,7 +1013,7 @@
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg') //4 tiles per crystal
+		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //4 tiles per crystal
 	..()
 
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/M)
@@ -1025,7 +1025,7 @@
 	..()
 
 /mob/living/proc/bluespace_shuffle()
-	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg')
+	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /datum/reagent/aluminium
 	name = "Aluminium"

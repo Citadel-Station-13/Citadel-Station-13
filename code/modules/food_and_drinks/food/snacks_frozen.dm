@@ -88,7 +88,7 @@
 
 /obj/item/reagent_containers/food/snacks/snowcones/orange
 	name = "orange flavored snowcone"
-	desc = "A mix of different flavors dizzled on a snowball in a paper cup."
+	desc = "A orange flavor dizzled on a snowball in a paper cup."
 	icon_state = "orange_sc"
 	list_reagents = list("nutriment" = 1, "orangejuice" = 10)
 	tastes = list("ice" = 1, "water" = 1, "berries" = 5)
@@ -130,7 +130,7 @@
 	name = "mixed fruit flavored snowcone"
 	desc = "A mix of different flavors dizzled on a snowball in a paper cup."
 	icon_state = "fruitsalad_sc"
-	list_reagents = list("nutriment" = 1, "lemonjuice" = 5, "limejuice" = 5, "lemonjuice" = 5, "orangejuice" = 5)
+	list_reagents = list("nutriment" = 1, "limejuice" = 5, "lemonjuice" = 5, "orangejuice" = 5)
 	tastes = list("ice" = 1, "water" = 1, "fruits" = 25)
 	foodtype = FRUIT
 
