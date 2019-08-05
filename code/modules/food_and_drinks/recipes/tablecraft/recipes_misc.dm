@@ -258,7 +258,7 @@
 	subcategory = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/food/lizardwine
+/datum/crafting_recipe/lizardwine //not a subtype of /datum/crafting_recipe/food due to a bug where the resulting bottle would contain 100u of lizardwine and 100u of ethanol.
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
@@ -266,6 +266,7 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
+	category = CAT_FOOD
 	subcategory = CAT_MISCFOOD
 
 
