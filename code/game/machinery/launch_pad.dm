@@ -127,7 +127,7 @@
 				if(first_inner)
 					log_msg += "empty"
 				log_msg += ")"
-		do_teleport(ROI, dest, no_effects = !first)
+		do_teleport(ROI, dest, no_effects = !first, channel = TELEPORT_CHANNEL_BLUESPACE)
 		first = FALSE
 
 	if (first)
@@ -206,7 +206,7 @@
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
 	new /obj/item/pen(src)
-	new /obj/item/launchpad_remote(src, pad) 
+	new /obj/item/launchpad_remote(src, pad)
 
 /obj/item/storage/briefcase/launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
@@ -227,7 +227,7 @@
 		L.pad = src.pad
 		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
 	else
-		return ..()	
+		return ..()
 
 /obj/item/launchpad_remote
 	name = "folder"
