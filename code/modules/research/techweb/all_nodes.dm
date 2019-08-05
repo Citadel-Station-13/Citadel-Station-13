@@ -245,7 +245,7 @@
 	display_name = "Advanced Bluespace Research"
 	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
-	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "bluespace_crystal")
+	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "bluespace_crystal", "roastingstick")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 
@@ -278,10 +278,10 @@
 
 /datum/techweb_node/bluespace_warping
 	id = "bluespace_warping"
-	display_name = "Bluespace Teleportation tech"
-	description = "Traversing through space at an instant with Bluespace."
+	display_name = "Bluespace Travel"
+	description = "Application of Bluespace for static teleportation technology."
 	prereq_ids = list("adv_power", "adv_bluespace")
-	design_ids = list( "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console", "teleconsole", "roastingstick")
+	design_ids = list("tele_station", "tele_hub", "quantumpad", "quantum_keycard", "launchpad", "launchpad_console", "teleconsole")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

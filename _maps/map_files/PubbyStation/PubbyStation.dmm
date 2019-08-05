@@ -2,44 +2,12 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
-"aab" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm3Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aac" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm2Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
-"aae" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm1Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -8637,6 +8605,16 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
+"ave" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm3Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "avf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -10079,6 +10057,17 @@
 	name = "Dorm Shutters"
 	},
 /turf/open/floor/plating,
+/area/crew_quarters/dorms)
+"ayj" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm2Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayk" = (
 /obj/machinery/light/small{
@@ -11526,6 +11515,17 @@
 	name = "Dorm Shutters"
 	},
 /turf/open/floor/plating,
+/area/crew_quarters/dorms)
+"aBM" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm1Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aBN" = (
 /obj/machinery/light/small{
@@ -16689,8 +16689,8 @@
 /area/maintenance/disposal)
 "aNV" = (
 /obj/machinery/conveyor{
-	dir = 8;
-	id = "EngLoad"
+	dir = 4;
+	id = "garbagestacked"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -17182,7 +17182,7 @@
 /area/maintenance/department/cargo)
 "aPg" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposaloutlet{
@@ -17566,7 +17566,7 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -21118,7 +21118,7 @@
 "aYf" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -24109,6 +24109,10 @@
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -51264,11 +51268,11 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvf" = (
+/obj/machinery/recycler,
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
-/obj/machinery/recycler,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cvg" = (
@@ -52077,6 +52081,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+"cyp" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "cyy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -53701,8 +53712,8 @@
 	pixel_y = 32
 	},
 /obj/machinery/conveyor{
-	dir = 8;
-	id = "EngLoad"
+	dir = 4;
+	id = "garbagestacked"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -59043,14 +59054,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
-"rax" = (
-/obj/machinery/conveyor{
-	icon_state = "conveyor_map";
-	dir = 1;
-	id = "EngLoad"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "reH" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/disposalpipe/segment{
@@ -61510,7 +61513,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "xer" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -61779,6 +61782,7 @@
 	dir = 1;
 	light_color = "#ffc1c1"
 	},
+/obj/effect/landmark/start/lawyer,
 /turf/open/floor/wood,
 /area/lawoffice)
 "xKc" = (
@@ -99272,13 +99276,13 @@ ale
 asb
 coe
 apX
-aab
+ave
 awn
 apX
-aac
+ayj
 azr
 apX
-aae
+aBM
 aDb
 apX
 oFo
@@ -101105,7 +101109,7 @@ aTm
 bbE
 bbE
 bbE
-dps
+bbE
 bbE
 bbE
 aEj
@@ -101364,7 +101368,7 @@ bcA
 bdF
 beJ
 bfB
-bbE
+dps
 aZv
 aUC
 biz
@@ -107771,7 +107775,7 @@ aaa
 aLm
 aLm
 aNU
-aNV
+cyp
 dqY
 aRv
 sZh
@@ -108028,7 +108032,7 @@ aaa
 aLm
 aME
 eFG
-aNV
+cyp
 dqY
 aRw
 sqQ
@@ -108285,7 +108289,7 @@ aaa
 aLo
 aMF
 aNV
-aNV
+cyp
 cvf
 aQn
 sqQ
@@ -108542,8 +108546,8 @@ aaa
 aLo
 aMG
 aNX
-aNV
-rax
+cyp
+xer
 aRy
 aSn
 aSn

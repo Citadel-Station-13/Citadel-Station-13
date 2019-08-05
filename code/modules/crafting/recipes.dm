@@ -9,6 +9,7 @@
 	var/chem_catalysts[] = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
+	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
@@ -68,7 +69,7 @@
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/reagent_containers/glass/rag = 1,
+	reqs = list(/obj/item/reagent_containers/rag = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
 	time = 40

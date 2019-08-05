@@ -2248,11 +2248,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
-"fR" = (
-/obj/item/paicard,
-/obj/structure/table/wood,
-/turf/open/floor/engine/cult,
-/area/wizard_station)
 "fS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2940,22 +2935,6 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
-"hH" = (
-/obj/structure/table/reinforced,
-/obj/item/flashlight/seclite,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/paicard,
-/turf/open/floor/plasteel/dark,
-/area/centcom/ferry)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -8415,6 +8394,9 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership)
 "tg" = (
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/item/soap/syndie,
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
@@ -11391,6 +11373,22 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
+"AL" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/seclite,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paicard,
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "AM" = (
 /obj/machinery/shuttle_manipulator,
 /turf/open/floor/circuit/green,
@@ -11587,6 +11585,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
+"Bp" = (
+/obj/item/paicard,
+/obj/structure/table/wood,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Bs" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -15122,7 +15125,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -17434,6 +17437,8 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
+/obj/structure/table,
+/obj/item/reagent_containers/rag/towel/syndicate,
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
 "Rm" = (
@@ -25742,7 +25747,7 @@ lI
 lI
 lI
 Ax
-fR
+Bp
 qZ
 qZ
 Ax
@@ -56338,7 +56343,7 @@ yr
 sw
 sw
 Ad
-hH
+AL
 Bx
 sw
 Cv

@@ -1,0 +1,4 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - rscadd: "Added the secbat, a box to hold it and the ability to dispense it from the SecTech vendor."

@@ -155,7 +155,7 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -163,6 +163,8 @@
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( msg, 2, deaf_message, 1)
 
 // Show a message to all mobs in earshot of this atom
@@ -171,11 +173,13 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
+/atom/proc/audible_message(message, deaf_message, hearing_distance, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/Life()

@@ -283,7 +283,7 @@
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
-obj/item/reagent_containers/food/snacks/store/cake/holy_cake
+/obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 	name = "angel food cake"
 	desc = "A cake made for angels and chaplains alike! Contains holy water."
 	icon = 'modular_citadel/icons/obj/food/cake.dmi'
@@ -322,7 +322,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	tastes = list("cake" = 5, "sweetness" = 5, "batter" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR | JUNKFOOD
 
-obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
+/obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
 	name = "hardware cake"
 	desc = "A cake that is made with electronic boards and leaks acid..."
 	icon = 'modular_citadel/icons/obj/food/cake.dmi'

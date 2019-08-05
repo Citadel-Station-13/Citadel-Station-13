@@ -304,3 +304,22 @@
 
 /obj/item/gun/energy/gravity_gun/security
 	pin = /obj/item/firing_pin
+
+//Emitter Gun
+
+/obj/item/gun/energy/emitter
+	name = "Emitter Carbine"
+	desc = "A small emitter fitted into a handgun case, do to size constraints and safety it can only shoot about ten times when fully charged."
+	icon_state = "emitter_carbine"
+	force = 12
+	w_class = WEIGHT_CLASS_SMALL
+	cell_type = /obj/item/stock_parts/cell/super
+	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
+
+/obj/item/gun/energy/emitter/update_icon()
+	..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
+		add_overlay("emitter_carbine_empty")
+	else
+		add_overlay("emitter_carbine")
