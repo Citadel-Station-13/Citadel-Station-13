@@ -85,7 +85,7 @@
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
 		H.emote("scream")
 		H.apply_damage(150, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		H.adjustBruteLoss(rand(5,20) + (max(0, H.health)) //Make absolutely sure they end up in crit, so that they can succumb if they wish.
+		H.adjustBruteLoss(rand(5,20) + (max(0, H.health))) //Make absolutely sure they end up in crit, so that they can succumb if they wish.
 
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED
