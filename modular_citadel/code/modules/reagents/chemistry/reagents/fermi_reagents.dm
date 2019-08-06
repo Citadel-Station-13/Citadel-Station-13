@@ -138,6 +138,7 @@
 		M.emote("cough")
 		var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))
 		new P(T)
+		to_chat(M, "<span class='warning'>You feel a lump form in your throat, as you suddenly cough up what seems to be a hairball?</b></span>")
 		var/list/seen = viewers(8, T)
 		for(var/mob/S in seen)
 			to_chat(S, "<span class='warning'>[M] suddenly coughs up a [P.name]!</b></span>")

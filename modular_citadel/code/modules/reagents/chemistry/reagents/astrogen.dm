@@ -52,10 +52,10 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		qdel(O)
 
 
-/datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
+/datum/reagent/fermi/astral/on_mob_life(mob/living/carbon/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
-	originalmind = M.mind
 	if(current_cycle == 0)
+		originalmind = M.mind
 		log_game("FERMICHEM: [M] ckey: [M.key] became an astral ghost")
 		origin = M
 		if (G == null)
@@ -64,7 +64,8 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		var/datum/action/chem/astral/AS = new(G)
 		AS.origin = M
 		AS.ghost = G
-		M.mind.transfer_to(G)
+		if(M.mind)
+			M.mind.transfer_to(G)
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
 	if(overdosed)
 		if(prob(50))
@@ -77,13 +78,16 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			if(G.stat == DEAD || G.pseudo_death == TRUE)
 				G.mind.transfer_to(M)
 				qdel(G)
-	else
-		M.Sleeping(20, 0)
-		M.reagents.remove_reagent(id, 2, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	if(!G)
+		if(M.mind)
+			if(!M.reagents.has_reagent("astral")) //I have no idea how you got here with a mind and no astral, but this is in case.
+				message_admins("No astral!")
+			var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
+			M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
 		originalmind.transfer_to(M)
 	else if(G.mind)
 		G.mind.transfer_to(origin)

@@ -22,6 +22,7 @@
 	speak_emote = list("echos")
 	movement_type = FLYING
 	var/pseudo_death = FALSE
+	var/posses_safe = FALSE
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
@@ -40,6 +41,17 @@
 	..()
 	if(pseudo_death == FALSE)
 		if(isliving(A))
+			if(ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if(H.reagents.has_reagent("astral") && !H.mind)
+					var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in H.reagents.reagent_list
+					if(As.originalmind == src.mind && As.current_cycle < 10)
+						to_chat(src, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
+						return
+					to_chat(src, "<b><i>You astrally possess [H]!</b></i>")
+					log_game("FERMICHEM: [src] has astrally possessed [A]!")
+					src.mind.transfer_to(H)
+					qdel(src)
 			var/message = html_decode(stripped_input(src, "Enter a message to send to [A]", MAX_MESSAGE_LEN))
 			if(!message)
 				return
