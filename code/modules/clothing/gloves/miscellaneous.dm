@@ -72,7 +72,15 @@
 		M.adjustStaminaLoss(-2) //Restore 2/3 of the stamina used assuming empty stam buffer. With proper stamina buffer management, this results in a net gain of +.5 stamina per click.
 		if(warcry)
 			M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
+
+	else if(M.a_intent == INTENT_HELP)
+		if(target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)) //Can't hug people who are dying/dead
+			if(target.on_fire || target.lying ) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
+				return
+			else
+				M.changeNext_move(CLICK_CD_RAPID)
 	.= FALSE
+
 
 /obj/item/clothing/gloves/rapid/attack_self(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
