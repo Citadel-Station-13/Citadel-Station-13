@@ -59,8 +59,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/CtrlClickOn(atom/A)
-	return
-
+	var/mob/living/carbon/C = A
+	if((iscarbon(C)) && (istype(C.wear_neck, /obj/item/clothing/neck/necklace/memento_mori)))
+		return
+	else
+		. = ..()
+	
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
 		var/image/holder = hud_list[HEALTH_HUD]
