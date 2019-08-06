@@ -57,6 +57,7 @@
 		/obj/item/stack/tile/fakespace/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/stack/tile/fakepit/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/restraints/handcuffs/fake = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/gloves/rapid/hug = ARCADE_WEIGHT_TRICK,
 
 		/obj/item/grenade/chem_grenade/glitter/pink = ARCADE_WEIGHT_TRICK,
 		/obj/item/grenade/chem_grenade/glitter/blue = ARCADE_WEIGHT_TRICK,
