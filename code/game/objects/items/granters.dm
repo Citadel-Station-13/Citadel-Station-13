@@ -457,3 +457,11 @@
 	icon_state = "cooking_learing_ice"
 	oneuse = FALSE
 	remarks = list()
+
+/obj/item/book/granter/crafting_recipe/death_building
+	name = "The death of Traitors and Tyrants"
+	desc = "A classic! At last, a book on what to do with the wealthy and the traitors."
+	crafting_recipe_types = list(/datum/crafting_recipe/guillotine, /datum/crafting_recipe/femur_breaker)
+	icon_state = "learning_death"
+	oneuse = FALSE
+	remarks = list("The French really know what to do with...", "Make the blade sharper then steel...", "A bag of sand is needed...")

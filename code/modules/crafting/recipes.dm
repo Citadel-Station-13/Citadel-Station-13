@@ -670,17 +670,20 @@
 		        /obj/item/stack/sheet/mineral/wood = 20,
 		        /obj/item/stack/cable_coil = 10)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	always_availible = FALSE
 	category = CAT_MISC
 
 /datum/crafting_recipe/femur_breaker
 	name = "Femur Breaker"
 	result = /obj/structure/femur_breaker
-	time = 150 
+	time = 150
 	reqs = list(/obj/item/stack/sheet/metal = 20,
-		        /obj/item/stack/cable_coil = 30)
+		        /obj/item/stack/cable_coil = 30,
+		        /obj/item/stack/sheet/mineral/sandbags = 1)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	always_availible = FALSE
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
