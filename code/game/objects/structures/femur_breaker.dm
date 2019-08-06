@@ -83,8 +83,9 @@
 				icon_state = "breaker_drop"
 
 /obj/structure/femur_breaker/proc/damage_leg(mob/living/carbon/human/H)
+	if(H.stat == CONSCIOUS)
 		H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHH!!", forced = "femur broken")
-		H.apply_damage(150, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+	H.apply_damage(150, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 
 /obj/structure/femur_breaker/proc/raise_slat()
 	slat_status = BREAKER_SLAT_RAISED
@@ -97,13 +98,18 @@
 		if (!H)
 			return
 
-		playsound(src, 'sound/effects/femur_breaker.ogg', 100, FALSE)
+		playsound(src, 'sound/effects/femur_breaker.ogg', 75, FALSE)
 		H.Stun(BREAKER_ANIMATION_LENGTH)
 		addtimer(CALLBACK(src, .proc/damage_leg, H), BREAKER_ANIMATION_LENGTH, TIMER_UNIQUE)
 		log_combat(user, H, "femur broke", src)
 
 	slat_status = BREAKER_SLAT_DROPPED
 	icon_state = "breaker"
+
+/obj/structure/femur_breaker/user_buckle_mob(mob/living/victim, mob/living/user)
+	if(!do_after(user, delay = 50, target = victim))
+		return
+	return ..()
 
 /obj/structure/femur_breaker/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if (!anchored)
