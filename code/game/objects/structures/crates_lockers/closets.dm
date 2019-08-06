@@ -292,7 +292,7 @@
 	if(!istype(S))
 		return
 	var/brokenword = broken ? "broken " : null
-	user.visible_message("<span class='notice'>You begin removing the [brokenword]lock on [src]...</span>", "<span class='notice'>[user] begins removing the [brokenword]lock on [src]...</span>")
+	user.visible_message("<span class='notice'>[user] begins removing the [brokenword]lock on [src]...</span>","<span class='notice'>You begin removing the [brokenword]lock on [src]...</span>")
 	playsound(loc, S.usesound, 50, 1)
 	lock_in_use = TRUE
 	if(!do_after(user, 100 * S.toolspeed, target = src))
