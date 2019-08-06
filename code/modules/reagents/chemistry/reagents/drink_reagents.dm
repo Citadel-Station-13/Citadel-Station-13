@@ -272,7 +272,7 @@
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M)
 	var/datum/disease/heart_failure/D = /datum/disease/heart_failure
 	if(!M.HasDisease(D))
-		M.ForceContractDisease(D)
+		M.ForceContractDisease(new D)
 	if(prob(10))
 		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there.</span>")
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
