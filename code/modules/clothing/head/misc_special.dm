@@ -69,7 +69,9 @@ GLOBAL_LIST_EMPTY(all_cakehats)
 
 /obj/item/clothing/head/hardhat/cakehat/proc/calculate_shared_power()
 	var/n_cakehats = length(GLOB.all_cakehats)
-	if(n_cakehats && (n_cakehats % CAKEHAT_MASS_PRODUCTION_TOLERANCE) == 0)
+	if(n_cakehats > STANDARD_CAKEHAT_DAMAGE * CAKEHAT_MASS_PRODUCTION_TOLERANCE) //better safe than sorry, stops negative power cakehats
+		return
+	if(n_cakehats && (!(n_cakehats % CAKEHAT_MASS_PRODUCTION_TOLERANCE) || (n_cakehats < CAKEHAT_MASS_PRODUCTION_TOLERANCE && cakehat_damage != STANDARD_CAKEHAT_DAMAGE)))
 		cakehat_damage = STANDARD_CAKEHAT_DAMAGE - FLOOR(n_cakehats / CAKEHAT_MASS_PRODUCTION_TOLERANCE, 1)
 		for(var/A in GLOB.all_cakehats)
 			var/obj/item/clothing/head/hardhat/cakehat/C = A
