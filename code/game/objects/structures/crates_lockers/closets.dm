@@ -34,8 +34,6 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
-	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
-	var/obj/structure/closet/eigen_target //Where you go to.
 	var/obj/item/electronics/airlock/lockerelectronics //Installed electronics
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
 
@@ -188,12 +186,7 @@
 	if(contents.len >= storage_capacity)
 		return -1
 	if(insertion_allowed(AM))
-		if(eigen_teleport) // For teleporting people with linked lockers.
-			do_teleport(AM, get_turf(eigen_target), 0)
-			if(eigen_target.opened == FALSE)
-				eigen_target.open()
-		else
-			AM.forceMove(src)
+		AM.forceMove(src)
 		return TRUE
 	else
 		return FALSE
@@ -299,7 +292,7 @@
 	if(!istype(S))
 		return
 	var/brokenword = broken ? "broken " : null
-	user.visible_message("<span class='notice'>You begin removing the [brokenword]lock on [src]...</span>", "<span class='notice'>[user] begins removing the [brokenword]lock on [src]...</span>")
+	user.visible_message("<span class='notice'>[user] begins removing the [brokenword]lock on [src]...</span>","<span class='notice'>You begin removing the [brokenword]lock on [src]...</span>")
 	playsound(loc, S.usesound, 50, 1)
 	lock_in_use = TRUE
 	if(!do_after(user, 100 * S.toolspeed, target = src))
