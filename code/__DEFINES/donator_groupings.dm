@@ -1,6 +1,6 @@
-#define DONATOR_GROUPING_TIER_1_CONFIG_PATH /datum/config_entry/keyed_list/donator/tier_1_donators
-#define DONATOR_GROUPING_TIER_2_CONFIG_PATH /datum/config_entry/keyed_list/donator/tier_2_donators
-#define DONATOR_GROUPING_TIER_3_CONFIG_PATH /datum/config_entry/keyed_list/donator/tier_3_donators
+#define DONATOR_GROUPING_TIER_1_CONFIG_PATH /datum/config_entry/keyed_list/donator_grouping/tier_1_donators
+#define DONATOR_GROUPING_TIER_2_CONFIG_PATH /datum/config_entry/keyed_list/donator_grouping/tier_2_donators
+#define DONATOR_GROUPING_TIER_3_CONFIG_PATH /datum/config_entry/keyed_list/donator_grouping/tier_3_donators
 
 #define DONATOR_GROUPING_TIER_1_CONFIG_SUBPATH keyed_list/donator/tier_1_donators
 #define DONATOR_GROUPING_TIER_2_CONFIG_SUBPATH keyed_list/donator/tier_2_donators
