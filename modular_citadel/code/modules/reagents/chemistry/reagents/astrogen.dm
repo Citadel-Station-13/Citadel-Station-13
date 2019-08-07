@@ -88,16 +88,18 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
 			M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+			log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
 		originalmind.transfer_to(M)
 	else if(G.mind)
 		G.mind.transfer_to(origin)
 		qdel(G)
 	if(overdosed)
-		to_chat(M, "<span class='warning'>The high volume of Astrogren you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
+		to_chat(M, "<span class='warning'>The high volume of astrogen you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
 		M.Sleeping(sleepytime, 0)
 	antiGenetics = 255
 	if(G)//just in case
 		qdel(G)
+	log_game("FERMICHEM: [M] has astrally returned to their body!")
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.
