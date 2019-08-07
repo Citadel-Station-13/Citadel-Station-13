@@ -349,6 +349,9 @@
 
 				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 				if(W.use_tool(src, user, 40, volume=50))
+					if(eigen_teleport)
+						to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to cut!</span>")
+						return
 					if(!opened)
 						return
 					user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
