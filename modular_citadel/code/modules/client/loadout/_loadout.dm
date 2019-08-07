@@ -50,6 +50,9 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/geargroupID //defines the ID that the gear inherits from the config
+
+	var/donator_group_id		//New donator group ID system.
+
 	var/list/restricted_roles
 	var/list/ckeywhitelist
 	var/restricted_desc
