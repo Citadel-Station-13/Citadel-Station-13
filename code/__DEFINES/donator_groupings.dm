@@ -15,4 +15,4 @@
 #define DONATOR_GROUP_TIER_2 "T2"
 #define DONATOR_GROUP_TIER_3 "T3"
 
-#define IS_CKEY_DONATOR_GROUP(ckey, group) is_donator_group(ckey, group)
+#define IS_CKEY_DONATOR_GROUP(ckey, groupid) is_donator_group(ckey, groupid)
