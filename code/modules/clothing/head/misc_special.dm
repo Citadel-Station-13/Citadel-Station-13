@@ -37,6 +37,12 @@
 /*
  * Cakehat
  */
+
+#define STANDARD_CAKEHAT_DAMAGE 15
+#define CAKEHAT_MASS_PRODUCTION_TOLERANCE 5
+
+GLOBAL_LIST_EMPTY(all_cakehats)
+
 /obj/item/clothing/head/hardhat/cakehat
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
@@ -49,6 +55,27 @@
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	heat = 999
+	var/static/cakehat_damage = STANDARD_CAKEHAT_DAMAGE
+
+/obj/item/clothing/head/hardhat/cakehat/Initialize()
+	. = ..()
+	GLOB.all_cakehats += src
+	calculate_shared_power()
+
+/obj/item/clothing/head/hardhat/cakehat/Destroy()
+	GLOB.all_cakehats -= src
+	calculate_shared_power()
+	return ..()
+
+/obj/item/clothing/head/hardhat/cakehat/proc/calculate_shared_power()
+	var/n_cakehats = length(GLOB.all_cakehats)
+	if(n_cakehats && (n_cakehats % CAKEHAT_MASS_PRODUCTION_TOLERANCE) == 0)
+		cakehat_damage = STANDARD_CAKEHAT_DAMAGE - FLOOR(n_cakehats / CAKEHAT_MASS_PRODUCTION_TOLERANCE, 1)
+		for(var/A in GLOB.all_cakehats)
+			var/obj/item/clothing/head/hardhat/cakehat/C = A
+			if(C.on)
+				C.force = cakehat_damage
+				C.throwforce = cakehat_damage
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -62,8 +89,8 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 15
-	throwforce = 15
+	force = cakehat_damage
+	throwforce = cakehat_damage
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	START_PROCESSING(SSobj, src)
@@ -78,6 +105,10 @@
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat
+
+#undef STANDARD_CAKEHAT_DAMAGE
+#undef CAKEHAT_MASS_PRODUCTION_TOLERANCE
+
 /*
  * Ushanka
  */
