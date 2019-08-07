@@ -36,6 +36,9 @@
 	var/icon_welded = "welded"
 	var/obj/item/electronics/airlock/lockerelectronics //Installed electronics
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
+	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
+	var/obj/structure/closet/eigen_target //Where you go to.
+
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
@@ -144,6 +147,8 @@
 
 /obj/structure/closet/proc/togglelock(mob/living/user)
 	add_fingerprint(user)
+	if(eigen_target)
+		return
 	if(opened)
 		return
 	if(!can_lock(user))
@@ -186,7 +191,12 @@
 	if(contents.len >= storage_capacity)
 		return -1
 	if(insertion_allowed(AM))
-		AM.forceMove(src)
+		if(eigen_teleport) // For teleporting people with linked lockers.
+			do_teleport(AM, get_turf(eigen_target), 0)
+			if(eigen_target.opened == FALSE)
+				eigen_target.bust_open()
+		else
+			AM.forceMove(src)
 		return TRUE
 	else
 		return FALSE
@@ -363,6 +373,9 @@
 
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
+			if(eigen_teleport)
+				to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to weld!</span>")
+				return
 			if(opened)
 				return
 			welded = !welded
