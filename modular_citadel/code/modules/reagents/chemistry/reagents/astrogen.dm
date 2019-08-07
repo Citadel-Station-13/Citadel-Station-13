@@ -83,8 +83,6 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	if(!G)
 		if(M.mind)
-			if(!M.reagents.has_reagent("astral")) //I have no idea how you got here with a mind and no astral, but this is in case.
-				message_admins("No astral!")
 			var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
 			M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
