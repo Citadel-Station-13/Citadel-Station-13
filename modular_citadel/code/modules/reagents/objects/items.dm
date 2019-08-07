@@ -11,8 +11,8 @@
 //A little janky with pockets
 /obj/item/fermichem/pHbooklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
-        if(numberOfPages == 50)
-            icon_state = "pHbookletOpen"
+		if(numberOfPages == 50)
+			icon_state = "pHbookletOpen"
 		if(numberOfPages >= 1)
 			var/obj/item/fermichem/pHpaper/P = new /obj/item/fermichem/pHpaper
 			P.add_fingerprint(user)
