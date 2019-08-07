@@ -41,6 +41,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"aad" = (
+/obj/structure/table,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "aae" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -17906,18 +17917,6 @@
 /area/bridge)
 "aPY" = (
 /obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
-"aPZ" = (
-/obj/structure/table,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -31
-	},
-/obj/item/clothing/head/hardhat/cakehat,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -91623,7 +91622,7 @@ aAh
 aMq
 adq
 aQb
-aPZ
+aad
 aRu
 aQc
 aUf

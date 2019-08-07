@@ -2,6 +2,12 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/crew_quarters/bar)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -22704,13 +22710,6 @@
 /obj/structure/chair/stool/bar,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/dark,
-/area/crew_quarters/bar)
-"bbo" = (
-/obj/item/clothing/head/hardhat/cakehat,
-/obj/structure/table/wood/fancy,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
 /area/crew_quarters/bar)
 "bbp" = (
 /obj/structure/chair/wood/normal{
@@ -94182,7 +94181,7 @@ bah
 aYf
 aZc
 bah
-bbo
+aab
 bco
 bdw
 beA
