@@ -177,3 +177,23 @@
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
+
+
+//Robotocist
+
+/obj/item/clothing/suit/hooded/techpriest
+	name = "techpriest robes"
+	desc = "For those who REALLY love their toasters."
+	icon_state = "techpriest"
+	item_state = "techpriest"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	hoodtype = /obj/item/clothing/head/hooded/techpriest
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/hooded/techpriest
+	name = "techpriest's hood"
+	desc = "A hood for those who REALLY love their toasters."
+	icon_state = "techpriesthood"
+	item_state = "techpriesthood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS

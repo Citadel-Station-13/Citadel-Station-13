@@ -113,3 +113,11 @@
 	user.dust()
 
 	return OXYLOSS
+
+/obj/item/wrench/advanced
+	name = "advanced wrench"
+	desc = "A wrench that uses the same magnetic technology that abductor tools use, but slightly more ineffeciently."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "wrench"
+	usesound = 'sound/effects/empulse.ogg'
+	toolspeed = 0.2

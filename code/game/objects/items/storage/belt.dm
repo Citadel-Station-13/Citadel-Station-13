@@ -10,6 +10,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+	var/worn_overlays = FALSE //worn counterpart of the above.
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -22,6 +23,12 @@
 			var/mutable_appearance/M = I.get_belt_overlay()
 			add_overlay(M)
 	..()
+
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(!isinhands && worn_overlays)
+		for(var/obj/item/I in contents)
+			. += I.get_worn_belt_overlay(icon_file)
 
 /obj/item/storage/belt/Initialize()
 	. = ..()
@@ -653,6 +660,10 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	content_overlays = TRUE
+	worn_overlays = TRUE
+	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
+	var/starting_sword = /obj/item/melee/sabre
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
@@ -660,35 +671,7 @@
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/melee/sabre
-		))
-
-/obj/item/storage/belt/sabre/rapier
-	name = "rapier sheath"
-	desc = "A black, thin sheath that looks to house only a long thin blade. Feels like its made of metal."
-	icon_state = "rsheath"
-	item_state = "rsheath"
-	force = 5
-	throwforce = 15
-	block_chance = 30
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("bashed", "slashes", "prods", "pokes")
-
-/obj/item/storage/belt/sabre/rapier/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 1
-	STR.rustle_sound = FALSE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/melee/rapier
-		))
-
-/obj/item/storage/belt/sabre/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //To thin to block bullets
-	return ..()
+	STR.can_hold = typecacheof(fitting_swords)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	..()
@@ -707,20 +690,28 @@
 		to_chat(user, "[src] is empty.")
 
 /obj/item/storage/belt/sabre/update_icon()
-	icon_state = initial(icon_state)
-	item_state = initial(item_state)
-	if(contents.len)
-		icon_state += "-sabre"
-		item_state += "-sabre"
-	if(loc && isliving(loc))
+	. = ..()
+	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
-	..()
 
 /obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
-	update_icon()
+	new starting_sword(src)
 
-/obj/item/storage/belt/sabre/rapier/PopulateContents()
-	new /obj/item/melee/rapier(src)
-	update_icon()
+/obj/item/storage/belt/sabre/rapier
+	name = "rapier sheath"
+	desc = "A black, thin sheath that looks to house only a long thin blade. Feels like its made of metal."
+	icon_state = "rsheath"
+	item_state = "rsheath"
+	force = 5
+	throwforce = 15
+	block_chance = 30
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("bashed", "slashes", "prods", "pokes")
+	fitting_swords = list(/obj/item/melee/rapier)
+	starting_sword = /obj/item/melee/rapier
+
+/obj/item/storage/belt/sabre/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //To thin to block bullets
+	return ..()

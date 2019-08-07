@@ -226,7 +226,7 @@
 /datum/gear/darksabre
 	name = "Dark Sabre"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/sword/darksabre
+	path = /obj/item/toy/darksabre
 	ckeywhitelist = list("inferno707")
 
 datum/gear/darksabresheath

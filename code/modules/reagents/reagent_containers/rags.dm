@@ -54,7 +54,7 @@
 /obj/item/reagent_containers/rag/pre_altattackby(mob/living/M, mob/living/user, params)
 	if(istype(M) && user.a_intent == INTENT_HELP)
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(user.on_fire)
+		if(M.on_fire)
 			user.visible_message("<span class='warning'>\The [user] uses \the [src] to pat out [M == user ? "[user.p_their()]" : "\the [M]'s"] flames!</span>")
 			if(hitsound)
 				playsound(M, hitsound, 25, 1)
