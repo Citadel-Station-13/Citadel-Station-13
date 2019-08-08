@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "Towels. Crafted with 3 sheets of cloth, they can be worn on head, suit and belt slots even without uniform, or laid flat on the floor. Sprites from Baystation and Aurora Station."
+  - rscadd: "You can combat mode right click people while wielding rags and towels to pat out their flames (to no use for rags) or otherwise drying them out."

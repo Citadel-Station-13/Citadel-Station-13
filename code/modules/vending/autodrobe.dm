@@ -63,6 +63,8 @@
 					/obj/item/clothing/suit/wizrobe/fake = 1,
 					/obj/item/clothing/head/wizard/fake = 1,
 					/obj/item/staff = 3,
+					/obj/item/clothing/under/rank/mime/skirt = 1,
+					/obj/item/clothing/under/gimmick/rank/captain/suit/skirt = 1,
 					/obj/item/clothing/mask/gas/sexyclown = 1,
 					/obj/item/clothing/under/rank/clown/sexy = 1,
 					/obj/item/clothing/mask/gas/sexymime = 1,

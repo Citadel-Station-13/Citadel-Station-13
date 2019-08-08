@@ -1,4 +1,4 @@
-#define AUTOCLONING_MINIMAL_LEVEL 3
+#define AUTOCLONING_MINIMAL_LEVEL 4
 
 /obj/machinery/computer/cloning
 	name = "cloning console"
@@ -13,17 +13,20 @@
 	var/scantemp_ckey
 	var/scantemp = "Ready to Scan"
 	var/menu = 1 //Which menu screen to display
-	var/list/records = list()
 	var/datum/data/record/active_record = null
 	var/obj/item/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
+	var/list/records = list()
 
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/cloning/Initialize()
 	. = ..()
 	updatemodules(TRUE)
+	var/obj/item/circuitboard/computer/cloning/board = circuit
+	records = board.records
+
 
 /obj/machinery/computer/cloning/Destroy()
 	if(pods)
@@ -346,6 +349,8 @@
 					active_record = null
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					src.menu = 2
+					var/obj/item/circuitboard/computer/cloning/board = circuit
+					board.records = records
 				else
 					src.temp = "<font class='bad'>Access Denied.</font>"
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -368,6 +373,8 @@
 				for(var/key in diskette.fields)
 					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
+				var/obj/item/circuitboard/computer/cloning/board = circuit
+				board.records = records
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 			if("eject")
@@ -502,5 +509,7 @@
 	R.fields["imp"] = "[REF(imp)]"
 
 	src.records += R
+	var/obj/item/circuitboard/computer/cloning/board = circuit
+	board.records = records
 	scantemp = "Subject successfully scanned."
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)

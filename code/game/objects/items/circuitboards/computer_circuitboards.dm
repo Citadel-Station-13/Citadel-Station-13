@@ -110,6 +110,7 @@
 /obj/item/circuitboard/computer/cloning
 	name = "Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/cloning
+	var/list/records = list()
 
 /obj/item/circuitboard/computer/prototype_cloning
 	name = "Prototype Cloning (Computer Board)"
