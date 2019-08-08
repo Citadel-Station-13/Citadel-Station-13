@@ -261,6 +261,10 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
+// /datum/component/vortex_magic signals
+#define COMSIG_VORTEXMAGIC_BLAST "vortex_blast"						//(turf/source, dirs, distance, damage, bonus_mob_damage, hit_once, hit_count, max_hit_count)
+#define COMSIG_VORTEXMAGIC_BURST "vortex_burst"						//(turf/source, burst_range, base_speed, min_spread_speed, spread_acceleration_mult, damage, bonus_mob_damage, silent, multi_hit, hit_count, max_hit_count)
+
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags

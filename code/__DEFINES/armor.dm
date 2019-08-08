@@ -1,0 +1,11 @@
+//KEEP UP TO DATE WITH code/datums/armor.dm!!
+#define ARMOR_MELEE "melee"
+#define ARMOR_BULLET "bullet"
+#define ARMOR_LASER "laser"
+#define ARMOR_ENERGY "energy"
+#define ARMOR_BOMB "bomb"
+#define ARMOR_BIO "bio"
+#define ARMOR_RAD "rad"
+#define ARMOR_FIRE "fire"
+#define ARMOR_ACID "acid"
+#define ARMOR_MAGIC "magic"
