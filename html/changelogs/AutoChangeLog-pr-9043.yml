@@ -1,0 +1,7 @@
+author: "chef"
+delete-after: True
+changes: 
+  - rscadd: "Added main hallway approach to monastery"
+  - rscadd: "Added Maintenance hallway approach, with some maint loot"
+  - tweak: "moved the docking arm for the white ship"
+  - tweak: "changed placement of some grills and windows"

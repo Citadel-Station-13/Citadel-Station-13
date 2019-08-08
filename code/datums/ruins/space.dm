@@ -305,3 +305,9 @@
 	suffix = "spacehermit.dmm"
 	name = "Space Hermit"
 	description = "A late awakening cryo pod in a crashed escape pod wakes up to find what befell of his fellow survivors. Contains all the necessary resources to actually make it out alive. Good luck."
+
+/datum/map_template/ruin/space/advancedlab
+	id = "advancedlab"
+	suffix = "advancedlab.dmm"
+	name = "Abductor Replication Lab"
+	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
