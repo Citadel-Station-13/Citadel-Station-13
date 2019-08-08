@@ -70,13 +70,13 @@
 			use_power(5000)
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				log_game("[M] ([key_name(M)]) was turned into a fly person")
-				if(iscarbon(M))//don't remove people from the round randomly you jerks
-					var/mob/living/carbon = M
-					if(M.dna)
+				if(ishuman(M))//don't remove people from the round randomly you jerks
+					var/mob/living/carbon/human/human = M
+					if(human.dna && human.dna.species.id == "human")
 						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
-						M.set_species(/datum/species/fly)
+						human.set_species(/datum/species/fly)
 
-					M.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
