@@ -68,15 +68,14 @@
 	if (ismovableatom(M))
 		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
-			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+			var/mob/living/carbon/C = M
+				if(C.dna && C.dna.species && C.dna.species.id != "fly" && !HAS_TRAIT(C, TRAIT_RADIMMUNE))
+					if(!calibrated && iscarbon(M) && prob(30 - ((accurate) * 10))) //oh dear a problem
 				log_game("[M] ([key_name(M)]) was turned into a fly person")
-				if(ishuman(M))//don't remove people from the round randomly you jerks
-					var/mob/living/carbon/human = M
-					if(human.dna)
-						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
-						human.set_species(/datum/species/fly)
+					to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
+					C.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
+					C.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
