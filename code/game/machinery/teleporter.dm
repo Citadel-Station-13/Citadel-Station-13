@@ -68,6 +68,7 @@
 	if (ismovableatom(M))
 		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
+
 			if(!calibrated && iscarbon(M) && prob(30 - ((accurate) * 10))) //oh dear a problem
 				var/mob/living/carbon/C = M
 				if(C.dna?.species && C.dna.species.id != "fly" && !HAS_TRAIT(C, TRAIT_RADIMMUNE))
