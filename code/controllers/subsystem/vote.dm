@@ -87,17 +87,20 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
+	var/was_roundtype_vote = mode == "roundtype"
 	if(winners.len > 0)
 		if(question)
 			text += "<b>[question]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
-		stored_gamemode_votes = list()
+		if(was_roundtype_vote)
+			stored_gamemode_votes = list()
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			stored_gamemode_votes[choices[i]] = votes
+			if(was_roundtype_vote)
+				stored_gamemode_votes[choices[i]] = votes
 			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
