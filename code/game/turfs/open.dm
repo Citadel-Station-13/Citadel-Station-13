@@ -272,7 +272,7 @@
 				return 0
 			if(ishuman(C) && (lube&NO_SLIP_WHEN_WALKING))
 				var/mob/living/carbon/human/H = C
-				if(!H.sprinting && H.getStaminaLoss() >= 20)
+				if(!H.sprinting && H.getStaminaLoss() <= 20)
 					return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")

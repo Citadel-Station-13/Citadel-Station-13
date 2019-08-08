@@ -8,6 +8,7 @@
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
 	reagent_state = LIQUID
 	color = "#FFFFFF" // rgb: 255, 255, 255
+	can_synth = FALSE
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
@@ -19,7 +20,6 @@
 	var/obj/effect/decal/cleanable/semen/S = locate() in T
 	if(!S)
 		S = new(T)
-	S.reagents.add_reagent("semen", reac_volume)
 	if(data["blood_DNA"])
 		S.add_blood(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -52,6 +52,7 @@
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
 	reagent_state = LIQUID
 	color = "#AAAAAA77"
+	can_synth = FALSE
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 
 /obj/effect/decal/cleanable/femcum
@@ -85,7 +86,6 @@
 	var/obj/effect/decal/cleanable/femcum/S = locate() in T
 	if(!S)
 		S = new(T)
-	S.reagents.add_reagent("femcum", reac_volume)
 	if(data["blood_DNA"])
 		S.add_blood(list(data["blood_DNA"] = data["blood_type"]))
 

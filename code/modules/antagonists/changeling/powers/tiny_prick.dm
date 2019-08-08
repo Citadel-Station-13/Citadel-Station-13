@@ -230,23 +230,22 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
-	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect begins after a few seconds."
+	desc = "Causes terror in the target and deals a minor amount of toxin damage."
+	helptext = "We evolve the ability to sting a target with a powerful toxic hallucinogenic chemical. The target does not notice they have been stung, and the effect begins instantaneously. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
+	loudness = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_lsd"
 	action_background_icon_state = "bg_ling"
 
-/obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(100,200))
+	if(target.reagents)
+		target.reagents.add_reagent("regenerative_materia", 5)
+		target.reagents.add_reagent("mindbreaker", 5)
 	return TRUE
-
-/obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
-	if(target)
-		target.hallucination = max(90, target.hallucination)
 
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
