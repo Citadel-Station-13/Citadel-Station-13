@@ -9,7 +9,6 @@
 	idle_power_usage = 100
 	active_power_usage = 2500
 	var/list/stored_items = list()
-	var/obj/item/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
@@ -18,9 +17,6 @@
 		I.forceMove(get_turf(src))
 	if(linked_teleporter)
 		linked_teleporter.linked_reclaimer = null
-	if(inserted_id)
-		inserted_id.forceMove(get_turf(src))
-		inserted_id = null
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
@@ -28,18 +24,6 @@
 		return
 	req_access = list()
 	obj_flags |= EMAGGED
-
-/obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id))
-		if(!inserted_id)
-			if(!user.transferItemToLoc(I, src))
-				return
-			inserted_id = I
-			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			return
-		else
-			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
-	return ..()
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -55,15 +39,19 @@
 	if(allowed(user))
 		can_reclaim = TRUE
 
-	if(inserted_id)
-		data["id"] = inserted_id
-		data["id_name"] = inserted_id.registered_name
-		if(inserted_id.points >= inserted_id.goal)
+	var/obj/item/card/id/I = user.get_idcard(TRUE)
+	if(istype(I, /obj/item/card/id/prisoner))
+		var/obj/item/card/id/prisoner/P = I
+		if(P.points >= P.goal)
 			can_reclaim = TRUE
 
 	var/list/mobs = list()
 	for(var/i in stored_items)
 		var/mob/thismob = i
+		if(QDELETED(thismob))
+			say("Alert! Unable to locate vital signals of a previously processed prisoner. Ejecting equipment!")
+			drop_items(thismob)
+			continue
 		var/list/mob_info = list()
 		mob_info["name"] = thismob.real_name
 		mob_info["mob"] = "[REF(thismob)]"
@@ -78,16 +66,6 @@
 
 /obj/machinery/gulag_item_reclaimer/ui_act(action, list/params)
 	switch(action)
-		if("handle_id")
-			if(inserted_id)
-				usr.put_in_hands(inserted_id)
-				inserted_id = null
-			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
-				if(I)
-					if(!usr.transferItemToLoc(I, src))
-						return
-					inserted_id = I
 		if("release_items")
 			var/mob/M = locate(params["mobref"])
 			if(M == usr || allowed(usr))
@@ -98,8 +76,9 @@
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
+	var/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
 		stored_items[user] -= W
-		W.forceMove(get_turf(src))
+		W.forceMove(drop_location)
 	stored_items -= user
