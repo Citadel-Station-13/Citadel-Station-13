@@ -262,8 +262,12 @@
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
 // /datum/component/vortex_magic signals
+	#define VORTEXMAGIC_SUCCESS 1
 #define COMSIG_VORTEXMAGIC_BLAST "vortex_blast"						//(turf/source, dirs, distance, damage, bonus_mob_damage, hit_once, hit_count, max_hit_count)
 #define COMSIG_VORTEXMAGIC_BURST "vortex_burst"						//(turf/source, burst_range, base_speed, min_spread_speed, spread_acceleration_mult, damage, bonus_mob_damage, silent, multi_hit, hit_count, max_hit_count)
+#define COMSIG_VORTEXMAGIC_BLINK "vortex_blink"						//(turf/destination, atom/movable/object, do_blast, blast_range, silent, delay, damage, bonus_mob_damage, do_burst, burst_range)
+#define COMSIG_VORTEXMAGIC_USERBLINK "vortex_userblink"				//(turf/destination, do_blast, blast_range, silent, delay, damage, bonus_mob_damage, datum/callback/on_finish)
+#define COMSIG_VORTEXMAGIC_CHASER "vortex_chaser"					//(turf/source, atom/target, duration, damage, bonus_mob_damage, speed, diagonals, tiles_before_recalculation, tiles_per_step, initial_dir, initial_move_dist)
 
 /*******Non-Signal Component Related Defines*******/
 
@@ -277,3 +281,11 @@
 //Ouch my toes!
 #define CALTROP_BYPASS_SHOES 1
 #define CALTROP_IGNORE_WALKERS 2
+
+//Vortex magic
+#define VORTEX_ABILITY_CHASER			(1<<0)
+#define VORTEX_ABILITY_RECALL			(1<<1)
+#define VORTEX_ABILITY_BLINK			(1<<2)
+#define VORTEX_ABILITY_BURST			(1<<3)
+#define VORTEX_ABILITY_BARRAGE			(1<<4)
+#define VORTEX_ABILITY_BLAST			(1<<5)

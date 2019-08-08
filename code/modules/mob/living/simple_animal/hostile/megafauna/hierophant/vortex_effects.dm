@@ -164,13 +164,16 @@
 	var/monster_damage_boost = 10
 	var/max_hit_amount = INFINITY		//max times to hit a unique atom
 
-/obj/effect/temp_visual/vortex_magic/chaser/Initialize(mapload, datum/component/vortex_magic/C, atom/target, duration = 98, damage = 10, monster_damage_boost = 10, move_delay = 3, tiles_per_step = 1, allow_diagonals = FALSE)
+/obj/effect/temp_visual/vortex_magic/chaser/Initialize(mapload, datum/component/vortex_magic/C, atom/target, duration = 98, damage = 10, monster_damage_boost = 10, move_delay = 3, tiles_per_step = 1, allow_diagonals = FALSE, tiles_before_recalculation, initial_dir, initial_move_dist)
 	src.duration = duration
 	src.damage = damage
 	src.monster_damage_boost = monster_damage_boost
 	src.move_delay = move_delay
 	src.tiles_per_step = tiles_per_step
 	src.allow_diagonals = allow_diagonals
+	steps_before_recalc = tiles_before_recalculation
+	steps_left_before_recalc = initial_move_dist
+	moving_dir = initial_dir
 	. = ..()
 	hit_things = list()
 	INVOKE_ASYNC(src, .proc/seek_target)
@@ -178,9 +181,6 @@
 /obj/effect/temp_visual/vortex_magic/chaser/Destroy()
 	hit_things = null
 	return ..()
-
-
-
 
 /obj/effect/temp_visual/vortex_magic/chaser/proc/get_target_dir()
 	. = allow_diagonals? get_dir(src, targetturf) : get_cardinal_dir(src, targetturf)
@@ -251,10 +251,10 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF
 
-/obj/effect/vortex_magic/ex_act()
+/obj/effect/vortex_beacon/ex_act()
 	return
 
-/obj/effect/vortex_magic/attackby(obj/item/I, mob/user, params)
+/obj/effect/vortex_beacon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/vortex_magic_club))
 		var/obj/item/vortex_magic_club/H = I
 		if(H.timer > world.time)

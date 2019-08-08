@@ -30,9 +30,19 @@ Cross Blasts and the AoE burst gain additional range as Hierophant loses health,
 When Hierophant dies, it stops trying to murder you and shrinks into a small form, which, while much weaker, is still quite effective.
 - The smaller club can place a teleport beacon, allowing the user to teleport themself and their allies to the beacon.
 
-Difficulty: Normal
+Difficulty: Hard
 
 */
+
+#define HIEROPHANT_STAGE_ONE		1
+#define HIEROPHANT_STAGE_TWO		2
+#define HIEROPHANT_STAGE_THREE		3
+#define HIEROPHANT_STAGE_FOUR		4
+#define HIEROPHANT_STAGE_FIVE		5
+
+#define HIEROPHANT_RAGE_BLASTSPAM		1
+#define HIEROPHANT_RAGE_BLINKSPAM		2
+#define HIEROPHANT_RAGE_CHASERSPAM		3
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "hierophant"
@@ -51,7 +61,7 @@ Difficulty: Normal
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	speed = 1
-	move_to_delay = 11
+	move_to_delay = 5
 	ranged = 1
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
@@ -63,6 +73,19 @@ Difficulty: Normal
 	del_on_death = TRUE
 	death_sound = 'sound/magic/repulse.ogg'
 
+	var/stage = HIEROPHANT_STAGE_ONE
+	var/blast_damage = 10
+	var/max_chasers = 1
+	var/max_enraged_chasrs = 2
+	var/blast_range = 5
+	var/burst_range = 3
+	var/burst_on_blink = FALSE
+	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
+
+	var/anger_modifier = 0		//ho nagry we are
+
+
+
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
 	var/chaser_speed = 2 //how fast chasers are currently
@@ -72,7 +95,6 @@ Difficulty: Normal
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our beacon
-	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 
@@ -109,7 +131,7 @@ Difficulty: Normal
 	else
 		stat = DEAD
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
-		burst_range = 10
+		burst_range = 20
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
 		burst(get_turf(src))
@@ -186,11 +208,53 @@ Difficulty: Normal
 	if(!blinking)
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_stage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
+	stage = CEILING((maxHealth - health) / 500, 1)
+	switch(stage)
+		if(HIEROPHANT_STAGE_ONE)
+			max_tracers = 1
+			max_enraged_chasers = 2
+			burst_range = 3
+			beam_range = 5
+		if(HIEROPHANT_STAGE_TWO)
+			max_tracers = 2
+			max_enraged_chasers = 3
+			burst_range = 5
+			beam_range = 7
+		if(HIEROPHANT_STAGE_THREE)
+			max_tracers = 3
+			max_enraged_chasers = 4
+			burst_range = 6
+			beam_range = 9
+		if(HIEROPHANT_STAGE_FOUR)
+			max_tracers = 3
+			max_enraged_chasers = 3
+			burst_range = 7
+			beam_range = 11
+		if(HIEROPHANT_STAGE_FIVE)
+			max_tracers = 3
+			max_enraged_chasers = 5
+			burst_range = 8
+			beam_range = 15
+
 	anger_modifier = CLAMP(((maxHealth - health) / 42),0,50)
-	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
-	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/process_stage()
+	switch(stage)
+		if(HIEROPHANT_STAGE_ONE)
+
+		if(HIEROPHANT_STAGE_TWO)
+
+		if(HIEROPHANT_STAGE_THREE)
+
+		if(HIEROPHANT_STAGE_FOUR)
+
+		if(HIEROPHANT_STAGE_FIVE)
+
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/enrage(mob/victim)
+
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
@@ -290,6 +354,7 @@ Difficulty: Normal
 					blinking = FALSE
 			return
 
+
 	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
 		chaser_cooldown = world.time + initial(chaser_cooldown)
@@ -297,6 +362,19 @@ Difficulty: Normal
 			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
 			OC.moving_dir = pick(GLOB.cardinals - C.moving_dir)
+
+
+
+
+
+chaser(turf/source, atom/target, duration = 100, damage = 10, bonus_mob_damage = 10, speed = 2, diagonals = FALSE, tiles_before_recalculation = 4, tiles_per_step = 1, initial_dir, initial_move_dist)
+
+
+
+
+
+
+
 
 	else if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
 		blink(target)
@@ -319,7 +397,7 @@ Difficulty: Normal
 	new /obj/effect/temp_visual/hierophant/telegraph/diagonal(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BLAST, T, NORTHEAST|NORTHWEST|SOUTHEAST|SOUTHWEST)
+	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BLAST, T, NORTHEAST|NORTHWEST|SOUTHEAST|SOUTHWEST, blast_damage, blast_damage)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -328,7 +406,7 @@ Difficulty: Normal
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BLAST, T, NORTH|SOUTH|EAST|WEST)
+	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BLAST, T, NORTH|SOUTH|EAST|WEST, blast_damage, blast_damage)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -337,10 +415,10 @@ Difficulty: Normal
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BLAST, T, NORTH|SOUTH|EAST|WEST|NORTHEAST|NORTHWEST|SOUTHEAST|SOUTHWEST)
+	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BLAST, T, NORTH|SOUTH|EAST|WEST|NORTHEAST|NORTHWEST|SOUTHEAST|SOUTHWEST, blast_damage, blast_damage)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed = 0.5) //release a wave of blasts
-	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BURST(original, burst_range, null, null, spread_speed)
+	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BURST, original, burst_range, null, null, spread_speed, blast_damage, blast_damage)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/melee_blast(mob/victim) //make a 3x3 blast around a target
 	var/turf/T = get_turf(victim)
@@ -349,7 +427,7 @@ Difficulty: Normal
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BURST(T, 2, 0, 0, 0)
+	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_BURST, T, 2, 0, 0, 0, blast_damage, blast_damage)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
@@ -393,34 +471,4 @@ Difficulty: Normal
 		sleep(0.5)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink(mob/victim) //blink to a target
-	if(blinking || !victim)
-		return
-	var/turf/T = get_turf(victim)
-	var/turf/source = get_turf(src)
-	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
-	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
-	blinking = TRUE
-	sleep(2) //short delay before we start...
-	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
-	new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, src)
-	for(var/t in RANGE_TURFS(1, T))
-		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
-		B.damage = 30
-	for(var/t in RANGE_TURFS(1, source))
-		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
-		B.damage = 30
-	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	sleep(1)
-	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
-	density = FALSE
-	sleep(2)
-	forceMove(T)
-	sleep(1)
-	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	sleep(1)
-	density = TRUE
-	visible_message("<span class='hierophant_warning'>[src] fades in!</span>")
-	sleep(1) //at this point the blasts we made detonate
-	blinking = FALSE
+	SEND_SIGNAL(src, COMSIG_VORTEXMAGIC_USERBLINK, get_turf(victim), TRUE, 1, FALSE, 2, 30, 80, burst_on_blink? CALLBACK(src, .proc/burst, get_turf(victim)): NONE)
