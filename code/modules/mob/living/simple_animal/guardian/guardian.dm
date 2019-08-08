@@ -61,6 +61,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/CtrlClickOn(atom/A)
 	var/mob/living/carbon/C = A
 	if((iscarbon(C)) && (istype(C.wear_neck, /obj/item/clothing/neck/necklace/memento_mori)))
+		to_chat(user,"The memento mori repels your hands, you cannot grasp [C]!")
 		return
 	else
 		. = ..()
