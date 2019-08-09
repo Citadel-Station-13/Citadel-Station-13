@@ -169,6 +169,8 @@ SLIME SCANNER
 		if(L)
 			if(L.swelling > 20)
 				msg += "\t<span class='danger'>Subject is suffering from an enlarged liver.</span>\n" //i.e. shrink their liver or give them a transplant.
+		else
+			msg += "\t<span class='danger'>Subject's liver is missing.</span>\n"
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(T)
 			if(T.damage > 40)
@@ -178,7 +180,7 @@ SLIME SCANNER
 		else
 			msg += "\t<span class='danger'>Subject's tongue is missing.</span>\n"
 		var/obj/item/organ/lungs/Lung = H.getorganslot("lungs")
-		if(L)
+		if(Lung)
 			if(Lung.damage > 150)
 				msg += "\t<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>\n" //i.e. Their lungs are shot
 		else
@@ -220,11 +222,11 @@ SLIME SCANNER
 		msg += "\t<span class='info'>Subject is hallucinating.</span>\n"
 
 	//MKUltra
-	if(M.has_status_effect(/datum/status_effect/chem/enthrall))
+	if(advanced && M.has_status_effect(/datum/status_effect/chem/enthrall))
 		msg += "\t<span class='info'>Subject has abnormal brain fuctions.</span>\n"
 
 	//Astrogen shenanigans
-	if(M.reagents.has_reagent("astral"))
+	if(advanced && M.reagents.has_reagent("astral"))
 		if(M.mind)
 			msg += "\t<span class='danger'>Warning: subject may be possesed.</span>\n"
 		else
