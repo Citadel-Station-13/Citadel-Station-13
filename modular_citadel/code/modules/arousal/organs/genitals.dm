@@ -270,8 +270,8 @@
 	switch(layer)
 		if(GENITALS_BEHIND_LAYER)
 			return "BEHIND"
-		if(GENITALS_ADJ_LAYER)
-			return "ADJ"
+		/*if(GENITALS_ADJ_LAYER)
+			return "ADJ"*/
 		if(GENITALS_FRONT_LAYER)
 			return "FRONT"
 
@@ -344,7 +344,7 @@
 	if(HAS_TRAIT(H, TRAIT_HUSK))
 		return
 	var/list/genitals_to_add = list()
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER) //GENITALS_ADJ_LAYER removed
 	var/list/standing = list()
 	var/size
 	var/aroused_state
