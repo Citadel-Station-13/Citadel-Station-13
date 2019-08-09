@@ -7,7 +7,7 @@
 	config_tag = "internal_affairs"
 	false_report_weight = 10
 	required_players = 25
-	required_enemies = 2 // Cit change - was 5
+	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
 	traitor_name = "Nanotrasen Internal Affairs Agent"

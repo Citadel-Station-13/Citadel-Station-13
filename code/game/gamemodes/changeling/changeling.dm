@@ -24,6 +24,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 	var/list/changelings = list()
+	var/antags_required = FALSE // allows for possibility of no antags
 
 /datum/game_mode/changeling/pre_setup()
 
@@ -41,19 +42,22 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
-	if(antag_candidates.len>0)
-		for(var/i = 0, i < num_changelings, i++)
-			if(!antag_candidates.len)
-				break
-			var/datum/mind/changeling = antag_pick(antag_candidates)
-			antag_candidates -= changeling
-			changelings += changeling
-			changeling.special_role = ROLE_CHANGELING
-			changeling.restricted_roles = restricted_jobs
-		return 1
-	else
+	for(var/i = 0, i < num_changelings, i++)
+		if(!antag_candidates.len)
+			break
+		var/datum/mind/changeling = antag_pick(antag_candidates)
+		antag_candidates -= changeling
+		changelings += changeling
+		changeling.special_role = ROLE_CHANGELING
+		changeling.restricted_roles = restricted_jobs
+
+	var/enough_antags = !antags_required || antag_candidates.len > 0
+
+	if(!enough_antags)
 		setup_error = "Not enough changeling candidates"
-		return 0
+		return FALSE
+	else
+		return TRUE
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)

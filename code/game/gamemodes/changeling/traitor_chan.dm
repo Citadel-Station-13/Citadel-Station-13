@@ -13,6 +13,7 @@
 	var/list/possible_changelings = list()
 	var/list/changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
+	var/antags_required = FALSE // allows for possibility of no antags
 
 /datum/game_mode/traitor/changeling/announce()
 	to_chat(world, "<B>The current game mode is - Traitor+Changeling!</B>")
@@ -43,19 +44,23 @@
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
-	if(possible_changelings.len>0)
-		for(var/j = 0, j < num_changelings, j++)
-			if(!possible_changelings.len)
-				break
-			var/datum/mind/changeling = antag_pick(possible_changelings)
-			antag_candidates -= changeling
-			possible_changelings -= changeling
-			changeling.special_role = ROLE_CHANGELING
-			changelings += changeling
-			changeling.restricted_roles = restricted_jobs
-		return ..()
+	for(var/j = 0, j < num_changelings, j++)
+		if(!possible_changelings.len)
+			break
+		var/datum/mind/changeling = antag_pick(possible_changelings)
+		antag_candidates -= changeling
+		possible_changelings -= changeling
+		changeling.special_role = ROLE_CHANGELING
+		changelings += changeling
+		changeling.restricted_roles = restricted_jobs
+
+	var/enough_antags = !antags_required || possible_changelings.len > 0
+
+	if(!enough_antags)
+		setup_error = "Not enough changeling candidates"
+		return FALSE
 	else
-		return 0
+		return ..()
 
 /datum/game_mode/traitor/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
