@@ -551,6 +551,7 @@ RLD
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
+	upgrade = TRUE
 
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
@@ -622,7 +623,7 @@ RLD
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
-
+	upgrade = TRUE
 
 // Ranged RCD
 
