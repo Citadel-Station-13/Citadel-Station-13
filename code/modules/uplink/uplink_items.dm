@@ -290,6 +290,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
 
+/datum/uplink_item/dangerous/pistol
+	name = "Stechkin Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+			with suppressors."
+	item = /obj/item/gun/ballistic/automatic/pistol
+	cost = 7
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/dangerous/revolver
+	name = "Syndicate Revolver"
+	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
+	item = /obj/item/gun/ballistic/revolver/syndie
+	cost = 13
+	surplus = 50
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
@@ -414,8 +430,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/rapier
 	name = "Rapier"
 	desc = "A fancy rapier with a diamond tip piercing anything that it comes into contack with. \
-			The rapier comes with its own shielf, this is rather noticeable as only the captain is known to carry a shielf. \
-			The shielf itself can be used to block melee attacks only. Its also jet black colours."
+			The rapier comes with its own sheath, this is rather noticeable as only the captain is known to carry a sheath. \
+			The sheath itself can be used to block melee attacks only. Its also jet black colours."
 	item = /obj/item/storage/belt/sabre/rapier
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -494,28 +510,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/dangerous/pistol
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
-			with suppressors."
-	item = /obj/item/gun/ballistic/automatic/pistol
-	cost = 7
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
 	item = /obj/item/gun/ballistic/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/revolver
-	name = "Syndicate Revolver"
-	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver/syndie
-	cost = 13
-	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -562,6 +562,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 13
 	surplus = 0
+
+/datum/uplink_item/dangerous/phantomthief
+	name = "Syndicate Mask"
+	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
+	item = /obj/item/clothing/glasses/phantomthief/syndicate
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -1307,6 +1313,19 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
 
+/datum/uplink_item/device_tools/emag
+	name = "Cryptographic Sequencer"
+	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
+			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
+	item = /obj/item/card/emag
+	cost = 6
+
+/datum/uplink_item/device_tools/emagrecharge
+	name = "Electromagnet Charging Device"
+	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
+	item = /obj/item/emagrecharge
+	cost = 2
+ 
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
 	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. \
@@ -1374,19 +1393,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/device_tools/emag
-	name = "Cryptographic Sequencer"
-	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
-	item = /obj/item/card/emag
-	cost = 6
-
-/datum/uplink_item/device_tools/emagrecharge
-	name = "Electromagnet Charging Device"
-	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
-	item = /obj/item/emagrecharge
-	cost = 2
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -1836,6 +1842,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 14
 	item = /obj/item/clothing/shoes/clown_shoes/taeclowndo
 	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/emitter_cannon
+	name = "Emitter Cannon"
+	desc = "A small emitter fitted into a gun case, do to size constraints and safety it can only shoot about ten times when fully charged."
+	cost = 5 //Low ammo, and deals same as 10mm but emp-able
+	item = /obj/item/gun/energy/emitter
+	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
 // Pointless
 /datum/uplink_item/badass

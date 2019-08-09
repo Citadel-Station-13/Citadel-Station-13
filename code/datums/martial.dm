@@ -2,6 +2,7 @@
 	var/name = "Martial Art"
 	var/streak = ""
 	var/max_streak_length = 6
+	var/id = "" //ID, used by mind/has_martialartcode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proc
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
 	var/deflection_chance = 0 //Chance to deflect projectiles

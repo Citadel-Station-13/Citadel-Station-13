@@ -91,6 +91,12 @@
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 
+/obj/item/melee/sabre/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre")
+
+/obj/item/melee/sabre/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "-sabre")
+
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/i = 0
@@ -156,6 +162,12 @@
 /obj/item/melee/rapier/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
+
+/obj/item/melee/rapier/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier")
+
+/obj/item/melee/rapier/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "-rapier")
 
 /obj/item/melee/classic_baton
 	name = "police baton"
