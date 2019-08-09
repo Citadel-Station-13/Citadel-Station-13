@@ -163,7 +163,7 @@ SLIME SCANNER
 		msg += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>\n"
 	else if (M.getBrainLoss() >= 45)
 		msg += "\t<span class='alert'>Brain damage detected.</span>\n"
-	if(ishuman(M))
+	if(ishuman(M) && advanced) // Should I make this not advanced?
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/liver/L = H.getorganslot("liver")
 		if(L)
