@@ -15,9 +15,9 @@
 	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
 	H.underwear = random_underwear(H.gender)
-	H.undie_color = random_color()
+	H.undie_color = random_short_color()
 	H.undershirt = random_undershirt(H.gender)
-	H.shirt_color = random_color()
+	H.shirt_color = random_short_color()
 	H.skin_tone = random_skin_tone()
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = random_facial_hair_style(H.gender)

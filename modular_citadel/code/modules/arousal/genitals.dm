@@ -11,7 +11,7 @@
 	var/fluid_id = null
 	var/fluid_max_volume = 50
 	var/fluid_efficiency = 1
-	var/fluid_rate = 1
+	var/fluid_rate = CUM_RATE
 	var/fluid_mult = 1
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
@@ -117,9 +117,15 @@
 		generate_fluid()
 
 /obj/item/organ/genital/proc/generate_fluid()
+	var/amount = fluid_rate
+	if(!reagents.total_volume && amount < 0.1) // Apparently, 0.015 gets rounded down to zero and no reagents are created if we don't start it with 0.1 in the tank.
+		amount += 0.1
+	var/multiplier = fluid_mult
+	if(reagents.total_volume >= 5)
+		multiplier *= 0.5
 	if(reagents.total_volume < reagents.maximum_volume)
 		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
-		reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
+		reagents.add_reagent(fluid_id, (amount * multiplier))//generate the cum
 		return TRUE
 	return FALSE
 
