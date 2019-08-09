@@ -163,25 +163,31 @@ SLIME SCANNER
 		msg += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>\n"
 	else if (M.getBrainLoss() >= 45)
 		msg += "\t<span class='alert'>Brain damage detected.</span>\n"
-	if(iscarbon(M))
-		var/obj/item/organ/liver/L = M.getorganslot("liver")
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/liver/L = H.getorganslot("liver")
 		if(L)
 			if(L.swelling > 20)
 				msg += "\t<span class='danger'>Subject is suffering from an enlarged liver.</span>\n" //i.e. shrink their liver or give them a transplant.
-		var/obj/item/organ/tongue/T = M.getorganslot("tongue")
-		if(!T || T.damage > 40)
-			msg += "\t<span class='danger'>Subject is suffering from severe burn tissue on their tongue.</span>\n" //i.e. their tongue is shot
-		if(T.name == "fluffy tongue")
-			msg += "\t<span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>\n"
-		var/obj/item/organ/lungs/Lung = M.getorganslot("lungs")
+		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
+		if(T)
+			if(T.damage > 40)
+				msg += "\t<span class='danger'>Subject is suffering from severe burn tissue on their tongue.</span>\n" //i.e. their tongue is shot
+			if(T.name == "fluffy tongue")
+				msg += "\t<span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>\n"
+		else
+			msg += "\t<span class='danger'>Subject's tongue is missing.</span>\n"
+		var/obj/item/organ/lungs/Lung = H.getorganslot("lungs")
 		if(L)
 			if(Lung.damage > 150)
 				msg += "\t<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>\n" //i.e. Their lungs are shot
-		var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+		else
+			msg += "\t<span class='danger'>Subject's lungs have collapsed from trauma!</span>\n"
+		var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
 		if(P)
 			if(P.length>20)
 				msg += "\t<span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>\n"
-		var/obj/item/organ/genital/breasts/Br = M.getorganslot("breasts")
+		var/obj/item/organ/genital/breasts/Br = H.getorganslot("breasts")
 		if(Br)
 			if(Br.cached_size>5)
 				msg += "\t<span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>\n"
@@ -205,7 +211,7 @@ SLIME SCANNER
 			msg += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>\n"
 	if(advanced)
 		msg += "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>\n"
-	if (M.radiation)
+	if(M.radiation)
 		msg += "\t<span class='alert'>Subject is irradiated.</span>\n"
 		if(advanced)
 			msg += "\t<span class='info'>Radiation Level: [M.radiation]%.</span>\n"
@@ -220,9 +226,9 @@ SLIME SCANNER
 	//Astrogen shenanigans
 	if(M.reagents.has_reagent("astral"))
 		if(M.mind)
-			msg += "<span class='danger'>Warning: subject may be possesed.</span>\n"
+			msg += "\t<span class='danger'>Warning: subject may be possesed.</span>\n"
 		else
-			msg += "<span class='notice'>Subject appears to be astrally projecting.</span>\n"
+			msg += "\t<span class='notice'>Subject appears to be astrally projecting.</span>\n"
 
 	//Eyes and ears
 	if(advanced)
