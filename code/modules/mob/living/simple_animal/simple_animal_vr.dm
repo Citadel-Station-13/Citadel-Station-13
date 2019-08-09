@@ -9,6 +9,7 @@
 	var/list/prey_excludes = list()				//For excluding people from being eaten.
 	var/voracious_chance = VORACIOUS_CHANCE		//Mob AI Engagement probability when rolling between regular melee strike and a vore attempt, default 40%
 
+	var/holodeck = FALSE
 	// Vore belly interactions
 	// Most mobs are only going to have the one gut. Multi-gut set ups should refer to Ash Drake's dragon_vore.dm for set up.
 
@@ -49,6 +50,8 @@
 // Simple animals have only one belly.  This creates it (if it isn't already set up)
 /mob/living/simple_animal/init_vore()
 	vore_init = TRUE
+	if(holodeck)	//hacky dumbshit, but I can't get it to work right anyway
+		return
 	if(vore_organs.len)
 		return
 	if(no_vore) //If it can't vore, let's not give it a stomach.
