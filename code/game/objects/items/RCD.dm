@@ -555,13 +555,12 @@ RLD
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
-	var/ammoamt = 40
+	var/ammoamt = 80
 
 /obj/item/rcd_ammo/large
 	name = "large compressed matter cartridge"
-	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
-	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
+	desc = "Highly compressed matter for the RCD. Has twice as much the matter packed into the same space as a normal cartridge."
+	materials = list(MAT_METAL=24000, MAT_GLASS=16000)
 	ammoamt = 160
 
 
