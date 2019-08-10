@@ -895,3 +895,49 @@
 	time = 150 //It's a gun
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/durathread_vest
+	name = "Makeshift Durathread Vest"
+	result = /obj/item/clothing/suit/armor/vest/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 5,
+				/obj/item/stack/sheet/leather = 4)
+	time = 50
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_helmet
+	name = "Makeshift Durathread Helmet"
+	result = /obj/item/clothing/head/helmet/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4,
+				/obj/item/stack/sheet/leather = 3)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_jumpsuit
+	name = "Durathread Jumpsuit"
+	result = /obj/item/clothing/under/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_beret
+	name = "Durathread Beret"
+	result = /obj/item/clothing/head/beret/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 6)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_beanie
+	name = "Durathread Beanie"
+	result = /obj/item/clothing/head/beanie/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 6)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_bandana
+	name = "Durathread Bandana"
+	result = /obj/item/clothing/mask/bandana/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 1)
+	time = 25
+	category = CAT_CLOTHING
+
+
