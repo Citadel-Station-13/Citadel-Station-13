@@ -2,15 +2,15 @@
 	mix_sound = 'sound/effects/bubbles.ogg'
 
 //Called for every reaction step
-/datum/chemical_reaction/fermi/proc/FermiCreate(holder)
+/datum/chemical_reaction/proc/FermiCreate(holder)
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder)
+/datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder)
 	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
-/datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+/datum/chemical_reaction/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
 	if (Exploding == TRUE)
 		return
 

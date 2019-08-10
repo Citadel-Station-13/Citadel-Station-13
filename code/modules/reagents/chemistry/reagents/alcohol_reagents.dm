@@ -1373,6 +1373,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
+	id = "neurotoxin"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
 	boozepwr = 50
@@ -1382,6 +1383,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
+	ImpureChem 			= "neuroweak"
+	InverseChemVal 		= 0 //Clear conversion
+	InverseChem 		= "neuroweak"
 
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
@@ -1415,6 +1419,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, type)
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, type)
 	M.adjustStaminaLoss(10)
+	..()
+
+/datum/reagent/consumable/ethanol/neuroweak
+	name = "Neuroalcohol"
+	id = "neuroweak"
+	description = "A mostly safe alcoholic drink for the true daredevils. Do not mix with Neurotoxin."
+	boozepwr = 60
+
+/datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent("neurotoxin"))
+		M.adjustBrainLoss(0.5*REM, 150)
+	else
+		M.adjustBrainLoss(-0.5*REM, 150)
+		M.dizziness +=2
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
