@@ -383,6 +383,14 @@
 	icon_state = "duffel-eng"
 	item_state = "duffel-eng"
 
+/obj/item/storage/backpack/duffelbag/durathread
+	name = "durathread duffel bag"
+	desc = "A lightweight duffel bag made out of durathread."
+	icon_state = "duffel-durathread"
+	item_state = "duffel-durathread"
+	resistance_flags = FIRE_PROOF
+	slowdown = 0
+
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
 	desc = "A large duffel bag for holding tools and hats."
