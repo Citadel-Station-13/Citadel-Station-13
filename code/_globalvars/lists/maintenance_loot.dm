@@ -110,6 +110,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 1,
 	/obj/item/storage/daki = 3, //VERY IMPORTANT CIT CHANGE - adds bodypillows to maint
 	/obj/item/storage/pill_bottle/penis_enlargement = 2,
+	/obj/item/storage/pill_bottle/breast_enlargement = 2,
 	/obj/item/clothing/shoes/wheelys = 1,
 	/obj/item/clothing/shoes/kindleKicks = 1,
 	/obj/item/autosurgeon/penis = 1,
