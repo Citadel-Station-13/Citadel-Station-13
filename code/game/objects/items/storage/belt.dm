@@ -595,8 +595,11 @@
 	desc = "An double stacked bandolier made out of durathread."
 	icon_state = "bandolier-durathread"
 	item_state = "bandolier-durathread"
-	max_ammo = 32
+	STR.max_items = 32
 	resistance_flags = FIRE_PROOF
+	STR.can_hold = typecacheof(list(
+		/obj/item/ammo_casing
+		))
 
 /obj/item/storage/belt/medolier
 	name = "medolier"
