@@ -133,6 +133,7 @@
 	mode = "M-SHIELD"
 	speed_process = TRUE
 	var/kill_range = 14
+	density = 0
 
 /obj/machinery/satellite/meteor_shield/sci
 	name = "\improper Meteor Shield Satellite"

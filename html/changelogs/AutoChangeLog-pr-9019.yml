@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "MRE menu 3 has cuban nachos instead of a chili now."
+  - bugfix: "Removed the illustration overlay from MREs, looks pretty weird otherwise."
+  - rscadd: "MRE menu 4, vegetarian."
