@@ -144,7 +144,7 @@
 	desc = "Beefed up version of a standard laser gun."
 	id = "lasercarbine"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500)
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 7500, MAT_SILVER = 7500, MAT_TITANIUM = 1000)
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

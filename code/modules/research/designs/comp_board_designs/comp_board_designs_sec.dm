@@ -41,3 +41,11 @@
 	build_path = /obj/item/circuitboard/computer/card
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY	| DEPARTMENTAL_FLAG_ENGINEERING 	//Honestly should have a bridge techfab for this sometime.
+
+/datum/design/board/adv_cams
+	name = "Computer Design (Adv Cameras Console)"
+	desc = "Allows for the construction of circuit boards used to build an much more advanced cameras monitors."
+	id = "adv_cams"
+	build_path = /obj/item/circuitboard/computer/camera_advanced
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY	| DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE 	//Honestly should have a bridge techfab for this sometime. We really should

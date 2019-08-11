@@ -14,6 +14,10 @@
 	name = "Security Cameras (Computer Board)"
 	build_path = /obj/machinery/computer/security
 
+/obj/item/circuitboard/computer/camera_advanced
+	name = "Advanced Security Cameras (Computer Board)"
+	build_path = /obj/machinery/computer/camera_advanced
+
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio

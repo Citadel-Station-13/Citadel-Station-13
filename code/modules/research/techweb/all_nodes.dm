@@ -609,7 +609,7 @@
 	display_name = "Weapon Development Technology"
 	description = "Our researchers have found new to weaponize just about everything now."
 	prereq_ids = list("engineering")
-	design_ids = list("pin_testing", "tele_shield", "lasercarbine")
+	design_ids = list("pin_testing", "tele_shield")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	export_price = 5000
 
@@ -618,7 +618,7 @@
 	display_name = "Advanced Weapon Development Technology"
 	description = "Our weapons are breaking the rules of reality by now."
 	prereq_ids = list("adv_engi", "weaponry")
-	design_ids = list("pin_loyalty")
+	design_ids = list("pin_loyalty", "lasercarbine")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	export_price = 5000
 
@@ -681,8 +681,8 @@
 	display_name = "Ballistic Weaponry"
 	description = "This isn't research.. This is reverse-engineering!"
 	prereq_ids = list("weaponry")
-	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_rubber", "mag_oldsmg_tx")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
+	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_rubber", "mag_oldsmg_tx","bolt_clip")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
 /datum/techweb_node/tech_shell
@@ -1012,7 +1012,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 20000
 	hidden = TRUE
-	design_ids = list("alienalloy")
+	design_ids = list("alienalloy", "decloner")
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"
@@ -1044,10 +1044,37 @@
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
 	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
-	design_ids = list("decloner", "borg_syndicate_module", "suppressor", "largecrossbow", "donksofttoyvendor")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	design_ids = list("suppressor", "largecrossbow", "donksofttoyvendor")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 8000)
 	export_price = 5000
 	hidden = TRUE
+
+/datum/techweb_node/robotics_illegal
+	id = "robotics_illegal"
+	display_name = "Illegal Robotic Technology"
+	description = "Vastly illegal borg tech."
+	prereq_ids = list("syndicate_basic", "cyborg_upg_combat")
+	design_ids = list("borg_syndicate_module")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	export_price = 5000
+
+/datum/techweb_node/illegal_cams
+	id = "illegal_cams"
+	display_name = "Advanced CCTV Controls"
+	description = "Vastly illegal ways to spy on the crew."
+	prereq_ids = list("syndicate_basic", "robotics_illegal")
+	design_ids = list("adv_cams", "ai_cam_upgrade")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
+/datum/techweb_node/advanced_illegl_ballistics
+	id = "advanced_illegal_ballistics"
+	display_name = "Advanced Illegal Ballistics"
+	description = "Advanced Ballistic for Illegal weaponds."
+	design_ids = list("10mm","10mmap","10mminc","10mmhp","pistolm9mm","m45")
+	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 8000) //This gives sec lethal mags/clips for guns form traitors or space.
+	export_price = 7000
 
 /datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
@@ -1057,15 +1084,6 @@
 		if(!UI.item)
 			continue
 		boost_item_paths |= UI.item	//allows deconning to unlock.
-
-/datum/techweb_node/advanced_illegl_ballistics
-	id = "advanced_illegal_ballistics"
-	display_name = "Advanced Illegal Ballistics"
-	description = "Advanced Ballistic for Illegal weaponds."
-	design_ids = list("10mm","10mmap","10mminc","10mmhp","pistolm9mm","m45","bolt_clip")
-	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns form traitors or space.
-	export_price = 7000
 
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()

@@ -3,6 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
+	circuit = /obj/item/circuitboard/computer/camera_advanced
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
 	var/mob/camera/aiEye/remote/eyeobj
