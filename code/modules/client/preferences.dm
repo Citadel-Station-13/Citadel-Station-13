@@ -669,6 +669,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
+			if("diona_body_markings" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Diona Body Markings</h3>"
+
+				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=diona_body_markings;task=input'>[features["diona_body_markings"]]</a>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
 			if(mutant_category)
 				dat += "</td>"
 				mutant_category = 0
@@ -1646,6 +1659,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_ipc_antenna = input(user, "Choose your character's antenna:", "Character Preference") as null|anything in GLOB.ipc_antennas_list
 					if(new_ipc_antenna)
 						features["ipc_antenna"] = new_ipc_antenna
+
+				if("diona_body_markings")
+					var/list/snowflake_markings_list = list()
+					for(var/path in GLOB.diona_body_markings_list)
+						var/datum/sprite_accessory/diona/instance = GLOB.diona_body_markings_list[path]
+						if(istype(instance, /datum/sprite_accessory))
+							var/datum/sprite_accessory/S = instance
+							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+								snowflake_markings_list[S.name] = path
+					var/new_diona_body_markings
+					new_diona_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in snowflake_markings_list
+					if(new_diona_body_markings)
+						features["diona_body_markings"] = new_diona_body_markings
+						if(new_diona_body_markings != "None")
+							features["diona_body_markings"] = "None"
+						else if(new_diona_body_markings == "None")
+							features["diona_body_markings"] = "None"
+							features["body_markings"] = "None"
+						update_preview_icon()
 
 				if("tail_lizard")
 					var/new_tail

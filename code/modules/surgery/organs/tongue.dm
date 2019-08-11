@@ -62,6 +62,27 @@
 		message = lizard_hiSS.Replace(message, "SSS")
 	speech_args[SPEECH_MESSAGE] = message
 
+
+/obj/item/organ/tongue/diona
+	name = "forked tongue"
+	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."
+	icon_state = "tonguediona"
+	say_mod = "rustles"
+	taste_sensitivity = 1
+	modifies_speech = TRUE
+
+/obj/item/organ/tongue/diona/handle_speech(datum/source, list/speech_args)
+
+	var/static/regex/diona_pause_long = new("\\.+", "g")
+	var/static/regex/diona_pause = new("\\,+", "g")
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = diona_pause_long.Replace(message, "...")
+		message = diona_pause.Replace(message, "...")
+
+	speech_args[SPEECH_MESSAGE] = message
+
 /obj/item/organ/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."

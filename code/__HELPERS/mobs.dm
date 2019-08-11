@@ -94,6 +94,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
 	if(!GLOB.mam_snouts_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_snouts, GLOB.mam_snouts_list)
+	if(!GLOB.diona_body_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/diona, GLOB.diona_body_markings_list)
 
 	//snowflake check so people's ckey features don't get randomly put on unmonkeys/spawns
 	var/list/snowflake_mam_tails_list = list()

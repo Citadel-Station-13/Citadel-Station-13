@@ -1818,6 +1818,28 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Crowned"
 	icon_state = "crowned"
 
+//Diona
+/datum/sprite_accessory/diona/
+	name = "Diona"
+	icon_state = "none"
+	icon = 'icons/mob/markings_diona.dmi'
+	extra = FALSE
+	extra2 = FALSE
+	color_src = MATRIXED
+	gender_specific = 0
+
+/datum/sprite_accessory/diona/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/diona/default
+	name = "Default"
+	icon_state = "default"
+
+/datum/sprite_accessory/diona/corvid
+	name = "Corvid"
+	icon_state = "corvid"
+
 // *** Snooooow flaaaaake ***
 
 /datum/sprite_accessory/horns/guilmon

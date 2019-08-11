@@ -5,6 +5,11 @@
 
 	features["ipc_screen"] 	= sanitize_inlist(features["ipc_screen"], GLOB.ipc_screens_list)
 	features["ipc_antenna"] 	= sanitize_inlist(features["ipc_antenna"], GLOB.ipc_antennas_list)
+
+	//Diona
+	S["feature_diona_body_markings"] >> features["diona_body_markings"]
+	features["diona_body_markings"] = sanitize_inlist(features["diona_body_markings"], GLOB.diona_body_markings_list)
+
 	//Citadel
 	features["flavor_text"]		= sanitize_text(features["flavor_text"], initial(features["flavor_text"]))
 	if(!features["mcolor2"] || features["mcolor"] == "#000")
@@ -30,6 +35,8 @@
 	//ipcs
 	WRITE_FILE(S["feature_ipc_screen"], features["ipc_screen"])
 	WRITE_FILE(S["feature_ipc_antenna"], features["ipc_antenna"])
+	//Diona
+	WRITE_FILE(S["feature_diona_body_markings"], features["diona_body_markings"])
 	//Citadel
 	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
 	WRITE_FILE(S["feature_exhibitionist"], features["exhibitionist"])

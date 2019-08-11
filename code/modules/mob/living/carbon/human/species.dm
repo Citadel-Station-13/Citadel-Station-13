@@ -725,6 +725,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
 				if("ipc_antenna")
 					S = GLOB.ipc_antennas_list[H.dna.features["ipc_antenna"]]
+				if("diona_body_markings")
+					S = GLOB.diona_body_markings_list[H.dna.features["diona_body_markings"]]
 				if("mam_tail")
 					S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
 				if("mam_waggingtail")

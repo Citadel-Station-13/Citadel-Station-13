@@ -327,6 +327,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_tail"]				>> features["xenotail"]
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
 	S["feature_xeno_head"]				>> features["xenohead"]
+	//Diona features
+	S["feature_diona_body_markings"]	>> features["diona_body_markings"]
 	//cock features
 	S["feature_has_cock"]				>> features["has_cock"]
 	S["feature_cock_shape"]				>> features["cock_shape"]

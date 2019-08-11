@@ -55,6 +55,9 @@ GLOBAL_LIST_EMPTY(xeno_dorsal_list)
 GLOBAL_LIST_EMPTY(ipc_screens_list)
 GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
+	//Diona Species
+GLOBAL_LIST_EMPTY(diona_body_markings_list)
+
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
 GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
