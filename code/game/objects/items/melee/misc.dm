@@ -242,6 +242,7 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+	cooldown = 10
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
