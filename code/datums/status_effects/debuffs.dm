@@ -507,3 +507,101 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+datum/status_effect/pacify
+	id = "pacify"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 1
+	duration = 100
+	alert_type = null
+
+/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/pacify/on_apply()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+
+/datum/status_effect/trance
+	id = "trance"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 300
+	tick_interval = 10
+	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
+	var/stun = TRUE
+	var/triggered = FALSE
+	alert_type = null
+
+/obj/screen/alert/status_effect/trance
+	name = "Trance"
+	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
+	icon_state = "high"
+
+/datum/status_effect/trance/tick()
+	if(HAS_TRAIT(owner, "hypnotherapy"))
+		if(triggered == TRUE)
+			UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+			RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+			ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+			if(!owner.has_quirk(/datum/quirk/monochromatic))
+				owner.add_client_colour(/datum/client_colour/monochrome)
+			to_chat(owner, "<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+			triggered = FALSE
+		else
+			return
+	if(stun)
+		owner.Stun(60, TRUE, TRUE)
+	owner.dizziness = 20
+
+/datum/status_effect/trance/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	if(HAS_TRAIT(owner, "hypnotherapy"))
+		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/listen)
+		return TRUE
+	alert_type = /obj/screen/alert/status_effect/trance
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+	if(!owner.has_quirk(/datum/quirk/monochromatic))
+		owner.add_client_colour(/datum/client_colour/monochrome)
+	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
+	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+	return TRUE
+
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE, source_quirk = FALSE)//hypnoquirk makes no visible message, prevents self antag messages, and places phrase below objectives.
+	duration = _duration
+	stun = _stun
+	if(source_quirk == FALSE && HAS_TRAIT(owner, "hypnotherapy"))
+		REMOVE_TRAIT(owner, "hypnotherapy", ROUNDSTART_TRAIT)
+	return ..()
+
+/datum/status_effect/trance/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+	owner.dizziness = 0
+	if(!owner.has_quirk(/datum/quirk/monochromatic))
+		owner.remove_client_colour(/datum/client_colour/monochrome)
+	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
+
+/datum/status_effect/trance/proc/listen(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	to_chat(owner, "<span class='notice'><i>[speaker] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
+	triggered = TRUE
+
+/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!owner.can_hear())
+		return
+	if(speaker == owner)
+		return
+	var/mob/living/carbon/C = owner
+	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	if(HAS_TRAIT(C, "hypnotherapy"))
+		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message, TRUE), 10)
+	else
+		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)
+	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
+	qdel(src)

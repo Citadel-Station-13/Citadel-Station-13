@@ -51,6 +51,7 @@
 	var/list/blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 	var/name_override //For temporary visible name changes
+	var/genital_override = FALSE //Force genitals on things incase of chems
 
 	var/nameless = FALSE //For drones of both the insectoid and robotic kind. And other types of nameless critters.
 
