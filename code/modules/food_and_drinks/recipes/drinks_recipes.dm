@@ -795,3 +795,9 @@
 	id = "red_queen"
 	results = list("red_queen" = 10)
 	required_reagents = list("tea" = 6, "mercury" = 2, "blackpepper" = 1, "growthserum" = 1)
+
+/datum/chemical_reaction/catnip_tea
+	name = "Catnip Tea"
+	id = "catnip_tea"
+	results = list("catnip_tea" = 3)
+	required_reagents = list("tea" = 5, "catnip" = 2)
