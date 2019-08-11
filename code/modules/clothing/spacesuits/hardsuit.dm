@@ -208,7 +208,7 @@
 	//Chief Engineer's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	name = "advanced hardsuit helmet"
-	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
+	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish that resonates with the supermatter crystal."
 	icon_state = "hardsuit0-white"
 	item_state = "ce_helm"
 	item_color = "white"
@@ -219,7 +219,7 @@
 /obj/item/clothing/suit/space/hardsuit/engine/elite
 	icon_state = "hardsuit-white"
 	name = "advanced hardsuit"
-	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
+	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish that resonates with the supermatter crystal."
 	item_state = "ce_hardsuit"
 	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 90)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
