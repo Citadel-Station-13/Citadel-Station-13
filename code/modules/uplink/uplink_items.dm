@@ -1369,7 +1369,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			Recharge using bluespace crystals. \
 			Comes with 5 charges."
 	item = /obj/item/compressionkit
-	cost = 5
+	cost = 12
 
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
