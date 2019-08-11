@@ -117,6 +117,9 @@
 		if(!GLOB.mam_body_markings_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
 		L[DNA_MUTANTMARKING_BLOCK] = construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+		if(!GLOB.diona_body_markings_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/diona, GLOB.diona_body_markings_list)
+		L[DNA_MUTANTDIONA_BLOCK] = construct_block(GLOB.diona_body_markings_list.Find(features["diona_body_markings"]), GLOB.diona_body_markings_list.len)
 		if(!GLOB.taur_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, GLOB.taur_list)
 		L[DNA_TAUR_BLOCK] = construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
@@ -182,6 +185,8 @@
 			construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
 		if(DNA_MUTANTMARKING_BLOCK)
 			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+		if(DNA_MUTANTDIONA_BLOCK)
+			construct_block(GLOB.diona_body_markings_list.Find(features["diona_body_markings"]), GLOB.diona_body_markings_list.len)
 		if(DNA_TAUR_BLOCK)
 			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
 

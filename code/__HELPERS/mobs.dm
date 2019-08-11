@@ -204,6 +204,7 @@
 		"womb_fluid" 		= "femcum",
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
+		"diona_body_markings" = "None",
 		"flavor_text"		= ""))
 
 /proc/random_hair_style(gender)

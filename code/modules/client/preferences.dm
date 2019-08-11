@@ -156,6 +156,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"womb_fluid" = "femcum",
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
+		"diona_body_markings" = "None",
 		"flavor_text" = ""
 		)
 
@@ -1584,6 +1585,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
 							features["mam_body_markings"] = "None"
+						if(!("diona_body_markings" in pref_species.default_features))
+							features["diona_body_markings"] = "None"
 						if("mam_body_markings" in pref_species.default_features)
 							if(features["mam_body_markings"] == "None")
 								features["mam_body_markings"] = "Plain"
@@ -1673,9 +1676,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_diona_body_markings)
 						features["diona_body_markings"] = new_diona_body_markings
 						if(new_diona_body_markings != "None")
-							features["diona_body_markings"] = "None"
+							features["body_markings"] = "None"
 						else if(new_diona_body_markings == "None")
-							features["diona_body_markings"] = "None"
+							features["mam_body_markings"] = "Plain"
 							features["body_markings"] = "None"
 						update_preview_icon()
 
@@ -1782,7 +1785,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
 						if(new_body_markings != "None")
-							features["mam_body_markings"] = "None"
+							features["body_markings"] = "None"
 						update_preview_icon()
 
 				if("legs")
@@ -1864,6 +1867,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if(new_mam_body_markings == "None")
 							features["mam_body_markings"] = "Plain"
 							features["body_markings"] = "None"
+							features["diona_body_markings"] = "None"
 						update_preview_icon()
 
 				//Xeno Bodyparts

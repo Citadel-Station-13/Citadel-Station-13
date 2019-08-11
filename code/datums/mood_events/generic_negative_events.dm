@@ -143,3 +143,9 @@
 
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
+
+
+/datum/mood_event/diona_radiation_bad
+	description = "<span class='warning'>The amount of radiation is starting to make me feel weird...</span>\n"
+	mood_change = -4
+	timeout = 600

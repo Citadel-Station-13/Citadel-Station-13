@@ -16,7 +16,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, GLOB.xeno_dorsal_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list, roundstart = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list, roundstart = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/diona, GLOB.diona_body_markings_list, roundstart = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/diona, GLOB.diona_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
 	for(var/K in GLOB.cock_shapes_list)
 		var/datum/sprite_accessory/penis/value = GLOB.cock_shapes_list[K]
