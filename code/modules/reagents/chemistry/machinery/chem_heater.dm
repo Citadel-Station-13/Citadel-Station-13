@@ -97,13 +97,21 @@
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
 	data["currentTemp"] = beaker ? beaker.reagents.chem_temp : null
+	data["currentpH"] =  beaker ? beaker.reagents.pH : null
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
+	//purity and pH accuracy
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
+		data["partRating"]= 10**(M.rating-1)
+		if(M.rating == 4)
+			data["showPurity"] = 1
+		else
+			data["showPurity"] = 0
 
 	var beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume, "purity" = R.purity))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
 
