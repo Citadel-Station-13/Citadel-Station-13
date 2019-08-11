@@ -279,13 +279,56 @@
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
 /obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
+	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/storage/bag/ore(src)
-	new /obj/item/clothing/suit/hooded/explorer(src)
-	new /obj/item/encryptionkey/headset_mining(src)
+	new /obj/item/clothing/suit/hooded/explorer/standard(src)
+	new /obj/item/encryptionkey/headset_cargo(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/mining_access_card(src)
 	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/kitchen/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+	//CITADEL ADDITIONS BELOW
+
+/obj/item/storage/backpack/duffelbag/mining_cloned
+	name = "mining replacement kit"
+	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even as a new Id!"
+
+/obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
+	new /obj/item/pickaxe/mini(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/implanter/tracking/gps(src)
+	new /obj/item/gun/energy/kinetic_accelerator(src)
+	new /obj/item/kitchen/knife/combat/survival(src)
+	new /obj/item/storage/firstaid/regular(src)
+	new /obj/item/reagent_containers/hypospray/medipen/survival(src)
+	new /obj/item/t_scanner/adv_mining_scanner(src)
+	new /obj/item/clothing/suit/hooded/explorer/standard(src)
+	new /obj/item/encryptionkey/headset_cargo(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/card/id/mining(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/clothing/glasses/meson/prescription(src)
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
+	var/items = list("Exo-suit", "SEVA suit")
+
+	var/selection = input(redeemer, "Pick your suit.", "Suit Voucher Redemption") as null|anything in items
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+		return
+	var/drop_location = drop_location()
+	switch(selection)
+		if("Exo-suit")
+			new /obj/item/clothing/suit/hooded/explorer/exo(drop_location)
+			new /obj/item/clothing/mask/gas/exo(drop_location)
+		if("SEVA suit")
+			new /obj/item/clothing/suit/hooded/explorer/seva(drop_location)
+			new /obj/item/clothing/mask/gas/seva(drop_location)
+
+	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
+	qdel(voucher)
