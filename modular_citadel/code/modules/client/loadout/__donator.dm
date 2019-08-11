@@ -442,7 +442,7 @@ datum/gear/darksabresheath
 	ckeywhitelist = list("nicholaiavenicci")
 
 /datum/gear/donorberet
-	name = "Atmos Beret
+	name = "Atmos Beret"
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/blueberet
 	ckeywhitelist = list("foxystalin")
