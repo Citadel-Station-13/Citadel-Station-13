@@ -72,11 +72,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
-	var/undie_color = "#FFFFFF"
+	var/undie_color = "FFF"
 	var/undershirt = "Nude"				//undershirt type
-	var/shirt_color = "#FFFFFF"
+	var/shirt_color = "FFF"
 	var/socks = "Nude"					//socks type
-	var/socks_color = "#FFFFFF"
+	var/socks_color = "FFF"
 	var/backbag = DBACKPACK				//backpack type
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
@@ -1534,7 +1534,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("undie_color")
 					var/n_undie_color = input(user, "Choose your underwear's color.", "Character Preference", undie_color) as color|null
 					if(n_undie_color)
-						undie_color = sanitize_hexcolor(n_undie_color, include_crunch= TRUE)
+						undie_color = sanitize_hexcolor(n_undie_color)
 
 				if("undershirt")
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
@@ -1544,7 +1544,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("shirt_color")
 					var/n_shirt_color = input(user, "Choose your undershirt's color.", "Character Preference", shirt_color) as color|null
 					if(n_shirt_color)
-						shirt_color = sanitize_hexcolor(n_shirt_color, include_crunch= TRUE)
+						shirt_color = sanitize_hexcolor(n_shirt_color)
 
 				if("socks")
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
@@ -1554,7 +1554,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("socks_color")
 					var/n_socks_color = input(user, "Choose your socks' color.", "Character Preference", socks_color) as color|null
 					if(n_socks_color)
-						socks_color = sanitize_hexcolor(n_socks_color, include_crunch= TRUE)
+						socks_color = sanitize_hexcolor(n_socks_color)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null

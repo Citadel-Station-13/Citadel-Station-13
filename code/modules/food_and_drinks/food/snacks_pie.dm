@@ -316,3 +316,11 @@
 	list_reagents = list("nutriment" = 2, "vitamin" = 4)
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/pie/strawberrypie
+	name = "strawberry pie"
+	desc = "A strawberry.pie."
+	icon_state = "strawberrypie"
+	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
+	tastes = list("strawberry" = 1, "pie" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR

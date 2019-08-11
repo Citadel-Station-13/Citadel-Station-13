@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "The femur breaker now uses `*scream` instead of forced speech. This means that the femur breaker will no longer spam deadchat with \"AAAAAAAAAHHHHHHHHHH!!\""
+  - tweak: "The femur breaker will now guarantee that the victim falls into crit, which will make it harder to perform torture scenes with it since the victim can just succumb."
