@@ -421,7 +421,7 @@
 //Crafting Recipe books
 
 /obj/item/book/granter/crafting_recipe
-	var/list/crafting_recipe_types = list()
+	var/list/crafting_recipe_types = list() //Use full /datum/crafting_recipe/what_you_craft
 
 /obj/item/book/granter/crafting_recipe/on_reading_finished(mob/user)
 	. = ..()
@@ -431,3 +431,29 @@
 		var/datum/crafting_recipe/R = crafting_recipe_type
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
+
+/obj/item/book/granter/crafting_recipe/cooking_sweets_101 //We start at 101 for 103 and 105
+	name = "Cooking Desserts 101"
+	desc = "A cook book that teaches you some more of the newest desserts. AI approved, and a best seller on Honkplanet."
+	crafting_recipe_types = list(/datum/crafting_recipe/food/mimetart, /datum/crafting_recipe/food/berrytart, /datum/crafting_recipe/food/cocolavatart, /datum/crafting_recipe/food/clowncake, /datum/crafting_recipe/food/vanillacake)
+	icon_state = "cooking_learing_sweets"
+	oneuse = FALSE
+	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
+
+//Later content when I have free time - Trilby Date:02-Aug-2019
+
+/obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
+	name = "Under The Oven"
+	desc = "A cook book that teaches you many illegal and fun candys. MALF AI approved, and a best seller on the blackmarket."
+	crafting_recipe_types = list()
+	icon_state = "cooking_learing_illegal"
+	oneuse = FALSE
+	remarks = list()
+
+/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
+	name = "Cooking with Ice"
+	desc = "A cook book that teaches you many old icecream treats."
+	crafting_recipe_types = list()
+	icon_state = "cooking_learing_ice"
+	oneuse = FALSE
+	remarks = list()

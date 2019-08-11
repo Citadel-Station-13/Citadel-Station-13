@@ -116,7 +116,7 @@
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob, no_ghosts = FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -129,6 +129,8 @@
 		if(M == ignored_mob)
 			continue
 		var/msg = message
+		if(isobserver(M) && no_ghosts)
+			continue
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message

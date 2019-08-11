@@ -211,6 +211,12 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/potatos
+	name = "Potat-OS"
+	reqs = list(/obj/item/stack/cable_coil = 1, /obj/item/stack/rods = 1,  /obj/item/reagent_containers/food/snacks/grown/potato = 1, /obj/item/aicard = 1 )
+	result = /obj/item/aicard/potato
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -455,6 +461,12 @@
 				/obj/item/bikehorn = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/toyneb
+	name = "Non-Euplastic Blade"
+	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	result = /obj/item/toy/sword/cx
+	category = CAT_MISC
+
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"
 	result = /obj/item/bombcore/chemical
@@ -660,6 +672,15 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
 
+/datum/crafting_recipe/femur_breaker
+	name = "Femur Breaker"
+	result = /obj/structure/femur_breaker
+	time = 150 
+	reqs = list(/obj/item/stack/sheet/metal = 20,
+		        /obj/item/stack/cable_coil = 30)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	category = CAT_MISC
+	
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
