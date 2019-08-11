@@ -347,6 +347,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
+	S["feature_breasts_producing"]		>> features["breasts_producing"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
 	S["feature_vag_shape"]				>> features["vag_shape"]
