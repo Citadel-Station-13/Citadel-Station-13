@@ -444,7 +444,7 @@
 	STR.max_items = 14
 	STR.max_combined_w_class = 32
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	STR.can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
