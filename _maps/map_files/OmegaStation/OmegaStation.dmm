@@ -13815,47 +13815,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
-"axH" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket/letterman_nanotrasen,
-/obj/item/clothing/suit/toggle/lawyer,
-/obj/item/clothing/under/maid,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"axI" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"axJ" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/geisha,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"axK" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "axM" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -14181,28 +14140,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
-"ayz" = (
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"ayA" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/blue,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"ayB" = (
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"ayC" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/red,
-/turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayE" = (
 /obj/structure/table/wood,
@@ -16801,26 +16738,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"aDG" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aDH" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/brown,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aDI" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/black,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "aDJ" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -17502,50 +17419,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
-"aEO" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/lawyer/female,
-/obj/machinery/light/small,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aEP" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"aEQ" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/black,
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/under/blacktango,
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aER" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aES" = (
 /obj/structure/table/wood,
@@ -22738,7 +22611,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_crystal/shard/engine,
+/obj/machinery/nuclearbomb/selfdestruct{
+	r_code = "11111"
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
@@ -38275,6 +38150,10 @@
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
 /area/science/mixing)
+"jtI" = (
+/obj/item/screwdriver/nuke,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "jtZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -75143,7 +75022,7 @@ aMU
 wUF
 aMU
 aOa
-aMU
+jtI
 bvd
 aQO
 aRL
@@ -81294,14 +81173,14 @@ atR
 auV
 awa
 sDl
-axH
-ayz
+awQ
+awQ
 azD
 aAH
 aBQ
 azD
-aDG
-aEO
+awQ
+awQ
 sDl
 aGD
 aHM
@@ -81551,14 +81430,14 @@ atS
 auW
 awb
 awQ
-axI
-ayA
+awQ
+awQ
 awQ
 aAH
 aBQ
 awQ
-aDH
-aEP
+awQ
+awQ
 awQ
 aGE
 aHL
@@ -82065,14 +81944,14 @@ atU
 apI
 apI
 awQ
-axJ
-ayB
+awQ
+awQ
 azD
 aAH
 aBS
 azD
-ayz
-aEQ
+awQ
+awQ
 sDl
 arY
 aHM
@@ -82322,14 +82201,14 @@ atV
 auY
 awd
 awQ
-axK
-ayC
+awQ
+awQ
 awQ
 aAJ
 aBT
 awQ
-aDI
-aER
+awQ
+awQ
 awQ
 aGG
 aHM
