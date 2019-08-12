@@ -34,7 +34,7 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/board/mining
+/datum/design/board/miningshuttle
 	name = "Computer Design (Mining Shuttle Console)"
 	desc = "Allows for the construction of circuit boards used to build a Mining Shuttle Console."
 	id = "miningshuttle"
