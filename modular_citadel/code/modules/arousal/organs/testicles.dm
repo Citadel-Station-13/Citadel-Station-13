@@ -53,7 +53,7 @@
 		linked_organ = null
 
 /obj/item/organ/genital/testicles/proc/send_full_message(msg = "Your balls finally feel full, again.")
-	if(owner && istext(msg))
+	if(owner && istext(msg) && M.canbearoused)
 		to_chat(owner, msg)
 		return TRUE
 
