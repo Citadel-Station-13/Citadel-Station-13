@@ -331,7 +331,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 		if(86)//mean clone time!
 			if (!M.reagents.has_reagent("pen_acid"))//Counterplay is pent.)
-				message_admins("(non-infectious) Zombie spawned at [M.loc], produced by impure chem, wah!")
+				message_admins("(non-infectious) SDZF: Zombie spawned at [M]!")
 				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1
 				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
