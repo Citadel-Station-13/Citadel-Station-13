@@ -449,10 +449,10 @@
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
-	display_name = "Arcade Games"
+	display_name = "Games and Toys"
 	description = "For the slackers on the station."
 	prereq_ids = list("comptech")
-	design_ids = list("arcade_battle", "arcade_orion", "slotmachine") // Magic money
+	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe") // Magic money
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 2000
 
