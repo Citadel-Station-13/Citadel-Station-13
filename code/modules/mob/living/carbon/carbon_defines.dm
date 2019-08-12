@@ -27,6 +27,7 @@
 	var/obj/item/shoes = null //only used by humans.
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
 	var/obj/item/ears = null //only used by humans.
+	var/obj/item/clothing/suits = null //only used by humans.
 
 	var/datum/dna/dna = null//Carbon
 	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning

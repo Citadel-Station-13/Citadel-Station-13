@@ -227,6 +227,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/tank/jetpack/suit
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+	clothing_flags = SUPER_PROOF
 
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
