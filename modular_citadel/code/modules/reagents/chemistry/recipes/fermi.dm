@@ -137,12 +137,14 @@
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!
 	var/turf/T = get_turf(my_atom)
-	var/mob/living/simple_animal/slime/S = new(T,"green")
-	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	S.name = "Living teratoma"
-	S.real_name = "Living teratoma"
-	S.rabid = 1//Make them an angery boi
-	S.color = "#810010"
+	var/amount_to_spawn = round((volume/30), 1)
+	for(var/i in 1 to amount_to_spawn)
+		var/mob/living/simple_animal/slime/S = new(T,"green")
+		S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+		S.name = "Living teratoma"
+		S.real_name = "Living teratoma"
+		S.rabid = 1//Make them an angery boi
+		S.color = "#810010"
 	my_atom.reagents.clear_reagents()
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
@@ -353,11 +355,13 @@
 	PurityMin		= 0.5
 
 /datum/chemical_reaction/fermi/hatmium/FermiExplode(src, var/atom/my_atom, volume, temp, pH)
-	var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
-	hat.animate_atom_living()
+	var/amount_to_spawn = round((volume/30), 1)
+	for(var/i in 1 to amount_to_spawn)
+		var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
+		hat.animate_atom_living()
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The makes an off sounding pop, as a hat suddenly climbs out of the beaker!</b></span>")
+		to_chat(M, "<span class='warning'>The [src] makes an off sounding pop, as a hat suddenly climbs out of it!</b></span>")
 	my_atom.reagents.clear_reagents()
 
 /datum/chemical_reaction/fermi/furranium
