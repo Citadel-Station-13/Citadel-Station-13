@@ -50,7 +50,6 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
-	var/directive = "" //Message passed down to children, to relay the creator's orders
 
 	do_footstep = TRUE
 
@@ -68,12 +67,6 @@
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost) && playable_spider)
 			humanize_spider(ghost)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/Login()
-	..()
-	if(directive)
-		to_chat(src, "<span class='notice'>Your mother left you a directive! Follow it at all costs.</span>")
-		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	. = ..()
@@ -119,13 +112,10 @@
 	AddAbility(wrap)
 	lay_eggs = new
 	lay_eggs.Grant(src)
-	set_directive = new
-	set_directive.Grant(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Destroy()
 	RemoveAbility(wrap)
 	QDEL_NULL(lay_eggs)
-	QDEL_NULL(set_directive)
 	return ..()
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -193,17 +183,7 @@
 	icon_dead = "midwife_dead"
 	maxHealth = 40
 	health = 40
-	var/datum/action/innate/spider/comm/letmetalkpls
 	gold_core_spawnable = NO_SPAWN
-
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
-	. = ..()
-	letmetalkpls = new
-	letmetalkpls.Grant(src)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Destroy()
-	QDEL_NULL(letmetalkpls)
-	return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
@@ -464,9 +444,6 @@
 				E = locate() in get_turf(S)
 				if(!E || !isturf(S.loc))
 					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(get_turf(S))
-					if(S.ckey)
-						C.player_spiders = TRUE
-					C.directive = S.directive
 					C.poison_type = S.poison_type
 					C.poison_per_bite = S.poison_per_bite
 					C.faction = S.faction.Copy()
@@ -475,18 +452,6 @@
 		S.busy = SPIDER_IDLE
 		S.stop_automated_movement = FALSE
 
-/datum/action/innate/spider/set_directive
-	name = "Set Directive"
-	desc = "Set a directive for your children to follow."
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "directive"
-
-/datum/action/innate/spider/set_directive/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
-		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
-
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
 	GLOB.spidermobs[src] = TRUE
@@ -494,35 +459,6 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	GLOB.spidermobs -= src
 	return ..()
-
-/datum/action/innate/spider/comm
-	name = "Command"
-	desc = "Send a command to all living spiders."
-	button_icon_state = "command"
-
-/datum/action/innate/spider/comm/IsAvailable()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
-		return FALSE
-	return TRUE
-
-/datum/action/innate/spider/comm/Trigger()
-	var/input = stripped_input(owner, "Input a command for your legions to follow.", "Command", "")
-	if(QDELETED(src) || !input || !IsAvailable())
-		return FALSE
-	spider_command(owner, input)
-	return TRUE
-
-/datum/action/innate/spider/comm/proc/spider_command(mob/living/user, message)
-	if(!message)
-		return
-	var/my_message
-	my_message = "<span class='spider'><b>Command from [user]:</b> [message]</span>"
-	for(var/mob/living/simple_animal/hostile/poison/giant_spider/M in GLOB.spidermobs)
-		to_chat(M, my_message)
-	for(var/M in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(M, user)
-		to_chat(M, "[link] [my_message]")
-	usr.log_talk(message, LOG_SAY, tag="spider command")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
