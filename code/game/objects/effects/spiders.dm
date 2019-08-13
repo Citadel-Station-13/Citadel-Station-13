@@ -68,7 +68,7 @@
 /obj/structure/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
-		var/num = rand(3,12)
+		var/num = rand(2,6)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.poison_type = poison_type
