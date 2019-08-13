@@ -1974,3 +1974,4 @@
 	M.emote("nya")
 	to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
 	M.adjustArousalLoss(2)
+	..()
