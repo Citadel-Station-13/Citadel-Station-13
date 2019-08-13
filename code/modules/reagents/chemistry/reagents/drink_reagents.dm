@@ -898,3 +898,4 @@
 	to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
 	M.adjustArousalLoss(5)
 	M.adjustStaminaLoss(3)
+	..()
