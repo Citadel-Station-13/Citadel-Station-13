@@ -65,6 +65,9 @@
 	var/warcry = "AT"
 
 /obj/item/clothing/gloves/rapid/Touch(mob/living/target,proximity = TRUE)
+	if(!istype(target))
+		return
+
 	var/mob/living/M = loc
 
 	if(M.a_intent == INTENT_HARM)
@@ -87,6 +90,9 @@
 	warcry = "owo" //Shouldn't ever come into play
 
 /obj/item/clothing/gloves/rapid/hug/Touch(mob/living/target,proximity = TRUE)
+	if(!istype(target))
+		return
+
 	var/mob/living/M = loc
 
 	if(M.a_intent == INTENT_HELP)
