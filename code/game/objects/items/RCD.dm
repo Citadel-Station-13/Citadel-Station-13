@@ -583,6 +583,9 @@ RLD
 /obj/item/construction/rcd/loaded
 	matter = 160
 
+/obj/item/construction/rcd/loaded/upgraded
+	upgrade = TRUE
+
 /obj/item/construction/rcd/combat
 	name = "Combat RCD"
 	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges. This RCD has been upgraded to be able to remove Rwalls!"
