@@ -226,7 +226,7 @@
 				target.LAssailant = null
 			else
 				target.LAssailant = user
-			cooldown = world.time + 40
+			cooldown = world.time
 			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 
 /obj/item/melee/classic_baton/telescopic
@@ -242,7 +242,7 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
-	cooldown = 10
+	cooldown = 0
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
