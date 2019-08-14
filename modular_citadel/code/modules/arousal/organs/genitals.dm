@@ -230,6 +230,7 @@
 				B.prev_size = B.size
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
+			B.producing = dna.features["breasts_producing"]
 			B.update()
 
 
