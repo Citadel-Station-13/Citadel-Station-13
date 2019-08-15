@@ -44,11 +44,11 @@
 		var/obj/item/clothing/gloves/G = M.gloves
 		old = length(G.return_blood_DNA())
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood(G.return_blood_DNA()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood_DNA(G.return_blood_DNA()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
 		old = length(M.return_blood_DNA())
-		if(add_blood(M.return_blood_DNA()) && length(M.return_blood_DNA()) > old)
+		if(add_blood_DNA(M.return_blood_DNA()) && length(M.return_blood_DNA()) > old)
 			M.bloody_hands--
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fibers(M)
@@ -61,46 +61,46 @@
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
-/atom/proc/add_blood(list/dna)						//ASSOC LIST DNA = BLOODTYPE
+/atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 
-/obj/add_blood(list/dna)
+/obj/add_blood_DNA(list/dna)
 	. = ..()
 	if(length(dna))
 		. = AddComponent(/datum/component/forensics, null, null, dna)
 
-/obj/item/clothing/gloves/add_blood(list/blood_dna, list/datum/disease/diseases)
+/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	. = ..()
 	transfer_blood = rand(2, 4)
 
-/turf/add_blood(list/blood_dna, list/datum/disease/diseases)
+/turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
-	B.add_blood(blood_dna) //give blood info to the blood decal.
+	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
 	return TRUE //we bloodied the floor
 
-/mob/living/carbon/human/add_blood(list/blood_dna, list/datum/disease/diseases)
+/mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	if(wear_suit)
-		wear_suit.add_blood(blood_dna)
+		wear_suit.add_blood_DNA(blood_dna)
 		update_inv_wear_suit()
 	else if(w_uniform)
-		w_uniform.add_blood(blood_dna)
+		w_uniform.add_blood_DNA(blood_dna)
 		update_inv_w_uniform()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood(blood_dna)
+		G.add_blood_DNA(blood_dna)
 	else if(length(blood_dna))
 		AddComponent(/datum/component/forensics, null, null, blood_dna)
 		bloody_hands = rand(2, 4)
 	if(head)
-		head.add_blood(blood_dna)
+		head.add_blood_DNA(blood_dna)
 		update_inv_head()
 	else if(wear_mask)
-		wear_mask.add_blood(blood_dna)
+		wear_mask.add_blood_DNA(blood_dna)
 		update_inv_wear_mask()
 	if(wear_neck)
-		wear_neck.add_blood(blood_dna)
+		wear_neck.add_blood_DNA(blood_dna)
 		update_inv_neck()
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE

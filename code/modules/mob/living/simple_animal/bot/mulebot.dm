@@ -474,7 +474,7 @@
 				if(isturf(next))
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.add_blood(return_blood_DNA())
+						B.add_blood_DNA(return_blood_DNA())
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -655,7 +655,7 @@
 	T.add_mob_blood(H)
 
 	var/list/blood_dna = H.get_blood_dna_list()
-	add_blood(blood_dna)
+	add_blood_DNA(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move

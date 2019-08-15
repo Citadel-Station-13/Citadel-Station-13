@@ -9,7 +9,7 @@
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	C.add_blood(return_blood_DNA())
+	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
@@ -35,7 +35,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	..()
 	icon_state += "-old"
-	add_blood(list("Non-human DNA" = "A+"))
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")

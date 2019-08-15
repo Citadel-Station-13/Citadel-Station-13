@@ -74,7 +74,7 @@
 					digester.stomach_contents += gib
 
 				if(dna_to_add && dna_to_add.len)
-					gib.add_blood(dna_to_add)
+					gib.add_blood_DNA(dna_to_add)
 					gib.body_colors = body_coloring
 					gib.update_icon()
 

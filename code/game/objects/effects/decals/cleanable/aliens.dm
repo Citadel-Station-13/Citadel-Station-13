@@ -35,7 +35,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/xeno/splat = new /obj/effect/decal/cleanable/blood/splatter/xeno(loc, diseases)
-			splat.add_blood(return_blood_DNA())
+			splat.add_blood_DNA(return_blood_DNA())
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -68,5 +68,5 @@
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/blood/xtracks/Initialize()
-	add_blood(list("UNKNOWN DNA" = "X*"))
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 	. = ..()

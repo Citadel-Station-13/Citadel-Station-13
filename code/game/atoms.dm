@@ -351,7 +351,7 @@
 	if(!new_blood_dna)
 		return FALSE
 	var/old_length = blood_DNA_length()
-	add_blood(new_blood_dna)
+	add_blood_DNA(new_blood_dna)
 	if(blood_DNA_length() == old_length)
 		return FALSE
 	return TRUE
@@ -361,7 +361,7 @@
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
-	return add_blood(blood_dna)
+	return add_blood_DNA(blood_dna)
 
 /atom/proc/wash_cream()
 	return TRUE

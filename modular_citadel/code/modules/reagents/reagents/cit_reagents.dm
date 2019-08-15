@@ -21,7 +21,7 @@
 	if(!S)
 		S = new(T)
 	if(data["blood_DNA"])
-		S.add_blood(list(data["blood_DNA"] = data["blood_type"]))
+		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /obj/effect/decal/cleanable/semen
 	name = "semen"
@@ -36,10 +36,10 @@
 /obj/effect/decal/cleanable/semen/New()
 	..()
 	dir = pick(1,2,4,8)
-	add_blood(list("Non-human DNA" = "A+"))
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-	S.add_blood(return_blood_DNA())
+	S.add_blood_DNA(return_blood_DNA())
 	return ..()
 
 /datum/reagent/consumable/femcum
@@ -69,10 +69,10 @@
 /obj/effect/decal/cleanable/femcum/New()
 	..()
 	dir = pick(1,2,4,8)
-	add_blood(list("Non-human DNA" = "A+"))
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	F.add_blood(return_blood_DNA())
+	F.add_blood_DNA(return_blood_DNA())
 	return ..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
@@ -85,7 +85,7 @@
 	if(!S)
 		S = new(T)
 	if(data["blood_DNA"])
-		S.add_blood(list(data["blood_DNA"] = data["blood_type"]))
+		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 //aphrodisiac & anaphrodisiac
 
