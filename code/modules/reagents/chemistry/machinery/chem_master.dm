@@ -21,6 +21,7 @@
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 	var/list/pillStyles
+	var/fermianalyze //Give more detail on fermireactions on analysis
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
@@ -102,12 +103,9 @@
 		updateUsrDialog()
 		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
-		if(bottle)
-			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
-			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		bottle = I
+		replace_pillbottle(user, I)
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		updateUsrDialog()
 	else
@@ -131,12 +129,23 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/chem_master/on_deconstruction()
-	replace_beaker(usr)
+/obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
 		bottle.forceMove(drop_location())
-		adjust_item_drop_location(bottle)
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(bottle)
+	if(new_bottle)
+		bottle = new_bottle
+	else
 		bottle = null
+	update_icon()
+	return TRUE
+
+/obj/machinery/chem_master/on_deconstruction()
+	replace_beaker(usr)
+	replace_pillbottle(usr)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -162,6 +171,7 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
+	data["fermianalyze"] = fermianalyze
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
@@ -195,22 +205,21 @@
 			. = TRUE
 
 		if("ejectp")
-			if(bottle)
-				bottle.forceMove(drop_location())
-				adjust_item_drop_location(bottle)
-				bottle = null
-				. = TRUE
+			replace_pillbottle(usr)
+			. = TRUE
 
 		if("transferToBuffer")
 			if(beaker)
 				var/id = params["id"]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
+					end_fermi_reaction()
 					beaker.reagents.trans_id_to(src, id, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
+						end_fermi_reaction()
 						beaker.reagents.trans_id_to(src, id, useramount)
 						. = TRUE
 
@@ -245,14 +254,14 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
-				var/target_loc = drop_location()
+				var/target_loc = bottle ? bottle : drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
 					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
-				for(var/i = 0; i < amount; i++)
+				for(var/i in 1 to amount)
 					if(i < drop_threshold)
 						P = new(target_loc)
 					else
@@ -348,10 +357,10 @@
 				return
 
 			var/amount_full = 0
-			var/vol_part = min(reagents.total_volume, 30)
+			var/vol_part = min(reagents.total_volume, 60)
 			if(text2num(many))
-				amount_full = round(reagents.total_volume / 30)
-				vol_part = reagents.total_volume % 30
+				amount_full = round(reagents.total_volume / 60)
+				vol_part = reagents.total_volume % 60
 			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
@@ -361,7 +370,7 @@
 				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
 				P.name = trim("[name] hypovial")
 				adjust_item_drop_location(P)
-				reagents.trans_to(P, 30)
+				reagents.trans_to(P, 60)
 
 			if(vol_part)
 				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
@@ -382,7 +391,14 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				if(istype(R, /datum/reagent/fermi))
+					fermianalyze = TRUE
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = initial(R.purity), "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 				screen = "analyze"
 				return
 
@@ -392,6 +408,9 @@
 
 
 
+/obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
+	if(beaker.reagents.fermiIsReacting)
+		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))

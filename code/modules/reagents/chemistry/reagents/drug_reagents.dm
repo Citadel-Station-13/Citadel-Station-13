@@ -15,6 +15,7 @@
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
+	pH = 9
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
@@ -44,6 +45,7 @@
 	addiction_threshold = 30
 	taste_description = "smoke"
 	trippy = FALSE
+	pH = 8
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
@@ -65,6 +67,7 @@
 	color = "#FA00C8"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	pH = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -112,6 +115,7 @@
 	color = "#0064B4"
 	overdose_threshold = 20
 	addiction_threshold = 15
+	pH = 9
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -167,6 +171,7 @@
 	var/brain_damage = TRUE
 	var/jitter = TRUE
 	var/confusion = TRUE
+	pH = 5
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
@@ -261,6 +266,7 @@
 	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
+	pH = 8.2
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
@@ -357,6 +363,7 @@
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
+	pH = 9.2
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
@@ -370,6 +377,84 @@
 	..()
 	. = 1
 
+/datum/reagent/drug/happiness
+	name = "Happiness"
+	id = "happiness"
+	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
+	reagent_state = LIQUID
+	color = "#FFF378"
+	addiction_threshold = 10
+	overdose_threshold = 20
+	pH = 10.5
+
+/datum/reagent/drug/happiness/on_mob_add(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_FEARLESS, id)
+	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
+
+/datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, id)
+	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
+	..()
+
+/datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
+	M.jitteriness = 0
+	M.confused = 0
+	M.disgust = 0
+	M.adjustBrainLoss(0.2)
+	..()
+	. = 1
+
+/datum/reagent/drug/happiness/overdose_process(mob/living/M)
+	if(prob(30))
+		var/reaction = rand(1,3)
+		switch(reaction)
+			if(1)
+				M.emote("laugh")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_good_od)
+			if(2)
+				M.emote("sway")
+				M.Dizzy(25)
+			if(3)
+				M.emote("frown")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
+	M.adjustBrainLoss(0.5)
+	..()
+	. = 1
+
+/datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
+	M.Jitter(5)
+	if(prob(20))
+		M.emote(pick("twitch","laugh","frown"))
+	..()
+
+/datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
+	M.Jitter(10)
+	if(prob(30))
+		M.emote(pick("twitch","laugh","frown"))
+	..()
+
+/datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
+	M.Jitter(15)
+	if(prob(40))
+		M.emote(pick("twitch","laugh","frown"))
+	..()
+
+/datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	mood.setSanity(SANITY_INSANE)
+	M.Jitter(20)
+	if(prob(50))
+		M.emote(pick("twitch","laugh","frown"))
+	..()
+	. = 1
+
 /datum/reagent/drug/skooma
 	name = "Skooma"
 	id = "skooma"
@@ -380,6 +465,7 @@
 	addiction_threshold = 1
 	addiction_stage3_end = 40
 	addiction_stage4_end = 240
+	pH = 12.5
 
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
@@ -440,4 +526,3 @@
 	if(prob(40))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-

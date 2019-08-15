@@ -358,3 +358,8 @@
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
 
+/obj/structure/closet/coffin/handle_lock_addition()
+	return
+
+/obj/structure/closet/coffin/handle_lock_removal()
+	return

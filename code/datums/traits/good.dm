@@ -186,3 +186,20 @@
 	var/obj/item/autosurgeon/gloweyes/gloweyes = new(get_turf(H))
 	H.equip_to_slot(gloweyes, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
+
+/datum/quirk/bloodpressure
+	name = "Polycythemia vera"
+	desc = "You've a treated form of Polycythemia vera that increases the total blood volume inside of you as well as the rate of replenishment!"
+	value = 2 //I honeslty dunno if this is a good trait? I just means you use more of medbays blood and make janitors madder, but you also regen blood a lil faster.
+	mob_trait = TRAIT_HIGH_BLOOD
+	gain_text = "<span class='notice'>You feel full of blood!</span>"
+	lose_text = "<span class='notice'>You feel like your blood pressure went down.</span>"
+
+/datum/quirk/bloodpressure/add()
+	var/mob/living/M = quirk_holder
+	M.blood_ratio = 1.2
+	M.blood_volume += 150
+
+/datum/quirk/bloodpressure/remove()
+	var/mob/living/M = quirk_holder
+	M.blood_ratio = 1

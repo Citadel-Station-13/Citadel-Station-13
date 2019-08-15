@@ -23,6 +23,7 @@
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
 	taste_description = "mushroom"
+	pH = 13
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
@@ -32,6 +33,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
+	pH = 2
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
@@ -61,6 +63,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	pH = 4
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("epinephrine"))
@@ -93,6 +96,7 @@
 	color = "#7DC3A0"
 	toxpwr = 0
 	taste_description = "acid"
+	pH = 1.2
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
@@ -115,6 +119,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3
+	pH = 10
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -133,6 +138,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 	taste_description = "mint"
+	pH = 8
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
@@ -146,6 +152,7 @@
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
 	taste_description = "fish"
+	pH = 12
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -155,6 +162,7 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
+	pH = 13
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -177,6 +185,7 @@
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
 	taste_description = "death"
+	pH = 14.5
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -198,6 +207,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
+	pH = 11
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
 	M.hallucination += 5
@@ -210,6 +220,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 	taste_mult = 1
+	pH = 2
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
@@ -234,6 +245,7 @@
 	id = "weedkiller"
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
+	pH = 3
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -241,6 +253,7 @@
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
+	pH = 3.2
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
@@ -254,6 +267,7 @@
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
 	toxpwr = 1
+	pH = 11
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
 	C.damageoverlaytemp = 60
@@ -268,6 +282,7 @@
 	color = "#9ACD32"
 	toxpwr = 0.5
 	taste_description = "burning"
+	pH = 13
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
@@ -282,6 +297,7 @@
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	pH = 11
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -326,6 +342,7 @@
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	pH = 2
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -343,6 +360,7 @@
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5
+	pH = 4.2
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -351,6 +369,7 @@
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
 	toxpwr = 0.5
+	pH = 4.9
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -359,6 +378,7 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "silence"
+	pH = 12.2
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
 	M.silent = max(M.silent, 3)
@@ -816,6 +836,7 @@
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
+	pH = 2.75
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
