@@ -4,16 +4,17 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	blood_DNA = list()
 	blood_state = BLOOD_STATE_BLOOD
 	bloodiness = MAX_SHOE_BLOODINESS
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if (C.blood_DNA)
-		blood_DNA |= C.blood_DNA.Copy()
+	C.add_blood(return_blood_DNA())
+	if (bloodiness)
+		if (C.bloodiness < MAX_SHOE_BLOODINESS)
+			C.bloodiness += bloodiness
 	update_icon()
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/transfer_blood_dna()
 	..()
@@ -50,7 +51,6 @@
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
-	blood_DNA = list()
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	color = blood_DNA_to_color()

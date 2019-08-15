@@ -1,4 +1,4 @@
-/mob/living/carbon/human/examine(mob/user) //User is the person being examined
+/mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -37,47 +37,30 @@
 			if(U.attached_accessory)
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
 
-		if(w_uniform.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(w_uniform, user)] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
-		else
-			msg += "[t_He] [t_is] wearing [icon2html(w_uniform, user)] \a [w_uniform][accessory_msg].\n"
+		msg += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg].\n"
 	//head
 	if(head)
-		if(head.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(head, user)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
-		else
-			msg += "[t_He] [t_is] wearing [icon2html(head, user)] \a [head] on [t_his] head.\n"
+		msg += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head.\n"
 	//suit/armor
 	if(wear_suit)
-		if(wear_suit.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(wear_suit, user)] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
-		else
-			msg += "[t_He] [t_is] wearing [icon2html(wear_suit, user)] \a [wear_suit].\n"
-	//suit/armour storage
-		if(s_store)
-			if(s_store.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] carrying [icon2html(s_store, user)] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
-			else
-				msg += "[t_He] [t_is] carrying [icon2html(s_store, user)] \a [s_store] on [t_his] [wear_suit.name].\n"
+		msg += "[t_He] [t_is] wearing [wear_suit.get_examine_string(user)].\n"
+		//suit/armor storage
+		if(s_store && !(SLOT_S_STORE in obscured))
+			msg += "[t_He] [t_is] carrying [s_store.get_examine_string(user)] on [t_his] [wear_suit.name].\n"
 	//back
 	if(back)
-		if(back.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] [icon2html(back, user)] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
-		else
-			msg += "[t_He] [t_has] [icon2html(back, user)] \a [back] on [t_his] back.\n"
+		msg += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back.\n"
+
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(I.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-		else
-			msg += "[t_He] [t_is] holding [icon2html(I, user)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
+		if(!(I.item_flags & ABSTRACT))
+			msg += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
+
+	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
 	if(gloves && !(SLOT_GLOVES in obscured))
-		if(gloves.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] [icon2html(gloves, user)] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
-		else
-			msg += "[t_He] [t_has] [icon2html(gloves, user)] \a [gloves] on [t_his] hands.\n"
-	else if(blood_DNA)
+		msg += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands.\n"
+	else if(FR && length(FR.blood_DNA))
 		var/hand_number = get_num_arms(FALSE)
 		if(hand_number)
 			msg += "<span class='warning'>[t_He] [t_has] [hand_number > 1 ? "" : "a"] blood-stained hand[hand_number > 1 ? "s" : ""]!</span>\n"
@@ -93,47 +76,33 @@
 
 	//belt
 	if(belt)
-		if(belt.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] [icon2html(belt, user)] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
-		else
-			msg += "[t_He] [t_has] [icon2html(belt, user)] \a [belt] about [t_his] waist.\n"
+		msg += "[t_He] [t_has] [belt.get_examine_string(user)] about [t_his] waist.\n"
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
-		if(shoes.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [icon2html(shoes, user)] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
-		else
-			msg += "[t_He] [t_is] wearing [icon2html(shoes, user)] \a [shoes] on [t_his] feet.\n"
+		msg += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet.\n"
 
 	//mask
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
-		if(wear_mask.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] [icon2html(wear_mask, user)] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
-		else
-			msg += "[t_He] [t_has] [icon2html(wear_mask, user)] \a [wear_mask] on [t_his] face.\n"
+		msg += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face.\n"
 
-	//neck
 	if(wear_neck && !(SLOT_NECK in obscured))
-		msg += "[t_He] [t_is] wearing [icon2html(wear_neck, user)] \a [src.wear_neck] around [t_his] neck.\n"
+		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	//eyes
 	if(!(SLOT_GLASSES in obscured))
 		if(glasses)
-			if(glasses.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] [icon2html(glasses, user)] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
-			else
-				msg += "[t_He] [t_has] [icon2html(glasses, user)] \a [glasses] covering [t_his] eyes.\n"
-
+			msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
 		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
 			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//ears
 	if(ears && !(SLOT_EARS in obscured))
-		msg += "[t_He] [t_has] [icon2html(ears, user)] \a [ears] on [t_his] ears.\n"
+		msg += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] ears.\n"
 
 	//ID
 	if(wear_id)
-		msg += "[t_He] [t_is] wearing [icon2html(wear_id, user)] \a [wear_id].\n"
+		msg += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)].\n"
 
 	//Status effects
 	msg += status_effect_examines()
@@ -183,7 +152,7 @@
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
-	msg += "<span class='warning'>"
+	msg += "<span class='warning'>" //Everything below gets this span
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()

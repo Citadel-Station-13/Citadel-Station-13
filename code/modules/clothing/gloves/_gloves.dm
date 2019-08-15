@@ -12,6 +12,15 @@
 	strip_delay = 20
 	equip_delay_other = 40
 
+/obj/item/clothing/gloves/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+
+/obj/item/clothing/gloves/proc/clean_blood(datum/source, strength)
+	if(strength < CLEAN_STRENGTH_BLOOD)
+		return
+	transfer_blood = 0
+
 /obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!</span>")
 	return OXYLOSS
@@ -21,7 +30,7 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-		if(blood_DNA)
+		IF_HAS_BLOOD_DNA(src)
 			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = blood_DNA_to_color())
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)

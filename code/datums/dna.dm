@@ -303,14 +303,6 @@
 	if(!dna.species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		dna.species = new rando_race()
-		if(isjellyperson(dna.species))
-			dna.blood_type = "GEL"
-		if(isipcperson(dna.species))
-			dna.blood_type = "HF"
-		if(isxenoperson(dna.species))
-			dna.blood_type = "X*"
-		if(islizard(dna.species))
-			dna.blood_type = "L"
 
 //proc used to update the mob's appearance after its dna UI has been changed
 /mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)

@@ -24,14 +24,8 @@
 	if(!stored_dna.species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		stored_dna.species = new rando_race()
-		if(isjellyperson(stored_dna.species))
-			stored_dna.blood_type = "GEL"
-		if(isipcperson(stored_dna.species))
-			stored_dna.blood_type = "HF"
-		if(isxenoperson(stored_dna.species))
-			stored_dna.blood_type = "X*"
-		if(islizard(stored_dna.species))
-			stored_dna.blood_type = "L"
+		if(stored_dna.species.exotic_bloodtype)
+			stored_dna.blood_type = stored_dna.species.exotic_bloodtype
 
 /mob/living/brain/Destroy()
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.

@@ -19,27 +19,27 @@
 	var/turf/T = get_turf(target)
 
 	//section shamelessly copypasta'd from the clean component
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	for(var/A in T)
 		if(is_cleanable(A))
 			qdel(A)
 		else if(istype(A, /obj/item))
 			var/obj/item/I = A
-			I.clean_blood()
+			SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(ismob(I.loc))
 				var/mob/M = I.loc
 				M.regenerate_icons()
 		else if(ishuman(A))
 			var/mob/living/carbon/human/cleaned_human = A
 			if(cleaned_human.head)
-				cleaned_human.head.clean_blood()
+				SEND_SIGNAL(cleaned_human.head, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(cleaned_human.wear_suit)
-				cleaned_human.wear_suit.clean_blood()
+				SEND_SIGNAL(cleaned_human.wear_suit, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			else if(cleaned_human.w_uniform)
-				cleaned_human.w_uniform.clean_blood()
+				SEND_SIGNAL(cleaned_human.w_uniform, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(cleaned_human.shoes)
-				cleaned_human.shoes.clean_blood()
-			cleaned_human.clean_blood()
+				SEND_SIGNAL(cleaned_human.shoes, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(cleaned_human, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			cleaned_human.wash_cream()
 			cleaned_human.regenerate_icons()
 

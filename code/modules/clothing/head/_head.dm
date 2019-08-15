@@ -46,7 +46,7 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
-		if(blood_DNA)
+		IF_HAS_BLOOD_DNA(src)
 			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)

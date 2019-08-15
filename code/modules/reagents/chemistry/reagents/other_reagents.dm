@@ -216,7 +216,7 @@
 	color = BLOOD_COLOR_OIL
 	taste_description = "chunky burnt oil"
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	pH = 9.75	
+	pH = 9.75
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -738,11 +738,11 @@
 	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to dark, moist areas.</span>"
 
 /datum/reagent/mutationtoxin/xenoperson
-	name = "Xeno Mutation Toxin"
+	name = "Xeno-Hybrid Mutation Toxin"
 	id = "xenopersonmutationtoxin"
 	description = "A glowing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/xenoperson
+	race = /datum/species/xeno
 	mutationtext = "<span class='danger'>The pain subsides. You feel... oddly longing for the Queen.</span>" //sadly, not the British one.
 
 //BLACKLISTED RACES
@@ -1241,12 +1241,12 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			O.clean_blood()
+			SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.clean_blood()
+		SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -1264,26 +1264,26 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				I.clean_blood()
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(C.wear_mask)
-				if(C.clean_blood())
+				if(SEND_SIGNAL(C.wear_mask, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 					C.update_inv_wear_mask()
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = C
 				if(H.head)
-					if(H.head.clean_blood())
+					if(SEND_SIGNAL(H.head, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_head()
 				if(H.wear_suit)
-					if(H.wear_suit.clean_blood())
+					if(SEND_SIGNAL(H.wear_suit, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_wear_suit()
 				else if(H.w_uniform)
-					if(H.w_uniform.clean_blood())
+					if(SEND_SIGNAL(H.w_uniform, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_w_uniform()
 				if(H.shoes)
-					if(H.shoes.clean_blood())
+					if(SEND_SIGNAL(H.shoes, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_shoes()
 				H.wash_cream()
-			M.clean_blood()
+			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"

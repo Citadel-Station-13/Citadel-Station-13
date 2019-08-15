@@ -37,7 +37,6 @@
 	gender = NEUTER
 	mob_biotypes = list(MOB_ROBOTIC)
 	speak_emote = list("chirps")
-	speech_span = SPAN_ROBOT
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
@@ -93,7 +92,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	access_card.item_flags |= TRAIT_NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -170,23 +169,15 @@
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-			if(I.blood_DNA)
-				msg += "<span class='warning'>It has [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-			else
-				msg += "It has [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
-		if(internal_storage.blood_DNA)
-			msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
-		else
-			msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
+		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.item_flags & ABSTRACT))
-		if(head.blood_DNA)
-			msg += "<span class='warning'>It is wearing [icon2html(head, user)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
-		else
-			msg += "It is wearing [icon2html(head, user)] \a [head] on its head.\n"
+		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
 
 	//Braindead
 	if(!client && stat != DEAD)

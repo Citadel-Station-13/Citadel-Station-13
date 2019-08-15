@@ -327,8 +327,11 @@
 	possible = list()
 	if(!voodoo_link)
 		return
+	var/list/prints = voodoo_link.return_fingerprints()
+	if(!length(prints))
+		return FALSE
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(md5(H.dna.uni_identity) in voodoo_link.fingerprints)
+		if(prints[md5(H.dna.uni_identity)])
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)

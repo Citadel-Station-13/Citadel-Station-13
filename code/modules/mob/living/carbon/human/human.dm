@@ -32,6 +32,8 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		togglesprint()
 
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
@@ -687,21 +689,16 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/clean_blood()
-	var/mob/living/carbon/human/H = src
-	if(H.gloves)
-		if(H.gloves.clean_blood())
-			H.update_inv_gloves()
+/mob/living/carbon/human/proc/clean_blood(datum/source, strength)
+	if(strength < CLEAN_STRENGTH_BLOOD)
+		return
+	if(gloves)
+		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+			update_inv_gloves()
 	else
-		..() // Clear the Blood_DNA list
-		if(H.bloody_hands)
-			H.bloody_hands = 0
-			H.update_inv_gloves()
-/*		if(H.bloody_feet)
-			H.bloody_feet = 0
-			H.update_inv_shoes()*/
-
-	update_icons()	//apply the now updated overlays to the mob
+		if(bloody_hands)
+			bloody_hands = 0
+			update_inv_gloves()
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug

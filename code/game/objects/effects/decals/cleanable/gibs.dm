@@ -6,11 +6,17 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	var/body_colors = "#e3ba84"	//a default color just in case.
+	var/gibs_reagent_id = "liquidgibs"
+	var/gibs_bloodtype = "A+"
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if(random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
+	if(gibs_reagent_id)
+		reagents.add_reagent(gibs_reagent_id, 5)
+	if(gibs_bloodtype)
+		add_blood(list("Non-human DNA" = gibs_bloodtype))
 	update_icon()
 
 
@@ -51,7 +57,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
-			splat.transfer_blood_dna(blood_DNA)
+			splat.add_blood(return_blood_DNA())
 
 		if(!step_to(src, get_step(src, direction), 0))
 			break
@@ -81,9 +87,8 @@
 
 /obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	setDir(pick(1,2,4,8))
+	setDir(pick(GLOB.cardinals))
 	icon_state += "-old"
-	add_blood(list("Non-human DNA" = "A+"))
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/drip
@@ -101,9 +106,6 @@
 
 /obj/effect/decal/cleanable/blood/gibs/human/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidgibs", 5)
-	if(!blood_DNA.len)
-		add_blood(list("Non-human DNA" = "A+"))
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/human/up
@@ -128,12 +130,11 @@
 //Lizards
 /obj/effect/decal/cleanable/blood/gibs/human/lizard
 	body_colors = "117720"
+	gibs_reagent_id = "liquidgibs"
+	gibs_bloodtype = "L"
 
 /obj/effect/decal/cleanable/blood/gibs/human/lizard/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidgibs", 5)
-	if(!blood_DNA.len)
-		add_blood(list("Non-human DNA" = "L"))
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/human/lizard/up
@@ -157,12 +158,11 @@
 // Slime Gibs
 /obj/effect/decal/cleanable/blood/gibs/slime
 	desc = "They look gooey and gruesome."
+	gibs_reagent_id = "liquidslimegibs"
+	gibs_bloodtype = "GEL"
 
 /obj/effect/decal/cleanable/blood/gibs/slime/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidslimegibs", 5)
-	if(!blood_DNA.len)
-		add_blood(list("Non-human DNA" = "GEL"))
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/slime/update_icon()
@@ -197,21 +197,22 @@
 
 /obj/effect/decal/cleanable/blood/gibs/synth
 	desc = "They look sludgy and disgusting."
+	gibs_reagent_id = "liquidsyntheticgibs"
+	gibs_bloodtype = "SY"
 
 /obj/effect/decal/cleanable/blood/gibs/synth/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidsyntheticgibs", 5)
+	update_icon()
 
 //IPCs
 /obj/effect/decal/cleanable/blood/gibs/ipc
 	desc = "They look sharp yet oozing."
 	body_colors = "00ff00"
+	gibs_reagent_id = "liquidoilgibs"
+	gibs_bloodtype = "HF"
 
 /obj/effect/decal/cleanable/blood/gibs/ipc/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidoilgibs", 5)
-	if(!blood_DNA.len)
-		add_blood(list("Non-human DNA" = "HF"))
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/ipc/update_icon()

@@ -160,7 +160,7 @@
 							C.reagents.add_reagent("bonehurtingjuice", amount * 0.5)
 					else
 						C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
-						return 1
+					return 1
 
 			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
 			return 1
@@ -232,12 +232,7 @@
 		return "blood"
 
 /mob/living/carbon/get_blood_id()
-	var/mob/living/carbon/C = src
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.dna.species.exotic_blood)
-			return H.dna.species.exotic_blood
-	if(dna.species.exotic_blood)
+	if(dna?.species?.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (HAS_TRAIT(src, TRAIT_NOCLONE)))
 		return
@@ -290,8 +285,7 @@
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
-				temp_blood_DNA = list()
-				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA = drop.return_blood_DNA() //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
@@ -307,9 +301,9 @@
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		if(isalien(src))
-			B.blood_DNA["UNKNOWN DNA"] = "X*"
+			B.add_blood(list("UNKNOWN DNA" = "X*"))
 		else
-			B.blood_DNA |= temp_blood_DNA
+			B.add_blood(temp_blood_DNA)
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))

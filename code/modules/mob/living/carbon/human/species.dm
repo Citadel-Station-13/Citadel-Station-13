@@ -269,16 +269,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	regenerate_organs(C,old_species)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
-		if(isjellyperson(C))
-			C.dna.blood_type = "GEL"
-		if(isipcperson(C))
-			C.dna.blood_type = "HF"
-		if(isxenoperson(C))
-			C.dna.blood_type = "X*"
-		if(islizard(C))
-			C.dna.blood_type = "L"
-		else
-			C.dna.blood_type = exotic_bloodtype
+		C.dna.blood_type = exotic_bloodtype
 
 	if(old_species.mutanthands)
 		for(var/obj/item/I in C.held_items)
@@ -319,16 +310,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	if(C.dna.species.exotic_bloodtype)
-		if(isjellyperson(C))
-			C.dna.blood_type = "GEL"
-		if(isipcperson(C))
-			C.dna.blood_type = "HF"
-		if(isxenoperson(C))
-			C.dna.blood_type = "X*"
-		if(islizard(C))
-			C.dna.blood_type = "L"
-		else
-			C.dna.blood_type = random_blood_type()
+		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)

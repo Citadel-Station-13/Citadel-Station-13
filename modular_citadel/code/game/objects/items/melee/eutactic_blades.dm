@@ -298,7 +298,7 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)//blood overlays get weird otherwise, because the sprite changes. (retained from original desword because I have no idea what this is)
 
 /obj/item/twohanded/dualsaber/hypereutactic/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)

@@ -3,17 +3,17 @@
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
 	color = BLOOD_COLOR_XENO
-	blood_DNA = list("UNKNOWN DNA" = "X*")
 
 /obj/effect/decal/cleanable/blood/splatter/xeno
 	color = BLOOD_COLOR_XENO
 
 /obj/effect/decal/cleanable/blood/gibs/xeno
 	color = BLOOD_COLOR_XENO
+	gibs_reagent_id = "liquidxenogibs"
+	gibs_bloodtype = "X*"
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidxenogibs", 5)
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
@@ -35,7 +35,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/xeno/splat = new /obj/effect/decal/cleanable/blood/splatter/xeno(loc, diseases)
-			splat.transfer_blood_dna(blood_DNA)
+			splat.add_blood(return_blood_DNA())
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 

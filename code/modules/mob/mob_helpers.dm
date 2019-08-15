@@ -491,7 +491,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	. = BLOOD_COLOR_HUMAN
 	switch(type)
 		if("U")//Universal blood; a bit orange
-			. = "#db3300"
+			. = BLOOD_COLOR_UNIVERSAL
 		if("SY")//Synthetics blood; blue
 			. = BLOOD_COLOR_SYNTHETIC
 		if("L")//lizard, a bit pink/purple
@@ -502,6 +502,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			. = BLOOD_COLOR_OIL
 		if("GEL")// slimepeople blood, rgb 0, 255, 144
 			. = BLOOD_COLOR_SLIME
-		if("BUG")
-			. = "#a37c0f"
+		if("BUG")// yellowish, like, y'know bug guts I guess.
+			. = BLOOD_COLOR_BUG
 		//add more stuff to the switch if you have more blood colors for different types
+		// the defines are in _DEFINES/misc.dm

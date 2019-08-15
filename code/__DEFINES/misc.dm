@@ -183,6 +183,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_COLOR_SYNTHETIC		"#3f48aa"
 #define BLOOD_COLOR_SLIME			"#00ff90"
 #define BLOOD_COLOR_LIZARD			"#db004D"
+#define BLOOD_COLOR_UNIVERSAL		"#db3300"
+#define BLOOD_COLOR_BUG				"#a37c0f"
+
 
 //suit sensors: sensor_mode defines
 
