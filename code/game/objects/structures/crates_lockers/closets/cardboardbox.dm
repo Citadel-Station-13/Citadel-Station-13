@@ -57,6 +57,11 @@
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
+/obj/structure/closet/cardboard/handle_lock_addition() //Whoever heard of a lockable cardboard box anyway
+	return
+
+/obj/structure/closet/cardboard/handle_lock_removal()
+	return
 
 /obj/structure/closet/cardboard/metal
 	name = "large metal box"

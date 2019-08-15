@@ -5,6 +5,7 @@
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
+GLOBAL_VAR_INIT(war_declared, FALSE)
 
 /obj/item/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
@@ -61,8 +62,13 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
+    
+  GLOB.war_declared = TRUE
+	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
+	var/actual_players = GLOB.joined_player_list.len - nukeops.len
 
-	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS + CEILING(PLAYER_SCALING * GLOB.player_list.len, 1))
+	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS + CEILING(PLAYER_SCALING * actual_players, 1))
+
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
@@ -72,7 +78,10 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
-	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
+
+	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
+	var/actual_players = GLOB.joined_player_list.len - nukeops.len
+	if(actual_players < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return FALSE
 	if(!user.onSyndieBase())

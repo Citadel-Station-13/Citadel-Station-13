@@ -95,7 +95,7 @@
 					killwish.grasp_range = 6
 					killwish.melee_damage_upper = 30
 					killwish.grasp_chance = 50
-					killwish.loot = list(/obj/item/twohanded/hypereutactic)
+					killwish.loot = list(/obj/item/twohanded/dualsaber/hypereutactic)
 					charges--
 					insisting = FALSE
 					if(!charges)

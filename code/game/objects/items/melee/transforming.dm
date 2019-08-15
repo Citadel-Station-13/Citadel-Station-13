@@ -13,6 +13,7 @@
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/clumsy_check = TRUE
+	var/total_mass_on //Total mass in ounces when transformed. Primarily for balance purposes. Don't think about it too hard.
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -46,6 +47,7 @@
 	active = !active
 	if(active)
 		force = force_on
+		total_mass = total_mass_on
 		throwforce = throwforce_on
 		hitsound = hitsound_on
 		throw_speed = 4
@@ -62,6 +64,7 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
+		total_mass = initial(total_mass)
 	if(is_sharp())
 		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
 		BT.butchering_enabled = TRUE
