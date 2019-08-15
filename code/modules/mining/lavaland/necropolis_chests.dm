@@ -641,6 +641,8 @@
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
+	total_mass = 2.75
+	total_mass_on = 5
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	..()

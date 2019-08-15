@@ -508,3 +508,11 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/blueberet
+	name = "Atmos Beret"
+	desc = "A fitted beret designed to be worn by Atmos Techs."
+	icon_state = "blueberet"
+	item_state = "blueberet"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'

@@ -35,6 +35,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
