@@ -242,7 +242,6 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
-	total_mass = TOTAL_MASS_SMALL_ITEM
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
