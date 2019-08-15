@@ -7,7 +7,7 @@
 	desc = "Nougat love it or hate it."
 	icon_state = "candy"
 	trash = /obj/item/trash/candy
-	list_reagents = list("nutriment" = 1, "sugar" = 3)
+	list_reagents = list("nutriment" = 1, "sugar" = 3, "cocoa" = 3)
 	junkiness = 25
 	filling_color = "#D2691E"
 	tastes = list("candy" = 1)

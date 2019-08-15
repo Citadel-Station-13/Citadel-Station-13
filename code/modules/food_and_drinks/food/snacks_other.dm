@@ -574,3 +574,13 @@
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	tastes = list("peaches" = 1, "tin" = 7)
+
+/obj/item/reagent_containers/food/snacks/chocolatestrawberry
+	name = "Chocolate dipped strawberries"
+	desc = "A strawberry dipped in a bit of chocolate."
+	icon_state = "chocolatestrawberry"
+	list_reagents = list("sugar" = 5, "nutriment" = 2)
+	filling_color = "#ffdf26"
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("strawberries" = 5, "chocolate" = 3)
+	foodtype = FRUIT | SUGAR
