@@ -7,9 +7,8 @@
 	default_features = list("mcolor" = "c4c4c4", "tail_human" = "None", "wings" = "None")
 	use_skintones = 0
 	fixed_mut_color="c4c4c4"
-	hair_color="000000"
+	hair_color="333333"
 	limbs_id = "human"
-	exotic_bloodtype = "T"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | DAIRY
 	liked_food = JUNKFOOD | MEAT
