@@ -98,6 +98,7 @@
 #define DRINKSBLOOD		15
 #define NOEYES			16
 #define MARKINGS		17
+#define TROLLHORNS		413 //just putting it waaaaay up there for future proofing sorry
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

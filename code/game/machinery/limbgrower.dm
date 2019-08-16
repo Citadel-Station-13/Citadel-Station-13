@@ -29,6 +29,7 @@
 							"fly",
 							"moth",
 							"plasmaman",
+							"troll",
 							"other"
 							)
 

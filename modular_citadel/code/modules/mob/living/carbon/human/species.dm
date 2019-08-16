@@ -1,5 +1,6 @@
 /datum/species
 	var/should_draw_citadel = FALSE
+	var/troll_caste = "burgundy" //burgundy is the default caste
 
 /datum/species/proc/alt_spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	if(!istype(M))

@@ -8,6 +8,8 @@
 	var/list/gear_categories
 	var/list/chosen_gear
 	var/gear_tab
+	var/troll_caste = "burgundy"        //troll caste
+	var/troll_horn = "Nubby"           //troll horns
 
 	//pref vars
 	var/screenshake = 100

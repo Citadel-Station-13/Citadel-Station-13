@@ -285,6 +285,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_moth_wings"]				>> features["moth_wings"]
 	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_human_ears"]				>> features["ears"]
+	//413 start
+	S["troll_caste"]        >> troll_caste
+	S["troll_horn"]         >> troll_horn
+	//413 end
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -406,6 +410,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, GLOB.skin_tones)
+	//413 start
+	troll_caste     = sanitize_inlist(troll_caste, GLOB.troll_castes)
+	troll_horn     = sanitize_inlist(troll_horn, GLOB.troll_horns_list)
+	//413 end
 	backbag			= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
@@ -470,6 +478,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
 	WRITE_FILE(S["hair_style_name"]	, hair_style)
 	WRITE_FILE(S["facial_style_name"]	, facial_hair_style)
+	//413 start
+	WRITE_FILE(S["troll_caste"] , troll_caste)
+	WRITE_FILE(S["troll_horn"] , troll_horn)
+	//413 end
 	WRITE_FILE(S["underwear"]			, underwear)
 	WRITE_FILE(S["undie_color"]			, undie_color)
 	WRITE_FILE(S["undershirt"]			, undershirt)

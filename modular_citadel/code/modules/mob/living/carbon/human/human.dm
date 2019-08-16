@@ -13,6 +13,9 @@
 /mob/living/carbon/human/species/xeno
 	race = /datum/species/xeno
 
+/mob/living/carbon/human/species/troll
+	race = /datum/species/troll
+
 /mob/living/carbon/human/resist()
 	. = ..()
 	if(wear_suit && wear_suit.breakouttime)//added in human cuff breakout proc
