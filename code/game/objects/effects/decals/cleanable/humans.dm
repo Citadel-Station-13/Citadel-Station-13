@@ -11,6 +11,8 @@
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
+	if(C.Blood_DNA.len)
+		Blood_DNA |= C.Blood_DNA.Copy()
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
@@ -26,6 +28,9 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(D)
+		Blood_DNA = D.blood_DNA
 	color = blood_DNA_to_color()
 
 /obj/effect/decal/cleanable/blood/old

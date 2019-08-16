@@ -113,7 +113,10 @@
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna)
-	var/list/blood_DNA = return_blood_DNA()
+	var/list/blood_DNA
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(D)
+		blood_DNA = D.blood_DNA
 	if(!blood_DNA)
 		blood_DNA = list()
 	var/old_length = blood_DNA.len
@@ -125,7 +128,6 @@
 	return
 
 /obj/effect/decal/cleanable/blood/blood_DNA_to_color()
-	to_chat(world, "blood dna to color called by [src]")
 	var/list/colors = list()//first we make a list of all bloodtypes present
 	for(var/bloop in Blood_DNA)
 		if(colors[Blood_DNA[bloop]])
@@ -135,7 +137,6 @@
 
 	var/final_rgb = BLOOD_COLOR_HUMAN
 
-	to_chat(world, "colors has [colors.len] bloodtypes in it")
 	if(colors.len)
 		var/sum = 0 //this is all shitcode, but it works; trust me
 		final_rgb = bloodtype_to_color(colors[1])

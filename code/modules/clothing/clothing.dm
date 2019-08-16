@@ -346,7 +346,10 @@ BLIND     // can't see anything
 
 /obj/item/clothing/transfer_blood_dna(list/blood_dna)
 	..()
-	var/list/blood_list = list(return_blood_DNA())
+	var/list/blood_list
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(D)
+		blood_list = D.blood_DNA
 	if(blood_list.len)
 		last_bloodtype = blood_list[blood_list[blood_list.len]]//trust me this works
 		last_blood_DNA = blood_list[blood_list.len]
