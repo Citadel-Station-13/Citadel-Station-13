@@ -78,6 +78,7 @@
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
 	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
+	B.update_icon()
 	return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
@@ -112,25 +113,29 @@
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna)
-	var/list/dna = blood_DNA_length()
-	if(!dna)
-		dna = list()
-	var/old_length = dna.len
-	dna |= blood_dna
-	if(dna.len > old_length)
+	var/list/blood_DNA = return_blood_DNA()
+	if(!blood_DNA)
+		blood_DNA = list()
+	var/old_length = blood_DNA.len
+	blood_DNA |= blood_dna
+	if(blood_DNA.len > old_length)
 		return TRUE//some new blood DNA was added
 
-/atom/proc/blood_DNA_to_color()	//handles RGB colorings of blood
-	var/list/dna = blood_DNA_length()
+/atom/proc/blood_DNA_to_color()
+	return
+
+/obj/effect/decal/cleanable/blood/blood_DNA_to_color()
+	to_chat(world, "blood dna to color called by [src]")
 	var/list/colors = list()//first we make a list of all bloodtypes present
-	for(var/bloop in dna)
-		if(colors[dna[bloop]])
-			colors[dna[bloop]]++
+	for(var/bloop in Blood_DNA)
+		if(colors[Blood_DNA[bloop]])
+			colors[Blood_DNA[bloop]]++
 		else
-			colors[dna[bloop]] = 1
+			colors[Blood_DNA[bloop]] = 1
 
 	var/final_rgb = BLOOD_COLOR_HUMAN
 
+	to_chat(world, "colors has [colors.len] bloodtypes in it")
 	if(colors.len)
 		var/sum = 0 //this is all shitcode, but it works; trust me
 		final_rgb = bloodtype_to_color(colors[1])
@@ -143,4 +148,10 @@
 				sum += tmp
 				i++
 
+	return final_rgb
+
+/obj/item/clothing/blood_DNA_to_color()
+	var/final_rgb = BLOOD_COLOR_HUMAN
+	if(last_bloodtype)
+		final_rgb = bloodtype_to_color(last_bloodtype)
 	return final_rgb

@@ -7,8 +7,19 @@
 	blood_state = BLOOD_STATE_BLOOD
 	bloodiness = MAX_SHOE_BLOODINESS
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
+	var/list/Blood_DNA = list()
+
+/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
+	..()
+	get_blood_lists()
+
+/obj/effect/decal/cleanable/blood/proc/get_blood_lists()
+	if(!Blood_DNA.len)
+		Blood_DNA = return_blood_DNA()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
+	if(C.Blood_DNA)
+		Blood_DNA |= C.Blood_DNA.Copy()
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
@@ -51,6 +62,7 @@
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
+	var/list/Blood_DNA = list()
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	color = blood_DNA_to_color()
@@ -81,6 +93,7 @@
 	var/exited_dirs = 0
 	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
 	var/list/shoe_types = list()
+	var/list/shoe_printer = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
@@ -111,6 +124,9 @@
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	..()
 	cut_overlays()
+
+	if(shoe_printer)
+		color = shoeblood_DNA_to_color(shoe_printer)
 
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
@@ -149,6 +165,29 @@
 		return TRUE
 	return FALSE
 
+/obj/effect/decal/cleanable/blood/footprints/proc/shoeblood_DNA_to_color(list/blood_dna)	//handles RGB colorings of bloody shoes
+	var/list/colors = list()//first we make a list of all bloodtypes present
+	for(var/bloop in shoe_printer)
+		if(colors[shoe_printer[bloop]])
+			colors[shoe_printer[bloop]]++
+		else
+			colors[shoe_printer[bloop]] = 1
+
+	var/final_rgb = BLOOD_COLOR_HUMAN
+
+	if(colors.len)
+		var/sum = 0 //this is all shitcode, but it works; trust me
+		final_rgb = bloodtype_to_color(colors[1])
+		sum = colors[colors[1]]
+		if(colors.len > 1)
+			var/i = 2
+			while(i <= colors.len)
+				var/tmp = colors[colors[i]]
+				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
+				sum += tmp
+				i++
+
+	return final_rgb
 /* Eventually TODO: make snowflake trails like baycode's
 /obj/effect/decal/cleanable/blood/footprints/tracks/shoe
 	name = "footprints"

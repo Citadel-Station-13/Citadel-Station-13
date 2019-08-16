@@ -64,6 +64,9 @@
 					FP.blood_state = S.blood_state
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
+					if(S.last_blood_DNA && S.last_bloodtype)
+						FP.shoe_printer += list(S.last_blood_DNA = S.last_bloodtype)
+						//hacky as heck; we need to move the LAST entry to there, otherwise we mix all the blood
 					FP.add_blood_DNA(S.return_blood_DNA())
 					FP.update_icon()
 					update_inv_shoes()
