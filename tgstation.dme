@@ -1279,6 +1279,7 @@
 #include "code\modules\antagonists\disease\disease_mob.dm"
 #include "code\modules\antagonists\ert\ert.dm"
 #include "code\modules\antagonists\greentext\greentext.dm"
+#include "code\modules\antagonists\greybois\greybois.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"
 #include "code\modules\antagonists\morph\morph.dm"

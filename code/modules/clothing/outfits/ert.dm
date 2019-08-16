@@ -163,6 +163,33 @@
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/construction/rcd/combat=1)
 
+/datum/outfit/ert/greybois
+	name = "Emergency Assistant"
+
+	uniform = /obj/item/clothing/under/color/grey/glorf
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	gloves = /obj/item/clothing/gloves/color/fyellow
+	ears = /obj/item/radio/headset
+	head = /obj/item/clothing/head/soft/grey
+	belt = /obj/item/storage/belt/utility/full
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/gas
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	l_hand = /obj/item/storage/toolbox/emergency/old
+	id = /obj/item/card/id
+
+/datum/outfit/ert/greybois/greygod
+	suit = /obj/item/clothing/suit/hazardvest
+	l_hand = /obj/item/storage/toolbox/plastitanium
+
+/datum/outfit/ert/greybois/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.registered_name = H.real_name
+	W.assignment = "Assistant"
+	W.access = list(ACCESS_MAINT_TUNNELS,ACCESS_CENT_GENERAL)
+	W.update_label(W.registered_name, W.assignment)
 
 /datum/outfit/centcom_official
 	name = "CentCom Official"
