@@ -26,17 +26,17 @@
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
-	turns_per_move = 5
+	turns_per_move = 4
 	see_in_dark = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
-	maxHealth = 200
-	health = 200
-	obj_damage = 60
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	maxHealth = 175
+	health = 175
+	obj_damage = 40
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	faction = list("spiders")
 	var/busy = SPIDER_IDLE
 	pass_flags = PASSTABLE
@@ -101,8 +101,8 @@
 	icon_dead = "nurse_dead"
 	gender = FEMALE
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
-	maxHealth = 40
-	health = 40
+	maxHealth = 60
+	health = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 3
@@ -165,10 +165,10 @@
 	icon_state = "tarantula"
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
-	maxHealth = 300 // woah nelly
-	health = 300
-	melee_damage_lower = 35
-	melee_damage_upper = 40
+	maxHealth = 250 // woah nelly
+	health = 250
+	melee_damage_lower = 20
+	melee_damage_upper = 30
 	poison_per_bite = 0
 	move_to_delay = 8
 	speed = 7
