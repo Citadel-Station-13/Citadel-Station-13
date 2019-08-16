@@ -181,6 +181,7 @@
 /datum/outfit/ert/greybois/greygod
 	suit = /obj/item/clothing/suit/hazardvest
 	l_hand = /obj/item/storage/toolbox/plastitanium
+	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/ert/greybois/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
