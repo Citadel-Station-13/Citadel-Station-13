@@ -9,17 +9,7 @@
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 	var/list/Blood_DNA = list()
 
-/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
-	..()
-	get_blood_lists()
-
-/obj/effect/decal/cleanable/blood/proc/get_blood_lists()
-	if(!Blood_DNA.len)
-		Blood_DNA = return_blood_DNA()
-
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if(C.Blood_DNA)
-		Blood_DNA |= C.Blood_DNA.Copy()
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)

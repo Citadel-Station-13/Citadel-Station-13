@@ -17,7 +17,6 @@
 		reagents.add_reagent(gibs_reagent_id, 5)
 	if(gibs_bloodtype)
 		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype))
-		Blood_DNA = add_blood_DNA(list("Non-human DNA" = gibs_bloodtype))
 	update_icon()
 
 
