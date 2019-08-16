@@ -215,3 +215,22 @@
 	filling_color = "#7FFF00"
 	tastes = list("green grape" = 1)
 	distill_reagent = "cognac"
+
+// Strawberry
+/obj/item/seeds/strawberries
+	name = "pack of green grape seeds"
+	desc = "These seeds grow into strawberries vines."
+	icon_state = "seed-strawberry"
+	species = "strawberry"
+	plantname = "Strawberry Vine"
+	product = /obj/item/reagent_containers/food/snacks/grown/strawberries
+	reagents_add = list("vitamin" = 0.07, "nutriment" = 0.1, "sugar" = 0.1)
+	mutatelist = list()
+
+/obj/item/reagent_containers/food/snacks/grown/strawberries
+	seed = /obj/item/seeds/strawberries
+	name = "strawberry"
+	icon_state = "strawberries"
+	filling_color = "#7FFF00"
+	tastes = list("strawberries" = 1)
+	wine_power = 20

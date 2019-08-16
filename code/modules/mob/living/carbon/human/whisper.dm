@@ -88,4 +88,4 @@
 		AM.Hear(rendered, src, language, message, , spans)
 
 	if(critical) //Dying words.
-		succumb(1)
+		succumb()

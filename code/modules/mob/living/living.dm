@@ -318,16 +318,26 @@
 	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb()
 	set name = "Succumb"
 	set category = "IC"
+	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
+		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
+		if(E.phase < 3)
+			if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+				to_chat(src, "<span class='notice'>Your mindshield prevents your mind from giving in!</span>")
+			else if(src.mind.assigned_role in GLOB.command_positions)
+				to_chat(src, "<span class='notice'>Your dedication to your department prevents you from giving in!</span>")
+			else
+				E.enthrallTally += 20
+				to_chat(src, "<span class='notice'>You give into [E.master]'s influence.</span>")
 	if (InCritical())
-		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
+		log_message("Has succumbed to death while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
-		if(!whispered)
-			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
+
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
@@ -532,7 +542,7 @@
 		var/trail_type = getTrail()
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+			if(blood_volume && blood_volume > max((BLOOD_VOLUME_NORMAL*blood_ratio)*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
