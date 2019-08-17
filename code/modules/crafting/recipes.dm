@@ -919,4 +919,20 @@
 				/obj/item/stack/sheet/leather = 2)
 	time = 50
 	category = CAT_CLOTHING
+	
+	/datum/crafting_recipe/durathread_helmet
+	name = "Makeshift Durathread Helmet"
+	result = /obj/item/clothing/head/helmet/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 4,
+				/obj/item/stack/sheet/leather = 2)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_vest
+	name = "Makeshift Durathread Armour"
+	result = /obj/item/clothing/suit/armor/vest/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 3)
+	time = 50
+	category = CAT_CLOTHING
 
