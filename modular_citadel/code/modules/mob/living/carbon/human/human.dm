@@ -1,7 +1,3 @@
-/mob/living/carbon/human/resist()
-	. = ..()
-	if(wear_suit && wear_suit.breakouttime)//added in human cuff breakout proc
-
 /mob/living/proc/resist_embedded()
 	return
 
