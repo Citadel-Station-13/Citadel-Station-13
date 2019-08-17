@@ -652,6 +652,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
-	loom_result = /obj/item/stack/sheet/cloth/durathread
+	loom_result = /obj/item/stack/sheet/durathread
 
 
