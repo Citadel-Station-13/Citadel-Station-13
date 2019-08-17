@@ -17,7 +17,7 @@
 
 /datum/round_event/meteor_wave/setup()
 	announceWhen = 1
-	startWhen = rand(300, 600) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
+	startWhen = rand(30, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
 	endWhen = startWhen + 60
 
 
