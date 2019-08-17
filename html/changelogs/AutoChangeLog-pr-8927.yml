@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "toned down the stamina costs of some of the bulkier weapons."
+  - code_imp: "repathed hypereutactic blades to be a subtype of dual sabers. Way less copypasta."

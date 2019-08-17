@@ -184,7 +184,7 @@
 
 /obj/item/organ/eyes/robotic/glow/proc/terminate_effects()
 	if(owner && active)
-		deactivate()
+		deactivate(TRUE)
 	active = FALSE
 	clear_visuals(TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
@@ -236,12 +236,6 @@
 	if(!active || . & EMP_PROTECT_SELF)
 		return
 	deactivate(silent = TRUE)
-
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M)
-	. = ..()
-	if(active)
-		UnregisterSignal(M, COMSIG_ATOM_DIR_CHANGE)
-		active = FALSE
 
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
 	start_visuals()

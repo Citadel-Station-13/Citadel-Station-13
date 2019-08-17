@@ -189,6 +189,7 @@
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
 		"breasts_shape"		= "Pair",
 		"breasts_fluid" 	= "milk",
+		"breasts_producing" = FALSE,
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
 		"vag_color"			= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),

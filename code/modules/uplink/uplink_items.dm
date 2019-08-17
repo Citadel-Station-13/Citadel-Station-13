@@ -1325,7 +1325,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
 	item = /obj/item/emagrecharge
 	cost = 2
- 
+
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
 	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. \

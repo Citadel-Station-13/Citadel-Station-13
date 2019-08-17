@@ -154,4 +154,6 @@
 		color = color+pick(colors)
 	return color
 
-
+/obj/mecha/combat/Initialize()
+	. = ..()
+	trackers += new /obj/item/mecha_parts/mecha_tracking(src)
