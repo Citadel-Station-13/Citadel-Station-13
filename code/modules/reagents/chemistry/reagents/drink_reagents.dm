@@ -892,10 +892,9 @@
 	glass_icon_state = "teaglass"
 	glass_name = "glass of catnip tea"
 	glass_desc = "A purfect drink for a cat."
-	var/staminaloss = M.getStaminaLoss()
 
 /datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
-	M.getStaminaLoss(min(50 - staminaloss, 3))
+	M.getStaminaLoss(min(50 - M.getStaminaLoss(), 3))
 	if(prob(20))
 		M.emote("nya")
 	if(prob(20))
