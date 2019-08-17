@@ -1448,7 +1448,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				//413 start
 				if("t_caste")
 					troll_caste = random_troll_caste()
-					eye_color = get_color_from_caste(troll_caste)
 				if("horn_type")
 					troll_horn = random_troll_horns()
 				//413 end
@@ -2358,8 +2357,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.custom_species = character.custom_species
 		//413 start
 	character.troll_caste = troll_caste
-	if (istype(pref_species, /datum/species/troll))
-		character.eye_color=get_color_from_caste(troll_caste)
+	//if (istype(pref_species, /datum/species/troll))
+		//character.eye_color=get_color_from_caste(troll_caste)
 	character.troll_horn = troll_horn
 	//413 end
 
