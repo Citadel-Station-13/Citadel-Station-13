@@ -32,7 +32,7 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		togglesprint()
 
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, /mob/living/carbon/human/clean_blood)))
 
 
 /mob/living/carbon/human/ComponentInitialize()
@@ -689,9 +689,9 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/mob/living/carbon/human/clean_blood(datum/source, strength)
+	. = ..()
+	// we've made our strength check already
 	if(gloves)
 		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 			update_inv_gloves()

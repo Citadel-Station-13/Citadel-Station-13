@@ -21,7 +21,7 @@
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, /obj/item/clothing/shoes/clean_blood)))
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)
@@ -46,7 +46,7 @@
 	. = list()
 	if(!isinhands)
 		var/bloody = FALSE
-		IF_HAS_BLOOD_DNA(src)
+		if(blood_DNA)
 			bloody = TRUE
 		else
 			bloody = bloody_shoes[BLOOD_STATE_BLOOD]
@@ -93,9 +93,9 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/clothing/shoes/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/obj/item/clothing/shoes/clean_blood(datum/source, strength)
+	. = ..()
+
 	bloody_shoes = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	if(ismob(loc))

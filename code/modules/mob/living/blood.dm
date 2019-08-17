@@ -285,7 +285,8 @@
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
-				temp_blood_DNA = drop.return_blood_DNA() //we transfer the dna from the drip to the splatter
+				LAZYINITLIST(temp_blood_DNA)
+				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())

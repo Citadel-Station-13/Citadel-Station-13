@@ -39,8 +39,9 @@
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-	S.add_blood_DNA(return_blood_DNA())
-	return ..()
+	if(S.blood_DNA)
+		blood_DNA |= S.blood_DNA.Copy()
+	..()
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
@@ -72,8 +73,9 @@
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	F.add_blood_DNA(return_blood_DNA())
-	return ..()
+	if(F.blood_DNA)
+		blood_DNA |= F.blood_DNA.Copy()
+	..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))

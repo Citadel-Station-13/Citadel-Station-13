@@ -56,11 +56,10 @@
 		if(!(I.item_flags & ABSTRACT))
 			msg += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
-	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
 	if(gloves && !(SLOT_GLOVES in obscured))
 		msg += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands.\n"
-	else if(FR && length(FR.blood_DNA))
+	else if(length(blood_DNA))
 		var/hand_number = get_num_arms(FALSE)
 		if(hand_number)
 			msg += "<span class='warning'>[t_He] [t_has] [hand_number > 1 ? "" : "a"] blood-stained hand[hand_number > 1 ? "s" : ""]!</span>\n"

@@ -21,9 +21,6 @@
 
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
-	GET_COMPONENT(D, /datum/component/forensics)
-	if(D)
-		Blood_DNA = D.blood_DNA
 	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
 	cut_overlays()
 	var/mutable_appearance/guts = mutable_appearance(icon, "[icon_state]_guts")
@@ -60,7 +57,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
-			splat.add_blood_DNA(return_blood_DNA())
+			splat.transfer_blood_dna(blood_DNA)
 
 		if(!step_to(src, get_step(src, direction), 0))
 			break

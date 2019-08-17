@@ -13,7 +13,7 @@
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, /obj/machinery/washing_machine/clean_blood)))
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
@@ -59,7 +59,8 @@
 		M.Translate(rand(-3, 3), rand(-1, 3))
 		animate(src, transform=M, time=2)
 
-/obj/machinery/washing_machine/proc/clean_blood()
+/obj/machinery/washing_machine/clean_blood()
+	. = ..()
 	if(!busy)
 		bloody_mess = FALSE
 		update_icon()
