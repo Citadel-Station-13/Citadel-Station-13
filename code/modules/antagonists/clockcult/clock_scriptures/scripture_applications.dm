@@ -140,7 +140,7 @@
 	multiple_invokers_used = TRUE
 	object_path = /obj/mecha/neovgre
 	tier = SCRIPTURE_APPLICATION
-	primary_component = REPLICANT_ALLOY
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 	creator_message = "<span class='brass'>Neovgre, the Anima Bulwark towers over you... your enemies reckoning has come.</span>"
 
