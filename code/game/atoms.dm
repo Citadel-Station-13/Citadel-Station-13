@@ -255,6 +255,8 @@
 	if(article)
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
+		if(blood_DNA)
+			override[EXAMINE_POSITION_BEFORE] = " blood-stained "
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
@@ -373,6 +375,7 @@
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
+	LAZYINITLIST(blood_DNA)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
@@ -383,16 +386,17 @@
 	return FALSE
 
 /obj/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	LAZYINITLIST(blood_DNA)
 	return transfer_blood_dna(blood_dna)
 
 /obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	. = ..()
-	if(!.)
-		return
+	if(!..())
+		return FALSE
 	add_blood_overlay()
+	return TRUE //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
-	if(!length(blood_DNA))
+	if(!blood_DNA.len)
 		return
 	if(initial(icon) && initial(icon_state))
 		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
@@ -400,7 +404,7 @@
 		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 
 	blood_overlay = image(blood_splatter_icon)
-	blood_overlay.color = blood_DNA_to_color()
+	blood_overlay.color = BLOOD_COLOR_SYNTHETIC
 	add_overlay(blood_overlay)
 
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
@@ -482,6 +486,7 @@
 	if(.)
 		if(blood_splatter_icon)
 			cut_overlay(blood_splatter_icon)
+			cut_overlay(blood_overlay)
 
 /atom/proc/wash_cream()
 	return TRUE

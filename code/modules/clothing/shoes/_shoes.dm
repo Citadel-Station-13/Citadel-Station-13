@@ -95,7 +95,6 @@
 
 /obj/item/clothing/shoes/clean_blood(datum/source, strength)
 	. = ..()
-
 	bloody_shoes = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	if(ismob(loc))

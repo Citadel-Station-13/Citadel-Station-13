@@ -345,6 +345,7 @@ BLIND     // can't see anything
 		..()
 
 /obj/item/clothing/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
-	if(length(blood_DNA))
-		last_bloodtype = blood_DNA[blood_DNA[blood_DNA.len]]//trust me this works
-		last_blood_DNA = blood_DNA[blood_DNA.len]
+	..()
+	if(length(blood_dna))
+		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
+		last_blood_DNA = blood_dna[blood_dna.len]

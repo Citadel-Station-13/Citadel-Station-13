@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//Blood overlay things
 	var/blood_color
-	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/image/blood_overlay //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 
 /obj/item/Initialize()
 
