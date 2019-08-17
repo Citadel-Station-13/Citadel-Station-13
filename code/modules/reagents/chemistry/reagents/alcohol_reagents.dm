@@ -2122,6 +2122,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Planet Cracker"
 	glass_desc = "Although historians believe the drink was originally created to commemorate the end of an important conflict in man's past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
 
+/datum/reagent/consumable/ethanol/commander_and_chief
+	name = "Commander and Chief"
+	id = "commander_and_chief"
+	description = "A cocktail for the captain on the go."
+	color = "#ffffc9"
+	boozepwr = 50
+	quality = DRINK_FANTASTIC
+	taste_description = "Tastes like...duty and responsibility?"
+	glass_icon_state = "commander_and_chief"
+	glass_name = "Commander and Chief"
+	glass_desc = "The gems of this majestic chalice represent the departments and their Heads."
+	
+/datum/reagent/consumable/ethanol/commander_and_chief/on_mob_life(mob/living/carbon/M)
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CAPTAIN_METABOLISM)))
+		M.heal_bodypart_damage(2,2,2)
+		M.adjustBruteLoss(-3.5,0)
+		M.adjustOxyLoss(-3.5,0)
+		M.adjustFireLoss(-3.5,0)
+		M.adjustToxLoss(-3.5,0)
+		M.radiation = max(M.raddiation - 25, 0)
+		. = 1
+	return ..()
+
 /datum/reagent/consumable/ethanol/fruit_wine
 	name = "Fruit Wine"
 	id = "fruit_wine"
