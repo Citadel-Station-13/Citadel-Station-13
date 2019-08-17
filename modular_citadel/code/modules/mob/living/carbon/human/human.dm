@@ -1,36 +1,20 @@
-/mob/living/carbon/human/species/mammal
-	race = /datum/species/mammal
-
-/mob/living/carbon/human/species/avian
-	race = /datum/species/avian
-
-/mob/living/carbon/human/species/aquatic
-	race = /datum/species/aquatic
-
-/mob/living/carbon/human/species/insect
-	race = /datum/species/insect
-
-/mob/living/carbon/human/species/xeno
-	race = /datum/species/xeno
-
-/mob/living/carbon/human/species/ipc
-	race = /datum/species/ipc
-
-/mob/living/carbon/human/species/roundstartslime
-	race = /datum/species/jelly/roundstartslime
-
 /mob/living/carbon/human/resist()
 	. = ..()
 	if(wear_suit && wear_suit.breakouttime)//added in human cuff breakout proc
+
+/mob/living/proc/resist_embedded()
+	return
+
+/mob/living/carbon/human/resist_embedded()
+	if(handcuffed || legcuffed || (wear_suit && wear_suit.breakouttime))
 		return
-	if(.)
-		if(canmove && !on_fire)
-			for(var/obj/item/bodypart/L in bodyparts)
-				if(istype(L) && L.embedded_objects.len)
-					for(var/obj/item/I in L.embedded_objects)
-						if(istype(I) && I.w_class >= WEIGHT_CLASS_NORMAL)	//minimum weight class to insta-ripout via resist
-							remove_embedded_unsafe(L, I, src, 1.5)	//forcefully call the remove embedded unsafe proc but with extra pain multiplier. if you want to remove it less painfully, examine and remove it carefully.
-							return FALSE //Hands are occupied
+	if(canmove && !on_fire)
+		for(var/obj/item/bodypart/L in bodyparts)
+			if(istype(L) && L.embedded_objects.len)
+				for(var/obj/item/I in L.embedded_objects)
+					if(istype(I) && I.w_class >= WEIGHT_CLASS_NORMAL)	//minimum weight class to insta-ripout via resist
+						remove_embedded_unsafe(L, I, src, 1.5)	//forcefully call the remove embedded unsafe proc but with extra pain multiplier. if you want to remove it less painfully, examine and remove it carefully.
+						return TRUE //Hands are occupied
 	return
 
 /mob/living/carbon/human/proc/remove_embedded_unsafe(obj/item/bodypart/L, obj/item/I, mob/user, painmul = 1)
