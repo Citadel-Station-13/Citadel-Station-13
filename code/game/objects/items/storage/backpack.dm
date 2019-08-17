@@ -398,6 +398,8 @@
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
+	new /obj/item/construction/rcd(src) //we give them a non-full one
+	new /obj/item/pipe_dispenser(src)
 
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"
