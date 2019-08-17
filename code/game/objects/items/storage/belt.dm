@@ -598,8 +598,13 @@
 	desc = "An double stacked bandolier made out of durathread."
 	icon_state = "bandolier-durathread"
 	item_state = "bandolier-durathread"
-	STR.max_items = 32
 	resistance_flags = FIRE_PROOF
+	
+/obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 32
+	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/ammo_casing
 		))
