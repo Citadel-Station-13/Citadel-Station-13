@@ -252,11 +252,13 @@
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
 	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
-	if(article)
+	if(length(blood_DNA) && article)
+		. = "[article] [src]"
+		override[EXAMINE_POSITION_ARTICLE] = " blood-stained [article]"
+	else if(article)
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
-		if(blood_DNA)
-			override[EXAMINE_POSITION_BEFORE] = " blood-stained "
+
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
@@ -366,16 +368,13 @@
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
 	LAZYINITLIST(blood_DNA)
-	var/old_length = length(blood_DNA)
+	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
-	if(length(blood_DNA) == old_length)
-		return FALSE
-	return TRUE
-
+	if(blood_DNA.len > old_length)
+		return TRUE
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
-	LAZYINITLIST(blood_DNA)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
@@ -386,17 +385,16 @@
 	return FALSE
 
 /obj/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	LAZYINITLIST(blood_DNA)
 	return transfer_blood_dna(blood_dna)
 
 /obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	if(!..())
-		return FALSE
+	. = ..()
 	add_blood_overlay()
-	return TRUE //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
-	if(!blood_DNA.len)
+	cut_overlays()
+	if(!length(blood_DNA))
+		update_icon() // Don't have blood, let's just refresh the item's overlays
 		return
 	if(initial(icon) && initial(icon_state))
 		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
@@ -404,7 +402,8 @@
 		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 
 	blood_overlay = image(blood_splatter_icon)
-	blood_overlay.color = BLOOD_COLOR_SYNTHETIC
+	blood_overlay.color = blood_DNA_to_color()
+	update_icon()
 	add_overlay(blood_overlay)
 
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
@@ -471,22 +470,16 @@
 	if(strength < CLEAN_STRENGTH_BLOOD)
 		return
 	if(strength >= CLEAN_STRENGTH_FINGERPRINTS)
-		if(islist(fingerprints))
-			fingerprints = null
+		fingerprints = null
 	if(strength >= CLEAN_STRENGTH_BLOOD)
-		if(islist(blood_DNA))
-			blood_DNA = null
+		blood_DNA = null
 	if(strength >= CLEAN_STRENGTH_FIBERS)
-		if(islist(suit_fibers))
-			suit_fibers = null
+		suit_fibers = null
 	return TRUE
 
 /obj/item/clean_blood(datum/source, strength)
 	. = ..()
-	if(.)
-		if(blood_splatter_icon)
-			cut_overlay(blood_splatter_icon)
-			cut_overlay(blood_overlay)
+	add_blood_overlay() //this will purge the overlay if there is one while regenerating the icons of the item as well.
 
 /atom/proc/wash_cream()
 	return TRUE

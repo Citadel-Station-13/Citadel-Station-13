@@ -36,14 +36,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.mind.assigned_role == "Detective") //Gumshoe perks yo
-				playsound(loc, 'sound/effects/gib_step.ogg', 10, 1)
-			else
-				playsound(loc, 'sound/effects/gib_step.ogg', !HAS_TRAIT(H,TRAIT_LIGHT_STEP) ? 20 : 50, 1)
-		else
-			playsound(loc, 'sound/effects/gib_step.ogg', !HAS_TRAIT(L,TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+		playsound(loc, 'sound/effects/gib_step.ogg', !HAS_TRAIT(L,TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
@@ -58,7 +51,6 @@
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 			splat.transfer_blood_dna(blood_DNA)
-
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
