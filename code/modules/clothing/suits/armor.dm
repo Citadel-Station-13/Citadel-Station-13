@@ -1,5 +1,6 @@
 /obj/item/clothing/suit/armor
 	allowed = null
+	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT

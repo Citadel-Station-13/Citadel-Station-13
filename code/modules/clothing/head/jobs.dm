@@ -31,6 +31,7 @@
 	icon_state = "captain"
 	item_state = "that"
 	flags_inv = 0
+	clothing_flags = THICKMATERIAL
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/captain
@@ -134,6 +135,7 @@
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 50, "acid" = 60)
+	clothing_flags = THICKMATERIAL
 	strip_delay = 80
 	dynamic_hair_suffix = ""
 
@@ -156,6 +158,7 @@
 	icon_state = "policehelm"
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 60)
 	strip_delay = 60
+	clothing_flags = THICKMATERIAL
 	dog_fashion = /datum/dog_fashion/head/warden
 
 /obj/item/clothing/head/warden/drill
@@ -231,6 +234,7 @@
 	icon_state = "beret_badge"
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
+	clothing_flags = THICKMATERIAL
 	dog_fashion = null
 
 /obj/item/clothing/head/beret/sec/navyhos
