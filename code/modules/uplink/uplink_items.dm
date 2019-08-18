@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	var/restricted = FALSE // Adds restrictions for VR/Events
-
+	var/list/restricted_species //Limits items to a specific species. Hopefully.
 /datum/uplink_item/New()
 	. = ..()
 	if(isnull(surplus_nullcrates))
@@ -1640,6 +1640,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 10
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+
+//Race-specific items
+/datum/uplink_item/race_restricted
+	category = "Species-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	surplus = 0
 
 // Role-specific items
 /datum/uplink_item/role_restricted
