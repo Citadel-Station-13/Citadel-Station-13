@@ -1010,15 +1010,6 @@
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-/datum/supply_pack/engine/mason
-	name = "M.A.S.O.N RIG Crate"
-	desc = "The rare M.A.S.O.N RIG. Requires CE access to open."
-	cost = 15000
-	access = ACCESS_CE
-	contains = list(/obj/item/clothing/suit/space/hardsuit/ancient/mason)
-	crate_name = "M.A.S.O.N Rig"
-	crate_type = /obj/structure/closet/crate/secure/engineering
-
 /datum/supply_pack/engine/PA
 	name = "Particle Accelerator Crate"
 	desc = "A supermassive black hole or hyper-powered teslaball are the perfect way to spice up any party! This \"My First Apocalypse\" kit contains everything you need to build your own Particle Accelerator! Ages 10 and up."
