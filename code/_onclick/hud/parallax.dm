@@ -146,28 +146,29 @@
 
 
 /datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
-	C.parallax_animate_timer = FALSE
-	for(var/thing in C.parallax_layers)
-		var/obj/screen/parallax_layer/L = thing
-		if (!new_parallax_movedir)
-			animate(L)
-			continue
+	if(C)
+		C.parallax_animate_timer = FALSE
+		for(var/thing in C.parallax_layers)
+			var/obj/screen/parallax_layer/L = thing
+			if (!new_parallax_movedir)
+				animate(L)
+				continue
 
-		var/newstate = initial(L.icon_state)
-		var/T = PARALLAX_LOOP_TIME / L.speed
+			var/newstate = initial(L.icon_state)
+			var/T = PARALLAX_LOOP_TIME / L.speed
 
-		if (newstate in icon_states(L.icon))
-			L.icon_state = newstate
-			L.update_o(C.view)
+			if (newstate in icon_states(L.icon))
+				L.icon_state = newstate
+				L.update_o(C.view)
 
-		L.transform = newtransform
+			L.transform = newtransform
 
-		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
+			animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
 	var/turf/posobj = get_turf(C.eye)
-	if(!posobj) 
+	if(!posobj)
 		return
 	var/area/areaobj = posobj.loc
 

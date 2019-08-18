@@ -168,7 +168,8 @@
 			data = list("blood_type" = "O-")
 		if(rid == "nutriment" || rid == "vitamin")
 			// apple tastes of apple.
-			data = T.tastes
+			if(T.tastes) //but not everything has a taste, like sunflowers for whatever reason.
+				data = T.tastes
 
 		T.reagents.add_reagent(rid, amount, data)
 

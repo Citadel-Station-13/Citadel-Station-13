@@ -325,7 +325,8 @@
 	. = ..()
 	if(.) //damage received
 		if(prob(30))
-			spark_system.start()
+			if(spark_system)
+				spark_system.start()
 		if(on && !attacked && !(obj_flags & EMAGGED))
 			attacked = TRUE
 			addtimer(CALLBACK(src, .proc/reset_attacked), 60)

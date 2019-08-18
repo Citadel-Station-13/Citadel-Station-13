@@ -138,9 +138,11 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
-	var/gases = C.air_contents.gases
+	var/gases
+	if(C && C.air_contents)
+		gases = C.air_contents.gases
 
-	worth += gases[/datum/gas/bz]*4	
+	worth += gases[/datum/gas/bz]*4
 	worth += gases[/datum/gas/stimulum]*25
 	worth += gases[/datum/gas/hypernoblium]*1000
 	worth += gases[/datum/gas/miasma]*15

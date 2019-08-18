@@ -407,6 +407,8 @@
 		if(!T)
 			break
 		var/turf/potential_T = find_safe_turf()
+		if(!potential_T)
+			break
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
 			user.canmove = 0

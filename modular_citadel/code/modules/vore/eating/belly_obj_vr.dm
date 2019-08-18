@@ -157,7 +157,11 @@
 	return ..()
 
 /obj/belly/proc/Remove(mob/living/owner)
-	owner.vore_organs -= src
+	if(length(owner.vore_organs))
+		for(var/belly in owner.vore_organs)
+			belly = src
+			var/obj/belly/B = belly
+			owner.vore_organs -= B
 	owner = null
 
 // Called whenever an atom enters this belly
