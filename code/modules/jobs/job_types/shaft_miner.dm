@@ -43,7 +43,7 @@
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"
-	suit = /obj/item/clothing/suit/hooded/explorer
+	suit = /obj/item/clothing/suit/hooded/explorer/standard
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
 	suit_store = /obj/item/tank/internals/oxygen
