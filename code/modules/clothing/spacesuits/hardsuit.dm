@@ -619,50 +619,6 @@
 	var/footstep = 1
 	var/datum/component/mobhook
 
-/obj/item/clothing/suit/space/hardsuit/ancient/mason
-	name = "M.A.S.O.N RIG"
-	desc = "The Multi-Augmented Severe Operations Networked Resource Integration Gear is an man-portable tank designed for extreme environmental situations. It is excessively bulky, but rated for all but the most atomic of hazards. The specialized armor is surprisingly weak to conventional weaponry. The exo slot can attach most storge bags on to the suit."
-	icon_state = "hardsuit-ancient"
-	item_state = "anc_hardsuit"
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 50, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
-	slowdown = 6 //Slow
-	obj_flags = IMMUTABLE_SLOW
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
-	name = "M.A.S.O.N RIG helmet"
-	desc = "The M.A.S.O.N RIG helmet is complimentary to the rest of the armor. It features a very large, high powered flood lamp and robust flash protection."
-	icon_state = "hardsuit0-ancient"
-	item_state = "anc_helm"
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 50, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
-	item_color = "ancient"
-	brightness_on = 16
-	scan_reagents = TRUE
-	flash_protect = 5 //We will not be flash by bombs
-	tint = 1
-	var/obj/machinery/doppler_array/integrated/bomb_radar
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/Initialize()
-	. = ..()
-	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
-
-/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if (slot == SLOT_HEAD)
-		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.add_hud_to(user)
-
-/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/dropped(mob/living/carbon/human/user)
-	..()
-	if (user.head == src)
-		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.remove_hud_from(user)
-
 /obj/item/clothing/suit/space/hardsuit/ancient/proc/on_mob_move()
 	var/mob/living/carbon/human/H = loc
 	if(!istype(H) || H.wear_suit != src)
