@@ -113,7 +113,7 @@
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
 	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.04)
 
-/obj/item/grown/sunflower // FLOWER POWER!
+/obj/item/reagent_containers/food/snacks/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
@@ -129,7 +129,7 @@
 	throw_range = 3
 	tastes = list("seeds" = 1)
 
-/obj/item/grown/sunflower/attack(mob/M, mob/user)
+/obj/item/reagent_containers/food/snacks/grown/sunflower/attack(mob/M, mob/user)
 	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
 	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>")
 
@@ -174,14 +174,13 @@
 	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
 	rarity = 20
 
-/obj/item/grown/novaflower
+/obj/item/reagent_containers/food/snacks/grown/novaflower
 	seed = /obj/item/seeds/sunflower/novaflower
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon_state = "novaflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
-	tastes = list("nova" = 1)
 	damtype = "fire"
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
@@ -191,12 +190,13 @@
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
 	grind_results = list("capsaicin" = 0, "condensedcapsaicin" = 0)
+	tastes = list("cooked sunflower" = 1)
 
-/obj/item/grown/novaflower/add_juice()
+/obj/item/reagent_containers/food/snacks/grown/novaflower/add_juice()
 	..()
 	force = round((5 + seed.potency / 5), 1)
 
-/obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
+/obj/item/reagent_containers/food/snacks/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
 	if(isliving(M))
@@ -206,7 +206,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
 			log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 
-/obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
+/obj/item/reagent_containers/food/snacks/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -216,7 +216,7 @@
 		to_chat(usr, "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")
 		qdel(src)
 
-/obj/item/grown/novaflower/pickup(mob/living/carbon/human/user)
+/obj/item/reagent_containers/food/snacks/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
 	if(!user.gloves)
 		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
