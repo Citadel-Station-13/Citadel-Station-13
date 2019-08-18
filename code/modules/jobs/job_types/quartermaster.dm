@@ -24,6 +24,7 @@
 					ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_VAULT)
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"

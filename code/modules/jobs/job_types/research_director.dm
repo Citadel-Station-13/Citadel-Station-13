@@ -30,6 +30,7 @@
 			            ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 
 /datum/outfit/job/rd
 	name = "Research Director"
