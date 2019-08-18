@@ -24,7 +24,6 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE

@@ -28,3 +28,6 @@
 	switch_damtype_action.Remove(user)
 	phasing_action.Remove(user)
 
+/obj/mecha/combat/Initialize()
+	. = ..()
+	trackers += new /obj/item/mecha_parts/mecha_tracking(src)

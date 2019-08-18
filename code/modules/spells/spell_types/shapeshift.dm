@@ -15,7 +15,6 @@
 	var/die_with_shapeshifted_form = TRUE
 	var/convert_damage = FALSE //If you want to convert the caster's health to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
-
 	var/shapeshift_type
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/dog/corgi,\

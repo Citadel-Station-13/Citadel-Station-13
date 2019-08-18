@@ -171,3 +171,7 @@
 		if(prob(2))
 			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 	return 1
+
+/obj/item/proc/getweight()
+	return total_mass || w_class * 1.25
+

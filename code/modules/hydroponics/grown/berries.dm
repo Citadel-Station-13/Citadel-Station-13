@@ -218,13 +218,13 @@
 
 // Strawberry
 /obj/item/seeds/strawberries
-	name = "pack of green grape seeds"
+	name = "pack of strawberrie seeds"
 	desc = "These seeds grow into strawberries vines."
 	icon_state = "seed-strawberry"
 	species = "strawberry"
 	plantname = "Strawberry Vine"
 	product = /obj/item/reagent_containers/food/snacks/grown/strawberries
-	reagents_add = list("vitamin" = 0.07, "nutriment" = 0.1, "sugar" = 0.1)
+	reagents_add = list("vitamin" = 0.07, "nutriment" = 0.1, "sugar" = 0.2)
 	mutatelist = list()
 
 /obj/item/reagent_containers/food/snacks/grown/strawberries

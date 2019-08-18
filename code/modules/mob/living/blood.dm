@@ -18,10 +18,10 @@
 /mob/living/carbon/monkey/handle_blood()
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL)
+		if(blood_volume < (BLOOD_VOLUME_NORMAL * blood_ratio))
 			blood_volume += 0.1 // regenerate blood VERY slowly
-			if(blood_volume < BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+			if(blood_volume < (BLOOD_VOLUME_OKAY * blood_ratio))
+				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.02, 1))
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
@@ -33,7 +33,7 @@
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+		if(blood_volume < (BLOOD_VOLUME_NORMAL * blood_ratio) && !HAS_TRAIT(src, TRAIT_NOHUNGER))
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
@@ -46,20 +46,22 @@
 					nutrition_ratio = 0.8
 				else
 					nutrition_ratio = 1
+			if(HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
+				nutrition_ratio *= 1.2
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
 			nutrition = max(0, nutrition - nutrition_ratio * HUNGER_FACTOR)
-			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
+			blood_volume = min((BLOOD_VOLUME_NORMAL * blood_ratio), blood_volume + 0.5 * nutrition_ratio)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		switch(blood_volume)
+		switch(blood_volume * INVERSE(blood_ratio))
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
 					to_chat(src, "<span class='warning'>You feel [word].</span>")
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
+				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.01, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.02, 1))
 				if(prob(5))
 					blur_eyes(6)
 					to_chat(src, "<span class='warning'>You feel very [word].</span>")
@@ -111,7 +113,7 @@
 	blood_volume = initial(blood_volume)
 
 /mob/living/carbon/human/restore_blood()
-	blood_volume = BLOOD_VOLUME_NORMAL
+	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 	bleed_rate = 0
 
 /****************************************************
@@ -122,7 +124,7 @@
 /mob/living/proc/transfer_blood_to(atom/movable/AM, amount, forced)
 	if(!blood_volume || !AM.reagents)
 		return 0
-	if(blood_volume < BLOOD_VOLUME_BAD && !forced)
+	if(blood_volume < (BLOOD_VOLUME_BAD * blood_ratio) && !forced)
 		return 0
 
 	if(blood_volume < amount)
@@ -161,7 +163,7 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == "blood") //actual blood reagent
+	if(blood_id == "blood")  //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -204,6 +206,21 @@
 			if(istype(ling))
 				blood_data["changeling_loudness"] = ling.loudfactor
 		return blood_data
+	if(blood_id == "slimejelly") //Just so MKUltra works. Takes the minimum required data. Sishen is testing if this breaks stuff.
+		var/blood_data = list()
+		if(mind)
+			blood_data["mind"] = mind
+		else if(last_mind)
+			blood_data["mind"] = last_mind
+		if(ckey)
+			blood_data["ckey"] = ckey
+		else if(last_mind)
+			blood_data["ckey"] = ckey(last_mind.key)
+		blood_data["gender"] = gender
+		blood_data["real_name"] = real_name
+		return blood_data
+
+
 
 //get the id of the substance this mob use as blood.
 /mob/proc/get_blood_id()
@@ -300,3 +317,24 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+//This is a terrible way of handling it.
+/mob/living/proc/ResetBloodVol()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
+			blood_ratio = 1.2
+			H.handle_blood()
+			return
+		blood_ratio = 1
+		H.handle_blood()
+		return
+	blood_ratio = 1
+
+/mob/living/proc/AdjustBloodVol(var/value)
+	if(blood_ratio == value)
+		return
+	blood_ratio = value
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.handle_blood()

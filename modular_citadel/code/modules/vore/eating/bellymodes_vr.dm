@@ -4,10 +4,16 @@
 		recent_sound = FALSE
 		return SSBELLIES_IGNORED
 
+	if(!owner)
+		qdel(src)
+		SSbellies.belly_list -= src
+		return SSBELLIES_PROCESSED
+
 	if(loc != owner)
-		if(istype(owner))
-			loc = owner
+		if(isliving(owner)) //we don't have machine based bellies. (yet :honk:)
+			forceMove(owner)
 		else
+			SSbellies.belly_list -= src
 			qdel(src)
 			return SSBELLIES_PROCESSED
 
