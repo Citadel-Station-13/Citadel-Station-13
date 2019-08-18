@@ -33,7 +33,7 @@
 					/obj/item/seeds/soya = 3,
 					/obj/item/seeds/sugarcane = 3,
 					/obj/item/seeds/sunflower = 3,
-					/obj/item/seeds/strawberries = 3,
+					/obj/item/seeds/strawberry = 3,
 					/obj/item/seeds/tea = 3,
 					/obj/item/seeds/tobacco = 3,
 					/obj/item/seeds/tomato = 3,
