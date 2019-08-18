@@ -7,7 +7,7 @@
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the quartermaster"
-	selection_color = "#dcba97"
+	selection_color = "#ca8f55"
 
 	outfit = /datum/outfit/job/cargo_tech
 
