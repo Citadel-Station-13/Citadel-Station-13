@@ -102,7 +102,7 @@
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
-	product = /obj/item/grown/sunflower
+	product = /obj/item/reagent_containers/food/snacks/grown/sunflower
 	endurance = 20
 	production = 2
 	yield = 2
@@ -169,7 +169,7 @@
 	plantname = "Novaflowers"
 	icon_grow = "novaflower-grow"
 	icon_dead = "sunflower-dead"
-	product = /obj/item/grown/novaflower
+	product = /obj/item/reagent_containers/food/snacks/grown/novaflower
 	mutatelist = list()
 	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
 	rarity = 20
