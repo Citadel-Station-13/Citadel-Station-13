@@ -290,6 +290,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/light_replacer
+	name = "Light Replacer"
+	desc = "A device to automatically replace lights. Refill with working light bulbs."
+	id = "light_replacer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
+	build_path = /obj/item/lightreplacer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."

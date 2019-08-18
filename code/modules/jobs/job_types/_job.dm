@@ -57,6 +57,7 @@
 	var/antag_rep = 10
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
+	var/list/blacklisted_quirks		//list of quirk typepaths blacklisted.
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
