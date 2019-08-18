@@ -49,7 +49,7 @@
 
 /datum/outfit/lavaknight/captain
 	name ="Cydonian Knight Captain"
-	l_pocket = /obj/item/twohanded/hypereutactic
+	l_pocket = /obj/item/twohanded/dualsaber/hypereutactic
 
 /datum/outfit/lavaknight/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
