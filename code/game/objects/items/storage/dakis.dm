@@ -22,7 +22,7 @@
 /obj/item/storage/daki/attack_self(mob/living/user)
 	var/body_choice
 	var/custom_name
-
+	user.setClickCooldown(1 SECONDS)
 	if(icon_state == "daki_base")
 		body_choice = input("Pick a body.") in dakimakura_options
 		icon_state = "daki_[body_choice]"
