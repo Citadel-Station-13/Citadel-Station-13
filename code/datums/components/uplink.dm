@@ -141,10 +141,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 				if(I.limited_stock == 0)
 					continue
 				if(I.restricted_roles.len)
-					var/is_inaccessible = 1
+					var/is_inaccessible = TRUE
 					for(var/R in I.restricted_roles)
 						if(R == user.mind.assigned_role)
-							is_inaccessible = 0
+							is_inaccessible = FALSE
 					if(is_inaccessible)
 						continue
 					if(I.restricted_species.len)
