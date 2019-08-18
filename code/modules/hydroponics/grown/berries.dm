@@ -223,12 +223,12 @@
 	icon_state = "seed-strawberry"
 	species = "strawberry"
 	plantname = "Strawberry Vine"
-	product = /obj/item/reagent_containers/food/snacks/grown/strawberries
+	product = /obj/item/reagent_containers/food/snacks/grown/strawberry
 	reagents_add = list("vitamin" = 0.07, "nutriment" = 0.1, "sugar" = 0.2)
 	mutatelist = list()
 
 /obj/item/reagent_containers/food/snacks/grown/strawberry
-	seed = /obj/item/seeds/strawberries
+	seed = /obj/item/seeds/strawberry
 	name = "strawberry"
 	icon_state = "strawberry"
 	filling_color = "#7FFF00"
