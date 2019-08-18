@@ -174,7 +174,7 @@
 	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
 	rarity = 20
 
-/obj/item/grown/grown/novaflower
+/obj/item/grown/novaflower
 	seed = /obj/item/seeds/sunflower/novaflower
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
