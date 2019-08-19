@@ -46,7 +46,7 @@
 	role = "Engineer"
 	outfit = /datum/outfit/ert/engineer
 
-/datum/antagonist/ert/enginer/amber
+/datum/antagonist/ert/engineer/amber
 	outfit = /datum/outfit/ert/engineer/alert
 
 /datum/antagonist/ert/engineer/red
