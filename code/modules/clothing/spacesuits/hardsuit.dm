@@ -624,7 +624,7 @@
 	desc = "The Multi-Augmented Severe Operations Networked Resource Integration Gear is an man-portable tank designed for extreme environmental situations. It is excessively bulky, but rated for all but the most atomic of hazards. The specialized armor is surprisingly weak to conventional weaponry. The exo slot can attach most storge bags on to the suit."
 	icon_state = "hardsuit-ancient"
 	item_state = "anc_hardsuit"
-	armor = list("melee" = 20, "bullet" = 15, "laser" = 15, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 20, "bullet" = 15, "laser" = 15, "energy" = 45, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	slowdown = 6 //Slow
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
@@ -636,7 +636,7 @@
 	desc = "The M.A.S.O.N RIG helmet is complimentary to the rest of the armor. It features a very large, high powered flood lamp and robust flash protection."
 	icon_state = "hardsuit0-ancient"
 	item_state = "anc_helm"
-	armor = list("melee" = 20, "bullet" = 15, "laser" = 15, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 20, "bullet" = 15, "laser" = 15, "energy" = 45, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	item_color = "ancient"
 	brightness_on = 16
 	scan_reagents = TRUE
