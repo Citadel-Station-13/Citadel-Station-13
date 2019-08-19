@@ -154,7 +154,7 @@
 	minimum_required_age = 14
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
-	weight = 2
+	weight = 1
 	cost = 30
 	requirements = list(90,90,70,40,30,20,10,10,10,10)
 	high_population_requirement = 10
