@@ -2135,7 +2135,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The gems of this majestic chalice represent the departments and their Heads."
 	
 /datum/reagent/consumable/ethanol/commander_and_chief/on_mob_life(mob/living/carbon/M)
-	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CAPTAIN_METABOLISM)))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CAPTAIN_METABOLISM))
 		M.heal_bodypart_damage(2,2,2)
 		M.adjustBruteLoss(-3.5,0)
 		M.adjustOxyLoss(-3.5,0)
