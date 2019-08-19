@@ -2141,7 +2141,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustOxyLoss(-3.5,0)
 		M.adjustFireLoss(-3.5,0)
 		M.adjustToxLoss(-3.5,0)
-		M.radiation = max(M.raddiation - 25, 0)
+		M.radiation = max(M.radiation - 25, 0)
 		. = 1
 	return ..()
 
