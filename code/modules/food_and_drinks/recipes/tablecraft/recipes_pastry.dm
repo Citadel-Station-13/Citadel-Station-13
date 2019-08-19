@@ -329,7 +329,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Strawberry cherry cupcake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/strawberries  = 1
+		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/strawberrycupcake
 	subcategory = CAT_PASTRY
