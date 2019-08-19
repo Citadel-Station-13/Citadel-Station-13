@@ -248,12 +248,13 @@
 	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
-	slot_flags = ITEM_SLOT_BACK	| ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/storage/backpack/satchel/bone/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 10
+	STR.max_combined_w_class = 20
+	STR.max_items = 15
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
