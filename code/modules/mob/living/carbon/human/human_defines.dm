@@ -31,6 +31,7 @@
 	var/socks = "Nude" //Which socks the player wants
 	var/socks_color = "#FFFFFF"
 	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
+	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -47,6 +48,7 @@
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/name_override //For temporary visible name changes
+	var/genital_override = FALSE //Force genitals on things incase of chems
 
 	var/nameless = FALSE //For drones of both the insectoid and robotic kind. And other types of nameless critters.
 

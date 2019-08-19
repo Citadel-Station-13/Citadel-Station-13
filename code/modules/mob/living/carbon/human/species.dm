@@ -500,7 +500,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(B)
 					var/mutable_appearance/MA = mutable_appearance(B.icon, B.icon_state, -BODY_LAYER)
 					if(UNDIE_COLORABLE(B))
-						MA.color = H.undie_color
+						MA.color = "#[H.undie_color]"
 					standing += MA
 
 		if(H.undershirt)
@@ -516,7 +516,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					else
 						MA = mutable_appearance(T.icon, T.icon_state, -BODY_LAYER)
 					if(UNDIE_COLORABLE(T))
-						MA.color = H.shirt_color
+						MA.color = "#[H.shirt_color]"
 					standing += MA
 
 		if(H.socks && H.get_num_legs(FALSE) >= 2)
@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
 					var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
 					if(UNDIE_COLORABLE(S))
-						MA.color = H.socks_color
+						MA.color = "[H.socks_color]"
 					standing += MA
 
 	if(standing.len)
@@ -1019,13 +1019,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_BELT)
 			if(H.belt)
 				return FALSE
-
-			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return FALSE
+			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
+				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
+				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_BELT))
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
@@ -1062,12 +1061,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_WEAR_ID)
 			if(H.wear_id)
 				return FALSE
-
-			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return FALSE
+			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
+				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
+				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ID) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
@@ -1782,6 +1781,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(CLONE)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
+			H.stamdamageoverlaytemp = 20
 			if(BP)
 				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod), only_robotic = FALSE, only_organic = FALSE))
 					H.update_stamina()

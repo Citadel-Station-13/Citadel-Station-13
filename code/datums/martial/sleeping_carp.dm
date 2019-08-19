@@ -6,6 +6,7 @@
 
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
+	id = MARTIALART_SLEEPINGCARP
 	deflection_chance = 100
 	reroute_deflection = TRUE
 	no_guns = TRUE

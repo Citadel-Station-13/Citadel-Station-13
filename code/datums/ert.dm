@@ -55,3 +55,13 @@
 	rename_team = "Inquisition"
 	mission = "Destroy any traces of paranormal activity aboard the station."
 	polldesc = "a Nanotrasen paranormal response team"
+
+/datum/ert/greybois
+	code = "Green"
+	teamsize = 1
+	opendoors = FALSE
+	enforce_human = FALSE
+	roles = /datum/antagonist/greybois
+	leader_role = /datum/antagonist/greybois/greygod
+	rename_team = "Emergency Assistants"
+	polldesc = "an Emergency Assistant"

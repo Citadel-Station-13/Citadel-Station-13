@@ -62,3 +62,8 @@
 	e_cost = 200
 	select_name = "stun"
 	projectile_type = /obj/item/projectile/energy/tesla/revolver
+
+/obj/item/ammo_casing/energy/emitter
+	fire_sound = 'sound/weapons/emitter.ogg'
+	e_cost = 2000 //20,000 is in the cell making this 10 shots before reload
+	projectile_type = /obj/item/projectile/beam/emitter

@@ -116,3 +116,9 @@
 				disk.program = null
 				disk.name = initial(disk.name)
 			. = TRUE
+	
+	
+/obj/machinery/nanite_program_hub/admin/Initialize()
+	. = ..()
+	linked_techweb = SSresearch.admin_tech
+	
