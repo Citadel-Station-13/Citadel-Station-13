@@ -1,4 +1,4 @@
-#define AUTOCLONING_MINIMAL_LEVEL 3
+#define AUTOCLONING_MINIMAL_LEVEL 4
 
 /obj/machinery/computer/cloning
 	name = "cloning console"

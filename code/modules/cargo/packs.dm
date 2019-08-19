@@ -1699,7 +1699,7 @@
 /datum/supply_pack/service/janitor/janpremium
 	name = "Janitor Premium Supplies"
 	desc = "Do to the union for better supplies, we have desided to make a deal for you, In this crate you can get a brand new chem, Drying Angent this stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
-	cost = 3000
+	cost = 1750
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/caution,
 					/obj/item/caution,
@@ -1707,8 +1707,19 @@
 					/obj/item/reagent_containers/rag,
 					/obj/item/reagent_containers/glass/bottle/ammonia,
 					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
 					/obj/item/reagent_containers/spray/drying_agent)
 	crate_name = "janitor backpack crate"
+
+/datum/supply_pack/service/janitor/janpimp
+	name = "Custodial Cruiser"
+	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/vehicle/ridden/janicart,
+					/obj/item/key/janitor)
+	crate_name = "janitor ride crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"

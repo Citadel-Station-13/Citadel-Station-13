@@ -32,4 +32,33 @@
 			last_taste_time = world.time
 			last_taste_text = text_output
 
+//FermiChem - How to check pH of a beaker without a meter/pH paper.
+//Basically checks the pH of the holder and burns your poor tongue if it's too acidic!
+//TRAIT_AGEUSIA players can't taste, unless it's burning them.
+//taking sips of a strongly acidic/alkaline substance will burn your tongue.
+/mob/living/carbon/taste(datum/reagents/from)
+	var/obj/item/organ/tongue/T = getorganslot("tongue")
+	if (!T)
+		return
+	.=..()
+	if ((from.pH > 12.5) || (from.pH < 1.5))
+		to_chat(src, "<span class='warning'>You taste chemical burns!</span>")
+		T.adjustTongueLoss(src, 4)
+	if(istype(T, /obj/item/organ/tongue/cybernetic))
+		to_chat(src, "<span class='notice'>Your tongue moves on it's own in response to the liquid.</span>")
+		say("The pH is appropriately [round(from.pH, 1)].")
+		return
+	if (!HAS_TRAIT(src, TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
+		switch(from.pH)
+			if(11.5 to INFINITY)
+				to_chat(src, "<span class='warning'>You taste a strong alkaline flavour!</span>")
+				T.adjustTongueLoss(src, 1)
+			if(8.5 to 11.5)
+				to_chat(src, "<span class='notice'>You taste a sort of soapy tone in the mixture.</span>")
+			if(2.5 to 5.5)
+				to_chat(src, "<span class='notice'>You taste a sort of acid tone in the mixture.</span>")
+			if(-INFINITY to 2.5)
+				to_chat(src, "<span class='warning'>You taste a strong acidic flavour!</span>")
+				T.adjustTongueLoss(src, 1)
+
 #undef DEFAULT_TASTE_SENSITIVITY
