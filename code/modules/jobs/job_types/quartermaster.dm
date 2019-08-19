@@ -9,7 +9,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
-	selection_color = "#ead4ae"
+	selection_color = "#a06121"
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_requirements = 180

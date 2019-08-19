@@ -37,7 +37,8 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
-	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+	var/output = "<center><p>Welcome, <b>[client ? client.prefs.real_name : "Unknown User"]</b></p>"
+	output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -444,7 +445,7 @@
 		if(SEC_LEVEL_RED)
 			level = "red"
 		if(SEC_LEVEL_DELTA)
-			level = "delta"	
+			level = "delta"
 
 	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]<br>Alert Level: [capitalize(level)]</div>"
 	if(SSshuttle.emergency)
@@ -457,17 +458,18 @@
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
 			SSjob.prioritized_jobs -= prioritized_job
-	dat += "<table><tr><td valign='top'>"
+	dat += "<center><table><tr><td valign='top'>"
 	var/column_counter = 0
-	for(var/list/category in list(GLOB.command_positions) + list(GLOB.engineering_positions) + list(GLOB.supply_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
+	var/free_space = 0
+	for(var/list/category in list(GLOB.command_positions) + list(GLOB.supply_positions) + list(GLOB.engineering_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
 		var/cat_color = "fff" //random default
 		if(SSjob.name_occupations && SSjob.name_occupations[category[1]])
 			cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 		else
 			cat_color = SSjob.occupations[category[1]].selection_color
-
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
+
 		var/list/dept_dat = list()
 		for(var/job in category)
 			var/datum/job/job_datum = SSjob.name_occupations[job]
@@ -484,10 +486,16 @@
 		dat += jointext(dept_dat, "")
 		dat += "</fieldset><br>"
 		column_counter++
-		if(column_counter > 0 && (column_counter % 3 == 0))
+		if(free_space <=4)
+			free_space++
+			if(column_counter > 0 && (column_counter % 3 == 0))
+				dat += "</td><td valign='top'>"
+		if(free_space >= 5 && (free_space % 5 == 0) && (column_counter % 3 != 0))
+			free_space = 0
+			column_counter = 0
 			dat += "</td><td valign='top'>"
-	dat += "</td></tr></table></center>"
-	dat += "</div></div>"
+
+	dat += "</td></tr></table></center></center>"
 
 	var/available_ghosts = 0
 	for(var/spawner in GLOB.mob_spawners)
@@ -502,7 +510,6 @@
 	if(!available_ghosts)
 		dat += "<div class='notice red'>There are currently no open ghost spawners.</div>"
 	else
-		dat += "<div class='clearBoth'>Currently open Ghost roles:</div><br>"
 		var/list/categorizedJobs = list("Ghost Role" = list(jobs = list(), titles = GLOB.mob_spawners, color = "#ffffff"))
 		for(var/spawner in GLOB.mob_spawners)
 			if(!LAZYLEN(spawner))
@@ -512,10 +519,8 @@
 				continue
 			categorizedJobs["Ghost Role"]["jobs"] += spawner
 
-		dat += "<table><tr><td valign='top'>"
+		dat += "<center><table><tr><td valign='top'>"
 		for(var/jobcat in categorizedJobs)
-			if(categorizedJobs[jobcat]["colBreak"])
-				dat += "</td><td valign='top'>"
 			if(!length(categorizedJobs[jobcat]["jobs"]))
 				continue
 			var/color = categorizedJobs[jobcat]["color"]
@@ -528,7 +533,7 @@
 		dat += "</td></tr></table></center>"
 		dat += "</div></div>"
 
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 580)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 720, 600)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
