@@ -203,6 +203,7 @@
 	cost = 30
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	high_population_requirement = 10
+	pop_per_requirement = 5
 	flags = HIGHLANDER_RULESET
 	var/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
 	var/datum/team/cult/main_cult
@@ -262,6 +263,7 @@
 	cost = 40
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	high_population_requirement = 10
+	pop_per_requirement = 5
 	flags = HIGHLANDER_RULESET
 	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
 	var/datum/team/nuclear/nuke_team
