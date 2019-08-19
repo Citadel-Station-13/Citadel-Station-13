@@ -18,6 +18,8 @@
 	//CITADEL EDIT Enables digitigrade shoe styles
 	var/adjusted = NORMAL_STYLE
 	mutantrace_variation = MUTANTRACE_VARIATION
+	var/last_bloodtype = ""	//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
+	var/last_blood_DNA = ""	//same as last one
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
@@ -41,6 +43,13 @@
 			sleep(3)
 			playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
 		return(BRUTELOSS)
+
+
+/obj/item/clothing/shoes/transfer_blood_dna(list/blood_dna)
+	..()
+	if(blood_dna.len)
+		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
+		last_blood_DNA = blood_dna[blood_dna.len]
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()

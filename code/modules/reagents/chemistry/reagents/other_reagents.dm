@@ -43,12 +43,10 @@
 
 	if(reac_volume >= 10 && istype(L))
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-		L.color = bloodtype_to_color(data["blood_type"])
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
 		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-		O.color = bloodtype_to_color(data["blood_type"])
 
 /datum/reagent/blood/on_new(list/data)
 	if(iscarbon(src))
@@ -98,11 +96,10 @@
 	if(reac_volume < 3)
 		return
 
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	if(!B)
-		B = new(T)
+	T.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B.reagents)
-		B.reagents.add_reagent("blood", reac_volume)
+		B.reagents.add_reagent(id, reac_volume)
 	B.update_icon()
 
 /datum/reagent/blood/synthetics
@@ -112,11 +109,6 @@
 	taste_description = "oily"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
 
-/datum/reagent/blood/synthetics/reaction_turf(turf/T, reac_volume)
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	B.reagents.add_reagent("syntheticblood", reac_volume)
-	. = ..()
-
 /datum/reagent/blood/xenomorph
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Xenomorph Blood"
@@ -124,11 +116,7 @@
 	taste_description = "acidic heresy"
 	color = BLOOD_COLOR_XENO // greenish yellow ooze
 	shot_glass_icon_state = "shotglassgreen"
-
-/datum/reagent/blood/xenomorph/reaction_turf(turf/T, reac_volume)
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	B.reagents.add_reagent("xenoblood", reac_volume)
-	. = ..()
+	pH = 2.5
 
 /datum/reagent/blood/oil
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -136,11 +124,7 @@
 	id = "oilblood"
 	taste_description = "burnt oil"
 	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
-
-/datum/reagent/blood/oil/reaction_turf(turf/T, reac_volume)
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	B.reagents.add_reagent("oilblood", reac_volume)
-	. = ..()
+	pH = 9.75
 
 /datum/reagent/blood/jellyblood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -150,29 +134,16 @@
 	color = BLOOD_COLOR_SLIME
 	taste_description = "slime"
 	taste_mult = 1.3
-
-/datum/reagent/blood/jellyblood/on_new(list/data)
-	.=..()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/datum/species/slimecolor = H.dna.species
-		if("mcolor" in slimecolor.default_features)
-			color = H.dna.features["mcolor"]
-		else
-			color = bloodtype_to_color(data["blood_type"])
-
-/datum/reagent/blood/jellyblood/reaction_turf(turf/T, reac_volume)
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	B.reagents.add_reagent("jellyblood", reac_volume)
-	. = ..()
+	pH = 4
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
-		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
+		if(M.dna?.species?.exotic_bloodtype != "GEL")
+			to_chat(M, "<span class='danger'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
-	else if(prob(40))
-		M.heal_bodypart_damage(5*REM)
+	else if(prob(40) && isjellyperson(M))
+		M.heal_bodypart_damage(2*REM)
 		. = 1
 	..()
 
@@ -202,6 +173,7 @@
 	taste_description = "slime"
 	shot_glass_icon_state = "shotglassgreen"
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	pH = 4
 
 /datum/reagent/liquidgibs/synth
 	name = "Synthetic sludge"
@@ -1106,7 +1078,7 @@
 	reagent_state = SOLID
 	taste_description = "iron"
 	pH = 6
-
+	overdose_threshold = 30
 	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
@@ -1118,6 +1090,17 @@
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
 			M.reagents.add_reagent("toxin", reac_volume)
+	..()
+
+/datum/reagent/iron/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
+
+/datum/reagent/iron/overdose_process(mob/living/carbon/C)
+	if(prob(20))
+		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		if (istype(L))
+			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
 	..()
 
 /datum/reagent/gold

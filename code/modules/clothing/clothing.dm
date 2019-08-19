@@ -41,10 +41,6 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-	//for blood coloration memes
-	var/last_bloodtype	//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
-	var/last_blood_DNA	//same as last one
-
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
@@ -343,9 +339,3 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else
 		..()
-
-/obj/item/clothing/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
-	..()
-	if(length(blood_dna))
-		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
-		last_blood_DNA = blood_dna[blood_dna.len]

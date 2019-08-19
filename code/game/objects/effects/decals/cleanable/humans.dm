@@ -9,13 +9,10 @@
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if(length(C.blood_DNA))
+	if (C.blood_DNA)
 		blood_DNA |= C.blood_DNA.Copy()
-	if (bloodiness)
-		if (C.bloodiness < MAX_SHOE_BLOODINESS)
-			C.bloodiness += bloodiness
 	update_icon()
-	return ..()
+	..()
 
 /obj/effect/decal/cleanable/blood/transfer_blood_dna()
 	..()
