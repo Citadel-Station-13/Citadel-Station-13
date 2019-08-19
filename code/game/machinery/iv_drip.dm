@@ -133,7 +133,9 @@
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
-				beaker.reagents.trans_to(attached, transfer_amount, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
+				beaker.reagents.reaction(attached, INJECT, fraction, FALSE) //make reagents reacts, but don't spam messages
+				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
 		// Take blood
@@ -205,17 +207,17 @@
 	if(get_dist(user, src) > 2)
 		return
 
-	. += "[src] is [mode ? "injecting" : "taking blood"]."
+	. += "[src] is [mode ? "injecting" : "taking blood"].\n"
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			. += "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			. += "\t<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>\n"
 		else
-			. += "<span class='notice'>Attached is an empty [beaker.name].</span>"
+			. += "\t<span class='notice'>Attached is an empty [beaker.name].</span>\n"
 	else
-		. += "<span class='notice'>No chemicals are attached.</span>"
+		. += "\t<span class='notice'>No chemicals are attached.</span>\n"
 
-	. += "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+	. += "\t<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
 	to_chat(user,.)
 
 #undef IV_TAKING
