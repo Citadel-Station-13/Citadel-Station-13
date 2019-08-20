@@ -13,9 +13,6 @@
 /mob/living/carbon/human/species/xeno
 	race = /datum/species/xeno
 
-/mob/living/carbon/human/species/troll
-	race = /datum/species/troll
-
 /mob/living/proc/resist_embedded()
 	return
 
