@@ -217,7 +217,6 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
-	exotic_blood = "xenoblood"
 	exotic_bloodtype = "X*"
 	damage_overlay_type = "xeno"
 	liked_food = MEAT

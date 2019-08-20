@@ -111,17 +111,11 @@ GLOBAL_LIST_INIT(all_types_bloods,list(
 
 GLOBAL_LIST_INIT(blood_types, list(
 		"blood",
-		"syntheticblood",
-		"xenoblood",
-		"oilblood",
 		"jellyblood"
 		))
 
 GLOBAL_LIST_INIT(blood_id_types, list(
 		"blood" = /datum/reagent/blood,
-		"syntheticblood" = /datum/reagent/blood/synthetics,
-		"xenoblood" = /datum/reagent/blood/xenomorph,
-		"oilblood" = /datum/reagent/blood/oil,
 		"jellyblood" = /datum/reagent/blood/jellyblood
 		))
 

@@ -299,10 +299,10 @@
 
 //So slimes can play too.
 /datum/chemical_reaction/fermi/enthrall/slime
-	required_catalysts = list("slimejelly" = 1)
+	required_catalysts = list("jellyblood" = 1)
 
 /datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
-	var/datum/reagent/toxin/slimejelly/B = locate(/datum/reagent/toxin/slimejelly) in my_atom.reagents.reagent_list//The one line change.
+	var/datum/reagent/blood/jellyblood/B = locate(/datum/reagent/blood/jellyblood) in my_atom.reagents.reagent_list//The one line change.
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
 	if(!B.data)
 		var/list/seen = viewers(5, get_turf(my_atom))

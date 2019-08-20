@@ -332,22 +332,19 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	if(get_blood_id() != "blood" || "jellyblood")
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	var/blood_id = get_blood_id()
-	for(var/B in GLOB.blood_id_types)
-		var/list/bluhduh = typecacheof(B)
-		if(!blood_id in bluhduh)
-			return
-		var/list/blood_dna = list()
-		if(dna)
-			blood_dna[dna.unique_enzymes] = dna.blood_type
-		else
-			blood_dna["UNKNOWN DNA"] = "X*"
-		return blood_dna
+	if(get_blood_id() != "blood" || "jellyblood")
+		return
+	var/list/blood_dna = list()
+	if(dna)
+		blood_dna[dna.unique_enzymes] = dna.blood_type
+	else
+		blood_dna["UNKNOWN DNA"] = "X*"
+	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")

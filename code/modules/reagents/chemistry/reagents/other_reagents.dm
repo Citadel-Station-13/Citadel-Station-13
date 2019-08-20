@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= "O+","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
@@ -27,35 +27,46 @@
 
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		for(var/bluhduh in GLOB.blood_types)
-			if(C.get_blood_id() == bluhduh)
-				if(method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits)))
-					if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-						C.reagents.add_reagent("bonehurtingjuice", reac_volume * 0.5)
-					if(data && (data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
-						C.reagents.add_reagent("bonehurtingjuice", reac_volume * 1.5) //filthy xenos bloooood
-					if(data && (data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
-						C.reagents.add_reagent("bonehurtingjuice", reac_volume * 1)	//don't drink oil, silly vampire
-					if(data && (data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
-						C.reagents.add_reagent("sacid", reac_volume * 1.5) //acid blooood, dumb vampire
-					else
-						C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-
-	if(reac_volume >= 10 && istype(L))
-		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		if(C.get_blood_id() == ("blood" || "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+				C.reagents.add_reagent("bonehurtingjuice", reac_volume * 0.5)
+			else
+				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
 		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_new(list/data)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		var/blood_id = C.get_blood_id()
-		data = C.get_blood_data(blood_id)
 	if(istype(data))
 		SetViruses(src, data)
 		color = bloodtype_to_color(data["blood_type"])
+		if(data["blood_type"] == "SY")
+			name = "Synthetic Blood"
+			taste_description = "oily"
+
+		if(data["blood_type"] == "X*")
+			name = "Xenomorph Blood"
+			taste_description = "acidic heresy"
+			shot_glass_icon_state = "shotglassgreen"
+			pH = 2.5
+
+		if(data["blood_type"] == "HF")
+			name = "Hydraulic Blood"
+			taste_description = "burnt oil"
+			pH = 9.75
+
+		if(data["blood_type"] == "BUG")
+			name = "Insect Blood"
+			taste_description = "greasy"
+			pH = 7.25
+
+		if(data["blood_type"] == "L")
+			name = "Lizard Blood"
+			taste_description = "spicy"
+			pH = 6.85
+
+
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
@@ -101,30 +112,6 @@
 	if(!B.reagents)
 		B.reagents.add_reagent(id, reac_volume)
 	B.update_icon()
-
-/datum/reagent/blood/synthetics
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Synthetic Blood"
-	id = "syntheticblood"
-	taste_description = "oily"
-	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
-
-/datum/reagent/blood/xenomorph
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Xenomorph Blood"
-	id = "xenoblood"
-	taste_description = "acidic heresy"
-	color = BLOOD_COLOR_XENO // greenish yellow ooze
-	shot_glass_icon_state = "shotglassgreen"
-	pH = 2.5
-
-/datum/reagent/blood/oil
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Hydraulic Blood"
-	id = "oilblood"
-	taste_description = "burnt oil"
-	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
-	pH = 9.75
 
 /datum/reagent/blood/jellyblood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
