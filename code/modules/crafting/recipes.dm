@@ -9,6 +9,7 @@
 	var/chem_catalysts[] = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
+	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
@@ -68,7 +69,7 @@
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/reagent_containers/glass/rag = 1,
+	reqs = list(/obj/item/reagent_containers/rag = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
 	time = 40
@@ -208,6 +209,12 @@
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/clothing/head/hardhat/red = 1)
 	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/potatos
+	name = "Potat-OS"
+	reqs = list(/obj/item/stack/cable_coil = 1, /obj/item/stack/rods = 1,  /obj/item/reagent_containers/food/snacks/grown/potato = 1, /obj/item/aicard = 1 )
+	result = /obj/item/aicard/potato
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
@@ -454,6 +461,12 @@
 				/obj/item/bikehorn = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/toyneb
+	name = "Non-Euplastic Blade"
+	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	result = /obj/item/toy/sword/cx
+	category = CAT_MISC
+
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"
 	result = /obj/item/bombcore/chemical
@@ -656,6 +669,15 @@
 	reqs = list(/obj/item/stack/sheet/plasteel = 3,
 		        /obj/item/stack/sheet/mineral/wood = 20,
 		        /obj/item/stack/cable_coil = 10)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	category = CAT_MISC
+
+/datum/crafting_recipe/femur_breaker
+	name = "Femur Breaker"
+	result = /obj/structure/femur_breaker
+	time = 150
+	reqs = list(/obj/item/stack/sheet/metal = 20,
+		        /obj/item/stack/cable_coil = 30)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
 
@@ -873,3 +895,44 @@
 	time = 150 //It's a gun
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/durathread_duffelbag
+	name = "Durathread Dufflebag"
+	result = /obj/item/storage/backpack/duffelbag/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 7,
+				/obj/item/stack/sheet/leather = 3)
+	time = 70
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_toolbelt
+	name = "Durathread Toolbelt"
+	result = /obj/item/storage/belt/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 5,
+				/obj/item/stack/sheet/leather = 1)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_bandolier
+	name = "Durathread Bandolier"
+	result = /obj/item/storage/belt/bandolier/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 2)
+	time = 50
+	category = CAT_CLOTHING
+	
+	/datum/crafting_recipe/durathread_helmet
+	name = "Makeshift Durathread Helmet"
+	result = /obj/item/clothing/head/helmet/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 4,
+				/obj/item/stack/sheet/leather = 2)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_vest
+	name = "Makeshift Durathread Armour"
+	result = /obj/item/clothing/suit/armor/vest/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 3)
+	time = 50
+	category = CAT_CLOTHING
+

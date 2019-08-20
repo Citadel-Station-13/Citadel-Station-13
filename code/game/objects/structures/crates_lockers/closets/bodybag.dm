@@ -49,6 +49,12 @@
 		return 1
 	return 0
 
+/obj/structure/closet/body_bag/handle_lock_addition()
+	return
+
+/obj/structure/closet/body_bag/handle_lock_removal()
+	return
+
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))

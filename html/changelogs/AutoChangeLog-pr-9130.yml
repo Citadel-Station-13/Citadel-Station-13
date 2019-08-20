@@ -1,0 +1,9 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - rscadd: "custodial cruiser cargo crate"
+  - tweak: "removed light replacer from power designs and moved to misc designs"
+  - tweak: "added pimpin ride to custodial locator"
+  - tweak: "added additional items to janibelt whitelist"
+  - tweak: "made plant DNA manipulator unwrenchable"
+  - balance: "reduced janitor premium supply costs"
