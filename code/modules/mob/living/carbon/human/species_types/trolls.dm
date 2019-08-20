@@ -23,6 +23,8 @@ datum/species/troll/on_species_gain(mob/living/carbon/human/H, datum/species/old
 	if(H.dna.features["tail_human"] == "Cat")
 		var/tail = /obj/item/organ/tail/cat
 		mutant_organs += tail
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='warning'>Please note that Citadel Station is a MRP server, and as such typing in quirks that can be immersion breaking such as replacing letters with numbers or having emotes at the end of your in-character speech are not allowed!</span>"
+), 50)
 	..()
 
 /datum/species/troll/random_name(gender,unique,lastname)

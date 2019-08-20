@@ -1448,6 +1448,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				//413 start
 				if("t_caste")
 					troll_caste = random_troll_caste()
+					//eye_color = get_color_from_caste(troll_caste)
 				if("horn_type")
 					troll_horn = random_troll_horns()
 				//413 end
