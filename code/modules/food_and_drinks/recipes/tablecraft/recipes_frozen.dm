@@ -232,6 +232,28 @@
 	result = /obj/item/reagent_containers/food/snacks/snowcones/honey
 	subcategory = CAT_ICE
 
+/datum/crafting_recipe/food/peach_sc
+	name = "Peach snowcone"
+	reqs = list(
+		/obj/item/reagent_containers/food/drinks/sillycup = 1,
+		/datum/reagent/water  = 5,
+		/datum/reagent/consumable/ice = 15,
+		/obj/item/reagent_containers/food/snacks/grown/peach = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/snowcones/peach
+	subcategory = CAT_ICE
+
+/datum/crafting_recipe/food/strawberry_sc
+	name = "Strawberry snowcone"
+	reqs = list(
+		/obj/item/reagent_containers/food/drinks/sillycup = 1,
+		/datum/reagent/water  = 5,
+		/datum/reagent/consumable/ice = 15,
+		/obj/item/reagent_containers/food/snacks/grown/strawberry = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/snowcones/strawberry
+	subcategory = CAT_ICE
+
 /datum/crafting_recipe/food/honey_sc
 	name = "Rainbow snowcone"
 	reqs = list(
