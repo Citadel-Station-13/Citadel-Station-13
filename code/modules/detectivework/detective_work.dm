@@ -7,7 +7,7 @@
 			if(add_blood_DNA(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
-		if(add_blood_DNA(M.blood_DNA))
+		if(add_blood_DNA(M.blood_DNA, M.diseases))
 			M.bloody_hands--
 	if(!suit_fibers)
 		suit_fibers = list()

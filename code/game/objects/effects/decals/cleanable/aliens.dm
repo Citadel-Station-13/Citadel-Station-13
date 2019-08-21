@@ -35,7 +35,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/xeno/splat = new /obj/effect/decal/cleanable/blood/splatter/xeno(loc, diseases)
-			splat.transfer_blood_dna(blood_DNA)
+			splat.transfer_blood_dna(blood_DNA, diseases)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 

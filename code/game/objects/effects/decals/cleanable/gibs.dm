@@ -16,7 +16,7 @@
 	if(gibs_reagent_id)
 		reagents.add_reagent(gibs_reagent_id, 5)
 	if(gibs_bloodtype)
-		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype))
+		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype, diseases))
 	update_icon()
 
 
@@ -50,7 +50,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
-			splat.transfer_blood_dna(blood_DNA)
+			splat.transfer_blood_dna(blood_DNA, diseases)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 

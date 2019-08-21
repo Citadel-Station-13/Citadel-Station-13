@@ -252,10 +252,7 @@
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
 	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
-	if(length(blood_DNA) && article)
-		. = "[article] [src]"
-		override[EXAMINE_POSITION_ARTICLE] = " blood-stained [article]"
-	else if(article)
+	if(article)
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
 
@@ -267,7 +264,18 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, "[get_examine_string(user, TRUE)].")
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]."
+	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		f_name += "<span class='danger'>blood-stained</span> [name]!"
+
+	to_chat(user, "[icon2html(src, user)] That's [f_name]")
+
+//	to_chat(user, "[get_examine_string(user, TRUE)].")
 
 	if(desc)
 		to_chat(user, desc)
@@ -377,14 +385,14 @@
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
-	return add_blood_DNA(blood_dna)
+	return add_blood_DNA(blood_dna, M.diseases)
 
 //to add blood onto something, with blood dna info to include.
 /atom/proc/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	return FALSE
 
 /obj/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	return transfer_blood_dna(blood_dna)
+	return transfer_blood_dna(blood_dna, diseases)
 
 /obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	if(!..())
@@ -413,30 +421,30 @@
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
-	B.transfer_blood_dna(blood_dna) //give blood info to the blood decal.
+	B.transfer_blood_dna(blood_dna, diseases) //give blood info to the blood decal.
 	return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	if(head)
-		head.add_blood_DNA(blood_dna)
+		head.add_blood_DNA(blood_dna, diseases)
 		update_inv_head()
 	else if(wear_mask)
-		wear_mask.add_blood_DNA(blood_dna)
+		wear_mask.add_blood_DNA(blood_dna, diseases)
 		update_inv_wear_mask()
 	if(wear_neck)
-		wear_neck.add_blood_DNA(blood_dna)
+		wear_neck.add_blood_DNA(blood_dna, diseases)
 		update_inv_neck()
 	if(wear_suit)
-		wear_suit.add_blood_DNA(blood_dna)
+		wear_suit.add_blood_DNA(blood_dna, diseases)
 		update_inv_wear_suit()
 	else if(w_uniform)
-		w_uniform.add_blood_DNA(blood_dna)
+		w_uniform.add_blood_DNA(blood_dna, diseases)
 		update_inv_w_uniform()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood_DNA(blood_dna)
+		G.add_blood_DNA(blood_dna, diseases)
 	else
-		transfer_blood_dna(blood_dna)
+		transfer_blood_dna(blood_dna, diseases)
 		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE

@@ -35,7 +35,7 @@
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
-		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		O.add_blood_DNA(data)
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
@@ -107,8 +107,8 @@
 	if(reac_volume < 3)
 		return
 
-	T.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-	var/obj/effect/decal/cleanable/blood/B = locate() in T
+	T.add_blood_DNA(data)
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
 	if(!B.reagents)
 		B.reagents.add_reagent(id, reac_volume)
 	B.update_icon()

@@ -45,7 +45,7 @@
 		return(BRUTELOSS)
 
 
-/obj/item/clothing/shoes/transfer_blood_dna(list/blood_dna)
+/obj/item/clothing/shoes/transfer_blood_dna(list/blood_dna, diseases)
 	..()
 	if(blood_dna.len)
 		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
