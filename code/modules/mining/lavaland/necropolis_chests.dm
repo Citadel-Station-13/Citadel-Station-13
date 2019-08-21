@@ -789,7 +789,7 @@
 
 /obj/item/melee/ghost_sword/proc/recursive_orbit_collect(atom/A, list/L)
 	for(var/i in A.orbiters?.orbiters)
-		if(!isobserver(i))
+		if(!isobserver(i) || (i in L))
 			continue
 		L |= i
 		recursive_orbit_collect(i, L)
