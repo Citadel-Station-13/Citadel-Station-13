@@ -689,16 +689,17 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/clean_blood(datum/source, strength)
-	. = ..()
-	// we've made our strength check already
-	if(gloves)
-		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
-			update_inv_gloves()
+/mob/living/carbon/human/clean_blood()
+	var/mob/living/carbon/human/H = src
+	if(H.gloves)
+		if(H.gloves.clean_blood())
+			H.update_inv_gloves()
 	else
-		if(bloody_hands)
-			bloody_hands = 0
-			update_inv_gloves()
+		..() // Clear the Blood_DNA list
+		if(H.bloody_hands)
+			H.bloody_hands = 0
+			H.update_inv_gloves()
+	update_icons()	//apply the now updated overlays to the mob
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug

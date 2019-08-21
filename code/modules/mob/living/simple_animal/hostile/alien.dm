@@ -168,7 +168,6 @@
 
 /mob/living/simple_animal/hostile/alien/maid/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cleaning)
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
@@ -177,6 +176,6 @@
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target
-		SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
 		return TRUE

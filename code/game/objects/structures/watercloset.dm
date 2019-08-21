@@ -317,7 +317,7 @@
 
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
-	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
@@ -328,15 +328,14 @@
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
 		var/turf/tile = loc
-		SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		tile.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
@@ -381,7 +380,7 @@
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
 			if(washgloves)
-				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+				H.clean_blood()
 			if(H.shoes && washshoes && wash_obj(H.shoes))
 				H.update_inv_shoes()
 			if(H.wear_mask && washmask && wash_obj(H.wear_mask))
@@ -398,9 +397,9 @@
 		else
 			if(M.wear_mask && wash_obj(M.wear_mask))
 				M.update_inv_wear_mask(0)
-			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			M.clean_blood()
 	else
-		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		L.clean_blood()
 
 /obj/machinery/shower/proc/contamination_cleanse(atom/movable/thing)
 	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
@@ -498,7 +497,7 @@
 			H.regenerate_icons()
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
-		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		user.clean_blood()
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
@@ -554,7 +553,7 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
-		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		O.clean_blood()
 		O.acid_level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)

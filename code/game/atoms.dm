@@ -389,9 +389,7 @@
 	add_blood_overlay()
 
 /obj/item/proc/add_blood_overlay()
-	cut_overlays()
-	if(!length(blood_DNA))
-		update_icon() // Don't have blood, let's just refresh the item's overlays
+	if(!blood_DNA.len)
 		return
 	if(initial(icon) && initial(icon_state))
 		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
@@ -463,20 +461,10 @@
 
 	return final_rgb
 
-/atom/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
-	if(strength >= CLEAN_STRENGTH_FINGERPRINTS)
-		fingerprints = null
-	if(strength >= CLEAN_STRENGTH_BLOOD)
+/atom/proc/clean_blood()
+	if(islist(blood_DNA))
 		blood_DNA = null
-	if(strength >= CLEAN_STRENGTH_FIBERS)
-		suit_fibers = null
-	return TRUE
-
-/obj/item/clean_blood(datum/source, strength)
-	. = ..()
-	add_blood_overlay() //this will purge the overlay if there is one while regenerating the icons of the item as well.
+		return TRUE
 
 /atom/proc/wash_cream()
 	return TRUE
