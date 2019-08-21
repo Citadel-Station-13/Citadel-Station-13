@@ -226,7 +226,7 @@
 	return FALSE
 
 /atom/proc/CheckExit()
-	return 1
+	return TRUE
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -332,12 +332,12 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood" || "jellyblood")
+	if(get_blood_id() != ("blood" || "jellyblood"))
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != "blood" || "jellyblood")
+	if(get_blood_id() != ("blood" || "jellyblood"))
 		return
 	var/list/blood_dna = list()
 	if(dna)
@@ -356,9 +356,9 @@
 	if(!new_blood_dna)
 		return FALSE
 	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
-	var/old_length = length(blood_DNA)
-	add_blood_DNA(new_blood_dna)
-	if(length(blood_DNA) == old_length)
+	var/old_length = blood_DNA.len
+	blood_DNA |= new_blood_dna
+	if(blood_DNA.len == old_length)
 		return FALSE
 	return TRUE
 
@@ -369,6 +369,8 @@
 	blood_DNA |= blood_dna
 	if(blood_DNA.len > old_length)
 		return TRUE
+		//some new blood DNA was added
+
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
@@ -385,8 +387,10 @@
 	return transfer_blood_dna(blood_dna)
 
 /obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	. = ..()
+	if(!..())
+		return FALSE
 	add_blood_overlay()
+	return TRUE //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
 	if(!blood_DNA.len)
@@ -413,18 +417,6 @@
 	return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	if(wear_suit)
-		wear_suit.add_blood_DNA(blood_dna)
-		update_inv_wear_suit()
-	else if(w_uniform)
-		w_uniform.add_blood_DNA(blood_dna)
-		update_inv_w_uniform()
-	if(gloves)
-		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood_DNA(blood_dna)
-	else if(length(blood_dna))
-		transfer_blood_dna(blood_dna)
-		bloody_hands = rand(2, 4)
 	if(head)
 		head.add_blood_DNA(blood_dna)
 		update_inv_head()
@@ -434,6 +426,18 @@
 	if(wear_neck)
 		wear_neck.add_blood_DNA(blood_dna)
 		update_inv_neck()
+	if(wear_suit)
+		wear_suit.add_blood_DNA(blood_dna)
+		update_inv_wear_suit()
+	else if(w_uniform)
+		w_uniform.add_blood_DNA(blood_dna)
+		update_inv_w_uniform()
+	if(gloves)
+		var/obj/item/clothing/gloves/G = gloves
+		G.add_blood_DNA(blood_dna)
+	else
+		transfer_blood_dna(blood_dna)
+		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE
 
