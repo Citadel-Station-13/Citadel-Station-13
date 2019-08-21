@@ -791,7 +791,7 @@
 	for(var/i in A.orbiters?.orbiters)
 		if(!isobserver(i))
 			continue
-		L += i
+		L |= i
 		recursive_orbit_collect(i, L)
 
 /obj/item/melee/ghost_sword/proc/ghost_check()
