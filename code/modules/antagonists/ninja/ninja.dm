@@ -22,6 +22,8 @@
 	update_ninja_icons_removed(M)
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
+	var/datum/martial_art/the_sleeping_carp/ninja = new
+	ninja.teach(H)
 	return H.equipOutfit(/datum/outfit/ninja)
 
 /datum/antagonist/ninja/proc/addMemories()
