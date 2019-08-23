@@ -170,8 +170,7 @@
 	tick_interval = 4
 	alert_type = /obj/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
-	owner.adjustStaminaLoss(-5)
-
+	
 /obj/screen/alert/status_effect/his_grace
 	name = "His Grace"
 	desc = "His Grace hungers, and you must feed Him."
