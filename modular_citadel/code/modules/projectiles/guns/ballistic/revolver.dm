@@ -6,6 +6,6 @@
 	name = "\improper .357 revolver"
 	desc = "A typical revolver. Uses .357 ammo."
 
-/obj/item/gun/ballistic/revolver/syndie		//New and improved 100% syndicate technology!
+/obj/item/gun/ballistic/revolver/syndie		//Nice Looking
 	desc = "A suspicious revolver. Uses .357 ammo."
-	icon = 'modular_citadel/icons/obj/guns/revolver.dmi'
+	icon = 'icons/obj/guns/nagant.dmi'

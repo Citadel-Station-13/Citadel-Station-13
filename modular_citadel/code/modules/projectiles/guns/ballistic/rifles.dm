@@ -69,7 +69,7 @@
 
 /obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
 	name = "flechette (serrated)"
-	damage = 15
+	damage = 12
 	dismemberment = 10
 	armour_penetration = -80
 
@@ -106,7 +106,7 @@
 	icon_state = "flechettemag"
 	ammo_type = /obj/item/ammo_casing/caseless/flechetteap
 	caliber = "flechette"
-	max_ammo = 40
+	max_ammo = 64
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/flechette/s
@@ -127,7 +127,7 @@
 	mag_type = /obj/item/ammo_box/magazine/flechette
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
-	burst_size = 5
+	burst_size = 8
 	fire_delay = 1
 	casing_ejector = 0
 	spread = 10

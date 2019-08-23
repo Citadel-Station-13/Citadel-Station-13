@@ -6,6 +6,12 @@
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/a357
 
+/obj/item/ammo_casing/a357rubber
+	name = ".357 rubber bullet casing"
+	desc = "A .357 rubber bullet casing."
+	caliber = "357"
+	projectile_type = /obj/item/projectile/bullet/a357rubber
+
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

@@ -1,4 +1,4 @@
-// 9mm (Stechkin APS)
+// 9mm (VP78)
 
 /obj/item/projectile/bullet/c9mm
 	name = "9mm bullet"
@@ -9,12 +9,17 @@
 	damage = 15
 	armour_penetration = 40
 
+/obj/item/projectile/bullet/c9mm_hp
+	name = "9mm hollow-point bullet"
+	damage = 25
+	armour_penetration = -50
+
 /obj/item/projectile/bullet/incendiary/c9mm
 	name = "9mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
 
-// 10mm (Stechkin)
+// 10mm (M92)
 
 /obj/item/projectile/bullet/c10mm
 	name = "10mm bullet"
@@ -22,8 +27,8 @@
 
 /obj/item/projectile/bullet/c10mm_ap
 	name = "10mm armor-piercing bullet"
-	damage = 27
-	armour_penetration = 40
+	damage = 24
+	armour_penetration = 50
 
 /obj/item/projectile/bullet/c10mm_hp
 	name = "10mm hollow-point bullet"

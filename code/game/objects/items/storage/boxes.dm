@@ -741,6 +741,16 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+/obj/item/storage/box/rubber
+	name = "box of rubber shot"
+	desc = "A box full of rubber shot shells."
+	icon_state = "rubbershot_box"
+	illustration = null
+
+/obj/item/storage/box/rubber/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_casing/shotgun/rubbershot(src)
+
 /obj/item/storage/box/lethalslugs
 	name = "box of 12g shotgun slugs"
 	desc = "A box full of lethal 12g slug, designed for riot shotguns."
@@ -770,6 +780,16 @@
 /obj/item/storage/box/techsslug/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/techshell(src)
+
+/obj/item/storage/box/lasershot
+	name = "box of scatter laser shells"
+	desc = "A box full of scatter laser shells."
+	icon_state = "techslug_box"
+	illustration = null
+
+/obj/item/storage/box/lasershot/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/laserslug(src)
 
 /obj/item/storage/box/fireshot
 	name = "box of incendiary ammo"

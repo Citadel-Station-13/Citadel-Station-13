@@ -142,7 +142,7 @@
 
 /obj/item/melee/rapier
 	name = "plastitanium rapier"
-	desc = "A impossibly thin blade made of plastitanium with a tip made of diamond. It looks to be able to cut through any armor."
+	desc = "An impossibly thin blade made of plastitanium, ending in a sharp diamond tip. It looks like it is capable of piercing through any amount of armor."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rapier"
 	item_state = "rapier"
@@ -150,7 +150,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 25
 	throwforce = 35
-	block_chance = 0
+	block_chance = 35
 	armour_penetration = 100
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME

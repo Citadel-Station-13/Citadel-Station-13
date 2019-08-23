@@ -74,3 +74,30 @@
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 50
+
+/obj/item/ammo_box/magazine/smgm10mm
+	name = "toploader magazine (10mm)"
+	icon_state = "c20r45-24"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = "10mm"
+	max_ammo = 28
+
+/obj/item/ammo_box/magazine/smgm45/update_icon()
+	..()
+	icon_state = "c20r45-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/smgm10mm/ap
+	name = "toploader magazine (Armour Piercing 10mm)"
+	ammo_type = /obj/item/ammo_casing/c10mm/ap
+
+/obj/item/ammo_box/magazine/smgm10mm/hp
+	name = "toploader magazine (Hollow-Point 10mm)"
+	ammo_type = /obj/item/ammo_casing/c10mm/hp
+
+/obj/item/ammo_box/magazine/smgm10mm/fire
+	name = "toploader magazine (Incendiary 10mm)"
+	ammo_type = /obj/item/ammo_casing/c10mm/inc
+
+/obj/item/ammo_box/magazine/smgm10mm/soporific
+	name = "toploader magazine (Soporific 10mm)"
+	ammo_type = /obj/item/ammo_casing/c10mm/soporific
