@@ -141,7 +141,7 @@
 	id = "pin_dna"
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 750, MAT_URANIUM = 200, MAT_TITANIUM = 400)
-	build_path = /obj/item/firing_pin/implant/mindshield
+	build_path = /obj/item/firing_pin/dna
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
