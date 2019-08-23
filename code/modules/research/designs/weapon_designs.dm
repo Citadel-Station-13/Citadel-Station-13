@@ -135,6 +135,16 @@
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/pin_dna
+	name = "DNA-keyed Firing Pin"
+	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link."
+	id = "pin_dna"
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 750, MAT_URANIUM = 200, MAT_TITANIUM = 400)
+	build_path = /obj/item/firing_pin/implant/mindshield
+	category = list("Firing Pins")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 //////////////
 //Guns////////
 //////////////
