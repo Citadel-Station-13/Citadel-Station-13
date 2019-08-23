@@ -2416,6 +2416,7 @@
 #include "code\modules\projectiles\guns\energy\kinetic_accelerator.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
 #include "code\modules\projectiles\guns\energy\megabuster.dm"
+#include "code\modules\projectiles\guns\energy\minigun.dm"
 #include "code\modules\projectiles\guns\energy\mounted.dm"
 #include "code\modules\projectiles\guns\energy\plasma_cit.dm"
 #include "code\modules\projectiles\guns\energy\pulse.dm"
