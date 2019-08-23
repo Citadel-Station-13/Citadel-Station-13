@@ -45,6 +45,32 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/disabler/carbine
+	name = "disabler carbine"
+	desc = "A much better power bank fitted into the casing of a normal disabler."
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "disablernew"
+	item_state = "laser"
+	force = 7
+	throwforce = 5
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+	cell_type = /obj/item/stock_parts/cell/disablercarbine
+
+/obj/item/gun/energy/disabler/carbine/nopin
+	pin = null
+
+/obj/item/gun/energy/disabler/heavy
+	name = "heavy disabler"
+	desc = "A larger then normal disabler that densified its beam to be much more powerful then normal, but eats through power."
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "heavydisabler"
+	item_state = "laser"
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/heavy)
+	cell_type = /obj/item/stock_parts/cell/heavy
+
+/obj/item/gun/energy/disabler/heavy/nopin
+	pin = null
+
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This one contains a limiter to prevent the cyborg's power cell from overheating."

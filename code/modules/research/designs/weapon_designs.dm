@@ -149,6 +149,36 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/lasercannon
+	name = "Laser Cannon"
+	desc = "A way to make lasers even more deadly."
+	id = "lasercannon"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 25000, MAT_GLASS = 15000, MAT_GOLD = 4500, MAT_SILVER = 4500, MAT_DIAMOND = 2000)
+	build_path = /obj/item/gun/energy/laser/heavy/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/disablercarbine
+	name = "Disabler Carbine"
+	desc = "Beefed up version of a standard disabler gun."
+	id = "disablercarbine"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500)
+	build_path = /obj/item/gun/energy/disabler/carbine/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/disablercannon
+	name = "Heavy Disabler"
+	desc = "A way to make lasers even more disabling."
+	id = "disablercannon"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 25000, MAT_GLASS = 15000, MAT_GOLD = 4500, MAT_SILVER = 4500, MAT_DIAMOND = 2000)
+	build_path = /obj/item/gun/energy/disabler/heavy/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/stunrevolver
 	name = "Tesla Revolver"
 	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."

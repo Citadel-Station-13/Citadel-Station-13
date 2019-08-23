@@ -92,6 +92,21 @@
 
 ///Laser Cannon
 
+/obj/item/gun/energy/laser/heavy
+	name = "laser cannon"
+	desc = "A larger laser gun that eats much more power to make a highly densified laser beam that will deal more harm then normal.."
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "heavylasercannon"
+	item_state = "laser"
+	force = 12
+	throwforce = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
+	cell_type = /obj/item/stock_parts/cell/heavy
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/gun/energy/laser/heavy/nopin
+	pin = null
+
 /obj/item/gun/energy/lasercannon
 	name = "accelerator laser cannon"
 	desc = "An advanced laser cannon that does more damage the farther away the target is."

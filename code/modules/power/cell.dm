@@ -200,8 +200,16 @@
 	update_icon()
 
 /obj/item/stock_parts/cell/lascarbine
-	name = "laser carbine power supply"
+	name = "laser carbine power supply cell"
 	maxcharge = 2500
+
+/obj/item/stock_parts/cell/disablercarbine
+	name = "laser carbine power supply cell"
+	maxcharge = 1000 //25 shots
+
+/obj/item/stock_parts/cell/heavy
+	name = "heavy laser gun supply cell"
+	maxcharge = 3750
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
@@ -293,7 +301,6 @@
 
 /obj/item/stock_parts/cell/infinite/abductor/update_icon()
 	return
-
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"

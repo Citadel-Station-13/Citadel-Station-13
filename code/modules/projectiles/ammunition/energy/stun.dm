@@ -25,3 +25,8 @@
 	fire_sound = 'sound/weapons/taser2.ogg'
 	harmful = FALSE
 	click_cooldown_override = 3.5
+
+/obj/item/ammo_casing/energy/disabler/heavy
+	projectile_type = /obj/item/projectile/beam/disabler/heavy
+	select_name  = "heavy-disable"
+	e_cost = 375 //10 shots with heavy cell
