@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 //All bundles and telecrystals
 /datum/uplink_item/bundles_TC
-	category = "Bundles and Telecrystals."
+	category = "Bundles and Telecrystals"
 	surplus = 0
 	cant_discount = TRUE
 
@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/revolver
-	name = "Nagant Revolver"
+	name = "Syndicate Revolver"
 	desc = "A bulky and powerful hand cannon that fires devastating .357 rounds from 7 chambers. \
 			Capable of dispatching targets with ease at the cost of making a lot of noise."
 	item = /obj/item/gun/ballistic/revolver/syndie
@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Fires .50 caliber rounds from a 5 round magazine, but with terrible accuracy. \
 			Cheaper than the revolver, and absolutely devastating if it hits"
 	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
-	cost = 11
+	cost = 14
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A brutally simple double barrel shotgun, precut for portability. \
 			Designed for close quarter target elimination. Pre-loaded with buckshot shells"
 	item = /obj/item/gun/ballistic/revolver/doublebarrel/sawn
-	cost = 11
+	cost = 10
 	surplus = 40
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/munitions/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A heavy duty Aussec Armoury belt-fed machine gun that carries a massive 100-round magazine of armor piercing 5.56×45mm ammunition that \
-			is fired in 8 round bursts. Requires two hands to fire. The L6 is ideal for suppressive fire and support roles.
+			is fired in 8 round bursts. Requires two hands to fire. The L6 is ideal for suppressive fire and support roles."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 16
 	surplus = 0
@@ -537,7 +537,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/shell/incendiary
 	name = "Box of 12g Incendiary Shells"
 	desc = "An alternative seven shells of incendiary in a box. \
-			Sets the target on fire, but otherwise has little impact."
+			Shoots multiple pellets that will set any target hit on fire. Great against crowds."
 	item = /obj/item/storage/box/fireshot
 
 /datum/uplink_item/ammo/shell/scatter
@@ -566,7 +566,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/shotgun/dragon
 	name = "12g Dragon's Breath Drum"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
-			Sets the target on fire, and generally gives them a bad time."
+			Shoots multiple pellets that will set any target hit on fire. Great against crowds."
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 
 /datum/uplink_item/ammo/shotgun/scatter
@@ -806,7 +806,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = " Plastitanium Rapier"
 	desc = "An incredibly sharp rapier capable of piercing all forms of armor with ease. \
 			The rapier comes with its own jet black sheath, however this will generally alert hostiles to your allegience. \
-			The rapier itself can be used to deflect melee strikes to some degree, and it can be used as a powerful projectile in a pinch.
+			The rapier itself can be used to deflect melee strikes to some degree, and it can be used as a powerful projectile in a pinch."
 	item = /obj/item/storage/belt/sabre/rapier
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -1642,7 +1642,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			Recharge using bluespace crystals. \
 			Comes with 5 charges."
 	item = /obj/item/compressionkit
-	cost = 6
+	cost = 8
 
 /datum/uplink_item/devices/briefcase_launchpad
 	name = "Briefcase Launchpad"

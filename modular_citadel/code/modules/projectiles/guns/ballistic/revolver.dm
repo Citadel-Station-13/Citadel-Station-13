@@ -8,4 +8,4 @@
 
 /obj/item/gun/ballistic/revolver/syndie		//Nice Looking
 	desc = "A suspicious revolver. Uses .357 ammo."
-	icon = 'icons/obj/guns/nagant.dmi'
+	icon_state = "nagant"

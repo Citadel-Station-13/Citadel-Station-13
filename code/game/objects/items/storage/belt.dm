@@ -766,6 +766,7 @@
 	item_state = "rsheath"
 	force = 5
 	throwforce = 15
+	block_chance = 30
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed", "slashes", "prods", "pokes")
 	fitting_swords = list(/obj/item/melee/rapier)

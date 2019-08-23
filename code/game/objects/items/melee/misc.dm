@@ -150,7 +150,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 25
 	throwforce = 35
-	block_chance = 35
+	block_chance = 0
 	armour_penetration = 100
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME

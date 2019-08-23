@@ -82,7 +82,7 @@
 	caliber = "10mm"
 	max_ammo = 28
 
-/obj/item/ammo_box/magazine/smgm45/update_icon()
+/obj/item/ammo_box/magazine/smgm10mm/update_icon()
 	..()
 	icon_state = "c20r45-[round(ammo_count(),2)]"
 
