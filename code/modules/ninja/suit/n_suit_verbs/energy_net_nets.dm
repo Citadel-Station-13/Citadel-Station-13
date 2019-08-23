@@ -44,12 +44,6 @@ It is possible to destroy the net by the occupant or someone else.
 		qdel(src)//Get rid of the net.
 		return
 
-	if(ishuman(affecting))
-		var/mob/living/carbon/human/M = affecting
-		if(M.staminaloss <= 99 || M.stat != UNCONSCIOUS)
-			qdel(src)
-			return
-
 	if(check>0)
 		check--
 		return

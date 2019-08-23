@@ -24,6 +24,10 @@
 	else
 		C = input("Select who to capture:","Capture who?",null) as null|mob in candidates
 
+	if(ishuman(C))
+		var/mob/living/carbon/human/M = C
+		if(M.staminaloss <= 99 && M.stat != UNCONSCIOUS)
+			return FALSE
 
 	if(QDELETED(C)||!(C in oview(H)))
 		return FALSE
