@@ -8,4 +8,4 @@
 
 /obj/item/gun/ballistic/revolver/syndie		//Nice Looking
 	desc = "A suspicious revolver. Uses .357 ammo."
-	icon_state = "nagant"
+	icon_state = "mateba"

@@ -52,6 +52,30 @@
 	..()
 	icon_state = "9x19p-[ammo_count() ? "8" : "0"]"
 
+
+/obj/item/ammo_box/magazine/pistolm9mm/ap
+	name = "pistol magazine (9mm AP)"
+	icon_state = "9x19p-8"
+	ammo_type = /obj/item/ammo_casing/c9mm/ap
+	caliber = "9mm"
+	max_ammo = 16
+
+
+/obj/item/ammo_box/magazine/pistolm9mm/hp
+	name = "pistol magazine (9mm HP)"
+	icon_state = "9x19p-8"
+	ammo_type = /obj/item/ammo_casing/c9mm/hp
+	caliber = "9mm"
+	max_ammo = 16
+
+
+/obj/item/ammo_box/magazine/pistolm9mm/fire
+	name = "pistol magazine (9mm Incendiary)"
+	icon_state = "9x19p-8"
+	ammo_type = /obj/item/ammo_casing/c9mm/inc
+	caliber = "9mm"
+	max_ammo = 16
+
 /obj/item/ammo_box/magazine/m50
 	name = "handgun magazine (.50ae)"
 	icon_state = "50ae"

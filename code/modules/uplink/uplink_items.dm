@@ -472,26 +472,26 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "9mm Standard Magazine"
 	desc = "An additional 16-round 9mm magazine; compativle with the VP78 Machine Pistol. These rounds are fairly weak individually \
 			so be prepared to buy plenty of these."
-	item = /obj/item/ammo_box/m9mm
+	item = /obj/item/ammo_box/magazine/pistolm9mm
 
 /datum/uplink_item/ammo/machinepistol/ap
 	name = "9mm Armour Piercing Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the VP78 Machine Pistol. \
 			These rounds are less effective at injuring the target, but are useful for penetrating protective gear."
-	item = /obj/item/ammo_box/magazine/m9mm/ap
+	item = /obj/item/ammo_box/magazine/pistolm9mm/ap
 
 /datum/uplink_item/ammo/machinepistol/hp
 	name = "9mm Hollow Point Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the VP98 Machine Pistol. \
 			These rounds cause more internal damage to the target, but are easily stopped by armor."
-	item = /obj/item/ammo_box/magazine/m9mm/hp
+	item = /obj/item/ammo_box/magazine/pistolm9mm/hp
 	cost = 2
 
 /datum/uplink_item/ammo/machinepistol/fire
 	name = "9mm Incendiary Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the VP98 Machine Pistol. \
 			Loaded with incendiary rounds which are weak in impact, but carry a payload that will ignite the target."
-	item = /obj/item/ammo_box/magazine/m9mm/fire
+	item = /obj/item/ammo_box/magazine/pistolm9mm/fire
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 

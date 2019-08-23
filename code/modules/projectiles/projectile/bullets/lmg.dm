@@ -38,7 +38,7 @@
 	damage = 30
 	armour_penetration = -60
 
-/obj/item/projectile/bullet/mm556x45_incendiary
+/obj/item/projectile/bullet/incendiary/mm556x45
 	name = "5.56x45mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1

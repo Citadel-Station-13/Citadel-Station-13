@@ -35,7 +35,7 @@
 	projectile_type =/obj/item/projectile/bullet/c9mm_ap
 
 
-/obj/item/ammo_casing/c9mm/ap
+/obj/item/ammo_casing/c9mm/hp
 	name = "9mm hollow-point bullet casing"
 	desc = "A 9mm hollow-point bullet casing."
 	projectile_type =/obj/item/projectile/bullet/c9mm_hp

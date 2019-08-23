@@ -96,7 +96,7 @@
 
 /obj/item/ammo_box/magazine/smgm10mm/fire
 	name = "toploader magazine (Incendiary 10mm)"
-	ammo_type = /obj/item/ammo_casing/c10mm/inc
+	ammo_type = /obj/item/ammo_casing/c10mm/fire
 
 /obj/item/ammo_box/magazine/smgm10mm/soporific
 	name = "toploader magazine (Soporific 10mm)"

@@ -376,7 +376,7 @@
 	new /obj/item/pen/sleepy(src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 
-/obj/item/storage/box/syndie_kit/bundle/bomb/PopulateContents() //41 TC value
+/obj/item/storage/box/syndie_kit/bundle/explosive/PopulateContents() //41 TC value
 	new /obj/item/storage/belt/grenade(src)
 	new /obj/item/sbeacondrop/bomb(src)
 	new /obj/item/pizzabox/bomb(src)
