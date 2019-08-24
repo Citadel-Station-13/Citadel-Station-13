@@ -340,12 +340,14 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != ("blood" || "jellyblood"))
+	var/blood_id = get_blood_id()
+	if(!(blood_id =="blood" || blood_id == "jellyblood"))
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != ("blood" || "jellyblood"))
+	var/blood_id = get_blood_id()
+	if(!(blood_id =="blood" || blood_id == "jellyblood"))
 		return
 	var/list/blood_dna = list()
 	if(dna)

@@ -141,7 +141,7 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
-			if(blood_id == ("blood" || "jellyblood")) //normal blood
+			if(blood_id == "blood" || blood_id == "jellyblood") //normal blood
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
@@ -163,7 +163,7 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == ("blood" || "jellyblood")) //actual blood reagent
+	if(blood_id == "blood" || blood_id == "jellyblood") //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -221,6 +221,8 @@
 		return "blood"
 
 /mob/living/carbon/get_blood_id()
+	if(isjellyperson(src))
+		return "jellyblood"
 	if(dna?.species?.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (HAS_TRAIT(src, TRAIT_NOCLONE)))
