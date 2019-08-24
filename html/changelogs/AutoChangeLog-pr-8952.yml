@@ -1,0 +1,4 @@
+author: "CdrCross"
+delete-after: True
+changes: 
+  - rscadd: "Adds the ability for cloning consoles to read and write record lists to the circuit board, and provides a template for giving other machines local circuit board memory."

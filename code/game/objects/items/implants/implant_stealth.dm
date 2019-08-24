@@ -9,6 +9,7 @@
 	name = "inconspicious box"
 	desc = "It's so normal that you didn't notice it before."
 	icon_state = "agentbox"
+	max_integrity = 1
 	use_mob_movespeed = TRUE
 
 /obj/structure/closet/cardboard/agent/proc/go_invisible()

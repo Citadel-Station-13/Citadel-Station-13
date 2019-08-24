@@ -137,7 +137,7 @@ GLOBAL_VAR(restart_counter)
 	// but those are both private, so let's put the commit info in the runtime
 	// log which is ultimately public.
 	log_runtime(GLOB.revdata.get_log_message())
-	
+
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
 
@@ -270,7 +270,8 @@ GLOBAL_VAR(restart_counter)
 		if (M.client)
 			n++
 
-	features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
+	if(SSmapping.config) // this just stops the runtime, honk.
+		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
 
 	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
 		features += "[get_security_level()] alert"

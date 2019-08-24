@@ -44,6 +44,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "impaled", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
 	. = ..()
@@ -67,6 +68,7 @@
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
+	total_mass = 3.4
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -88,6 +90,12 @@
 	var/obj/item/storage/belt/sabre/B = S
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+
+/obj/item/melee/sabre/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre")
+
+/obj/item/melee/sabre/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "-sabre")
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -147,12 +155,19 @@
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_- 
+	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
 	attack_verb = list("slashed", "cut", "pierces", "pokes")
+	total_mass = 3.4
 
 /obj/item/melee/rapier/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
+
+/obj/item/melee/rapier/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier")
+
+/obj/item/melee/rapier/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "-rapier")
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -230,6 +245,7 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+	total_mass = TOTAL_MASS_SMALL_ITEM
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -390,6 +406,7 @@
 	var/static/list/ovens
 	var/on = FALSE
 	var/datum/beam/beam
+	total_mass = 2.5
 
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()

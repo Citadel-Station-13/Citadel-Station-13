@@ -191,10 +191,16 @@
 		data["beakerCurrentVolume"] = beakerCurrentVolume
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerCurrentpH"] = beaker.reagents.pH
+		//pH accuracy
+		for(var/obj/item/stock_parts/capacitor/C in component_parts)
+			data["partRating"]= 10**(C.rating-1)
+
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 		data["beakerTransferAmounts"] = null
+		data["beakerCurrentpH"] = null
 
 	var/chemicals[0]
 	var/recipes[0]

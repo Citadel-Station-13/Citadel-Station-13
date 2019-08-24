@@ -16,6 +16,7 @@
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/twohanded/singularityhammer/New()
 	..()
@@ -84,6 +85,7 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/twohanded/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)

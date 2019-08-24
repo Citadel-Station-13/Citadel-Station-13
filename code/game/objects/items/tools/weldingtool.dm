@@ -377,4 +377,18 @@
 		nextrefueltick = world.time + 10
 		reagents.add_reagent("welding_fuel", 1)
 
+/obj/item/weldingtool/advanced
+	name = "advanced welding tool"
+	desc = "A modern welding tool combined with an alien welding tool, it never runs out of fuel and works almost as fast."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "welder"
+	toolspeed = 0.2
+	light_intensity = 0
+	change_icons = 0
+
+/obj/item/weldingtool/advanced/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent("welding_fuel", 1)
+	..()
+
 #undef WELDER_FUEL_BURN_INTERVAL

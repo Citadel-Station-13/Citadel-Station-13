@@ -32,7 +32,7 @@
 	return TRUE
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id/prisoner))
+	if(istype(I, /obj/item/card/id))
 		if(!inserted_id)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -85,7 +85,7 @@
 				usr.put_in_hands(inserted_id)
 				inserted_id = null
 			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
 				if(I)
 					if(!usr.transferItemToLoc(I, src))
 						return

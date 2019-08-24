@@ -153,6 +153,17 @@
 
 		// if they have no mutant tongues, give them a regular one
 		T.Insert(src)
+	else
+		var/obj/item/organ/tongue/oT = getorganslot(ORGAN_SLOT_TONGUE)
+		if(oT.name == "fluffy tongue")
+			var/obj/item/organ/tongue/T
+			if(dna && dna.species && dna.species.mutanttongue)
+				T = new dna.species.mutanttongue()
+			else
+				T = new()
+			oT.Remove(src)
+			qdel(oT)
+			T.Insert(src)
 
 	if(!getorganslot(ORGAN_SLOT_EYES))
 		var/obj/item/organ/eyes/E
