@@ -94,7 +94,7 @@
 
 /obj/item/gun/energy/laser/heavy
 	name = "laser cannon"
-	desc = "A larger laser gun that eats much more power to make a highly densified laser beam that will deal more harm then normal.."
+	desc = "A larger laser gun that eats much more power to make a highly densified laser beam that will deal more harm then normal."
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "heavylasercannon"
 	item_state = "laser"
