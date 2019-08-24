@@ -53,7 +53,7 @@
 	name = "the chief engineer's advanced magnetic boots."
 	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy."
@@ -62,10 +62,10 @@
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/hypo
-	name = "the hypospray."
+	name = "the Chief Medical Officer's MKII hypospray."
 	targetitem = /obj/item/hypospray/mkii/CMO //CITADEL EDIT, changing theft objective for the Hypo MK II
 	difficulty = 5
-	excludefromjob = list("Chief Medical Officer")
+	excludefromjob = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist", "Geneticist")
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk."
@@ -83,10 +83,10 @@
 	excludefromjob = list("Head of Security", "Warden")
 
 /datum/objective_item/steal/reactive
-	name = "the reactive teleport armor."
+	name = "a reactive teleport armor."
 	targetitem = /obj/item/clothing/suit/armor/reactive
 	difficulty = 5
-	excludefromjob = list("Research Director")
+	excludefromjob = list("Research Director","Scientist", "Roboticist")
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization."
@@ -143,7 +143,7 @@
 	name = "the station blueprints."
 	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 	altitems = list(/obj/item/photo)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
@@ -159,7 +159,7 @@
 	name = "an unused sample of slime extract."
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
-	excludefromjob = list("Research Director","Scientist")
+	excludefromjob = list("Research Director","Scientist", "Roboticist")
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)

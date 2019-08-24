@@ -132,7 +132,7 @@
 			new /obj/item/card/emag(src) // 6 tc
 
 		if("ninja") // 40~ tc worth
-			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc? 
+			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc?
 			new /obj/item/implanter/adrenalin(src) // 8 tc
 			new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/throwing_star(src)
@@ -294,6 +294,7 @@
 	new /obj/item/radio/headset/chameleon(src)
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/pda/chameleon(src)
+	new /obj/item/clothing/neck/cloak/chameleon(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)

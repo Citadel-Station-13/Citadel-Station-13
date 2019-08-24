@@ -17,6 +17,24 @@
 	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
+	//FermiChem!
+	var/OptimalTempMin 			= 200 		// Lower area of bell curve for determining heat based rate reactions
+	var/OptimalTempMax			= 800		// Upper end for above
+	var/ExplodeTemp 			= 900 		// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
+	var/OptimalpHMin 			= 5         // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/OptimalpHMax 			= 10        // Higest value for above
+	var/ReactpHLim 				= 3         // How far out pH wil react, giving impurity place (Exponential phase)
+	var/CatalystFact 			= 0 		// How much the catalyst affects the reaction (0 = no catalyst)//Not implemented yet
+	var/CurveSharpT 			= 2         // How sharp the temperature exponential curve is (to the power of value)
+	var/CurveSharppH 			= 2         // How sharp the pH exponential curve is (to the power of value)
+	var/ThermicConstant 		= 1         // Temperature change per 1u produced
+	var/HIonRelease 			= 0.1       // pH change per 1u reaction
+	var/RateUpLim 				= 10        // Optimal/max rate possible if all conditions are perfect
+	var/FermiChem				= FALSE 	// If the chemical uses the Fermichem reaction mechanics//If the chemical uses the Fermichem reaction mechanics
+	var/FermiExplode 			= FALSE 	// If the chemical explodes in a special way
+	var/PurityMin 				= 0.15 		//If purity is below 0.15, it explodes too. Set to 0 to disable this.
+
+
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume, specialreact)
 	return
 	//I recommend you set the result amount to the total volume of all components.

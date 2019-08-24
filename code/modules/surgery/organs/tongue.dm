@@ -1,3 +1,5 @@
+#define TONGUE_MAX_HEALTH 60
+
 /obj/item/organ/tongue
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
@@ -8,6 +10,8 @@
 	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
+	var/maxHealth = TONGUE_MAX_HEALTH
+	var/damage = 0
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
@@ -26,6 +30,29 @@
 	languages_possible = languages_possible_base
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
+
+/obj/item/organ/tongue/proc/adjustTongueLoss(mob/living/carbon/M, damage_mod)
+	if (maxHealth == "alien")
+		return
+	if (maxHealth == "bone")
+		var/target = M.get_bodypart(BODY_ZONE_HEAD)
+		M.apply_damage(damage_mod, BURN, target)
+		to_chat(M, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
+		return
+	if(damage+damage_mod < 0)
+		damage = 0
+		return
+
+	damage += damage_mod
+	if ((damage / maxHealth) > 1)
+		to_chat(M, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
+		qdel(src)
+	else if ((damage / maxHealth) > 0.85)
+		to_chat(M, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
+	else if ((damage / maxHealth) > 0.5)
+		to_chat(M, "<span class='notice'>Your tongue is really starting to hurt.</span>")
+
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -51,6 +78,7 @@
 	icon_state = "tonguelizard"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
+	maxHealth = 40 //extra sensitivity means tongue is more susceptible to damage
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
@@ -68,6 +96,7 @@
 	icon_state = "tonguefly"
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
+	maxHealth = 80 //years of eatting trash has made your tongue strong
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
@@ -85,6 +114,7 @@
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
 	taste_sensitivity = 101 // ayys cannot taste anything.
+	maxHealth = 120 //Ayys probe a lot
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
@@ -113,6 +143,7 @@
 	icon_state = "tonguezombie"
 	say_mod = "moans"
 	taste_sensitivity = 32
+	maxHealth = 65 //Stop! It's already dead...!
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/zombie/handle_speech(datum/source, list/speech_args)
@@ -137,6 +168,7 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
+	maxHealth = "alien" //Their blood is acid, so, no, though a tongueless xeno might be funny
 	modifies_speech = TRUE // not really, they just hiss
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
@@ -159,6 +191,7 @@
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
+	maxHealth = "bone" //Take brute damage instead
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -181,6 +214,7 @@
 	name = "plasma bone \"tongue\""
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
+	maxHealth = "alien"
 	modifies_speech = FALSE
 
 /obj/item/organ/tongue/robot
@@ -192,12 +226,44 @@
 	attack_verb = list("beeped", "booped")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	maxHealth = 100 //RoboTongue!
 	var/electronics_magic = TRUE
 
 /obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
 	return ..() || electronics_magic
 
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
+	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
+
+/obj/item/organ/tongue/fluffy
+	name = "fluffy tongue"
+	desc = "OwO what's this?"
+	icon_state = "tonguefluffy"
+	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
+	maxHealth = 35 //Sensitive tongue!
+	modifies_speech = TRUE
+
+/obj/item/organ/tongue/fluffy/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "ne", "nye")
+		message = replacetext(message, "nu", "nyu")
+		message = replacetext(message, "na", "nya")
+		message = replacetext(message, "no", "nyo")
+		message = replacetext(message, "ove", "uv")
+		message = replacetext(message, "l", "w")
+		message = replacetext(message, "r", "w")
+	message = lowertext(message)
+	speech_args[SPEECH_MESSAGE] = message
+
+/obj/item/organ/tongue/cybernetic
+	name = "cybernetic tongue"
+	desc = "A state of the art robotic tongue that can detect the pH of anything drank."
+	icon_state = "tonguecybernetic"
+	taste_sensitivity = 10
+	maxHealth = 60 //It's robotic!
+
+/obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
 /obj/item/organ/tongue/robot/ipc

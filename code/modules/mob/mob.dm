@@ -116,19 +116,23 @@
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, list/ignored_mobs, no_ghosts = FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
-		if(M == ignored_mob)
+		if(M in ignored_mobs)
 			continue
 		var/msg = message
+		if(isobserver(M) && no_ghosts)
+			continue
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
@@ -155,7 +159,7 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -163,6 +167,8 @@
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( msg, 2, deaf_message, 1)
 
 // Show a message to all mobs in earshot of this atom
@@ -171,11 +177,13 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
+/atom/proc/audible_message(message, deaf_message, hearing_distance, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/Life()

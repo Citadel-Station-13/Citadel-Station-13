@@ -416,7 +416,7 @@
 						SSticker.mode.make_antag_chance(humanc)
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
-		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
+		SSquirks.AssignQuirks(humanc, humanc.client, TRUE, FALSE, job, FALSE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -429,7 +429,19 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
+
+	var/level = "green"
+	switch(GLOB.security_level)
+		if(SEC_LEVEL_BLUE)
+			level = "blue"
+		if(SEC_LEVEL_AMBER)
+			level = "amber"
+		if(SEC_LEVEL_RED)
+			level = "red"
+		if(SEC_LEVEL_DELTA)
+			level = "delta"	
+
+	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]<br>Alert Level: [capitalize(level)]</div>"
 
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)

@@ -2,7 +2,7 @@
 	name = "rapid cable layer"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcl-0"
+	icon_state = "rcl-empty"
 	item_state = "rcl-0"
 	var/obj/structure/cable/last
 	var/obj/item/stack/cable_coil/loaded
@@ -92,22 +92,32 @@
 
 /obj/item/twohanded/rcl/update_icon()
 	if(!loaded)
-		icon_state = "rcl-0"
-		item_state = "rcl-0"
+		icon_state = "rcl-empty"
+		item_state = "rcl-empty"
 		return
+	cut_overlays()
+	var/cable_amount = 0
 	switch(loaded.amount)
 		if(61 to INFINITY)
-			icon_state = "rcl-30"
-			item_state = "rcl"
+			cable_amount = 3
 		if(31 to 60)
-			icon_state = "rcl-20"
-			item_state = "rcl"
+			cable_amount = 2
 		if(1 to 30)
-			icon_state = "rcl-10"
-			item_state = "rcl"
+			cable_amount = 1
 		else
-			icon_state = "rcl-0"
-			item_state = "rcl-0"
+			cable_amount = 0
+
+	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[cable_amount]")
+	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
+	if(cable_amount >= 1)
+		icon_state = "rcl"
+		item_state = "rcl"
+		add_overlay(cable_overlay)
+	else
+		icon_state = "rcl-empty"
+		item_state = "rcl-0"
+		add_overlay(cable_overlay)
+
 
 /obj/item/twohanded/rcl/proc/is_empty(mob/user, loud = 1)
 	update_icon()
@@ -302,6 +312,7 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
 			loaded.item_color= colors[current_color_index]
+			update_icon()
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))
@@ -318,13 +329,29 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 
 /obj/item/twohanded/rcl/ghetto/update_icon()
 	if(!loaded)
-		icon_state = "rclg-0"
+		icon_state = "rclg-empty"
 		item_state = "rclg-0"
 		return
+	cut_overlays()
+	var/cable_amount = 0
 	switch(loaded.amount)
-		if(1 to INFINITY)
-			icon_state = "rclg-1"
-			item_state = "rcl"
+		if(20 to INFINITY)
+			cable_amount = 3
+		if(10 to 19)
+			cable_amount = 2
+		if(1 to 9)
+			cable_amount = 1
 		else
-			icon_state = "rclg-1"
-			item_state = "rclg-1"
+			cable_amount = 0
+
+	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[cable_amount]")
+	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
+	if(cable_amount >= 1)
+		icon_state = "rclg"
+		item_state = "rclg"
+		add_overlay(cable_overlay)
+	else
+		icon_state = "rclg-empty"
+		item_state = "rclg-0"
+		add_overlay(cable_overlay)
+

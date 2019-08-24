@@ -1,0 +1,5 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - balance: "storage tweaks for belt briefcase"
+  - imageadd: "codersprite for belt briefcase"

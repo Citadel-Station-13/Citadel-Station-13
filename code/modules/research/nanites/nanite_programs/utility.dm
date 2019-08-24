@@ -190,13 +190,13 @@
 	if(!iscarbon(host_mob))
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_WELL_FED)
+	if(C.nutrition <= NUTRITION_LEVEL_STARVING)
 		return FALSE
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
 	host_mob.nutrition -= 0.5
-	nanites.adjust_nanites(0.5)
+	nanites.adjust_nanites(src, 0.5)
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"

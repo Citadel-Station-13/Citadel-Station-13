@@ -244,13 +244,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
 		return 0
-	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie.</a> Or you could choose to continue resisting and suffer a fate worse than death...</span>")
+	to_chat(convertee, "<span class='cult italic'><b>The world goes red. All at once you are aware of an evil, eldritch truth taking roots into your mind.\n\
+	<a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie</a></b>, or suffer a fate worse than death.</span>")
+	INVOKE_ASYNC(src, .proc/optinalert, convertee)
 	currentconversionman = convertee
-	conversiontimeout = world.time + (10 SECONDS)
-	convertee.Stun(100)
+	conversiontimeout = world.time + (14 SECONDS)
+	convertee.Stun(140)
 	ADD_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
+	flash_color(convertee, list("#960000", "#960000", "#960000", rgb(0,0,0)), 50)
 	conversionresult = FALSE
 	while(world.time < conversiontimeout && convertee && !conversionresult)
 		stoplag(1)
@@ -282,6 +283,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.stuttering = 0
 		H.cultslurring = 0
 	return 1
+
+/obj/effect/rune/convert/proc/optinalert(mob/living/convertee)
+	var/alert = alert(convertee, "Will you embrace the Geometer of Blood or perish in futile resistance?", "Choose your own fate", "Join the Blood Cult", "Suffer a horrible demise")
+	if(alert == "Join the Blood Cult")
+		signmeup(convertee)
+
+/obj/effect/rune/convert/proc/signmeup(mob/living/convertee)
+	if(currentconversionman == usr)
+		conversionresult = TRUE
+	else
+		to_chat(usr, "<span class='cult italic'>Your fate has already been set in stone.</span>")
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
 	var/mob/living/first_invoker = invokers[1]
@@ -335,11 +347,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/convert/Topic(href, href_list)
 	if(href_list["signmeup"])
-		if(currentconversionman == usr)
-			conversionresult = TRUE
-		else
-			to_chat(usr, "<span class='cult italic'><b>Your fate has already been set in stone.</b></span>")
-
+		signmeup(usr)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"
@@ -414,6 +422,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/movedsomething = FALSE
 	var/moveuserlater = FALSE
+	var/movesuccess = FALSE
 	for(var/atom/movable/A in T)
 		if(ishuman(A))
 			new /obj/effect/temp_visual/dir_setting/cult/phase/out(T, A.dir)
@@ -424,20 +433,26 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		if(!A.anchored)
 			movedsomething = TRUE
-			A.forceMove(target)
+			if(do_teleport(A, target, forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
-		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
-			user.forceMove(target)
+			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
+				movesuccess = TRUE
+		if(movesuccess)
+			visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
+			to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
+		else
+			to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs briefly, but nothing happens":"  try send everything above the rune away, but the teleportation fails"].</span>")
 		if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
 			actual_selected_rune.handle_portal("lava")
 		else
 			var/area/A = get_area(T)
 			if(A.map_name == "Space")
 				actual_selected_rune.handle_portal("space", T)
-		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		if(movesuccess)
+			target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 

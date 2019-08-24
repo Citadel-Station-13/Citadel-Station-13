@@ -25,6 +25,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#FF6347"
 	bitesize_mod = 3
+	tastes = list("sesame seeds" = 1)
 	foodtype = VEGETABLES | GROSS
 	distill_reagent = "vermouth"
 
@@ -43,6 +44,7 @@
 	name = "lily"
 	desc = "A beautiful orange flower."
 	icon_state = "lily"
+	tastes = list("pelts " = 1)
 	filling_color = "#FFA500"
 
 // Geranium
@@ -61,6 +63,7 @@
 	desc = "A beautiful blue flower."
 	icon_state = "geranium"
 	filling_color = "#008B8B"
+	tastes = list("pelts " = 1)
 
 // Harebell
 /obj/item/seeds/harebell
@@ -86,6 +89,7 @@
 	name = "harebell"
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
+	tastes = list("salt" = 1)
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
@@ -123,6 +127,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
+	tastes = list("seeds" = 1)
 
 /obj/item/grown/sunflower/attack(mob/M, mob/user)
 	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
@@ -153,6 +158,7 @@
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
 	distill_reagent = "absinthe" //It's made from flowers.
+	tastes = list("glowbugs" = 1)
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
@@ -184,6 +190,7 @@
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
 	grind_results = list("capsaicin" = 0, "condensedcapsaicin" = 0)
+	tastes = list("cooked sunflower" = 1)
 
 /obj/item/grown/novaflower/add_juice()
 	..()

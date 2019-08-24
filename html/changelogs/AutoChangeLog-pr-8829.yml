@@ -1,0 +1,5 @@
+author: "BurgerLUA"
+delete-after: True
+changes: 
+  - code_imp: "Added a new framework for reagents. Reagents can now have a bool that determines if it can be detected by handheld medical analyzers. Currently only the changeling sting chemical does this."
+  - balance: "Made changeling transformation string last between 10-15 minutes. Lowered the dna cost of changeling sting from 3 dna to 2 dna. Lowered the chemical cost from 50 to 10. Lowered the loudness from 2 to 1. Changeling sting transformation can be removed via high doses of calomel."

@@ -21,6 +21,8 @@ Captain
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
 
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
+
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
@@ -67,7 +69,7 @@ Head of Personnel
 	flag = HOP
 	department_head = list("Captain")
 	department_flag = CIVILIAN
-	head_announce = list("Supply", "Service")
+	head_announce = list(RADIO_CHANNEL_SERVICE)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -94,6 +96,7 @@ Head of Personnel
 			            ACCESS_THEATRE, ACCESS_CHAPEL_OFFICE, ACCESS_LIBRARY, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_VAULT, ACCESS_MINING_STATION,
 			            ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM)
 
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/prosopagnosia, /datum/quirk/insanity)
 
 /datum/outfit/job/hop
 	name = "Head of Personnel"
