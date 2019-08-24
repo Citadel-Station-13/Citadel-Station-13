@@ -220,7 +220,7 @@
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/twohanded/hypereutactic/toy/rainbow
+	path = /obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/darksabre
@@ -438,7 +438,13 @@ datum/gear/darksabresheath
 /datum/gear/borgplush
 	name = "Robot Plush"
 	category = SLOT_IN_BACKPACK
-	/obj/item/toy/plush/borgplushie
+	path = /obj/item/toy/plush/borgplushie
 	ckeywhitelist = list("nicholaiavenicci")
+
+/datum/gear/donorberet
+	name = "Atmos Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/blueberet
+	ckeywhitelist = list("foxystalin")
 
 

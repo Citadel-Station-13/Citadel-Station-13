@@ -117,6 +117,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["widescreenpref"]		>> widescreenpref
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
+	S["lewdchem"]			>> lewdchem
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -211,6 +212,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
+	WRITE_FILE(S["lewdchem"], lewdchem)
 
 	return 1
 
@@ -347,6 +349,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
+	S["feature_breasts_producing"]		>> features["breasts_producing"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
 	S["feature_vag_shape"]				>> features["vag_shape"]

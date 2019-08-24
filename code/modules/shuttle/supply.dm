@@ -61,6 +61,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			for(var/a in T.GetAllContents())
 				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
 					return FALSE
+				if(istype(a, /obj/structure/closet))//Prevents eigenlockers from ending up at CC
+					var/obj/structure/closet/c = a
+					if(c.eigen_teleport == TRUE)
+						return FALSE
 	return TRUE
 
 /obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)

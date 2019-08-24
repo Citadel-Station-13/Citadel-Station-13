@@ -1,7 +1,7 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
 	w_class 					= WEIGHT_CLASS_NORMAL
-	var/shape					= "human"
+	var/shape					= "Human" //Changed to be uppercase, let me know if this breaks everything..!!
 	var/sensitivity				= AROUSAL_START_VALUE
 	var/list/genital_flags		= list()
 	var/can_masturbate_with 	= FALSE
@@ -172,6 +172,8 @@
 			P.length = dna.features["cock_length"]
 			P.girth_ratio = dna.features["cock_girth_ratio"]
 			P.shape = dna.features["cock_shape"]
+			P.prev_length = P.length
+			P.cached_length = P.length
 			P.update()
 
 /mob/living/carbon/human/proc/give_balls()
@@ -214,8 +216,21 @@
 			else
 				B.color = "#[dna.features["breasts_color"]]"
 			B.size = dna.features["breasts_size"]
+			if(!isnum(B.size))
+				if(B.size == "flat")
+					B.cached_size = 0
+					B.prev_size = 0
+				else if (B.cached_size == "huge")
+					B.prev_size = "huge"
+				else
+					B.cached_size = B.breast_values[B.size]
+					B.prev_size = B.size
+			else
+				B.cached_size = B.size
+				B.prev_size = B.size
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
+			B.producing = dna.features["breasts_producing"]
 			B.update()
 
 
@@ -256,8 +271,8 @@
 	switch(layer)
 		if(GENITALS_BEHIND_LAYER)
 			return "BEHIND"
-		if(GENITALS_ADJ_LAYER)
-			return "ADJ"
+		/*if(GENITALS_ADJ_LAYER)
+			return "ADJ"*/
 		if(GENITALS_FRONT_LAYER)
 			return "FRONT"
 
@@ -279,27 +294,65 @@
 	if(src && !QDELETED(src))
 		dna.species.handle_genitals(src)
 
-/datum/species/proc/handle_genitals(mob/living/carbon/human/H)
+//fermichem procs
+/mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
+	dna.species.handle_genitals(src)//should work.
+	//dna.species.handle_breasts(src)
+
+//Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
+/mob/living/carbon/human/proc/emergent_genital_call()
+	var/organCheck = FALSE
+	var/breastCheck = FALSE
+	var/willyCheck = FALSE
+	if(!canbearoused)
+		ADD_TRAIT(src, TRAIT_PHARMA, "pharma")//Prefs prevent unwanted organs.
+		return
+	for(var/obj/item/organ/O in internal_organs)
+		if(istype(O, /obj/item/organ/genital))
+			organCheck = TRUE
+			if(/obj/item/organ/genital/penis)
+				//dna.features["has_cock"] = TRUE
+				willyCheck = TRUE
+			if(/obj/item/organ/genital/breasts)
+				//dna.features["has_breasts"] = TRUE//Goddamnit get in there.
+				breastCheck = TRUE
+	if(organCheck == FALSE)
+		if(ishuman(src) && dna.species.id == "human")
+			dna.features["genitals_use_skintone"] = TRUE
+			dna.species.use_skintones = TRUE
+		if(MUTCOLORS)
+			if(src.dna.species.fixed_mut_color)
+				dna.features["cock_color"] = "[src.dna.species.fixed_mut_color]"
+				dna.features["breasts_color"] = "[src.dna.species.fixed_mut_color]"
+				return
+		//So people who haven't set stuff up don't get rainbow surprises.
+		dna.features["cock_color"] = "[dna.features["mcolor"]]"
+		dna.features["breasts_color"] = "[dna.features["mcolor"]]"
+	else //If there's a new organ, make it the same colour.
+		if(breastCheck == FALSE)
+			dna.features["breasts_color"] = dna.features["cock_color"]
+		else if (willyCheck == FALSE)
+			dna.features["cock_color"] = dna.features["breasts_color"]
+	return
+
+/datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
 	if(!H)//no args
 		CRASH("H = null")
 	if(!LAZYLEN(H.internal_organs))//if they have no organs, we're done
 		return
-	if(NOGENITALS in species_traits)//golems and such
+	if((NOGENITALS in species_traits) && (H.genital_override = FALSE))//golems and such - things that shouldn't
 		return
 	if(HAS_TRAIT(H, TRAIT_HUSK))
 		return
-
 	var/list/genitals_to_add = list()
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER) //GENITALS_ADJ_LAYER removed
 	var/list/standing = list()
 	var/size
 	var/aroused_state
 
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
-
 	//start scanning for genitals
-	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/O in H.internal_organs)
 		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
@@ -308,7 +361,6 @@
 			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 				genitals_to_add += H.getorganslot(G.slot)
 	//Now we added all genitals that aren't internal and should be rendered
-
 	//start applying overlays
 	for(var/layer in relevant_layers)
 		var/layertext = genitals_layertext(layer)
@@ -325,6 +377,9 @@
 					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
 					S = GLOB.breasts_shapes_list[G.shape]
+
+
+
 
 			if(!S || S.icon_state == "none")
 				continue
