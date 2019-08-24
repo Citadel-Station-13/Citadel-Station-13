@@ -42,6 +42,52 @@
 	result = /obj/item/reagent_containers/food/snacks/honkdae
 	subcategory = CAT_ICE
 
+/datum/crafting_recipe/food/banana_split
+	name = "Banana Split"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/icecream = 3,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/banana_split
+	subcategory = CAT_ICE
+
+/datum/crafting_recipe/food/root_float
+	name = "Cola Float"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/icecream = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
+		/datum/reagent/consumable/space_cola = 10,
+		/obj/item/reagent_containers/food/drinks/drinkingglass = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/cola_float
+	subcategory = CAT_ICE
+
+/datum/crafting_recipe/food/charrie_float
+	name = "Cherry Shake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/icecream = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cherries = 3,
+		/obj/item/reagent_containers/food/drinks/drinkingglass = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/charrie_float
+	subcategory = CAT_ICE
+
+/datum/crafting_recipe/food/bluecharrie_float
+	name = "Blue Cherry Shake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/icecream = 1,
+		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 3,
+		/obj/item/reagent_containers/food/drinks/drinkingglass = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/bluecharrie_float
+	subcategory = CAT_ICE
+
 //////////////////////////SNOW CONES///////////////////////
 
 /datum/crafting_recipe/food/flaverless_sc

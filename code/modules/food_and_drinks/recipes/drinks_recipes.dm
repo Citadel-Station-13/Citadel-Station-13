@@ -454,18 +454,6 @@
 	results = list("vanillapudding" = 20)
 	required_reagents = list("vanilla" = 5, "milk" = 5, "eggyolk" = 5)
 
-/datum/chemical_reaction/cherryshake
-	name = "Cherry Shake"
-	id = "cherryshake"
-	results = list("cherryshake" = 3)
-	required_reagents = list("cherryjelly" = 1, "ice" = 1, "cream" = 1)
-
-/datum/chemical_reaction/bluecherryshake
-	name = "Blue Cherry Shake"
-	id = "bluecherryshake"
-	results = list("bluecherryshake" = 3)
-	required_reagents = list("bluecherryjelly" = 1, "ice" = 1, "cream" = 1)
-
 /datum/chemical_reaction/drunkenblumpkin
 	name = "Drunken Blumpkin"
 	id = "drunkenblumpkin"

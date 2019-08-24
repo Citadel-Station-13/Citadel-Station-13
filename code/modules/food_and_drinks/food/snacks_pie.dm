@@ -327,8 +327,8 @@
 
 /obj/item/reagent_containers/food/snacks/pie/peachpie
 	name = "peach pie"
-	desc = "A peach pie."
+	desc = "A pei with peach filling."
 	icon_state = "strawberrypie"
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "peachjuice" = 15)
 	tastes = list("peach" = 1, "pie" = 1)
-	foodtype = GRAIN | FRUI
+	foodtype = GRAIN | FRUIT
