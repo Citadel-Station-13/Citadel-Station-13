@@ -222,5 +222,5 @@
             /obj/item/reagent_containers/food/snacks/pie/plain = 1,
 	        /obj/item/reagent_containers/food/snacks/grown/peach = 3
 	        )
-	result = /obj/item/reagent_containers/food/snacks/pie/peach
+	result = /obj/item/reagent_containers/food/snacks/pie/peachpie
 	subcategory = CAT_PIE
