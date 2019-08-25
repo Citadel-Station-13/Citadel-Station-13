@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An automatic machine pistol that fires 9mm rounds in 2-round bursts from a 16 round magazine. \
 			For when you just need to spray and pray. Compatible with supressors."
 	item = /obj/item/gun/ballistic/automatic/pistol/machinepistol
-	cost = 10
+	cost = 9
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/revolver
@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Flechettes deal very little damage individually, but shred the targets internal organs, causing them to quickly bleed to death. \
 			Ideal for extended engagements."
 	item = /obj/item/gun/ballistic/automatic/flechette
-	cost = 14
+	cost = 15
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			This specific model comes with an underbarrel grenade launcher, for flushing out enemies behind cover. \
 			While expensive, it is the most versatile and effective of its size on offer."
 	item = /obj/item/gun/ballistic/automatic/m90
-	cost = 18
+	cost = 20
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -352,9 +352,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/munitions/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A heavy duty Aussec Armoury belt-fed machine gun that carries a massive 100-round magazine of armor piercing 5.56×45mm ammunition that \
-			is fired in 8 round bursts. Requires two hands to fire. The L6 is ideal for suppressive fire and support roles."
+			is fired in 5 round bursts. Requires two hands to fire. The L6 is ideal for suppressive fire and support roles."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
-	cost = 16
+	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -367,14 +367,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/munitions/rocketlauncher
+
+//CURRENTLY UNABLE TO LOAD ROCKETS INTO LAUNCHER. UNCOMMENT ONCE FIXED
+/*datum/uplink_item/munitions/rocketlauncher
 	name = "PML-9 Rocket Launcher"
 	desc = "A powerful and reusable rocket launcher preloaded with an armor piercing HEDP round. \
 			Ideal for eliminating heavily armored targets, or, when loaded with HE rounds, large groups of targets."
 	item = /obj/item/gun/ballistic/rocketlauncher
-	cost = 12
+	cost = 8
 	surplus = 30
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear)*/
 
 /datum/uplink_item/munitions/flamethrower
 	name = "Plasma Flamethrower"
@@ -411,7 +413,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/device_tools/medgun
+/datum/uplink_item/munitions/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
 			operatives in the fight, even while under fire. Don't cross the streams!"
@@ -500,7 +502,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A speed loader that contains seven additional lethal .357 Magnum rounds; compatible with the Nagant revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 2
+	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/revolver/rubber
@@ -508,11 +510,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A speed loader that contains seven additional rubber .357 Magnum rounds; compatible with the Nagant revolver. \
 			For when you really need a lot of things alive."
 	item = /obj/item/ammo_box/a357/rubber
-	cost = 3
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shell
-	cost = 2
+	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shell/buck
@@ -524,20 +526,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Box of 12g Slug Shells"
 	desc = "An additional seven shells of slug in a box. \
 			Ideal for engaging at longer ranges."
-	cost = 3
+	cost = 2
 	item = /obj/item/storage/box/lethalslugs
 
 /datum/uplink_item/ammo/shell/rubber
 	name = "Box of 12g Rubber Shells"
 	desc = "An alternative seven shells of rubber in a box. \
 			Highly effective at taking down targets non-lethally."
-	cost = 3
+	cost = 2
 	item = /obj/item/storage/box/rubber
 
 /datum/uplink_item/ammo/shell/incendiary
 	name = "Box of 12g Incendiary Shells"
 	desc = "An alternative seven shells of incendiary in a box. \
 			Shoots multiple pellets that will set any target hit on fire. Great against crowds."
+	cost = 2
 	item = /obj/item/storage/box/fireshot
 
 /datum/uplink_item/ammo/shell/scatter
@@ -602,7 +605,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 28-round 10mm magazine suitable for use with the C-20r submachine gun. \
 			These rounds are less effective at injuring the target, but are useful for penetrating protective gear."
 	item = /obj/item/ammo_box/magazine/smgm10mm/ap
-	cost = 2
 
 /datum/uplink_item/ammo/smg/hp
 	name = "10mm SMG HP Magazine"
@@ -615,14 +617,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 28-round 10mm magazine suitable for use with the C-20r submachine gun. \
 			Loaded with incendiary rounds which are weak in impact, but carry a payload that will ignite the target."
 	item = /obj/item/ammo_box/magazine/smgm10mm/fire
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/ammo/smg/zzz
 	name = "10mm SMG Soporific Magazine"
 	desc = "An additional 28-round 10mm magazine suitable for use with the C-20r submachine gun. Loaded with soporific rounds that put the target to sleep. \
 			Remember that it takes about three shots to actually put the target to sleep, so plan accordinlgy."
 	item = /obj/item/ammo_box/magazine/smgm10mm/soporific
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/ammo/flechettes
 	name = "Serrated Flechette Magazine"
@@ -653,7 +655,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "5.7x28mm HP Toploader Magazine"
 	desc = "An alternative 50-round 5.7x28mm HP magazine; suitable for use with the M-90gl carbine. \
 			Forfeits the armor piercing capabilities of standard rounds for raw damage."
-	item = /obj/item/ammo_box/magazine/a57x28_hp
+	item = /obj/item/ammo_box/magazine/a57x28/hp
 	cost = 3
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -671,6 +673,37 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = 	/obj/item/ammo_box/a762
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/lmg
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/lmg/basic
+	name = "5.56x45mm Box Magazine"
+	desc = "An additional 100-round box magazine for the L6 SAW. Suppressive fire in, \
+			suppressive fire out, we do the hokey pokey and that's what it's all about."
+	item = /obj/item/ammo_box/magazine/mm556x45
+
+/datum/uplink_item/ammo/lmg/ap
+	name = "5.56x45mm (Armor Piercing) Box Magazine"
+	desc = "An alternative 100-round box magazine of armor piercing rounds for the L6 SAW. \
+			Is much more effective against armored targers, but generally has a reduced impact on target."
+	item = /obj/item/ammo_box/magazine/mm556x45/ap
+	cost = 5
+
+/datum/uplink_item/ammo/lmg/hollow
+	name = "5.56x45mm (Hollow-Point) Box Magazine"
+	desc = "An unethical 75-round box magazine of shredding hollow-point rounds for the L6 SAW. \
+			Is incredibly effective at mowing down the unarmored masses of the crew."
+	item = /obj/item/ammo_box/magazine/mm556x45/hollow
+	cost = 5
+
+/datum/uplink_item/ammo/lmg/incen
+	name = "5.56x45mm (Incendiary) Box Magazine"
+	desc = "An alternative 75-round box magazine of incendiary rounds for the L6 Saw. \
+			Sets targets alight with every bullet, just be careful not to set your squad mates on fire."
+	item = /obj/item/ammo_box/magazine/mm556x45/incen
+	cost = 6
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -692,38 +725,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = ".50 Soporific Magazine"
 	desc = "A 3-round magazine of soporific ammo designed for use with .50 sniper rifles. Puts enemies to sleep in only one shot."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
-	cost = 6
-
-/datum/uplink_item/ammo/machinegun
-	cost = 5
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/ammo/machinegun/basic
-	name = "5.56×45mm Box Magazine"
-	desc = "A 100-round magazine of 5.56×45mm ammunition for use with the L6 SAW. \
-			Suppressive fire in, suppressive fire out, you do the hokey pokey and that's what it's all about."
-	item = /obj/item/ammo_box/magazine/mm556x45
-
-/datum/uplink_item/ammo/machinegun/ap
-	name = "5.56×45mm (Armor Penetrating) Box Magazine"
-	desc = "A 100-round magazine of 5.56×45mm ammunition for use in the L6 SAW; specially designed \
-			to puncture even the most durable of armor."
-	item = /obj/item/ammo_box/magazine/mm556x45/ap
-	cost = 6
-
-/datum/uplink_item/ammo/machinegun/hollow
-	name = "5.56×45mm (Hollow-Point) Box Magazine"
-	desc = "An unethical 75-round magazine of 5.56×45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
-			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/mm556x45/hollow
-	cost = 6
-
-/datum/uplink_item/ammo/machinegun/incen
-	name = "5.56×45mm (Incendiary) Box Magazine"
-	desc = "A 75-round magazine of 5.56×45mm ammunition for use in the L6 SAW; tipped with a special flammable \
-			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/mm556x45/incen
 	cost = 6
 
 /datum/uplink_item/ammo/rocket
@@ -842,7 +843,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-datum/uplink_item/stealthy_weapons/taeclowndo_shoes
+datum/uplink_item/cqc/taeclowndo_shoes
 	name = "Tae-clown-do Shoes"
 	desc = "A pair of shoes for the most elite agents of the honkmotherland. They grant the mastery of taeclowndo with some honk-fu moves as long as they're worn."
 	cost = 12
@@ -937,7 +938,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	surplus = 50
 
 /datum/uplink_item/toxins/syringe
-	name = "Box of syringes"
+	name = "Box of Syringes"
 	desc = "A box of seven syringes, perfect for use with the dart gun."
 	item = /obj/item/storage/box/syringes
 	cost = 1
@@ -1028,7 +1029,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/grenade/flashbang
 	cost = 1
 
-/datum/uplink_item/stealthy_weapons/soap_clusterbang
+/datum/uplink_item/explosives/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
@@ -1092,7 +1093,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
 		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
 	item = /obj/item/grenade/chem_grenade/teargas/moustache
-	cost = 4
+	cost = 5
 	surplus = 0
 
 /datum/uplink_item/explosives/viscerators
@@ -1411,12 +1412,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			fitting inside bags, and being able to hold weapons. While fairly subtle in coloration, perceptive crew members will be quick to call it out."
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/suits/space_suit/nukeop
-	cost = 4
-	exclude_modes = list()
-	include_modes = list(/datum/game_mode/nuclear) //Cheaper for ops
 
 /datum/uplink_item/suits/hardsuit
 	name = "Syndicate Hardsuit"
@@ -1430,7 +1425,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/suits/hardsuit/nukeop
-	cost = 4
+	cost = 6
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear) //cheaper for ops
 
@@ -1472,7 +1467,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/clothing/glasses/night
 	cost = 2
 
-/datum/uplink_item/device_tools/magboots
+/datum/uplink_item/tools/magboots
 	name = "Blood-Red Magboots"
 	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
 			during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's \
@@ -1481,7 +1476,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/stealthy_tools/combatbananashoes
+/datum/uplink_item/tools/combatbananashoes
 	name = "Combat Banana Shoes"
 	desc = "While making the wearer immune to most slipping attacks like regular combat clown shoes, these shoes \
 		can generate a large number of synthetic banana peels as the wearer walks, slipping up would-be pursuers. They also \
@@ -1514,6 +1509,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 /datum/uplink_item/tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
+	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
+			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit"
+	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
+	cost = 10
+
+/datum/uplink_item/tools/surgerybag_adv
+	name = "Advanced Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
@@ -1618,7 +1620,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	surplus = 75
 	restricted = TRUE
 
-/datum/uplink_item/device_tools/binary
+/datum/uplink_item/devices/binary
 	name = "Binary Translator Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
 			such as AI units and cyborgs, over their private binary channel. Caution should \
@@ -2014,7 +2016,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	 		This particular model has a polychromic hardlight generator, allowing you to murder in style! \
 	 		The illegal modifications bring this weapon up to par with the classic energy sword, and also gives it the energy sword's distinctive sounds."
 	item = /obj/item/melee/transforming/energy/sword/cx/traitor
-	cost = 8
+	cost = 7
 
 /datum/uplink_item/badass/costumes/obvious_chameleon
 	name = "Broken Chameleon Kit"

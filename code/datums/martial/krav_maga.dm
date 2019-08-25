@@ -194,7 +194,7 @@
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/krav_maga/combatglovesplus
-	name = "combat gloves plus"
+	name = "nanotech combat gloves"
 	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
 	icon_state = "combat"
 	item_state = "blackgloves"

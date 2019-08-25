@@ -77,14 +77,14 @@
 
 /obj/item/ammo_box/magazine/smgm10mm
 	name = "toploader magazine (10mm)"
-	icon_state = "c20r45-24"
+	icon_state = "smgm10mm-28"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = "10mm"
 	max_ammo = 28
 
 /obj/item/ammo_box/magazine/smgm10mm/update_icon()
 	..()
-	icon_state = "c20r45-[round(ammo_count(),2)]"
+	icon_state = "smgm10mm-[round(ammo_count(),2)]"
 
 /obj/item/ammo_box/magazine/smgm10mm/ap
 	name = "toploader magazine (Armour Piercing 10mm)"

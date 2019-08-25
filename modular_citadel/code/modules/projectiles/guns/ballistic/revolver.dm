@@ -6,6 +6,6 @@
 	name = "\improper .357 revolver"
 	desc = "A typical revolver. Uses .357 ammo."
 
-/obj/item/gun/ballistic/revolver/syndie		//Nice Looking
+/obj/item/gun/ballistic/revolver/syndie		//Classic for now
 	desc = "A suspicious revolver. Uses .357 ammo."
-	icon_state = "mateba"
+	icon_state = "revolver"

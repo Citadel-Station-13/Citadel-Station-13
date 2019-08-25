@@ -220,7 +220,7 @@
 /obj/item/storage/box/syndie_kit/imp_emp
 	name = "boxed EMP kit"
 
-/obj/item/storage/box/syndie_kit/emp/PopulateContents()
+/obj/item/storage/box/syndie_kit/imp_emp/PopulateContents()
 	new /obj/item/implanter/emp(src)
 
 /obj/item/storage/box/syndie_kit/chemical

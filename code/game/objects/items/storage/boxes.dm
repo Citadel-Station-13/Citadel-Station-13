@@ -784,7 +784,7 @@
 /obj/item/storage/box/lasershot
 	name = "box of scatter laser shells"
 	desc = "A box full of scatter laser shells."
-	icon_state = "lethal_box"
+	icon_state = "lethalshot_box"
 	illustration = null
 
 /obj/item/storage/box/lasershot/PopulateContents()

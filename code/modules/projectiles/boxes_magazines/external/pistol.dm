@@ -43,19 +43,14 @@
 
 /obj/item/ammo_box/magazine/pistolm9mm
 	name = "pistol magazine (9mm)"
-	icon_state = "9x19p-8"
+	icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 16
 
-/obj/item/ammo_box/magazine/pistolm9mm/update_icon()
-	..()
-	icon_state = "9x19p-[ammo_count() ? "8" : "0"]"
-
-
 /obj/item/ammo_box/magazine/pistolm9mm/ap
 	name = "pistol magazine (9mm AP)"
-	icon_state = "9x19p-8"
+	icon_state = "9x19pA"
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 	caliber = "9mm"
 	max_ammo = 16
@@ -63,7 +58,7 @@
 
 /obj/item/ammo_box/magazine/pistolm9mm/hp
 	name = "pistol magazine (9mm HP)"
-	icon_state = "9x19p-8"
+	icon_state = "9x19pH"
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 	caliber = "9mm"
 	max_ammo = 16
@@ -71,7 +66,7 @@
 
 /obj/item/ammo_box/magazine/pistolm9mm/fire
 	name = "pistol magazine (9mm Incendiary)"
-	icon_state = "9x19p-8"
+	icon_state = "9x19pI"
 	ammo_type = /obj/item/ammo_casing/c9mm/inc
 	caliber = "9mm"
 	max_ammo = 16

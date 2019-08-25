@@ -27,6 +27,7 @@
 	name = ".357 bullet"
 	damage = 60
 
-/obj/item/projectile/bullet/a357/rubber
+/obj/item/projectile/bullet/a357rubber
 	name = ".357 rubber bullet"
-	stamina = 60
+	damage = 18
+	stamina = 70

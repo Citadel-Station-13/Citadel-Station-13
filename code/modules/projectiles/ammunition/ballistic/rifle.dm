@@ -35,8 +35,7 @@
 	caliber = "a57x28"
 	projectile_type = /obj/item/projectile/bullet/a57x28
 
-/obj/item/ammo_casing/a57x28_hp
+/obj/item/ammo_casing/a57x28/hp
 	name = "5.7x28mm hollow-point bullet casing"
 	desc = "A 5.7x28mm hollow-point bullet casing."
-	caliber = "a57x28"
-	projectile_type = /obj/item/projectile/bullet/a57x28_hp
+	projectile_type = /obj/item/projectile/bullet/a57x28/hp

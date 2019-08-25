@@ -28,12 +28,12 @@
 	damage = 21
 	armour_penetration = 5
 
-/obj/item/projectile/bullet/mm556x45_ap
+/obj/item/projectile/bullet/mm556x45/ap
 	name = "5.56x45mmm armor-piercing bullet"
 	damage = 15
 	armour_penetration = 75
 
-/obj/item/projectile/bullet/mm556x45_hp
+/obj/item/projectile/bullet/mm556x45/hp
 	name = "5.56x45mm hollow-point bullet"
 	damage = 30
 	armour_penetration = -60

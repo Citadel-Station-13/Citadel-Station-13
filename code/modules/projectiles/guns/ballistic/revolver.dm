@@ -301,8 +301,8 @@
 /obj/item/gun/ballistic/revolver/doublebarrel/sawn
 	name = "sawn-off double-barrel shotgun"
 	desc = "A sawn off classic"
-	icon_state = "ishotgun"
-	item_state = "gun"
+	icon_state = "dshotgun"
+	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT

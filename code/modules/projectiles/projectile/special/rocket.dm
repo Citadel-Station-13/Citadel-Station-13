@@ -40,7 +40,7 @@
 /obj/item/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		explosion(target, 0, 1, 3, 5)
+		explosion(target, 0, 2, 3, 5)
 	else
-		explosion(target, 0, 0, 3, 5)
+		explosion(target, 0, 1, 3, 5)
 	return TRUE

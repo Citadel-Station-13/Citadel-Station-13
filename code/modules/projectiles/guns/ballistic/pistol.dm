@@ -24,11 +24,11 @@
 /obj/item/gun/ballistic/automatic/pistol/machinepistol
 	name = "VP78 machine pistol"
 	desc = "A light weight 9mm machine pistol. Has a threaded barrel for suppressors."
-	icon_state = "vp78"
+	icon_state = "secguncomp"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
 	burst_size = 2
-	fire_delay = 1
+	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
