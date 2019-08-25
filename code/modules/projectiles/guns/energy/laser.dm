@@ -100,6 +100,8 @@
 	item_state = "laser"
 	force = 12
 	throwforce = 10
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 	cell_type = /obj/item/stock_parts/cell/heavy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
