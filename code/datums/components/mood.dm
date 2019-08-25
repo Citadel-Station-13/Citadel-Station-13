@@ -147,11 +147,13 @@
 		if(9)
 			IncreaseSanity(0.4, SANITY_GREAT)
 
+/*
 	if(insanity_effect != holdmyinsanityeffect)
 		if(insanity_effect > holdmyinsanityeffect)
 			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
 		else
 			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
+*/
 
 	if(HAS_TRAIT(owner, TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -215,7 +217,7 @@
 	if(newval == insanity_effect)
 		return
 	var/mob/living/master = parent
-	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
 /datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
