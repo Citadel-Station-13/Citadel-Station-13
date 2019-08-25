@@ -64,12 +64,12 @@
 
 /obj/item/projectile/bullet/cflechetteap	//shreds armor
 	name = "flechette (armor piercing)"
-	damage = 8
+	damage = 7
 	armour_penetration = 80
 
 /obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
 	name = "flechette (serrated)"
-	damage = 12
+	damage = 10
 	dismemberment = 10
 	armour_penetration = -80
 

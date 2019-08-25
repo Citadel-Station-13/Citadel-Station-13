@@ -30,7 +30,7 @@
 
 /obj/item/projectile/bullet/mm556x45/ap
 	name = "5.56x45mmm armor-piercing bullet"
-	damage = 15
+	damage = 18
 	armour_penetration = 75
 
 /obj/item/projectile/bullet/mm556x45/hp

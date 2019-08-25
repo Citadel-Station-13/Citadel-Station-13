@@ -366,51 +366,16 @@
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 
-/obj/item/storage/box/syndie_kit/bundle //all the 20 TC bundles
+/obj/item/storage/box/syndie_kit/emp
+	name = "box"
 
-/obj/item/storage/box/syndie_kit/bundle/toxic/PopulateContents() //28 TC value
-	new /obj/item/gun/energy/kinetic_accelerator/crossbow(src)
-	new /obj/item/gun/syringe/syndicate(src)
-	new /obj/item/storage/box/syringes(src)
-	new /obj/item/storage/box/syndie_kit/chemical(src)
-	new /obj/item/pen/sleepy(src)
-	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+/obj/item/storage/box/syndie_kit/emp/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/empgrenade(src)
 
-/obj/item/storage/box/syndie_kit/bundle/explosive/PopulateContents() //41 TC value
-	new /obj/item/storage/belt/grenade(src)
-	new /obj/item/sbeacondrop/bomb(src)
-	new /obj/item/pizzabox/bomb(src)
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/grenade/chem_grenade/teargas/moustache(src)
+/obj/item/storage/box/syndie_kit/flashbang
+	name = "box"
 
-/obj/item/storage/box/syndie_kit/bundle/sabotage/PopulateContents() //32 TC value
-	new /obj/item/grenade/plastic/c4 (src)
-	new /obj/item/grenade/plastic/c4 (src)
-	new /obj/item/grenade/plastic/x4 (src)
-	new /obj/item/grenade/plastic/x4 (src)
-	new /obj/item/doorCharge(src)
-	new /obj/item/doorCharge(src)
-	new /obj/item/camera_bug(src)
-	new /obj/item/sbeacondrop/powersink(src)
-	new /obj/item/cartridge/virus/syndicate(src)
-	new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
-	new /obj/item/card/emag(src)
-
-/obj/item/storage/box/syndie_kit/bundle/hacker/PopulateContents() //25 TC value
-	new /obj/item/aiModule/syndicate(src)
-	new /obj/item/card/emag(src)
-	new /obj/item/emagrecharge(src)
-	new /obj/item/emagrecharge(src)
-	new /obj/item/encryptionkey/binary(src)
-	new /obj/item/multitool/ai_detect(src)
-	new /obj/item/flashlight/emp(src)
-	new /obj/item/implanter/emp(src)
-	new /obj/item/aiModule/toyAI(src)
-	new /obj/item/camera_bug(src)
+/obj/item/storage/box/syndie_kit/flashbag/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/grenade/flashbang(src)

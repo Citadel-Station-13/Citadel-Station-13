@@ -115,37 +115,133 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	cant_discount = TRUE
 
-/datum/uplink_item/bundles_TC/toxic
-	name = "Toxic Bundle"
-	desc = "Toxins and toxin applicators, for chemical warfare: Contains a miniature energy crossbow, a sleepy pen, \
-			a dart gun, a poison kit, a box of spare syringes, and complementary syndicate cigarettes."
-	item = /obj/item/storage/box/syndie_kit/bundle/toxic
-	cost = 20 // normally 28
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+/datum/uplink_item/bundles_TC/assault
+	name = "Assault Trooper Kit"
+	desc = "Be the man on the front lines with this robust kit. Includes a c-20r with two spare magazines, \
+			an energy sshield, two flashbangs, an EMP grenade, a fragmentation grenade, two X-4, and thermal glasses."
+	item = /obj/item/storage/backpack/duffelbag/syndie/assault
+	cost = 25 //Worth 43
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
 
-/datum/uplink_item/bundles_TC/explosive
-	name = "Explosive Bundle"
-	desc = "JC A BOMB!: Contains a syndicate bomb, a pizza bomb, two flashbangs, two emp grenades, two syndicate minibombs \
-			two incendiary grenades, a tearstache grenade, and a belt to hold them all."
-	item = /obj/item/storage/box/syndie_kit/bundle/explosive
-	cost = 20 // normally 41
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+/datum/uplink_item/bundles_TC/shredder
+	name = "Shredder Kit"
+	desc = "A truly horrific weapon designed simply to maim its victim, the CX Shredder is banned by several intergalactic treaties. \
+			This kit contains one CX Shredder with an assortment of six spare magazines, two fragmentation grenades, a stimulants injector, and a bar of soap."
+	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	cost = 25 //Worth 41
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
 
-/datum/uplink_item/bundles_TC/sabotage
-	name = "Sabotage Bundle"
-	desc = "Explosives and tools for saboteurs: Contains two C4, X4, and door charges; a camera bug, a power sink, \
-			a cryptographic sequencer, a Detomatix cartridge, and a toolbox. Handle with care."
-	item = /obj/item/storage/box/syndie_kit/bundle/sabotage
-	cost = 20 // normally 32
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+/datum/uplink_item/bundles_TC/donk
+	name = "Donksoft Kit"
+	desc = "A kit chalk full of harmless fun! Includes a toy riot submachine gun, with three extra boxes of riot darts, \
+			three tearstache grenades, soap, a fake nuke disk, a syndicate sentience potion, playing cards, and a broken chameleon kit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/donk
+	cost = 25 //Worth 40
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cant_discount = TRUE
 
-/datum/uplink_item/bundles_TC/hacker
-	name = "Hacker Bundle"
-	desc = "For subverting silicon equipment: Contains a hacked AI upload module, a cryptographic sequencer with two rechargers, \
-			a binary encryption key, an EMP flashlight and implant kit, an AI detection tool, and a camera bug."
-	item = /obj/item/storage/box/syndie_kit/bundle/hacker
-	cost = 20 // normally 25
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+/datum/uplink_item/bundles_TC/knight
+	name = "Energy Knight Kit"
+	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield \
+			syndicate glue, no slip shoes, and an adrenals implanter."
+	item = /obj/item/storage/backpack/duffelbag/syndie/knight
+	cost = 25 //Worth 39
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/cqc
+	name = "Close Quarters Combat Kit"
+	desc = "Reign supreme in hand to hand combat with this kit. Includes a CQC manual, gloves of the north star \
+			an adrenal mask, throwing weapons, a cryptographic sequencer, a bluespace launchpad, soap, and an EMP implanter."
+	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	cost = 25 //Worth 39
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/sniper
+	name = "Sniper Kit"
+	desc = "A specialist kit for long ranged assassinations. Includes a syndicate .50 caliber sniper rifle, with an assortment of three magazines, \
+			a sharp-looking tactical turtleneck suit and tie, a suppressor, an energy dagger, and a door charge."
+	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	cost = 25 //Worth 40
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/infiltrator
+	name = "Infiltration Kit"
+	desc = "Sneak behind enemy lines and complete key objectives for your team. Includes an additional M92 pistol, two suppressors, four 10mm magazines, \
+			a switchblade, two smoke grenades, a cryptographic sequencer with a spare recharger, a camera bug, a radio jammer, an AI detector, and a stealth implanter."
+	item = /obj/item/storage/backpack/duffelbag/syndie/infiltrator
+	cost = 25 //Worth 39
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/medic
+	name = "Combat Medic Kit"
+	desc = "Keep your allies in the fight with this medical kit. Includes a medibeam gun, an advanced health analyzer, \
+			a c-20r with two spare 10mm SMG magazines, omnizine laced cigarettes, and a tactical medkit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/med/combatmedic
+	cost = 25 //Worth ~37
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/engineer
+	name = "Combat Engineer Kit"
+	desc = "Keep your silicon and mechanized allies alive with this engineering kit. Includes a chestrig full of engineering goodies, \
+			magboots, a cryptographic sequencer, a binary encryption key, and EMP flashlight, a bulldog with two spare drums, \
+			two grenade full of manhacks, two C-4, and two X-4 charges."
+	item = /obj/item/storage/backpack/duffelbag/syndie/engineer
+	cost = 25 //Worth 41
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/grenadier
+	name = "Grenadier's Belt"
+	desc = "KABOOM BABY! Includes a grenade belt jam packed with a serious arsenal of explosives. Includes 10 fragmentation grenades, two minibombs \
+			two flashbangs, two emp grenades, two incendiary grenades, four smoke grenades, four gluon grenades, an acid grenades, and a screwdriver and multitool \
+			for modifying them. An EXCEPTIONAL value."
+	item = /obj/item/storage/belt/grenade/full
+	cost = 25 //Worth ~90. Sounds like a lot but hasn't been a balance issue thus far.
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/heavy
+	name = "Heavy Weapons Specialist Kit"
+	desc = "Provide your allies with covering fire with this specialist kit. Includes the L6 SAW along with two magazines, just in case, \
+			an elite syndicate hardsuit for absorbing more damage, one incendiary grenade, one minibomb, and two flashbangs for crowd control."
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/heavy
+	cost = 25 //Worth 42
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/bioterror
+	name = "Bioterrorist Kit"
+	desc = "An incredibly dangerous kit for biological warfare. Handle with care. Includes a handheld bioterror chem sprayer, a dart gun, \
+			a poison kit, a bioterror kit, and the terrifying Fungal Tuberculosis kit. Seal suit and internals before use."
+	item = /obj/item/storage/backpack/duffelbag/syndie/bioterror
+	cost = 25 //Worth 44!
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/pyro
+	name = "Pyromaniac Kit"
+	desc = "Set the station on fire with this dangerous kit. Includes a plasma flamethrower with a spare tank, \
+			a VP78 machine pistol with three spare magazines, two of them incendiary, three incendiary grenades, a syringe of stimulants, \
+			and a fireproof elite syndicate hardsuit to keep you safe from the flames. We are not responsible for any friendly fire that results from the purchase of this kit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/pyro
+	cost = 25 //Worth 39
+	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
+
+/datum/uplink_item/bundles_TC/modular
+	name = "Modular Pistol Kit"
+	desc = "A heavy briefcase containing one modular pistole (chambered in 10mm), one suppressor, and spare ammunition, \
+			including a box of soporific ammo. Includes a suit jacket padded with robust liner."
+	item = /obj/item/storage/briefcase/modularbundle
+	cost = 12
+	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/bundle
 	name = "Syndicate Bundle"
@@ -154,7 +250,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			you will receive. May contain discontinued and/or exotic items."
 	item = /obj/item/storage/box/syndicate
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/surplus
@@ -264,7 +360,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An automatic machine pistol that fires 9mm rounds in 2-round bursts from a 16 round magazine. \
 			For when you just need to spray and pray. Compatible with supressors."
 	item = /obj/item/gun/ballistic/automatic/pistol/machinepistol
-	cost = 9
+	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/revolver
@@ -292,7 +388,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Designed for close quarter target elimination. Pre-loaded with buckshot shells"
 	item = /obj/item/gun/ballistic/revolver/doublebarrel/sawn
 	cost = 10
-	surplus = 40
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/shotgun
@@ -319,7 +414,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Flechettes deal very little damage individually, but shred the targets internal organs, causing them to quickly bleed to death. \
 			Ideal for extended engagements."
 	item = /obj/item/gun/ballistic/automatic/flechette
-	cost = 15
+	cost = 14
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -329,7 +424,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			This specific model comes with an underbarrel grenade launcher, for flushing out enemies behind cover. \
 			While expensive, it is the most versatile and effective of its size on offer."
 	item = /obj/item/gun/ballistic/automatic/m90
-	cost = 20
+	cost = 22
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -365,6 +460,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/munitions/ion
+	name = "Ion Rifle"
+	desc = "A man-portable anti-electronics weapon designed to disrupt electrical systems and mechanical targets."
+	item = /obj/item/gun/energy/ionrifle
+	cost = 12
 	include_modes = list(/datum/game_mode/nuclear)
 
 
@@ -447,7 +549,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 8-round 10mm magazine; compatible with the M92 Pistol. \
 			These rounds cause more internal damage to the target, but are easily stopped by armor."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
-	cost = 1
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolfire
@@ -526,7 +628,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Box of 12g Slug Shells"
 	desc = "An additional seven shells of slug in a box. \
 			Ideal for engaging at longer ranges."
-	cost = 2
 	item = /obj/item/storage/box/lethalslugs
 
 /datum/uplink_item/ammo/shell/rubber
@@ -563,7 +664,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "12g Slug Drum"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 			Ideal for engaging at longer ranges."
-	cost = 3
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
 /datum/uplink_item/ammo/shotgun/dragon
@@ -571,6 +671,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			Shoots multiple pellets that will set any target hit on fire. Great against crowds."
 	item = /obj/item/ammo_box/magazine/m12g/dragon
+	cost = 3
 
 /datum/uplink_item/ammo/shotgun/scatter
 	name = "12g Scatter Laser shot Slugs"
@@ -590,9 +691,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Effective for quickly disabling a target without killing them outright."
 	item = /obj/item/ammo_box/magazine/m12g/stun
+	cost = 3
 
 /datum/uplink_item/ammo/smg
-	cost = 2
+	cost = 3
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg/standard
@@ -617,14 +719,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 28-round 10mm magazine suitable for use with the C-20r submachine gun. \
 			Loaded with incendiary rounds which are weak in impact, but carry a payload that will ignite the target."
 	item = /obj/item/ammo_box/magazine/smgm10mm/fire
-	cost = 3
-
-/datum/uplink_item/ammo/smg/zzz
-	name = "10mm SMG Soporific Magazine"
-	desc = "An additional 28-round 10mm magazine suitable for use with the C-20r submachine gun. Loaded with soporific rounds that put the target to sleep. \
-			Remember that it takes about three shots to actually put the target to sleep, so plan accordinlgy."
-	item = /obj/item/ammo_box/magazine/smgm10mm/soporific
-	cost = 3
+	cost = 4
 
 /datum/uplink_item/ammo/flechettes
 	name = "Serrated Flechette Magazine"
@@ -648,7 +743,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 50-round 5.7x28mm magazine; suitable for use with the M-90gl carbine. \
 			Armor piercing out of the box, with a large capacity, these magazines will take you far."
 	item = /obj/item/ammo_box/magazine/a57x28
-	cost = 3
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/pdwhp
@@ -656,7 +751,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An alternative 50-round 5.7x28mm HP magazine; suitable for use with the M-90gl carbine. \
 			Forfeits the armor piercing capabilities of standard rounds for raw damage."
 	item = /obj/item/ammo_box/magazine/a57x28/hp
-	cost = 3
+	cost = 5
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
@@ -727,7 +822,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	cost = 6
 
-/datum/uplink_item/ammo/rocket
+/*datum/uplink_item/ammo/rocket
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/rocket/he
@@ -740,7 +835,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "84mm HEDP Rocket"
 	desc = "A high-yield HEDP rocket; extremely effective against armored targets, while impacting a smaller area."
 	item = /obj/item/ammo_casing/caseless/rocket/hedp
-	cost = 5
+	cost = 5*/
 
 /datum/uplink_item/ammo/plasma
 	name = "Flamethrower Fuel Tank"
@@ -770,9 +865,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/cqc/switchblade
 	name = "Switchblade"
 	desc = "A small, retractable blade that can easily be concealed in one's pocket.  \
-			Is a lot quieter and subtler than the edagger, but at a higher cost, while being much more likely to be noticed in a search."
+			It is a lot quieter than the edagger but for a greater cost, while being much more likely to be noticed in a search."
 	item = /obj/item/switchblade
-	cost = 4
+	cost = 3
 
 /datum/uplink_item/cqc/sword
 	name = "Energy Sword"
@@ -855,7 +950,7 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	desc = "A manual that teaches a single user tactical hand-to-hand Close-Quarters Combat before self-destructing."
 	item = /obj/item/book/granter/martial/cqc
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	cost = 15
+	cost = 13
 	surplus = 0
 
 /datum/uplink_item/cqc/rapid
@@ -893,7 +988,7 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
 
-// Stealthy Weapons
+// Deadly Toxins
 /datum/uplink_item/toxins
 	category = "Toxins and Biohazardous Chemicals"
 
@@ -1023,11 +1118,11 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	surplus = 8
 
 /datum/uplink_item/explosives/flashbang
-	name = "Flashbang"
-	desc = "A non-lethal grenade with a five-second fuse that can be used to blind, deafen, and incapacitate nearby opponents. \
+	name = "Box of Flashbangs"
+	desc = "A box of four non-lethal grenade with a five-second fuse that can be used to blind, deafen, and incapacitate nearby opponents. \
 			Just be careful not to be in the blast radius."
-	item = /obj/item/grenade/flashbang
-	cost = 1
+	item = /obj/item/storage/box/syndie_kit/flashbang
+	cost = 2
 
 /datum/uplink_item/explosives/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
@@ -1036,10 +1131,10 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	cost = 6
 
 /datum/uplink_item/explosives/emp
-	name = "EMP Grenade"
-	desc = "A rather useful utility grenade with a five-second fuse that generates a small electro-magnetic pulse upon detonation. \
+	name = "Box of EMP Grenades"
+	desc = "A box of five rather useful utility grenades with a five-second fuse that generates a small electro-magnetic pulse upon detonation. \
 			Useful for disabling cyborgs, mechs, and other electronic devices."
-	item = /obj/item/grenade/empgrenade
+	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 1
 
 /datum/uplink_item/explosives/incendiary
@@ -1050,6 +1145,14 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/explosives/frag
+	name = "Fragmentation Grenade"
+	desc = "The classic fragmentation grenade is a high explosive grenade with a five-second fuse. Upon damage it will seriously injure \
+			anyone in the immediate area. A weaker version of the minibomb."
+	item = /obj/item/grenade/syndieminibomb/concussion/frag
+	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/explosives/syndicate_minibomb
 	name = "Syndicate Minibomb"
 	desc = "The minibomb is a high explosive grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
@@ -1057,6 +1160,14 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	item = /obj/item/grenade/syndieminibomb
 	cost = 6
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/explosives/gluon
+	name = "Gluon Grenade"
+	desc = "A highly advanced grenade that releases a harmful stream of radioactive gluons around the point of detonation. \
+			The gluons seriously cool the surrounding area and tire anyone hit from the impact."
+	item = /obj/item/grenade/gluon
+	cost = 10
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/explosives/bombanana
 	name = "Bombanana"
@@ -1093,8 +1204,9 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
 		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
 	item = /obj/item/grenade/chem_grenade/teargas/moustache
-	cost = 5
+	cost = 6
 	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/explosives/viscerators
 	name = "Viscerator Delivery Grenade"
@@ -1219,6 +1331,87 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
+//Armor and EVA Gear
+/datum/uplink_item/suits
+	category = "Uniforms, Armor, and Space Suits"
+	surplus = 40
+
+/datum/uplink_item/suits/turtlenck
+	name = "Tactical Turtleneck"
+	desc = "A weakly armored suit that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
+	item = /obj/item/clothing/under/syndicate
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/turtlenck_skirt
+	name = "Tactical Skirtleneck"
+	desc = "A weakly armored skirt that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
+	item = /obj/item/clothing/under/syndicate/skirt
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/padding
+	name = "Soft Padding"
+	desc = "Padding that can be stuffed into a jumpsuit to help protect against melee attacks."
+	item = /obj/item/clothing/accessory/padding
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/kevlar
+	name = "Kevlar Padding"
+	desc = "Kevlar Padding that can be stuffed into a jumpsuit to help protect against bullet impacts."
+	item = /obj/item/clothing/accessory/kevlar
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/plastic
+	name = "Plastic Padding"
+	desc = "Plastic Padding that can be stuffed into a jumpsuit to help protect against energy and laser impacts."
+	item = /obj/item/clothing/accessory/plastics
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/space_suit
+	name = "Syndicate Space Suit"
+	desc = "This black and red Syndicate space suit is less encumbering than Nanotrasen variants, \
+			fitting inside bags, and being able to hold weapons. While fairly subtle in coloration, perceptive crew members will be quick to call it out."
+	item = /obj/item/storage/box/syndie_kit/space
+	cost = 4
+
+/datum/uplink_item/suits/hardsuit
+	name = "Syndicate Hardsuit"
+	desc = "The feared suit of a Syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
+			that runs off standard atmospheric tanks. Toggling the suit in and out of \
+			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
+			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
+			Nanotrasen crew who spot these suits are known to panic."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi
+	cost = 8
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/suits/hardsuit/nukeop
+	cost = 6
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear) //cheaper for ops
+
+/datum/uplink_item/suits/hardsuit/elite
+	name = "Elite Syndicate Hardsuit"
+	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
+			provides the user with superior armor and mobility compared to the standard Syndicate hardsuit."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	cost = 8
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list()
+
+/datum/uplink_item/suits/hardsuit/shielded
+	name = "Shielded Syndicate Hardsuit"
+	desc = "An improved version of the standard Syndicate hardsuit. It features an advanced built-in energy shielding system. \
+			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
+	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
+	cost = 30
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list()
+
 // Stealth Items
 /datum/uplink_item/stealthy_tools
 	category = "Infiltration and Distruption Tools"
@@ -1248,6 +1441,7 @@ datum/uplink_item/cqc/taeclowndo_shoes
 			Due to budget cuts, the shoes don't provide protection against slipping."
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //necessary until nuke ops is reworked
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -1366,88 +1560,6 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	cost = 2
 	surplus = 30
 
-//Armor and EVA Gear
-/datum/uplink_item/suits
-	category = "Uniforms, Armor, and Space Suits"
-	surplus = 40
-
-/datum/uplink_item/suits/turtlenck
-	name = "Tactical Turtleneck"
-	desc = "A weakly armored suit that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
-	item = /obj/item/clothing/under/syndicate
-	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
-
-/datum/uplink_item/suits/turtlenck_skirt
-	name = "Tactical Skirtleneck"
-	desc = "A weakly armored skirt that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
-	item = /obj/item/clothing/under/syndicate/skirt
-	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
-
-/datum/uplink_item/suits/padding
-	name = "Soft Padding"
-	desc = "Padding that can be stuffed into a jumpsuit to help protect against melee attacks."
-	item = /obj/item/clothing/accessory/padding
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/suits/kevlar
-	name = "Kevlar Padding"
-	desc = "Kevlar Padding that can be stuffed into a jumpsuit to help protect against bullet impacts."
-	item = /obj/item/clothing/accessory/kevlar
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/suits/plastic
-	name = "Plastic Padding"
-	desc = "Plastic Padding that can be stuffed into a jumpsuit to help protect against energy and laser impacts."
-	item = /obj/item/clothing/accessory/plastics
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/suits/space_suit
-	name = "Syndicate Space Suit"
-	desc = "This black and red Syndicate space suit is less encumbering than Nanotrasen variants, \
-			fitting inside bags, and being able to hold weapons. While fairly subtle in coloration, perceptive crew members will be quick to call it out."
-	item = /obj/item/storage/box/syndie_kit/space
-	cost = 4
-
-/datum/uplink_item/suits/hardsuit
-	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a Syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
-			that runs off standard atmospheric tanks. Toggling the suit in and out of \
-			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
-			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
-			Nanotrasen crew who spot these suits are known to panic."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi
-	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/suits/hardsuit/nukeop
-	cost = 6
-	exclude_modes = list()
-	include_modes = list(/datum/game_mode/nuclear) //cheaper for ops
-
-/datum/uplink_item/suits/hardsuit/elite
-	name = "Elite Syndicate Hardsuit"
-	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
-			provides the user with superior armor and mobility compared to the standard Syndicate hardsuit."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	exclude_modes = list()
-
-/datum/uplink_item/suits/hardsuit/shielded
-	name = "Shielded Syndicate Hardsuit"
-	desc = "An improved version of the standard Syndicate hardsuit. It features an advanced built-in energy shielding system. \
-			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
-	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
-	cost = 30
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	exclude_modes = list()
-
-
 // Tools
 /datum/uplink_item/tools
 	category = "Mil-Spec Tools"
@@ -1465,7 +1577,7 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	name = "Night Vision Goggles"
 	desc = "Simple goggles that allow one to see in the dark. Incredibly useful for infiltration."
 	item = /obj/item/clothing/glasses/night
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/tools/magboots
 	name = "Blood-Red Magboots"
@@ -1510,16 +1622,16 @@ datum/uplink_item/cqc/taeclowndo_shoes
 /datum/uplink_item/tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit"
-	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
-	cost = 10
+			a Syndicate brand MMI, a straitjacket, and a muzzle."
+	item = /obj/item/storage/backpack/duffelbag/syndie/med/surgery
+	cost = 3
 
 /datum/uplink_item/tools/surgerybag_adv
 	name = "Advanced Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	cost = 3
+			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit"
+	item = /obj/item/storage/backpack/duffelbag/syndie/med/surgery_adv
+	cost = 10
 
 /datum/uplink_item/tools/soap
 	name = "Syndicate Soap"
@@ -1635,7 +1747,7 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
-	cost = 7
+	cost = 5
 
 /datum/uplink_item/devices/compressionkit
 	name = "Bluespace Compression Kit"
@@ -1765,7 +1877,7 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/autosurgeon/thermal_eyes
-	cost = 7
+	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/implants/xray

@@ -24,4 +24,4 @@
 /obj/item/projectile/bullet/a57x28/hp
 	name = "5.7x28mm bullet"
 	damage = 40 //Three shot kill
-	armour_penetration = -40 //Let bulletproof armor do its thing
+	armour_penetration = -50 //Let bulletproof armor do its thing
