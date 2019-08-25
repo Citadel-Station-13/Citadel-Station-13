@@ -62,6 +62,8 @@
 /obj/item/gun/energy/disabler/heavy
 	name = "heavy disabler"
 	desc = "A larger then normal disabler that densified its beam to be much more powerful then normal, but eats through power."
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "heavydisabler"
 	item_state = "laser"
