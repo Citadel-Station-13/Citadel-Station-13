@@ -139,6 +139,8 @@
 		return 0
 	if(!SSdbcore.Connect())
 		return 0 //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
+	if(C.prefs.db_flags & DB_FLAG_EXEMPT)
+		return 0
 	if(!isnum(minimal_player_age))
 		return 0
 
