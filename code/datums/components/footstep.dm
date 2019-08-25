@@ -18,9 +18,12 @@
 	var/mob/living/LM = parent
 	var/v = volume
 	var/e = e_range
-	if(!T.footstep || LM.buckled || LM.lying || !CHECK_MULTIPLE_BITFIELDS(LM.mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
+	if(!T.footstep || LM.buckled || LM.lying || !LM.canmove || LM.resting || LM.buckled || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
 		if (LM.lying && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
 			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
+		return
+
+	if(HAS_TRAIT(LM, TRAIT_SILENT_STEP))
 		return
 
 	if(iscarbon(LM))
@@ -32,13 +35,13 @@
 			e -= 5
 	steps++
 
-	if(steps >= 6)
+	if(steps >= 3)
 		steps = 0
 
-	if(steps % 2)
+	else
 		return
 
-	if(!LM.has_gravity(T) && steps != 0) // don't need to step as often when you hop around
+	if(prob(80) && !LM.has_gravity(T)) // don't need to step as often when you hop around
 		return
 
 	//begin playsound shenanigans//
@@ -88,6 +91,10 @@
 			var/mob/living/carbon/human/H = LM
 			var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
 
+			if (H.dna.features["taur"] == "Naga" || H.dna.features["taur"] == "Tentacle") //are we a naga or tentacle taur creature
+				playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
+				return
+
 			if(H.shoes || feetCover) //are we wearing shoes
 				playsound(T, pick(GLOB.footstep[T.footstep][1]),
 					GLOB.footstep[T.footstep][2] * v,
@@ -95,10 +102,7 @@
 					GLOB.footstep[T.footstep][3] + e)
 
 			if((!H.shoes && !feetCover)) //are we NOT wearing shoes
-				if(H.dna.species.special_step_sounds)
-					playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
-				else
-					playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-						GLOB.barefootstep[T.barefootstep][2] * v,
-						TRUE,
-						GLOB.barefootstep[T.barefootstep][3] + e)
+				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
+					GLOB.barefootstep[T.barefootstep][2] * v,
+					TRUE,
+					GLOB.barefootstep[T.barefootstep][3] + e)

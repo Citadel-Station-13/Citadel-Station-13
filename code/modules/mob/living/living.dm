@@ -286,7 +286,7 @@
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
-			
+
 			update_pull_movespeed()
 
 //mob verbs are a lot faster than object verbs
