@@ -546,7 +546,7 @@
 
 	var/frn = CONFIG_GET(flag/force_random_names)
 	if(!frn)
-		frn = jobban_isbanned(src, "Appearance")
+		frn = jobban_isbanned(src, "appearance")
 		if(QDELETED(src))
 			return
 	if(frn)
