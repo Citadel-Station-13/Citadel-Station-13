@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
