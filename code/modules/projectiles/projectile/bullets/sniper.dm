@@ -3,7 +3,7 @@
 /obj/item/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
-	damage = 90 //That's a lotta damage
+	damage = 80 //That's a lotta damage
 	knockdown = 100
 	dismemberment = 50
 	armour_penetration = 50
