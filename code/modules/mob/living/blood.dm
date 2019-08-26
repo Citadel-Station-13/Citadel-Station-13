@@ -267,7 +267,7 @@
 		. = safe
 
 //to add a splatter of blood or other mob liquid.
-/mob/living/proc/add_splatter_floor(turf/T, small_drip, shift_x, shift_y)
+/mob/living/proc/add_splatter_floor(turf/T, small_drip)
 	if(get_blood_id() == null)
 		return
 	if(!T)
@@ -298,10 +298,6 @@
 
 	// Find a blood decal or create a new one.
 	var/obj/effect/decal/cleanable/blood/splats/B = locate() in T
-	var/list/bloods = get_atoms_of_type(T, B, TRUE, 0, 0) //Get all the non-projectile-splattered blood on this turf (not pixel-shifted).
-	if(shift_x || shift_y)
-		bloods = get_atoms_of_type(T, B, TRUE, shift_x, shift_y) //Get all the projectile-splattered blood at these pixels on this turf (pixel-shifted).
-		B = locate() in bloods
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splats(T, get_static_viruses())
 	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
@@ -310,12 +306,6 @@
 	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA
-	B.pixel_x = (shift_x)
-	B.pixel_y = (shift_y)
-	B.update_icon()
-	if(shift_x || shift_y)
-		B.layer = BELOW_MOB_LAYER //So the blood lands ontop of things like posters, windows, etc.
-
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
@@ -351,6 +341,7 @@
 	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
+	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA
 

@@ -194,17 +194,8 @@
 					C.bleed(damage)
 
 			if(prob(33))
-				var/list/shift = list("x" = 0, "y" = 0)
-				var/turf/step_over = get_step(target_loca, splatter_dir)
+				L.add_splatter_floor(target_loca)
 
-				if(get_splatter_blockage(step_over, target, splatter_dir, target_loca)) //If you can't cross the tile or any of its relevant obstacles...
-					shift = pixel_shift_dir(splatter_dir) //Pixel shift the blood there instead (so you can't see wallsplatter through walls).
-				else
-					target_loca = step_over
-				L.add_splatter_floor(target_loca, shift_x = shift["x"], shift_y = shift["y"])
-				if(ishuman(L))
-					for(var/mob/living/carbon/human/M in step_over) //Bloody the mobs who're infront of the spray.
-						M.bloody_hands = rand(2, 4)
 
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
@@ -239,10 +230,6 @@
 		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 
 	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
-
-/obj/item/projectile/proc/get_splatter_blockage(var/turf/step_over, var/atom/target, var/splatter_dir, var/target_loca) //Check whether the place we want to splatter blood is blocked (i.e. by windows).
-	if(step_over.density && !step_over.CanPass(target, step_over, 1)) //Preliminary simple check.
-		return TRUE
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
