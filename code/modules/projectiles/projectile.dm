@@ -176,7 +176,7 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 
 			if(iscarbon(L))
-				if(ishuman(L)
+				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					var/armorsave
 					if(flag == "bullet")
