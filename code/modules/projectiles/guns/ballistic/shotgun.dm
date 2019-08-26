@@ -5,6 +5,7 @@
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
+	fire_delay = 10
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
@@ -205,6 +206,7 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
+	fire_delay = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 	unique_reskin = list("Tatical" = "cshotgun",
