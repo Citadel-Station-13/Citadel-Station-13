@@ -2,6 +2,9 @@
 				BLOOD SYSTEM
 ****************************************************/
 
+#define EXOTIC_BLEED_MULTIPLIER 4 //Multiplies the actually bled amount by this number for the purposes of turf reaction calculations.
+
+
 /mob/living/carbon/human/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
 		return
@@ -80,6 +83,9 @@
 			var/obj/item/bodypart/BP = X
 			var/brutedamage = BP.brute_dam
 
+			if(BP.status == BODYPART_ROBOTIC) //for the moment, synth limbs won't bleed, but soon, my pretty.
+				continue
+
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
 			temp_bleed += 0.5*BP.embedded_objects.len
@@ -105,9 +111,11 @@
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
-		..()
-
-
+		.=..()
+		if(dna.species.exotic_blood && .) // Do we have exotic blood, and have we left any on the ground?
+			var/datum/reagent/R = GLOB.chemical_reagents_list[get_blood_id()]
+			if(istype(R) && isturf(loc))
+				R.reaction_turf(get_turf(src), amt * EXOTIC_BLEED_MULTIPLIER)
 
 /mob/living/proc/restore_blood()
 	blood_volume = initial(blood_volume)
@@ -259,7 +267,7 @@
 		. = safe
 
 //to add a splatter of blood or other mob liquid.
-/mob/living/proc/add_splatter_floor(turf/T, small_drip)
+/mob/living/proc/add_splatter_floor(turf/T, small_drip, shift_x, shift_y)
 	if(get_blood_id() == null)
 		return
 	if(!T)
@@ -274,6 +282,8 @@
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
+				src.transfer_blood_to(drop, 2)
+				drop.update_icon()
 				return
 			else
 				temp_blood_DNA = list()
@@ -282,17 +292,30 @@
 		else
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
+			src.transfer_blood_to(drop, 2)
+			drop.update_icon()
 			return
 
 	// Find a blood decal or create a new one.
-	var/obj/effect/decal/cleanable/blood/B = locate() in T
+	var/obj/effect/decal/cleanable/blood/splats/B = locate() in T
+	var/list/bloods = get_atoms_of_type(T, B, TRUE, 0, 0) //Get all the non-projectile-splattered blood on this turf (not pixel-shifted).
+	if(shift_x || shift_y)
+		bloods = get_atoms_of_type(T, B, TRUE, shift_x, shift_y) //Get all the projectile-splattered blood at these pixels on this turf (pixel-shifted).
+		B = locate() in bloods
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
-	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
+		B = new /obj/effect/decal/cleanable/blood/splats(T, get_static_viruses())
+	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
+	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA
+	B.pixel_x = (shift_x)
+	B.pixel_y = (shift_y)
+	B.update_icon()
+	if(shift_x || shift_y)
+		B.layer = BELOW_MOB_LAYER //So the blood lands ontop of things like posters, windows, etc.
+
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
@@ -307,6 +330,43 @@
 	B.blood_DNA["UNKNOWN DNA"] = "X*"
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
+	if(!T)
+		T = get_turf(src)
+	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
+	if(!B)
+		B = new(T)
+
+/mob/living/proc/add_splash_floor(turf/T)
+	if(get_blood_id() == null)
+		return
+	if(!T)
+		T = get_turf(src)
+
+	var/list/temp_blood_DNA
+
+	// Find a blood decal or create a new one.
+	var/obj/effect/decal/cleanable/blood/B = locate() in T
+	if(!B)
+		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
+	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
+		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
+	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
+	if(temp_blood_DNA)
+		B.blood_DNA |= temp_blood_DNA
+
+/mob/living/carbon/human/add_splash_floor(turf/T)
+	if(!(NOBLOOD in dna.species.species_traits))
+		..()
+
+/mob/living/carbon/alien/add_splash_floor(turf/T)
+	if(!T)
+		T = get_turf(src)
+	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in T.contents
+	if(!B)
+		B = new(T)
+	B.blood_DNA["UNKNOWN DNA"] = "X*"
+
+/mob/living/silicon/robot/add_splash_floor(turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents

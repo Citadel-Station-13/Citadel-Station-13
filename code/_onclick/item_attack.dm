@@ -126,8 +126,16 @@
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
 				if(iscarbon(src))
-					var/mob/living/carbon/C = src
-					C.bleed(totitemdamage)
+					if(ishuman(src))
+						var/mob/living/carbon/human/H = src
+						var/armorsave = H.getarmor(H, "melee")
+						if(armorsave >= 30) // armor is useful again!
+							H.bleed_rate += round((totitemdamage * 0.15))	// internal bleeding, took it on the joint, what have you.
+						else
+							H.bleed_rate += round((totitemdamage * 0.50))	//it's not a 1:1 deletion of blood, but it's worrysome enough that you should get treated asap
+					else
+						var/mob/living/carbon/C = src
+						C.bleed(totitemdamage)
 				else
 					add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood

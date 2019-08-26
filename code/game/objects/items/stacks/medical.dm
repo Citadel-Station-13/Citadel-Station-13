@@ -17,15 +17,15 @@
 	var/self_delay = 50
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
-
-	if(M.stat == DEAD && !stop_bleeding)
+//Let's see if this isn't a horrid mistake. Removes death check from applying medical stack stuff. should help.
+/*	if(M.stat == DEAD && !stop_bleeding)
 		var/t_him = "it"
 		if(M.gender == MALE)
 			t_him = "him"
 		else if(M.gender == FEMALE)
 			t_him = "her"
 		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
-		return
+		return */
 
 	if(!iscarbon(M) && !isanimal(M))
 		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
@@ -125,7 +125,7 @@
 	icon_state = "gauze"
 	stop_bleeding = 1800
 	self_delay = 20
-	max_amount = 12
+	max_amount = 36	//bleeding is a major issue now, let's be nice to our medical team
 
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)

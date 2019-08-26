@@ -76,8 +76,13 @@
 			L.forceMove(drop_location())
 			L.emote("scream")
 			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.bleed(30)
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					H.bleed_rate += 10
+					H.bleed(10) //less instant blood damage because you're bleeding, and bleeding is bad news.
+				else
+					var/mob/living/carbon/C = L
+					C.bleed(30)
 			else
 				L.add_splatter_floor()
 			L.adjustBruteLoss(30)

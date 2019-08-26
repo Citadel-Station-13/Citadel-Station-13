@@ -35,8 +35,11 @@
 	icon_state += "-old"
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
-/obj/effect/decal/cleanable/blood/splatter
+/obj/effect/decal/cleanable/blood/splats
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
+
+/obj/effect/decal/cleanable/blood/splatter
+	random_icon_states = list("splatter1", "splatter2", "splatter3", "splatter4", "splatter5")
 
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
