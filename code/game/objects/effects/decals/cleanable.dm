@@ -84,6 +84,7 @@
 			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
 			if(blood_DNA && blood_DNA.len)
 				S.add_blood_DNA(blood_DNA)
+				S.add_blood_overlay()
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()

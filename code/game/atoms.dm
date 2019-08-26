@@ -412,7 +412,6 @@
 
 	blood_overlay = image(blood_splatter_icon)
 	blood_overlay.color = blood_DNA_to_color()
-	update_icon()
 	add_overlay(blood_overlay)
 
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
