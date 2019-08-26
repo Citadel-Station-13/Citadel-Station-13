@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/bundles_TC/infiltrator
 	name = "Infiltration Kit"
-	desc = "Sneak behind enemy lines and complete key objectives for your team. Includes an additional M92 pistol, two suppressors, four 10mm magazines, \
+	desc = "Sneak behind enemy lines and complete key objectives for your team. Includes an additional stechkin pistol, two suppressors, four 10mm magazines, \
 			a switchblade, two smoke grenades, a cryptographic sequencer with a spare recharger, a camera bug, a radio jammer, an AI detector, and a stealth implanter."
 	item = /obj/item/storage/backpack/duffelbag/syndie/infiltrator
 	cost = 25 //Worth 39
@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	category = "Syndicate Munitions"
 
 /datum/uplink_item/munitions/pistol
-	name = "M92 Pistol"
+	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun, which fires 10mm rounds from an 8 round magazine. \
 			The preferred weapon for stealth operations on a budget. Compatible with supressors."
 	item = /obj/item/gun/ballistic/automatic/pistol
