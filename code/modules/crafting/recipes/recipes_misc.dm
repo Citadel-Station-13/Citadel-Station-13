@@ -1,18 +1,35 @@
-/datum/crafting_recipe/aitater
-	name = "intelliTater"
-	result = /obj/item/aicard/aitater
-	time = 30
-	reqs = list(/obj/item/aicard = 1,
-					/obj/item/reagent_containers/food/snacks/grown/potato = 1)
+/////////////////
+//Large Objects//
+/////////////////
+
+/datum/crafting_recipe/showercurtain
+	name = "Shower Curtains"
+	reqs = 	list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
+	result = /obj/structure/curtain
 	category = CAT_MISC
 
-/datum/crafting_recipe/paperwork
-	name = "Filed Paper Work"
-	result =  /obj/item/folder/paperwork_correct
-	time = 60 //Takes time for people to file and complete paper work!
-	reqs = list(/obj/item/pen = 1,
-					/obj/item/folder/paperwork = 2)
+/datum/crafting_recipe/guillotine
+	name = "Guillotine"
+	result = /obj/structure/guillotine
+	time = 150 // Building a functioning guillotine takes time
+	reqs = list(/obj/item/stack/sheet/plasteel = 3,
+		        /obj/item/stack/sheet/mineral/wood = 20,
+		        /obj/item/stack/cable_coil = 10)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
+
+/datum/crafting_recipe/femur_breaker
+	name = "Femur Breaker"
+	result = /obj/structure/femur_breaker
+	time = 150
+	reqs = list(/obj/item/stack/sheet/metal = 20,
+		        /obj/item/stack/cable_coil = 30)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	category = CAT_MISC
+
+///////////////////
+//Tools & Storage//
+///////////////////
 
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
@@ -86,50 +103,6 @@
 	time = 40
 	category = CAT_MISC
 
-/datum/crafting_recipe/guillotine
-	name = "Guillotine"
-	result = /obj/structure/guillotine
-	time = 150 // Building a functioning guillotine takes time
-	reqs = list(/obj/item/stack/sheet/plasteel = 3,
-		        /obj/item/stack/sheet/mineral/wood = 20,
-		        /obj/item/stack/cable_coil = 10)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
-	category = CAT_MISC
-
-/datum/crafting_recipe/femur_breaker
-	name = "Femur Breaker"
-	result = /obj/structure/femur_breaker
-	time = 150
-	reqs = list(/obj/item/stack/sheet/metal = 20,
-		        /obj/item/stack/cable_coil = 30)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
-	category = CAT_MISC
-
-/datum/crafting_recipe/smallcarton
-	name = "Small Carton"
-	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
-	time = 10
-	reqs = list(/obj/item/stack/sheet/cardboard = 1)
-	category = CAT_MISC
-
-/datum/crafting_recipe/pressureplate
-	name = "Pressure Plate"
-	result = /obj/item/pressure_plate
-	time = 5
-	reqs = list(/obj/item/stack/sheet/metal = 1,
-				  /obj/item/stack/tile/plasteel = 1,
-				  /obj/item/stack/cable_coil = 2,
-				  /obj/item/assembly/igniter = 1)
-	category = CAT_MISC
-
-/datum/crafting_recipe/wheelchair
-	name = "Wheelchair"
-	result = /obj/vehicle/ridden/wheelchair
-	reqs = list(/obj/item/stack/sheet/plasteel = 2,
-				/obj/item/stack/rods = 8)
-	time = 100
-	category = CAT_MISC
-
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
 	result = /obj/item/twohanded/rcl/ghetto
@@ -138,21 +111,16 @@
 	reqs = list(/obj/item/stack/sheet/metal = 15)
 	category = CAT_MISC
 
-/datum/crafting_recipe/gold_horn
-	name = "Golden Bike Horn"
-	result = /obj/item/bikehorn/golden
-	time = 20
-	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
-				/obj/item/bikehorn = 1)
-	category = CAT_MISC
+////////////
+//Vehicles//
+////////////
 
-/datum/crafting_recipe/spooky_camera
-	name = "Camera Obscura"
-	result = /obj/item/camera/spooky
-	time = 15
-	reqs = list(/obj/item/camera = 1,
-				/datum/reagent/water/holywater = 10)
-	parts = list(/obj/item/camera = 1)
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/plasteel = 2,
+				/obj/item/stack/rods = 8)
+	time = 100
 	category = CAT_MISC
 
 /datum/crafting_recipe/skateboard
@@ -169,6 +137,70 @@
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
+	category = CAT_MISC
+
+/////////
+//Toys///
+/////////
+
+/datum/crafting_recipe/toysword
+	name = "Toy Sword"
+	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	result = /obj/item/toy/sword
+	category = CAT_MISC
+
+/datum/crafting_recipe/extendohand
+	name = "Extendo-Hand"
+	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
+	result = /obj/item/extendohand
+	category = CAT_MISC
+
+/datum/crafting_recipe/toyneb
+	name = "Non-Euplastic Blade"
+	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	result = /obj/item/toy/sword/cx
+	category = CAT_MISC
+
+////////////
+//Unsorted//
+////////////
+
+/datum/crafting_recipe/blackcarpet
+	name = "Black Carpet"
+	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
+	result = /obj/item/stack/tile/carpet/black/fifty
+	category = CAT_MISC
+
+/datum/crafting_recipe/paperframes
+	name = "Paper Frames"
+	result = /obj/item/stack/sheet/paperframes/five
+	time = 10
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/paper = 20)
+	category = CAT_MISC
+
+/datum/crafting_recipe/naturalpaper
+	name = "Hand-Pressed Paper"
+	time = 30
+	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
+	tools = list(/obj/item/hatchet)
+	result = /obj/item/paper_bin/bundlenatural
+	category = CAT_MISC
+
+/datum/crafting_recipe/bluespacehonker
+	name = "Bluespace Bike horn"
+	result = /obj/item/bikehorn/bluespacehonker
+	time = 10
+	reqs = list(/obj/item/stack/ore/bluespace_crystal = 1,
+				/obj/item/toy/crayon/blue = 1,
+				/obj/item/bikehorn = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/aitater
+	name = "intelliTater"
+	result = /obj/item/aicard/aitater
+	time = 30
+	reqs = list(/obj/item/aicard = 1,
+					/obj/item/reagent_containers/food/snacks/grown/potato = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/mousetrap
@@ -196,56 +228,96 @@
 	)
 	category = CAT_MISC
 
-/datum/crafting_recipe/paperframes
-	name = "Paper Frames"
-	result = /obj/item/stack/sheet/paperframes/five
+/datum/crafting_recipe/smallcarton
+	name = "Small Carton"
+	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
 	time = 10
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/paper = 20)
+	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/naturalpaper
-	name = "Hand-Pressed Paper"
-	time = 30
-	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
-	tools = list(/obj/item/hatchet)
-	result = /obj/item/paper_bin/bundlenatural
+/datum/crafting_recipe/pressureplate
+	name = "Pressure Plate"
+	result = /obj/item/pressure_plate
+	time = 5
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				  /obj/item/stack/tile/plasteel = 1,
+				  /obj/item/stack/cable_coil = 2,
+				  /obj/item/assembly/igniter = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/toysword
-	name = "Toy Sword"
-	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
-	result = /obj/item/toy/sword
-	category = CAT_MISC
-
-/datum/crafting_recipe/blackcarpet
-	name = "Black Carpet"
-	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
-	result = /obj/item/stack/tile/carpet/black/fifty
-	category = CAT_MISC
-
-/datum/crafting_recipe/showercurtain
-	name = "Shower Curtains"
-	reqs = 	list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
-	result = /obj/structure/curtain
-	category = CAT_MISC
-
-/datum/crafting_recipe/extendohand
-	name = "Extendo-Hand"
-	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
-	result = /obj/item/extendohand
-	category = CAT_MISC
-
-/datum/crafting_recipe/bluespacehonker
-	name = "Bluespace Bike horn"
-	result = /obj/item/bikehorn/bluespacehonker
-	time = 10
-	reqs = list(/obj/item/stack/ore/bluespace_crystal = 1,
-				/obj/item/toy/crayon/blue = 1,
+/datum/crafting_recipe/gold_horn
+	name = "Golden Bike Horn"
+	result = /obj/item/bikehorn/golden
+	time = 20
+	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
 				/obj/item/bikehorn = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/toyneb
-	name = "Non-Euplastic Blade"
-	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
-	result = /obj/item/toy/sword/cx
+/datum/crafting_recipe/spooky_camera
+	name = "Camera Obscura"
+	result = /obj/item/camera/spooky
+	time = 15
+	reqs = list(/obj/item/camera = 1,
+				/datum/reagent/water/holywater = 10)
+	parts = list(/obj/item/camera = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/paperwork
+	name = "Filed Paper Work"
+	result =  /obj/item/folder/paperwork_correct
+	time = 60 //Takes time for people to file and complete paper work!
+	reqs = list(/obj/item/pen = 1,
+					/obj/item/folder/paperwork = 2)
+	category = CAT_MISC
+
+//////////////
+//Banners/////
+//////////////
+
+/datum/crafting_recipe/command_banner
+	name = "Command Banner"
+	result = /obj/item/banner/command/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/captainparade = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/engineering_banner
+	name = "Engitopia Banner"
+	result = /obj/item/banner/engineering/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/engineer = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/cargo_banner
+	name = "Cargonia Banner"
+	result = /obj/item/banner/cargo/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/cargotech = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/science_banner
+	name = "Sciencia Banner"
+	result = /obj/item/banner/science/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/scientist = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/medical_banner
+	name = "Meditopia Banner"
+	result = /obj/item/banner/medical/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/medical = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/security_banner
+	name = "Securistan Banner"
+	result = /obj/item/banner/security/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/security = 1)
 	category = CAT_MISC
