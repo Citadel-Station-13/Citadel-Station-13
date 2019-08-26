@@ -122,7 +122,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/assault
 	cost = 25 //Worth 43
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/shredder
 	name = "Shredder Kit"
@@ -131,7 +130,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
 	cost = 25 //Worth 41
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/donk
 	name = "Donksoft Kit"
@@ -140,7 +138,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/donk
 	cost = 25 //Worth 40
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/knight
 	name = "Energy Knight Kit"
@@ -149,7 +146,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/knight
 	cost = 25 //Worth 39
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/cqc
 	name = "Close Quarters Combat Kit"
@@ -158,7 +154,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
 	cost = 25 //Worth 39
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/sniper
 	name = "Sniper Kit"
@@ -167,7 +162,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
 	cost = 25 //Worth 40
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/infiltrator
 	name = "Infiltration Kit"
@@ -176,7 +170,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/infiltrator
 	cost = 25 //Worth 39
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/medic
 	name = "Combat Medic Kit"
@@ -185,7 +178,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/combatmedic
 	cost = 25 //Worth ~37
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/engineer
 	name = "Combat Engineer Kit"
@@ -195,7 +187,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/engineer
 	cost = 25 //Worth 41
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/grenadier
 	name = "Grenadier's Belt"
@@ -205,7 +196,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/belt/grenade/full
 	cost = 25 //Worth ~90. Sounds like a lot but hasn't been a balance issue thus far.
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/heavy
 	name = "Heavy Weapons Specialist Kit"
@@ -214,7 +204,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/heavy
 	cost = 25 //Worth 42
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/bioterror
 	name = "Bioterrorist Kit"
@@ -223,7 +212,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/bioterror
 	cost = 25 //Worth 44!
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/pyro
 	name = "Pyromaniac Kit"
@@ -233,7 +221,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/pyro
 	cost = 25 //Worth 39
 	include_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/modular
 	name = "Modular Pistol Kit"
@@ -241,7 +228,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			including a box of soporific ammo. Includes a suit jacket padded with robust liner."
 	item = /obj/item/storage/briefcase/modularbundle
 	cost = 12
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/bundle
 	name = "Syndicate Bundle"
@@ -251,7 +237,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndicate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/surplus
 	name = "Syndicate Surplus Crate"
@@ -261,7 +246,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	cant_discount = TRUE
 	var/starting_crate_value = 50
 
 /datum/uplink_item/bundles_TC/surplus/super
@@ -299,7 +283,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
 	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
 	cost = 0
-	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/random/purchase(mob/user, datum/component/uplink/U)
 	var/list/uplink_items = U.uplink_items
@@ -326,7 +309,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/stack/telecrystal
 	cost = 1
 	surplus = 0
-	cant_discount = TRUE
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
 	purchase_log_vis = FALSE
@@ -565,7 +547,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 8-round 10mm magazine; compatible with the M92 Pistol. Loaded with soporific rounds that put the target to sleep. \
 			Remember that it takes about three shots to actually put the target to sleep, so plan accordinlgy."
 	item = /obj/item/ammo_box/magazine/m10mm/soporific
-	cost = 2
+	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/machinepistol
@@ -765,7 +747,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
-	item = 	/obj/item/ammo_box/a762
+	item = /obj/item/ammo_box/a762
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1575,8 +1557,8 @@ datum/uplink_item/cqc/taeclowndo_shoes
 
 /datum/uplink_item/tools/nightvision
 	name = "Night Vision Goggles"
-	desc = "Simple goggles that allow one to see in the dark. Incredibly useful for infiltration."
-	item = /obj/item/clothing/glasses/night
+	desc = "Simple goggles that allow one to see in the dark. Incredibly useful for infiltration. This pair works for agents with nearsightedness "
+	item = /obj/item/clothing/glasses/night/prescription
 	cost = 1
 
 /datum/uplink_item/tools/magboots
