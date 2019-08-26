@@ -169,7 +169,8 @@
 					/obj/item/clothing/suit/apron/overalls = 5,
 					/obj/item/clothing/under/rank/hydroponics = 5,
 					/obj/item/clothing/under/rank/hydroponics/skirt = 5,
-					/obj/item/clothing/mask/bandana = 4)
+					/obj/item/clothing/mask/bandana = 4,
+					/obj/item/book/granter/crafting_recipe/threads = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
