@@ -205,7 +205,7 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
-	fire_delay = 5
+	fire_delay = 3
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 	unique_reskin = list("Tatical" = "cshotgun",
