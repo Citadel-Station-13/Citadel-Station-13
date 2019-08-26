@@ -263,9 +263,10 @@
  */
 /obj/structure/table/plasmaglass
 	name = "plasmaglass table"
-	desc = "A glasstable, but pink. What will Nanotrasen design next with plasma?"
+	desc = "A glasstable, but it's pink and more sturdy. What will Nanotrasen design next with plasma?"
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table"
+	climbable = TRUE
 	buildstack = /obj/item/stack/sheet/plasmaglass
 	canSmoothWith = null
 	max_integrity = 270
@@ -276,45 +277,14 @@
 /obj/structure/table/plasmaglass/New()
 	. = ..()
 	debris += new frame
-	debris += new /obj/item/shard
+	debris += new /obj/item/shard/plasma
 
 /obj/structure/table/plasmaglass/Destroy()
 	QDEL_LIST(debris)
 	. = ..()
 
-/obj/structure/table/plasmaglass/Crossed(atom/movable/AM)
-	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
-	if(!isliving(AM))
-		return
-	// Don't break if they're just flying past
-	if(AM.throwing)
-		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
-	else
-		check_break(AM)
-
-/obj/structure/table/plasmaglass/proc/throw_check(mob/living/M)
-	if(M.loc == get_turf(src))
-		check_break(M)
-
 /obj/structure/table/plasmaglass/proc/check_break(mob/living/M)
-	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
-		table_shatter(M)
-
-/obj/structure/table/plasmaglass/proc/table_shatter(mob/living/L)
-	visible_message("<span class='warning'>[src] breaks!</span>",
-		"<span class='danger'>You hear breaking glass.</span>")
-	var/turf/T = get_turf(src)
-	playsound(T, "shatter", 50, 1)
-	for(var/I in debris)
-		var/atom/movable/AM = I
-		AM.forceMove(T)
-		debris -= AM
-		if(istype(AM, /obj/item/shard))
-			AM.throw_impact(L)
-	L.Knockdown(100)
-	qdel(src)
+	return
 
 /obj/structure/table/plasmaglass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	if(!(flags_1 & NODECONSTRUCT_1))
