@@ -1,6 +1,6 @@
 /obj/item/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
-	damage = 50
+	damage = 60
 
 /obj/item/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
@@ -47,7 +47,7 @@
 
 /obj/item/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
-	damage = 20
+	damage = 25
 	knockdown = 50
 
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
