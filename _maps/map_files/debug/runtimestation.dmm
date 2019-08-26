@@ -998,7 +998,7 @@
 /area/medical/medbay)
 "cL" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/item/storage/backpack/duffelbag/syndie/med/surgery,
 /obj/item/disk/surgery/debug,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
