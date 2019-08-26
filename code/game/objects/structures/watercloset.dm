@@ -480,11 +480,11 @@
 	dir = NORTH
 
 /obj/structure/sink/directional/east
-	pixel_x = -20
+	pixel_x = -16
 	dir = WEST
 
 /obj/structure/sink/directional/west
-	pixel_x = 20
+	pixel_x = 16
 	dir = EAST
 
 /obj/structure/sink/attack_hand(mob/living/user)
