@@ -134,9 +134,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_TC/donk
 	name = "Donksoft Kit"
 	desc = "A kit chalk full of harmless fun! Includes a toy riot submachine gun, with three extra boxes of riot darts, \
-			three tearstache grenades, soap, a fake nuke disk, a syndicate sentience potion, playing cards, and a broken chameleon kit."
+			soap, a fake nuke disk, a syndicate sentience potion, playing cards, a beenade, and a broken chameleon kit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/donk
-	cost = 25 //Worth 40
+	cost = 25 //Worth 43
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/bundles_TC/knight
@@ -1186,9 +1186,9 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
 		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
 	item = /obj/item/grenade/chem_grenade/teargas/moustache
-	cost = 6
+	cost = 3
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/explosives/viscerators
 	name = "Viscerator Delivery Grenade"

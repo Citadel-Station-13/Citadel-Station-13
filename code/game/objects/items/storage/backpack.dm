@@ -501,14 +501,12 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src)
-	new /obj/item/grenade/chem_grenade/teargas/moustache(src)
-	new /obj/item/grenade/chem_grenade/teargas/moustache(src)
-	new /obj/item/grenade/chem_grenade/teargas/moustache(src)
 	new /obj/item/soap/syndie(src)
 	new /obj/item/disk/nuclear/fake(src)
 	new /obj/item/slimepotion/slime/sentience/nuclear(src)
 	new /obj/item/storage/box/syndie_kit/chameleon/broken(src)
 	new /obj/item/toy/cards/deck/syndicate(src)
+	new /obj/item/storage/box/syndie_kit/bee_grenades(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/bioterror
 	name = "bioterrorist duffel bag"
