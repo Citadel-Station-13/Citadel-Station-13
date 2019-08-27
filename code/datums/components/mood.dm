@@ -216,7 +216,7 @@
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
 	if(newval == insanity_effect)
 		return
-	var/mob/living/master = parent
+	//var/mob/living/master = parent
 	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
