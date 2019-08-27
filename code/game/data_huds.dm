@@ -18,7 +18,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD, RAD_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -210,6 +210,22 @@
 			if(null)
 				holder.icon_state = "hudhealthy"
 
+
+/mob/living/carbon/proc/med_hud_set_radstatus()
+	var/image/radholder = hud_list[RAD_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	radholder.pixel_y = I.Height() - world.icon_size
+	var/mob/living/carbon/M = src
+	var/rads = M.radiation
+	switch(rads)
+		if(-INFINITY to RAD_MOB_SAFE)
+			radholder.icon_state = "hudradsafe"
+		if((RAD_MOB_SAFE+1) to RAD_MOB_MUTATE)
+			radholder.icon_state = "hudraddanger"
+		if((RAD_MOB_MUTATE+1) to RAD_MOB_VOMIT)
+			radholder.icon_state = "hudradlethal"
+		if((RAD_MOB_VOMIT+1) to INFINITY)
+			radholder.icon_state = "hudradnuke"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
