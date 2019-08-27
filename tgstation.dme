@@ -3077,4 +3077,8 @@
 #include "modular_citadel\code\modules\vore\eating\voreitems.dm"
 #include "modular_citadel\code\modules\vore\eating\vorepanel_vr.dm"
 #include "modular_citadel\interface\skin.dmf"
+#include "modular_kepler\code\modules\oracle_ui\assets.dm"
+#include "modular_kepler\code\modules\oracle_ui\hookup_procs.dm"
+#include "modular_kepler\code\modules\oracle_ui\oracle_ui.dm"
+#include "modular_kepler\code\modules\oracle_ui\themed.dm"
 // END_INCLUDE
