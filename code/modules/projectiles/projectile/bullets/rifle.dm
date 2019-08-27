@@ -1,4 +1,4 @@
-// 5.56mm (Unused... for now)
+// 5.56mm (NT-ARG Boarder)
 
 /obj/item/projectile/bullet/a556
 	name = "5.56mm bullet"

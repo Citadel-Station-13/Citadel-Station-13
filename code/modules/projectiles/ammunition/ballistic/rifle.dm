@@ -10,7 +10,7 @@
 /obj/item/ammo_casing/a762/enchanted
 	projectile_type = /obj/item/projectile/bullet/a762_enchanted
 
-// 5.56mm (Unused)
+// 5.56mm (NT-ARG Boarder)
 
 /obj/item/ammo_casing/a556
 	name = "5.56mm bullet casing"

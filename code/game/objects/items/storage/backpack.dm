@@ -492,7 +492,7 @@
 	new /obj/item/soap/syndie(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/donk
-	name = "donk co. duffel bag"
+	name = "\improper Donk Co. duffel bag"
 	desc = "A large duffel bag for holding toys. There is a Donk Co. logo on the back."
 
 /obj/item/storage/backpack/duffelbag/syndie/donk/PopulateContents()
