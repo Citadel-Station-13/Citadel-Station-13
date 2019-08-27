@@ -66,7 +66,7 @@
 /obj/item/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"
 	damage = 2
-	stamina = 12.5
+	stamina = 15
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()
