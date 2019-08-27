@@ -119,6 +119,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Service Maintenance"
 	icon_state = "maint_bar"
 
+/area/maintenance/department/crew_quarters/theatre
+	name = "Theatre Maintenance"
+	icon_state = "maint_bar"
+
+
 /area/maintenance/department/crew_quarters/dorms
 	name = "Dormitory Maintenance"
 	icon_state = "maint_dorms"
@@ -895,12 +900,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "checkpoint1"
 
 /area/security/checkpoint/auxiliary
+	name = "Auxiliary Security Checkpoint"
 	icon_state = "checkpoint_aux"
 
 /area/security/checkpoint/tertiary
+	name = "Tertiary Security Checkpoint"
 	icon_state = "checkpoint_tert"
 
 /area/security/checkpoint/escape
+	name = "Departures Security Checkpoint"
+	icon_state = "checkpoint_esc"
+
+/area/security/checkpoint/arrivals
+	name = "Arrivals Security Checkpoint"
 	icon_state = "checkpoint_esc"
 
 /area/security/checkpoint/supply
