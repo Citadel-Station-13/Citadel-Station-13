@@ -217,6 +217,8 @@
 	var/customEcho	//Custom looping text in owner
 	var/customSpan	//Custom spans for looping text
 
+	var/political = TRUE // if source is from politi-aid
+
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
@@ -225,6 +227,7 @@
 		owner.remove_status_effect(src)
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
+	political = E.political
 	master = get_mob_by_key(enthrallID)
 	//if(M.ckey == enthrallID)
 	//	owner.remove_status_effect(src)//At the moment, a user can enthrall themselves, toggle this back in if that should be removed.
@@ -595,7 +598,6 @@
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'><i>[saytext]</i></span>"), 5)
 				addtimer(CALLBACK(C, /atom/movable/proc/say, "[customTriggers[trigger][2]]"), 5)
-				//(C.say(customTriggers[trigger][2]))//trigger3
 				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
 
 
@@ -687,6 +689,10 @@
 	else
 		deltaResist = 1.8 + resistGrowth
 		resistGrowth += 0.05
+
+	//MKUltra easy break, if you have prefs off and ended up with it, then you break extra easy
+	if(!political && !owner.client?.prefs.lewdchem)
+		deltaResist += 10
 
 	//distance modifer
 	switch(DistApart)

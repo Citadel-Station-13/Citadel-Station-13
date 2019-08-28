@@ -130,8 +130,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 */
 
 /datum/reagent/fermi/enthrall
-	name = "Politi-aid"
-	id = "politi-aid"
+	name = "enthrall"
+	id = "enthrall"
 	description = "A forbidden deep purple mixture that aids the political influence of creator upon the subject. When taken by the creator, it will enhance the power of their words to those affected by it."
 	color = "#660055"
 	taste_description = "politics"
@@ -143,6 +143,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
+	var/political = TRUE
 	pH = 10
 	OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
 	can_synth = FALSE
@@ -176,15 +177,20 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
+	political = FALSE
 
 
 /datum/reagent/fermi/enthrall/mkultra/on_mob_add(mob/living/carbon/M)
 	if(M.client?.prefs.lewdchem)
 		..()
 
-/datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+/datum/reagent/fermi/enthrall/mkultra/on_mob_life(mob/living/carbon/M)
 	if(M.client?.prefs.lewdchem)
 		..()
+
+/datum/reagent/fermi/enthrall/politi
+	name = "Politi-aid"
+	id = "politi-aid"
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
@@ -212,7 +218,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
+		to_chat(M, "<span class='notice'><i>[(political?"You feel your vocal chords tingle as your voice turns charasmatic.":" comes out in a more sultry tone.")]</span>")
 	else
 		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
@@ -272,22 +278,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 100u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
 		if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
 			to_chat(M, "<span class='love'><i>You are unable to resist your own charms anymore, and become a full blown narcissist.</i></span>")
-		/*Old way of handling, left in as an option B
-		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
-		for(var/mob/living/carbon/victim in seen)
-			if(victim == M)//as much as I want you to fall for beepsky, he doesn't have a ckey
-				seen = seen - victim
-			if(!victim.ckey)
-				seen = seen - victim
-		var/mob/living/carbon/chosen = pick(seen)
-		creatorID = chosen.ckey
-		if (chosen.gender == "female")
-			creatorGender = "Mistress"
-		else
-			creatorGender = "Master"
-		creatorName = chosen.real_name
-		creator = get_mob_by_key(creatorID)
-		*/
 	ADD_TRAIT(M, TRAIT_PACIFISM, "MKUltra")
 	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
