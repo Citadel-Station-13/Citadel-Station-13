@@ -5898,13 +5898,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"alN" = (
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel/white,
-/area/security/brig)
 "alO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -85145,7 +85138,7 @@ afH
 agj
 ahs
 ahP
-alN
+ahP
 aiF
 agj
 aja
