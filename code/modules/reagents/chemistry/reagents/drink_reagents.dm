@@ -13,6 +13,7 @@
 	glass_icon_state = "glass_orange"
 	glass_name = "glass of orange juice"
 	glass_desc = "Vitamins! Yay!"
+	pH = 3.3
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getOxyLoss() && prob(30))
@@ -45,6 +46,7 @@
 	glass_icon_state = "glass_green"
 	glass_name = "glass of lime juice"
 	glass_desc = "A glass of sweet-sour lime juice."
+	pH = 2.2
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getToxLoss() && prob(20))
@@ -125,6 +127,7 @@
 	glass_icon_state  = "lemonglass"
 	glass_name = "glass of lemon juice"
 	glass_desc = "Sour..."
+	pH = 2
 
 /datum/reagent/consumable/banana
 	name = "Banana Juice"

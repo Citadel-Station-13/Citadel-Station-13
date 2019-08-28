@@ -385,8 +385,8 @@
 	OptimalTempMin 		= 200 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax		= 950 // Upper end for above
 	ExplodeTemp			= 999 //Temperature at which reaction explodes
-	OptimalpHMin		= 2 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	OptimalpHMax		= 2.8 // Higest value for above
+	OptimalpHMin		= 3 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax		= 3.6 // Higest value for above
 	ReactpHLim			= 5 // How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 2 // How sharp the temperature exponential curve is (to the power of value)
@@ -404,6 +404,10 @@
 	if(Nt.purity < 0.5)
 		holder.remove_reagent(src.id, cached_volume)
 		holder.add_reagent("neuroweak", cached_volume)
+
+/datum/chemical_reaction/neurotoxin/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//reduced size
+	volume = volume/10
+	..()
 
 /datum/chemical_reaction/snowwhite
 	name = "Snow White"

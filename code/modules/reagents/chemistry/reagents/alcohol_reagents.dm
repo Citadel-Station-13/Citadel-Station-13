@@ -1383,6 +1383,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
+	SplitChem			= TRUE
 	ImpureChem 			= "neuroweak"
 	InverseChemVal 		= 0 //Clear conversion
 	InverseChem 		= "neuroweak"
@@ -1422,14 +1423,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 
 /datum/reagent/consumable/ethanol/neuroweak
-	name = "Neuroalcohol"
+	name = "Neuro-Smash"
 	id = "neuroweak"
-	description = "A mostly safe alcoholic drink for the true daredevils. Do not mix with Neurotoxin."
+	description = "A mostly safe alcoholic drink for the true daredevils. Counteracts Neurotoxins."
 	boozepwr = 60
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent("neurotoxin"))
-		M.adjustBrainLoss(0.5*REM, 150)
+		M.adjustBrainLoss(-1*REM, 150)
+		M.reagents.remove_reagent("neurotoxin", 0.25, FALSE)
+	if(holder.has_reagent("fentanyl"))
+		M.adjustBrainLoss(-1*REM, 150)
+		M.reagents.remove_reagent("fentanyl", 0.25, FALSE)
 	else
 		M.adjustBrainLoss(-0.5*REM, 150)
 		M.dizziness +=2

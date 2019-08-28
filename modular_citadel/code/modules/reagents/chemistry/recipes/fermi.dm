@@ -101,10 +101,10 @@
 	PurityMin			= 0.4 //The minimum purity something has to be above, otherwise it explodes.
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
-	if(!locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list)
+	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
+	if(!E)
 		return
 	var/turf/open/location = get_turf(my_atom)
-	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	if(location)
 		E.location_created = location
 		E.data.["location_created"] = location
