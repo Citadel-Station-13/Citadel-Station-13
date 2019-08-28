@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
 					var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
 					if(UNDIE_COLORABLE(S))
-						MA.color = "[H.socks_color]"
+						MA.color = "#[H.socks_color]"
 					standing += MA
 
 	if(standing.len)
