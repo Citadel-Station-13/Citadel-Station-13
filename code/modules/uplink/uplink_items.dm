@@ -327,7 +327,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 // Guns, Launchers, and other ranged weapons of destruction
 /datum/uplink_item/munitions
-	category = "Syndicate Munitions"
+	category = "Syndicate Firearms"
 
 /datum/uplink_item/munitions/pistol
 	name = "Stechkin Pistol"
