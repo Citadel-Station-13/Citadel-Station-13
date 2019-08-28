@@ -36,7 +36,6 @@
 	var/metabolizing 		= FALSE
 	var/invisible			= FALSE //Set to true if it doesn't appear on handheld health analyzers.
 	//Fermichem vars:
-	var/FermiChem 			= FALSE		//If it's a fermichem
 	var/purity = 1 						//How pure a chemical is from 0 - 1.
 	var/addProc = FALSE 				//If the chemical should force an on_new() call
 	var/turf/loc 			= null 				//Should be the creation location!
