@@ -134,6 +134,8 @@
 		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
+	. = ..()
+
 	// How did you even get on the shuttle before it go to the station?
 	if(!IS_DOCKED)
 		return
@@ -159,6 +161,7 @@
 		authorized += ID
 
 	process()
+	return TRUE
 
 /obj/machinery/computer/emergency_shuttle/Destroy()
 	// Our fake IDs that the emag generated are just there for colour
@@ -459,10 +462,12 @@
 	return
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	return TRUE
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	. = ..()
