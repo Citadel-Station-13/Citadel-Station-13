@@ -750,9 +750,9 @@
 		to_chat(world, "[user]'s power is [power_multiplier].")
 
 	//Mixables
-	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara")
-	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job")
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job")
+	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara|old boy|pip pip|whatho|how about we discuss this|spot of tea")
+	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job|splendid|jolly good|jolly good show|bloody brilliant")
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
 	var/static/regex/wakeup_words = regex("revert|awaken|snap") //works
@@ -772,7 +772,7 @@
 	var/static/regex/strip_words = regex("strip|derobe|nude")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
-	var/static/regex/liedown_words = regex("lie down") //TO ADD
+	var/static/regex/liedown_words = regex("lie down") 
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel")
 	//phase 3
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
@@ -781,14 +781,14 @@
 	var/static/regex/custom_echo = regex("obsess|fills your mind|loop")
 	var/static/regex/instill_words = regex("feel|entice|overwhel")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
-	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
+	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed|word from HQ")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-	var/static/regex/hallucinate_words = regex("get high|hallucinate")
+	var/static/regex/hallucinate_words = regex("get high|hallucinate|trip balls")
 	var/static/regex/hot_words = regex("heat|hot|hell")
 	var/static/regex/cold_words = regex("cold|cool down|chill|freeze")
-	var/static/regex/getup_words = regex("get up")
-	var/static/regex/pacify_words = regex("more and more docile|complaisant|friendly|pacifist")
+	var/static/regex/getup_words = regex("get up|hop to it")
+	var/static/regex/pacify_words = regex("docile|complaisant|friendly|pacifist")
 	var/static/regex/charge_words = regex("charge|oorah|attack")
 
 	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)

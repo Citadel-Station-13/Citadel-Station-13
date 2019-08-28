@@ -46,9 +46,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/unitCheck = FALSE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "a weird chemical fleshy flavour"
-	//var/datum/status_effect/chem/SDGF/candidates/candies
 	var/list/candies = list()
-	//var/polling = FALSE
 	var/list/result = list()
 	var/list/group = null
 	var/pollStarted = FALSE
@@ -214,7 +212,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/SDGFheal
 	name = "synthetic-derived growth factor"
 	id = "SDGFheal"
-	metabolization_rate = 1
+	metabolization_rate = 0.8
 	can_synth = FALSE
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
@@ -244,7 +242,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#a502e0" // rgb: 96, 0, 255
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	var/startHunger
 	can_synth = TRUE
 

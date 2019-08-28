@@ -206,15 +206,13 @@
 	can_synth = FALSE
 
 /datum/reagent/fermi/nanite_b_gone/on_mob_life(mob/living/carbon/C)
-	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -cached_purity//0.5 seems to be the default to me, so it'll neuter them.
+	N.nanite_volume = -cached_purity*2//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
-	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
@@ -226,7 +224,7 @@
 		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -2
+	N.nanite_volume = -4*cached_purity
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
