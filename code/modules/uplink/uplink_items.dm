@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An automatic machine pistol that fires 9mm rounds in 2-round bursts from a 16 round magazine. \
 			For when you just need to spray and pray. Compatible with supressors."
 	item = /obj/item/gun/ballistic/automatic/pistol/machinepistol
-	cost = 8
+	cost = 9
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/revolver
@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/munitions/pdw
 	name = "M-90gl PDW"
-	desc = "A compact personal defense weapon that fires armor piercing 5.7x28mm ammunition in 5-round bursts from a 50 round magazine. \
+	desc = "A compact personal defense weapon that fires armor piercing 5.7x28mm ammunition in 4-round bursts from a 48 round magazine. \
 			This specific model comes with an underbarrel grenade launcher, for flushing out enemies behind cover. \
 			While expensive, it is the most versatile and effective of its size on offer."
 	item = /obj/item/gun/ballistic/automatic/m90
@@ -722,7 +722,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/pdw
 	name = "5.7x28mm Toploader Magazine"
-	desc = "An additional 50-round 5.7x28mm magazine; suitable for use with the M-90gl carbine. \
+	desc = "An additional 48-round 5.7x28mm magazine; suitable for use with the M-90gl carbine. \
 			Armor piercing out of the box, with a large capacity, these magazines will take you far."
 	item = /obj/item/ammo_box/magazine/a57x28
 	cost = 4
@@ -730,7 +730,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/pdwhp
 	name = "5.7x28mm HP Toploader Magazine"
-	desc = "An alternative 50-round 5.7x28mm HP magazine; suitable for use with the M-90gl carbine. \
+	desc = "An alternative 48-round 5.7x28mm HP magazine; suitable for use with the M-90gl carbine. \
 			Forfeits the armor piercing capabilities of standard rounds for raw damage."
 	item = /obj/item/ammo_box/magazine/a57x28/hp
 	cost = 5

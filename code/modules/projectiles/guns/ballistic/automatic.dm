@@ -146,7 +146,7 @@
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
-	burst_size = 5
+	burst_size = 4
 	fire_delay = 2
 	pin = /obj/item/firing_pin/implant/pindicate
 

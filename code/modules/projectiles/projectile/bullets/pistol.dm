@@ -27,7 +27,7 @@
 
 /obj/item/projectile/bullet/c10mm_ap
 	name = "10mm armor-piercing bullet"
-	damage = 24
+	damage = 27
 	armour_penetration = 50
 
 /obj/item/projectile/bullet/c10mm_hp

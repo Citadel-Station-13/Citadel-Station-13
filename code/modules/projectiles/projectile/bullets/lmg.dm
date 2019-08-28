@@ -25,20 +25,20 @@
 
 /obj/item/projectile/bullet/mm556x45
 	name = "5.56x45mm bullet"
-	damage = 21
+	damage = 25
 	armour_penetration = 5
 
 /obj/item/projectile/bullet/mm556x45/ap
 	name = "5.56x45mmm armor-piercing bullet"
-	damage = 18
+	damage = 21
 	armour_penetration = 75
 
 /obj/item/projectile/bullet/mm556x45/hp
 	name = "5.56x45mm hollow-point bullet"
-	damage = 30
+	damage = 35
 	armour_penetration = -60
 
 /obj/item/projectile/bullet/incendiary/mm556x45
 	name = "5.56x45mm incendiary bullet"
 	damage = 10
-	fire_stacks = 1
+	fire_stacks = 2
