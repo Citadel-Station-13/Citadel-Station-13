@@ -130,7 +130,7 @@
 		if(chambered)
 			to_chat(user, "<span class='notice'>[src] already has a [magazine_wording] chambered.</span>")
 			return
-		if(magazine.attackby(A, silent = TRUE))
+		if(magazine.attackby(A, user, silent = TRUE))
 			to_chat(user, "<span class='notice'>You load a new [A] into \the [src].</span>")
 			playsound(src, "gun_insert_full_magazine", 70, 1)
 			chamber_round()
