@@ -21,13 +21,13 @@
 	export_types = list(/obj/structure/ore_box)
 
 /datum/export/large/crate/wood
-	cost = 240
+	cost = 140
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
 
 /datum/export/large/crate/coffin
-	cost = 250//50 wooden crates cost 2000 points, and you can make 10 coffins in seconds with those planks. Each coffin selling for 250 means you can make a net gain of 500 points for wasting your time making coffins.
+	cost = 150
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 
@@ -131,6 +131,32 @@
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 
+/datum/export/large/frame
+	cost = 20
+	unit_name = "structure frame"
+	export_types = list(/obj/structure/frame, /obj/structure/table_frame)
+	include_subtypes = TRUE
+
+/datum/export/large/pacman
+	cost = 125
+	unit_name = "pacman"
+	export_types = list(/obj/machinery/power/port_gen/pacman)
+
+/datum/export/large/pacman
+	cost = 150
+	unit_name = "super pacman"
+	export_types = list(/obj/machinery/power/port_gen/pacman/super)
+
+/datum/export/large/pacman
+	cost = 175
+	unit_name = "mrs super pacman"
+	export_types = list(/obj/machinery/power/port_gen/pacman/mrs)
+
+/datum/export/large/hydroponics
+	cost = 120
+	unit_name = "hydroponics tray"
+	export_types = list(/obj/machinery/hydroponics)
+
 /datum/export/large/gas_canister
 	cost = 10 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
@@ -140,7 +166,7 @@
 	var/worth = 10
 	var/gases = C.air_contents.gases
 
-	worth += gases[/datum/gas/bz]*4	
+	worth += gases[/datum/gas/bz]*4
 	worth += gases[/datum/gas/stimulum]*25
 	worth += gases[/datum/gas/hypernoblium]*1000
 	worth += gases[/datum/gas/miasma]*15

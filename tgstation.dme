@@ -1450,6 +1450,7 @@
 #include "code\modules\cargo\exports\large_objects.dm"
 #include "code\modules\cargo\exports\manifest.dm"
 #include "code\modules\cargo\exports\materials.dm"
+#include "code\modules\cargo\exports\orgains_robotics.dm"
 #include "code\modules\cargo\exports\parts.dm"
 #include "code\modules\cargo\exports\seeds.dm"
 #include "code\modules\cargo\exports\sheets.dm"

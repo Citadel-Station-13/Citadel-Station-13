@@ -3,6 +3,26 @@
 /datum/export/weapon
 	include_subtypes = FALSE
 
+/datum/export/gear/makeshift_shield
+	cost = 30
+	unit_name = "unknown shield"
+	export_types = list(/obj/item/shield/riot, /obj/item/shield/riot/roman, /obj/item/shield/riot/buckler, /obj/item/shield/makeshift)
+
+/datum/export/gear/riot_shield
+	cost = 50
+	unit_name = "riot shield"
+	export_types = list(/obj/item/shield/riot, /obj/item/shield/riot/tower)
+
+/datum/export/gear/riot_shield
+	cost = 70
+	unit_name = "flash shield"
+	export_types = list(/obj/item/assembly/flash/shield)
+
+/datum/export/gear/tele_shield
+	cost = 100
+	unit_name = "tele shield"
+	export_types = list(/obj/item/shield/riot/tele, /obj/item/shield/energy)
+
 /datum/export/weapon/baton
 	cost = 100
 	unit_name = "stun baton"
@@ -14,7 +34,6 @@
 	cost = 100
 	unit_name = "combat knife"
 	export_types = list(/obj/item/kitchen/knife/combat)
-
 
 /datum/export/weapon/taser
 	cost = 200
@@ -46,7 +65,6 @@
 	unit_name = "combat shotgun"
 	export_types = list(/obj/item/gun/ballistic/shotgun/automatic/combat)
 
-
 /datum/export/weapon/flashbang
 	cost = 5
 	unit_name = "flashbang grenade"
@@ -56,7 +74,6 @@
 	cost = 5
 	unit_name = "tear gas grenade"
 	export_types = list(/obj/item/grenade/chem_grenade/teargas)
-
 
 /datum/export/weapon/flash
 	cost = 5
