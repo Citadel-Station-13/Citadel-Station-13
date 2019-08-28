@@ -1427,6 +1427,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "neuroweak"
 	description = "A mostly safe alcoholic drink for the true daredevils. Counteracts Neurotoxins."
 	boozepwr = 60
+	pH = 8
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent("neurotoxin"))
