@@ -64,6 +64,24 @@
 	export_types = list(/obj/item/lightreplacer)
 
 // Basic tools
+/datum/export/basicmining
+	cost = 20
+	unit_name = "basic mining tool"
+	export_types = list(/obj/item/pickaxe, /obj/item/pickaxe/mini, /obj/item/shovel, /obj/item/resonator)
+	include_subtypes = FALSE
+
+/datum/export/upgradedmining
+	cost = 50
+	unit_name = "mining tool"
+	export_types = list(/obj/item/pickaxe/silver, /obj/item/pickaxe/drill, /obj/item/gun/energy/plasmacutter, /obj/item/resonator/upgraded)
+	include_subtypes = FALSE
+
+/datum/export/advdmining
+	cost = 150
+	unit_name = "advanced mining tool"
+	export_types = list(/obj/item/pickaxe/diamond, /obj/item/pickaxe/drill/diamonddrill, /obj/item/pickaxe/drill/jackhammer, /obj/item/gun/energy/plasmacutter/adv)
+	include_subtypes = FALSE
+
 /datum/export/screwdriver
 	cost = 2
 	unit_name = "screwdriver"

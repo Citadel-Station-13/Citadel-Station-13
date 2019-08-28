@@ -1,5 +1,5 @@
 /datum/bounty/item/botany
-	reward = 5000
+	reward = 1200
 	var/datum/bounty/item/botany/multiplier = 0 //adds bonus reward money; increased for higher tier or rare mutations
 	var/datum/bounty/item/botany/bonus_desc //for adding extra flavor text to bounty descriptions
 	var/datum/bounty/item/botany/foodtype = "meal" //same here
@@ -64,7 +64,7 @@
 	multiplier = 4 //hush money
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "\"meal\""
-	
+
 /datum/bounty/item/botany/cannabis_white
 	name = "Lifeweed Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white)

@@ -6,6 +6,7 @@
 
 /datum/export/implant
 	include_subtypes = FALSE
+	k_elasticity = 0 //ALWAYS worth selling upgrades
 
 /datum/export/orgains
 	include_subtypes = TRUE
@@ -15,6 +16,12 @@
 	cost = 150
 	unit_name = "autsurgeon"
 	export_types = list(/obj/item/autosurgeon)
+	include_subtypes = TRUE
+
+/datum/export/implant/implant
+	cost = 50
+	unit_name = "implant"
+	export_types = list(/obj/item/implant)
 	include_subtypes = TRUE
 
 /datum/export/implant/cnsreboot
@@ -112,3 +119,28 @@
 	cost = 500
 	unit_name = "vocal cords"
 	export_types = list(/obj/item/organ/vocal_cords) //These are gotten via different races
+
+/datum/export/robotics/lims
+	cost = 30
+	unit_name = "robotic lim replacement"
+	export_types = list(/obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot)
+
+/datum/export/robotics/surpluse
+	cost = 40
+	unit_name = "robotic lim replacement"
+	export_types = list(/obj/item/bodypart/l_arm/robot/surplus, /obj/item/bodypart/r_arm/robot/surplus, /obj/item/bodypart/l_leg/robot/surplus, /obj/item/bodypart/r_leg/robot/surplus)
+
+/datum/export/robotics/surplus_upgraded
+	cost = 50
+	unit_name = "upgraded robotic lim replacement"
+	export_types = list(/obj/item/bodypart/l_arm/robot/surplus_upgraded, /obj/item/bodypart/r_arm/robot/surplus_upgraded, /obj/item/bodypart/l_leg/robot/surplus_upgraded, /obj/item/bodypart/r_leg/robot/surplus_upgraded)
+
+/datum/export/robotics/surgery_gear_basic
+	cost = 5
+	unit_name = "surgery tool"
+	export_types = list(/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw, /obj/item/surgical_drapes)
+
+/datum/export/robotics/surgery_gear_adv
+	cost = 75
+	unit_name = "advanced surgery tool"
+	export_types = list(/obj/item/retractor/adv, /obj/item/hemostat/adv, /obj/item/cautery/adv, /obj/item/surgicaldrill/adv, /obj/item/scalpel/adv, /obj/item/circular_saw/adv)
