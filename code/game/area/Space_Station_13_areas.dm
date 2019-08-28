@@ -188,6 +188,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
 
+/area/maintenance/arrivals/south
+	name = "Arrivals South Maintenance"
+	icon_state = "fpmaint"
+
+
 /area/maintenance/arrivals/north_2
 	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
@@ -562,6 +567,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/engineering
 	name = "Engineering"
 	icon_state = "engine"
+
+/area/engine/tesla
+	name = "Tesla Engine"
+	icon_state = "engine"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	valid_territory = FALSE
+	blob_allowed = FALSE
+	flags_1 = NONE
+	ambientsounds = ENGINEERING
 
 /area/engine/atmos
 	name = "Atmospherics"
