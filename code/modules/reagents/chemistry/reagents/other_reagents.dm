@@ -2031,3 +2031,12 @@
 /datum/reagent/changeling_string/Destroy()
 	qdel(original_dna)
 	return ..()
+
+/datum/reagent/mustardgrind
+	name = "Mustardgrind"
+	id = "mustardgrind"
+	description = "A powerd that is mixed with water and enzymes to make mustard."
+	color = "#BCC740" //RGB: 188, 199, 64
+	taste_description = "plant dust"
+
+

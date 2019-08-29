@@ -44,6 +44,9 @@
 	icon_state = "plate"
 	resistance_flags = NONE
 
+/obj/item/trash/plate/alt
+	icon_state = "plate1"
+
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"
