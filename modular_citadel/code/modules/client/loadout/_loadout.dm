@@ -50,12 +50,32 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/geargroupID //defines the ID that the gear inherits from the config
+
+	//NEW DONATOR SYTSEM STUFF
+	var/donoritem				//autoset on new if null
+	var/donator_group_id		//New donator group ID system.
+	//END
+
 	var/list/restricted_roles
+
+	//Old donator system/snowflake ckey whitelist, used for single ckeys/exceptions
 	var/list/ckeywhitelist
+	//END
+
 	var/restricted_desc
 
 /datum/gear/New()
-	..()
+	if(isnull(donoritem))
+		if(donator_group_id || ckeywhitelist)
+			donoritem = TRUE
 	if(!description && path)
 		var/obj/O = path
 		description = initial(O.desc)
+
+//a comprehensive donator check proc is intentionally not implemented due to the fact that we (((might))) have job-whitelists for donator items in the future and I like to stay on the safe side.
+
+//ckey only check
+/datum/gear/proc/donator_ckey_check(key)
+	if(ckeywhitelist && ckeywhitelist.Find(key))
+		return TRUE
+	return IS_CKEY_DONATOR_GROUP(key, donator_group_id)
