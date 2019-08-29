@@ -364,15 +364,10 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/pressure = air.return_pressure()
-
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma]/cached_gases[/datum/gas/nitrous_oxide],1))),cached_gases[/datum/gas/nitrous_oxide],cached_gases[/datum/gas/plasma]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-	if(cached_gases[/datum/gas/miasma] && cached_gases[/datum/gas/miasma] > 0)
-		energy_released /= cached_gases[/datum/gas/miasma]*0.1
-	if(cached_gases[/datum/gas/bz] && cached_gases[/datum/gas/bz] > 0)
-		energy_released *= cached_gases[/datum/gas/bz]*0.1
-	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/bz] += reaction_efficency
 	if(reaction_efficency == cached_gases[/datum/gas/nitrous_oxide])
@@ -381,7 +376,7 @@
 	cached_gases[/datum/gas/nitrous_oxide] -= reaction_efficency
 	cached_gases[/datum/gas/plasma]  -= 2*reaction_efficency
 
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, (reaction_efficency**0.5)*BZ_RESEARCH_AMOUNT)
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2)*BZ_RESEARCH_SCALE),BZ_RESEARCH_MAX_AMOUNT)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()

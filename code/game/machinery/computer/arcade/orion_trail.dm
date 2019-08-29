@@ -736,6 +736,7 @@
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
@@ -743,6 +744,7 @@
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
 	obj_flags |= EMAGGED
+	return TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
