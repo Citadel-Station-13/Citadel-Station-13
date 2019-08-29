@@ -213,6 +213,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Central Maintenance"
 	icon_state = "maintcentral"
 
+/area/maintenance/hallway
+	name = "Hallway Maintenance"
+	icon_state = "maintcentral"
+
 /area/maintenance/fore
 	name = "Fore Maintenance"
 	icon_state = "fmaint"
@@ -448,6 +452,23 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/toilet/restrooms
 	name = "Restrooms"
 	icon_state = "toilet"
+
+/area/crew_quarters/toilet/engineeering
+	name = "Engineering Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/bridge
+	name = "Bridge Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/departures
+	name = "Departures Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/security
+	name = "Security Toilets"
+	icon_state = "toilet"
+
 
 /area/crew_quarters/locker
 	name = "Locker Room"
