@@ -373,6 +373,11 @@
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 		set_security_level("delta")
+
+		if(GLOB.war_declared)
+			var/area/A = get_area(src)
+			priority_announce("Alert: Unexpected increase in radiation levels near [A.name] ([src.x],[src.y],[src.z]). Please send an authorized radiation specialist to investigate.", "Sensory Nuclear Indexer Telemetry Calculation Helper")
+
 	else
 		detonation_timer = null
 		set_security_level(previous_level)

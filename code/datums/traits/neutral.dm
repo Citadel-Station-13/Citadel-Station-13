@@ -129,6 +129,16 @@
 	gain_text = "<span class='notice'>You feel like exposing yourself to the world.</span>"
 	lose_text = "<span class='notice'>Indecent exposure doesn't sound as charming to you anymore.</span>"
 
+/datum/quirk/pharmacokinesis //Prevents unwanted organ additions.
+	name = "Acute hepatic pharmacokinesis"
+	desc = "You've a rare genetic disorder that causes Incubus draft and Sucubus milk to be absorbed by your liver instead."
+	value = 0
+	mob_trait = TRAIT_PHARMA
+	lose_text = "<span class='notice'>Your liver feels different.</span>"
+	var/active = FALSE
+	var/power = 0
+	var/cachedmoveCalc = 1
+
 /datum/quirk/assblastusa
 	name = "Buns of Steel"
 	desc = "You've never skipped ass day. With this trait, you are completely immune to all forms of ass slapping and anyone who tries to slap your rock hard ass usually gets a broken hand."

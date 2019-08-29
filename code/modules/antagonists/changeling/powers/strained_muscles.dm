@@ -5,7 +5,7 @@
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
-	chemical_cost = 0
+	chemical_cost = 15
 	dna_cost = 1
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
@@ -15,13 +15,16 @@
 	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	active = !active
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
+		changeling.chem_recharge_slowdown += 0.5
 	else
 		REMOVE_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
-		if(stacks >= 10)
+		changeling.chem_recharge_slowdown -= 0.5
+		if(stacks >= 20)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
 			user.Knockdown(60)
 			user.emote("gasp")
@@ -42,9 +45,9 @@
 
 		stacks++
 		//user.take_bodypart_damage(stacks * 0.03, 0)
-		user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		user.adjustStaminaLoss(stacks*1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
-		if(stacks == 11) //Warning message that the stacks are getting too high
+		if(stacks == 10) //Warning message that the stacks are getting too high
 			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")
 
 		sleep(40)

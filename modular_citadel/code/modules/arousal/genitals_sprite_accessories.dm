@@ -29,6 +29,19 @@
 	icon_state = "tapered"
 	name = "Tapered"
 
+/datum/sprite_accessory/penis/tentacle
+    icon_state = "tentacle"
+    name = "Tentacled"
+
+/datum/sprite_accessory/penis/hemi
+    icon_state = "hemi"
+    name = "Hemi"
+
+/datum/sprite_accessory/penis/hemiknot
+    icon_state = "hemiknot"
+    name = "Knotted Hemi"
+
+
 ////////////////////////
 // Taur cocks go here //
 ////////////////////////
@@ -102,6 +115,10 @@
 /datum/sprite_accessory/vagina/furred
 	icon_state = "furred"
 	name = "Furred"
+
+/datum/sprite_accessory/vagina/gaping
+    icon_state = "gaping"
+    name = "Gaping"
 
 //BREASTS BE HERE
 /datum/sprite_accessory/breasts

@@ -193,8 +193,10 @@
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
+	. = ..()
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
+	return TRUE
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))

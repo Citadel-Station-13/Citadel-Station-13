@@ -64,6 +64,7 @@
 	WRITE_FILE(S["feature_breasts_shape"], features["breasts_shape"])
 	WRITE_FILE(S["feature_breasts_color"], features["breasts_color"])
 	WRITE_FILE(S["feature_breasts_fluid"], features["breasts_fluid"])
+	WRITE_FILE(S["feature_breasts_producing"], features["breasts_producing"])
 	//vagina features
 	WRITE_FILE(S["feature_has_vag"], features["has_vag"])
 	WRITE_FILE(S["feature_vag_shape"], features["vag_shape"])

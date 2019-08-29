@@ -124,7 +124,7 @@
 		..()
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
