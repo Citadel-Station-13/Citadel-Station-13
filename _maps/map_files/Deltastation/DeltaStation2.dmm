@@ -126476,6 +126476,7 @@
 	name = "Mass Driver"
 	},
 /obj/machinery/mass_driver{
+	id = "chapelgun";
 	name = "Holy Driver"
 	},
 /turf/open/floor/plating,
