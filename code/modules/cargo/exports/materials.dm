@@ -28,7 +28,7 @@
 
 	return round(amount/MINERAL_MATERIAL_AMOUNT)
 
-// Materials.Selling raw can lead to a big payout but takes a lot of work for miners to get a lot. Best to craft art/rnd gear
+// Materials. Selling raw can lead to a big payout but takes a lot of work for miners to get a lot. Best to craft art/rnd gear
 
 /datum/export/material/bananium
 	cost = 500
@@ -70,6 +70,11 @@
 	cost = 165 // plasma + titanium costs
 	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium
 	message = "cm3 of plastitanium"
+
+/datum/export/material/plastic
+	cost = 5
+	material_id = MAT_PLASTIC
+	message = "cm3 of plastic"
 
 /datum/export/material/metal
 	cost = 3

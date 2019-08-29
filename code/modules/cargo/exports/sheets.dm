@@ -10,6 +10,11 @@
 
 // Hides
 
+/datum/export/stack/leather
+	cost = 30
+	unit_name = "leather"
+	export_types = list(/obj/item/stack/sheet/leather)
+
 /datum/export/stack/skin/monkey
 	cost = 30
 	unit_name = "monkey hide"
@@ -94,6 +99,18 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
+/datum/export/stack/cloth
+	cost = 10
+	unit_name = "sheets"
+	message = "of cloth"
+	export_types = list(/obj/item/stack/sheet/cloth)
+
+/datum/export/stack/duracloth
+	cost = 40
+	unit_name = "sheets"
+	message = "of duracloth"
+	export_types = list(/obj/item/stack/sheet/durathread)
+
 // Weird Stuff
 
 /datum/export/stack/abductor
@@ -107,3 +124,25 @@
 	message = "of adamantine"
 	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
 
+/datum/export/stack/bone
+	cost = 20
+	message = "of bones"
+	export_types = list(/obj/item/stack/sheet/bone)
+
+/datum/export/stack/bronze
+	unit_name = "tiles"
+	cost = 5
+	message = "of brozne"
+	export_types = list(/obj/item/stack/tile/bronze)
+
+/datum/export/stack/brass
+	unit_name = "tiles"
+	cost = 50
+	message = "of brass"
+	export_types = list(/obj/item/stack/tile/brass)
+
+/datum/export/stack/paper
+	unit_name = "sheets"
+	cost = 30
+	message = "of paperframes"
+	export_types = list(/obj/item/stack/sheet/paperframes)
