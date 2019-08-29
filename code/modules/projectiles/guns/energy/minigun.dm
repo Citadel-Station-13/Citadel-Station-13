@@ -12,8 +12,8 @@
 	var/obj/item/gun/energy/minigun/gun
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 	var/overheat = 0
-	var/overheat_max = 50
-	var/heat_diffusion = 2
+	var/overheat_max = 200
+	var/heat_diffusion = 5
 
 /obj/item/minigunpack2/Initialize()
 	. = ..()
@@ -105,6 +105,7 @@
 	burst_size = 2
 	automatic = 1
 	can_charge = 0
+	firing_burst = FALSE
 	selfcharge = EGUN_SELFCHARGE
 	charge_tick = 2
 	charge_delay = 5
@@ -136,6 +137,8 @@
 			..()
 		else
 			to_chat(user, "The gun's heat sensor locked the trigger to prevent lens damage.")
+	if(user.a_intent == INTENT_HARM)
+		user.changeNext_move(CLICK_CD_HYPERSPEED)
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
