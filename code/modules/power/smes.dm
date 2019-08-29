@@ -421,6 +421,11 @@
 	update_icon()
 	log_smes()
 
+/obj/machinery/power/smes/substation
+	input_level = 15000
+	output_level = 15000
+	charge = 10000
+
 /obj/machinery/power/smes/engineering
 	charge = 1.5e6 // Engineering starts with some charge for singulo
 
