@@ -134,7 +134,7 @@
 		/obj/item/stack/rods = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/datum/chemical_reaction/mustard = 5,
+		/datum/reagent/consumable/mustard = 5,
 		/datum/reagent/consumable/ketchup = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/corndog
