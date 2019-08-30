@@ -40,8 +40,17 @@
 
 /obj/item/storage/briefcase/lawyer/family
 	name = "battered  briefcase"
-	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. Comes with an added belt clip!"
+	icon_state = "gbriefcase"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
+	desc = "An old briefcase with a golden trim. It's clear they don't make them as good as they used to. Comes with an added belt clip!"
 	slot_flags = ITEM_SLOT_BELT
+
+/obj/item/storage/briefcase/lawyer/family/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 14
 
 /obj/item/storage/briefcase/lawyer/family/PopulateContents()
 	new /obj/item/stamp/law(src)
