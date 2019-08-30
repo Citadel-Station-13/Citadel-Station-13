@@ -675,12 +675,12 @@
 /datum/crafting_recipe/femur_breaker
 	name = "Femur Breaker"
 	result = /obj/structure/femur_breaker
-	time = 150 
+	time = 150
 	reqs = list(/obj/item/stack/sheet/metal = 20,
 		        /obj/item/stack/cable_coil = 30)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
@@ -895,3 +895,44 @@
 	time = 150 //It's a gun
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/durathread_duffelbag
+	name = "Durathread Dufflebag"
+	result = /obj/item/storage/backpack/duffelbag/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 7,
+				/obj/item/stack/sheet/leather = 3)
+	time = 70
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_toolbelt
+	name = "Durathread Toolbelt"
+	result = /obj/item/storage/belt/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 5,
+				/obj/item/stack/sheet/leather = 1)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_bandolier
+	name = "Durathread Bandolier"
+	result = /obj/item/storage/belt/bandolier/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 2)
+	time = 50
+	category = CAT_CLOTHING
+	
+	/datum/crafting_recipe/durathread_helmet
+	name = "Makeshift Durathread Helmet"
+	result = /obj/item/clothing/head/helmet/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 4,
+				/obj/item/stack/sheet/leather = 2)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_vest
+	name = "Makeshift Durathread Armour"
+	result = /obj/item/clothing/suit/armor/vest/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 3)
+	time = 50
+	category = CAT_CLOTHING
+
