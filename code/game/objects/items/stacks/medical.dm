@@ -89,6 +89,8 @@
 			var/mob/living/carbon/human/H = C
 			if(stop_bleeding)
 				if(!H.bleedsuppress) //so you can't stack bleed suppression
+					if(H.bleed_rate)
+						H.bleed_rate -= 30
 					H.suppress_bloodloss(stop_bleeding)
 		if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 			if(affecting.heal_damage(heal_brute, heal_burn))
