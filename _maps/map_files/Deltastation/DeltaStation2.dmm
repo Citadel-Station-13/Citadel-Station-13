@@ -114276,17 +114276,16 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Chapel Maintenance";
+	req_access_txt = "27"
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
@@ -118987,7 +118986,6 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -126947,19 +126945,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-"kzR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Chapel Maintenance";
-	req_access_txt = "27"
-	},
-/turf/open/floor/plasteel,
-/area/chapel/office)
 "kLu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -160101,7 +160086,7 @@ dYu
 dZg
 jhK
 jhK
-kzR
+dZN
 owr
 mXJ
 gJj
