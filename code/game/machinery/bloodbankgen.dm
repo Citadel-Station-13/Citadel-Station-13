@@ -208,20 +208,20 @@
 		if(!panel_open)
 			if(bag && outbag)
 				to_chat(user, "<span class='warning'>This machine already has bags attached.</span>")
+
+			if(!bag && !outbag)
+				var/choice = alert(user, "Choose where to place [O]", "", "Input", "Cancel", "Output")
+				switch(choice)
+					if("Cancel")
+						return FALSE
+					if("Input")
+						attachinput(O, user)
+					if("Output")
+						attachoutput(O, user)
 			else if(!bag)
-				if(!user.transferItemToLoc(O, src))
-					return
-				bag = O
-				to_chat(user, "<span class='notice'>You add the container to the machine's input slot.</span>")
-				update_icon()
-				updateUsrDialog()
+				attachinput(O, user)
 			else if(!outbag)
-				if(!user.transferItemToLoc(O, src))
-					return
-				outbag = O
-				to_chat(user, "<span class='notice'>You add the container to the machine's output slot.</span>")
-				update_icon()
-				updateUsrDialog()
+				attachoutput(O, user)
 		else
 			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
 		return
@@ -303,14 +303,40 @@
 /obj/machinery/bloodbankgen/proc/detachinput()
 	if(bag)
 		bag.forceMove(drop_location())
+		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
+			usr.put_in_hands(bag)
 		bag = null
 		update_icon()
 
 /obj/machinery/bloodbankgen/proc/detachoutput()
 	if(outbag)
 		outbag.forceMove(drop_location())
+		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
+			usr.put_in_hands(outbag)
 		outbag = null
 		update_icon()
+
+/obj/machinery/bloodbankgen/proc/attachinput(obj/item/O, mob/user)
+	if(!bag)
+		if(!user.transferItemToLoc(O, src))
+			return
+		bag = O
+		to_chat(user, "<span class='notice'>You add [O] to the machine's input slot.</span>")
+		update_icon()
+		updateUsrDialog()
+	else
+		to_chat(user, "<span class='notice'>There is already something in this slot!</span>")
+
+/obj/machinery/bloodbankgen/proc/attachoutput(obj/item/O, mob/user)
+	if(!outbag)
+		if(!user.transferItemToLoc(O, src))
+			return
+		outbag = O
+		to_chat(user, "<span class='notice'>You add [O] to the machine's output slot.</span>")
+		update_icon()
+		updateUsrDialog()
+	else
+		to_chat(user, "<span class='notice'>There is already something in this slot!</span>")
 
 /obj/machinery/bloodbankgen/Topic(href, href_list)
 	if(..() || panel_open)
