@@ -24,26 +24,32 @@
 			if (500 to 750)
 				for(var/turf/turf in range(1,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.1
 
 			if (751 to 1100)
 				for(var/turf/turf in range(2,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.2
 
 			if (1101 to 1500) //If you're crafty
 				for(var/turf/turf in range(3,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.3
 
 			if (1501 to 2500) //requested
 				for(var/turf/turf in range(4,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.4
 
 			if (2501 to 5000)
 				for(var/turf/turf in range(5,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.5
 
 			if (5001 to INFINITY)
 				for(var/turf/turf in range(6,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.6
 
 
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
@@ -66,7 +72,7 @@
 
 	if (pH > 10) //if alkaline, small explosion.
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round((volume/30)*(pH-9)), T, 0, 0)
+		e.set_up(round((volume/28)*(pH-9)), T, 0, 0)
 		e.start()
 
 	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
