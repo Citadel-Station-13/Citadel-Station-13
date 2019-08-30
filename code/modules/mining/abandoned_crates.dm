@@ -214,8 +214,11 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
-	if(locked)
-		boom(user)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+	if(!locked)
+		return
+	boom(user)
+	return TRUE
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)
