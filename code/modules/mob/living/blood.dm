@@ -35,7 +35,6 @@
 
 	if(bleed_rate <= 0)
 		bleed_rate = 0
-		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
