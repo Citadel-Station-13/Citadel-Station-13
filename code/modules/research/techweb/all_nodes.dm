@@ -221,6 +221,15 @@
 	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	//export_price = 5000
 
+/datum/techweb_node/computer_board_gaming
+	id = "computer_board_gaming"
+	display_name = "Games and Toys"
+	description = "For the slackers on the station."
+	prereq_ids = list("comptech")
+	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	export_price = 5000
+
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
 	id = "bluespace_basic"
