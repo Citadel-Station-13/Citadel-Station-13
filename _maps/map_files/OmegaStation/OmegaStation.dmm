@@ -30064,10 +30064,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbs" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbt" = (

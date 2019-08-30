@@ -92897,10 +92897,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cZK" = (
-/obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cZL" = (
