@@ -56,6 +56,8 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
+	var/list/blacklisted_quirks		//list of quirk typepaths blacklisted.
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
