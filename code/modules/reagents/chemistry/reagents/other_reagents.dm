@@ -114,6 +114,13 @@
 		B.reagents.add_reagent(id, reac_volume)
 	B.update_icon()
 
+/datum/reagent/blood/synthetics
+	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Synthetic Blood"
+	id = "syntheticblood"
+	taste_description = "oily"
+	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
+
 /datum/reagent/blood/jellyblood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Slime Jelly Blood"
