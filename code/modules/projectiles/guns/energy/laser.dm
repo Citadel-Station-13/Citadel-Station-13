@@ -159,3 +159,20 @@
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
+
+/obj/item/gun/energy/laser/redtag/hitscan/holyak
+	name = "\improper holy lasrifle"
+	desc = "A lasrifle from the old Imperium. This one seems to be blessed by techpriests."
+	icon_state = "LaserAK"
+	item_state = null
+	force = 14
+	pin = /obj/item/firing_pin/holy
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
+	ammo_x_offset = 4
+	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
+	var/chaplain_spawnable = TRUE
+
+/obj/item/gun/energy/laser/redtag/hitscan/holyak/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)

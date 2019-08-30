@@ -134,6 +134,7 @@
 	name = "divine lightblade"
 	force_on = 20		//haha i'll regret this
 	block_chance = 50
+	var/chaplain_spawnable = TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/chaplain/Initialize()
 	. = ..()

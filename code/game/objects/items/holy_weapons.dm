@@ -229,7 +229,6 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
-	var/reskinned = FALSE
 	var/chaplain_spawnable = TRUE
 
 /obj/item/nullrod/Initialize()
@@ -247,9 +246,10 @@
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
 	if(GLOB.holy_weapon_type)
 		return
-	var/obj/item/nullrod/holy_weapon
+	var/obj/item/holy_weapon
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
-	/obj/item/melee/transforming/energy/sword/cx/chaplain
+	/obj/item/melee/transforming/energy/sword/cx/chaplain,
+	/obj/item/gun/energy/laser/redtag/hitscan/holyak
 	)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
