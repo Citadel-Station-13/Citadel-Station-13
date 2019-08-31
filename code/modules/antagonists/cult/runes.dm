@@ -61,8 +61,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(do_after(user, 15, target = src))
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
-	else if(istype(I, /obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+	else if(istype(I, /obj/item/storage/book/bible))
+		user.say("BEGONE FOUL MAGICKS!!", forced = "bible")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
