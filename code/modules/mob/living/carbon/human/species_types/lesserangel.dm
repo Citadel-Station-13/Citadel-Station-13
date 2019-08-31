@@ -37,7 +37,7 @@
 	. = ..()
 	if(H.loc && !isspaceturf(H.loc) && H.dna.features["wings"] != "Burnt Off")
 		var/datum/gas_mixture/current = H.loc.return_air()
-		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
+		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.50)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
 
 /datum/species/langel/on_species_loss(mob/living/carbon/human/H)
@@ -77,7 +77,7 @@
 		return 0
 
 	var/datum/gas_mixture/environment = T.return_air()
-	if(environment && !(environment.return_pressure() > 30))
+	if(environment && !(environment.return_pressure() > 50))
 		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
 		return 0
 	else
@@ -135,16 +135,16 @@
 		flyslip(H)
 	. = ..()
 
-/datum/species/langel/negates_gravity(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		return 1
+## /datum/species/langel/negates_gravity(mob/living/carbon/human/H)
+##	if(H.movement_type & FLYING)
+##		return 1
 
 /datum/species/langel/space_move(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		return 1
 
 /datum/species/langel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
-	if(flight && CanFly(H))
+	if(flight && CanFly(H) && H.dna.features["wings"] != "Burnt Off")
 		stunmod = 2
 		speedmod = -0.35
 		H.movement_type |= FLYING
