@@ -49,6 +49,14 @@
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
 
+/datum/design/rpd
+	name = "Rapid Pipe Dispenser (RPD)"
+	id = "rpd"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 75000, MAT_GLASS = 37500)
+	build_path = /obj/item/pipe_dispenser
+	category = list("hacked", "Construction")
+
 /datum/design/handcuffs
 	name = "Handcuffs"
 	id = "handcuffs"
