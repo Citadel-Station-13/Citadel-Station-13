@@ -444,7 +444,7 @@ ROUNDSTART_RACES xeno
 ROUNDSTART_RACES slimeperson
 ROUNDSTART_RACES guilmon
 ROUNDSTART_RACES ipc
-ROUNDSTART_RACES angel
+ROUNDSTART_RACES langel
 
 ##-------------------------------------------------------------------------------------------
 
