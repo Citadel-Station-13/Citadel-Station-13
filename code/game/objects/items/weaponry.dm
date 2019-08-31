@@ -229,7 +229,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed
 	slot_flags = null
 
-/obj/item/katana/Initialize()
+/obj/item/katana/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
