@@ -34,13 +34,17 @@
 
 /obj/item/multitool/chaplain
 	name = "\improper hypertool"
-	desc = "Used for pulsing wires to test which to cut. Seems to cause massive brain damage in certain targets."
+	desc = "Used for pulsing wires to test which to cut. Also emits microwaves to fry some brains!"
 	damtype = BRAIN
 	force = 18
 	armour_penetration = 35
 	hitsound = 'sound/effects/sparks4.ogg'
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	throw_speed = 3
+	throw_range = 4
+	throwforce = 10
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/multitool/chaplain/Initialize()
 	. = ..()

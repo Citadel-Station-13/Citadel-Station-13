@@ -271,6 +271,7 @@
 	block_chance = 50
 	armour_penetration = 0
 	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
 	. = ..()

@@ -174,6 +174,10 @@
 	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	throw_speed = 3
+	throw_range = 4
+	throwforce = 10
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/gun/energy/laser/redtag/hitscan/chaplain/Initialize()
 	. = ..()
