@@ -32,6 +32,19 @@
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
 
+/obj/item/multitool/chaplain
+	name = "\improper hypertool"
+	desc = "Used for pulsing wires to test which to cut. Seems to cause massive brain damage in certain targets."
+	damtype = BRAIN
+	force = 18
+	armour_penetration = 35
+	hitsound = 'sound/effects/sparks4.ogg'
+	var/chaplain_spawnable = TRUE
+
+/obj/item/multitool/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /obj/item/multitool/examine(mob/user)
 	..()
 	if(selected_io)

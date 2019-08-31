@@ -160,7 +160,7 @@
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
 
-/obj/item/gun/energy/laser/redtag/hitscan/holyak
+/obj/item/gun/energy/laser/redtag/hitscan/chaplain
 	name = "\improper holy lasrifle"
 	desc = "A lasrifle from the old Imperium. This one seems to be blessed by techpriests."
 	icon_state = "LaserAK"
@@ -169,10 +169,50 @@
 	pin = /obj/item/firing_pin/holy
 	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	ammo_x_offset = 4
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan/holy)
 	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
 	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
 	var/chaplain_spawnable = TRUE
 
-/obj/item/gun/energy/laser/redtag/hitscan/holyak/Initialize()
+/obj/item/gun/energy/laser/redtag/hitscan/chaplain/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
+/obj/item/gun/energy/laser/redtag/hitscan/chaplain/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
+	if(!ishuman(user) || !ishuman(target))
+		return
+
+	if(semicd)
+		return
+
+	if(user == target)
+		target.visible_message("<span class='warning'>[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
+	else
+		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
+
+	semicd = TRUE
+
+	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
+		if(user)
+			if(user == target)
+				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
+			else if(target && target.Adjacent(user))
+				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+		semicd = FALSE
+		return
+
+	semicd = FALSE
+
+	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
+
+	playsound('sound/weapons/dink.ogg', 30, 1)
+
+	if((iscultist(target)) || (is_servant_of_ratvar(target)))
+		chambered.BB.damage *= 150
+
+	else if(chambered && chambered.BB)
+		chambered.BB.damage *= 5
+
+	process_fire(target, user, TRUE, params)
