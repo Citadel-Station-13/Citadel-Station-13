@@ -49,7 +49,7 @@
 
 /obj/item/emagrecharge
 	name = "electromagnet charging device"
-	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this cant be recharged like a normal cell."
+	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this can't be recharged like a normal cell."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cell_mini"
 	item_flags = NOBLUDGEON
