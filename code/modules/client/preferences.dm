@@ -917,11 +917,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
-				var/donoritem
-				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
-					donoritem = TRUE
-					if(!(user.ckey in gear.ckeywhitelist))
-						continue
+				var/donoritem = gear.donoritem
+				if(donoritem && !gear.donator_ckey_check(user.ckey))
+					continue
 				var/class_link = ""
 				if(gear.type in chosen_gear)
 					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
@@ -2241,7 +2239,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
-				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+				if(G.donoritem && !G.donator_ckey_check(user.ckey))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
