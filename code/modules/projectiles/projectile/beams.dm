@@ -153,7 +153,7 @@
 
 /obj/item/projectile/beam/lasertag/redtag/hitscan/holy
 	name = "lasrifle beam"
-	damage = 1
+	damage = 0.1
 	damage_type = BURN
 
 /obj/item/projectile/beam/lasertag/bluetag

@@ -230,6 +230,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/nullrod/Initialize()
 	. = ..()
@@ -329,7 +330,6 @@
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -523,7 +523,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
-	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -586,6 +585,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	force = 12
 	reach = 2
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -675,7 +675,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
-	total_mass = TOTAL_MASS_NORMAL_ITEM
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()

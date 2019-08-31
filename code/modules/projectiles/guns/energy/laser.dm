@@ -173,6 +173,7 @@
 	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
 	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
 	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/gun/energy/laser/redtag/hitscan/chaplain/Initialize()
 	. = ..()
@@ -210,7 +211,7 @@
 	playsound('sound/weapons/dink.ogg', 30, 1)
 
 	if((iscultist(target)) || (is_servant_of_ratvar(target)))
-		chambered.BB.damage *= 150
+		chambered.BB.damage *= 1500
 
 	else if(chambered && chambered.BB)
 		chambered.BB.damage *= 5

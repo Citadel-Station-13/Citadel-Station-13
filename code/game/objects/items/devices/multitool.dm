@@ -40,6 +40,7 @@
 	armour_penetration = 35
 	hitsound = 'sound/effects/sparks4.ogg'
 	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/multitool/chaplain/Initialize()
 	. = ..()
