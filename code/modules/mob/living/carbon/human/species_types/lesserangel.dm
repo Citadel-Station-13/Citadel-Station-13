@@ -8,7 +8,7 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
 	no_equip = list(SLOT_BACK)
-	blacklisted = 1
+	blacklisted = 0
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -135,9 +135,9 @@
 		flyslip(H)
 	. = ..()
 
-## /datum/species/langel/negates_gravity(mob/living/carbon/human/H)
-##	if(H.movement_type & FLYING)
-##		return 1
+ /datum/species/langel/negates_gravity(mob/living/carbon/human/H)
+	if(H.movement_type & FLYING)
+		return 1
 
 /datum/species/langel/space_move(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
