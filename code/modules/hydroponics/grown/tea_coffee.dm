@@ -51,6 +51,7 @@
 	desc = "Long stocks with flowering tips that has a chemical to make feline attracted to it."
 	species = "catnip"
 	plantname = "Catnip Plant"
+	growthstages = 3
 	product = /obj/item/reagent_containers/food/snacks/grown/tea/catnip
 	reagents_add = list("catnip" = 0.1, "vitamin" = 0.06, "teapowder" = 0.3)
 	rarity = 50
