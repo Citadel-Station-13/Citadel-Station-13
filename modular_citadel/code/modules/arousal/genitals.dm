@@ -166,7 +166,7 @@
 		give_genital(/obj/item/organ/genital/womb)
 	if(dna.features["has_balls"])
 		give_genital(/obj/item/organ/genital/testicles)
-	if(dna.features["has_breasts"]) // since we have multi-boobs as a thing, we'll want to at least draw over these. but not over the pingas.
+	if(dna.features["has_breasts"])
 		give_genital(/obj/item/organ/genital/breasts)
 	if(dna.features["has_cock"])
 		give_genital(/obj/item/organ/genital/penis)
@@ -183,6 +183,7 @@
 	G = new G
 	G.get_features(src)
 	G.Insert(src)
+	return G
 
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
 	return
@@ -191,8 +192,6 @@
 	switch(layer)
 		if(GENITALS_BEHIND_LAYER)
 			return "BEHIND"
-		/*if(GENITALS_ADJ_LAYER)
-			return "ADJ"*/
 		if(GENITALS_FRONT_LAYER)
 			return "FRONT"
 
@@ -227,14 +226,12 @@
 	if(!canbearoused)
 		ADD_TRAIT(src, TRAIT_PHARMA, "pharma")//Prefs prevent unwanted organs.
 		return
-	for(var/obj/item/organ/O in internal_organs)
+	for(var/O in internal_organs)
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
-			if(/obj/item/organ/genital/penis)
-				//dna.features["has_cock"] = TRUE
+			if(istype(O, /obj/item/organ/genital/penis))
 				willyCheck = TRUE
-			if(/obj/item/organ/genital/breasts)
-				//dna.features["has_breasts"] = TRUE//Goddamnit get in there.
+			if(istype(O, /obj/item/organ/genital/breasts))
 				breastCheck = TRUE
 	if(organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
@@ -260,10 +257,7 @@
 		CRASH("H = null")
 	if(!LAZYLEN(H.internal_organs) || ((NOGENITALS in species_traits) && !H.genital_override) || HAS_TRAIT(H, TRAIT_HUSK))
 		return
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER) //GENITALS_ADJ_LAYER removed
-	var/list/standing = list()
-	var/size
-	var/aroused_state
+	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER)
 
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
@@ -271,21 +265,25 @@
 
 	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
 	var/list/genitals_to_add
+	var/list/fully_exposed
 	for(var/obj/item/organ/genital/G in H.internal_organs)
 		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 			LAZYADD(gen_index[G.layer_index], G)
 	for(var/L in gen_index)
 		if(L) //skip nulls
 			LAZYADD(genitals_to_add, L)
+	if(!genitals_to_add)
+		return
 	//Now we added all genitals that aren't internal and should be rendered
 	//start applying overlays
 	for(var/layer in relevant_layers)
+		var/list/standing = list()
 		var/layertext = genitals_layertext(layer)
 		for(var/A in genitals_to_add)
 			var/obj/item/organ/genital/G = A
 			var/datum/sprite_accessory/S
-			size = G.size
-			aroused_state = G.aroused_state
+			var/size = G.size
+			var/aroused_state = G.aroused_state
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
@@ -295,9 +293,6 @@
 					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
 					S = GLOB.breasts_shapes_list[G.shape]
-
-
-
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -322,11 +317,16 @@
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
 
-			standing += genital_overlay
+			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
+				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
+			else
+				standing += genital_overlay
 
 		if(LAZYLEN(standing))
-			H.overlays_standing[layer] = standing.Copy()
-			standing = list()
+			H.overlays_standing[layer] = standing
+
+	if(LAZYLEN(fully_exposed))
+		H.overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)

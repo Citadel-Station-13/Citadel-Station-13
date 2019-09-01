@@ -31,16 +31,13 @@
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
 
-/datum/reagent/fermi/breast_enlarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/breast_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(!ishuman(M)) //The monkey clause
 		if(volume >= 15) //To prevent monkey breast farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(T)
-			var/list/seen = viewers(8, T)
-			for(var/mob/S in seen)
-				to_chat(S, "<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
-			//var/turf/T2 = pick(turf in view(5, M))
+			M.visible_message("<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
 			M.Knockdown(50)
@@ -51,7 +48,7 @@
 	log_game("FERMICHEM: [M] ckey: [M.key] has ingested Sucubus milk")
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
-	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
+	var/obj/item/organ/genital/breasts/B = H.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!B)
 		H.emergent_genital_call()
 		return
@@ -103,7 +100,7 @@
 			M.adjustOxyLoss(5, 0)
 			M.apply_damage(1, BRUTE, target)
 	B.update()
-	..()
+	return ..()
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 
@@ -135,7 +132,7 @@
 		var/obj/item/organ/genital/womb/nW = new
 		nW.Insert(M)
 		W = nW
-	..()
+	return ..()
 
 /datum/reagent/fermi/BEsmaller
 	name = "Modesty milk"
@@ -159,7 +156,7 @@
 		return..()
 	B.cached_size = B.cached_size - 0.05
 	B.update()
-	..()
+	return ..()
 
 /datum/reagent/fermi/BEsmaller_hypo
 	name = "Rectify milk" //Rectify
@@ -171,19 +168,18 @@
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	can_synth = TRUE
 
-/datum/reagent/fermi/BEsmaller_hypo/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/BEsmaller_hypo/on_mob_metabolize(mob/living/M)
 	. = ..()
-	if(!M.getorganslot("vagina"))
-		if(M.dna.features["has_vag"])
-			var/obj/item/organ/genital/vagina/nV = new
-			nV.Insert(M)
-	if(!M.getorganslot("womb"))
-		if(M.dna.features["has_womb"])
-			var/obj/item/organ/genital/womb/nW = new
-			nW.Insert(M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!H.getorganslot(ORGAN_SLOT_VAGINA) && H.dna.features["has_vag"])
+		H.give_genital(/obj/item/organ/genital/vagina)
+	if(!H.getorganslot(ORGAN_SLOT_WOMB) && H.dna.features["has_womb"])
+		H.give_genital(/obj/item/organ/genital/womb)
 
 /datum/reagent/fermi/BEsmaller_hypo/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!B)
 		return..()
 	if(!M.dna.features["has_breasts"])//Fast fix for those who don't want it.
@@ -195,7 +191,7 @@
 	else if(B.cached_size < (sizeConv[M.dna.features["breasts_size"]])+0.1)
 		B.cached_size = B.cached_size + 0.05
 		B.update()
-	..()
+	return ..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										PENIS ENLARGE
@@ -216,15 +212,13 @@
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
 
-/datum/reagent/fermi/penis_enlarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/penis_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(!ishuman(M)) //Just monkeying around.
 		if(volume >= 15) //to prevent monkey penis farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(T)
-			var/list/seen = viewers(8, T)
-			for(var/mob/S in seen)
-				to_chat(S, "<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
+			M.visible_message("<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
 			M.Knockdown(50)
@@ -234,7 +228,7 @@
 		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
 	if(!P)
 		H.emergent_genital_call()
 		return
@@ -277,7 +271,7 @@
 			M.apply_damage(2.5, BRUTE, target)
 
 	P.update()
-	..()
+	return ..()
 
 /datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 	//Acute hepatic pharmacokinesis.
@@ -306,7 +300,7 @@
 		var/obj/item/organ/genital/testicles/nT = new
 		nT.Insert(M)
 		T = nT
-	..()
+	return ..()
 
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Chastity draft"
@@ -342,12 +336,13 @@
 	metabolization_rate = 0.5
 	can_synth = TRUE
 
-/datum/reagent/fermi/PEsmaller_hypo/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/PEsmaller_hypo/on_mob_metabolize(mob/living/M)
 	. = ..()
-	if(!M.getorganslot("testicles"))
-		if(M.dna.features["has_balls"])
-			var/obj/item/organ/genital/testicles/nT = new
-			nT.Insert(M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!H.getorganslot(ORGAN_SLOT_TESTICLES) && H.dna.features["has_balls"])
+		H.give_genital(/obj/item/organ/genital/testicles)
 
 /datum/reagent/fermi/PEsmaller_hypo/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
@@ -362,4 +357,4 @@
 	else if(P.cached_length < (M.dna.features["cock_length"]+0.1))
 		P.cached_length = P.cached_length + 0.1
 		P.update()
-	..()
+	return ..()
