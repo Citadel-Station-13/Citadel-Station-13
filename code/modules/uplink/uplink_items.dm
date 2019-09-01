@@ -1637,14 +1637,15 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/syringe/stimulants
-	cost = 5
+	cost = 4
 	surplus = 90
 
 /datum/uplink_item/tools/phantomthief
 	name = "Syndicate Mask"
-	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
+	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles. \
+			It will briefly allow you to attack much faster than you normally can. It has a 5 minute cooldown so use it wisely."
 	item = /obj/item/clothing/glasses/phantomthief/syndicate
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/tools/syndietome
 	name = "Syndicate Tome"
