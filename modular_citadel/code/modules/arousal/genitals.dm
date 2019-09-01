@@ -19,13 +19,17 @@
 	var/linked_organ_slot //only one of the two organs needs this to be set up. update_link() will handle linking the rest.
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 
-/obj/item/organ/genital/Initialize()
+/obj/item/organ/genital/Initialize(mapload, mob/living/carbon/human/H)
 	. = ..()
 	if(fluid_id)
 		create_reagents(fluid_max_volume)
 		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 			reagents.add_reagent(fluid_id, fluid_max_volume)
-	update()
+	if(H)
+		get_features(H)
+		Insert(H)
+	else
+		update()
 
 /obj/item/organ/genital/Destroy()
 	if(linked_organ)
@@ -180,9 +184,7 @@
 /mob/living/carbon/human/proc/give_genital(obj/item/organ/genital/G)
 	if(!dna || (NOGENITALS in dna.species.species_traits) || getorganslot(initial(G.slot)))
 		return FALSE
-	G = new G
-	G.get_features(src)
-	G.Insert(src)
+	G = new G(null, src)
 	return G
 
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)

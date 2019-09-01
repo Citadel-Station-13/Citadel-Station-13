@@ -19,8 +19,6 @@
 	var/list/knotted_types = list("knotted", "barbed, knotted")
 
 /obj/item/organ/genital/penis/update_size()
-	if(cached_length == length)
-		return
 	if(cached_length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		if(owner)
 			to_chat(owner, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
@@ -31,13 +29,13 @@
 	var/new_size
 	var/enlargement = FALSE
 	switch(round(cached_length))
-		if(0 to 6.99) //If modest size
+		if(0 to 6) //If modest size
 			new_size = 1
-		if(7 to 10.99) //If large
+		if(7 to 10) //If large
 			size = 2
-		if(11 to 19.99) //If massive
+		if(11 to 19) //If massive
 			size = 3
-		if(20 to 34.99) //If massive and due for large effects
+		if(20 to 34) //If massive and due for large effects
 			size = 3
 			enlargement = TRUE
 		if(35 to INFINITY) //If comical

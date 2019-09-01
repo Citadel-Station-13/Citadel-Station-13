@@ -52,10 +52,6 @@
 	if(!B)
 		H.emergent_genital_call()
 		return
-	if(!B.size == "huge")
-		var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
-		B.prev_size = B.size
-		B.cached_size = sizeConv[B.size]
 
 /datum/reagent/fermi/breast_enlarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!ishuman(M))//Just in case
@@ -87,7 +83,7 @@
 				nB.color = skintone2hex(H.skin_tone)
 			nB.size = "flat"
 			nB.cached_size = 0
-			nB.prev_size = 0
+			nB.prev_size = "flat"
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
 			M.reagents.remove_reagent(id, 5)
 			B = nB
@@ -123,15 +119,13 @@
 		P.cached_length = P.cached_length - 0.05
 		P.update()
 	if(T)
-		T.Remove(M)
+		qdel(T)
 	if(!V)
-		var/obj/item/organ/genital/vagina/nV = new
-		nV.Insert(M)
-		V = nV
+		V = new
+		V.Insert(M)
 	if(!W)
-		var/obj/item/organ/genital/womb/nW = new
-		nW.Insert(M)
-		W = nW
+		W = new
+		W.Insert(M)
 	return ..()
 
 /datum/reagent/fermi/BEsmaller
@@ -232,8 +226,6 @@
 	if(!P)
 		H.emergent_genital_call()
 		return
-	P.prev_length = P.length
-	P.cached_length = P.length
 
 /datum/reagent/fermi/penis_enlarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	if(!ishuman(M))
@@ -273,7 +265,9 @@
 	P.update()
 	return ..()
 
-/datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
+/datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/human/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
+	if(!istype(M))
+		return ..()
 	//Acute hepatic pharmacokinesis.
 	if(HAS_TRAIT(M, TRAIT_PHARMA))
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
@@ -292,14 +286,13 @@
 	if(B)
 		B.cached_size = B.cached_size - 0.05
 		B.update()
-	if(V)
-		V.Remove(M)
+	if(M.getorganslot(ORGAN_SLOT_VAGINA))
+		qdel(V)
 	if(W)
-		W.Remove(M)
+		qdel(W)
 	if(!T)
-		var/obj/item/organ/genital/testicles/nT = new
-		nT.Insert(M)
-		T = nT
+		T = new
+		T.Insert(M)
 	return ..()
 
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
