@@ -275,6 +275,13 @@
 		qdel(src)
 		M.put_in_active_hand(holy_weapon)
 
+/obj/item/nullrod/proc/jedi_spin(mob/living/user)
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		user.setDir(i)
+		if(i == WEST)
+			user.emote("flip")
+		sleep(1)
+
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
@@ -661,6 +668,44 @@
 	item_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+/obj/item/nullrod/claymore/bostaff/attack(mob/target, mob/living/user)
+	add_fingerprint(user)
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
+		user.Knockdown(60)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+		else
+			user.take_bodypart_damage(2*force)
+		return
+	if(iscyborg(target))
+		return ..()
+	if(!isliving(target))
+		return ..()
+	var/mob/living/carbon/C = target
+	if(C.stat || C.health < 0 || C.staminaloss > 130 )
+		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
+		return
+	if(user.a_intent == INTENT_DISARM)
+		if(!ishuman(target))
+			return ..()
+		var/mob/living/carbon/human/H = target
+		var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
+									  "[user] smacks [H] with the butt of [src]!", \
+									  "[user] broadsides [H] with [src]!", \
+									  "[user] smashes [H]'s head with [src]!", \
+									  "[user] beats [H] with front of [src]!", \
+									  "[user] twirls and slams [H] with [src]!")
+		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
+							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+		H.adjustStaminaLoss(rand(12,18))
+		if(prob(25))
+			(INVOKE_ASYNC(src, .proc/jedi_spin, user))
+	else
+		return ..()
 
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
