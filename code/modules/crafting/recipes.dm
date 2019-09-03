@@ -136,7 +136,7 @@
 /datum/crafting_recipe/minigun
 	name = "Laser Minigun"
 	result = /obj/item/minigunpack2
-	reqs = list(/obj/item/gun/energy/laser = 3,
+	reqs = list(/obj/item/gun/energy/laser/carbine = 3,
 				/obj/item/stack/sheet/plasteel = 5,
 				/obj/item/stack/cable_coil = 30,
 				/obj/item/stock_parts/cell/bluespace = 2)

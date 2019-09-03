@@ -71,6 +71,6 @@
 
 /obj/item/ammo_casing/energy/laser/weak
 	projectile_type = /obj/item/projectile/beam/weak/minigun
-	e_cost = 5
-	delay = 0
+	e_cost = 10
 	fire_sound = 'sound/weapons/gatling.ogg'
+	click_cooldown_override = 1

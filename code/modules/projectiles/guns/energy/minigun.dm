@@ -12,7 +12,7 @@
 	var/obj/item/gun/energy/minigun/gun
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 	var/overheat = 0
-	var/overheat_max = 200
+	var/overheat_max = 60
 	var/heat_diffusion = 5
 
 /obj/item/minigunpack2/Initialize()
@@ -97,6 +97,8 @@
 	icon_state = "minigun_spin"
 	item_state = "minigun"
 	flags_1 = CONDUCT_1
+	force = 15
+	recoil = 2
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
@@ -105,7 +107,6 @@
 	burst_size = 2
 	automatic = 1
 	can_charge = 0
-	firing_burst = FALSE
 	selfcharge = EGUN_SELFCHARGE
 	charge_tick = 2
 	charge_delay = 5
@@ -130,15 +131,13 @@
 	else
 		qdel(src)
 
-/obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 15)
+/obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size
 			..()
 		else
 			to_chat(user, "The gun's heat sensor locked the trigger to prevent lens damage.")
-	if(user.a_intent == INTENT_HARM)
-		user.changeNext_move(CLICK_CD_HYPERSPEED)
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)

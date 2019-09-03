@@ -40,6 +40,8 @@
 	damage = 15
 
 /obj/item/projectile/beam/weak/minigun
+	damage = 12.5
+	armour_penetration = 40
 
 /obj/item/projectile/beam/weak/minigun/Initialize()
 	.=..()
