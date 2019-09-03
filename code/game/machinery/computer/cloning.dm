@@ -63,11 +63,6 @@
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
-		
-	if(ismob(scanner.occupant))
-		var/mob/M = scanner.occpuant
-		if(M.stat == DEAD) //you must be kill to autoscan.
-			scan_occupant(scanner.occupant) //I blame kevin
 
 	for(var/datum/data/record/R in records)
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
