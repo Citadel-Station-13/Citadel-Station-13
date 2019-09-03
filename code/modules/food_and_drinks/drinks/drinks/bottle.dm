@@ -7,11 +7,12 @@
 /obj/item/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
+	force = 15
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
+	var/knockdown_duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
@@ -61,46 +62,30 @@
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return
 
-	force = 15 //Smashing bottles over someoen's head hurts.
-
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
-	var/armor_block = 0 //Get the target's armor values for normal attack damage.
-	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+	var/headarmor = 0 // Target's head armor
+	var/armor_block = min(90, target.run_armor_check(affecting, "melee", null, null,armour_penetration)) // For normal attack damage
 
-	//Calculating duration and calculating damage.
-	if(ishuman(target))
+	//If they have a hat/helmet and the user is targeting their head.
+	if(affecting == BODY_ZONE_HEAD)
+		var/obj/item/I = target.get_item_by_slot(SLOT_HEAD)
+		if(I)
+			headarmor = I.armor.melee
 
-		var/mob/living/carbon/human/H = target
-		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, "melee", null, null,armour_penetration) // For normal attack damage
-
-		//If they have a hat/helmet and the user is targeting their head.
-		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
-			headarmor = H.head.armor.melee
-		else
-			headarmor = 0
-
-		//Calculate the knockdown duration for the target.
-		armor_duration = (duration - headarmor) + force
-
-	else
-		//Only humans can have armor, right?
-		armor_block = target.run_armor_check(affecting, "melee")
-		if(affecting == BODY_ZONE_HEAD)
-			armor_duration = duration + force
+	//Calculate the knockdown duration for the target.
+	var/armor_duration = (knockdown_duration - headarmor) + force
 
 	//Apply the damage!
-	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
-	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
+	if(affecting == BODY_ZONE_HEAD && iscarbon(target))
 		head_attack_message = " on the head"
 		//Knockdown the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN) // Never knockdown more than a flash!
+			target.Knockdown(min(armor_duration, 200)) // Never knockdown more than a flash!
 
 	//Display an attack message.
 	if(target != user)
@@ -202,17 +187,18 @@
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list("hell_water" = 100)
 
-/obj/item/reagent_containers/food/drinks/holyoil
+/obj/item/reagent_containers/food/drinks/bottle/holyoil
 	name = "flask of zelus oil"
-	desc = "A brass flask of Zelus oil, a viscous fluid with a scenting of brass - this flask may be sipped or thrown."
+	desc = "A brass flask of Zelus oil, a viscous fluid scenting of brass. Can be thrown to deal damage from afar."
 	icon_state = "zelusflask"
-	list_reagents = list("holyoil" = 30) //Powerfull
+	list_reagents = list("holyoil" = 30)
 	volume = 30
 	foodtype = NONE
-	force = 12 //Same as a toolbox
+	force = 18
 	throwforce = 18
+	knockdown_duration = 18
 
-/obj/item/reagent_containers/food/drinks/holyoil/null
+/obj/item/reagent_containers/food/drinks/bottle/holyoil/empty
 	list_reagents = list("holyoil" = 0)
 
 /obj/item/reagent_containers/food/drinks/bottle/vermouth

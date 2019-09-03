@@ -16,14 +16,18 @@
 	can_climax				= TRUE
 	var/sent_full_message	= TRUE //defaults to 1 since they're full to start
 
-/obj/item/organ/genital/testicles/Initialize()
-	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
-
 /obj/item/organ/genital/testicles/on_life()
 	if(QDELETED(src))
 		return
 	if(reagents && producing)
+		if(reagents.total_volume == 0) // Apparently, 0.015 gets rounded down to zero and no reagents are created if we don't start it with 0.1 in the tank.
+			fluid_rate = 0.1
+		else
+			fluid_rate = CUM_RATE
+		if(reagents.total_volume >= 5)
+			fluid_mult = 0.5
+		else
+			fluid_mult = 1
 		generate_cum()
 
 /obj/item/organ/genital/testicles/proc/generate_cum()

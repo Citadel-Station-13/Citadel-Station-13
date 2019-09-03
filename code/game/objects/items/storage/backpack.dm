@@ -248,12 +248,13 @@
 	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
-	slot_flags = ITEM_SLOT_BACK	| ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/storage/backpack/satchel/bone/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 10
+	STR.max_combined_w_class = 20
+	STR.max_items = 15
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
@@ -383,6 +384,14 @@
 	icon_state = "duffel-eng"
 	item_state = "duffel-eng"
 
+/obj/item/storage/backpack/duffelbag/durathread
+	name = "durathread duffel bag"
+	desc = "A lightweight duffel bag made out of durathread."
+	icon_state = "duffel-durathread"
+	item_state = "duffel-durathread"
+	resistance_flags = FIRE_PROOF
+	slowdown = 0
+
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
 	desc = "A large duffel bag for holding tools and hats."
@@ -398,6 +407,7 @@
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
+	new /obj/item/pipe_dispenser(src)
 
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"

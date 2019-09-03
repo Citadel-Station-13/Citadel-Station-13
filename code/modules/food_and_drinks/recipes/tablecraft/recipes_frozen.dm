@@ -211,7 +211,7 @@
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/kiwi_sc
-	name = "Soda water snowcone"
+	name = "Kiwi snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
 		/obj/item/reagent_containers/food/snacks/egg/kiwiEgg = 1,

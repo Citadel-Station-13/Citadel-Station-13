@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by Kmc2000 and actioninja)"
+delete-after: True
+changes: 
+  - rscadd: "Added darkmode! You can opt-in to this by clicking the new toggle darkmode button just beside the settings one."
+  - rscadd: "Byond members will now have a new setting for their Antag OOC color, instead of using their OOC one. (Antag OOC still locked under admin discretion though)"
+  - rscdel: "Default black'n'white windows style."

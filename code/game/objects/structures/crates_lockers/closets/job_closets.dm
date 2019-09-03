@@ -21,8 +21,8 @@
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/reagent_containers/glass/rag(src)
-	new /obj/item/reagent_containers/glass/rag(src)
+	new /obj/item/reagent_containers/rag(src)
+	new /obj/item/reagent_containers/rag(src)
 	new /obj/item/storage/box/beanbag(src)
 	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/circuitboard/machine/dish_drive(src)
@@ -53,7 +53,7 @@
 	new /obj/item/clothing/suit/toggle/chef(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
-	new /obj/item/reagent_containers/glass/rag(src)
+	new /obj/item/reagent_containers/rag(src)
 
 /obj/structure/closet/jcloset
 	name = "custodial closet"
@@ -358,3 +358,8 @@
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
 
+/obj/structure/closet/coffin/handle_lock_addition()
+	return
+
+/obj/structure/closet/coffin/handle_lock_removal()
+	return
