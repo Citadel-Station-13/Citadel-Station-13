@@ -29,8 +29,20 @@
 				for(var/turf/turf in range(2,T))
 					new /obj/effect/hotspot(turf)
 
-			if (1101 to INFINITY) //If you're crafty
+			if (1101 to 1500) //If you're crafty
 				for(var/turf/turf in range(3,T))
+					new /obj/effect/hotspot(turf)
+
+			if (1501 to 2500) //requested
+				for(var/turf/turf in range(4,T))
+					new /obj/effect/hotspot(turf)
+
+			if (2501 to 5000)
+				for(var/turf/turf in range(5,T))
+					new /obj/effect/hotspot(turf)
+
+			if (5001 to INFINITY)
+				for(var/turf/turf in range(6,T))
 					new /obj/effect/hotspot(turf)
 
 
@@ -512,7 +524,7 @@
 	name = "Yamerol"
 	id = "yamerol"
 	results = list("yamerol" = 1.5)
-	required_reagents = list("perfluorodecalin" = 0.5, "furranium" = 0.5, "water" = 0.5)
+	required_reagents = list("perfluorodecalin" = 0.5, "salbutamol" = 0.5, "water" = 0.5)
 	//FermiChem vars:
 	OptimalTempMin 	= 300
 	OptimalTempMax 	= 500

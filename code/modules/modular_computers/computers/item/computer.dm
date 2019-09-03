@@ -178,13 +178,13 @@
 			turn_on(user)
 
 /obj/item/modular_computer/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
-		return 0
-	else
-		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
-		return 1
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
+	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
 	..()

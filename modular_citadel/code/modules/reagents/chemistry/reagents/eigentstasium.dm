@@ -171,4 +171,33 @@
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_overdose")//holdover until above fix works
 	..()
 
+/datum/reagent/fermi/eigenstate/reaction_turf(turf/T, reac_volume)
+	//if(cached_purity < 0.99) To add with next batch of fixes and tweaks.
+	var/obj/structure/closet/First
+	var/obj/structure/closet/Previous
+	for(var/obj/structure/closet/C in T.contents)
+		if(C.eigen_teleport == TRUE)
+			C.visible_message("[C] fizzes, it's already linked to something else!")
+			continue
+		if(!Previous)
+			First = C
+			Previous = C
+			continue
+		C.eigen_teleport = TRUE
+		C.eigen_target = Previous
+		C.color = "#9999FF" //Tint the locker slightly.
+		C.alpha = 200
+		do_sparks(5,FALSE,C)
+		Previous = C
+	if(!First)
+		return
+	if(Previous == First)
+		return
+	First.eigen_teleport = TRUE
+	First.eigen_target = Previous
+	First.color = "#9999FF"
+	First.alpha = 200
+	do_sparks(5,FALSE,First)
+	First.visible_message("The lockers' eigenstates spilt and merge, linking each of their contents together.")
+
 //eigenstate END

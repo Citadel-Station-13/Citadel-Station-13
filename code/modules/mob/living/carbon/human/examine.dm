@@ -281,6 +281,13 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
+	if(reagents.has_reagent("astral"))
+		msg += "[t_He] have wild, spacey eyes"
+		if(mind)
+			msg += " and have a strange, abnormal look to them.\n"
+		else
+			msg += " and don't look like they're all there.\n"
+
 	if(isliving(user))
 		var/mob/living/L = user
 		if(src != user && HAS_TRAIT(L, TRAIT_EMPATH) && !appears_dead)

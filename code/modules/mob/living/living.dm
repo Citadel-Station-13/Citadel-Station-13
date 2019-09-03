@@ -636,14 +636,15 @@
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-		else if(resting) //cit change - allows resisting out of resting
+			return
+		if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
-		else if(iscarbon(src)) //Citadel Change for embedded removal memes
-			var/mob/living/carbon/C = src
-			if(!C.handcuffed && !C.legcuffed)
-				return TRUE
-		else if(last_special <= world.time)
+			return
+		if(resist_embedded()) //Citadel Change for embedded removal memes
+			return
+		if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
+			return
 
 
 /mob/proc/resist_grab(moving_resist)
@@ -823,7 +824,7 @@
 	return 1
 
 //used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection()
+/mob/living/proc/get_permeability_protection(list/target_zones)
 	return 0
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering

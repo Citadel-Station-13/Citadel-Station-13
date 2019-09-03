@@ -253,8 +253,6 @@
 		message = replacetext(message, "ove", "uv")
 		message = replacetext(message, "l", "w")
 		message = replacetext(message, "r", "w")
-	if(prob(20))
-		message +=  pick(" OwO", " uwu")
 	message = lowertext(message)
 	speech_args[SPEECH_MESSAGE] = message
 

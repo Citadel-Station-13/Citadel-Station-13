@@ -134,6 +134,23 @@
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
 
+/datum/reagent/fermi/furranium/reaction_mob(mob/living/carbon/human/M, method=INJECT, reac_volume)
+	if(method == INJECT)
+		var/turf/T = get_turf(M)
+		M.adjustOxyLoss(15)
+		M.Knockdown(50)
+		M.Stun(50)
+		M.emote("cough")
+		var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))
+		new P(T)
+		to_chat(M, "<span class='warning'>You feel a lump form in your throat, as you suddenly cough up what seems to be a hairball?</b></span>")
+		var/list/seen = viewers(8, T)
+		for(var/mob/S in seen)
+			to_chat(S, "<span class='warning'>[M] suddenly coughs up a [P.name]!</b></span>")
+		var/T2 = get_random_station_turf()
+		P.throw_at(T2, 8, 1)
+	..()
+
 /datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
 
 	switch(current_cycle)
@@ -160,15 +177,15 @@
 			T.Remove(M)
 			nT.Insert(M)
 			T.moveToNullspace()//To valhalla
-			to_chat(M, "<span class='notice'>Youw tongue feews... weally fwuffy!!</span>")
+			to_chat(M, "<span class='big warning'>Your tongue feels... weally fwuffy!!</span>")
 		if(17 to INFINITY)
-			if(prob(10))
+			if(prob(5))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
 				M.emote("nya")
-			if(prob(10))
+			if(prob(5))
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
-			if(prob(20))
+			if(prob(5))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
 					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
@@ -178,7 +195,7 @@
 	..()
 
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
-	if(purity < 0.9)//Only permanent if you're a good chemist.
+	if(purity < 1)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
 		nT.Remove(M)
 		qdel(nT)
@@ -187,6 +204,7 @@
 		M.say("Pleh!")
 	else
 		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal

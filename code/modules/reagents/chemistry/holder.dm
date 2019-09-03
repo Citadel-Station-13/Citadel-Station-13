@@ -1,3 +1,5 @@
+#define CHEMICAL_QUANTISATION_LEVEL 0.0001
+
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 
@@ -94,7 +96,7 @@
 	var/list/data = list()
 	for(var/r in reagent_list) //no reagents will be left behind
 		var/datum/reagent/R = r
-		data += "[R.id] ([round(R.volume, 0.1)]u)"
+		data += "[R.id] ([round(R.volume, CHEMICAL_QUANTISATION_LEVEL)]u)"
 		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
@@ -471,7 +473,7 @@
 					return 0
 
 				for(var/B in cached_required_reagents)
-					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
+					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
 
@@ -498,7 +500,7 @@
 					return 0
 
 				for(var/B in cached_required_reagents) //
-					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
+					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
 
 				for(var/B in cached_required_reagents)
 					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1, ignore_pH = TRUE)
@@ -646,8 +648,8 @@
 		addChemAmmount = deltaT * stepChemAmmount
 		if (addChemAmmount >= (targetVol - reactedVol))
 			addChemAmmount = (targetVol - reactedVol)
-		if (addChemAmmount < 0.01)
-			addChemAmmount = 0.01
+		if (addChemAmmount < CHEMICAL_QUANTISATION_LEVEL)
+			addChemAmmount = CHEMICAL_QUANTISATION_LEVEL
 		removeChemAmmount = (addChemAmmount/cached_results[P])
 		//This is kept for future bugtesters.
 		//message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
@@ -692,11 +694,7 @@
 		return
 
 	//Make sure things are limited.
-	if (pH > 14)
-		pH = 14
-	else if (pH < 0)
-		pH = 0
-		//some beakers melt at extremes. This proc is called in add_reagent
+	pH = CLAMP(pH, 0, 14)
 
 	//return said amount to compare for next step.
 	return (reactedVol)
@@ -743,7 +741,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < 0.1)
+		if(R.volume < CHEMICAL_QUANTISATION_LEVEL)
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
@@ -812,7 +810,7 @@
 	if(!isnum(amount) || !amount)
 		return FALSE
 
-	if(amount <= 0.00)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small ammount problems.
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
@@ -971,7 +969,7 @@
 			if(!amount)
 				return R
 			else
-				if(R.volume >= amount)
+				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					return R
 				else
 					return 0
@@ -983,7 +981,7 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.id == reagent)
-			return R.volume
+			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
 
 	return 0
 

@@ -10,7 +10,7 @@
 	var/fluid_transfer_factor	= 0.0 //How much would a partner get in them if they climax using this?
 	var/size					= 2 //can vary between num or text, just used in icon_state strings
 	var/fluid_id				= null
-	var/fluid_max_volume		= 50
+	var/fluid_max_volume		= 15
 	var/fluid_efficiency		= 1
 	var/fluid_rate				= 1
 	var/fluid_mult				= 1
@@ -230,6 +230,7 @@
 				B.prev_size = B.size
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
+			B.producing = dna.features["breasts_producing"]
 			B.update()
 
 
@@ -270,8 +271,8 @@
 	switch(layer)
 		if(GENITALS_BEHIND_LAYER)
 			return "BEHIND"
-		if(GENITALS_ADJ_LAYER)
-			return "ADJ"
+		/*if(GENITALS_ADJ_LAYER)
+			return "ADJ"*/
 		if(GENITALS_FRONT_LAYER)
 			return "FRONT"
 
@@ -344,7 +345,7 @@
 	if(HAS_TRAIT(H, TRAIT_HUSK))
 		return
 	var/list/genitals_to_add = list()
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER) //GENITALS_ADJ_LAYER removed
 	var/list/standing = list()
 	var/size
 	var/aroused_state

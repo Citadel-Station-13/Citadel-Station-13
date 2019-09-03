@@ -52,10 +52,10 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		qdel(O)
 
 
-/datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
+/datum/reagent/fermi/astral/on_mob_life(mob/living/carbon/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
-	originalmind = M.mind
 	if(current_cycle == 0)
+		originalmind = M.mind
 		log_game("FERMICHEM: [M] ckey: [M.key] became an astral ghost")
 		origin = M
 		if (G == null)
@@ -64,7 +64,8 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		var/datum/action/chem/astral/AS = new(G)
 		AS.origin = M
 		AS.ghost = G
-		M.mind.transfer_to(G)
+		if(M.mind)
+			M.mind.transfer_to(G)
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
 	if(overdosed)
 		if(prob(50))
@@ -77,23 +78,26 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			if(G.stat == DEAD || G.pseudo_death == TRUE)
 				G.mind.transfer_to(M)
 				qdel(G)
-	else
-		M.Sleeping(20, 0)
-		M.reagents.remove_reagent(id, 2, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	if(!G)
+		if(M.mind)
+			var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
+			M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+			log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
 		originalmind.transfer_to(M)
 	else if(G.mind)
 		G.mind.transfer_to(origin)
 		qdel(G)
 	if(overdosed)
-		to_chat(M, "<span class='warning'>The high volume of Astrogren you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
+		to_chat(M, "<span class='warning'>The high volume of astrogen you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
 		M.Sleeping(sleepytime, 0)
 	antiGenetics = 255
 	if(G)//just in case
 		qdel(G)
+	log_game("FERMICHEM: [M] has astrally returned to their body!")
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.
@@ -119,6 +123,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			M.alpha--
 			antiGenetics--
 			ADD_TRAIT(M, TRAIT_NOCLONE, "astral") //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
+			M.hellbound = TRUE
 		if(180)
 			to_chat(M, "<span class='notice'>You feel fear build up in yourself as more and more of your body and consciousness begins to fade.</b></span>")
 			M.alpha--
@@ -135,7 +140,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
 			M.alpha--
 			antiGenetics--
-		if(0 to 30)
+		if(-INFINITY to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
 			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag, you do not remember the afterlife IC)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
 			deadchat_broadcast("<span class='warning'>[M] has become one with the universe, meaning that their IC conciousness is continuous in a new life. If they find a way back to life, they are allowed to remember their previous life. Be careful what you say. If they abuse this, bwoink the FUCK outta them.</span>")

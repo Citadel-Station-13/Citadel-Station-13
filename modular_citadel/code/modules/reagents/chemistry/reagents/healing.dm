@@ -7,7 +7,7 @@
 	pH = 8.6
 	overdose_threshold = 35
 	ImpureChem 			= "yamerol_tox"
-	InverseChemVal 		= 0.3
+	InverseChemVal 		= 0.4
 	InverseChem 		= "yamerol_tox"
 	can_synth = TRUE
 
@@ -16,17 +16,31 @@
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(T)
-		T.adjustTongueLoss(C, -2)
+		T.adjustTongueLoss(C, -2)//Fix the inputs me!
 	if(L)
 		L.adjustLungLoss(-5, C)
 		C.adjustOxyLoss(-2)
 	else
 		C.adjustOxyLoss(-10)
+
+	if(T)
+		if(T.name == "fluffy tongue")
+			var/obj/item/organ/tongue/nT
+			if(C.dna && C.dna.species && C.dna.species.mutanttongue)
+				nT = new C.dna.species.mutanttongue()
+			else
+				nT = new()
+			T.Remove(C)
+			qdel(T)
+			nT.Insert(C)
+			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
+			holder.remove_reagent(src.id, "10")
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
 	var/obj/item/organ/tongue/oT = C.getorganslot(ORGAN_SLOT_TONGUE)
-
+	if(current_cycle == 1)
+		to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and lungs.</span>")
 	if(current_cycle > 10)
 		if(!C.getorganslot(ORGAN_SLOT_TONGUE))
 			var/obj/item/organ/tongue/T
@@ -40,7 +54,6 @@
 		else
 			if((oT.name == "fluffy tongue") && (purity == 1))
 				var/obj/item/organ/tongue/T
-
 				if(C.dna && C.dna.species && C.dna.species.mutanttongue)
 					T = new C.dna.species.mutanttongue()
 				else
@@ -57,6 +70,10 @@
 			to_chat(C, "<span class='notice'>You feel your lungs reform in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
 
+<<<<<<< HEAD
+=======
+	C.adjustOxyLoss(-3)
+>>>>>>> upstream/master
 	..()
 
 /datum/reagent/fermi/yamerol/reaction_mob(var/mob/living/L)
@@ -87,7 +104,7 @@
 		T.adjustTongueLoss(C, 1)
 	if(L)
 		L.adjustLungLoss(4, C)
-		C.adjustOxyLoss(2)
+		C.adjustOxyLoss(3)
 	else
 		C.adjustOxyLoss(10)
 	..()
