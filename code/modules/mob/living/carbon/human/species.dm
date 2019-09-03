@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
 					var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
 					if(UNDIE_COLORABLE(S))
-						MA.color = "[H.socks_color]"
+						MA.color = "#[H.socks_color]"
 					standing += MA
 
 	if(standing.len)
@@ -1696,7 +1696,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
-						var/datum/antagonist/gang/gang = H.mind.has_antag_datum(/datum/antagonist/gang/)
+						var/datum/antagonist/gang/gang = H.mind.has_antag_datum(/datum/antagonist/gang && !/datum/antagonist/gang/boss)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
 						if(gang)
@@ -1781,7 +1781,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(CLONE)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
-			H.stamdamageoverlaytemp = 20
 			if(BP)
 				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod), only_robotic = FALSE, only_organic = FALSE))
 					H.update_stamina()
