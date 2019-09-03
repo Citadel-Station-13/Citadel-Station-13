@@ -42,12 +42,12 @@
 /obj/item/reagent_containers/food/snacks/cola_float
 	name = "Root Beer Float"
 	trash = /obj/item/reagent_containers/food/drinks/drinkingglass
-	desc = "A glass filled with cream, soda and ice-cream with a charrie on top."
+	desc = "A glass filled with cream, soda and ice-cream with a cherry on top."
 	icon_state = "cola_float"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "space coal" = 1, "charries" = 1)
+	tastes = list("ice cream" = 1, "space coal" = 1, "cherries" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/charrie_float
@@ -69,7 +69,7 @@
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 3, "vitamin" = 2, "bluecherryshake" = 10)
 	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "blue charries" = 1)
+	tastes = list("ice cream" = 1, "blue cherries" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/spacefreezy
