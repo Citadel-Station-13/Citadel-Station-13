@@ -64,7 +64,8 @@
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
 
-	if(ismob(scanner.occupant)) var/mob/M = scanner.occpuant if(M.stat == DEAD) //scans dead people automatically, not living.
+	if(ismob(scanner.occupant)) 
+		var/mob/M = scanner.occpuant if(M.stat == DEAD) //scans dead people automatically, not living.
 		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/R in records)
