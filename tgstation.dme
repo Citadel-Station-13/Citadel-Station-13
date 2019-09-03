@@ -3013,6 +3013,7 @@
 #include "modular_citadel\code\modules\mob\living\carbon\human\species_types\furrypeople.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\species_types\ipc.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\species_types\jellypeople.dm"
+#include "modular_citadel\code\modules\mob\living\silicon\ai\vox_sounds.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\dogborg_equipment.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\robot.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
