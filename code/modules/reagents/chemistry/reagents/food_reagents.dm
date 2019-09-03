@@ -194,7 +194,7 @@
 /datum/reagent/consumable/mustard
 	name = "Mustard"
 	id = "mustard"
-	description = "Mustard, mostly used on hotdogs, corndogs and burgards."
+	description = "Mustard, mostly used on hotdogs, corndogs and burgers."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#DDED26" // rgb: 221, 237, 38
 	taste_description = "mustard"
