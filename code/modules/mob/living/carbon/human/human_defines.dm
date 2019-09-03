@@ -25,11 +25,11 @@
 	var/age = 30		//Player's age
 
 	var/underwear = "Nude"	//Which underwear the player wants
-	var/undie_color = "#FFFFFF"
+	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude" //Which undershirt the player wants
-	var/shirt_color = "#FFFFFF"
+	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
-	var/socks_color = "#FFFFFF"
+	var/socks_color = "FFFFFF"
 	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
