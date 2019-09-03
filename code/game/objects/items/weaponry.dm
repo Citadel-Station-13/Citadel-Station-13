@@ -69,6 +69,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/claymore/Initialize()
 	. = ..()
@@ -223,11 +224,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/katana/cursed
 	slot_flags = null
 
-/obj/item/katana/Initialize()
+/obj/item/katana/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -253,7 +255,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
 		remove_item_from_storage(user)
-		qdel(I)
+		if (!user.transferItemToLoc(I, S))
+			return
+		S.CheckParts(list(I))
 		qdel(src)
 
 		user.put_in_hands(S)
@@ -431,6 +435,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/mounted_chainsaw/Initialize()
 	. = ..()

@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/paper/crumpled = 1,
 	/obj/item/pen = 1,
 	/obj/item/reagent_containers/spray/pestspray = 1,
-	/obj/item/reagent_containers/glass/rag = 3,
+	/obj/item/reagent_containers/rag = 3,
 	/obj/item/stock_parts/cell = 3,
 	/obj/item/storage/belt/utility = 2,
 	/obj/item/storage/box = 2,
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
 	/obj/item/reagent_containers/pill/floorpill = 1,
-	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 1,
+	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 2,
 	/obj/item/storage/daki = 3, //VERY IMPORTANT CIT CHANGE - adds bodypillows to maint
 	/obj/item/storage/pill_bottle/penis_enlargement = 2,
 	/obj/item/storage/pill_bottle/breast_enlargement = 2,

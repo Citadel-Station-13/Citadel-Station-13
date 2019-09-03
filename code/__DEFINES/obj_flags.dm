@@ -26,13 +26,14 @@
 #define ABSTRACT				(1<<8) 	// for all things that are technically items but used for various different stuff
 #define IMMUTABLE_SLOW          (1<<9) //When players should not be able to change the slowdown of the item (Speed potions, ect)
 #define SURGICAL_TOOL			(1<<10)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
+#define NO_UNIFORM_REQUIRED		(1<<11) // Can be worn on certain slots (currently belt and id) that would otherwise require an uniform.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
 #define LAVAPROTECT (1<<0)
 #define STOPSPRESSUREDAMAGE		(1<<1)	//SUIT and HEAD items which stop pressure damage. To stop you taking all pressure damage you must have both a suit and head item with this flag.
 #define BLOCK_GAS_SMOKE_EFFECT	(1<<2)	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
-#define MASKINTERNALS				    (1<<3)		// mask allows internals
+#define ALLOWINTERNALS				    (1<<3)		// mask allows internals
 #define NOSLIP                  (1<<4)   //prevents from slipping on wet floors, in space etc
 #define THICKMATERIAL				(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define VOICEBOX_TOGGLABLE (1<<6) // The voicebox in this clothing can be toggled.

@@ -65,7 +65,7 @@
 		return
 
 	if (!sender)
-		sender = input("Who is the message from?", "Sender") as null|anything in list("CentCom","Syndicate")
+		sender = input("Who is the message from?", "Sender") as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
 		if(!sender)
 			return
 
@@ -298,7 +298,7 @@
 		if(candidates.len)
 			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
 		else
-			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
+			to_chat(usr, "<span class='danger'>Error: create_xeno(): no suitable candidates.</span>")
 	if(!istext(ckey))
 		return 0
 

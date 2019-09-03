@@ -150,7 +150,7 @@
 /area/awaymission/beach)
 "aB" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aC" = (

@@ -54,12 +54,16 @@
 	only_current_user_can_interact = TRUE
 
 /obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
-	return
+	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /obj/machinery/vr_sleeper/emag_act(mob/user)
+	. = ..()
+	if(you_die_in_the_game_you_die_for_real)
+		return
 	you_die_in_the_game_you_die_for_real = TRUE
 	sparks.start()
 	addtimer(CALLBACK(src, .proc/emagNotify), 150)
+	return TRUE
 
 /obj/machinery/vr_sleeper/update_icon()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"

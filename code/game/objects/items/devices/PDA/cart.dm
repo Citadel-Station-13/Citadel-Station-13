@@ -498,6 +498,23 @@ Code:
 				else
 					menu += "[ldat]"
 
+				menu += "<h4>Pimpin' Ride:</h4>"
+
+				ldat = null
+				for (var/obj/vehicle/ridden/janicart/M in world)
+					var/turf/ml = get_turf(M)
+
+					if(ml)
+						if (ml.z != cl.z)
+							continue
+						var/direction = get_dir(src, M)
+						ldat += "Ride - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b><br>"
+
+				if (!ldat)
+					menu += "None"
+				else
+					menu += "[ldat]"
+
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null

@@ -69,11 +69,7 @@
 			L.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your lungs reform in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
-
-<<<<<<< HEAD
-=======
 	C.adjustOxyLoss(-3)
->>>>>>> upstream/master
 	..()
 
 /datum/reagent/fermi/yamerol/reaction_mob(var/mob/living/L)
