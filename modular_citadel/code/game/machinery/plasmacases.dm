@@ -19,6 +19,5 @@
 	return MouseDrop(user)
 
 /obj/structure/guncase/plasma/emag_act()
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
-	if(!.)
-		to_chat(usr, "The locking mechanism is fitted with old style parts, The card has no effect.")
+	to_chat(usr, "The locking mechanism is fitted with old style parts, The card has no effect.")
+	return

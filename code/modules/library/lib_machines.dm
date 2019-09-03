@@ -343,11 +343,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return ..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	. = ..()
-	if(!density || obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	return TRUE
+	if(density && !(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())

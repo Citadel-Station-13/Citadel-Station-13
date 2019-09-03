@@ -128,12 +128,9 @@ GLOBAL_LIST(labor_sheet_values)
 		qdel(src)
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
-	. = ..()
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
-	return TRUE
+	if(!(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
+		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 
 
 /**********************Prisoner Collection Unit**************************/

@@ -127,14 +127,15 @@
 
 /obj/item/gun/ballistic/rocketlauncher/attackby(obj/item/A, mob/user, params)
 	if(magazine && istype(A, /obj/item/ammo_casing))
-		if(chambered)
-			to_chat(user, "<span class='notice'>[src] already has a [magazine_wording] chambered.</span>")
-			return
-		if(magazine.attackby(A, user, silent = TRUE))
-			to_chat(user, "<span class='notice'>You load a new [A] into \the [src].</span>")
-			playsound(src, "gun_insert_full_magazine", 70, 1)
-			chamber_round()
-			update_icon()
+		if(user.temporarilyRemoveItemFromInventory(A))
+			if(!chambered)
+				to_chat(user, "<span class='notice'>You load a new [A] into \the [src].</span>")
+				playsound(src, "gun_insert_full_magazine", 70, 1)
+				chamber_round()
+				update_icon()
+				return TRUE
+		else
+			to_chat(user, "<span class='warning'>You cannot seem to get \the [A] out of your hands!</span>")
 
 /obj/item/gun/ballistic/rocketlauncher/update_icon()
 	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"

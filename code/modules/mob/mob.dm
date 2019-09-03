@@ -457,17 +457,13 @@
 	set name = ".click"
 	set hidden = TRUE
 	set category = null
-	var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .click macro!"
-	log_admin(msg)
-	message_admins(msg)
+	return
 
 /mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".dblclick"
 	set hidden = TRUE
 	set category = null
-	var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .dblclick macro!"
-	log_admin(msg)
-	message_admins(msg)
+	return
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])

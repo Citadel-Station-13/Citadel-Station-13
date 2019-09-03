@@ -286,14 +286,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/convert/proc/optinalert(mob/living/convertee)
 	var/alert = alert(convertee, "Will you embrace the Geometer of Blood or perish in futile resistance?", "Choose your own fate", "Join the Blood Cult", "Suffer a horrible demise")
-	if(src && alert == "Join the Blood Cult")
+	if(alert == "Join the Blood Cult")
 		signmeup(convertee)
 
 /obj/effect/rune/convert/proc/signmeup(mob/living/convertee)
-	if(currentconversionman == convertee)
+	if(currentconversionman == usr)
 		conversionresult = TRUE
 	else
-		to_chat(convertee, "<span class='cult italic'>Your fate has already been set in stone.</span>")
+		to_chat(usr, "<span class='cult italic'>Your fate has already been set in stone.</span>")
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
 	var/mob/living/first_invoker = invokers[1]

@@ -27,13 +27,19 @@
 	var/list/speech_buffer
 
 /datum/tgs_chat_command/poly/Run()
+	GenerateSayList() //Has a check in here, but we're gunna sanity it after
+	if(!speech_buffer)
+		return "**BAWWWWWK!** LEAVE THE HEADSET! ***BAWKKKKK!!***"
+
+
+/datum/tgs_chat_command/poly/proc/GenerateSayList()
 	LAZYINITLIST(speech_buffer) //I figure this is just safe to do for everything at this point
 	if(length(speech_buffer))	//Let's not look up the whole json EVERY TIME, just the first time.
 		return "[pick(speech_buffer)]"
 	else
 		var/json_file = file("data/npc_saves/Poly.json")
 		if(!fexists(json_file))
-			return "**BAWWWWWK!** LEAVE THE HEADSET! ***BAWKKKKK!!***"
+			return
 		var/list/json = json_decode(file2text(json_file))
 		speech_buffer = json["phrases"]
 		return "[pick(speech_buffer)]"

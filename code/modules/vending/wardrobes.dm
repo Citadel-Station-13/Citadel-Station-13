@@ -320,9 +320,6 @@
 					/obj/item/clothing/suit/nun = 2,
 					/obj/item/clothing/head/nun_hood = 2,
 					/obj/item/clothing/suit/holidaypriest = 2,
-					/obj/item/clothing/suit/pharaoh = 2,
-					/obj/item/clothing/head/nemes = 1,
-					/obj/item/clothing/head/pharaoh = 1,
 					/obj/item/storage/fancy/candle_box = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 

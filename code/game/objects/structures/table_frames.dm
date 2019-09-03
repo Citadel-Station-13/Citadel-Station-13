@@ -100,14 +100,6 @@
 		to_chat(user, "<span class='notice'>You start adding [B] to [src]...</span>")
 		if(do_after(user, 20, target = src) && B.use(1))
 			make_new_table(/obj/structure/table/bronze)
-	else if(istype(I, /obj/item/stack/sheet/plasmaglass))
-		var/obj/item/stack/sheet/plasmaglass/G = I
-		if(G.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one plasmaglass sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
-		if(do_after(user, 20, target = src) && G.use(1))
-			make_new_table(/obj/structure/table/plasmaglass)
 	else
 		return ..()
 

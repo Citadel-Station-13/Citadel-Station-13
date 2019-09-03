@@ -468,11 +468,11 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
-/obj/item/clothing/suit/pharaoh
-	name = "pharaoh tunic"
+/obj/item/clothing/suit/nemes
+	name = "pharoah tunic"
 	desc = "Lavish space tomb not included."
-	icon_state = "pharaoh"
-	icon_state = "pharaoh"
+	icon_state = "pharoah"
+	icon_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
 
 

@@ -432,7 +432,6 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
-	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
@@ -441,7 +440,6 @@
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
-	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()

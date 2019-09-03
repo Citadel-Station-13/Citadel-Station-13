@@ -36,8 +36,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/screwdriver,
 		/obj/item/valentine,
-		/obj/item/stamp,
-		/obj/item/key))
+		/obj/item/stamp))
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()
@@ -61,7 +60,7 @@
 /obj/item/storage/wallet/update_icon()
 	var/new_state = "wallet"
 	if(front_id)
-		new_state = "wallet_id"
+		new_state = "wallet_[front_id.icon_state]"
 	if(new_state != icon_state)		//avoid so many icon state changes.
 		icon_state = new_state
 

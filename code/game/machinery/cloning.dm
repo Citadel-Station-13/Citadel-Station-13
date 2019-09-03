@@ -320,12 +320,10 @@
 		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
-	. = ..()
 	if(!occupant)
 		return
 	to_chat(user, "<span class='warning'>You corrupt the genetic compiler.</span>")
 	malfunction()
-	return TRUE
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)

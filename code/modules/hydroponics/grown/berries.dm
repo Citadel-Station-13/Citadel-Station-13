@@ -224,10 +224,6 @@
 	species = "strawberry"
 	plantname = "Strawberry Vine"
 	product = /obj/item/reagent_containers/food/snacks/grown/strawberry
-	growthstages = 6
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_grow = "strawberry-grow"
-	icon_dead = "berry-dead"
 	reagents_add = list("vitamin" = 0.07, "nutriment" = 0.1, "sugar" = 0.2)
 	mutatelist = list()
 
