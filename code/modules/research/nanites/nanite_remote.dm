@@ -37,7 +37,6 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/item/nanite_remote/emag_act(mob/user)
-	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You override [src]'s ID lock.</span>")
@@ -45,7 +44,6 @@
 	if(locked)
 		locked = FALSE
 		update_icon()
-	return TRUE
 
 /obj/item/nanite_remote/update_icon()
 	. = ..()

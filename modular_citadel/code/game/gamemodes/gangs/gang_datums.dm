@@ -64,7 +64,7 @@
 	name = "Cyber"
 	color = "#00f904" //Cyber and waffle shared colors, I made these guys green and made weed darker green.
 	inner_outfits = list(/obj/item/clothing/under/color/lightbrown)
-	outer_outfits = list(/obj/item/clothing/suit/pharaoh)
+	outer_outfits = list(/obj/item/clothing/suit/nemes)
 
 /datum/team/gang/donk
 	name = "Donk"

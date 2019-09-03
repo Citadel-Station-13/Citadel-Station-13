@@ -13,7 +13,7 @@
 			var/permitted = TRUE
 			if(G.restricted_roles && G.restricted_roles.len && !(M.mind.assigned_role in G.restricted_roles))
 				permitted = FALSE
-			if(G.donoritem && !G.donator_ckey_check(the_mob.client.ckey))
+			if(G.ckeywhitelist && G.ckeywhitelist.len && !(the_mob.client.ckey in G.ckeywhitelist))
 				permitted = FALSE
 			if(!equipbackpackstuff && G.category == SLOT_IN_BACKPACK)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
 				permitted = FALSE

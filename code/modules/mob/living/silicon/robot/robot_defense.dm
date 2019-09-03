@@ -92,18 +92,17 @@
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
-		return FALSE
-	if(world.time < emag_cooldown)
-		return FALSE
-	. = ..()
+		return
 	if(!opened)//Cover is closed
 		if(locked)
 			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
-			return TRUE
-		to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
+		else
+			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
+		return
+	if(world.time < emag_cooldown)
 		return
 	if(wiresexposed)
 		to_chat(user, "<span class='warning'>You must unexpose the wires first!</span>")
@@ -116,24 +115,20 @@
 		to_chat(src, "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
 		<span class='danger'>ALERT: Subversion attempt denied.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Ratvar.")
-		return TRUE
+		return
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
-		return TRUE
+		return
 
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, "<span class='danger'>[src] is remotely controlled! Your emag attempt has triggered a system reset instead!</span>")
 		log_game("[key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
 		ResetModule()
-		return TRUE
+		return
 
-	INVOKE_ASYNC(src, .proc/beep_boop_rogue_bot, user)
-	return TRUE
-
-/mob/living/silicon/robot/proc/beep_boop_rogue_bot(mob/user)
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0

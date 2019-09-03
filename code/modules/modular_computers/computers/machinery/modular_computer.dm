@@ -44,9 +44,7 @@
 		cpu.attack_ghost(user)
 
 /obj/machinery/modular_computer/emag_act(mob/user)
-	. = ..()
-	if(cpu)
-		. |= cpu.emag_act(user)
+	return cpu ? cpu.emag_act(user) : 1
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()

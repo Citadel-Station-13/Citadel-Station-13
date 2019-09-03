@@ -703,6 +703,14 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+/obj/item/clothing/under/durathread
+	name = "durathread jumpsuit"
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "durathread"
+	item_state = "durathread"
+	item_color = "durathread"
+	can_adjust = FALSE
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 
 /obj/item/clothing/under/gear_harness
 	name = "gear harness"
@@ -717,15 +725,5 @@
 	icon_state = "durathread"
 	item_state = "durathread"
 	item_color = "durathread"
-	can_adjust = TRUE
-	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
-
-/obj/item/clothing/under/duraskirt
-	name = "durathread jumpskirt"
-	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer. Being a short skirt, it naturally doesn't protect the legs."
-	icon_state = "duraskirt"
-	item_state = "duraskirt"
-	item_color = "durathread"
 	can_adjust = FALSE
-	body_parts_covered = CHEST|GROIN|ARMS
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)

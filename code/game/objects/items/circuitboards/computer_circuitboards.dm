@@ -217,13 +217,10 @@
 		to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
-	. = ..()
-	if(obj_flags & EMAGGED)
-		return
-	contraband = TRUE
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
-	return TRUE
+	if(!(obj_flags & EMAGGED))
+		contraband = TRUE
+		obj_flags |= EMAGGED
+		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"
@@ -237,12 +234,8 @@
 		obj_flags &= ~EMAGGED
 
 /obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
-	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
-	obj_flags |= EMAGGED
-	return TRUE
+		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
+		obj_flags |= EMAGGED
 
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"

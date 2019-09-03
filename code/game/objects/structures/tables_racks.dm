@@ -259,53 +259,6 @@
 		S.color = NARSIE_WINDOW_COLOUR
 
 /*
- * Plasmaglass tables
- */
-/obj/structure/table/plasmaglass
-	name = "plasmaglass table"
-	desc = "A glasstable, but it's pink and more sturdy. What will Nanotrasen design next with plasma?"
-	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
-	icon_state = "plasmaglass_table"
-	climbable = TRUE
-	buildstack = /obj/item/stack/sheet/plasmaglass
-	canSmoothWith = null
-	max_integrity = 270
-	resistance_flags = ACID_PROOF
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
-	var/list/debris = list()
-
-/obj/structure/table/plasmaglass/New()
-	. = ..()
-	debris += new frame
-	debris += new /obj/item/shard/plasma
-
-/obj/structure/table/plasmaglass/Destroy()
-	QDEL_LIST(debris)
-	. = ..()
-
-/obj/structure/table/plasmaglass/proc/check_break(mob/living/M)
-	return
-
-/obj/structure/table/plasmaglass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			..()
-			return
-		else
-			var/turf/T = get_turf(src)
-			playsound(T, "shatter", 50, 1)
-			for(var/X in debris)
-				var/atom/movable/AM = X
-				AM.forceMove(T)
-				debris -= AM
-	qdel(src)
-
-/obj/structure/table/plasmaglass/narsie_act()
-	color = NARSIE_WINDOW_COLOUR
-	for(var/obj/item/shard/S in debris)
-		S.color = NARSIE_WINDOW_COLOUR
-
-/*
  * Wooden tables
  */
 

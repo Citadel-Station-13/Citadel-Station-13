@@ -4,8 +4,9 @@
 	if(notransform)
 		return
 
-	if(damageoverlaytemp)
+	if(damageoverlaytemp || stamdamageoverlaytemp)
 		damageoverlaytemp = 0
+		stamdamageoverlaytemp = 0
 		update_damage_hud()
 
 	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.

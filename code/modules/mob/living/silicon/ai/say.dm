@@ -100,8 +100,6 @@
 
 	last_announcement = message
 
-	var/voxType = input(src, "Male or female VOX?", "VOX-gender") in list("male", "female")
-
 	if(!message || announcing_vox > world.time)
 		return
 
@@ -123,9 +121,7 @@
 		if(!word)
 			words -= word
 			continue
-		if(!GLOB.vox_sounds[word] && voxType == "female")
-			incorrect_words += word
-		if(!GLOB.vox_sounds_male[word] && voxType == "male")
+		if(!GLOB.vox_sounds[word])
 			incorrect_words += word
 
 	if(incorrect_words.len)
@@ -137,21 +133,16 @@
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
 
 	for(var/word in words)
-		play_vox_word(word, src.z, null, voxType)
+		play_vox_word(word, src.z, null)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener, voxType = "female")
+/proc/play_vox_word(word, z_level, mob/only_listener)
 
 	word = lowertext(word)
 
-	if( (GLOB.vox_sounds[word] && voxType == "female") || (GLOB.vox_sounds_male[word] && voxType == "male") )
+	if(GLOB.vox_sounds[word])
 
-		var/sound_file
-
-		if(voxType == "female")
-			sound_file = GLOB.vox_sounds[word]
-		else
-			sound_file = GLOB.vox_sounds_male[word]
+		var/sound_file = GLOB.vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 

@@ -69,7 +69,7 @@
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
-					break
+					return
 				if(!Target.lying && prob(80))
 
 					if(Target.client && Target.health >= 20)

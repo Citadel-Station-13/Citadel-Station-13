@@ -158,13 +158,11 @@
 		open_machine()
 
 /obj/machinery/harvester/emag_act(mob/user)
-	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	allow_living = TRUE
 	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
-	return TRUE
 
 /obj/machinery/harvester/container_resist(mob/living/user)
 	if(!harvesting)

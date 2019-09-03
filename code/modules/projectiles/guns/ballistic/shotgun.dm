@@ -40,7 +40,7 @@
 	if(istype(user) && user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return//CIT CHANGE - ditto
-	pump(user, TRUE)
+	pump(user)
 	recentpump = world.time + 10
 	if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
 		user.adjustStaminaLossBuffered(2) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
@@ -52,9 +52,7 @@
 		process_fire(user, user, FALSE)
 		. = 1
 
-/obj/item/gun/ballistic/shotgun/proc/pump(mob/M, visible = TRUE)
-	if(visible)
-		M.visible_message("<span class='warning'>[M] racks [src].</span>", "<span class='warning'>You rack [src].</span>")
+/obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pump_unload(M)
 	pump_reload(M)

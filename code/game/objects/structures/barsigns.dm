@@ -112,16 +112,12 @@
 
 
 /obj/structure/sign/barsign/emag_act(mob/user)
-	. = ..()
 	if(broken || (obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	addtimer(CALLBACK(src, .proc/syndie_bar_good), 10 SECONDS)
-	return TRUE
-
-/obj/structure/sign/barsign/proc/syndie_bar_good()
+	sleep(10 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	req_access = list(ACCESS_SYNDICATE)
 

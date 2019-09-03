@@ -45,22 +45,15 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/commander/alert
-	name = "ERT Commander - Amber Alert"
+	name = "ERT Commander - High Alert"
 	
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/gun/energy/e_gun=1)
-	l_pocket = /obj/item/melee/transforming/energy/sword/saber
-
-/datum/outfit/ert/commander/alert/red
-	name = "ERT Commander - Red Alert"
-	backpack_contents = list(/obj/item/storage/box/engineer=1,\
-		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1)
+	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 
 /datum/outfit/ert/security
 	name = "ERT Security"
@@ -87,22 +80,15 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/security/alert
-	name = "ERT Security - Amber Alert"
+	name = "ERT Security - High Alert"
 	
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/sec
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/gun/energy/e_gun/stun=1)
-
-/datum/outfit/ert/security/alert/red
-	name = "ERT Security - Red Alert"
-	backpack_contents = list(/obj/item/storage/box/engineer=1,\
-		/obj/item/storage/box/handcuffs=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
+
 
 /datum/outfit/ert/medic
 	name = "ERT Medic"
@@ -131,18 +117,9 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/medic/alert
-	name = "ERT Medic - Amber Alert"
+	name = "ERT Medic - High Alert"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/med
-	backpack_contents = list(/obj/item/storage/box/engineer=1,\
-		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/gun/energy/e_gun=1,\
-		/obj/item/reagent_containers/hypospray/combat/nanites=1,\
-		/obj/item/gun/medbeam=1)
-
-/datum/outfit/ert/medic/alert/red
-	name = "ERT Medic - Red Alert"
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
@@ -177,17 +154,9 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/engineer/alert
-	name = "ERT Engineer - Amber Alert"
+	name = "ERT Engineer - High Alert"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/engi
-	backpack_contents = list(/obj/item/storage/box/engineer=1,\
-		/obj/item/melee/baton/loaded=1,\
-		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/gun/energy/e_gun=1,\
-		/obj/item/construction/rcd/combat=1)
-
-/datum/outfit/ert/engineer/alert/red
-	name = "ERT Engineer - Red Alert"
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
