@@ -17,7 +17,7 @@
 	color = "#5020F4" // rgb: 50, 20, 255
 	overdose_threshold = 15
 	addiction_threshold = 15
-	metabolization_rate = 1.2 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
@@ -52,7 +52,7 @@
 
 		location_return = get_turf(M)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		if(purity > 0.9) //Teleports you home if it's pure enough
+		if(cached_purity > 0.9) //Teleports you home if it's pure enough
 			if(!location_created && data) //Just in case
 				location_created = data.["location_created"]
 			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
