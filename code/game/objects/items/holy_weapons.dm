@@ -251,7 +251,8 @@
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
 	/obj/item/twohanded/dualsaber/hypereutactic/chaplain,
 	/obj/item/gun/energy/laser/redtag/hitscan/chaplain,
-	/obj/item/multitool/chaplain
+	/obj/item/multitool/chaplain,
+	/obj/item/melee/baseball_bat/chaplain
 	)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
