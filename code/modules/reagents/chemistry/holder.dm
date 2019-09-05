@@ -1,4 +1,4 @@
-#define CHEMICAL_QUANTISATION_LEVEL 0.0001
+#define CHEMICAL_QUANTISATION_LEVEL 0.001
 
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -745,7 +745,6 @@
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-
 	return 0
 
 /datum/reagents/proc/clear_reagents()
