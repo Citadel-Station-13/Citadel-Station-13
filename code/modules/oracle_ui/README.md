@@ -23,11 +23,11 @@ You need to pass in `src`, the width of the window, the height of the window, an
 
 #### Step 2
 
-You will now need to make a template in `modular_citadel/html/oracle_ui/content/{template_name}`.
+You will now need to make a template in `html/oracle_ui/content/{template_name}`.
 
 Values defined as `@{value}` will get replaced at runtime by oracle_ui.
 
-`modular_citadel/html/oracle_ui/content/disposal_bin/index.html`
+`html/oracle_ui/content/disposal_bin/index.html`
 ```html
 <div class='display'>
 	<section>
