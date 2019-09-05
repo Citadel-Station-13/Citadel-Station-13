@@ -41,8 +41,15 @@
 /obj/item/organ/genital/breasts/proc/generate_milk()
 	if(owner.stat == DEAD)
 		return FALSE
+	consider_size()
 	reagents.isolate_reagent(fluid_id)
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))
+
+/obj/item/organ/genital/breasts/proc/consider_size()
+	if(!cached_size || cached_size < 1)
+		return
+	fluid_max_volume = cached_size*5
+	fluid_rate = cached_size*0.1
 
 /obj/item/organ/genital/breasts/update_appearance()
 	var/lowershape = lowertext(shape)

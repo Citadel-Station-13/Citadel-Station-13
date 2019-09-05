@@ -8,7 +8,7 @@ This ghost moves pretty quickly and is mostly invisible, but is still visible fo
 When it's out of your system, you return back to yourself. It doesn't last long and metabolism of the chem is exponential.
 Addiction is particularlly brutal, it slowly turns you invisible with flavour text, then kills you at a low enough alpha. (i've also added something to prevent geneticists speeding this up)
 There's afairly major catch regarding the death though. I'm not gonna say here, go read the code, it explains it and puts my comments on it in context. I know that anyone reading it without understanding it is going to freak out so, this is my attempt to get you to read it and understand it.
-I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
+I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit chem and ask for some pills to quench your addiction.
 */
 
 
@@ -67,6 +67,12 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(M.mind)
 			M.mind.transfer_to(G)
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
+		//INSURANCE
+		C.apply_status_effect(/datum/status_effect/chem/astral_insurance)
+		var/datum/status_effect/chem/astral_insurance/AI = C.has_status_effect(/datum/status_effect/chem/astral_insurance)
+		AI.original = M
+		AI.originalmind = M.mind
+
 	if(overdosed)
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
@@ -98,6 +104,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(G)//just in case
 		qdel(G)
 	log_game("FERMICHEM: [M] has astrally returned to their body!")
+	M.remove_status_effect(/datum/status_effect/chem/astral_insurance)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.
@@ -105,7 +112,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(addiction_stage < 2)
 		antiGenetics = 255
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
-	if(prob(70))
+	if(prob(75))
 		M.alpha--
 		antiGenetics--
 	switch(antiGenetics)

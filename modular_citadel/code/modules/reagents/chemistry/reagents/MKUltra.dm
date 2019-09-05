@@ -131,7 +131,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/enthrall
 	name = "enthrall"
-	id = "enthrall"
+	id = "enthrall_base"
 	description = "A forbidden deep purple mixture that aids the political influence of creator upon the subject. When taken by the creator, it will enhance the power of their words to those affected by it."
 	color = "#660055"
 	taste_description = "politics"
@@ -189,8 +189,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		..()
 
 /datum/reagent/fermi/enthrall/politi
-	name = "Politi-aid"
-	id = "politi-aid"
+	name = "Politic-aid"
+	id = "politic-aid"
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()

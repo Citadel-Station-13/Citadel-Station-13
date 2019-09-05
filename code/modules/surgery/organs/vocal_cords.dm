@@ -769,10 +769,10 @@
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
-	var/static/regex/strip_words = regex("strip|derobe|nude")
+	var/static/regex/strip_words = regex("strip|derobe|nude|at east|suit off")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
-	var/static/regex/liedown_words = regex("lie down") 
+	var/static/regex/liedown_words = regex("lie down")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel")
 	//phase 3
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
@@ -782,7 +782,7 @@
 	var/static/regex/instill_words = regex("feel|entice|overwhel")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed|word from HQ")
-	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
+	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die|heroes never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/hallucinate_words = regex("get high|hallucinate|trip balls")
 	var/static/regex/hot_words = regex("heat|hot|hell")
@@ -1014,7 +1014,7 @@
 						speaktrigger += "I'm really, really horny, "
 
 			//collar
-			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
+			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar) && H.client?.prefs.lewdchem)
 				speaktrigger += "I love the collar you gave me, "
 			//End
 			if(H.client?.prefs.lewdchem)
@@ -1250,6 +1250,9 @@
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
 					continue
+				if(H.client?.prefs.lewdchem)
+					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with triggers.</b></span>")
+					continue
 				else
 					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
@@ -1287,6 +1290,9 @@
 			if(E.phase == 3)
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new echophrase!</b></span>")
+					continue
+				if(H.client?.prefs.lewdchem)
+					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with an echoing phrase.</b></span>")
 					continue
 				else
 					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
@@ -1344,7 +1350,7 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase == 3 && H.client?.prefs.lewdchem)
-				var/instill = stripped_input(user, "Instill an emotion in your [(user.client?.prefs.lewdchem?"Your pet":"listener")].", MAX_MESSAGE_LEN)
+				var/instill = stripped_input(user, "Instill an emotion in [H].", MAX_MESSAGE_LEN)
 				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")
 				log_game("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")

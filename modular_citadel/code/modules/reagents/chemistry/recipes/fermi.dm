@@ -254,9 +254,7 @@
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 0.5)
-	//required_reagents = list("iron" = 1, "iodine" = 1) Test vars
-	//required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
-	required_reagents = list("cocoa" = 0.1, "bluespace" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1) //TEMPORARY UNTIL HEADMINS GIVE THE OKAY FOR MK USE.
+	required_reagents = list("cocoa" = 0.1, "neurine" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
 	required_catalysts = list("blood" = 1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
@@ -297,9 +295,22 @@
 	E.data.["creatorID"] = B.data.["ckey"]
 	E.creatorID = B.data.["ckey"]
 
+//Politic-aid split
+/datum/chemical_reaction/fermi/enthrall/politi
+	name = "Politic-aid"
+	id = "politic-aid"
+	required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
+	results = list("politic-aid" = 0.5)
+
 //So slimes can play too.
 /datum/chemical_reaction/fermi/enthrall/slime
 	required_catalysts = list("slimejelly" = 1)
+
+/datum/chemical_reaction/fermi/enthrall/slime/politi
+	name = "Politic-aid"
+	id = "politic-aid"
+	required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
+	results = list("politic-aid" = 0.5)
 
 /datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/toxin/slimejelly/B = locate(/datum/reagent/toxin/slimejelly) in my_atom.reagents.reagent_list//The one line change.

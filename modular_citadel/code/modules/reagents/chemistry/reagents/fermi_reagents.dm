@@ -104,10 +104,10 @@
 		return ..()
 	var/hatArmor = 0
 	if(!overdosed)
-		hatArmor = (cached_purity/10)
+		hatArmor = 10+((cached_purity/10)*current_cycle)
 	else
-		hatArmor = - (cached_purity/10)
-	if(hatArmor > 90)
+		hatArmor = -10+((cached_purity/10)*current_cycle)
+	if(hatArmor > 100)
 		return ..()
 	var/obj/item/W = M.head
 	W.armor = W.armor.modifyAllRatings(hatArmor)
@@ -195,7 +195,7 @@
 	..()
 
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
-	if(purity < 1)//Only permanent if you're a good chemist.
+	if(cached_purity < 0.95)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
 		nT.Remove(M)
 		qdel(nT)
@@ -227,7 +227,7 @@
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -cached_purity*2//0.5 seems to be the default to me, so it'll neuter them.
+	N.nanite_volume += -cached_purity*2//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
@@ -242,7 +242,7 @@
 		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -4*cached_purity
+	N.nanite_volume += -4*cached_purity
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)

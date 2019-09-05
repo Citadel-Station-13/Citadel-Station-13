@@ -47,10 +47,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "a weird chemical fleshy flavour"
 	var/list/candies = list()
-	var/list/result = list()
-	var/list/group = null
 	var/pollStarted = FALSE
-	var/location_created
 	var/startHunger
 	ImpureChem 			= "SDGFtox"
 	InverseChemVal 		= 0.5

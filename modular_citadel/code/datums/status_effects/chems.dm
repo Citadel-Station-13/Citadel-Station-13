@@ -161,9 +161,33 @@
 	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 	owner.ResetBloodVol()
 
+///////////////////////////////////////////////
+//			Astral INSURANCE
+///////////////////////////////////////////////
+//Makes sure people can't get trapped in each other's bodies if lag causes a deync between proc calls.
+
+
+/datum/status_effect/chem/astral_insurance
+	id = "astral_insurance"
+	var/mob/living/original
+	var/datum/mind/originalmind
+
+/datum/status_effect/chem/astral_insurance/tick(mob/living/carbon/M)
+	. = ..()
+	if(M.has_reagent("astral"))
+		return
+	if(M.mind == originalmind) //If they're home, let the chem deal with deletion.
+		return
+	if(M.mind)
+		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
+		M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
+	originalmind.transfer_to(original)
+
 
 /*//////////////////////////////////////////
-		Mind control functions
+		Political functions!
 ///////////////////////////////////////////
 */
 
