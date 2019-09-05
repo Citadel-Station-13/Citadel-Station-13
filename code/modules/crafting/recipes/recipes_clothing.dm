@@ -120,7 +120,7 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 7,
 				/obj/item/stack/sheet/leather = 3)
 	time = 70
-	always_availible = FALSE
+	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_toolbelt
@@ -129,7 +129,7 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 5,
 				/obj/item/stack/sheet/leather = 2)
 	time = 30
-	always_availible = FALSE
+	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_bandolier
@@ -138,7 +138,7 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 6,
 				/obj/item/stack/sheet/leather = 2)
 	time = 50
-	always_availible = FALSE
+	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_helmet
@@ -147,7 +147,7 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 4,
 				/obj/item/stack/sheet/leather = 2)
 	time = 30
-	always_availible = FALSE
+	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_vest
@@ -156,5 +156,5 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 6,
 				/obj/item/stack/sheet/leather = 3)
 	time = 50
-	always_availible = FALSE
+	always_availible = TRUE
 	category = CAT_CLOTHING
