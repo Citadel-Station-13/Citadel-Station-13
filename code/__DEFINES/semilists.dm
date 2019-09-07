@@ -1,0 +1,2 @@
+// list of all null rod weapons
+#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/melee/baseball_bat/chaplain
