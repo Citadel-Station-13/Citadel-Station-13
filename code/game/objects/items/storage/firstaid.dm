@@ -1,3 +1,4 @@
+
 /* First aid storage
  * Contains:
  *		First Aid Kits
@@ -275,6 +276,22 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
 
+/obj/item/storage/hypospraykit/enlarge
+	name = "organomegaly trauma hypospray kit"
+	icon_state = "enlarge-mini"
+	item_state = "firstaid-brute"
+
+/obj/item/storage/hypospraykit/enlarge/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/enlarge(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+
 /obj/item/storage/hypospraykit/cmo
 	name = "deluxe hypospray kit"
 	desc = "A kit containing a Deluxe hypospray and Vials."
@@ -419,6 +436,22 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/aranesp(src)
 
+/obj/item/storage/pill_bottle/psicodine
+	name = "bottle of psicodine pills"
+	desc = "Contains pills used to treat mental distress and traumas."
+
+/obj/item/storage/pill_bottle/psicodine/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/psicodine(src)
+
+/obj/item/storage/pill_bottle/happiness
+	name = "happiness pill bottle"
+	desc = "The label is long gone, in its place an 'H' written with a marker."
+
+/obj/item/storage/pill_bottle/happiness/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happiness(src)
+
 /obj/item/storage/pill_bottle/antirad_plus
 	name = "anti radiation deluxe pill bottle"
 	desc = "The label says 'Med-Co branded pills'."
@@ -442,6 +475,14 @@
 /obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/penis_enlargement(src)
+
+/obj/item/storage/pill_bottle/breast_enlargement
+	name = "breast enlargement pills"
+	desc = "Made by Fermichem - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
+
+/obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/breast_enlargement(src)
 
 /////////////
 //Organ Box//
@@ -485,3 +526,4 @@
 	/obj/item/stack/sheet/mineral/silver,
 	/obj/item/organ_storage
 	))
+

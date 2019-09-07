@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Improved the zelus flask to be more viable for bottle smashing than the average barman's selection."
+  - code_imp: "Very slight bottle smashing code clean up, stupid const vars."

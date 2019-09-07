@@ -31,13 +31,43 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
+	var/oldres
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
-									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
-									"silver", "gold"
+									list(	// level 1
+										"copper", "silver", "iodine", "iron", "carbon"
+									),
+									list(	// level 2
+										"potassium", "ethanol", "lithium", "silicon", "bromine"
+									),
+									list(	// level 3
+										"sodiumchloride", "sugar", "orangejuice", "tomatojuice", "milk"
+									),
+									list(	//level 4
+										"spaceacillin", "salglu_solution", "epinephrine", "charcoal"
+									),
+									list(	//level 5
+										"oil", "synaptizine", "mannitol", "space_drugs", "cryptobiolin"
+									),
+									list(	// level 6
+										"phenol", "inacusiate", "oculine", "antihol"
+									),
+									list(	// level 7
+										"leporazine", "mindbreaker", "corazone"
+									),
+									list(	// level 8
+										"pax", "happiness", "ephedrine"
+									),
+									list(	// level 9
+										"lipolicide", "sal_acid"
+									),
+									list(	// level 10
+										"haloperidol", "aranesp", "diphenhydramine"
+									),
+									list(	//level 11
+										"modafinil", "anacea"
+									)
 								)
 
 /*
@@ -250,7 +280,10 @@
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		cures = list(advance_cures[res])
+		if(res == oldres)
+			return
+		cures = list(pick(advance_cures[res]))
+		oldres = res
 
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]

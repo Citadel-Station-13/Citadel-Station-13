@@ -350,6 +350,10 @@
 	design_autounlock_buildtypes = AUTOLATHE
 	allowed_buildtypes = AUTOLATHE
 
+/datum/techweb/specialized/autounlocking/autoylathe
+	design_autounlock_buildtypes = AUTOYLATHE
+	allowed_buildtypes = AUTOYLATHE
+
 /datum/techweb/specialized/autounlocking/limbgrower
 	design_autounlock_buildtypes = LIMBGROWER
 	allowed_buildtypes = LIMBGROWER

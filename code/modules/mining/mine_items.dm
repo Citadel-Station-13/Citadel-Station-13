@@ -68,6 +68,7 @@
 /obj/machinery/computer/shuttle/mining
 	name = "mining shuttle console"
 	desc = "Used to call and send the mining shuttle."
+	req_access = list(ACCESS_MINING)
 	circuit = /obj/item/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"

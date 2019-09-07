@@ -526,3 +526,232 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+datum/status_effect/pacify
+	id = "pacify"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 1
+	duration = 100
+	alert_type = null
+
+/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/pacify/on_apply()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+
+/datum/status_effect/trance
+	id = "trance"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 300
+	tick_interval = 10
+	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
+	var/stun = TRUE
+	var/triggered = FALSE
+	alert_type = null
+
+/obj/screen/alert/status_effect/trance
+	name = "Trance"
+	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
+	icon_state = "high"
+
+/datum/status_effect/trance/tick()
+	if(HAS_TRAIT(owner, "hypnotherapy"))
+		if(triggered == TRUE)
+			UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+			RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+			ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+			if(!owner.has_quirk(/datum/quirk/monochromatic))
+				owner.add_client_colour(/datum/client_colour/monochrome)
+			to_chat(owner, "<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+			triggered = FALSE
+		else
+			return
+	if(stun)
+		owner.Stun(60, TRUE, TRUE)
+	owner.dizziness = 20
+
+/datum/status_effect/trance/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	if(HAS_TRAIT(owner, "hypnotherapy"))
+		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/listen)
+		return TRUE
+	alert_type = /obj/screen/alert/status_effect/trance
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+	if(!owner.has_quirk(/datum/quirk/monochromatic))
+		owner.add_client_colour(/datum/client_colour/monochrome)
+	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
+	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+	return TRUE
+
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE, source_quirk = FALSE)//hypnoquirk makes no visible message, prevents self antag messages, and places phrase below objectives.
+	duration = _duration
+	stun = _stun
+	if(source_quirk == FALSE && HAS_TRAIT(owner, "hypnotherapy"))
+		REMOVE_TRAIT(owner, "hypnotherapy", ROUNDSTART_TRAIT)
+	return ..()
+
+/datum/status_effect/trance/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+	owner.dizziness = 0
+	if(!owner.has_quirk(/datum/quirk/monochromatic))
+		owner.remove_client_colour(/datum/client_colour/monochrome)
+	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
+
+/datum/status_effect/trance/proc/listen(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	to_chat(owner, "<span class='notice'><i>[speaker] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
+	triggered = TRUE
+
+/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!owner.can_hear())
+		return
+	if(speaker == owner)
+		return
+	var/mob/living/carbon/C = owner
+	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	if(HAS_TRAIT(C, "hypnotherapy"))
+		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message, TRUE), 10)
+	else
+		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)
+	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
+	qdel(src)
+
+//uncomfortable speed debuffs
+
+/datum/status_effect/chem/breast_enlarger
+	id = "breast_enlarger"
+	alert_type = null
+	var/moveCalc = 1
+	var/cachedmoveCalc = 1
+
+/datum/status_effect/chem/breast_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+	log_game("FERMICHEM: [owner]'s breasts has reached comical sizes. ID: [owner.key]")
+	var/mob/living/carbon/human/o = owner
+	var/items = o.get_contents()
+	for(var/obj/item/W in items)
+		if(W == o.w_uniform || W == o.wear_suit)
+			o.dropItemToGround(W, TRUE)
+			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+			to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
+			o.visible_message("<span class='boldnotice'>[o]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
+		else
+			to_chat(o, "<span class='notice'>Your bountiful bosom is so rich with mass, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
+		return ..()
+
+/datum/status_effect/chem/breast_enlarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
+	var/mob/living/carbon/human/o = owner
+	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
+	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
+	if(!B)
+		o.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
+		sizeMoveMod(1)
+		owner.remove_status_effect(src)
+	var/items = o.get_contents()
+	for(var/obj/item/W in items)
+		if(W == o.w_uniform || W == o.wear_suit)
+			o.dropItemToGround(W, TRUE)
+			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
+	if (B.size == "huge")
+		if(prob(1))
+			to_chat(owner, "<span class='notice'>Your back is feeling sore.</span>")
+			var/target = o.get_bodypart(BODY_ZONE_CHEST)
+			o.apply_damage(0.1, BRUTE, target)
+		if(!B.cached_size == B.breast_values[B.prev_size])
+			o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+			sizeMoveMod(moveCalc)
+		return ..()
+	else if (B.breast_values[B.size] > B.breast_values[B.prev_size])
+		o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		sizeMoveMod(moveCalc)
+	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
+		o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		sizeMoveMod(moveCalc)
+	if((B.cached_size) < 16)
+		switch(round(B.cached_size))
+			if(9)
+				if (B.breast_values[B.prev_size] != B.breast_values[B.size])
+					to_chat(o, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
+			if(10 to INFINITY)
+				if (B.breast_values[B.prev_size] != B.breast_values[B.size])
+					to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
+		if(prob(1))
+			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
+		..()
+
+/datum/status_effect/chem/breast_enlarger/on_remove(mob/living/carbon/M)
+	log_game("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
+	owner.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
+	sizeMoveMod(1)
+
+/datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
+	if(cachedmoveCalc == value)
+		return
+	owner.next_move_modifier /= cachedmoveCalc
+	owner.next_move_modifier *= value
+	cachedmoveCalc = value
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/status_effect/chem/penis_enlarger
+	id = "penis_enlarger"
+	alert_type = null
+	var/bloodCalc
+	var/moveCalc
+
+/datum/status_effect/chem/penis_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+	log_game("FERMICHEM: [owner]'s dick has reached comical sizes. ID: [owner.key]")
+	var/mob/living/carbon/human/o = owner
+	var/items = o.get_contents()
+	if(o.w_uniform || o.wear_suit)
+		to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
+		owner.visible_message("<span class='boldnotice'>[o]'s schlong suddenly bursts forth, ripping their clothes off!'</span>")
+	else
+		to_chat(o, "<span class='notice'>Your emancipated trouser snake is so ripe with girth, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
+	for(var/obj/item/W in items)
+		if(W == o.w_uniform || W == o.wear_suit)
+			o.dropItemToGround(W, TRUE)
+			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	return ..()
+
+
+/datum/status_effect/chem/penis_enlarger/tick(mob/living/carbon/M)
+	var/mob/living/carbon/human/o = owner
+	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
+	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
+	bloodCalc = 1+((round(P.length) - 21)/15) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
+	if(!P)
+		o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
+		o.ResetBloodVol()
+		owner.remove_status_effect(src)
+	var/items = o.get_contents()
+	for(var/obj/item/W in items)
+		if(W == o.w_uniform || W == o.wear_suit)
+			o.dropItemToGround(W, TRUE)
+			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+			to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
+	switch(round(P.cached_length))
+		if(21)
+			to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
+			o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
+			o.AdjustBloodVol(bloodCalc)
+		if(22 to INFINITY)
+			if(prob(2))
+				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
+			o.add_movespeed_modifier(DICK_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+			o.AdjustBloodVol(bloodCalc)
+	..()
+
+/datum/status_effect/chem/penis_enlarger/on_remove(mob/living/carbon/human/o)
+	log_game("FERMICHEM: [owner]'s dick has reduced to an acceptable size. ID: [owner.key]")
+	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
+	owner.ResetBloodVol()

@@ -6,7 +6,7 @@ Research Director
 	flag = RD_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
-	head_announce = list("Science")
+	head_announce = list(RADIO_CHANNEL_SCIENCE)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -30,6 +30,8 @@ Research Director
 			            ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_XENOBIOLOGY, ACCESS_AI_UPLOAD,
 			            ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM,
 			            ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
+
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 
 /datum/outfit/job/rd
 	name = "Research Director"

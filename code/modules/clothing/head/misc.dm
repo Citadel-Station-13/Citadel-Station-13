@@ -313,8 +313,8 @@
 /obj/item/clothing/head/pharaoh
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
-	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
+	icon_state = "pharaoh_hat"
+	icon_state = "pharaoh_hat"
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"

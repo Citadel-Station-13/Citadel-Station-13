@@ -1,7 +1,7 @@
 /datum/mood_event/hug
 	description = "<span class='nicegreen'>Hugs are nice.</span>\n"
 	mood_change = 1
-	timeout = 1200
+	timeout = 2 MINUTES
 
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
@@ -50,7 +50,7 @@
 /datum/mood_event/jolly
 	description = "<span class='nicegreen'>I feel happy for no particular reason.</span>\n"
 	mood_change = 6
-	timeout = 1200
+	timeout = 2 MINUTES
 
 /datum/mood_event/focused
 	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
@@ -76,6 +76,20 @@
 	mood_change = 3
 	timeout = 600
 
+/datum/mood_event/chemical_euphoria
+	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n"
+	mood_change = 4
+
+ /datum/mood_event/chemical_laughter
+	description = "<span class='nicegreen'>Laughter really is the best medicine! Or is it?</span>\n"
+	mood_change = 4
+	timeout = 3 MINUTES
+
+ /datum/mood_event/chemical_superlaughter
+	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
+	mood_change = 12
+	timeout = 3 MINUTES
+
 /datum/mood_event/betterhug
 	description = "<span class='nicegreen'>Someone was very nice to me.</span>\n"
 	mood_change = 3
@@ -94,11 +108,12 @@
 
 /datum/mood_event/happy_empath
 	description = "<span class='warning'>Someone seems happy!</span>\n"
-	mood_change = 2
+	mood_change = 3
 	timeout = 600
 
 /datum/mood_event/happy_empath/add_effects(var/mob/happytarget)
-	description = "<span class='warning'>[happytarget.name]'s happiness is infectious!</span>\n"
+	description = "<span class='nicegreen'>[happytarget.name]'s happiness is infectious!</span>\n"
+
 
 // Citadel-specific positive moodlets
 

@@ -136,3 +136,13 @@
 	medical_record_text = "Patient never skipped ass day."
 	gain_text = "<span class='notice'>Your ass rivals those of golems.</span>"
 	lose_text = "<span class='notice'>Your butt feels more squishy and slappable.</span>"
+
+/datum/quirk/pharmacokinesis //Prevents unwanted organ additions.
+	name = "Acute hepatic pharmacokinesis"
+	desc = "You've a rare genetic disorder that causes Incubus draft and Sucubus milk to be absorbed by your liver instead."
+	value = 0
+	mob_trait = TRAIT_PHARMA
+	lose_text = "<span class='notice'>Your liver feels different.</span>"
+	var/active = FALSE
+	var/power = 0
+	var/cachedmoveCalc = 1

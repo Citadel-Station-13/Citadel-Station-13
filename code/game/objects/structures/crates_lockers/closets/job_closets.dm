@@ -359,3 +359,8 @@
 	new /obj/item/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/accessory/pocketprotector/full(src)
 
+/obj/structure/closet/coffin/handle_lock_addition()
+	return
+
+/obj/structure/closet/coffin/handle_lock_removal()
+	return

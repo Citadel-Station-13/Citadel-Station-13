@@ -18,12 +18,14 @@
 	alt_covers_chest = TRUE
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
 /obj/item/clothing/under/rank/security/grey
 	name = "grey security jumpsuit"
 	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
+
 /obj/item/clothing/under/rank/security/skirt
 	name = "security jumpskirt"
 	desc = "A \"tactical\" security jumpsuit with the legs replaced by a skirt."
@@ -45,6 +47,7 @@
 	alt_covers_chest = TRUE
 	sensor_mode = 3
 	random_sensor = FALSE
+
 /obj/item/clothing/under/rank/warden/grey
 	name = "grey security suit"
 	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
@@ -136,6 +139,7 @@
 	icon_state = "hos"
 	item_state = "gy_suit"
 	item_color = "hos"
+
 /obj/item/clothing/under/rank/head_of_security/alt
 	name = "head of security's turtleneck"
 	desc = "A stylish alternative to the normal head of security jumpsuit, complete with tactical pants."

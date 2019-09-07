@@ -129,6 +129,7 @@
 					/obj/item/clothing/head/soft/black = 3,
 					/obj/item/clothing/mask/bandana/skull = 2)
 	premium = list(/obj/item/radio/headset/headset_rob = 2) //Cit change
+	contraband = list(/obj/item/clothing/suit/hooded/techpriest = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 
 /obj/item/vending_refill/wardrobe/robo_wardrobe
@@ -239,7 +240,8 @@
 					/obj/item/clothing/under/rank/chef = 2,
 					/obj/item/clothing/under/rank/chef/skirt = 2,
 					/obj/item/clothing/head/chefhat = 2,
-					/obj/item/reagent_containers/rag = 3)
+					/obj/item/reagent_containers/rag = 3,
+					/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -318,6 +320,9 @@
 					/obj/item/clothing/suit/nun = 2,
 					/obj/item/clothing/head/nun_hood = 2,
 					/obj/item/clothing/suit/holidaypriest = 2,
+					/obj/item/clothing/suit/pharaoh = 2,
+					/obj/item/clothing/head/nemes = 1,
+					/obj/item/clothing/head/pharaoh = 1,
 					/obj/item/storage/fancy/candle_box = 3)
 	premium = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
@@ -338,7 +343,8 @@
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 3,
 					/obj/item/storage/backpack/chemistry = 3,
 					/obj/item/storage/backpack/satchel/chem = 3,
-					/obj/item/storage/bag/chemistry = 3)
+					/obj/item/storage/bag/chemistry = 3,
+					/obj/item/fermichem/pHbooklet = 3)//pH indicator)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe

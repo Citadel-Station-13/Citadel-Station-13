@@ -703,15 +703,32 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+
+/obj/item/clothing/under/gear_harness
+	name = "gear harness"
+	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
+	icon_state = "gear_harness"
+	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
+	body_parts_covered = CHEST|GROIN
+
 /obj/item/clothing/under/durathread
 	name = "durathread jumpsuit"
 	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "durathread"
 	item_state = "durathread"
 	item_color = "durathread"
-	can_adjust = FALSE
+	can_adjust = TRUE
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 
+/obj/item/clothing/under/duraskirt
+	name = "durathread jumpskirt"
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer. Being a short skirt, it naturally doesn't protect the legs."
+	icon_state = "duraskirt"
+	item_state = "duraskirt"
+	item_color = "durathread"
+	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 /obj/item/clothing/under/bb_sweater
 	name = "cream sweater"
 	desc = "Why trade style for comfort? Now you can go commando down south and still be cozy up north."
@@ -760,9 +777,3 @@
 	can_adjust = FALSE
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
-/obj/item/clothing/under/gear_harness
-	name = "gear harness"
-	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
-	icon_state = "gear_harness"
-	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
-	body_parts_covered = CHEST|GROIN
