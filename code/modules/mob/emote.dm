@@ -46,3 +46,11 @@
 					riding_datum.force_dismount(M)
 			else
 				R.unbuckle_all_mobs()
+
+/datum/emote/spin/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/speen.ogg', 50, 1, -1)
+	. = ..()
