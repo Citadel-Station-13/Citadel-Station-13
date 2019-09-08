@@ -79,10 +79,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Process the willing ghosts, and make sure they're actually in the body when they're moved into it!
 				candies = shuffle(candies)//Shake those ghosts up!
 				for(var/mob/dead/observer/C2 in candies)
-					if(C2.mind && C2.key)
+					if(C2.key && C2)
+						SM.key = C2.key
 						message_admins("Ghost candidate found! [C2] key [C2.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
 						log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
-						SM.key = C2.key
 						break
 					else
 						candies =- C2
