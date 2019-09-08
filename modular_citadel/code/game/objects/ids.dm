@@ -49,7 +49,7 @@
 
 /obj/item/emagrecharge
 	name = "electromagnet charging device"
-	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices."
+	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this can't be recharged like a normal cell."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cell_mini"
 	item_flags = NOBLUDGEON
@@ -63,7 +63,7 @@
 		to_chat(user, "<span class='warning'>It has a small, red, blinking light coming from inside of it. It's spent.</span>")
 
 /obj/item/card/emag
-	var/uses = 10
+	var/uses = 15
 
 /obj/item/card/emag/examine(mob/user)
 	. = ..()

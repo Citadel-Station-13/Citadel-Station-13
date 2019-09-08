@@ -19,6 +19,7 @@
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
 
 	var/vv_VAS = TRUE		//Force validate and set on VV. VAS proccall guard will run regardless.
+	var/postload_required = FALSE		//requires running OnPostload()
 
 	var/dupes_allowed = FALSE
 
@@ -72,6 +73,9 @@
 /datum/config_entry/proc/DeprecationUpdate(value)
 	return
 
+/datum/config_entry/proc/OnPostload()
+	return
+
 /datum/config_entry/string
 	config_entry_value = ""
 	abstract_type = /datum/config_entry/string
@@ -80,7 +84,7 @@
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
 	return var_name != "auto_trim" && ..()
 
-/datum/config_entry/string/ValidateAndSet(str_val)
+/datum/config_entry/string/ValidateAndSet(str_val, during_load)
 	if(!VASProcCallGuard(str_val))
 		return FALSE
 	config_entry_value = auto_trim ? trim(str_val) : str_val
