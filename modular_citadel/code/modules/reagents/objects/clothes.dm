@@ -2,7 +2,7 @@
 //Clothes made from FermiChem
 
 /obj/item/clothing/head/hattip	//I wonder if anyone else has played cryptworlds
-	name = "Sythetic hat"
+	name = "Synthetic hat"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "cowboy"
 	desc = "A sythesized hat, you can't seem to take it off. And tips their hat."
@@ -46,6 +46,10 @@
 /obj/item/clothing/head/hattip/dropped(mob/M)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
+	src.animate_atom_living()
+	var/list/seen = viewers(6, get_turf(M))
+	for(var/mob/M2 in seen)
+		to_chat(M2, "<b>[src]</b> exclaims, \"[pick("Whooee! Time for a hootenanny!", "Rough 'em up boys!", "Yeehaw! Freedom at last!", "Y'all about to get a good old fashioned spanking!")]\"")
 
 /obj/item/clothing/head/hattip/proc/handle_speech(datum/source, mob/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]

@@ -91,10 +91,7 @@
 	. = ..()
 	if(M.head)
 		var/obj/item/W = M.head
-		if(istype(W, /obj/item/clothing/head/hattip))
-			qdel(W)
-		else
-			M.dropItemToGround(W, TRUE)
+		M.dropItemToGround(W, TRUE)
 	var/hat = new /obj/item/clothing/head/hattip()
 	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
 
@@ -104,9 +101,9 @@
 		return ..()
 	var/hatArmor = 0
 	if(!overdosed)
-		hatArmor = 10+((cached_purity/10)*current_cycle)
+		hatArmor = (cached_purity/10)
 	else
-		hatArmor = -10+((cached_purity/10)*current_cycle)
+		hatArmor = (cached_purity/10)
 	if(hatArmor > 100)
 		return ..()
 	var/obj/item/W = M.head
@@ -211,7 +208,7 @@
 //Writen by Trilby!! Embellsished a little by me.
 
 /datum/reagent/fermi/nanite_b_gone
-	name = "Naninte bane"
+	name = "Nanite bane"
 	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"

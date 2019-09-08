@@ -159,6 +159,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	creatorName = "Fermis Yakumo"
 	purity = 1
 	DoNotSplit = TRUE
+	political = FALSE
 
 /datum/reagent/fermi/enthrall/test/on_new()
 	id = "enthrall"
@@ -218,7 +219,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(M, "<span class='notice'><i>[(political?"You feel your vocal chords tingle as your voice turns charasmatic.":" comes out in a more sultry tone.")]</span>")
+		to_chat(M, "<span class='notice'><i>[(political?"You feel your vocal chords tingle as your voice turns more charasmatic.":" comes out in a more sultry tone.")]</span>")
 	else
 		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)

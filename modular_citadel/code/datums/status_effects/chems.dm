@@ -26,8 +26,8 @@
 /datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)
 	log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
 	originalmind.transfer_to(fermi_Clone)
-	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
-	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
+	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
+	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
 	fermi_Clone = null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,19 +171,31 @@
 	id = "astral_insurance"
 	var/mob/living/original
 	var/datum/mind/originalmind
+	alert_type = null
 
 /datum/status_effect/chem/astral_insurance/tick(mob/living/carbon/M)
 	. = ..()
-	if(M.has_reagent("astral"))
+	if(owner.reagents.has_reagent("astral"))
 		return
-	if(M.mind == originalmind) //If they're home, let the chem deal with deletion.
+	if(owner.mind == originalmind) //If they're home, let the chem deal with deletion.
 		return
-	if(M.mind)
+	if(owner.mind)
 		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
-		M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+		owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
 		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
 	originalmind.transfer_to(original)
+
+/datum/status_effect/chem/astral_insurance/on_remove(mob/living/carbon/M) //God damnit get them home!
+	if(owner.mind == originalmind) //If they're home, HOORAY
+		return
+	if(owner.mind)
+		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
+		owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
+	originalmind.transfer_to(original)
+
 
 
 /*//////////////////////////////////////////
@@ -192,10 +204,6 @@
 */
 
 //Preamble
-/*
-/mob/living
-	var/lewd = TRUE
-*/
 
 /mob/living/verb/toggle_lewd()
 	set category = "IC"

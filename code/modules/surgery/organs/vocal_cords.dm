@@ -1250,7 +1250,7 @@
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
 					continue
-				if(H.client?.prefs.lewdchem)
+				if(!H.client?.prefs.lewdchem)
 					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with triggers.</b></span>")
 					continue
 				else
@@ -1291,7 +1291,7 @@
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new echophrase!</b></span>")
 					continue
-				if(H.client?.prefs.lewdchem)
+				if(!H.client?.prefs.lewdchem)
 					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with an echoing phrase.</b></span>")
 					continue
 				else
@@ -1349,7 +1349,7 @@
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase == 3 && H.client?.prefs.lewdchem)
+			if(E.phase == 3 && !H.client?.prefs.lewdchem)
 				var/instill = stripped_input(user, "Instill an emotion in [H].", MAX_MESSAGE_LEN)
 				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")

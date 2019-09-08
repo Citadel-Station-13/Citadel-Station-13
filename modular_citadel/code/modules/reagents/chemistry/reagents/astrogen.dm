@@ -30,15 +30,25 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/sleepytime = 0
 	InverseChemVal = 0.25
 	can_synth = FALSE
+	var/datum/action/chem/astral/AS = new/datum/action/chem/astral()
 
 /datum/action/chem/astral
 	name = "Return to body"
-	var/mob/living/carbon/origin = null
-	var/mob/living/simple_animal/hostile/retaliate/ghost = null
+	var/mob/living/carbon/origin
+	var/datum/mind/originalmind
 
 /datum/action/chem/astral/Trigger()
-	ghost.mind.transfer_to(origin)
+	if(origin.mind)
+		to_chat(origin, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
+		return ..()
+	if(origin.reagents.has_reagent("astral") )
+		var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in origin.reagents.reagent_list
+		if(As.current_cycle < 10)
+			to_chat(origin, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
+			return ..()
+	originalmind.transfer_to(origin)
 	qdel(src)
+
 
 /datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
@@ -61,15 +71,17 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if (G == null)
 			G = new(get_turf(M.loc))
 		G.name = "[M]'s astral projection"
-		var/datum/action/chem/astral/AS = new(G)
+		//var/datum/action/chem/astral/AS = new(G)
+		AS.Grant(G)
 		AS.origin = M
-		AS.ghost = G
+		AS.originalmind = originalmind
+
 		if(M.mind)
 			M.mind.transfer_to(G)
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
 		//INSURANCE
-		C.apply_status_effect(/datum/status_effect/chem/astral_insurance)
-		var/datum/status_effect/chem/astral_insurance/AI = C.has_status_effect(/datum/status_effect/chem/astral_insurance)
+		M.apply_status_effect(/datum/status_effect/chem/astral_insurance)
+		var/datum/status_effect/chem/astral_insurance/AI = M.has_status_effect(/datum/status_effect/chem/astral_insurance)
 		AI.original = M
 		AI.originalmind = M.mind
 
@@ -89,10 +101,12 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	if(!G)
 		if(M.mind)
-			var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
-			M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+			var/mob/living/simple_animal/astral/G2 = new(get_turf(M.loc))
+			M.mind.transfer_to(G2)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
 			log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
+			if(!G2.mind)
+				qdel(G2)
 		originalmind.transfer_to(M)
 	else if(G.mind)
 		G.mind.transfer_to(origin)
@@ -104,7 +118,9 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(G)//just in case
 		qdel(G)
 	log_game("FERMICHEM: [M] has astrally returned to their body!")
-	M.remove_status_effect(/datum/status_effect/chem/astral_insurance)
+	if(M.mind && M.mind == originalmind)
+		M.remove_status_effect(/datum/status_effect/chem/astral_insurance)
+	AS.Remove(M)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.

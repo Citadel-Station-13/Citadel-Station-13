@@ -57,3 +57,9 @@
 				return
 			to_chat(A, "[src] projects into your mind, <b><i> \"[message]\"</b></i>")
 			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")
+
+//Delete the mob if there's no mind! Pay that mob no mind.
+/mob/living/simple_animal/astral/Life()
+	if(!src.mind)
+		qdel(src)
+	..()

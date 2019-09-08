@@ -50,6 +50,7 @@
 		return
 	fluid_max_volume = cached_size*5
 	fluid_rate = cached_size*0.1
+	reagents.maximum_volume = fluid_max_volume
 
 /obj/item/organ/genital/breasts/update_appearance()
 	var/lowershape = lowertext(shape)
