@@ -852,6 +852,11 @@
 	item_state = "reece"
 	attack_verb = list("healed", "cured", "demoted")
 
+/obj/item/toy/plush/mammal/redwood
+	icon_state = "redwood"
+	item_state = "redwood"
+	attack_verb = list("ordered", "bapped", "reprimanded")
+
 /obj/item/toy/plush/mammal/dog
 	desc = "An adorable stuffed toy that resembles a canine."
 	icon_state = "katlin"
