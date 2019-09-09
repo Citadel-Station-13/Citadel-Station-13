@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - imageadd: "Different cuffs now come with different worn overlays instead of a generic one."

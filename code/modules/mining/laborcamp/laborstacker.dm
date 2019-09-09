@@ -112,7 +112,7 @@ GLOBAL_LIST(labor_sheet_values)
 					else
 						if(!(obj_flags & EMAGGED))
 							Radio.set_frequency(FREQ_SECURITY)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY, get_spans(), get_default_language())
+							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
@@ -128,9 +128,12 @@ GLOBAL_LIST(labor_sheet_values)
 		qdel(src)
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+	return TRUE
 
 
 /**********************Prisoner Collection Unit**************************/
@@ -149,7 +152,7 @@ GLOBAL_LIST(labor_sheet_values)
 		var/obj/item/stack/sheet/inp = I
 		points += inp.point_value * inp.amount
 	return ..()
-	
+
 /**********************Point Lookup Console**************************/
 /obj/machinery/mineral/labor_points_checker
 	name = "points checking console"

@@ -86,6 +86,14 @@
 	toolspeed = 0.5
 	random_color = FALSE
 
+/obj/item/screwdriver/bronze
+	name = "bronze screwdriver"
+	desc = "A screwdriver plated with bronze."
+	icon_state = "screwdriver_brass"
+	item_state = "screwdriver_brass"
+	toolspeed = 0.95
+	random_color = FALSE
+
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
@@ -134,3 +142,13 @@
 	desc = "An electrical screwdriver, designed to be both precise and quick."
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
+
+/obj/item/screwdriver/advanced
+	name = "advanced screwdriver"
+	desc = "A classy silver screwdriver with an alien alloy tip, it works almost as well as the real thing."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "screwdriver_a"
+	item_state = "screwdriver_nuke"
+	usesound = 'sound/items/pshoom.ogg'
+	toolspeed = 0.2
+	random_color = FALSE

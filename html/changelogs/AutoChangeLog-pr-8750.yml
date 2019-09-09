@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Fixes brain damage/trauma healing nanites so they actually work while there are only traumas."

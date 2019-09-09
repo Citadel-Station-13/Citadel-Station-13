@@ -81,6 +81,7 @@
 
 /datum/export/paperwork_correct
 	cost = 150
+	k_elasticity = 0
 	unit_name = "correct paperwork"
 	export_types = list(/obj/item/folder/paperwork_correct)
 
@@ -88,5 +89,6 @@
 
 /datum/export/paperwork_incorrect
 	cost = -500 // Failed to meet NT standers
+	k_elasticity = 0
 	unit_name = "returned incorrect paperwork"
 	export_types = list(/obj/item/folder/paperwork)

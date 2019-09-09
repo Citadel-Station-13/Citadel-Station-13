@@ -8,33 +8,37 @@ Contents:
 
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
-	var/mob/living/carbon/human/U = affecting
-	if(!U)
+	if(!affecting)
 		return
 	if(stealth)
 		cancel_stealth()
 	else
 		if(cell.charge <= 0)
-			to_chat(U, "<span class='warning'>You don't have enough power to enable Stealth!</span>")
+			to_chat(affecting, "<span class='warning'>You don't have enough power to enable Stealth!</span>")
 			return
 		stealth = !stealth
-		animate(U, alpha = 50,time = 15)
-		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
+		animate(affecting, alpha = 10,time = 15)
+		affecting.visible_message("<span class='warning'>[affecting.name] vanishes into thin air!</span>", \
 						"<span class='notice'>You are now mostly invisible to normal detection.</span>")
+		RegisterSignal(affecting, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_RANGED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_THROW, COMSIG_PARENT_ATTACKBY), .proc/reduce_stealth)
+		RegisterSignal(affecting, COMSIG_MOVABLE_BUMP, .proc/bumping_stealth)
 
+/obj/item/clothing/suit/space/space_ninja/proc/reduce_stealth()
+	affecting.alpha = min(affecting.alpha + 30, 80)
+
+/obj/item/clothing/suit/space/space_ninja/proc/bumping_stealth(datum/source, atom/A)
+	if(isliving(A))
+		affecting.alpha = min(affecting.alpha + 15, 80)
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
-	var/mob/living/carbon/human/U = affecting
-	if(!U)
-		return 0
-	if(stealth)
-		stealth = !stealth
-		animate(U, alpha = 255, time = 15)
-		U.visible_message("<span class='warning'>[U.name] appears from thin air!</span>", \
-						"<span class='notice'>You are now visible.</span>")
-		return 1
-	return 0
-
+	if(!affecting || !stealth)
+		return FALSE
+	stealth = !stealth
+	UnregisterSignal(affecting, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_RANGED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_THROW, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_BUMP))
+	animate(affecting, alpha = 255, time = 15)
+	affecting.visible_message("<span class='warning'>[affecting.name] appears from thin air!</span>", \
+					"<span class='notice'>You are now visible.</span>")
+	return TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
 	if(!s_busy)

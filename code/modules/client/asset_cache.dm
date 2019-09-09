@@ -470,19 +470,46 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/simple/minesweeper
 	name = "minesweeper"
 	assets = list(
-		"1" = 'icons/misc/minesweeper_tiles/one.png',
-		"2" = 'icons/misc/minesweeper_tiles/two.png',
-		"3" = 'icons/misc/minesweeper_tiles/three.png',
-		"4" = 'icons/misc/minesweeper_tiles/four.png',
-		"5" = 'icons/misc/minesweeper_tiles/five.png',
-		"6" = 'icons/misc/minesweeper_tiles/six.png',
-		"7" = 'icons/misc/minesweeper_tiles/seven.png',
-		"8" = 'icons/misc/minesweeper_tiles/eight.png',
-		"empty" = 'icons/misc/minesweeper_tiles/empty.png',
-		"flag" = 'icons/misc/minesweeper_tiles/flag.png',
-		"hidden" = 'icons/misc/minesweeper_tiles/hidden.png',
-		"mine" = 'icons/misc/minesweeper_tiles/mine.png',
-		"minehit" = 'icons/misc/minesweeper_tiles/minehit.png'
+		"1" = 'icons/UI_Icons/minesweeper_tiles/one.png',
+		"2" = 'icons/UI_Icons/minesweeper_tiles/two.png',
+		"3" = 'icons/UI_Icons/minesweeper_tiles/three.png',
+		"4" = 'icons/UI_Icons/minesweeper_tiles/four.png',
+		"5" = 'icons/UI_Icons/minesweeper_tiles/five.png',
+		"6" = 'icons/UI_Icons/minesweeper_tiles/six.png',
+		"7" = 'icons/UI_Icons/minesweeper_tiles/seven.png',
+		"8" = 'icons/UI_Icons/minesweeper_tiles/eight.png',
+		"empty" = 'icons/UI_Icons/minesweeper_tiles/empty.png',
+		"flag" = 'icons/UI_Icons/minesweeper_tiles/flag.png',
+		"hidden" = 'icons/UI_Icons/minesweeper_tiles/hidden.png',
+		"mine" = 'icons/UI_Icons/minesweeper_tiles/mine.png',
+		"minehit" = 'icons/UI_Icons/minesweeper_tiles/minehit.png'
+	)
+
+/datum/asset/spritesheet/simple/pills
+	name = "pills"
+	assets = list(
+		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
+		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
+		"pill3" = 'icons/UI_Icons/Pills/pill3.png',
+		"pill4" = 'icons/UI_Icons/Pills/pill4.png',
+		"pill5" = 'icons/UI_Icons/Pills/pill5.png',
+		"pill6" = 'icons/UI_Icons/Pills/pill6.png',
+		"pill7" = 'icons/UI_Icons/Pills/pill7.png',
+		"pill8" = 'icons/UI_Icons/Pills/pill8.png',
+		"pill9" = 'icons/UI_Icons/Pills/pill9.png',
+		"pill10" = 'icons/UI_Icons/Pills/pill10.png',
+		"pill11" = 'icons/UI_Icons/Pills/pill11.png',
+		"pill12" = 'icons/UI_Icons/Pills/pill12.png',
+		"pill13" = 'icons/UI_Icons/Pills/pill13.png',
+		"pill14" = 'icons/UI_Icons/Pills/pill14.png',
+		"pill15" = 'icons/UI_Icons/Pills/pill15.png',
+		"pill16" = 'icons/UI_Icons/Pills/pill16.png',
+		"pill17" = 'icons/UI_Icons/Pills/pill17.png',
+		"pill18" = 'icons/UI_Icons/Pills/pill18.png',
+		"pill19" = 'icons/UI_Icons/Pills/pill19.png',
+		"pill20" = 'icons/UI_Icons/Pills/pill20.png',
+		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
+		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
 
 /datum/asset/simple/IRV

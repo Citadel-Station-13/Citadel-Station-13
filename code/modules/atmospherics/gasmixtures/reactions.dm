@@ -1,19 +1,36 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
 
 /proc/init_gas_reactions()
-	var/list/reaction_types = list()
+	. = list()
+	for(var/type in subtypesof(/datum/gas))
+		.[type] = list()
+
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
-		if(!initial(reaction.exclude))
-			reaction_types += reaction
-	reaction_types = sortList(reaction_types, /proc/cmp_gas_reactions)
+		if(initial(reaction.exclude))
+			continue
+		reaction = new r
+		var/datum/gas/reaction_key
+		for (var/req in reaction.min_requirements)
+			if (ispath(req))
+				var/datum/gas/req_gas = req
+				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
+					reaction_key = req_gas
+		.[reaction_key] += list(reaction)
+		sortTim(., /proc/cmp_gas_reactions, TRUE)
 
-	. = list()
-	for(var/path in reaction_types)
-		. += new path
-
-/proc/cmp_gas_reactions(datum/gas_reaction/a, datum/gas_reaction/b) //sorts in descending order of priority
-	return initial(b.priority) - initial(a.priority)
+/proc/cmp_gas_reactions(list/datum/gas_reaction/a, list/datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
+	if (!length(a) || !length(b))
+		return length(b) - length(a)
+	var/maxa
+	var/maxb
+	for (var/datum/gas_reaction/R in a)
+		if (R.priority > maxa)
+			maxa = R.priority
+	for (var/datum/gas_reaction/R in b)
+		if (R.priority > maxb)
+			maxb = R.priority
+	return maxb - maxa
 
 /datum/gas_reaction
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
@@ -347,15 +364,10 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/pressure = air.return_pressure()
-
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma]/cached_gases[/datum/gas/nitrous_oxide],1))),cached_gases[/datum/gas/nitrous_oxide],cached_gases[/datum/gas/plasma]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-	if(cached_gases[/datum/gas/miasma] && cached_gases[/datum/gas/miasma] > 0)
-		energy_released /= cached_gases[/datum/gas/miasma]*0.1
-	if(cached_gases[/datum/gas/bz] && cached_gases[/datum/gas/bz] > 0)
-		energy_released *= cached_gases[/datum/gas/bz]*0.1
-	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/bz] += reaction_efficency
 	if(reaction_efficency == cached_gases[/datum/gas/nitrous_oxide])
@@ -364,7 +376,7 @@
 	cached_gases[/datum/gas/nitrous_oxide] -= reaction_efficency
 	cached_gases[/datum/gas/plasma]  -= 2*reaction_efficency
 
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, (reaction_efficency**0.5)*BZ_RESEARCH_AMOUNT)	
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2)*BZ_RESEARCH_SCALE),BZ_RESEARCH_MAX_AMOUNT)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()

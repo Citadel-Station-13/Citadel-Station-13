@@ -508,7 +508,9 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/item/construction/rcd/loaded,
+/obj/item/construction/rcd/loaded/upgraded{
+	
+	},
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bn" = (

@@ -59,6 +59,9 @@
 /obj/item/ammo_casing/energy/laser/redtag/hitscan
 	projectile_type = /obj/item/projectile/beam/lasertag/redtag/hitscan
 
+/obj/item/ammo_casing/energy/laser/redtag/hitscan/holy
+	projectile_type = /obj/item/projectile/beam/lasertag/redtag/hitscan/holy
+
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50

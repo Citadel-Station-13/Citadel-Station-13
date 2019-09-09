@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes clock cult Abscond scripture not dragging pulled mobs into Reebe. Also fixes blood cult tele runes teleporting you from the source turf to the source turf."

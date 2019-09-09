@@ -16,6 +16,8 @@
 #define INVESTIGATE_EXONET			"exonet"
 #define INVESTIGATE_NANITES			"nanites"
 #define INVESTIGATE_CIRCUIT			"circuit"
+#define INVESTIGATE_FERMICHEM       "fermichem"
+#define INVESTIGATE_RCD				"rcd"
 
 // Logging types for log_message()
 #define LOG_ATTACK		(1 << 0)
