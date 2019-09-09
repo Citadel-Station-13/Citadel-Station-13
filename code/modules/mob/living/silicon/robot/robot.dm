@@ -1261,6 +1261,7 @@
 	var/choice = alert(src, "Select resting pose", "", "Resting", "Sitting", "Belly up")
 	switch(choice)
 		if("Resting")
+			update_icons()
 			return 0
 		if("Sitting")
 			sitting = 1
