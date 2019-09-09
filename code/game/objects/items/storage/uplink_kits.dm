@@ -71,7 +71,7 @@
 			new /obj/item/autosurgeon/anti_drop(src) //Lets just say 7~
 			new /obj/item/clothing/under/syndicate/baseball(src) //3tc
 			new /obj/item/clothing/head/soft/baseball(src) //Lets say 4 tc
-			new /obj/item/reagent_containers/hypospray/stimulants/baseball(src) //lets say 5tc
+			new /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball(src) //lets say 5tc
 
 		if("implant") // 67+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/implanter/freedom(src)
