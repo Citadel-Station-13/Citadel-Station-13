@@ -339,7 +339,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -350,11 +350,13 @@
 	var/health_cost = 0 //The amount of health taken from the user when invoking the spell
 	var/datum/action/innate/cult/blood_spell/source
 
-/obj/item/melee/blood_magic/New(loc, spell)
+/obj/item/melee/blood_magic/Initialize(mapload, spell)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 	source = spell
 	uses = source.charges
 	health_cost = source.health_cost
-	..()
+
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
@@ -488,11 +490,12 @@
 			to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 			return
 		uses--
-		user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
-		"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+		var/turf/origin = get_turf(user)
 		var/mob/living/L = target
-		L.forceMove(dest)
-		dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		if(do_teleport(L, dest, channel = TELEPORT_CHANNEL_CULT))
+			origin.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
+				"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+			dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 		..()
 
 //Shackles
@@ -652,15 +655,15 @@
 				if(H.stat == DEAD)
 					to_chat(user,"<span class='warning'>Only a revive rune can bring back the dead!</span>")
 					return
-				if(H.blood_volume < BLOOD_VOLUME_SAFE)
-					var/restore_blood = BLOOD_VOLUME_SAFE - H.blood_volume
+				if(H.blood_volume < (BLOOD_VOLUME_SAFE*H.blood_ratio))
+					var/restore_blood = (BLOOD_VOLUME_SAFE*H.blood_ratio) - H.blood_volume
 					if(uses*2 < restore_blood)
 						H.blood_volume += uses*2
 						to_chat(user,"<span class='danger'>You use the last of your blood rites to restore what blood you could!</span>")
 						uses = 0
 						return ..()
 					else
-						H.blood_volume = BLOOD_VOLUME_SAFE
+						H.blood_volume = (BLOOD_VOLUME_SAFE*H.blood_ratio)
 						uses -= round(restore_blood/2)
 						to_chat(user,"<span class='warning'>Your blood rites have restored [H == user ? "your" : "[H.p_their()]"] blood to safe levels!</span>")
 				var/overall_damage = H.getBruteLoss() + H.getFireLoss() + H.getToxLoss() + H.getOxyLoss()
@@ -695,7 +698,7 @@
 				if(H.cultslurring)
 					to_chat(user,"<span class='danger'>[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!</span>")
 					return
-				if(H.blood_volume > BLOOD_VOLUME_SAFE)
+				if(H.blood_volume > (BLOOD_VOLUME_SAFE*H.blood_ratio))
 					H.blood_volume -= 100
 					uses += 50
 					user.Beam(H,icon_state="drainbeam",time=10)

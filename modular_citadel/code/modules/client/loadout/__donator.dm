@@ -220,13 +220,13 @@
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/twohanded/hypereutactic/toy/rainbow
+	path = /obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/darksabre
 	name = "Dark Sabre"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/sword/darksabre
+	path = /obj/item/toy/darksabre
 	ckeywhitelist = list("inferno707")
 
 datum/gear/darksabresheath
@@ -407,8 +407,8 @@ datum/gear/darksabresheath
 
 /datum/gear/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/mw2_russian_para
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mw2_russian_para
 	ckeywhitelist = list("investigator77")
 
 /datum/gear/longblackgloves
@@ -434,4 +434,17 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/bedsheet/captain
 	ckeywhitelist = list("tikibomb")
+
+/datum/gear/borgplush
+	name = "Robot Plush"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/borgplushie
+	ckeywhitelist = list("nicholaiavenicci")
+
+/datum/gear/donorberet
+	name = "Atmos Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/blueberet
+	ckeywhitelist = list("foxystalin")
+
 

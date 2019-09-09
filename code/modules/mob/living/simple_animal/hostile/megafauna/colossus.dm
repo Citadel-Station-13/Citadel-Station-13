@@ -747,6 +747,12 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/ex_act()
 	return
 
+/obj/structure/closet/stasis/handle_lock_addition()
+	return
+
+/obj/structure/closet/stasis/handle_lock_removal()
+	return
+
 /obj/effect/proc_holder/spell/targeted/exit_possession
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing."

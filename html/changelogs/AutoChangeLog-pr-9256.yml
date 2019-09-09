@@ -1,0 +1,4 @@
+author: "Fermi"
+delete-after: True
+changes: 
+  - bugfix: "SDGF: Fixes infinite clones."

@@ -63,7 +63,7 @@
 				if(91 to INFINITY)
 					filling_overlay.icon_state = "reagent100"
 
-			filling_overlay.color = list("#0000", "#0000", "#0000", "#000f", mix_color_from_reagents(beaker.reagents.reagent_list))
+			filling_overlay.color = mix_color_from_reagents(beaker.reagents.reagent_list)
 			add_overlay(filling_overlay)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
@@ -80,12 +80,6 @@
 	if(!target.has_dna())
 		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
 		return
-
-	var/mob/living/L
-	if(isliving(target))
-		L = target
-		if(!L.can_inject(usr, 1))
-			return
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
@@ -151,7 +145,7 @@
 				return
 
 			// If the human is losing too much blood, beep.
-			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+			if(attached.blood_volume < ( (BLOOD_VOLUME_SAFE*attached.blood_ratio) && prob(5) ) )
 				visible_message("[src] beeps loudly.")
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)

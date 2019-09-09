@@ -54,6 +54,8 @@
 	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
+	name = "blue helmet"
+	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 
@@ -334,3 +336,11 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+
+/obj/item/clothing/head/helmet/durathread
+	name = "makeshift helmet"
+	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	icon_state = "durathread"
+	item_state = "durathread"
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)

@@ -317,9 +317,6 @@
 			new stack_type(get_turf(loc))
 	qdel(src)
 
-
-
-
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
@@ -338,7 +335,6 @@
 				C.Knockdown(20)
 		smash(user)
 
-
 /obj/item/chair/stool
 	name = "stool"
 	icon_state = "stool_toppled"
@@ -351,6 +347,70 @@
 	icon_state = "bar_toppled"
 	item_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+//////////////////////////
+//Brass & Bronze stools!//
+//////////////////////////
+
+/obj/structure/chair/stool/bar/brass
+	name = "brass bar stool"
+	desc = "A brass bar stool with red silk for a pillow."
+	icon_state = "barbrass"
+	item_chair = /obj/item/chair/stool/bar/brass
+	buildstacktype = /obj/item/stack/tile/brass
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bar/bronze
+	name = "bronze bar stool"
+	desc = "A bronze bar stool with red silk for a pillow."
+	icon_state = "barbrass"
+	item_chair = /obj/item/chair/stool/bar/bronze
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+
+/obj/structure/chair/stool/brass
+	name = "brass stool"
+	desc = "A brass stool with a silk top for comfort."
+	icon_state = "stoolbrass"
+	item_chair = /obj/item/chair/stool/brass
+	buildstacktype = /obj/item/stack/tile/brass
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bronze
+	name = "bronze stool"
+	desc = "A bronze stool with a silk top for comfort."
+	icon_state = "stoolbrass"
+	item_chair = /obj/item/chair/stool/bronze
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+
+/obj/item/chair/stool/brass
+	name = "brass stool"
+	icon_state = "stoolbrass_toppled"
+	item_state = "stoolbrass"
+	origin_type = /obj/structure/chair/stool/brass
+
+/obj/item/chair/stool/bar/brass
+	name = "brass bar stool"
+	icon_state = "barbrass_toppled"
+	item_state = "stoolbrass_bar"
+	origin_type = /obj/structure/chair/stool/bar/brass
+
+/obj/item/chair/stool/bronze
+	name = "bronze stool"
+	icon_state = "stoolbrass_toppled"
+	item_state = "stoolbrass"
+	origin_type = /obj/structure/chair/stool/bronze
+
+/obj/item/chair/stool/bar/bronze
+	name = "bronze bar stool"
+	icon_state = "barbrass_toppled"
+	item_state = "stoolbrass_bar"
+	origin_type = /obj/structure/chair/stool/bar/bronze
+
+/////////////////////////////////
+//End of Brass & Bronze stools!//
+/////////////////////////////////
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god

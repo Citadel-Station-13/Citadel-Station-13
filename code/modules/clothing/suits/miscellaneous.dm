@@ -237,7 +237,10 @@
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
-	item_flags = NODROP
+
+/obj/item/clothing/suit/poncho/ponchoshame/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"
@@ -465,11 +468,11 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
-/obj/item/clothing/suit/nemes
-	name = "pharoah tunic"
+/obj/item/clothing/suit/pharaoh
+	name = "pharaoh tunic"
 	desc = "Lavish space tomb not included."
-	icon_state = "pharoah"
-	icon_state = "pharoah"
+	icon_state = "pharaoh"
+	icon_state = "pharaoh"
 	body_parts_covered = CHEST|GROIN
 
 

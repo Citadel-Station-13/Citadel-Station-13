@@ -68,18 +68,12 @@
 	lose_text = ""
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-	owner.dna.add_mutation(UNINTELLIGIBLE)
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/mild/speech_impediment/on_life()
-	if(!(GLOB.mutations_list[UNINTELLIGIBLE] in owner.dna.mutations))
-		on_gain()
-	..()
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	. = ..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
-	owner.dna.remove_mutation(UNINTELLIGIBLE)
-	..()
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	. = ..()
 
 /datum/brain_trauma/mild/concussion
 	name = "Concussion"

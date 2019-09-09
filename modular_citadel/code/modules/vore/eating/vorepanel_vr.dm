@@ -57,7 +57,7 @@
 /datum/vore_look/proc/gen_vui(var/mob/living/user)
 	var/dat
 	dat += "Remember to toggle the vore mode, it's to the left of your combat toggle. Open mouth means you're voracious!<br>"
-	dat += "Remember that your prey is blind, use audible mode subtle messages to communicate to them with posts!<br>"
+	dat += "Remember that the prey is blind, use audible mode subtle messages to communicate to them with posts!<br>"
 	dat += "<HR>"
 	var/atom/userloc = user.loc
 	if (isbelly(userloc))
@@ -554,7 +554,7 @@
 	if(href_list["b_releasesoundtest"])
 		var/sound/releasetest = GLOB.release_sounds[selected.release_sound]
 		if(releasetest)
-			user << releasetest
+			SEND_SOUND(user, releasetest)
 
 	if(href_list["b_sound"])
 		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.vore_sounds
@@ -567,7 +567,7 @@
 	if(href_list["b_soundtest"])
 		var/sound/voretest = GLOB.vore_sounds[selected.vore_sound]
 		if(voretest)
-			user << voretest
+			SEND_SOUND(user, voretest)
 
 	if(href_list["b_tastes"])
 		selected.can_taste = !selected.can_taste

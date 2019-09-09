@@ -138,6 +138,10 @@
 	for (var/mob/M in src)
 		M.forceMove(drop_location())
 
+/obj/machinery/processor/container_resist(mob/living/user)
+	user.forceMove(drop_location())
+	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
+
 /obj/machinery/processor/slime
 	name = "slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
