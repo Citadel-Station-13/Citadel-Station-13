@@ -234,10 +234,10 @@
 	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/groovy
-  suffix = "groovy"
-  name = "Groovecruiser"
-  description = "A neutered version of Disco Inferno following complaints from the budgeting office. Funny enough the design team was able to expand the dance floor, add some seating and doors, and still have it come out cheaper!"
-  credit_cost = 7000
+	suffix = "groovy"
+	name = "Groovecruiser"
+	description = "A neutered version of Disco Inferno following complaints from the budgeting office. Funny enough the design team was able to expand the dance floor, add some seating and doors, and still have it come out cheaper!"
+	credit_cost = 7000
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
