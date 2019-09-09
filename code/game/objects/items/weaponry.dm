@@ -522,7 +522,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 14
 	obj_flags = UNIQUE_RENAME
 	var/chaplain_spawnable = TRUE
-	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON 
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/melee/baseball_bat/chaplain/Initialize()
 	. = ..()
@@ -577,6 +577,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(picksound == 2)
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
 	return 1
+
+/obj/item/melee/baseball_bat/ablative/synda
+	name = "syndicate major league bat"
+	desc = "A metal bat made by the syndicate for the major league team."
+	force = 18 //Spear damage...
+	throwforce = 30
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

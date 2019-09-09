@@ -1,7 +1,7 @@
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "baseball" = 1, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
 		if("bloodyspai") // 30 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -52,7 +52,7 @@
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 			new /obj/item/screwdriver/power(src) //2 tc item
 
-		if("murder") // 35 tc now
+		if("murder") // 35 tc
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
@@ -61,6 +61,17 @@
 			new /obj/item/grenade/syndieminibomb(src)
 			new /obj/item/clothing/glasses/phantomthief/syndicate(src)
 			new /obj/item/reagent_containers/syringe/stimulants(src)
+
+		if("baseball") // 42~ tc
+			new /obj/item/melee/baseball_bat/ablative/synda(src) //Lets say 12 tc, lesser sleeping carp
+			new /obj/item/clothing/glasses/sunglasses/garb(src) //Lets say 2 tc
+			new /obj/item/card/emag(src) //6 tc
+			new /obj/item/clothing/shoes/sneakers/noslip(src) //2tc
+			new /obj/item/encryptionkey/syndicate(src) //1tc
+			new /obj/item/autosurgeon/anti_drop(src) //Lets just say 7~
+			new /obj/item/clothing/under/syndicate/baseball(src) //3tc
+			new /obj/item/clothing/head/soft/baseball(src) //Lets say 4 tc
+			new /obj/item/reagent_containers/hypospray/stimulants/baseball(src) //lets say 5tc
 
 		if("implant") // 67+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/implanter/freedom(src)
