@@ -134,7 +134,7 @@
 	amount_per_transfer_from_this = 10
 	list_reagents = list("stimulants" = 50)
 
-/obj/item/reagent_containers/hypospray/stimulants/baseball
+/obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
 	name = "the reason the syndicate major league team wins."
 	desc = "They say drugs never win, but look were you are now, then were they are."
 	icon_state = "baseballstim"
