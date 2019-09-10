@@ -282,7 +282,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest"))
+	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest") && !owner.reagents.has_reagent("politic-aid"))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(5))

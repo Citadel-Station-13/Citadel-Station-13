@@ -445,12 +445,14 @@
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "cats")
 	if(H.InCritical())
 		perma = TRUE
-		volume = 10
-		//metabolization_rate = 0
+		volume = 5
 		H.stat = DEAD
 		catto.origin = H
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
+	if(!catto)
+		metabolization_rate = 5
+		return ..()
 	if(catto.health <= 0) //So the dead can't ghost
 		if(prob(10))
 			to_chat(catto, "<span class='notice'>You feel your body start to slowly shift back from it's dead form.</span>")

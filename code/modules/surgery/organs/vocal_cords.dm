@@ -750,30 +750,30 @@
 		to_chat(world, "[user]'s power is [power_multiplier].")
 
 	//Mixables
-	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara|old boy|pip pip|whatho|how about we discuss this|spot of tea")
+	var/static/regex/enthral_words = regex("relax|obey|love|serve|so easy|ara ara|old boy|pip pip|whatho|how about we discuss this|spot of tea")
 	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job|splendid|jolly good|jolly good show|bloody brilliant")
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|snap|this is a stealth mission|sneaky bollocks") //works
+	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention") //works
 	//phase1
 	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/speak_words = regex("talk to me|speak")
-	var/static/regex/antiresist_words = regex("unable to resist|give in")//useful if you think your target is resisting a lot
+	var/static/regex/antiresist_words = regex("unable to resist|give in|stop being difficult")//useful if you think your target is resisting a lot
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
-	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
+	var/static/regex/forget_words = regex("forget|muddled|awake and forget|sneaky bollocks|gaslight")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
 	//phase 2
 	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //wah, lewd
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
-	var/static/regex/strip_words = regex("strip|derobe|nude|at east|suit off")
+	var/static/regex/strip_words = regex("strip|derobe|nude|at ease|suit off")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
 	var/static/regex/liedown_words = regex("lie down")
-	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel")
+	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel|army crawl")
 	//phase 3
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
@@ -781,7 +781,7 @@
 	var/static/regex/custom_echo = regex("obsess|fills your mind|loop")
 	var/static/regex/instill_words = regex("feel|entice|overwhel")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
-	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed|word from HQ")
+	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed|word from hq")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die|heroes never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/hallucinate_words = regex("get high|hallucinate|trip balls")
@@ -1475,9 +1475,9 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(3 && E.political)//Tier 3 only
+			if(E.phase == 3 && E.political)//Tier 3 only
 				L.mind.remove_all_antag_datums()
-				to_chat(L, "<span class='big warning'><i>You renounce any previous allegiances you held before, and fully commit to [(L.client?.prefs.lewdchem?"serving [E.enthrallGender]!":"[E.master]'s cause!'")]!</i></span>")
+				to_chat(L, "<span class='big warning'><i>You renounce any previous allegiances you held before, and fully commit to [(L.client?.prefs.lewdchem?"serving [E.enthrallGender]!":"[E.master]'s cause!'")]</i></span>")
 				to_chat(user, "<span class='notice'><i>You remove any previous allegiances from [L]'s mind.</i></span>")
 
 

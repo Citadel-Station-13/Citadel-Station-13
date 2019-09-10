@@ -46,10 +46,13 @@
 /obj/item/clothing/head/hattip/dropped(mob/M)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	src.animate_atom_living()
-	var/list/seen = viewers(6, get_turf(M))
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/root_and_toot, src, src, 200))
+
+/obj/item/clothing/head/hattip/proc/root_and_toot(obj/item/clothing/head/hattip/hat)
+	hat.animate_atom_living()
+	var/list/seen = viewers(6, get_turf(hat))
 	for(var/mob/M2 in seen)
-		to_chat(M2, "<b>[src]</b> exclaims, \"[pick("Whooee! Time for a hootenanny!", "Rough 'em up boys!", "Yeehaw! Freedom at last!", "Y'all about to get a good old fashioned spanking!")]\"")
+		to_chat(M2, "<b>[hat]</b> exclaims, \"[pick("Whooee! Time for a hootenanny!", "Rough 'em up boys!", "Yeehaw! Freedom at last!", "Y'all about to get a good old fashioned spanking!")]\"")
 
 /obj/item/clothing/head/hattip/proc/handle_speech(datum/source, mob/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
