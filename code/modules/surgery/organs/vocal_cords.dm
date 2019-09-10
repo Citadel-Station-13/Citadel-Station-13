@@ -790,8 +790,6 @@
 	var/static/regex/getup_words = regex("get up|hop to it")
 	var/static/regex/pacify_words = regex("docile|complaisant|friendly|pacifist")
 	var/static/regex/charge_words = regex("charge|oorah|attack")
-	//3 && Political
-	var/static/regex/renounce_words = regex("renounce|deconvert|bugger the church|atheism")
 
 	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)
 
@@ -1468,18 +1466,6 @@
 					E.status = "charge"
 					E.cooldown += 10
 					to_chat(user, "<span class='notice'><i>You rally [L], leading them into a charge!</i></span>")
-
-	//Political ONLY
-	//Renounce
-	else if(findtext(message, renounce_words))
-		for(var/V in listeners)
-			var/mob/living/L = V
-			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase == 3 && E.political)//Tier 3 only
-				L.mind.remove_all_antag_datums()
-				to_chat(L, "<span class='big warning'><i>You renounce any previous allegiances you held before, and fully commit to [(L.client?.prefs.lewdchem?"serving [E.enthrallGender]!":"[E.master]'s cause!'")]</i></span>")
-				to_chat(user, "<span class='notice'><i>You remove any previous allegiances from [L]'s mind.</i></span>")
-
 
 	if(message_admins || debug)//Do you want this in?
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
