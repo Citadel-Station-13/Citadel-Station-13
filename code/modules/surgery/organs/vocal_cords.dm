@@ -755,7 +755,7 @@
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|snap") //works
+	var/static/regex/wakeup_words = regex("revert|awaken|snap|this is a stealth mission|sneaky bollocks") //works
 	//phase1
 	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
@@ -790,6 +790,8 @@
 	var/static/regex/getup_words = regex("get up|hop to it")
 	var/static/regex/pacify_words = regex("docile|complaisant|friendly|pacifist")
 	var/static/regex/charge_words = regex("charge|oorah|attack")
+	//3 && Political
+	var/static/regex/renounce_words = regex("renounce|deconvert|bugger the church|atheism")
 
 	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)
 
@@ -1082,7 +1084,7 @@
 			switch(E.phase)
 				if(1 to 2)
 					E.phase = -1
-					to_chat(C, "<span class='big warning'>You have no recollection of being enthralled by [E.master]!</b></span>")
+					to_chat(C, "<span class='big warning'>You suddenly forget [E.master]'s modulus operandi and their political affiliations!</b></span>")
 					to_chat(user, "<span class='notice'><i>You revert [C] back to their state before enthrallment.</i></span>")
 				if(3)
 					E.phase = 0
@@ -1090,7 +1092,7 @@
 					if(C.client?.prefs.lewdchem)
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master], nor their political affiliations.</b></span>"), 5)
 					to_chat(user, "<span class='notice'><i>You put [C] into a sleeper state, ready to turn them back at the snap of your fingers.</i></span>")
 
 	//ATTRACT
@@ -1106,13 +1108,13 @@
 
 	//teir 2
 
-	/* removed for now
+
 	//ORGASM
 	else if((findtext(message, orgasm_words)))
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase > 1)
+			if(E.phase > 1 && !E.political)
 				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && H.client?.prefs.lewdchem) // probably a redundant check but for good measure
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
@@ -1123,7 +1125,7 @@
 					E.cooldown += 6
 				else
 					H.throw_at(get_step_towards(user,H), 3 * power_multiplier, 1 * power_multiplier)
-	*/
+
 
 
 	//awoo
@@ -1466,6 +1468,18 @@
 					E.status = "charge"
 					E.cooldown += 10
 					to_chat(user, "<span class='notice'><i>You rally [L], leading them into a charge!</i></span>")
+
+	//Political ONLY
+	//Renounce
+	else if(findtext(message, renounce_words))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
+			if(3 && E.political)//Tier 3 only
+				L.mind.remove_all_antag_datums()
+				to_chat(L, "<span class='big warning'><i>You renounce any previous allegiances you held before, and fully commit to [(L.client?.prefs.lewdchem?"serving [E.enthrallGender]!":"[E.master]'s cause!'")]!</i></span>")
+				to_chat(user, "<span class='notice'><i>You remove any previous allegiances from [L]'s mind.</i></span>")
+
 
 	if(message_admins || debug)//Do you want this in?
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")

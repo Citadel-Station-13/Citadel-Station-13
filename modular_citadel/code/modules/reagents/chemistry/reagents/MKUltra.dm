@@ -210,6 +210,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			E.master = get_mob_by_key(creatorID)
 			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(M.client?.prefs.lewdchem?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
 			log_game("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
+			E.political = political
 			return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
 		log_game("FERMICHEM: [M] ckey: [M.key] has been given velvetspeech")
@@ -287,6 +288,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		E.enthrallID = creatorID
 		E.enthrallGender = creatorGender
 		E.master = creator
+		E.political = political
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	if(M.client?.prefs.lewdchem)

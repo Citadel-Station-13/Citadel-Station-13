@@ -110,6 +110,11 @@
 	W.armor = W.armor.modifyAllRatings(hatArmor)
 	..()
 
+/datum/reagent/fermi/hatmium/reaction_turf(turf/T, reac_volume)
+	if(reac_volume >= 5)
+		new /obj/item/clothing/head/hattip(T)
+	..()
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										FURRANIUM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -472,7 +477,7 @@
 
 
 /datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
-	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity => 0.95)
+	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity >= 0.95)
 		var/mob/living/simple_animal/pet/cat/custom_cat/catto = L
 		if(catto.origin)
 			var/mob/living/carbon/human/H = catto.origin
