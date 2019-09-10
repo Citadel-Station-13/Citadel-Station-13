@@ -69,8 +69,8 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/baseball
-	name = "major leage, number unknown"
-	desc = "A major leage outfit with the number faded number on the back. Seems rather robust for just a game"
+	name = "major league, number unknown"
+	desc = "A major league outfit with the number faded number on the back. Seems rather robust for just a game"
 	icon_state = "syndicatebaseball"
 	item_state = "syndicatebaseball"
 	item_color = "syndicatebaseball"

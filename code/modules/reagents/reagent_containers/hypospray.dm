@@ -129,14 +129,14 @@
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "illegal stimpack medipen"
-	desc = "A highly illegal medipen do to its load and small injections, allow for five uses before being drained"
+	desc = "A highly illegal medipen due to its load and small injections, allow for five uses before being drained"
 	volume = 50
 	amount_per_transfer_from_this = 10
 	list_reagents = list("stimulants" = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
 	name = "the reason the syndicate major league team wins."
-	desc = "They say drugs never win, but look were you are now, then were they are."
+	desc = "They say drugs never win, but look where you are now, then where they are."
 	icon_state = "baseballstim"
 	volume = 50
 	amount_per_transfer_from_this = 50

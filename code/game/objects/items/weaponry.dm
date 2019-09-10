@@ -578,7 +578,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
 	return 1
 
-/obj/item/melee/baseball_bat/ablative/synda
+/obj/item/melee/baseball_bat/ablative/syndi
 	name = "syndicate major league bat"
 	desc = "A metal bat made by the syndicate for the major league team."
 	force = 18 //Spear damage...

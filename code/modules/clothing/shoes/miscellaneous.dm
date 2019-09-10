@@ -63,7 +63,7 @@
 	icon_state = "galoshes_dry"
 
 /obj/item/clothing/shoes/sneakers/noslip
-	desc = "A pair of black shoes, they have the souls of galoshes making them unable to be slipped on a wet surface."
+	desc = "A pair of black shoes, they have the soles of galoshes making them unable to be slipped on a wet surface."
 	name = "black shoes"
 	icon_state = "black"
 	permeability_coefficient = 0.30
