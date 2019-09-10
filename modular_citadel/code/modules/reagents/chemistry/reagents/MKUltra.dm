@@ -130,11 +130,11 @@ Creating a chem with a low purity will make you permanently fall in love with so
 */
 
 /datum/reagent/fermi/enthrall
-	name = "enthrall"
-	id = "enthrall_base"
-	description = "A forbidden deep purple mixture that aids the political influence of creator upon the subject. When taken by the creator, it will enhance the power of their words to those affected by it."
-	color = "#660055"
-	taste_description = "politics"
+	name = "MKUltra"
+	id = "enthrall"
+	description = "A forbidden deep red mixture that increases a person's succeptability to another's words. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	color = "#660015" // rgb: , 0, 255
+	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
 	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
@@ -143,7 +143,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
-	var/political = TRUE
 	pH = 10
 	OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
 	can_synth = FALSE
@@ -159,7 +158,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	creatorName = "Fermis Yakumo"
 	purity = 1
 	DoNotSplit = TRUE
-	political = FALSE
 
 /datum/reagent/fermi/enthrall/test/on_new()
 	id = "enthrall"
@@ -171,27 +169,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	creatorGender = data.["creatorGender"]
 	creatorName = data.["creatorName"]
 	creator = get_mob_by_key(creatorID)
-
-/datum/reagent/fermi/enthrall/mkultra
-	name = "MKUltra"
-	id = "enthrall"
-	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
-	color = "#660015" // rgb: , 0, 255
-	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
-	political = FALSE
-
-
-/datum/reagent/fermi/enthrall/mkultra/on_mob_add(mob/living/carbon/M)
-	if(M.client?.prefs.lewdchem)
-		..()
-
-/datum/reagent/fermi/enthrall/mkultra/on_mob_life(mob/living/carbon/M)
-	if(M.client?.prefs.lewdchem)
-		..()
-
-/datum/reagent/fermi/enthrall/politi
-	name = "Politic-aid"
-	id = "politic-aid"
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
@@ -210,7 +187,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			E.master = get_mob_by_key(creatorID)
 			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(M.client?.prefs.lewdchem?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
 			log_game("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
-			E.political = political
 			return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
 		log_game("FERMICHEM: [M] ckey: [M.key] has been given velvetspeech")
@@ -220,7 +196,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(M, "<span class='notice'><i>[(political?"You feel your vocal chords tingle as your voice turns more charasmatic.":" comes out in a more sultry tone.")]</span>")
+		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as you speak with a charasmatic tone.)]</span>")
 	else
 		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
@@ -288,7 +264,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		E.enthrallID = creatorID
 		E.enthrallGender = creatorGender
 		E.master = creator
-		E.political = political
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	if(M.client?.prefs.lewdchem)

@@ -249,8 +249,6 @@
 	var/customEcho	//Custom looping text in owner
 	var/customSpan	//Custom spans for looping text
 
-	var/political = TRUE // if source is from politi-aid
-
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
@@ -259,7 +257,6 @@
 		owner.remove_status_effect(src)
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
-	political = E.political
 	master = get_mob_by_key(enthrallID)
 	//if(M.ckey == enthrallID)
 	//	owner.remove_status_effect(src)//At the moment, a user can enthrall themselves, toggle this back in if that should be removed.
@@ -282,7 +279,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest") && !owner.reagents.has_reagent("politic-aid"))
+	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest"))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(5))
@@ -721,10 +718,6 @@
 	else
 		deltaResist = 1.8 + resistGrowth
 		resistGrowth += 0.05
-
-	//MKUltra easy break, if you have prefs off and ended up with it, then you break extra easy
-	if(!political && !owner.client?.prefs.lewdchem)
-		deltaResist += 10
 
 	//distance modifer
 	switch(DistApart)

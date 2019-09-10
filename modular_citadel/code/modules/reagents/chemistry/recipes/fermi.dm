@@ -295,22 +295,9 @@
 	E.data.["creatorID"] = B.data.["ckey"]
 	E.creatorID = B.data.["ckey"]
 
-//Politic-aid split
-/datum/chemical_reaction/fermi/enthrall/politi
-	name = "Politic-aid"
-	id = "politic-aid"
-	required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
-	results = list("politic-aid" = 0.5)
-
 //So slimes can play too.
 /datum/chemical_reaction/fermi/enthrall/slime
 	required_catalysts = list("slimejelly" = 1)
-
-/datum/chemical_reaction/fermi/enthrall/slime/politi
-	name = "Politic-aid"
-	id = "politic-aid"
-	required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
-	results = list("politic-aid" = 0.5)
 
 /datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/toxin/slimejelly/B = locate(/datum/reagent/toxin/slimejelly) in my_atom.reagents.reagent_list//The one line change.
