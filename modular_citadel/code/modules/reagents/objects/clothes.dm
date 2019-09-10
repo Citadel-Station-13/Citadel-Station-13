@@ -46,7 +46,7 @@
 /obj/item/clothing/head/hattip/dropped(mob/M)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/root_and_toot, src, src, 200))
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/root_and_toot, src, src, 1000))
 
 /obj/item/clothing/head/hattip/proc/root_and_toot(obj/item/clothing/head/hattip/hat)
 	hat.animate_atom_living()
