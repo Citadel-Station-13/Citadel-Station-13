@@ -1106,13 +1106,13 @@
 
 	//teir 2
 
-
+	/* removed for now
 	//ORGASM
 	else if((findtext(message, orgasm_words)))
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase > 1 && !E.political)
+			if(E.phase > 1)
 				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && H.client?.prefs.lewdchem) // probably a redundant check but for good measure
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
@@ -1123,7 +1123,7 @@
 					E.cooldown += 6
 				else
 					H.throw_at(get_step_towards(user,H), 3 * power_multiplier, 1 * power_multiplier)
-
+	*/
 
 
 	//awoo
@@ -1349,7 +1349,7 @@
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase == 3 && !H.client?.prefs.lewdchem)
+			if(E.phase >= 3 && H.client?.prefs.lewdchem)
 				var/instill = stripped_input(user, "Instill an emotion in [H].", MAX_MESSAGE_LEN)
 				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")
