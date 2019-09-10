@@ -441,7 +441,7 @@
 	if(H.InCritical())
 		perma = TRUE
 		volume = 10
-		metabolization_rate = 0
+		//metabolization_rate = 0
 		H.stat = DEAD
 		catto.origin = H
 
@@ -458,8 +458,7 @@
 
 /datum/reagent/fermi/secretcatchem/on_mob_delete(mob/living/carbon/H)
 	if(perma)
-
-		//to_chat(H, "<span class='notice'>You feel your body settle into it's new form. You won't be able to shift back on death anymore.</span>")
+		to_chat(H, "<span class='notice'>You feel your body settle into it's new form. You won't be able to shift back on death anymore.</span>")
 		return
 	var/words = "Your body shifts back to normal."
 	H.forceMove(catto.loc)
@@ -470,3 +469,20 @@
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")
+
+
+/datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
+	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity => 0.95)
+		var/mob/living/simple_animal/pet/cat/custom_cat/catto = L
+		if(catto.origin)
+			var/mob/living/carbon/human/H = catto.origin
+			H.stat = CONSCIOUS
+			log_game("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
+			to_chat(catto, "<span class='notice'>Your body shifts back to normal!</span>")
+			H.forceMove(catto.loc)
+			catto.mind.transfer_to(H)
+			if(!L.mind) //Just in case
+				qdel(L)
+			else //This should never happen, but just in case, so their game isn't ruined.
+				catto.icon_state = "custom_cat"
+				catto.health = 50
