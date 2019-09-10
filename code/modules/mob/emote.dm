@@ -49,7 +49,7 @@
 
 /datum/emote/speen
 	key = "speen"
-	key_third_person = "spins"
+	key_third_person = "speeeeens!"
 	restraint_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
