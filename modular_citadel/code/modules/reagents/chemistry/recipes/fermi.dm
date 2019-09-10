@@ -143,7 +143,9 @@
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!
 	var/turf/T = get_turf(my_atom)
-	var/amount_to_spawn = round((volume/50), 1)
+	var/amount_to_spawn = round((volume/100), 1)
+	if(amount_to_spawn <= 0)
+		amount_to_spawn = 1
 	for(var/i in 1 to amount_to_spawn)
 		var/mob/living/simple_animal/slime/S = new(T,"green")
 		S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -361,7 +363,9 @@
 	PurityMin		= 0.5
 
 /datum/chemical_reaction/fermi/hatmium/FermiExplode(src, var/atom/my_atom, volume, temp, pH)
-	var/amount_to_spawn = round((volume/50), 1)
+	var/amount_to_spawn = round((volume/100), 1)
+	if(amount_to_spawn <= 0)
+		amount_to_spawn = 1
 	for(var/i in 1 to amount_to_spawn)
 		var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
 		hat.animate_atom_living()
