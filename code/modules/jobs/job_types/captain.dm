@@ -21,6 +21,8 @@ Captain
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
 
+	mind_traits = list(TRAIT_CAPTAIN_METABOLISM)
+
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 
 /datum/job/captain/get_access()
