@@ -263,7 +263,7 @@
 		var/mob/M = AM
 
 		log_combat(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
+		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")		//Cit change - And they thought ERP was bad.
 		if(!iscarbon(src))
 			M.LAssailant = null
@@ -281,6 +281,11 @@
 				var/datum/disease/D = thing
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
+
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
+					C.grippedby(src)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -313,16 +318,26 @@
 	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb()
 	set name = "Succumb"
 	set category = "IC"
+	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
+		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
+		if(E.phase < 3)
+			if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+				to_chat(src, "<span class='notice'>Your mindshield prevents your mind from giving in!</span>")
+			else if(src.mind.assigned_role in GLOB.command_positions)
+				to_chat(src, "<span class='notice'>Your dedication to your department prevents you from giving in!</span>")
+			else
+				E.enthrallTally += 20
+				to_chat(src, "<span class='notice'>You give into [E.master]'s influence.</span>")
 	if (InCritical())
-		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
+		log_message("Has succumbed to death while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
-		if(!whispered)
-			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
+
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
@@ -527,7 +542,7 @@
 		var/trail_type = getTrail()
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+			if(blood_volume && blood_volume > max((BLOOD_VOLUME_NORMAL*blood_ratio)*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
@@ -621,14 +636,15 @@
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-		else if(resting) //cit change - allows resisting out of resting
+			return
+		if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
-		else if(iscarbon(src)) //Citadel Change for embedded removal memes
-			var/mob/living/carbon/C = src
-			if(!C.handcuffed && !C.legcuffed)
-				return TRUE
-		else if(last_special <= world.time)
+			return
+		if(resist_embedded()) //Citadel Change for embedded removal memes
+			return
+		if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
+			return
 
 
 /mob/proc/resist_grab(moving_resist)
@@ -694,7 +710,7 @@
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.item_flags & NODROP)
+	if(HAS_TRAIT(what, TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -719,7 +735,7 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.item_flags & NODROP))
+	if(what && HAS_TRAIT(what, TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
@@ -808,13 +824,13 @@
 	return 1
 
 //used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection()
+/mob/living/proc/get_permeability_protection(list/target_zones)
 	return 0
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
 
-/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -1189,9 +1205,13 @@
 			clamp_unconscious_to = 0,
 			clamp_immobility_to = 0,
 			reset_misc = TRUE,
-			healing_chems = list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10, "stimulants" = 10),
-			message = "<span class='boldnotice'>You feel a surge of energy!</span>"
+			healing_chems = list("inaprovaline" = 3, "synaptizine" = 10, "regen_jelly" = 10, "stimulants" = 10),
+			message = "<span class='boldnotice'>You feel a surge of energy!</span>",
+			stamina_buffer_boost = 0,				//restores stamina buffer rather than just health
+			scale_stamina_loss_recovery,			//defaults to null. if this is set, restores loss * this stamina. make sure it's a fraction.
+			stamina_loss_recovery_bypass = 0		//amount of stamina loss to ignore during calculation
 		)
+	to_chat(src, message)
 	if(AmountSleeping() > clamp_unconscious_to)
 		SetSleeping(clamp_unconscious_to)
 	if(AmountUnconscious() > clamp_unconscious_to)
@@ -1200,7 +1220,10 @@
 		SetStun(clamp_immobility_to)
 	if(AmountKnockdown() > clamp_immobility_to)
 		SetKnockdown(clamp_immobility_to)
-	adjustStaminaLoss(max(0, -stamina_boost))
+	adjustStaminaLoss(min(0, -stamina_boost))
+	adjustStaminaLossBuffered(min(0, -stamina_buffer_boost))
+	if(scale_stamina_loss_recovery)
+		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)
 		resting = FALSE
 		lying = FALSE

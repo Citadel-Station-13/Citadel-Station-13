@@ -58,7 +58,7 @@
 	item_state = "radio"
 
 /obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
+	if(user.mind && (user.mind.isholy) && !GLOB.holy_armor_type)
 		beacon_armor(user)
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
@@ -71,13 +71,13 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || SSreligion.holy_armor_type)
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
-	SSreligion.holy_armor_type = A
+	GLOB.holy_armor_type = A
 	var/holy_armor_box = new A
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
@@ -229,8 +229,8 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
-	var/reskinned = FALSE
 	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/nullrod/Initialize()
 	. = ..()
@@ -245,11 +245,14 @@
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
-	if(SSreligion.holy_weapon_type)
+	if(GLOB.holy_weapon_type)
 		return
-	var/obj/item/nullrod/holy_weapon
+	var/obj/item/holy_weapon
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
-	/obj/item/melee/transforming/energy/sword/cx/chaplain
+	/obj/item/twohanded/dualsaber/hypereutactic/chaplain,
+	/obj/item/gun/energy/laser/redtag/hitscan/chaplain,
+	/obj/item/multitool/chaplain,
+	/obj/item/melee/baseball_bat/chaplain
 	)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
@@ -264,7 +267,7 @@
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
-	SSreligion.holy_weapon_type = holy_weapon.type
+	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 
@@ -273,6 +276,13 @@
 		qdel(src)
 		M.put_in_active_hand(holy_weapon)
 
+/obj/item/nullrod/proc/jedi_spin(mob/living/user)
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		user.setDir(i)
+		if(i == WEST)
+			user.emote("flip")
+		sleep(1)
+
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
@@ -280,11 +290,16 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	item_flags = ABSTRACT | NODROP | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+
+/obj/item/nullrod/godhand/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
@@ -525,13 +540,15 @@
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = NODROP | ABSTRACT
+	item_flags = ABSTRACT
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
@@ -576,6 +593,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	force = 12
+	reach = 2
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
 
@@ -600,12 +619,14 @@
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	item_flags = ABSTRACT | NODROP
+	item_flags = ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle
@@ -649,6 +670,44 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
+/obj/item/nullrod/claymore/bostaff/attack(mob/target, mob/living/user)
+	add_fingerprint(user)
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
+		user.Knockdown(60)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+		else
+			user.take_bodypart_damage(2*force)
+		return
+	if(iscyborg(target))
+		return ..()
+	if(!isliving(target))
+		return ..()
+	var/mob/living/carbon/C = target
+	if(C.stat || C.health < 0 || C.staminaloss > 130 )
+		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
+		return
+	if(user.a_intent == INTENT_DISARM)
+		if(!ishuman(target))
+			return ..()
+		var/mob/living/carbon/human/H = target
+		var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
+									  "[user] smacks [H] with the butt of [src]!", \
+									  "[user] broadsides [H] with [src]!", \
+									  "[user] smashes [H]'s head with [src]!", \
+									  "[user] beats [H] with front of [src]!", \
+									  "[user] twirls and slams [H] with [src]!")
+		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
+							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+		H.adjustStaminaLoss(rand(12,18))
+		if(prob(25))
+			(INVOKE_ASYNC(src, .proc/jedi_spin, user))
+	else
+		return ..()
+
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
 	item_state = "crysknife"
@@ -691,8 +750,8 @@
 	name = "egyptian staff"
 	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
 	icon = 'icons/obj/guns/magic.dmi'
-	icon_state = "pharoah_sceptre"
-	item_state = "pharoah_sceptre"
+	icon_state = "pharaoh_sceptre"
+	item_state = "pharaoh_sceptre"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL

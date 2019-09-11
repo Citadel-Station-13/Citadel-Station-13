@@ -164,7 +164,7 @@
 				return
 
 		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
-		if(istype(MS) && MS.attack_ghost(src, latejoinercalling = TRUE))
+		if(MS.attack_ghost(src, latejoinercalling = TRUE))
 			SSticker.queued_players -= src
 			SSticker.queue_delay = 4
 			qdel(src)
@@ -416,7 +416,7 @@
 						SSticker.mode.make_antag_chance(humanc)
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
-		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
+		SSquirks.AssignQuirks(humanc, humanc.client, TRUE, FALSE, job, FALSE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -429,7 +429,19 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
+
+	var/level = "green"
+	switch(GLOB.security_level)
+		if(SEC_LEVEL_BLUE)
+			level = "blue"
+		if(SEC_LEVEL_AMBER)
+			level = "amber"
+		if(SEC_LEVEL_RED)
+			level = "red"
+		if(SEC_LEVEL_DELTA)
+			level = "delta"	
+
+	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]<br>Alert Level: [capitalize(level)]</div>"
 
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -444,6 +456,11 @@
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++
 	for(var/spawner in GLOB.mob_spawners)
+		if(!LAZYLEN(spawner))
+			continue
+		var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
+		if(!istype(S) || !S.can_latejoin())
+			continue
 		available_job_count++
 		break
 
@@ -465,6 +482,11 @@
 			"Security" = list(jobs = list(), titles = GLOB.security_positions, color = "#ff9999"),
 		)
 		for(var/spawner in GLOB.mob_spawners)
+			if(!LAZYLEN(spawner))
+				continue
+			var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
+			if(!istype(S) || !S.can_latejoin())
+				continue
 			categorizedJobs["Ghost Role"]["jobs"] += spawner
 
 		for(var/datum/job/job in SSjob.occupations)

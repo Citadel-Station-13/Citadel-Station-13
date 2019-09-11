@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Added an underwear toggle button under 'Object' tab"
+  - tweak: "Genitals now layer under underwear. Hide these if they're too obnoxious."

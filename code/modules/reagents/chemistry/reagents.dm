@@ -33,6 +33,18 @@
 	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
+	//Fermichem vars:
+	var/purity = 1 						//How pure a chemical is from 0 - 1.
+	var/addProc = FALSE 				//If the chemical should force an on_new() call
+	var/turf/loc = null 				//Should be the creation location!
+	var/pH = 7							//pH of the specific reagent, used for calculating the sum pH of a holder.
+	var/ImpureChem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	var/InverseChemVal 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
+	var/InverseChem 		= "fermiTox"// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
+	var/DoNotSplit			= FALSE		// If impurity is handled within the main chem itself
+	var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
+	var/metabolizing = FALSE
+	var/invisible = FALSE //Set to true if it doesn't appear on handheld health analyzers.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -57,7 +69,8 @@
 
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+	if(holder)
+		holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
 // Called when this reagent is first added to a mob
@@ -66,6 +79,14 @@
 
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
+	return
+
+// Called when this reagent first starts being metabolized by a liver
+/datum/reagent/proc/on_mob_metabolize(mob/living/L)
+	return
+
+// Called when this reagent stops being metabolized by a liver
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
 /datum/reagent/proc/on_move(mob/M)

@@ -183,22 +183,7 @@
 	key_third_person = "suddenly hits a dab"
 	message = "suddenly hits a dab!"
 	emote_type = EMOTE_AUDIBLE
-
-
-
-/datum/emote/living/dab/run_emote(mob/living/user, params)
-	if (ishuman(user))
-		var/def_zone = BODY_ZONE_CHEST
-		var/luck = (rand(1,100))
-		if(luck >= 65)
-			user.adjustStaminaLoss(70)
-		if(luck >= 80)
-			def_zone = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-			user.apply_damage(20, BRUTE, def_zone)
-		if(luck >= 95)
-			user.adjustBrainLoss(100)
-	. = ..()
-
+	restraint_check = TRUE
 
 /datum/emote/living/mothsqueak
 	key = "msqueak"

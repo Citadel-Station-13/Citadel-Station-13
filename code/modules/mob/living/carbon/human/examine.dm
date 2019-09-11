@@ -247,7 +247,7 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < BLOOD_VOLUME_SAFE)
+	if(blood_volume < (BLOOD_VOLUME_SAFE*blood_ratio))
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
@@ -281,6 +281,13 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
+	if(reagents.has_reagent("astral"))
+		msg += "[t_He] have wild, spacey eyes"
+		if(mind)
+			msg += " and have a strange, abnormal look to them.\n"
+		else
+			msg += " and don't look like they're all there.\n"
+
 	if(isliving(user))
 		var/mob/living/L = user
 		if(src != user && HAS_TRAIT(L, TRAIT_EMPATH) && !appears_dead)
@@ -294,7 +301,7 @@
 			if(mood.sanity <= SANITY_DISTURBED)
 				msg += "[t_He] seem[p_s()] distressed.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
-			if(mood.mood >= 5) //So roundstart people aren't all "happy"
+			if(mood.shown_mood >= 6) //So roundstart people aren't all "happy" and that antags don't show their true happiness.
 				msg += "[t_He] seem[p_s()] to have had something nice happen to them recently.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empathH", /datum/mood_event/happy_empath, src)
 			if (HAS_TRAIT(src, TRAIT_BLIND))
@@ -303,6 +310,13 @@
 				msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
 
 	msg += "</span>"
+
+	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
+	if(Vc)
+		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
+			if(client?.prefs.lewdchem)
+				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
+
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)

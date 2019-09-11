@@ -343,8 +343,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return ..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(density && !(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
+	. = ..()
+	if(!density || obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
@@ -485,11 +488,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["printbible"])
 		if(cooldown < world.time)
 			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
-			if(SSreligion.bible_icon_state && SSreligion.bible_item_state)
-				B.icon_state = SSreligion.bible_icon_state
-				B.item_state = SSreligion.bible_item_state
-				B.name = SSreligion.bible_name
-				B.deity_name = SSreligion.deity
+			if(GLOB.bible_icon_state && GLOB.bible_item_state)
+				B.icon_state = GLOB.bible_icon_state
+				B.item_state = GLOB.bible_item_state
+				B.name = GLOB.bible_name
+				B.deity_name = GLOB.deity
 			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")

@@ -150,6 +150,7 @@
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
+	full_speed = FALSE
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
@@ -158,6 +159,11 @@
 	item_state =  "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
+
+/obj/item/tank/jetpack/carbondioxide/eva
+	name = "surplus jetpack (carbon dioxide)"
+	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals. Rated for less than stellar EVA speeds!"
+	full_speed = FALSE
 
 /obj/item/tank/jetpack/suit
 	name = "hardsuit jetpack upgrade"
@@ -235,3 +241,4 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+

@@ -27,7 +27,12 @@ Thus, the two variables affect pump operation are set in New():
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
-	
+
+/obj/machinery/atmospherics/components/binary/pump/examine(mob/user)
+	. = ..()
+	to_chat(user,"<span class='notice'>You can hold <b>Ctrl</b> and click on it to toggle it on and off.</span>")
+	to_chat(user,"<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its pressure.</span>")
+
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
 	var/area/A = get_area(src)
 	var/turf/T = get_turf(src)
@@ -37,7 +42,7 @@ Thus, the two variables affect pump operation are set in New():
 		investigate_log("Pump, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 		return ..()
-	
+
 /obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
 	var/area/A = get_area(src)
 	var/turf/T = get_turf(src)
@@ -46,7 +51,7 @@ Thus, the two variables affect pump operation are set in New():
 		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
 		investigate_log("Pump, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Pump, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-		
+
 /obj/machinery/atmospherics/components/binary/pump/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X

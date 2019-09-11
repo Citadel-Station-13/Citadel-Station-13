@@ -54,10 +54,17 @@
 	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
 
+	var/list/mind_traits // Traits added to the mind of the mob assigned this job
+
+	var/list/blacklisted_quirks		//list of quirk typepaths blacklisted.
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
+	if(mind_traits)
+		for(var/t in mind_traits)
+			ADD_TRAIT(H.mind, t, JOB_TRAIT)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -184,6 +191,16 @@
 			backpack_contents = list()
 		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
 		backpack_contents[box] = 1
+
+	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
+	var/holder
+	if(H.jumpsuit_style == PREF_SKIRT)
+		holder = "[uniform]/skirt"
+		if(!text2path(holder))
+			holder = "[uniform]"
+	else
+		holder = "[uniform]"
+	uniform = text2path(holder)
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

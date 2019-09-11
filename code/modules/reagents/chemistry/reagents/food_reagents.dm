@@ -32,6 +32,8 @@
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
 				if (DRINK_FANTASTIC)
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+				if (FOOD_AMAZING)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 	return ..()
 
 /datum/reagent/consumable/nutriment
@@ -228,6 +230,7 @@
 	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
+	pH = 13 //HMM! I wonder
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
 	var/cooling = 0
@@ -273,6 +276,7 @@
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "scorching agony"
+	pH = 7.4
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
@@ -319,7 +323,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Knockdown(60, override_stamdmg = min(reac_volume * 3, 15))
+			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 3, 15))
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
@@ -332,7 +336,7 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Knockdown(100, override_stamdmg = min(reac_volume * 5, 25))
+			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 5, 25))
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
@@ -400,8 +404,9 @@
 	color = "#E700E7" // rgb: 231, 0, 231
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
+	pH = 11
 
-/datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
 	M.slurring = max(M.slurring,50)
 	switch(current_cycle)
 		if(1 to 5)
@@ -431,10 +436,18 @@
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
+
+/datum/reagent/consumable/peanut_butter
+	name = "Peanut Butter"
+	id = "peanut_butter"
+	description = "A popular food paste made from ground dry-roasted peanuts."
+	color = "#C29261"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_description = "peanuts"
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
@@ -554,14 +567,14 @@
 	name = "Corn Starch"
 	id = "corn_starch"
 	description = "A slippery solution."
-	color = "#C8A5DC"
+	color = "#f7f6e4"
 	taste_description = "slime"
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	id = "corn_syrup"
 	description = "Decays into sugar."
-	color = "#C8A5DC"
+	color = "#fff882"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
 
@@ -608,6 +621,7 @@
 	description = "A blinding substance extracted from certain onions."
 	color = "#c0c9a0"
 	taste_description = "bitterness"
+	pH = 5
 
 /datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
@@ -662,6 +676,7 @@
 	description = "An ichor, derived from a certain mushroom, makes for a bad time."
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
+	pH = 12
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -682,11 +697,12 @@
 	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
+	pH = 11.2
 
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
 	M.set_light(2)
 
-/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
+/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
 	M.set_light(-2)
 
 /datum/reagent/consumable/vitfro
@@ -696,6 +712,7 @@
 	color = "#d3a308"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
+	pH = 10.4
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
@@ -711,3 +728,34 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+	pH = 9.2
+
+/datum/reagent/consumable/astrotame
+	name = "Astrotame"
+	id = "astrotame"
+	description = "A space age artifical sweetener."
+	nutriment_factor = 0
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	reagent_state = SOLID
+	color = "#FFFFFF" // rgb: 255, 255, 255
+	taste_mult = 8
+	taste_description = "sweetness"
+	overdose_threshold = 17
+
+/datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M)
+	if(M.disgust < 80)
+		M.adjust_disgust(10)
+	..()
+	. = TRUE
+
+/datum/reagent/consumable/secretsauce
+	name = "secret sauce"
+	id = "secret_sauce"
+	description = "What could it be."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#792300"
+	taste_description = "indescribable"
+	quality = FOOD_AMAZING
+	taste_mult = 100
+	can_synth = FALSE
+	pH = 6.1

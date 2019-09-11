@@ -23,6 +23,7 @@
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
 	taste_description = "mushroom"
+	pH = 13
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
@@ -32,6 +33,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
+	pH = 2
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
@@ -61,6 +63,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	pH = 4
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("epinephrine"))
@@ -93,6 +96,7 @@
 	color = "#7DC3A0"
 	toxpwr = 0
 	taste_description = "acid"
+	pH = 1.2
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
@@ -115,6 +119,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3
+	pH = 10
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -133,6 +138,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 	taste_description = "mint"
+	pH = 8
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
@@ -146,6 +152,7 @@
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
 	taste_description = "fish"
+	pH = 12
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -155,12 +162,13 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
+	pH = 13
 
-/datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
 	L.fakedeath(id)
 
-/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(id)
 	..()
 
@@ -177,12 +185,13 @@
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
 	taste_description = "death"
+	pH = 14.5
 
-/datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FAKEDEATH, id)
 
-/datum/reagent/toxin/ghoulpowder/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, id)
 	..()
 
@@ -198,6 +207,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
+	pH = 11
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
 	M.hallucination += 5
@@ -210,6 +220,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 	taste_mult = 1
+	pH = 2
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
@@ -234,6 +245,7 @@
 	id = "weedkiller"
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
+	pH = 3
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -241,6 +253,7 @@
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
+	pH = 3.2
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
@@ -254,6 +267,7 @@
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
 	toxpwr = 1
+	pH = 11
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
 	C.damageoverlaytemp = 60
@@ -268,6 +282,7 @@
 	color = "#9ACD32"
 	toxpwr = 0.5
 	taste_description = "burning"
+	pH = 13
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
@@ -282,6 +297,7 @@
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	pH = 11
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -326,6 +342,7 @@
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	pH = 2
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -343,6 +360,7 @@
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5
+	pH = 4.2
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -351,6 +369,7 @@
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
 	toxpwr = 0.5
+	pH = 4.9
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -359,6 +378,7 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "silence"
+	pH = 12.2
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
 	M.silent = max(M.silent, 3)
@@ -626,7 +646,7 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/amanitin/on_mob_end_metabolize(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
 	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
@@ -742,7 +762,7 @@
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
-/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
@@ -779,7 +799,7 @@
 	*/
 	return ..()
 
-/datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/skewium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
@@ -798,7 +818,7 @@
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
 	var/remove_amt = 5
-	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
+	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid") || holder.has_reagent("pen_jelly"))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.id,remove_amt)
@@ -816,6 +836,7 @@
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
+	pH = 2.75
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
@@ -882,8 +903,69 @@
 	toxpwr = 0
 	taste_description = "stillness"
 
-/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
+/datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/L)
 	ADD_TRAIT(L, TRAIT_EMOTEMUTE, id)
 
-/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/mimesbane/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/bonehurtingjuice //oof ouch
+	name = "Bone Hurting Juice"
+	id = "bonehurtingjuice"
+	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
+	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
+	toxpwr = 0
+	taste_description = "bone hurting"
+	overdose_threshold = 20
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
+	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(7.5, 0)
+	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
+		M.adjustBruteLoss(3.5, 0)
+	if(prob(12))
+		switch(rand(1, 3))
+			if(1)
+				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
+				M.say(pick(possible_says), forced = /datum/reagent/toxin/bonehurtingjuice)
+			if(2)
+				var/list/possible_mes = list("oofs softly.", "looks like their bones hurt.", "grimaces, as though their bones hurt.")
+				M.say("*custom " + pick(possible_mes), forced = /datum/reagent/toxin/bonehurtingjuice)
+			if(3)
+				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
+	return ..()
+
+/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
+	if(prob(6) && iscarbon(M)) //big oof
+		var/selected_part
+		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
+			if(1)
+				selected_part = BODY_ZONE_L_ARM
+			if(2)
+				selected_part = BODY_ZONE_R_ARM
+			if(3)
+				selected_part = BODY_ZONE_L_LEG
+			if(4)
+				selected_part = BODY_ZONE_R_LEG
+		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
+		if(M.dna.species.type != /datum/species/skeleton || M.dna.species.type != /datum/species/plasmaman || M.dna.species.type != /datum/species/golem/bone) //We're so sorry skeletons, you're so misunderstood
+			if(bp)
+				bp.receive_damage(0, 0, 200)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+				M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
+			else //SUCH A LUST FOR REVENGE!!!
+				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+				M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
+		else //you just want to socialize
+			if(bp)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+				M.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
+				bp.receive_damage(200, 0, 0) //But I don't think we should
+			else
+				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+				M.emote("sigh")
+	return ..()

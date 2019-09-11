@@ -1,19 +1,36 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
 
 /proc/init_gas_reactions()
-	var/list/reaction_types = list()
+	. = list()
+	for(var/type in subtypesof(/datum/gas))
+		.[type] = list()
+
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
-		if(!initial(reaction.exclude))
-			reaction_types += reaction
-	reaction_types = sortList(reaction_types, /proc/cmp_gas_reactions)
+		if(initial(reaction.exclude))
+			continue
+		reaction = new r
+		var/datum/gas/reaction_key
+		for (var/req in reaction.min_requirements)
+			if (ispath(req))
+				var/datum/gas/req_gas = req
+				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
+					reaction_key = req_gas
+		.[reaction_key] += list(reaction)
+		sortTim(., /proc/cmp_gas_reactions, TRUE)
 
-	. = list()
-	for(var/path in reaction_types)
-		. += new path
-
-/proc/cmp_gas_reactions(datum/gas_reaction/a, datum/gas_reaction/b) //sorts in descending order of priority
-	return initial(b.priority) - initial(a.priority)
+/proc/cmp_gas_reactions(list/datum/gas_reaction/a, list/datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
+	if (!length(a) || !length(b))
+		return length(b) - length(a)
+	var/maxa
+	var/maxb
+	for (var/datum/gas_reaction/R in a)
+		if (R.priority > maxa)
+			maxa = R.priority
+	for (var/datum/gas_reaction/R in b)
+		if (R.priority > maxb)
+			maxb = R.priority
+	return maxb - maxa
 
 /datum/gas_reaction
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
@@ -95,7 +112,7 @@
 		cached_gases[/datum/gas/oxygen] -= cached_gases[/datum/gas/tritium]
 
 	if(burned_fuel)
-		energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
+		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
 			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
@@ -285,6 +302,7 @@
 			if(do_explosion)
 				explosion(location, 0, 0, 5, power_ratio, TRUE, TRUE) //large shockwave, the actual radius is quite small - people will recognize that you're doing fusion
 			radiation_pulse(location, radiation_power) //You mean causing a super-tier fusion reaction in the halls is a bad idea?
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, 30000)//The science is cool though.
 			playsound(location, 'sound/effects/supermatter.ogg', 100, 0)
 		else
 			playsound(location, 'sound/effects/phasein.ogg', 75, 0)
@@ -346,16 +364,19 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/pressure = air.return_pressure()
-
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma]/cached_gases[/datum/gas/nitrous_oxide],1))),cached_gases[/datum/gas/nitrous_oxide],cached_gases[/datum/gas/plasma]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/bz] += reaction_efficency
+	if(reaction_efficency == cached_gases[/datum/gas/nitrous_oxide])
+		cached_gases[/datum/gas/bz] -= min(pressure,1)
+		cached_gases[/datum/gas/oxygen] += min(pressure,1)
 	cached_gases[/datum/gas/nitrous_oxide] -= reaction_efficency
 	cached_gases[/datum/gas/plasma]  -= 2*reaction_efficency
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2)*BZ_RESEARCH_SCALE),BZ_RESEARCH_MAX_AMOUNT)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -390,6 +411,7 @@
 	cached_gases[/datum/gas/plasma] -= heat_scale
 	cached_gases[/datum/gas/nitryl] -= heat_scale
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, STIMULUM_RESEARCH_AMOUNT*max(stim_energy_change,0))
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -418,6 +440,7 @@
 	cached_gases[/datum/gas/nitrogen] -= 20*nob_formed
 	cached_gases[/datum/gas/hypernoblium]+= nob_formed
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, nob_formed*NOBLIUM_RESEARCH_AMOUNT)
 
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()
@@ -449,3 +472,4 @@
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.temperature += cleaned_air * 0.002
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, cleaned_air*MIASMA_RESEARCH_AMOUNT)//Turns out the burning of miasma is kinda interesting to scientists

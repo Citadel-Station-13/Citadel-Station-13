@@ -151,6 +151,11 @@
 /obj/item/projectile/beam/lasertag/redtag/hitscan
 	hitscan = TRUE
 
+/obj/item/projectile/beam/lasertag/redtag/hitscan/holy
+	name = "lasrifle beam"
+	damage = 0.1
+	damage_type = BURN
+
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)

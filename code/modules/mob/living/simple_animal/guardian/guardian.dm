@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
-	var/mob/living/summoner
+	var/mob/living/carbon/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
@@ -149,6 +149,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		death(TRUE)
 		qdel(src)
 	snapback()
+	if(HAS_TRAIT(summoner, TRAIT_NODEATH) && (istype(summoner.wear_neck, /obj/item/clothing/neck/necklace/memento_mori)))
+		REMOVE_TRAIT(summoner, TRAIT_NODEATH, "memento_mori")
+		to_chat(summoner,"<span class='danger'>You feel incredibly vulnerable as the memento mori pulls your life force in one too many directions!")
 
 /mob/living/simple_animal/hostile/guardian/Stat()
 	..()
@@ -595,6 +598,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+
+/obj/item/guardiancreator/tech/choose/traitor/check_uplink_validity()
+	return !used
 
 /obj/item/guardiancreator/tech/choose
 	random = FALSE

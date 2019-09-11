@@ -108,6 +108,9 @@
 	buckle_lying = FALSE
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
+	var/sitting = 0
+	var/bellyup = 0
+
 /mob/living/silicon/robot/get_cell()
 	return cell
 
@@ -173,6 +176,7 @@
 	diag_hud_set_borgcell()
 
 	verbs += /mob/living/proc/lay_down //CITADEL EDIT gimmie rest verb kthx
+	verbs += /mob/living/silicon/robot/proc/rest_style
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -580,6 +584,19 @@
 	else
 		return ..()
 
+/mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/I) //TODO: make fucking everything up there in that attackby() proc use the proper tool_act() procs. But honestly, who has time for that? 'cause I know for sure that you, the person reading this, sure as hell doesn't.
+	var/validbreakout = FALSE
+	for(var/obj/item/dogborg/sleeper/S in held_items)
+		if(!LAZYLEN(S.contents))
+			continue
+		if(!validbreakout)
+			visible_message("<span class='notice'>[user] wedges [I] into the crevice separating [S] from [src]'s chassis, and begins to pry...</span>", "<span class='notice'>You wedge [I] into the crevice separating [S] from [src]'s chassis, and begin to pry...</span>")
+		validbreakout = TRUE
+		S.go_out()
+	if(validbreakout)
+		return TRUE
+	return ..()
+
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
@@ -644,13 +661,6 @@
 		add_overlay("[module.sleeper_overlay]_g[sleeper_nv ? "_nv" : ""]")
 	if(sleeper_r && module.sleeper_overlay)
 		add_overlay("[module.sleeper_overlay]_r[sleeper_nv ? "_nv" : ""]")
-	if(module.dogborg == TRUE)
-		if(resting)
-			cut_overlays()
-			icon_state = "[module.cyborg_base_icon]-rest"
-		else
-			icon_state = "[module.cyborg_base_icon]"
-
 	if(stat == DEAD && module.has_snowflake_deadsprite)
 		icon_state = "[module.cyborg_base_icon]-wreck"
 
@@ -683,6 +693,18 @@
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
+
+	if(client && stat != DEAD && module.dogborg == TRUE)
+		if(resting)
+			if(sitting)
+				icon_state = "[module.cyborg_base_icon]-sit"
+			if(bellyup)
+				icon_state = "[module.cyborg_base_icon]-bellyup"
+			else if(!sitting && !bellyup)
+				icon_state = "[module.cyborg_base_icon]-rest"
+			cut_overlays()
+		else
+			icon_state = "[module.cyborg_base_icon]"
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
@@ -910,7 +932,7 @@
 		if(DISCONNECT) //Tampering with the wires
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(stat || lockcharge || low_power_mode)
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -1229,3 +1251,20 @@
 			connected_ai.aicamera.stored[i] = TRUE
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
+
+/mob/living/silicon/robot/proc/rest_style()
+	set name = "Switch Rest Style"
+	set category = "Robot Commands"
+	set desc = "Select your resting pose."
+	sitting = 0
+	bellyup = 0
+	var/choice = alert(src, "Select resting pose", "", "Resting", "Sitting", "Belly up")
+	switch(choice)
+		if("Resting")
+			update_icons()
+			return 0
+		if("Sitting")
+			sitting = 1
+		if("Belly up")
+			bellyup = 1
+	update_icons()

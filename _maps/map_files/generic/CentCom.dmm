@@ -3864,7 +3864,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jS" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -5857,7 +5857,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "nY" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8394,6 +8394,9 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership)
 "tg" = (
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/item/soap/syndie,
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
@@ -9837,7 +9840,7 @@
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_y = 24;
-	req_access_txt = "2"
+	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -10492,7 +10495,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "yv" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 1
 	},
 /obj/machinery/light,
@@ -11383,6 +11386,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/paicard,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AM" = (
@@ -11581,6 +11585,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
+"Bp" = (
+/obj/item/paicard,
+/obj/structure/table/wood,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Bs" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -15116,7 +15125,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -17428,6 +17437,8 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
+/obj/structure/table,
+/obj/item/reagent_containers/rag/towel/syndicate,
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
 "Rm" = (
@@ -25222,7 +25233,7 @@ lI
 lI
 lI
 Ax
-qZ
+EW
 qZ
 qZ
 Ax
@@ -25480,7 +25491,7 @@ lI
 lI
 Ax
 ra
-qZ
+Bf
 qZ
 tX
 qZ
@@ -25736,7 +25747,7 @@ lI
 lI
 lI
 Ax
-qZ
+Bp
 qZ
 qZ
 Ax

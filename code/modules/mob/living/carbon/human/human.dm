@@ -8,6 +8,7 @@
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/carbon/human/proc/underwear_toggle //fwee
 
 	//initialize limbs first
 	create_bodyparts()
@@ -251,7 +252,7 @@
 
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-				if(pocket_item.item_flags & NODROP)
+				if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
 					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
 			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
@@ -622,6 +623,7 @@
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
+	undershirt = "Nude"
 	update_body()
 	update_hair()
 	update_genitals()
@@ -724,12 +726,12 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated() || lying )
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
-		if((be_close == 0) || (dna.check_mutation(TK) && tkMaxRangeCheck(src, M)))
+		if((be_close == 0) || (!no_tk && (dna.check_mutation(TK) && tkMaxRangeCheck(src, M))))
 			return TRUE
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
@@ -810,6 +812,8 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	if(blood_volume < (BLOOD_VOLUME_NORMAL*blood_ratio))
+		blood_volume = (BLOOD_VOLUME_NORMAL*blood_ratio)
 	..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
@@ -851,9 +855,12 @@
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
-	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+	if(user == target && can_piggyback(target) && pulling == target && (HAS_TRAIT(src, TRAIT_PACIFISM) || grab_state >= GRAB_AGGRESSIVE) && stat == CONSCIOUS)
 		buckle_mob(target,TRUE,TRUE)
 	. = ..()
+
+/mob/living/carbon/human/proc/piggyback_instant(mob/living/M)
+	return buckle_mob(M, TRUE, TRUE, FALSE, TRUE)
 
 //Can C try to piggyback at all.
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
@@ -861,9 +868,11 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, bypass_piggybacking = FALSE, no_delay = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
+	if(bypass_piggybacking)
+		return ..()
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
@@ -876,7 +885,7 @@
 	if(can_piggyback(M))
 		riding_datum.ride_check_ridden_incapacitated = TRUE
 		visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
-		if(do_after(M, 15, target = src))
+		if(no_delay || do_after(M, 15, target = src))
 			if(can_piggyback(M))
 				if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
@@ -893,12 +902,9 @@
 		stop_pulling()
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(istype(bp, /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.blocks_shove_knockdown)
-				return TRUE
+	for(var/obj/item/clothing/C in get_equipped_items()) //doesn't include pockets
+		if(C.blocks_shove_knockdown)
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/clear_shove_slowdown()

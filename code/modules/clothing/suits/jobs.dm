@@ -124,6 +124,9 @@
 	icon_state = "suitjacket_black"
 	item_state = "ro_suit"
 
+/obj/item/clothing/suit/toggle/lawyer/black/syndie
+	desc = "A snappy dress jacket. Suspiciously has no tags or branding."
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -174,3 +177,23 @@
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
+
+
+//Robotocist
+
+/obj/item/clothing/suit/hooded/techpriest
+	name = "techpriest robes"
+	desc = "For those who REALLY love their toasters."
+	icon_state = "techpriest"
+	item_state = "techpriest"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	hoodtype = /obj/item/clothing/head/hooded/techpriest
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/hooded/techpriest
+	name = "techpriest's hood"
+	desc = "A hood for those who REALLY love their toasters."
+	icon_state = "techpriesthood"
+	item_state = "techpriesthood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS

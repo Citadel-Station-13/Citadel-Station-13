@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes hypovials being unable to transfer out liquids or be refilled by large dispensers like water tanks."
+  - bugfix: "Fixes chem-masters machineries not dispensing newly made pills inside loaded in pill bottles."

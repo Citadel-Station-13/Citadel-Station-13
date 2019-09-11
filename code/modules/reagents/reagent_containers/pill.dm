@@ -46,6 +46,9 @@
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
+	var/makes_me_think = pick(strings("redpill.json", "redpill_questions"))
+	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, M, "<span class='notice'>[makes_me_think]</span>"), 50)
 
 	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)
@@ -166,6 +169,13 @@
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
 
+/obj/item/reagent_containers/pill/psicodine
+	name = "psicodine pill"
+	desc = "Used to treat mental instability and traumas."
+	list_reagents = list("psicodine" = 10)
+	icon_state = "pill22"
+	roundstart = 1
+
 /obj/item/reagent_containers/pill/antirad
 	name = "potassium iodide pill"
 	desc = "Used to treat radition used to counter radiation poisoning."
@@ -216,6 +226,12 @@
 	name = "speedy pill"
 	list_reagents = list("aranesp" = 10)
 
+/obj/item/reagent_containers/pill/happiness
+	name = "happiness pill"
+	desc = "It has a creepy smiling face on it."
+	icon_state = "pill_happy"
+	list_reagents = list("happiness" = 10)
+
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "A strange pill found in the depths of maintenance"
@@ -236,4 +252,8 @@
 
 /obj/item/reagent_containers/pill/penis_enlargement
 	name = "penis enlargement pill"
-	list_reagents = list("penis_enlargement" = 30)
+	list_reagents = list("penis_enlarger" = 10)
+
+/obj/item/reagent_containers/pill/breast_enlargement
+	name = "breast enlargement pill"
+	list_reagents = list("breast_enlarger" = 10)

@@ -1,4 +1,3 @@
-
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
@@ -52,7 +51,6 @@
 	build_path = /obj/item/clothing/glasses/hud/security/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
@@ -238,6 +236,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/sci_goggles
+	name = "Science Goggles"
+	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
+	id = "scigoggles"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/clothing/glasses/science
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/diskplantgene
 	name = "Plant Data Disk"
 	desc = "A disk for storing plant genetic data."
@@ -282,6 +290,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/light_replacer
+	name = "Light Replacer"
+	desc = "A device to automatically replace lights. Refill with working light bulbs."
+	id = "light_replacer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
+	build_path = /obj/item/lightreplacer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
@@ -303,7 +321,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /////////////////////////////////////////
-////////////Holosign Designs/////////////
+////////////Holosign Designs//////////////
 /////////////////////////////////////////
 
 /datum/design/holosign
@@ -356,9 +374,20 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+
 ///////////////////////////////
 ////////////Tools//////////////
 ///////////////////////////////
+
+/datum/design/rcd_upgrade
+	name = "Advanced RCD designs upgrade"
+	desc = "Adds the computer frame and machine frame to the RCD."
+	id = "rcd_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
+	build_path = /obj/item/rcd_upgrade
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
@@ -450,6 +479,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/quantum_keycard
+	name = "Quantum Keycard"
+	desc = "Allows for the construction of a quantum keycard."
+	id = "quantum_keycard"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_SILVER = 500, MAT_BLUESPACE = 1000)
+	build_path = /obj/item/quantum_keycard
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
@@ -459,6 +498,16 @@
 	build_path = /obj/item/anomaly_neutralizer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/pHmeter
+	name = "Chemical Analyser"
+	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution."
+	id   = "pHmeter"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_SILVER = 100, MAT_DIAMOND = 100)
+	build_path = /obj/item/fermichem/pHmeter
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 ////////////Armour///////////////////////
@@ -473,3 +522,35 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/////////////////////////////////////////
+////////////Meteor///////////////////////
+/////////////////////////////////////////
+
+/datum/design/meteor_defence
+	name = "Meteor Defence"
+	desc = "A blue print of a early model of the Meteor defence turret."
+	id = "meteor_defence"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50000, MAT_GLASS = 50000, MAT_SILVER = 8500, MAT_GOLD = 8500, MAT_TITANIUM = 7500, MAT_URANIUM = 7500)
+	build_path = /obj/machinery/satellite/meteor_shield/sci
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/meteor_disk
+	name = "Meteor Defence Upgrade Disk"
+	desc = "A disk containing debugging programming to solve and monitor meteors more effectively."
+	id = "meteor_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 2500, MAT_GOLD = 1000)
+	build_path = /obj/item/disk/meteor
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/meteor_console
+	name = "Computer Design (Meteor Satellite Console)"
+	desc = "Allows for the construction of circuit boards used to build a new Meteor Satellite monitor console."
+	id = "meteor_console"
+	build_path = /obj/item/circuitboard/computer/sat_control
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

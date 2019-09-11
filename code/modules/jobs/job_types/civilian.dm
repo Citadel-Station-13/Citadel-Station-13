@@ -18,6 +18,7 @@ Clown
 	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
+	. = ..()
 	H.apply_pref_name("clown", M.client)
 
 /datum/outfit/job/clown
@@ -60,6 +61,7 @@ Clown
 		return
 
 	H.dna.add_mutation(CLOWNMUT)
+	H.dna.add_mutation(SMILE)
 
 /*
 Mime
@@ -173,6 +175,8 @@ Lawyer
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+
+	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"

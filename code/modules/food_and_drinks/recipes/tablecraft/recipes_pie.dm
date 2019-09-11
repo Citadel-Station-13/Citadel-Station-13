@@ -159,3 +159,59 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/pie/frostypie
 	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/strawberrypie
+	name = "Strawberry pie"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pie/strawberrypie
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/baklava
+	name = "Baklava pie"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/butter = 1,
+		/obj/item/reagent_containers/food/snacks/tortilla = 4,	//Layers
+		/obj/item/seeds/wheat/oat = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/pie/baklava
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/mimetart
+	name = "Mime tart"
+	always_availible = FALSE
+	reqs = list(
+            /datum/reagent/consumable/milk = 5,
+            /datum/reagent/consumable/sugar = 5,
+            /obj/item/reagent_containers/food/snacks/pie/plain = 1,
+	        /datum/reagent/consumable/nothing = 5
+	        )
+	result = /obj/item/reagent_containers/food/snacks/pie/mimetart
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/berrytart
+	name = "Berry tart"
+	always_availible = FALSE
+	reqs = list(
+            /datum/reagent/consumable/milk = 5,
+            /datum/reagent/consumable/sugar = 5,
+            /obj/item/reagent_containers/food/snacks/pie/plain = 1,
+	        /obj/item/reagent_containers/food/snacks/grown/berries = 3
+	        )
+	result = /obj/item/reagent_containers/food/snacks/pie/berrytart
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/cocolavatart
+	name = "Chocolate Lava tart"
+	always_availible = FALSE
+	reqs = list(
+            /datum/reagent/consumable/milk = 5,
+            /datum/reagent/consumable/sugar = 5,
+            /obj/item/reagent_containers/food/snacks/pie/plain = 1,
+	        /obj/item/reagent_containers/food/snacks/chocolatebar = 3,
+	        /obj/item/slime_extract = 1
+	        )
+	result = /obj/item/reagent_containers/food/snacks/pie/cocolavatart
+	subcategory = CAT_PIE

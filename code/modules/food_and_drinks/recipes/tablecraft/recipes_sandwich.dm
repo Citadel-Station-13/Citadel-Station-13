@@ -43,6 +43,48 @@
 	result = /obj/item/reagent_containers/food/snacks/jellysandwich/cherry
 	subcategory = CAT_SANDWICH
 
+/datum/crafting_recipe/food/pbj_slimesandwich
+	name = "PB&J sandwich"
+	reqs = list(
+		/datum/reagent/toxin/slimejelly = 5,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+	)
+	result = /obj/item/reagent_containers/food/snacks/jellysandwich/pbj/slime
+	subcategory = CAT_SANDWICH
+
+/datum/crafting_recipe/food/pbj_slimesandwich/alt
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/jelliedtoast/slime = 1,
+		/obj/item/reagent_containers/food/snacks/peanut_buttertoast = 1,
+	)
+
+/datum/crafting_recipe/food/pbj_sandwich
+	name = "PB&J sandwich"
+	reqs = list(
+		/datum/reagent/consumable/cherryjelly = 5,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+	)
+	result = /obj/item/reagent_containers/food/snacks/jellysandwich/pbj/cherry
+	subcategory = CAT_SANDWICH
+
+/datum/crafting_recipe/food/pbj_sandwich/alt
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/jelliedtoast/cherry = 1,
+		/obj/item/reagent_containers/food/snacks/peanut_buttertoast = 1,
+	)
+
+/datum/crafting_recipe/peanutbutter_sandwich
+	name = "Peanut butter sandwich"
+	reqs = list(
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+	)
+	result = /obj/item/reagent_containers/food/snacks/peanutbutter_sandwich
+	subcategory = CAT_SANDWICH
+
+
 /datum/crafting_recipe/food/notasandwich
 	name = "Not a sandwich"
 	reqs = list(
@@ -52,7 +94,7 @@
 	result = /obj/item/reagent_containers/food/snacks/notasandwich
 	subcategory = CAT_SANDWICH
 
-/datum/crafting_recipe/food/notasandwich
+/datum/crafting_recipe/food/tunasandwich
 	name = "Tuna sandwich"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
@@ -61,4 +103,14 @@
 		/obj/item/reagent_containers/food/condiment/mayonnaise = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/tuna_sandwich
+	subcategory = CAT_SANDWICH
+
+/datum/crafting_recipe/food/hotdog
+	name = "Hot dog"
+	reqs = list(
+		/datum/reagent/consumable/ketchup = 5,
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/reagent_containers/food/snacks/sausage = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/hotdog
 	subcategory = CAT_SANDWICH

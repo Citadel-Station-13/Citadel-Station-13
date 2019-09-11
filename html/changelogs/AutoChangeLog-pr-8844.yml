@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the rocket launcher being unreloadable."
+  - balance: "Buffed its accuracy a bit."
+  - tweak: "Replaced the grenade launcher emagged minesweeper loot with the rocket launcher like it was originally supposed to be."

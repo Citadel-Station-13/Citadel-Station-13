@@ -14,8 +14,10 @@
 						"green hypovial" = "hypovial-a",
 						"orange hypovial" = "hypovial-k",
 						"purple hypovial" = "hypovial-p",
-						"black hypovial" = "hypovial-t"
+						"black hypovial" = "hypovial-t",
+						"pink hypovial" = "hypovial-pink"
 						)
+	always_reskinnable = TRUE
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
@@ -28,17 +30,6 @@
 
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
 	update_icon()
-
-/obj/item/reagent_containers/glass/bottle/vial/reskin_obj(mob/M) //Makes the vials completely reskinnable, and renames them - overrides /obj/proc/reskin_obj
-	if(!LAZYLEN(unique_reskin))
-		return
-	var/choice = input(M,"Do you wish to recolour your [src]?","Vial Recolour") as null|anything in unique_reskin
-	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
-		if(!unique_reskin[choice])
-			return
-		icon_state = unique_reskin[choice]
-		name = choice
-		to_chat(M, "[src] is now skinned as '[choice].'")
 
 /obj/item/reagent_containers/glass/bottle/vial/update_icon()
 	cut_overlays()
@@ -145,6 +136,16 @@
 	name = "hypovial (tricordrazine)"
 	icon_state = "hypovial"
 	comes_with = list("tricordrazine" = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction
+	name = "pink hypovial (breast treatment)"
+	icon_state = "hypovial-pink"
+	comes_with = list("BEsmaller_hypo" = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction
+	name = "pink hypovial (penis treatment)"
+	icon_state = "hypovial-pink"
+	comes_with = list("PEsmaller_hypo" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
 	name = "deluxe hypovial"

@@ -92,6 +92,36 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/medicinalsmartdart
+	name = "Medicinal Smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	id = "medicinalsmartdart"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 100, MAT_PLASTIC = 100, MAT_METAL = 100)
+	build_path = /obj/item/reagent_containers/syringe/dart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/bluespacesmartdart
+	name = "bluespace smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented. Has an extended volume capacity thanks to bluespace foam."
+	id = "bluespacesmartdart"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 250, MAT_PLASTIC = 250, MAT_METAL = 250, MAT_BLUESPACE = 250)
+	build_path = /obj/item/reagent_containers/syringe/dart/bluespace
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/smartdartgun
+	name = "dart gun"
+	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
+	id = "smartdartgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_PLASTIC = 1000, MAT_METAL = 500)
+	build_path = /obj/item/gun/syringe/dart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/bluespacebodybag
 	name = "Bluespace Body Bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
@@ -169,6 +199,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
 	build_path = /obj/item/disk/data
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/organbox
+	name = "Empty Organ Box"
+	desc = "A large cool box that can hold large amouts of medical tools or organs."
+	id = "organbox"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_SILVER= 3500, MAT_GOLD = 3500, MAT_PLASTIC = 5000)
+	build_path = /obj/item/storage/belt/organbox
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -514,6 +554,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_tongue
+	name = "Cybernetic tongue"
+	desc = "A fancy cybernetic tongue."
+	id = "cybernetic_tongue"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/organ/tongue/cybernetic
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////
 //Adv Surgery Tools//
 /////////////////////
@@ -690,6 +740,13 @@
 	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
 	id = "surgery_reconstruction"
 	surgery = /datum/surgery/advanced/reconstruction
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/surgery_toxinhealing
+	name = "Body Rejuvenation"
+	desc = "A surgical procedure that helps deal with oxygen  deprecation, and treat toxic damaged. Works on corpses and alive alike without chemicals."
+	id = "surgery_toxinhealing"
+	surgery = /datum/surgery/advanced/toxichealing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/revival

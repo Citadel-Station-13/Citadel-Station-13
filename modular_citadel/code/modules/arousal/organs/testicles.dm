@@ -11,19 +11,23 @@
 	var/sack_size			= BALLS_SACK_SIZE_DEF
 	fluid_id 				= "semen"
 	producing				= TRUE
-	can_masturbate_with		= TRUE
+	can_masturbate_with		= FALSE
 	masturbation_verb 		= "massage"
 	can_climax				= TRUE
 	var/sent_full_message	= TRUE //defaults to 1 since they're full to start
-
-/obj/item/organ/genital/testicles/Initialize()
-	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
 
 /obj/item/organ/genital/testicles/on_life()
 	if(QDELETED(src))
 		return
 	if(reagents && producing)
+		if(reagents.total_volume == 0) // Apparently, 0.015 gets rounded down to zero and no reagents are created if we don't start it with 0.1 in the tank.
+			fluid_rate = 0.1
+		else
+			fluid_rate = CUM_RATE
+		if(reagents.total_volume >= 5)
+			fluid_mult = 0.5
+		else
+			fluid_mult = 1
 		generate_cum()
 
 /obj/item/organ/genital/testicles/proc/generate_cum()
@@ -45,6 +49,7 @@
 		linked_organ = (owner.getorganslot("penis"))
 		if(linked_organ)
 			linked_organ.linked_organ = src
+			size = linked_organ.size
 
 	else
 		if(linked_organ)
@@ -57,20 +62,22 @@
 		return TRUE
 
 /obj/item/organ/genital/testicles/update_appearance()
-	if(owner)
-		if(size == 0)
-			size_name = "nonexistant"
-		if(size == 1)
+	switch(size)
+		if(0.1 to 1)
 			size_name = "average"
-		if(size == 2)
+		if(1.1 to 2)
 			size_name = "enlarged"
-		if(size >= 3)
+		if(2.1 to INFINITY)
 			size_name = "engorged"
-
-		if(!internal)
-			desc = "You see an [size_name] pair of testicles dangling."
 		else
-			desc = "They don't have any testicles you can see."
+			size_name = "nonexistant"
+
+	if(!internal)
+		desc = "You see an [size_name] pair of testicles."
+	else
+		desc = "They don't have any testicles you can see."
+
+	if(owner)
 		var/string
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...

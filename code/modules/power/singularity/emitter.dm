@@ -90,7 +90,7 @@
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
 	if (anchored)
@@ -339,12 +339,13 @@
 	projectile_sound = initial(projectile_sound)
 
 /obj/machinery/power/emitter/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
 	obj_flags |= EMAGGED
-	if(user)
-		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+	user?.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+	return TRUE
 
 
 /obj/machinery/power/emitter/prototype
@@ -440,9 +441,13 @@
 	name = "turret controls"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | NODROP | NOBLUDGEON
+	item_flags = ABSTRACT | NOBLUDGEON
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/delay = 0
+
+/obj/item/turret_control/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	. = ..()

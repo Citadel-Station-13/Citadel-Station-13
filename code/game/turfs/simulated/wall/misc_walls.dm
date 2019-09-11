@@ -7,6 +7,7 @@
 	smooth = SMOOTH_MORE
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
+	explosion_block = 10
 	girder_type = /obj/structure/girder/cult
 
 /turf/closed/wall/mineral/cult/Initialize()
@@ -49,7 +50,7 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	explosion_block = 2
+	explosion_block = 5
 	hardness = 10
 	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
@@ -76,6 +77,14 @@
 			E.superheated_walls--
 
 	return ..()
+
+/turf/closed/wall/clockwork/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(heated && the_rcd.canRturf)
+		return ..()
+
+/turf/closed/wall/clockwork/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(heated && the_rcd.canRturf)
+		return ..()
 
 /turf/closed/wall/clockwork/try_destroy(obj/item/I, mob/user, turf/T)
 	if(!heated)

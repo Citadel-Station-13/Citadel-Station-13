@@ -53,7 +53,6 @@
 
 /obj/item/cartridge/virus/syndicate
 	name = "\improper Detomatix cartridge"
-	icon_state = "cart"
 	access = CART_REMOTE_DOOR
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	charges = 4
@@ -85,7 +84,7 @@
 
 /obj/item/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"
-	icon_state = "cart"
+	icon_state = "cart-f"
 	var/telecrystals = 0
 
 /obj/item/cartridge/virus/frame/send_virus(obj/item/pda/target, mob/living/U)
@@ -99,7 +98,7 @@
 		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
 		if(!hidden_uplink)
 			hidden_uplink = target.AddComponent(/datum/component/uplink)
-			target.lock_code = lock_code
+			hidden_uplink.unlock_code = lock_code
 		else
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals
