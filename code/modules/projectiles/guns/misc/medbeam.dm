@@ -118,6 +118,12 @@
 	target.adjustFireLoss(-4)
 	target.adjustToxLoss(-1, forced = TRUE)
 	target.adjustOxyLoss(-1)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.bleed_rate)
+			H.bleed_rate -=	1
+		if(H.radiation)
+			H.radiation -= 10 //it heals toxin, why wouldn't it also heal radiation?
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(var/mob/living/target)
