@@ -164,13 +164,13 @@
 	config_entry_value = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 
 /datum/config_entry/string/alert_blue_upto
-	config_entry_value = "The station has received reliable information about potential threats to the station. Security staff may have weapons visible, random searches are permitted."
+	config_entry_value = "The station has received reliable information about potential threats to the station. Security staff may have weapons visible, searches within reason are permitted."
 
 /datum/config_entry/string/alert_blue_downto
-	config_entry_value = "Significant confirmed threats have been neutralized. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still permitted."
+	config_entry_value = "Significant confirmed threats have been neutralized. Security may no longer have weapons drawn at all times, but may continue to have them visible. Searches within reason are still permitted."
 
 /datum/config_entry/string/alert_amber_upto
-	config_entry_value = "There are significant confirmed threats to the station. Security staff may have weapons unholstered at all times. Random searches are allowed and advised."
+	config_entry_value = "There are significant confirmed threats to the station. Security staff may have weapons unholstered at all times. Searches within reason are still permitted and advised."
 
 /datum/config_entry/string/alert_amber_downto
 	config_entry_value = "The immediate threat has passed. Security is no longer authorized to use lethal force, but may continue to have weapons drawn. Access requirements have been restored."
