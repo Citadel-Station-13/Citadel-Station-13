@@ -90,7 +90,7 @@
 			if(stop_bleeding)
 				if(!H.bleedsuppress) //so you can't stack bleed suppression
 					if(H.bleed_rate)
-						H.bleed_rate -= 30
+						H.bleed_rate = 0	//fully stops accumulated bleeding on application, just in case the bleed cap is altered.
 					H.suppress_bloodloss(stop_bleeding)
 		if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 			if(affecting.heal_damage(heal_brute, heal_burn))
