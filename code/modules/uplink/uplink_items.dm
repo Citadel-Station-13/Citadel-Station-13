@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Sniper Kit"
 	desc = "A specialist kit for long ranged assassinations. Includes a syndicate .50 caliber sniper rifle, with an assortment of three magazines, \
 			a sharp-looking tactical turtleneck suit and tie, a suppressor, an energy dagger, and a door charge."
-	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 25 //Worth 40
 	include_modes = list(/datum/game_mode/nuclear)
 
