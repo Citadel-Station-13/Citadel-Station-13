@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
+	var/horn_color	//specific horn colors, because why not?
+
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
@@ -260,7 +262,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.hud_used.update_locked_slots()
 
 	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+	if(("legs" in C.dna.species.mutant_bodyparts) && (C.dna.features["legs"] == "Digitigrade" || C.dna.features["legs"] == "Avian"))
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
@@ -717,8 +719,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
-				if("moth_wings")
-					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
+				if("insect_wings")
+					S = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 				if("ipc_screen")
@@ -815,6 +817,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							accessory_overlay.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
 							accessory_overlay.color = "#[H.eye_color]"
+						if(HORNCOLOR)
+							accessory_overlay.color = "#[H.horn_color]"
 				else
 					accessory_overlay.color = forced_colour
 			else
@@ -880,6 +884,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						extra_accessory_overlay.color = "#[H.facial_hair_color]"
 					if(EYECOLOR)
 						extra_accessory_overlay.color = "#[H.eye_color]"
+
+					if(HORNCOLOR)
+						extra_accessory_overlay.color = "#[H.horn_color]"
 				standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
@@ -912,6 +919,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 						else
 							extra2_accessory_overlay.color = "#[H.hair_color]"
+					if(HORNCOLOR)
+						extra2_accessory_overlay.color = "#[H.horn_color]"
 				standing += extra2_accessory_overlay
 
 

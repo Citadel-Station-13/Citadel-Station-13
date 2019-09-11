@@ -59,7 +59,7 @@
 	if(!GLOB.horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, GLOB.horns_list)
 	if(!GLOB.ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.horns_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.ears_list)
 	if(!GLOB.frills_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
 	if(!GLOB.spines_list.len)
@@ -70,8 +70,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
-	if(!GLOB.moth_wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
+	if(!GLOB.insect_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -138,13 +138,14 @@
 		"wings" = "None",
 		"snout" = pick(GLOB.snouts_list),
 		"horns" = pick(GLOB.horns_list),
+		"horn_color" = "85615a",
 		"ears" = "None",
 		"frills" = pick(GLOB.frills_list),
 		"spines" = pick(GLOB.spines_list),
 		"body_markings" = pick(GLOB.body_markings_list),
-		"legs" = pick("Normal Legs","Digitigrade Legs"),
+		"legs" = pick("Plantigrade","Digitigrade"),
 		"caps" = pick(GLOB.caps_list),
-		"moth_wings" = pick(GLOB.moth_wings_list),
+		"insect_wings" = pick(GLOB.insect_wings_list),
 		"taur" = "None",
 		"mam_body_markings" = pick(snowflake_markings_list),
 		"mam_ears" 			= pick(snowflake_ears_list),

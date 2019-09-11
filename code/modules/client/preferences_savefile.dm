@@ -242,11 +242,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == -2)		//fatal, can't load any data
 		return 0
 
+	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
+	if((S["flavor_text"] != "") && (S["flavor_text"] != null) && S["flavor_text"]) //If old text isn't null and isn't "" but still exists.
+		S["flavor_text"]				>> features["flavor_text"] //Load old flavortext as current dna-based flavortext
+
+		WRITE_FILE(S["feature_flavor_text"], features["flavor_text"]) //Save it in our new type of flavor-text
+		WRITE_FILE(S["flavor_text"]	, "") //Remove old flavortext, completing the cut-and-paste into the new format.
+
+	else //We have no old flavortext, default to new
+		S["feature_flavor_text"]		>> features["flavor_text"]
+
 	//Species
 	var/species_id
 	S["species"]			>> species_id
 	if(species_id)
 		var/newtype = GLOB.species_list[species_id]
+		if(species_id == "avian" || species_id == "aquatic")
+			newtype = "mammal"
+		else if(species_id == "moth")
+			newtype = "insect"
+
 		if(newtype)
 			pref_species = new newtype
 
@@ -280,13 +295,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
+	S["feature_horn_color"]				>> features["horn_color"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	S["feature_moth_wings"]				>> features["moth_wings"]
 	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_human_ears"]				>> features["ears"]
+
+	if((S["feature_moth_wings"] != "") && (S["feature_moth_wings"] != null) && S["feature_moth_wings"]) //Shamelessly adapted from flavortext stuff
+		S["feature_moth_wings"]			>> features["moth_wings"]
+		WRITE_FILE(S["insect_wings"], features["moth_wings"])
+		WRITE_FILE(S["feature_moth_wings"]	, "")
+	else
+		S["feature_insect_wings"]				>> features["insect_wings"]
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -417,12 +439,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human)
 	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
 	features["horns"] 	= sanitize_inlist(features["horns"], GLOB.horns_list)
+	features["horn_color"]	= sanitize_hexcolor(features["horn_color"], 3, 0)
 	features["ears"]	= sanitize_inlist(features["ears"], GLOB.ears_list)
 	features["frills"] 	= sanitize_inlist(features["frills"], GLOB.frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list)
-	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list)
+	features["insect_wings"] 	= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -493,7 +516,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
-	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
+	WRITE_FILE(S["feature_insect_wings"]			, features["insect_wings"])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

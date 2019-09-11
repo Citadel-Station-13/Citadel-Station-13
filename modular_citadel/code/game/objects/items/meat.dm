@@ -5,10 +5,10 @@
 	filling_color = "#000000"
 	tastes = list("metal" = 1)
 
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 	icon = 'modular_citadel/icons/obj/foods.dmi'
 	icon_state = "mothmeat"
-	desc = "Moth meat."
+	desc = "Insect meat."
 	filling_color = "#BF896B"
 	tastes = list("insects" = 1)
 

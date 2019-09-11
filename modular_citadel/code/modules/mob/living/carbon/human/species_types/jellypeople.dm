@@ -4,7 +4,7 @@
 //##########SLIMEPEOPLE##########
 
 /datum/species/jelly/roundstartslime
-	name = "Slimeperson"
+	name = "Xenobiological Slime Hybrid"
 	id = "slimeperson"
 	limbs_id = "slime"
 	default_color = "00FFFF"

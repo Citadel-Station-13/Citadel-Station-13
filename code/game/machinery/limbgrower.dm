@@ -27,7 +27,7 @@
 							"human",
 							"lizard",
 							"fly",
-							"moth",
+							"insect",
 							"plasmaman",
 							"other"
 							)
