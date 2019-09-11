@@ -111,7 +111,7 @@
 	name = "Bee"
 	icon_state = "bee"
 
-/datum/sprite_accessory/insect_wings/bee
+/datum/sprite_accessory/insect_wings/bee_color
 	name = "Bee (Hair colored)"
 	icon_state = "bee"
 	color_src = HAIR
