@@ -69,12 +69,14 @@
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
-/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
-	if(safety)
-		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
-	else
+
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
+	. = ..()
+	if(!safety)
 		return
+	safety = FALSE
+	to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
+	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"

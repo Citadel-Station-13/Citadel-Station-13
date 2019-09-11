@@ -248,12 +248,13 @@
 	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
-	slot_flags = ITEM_SLOT_BACK	| ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/storage/backpack/satchel/bone/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 10
+	STR.max_combined_w_class = 20
+	STR.max_items = 15
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
@@ -355,6 +356,7 @@
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 	new /obj/item/razor(src)
 
 /obj/item/storage/backpack/duffelbag/sec
@@ -376,12 +378,21 @@
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"
 	desc = "A large duffel bag for holding extra tools and supplies."
 	icon_state = "duffel-eng"
 	item_state = "duffel-eng"
+
+/obj/item/storage/backpack/duffelbag/durathread
+	name = "durathread duffel bag"
+	desc = "A lightweight duffel bag made out of durathread."
+	icon_state = "duffel-durathread"
+	item_state = "duffel-durathread"
+	resistance_flags = FIRE_PROOF
+	slowdown = 0
 
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
@@ -398,6 +409,7 @@
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
+	new /obj/item/pipe_dispenser(src)
 
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"
@@ -460,6 +472,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/implantcase(src)
 	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
 	name = "advanced surgery duffel bag"
@@ -479,6 +492,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/implantcase(src)
 	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"

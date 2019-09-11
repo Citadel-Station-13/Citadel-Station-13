@@ -67,7 +67,7 @@
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
-	next_click = world.time + 1
+	next_click = world.time + world.tick_lag
 
 	if(check_click_intercept(params,A))
 		return

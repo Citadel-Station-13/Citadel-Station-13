@@ -1269,8 +1269,43 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
-	category = "Space Suits and Hardsuits"
+	category = "Space Suits, Hardsuits and Clothing"
 	surplus = 40
+
+/datum/uplink_item/suits/turtlenck
+	name = "Tactical Turtleneck"
+	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	item = /obj/item/clothing/under/syndicate
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/turtlenck_skirt
+	name = "Tactical Skirtleneck"
+	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	item = /obj/item/clothing/under/syndicate/skirt
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/padding
+	name = "Soft Padding"
+	desc = "Padding to add to a jumpsuit to help against melee and bullets."
+	item = /obj/item/clothing/accessory/padding
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/kevlar
+	name = "Kevlar sheets"
+	desc = "Kevlar sheets to add to jumpsuit to help against bullets and melee."
+	item = /obj/item/clothing/accessory/kevlar
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/plastic
+	name = "Plastic sheet"
+	desc = "Plastic body sheet to add to a jumpsuit to help against laser and energy harm."
+	item = /obj/item/clothing/accessory/plastics
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
@@ -1424,6 +1459,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A cheap bottle of one use syndicate brand super glue. \
 			Use on any item to make it undroppable. \
 			Be careful not to glue an item you're already holding!"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	item = /obj/item/syndie_glue
 	cost = 2
 
@@ -1802,7 +1838,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
-	cost = 15
+	cost = 8
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
