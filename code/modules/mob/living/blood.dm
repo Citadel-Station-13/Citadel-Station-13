@@ -96,11 +96,11 @@
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
 
-		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
+		bleed_rate = max(bleed_rate - 0.25, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases //since blood loss is capped, reduced the heal rate
 
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-			if(bleed_rate >= 20) //let's cap blood loss. 
-				bleed_rate = 20
+			if(bleed_rate >= 30) //let's cap blood loss.
+				bleed_rate = 30
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob

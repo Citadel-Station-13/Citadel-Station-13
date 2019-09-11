@@ -297,9 +297,7 @@
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
 		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
-	..()
 
-/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscultist(M))
 		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
 	..()
@@ -423,6 +421,10 @@
 		M.adjustOxyLoss(-3, 0)
 		M.adjustBruteLoss(-3, 0)
 		M.adjustFireLoss(-5, 0)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.bleed_rate)
+				H.bleed_rate = 0
 	if(iscultist(M))
 		M.AdjustUnconscious(1, 0)
 		M.AdjustStun(10, 0)

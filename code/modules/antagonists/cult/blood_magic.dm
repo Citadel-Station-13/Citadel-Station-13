@@ -687,6 +687,8 @@
 					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0)
 					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0)
 					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0)
+					if(H.bleed_rate)
+						H.bleed_rate -= 20
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
