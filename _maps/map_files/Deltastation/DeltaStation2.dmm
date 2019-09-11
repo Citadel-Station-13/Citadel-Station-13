@@ -1010,10 +1010,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"aez" = (
-/obj/machinery/keycard_auth,
-/turf/closed/wall,
-/area/quartermaster/qm)
 "aeB" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
@@ -126276,6 +126272,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"evS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "exE" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
@@ -126290,6 +126299,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
+"eIO" = (
+/obj/machinery/keycard_auth,
+/turf/closed/wall,
+/area/quartermaster/qm)
 "eJc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
@@ -126367,6 +126380,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
+"feX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/chapel/office)
 "fhE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
@@ -126408,13 +126427,14 @@
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
 /area/science/mixing)
-"fwr" = (
-/obj/machinery/door/poddoor{
-	id = "chapelgun";
-	name = "Chapel Launcher Door"
+"fAa" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
 	},
-/turf/open/floor/plating,
-/area/chapel/office)
+/turf/open/floor/plasteel,
+/area/maintenance/port/aft)
 "fFK" = (
 /obj/machinery/ore_silo,
 /obj/effect/turf_decal/tile/neutral{
@@ -126433,10 +126453,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/science/circuit)
-"fHS" = (
-/obj/structure/sign/warning/vacuum,
-/turf/closed/wall/r_wall,
-/area/chapel/office)
 "fLR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -126469,16 +126485,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/science/circuit)
-"gJj" = (
-/obj/machinery/door/window/northleft{
-	name = "Mass Driver"
-	},
-/obj/machinery/mass_driver{
-	id = "chapelgun";
-	name = "Holy Driver"
-	},
-/turf/open/floor/plating,
-/area/chapel/office)
 "gKr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -126496,22 +126502,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
-"gNJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
 "gNS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral{
@@ -126576,10 +126566,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-"hei" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/chapel/office)
 "hic" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_electronics/analyzer,
@@ -126641,22 +126627,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"hLO" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/port/aft)
 "hNZ" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -126703,9 +126673,10 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
-"iyd" = (
-/turf/open/space,
-/area/space)
+"iEo" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/r_wall,
+/area/chapel/office)
 "iQh" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -126770,9 +126741,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
-"jhK" = (
-/turf/open/floor/plasteel,
-/area/maintenance/port/aft)
 "jjN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
@@ -126790,6 +126758,10 @@
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
+"jno" = (
+/obj/structure/sign/warning/vacuum,
+/turf/closed/wall/r_wall,
+/area/chapel/office)
 "jqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -126807,6 +126779,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
+"jsn" = (
+/obj/machinery/door/poddoor{
+	id = "chapelgun";
+	name = "Chapel Launcher Door"
+	},
+/turf/open/floor/plating,
+/area/chapel/office)
 "juf" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /obj/effect/turf_decal/stripes/line{
@@ -126870,7 +126849,27 @@
 /obj/machinery/chem_master,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
-"jPA" = (
+"jRy" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
+"jSe" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rdtoxins";
+	name = "Toxins Lab Shutters"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/science/mixing)
+"jXG" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -126892,26 +126891,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
-"jRy" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
-"jSe" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rdtoxins";
-	name = "Toxins Lab Shutters"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/science/mixing)
 "kam" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -127176,33 +127155,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
-"mXJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
-"nht" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light,
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
 "nyN" = (
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
@@ -127211,19 +127163,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"owr" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
 "oIl" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -127332,6 +127271,25 @@
 	dir = 1
 	},
 /area/science/circuit)
+"pou" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "poI" = (
 /obj/structure/bed,
 /obj/item/tank/internals/anesthetic,
@@ -127398,16 +127356,23 @@
 	dir = 5
 	},
 /area/science/circuit)
+"qwz" = (
+/obj/machinery/door/window/northleft{
+	name = "Mass Driver"
+	},
+/obj/machinery/mass_driver{
+	id = "chapelgun";
+	name = "Holy Driver"
+	},
+/turf/open/floor/plating,
+/area/chapel/office)
 "qBG" = (
 /obj/effect/spawner/lootdrop/keg,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
-"qMR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/turf/open/floor/plating,
-/area/chapel/office)
+"qOX" = (
+/turf/open/floor/plasteel,
+/area/maintenance/port/aft)
 "rhO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -127466,6 +127431,9 @@
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"sTH" = (
+/turf/open/space,
+/area/space)
 "tmi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -127497,6 +127465,20 @@
 /obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"uiz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "upk" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
@@ -127557,14 +127539,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"uZN" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/port/aft)
 "vhA" = (
 /obj/item/clothing/under/color/grey,
 /turf/open/floor/plating,
@@ -127578,6 +127552,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"vWU" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port/aft)
 "wei" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -127649,6 +127639,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"xzx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "xDZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -127667,6 +127670,22 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"xGq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "xJl" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -127702,25 +127721,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/research)
-"xWZ" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
 "xXn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
@@ -159833,7 +159833,7 @@ dZN
 dZN
 dZN
 dZN
-fHS
+jno
 dZN
 dLY
 dLY
@@ -160084,20 +160084,20 @@ dWJ
 dLW
 dYu
 dZg
-jhK
-jhK
+qOX
+qOX
 dZN
-owr
-mXJ
-gJj
-qMR
-fwr
+xzx
+evS
+qwz
+feX
+jsn
 aaa
 aaa
-iyd
+sTH
 aaa
 aaa
-iyd
+sTH
 aaa
 aaa
 aaa
@@ -160341,11 +160341,11 @@ dTw
 dTw
 dTw
 dTw
-hLO
-uZN
-hei
-gNJ
-jPA
+vWU
+fAa
+iEo
+xGq
+jXG
 dTw
 dTw
 dTw
@@ -160601,8 +160601,8 @@ dTw
 dZN
 dZN
 dZN
-xWZ
-nht
+pou
+uiz
 dTw
 dTw
 dTw
@@ -174623,7 +174623,7 @@ aaa
 aaa
 aad
 aQQ
-aez
+eIO
 aUp
 aVY
 aXE
