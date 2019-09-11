@@ -99,6 +99,8 @@
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+			if(bleed_rate >= 20) //let's cap blood loss. 
+				bleed_rate = 20
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
