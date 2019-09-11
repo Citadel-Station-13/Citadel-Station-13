@@ -61,8 +61,8 @@
 		collar_type = "[initial(collar_type)]_dead"
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/gib()
-	if(pcollar)
+/mob/living/simple_animal/pet/gib(no_brain, no_organs, no_bodyparts, no_drops)
+	if(pcollar && !no_drops)
 		pcollar.forceMove(drop_location())
 		pcollar = null
 	..()

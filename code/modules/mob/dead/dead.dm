@@ -23,7 +23,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
-/mob/dead/gib()		//ghosts can't be gibbed.
+/mob/dead/gib(no_brain, no_organs, no_bodyparts, no_drops)		//ghosts can't be gibbed.
 	return
 
 /mob/dead/ConveyorMove()	//lol

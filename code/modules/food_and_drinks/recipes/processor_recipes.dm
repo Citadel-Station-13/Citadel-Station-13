@@ -21,10 +21,11 @@
 		return FALSE
 	if(req_emagged && !CHECK_BITFIELD(P.obj_flags, EMAGGED))
 		return FALSE
-	if(P.rating_amount >= min_amount_rating)
+	if(P.rating_amount < min_amount_rating)
 		if(user)
-			to_chat(user, "<span class='warning'>\The [src] lacks the more advanced stock parts required to process \the [X].</span>")
+			to_chat(user, "<span class='warning'>\The [P] lacks the more advanced stock parts required to process \the [X].</span>")
 		return FALSE
+	return TRUE
 
 /datum/food_processor_process/proc/make_results(obj/machinery/processor/P, atom/movable/X)
 	if(!output || (X in P))
@@ -94,10 +95,11 @@
 		return FALSE
 	if(check_items)
 		for(var/A in L.held_items + L.get_equipped_items())
+			if(!A)
+				continue
 			var/obj/item/I = A
 			if(!HAS_TRAIT(I, TRAIT_NODROP))
 				to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
-				playsound(P, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return FALSE
 	if(stuffin_time)
 		user.visible_message("<span class='warning'>[user] starts stuffing [L] into [P].</span>", "<span class='notice'>You start stuffing [L] into [P]...</span>")
@@ -130,6 +132,7 @@
 /datum/food_processor_process/mob/sausage
 	output = /obj/item/reagent_containers/food/snacks/sausage
 	min_amount_rating = 3
+	time = 80
 
 /datum/food_processor_process/mob/sausage/poultry
 	input = /mob/living/simple_animal/chicken
@@ -154,6 +157,7 @@
 	min_amount_rating = 3
 	output_multiplier = 0.5
 	instinct_verb = "gnashes"
+	time = 80
 
 /datum/food_processor_process/mob/killer_soup
 	input = /mob/living/simple_animal/hostile/killertomato
@@ -162,6 +166,7 @@
 	output_multiplier = 0.5
 	instinct_verb = "gnashes"
 	blind_istinct_noise = "plant"
+	time = 80
 
 /datum/food_processor_process/mob/soylent_green
 	req_emagged = TRUE
@@ -169,3 +174,4 @@
 	input = /mob/living/carbon/human
 	output = /obj/item/reagent_containers/food/snacks/soylentgreen
 	output_multiplier = 0.5
+	time = 80

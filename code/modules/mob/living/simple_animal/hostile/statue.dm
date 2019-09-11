@@ -138,7 +138,7 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib()
+/mob/living/simple_animal/hostile/statue/gib(no_brain, no_organs, no_bodyparts, no_drops)
 	dust()
 
 

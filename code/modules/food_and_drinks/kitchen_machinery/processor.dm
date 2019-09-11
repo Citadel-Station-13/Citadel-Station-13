@@ -43,7 +43,7 @@
 		recipe.make_results(src, what)
 	if (ismob(what))
 		var/mob/themob = what
-		themob.gib(TRUE,TRUE,TRUE)
+		themob.gib(TRUE, TRUE, TRUE, TRUE)
 	else
 		qdel(what)
 
@@ -53,6 +53,8 @@
 	var/datum/food_processor_process/recipe = GLOB.food_processor_recipes[X.type]
 	if(recipe?.check_requirements(src, X, user))
 		return recipe
+	else if(ismob(X))
+		to_chat(user, "<span class='warning'>That probably won't blend!</span>")
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
 	if(processing)
@@ -100,12 +102,13 @@
 	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
-	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling, user))
+	if(user.a_intent == INTENT_GRAB && ismob(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
-		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
-		pushed_mob.forceMove(src)
-		user.stop_pulling()
-		return
+		if(select_recipe(pushed_mob, user))
+			visible_message("<span class='warning'>[user] stuffs [pushed_mob] into [src]!</span>")
+			pushed_mob.forceMove(src)
+			user.stop_pulling()
+		return TRUE
 	if(contents.len == 0)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return TRUE

@@ -65,7 +65,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot
 
-/mob/living/simple_animal/hostile/megafauna/gib()
+/mob/living/simple_animal/hostile/megafauna/gib(no_brain, no_organs, no_bodyparts, no_drops)
 	if(health > 0)
 		return
 	else
