@@ -357,7 +357,7 @@
 /obj/item/storage/belt/military/engineer/PopulateContents()
 	new /obj/item/screwdriver/power(src)
 	new /obj/item/crowbar/power(src)
-	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
+	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,"red")
 	new /obj/item/extinguisher/mini(src)

@@ -572,7 +572,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/engineer/PopulateContents()
 	new /obj/item/storage/belt/military/engineer(src)
 	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/card/emag(src)
 	new /obj/item/encryptionkey/binary(src)
 	new /obj/item/flashlight/emp(src)
 	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
@@ -582,7 +581,6 @@
 	new /obj/item/grenade/plastic/c4(src)
 	new /obj/item/grenade/plastic/x4(src)
 	new /obj/item/grenade/plastic/x4(src)
-	new /obj/item/grenade/spawnergrenade/manhacks(src)
 	new /obj/item/grenade/spawnergrenade/manhacks(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/pyro

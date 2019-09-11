@@ -181,11 +181,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/bundles_TC/engineer
 	name = "Combat Engineer Kit"
-	desc = "Keep your silicon and mechanized allies alive with this engineering kit. Includes a chestrig full of engineering goodies, \
-			magboots, a cryptographic sequencer, a binary encryption key, and EMP flashlight, a bulldog with two spare drums, \
-			two grenade full of manhacks, two C-4, and two X-4 charges."
+	desc = "Keep your silicon and mechanized allies alive with this engineering kit. Includes a chest rig full of engineering goodies, \
+			magboots, a binary encryption key, an EMP flashlight, a bulldog with two spare drums, \
+			a grenade full of manhacks, two C-4 charges, and two X-4 charges."
 	item = /obj/item/storage/backpack/duffelbag/syndie/engineer
-	cost = 25 //Worth 41
+	cost = 25 //Worth ~36
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/grenadier
