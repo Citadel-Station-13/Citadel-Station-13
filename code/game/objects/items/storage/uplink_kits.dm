@@ -63,7 +63,7 @@
 			new /obj/item/reagent_containers/syringe/stimulants(src)
 
 		if("baseball") // 42~ tc
-			new /obj/item/melee/baseball_bat/ablative/synda(src) //Lets say 12 tc, lesser sleeping carp
+			new /obj/item/melee/baseball_bat/ablative/syndi(src) //Lets say 12 tc, lesser sleeping carp
 			new /obj/item/clothing/glasses/sunglasses/garb(src) //Lets say 2 tc
 			new /obj/item/card/emag(src) //6 tc
 			new /obj/item/clothing/shoes/sneakers/noslip(src) //2tc
