@@ -876,7 +876,7 @@
 	if(can_be_firemanned(target))
 		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
 			"<span class='notice'>You start lifting [target] onto your back...</span>")
-		if(do_after(src, 50, TRUE, target))
+		if(do_after(src, 30, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				target.resting = FALSE
