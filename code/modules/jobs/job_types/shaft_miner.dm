@@ -8,6 +8,8 @@
 	spawn_positions = 3
 	supervisors = "the quartermaster"
 	selection_color = "#ca8f55"
+	custom_spawn_text = "Remember, you are a miner, not a hunter. Hunting monsters is not a requirement of your job, the only requirement of your job is to provide materials for the station. Don't be afraid to run away if you're inexperienced with fighting the mining area's locals."
+
 
 	outfit = /datum/outfit/job/miner
 
@@ -17,7 +19,7 @@
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 
 /datum/outfit/job/miner
-	name = "Shaft Miner"
+	name = "Shaft Miner (Lavaland)"
 	jobtype = /datum/job/mining
 
 	belt = /obj/item/pda/shaftminer
@@ -41,8 +43,13 @@
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
+/datum/outfit/job/miner/asteroid
+	name = "Shaft Miner (Asteroid)"
+	uniform = /obj/item/clothing/under/rank/miner
+	shoes = /obj/item/clothing/shoes/workboots
+	
 /datum/outfit/job/miner/equipped
-	name = "Shaft Miner (Equipment)"
+	name = "Shaft Miner (Lavaland + Equipment)"
 	suit = /obj/item/clothing/suit/hooded/explorer/standard
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
@@ -68,4 +75,3 @@
 	name = "Shaft Miner (Equipment + Hardsuit)"
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
-
