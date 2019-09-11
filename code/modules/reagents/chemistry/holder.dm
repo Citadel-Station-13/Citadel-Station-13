@@ -1,4 +1,4 @@
-#define CHEMICAL_QUANTISATION_LEVEL 0.0001
+#define CHEMICAL_QUANTISATION_LEVEL 0.001
 
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -745,7 +745,6 @@
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-
 	return 0
 
 /datum/reagents/proc/clear_reagents()
@@ -874,7 +873,7 @@
 		var/datum/reagent/R = A
 		if (R.id == reagent) //IF MERGING
 			//Add amount and equalize purity
-			R.volume += amount
+			R.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
 			R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
 
 			update_total()
@@ -896,7 +895,7 @@
 	var/datum/reagent/R = new D.type(data)
 	cached_reagents += R
 	R.holder = src
-	R.volume = amount
+	R.volume = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	R.purity = other_purity
 	R.loc = get_turf(my_atom)
 	if(data)
