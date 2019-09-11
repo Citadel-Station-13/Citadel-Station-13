@@ -332,7 +332,7 @@
 				var/vol_part = min(reagents.total_volume, 30)
 				if(text2num(many))
 					amount_full = round(reagents.total_volume / 30)
-					vol_part = reagents.total_volume % 30
+					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return

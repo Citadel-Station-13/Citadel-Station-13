@@ -81,9 +81,19 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
-				var/mob/dead/observer/C = pick(candies)
-				message_admins("Ghost candidate found! [C] key [C.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
-				SM.key = C.key
+
+
+				candies = shuffle(candies)//Shake those ghosts up!
+				for(var/mob/dead/observer/C2 in candies)
+					if(C2.key && C2)
+						SM.key = C2.key
+						message_admins("Ghost candidate found! [C2] key [C2.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
+						log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
+						break
+					else
+						candies =- C2
+				if(!SM.mind) //Something went wrong, use alt mechanics
+					return ..()
 				SM.mind.enslave_mind_to_creator(M)
 
 				//If they're a zombie, they can try to negate it with this.
@@ -331,7 +341,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 		if(86)//mean clone time!
 			if (!M.reagents.has_reagent("pen_acid"))//Counterplay is pent.)
-				message_admins("(non-infectious) Zombie spawned at [M.loc], produced by impure chem, wah!")
+				message_admins("(non-infectious) SDZF: Zombie spawned at [M] [COORD(M)]!")
 				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1
 				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")

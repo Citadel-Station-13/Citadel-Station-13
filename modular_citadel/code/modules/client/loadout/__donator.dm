@@ -438,7 +438,13 @@ datum/gear/darksabresheath
 /datum/gear/borgplush
 	name = "Robot Plush"
 	category = SLOT_IN_BACKPACK
-	/obj/item/toy/plush/borgplushie
+	path = /obj/item/toy/plush/borgplushie
 	ckeywhitelist = list("nicholaiavenicci")
+
+/datum/gear/donorberet
+	name = "Atmos Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/blueberet
+	ckeywhitelist = list("foxystalin")
 
 
