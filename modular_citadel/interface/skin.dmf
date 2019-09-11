@@ -139,7 +139,7 @@ window "infowindow"
 		size = 104x20
 		anchor1 = 3,0
 		anchor2 = 19,0
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Changelog"
@@ -150,7 +150,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 19,0
 		anchor2 = 34,0
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Rules"
@@ -161,7 +161,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Wiki"
@@ -172,7 +172,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Forum"
@@ -183,7 +183,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 66,0
 		anchor2 = 81,0
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
 		text = "GitHub"
@@ -195,7 +195,7 @@ window "infowindow"
 		anchor1 = 81,0
 		anchor2 = 97,0
 		font-size = 8
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #A92c2c
 		saved-params = "is-checked"
 		text = "Report Issue"
@@ -232,7 +232,7 @@ window "outputwindow"
 		size = 37x20
 		anchor1 = 100,100
 		anchor2 = none
-		text-color = #a4BaD6
+		text-color = #e0e0e0
 		background-color = #272727
 		saved-params = "is-checked"
 		text = "Chat"
@@ -256,7 +256,7 @@ window "outputwindow"
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		text-color = #a4bad6
+		text-color = #e0e0e0
 		background-color = #272727
 		is-default = true
 		saved-params = ""
@@ -277,14 +277,14 @@ window "statwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		text-color = #a4bad6
+		text-color = #e0e0e0
 		background-color = #272727
 		is-default = true
 		saved-params = ""
-		tab-text-color = #a4bad6
+		tab-text-color = #e0e0e0
 		tab-background-color = #242424
-		prefix-color = #a4bad6
-		suffix-color = #a4bad6
+		prefix-color = #e0e0e0
+		suffix-color = #e0e0e0
 
 window "preferences_window"
 	elem "preferences_window"

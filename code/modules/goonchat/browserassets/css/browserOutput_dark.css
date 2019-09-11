@@ -11,14 +11,18 @@ a {color: #397ea5;}
 a.visited {color: #7c00e6;}
 a:visited {color: #7c00e6;}
 
-#newMessages {background: #242424;}
+#newMessages {
+	background: #242424;
+	color: #E0E0E0;
+}
 #newMessages:hover {background: #272727;}
 
-#ping {background: #171717;}
+#ping {background: #272727;}
 
 #userBar .subCell {
 	background: #272727;
-	 border-top: 1px solid #171717;
+	color: #E0E0E0
+	border-top: 1px solid #171717;
 }
 #userBar .subCell:hover {background: #272727;}
 #userBar .toggle {background: #272727;}
