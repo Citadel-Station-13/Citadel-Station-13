@@ -742,6 +742,13 @@
 	surgery = /datum/surgery/advanced/reconstruction
 	research_icon_state = "surgery_chest"
 
+/datum/design/surgery/surgery_toxinhealing
+	name = "Body Rejuvenation"
+	desc = "A surgical procedure that helps deal with oxygen  deprecation, and treat toxic damaged. Works on corpses and alive alike without chemicals."
+	id = "surgery_toxinhealing"
+	surgery = /datum/surgery/advanced/toxichealing
+	research_icon_state = "surgery_chest"
+
 /datum/design/surgery/revival
 	name = "Revival"
 	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."

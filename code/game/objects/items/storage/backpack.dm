@@ -356,6 +356,7 @@
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 	new /obj/item/razor(src)
 
 /obj/item/storage/backpack/duffelbag/sec
@@ -377,6 +378,7 @@
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"
@@ -623,6 +625,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/implantcase(src)
 	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/surgery_adv
 	name = "advanced surgery duffel bag"
@@ -642,6 +645,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/implantcase(src)
 	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/combatmedic
 	name = "combat medic duffel bag"

@@ -10,13 +10,16 @@ mob/living/silicon
 
 /mob/living/silicon/robot/update_canmove()
 	..()
-	if(client && stat != DEAD && dogborg == TRUE)
+	if(client && stat != DEAD && dogborg == FALSE)
 		if(resting)
 			cut_overlays()
 			icon_state = "[module.cyborg_base_icon]-rest"
 		else
 			icon_state = "[module.cyborg_base_icon]"
 	update_icons()
+
+
+
 
 /mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_stamina = 1)
 	if(istype(cell))

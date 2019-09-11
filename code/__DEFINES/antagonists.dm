@@ -38,5 +38,5 @@
 
 //Gangshit
 #define NOT_DOMINATING			-1
-#define MAX_LEADERS_GANG		3
+#define MAX_LEADERS_GANG		4
 #define INITIAL_DOM_ATTEMPTS	3
