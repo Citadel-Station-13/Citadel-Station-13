@@ -1432,10 +1432,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent("neurotoxin"))
 		M.adjustBrainLoss(-1*REM, 150)
-		M.reagents.remove_reagent("neurotoxin", 1 * REAGENTS_METABOLISM, FALSE)
+		M.reagents.remove_reagent("neurotoxin", 2 * REAGENTS_METABOLISM, FALSE)
 	if(holder.has_reagent("fentanyl"))
 		M.adjustBrainLoss(-1*REM, 150)
-		M.reagents.remove_reagent("fentanyl", 0.5 * REAGENTS_METABOLISM, FALSE)
+		M.reagents.remove_reagent("fentanyl", 1 * REAGENTS_METABOLISM, FALSE)
 	else
 		M.adjustBrainLoss(-0.5*REM, 150)
 		M.dizziness +=2
@@ -2157,7 +2157,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "commander_and_chief"
 	glass_name = "Commander and Chief"
 	glass_desc = "The gems of this majestic chalice represent the departments and their Heads."
-	
+
 /datum/reagent/consumable/ethanol/commander_and_chief/on_mob_life(mob/living/carbon/M)
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CAPTAIN_METABOLISM))
 		M.heal_bodypart_damage(2,2,2)
