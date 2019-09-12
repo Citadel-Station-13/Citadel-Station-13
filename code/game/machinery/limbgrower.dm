@@ -29,6 +29,8 @@
 							"fly",
 							"insect",
 							"plasmaman",
+							"mammal",
+							"xeno",
 							"other"
 							)
 
