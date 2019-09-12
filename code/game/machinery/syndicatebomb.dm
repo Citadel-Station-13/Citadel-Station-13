@@ -447,9 +447,9 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			beakers += I
-			to_chat(user, "<span class='notice'>You load [src] with [I].</span>")
+			to_chat(user, "<span class='notice'>You load [src] with [I]. \The [src] can hold up to [max_beakers] containers.</span>")
 		else
-			to_chat(user, "<span class='warning'>[I] won't fit! \The [src] can only hold up to [max_beakers] containers.</span>")
+			to_chat(user, "<span class='warning'>[src] is full!</span>")
 			return
 	..()
 
