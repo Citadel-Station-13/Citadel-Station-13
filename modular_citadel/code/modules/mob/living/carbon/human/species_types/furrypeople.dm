@@ -42,19 +42,6 @@
 		mutant_bodyparts |= "mam_tail"
 	H.update_body()
 
-/datum/species/mammal/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	return ..()
-
-/datum/species/mammal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-
 /datum/species/mammal/qualifies_for_rank(rank, list/features)
 	return TRUE
 

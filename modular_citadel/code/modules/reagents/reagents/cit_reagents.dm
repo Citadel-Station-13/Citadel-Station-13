@@ -235,11 +235,3 @@
 	required_reagents = list("anaphro" = 5, "acetone" = 1)
 	required_temp = 300
 	mix_message = "The mixture thickens and heats up slighty..."
-
-//Mutation toxin stuff
-/datum/reagent/mutationtoxin/mammal
-	name = "Mammilan Mutation Toxin"
-	id = "mammalmutationtoxin"
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/mammal
-	mutationtext = "<span class='danger'>The pain subsides. You feel... like a single furry.</span>"

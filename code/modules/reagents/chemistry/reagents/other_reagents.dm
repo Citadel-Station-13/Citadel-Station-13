@@ -678,22 +678,6 @@
 	race = /datum/species/mammal
 	mutationtext = "<span class='danger'>The pain subsides. You feel... fluffier.</span>"
 
-/datum/reagent/mutationtoxin/aquatic
-	name = "Aquatic Mutation Toxin"
-	id = "aquaticmutationtoxin"
-	description = "A glowing toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/aquatic
-	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to sea.</span>"
-
-/datum/reagent/mutationtoxin/avian
-	name = "Avian Mutation Toxin"
-	id = "avianmutationtoxin"
-	description = "A glowing toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/avian
-	mutationtext = "<span class='danger'>The pain subsides. You feel... feathery.</span>"
-
 /datum/reagent/mutationtoxin/insect
 	name = "Insect Mutation Toxin"
 	id = "insectmutationtoxin"
