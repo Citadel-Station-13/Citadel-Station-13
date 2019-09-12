@@ -72,11 +72,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
-	var/undie_color = "FFFFFF"
+	var/undie_color = "FFF"
 	var/undershirt = "Nude"				//undershirt type
-	var/shirt_color = "FFFFFF"
+	var/shirt_color = "FFF"
 	var/socks = "Nude"					//socks type
-	var/socks_color = "FFFFFF"
+	var/socks_color = "FFF"
 	var/backbag = DBACKPACK				//backpack type
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
