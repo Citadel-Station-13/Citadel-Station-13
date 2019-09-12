@@ -1970,14 +1970,33 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dE" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
+/turf/open/floor/plating/asteroid{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/main)
+"dF" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_2"
+	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dG" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /obj/item/mining_scanner,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -2536,7 +2555,11 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2556,7 +2579,11 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "201"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2565,7 +2592,11 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 5;
+	icon_state = "ltrails_1"
+	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -2743,7 +2774,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	icon_state = "ltrails_2"
+	},
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -3180,7 +3214,10 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gl" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	icon_state = "ltrails_1"
+	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -3382,7 +3419,11 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -3397,6 +3438,19 @@
 /obj/item/stack/rods,
 /obj/item/shard,
 /turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
+"gF" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 6;
+	icon_state = "ltrails_1"
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -4363,7 +4417,11 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "is" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6473,7 +6531,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 9;
+	icon_state = "ltrails_1"
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -6484,7 +6546,11 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mQ" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
@@ -6498,13 +6564,21 @@
 	id_tag = "awaydorm2";
 	name = "Dorm 2"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mS" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 5;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -6549,7 +6623,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mZ" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	icon_state = "ltrails_1"
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -6670,7 +6747,10 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nq" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	icon_state = "ltrails_2"
+	},
 /obj/machinery/camera{
 	c_tag = "Dormitories";
 	dir = 4;
@@ -6795,7 +6875,11 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 9;
+	icon_state = "ltrails_1"
+	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -6805,7 +6889,11 @@
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/shard,
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_2"
+	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -6814,7 +6902,11 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nE" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_2"
+	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
@@ -6823,7 +6915,24 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nF" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 8;
+	icon_state = "ltrails_1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
+	temperature = 251
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"nG" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 6;
+	icon_state = "ltrails_1"
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -36576,7 +36685,7 @@ fd
 fv
 fW
 gl
-gl
+gF
 gR
 gR
 gR
@@ -39941,7 +40050,7 @@ mZ
 ni
 nq
 kG
-nF
+nG
 kE
 kE
 kE
@@ -47346,7 +47455,7 @@ ac
 ac
 ac
 ba
-dE
+dF
 ac
 ac
 ac
