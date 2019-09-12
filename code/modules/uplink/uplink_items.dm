@@ -141,10 +141,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/bundles_TC/knight
 	name = "Energy Knight Kit"
-	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield \
-			syndicate glue, no slip shoes, and an adrenals implanter."
+	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield, \
+			a CNS Rebooter implant, no slip shoes, and an adrenals implanter."
 	item = /obj/item/storage/backpack/duffelbag/syndie/knight
-	cost = 25 //Worth 39
+	cost = 25 //Worth 42
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/cqc

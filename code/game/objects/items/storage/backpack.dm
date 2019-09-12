@@ -529,7 +529,7 @@
 	new /obj/item/melee/transforming/energy/sword/saber(src)
 	new /obj/item/shield/energy(src)
 	new /obj/item/clothing/shoes/chameleon/noslip(src)
-	new /obj/item/syndie_glue(src)
+	new /obj/item/autosurgeon/anti_stun(src)
 	new /obj/item/storage/box/syndie_kit/imp_adrenal(src)
 	new /obj/item/autosurgeon/thermal_eyes(src)
 
