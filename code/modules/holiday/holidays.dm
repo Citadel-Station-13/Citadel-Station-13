@@ -402,14 +402,14 @@
 	begin_month = JUNE
 	begin_weekday = SUNDAY
 
-/datum/holiday/insect
-	name = "Insect Week"
+/datum/holiday/moth
+	name = "Moth Week"
 
-/datum/holiday/insect/shouldCelebrate(dd, mm, yy, ww, ddd) //National Insect Week falls on the last full week of July
+/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July
 	return mm == JULY && (ww == 4 || (ww == 5 && ddd == SUNDAY))
 
-/datum/holiday/insect/getStationPrefix()
-	return pick("Mothball","Lepidopteran","Lightbulb","Insect","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
+/datum/holiday/moth/getStationPrefix()
+	return pick("Mothball","Lepidopteran","Lightbulb","moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
 
 /datum/holiday/ramadan
 	name = "Start of Ramadan"
