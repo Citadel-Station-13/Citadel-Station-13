@@ -21,7 +21,7 @@ a:visited {color: #7c00e6;}
 
 #userBar .subCell {
 	background: #272727;
-	color: #E0E0E0
+	color: #E0E0E0;
 	border-top: 1px solid #171717;
 }
 #userBar .subCell:hover {background: #272727;}
