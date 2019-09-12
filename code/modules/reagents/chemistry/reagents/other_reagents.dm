@@ -421,10 +421,6 @@
 		M.adjustOxyLoss(-3, 0)
 		M.adjustBruteLoss(-3, 0)
 		M.adjustFireLoss(-5, 0)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.bleed_rate)
-				H.bleed_rate = 0
 	if(iscultist(M))
 		M.AdjustUnconscious(1, 0)
 		M.AdjustStun(10, 0)

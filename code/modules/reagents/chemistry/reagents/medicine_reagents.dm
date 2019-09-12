@@ -63,10 +63,6 @@
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume = (BLOOD_VOLUME_NORMAL*M.blood_ratio)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate = 0
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -148,10 +144,6 @@
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.bleed_rate)
-				H.bleed_rate -= 5
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
@@ -304,10 +296,6 @@
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.bleed_rate)
-					H.bleed_rate -= reac_volume
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
@@ -377,10 +365,6 @@
 	C.adjustBruteLoss(-0.25*REM, 0)
 	C.adjustFireLoss(-0.25*REM, 0)
 	C.adjustStaminaLoss(-0.5*REM, 0)
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.bleed_rate)
-			H.bleed_rate -= 0.25
 	..()
 	return TRUE
 
@@ -422,10 +406,6 @@
 		if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.bleed_rate)
-					H.bleed_rate -= (1.25 * reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
@@ -464,10 +444,6 @@
 	M.adjustOxyLoss(-0.5*REM, 0)
 	M.adjustBruteLoss(-0.5*REM, 0)
 	M.adjustFireLoss(-0.5*REM, 0)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 0.25
 	..()
 	. = 1
 
@@ -609,10 +585,6 @@
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.bleed_rate)
-				H.bleed_rate -= 0.25
 	..()
 	return TRUE
 
@@ -807,10 +779,6 @@
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
 		M.adjustOxyLoss(-5*REM, 0)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.bleed_rate)
-				H.bleed_rate -= 5
 		. = 1
 	M.losebreath = 0
 	if(prob(20))
@@ -847,10 +815,6 @@
 	if(M.losebreath < 0)
 		M.losebreath = 0
 	M.adjustStaminaLoss(-0.5*REM, 0)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 0.5 //basically doubles natural clotting for reasons
 	. = 1
 	if(prob(20))
 		M.AdjustStun(-20, 0)
@@ -1030,10 +994,6 @@
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2*REM, 0)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 2
 	..()
 	. = 1
 
@@ -1131,10 +1091,6 @@
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
 		. = 1
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 0.5
 	..()
 
 /datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
@@ -1158,10 +1114,6 @@
 	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjustOxyLoss(-1.5*REM, 0)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 2
 	. = 1
 	..()
 
@@ -1181,10 +1133,6 @@
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
 	M.adjustStaminaLoss(-20*REM,0)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 10
 	..()
 	. = 1
 
@@ -1200,23 +1148,19 @@
 	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0)
-	M.adjustFireLoss(-1.5*REM, 0)
-	M.adjustOxyLoss(-1.5*REM, 0)
-	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 2
-	. = 1
-	..()
+    M.adjustBruteLoss(-1.5*REM, 0)
+    M.adjustFireLoss(-1.5*REM, 0)
+    M.adjustOxyLoss(-1.5*REM, 0)
+    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+    . = 1
+    ..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2.6*REM, 0)
-	M.adjustBruteLoss(3.5*REM, 0)
-	M.adjustFireLoss(3.5*REM, 0)
-	..()
-	. = 1
+    M.adjustOxyLoss(2.6*REM, 0)
+    M.adjustBruteLoss(3.5*REM, 0)
+    M.adjustFireLoss(3.5*REM, 0)
+    ..()
+    . = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
@@ -1233,13 +1177,9 @@
 	M.adjustToxLoss(-3 * REM, 0, TRUE) //Heals TOXINLOVERS
 	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-30 * REM, 0)
+	M.adjustStaminaLoss(-13 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 5
 	..()
 	. = 1
 
@@ -1283,10 +1223,6 @@
 
 /datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
 	M.heal_bodypart_damage(5,5)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed_rate -= 20
 	..()
 	return TRUE
 

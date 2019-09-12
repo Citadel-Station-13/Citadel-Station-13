@@ -96,11 +96,9 @@
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
 
-		bleed_rate = max(bleed_rate - 0.25, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases //since blood loss is capped, reduced the heal rate
+		bleed_rate = max(bleed_rate - 0.50, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-			if(bleed_rate >= 30) //let's cap blood loss.
-				bleed_rate = 30
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -287,7 +285,7 @@
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
-				src.transfer_blood_to(drop, 2)
+			//	src.transfer_blood_to(drop, 2)
 				drop.update_icon()
 				return
 			else
@@ -297,7 +295,7 @@
 		else
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
-			src.transfer_blood_to(drop, 2)
+		//	src.transfer_blood_to(drop, 2)
 			drop.update_icon()
 			return
 
@@ -308,7 +306,7 @@
 	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
-	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
+//	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA
 

@@ -1687,7 +1687,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				bloody = 1
 				var/turf/location = H.loc
 				if(istype(location))
-					H.bleed_rate += 2	//This usually stacks pretty quickly, death by a thousand cuts, etc etc.
+					H.bleed(totitemdamage)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
 

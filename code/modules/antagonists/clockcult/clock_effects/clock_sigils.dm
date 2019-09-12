@@ -334,10 +334,6 @@
 						if(ghost)
 							ghost.reenter_corpse()
 						L.revive(1, 1)
-						if(ishuman(L))
-							var/mob/living/carbon/human/H = L
-							if(H.bleed_rate)
-								H.bleed_rate = 0 //  just a double check, since it's a full heal.
 						var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 						animate(V, alpha = 0, transform = matrix()*2, time = 8)
 						playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
@@ -365,10 +361,6 @@
 					vitality_for_cycle = 2
 				vitality_for_cycle = min(GLOB.clockwork_vitality, vitality_for_cycle)
 			var/vitality_used = L.heal_ordered_damage(vitality_for_cycle, damage_heal_order)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				if(H.bleed_rate)
-					H.bleed_rate -= vitality_for_cycle //might as well make this reduce bleeding as per the healing too.
 
 			if(!vitality_used)
 				break

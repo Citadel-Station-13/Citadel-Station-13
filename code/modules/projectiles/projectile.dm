@@ -176,26 +176,10 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 
 			if(iscarbon(L))
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					var/armorsave
-					if(flag == "bullet")
-						armorsave = H.getarmor(B, "bullet")
-					else if(flag == "energy")
-						armorsave = H.getarmor(B, "energy")
-					else if(flag == "magic")
-						armorsave = H.getarmor(B, "magic")
-					if(armorsave >= 30) // armor is useful again, yay.
-						H.bleed_rate += (damage * 0.15)	// a tiny bit of shrapnel and internal bleeding, I guess.
-					else
-						H.bleed_rate += (damage * 0.50)	//it's not a 1:1 deletion of blood, but it's worrysome enough that you should get treated asap
-				else
-					var/mob/living/carbon/C = L
-					C.bleed(damage)
-
-			if(prob(33))
+				var/mob/living/carbon/C = L
+				C.bleed(damage)
+			else
 				L.add_splatter_floor(target_loca)
-
 
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)

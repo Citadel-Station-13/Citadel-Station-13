@@ -27,8 +27,6 @@
 		return 1
 	add_mob_blood(C)
 	C.bleed(40)
-	var/mob/living/carbon/human/H = C
-	H.bleed_rate += 40
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -55,8 +53,6 @@
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.bleed(50)
-	var/mob/living/carbon/human/H = C
-	H.bleed_rate += 60
 	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
