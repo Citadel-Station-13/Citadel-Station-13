@@ -1,5 +1,5 @@
 /datum/species/ipc
-	name = "IPC"
+	name = "I.P.C."
 	id = "ipc"
 	say_mod = "beeps"
 	default_color = "00FF00"

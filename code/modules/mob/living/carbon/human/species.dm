@@ -1,6 +1,7 @@
 // This code handles different species in the game.
 
 GLOBAL_LIST_EMPTY(roundstart_races)
+GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
@@ -100,6 +101,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/datum/species/S = new I
 		if(S.check_roundstart_eligible())
 			GLOB.roundstart_races += S.id
+			GLOB.roundstart_race_names["[S.name]"] = S.id
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
 		GLOB.roundstart_races += "human"
@@ -296,8 +298,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
-	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
-
 //CITADEL EDIT
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE
@@ -308,6 +308,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/mob/living/carbon/human/H = C
 		if(NOGENITALS in H.dna.species.species_traits)
 			H.give_genitals(TRUE) //call the clean up proc to delete anything on the mob then return.
+		if("meat_type" in default_features) //I can't believe it's come to the meat
+			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
+
+	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+
 
 // EDIT ENDS
 
@@ -318,6 +323,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
+	if("meat_type" in default_features)
+		C.type_of_meat = GLOB.meat_types[C.dna.features["meat_type"]]
+	else
+		C.type_of_meat = initial(meat)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 

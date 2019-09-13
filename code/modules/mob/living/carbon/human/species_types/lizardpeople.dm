@@ -12,7 +12,7 @@
 	coldmod = 1.5
 	heatmod = 0.67
 	default_features = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round",
-							 "horns" = "None", "horn_color" = "85615a", "frills" = "None", "spines" = "None", "body_markings" = "None",
+							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
 							  "legs" = "Digitigrade", "taur" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'

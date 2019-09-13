@@ -130,23 +130,22 @@
 
 	//CIT CHANGE - changes this entire return to support cit's snowflake parts
 	return(list(
-		"mcolor" = color1,
-		"mcolor2" = color2,
-		"mcolor3" = color3,
-		"tail_lizard" = pick(GLOB.tails_list_lizard),
-		"tail_human" = "None",
-		"wings" = "None",
-		"snout" = pick(GLOB.snouts_list),
-		"horns" = pick(GLOB.horns_list),
-		"horn_color" = "85615a",
-		"ears" = "None",
-		"frills" = pick(GLOB.frills_list),
-		"spines" = pick(GLOB.spines_list),
-		"body_markings" = pick(GLOB.body_markings_list),
-		"legs" = pick("Plantigrade","Digitigrade"),
-		"caps" = pick(GLOB.caps_list),
-		"insect_wings" = pick(GLOB.insect_wings_list),
-		"taur" = "None",
+		"mcolor"			= color1,
+		"mcolor2"			= color2,
+		"mcolor3"			= color3,
+		"tail_lizard"		= pick(GLOB.tails_list_lizard),
+		"tail_human"		= "None",
+		"wings"				= "None",
+		"snout"				= pick(GLOB.snouts_list),
+		"horns"				= pick(GLOB.horns_list),
+		"ears"				= "None",
+		"frills"			= pick(GLOB.frills_list),
+		"spines"			= pick(GLOB.spines_list),
+		"body_markings"		= pick(GLOB.body_markings_list),
+		"legs"				= pick("Plantigrade","Digitigrade"),
+		"caps"				= pick(GLOB.caps_list),
+		"insect_wings"		= pick(GLOB.insect_wings_list),
+		"taur"				= "None",
 		"mam_body_markings" = pick(snowflake_markings_list),
 		"mam_ears" 			= pick(snowflake_ears_list),
 		"mam_snouts"		= pick(snowflake_mam_snouts_list),
@@ -202,9 +201,11 @@
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
-		"ipc_screen" = "Sunburst",
-		"ipc_antenna" = "None",
-		"flavor_text"		= ""))
+		"ipc_screen"		= "Sunburst",
+		"ipc_antenna"		= "None",
+		"flavor_text"		= "",
+		"meat_type"			= "Mammalian"
+		))
 
 /proc/random_hair_style(gender)
 	switch(gender)
