@@ -233,6 +233,12 @@
 				else
 					reagents.remove_reagent(id, amount)
 					. = TRUE
+			else if (amount == -1) // -1 means custom amount
+				useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
+				if (useramount > 0)
+					end_fermi_reaction()
+					reagents.trans_id_to(beaker, id, useramount)
+					. = TRUE
 
 		if("toggleMode")
 			mode = !mode
@@ -379,7 +385,7 @@
 				reagents.trans_to(P, vol_part)
 			. = TRUE
 		//END CITADEL ADDITIONS
-		if("analyze")
+		if("analyzeBeak")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
 				var/state = "Unknown"
@@ -395,7 +401,38 @@
 					fermianalyze = TRUE
 					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = initial(R.purity), "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
+
+					if(!targetReagent)
+						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				screen = "analyze"
+				return
+
+		if("analyzeBuff")
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			if(R)
+				var/state = "Unknown"
+				if(initial(R.reagent_state) == 1)
+					state = "Solid"
+				else if(initial(R.reagent_state) == 2)
+					state = "Liquid"
+				else if(initial(R.reagent_state) == 3)
+					state = "Gas"
+				var/const/P = 3 //The number of seconds between life ticks
+				var/T = initial(R.metabolization_rate) * (60 / P)
+				if(istype(R, /datum/reagent/fermi))
+					fermianalyze = TRUE
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					var/datum/reagent/targetReagent = reagents.has_reagent("[R.id]")
+
+					if(!targetReagent)
+						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
 				else
 					fermianalyze = FALSE
 					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
