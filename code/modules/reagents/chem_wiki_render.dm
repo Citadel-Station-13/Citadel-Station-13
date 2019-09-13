@@ -1,79 +1,84 @@
 //Generates a markdown txt file for use with the wiki
 
 /client/proc/generate_wikichem_list()
-	set category = "debug"
-	set name = "generate_wikichem_list"
+	set name = "Generate wikichem"
+	set category = "Debug"
 	set desc = "generate a huge loglist of all the chems. Do not click unless you want lag."
 
-    var/prefix = list("**Name** | **Reagent pH** | **Reagents** | **Reaction temp** | **Explosion temp** | **pH range** | **Kinetics** | **Description** | **OD level** | **Addiction level** | **Metabolism rate** |**Impure chem** \n---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|")
-    var/medicine
-    var/toxin
-    var/consumable
-    var/plant
-    var/uranium
-    var/colours
-    var/muta
-    var/fermi
-    var/remainder
+	var/prefix = "**Name** | **Reagent pH** | **Reagents** | **Reaction temp** | **Explosion temp** | **pH range** | **Kinetics** | **Description** | **OD level** | **Addiction level** | **Metabolism rate** |**Impure chem**|InverseChem \n---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|"
+	var/medicine = ""
+	var/toxin = ""
+	var/consumable = ""
+	var/plant = ""
+	var/uranium = ""
+	var/colours = ""
+	var/muta = ""
+	var/fermi = ""
+	var/remainder = ""
 
     ///datum/reagent/medicine, /datum/reagent/toxin, /datum/reagent/consumable, /datum/reagent/plantnutriment, /datum/reagent/uranium,
     ///datum/reagent/colorful_reagent, /datum/reagent/mutationtoxin, /datum/reagent/fermi
 
 	//Probably not the most eligant of solutions.
-    for(var/datum/reagent/R in GLOB.chemical_reagents_list)
-        if(istype(R, /datum/reagent/medicine))
+	for(var/datum/reagent/R in GLOB.chemical_reagents_list)
+		if(istype(R, /datum/reagent/medicine))
 			medicine += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/toxin))
+		else if(istype(R, /datum/reagent/toxin))
 			toxin += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/consumable))
+		else if(istype(R, /datum/reagent/consumable))
 			consumable += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/plantnutriment))
+		else if(istype(R, /datum/reagent/plantnutriment))
 			plant += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/uranium))
+		else if(istype(R, /datum/reagent/uranium))
 			uranium += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/colorful_reagent))
+		else if(istype(R, /datum/reagent/colorful_reagent))
 			colours += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/mutationtoxin))
+		else if(istype(R, /datum/reagent/mutationtoxin))
 			muta += generate_chemwiki_line(R)
 
-        else if(istype(R, /datum/reagent/fermi))
+		else if(istype(R, /datum/reagent/fermi))
 			fermi += generate_chemwiki_line(R)
 
-        else
-			remainer += generate_chemwiki_line(R)
+		else
+			remainder += generate_chemwiki_line(R)
 
 
-	log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n
-	----------------------------------------------------------------------------------\n\n\n
-	#BASIC REAGENTS\n[prefix][remainder]\n
-	#MEDICINE:\n[prefix][medicine]\n#TOXIN:\n[prefix][toxin]\n#CONSUMABLE\n[prefix][consumable]\n
-	#FERMI\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n[prefix][fermi]\n
-	#PLANTS\n[prefix][plant]\n#URANIUM\n[prefix][uranium]\n#COLOURS\n[prefix][colours]\n
-	#RACE MUTATIONS\n[prefix][muta]\n")
+	log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n")
+	log_sql("----------------------------------------------------------------------------------\n\n\n")
+	log_sql("#BASIC REAGENTS\n[prefix][remainder]\n")
+	log_sql("#MEDICINE:\n[prefix][medicine]\n#TOXIN:\n[prefix][toxin]\n#CONSUMABLE\n[prefix][consumable]\n")
+	log_sql("#FERMI\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n[prefix][fermi]\n")
+	log_sql("#PLANTS\n[prefix][plant]\n#URANIUM\n[prefix][uranium]\n#COLOURS\n[prefix][colours]\n")
+	log_sql("#RACE MUTATIONS\n[prefix][muta]\n")
 
 
 
 /proc/generate_chemwiki_line(datum/reagent/R)
 	//name | Reagent pH | reagents | reaction temp | explosion temp | pH range | Kinetics | description | OD level | Addiction level | Metabolism rate | impure chem | inverse chem
 	var/datum/chemical_reaction/CR = GLOB.chemical_reactions_list[R.id]
-	if(!CR)
-		CR = FALSE
-	var/outstring = "[R.name] | [R.ph] | <ul>"
-	for(var/R2 in R.required_reagents)
-		var/R3 GLOB.chemical_reagents_list[R2]//What a convoluted mess
-		outstring += "<li>[R3.name]</li>"
+	var/outstring = "[R.name] | [R.pH] | "
+	var/datum/reagent/R3
+	if(CR)
+		outstring += "<ul>"
+		for(var/R2 in CR.required_reagents)
+			R3 = GLOB.chemical_reagents_list[R2]//What a convoluted mess
+			outstring += "<li>[R3.name]</li>"
+		outstring += "</ul> | "
+	else
+		outstring += "N/A | "
+
 
 	//Temp, Explosions and pH
 	if(CR)
-		outstring += "</ul> | [(CR.FermiChem?"[CR.OptimalTempMin]":"[(CR.required_temp?"[CR.required_temp]":"N/A")]")] | [(CR.FermiChem?"[CR.ExplodeTemp]":"N/A")] | [(CR.FermiChem?"[max((CR.OptimalpHMin - CR.ReactpHLim), 0)] - [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"N/A")] | "
+		outstring += "[(CR.FermiChem?"[CR.OptimalTempMin]":"[(CR.required_temp?"[CR.required_temp]":"N/A")]")] | [(CR.FermiChem?"[CR.ExplodeTemp]":"N/A")] | [(CR.FermiChem?"[max((CR.OptimalpHMin - CR.ReactpHLim), 0)] - [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"N/A")] | "
 	else
-		outstring += "</ul> | N/A | N/A | N/A | "
+		outstring += "N/A | N/A | N/A | "
 
 	//Kinetics
 	if(CR.FermiChem || !CR)
@@ -99,13 +104,16 @@
 	outstring += "[R.description] | [(R.overdose_threshold?"[R.overdose_threshold]":"N/A")] | [(R.addiction_threshold?"[R.addiction_threshold]":"N/A")] | [R.metabolization_rate * REAGENTS_METABOLISM] | "
 
 	if(R.ImpureChem != "fermiTox" || !R.ImpureChem)
-		outstring += "[R.ImpureChem] |"
+		R3 = GLOB.chemical_reagents_list[R.ImpureChem]
+		outstring += "[R3.name] | "
 	else
 		outstring += "N/A |"
 
 	if(R.InverseChem != "fermiTox" || !R.InverseChem)
-		outstring += "[R.InverseChem] |"
+		R3 = GLOB.chemical_reagents_list[R.InverseChem]
+		outstring += "[R3.name] | "
 	else
-		outstring += "N/A |"
+		outstring += "N/A | "
 
+	outstring += "\n"
 	return outstring
