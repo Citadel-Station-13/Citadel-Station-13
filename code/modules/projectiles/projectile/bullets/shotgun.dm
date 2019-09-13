@@ -56,8 +56,8 @@
 	return TRUE
 
 /obj/item/projectile/bullet/pellet
-	var/tile_dropoff = 0.75
-	var/tile_dropoff_s = 1.25
+	var/tile_dropoff = 0.5
+	var/tile_dropoff_s = 1.1
 
 /obj/item/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
@@ -67,7 +67,7 @@
 	name = "rubbershot pellet"
 	damage = 2
 	stamina = 15
-
+ 
 /obj/item/projectile/bullet/pellet/Range()
 	..()
 	if(damage > 0)
