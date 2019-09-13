@@ -72,11 +72,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
-	var/undie_color = "#FFFFFF"
+	var/undie_color = "FFF"
 	var/undershirt = "Nude"				//undershirt type
-	var/shirt_color = "#FFFFFF"
+	var/shirt_color = "FFF"
 	var/socks = "Nude"					//socks type
-	var/socks_color = "#FFFFFF"
+	var/socks_color = "FFF"
 	var/backbag = DBACKPACK				//backpack type
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
@@ -144,6 +144,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"breasts_size" = "C",
 		"breasts_shape" = "Pair",
 		"breasts_fluid" = "milk",
+		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
 		"vag_shape" = "Human",
 		"vag_color" = "fff",
@@ -680,13 +681,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Clothing & Equipment</h2>"
 			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
 			if(UNDIE_COLORABLE(GLOB.underwear_list[underwear]))
-				dat += "<b>Underwear Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undie_color;task=input'>[undie_color]</a>"
+				dat += "<b>Underwear Color:</b> <span style='border:1px solid #161616; background-color: #[undie_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=undie_color;task=input'>Change</a><BR>"
 			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
 			if(UNDIE_COLORABLE(GLOB.undershirt_list[undershirt]))
-				dat += "<b>Undershirt Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=shirt_color;task=input'>[shirt_color]</a>"
+				dat += "<b>Undershirt Color:</b> <span style='border:1px solid #161616; background-color: #[shirt_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=shirt_color;task=input'>Change</a><BR>"
 			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
 			if(UNDIE_COLORABLE(GLOB.socks_list[socks]))
-				dat += "<b>Socks Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks_color;task=input'>[socks_color]</a>"
+				dat += "<b>Socks Color:</b> <span style='border:1px solid #161616; background-color: #[socks_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=socks_color;task=input'>Change</a><BR>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
@@ -743,6 +744,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><br>"
 					dat += "<b>Cup Size:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a>"
 					dat += "<b>Breast Shape:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a>"
+					dat += "<b>Lactates:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_producing'>[features["breasts_producing"] == TRUE ? "Yes" : "No"]</a>"
 				dat += "</td>"
 			dat += "</td>"
 			dat += "</tr></table>"
@@ -796,6 +798,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Lewdchem:</b><a href='?_src_=prefs;preference=lewdchem'>[lewdchem == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
@@ -916,11 +919,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
-				var/donoritem
-				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
-					donoritem = TRUE
-					if(!(user.ckey in gear.ckeywhitelist))
-						continue
+				var/donoritem = gear.donoritem
+				if(donoritem && !gear.donator_ckey_check(user.ckey))
+					continue
 				var/class_link = ""
 				if(gear.type in chosen_gear)
 					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
@@ -1533,7 +1534,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("undie_color")
 					var/n_undie_color = input(user, "Choose your underwear's color.", "Character Preference", undie_color) as color|null
 					if(n_undie_color)
-						undie_color = sanitize_hexcolor(n_undie_color, include_crunch= TRUE)
+						undie_color = sanitize_hexcolor(n_undie_color)
 
 				if("undershirt")
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
@@ -1543,7 +1544,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("shirt_color")
 					var/n_shirt_color = input(user, "Choose your undershirt's color.", "Character Preference", shirt_color) as color|null
 					if(n_shirt_color)
-						shirt_color = sanitize_hexcolor(n_shirt_color, include_crunch= TRUE)
+						shirt_color = sanitize_hexcolor(n_shirt_color)
 
 				if("socks")
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
@@ -1553,7 +1554,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("socks_color")
 					var/n_socks_color = input(user, "Choose your socks' color.", "Character Preference", socks_color) as color|null
 					if(n_socks_color)
-						socks_color = sanitize_hexcolor(n_socks_color, include_crunch= TRUE)
+						socks_color = sanitize_hexcolor(n_socks_color)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
@@ -2037,6 +2038,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					features["genitals_use_skintone"] = !features["genitals_use_skintone"]
 				if("arousable")
 					arousable = !arousable
+				if("lewdchem")
+					lewdchem = !lewdchem
 				if("has_cock")
 					features["has_cock"] = !features["has_cock"]
 					if(features["has_cock"] == FALSE)
@@ -2053,6 +2056,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					features["eggsack_internal"] = !features["eggsack_internal"]
 				if("has_breasts")
 					features["has_breasts"] = !features["has_breasts"]
+					if(features["has_breasts"] == FALSE)
+						features["breasts_producing"] = FALSE
+				if("breasts_producing")
+					features["breasts_producing"] = !features["breasts_producing"]
 				if("has_vag")
 					features["has_vag"] = !features["has_vag"]
 					if(features["has_vag"] == FALSE)
@@ -2236,7 +2243,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
-				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+				if(G.donoritem && !G.donator_ckey_check(user.ckey))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))

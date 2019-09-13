@@ -117,6 +117,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["widescreenpref"]		>> widescreenpref
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
+	S["lewdchem"]			>> lewdchem
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -211,6 +212,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
+	WRITE_FILE(S["lewdchem"], lewdchem)
 
 	return 1
 
@@ -347,6 +349,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
+	S["feature_breasts_producing"]		>> features["breasts_producing"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
 	S["feature_vag_shape"]				>> features["vag_shape"]
@@ -396,11 +399,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
 	underwear		= sanitize_inlist(underwear, GLOB.underwear_list)
-	undie_color		= sanitize_hexcolor(undie_color, 6, 1, initial(undie_color))
+	undie_color		= sanitize_hexcolor(undie_color, 3, FALSE, initial(undie_color))
 	undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_list)
-	shirt_color		= sanitize_hexcolor(shirt_color, 6, 1, initial(shirt_color))
+	shirt_color		= sanitize_hexcolor(shirt_color, 3, FALSE, initial(shirt_color))
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
-	socks_color		= sanitize_hexcolor(socks_color, 6, 1, initial(socks_color))
+	socks_color		= sanitize_hexcolor(socks_color, 3, FALSE, initial(socks_color))
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)

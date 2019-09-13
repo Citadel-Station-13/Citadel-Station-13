@@ -21,6 +21,7 @@
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 	var/list/pillStyles
+	var/fermianalyze //Give more detail on fermireactions on analysis
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
@@ -170,6 +171,7 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
+	data["fermianalyze"] = fermianalyze
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
@@ -211,11 +213,13 @@
 				var/id = params["id"]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
+					end_fermi_reaction()
 					beaker.reagents.trans_id_to(src, id, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
+						end_fermi_reaction()
 						beaker.reagents.trans_id_to(src, id, useramount)
 						. = TRUE
 
@@ -228,6 +232,12 @@
 					. = TRUE
 				else
 					reagents.remove_reagent(id, amount)
+					. = TRUE
+			else if (amount == -1) // -1 means custom amount
+				useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
+				if (useramount > 0)
+					end_fermi_reaction()
+					reagents.trans_id_to(beaker, id, useramount)
 					. = TRUE
 
 		if("toggleMode")
@@ -328,7 +338,7 @@
 				var/vol_part = min(reagents.total_volume, 30)
 				if(text2num(many))
 					amount_full = round(reagents.total_volume / 30)
-					vol_part = reagents.total_volume % 30
+					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
@@ -375,7 +385,7 @@
 				reagents.trans_to(P, vol_part)
 			. = TRUE
 		//END CITADEL ADDITIONS
-		if("analyze")
+		if("analyzeBeak")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
 				var/state = "Unknown"
@@ -387,7 +397,45 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				if(istype(R, /datum/reagent/fermi))
+					fermianalyze = TRUE
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
+
+					if(!targetReagent)
+						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				screen = "analyze"
+				return
+
+		if("analyzeBuff")
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			if(R)
+				var/state = "Unknown"
+				if(initial(R.reagent_state) == 1)
+					state = "Solid"
+				else if(initial(R.reagent_state) == 2)
+					state = "Liquid"
+				else if(initial(R.reagent_state) == 3)
+					state = "Gas"
+				var/const/P = 3 //The number of seconds between life ticks
+				var/T = initial(R.metabolization_rate) * (60 / P)
+				if(istype(R, /datum/reagent/fermi))
+					fermianalyze = TRUE
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					var/datum/reagent/targetReagent = reagents.has_reagent("[R.id]")
+
+					if(!targetReagent)
+						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 				screen = "analyze"
 				return
 
@@ -397,6 +445,9 @@
 
 
 
+/obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
+	if(beaker.reagents.fermiIsReacting)
+		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))

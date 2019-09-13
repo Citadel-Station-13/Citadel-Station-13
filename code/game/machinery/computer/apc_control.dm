@@ -11,7 +11,6 @@
 	var/list/result_filters //For sorting the results
 	var/checking_logs = 0
 	var/list/logs
-	var/authenticated = 0
 	var/auth_id = "\[NULL\]"
 
 /obj/machinery/computer/apc_control/Initialize()
@@ -185,15 +184,19 @@
 	ui_interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
+	. = ..()
 	if(!authenticated)
 		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 		authenticated = TRUE
 		log_activity("logged in")
-	else if(!(obj_flags & EMAGGED))
+	else
+		if(obj_flags & EMAGGED)
+			return
 		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
-	playsound(src, "sparks", 50, 1)
+		playsound(src, "sparks", 50, 1)
+	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"

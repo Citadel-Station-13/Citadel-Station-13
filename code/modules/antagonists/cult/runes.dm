@@ -61,8 +61,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(do_after(user, 15, target = src))
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
-	else if(istype(I, /obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+	else if(istype(I, /obj/item/storage/book/bible) || istype(I, /obj/item/nullrod))
+		user.say("BEGONE FOUL MAGICKS!!", forced = "bible")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
@@ -286,14 +286,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/convert/proc/optinalert(mob/living/convertee)
 	var/alert = alert(convertee, "Will you embrace the Geometer of Blood or perish in futile resistance?", "Choose your own fate", "Join the Blood Cult", "Suffer a horrible demise")
-	if(alert == "Join the Blood Cult")
+	if(src && alert == "Join the Blood Cult")
 		signmeup(convertee)
 
 /obj/effect/rune/convert/proc/signmeup(mob/living/convertee)
-	if(currentconversionman == usr)
+	if(currentconversionman == convertee)
 		conversionresult = TRUE
 	else
-		to_chat(usr, "<span class='cult italic'>Your fate has already been set in stone.</span>")
+		to_chat(convertee, "<span class='cult italic'>Your fate has already been set in stone.</span>")
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
 	var/mob/living/first_invoker = invokers[1]
@@ -433,12 +433,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		if(!A.anchored)
 			movedsomething = TRUE
-			if(do_teleport(A, T, forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+			if(do_teleport(A, target, forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
 		if(moveuserlater)
-			if(do_teleport(user, T, channel = TELEPORT_CHANNEL_CULT))
+			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
 		if(movesuccess)
 			visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")

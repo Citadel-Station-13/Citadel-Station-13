@@ -317,9 +317,12 @@
 					/obj/item/clothing/under/rank/chaplain = 2,
 					/obj/item/clothing/under/rank/chaplain/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
-					/obj/item/clothing/suit/nun = 2,
+					/obj/item/clothing/suit/chaplain/nun = 2,
 					/obj/item/clothing/head/nun_hood = 2,
-					/obj/item/clothing/suit/holidaypriest = 2,
+					/obj/item/clothing/suit/chaplain/holidaypriest = 2,
+					/obj/item/clothing/suit/chaplain/pharaoh = 2,
+					/obj/item/clothing/head/nemes = 1,
+					/obj/item/clothing/head/pharaoh = 1,
 					/obj/item/storage/fancy/candle_box = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
@@ -338,7 +341,8 @@
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 3,
 					/obj/item/storage/backpack/chemistry = 3,
 					/obj/item/storage/backpack/satchel/chem = 3,
-					/obj/item/storage/bag/chemistry = 3)
+					/obj/item/storage/bag/chemistry = 3,
+					/obj/item/fermichem/pHbooklet = 3)//pH indicator)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe

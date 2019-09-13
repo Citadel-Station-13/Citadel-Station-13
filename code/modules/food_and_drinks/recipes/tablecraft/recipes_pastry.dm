@@ -23,7 +23,7 @@
 	result = /obj/item/reagent_containers/food/snacks/donut
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/donut
+/datum/crafting_recipe/food/donut/semen
 	time = 15
 	name = "Semen donut"
 	reqs = list(
@@ -323,6 +323,15 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/bluecherrycupcake
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/strawberrycupcake
+	name = "Strawberry cherry cupcake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/strawberrycupcake
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/honeybun

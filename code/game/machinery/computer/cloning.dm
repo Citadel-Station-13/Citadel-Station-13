@@ -1,4 +1,4 @@
-#define AUTOCLONING_MINIMAL_LEVEL 3
+#define AUTOCLONING_MINIMAL_LEVEL 4
 
 /obj/machinery/computer/cloning
 	name = "cloning console"
@@ -63,9 +63,6 @@
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
-
-	if(scanner.occupant && scanner.scan_level > 2)
-		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/R in records)
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])

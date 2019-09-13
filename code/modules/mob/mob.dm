@@ -116,17 +116,19 @@
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob, no_ghosts = FALSE)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, list/ignored_mobs, no_ghosts = FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
-		if(M == ignored_mob)
+		if(M in ignored_mobs)
 			continue
 		var/msg = message
 		if(isobserver(M) && no_ghosts)
@@ -450,18 +452,28 @@
 	reset_perspective(null)
 	unset_machine()
 
+GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
+
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .click macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".dblclick"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .dblclick macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])

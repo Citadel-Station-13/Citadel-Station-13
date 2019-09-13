@@ -33,6 +33,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -67,6 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
+	var/reskinned = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item

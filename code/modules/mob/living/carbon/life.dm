@@ -4,9 +4,8 @@
 	if(notransform)
 		return
 
-	if(damageoverlaytemp || stamdamageoverlaytemp)
+	if(damageoverlaytemp)
 		damageoverlaytemp = 0
-		stamdamageoverlaytemp = 0
 		update_damage_hud()
 
 	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
@@ -229,6 +228,9 @@
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases[/datum/gas/bz])
@@ -305,11 +307,17 @@
 	return
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
+	var/obj/item/clothing/check
+	var/internals = FALSE
+
+	for(check in GET_INTERNAL_SLOTS(src))
+		if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+			internals = TRUE
 	if(internal)
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		else if (!internals && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -527,6 +535,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
@@ -612,6 +623,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+		else
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

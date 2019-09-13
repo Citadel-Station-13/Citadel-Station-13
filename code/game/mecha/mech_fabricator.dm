@@ -64,10 +64,15 @@
 
 
 /obj/machinery/mecha_part_fabricator/emag_act()
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	req_access = list()
+	INVOKE_ASYNC(src, .proc/error_action_sucessful)
+	return TRUE
+
+/obj/machinery/mecha_part_fabricator/proc/error_action_sucessful()
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)
 	say("Attempting auto-repair...")
