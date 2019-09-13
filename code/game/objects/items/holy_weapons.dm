@@ -247,12 +247,7 @@
 	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/holy_weapon
-	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
-	/obj/item/twohanded/dualsaber/hypereutactic/chaplain,
-	/obj/item/gun/energy/laser/redtag/hitscan/chaplain,
-	/obj/item/multitool/chaplain,
-	/obj/item/melee/baseball_bat/chaplain
-	)
+	var/list/holy_weapons_list = subtypesof(/obj/item/nullrod) + list(HOLY_WEAPONS)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
 		var/obj/item/nullrod/rodtype = V
