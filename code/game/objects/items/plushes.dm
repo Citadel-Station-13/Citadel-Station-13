@@ -629,7 +629,7 @@
 
 /obj/item/toy/plush/mothplushie
 	name = "insect plushie"
-	desc = "An adorable stuffed toy that resembles some kind of insect"
+	desc = "An adorable stuffed toy that resembles some kind of insect."
 	icon_state = "bumble"
 	item_state = "bumble"
 	squeak_override = list('modular_citadel/sound/voice/mothsqueak.ogg' = 1)
@@ -773,8 +773,10 @@
 	item_state = "blep"
 
 /obj/item/toy/plush/mammal/circe
+	desc = "A luxuriously soft toy that resembles a nine-tailed kitsune."
 	icon_state = "circe"
 	item_state = "circe"
+	attack_verb = list("medicated", "tailhugged", "kissed")
 
 /obj/item/toy/plush/mammal/robin
 	icon_state = "robin"
@@ -839,8 +841,10 @@
 	item_state = "rae"
 
 /obj/item/toy/plush/mammal/zed
+	desc = "A masked stuffed toy that resembles a fierce miner. He even comes with his own little crusher!"
 	icon_state = "zed"
 	item_state = "zed"
+	attack_verb = list("ENDED", "CRUSHED", "GNOMED")
 
 /obj/item/toy/plush/mammal/justin
 	icon_state = "justin"
@@ -851,6 +855,12 @@
 	icon_state = "reece"
 	item_state = "reece"
 	attack_verb = list("healed", "cured", "demoted")
+
+/obj/item/toy/plush/mammal/redwood
+	desc = "An adorable stuffed toy resembling a Nanotrasen Captain. That just happens to be a bunny."
+	icon_state = "redwood"
+	item_state = "redwood"
+	attack_verb = list("ordered", "bapped", "reprimanded")
 
 /obj/item/toy/plush/mammal/dog
 	desc = "An adorable stuffed toy that resembles a canine."
@@ -898,6 +908,12 @@
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
 
+/obj/item/toy/plush/mammal/dog/jesse
+	desc = "An adorable wolf toy that resembles a cream-colored wolf. He has a little pride flag!"
+	icon_state = "jesse"
+	item_state = "jesse"
+	attack_verb = list("greeted", "merc'd", "howdy'd")
+
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
 	desc = "An adorable stuffed toy that resembles a feline."
@@ -935,3 +951,15 @@
     item_state = "fermis"
     attack_verb = list("cuddled", "petpatted", "wigglepurred")
     squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
+
+/obj/item/toy/plush/catgirl/mariaf
+	desc = "An adorable stuffed toy that resembles a very tall cat girl."
+	icon_state = "mariaf"
+	item_state = "mariaf"
+	attack_verb = list("hugged", "stabbed", "licked")
+
+/obj/item/toy/plush/catgirl/maya
+	desc = "An adorable stuffed toy that resembles an angry cat girl. She has her own tiny nuke disk!"
+	icon_state = "maya"
+	item_state = "maya"
+	attack_verb = list("nuked", "arrested", "harmbatonned")

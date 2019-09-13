@@ -4897,7 +4897,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "amT" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -6072,7 +6072,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "apF" = (
-/obj/machinery/computer/gulag_teleporter_computer{
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -7048,7 +7048,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arR" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -47463,8 +47463,8 @@
 /area/hydroponics/garden/monastery)
 "cgL" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplain/holidaypriest,
+/obj/item/clothing/suit/chaplain/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell1";
@@ -47831,8 +47831,8 @@
 /area/space/nearstation)
 "cio" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/holidaypriest,
-/obj/item/clothing/suit/nun,
+/obj/item/clothing/suit/chaplain/holidaypriest,
+/obj/item/clothing/suit/chaplain/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell2";
@@ -50473,8 +50473,8 @@
 /obj/structure/closet,
 /obj/item/storage/backpack/cultpack,
 /obj/item/clothing/head/nun_hood,
-/obj/item/clothing/suit/nun,
-/obj/item/clothing/suit/holidaypriest,
+/obj/item/clothing/suit/chaplain/nun,
+/obj/item/clothing/suit/chaplain/holidaypriest,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

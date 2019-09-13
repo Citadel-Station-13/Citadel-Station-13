@@ -54,6 +54,7 @@
 	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 	if(obj_flags & EMAGGED)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
@@ -63,6 +64,8 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
 	packin_up()
+	req_access = list()
+	return TRUE
 
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
 	meme_pack_data = list() // sorry for what?

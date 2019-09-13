@@ -78,7 +78,7 @@
 		return ..()
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
@@ -174,9 +174,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/proc/get_targets()
 	target_types = list(
-		/obj/effect/decal/cleanable/oil,
 		/obj/effect/decal/cleanable/vomit,
-		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/crayon,
 		/obj/effect/decal/cleanable/molten_object,
 		/obj/effect/decal/cleanable/tomato_smudge,
@@ -187,12 +185,24 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/insectguts,
+		/obj/effect/decal/cleanable/semen,
+		/obj/effect/decal/cleanable/femcum,
+		/obj/effect/decal/cleanable/generic,
+		/obj/effect/decal/cleanable/glass,,
+		/obj/effect/decal/cleanable/cobweb,
+		/obj/effect/decal/cleanable/plant_smudge,
+		/obj/effect/decal/cleanable/chem_pile,
+		/obj/effect/decal/cleanable/shreds,
+		/obj/effect/decal/cleanable/glitter,
 		/obj/effect/decal/remains
 		)
 
 	if(blood)
 		target_types += /obj/effect/decal/cleanable/blood
 		target_types += /obj/effect/decal/cleanable/trail_holder
+		target_types += /obj/effect/decal/cleanable/insectguts
+		target_types += /obj/effect/decal/cleanable/robot_debris
+		target_types += /obj/effect/decal/cleanable/oil
 
 	if(pests)
 		target_types += /mob/living/simple_animal/cockroach
@@ -200,6 +210,7 @@
 
 	if(trash)
 		target_types += /obj/item/trash
+		target_types += /obj/item/reagent_containers/food/snacks/meat/slab/human
 
 	target_types = typecacheof(target_types)
 
@@ -241,7 +252,7 @@
 			victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='userdanger'>[src] sprays you with hydrofluoric acid!</span>")
 			var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
 				"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
-				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
+				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.", "I JUST WANTED TO BE A PAINTER BUT YOU MADE ME BLEACH EVERYTHING I TOUCH")
 			say(phrase)
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
