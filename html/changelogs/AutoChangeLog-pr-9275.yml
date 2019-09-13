@@ -1,0 +1,5 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "Fixes analyse function on ChemMasters to correctly display purity."
+  - bugfix: "Fixes the custom transfer for buffer to beaker button."
