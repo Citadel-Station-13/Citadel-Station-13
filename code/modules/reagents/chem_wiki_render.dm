@@ -70,10 +70,13 @@
 		outstring += "<li>[R3.name]</li>"
 
 	//Temp, Explosions and pH
-	outstring += "</ul> | [(CR.FermiChem?"[CR.OptimalTempMin]":"[(CR.required_temp?"[CR.required_temp]":"N/A")]")] | [(CR.FermiChem?"[CR.ExplodeTemp]":"N/A")] | [(CR.FermiChem?"[max((CR.OptimalpHMin - CR.ReactpHLim), 0)] - [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"N/A")] | "
+	if(CR)
+		outstring += "</ul> | [(CR.FermiChem?"[CR.OptimalTempMin]":"[(CR.required_temp?"[CR.required_temp]":"N/A")]")] | [(CR.FermiChem?"[CR.ExplodeTemp]":"N/A")] | [(CR.FermiChem?"[max((CR.OptimalpHMin - CR.ReactpHLim), 0)] - [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"N/A")] | "
+	else
+		outstring += "</ul> | N/A | N/A | N/A | "
 
 	//Kinetics
-	if(CR.FermiChem)
+	if(CR.FermiChem || !CR)
 		switch(CR.ThermicConstant)
 			if(-INFINITY to -9.9)
 				outstring += "Extremely endothermic | "
