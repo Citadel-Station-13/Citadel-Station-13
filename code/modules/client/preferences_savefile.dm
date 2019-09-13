@@ -247,7 +247,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["species"]			>> species_id
 	if(species_id)
 		if(species_id == "avian" || species_id == "aquatic")
-			species_id = "mammal
+			species_id = "mammal"
 		else if(species_id == "moth")
 			species_id = "insect"
 
