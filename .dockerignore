@@ -11,7 +11,7 @@ TGS3.json
 .git/hooks
 .git/info
 .git/modules
-.git/objects
+.git/objects 
 .git/refs
 .vs*
 cfg
