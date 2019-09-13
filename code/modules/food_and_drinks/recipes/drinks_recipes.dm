@@ -801,3 +801,10 @@
 	id = "catnip_tea"
 	results = list("catnip_tea" = 3)
 	required_reagents = list("tea" = 5, "catnip" = 2)
+	
+/datum/chemical_reaction/commander_and_chief
+	name = "Commander and Chief" 
+	id = "commander_and_chief" 
+	results = list("commander_and_chief" = 50) 
+	required_reagents = list("alliescocktail" = 50, "champagne" = 20, "doctorsdelight" = 10, "quintuple_sec" = 10, "screwdrivercocktail" = 10)
+	mix_message = "When your powers combine, I am Captain Pl-..."	
