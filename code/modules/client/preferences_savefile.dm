@@ -246,12 +246,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/species_id
 	S["species"]			>> species_id
 	if(species_id)
-		var/newtype = GLOB.species_list[species_id]
 		if(species_id == "avian" || species_id == "aquatic")
-			newtype = "mammal"
+			species_id = "mammal
 		else if(species_id == "moth")
-			newtype = "insect"
+			species_id = "insect"
 
+		var/newtype = GLOB.species_list[species_id]
 		if(newtype)
 			pref_species = new newtype
 
@@ -292,21 +292,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_legs"]			>> features["legs"]
 	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_human_ears"]				>> features["ears"]
-
-	if((S["feature_moth_wings"] != "") && (S["feature_moth_wings"] != null) && S["feature_moth_wings"]) //Shamelessly adapted from flavortext stuff
-		S["feature_moth_wings"]			>> features["moth_wings"]
-		WRITE_FILE(S["insect_wings"], features["moth_wings"])
-		WRITE_FILE(S["feature_moth_wings"]	, "")
-	else
-		S["feature_insect_wings"]				>> features["insect_wings"]
+	S["feature_insect_wings"]			>> features["insect_wings"]
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
 		S[savefile_slot_name] >> custom_names[custom_name_id]
 
-	S["preferred_ai_core_display"] >> preferred_ai_core_display
-	S["prefered_security_department"] >> prefered_security_department
+	S["preferred_ai_core_display"]		>> preferred_ai_core_display
+	S["prefered_security_department"]	>> prefered_security_department
 
 	//Jobs
 	S["joblessrole"]		>> joblessrole
