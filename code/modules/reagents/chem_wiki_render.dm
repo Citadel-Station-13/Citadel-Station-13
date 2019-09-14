@@ -7,13 +7,13 @@
 
 	message_admins("Someone pressed the superlag button. (Generate Wikichems)")
 	to_chat(usr, "Generating list")
-	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties | Impure chems|\n|---|---|---|---|----------|---|\n"
+	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties |\n|---|---|---|-----------|---|\n"
 
     ///datum/reagent/medicine, /datum/reagent/toxin, /datum/reagent/consumable, /datum/reagent/plantnutriment, /datum/reagent/uranium,
-    ///datum/reagent/colorful_reagent, /datum/reagent/mutationtoxin, /datum/reagent/fermi
+    ///datum/reagent/colorful_reagent, /datum/reagent/mutationtoxin, /datum/reagent/fermi, /datum/reagent/drug
 
 	//Probably not the most eligant of solutions.
-	to_chat(usr, "Attempting reagent scan. Length of list [LAZYLEN(GLOB.chemical_reagents_list)]")
+	to_chat(usr, "Attempting reagent scan. Length of list [LAZYLEN(GLOB.chemical_reagents_list)*2]")
 	var/datum/reagent/R
 	var/tally = 0
 	var/processCR = TRUE //Process reactions first
@@ -27,6 +27,7 @@
 		var/muta = ""
 		var/fermi = ""
 		var/remainder = ""
+		var/drug = ""
 		for(var/X in GLOB.chemical_reagents_list)
 			R = GLOB.chemical_reagents_list[X]
 			if(istype(R, /datum/reagent/medicine))
@@ -53,26 +54,36 @@
 			else if(istype(R, /datum/reagent/fermi))
 				fermi += generate_chemwiki_line(R, X, processCR)
 
+			else if(istype(R, /datum/reagent/drug))
+				drug += generate_chemwiki_line(R, X, processCR)
+
 			else
 				remainder += generate_chemwiki_line(R, X, processCR)
 
 			tally++
 			if((tally%50)==0)
-				to_chat(usr, "[tally] of [LAZYLEN(GLOB.chemical_reagents_list)] done.")
+				to_chat(usr, "[tally] of [LAZYLEN(GLOB.chemical_reagents_list)*2] done.")
 
 		processCR = FALSE
 
 		to_chat(usr, "finished chems")
-		log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n")
+		log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
 
-	prefix = "|Name | Reagents | Reaction vars | Description ||\n|---|---|---|----------|\n"
+	prefix = "|Name | Reagents | Reaction vars | Description |\n|---|---|---|----------|\n"
+	var/CRparse = ""
 	to_chat(usr, "starting reactions")
 	for(var/reagent in GLOB.chemical_reactions_list)
 		for(var/datum/chemical_reaction/CR in GLOB.chemical_reactions_list[reagent])
-			generate_chemreactwiki_line(CR)
+			//message_admins("trad: [CR], [CR.results], [CR.results.len], [LAZYLEN(CR.results)]")
 
+			CRparse += generate_chemreactwiki_line(CR)
+
+	log_sql("------------BEGINNING OF REACTIONS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# CHEMICAL REACTIONS\n\n[prefix][CRparse]\n")
 	to_chat(usr, "finished reactions")
 
+
+
+//Generate the big list of reagent based reactions.
 /proc/generate_chemwiki_line(datum/reagent/R, X, processCR)
 	//name | Reagent pH | reagents | reaction temp | explosion temp | pH range | Kinetics | description | OD level | Addiction level | Metabolism rate | impure chem | inverse chem
 
@@ -82,17 +93,17 @@
 
 
 	//message_admins("[CR]")
-	var/outstring = "|[R.name] !\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+) pH:[R.pH] | "
+	var/outstring = "|!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+) <a href=\"#[R.name]\"><h2 id=\"[R.name]\">[R.name]</h2></a> pH: [R.pH] | "
 	var/datum/reagent/R3
 	if(CR)
 		outstring += "<ul>"
 		for(var/R2 in CR.required_reagents)
 			R3 = GLOB.chemical_reagents_list[R2]//What a convoluted mess
-			outstring += "<li>[R3.name]</li>"
+			outstring += "<li><a href=\"#[R3.name]\"	>[R3.name]</a>: [CR.required_reagents[R3.id]]u</li>"
 		if(CR.required_catalysts)
-			for(var/R2 in CR.required_reagents)
+			for(var/R2 in CR.required_catalysts)
 				R3 = GLOB.chemical_reagents_list[R2]
-				outstring += "<li>[R3.name]</li>"
+				outstring += "<li>Catalyst: <a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.id]]u</li>"
 		outstring += "</ul> | "
 	else
 		outstring += "N/A | "
@@ -100,7 +111,7 @@
 
 	//Temp, Explosions and pH
 	if(CR)
-		outstring += "[(CR.FermiChem?"Min react temp:[CR.OptimalTempMin]":"[(CR.required_temp?"Min_react_temp:[CR.required_temp]":"")]")] [(CR.FermiChem?"Explosion_temp:[CR.ExplodeTemp]":"")] [(CR.FermiChem?"pH_range:[max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"")] "
+		outstring += "<ul>[(CR.FermiChem?"<li>Min react temp: [CR.OptimalTempMin]K</li>":"[(CR.required_temp?"<li>Min react temp: [CR.required_temp]K</li>":"")]")] [(CR.FermiChem?"<li>Explosion_temp: [CR.ExplodeTemp]K</li>":"")] [(CR.FermiChem?"<li>pH range: [max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]</li>":"")] "
 	else
 		outstring += ""
 
@@ -109,68 +120,79 @@
 		if(CR.FermiChem)
 			switch(CR.ThermicConstant)
 				if(-INFINITY to -9.9)
-					outstring += "Extremely endothermic | "
+					outstring += "<li>Extremely endothermic</li> "
 				if(-9.9 to -4.9)
-					outstring += "Very endothermic | "
+					outstring += "<li>Very endothermic</li> "
 				if(-4.9 to -0.1)
-					outstring += "Endothermic | "
+					outstring += "<li>Endothermic</li> "
 				if(-0.1 to 0.1)
-					outstring += "Neutral | "
+					outstring += "<li>Neutral</li> "
 				if(0.1 to 4.9)
-					outstring += "Exothermic | "
+					outstring += "<li>Exothermic</li> "
 				if(4.9 to 9.9)
-					outstring += "Very exothermic | "
-				if(9.9 to INFINITY)
-					outstring += "Extremely exothermic | "
-		else
-			outstring += " | "
-	else
-		outstring += " | "
+					outstring += "<li>Very exothermic</li> "
+				if(9.9 to 19.9)
+					outstring += "<li>Extremely exothermic</li> "
+				if(19.9 to INFINITY )
+					outstring += "<li>**Dangerously exothermic**</li> "
+				//if(CR.cheesey)
+					//outstring += "<li>Dangerously Cheesey</li>"
+
+	outstring += "</ul>| "
 
 	//Description, OD, Addict, Meta
-	outstring += "[R.description] | Metabolism_rate:[R.metabolization_rate] [(R.overdose_threshold?"[Overdose:R.overdose_threshold]":"")] [(R.addiction_threshold?"[Addiction:R.addiction_threshold]":"No addiction")] "
+	outstring += "[R.description] | <ul><li>Metabolism_rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
 
 	if(R.ImpureChem != "fermiTox" || !R.ImpureChem)
 		R3 = GLOB.chemical_reagents_list[R.ImpureChem]
-		outstring += "Impure chem:[R3.name]"
+		outstring += "<li>Impure chem:[R3.name]</li>"
 
 	if(R.InverseChem != "fermiTox" || !R.InverseChem)
 		R3 = GLOB.chemical_reagents_list[R.InverseChem]
-		outstring += "Inverse chem:[R3.name] "
+		outstring += "<li>Inverse chem:[R3.name]</li> "
 
 	if(CR)
 		if(CR.FermiChem)
-			outstring += "Minimum purity:[CR.PurityMin] [(CR.FermiExplode?"Special explosion:Yes":"")]"
+			outstring += "<li>Minimum purity: [CR.PurityMin]</li> [(CR.FermiExplode?"<li>Special explosion: Yes</li>":"")]"
 
 
-	outstring += "|\n"
+	outstring += "</ul>|\n"
 	//message_admins("[outstring]")
 	return outstring
 
+
+
+
+//Generate the big list of reaction based reactions.
 //|Name | Reagents | Reaction vars | Description | Chem properties
 /proc/generate_chemreactwiki_line(datum/chemical_reaction/CR)
-	if(!LAZYLEN(CR.results)) //Handled prior
+	if(CR.results.len) //Handled prior
 		return
-	var/outstring = "|CR.name | <ul>"
+	var/outstring = "|[CR.name] | <ul>"
 
 	//reagents
+	var/datum/reagent/R3
 	for(var/R2 in CR.required_reagents)
 		R3 = GLOB.chemical_reagents_list[R2]
-		outstring += "<li>[R3.name]</li>"
+		outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_reagents[R3.id]]u</li>"
 	if(CR.required_catalysts)
-		for(var/R2 in CR.required_reagents)
+		for(var/R2 in CR.required_catalysts)
 			R3 = GLOB.chemical_reagents_list[R2]
-			outstring += "<li>[R3.name]</li>"
+			outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.id]]u</li>"
 	outstring += "</ul> | "
 
-	outstring += "| fill in manually | "
+	//description
+	outstring += " fill in manually |<ul> "
 
 	//Reaction vars
 	if(CR.FermiChem)
-		outstring += "[(CR.FermiChem?"Min react temp:[CR.OptimalTempMin]":"[(CR.required_temp?"Min_react_temp:[CR.required_temp]":"")]")] [(CR.FermiChem?"Explosion_temp:[CR.ExplodeTemp]":"")] [(CR.FermiChem?"pH_range:[max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"")] Minimum purity:[CR.PurityMin] [(CR.FermiExplode?"Special explosion:Yes":"")]"
+		outstring += "[(CR.FermiChem?"<li>Min react temp: [CR.OptimalTempMin]K</li>":"[(CR.required_temp?"<li>Min react temp: [CR.required_temp]K</li>":"")]")] [(CR.FermiChem?"<li>Explosion temp: [CR.ExplodeTemp]K</li>":"")] [(CR.FermiChem?"<li>pH range: [max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]</li>":"")] <li>Minimum purity: [CR.PurityMin] [(CR.FermiExplode?"<li>Special explosion: Yes</li>":"")]"
 	if(CR.is_cold_recipe)
-		outstring += "Cold: Yes"
+		outstring += "<li>Cold: Yes</li>"
 	if(CR.required_container)
-		outstring += "Required container:[CR.required_container]"
+		outstring += "<li>Required container: [CR.required_container]</li>"
 	if(CR.mob_react)
-		outstring += "Can react in mob: Yes"
+		outstring += "<li>Can react in mob: Yes</li>"
+
+	outstring += "</ul>|\n"
+	return outstring
