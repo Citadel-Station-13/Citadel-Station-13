@@ -17,17 +17,17 @@
 	var/datum/reagent/R
 	var/tally = 0
 	var/processCR = TRUE //Process reactions first
+	var/medicine = ""
+	var/toxin = ""
+	var/consumable = ""
+	var/plant = ""
+	var/uranium = ""
+	var/colours = ""
+	var/muta = ""
+	var/fermi = ""
+	var/remainder = ""
+	var/drug = ""
 	for(var/i = 1, i <= 2, i+=1)
-		var/medicine = ""
-		var/toxin = ""
-		var/consumable = ""
-		var/plant = ""
-		var/uranium = ""
-		var/colours = ""
-		var/muta = ""
-		var/fermi = ""
-		var/remainder = ""
-		var/drug = ""
 		for(var/X in GLOB.chemical_reagents_list)
 			R = GLOB.chemical_reagents_list[X]
 			if(istype(R, /datum/reagent/medicine))
@@ -66,16 +66,16 @@
 
 		processCR = FALSE
 
-		to_chat(usr, "finished chems")
-		log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
+	to_chat(usr, "finished chems")
+	log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
 
 	prefix = "|Name | Reagents | Reaction vars | Description |\n|---|---|---|----------|\n"
 	var/CRparse = ""
 	to_chat(usr, "starting reactions")
+
+	//generate the reactions that we missed from before
 	for(var/reagent in GLOB.chemical_reactions_list)
 		for(var/datum/chemical_reaction/CR in GLOB.chemical_reactions_list[reagent])
-			//message_admins("trad: [CR], [CR.results], [CR.results.len], [LAZYLEN(CR.results)]")
-
 			CRparse += generate_chemreactwiki_line(CR)
 
 	log_sql("------------BEGINNING OF REACTIONS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# CHEMICAL REACTIONS\n\n[prefix][CRparse]\n")
@@ -92,8 +92,7 @@
 		return ""
 
 
-	//message_admins("[CR]")
-	var/outstring = "|!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+) <a href=\"#[R.name]\"><h2 id=\"[R.name]\">[R.name]</h2></a> pH: [R.pH] | "
+	var/outstring = "|<a href=\"#[R.name]\"><h3 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+)[R.name]</h3></a> pH: [R.pH] | "
 	var/datum/reagent/R3
 	if(CR)
 		outstring += "<ul>"
@@ -157,7 +156,6 @@
 
 
 	outstring += "</ul>|\n"
-	//message_admins("[outstring]")
 	return outstring
 
 
