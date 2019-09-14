@@ -5,7 +5,7 @@
 	set category = "Debug"
 	set desc = "Generate a huge loglist of all the chems. Do not click unless you want lag."
 
-	message_admins("Someone pressed the superlag button. (Generate Wikichems)")
+	message_admins("Someone pressed the lag button. (Generate Wikichems)")
 	to_chat(usr, "Generating list")
 	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties |\n|---|---|---|-----------|---|\n"
 
