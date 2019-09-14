@@ -3,10 +3,11 @@
 	id = "insect"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS,NOEYES,HAIR,FACEHAIR,MUTCOLORS)
+	species_traits = list(LIPS,NOEYES,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
-	mutant_bodyparts = list("mam_ears", "mam_snout", "mam_body_markings", "mam_tail", "taur", "insect_wings", "mam_snouts", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "insect_wings" = "None", "mam_snouts" = "None", "mam_body_markings" = "None", "taur" = "None", "legs" = "Plantigrade Legs")
+	mutant_bodyparts = list("mam_ears", "mam_snout", "mam_tail", "taur", "insect_wings", "mam_snouts", "insect_fluff","horns")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None",
+							"insect_wings" = "None", "insect_fluff" = "None", "mam_snouts" = "None", "taur" = "None","horns" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'

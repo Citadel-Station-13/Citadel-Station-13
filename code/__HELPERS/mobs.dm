@@ -72,6 +72,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
 	if(!GLOB.insect_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
+	if(!GLOB.insect_fluffs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_fluff, GLOB.insect_fluffs_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -145,6 +147,7 @@
 		"legs"				= pick("Plantigrade","Digitigrade"),
 		"caps"				= pick(GLOB.caps_list),
 		"insect_wings"		= pick(GLOB.insect_wings_list),
+		"insect_fluff"		= "None",
 		"taur"				= "None",
 		"mam_body_markings" = pick(snowflake_markings_list),
 		"mam_ears" 			= pick(snowflake_ears_list),

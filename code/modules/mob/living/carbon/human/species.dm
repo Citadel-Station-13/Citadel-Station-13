@@ -624,6 +624,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
+	if("insect_fluff" in mutant_bodyparts)
+		if(!H.dna.features["insect_fluff"] || H.dna.features["insect_fluff"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "insect_fluff"
+
 //CITADEL EDIT
 	//Race specific bodyparts:
 	//Xenos
@@ -731,6 +735,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("insect_wings")
 					S = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
+				if("insect_fluff")
+					S = GLOB.insect_fluffs_list[H.dna.features["insect_fluff"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 				if("ipc_screen")

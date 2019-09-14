@@ -99,6 +99,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"body_markings" = "None",
 		"legs" = "Plantigrade",
 		"insect_wings" = "Plain",
+		"insect_fluff" = "None",
 		"mcolor2" = "FFF",
 		"mcolor3" = "FFF",
 		"mam_body_markings" = "Plain",
@@ -599,7 +600,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Insect wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=insect_wings;task=input'>[features["insect_wings"]]</a>"
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+			if("insect_fluff" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
 
+				dat += "<h3>Insect Fluff</h3>"
+
+				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=insect_fluffs;task=input'>[features["insect_fluff"]]</a>"
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -1796,6 +1807,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_insect_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_wings_list
 					if(new_insect_wings)
 						features["insect_wings"] = new_insect_wings
+
+				if("insect_fluffs")
+					var/new_insect_fluff
+					new_insect_fluff = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_fluffs_list
+					if(new_insect_fluff)
+						features["insect_fluff"] = new_insect_fluff
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
