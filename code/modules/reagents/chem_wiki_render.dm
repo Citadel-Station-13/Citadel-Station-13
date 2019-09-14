@@ -98,7 +98,7 @@
 		outstring += "<ul>"
 		for(var/R2 in CR.required_reagents)
 			R3 = GLOB.chemical_reagents_list[R2]//What a convoluted mess
-			outstring += "<li><a href=\"#[R3.name]\"	>[R3.name]</a>: [CR.required_reagents[R3.id]]u</li>"
+			outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_reagents[R3.id]]u</li>"
 		if(CR.required_catalysts)
 			for(var/R2 in CR.required_catalysts)
 				R3 = GLOB.chemical_reagents_list[R2]
@@ -118,7 +118,7 @@
 	if(CR)
 		if(CR.FermiChem)
 			switch(CR.ThermicConstant)
-				if(-INFINITY to -9.9)
+				if(-INFINITY to -9.9) 
 					outstring += "<li>Extremely endothermic</li> "
 				if(-9.9 to -4.9)
 					outstring += "<li>Very endothermic</li> "
@@ -137,7 +137,9 @@
 				//if(CR.cheesey)
 					//outstring += "<li>Dangerously Cheesey</li>"
 
-	outstring += "</ul>| "
+		outstring += "</ul>| "
+	else
+		outstring += " | "
 
 	//Description, OD, Addict, Meta
 	outstring += "[R.description] | <ul><li>Metabolism_rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
@@ -176,11 +178,8 @@
 	if(CR.required_catalysts)
 		for(var/R2 in CR.required_catalysts)
 			R3 = GLOB.chemical_reagents_list[R2]
-			outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.id]]u</li>"
-	outstring += "</ul> | "
-
-	//description
-	outstring += " fill in manually |<ul> "
+			outstring += "<li>Catalyst: <a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.id]]u</li>"
+	outstring += "</ul> | <ul>"
 
 	//Reaction vars
 	if(CR.FermiChem)
@@ -192,5 +191,8 @@
 	if(CR.mob_react)
 		outstring += "<li>Can react in mob: Yes</li>"
 
-	outstring += "</ul>|\n"
+	//description
+	outstring += "</ul>| fill in manually "
+
+	outstring += "<ul>|\n"
 	return outstring
