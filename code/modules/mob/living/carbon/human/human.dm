@@ -802,6 +802,11 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
+		if(hud_used.staminas)
+			hud_used.staminas.icon_state = staminahudamount()
+		if(hud_used.staminabuffer)
+			hud_used.staminabuffer.icon_state = staminabufferhudamount()
+
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	if(admin_revive)
 		regenerate_limbs()

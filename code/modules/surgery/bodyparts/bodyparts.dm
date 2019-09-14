@@ -40,6 +40,7 @@
 	var/skin_tone = ""
 	var/body_gender = ""
 	var/species_id = ""
+	var/should_draw_citadel = FALSE
 	var/should_draw_gender = FALSE
 	var/should_draw_greyscale = FALSE
 	var/species_color = ""
