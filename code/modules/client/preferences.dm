@@ -681,13 +681,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Clothing & Equipment</h2>"
 			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
 			if(UNDIE_COLORABLE(GLOB.underwear_list[underwear]))
-				dat += "<b>Underwear Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undie_color;task=input'>[undie_color]</a>"
+				dat += "<b>Underwear Color:</b> <span style='border:1px solid #161616; background-color: #[undie_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=undie_color;task=input'>Change</a><BR>"
 			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
 			if(UNDIE_COLORABLE(GLOB.undershirt_list[undershirt]))
-				dat += "<b>Undershirt Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=shirt_color;task=input'>[shirt_color]</a>"
+				dat += "<b>Undershirt Color:</b> <span style='border:1px solid #161616; background-color: #[shirt_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=shirt_color;task=input'>Change</a><BR>"
 			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
 			if(UNDIE_COLORABLE(GLOB.socks_list[socks]))
-				dat += "<b>Socks Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks_color;task=input'>[socks_color]</a>"
+				dat += "<b>Socks Color:</b> <span style='border:1px solid #161616; background-color: #[socks_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=socks_color;task=input'>Change</a><BR>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
@@ -919,11 +919,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
-				var/donoritem
-				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
-					donoritem = TRUE
-					if(!(user.ckey in gear.ckeywhitelist))
-						continue
+				var/donoritem = gear.donoritem
+				if(donoritem && !gear.donator_ckey_check(user.ckey))
+					continue
 				var/class_link = ""
 				if(gear.type in chosen_gear)
 					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
@@ -2245,7 +2243,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
-				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+				if(G.donoritem && !G.donator_ckey_check(user.ckey))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))

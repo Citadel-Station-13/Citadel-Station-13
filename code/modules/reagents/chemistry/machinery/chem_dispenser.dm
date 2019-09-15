@@ -139,12 +139,14 @@
 
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return
 	to_chat(user, "<span class='notice'>You short out [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)

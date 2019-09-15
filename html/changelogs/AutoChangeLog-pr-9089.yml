@@ -1,0 +1,6 @@
+author: "original by Tlaltecuhtli, port by sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "rcd disk that gives rcd computer frame and machine frame designs"
+  - rscadd: "upgraded rcd in CE lockers"
+  - tweak: "moved deconstruction to the upgrade disk, ashwalker rcd comes upgraded"

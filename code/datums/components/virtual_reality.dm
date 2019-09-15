@@ -62,7 +62,7 @@
 	revert_to_reality(signal_source)
 
 /datum/component/virtual_reality/proc/you_only_live_once()
-	if(you_die_in_the_game_you_die_for_real)
+	if(you_die_in_the_game_you_die_for_real || vr_sleeper?.only_current_user_can_interact)
 		return FALSE
 	you_die_in_the_game_you_die_for_real = TRUE
 	return TRUE
