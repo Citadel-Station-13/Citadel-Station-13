@@ -198,7 +198,7 @@
 	sting_icon = "sting_mute"
 	chemical_cost = 20
 	dna_cost = 2
-	loudness = 2
+	loudness = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_mute"
 	action_background_icon_state = "bg_ling"
@@ -233,7 +233,7 @@
 	desc = "Causes terror in the target and deals a minor amount of toxin damage."
 	helptext = "We evolve the ability to sting a target with a powerful toxic hallucinogenic chemical. The target does not notice they have been stung, and the effect begins instantaneously. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_lsd"
-	chemical_cost = 10
+	chemical_cost = 15
 	dna_cost = 1
 	loudness = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -243,8 +243,8 @@
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "LSD sting")
 	if(target.reagents)
-		target.reagents.add_reagent("regenerative_materia", 5)
-		target.reagents.add_reagent("mindbreaker", 5)
+		target.reagents.add_reagent("regenerative_materia", 10)
+		target.reagents.add_reagent("mindbreaker", 10)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/cryo
@@ -253,7 +253,7 @@
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
-	dna_cost = 2
+	dna_cost = 1
 	loudness = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_cryo"
