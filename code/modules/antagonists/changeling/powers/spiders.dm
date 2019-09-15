@@ -5,7 +5,7 @@
 	chemical_cost = 45
 	dna_cost = 1
 	loudness = 2
-	req_human = 1
+	req_absorbs = 2
 	action_icon = 'icons/effects/effects.dmi'
 	action_icon_state = "spiderling"
 	action_background_icon_state = "bg_ling"

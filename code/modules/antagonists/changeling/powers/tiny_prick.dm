@@ -198,7 +198,7 @@
 	sting_icon = "sting_mute"
 	chemical_cost = 20
 	dna_cost = 2
-	loudness = 1
+	loudness = 2
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_mute"
 	action_background_icon_state = "bg_ling"
@@ -253,7 +253,7 @@
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
-	dna_cost = 1
+	dna_cost = 2
 	loudness = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_cryo"
