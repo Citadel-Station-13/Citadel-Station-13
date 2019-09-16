@@ -220,6 +220,14 @@
 "O" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
+"P" = (
+/obj/machinery/door/airlock/gold,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"Y" = (
+/obj/machinery/door/airlock/gold,
+/turf/open/floor/mineral/plasma,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -229,7 +237,7 @@ a
 b
 b
 b
-c
+Y
 b
 u
 b
@@ -286,7 +294,7 @@ r
 r
 r
 r
-c
+P
 x
 D
 D
