@@ -118,7 +118,7 @@
 	if(CR)
 		if(CR.FermiChem)
 			switch(CR.ThermicConstant)
-				if(-INFINITY to -9.9) 
+				if(-INFINITY to -9.9)
 					outstring += "<li>Extremely endothermic</li> "
 				if(-9.9 to -4.9)
 					outstring += "<li>Very endothermic</li> "
@@ -134,7 +134,7 @@
 					outstring += "<li>Extremely exothermic</li> "
 				if(19.9 to INFINITY )
 					outstring += "<li>**Dangerously exothermic**</li> "
-				//if(CR.cheesey)
+				//if("cheesey")
 					//outstring += "<li>Dangerously Cheesey</li>"
 
 		outstring += "</ul>| "
@@ -187,6 +187,7 @@
 	if(CR.is_cold_recipe)
 		outstring += "<li>Cold: Yes</li>"
 	if(CR.required_container)
+
 		outstring += "<li>Required container: [CR.required_container]</li>"
 	if(CR.mob_react)
 		outstring += "<li>Can react in mob: Yes</li>"
