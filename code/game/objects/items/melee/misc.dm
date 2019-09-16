@@ -180,14 +180,13 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
-	var/cooldown = 14
+	var/cooldown = 13
 	var/on = TRUE
 	var/last_hit = 0
 	var/stun_stam_cost_coeff = 1.25
 	var/hardstun_ds = 1
 	var/softstun_ds = 0
 	var/stam_dmg = 30
-	total_mass = TOTAL_MASS_NORMAL_ITEM
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
