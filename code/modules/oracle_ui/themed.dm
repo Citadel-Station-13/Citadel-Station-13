@@ -33,10 +33,10 @@ GLOBAL_LIST_EMPTY(oui_file_cache)
 		return errormsg
 
 /datum/oracle_ui/themed/proc/get_content_file(filename)
-	return get_file("./modular_citadel/html/oracle_ui/content/[content_root]/[filename]")
+	return get_file("./html/oracle_ui/content/[content_root]/[filename]")
 
 /datum/oracle_ui/themed/proc/get_themed_file(filename)
-	return get_file("./modular_citadel/html/oracle_ui/themes/[theme]/[filename]")
+	return get_file("./html/oracle_ui/themes/[theme]/[filename]")
 
 /datum/oracle_ui/themed/proc/process_template(template, variables)
 	var/regex/pattern = regex("\\@\\{(\\w+)\\}","gi")
