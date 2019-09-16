@@ -621,12 +621,12 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
-/datum/reagent/mutationtoxin/moth
-	name = "Moth Mutation Toxin"
+/datum/reagent/mutationtoxin/insect
+	name = "Insect Mutation Toxin"
 	id = "mothmutationtoxin"
 	description = "A glowing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/moth
+	race = /datum/species/insect
 	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
 
 /datum/reagent/mutationtoxin/pod

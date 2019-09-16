@@ -17,6 +17,8 @@
 	//Eye colour
 	var/eye_color = "000"
 
+	var/horn_color = "85615a"	//specific horn colors, because why not?
+
 	var/skin_tone = "caucasian1"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
