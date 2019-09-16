@@ -92,7 +92,7 @@
 		return ""
 
 
-	var/outstring = "|<a href=\"#[R.name]\"><h3 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+)[R.name]</h3></a> pH: [R.pH] | "
+	var/outstring = "|<a href=\"#[R.name]\"><h5 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+)[R.name]</h5></a> pH: [R.pH] | "
 	var/datum/reagent/R3
 	if(CR)
 		outstring += "<ul>"
@@ -146,13 +146,21 @@
 
 	if(R.ImpureChem != "fermiTox" || !R.ImpureChem)
 		R3 = GLOB.chemical_reagents_list[R.ImpureChem]
-		outstring += "<li>Impure chem:[R3.name]</li>"
+		outstring += "<li>Impure chem:<a href=\"#[R3.name]\">[R3.name]</a></li>"
 
 	if(R.InverseChem != "fermiTox" || !R.InverseChem)
 		R3 = GLOB.chemical_reagents_list[R.InverseChem]
-		outstring += "<li>Inverse chem:[R3.name]</li> "
+		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> "
+
+
 
 	if(CR)
+		if(CR.required_container)
+			/*var/obj/item/I
+			I = istype(I, CR.required_container) if you can work out how to get this to work, by all means.
+			outstring += "<li>Required container: [I.name]</li>"*/
+			outstring += "<li>Required container: [CR.required_container]</li>"
+
 		if(CR.FermiChem)
 			outstring += "<li>Minimum purity: [CR.PurityMin]</li> [(CR.FermiExplode?"<li>Special explosion: Yes</li>":"")]"
 
@@ -182,12 +190,13 @@
 	outstring += "</ul> | <ul>"
 
 	//Reaction vars
+	if(CR.required_temp)
+		outstring += "<li>Min react temp: [CR.required_temp]K</li>"
 	if(CR.FermiChem)
 		outstring += "[(CR.FermiChem?"<li>Min react temp: [CR.OptimalTempMin]K</li>":"[(CR.required_temp?"<li>Min react temp: [CR.required_temp]K</li>":"")]")] [(CR.FermiChem?"<li>Explosion temp: [CR.ExplodeTemp]K</li>":"")] [(CR.FermiChem?"<li>pH range: [max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]</li>":"")] <li>Minimum purity: [CR.PurityMin] [(CR.FermiExplode?"<li>Special explosion: Yes</li>":"")]"
 	if(CR.is_cold_recipe)
 		outstring += "<li>Cold: Yes</li>"
 	if(CR.required_container)
-
 		outstring += "<li>Required container: [CR.required_container]</li>"
 	if(CR.mob_react)
 		outstring += "<li>Can react in mob: Yes</li>"
