@@ -51,7 +51,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_color = "#808000"
 	if((current_version < 21) && features["meat_type"] && (features["meat_type"] == null))
 		features["meat_type"] = "Mammalian"
-	var/itsallogre = TRUE
 	if(current_version < 22)
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
@@ -104,8 +103,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						new_value = JP_LOW
 			if(new_value)
 				job_preferences[initial(J.title)] = new_value
-		itsallogre = FALSE
-	if(current_version < 23 && itsallogre) // we are fixing a gamebreaking bug.
+	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
