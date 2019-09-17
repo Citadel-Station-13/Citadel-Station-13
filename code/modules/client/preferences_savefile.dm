@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	22
+#define SAVEFILE_VERSION_MAX	23
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -49,7 +49,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_style = "mono"
 	if(current_version < 20)
 		pda_color = "#808000"
-	if(current_version < 21)
+	if(current_version < 23)
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
