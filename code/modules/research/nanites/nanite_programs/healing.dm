@@ -74,12 +74,12 @@
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			return ..()
-	if(host_mob.getBrainLoss())
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN))
 		return ..()
 	return FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
-	host_mob.adjustBrainLoss(-1, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1, TRUE)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
@@ -195,12 +195,12 @@
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			return ..()
-	if(host_mob.getBrainLoss())
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN))
 		return ..()
 	return FALSE
 	
 /datum/nanite_program/brain_heal_advanced/active_effect()
-	host_mob.adjustBrainLoss(-2, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2, TRUE)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
@@ -232,7 +232,7 @@
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.damaged_brain)
+	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
 		return FALSE
 	if(C.get_ghost())
 		return FALSE
@@ -252,7 +252,7 @@
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
 		var/tplus = world.time - C.timeofdeath
 		if(tplus > 600)
-			C.adjustBrainLoss( max(0, ((1800 - tplus) / 1800 * 150)), 150)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN,  max(0, ((1800 - tplus) / 1800 * 150)), 150)
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
 		playsound(C, 'sound/machines/defib_failed.ogg', 50, 0)

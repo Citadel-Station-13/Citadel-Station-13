@@ -991,7 +991,7 @@
 			if (HAS_TRAIT(H, TRAIT_DEAF))//How the heck you managed to get here I have no idea, but just in case!
 				speaktrigger += "I can barely hear you! "
 			//And the brain damage. And the brain damage. And the brain damage. And the brain damage. And the brain damage.
-			switch(H.getBrainLoss())
+			switch(H.getOrganLoss(ORGAN_SLOT_BRAIN))
 				if(20 to 40)
 					speaktrigger += "I have a mild head ache, "
 				if(40 to 80)

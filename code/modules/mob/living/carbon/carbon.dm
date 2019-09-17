@@ -814,7 +814,8 @@
 		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
-		B.damaged_brain = FALSE
+		B.organ_flags & ORGAN_FAILING = FALSE
+		B.brain_death = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)

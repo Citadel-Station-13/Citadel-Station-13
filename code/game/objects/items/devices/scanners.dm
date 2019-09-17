@@ -135,7 +135,7 @@ SLIME SCANNER
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
-		if(H.undergoing_liver_failure() && H.stat != DEAD)
+		if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated BUG_PROBABLE_CAUSE
 			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
 
 	var/msg = "<span class='info'>*---------*\nAnalyzing results for [M]:\n\tOverall status: [mob_status]\n"
@@ -157,12 +157,8 @@ SLIME SCANNER
 		msg += "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>\n"
 		if(advanced)
 			msg += "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>\n"
-	if (M.getBrainLoss() >= 200 || !M.getorgan(/obj/item/organ/brain))
-		msg += "\t<span class='alert'>Subject's brain function is non-existent.</span>\n"
-	else if (M.getBrainLoss() >= 120)
-		msg += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>\n"
-	else if (M.getBrainLoss() >= 45)
-		msg += "\t<span class='alert'>Brain damage detected.</span>\n"
+	if (!M.getorgan(/obj/item/organ/brain))
+		to_chat(user, "\t<span class='alert'>Subject lacks a brain.</span>") //Unsure how this won't proc for 50% of the cit playerbase (This is a joke everyone on cit a cute.)
 	if(ishuman(M) && advanced) // Should I make this not advanced?
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/liver/L = H.getorganslot("liver")
@@ -212,7 +208,7 @@ SLIME SCANNER
 		if(C.roundstart_quirks.len)
 			msg += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>\n"
 	if(advanced)
-		msg += "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>\n"
+		msg += "\t<span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
 	if(M.radiation)
 		msg += "\t<span class='alert'>Subject is irradiated.</span>\n"
 		if(advanced)
@@ -296,6 +292,62 @@ SLIME SCANNER
 			msg += "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>\n"
 			for(var/obj/item/bodypart/org in damaged)
 				msg += "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]\n"
+		
+	//Organ damages report
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/minor_damage
+		var/major_damage
+		var/max_damage
+		var/report_organs = FALSE
+
+		//Piece together the lists to be reported
+		for(var/O in H.internal_organs)
+			var/obj/item/organ/organ = O
+			if(organ.organ_flags & ORGAN_FAILING)
+				report_organs = TRUE	//if we report one organ, we report all organs, even if the lists are empty, just for consistency
+				if(max_damage)
+					max_damage += ", "	//prelude the organ if we've already reported an organ
+					max_damage += organ.name	//this just slaps the organ name into the string of text
+				else
+					max_damage = "\t<span class='alert'>Non-Functional Organs: "	//our initial statement
+					max_damage += organ.name
+			else if(organ.damage > organ.high_threshold)
+				report_organs = TRUE
+				if(major_damage)
+					major_damage += ", "
+					major_damage += organ.name
+				else
+					major_damage = "\t<span class='info'>Severely Damaged Organs: "
+					major_damage += organ.name
+			else if(organ.damage > organ.low_threshold)
+				report_organs = TRUE
+				if(minor_damage)
+					minor_damage += ", "
+					minor_damage += organ.name
+				else
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
+					minor_damage += organ.name
+
+		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
+			if(!max_damage)
+				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>"
+			else
+				max_damage += "</span>"
+			if(!major_damage)
+				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
+			else
+				major_damage += "</span>"
+			if(!minor_damage)
+				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
+			else
+				minor_damage += "</span>"
+			to_chat(user, minor_damage)
+			to_chat(user, major_damage)
+			to_chat(user, max_damage)
+		//Genetic damage
+		if(advanced && H.has_dna())
+			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 
 	// Species and body temperature
