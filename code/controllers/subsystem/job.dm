@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(player.client.prefs.job_preferences[job.title] == level)
+		if(player.client.prefs.job_preferences["[job.title]"] == level)
 			JobDebug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
 	return candidates
@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(job)
 
 	initial_players_to_assign = unassigned.len
 
-	JobDebug("DO, Len: [unassigned.len]")
+	JobDebug("DO, Len: [unassigned?.len]")
 	if(unassigned.len == 0)
 		return validate_required_jobs(required_jobs)
 
@@ -270,7 +270,7 @@ SUBSYSTEM_DEF(job)
 	JobDebug("DO, Running Overflow Check 1")
 	var/datum/job/overflow = GetJob(SSjob.overflow_role)
 	var/list/overflow_candidates = FindOccupationCandidates(overflow, JP_LOW)
-	JobDebug("AC1, Candidates: [overflow_candidates.len]")
+	JobDebug("AC1, Candidates: [overflow_candidates?.len]")
 	for(var/mob/dead/new_player/player in overflow_candidates)
 		JobDebug("AC1 pass, Player: [player]")
 		AssignRole(player, SSjob.overflow_role)
@@ -333,7 +333,7 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
-				if(player.client.prefs.job_preferences[job.title] == level)
+				if(player.client.prefs.job_preferences["[job.title]"] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
@@ -540,7 +540,7 @@ SUBSYSTEM_DEF(job)
 			if(job.required_playtime_remaining(player.client))
 				young++
 				continue
-			switch(player.client.prefs.job_preferences[job.title])
+			switch(player.client.prefs.job_preferences["[job.title]"])
 				if(JP_HIGH)
 					high++
 				if(JP_MEDIUM)
