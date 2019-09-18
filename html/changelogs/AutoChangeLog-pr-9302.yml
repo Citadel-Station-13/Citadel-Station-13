@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Things that access job_preferences now explicitly access keys, which means it no longer attempts to access invalid indices and runtimes as a result."

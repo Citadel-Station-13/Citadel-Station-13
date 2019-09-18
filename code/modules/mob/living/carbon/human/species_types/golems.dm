@@ -45,7 +45,7 @@
 	return golem_name
 
 /datum/species/golem/random
-	name = "Random Golem"
+	name = "Golem Mutant"
 	blacklisted = FALSE
 	dangerous_existence = FALSE
 	var/static/list/random_golem_types
