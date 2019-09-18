@@ -182,7 +182,7 @@ SUBSYSTEM_DEF(job)
 			if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 				continue
 			var/list/candidates = FindOccupationCandidates(job, level)
-			if(!candidates.len)
+			if(!candidates?.len)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(job)
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 			continue
 		var/list/candidates = FindOccupationCandidates(job, level)
-		if(!candidates.len)
+		if(!candidates?.len)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
