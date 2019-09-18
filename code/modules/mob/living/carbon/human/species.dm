@@ -1339,9 +1339,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
 		if(istype(J) && J.full_speed && J.allow_thrust(0.005, H))	//Prevents stacking
-			. -= 1
+			. -= 0.4
 		else if(istype(T) && T.allow_thrust(0.005, H))
-			. -= 1
+			. -= 0.4
 
 	if(!ignoreslow && gravity)
 		if(H.wear_suit)
