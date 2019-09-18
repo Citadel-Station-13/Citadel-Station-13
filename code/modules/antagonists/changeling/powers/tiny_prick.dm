@@ -264,3 +264,61 @@
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
 	return TRUE
+
+/obj/effect/proc_holder/changeling/sting/sleepy
+	name = "Narcolepsy Sting"
+	desc = "We silently sting a human with a cocktail of chemicals that causes them to fall asleep."
+	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly tired. This ability is loud, and carries a risk of our blood gaining violent sensitivity to heat."
+	sting_icon = "sting_sleep"
+	chemical_cost = 15
+	dna_cost = 2
+	loudness = 2
+	req_absorbs = 2
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_sleep"
+	action_background_icon_state = "bg_ling"
+
+/obj/effect/proc_holder/changeling/sting/sleepy/sting_action(mob/user, mob/target)
+	log_combat(user, target, "stung", "sleep sting")
+	if(target.reagents)
+		target.reagents.add_reagent("chloralhydratedelayed", 10)
+		target.reagents.add_reagent("tirizene", 10)
+	return TRUE
+
+/obj/effect/proc_holder/changeling/sting/pyro
+	name = "Pyro Sting"
+	desc = "We silently sting a human with a cocktail of chemicals that causes them to burn up from the inside"
+	helptext = "Does not provide a warning to the victim, though they will likely realize that they are burning up and are covered in flamable liquids. This ability is loud, and carries a risk of our blood gaining violent sensitivity to heat."
+	sting_icon = "sting_pyro"
+	chemical_cost = 15
+	dna_cost = 2
+	loudness = 2
+	req_absorbs = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_pyro"
+	action_background_icon_state = "bg_ling"
+
+/obj/effect/proc_holder/changeling/sting/pyro/sting_action(mob/user, mob/target)
+	log_combat(user, target, "stung", "pyro sting")
+	if(target.reagents)
+		target.reagents.add_reagent("phlogiston", 5)
+	return TRUE
+
+/obj/effect/proc_holder/changeling/sting/tesla
+	name = "Tesla Sting"
+	desc = "We silently sting a human with a cocktail of chemicals that causes them to randomly be shocked"
+	helptext = "Does not provide a warning to the victim, though they will randomly start to get shocked. This ability is loud, and carries a risk of our blood gaining violent sensitivity to heat."
+	sting_icon = "sting_tesla"
+	chemical_cost = 15
+	dna_cost = 2
+	loudness = 2
+	req_absorbs = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_tesla"
+	action_background_icon_state = "bg_ling"
+
+/obj/effect/proc_holder/changeling/sting/tesla/sting_action(mob/user, mob/target)
+	log_combat(user, target, "stung", "tesla sting")
+	if(target.reagents)
+		target.reagents.add_reagent("teslium", 5)
+	return TRUE
