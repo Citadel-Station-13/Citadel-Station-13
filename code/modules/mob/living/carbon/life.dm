@@ -8,8 +8,8 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
-		handle_organs()
+	//Reagent processing needs to come before breathing, to prevent edge cases.
+	handle_organs()
 
 	. = ..()
 
@@ -384,9 +384,14 @@
 			. |= BP.on_life()
 
 /mob/living/carbon/proc/handle_organs()
-	for(var/V in internal_organs)
-		var/obj/item/organ/O = V
-		O.on_life()
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_life()
+	else
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)

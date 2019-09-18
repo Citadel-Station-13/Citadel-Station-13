@@ -288,7 +288,7 @@
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-		L.adjustLungLoss(acidstr*2, C)
+		L.adjustOrganLoss(ORGAN_SLOT_LUNG, acidstr*2)
 		C.apply_damage(acidstr/5, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()

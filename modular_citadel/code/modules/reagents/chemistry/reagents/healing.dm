@@ -18,7 +18,7 @@
 	if(T)
 		T.adjustTongueLoss(C, -2)//Fix the inputs me!
 	if(L)
-		L.adjustLungLoss(-5, C)
+		L.adjustOrganLoss(ORGAN_SLOT_LUNG, -5)
 		C.adjustOxyLoss(-2)
 	else
 		C.adjustOxyLoss(-10)
@@ -65,9 +65,9 @@
 				holder.remove_reagent(src.id, "10")
 
 		if(!C.getorganslot(ORGAN_SLOT_LUNGS))
-			var/obj/item/organ/lungs/L = new()
+			var/obj/item/organ/lungs/yamero/L = new()
 			L.Insert(C)
-			to_chat(C, "<span class='notice'>You feel your lungs reform in your chest.</span>")
+			to_chat(C, "<span class='notice'>You feel the yamerol merge in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
 
 	C.adjustOxyLoss(-3)
@@ -88,7 +88,7 @@
 	if(T)
 		T.adjustTongueLoss(C, 1)
 	if(L)
-		L.adjustLungLoss(4, C)
+		L.adjustOrganLoss(ORGAN_SLOT_LUNG, 4)
 		C.adjustOxyLoss(3)
 	else
 		C.adjustOxyLoss(10)

@@ -120,7 +120,10 @@
 /mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
+		if(!maximum)
+			maximum = O.maxHealth
 		O.applyOrganDamage(amount, maximum)
+		O.onDamage(amount, maximum)
 
 /** setOrganLoss
   * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)
@@ -132,6 +135,7 @@
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
 		O.setOrganDamage(amount)
+		O.onSetDamage(amount)
 
 /** getOrganLoss
   * inputs: slot (organ slot, like ORGAN_SLOT_HEART)
@@ -143,6 +147,15 @@
 	if(O)
 		return O.damage
 
+/mob/living/carbon/adjustAllOrganLoss(amount, maximum)
+	for(var/o in internal_organs)
+		if(O && !(status_flags & GODMODE))
+			continue
+		if(!maximum)
+			maximum = O.maxHealth
+		O.applyOrganDamage(amount, maximum)
+		O.onDamage(amount, maximum)
+		
 
 ////////////////////////////////////////////
 
