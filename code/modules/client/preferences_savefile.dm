@@ -52,6 +52,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if((current_version < 21) && features["meat_type"] && (features["meat_type"] == null))
 		features["meat_type"] = "Mammalian"
 	if(current_version < 22)
+
+		job_preferences = list() //It loaded null from nonexistant savefile field.
+
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
 		var/job_civilian_low = 0
