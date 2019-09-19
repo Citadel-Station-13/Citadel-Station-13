@@ -25,9 +25,6 @@
 		if(!(organ_flags & ORGAN_FAILING))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
-	
-	if(Nutri)
-
 
 	if(damage < low_threshold)
 		return
@@ -44,7 +41,7 @@
 			H.vomit(damage)
 			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
-	
+
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)

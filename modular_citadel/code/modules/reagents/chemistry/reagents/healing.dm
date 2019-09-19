@@ -18,7 +18,7 @@
 	if(T)
 		T.adjustTongueLoss(C, -2)//Fix the inputs me!
 	if(L)
-		L.adjustOrganLoss(ORGAN_SLOT_LUNG, -5)
+		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, -5)
 		C.adjustOxyLoss(-2)
 	else
 		C.adjustOxyLoss(-10)
@@ -65,7 +65,7 @@
 				holder.remove_reagent(src.id, "10")
 
 		if(!C.getorganslot(ORGAN_SLOT_LUNGS))
-			var/obj/item/organ/lungs/yamero/L = new()
+			var/obj/item/organ/lungs/yamerol/L = new()
 			L.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
@@ -88,8 +88,27 @@
 	if(T)
 		T.adjustTongueLoss(C, 1)
 	if(L)
-		L.adjustOrganLoss(ORGAN_SLOT_LUNG, 4)
+		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, 4)
 		C.adjustOxyLoss(3)
 	else
 		C.adjustOxyLoss(10)
+	..()
+
+
+/datum/reagent/fermi/synthtissue
+	name = "Synthtissue"
+	id = "synthtissue"
+	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage."
+
+/datum/reagent/fermi/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+	if(iscarbon(M))
+		var/target = M.zone_selected
+		if (M.stat == DEAD)
+			show_message = 0
+		if(method in list(PATCH, TOUCH))
+			M.apply_damage(volume*1.25, BRUTE, target)
+			M.apply_damage(volume*1.25, BURN, target)
+			if(show_message)
+				to_chat(M, "<span class='danger'>You feel your damaged [target] heal! It stings like hell!</span>")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()

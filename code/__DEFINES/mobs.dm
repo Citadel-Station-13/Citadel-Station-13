@@ -254,6 +254,9 @@
 
 #define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
+#define MAX_REVIVE_FIRE_DAMAGE 180
+#define MAX_REVIVE_BRUTE_DAMAGE 180
+
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.

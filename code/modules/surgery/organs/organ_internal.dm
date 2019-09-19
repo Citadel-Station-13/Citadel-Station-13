@@ -29,17 +29,6 @@
 	var/high_threshold_cleared
 	var/low_threshold_cleared
 
-/obj/item/organ/proc/Assemble_Failure_Message()	//need to assemble a failure message since we can't have variables be based off of the same object's variables
-	var/name_length
-	//if no unique failure message is set, output the generic one, otherwise give the one we have set
-	if(!Unique_Failure_Msg)
-		name_length = lentext(name)
-		if(name[name_length] == "s")	//plural case, done without much sanitization since I don't know any organ that ends with an "s" that isn't plural at the moment
-			Unique_Failure_Msg = "<span class='danger'>Subject's [name] are too damaged to function, and needs to be replaced or fixed!</span>"
-		else
-			Unique_Failure_Msg = "<span class='danger'>Subject's [name] is too damaged to function, and needs to be replaced or fixed!</span>"
-	return Unique_Failure_Msg
-
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
@@ -94,8 +83,8 @@
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount) //FERMI_TWEAK
-	
+	applyOrganDamage(healing_amount) //to FERMI_TWEAK
+
 /obj/item/organ/examine(mob/user)
 	. = ..()
 	if(organ_flags & ORGAN_FAILING)

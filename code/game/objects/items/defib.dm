@@ -451,7 +451,7 @@
 	if(!heart || (heart.organ_flags & ORGAN_FAILING))
 		return
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
+	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || H.suiciding)
 		return
 	return TRUE
 
@@ -568,12 +568,11 @@
 	if(do_after(user, primetimer, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
-		var/tplus = world.time - H.timeofdeath
 		// patients rot when they are killed, and die when they are dead
+		var/tplus = world.time - H.timeofdeath	//length of time spent dead
 		var/tloss = deathtimer
 		var/total_burn	= 0
 		var/total_brute	= 0
-		var/tplus = world.time - H.timeofdeath	//length of time spent dead
 		var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 		if(do_after(user, primetimer2, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
@@ -614,11 +613,11 @@
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain tissue is damaged making recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 						if(BR.brain_death)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain damaged beyond point of no return. Further attempts futile.</span>"
-						if(BR.suicided || BR.brainmob?.suiciding)
+						if(H.suicided || BR.brainmob?.suiciding)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No intelligence pattern can be detected in patient's brain. Further attempts futile.</span>"
 					else
 						failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain is missing. Further attempts futile.</span>"
-						
+
 
 				if(failed)
 					user.visible_message(failed)

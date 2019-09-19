@@ -198,7 +198,7 @@
 	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN))
 		return ..()
 	return FALSE
-	
+
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2, TRUE)
 	if(iscarbon(host_mob) && prob(10))
@@ -232,7 +232,7 @@
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
+	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || C.suiciding)
 		return FALSE
 	if(C.get_ghost())
 		return FALSE

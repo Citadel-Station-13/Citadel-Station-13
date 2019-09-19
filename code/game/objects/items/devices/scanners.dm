@@ -243,11 +243,11 @@ SLIME SCANNER
 					healthy = FALSE
 					msg += "\t<span class='alert'>Subject is deaf.</span>\n"
 				else
-					if(ears.ear_damage)
-						msg += "\t<span class='alert'>Subject has [ears.ear_damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>\n"
+					if(ears.damage)
+						to_chat(user, "\t<span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>")
 						healthy = FALSE
 					if(ears.deaf)
-						msg += "\t<span class='alert'>Subject is [ears.ear_damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>\n"
+						to_chat(user, "\t<span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>")
 						healthy = FALSE
 				if(healthy)
 					msg += "\t<span class='info'>Healthy.</span>\n"
@@ -263,13 +263,13 @@ SLIME SCANNER
 				if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
 					msg += "\t<span class='alert'>Subject is nearsighted.</span>\n"
 					healthy = FALSE
-				if(eyes.eye_damage > 30)
+				if(eyes.damage > 30)
 					msg += "\t<span class='alert'>Subject has severe eye damage.</span>\n"
 					healthy = FALSE
-				else if(eyes.eye_damage > 20)
+				else if(eyes.damage > 20)
 					msg += "\t<span class='alert'>Subject has significant eye damage.</span>\n"
 					healthy = FALSE
-				else if(eyes.eye_damage)
+				else if(eyes.damage)
 					msg += "\t<span class='alert'>Subject has minor eye damage.</span>\n"
 					healthy = FALSE
 				if(healthy)
@@ -292,7 +292,7 @@ SLIME SCANNER
 			msg += "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>\n"
 			for(var/obj/item/bodypart/org in damaged)
 				msg += "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]\n"
-		
+
 	//Organ damages report
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -345,9 +345,6 @@ SLIME SCANNER
 			to_chat(user, minor_damage)
 			to_chat(user, major_damage)
 			to_chat(user, max_damage)
-		//Genetic damage
-		if(advanced && H.has_dna())
-			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 
 	// Species and body temperature

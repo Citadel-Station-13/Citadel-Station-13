@@ -447,7 +447,7 @@
 		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
+	H.setOrganLoss(ORGAN_SLOT_BRAIN, CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
 
 	// brain function, they also have no limbs or internal organs.

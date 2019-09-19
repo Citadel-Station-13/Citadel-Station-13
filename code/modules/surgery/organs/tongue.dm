@@ -10,8 +10,7 @@
 	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
-	var/maxHealth = TONGUE_MAX_HEALTH
-	var/damage = 0
+	maxHealth = TONGUE_MAX_HEALTH
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,

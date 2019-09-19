@@ -44,7 +44,7 @@
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
-	M.setBrainLoss(0)
+	M.setOrganLoss(ORGAN_SLOT_BRAIN, 0)
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
@@ -856,16 +856,16 @@
 			if(M.notify_ghost_cloning(source = M))
 				spawn (100) //so the ghost has time to re-enter
 					return
-			
+
 			else
 				M.adjustOxyLoss(-20, 0)
 				M.adjustToxLoss(-20, 0)
 				var/mob/living/carbon/H = M
 				for(var/organ in H.internal_organs)
 					var/obj/item/organ/O = organ
-					O.setOrganDamage(0) 
+					O.setOrganDamage(0)
 				M.updatehealth()
-				
+
 				if(M.revive())
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)

@@ -103,7 +103,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
 	..()
-	if((crit_fail || !(organ_flags & ORGAN_FAILING)) && amount > 0)
+	if(crit_fail || !(organ_flags & ORGAN_FAILING))
 		return
 	owner.adjustStaminaLoss(-3.5) //Citadel edit, makes it more useful in Stamina based combat
 	if(owner.AmountStun() > STUN_SET_AMOUNT)

@@ -230,8 +230,7 @@
 	//	owner.remove_status_effect(src)//At the moment, a user can enthrall themselves, toggle this back in if that should be removed.
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
-	mental_capacity = 500 - B.get_brain_damage()
+	mental_capacity = 500 - M.getOrganLoss(ORGAN_SLOT_BRAIN)//It's their brain!
 	var/mob/living/carbon/human/H = owner
 	if(H)//Prefs
 		if(!H.canbearoused)
