@@ -137,7 +137,7 @@
 /obj/item/organ/heart/nightmare/update_icon()
 	return //always beating visually
 
-/obj/item/organ/heart/nightmare/on_death()
+/obj/item/organ/heart/nightmare/decay()
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)

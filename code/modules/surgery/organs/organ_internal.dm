@@ -69,15 +69,15 @@
 	return
 
 /obj/item/organ/process()
-	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
+	decay() //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/on_death()	//runs decay when outside of a person
+/obj/item/organ/proc/decay()	//runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
 	applyOrganDamage(maxHealth * decay_factor)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	if(organ_flags & ORGAN_FAILING)
+	if(isFailing())
 		return
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = -(maxHealth * healing_factor)
@@ -87,7 +87,7 @@
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(organ_flags & ORGAN_FAILING)
+	if(isFailing())
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken!</span>"
 			return
@@ -141,6 +141,11 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
+/obj/item/organ/proc/isFailing()
+	if(isFailing())
+		return TRUE
+	return false
+
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
 	if(!d) //Micro-optimization.
@@ -169,14 +174,14 @@
 	var/delta = damage - prev_damage
 	if(delta > 0)
 		if(damage >= maxHealth)
-			organ_flags |= ORGAN_FAILING
+			organ_flags |= ORGAN_FAILING //|= is remove
 			return now_failing
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			return high_threshold_passed
 		if(damage > low_threshold && prev_damage <= low_threshold)
 			return low_threshold_passed
 	else
-		organ_flags &= ~ORGAN_FAILING
+		organ_flags &= ~ORGAN_FAILING //&= ~ is add
 		if(prev_damage > low_threshold && damage <= low_threshold)
 			return low_threshold_cleared
 		if(prev_damage > high_threshold && damage <= high_threshold)

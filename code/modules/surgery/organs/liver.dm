@@ -27,7 +27,7 @@
 	var/mob/living/carbon/C = owner
 
 	if(istype(C))
-		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
+		if(!(isFailing()))//can't process reagents with a failing liver
 			//slowly heal liver damage
 			damage = max(0, damage - 0.1)
 

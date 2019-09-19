@@ -446,12 +446,12 @@
 
 /obj/item/organ/lungs/on_life()
 	..()
-	if((!failed) && ((organ_flags & ORGAN_FAILING)))
+	if((!failed) && ((isFailing())))
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
 								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
 		failed = TRUE
-	else if(!(organ_flags & ORGAN_FAILING))
+	else if(!(isFailing()))
 		failed = FALSE
 	return
 

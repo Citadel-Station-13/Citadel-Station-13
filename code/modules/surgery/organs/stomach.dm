@@ -22,7 +22,7 @@
 
 
 	if(istype(H))
-		if(!(organ_flags & ORGAN_FAILING))
+		if(!(isFailing()))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
 

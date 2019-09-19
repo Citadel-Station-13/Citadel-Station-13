@@ -101,7 +101,7 @@
 	if(istype(O, /obj/item/organ_storage)) //BUG_PROBABLE_CAUSE
 		return //Borg organ bags shouldn't be killing brains
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("neurine")) //Neurine fixes dead brains
+	if((isFailing()) && O.is_drainable() && O.reagents.has_reagent("neurine")) //Neurine fixes dead brains
 		. = TRUE //don't do attack animation.
 		var/cached_Bdamage = brainmob?.health
 		var/datum/reagent/medicine/neurine/N = reagents.has_reagent("neurine")
@@ -132,7 +132,7 @@
 					gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 		return
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
+	if((isFailing()) && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
 		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent("mannitol")
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
@@ -164,17 +164,17 @@
 		if(brainmob.get_ghost(FALSE, TRUE))
 			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
 				. += "<span class='info'>It's lifeless and severely damaged, only the strongest of chems will save it.</span>"
-			else if(organ_flags & ORGAN_FAILING)
+			else if(isFailing())
 				. += "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>"
 			else
 				. += "<span class='info'>You can feel the small spark of life still left in this one.</span>"
-		else if(organ_flags & ORGAN_FAILING)
+		else if(isFailing())
 			. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
 		else
 			. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
 	else
 		if(decoy_override)
-			if(organ_flags & ORGAN_FAILING)
+			if(isFailing())
 				. += "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>"
 			else
 				. += "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>"
@@ -247,7 +247,7 @@
 		owner.death()
 		brain_death = TRUE
 
-/obj/item/organ/brain/on_death()
+/obj/item/organ/brain/decay()
 	if(damage <= BRAIN_DAMAGE_DEATH) //rip
 		brain_death = FALSE
 

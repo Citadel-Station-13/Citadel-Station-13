@@ -13,7 +13,7 @@
 
 /obj/item/organ/appendix/on_life()
 	..()
-	if(!(organ_flags & ORGAN_FAILING))
+	if(!(isFailing()))
 		return
 	var/mob/living/carbon/M = owner
 	if(M)

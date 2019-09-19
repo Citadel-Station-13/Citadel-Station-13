@@ -27,7 +27,7 @@
 		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()
 
-/obj/item/organ/body_egg/on_death()
+/obj/item/organ/body_egg/decay()
 	. = ..()
 	if(!owner)
 		return
