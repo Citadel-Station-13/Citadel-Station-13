@@ -71774,6 +71774,9 @@
 	location = "Security"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/northleft{
+	req_access_txt = "63"
+	},
 /turf/open/floor/plasteel,
 /area/security/range)
 "cqh" = (
