@@ -130,7 +130,6 @@
 	icon_state = "ears-c-u"
 	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
 	damage_multiplier = 0.5
-This conversation was marked as resolved by ExcessiveUseOfCobblestone
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()

@@ -30,13 +30,13 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/proc/onDamage(damage_mod)
+/obj/item/organ/tongue/onDamage(damage_mod)
 	if (maxHealth == "alien")
 		return
 	if (maxHealth == "bone")
-		var/target = M.get_bodypart(BODY_ZONE_HEAD)
-		M.apply_damage(damage_mod, BURN, target)
-		to_chat(M, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
+		var/target = owner.get_bodypart(BODY_ZONE_HEAD)
+		owner.apply_damage(damage_mod, BURN, target)
+		to_chat(owner, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
 		return
 	if(damage+damage_mod < 0)
 		damage = 0
@@ -44,13 +44,13 @@
 
 	damage += damage_mod
 	if ((damage / maxHealth) > 1)
-		to_chat(M, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
+		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
 	else if ((damage / maxHealth) > 0.85)
-		to_chat(M, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
+		to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
 	else if ((damage / maxHealth) > 0.5)
-		to_chat(M, "<span class='notice'>Your tongue is really starting to hurt.</span>")
+		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
 
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)

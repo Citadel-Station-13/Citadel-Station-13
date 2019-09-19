@@ -73,7 +73,7 @@
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
-	cached_damage = damage
+	var/cached_damage = damage
 	if (maxHealth == INFINITY)
 		return
 	if(cached_damage+damage_mod < 0)
