@@ -15021,6 +15021,9 @@
 	location = "Bar"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/eastleft{
+	req_access_txt = "25"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aGc" = (
@@ -21299,6 +21302,9 @@
 	location = "Theatre"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "46"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/theatre)
 "aQj" = (
@@ -26153,6 +26159,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/eastright{
+	req_one_access_txt = "48,50"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aXg" = (
@@ -29213,6 +29222,9 @@
 	location = "Kitchen"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/eastleft{
+	req_access_txt = "28"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bcd" = (
@@ -30865,6 +30877,9 @@
 	location = "Hydroponics"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "35"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "beW" = (
@@ -36055,6 +36070,9 @@
 /obj/structure/plasticflaps/opaque,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/northright{
+	req_access_txt = "48"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "bnB" = (
@@ -41789,6 +41807,9 @@
 	location = "Atmospherics"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "24"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bwH" = (
@@ -82547,6 +82568,9 @@
 	location = "Engineering"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/northright{
+	req_access_txt = "10"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cIr" = (
@@ -87734,6 +87758,9 @@
 	location = "Medbay"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westleft{
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel,
 /area/medical/storage)
 "cRl" = (
@@ -114081,6 +114108,9 @@
 	location = "Robotics"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/northright{
+	req_access_txt = "47"
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dKl" = (
@@ -127273,6 +127303,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"oOb" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window{
+	req_one_access_txt = "48,50"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "oSD" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -167677,7 +167720,7 @@ aCP
 avQ
 aFe
 aGp
-aHH
+oOb
 aJg
 aKF
 aLP
