@@ -880,7 +880,7 @@
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
 			if(isliving(my_atom))
-				if(R.reagentFlags & REAGENT_ONMOBMERGE)//Forces on_mob_add proc when a chem is merged
+				if(R.reagent_flags & REAGENT_ONMOBMERGE)//Forces on_mob_add proc when a chem is merged
 					R.on_mob_add(my_atom, amount)
 			R.on_merge(data, amount, my_atom, other_purity)
 			if(!no_react)
@@ -899,7 +899,7 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	if(R.reagentFlags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
+	if(R.reagent_flags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
 		R.on_new(pH) //Add more as desired.
 
 

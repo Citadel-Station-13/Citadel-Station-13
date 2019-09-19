@@ -39,19 +39,12 @@
 	var/turf/loc = null 				//Should be the creation location!
 	var/pH = 7							//pH of the specific reagent, used for calculating the sum pH of a holder.
 	//var/SplitChem			= FALSE		//If the chem splits on metabolism
-	var/ImpureChem						// What chemical is metabolised with an inpure reaction
-	var/InverseChemVal 		= 0			// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	var/InverseChem 					// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
+	var/impure_chem						// What chemical is metabolised with an inpure reaction
+	var/inverse_chem_val 		= 0			// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
+	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/metabolizing = FALSE
-	var/reagentFlags //REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
-	//REAGENT_DEAD_PROCESS  	Calls on_mob_dead() if present in a dead body
-	//REAGENT_DONOTSPLIT		Do not split the chem at all during processing
-	//REAGENT_ONLYINVERSE		Only invert chem, no splitting
-	//REAGENT_ONMOBMERGE		Call on_mob_life proc when reagents are merging.
-	//REAGENT_INVISIBLE			Doesn't appear on handheld health analyzers.
-	//REAGENT_FORCEONNEW		Forces a on_new() call without a data overhead
-	//REAGENT_SNEAKYNAME    	When inverted, the inverted chem uses the name of the original chem
-	//REAGENT_SPLITRETAINVOL 	Retains initial volume of chem when splitting
+	var/reagent_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
+
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -82,7 +75,7 @@
 
 //called when a mob processes chems when dead.
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/M)
-	if(!(reagentFlags & REAGENT_DEAD_PROCESS)) //justincase
+	if(!(reagent_flags & REAGENT_DEAD_PROCESS)) //justincase
 		return
 	current_cycle++
 	if(holder)
@@ -91,7 +84,7 @@
 
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
-	if(!(reagentFlags & REAGENT_DONOTSPLIT))
+	if(!(reagent_flags & REAGENT_DONOTSPLIT))
 		var/mob/living/carbon/M = L
 		if(!M)
 			return
@@ -102,22 +95,22 @@
 			cached_purity = purity
 		if(cached_purity < 0)
 			CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-		else if ((InverseChemVal > purity) && (InverseChem))//Turns all of a added reagent into the inverse chem
+		else if ((inverse_chem_val > purity) && (inverse_chem))//Turns all of a added reagent into the inverse chem
 			M.reagents.remove_reagent(id, amount, FALSE)
-			M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1-cached_purity)
-			log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [InverseChem]")
+			M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
+			log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [inverse_chem]")
 			return
-		else if (ImpureChem)
+		else if (impure_chem)
 			var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
-			if(!(reagentFlags & REAGENT_SPLITRETAINVOL))
+			if(!(reagent_flags & REAGENT_SPLITRETAINVOL))
 				M.reagents.remove_reagent(id, (impureVol), FALSE)
-			M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1-cached_purity)
-			if(reagentFlags & REAGENT_SNEAKYNAME)
-				var/datum/reagent/R = M.reagents.has_reagent("[InverseChem]")
+			M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
+			if(reagent_flags & REAGENT_SNEAKYNAME)
+				var/datum/reagent/R = M.reagents.has_reagent("[inverse_chem]")
 				R.name = name//Negative effects are hidden
 
 			log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
-			log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [ImpureChem]")
+			log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
 	return
 
 // Called when this reagent is removed while inside a mob
@@ -141,7 +134,7 @@
 
 // Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, amount, mob/living/carbon/M, purity)
-	if(!(reagentFlags & REAGENT_DONOTSPLIT))
+	if(!(reagent_flags & REAGENT_DONOTSPLIT))
 		if(!iscarbon(M))
 			return
 		if (purity == 1)
@@ -151,25 +144,25 @@
 			cached_purity = purity
 		if (purity < 0)
 			CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-		else if ((InverseChemVal > purity) && (InverseChem))
+		else if ((inverse_chem_val > purity) && (inverse_chem))
 			M.reagents.remove_reagent(id, amount, FALSE)
-			M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1-cached_purity)
+			M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
 			for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
 				if(R.name == "")
 					R.name = name//Negative effects are hidden
-			log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [InverseChem]")
+			log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [inverse_chem]")
 			return
-		else if (ImpureChem)
+		else if (impure_chem)
 			var/impureVol = amount * (1 - purity)
-			if(!(reagentFlags & REAGENT_SPLITRETAINVOL))
+			if(!(reagent_flags & REAGENT_SPLITRETAINVOL))
 				M.reagents.remove_reagent(id, impureVol, FALSE)
-			M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1-cached_purity)
-			if(reagentFlags & REAGENT_SNEAKYNAME)
-				var/datum/reagent/R = M.reagents.has_reagent("[InverseChem]")
+			M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
+			if(reagent_flags & REAGENT_SNEAKYNAME)
+				var/datum/reagent/R = M.reagents.has_reagent("[inverse_chem]")
 				R.name = name//Negative effects are hidden
 
 			log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [id]")
-			log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [ImpureChem]")
+			log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [impure_chem]")
 	return
 
 /datum/reagent/proc/on_update(atom/A)

@@ -26,9 +26,9 @@
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 17
 	metabolization_rate = 0.25
-	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.35
-	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
+	impure_chem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.35
+	inverse_chem		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_add(mob/living/carbon/M)
@@ -211,9 +211,9 @@
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 17 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
-	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.35
-	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
+	impure_chem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.35
+	inverse_chem		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_add(mob/living/carbon/M)

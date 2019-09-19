@@ -7,9 +7,9 @@
 	taste_description	= "affection and love!"
 	can_synth = FALSE
 	//SplitChem = TRUE
-	ImpureChem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
-	InverseChemVal 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	InverseChem 		= "fermiTox"
+	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
+	inverse_chem		= "fermiTox"
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
@@ -39,7 +39,7 @@
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	metabolization_rate = 0.2
 	overdose_threshold = 25
-	reagentFlags = REAGENT_DONOTSPLIT
+	reagent_flags = REAGENT_DONOTSPLIT
 	pH = 4
 	can_synth = TRUE
 
@@ -84,9 +84,9 @@
 	color = "#f9b9bc" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	InverseChemVal 		= 0
+	inverse_chem_val 		= 0
 	var/obj/item/organ/tongue/nT
-	reagentFlags = REAGENT_DONOTSPLIT
+	reagent_flags = REAGENT_DONOTSPLIT
 	pH = 5
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
@@ -173,9 +173,9 @@
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
 	overdose_threshold = 15
-	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
-	InverseChem 		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	impure_chem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.25
+	inverse_chem		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
 	can_synth = FALSE
@@ -212,7 +212,7 @@
 	id = "nanite_b_goneTox"
 	description = "Poorly made, and shocks you!"
 	metabolization_rate = 1
-	reagentFlags = REAGENT_INVISIBLE
+	reagent_flags = REAGENT_INVISIBLE
 
 //Increases shock events.
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
@@ -278,7 +278,7 @@
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	reagentFlags = REAGENT_FORCEONNEW
+	reagent_flags = REAGENT_FORCEONNEW
 	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -316,7 +316,7 @@
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE
-	reagentFlags = REAGENT_INVISIBLE
+	reagent_flags = REAGENT_INVISIBLE
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)

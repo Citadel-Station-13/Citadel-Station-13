@@ -6,9 +6,9 @@
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	ImpureChem 			= "yamerol_tox"
-	InverseChemVal 		= 0.4
-	InverseChem 		= "yamerol_tox"
+	impure_chem 			= "yamerol_tox"
+	inverse_chem_val 		= 0.4
+	inverse_chem		= "yamerol_tox"
 	can_synth = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
@@ -80,7 +80,7 @@
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6
-	reagentFlags = REAGENT_INVISIBLE 
+	reagent_flags = REAGENT_INVISIBLE
 
 /datum/reagent/fermi/yamerol_tox/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
