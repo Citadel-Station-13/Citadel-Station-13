@@ -1,4 +1,4 @@
-/datum/map_template/ruin/lavaland/alien_nest
+/*/datum/map_template/ruin/lavaland/alien_nest
 	name = "Alien Nest"
 	id = "alien-nest"
 	description = "Not even Necropolis is safe from alien infestation. The competition for hosts has locked the legion and aliens in an endless conflict that can only be resolved by a PKA."
@@ -23,4 +23,4 @@
 	desc = "A syringe filled with a strange viscous liquid. It might be best to leave it alone."
 	amount_per_transfer_from_this = 1
 	volume = 1
-	list_reagents = list("xenomicrobes" = 1)
+	list_reagents = list("xenomicrobes" = 1)*/
