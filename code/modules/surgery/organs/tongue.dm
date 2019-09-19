@@ -30,7 +30,7 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/proc/adjustTongueLoss(mob/living/carbon/M, damage_mod)
+/obj/item/organ/tongue/proc/onDamage(damage_mod)
 	if (maxHealth == "alien")
 		return
 	if (maxHealth == "bone")

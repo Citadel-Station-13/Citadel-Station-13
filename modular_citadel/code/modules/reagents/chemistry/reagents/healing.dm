@@ -16,7 +16,7 @@
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(T)
-		T.adjustTongueLoss(C, -2)//Fix the inputs me!
+		T.applyOrganDamage(-2)
 	if(L)
 		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, -5)
 		C.adjustOxyLoss(-2)
@@ -86,7 +86,7 @@
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(T)
-		T.adjustTongueLoss(C, 1)
+		T.applyOrganDamage(1)
 	if(L)
 		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, 4)
 		C.adjustOxyLoss(3)

@@ -73,27 +73,28 @@
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
+	cached_damage = damage
 	if (maxHealth == INFINITY)
 		return
-	if(damage+damage_mod < 0)
-		damage = 0
+	if(cached_damage+damage_mod < 0)
+		cached_damage = 0
 		return
 
-	damage += damage_mod
-	if ((damage / maxHealth) > 1)
+	cached_damage += damage_mod
+	if ((cached_damage/ maxHealth) > 1)
 		to_chat(owner, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
 		owner.emote("gasp")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Lungs lost")
 		//qdel(src) - Handled elsewhere for now.
-	else if ((damage / maxHealth) > 0.75)
+	else if ((cached_damage / maxHealth) > 0.75)
 		to_chat(owner, "<span class='warning'>It's getting really hard to breathe!!</span>")
 		owner.emote("gasp")
 		owner.Dizzy(3)
-	else if ((damage / maxHealth) > 0.5)
+	else if ((cached_damage / maxHealth) > 0.5)
 		owner.Dizzy(2)
 		to_chat(owner, "<span class='notice'>Your chest is really starting to hurt.</span>")
 		owner.emote("cough")
-	else if ((damage / maxHealth) > 0.2)
+	else if ((cached_damage / maxHealth) > 0.2)
 		to_chat(owner, "<span class='notice'>You feel an ache within your chest.</span>")
 		owner.emote("cough")
 		owner.Dizzy(1)
