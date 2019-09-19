@@ -886,3 +886,23 @@
 		to_chat(M, "<span class = 'notice'>[pick("Diamond skies where white deer fly.","Sipping strawberry tea.","Silver raindrops drift through timeless, Neverending June.","Crystal ... pearls free, with love!","Beaming love into me.")]</span>")
 	..()
 	. = 1
+
+/datum/reagent/consumable/catnip_tea
+	name = "Catnip Tea"
+	id = "catnip_tea"
+	description = "A sleepy and tasty catnip tea!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "sugar and catnip"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of catnip tea"
+	glass_desc = "A purrfect drink for a cat."
+
+/datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(min(50 - M.getStaminaLoss(), 3))
+	if(prob(20))
+		M.emote("nya")
+	if(prob(20))
+		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
+	M.adjustArousalLoss(5)
+	..()

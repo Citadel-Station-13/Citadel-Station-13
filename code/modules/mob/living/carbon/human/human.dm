@@ -802,6 +802,11 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
+		if(hud_used.staminas)
+			hud_used.staminas.icon_state = staminahudamount()
+		if(hud_used.staminabuffer)
+			hud_used.staminabuffer.icon_state = staminabufferhudamount()
+
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -1029,8 +1034,8 @@
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
 
-/mob/living/carbon/human/species/moth
-	race = /datum/species/moth
+/mob/living/carbon/human/species/insect
+	race = /datum/species/insect
 
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush

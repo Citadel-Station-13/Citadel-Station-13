@@ -382,6 +382,9 @@
 	FermiChem 		= TRUE
 	PurityMin		= 0.3
 
+/datum/chemical_reaction/fermi/furranium/organic
+	required_reagents = list("aphro" = 0.1, "catnip" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
+
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
 
