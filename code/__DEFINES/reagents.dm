@@ -42,4 +42,9 @@
 #define REAGENT_ONMOBMERGE			(1<<3)	//Call on_mob_life proc when reagents are merging.
 #define REAGENT_INVISIBLE			(1<<4)	//Doesn't appear on handheld health analyzers.
 #define REAGENT_FORCEONNEW			(1<<5)  //Forces a on_new() call without a data overhead
-#define REAGENT_SNEAKYNAME          (1<<6)  //When metabolised it takes the name of the splitting chem
+#define REAGENT_SNEAKYNAME          (1<<6)  //When inverted, the inverted chem uses the name of the original chem
+#define REAGENT_SPLITRETAINVOL      (1<<7)  //Retains initial volume of chem when splitting
+
+//Chemical reaction flags, for determining reaction specialties
+#define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
+#define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough

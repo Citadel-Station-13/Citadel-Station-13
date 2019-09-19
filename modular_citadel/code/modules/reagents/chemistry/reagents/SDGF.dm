@@ -316,6 +316,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger
 	can_synth = TRUE
+	reagentFlags = REAGENT_SNEAKYNAME
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal

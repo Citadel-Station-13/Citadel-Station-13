@@ -6,7 +6,23 @@
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder)
+/datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+	if(ClearConversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+		for(var/id in results)
+			var/datum/reagent/R = my_atom.reagents.has_reagent("[id]")
+			if(R.purity == 1)
+				continue
+
+			var/cached_volume = R.volume
+			if(ClearConversion == REACTION_CLEAR_INVERSE && R.InverseChem)
+				if(R.InverseChemVal > R.purity)
+					my_atom.reagents.remove_reagent(R.id, cached_volume, FALSE)
+					my_atom.reagents.add_reagent(R.InverseChem, cached_volume, FALSE, other_purity = 1)
+
+			else if (ClearConversion == REACTION_CLEAR_IMPURE && R.ImpureChem)
+				var/impureVol = cached_volume * (1 - R.purity)
+				my_atom.reagents.remove_reagent(R.id, (impureVol), FALSE)
+				my_atom.reagents.add_reagent(R.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.

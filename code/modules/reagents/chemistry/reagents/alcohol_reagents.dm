@@ -1383,7 +1383,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
-	SplitChem			= TRUE
+	//SplitChem			= TRUE
 	ImpureChem 			= "neuroweak"
 	InverseChemVal 		= 0 //Clear conversion
 	InverseChem 		= "neuroweak"

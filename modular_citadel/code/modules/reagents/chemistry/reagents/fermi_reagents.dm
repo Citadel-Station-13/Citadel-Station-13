@@ -6,7 +6,10 @@
 	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
-	SplitChem = TRUE
+	//SplitChem = TRUE
+	ImpureChem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	InverseChemVal 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
+	InverseChem 		= "fermiTox"
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
@@ -16,7 +19,7 @@
 //When merging two fermichems, see above
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
-	
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

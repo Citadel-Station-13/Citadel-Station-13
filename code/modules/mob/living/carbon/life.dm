@@ -43,9 +43,9 @@
 		return 1
 
 //Procs called while dead
-/mob/living/carbon/handle_death()
-	for(var/datum/reagents/R in reagents.reagent_list)
-		if(R.reagentFlag & REAGENT_DEAD_PROCESS)
+/mob/living/carbon/proc/handle_death()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		if(R.reagentFlags & REAGENT_DEAD_PROCESS)
 			R.on_mob_dead(src)
 
 ///////////////

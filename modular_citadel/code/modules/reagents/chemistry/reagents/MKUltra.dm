@@ -136,7 +136,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
-	reagentFlags = REAGENT_DONOTSPLIT
 	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
 	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
@@ -144,7 +143,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	reagentFlags = REAGENT_ONMOBMERGE //Procs on_mob_add when merging into a human
+	reagentFlags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
 	can_synth = FALSE
 
 
