@@ -84,10 +84,12 @@
 	new /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate(src)
 	new /obj/item/clothing/neck/tie/red(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/suppressor/specialoffer(src)
-
+	new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/pen/edagger(src)
+	new /obj/item/doorCharge(src)
 
 /obj/item/storage/briefcase/modularbundle
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding."

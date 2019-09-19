@@ -2,7 +2,7 @@
 	name = "sniper rounds (.50)"
 	icon_state = ".50mag"
 	ammo_type = /obj/item/ammo_casing/p50
-	max_ammo = 6
+	max_ammo = 5
 	caliber = ".50"
 
 /obj/item/ammo_box/magazine/sniper_rounds/update_icon()
@@ -21,6 +21,7 @@
 
 /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 	name = "sniper rounds (penetrator)"
+	icon_state = "haemorrhage"
 	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
 	ammo_type = /obj/item/ammo_casing/p50/penetrator
 	max_ammo = 5

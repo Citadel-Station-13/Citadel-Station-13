@@ -3,7 +3,7 @@
 /obj/item/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
-	damage = 70
+	damage = 80 //That's a lotta damage
 	knockdown = 100
 	dismemberment = 50
 	armour_penetration = 50
@@ -33,7 +33,7 @@
 	name =".50 penetrator bullet"
 	icon_state = "gauss"
 	name = "penetrator round"
-	damage = 60
+	damage = 70
 	forcedodge = TRUE
 	dismemberment = 0 //It goes through you cleanly.
 	knockdown = 0

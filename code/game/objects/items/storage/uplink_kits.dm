@@ -217,15 +217,10 @@
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 
-/obj/item/storage/box/syndie_kit/emp
+/obj/item/storage/box/syndie_kit/imp_emp
 	name = "boxed EMP kit"
 
-/obj/item/storage/box/syndie_kit/emp/PopulateContents()
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
+/obj/item/storage/box/syndie_kit/imp_emp/PopulateContents()
 	new /obj/item/implanter/emp(src)
 
 /obj/item/storage/box/syndie_kit/chemical
@@ -370,3 +365,18 @@
 	new /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
+
+
+/obj/item/storage/box/syndie_kit/emp
+	name = "box"
+
+/obj/item/storage/box/syndie_kit/emp/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/empgrenade(src)
+
+/obj/item/storage/box/syndie_kit/flashbang
+	name = "box"
+
+/obj/item/storage/box/syndie_kit/flashbag/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/grenade/flashbang(src)

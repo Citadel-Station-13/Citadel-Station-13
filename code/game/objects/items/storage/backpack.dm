@@ -433,6 +433,18 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.silent = TRUE
 
+/obj/item/storage/backpack/duffelbag/syndie/c4/
+
+/obj/item/storage/backpack/duffelbag/syndie/c4/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/grenade/plastic/c4(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/x4
+
+/obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/grenade/plastic/x4(src)
+
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
 	icon_state = "duffel-syndieammo"
@@ -447,19 +459,158 @@
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/head/fedora(src)
 
+/obj/item/storage/backpack/duffelbag/syndie/assault
+	name = "assault trooper duffel bag"
+	desc = "A large duffel bag for holding combat equipment"
+
+/obj/item/storage/backpack/duffelbag/syndie/assault/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/c20r(src)
+	new /obj/item/ammo_box/magazine/smgm10mm(src)
+	new /obj/item/ammo_box/magazine/smgm10mm(src)
+	new /obj/item/shield/energy(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/grenade/empgrenade(src)
+	new /obj/item/grenade/plastic/x4(src)
+	new /obj/item/grenade/plastic/x4(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/shredder
+	name = "assault trooper duffel bag"
+	desc = "A large duffel bag for holding combat equipment"
+
+/obj/item/storage/backpack/duffelbag/syndie/shredder/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/flechette(src)
+	new /obj/item/ammo_box/magazine/flechette/s(src)
+	new /obj/item/ammo_box/magazine/flechette/s(src)
+	new /obj/item/ammo_box/magazine/flechette/s(src)
+	new /obj/item/ammo_box/magazine/flechette(src)
+	new /obj/item/ammo_box/magazine/flechette(src)
+	new /obj/item/ammo_box/magazine/flechette(src)
+	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/reagent_containers/syringe/stimulants(src)
+	new /obj/item/soap/syndie(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/donk
+	name = "\improper Donk Co. duffel bag"
+	desc = "A large duffel bag for holding toys. There is a Donk Co. logo on the back."
+
+/obj/item/storage/backpack/duffelbag/syndie/donk/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/c20r/toy(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	new /obj/item/ammo_box/foambox/riot(src)
+	new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src)
+	new /obj/item/soap/syndie(src)
+	new /obj/item/disk/nuclear/fake(src)
+	new /obj/item/slimepotion/slime/sentience/nuclear(src)
+	new /obj/item/storage/box/syndie_kit/chameleon/broken(src)
+	new /obj/item/toy/cards/deck/syndicate(src)
+	new /obj/item/storage/box/syndie_kit/bee_grenades(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/bioterror
+	name = "bioterrorist duffel bag"
+	desc = "A large duffel bag for holding biohazardous material. Handle with extreme care"
+
+/obj/item/storage/backpack/duffelbag/syndie/bioterror/PopulateContents()
+	new /obj/item/reagent_containers/spray/chemsprayer/bioterror(src)
+	new /obj/item/gun/syringe/syndicate(src)
+	new /obj/item/storage/box/syndie_kit/bioterror(src)
+	new /obj/item/storage/box/syndie_kit/chemical(src)
+	new /obj/item/storage/box/syndie_kit/tuberculosisgrenade(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/knight
+	name = "energy knight duffel bag"
+	desc = "A large duffel bag for holding electronic swordsman gear"
+
+/obj/item/storage/backpack/duffelbag/syndie/knight/PopulateContents()
+	new /obj/item/melee/transforming/energy/sword/saber(src)
+	new /obj/item/shield/energy(src)
+	new /obj/item/clothing/shoes/chameleon/noslip(src)
+	new /obj/item/autosurgeon/anti_stun(src)
+	new /obj/item/storage/box/syndie_kit/imp_adrenal(src)
+	new /obj/item/autosurgeon/thermal_eyes(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/cqc
+	name = "cqc duffel bag"
+	desc = "A large duffel bag for holding the secrets of hand to hand combat"
+
+/obj/item/storage/backpack/duffelbag/syndie/cqc/PopulateContents()
+	new /obj/item/book/granter/martial/cqc(src)
+	new /obj/item/clothing/gloves/rapid(src)
+	new /obj/item/soap/syndie(src)
+	new /obj/item/clothing/glasses/phantomthief/syndicate(src)
+	new /obj/item/storage/box/syndie_kit/imp_emp(src)
+	new /obj/item/card/emag(src)
+	new /obj/item/storage/briefcase/launchpad(src)
+	new /obj/item/storage/box/syndie_kit/throwing_weapons(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/infiltrator/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/switchblade(src)
+	new /obj/item/grenade/smokebomb(src)
+	new /obj/item/grenade/smokebomb(src)
+	new /obj/item/card/emag(src)
+	new /obj/item/emagrecharge(src)
+	new /obj/item/camera_bug(src)
+	new /obj/item/jammer(src)
+	new /obj/item/multitool/ai_detect(src)
+	new /obj/item/implanter/stealth(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/engineer
+	name = "combat engineer duffel bag"
+	desc = "A large duffel bag for holding a lot of engineering supplies"
+
+/obj/item/storage/backpack/duffelbag/syndie/engineer/PopulateContents()
+	new /obj/item/storage/belt/military/engineer(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/encryptionkey/binary(src)
+	new /obj/item/flashlight/emp(src)
+	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
+	new /obj/item/ammo_box/magazine/m12g/slug(src)
+	new /obj/item/ammo_box/magazine/m12g/dragon(src)
+	new /obj/item/grenade/plastic/c4(src)
+	new /obj/item/grenade/plastic/c4(src)
+	new /obj/item/grenade/plastic/x4(src)
+	new /obj/item/grenade/plastic/x4(src)
+	new /obj/item/grenade/spawnergrenade/manhacks(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/pyro
+	name = "pyromaniac duffel bag"
+	desc = "A large duffel bag for holding inflammatory supplies. Handle with care."
+
+/obj/item/storage/backpack/duffelbag/syndie/pyro/PopulateContents()
+	new /obj/item/flamethrower/full/tank(src)
+	new /obj/item/tank/internals/plasma(src)
+	new /obj/item/gun/ballistic/automatic/pistol/machinepistol(src)
+	new /obj/item/ammo_box/magazine/pistolm9mm(src)
+	new /obj/item/ammo_box/magazine/pistolm9mm/fire(src)
+	new /obj/item/ammo_box/magazine/pistolm9mm/fire(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	new /obj/item/grenade/chem_grenade/incendiary(src)
+	new /obj/item/grenade/chem_grenade/incendiary(src)
+	new /obj/item/grenade/chem_grenade/incendiary(src)
+	new /obj/item/reagent_containers/syringe/stimulants(src)
+
 /obj/item/storage/backpack/duffelbag/syndie/med
 	name = "medical duffel bag"
 	desc = "A large duffel bag for holding extra tactical medical supplies."
 	icon_state = "duffel-syndiemed"
 	item_state = "duffel-syndiemed"
 
-/obj/item/storage/backpack/duffelbag/syndie/surgery
+/obj/item/storage/backpack/duffelbag/syndie/med/surgery
 	name = "surgery duffel bag"
 	desc = "A suspicious looking duffel bag for holding surgery tools."
-	icon_state = "duffel-syndiemed"
-	item_state = "duffel-syndiemed"
 
-/obj/item/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
+/obj/item/storage/backpack/duffelbag/syndie/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
 	new /obj/item/retractor(src)
@@ -474,11 +625,11 @@
 	new /obj/item/implanter(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
-/obj/item/storage/backpack/duffelbag/syndie/surgery_adv
+/obj/item/storage/backpack/duffelbag/syndie/med/surgery_adv
 	name = "advanced surgery duffel bag"
 	desc = "A large duffel bag for holding surgical tools. Bears the logo of an advanced med-tech firm."
 
-/obj/item/storage/backpack/duffelbag/syndie/surgery_adv/PopulateContents()
+/obj/item/storage/backpack/duffelbag/syndie/med/surgery_adv/PopulateContents()
 	new /obj/item/hemostat/adv(src)
 	new /obj/item/circular_saw/adv(src)
 	new /obj/item/scalpel/adv(src)
@@ -494,90 +645,37 @@
 	new /obj/item/implanter(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
+/obj/item/storage/backpack/duffelbag/syndie/med/combatmedic
+	name = "combat medic duffel bag"
+	desc = "A large duffel bag designed for carrying large amounts of military-grade medical supplies."
+
+/obj/item/storage/backpack/duffelbag/syndie/med/combatmedic/PopulateContents()
+	new /obj/item/gun/medbeam(src)
+	new /obj/item/storage/firstaid/tactical(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/gun/ballistic/automatic/c20r(src)
+	new /obj/item/ammo_box/magazine/smgm10mm(src)
+	new /obj/item/ammo_box/magazine/smgm10mm(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
 	desc = "A large duffel bag for holding extra weapons ammunition and supplies."
 	icon_state = "duffel-syndieammo"
 	item_state = "duffel-syndieammo"
 
-/obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
-	desc = "A large duffel bag, packed to the brim with Bulldog shotgun drum magazines."
+/obj/item/storage/backpack/duffelbag/syndie/ammo/heavy
+	name = "heavy weapons specialist duffel bag"
+	desc = "A large duffel bag for holding heavy weaponry and ammunition."
 
-/obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
-	new /obj/item/ammo_box/magazine/m12g/slug(src)
-	new /obj/item/ammo_box/magazine/m12g/dragon(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/smg
-	desc = "A large duffel bag, packed to the brim with C-20r magazines."
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/smg/PopulateContents()
-	for(var/i in 1 to 9)
-		new /obj/item/ammo_box/magazine/smgm45(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/c20rbundle
-	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
-
-/obj/item/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
-	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/gun/ballistic/automatic/c20r(src)
-	new /obj/item/suppressor/specialoffer(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
-	desc = "A large duffel bag containing a Bulldog, some drums, and a pair of thermal imaging glasses."
-
-/obj/item/storage/backpack/duffelbag/syndie/bulldogbundle/PopulateContents()
-	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a tactical medkit, a Donksoft machine gun, a big jumbo box of riot darts, and a knock-off pair of magboots."
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/storage/firstaid/tactical(src)
-	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
-	new /obj/item/ammo_box/foambox/riot(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
-	desc = "A large duffel bag containing deadly chemicals, a handheld chem sprayer, Bioterror foam grenade, a Donksoft assault rifle, box of riot grade darts, a dart pistol, and a box of syringes."
-
-/obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle/PopulateContents()
-	new /obj/item/reagent_containers/spray/chemsprayer/bioterror(src)
-	new /obj/item/storage/box/syndie_kit/chemical(src)
-	new /obj/item/gun/syringe/syndicate(src)
-	new /obj/item/gun/ballistic/automatic/c20r/toy(src)
-	new /obj/item/storage/box/syringes(src)
-	new /obj/item/ammo_box/foambox/riot(src)
-	new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
-	if(prob(5))
-		new /obj/item/reagent_containers/food/snacks/pizza/pineapple(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/c4/PopulateContents()
-	for(var/i in 1 to 10)
-		new /obj/item/grenade/plastic/c4(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/grenade/plastic/x4(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/firestarter
-	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite hardsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
-
-/obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
-	new /obj/item/clothing/under/syndicate/soviet(src)
-	new /obj/item/watertank/op(src)
+/obj/item/storage/backpack/duffelbag/syndie/ammo/heavy/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/l6_saw(src)
+	new /obj/item/ammo_box/magazine/mm556x45(src)
+	new /obj/item/ammo_box/magazine/mm556x45(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
-	new /obj/item/gun/ballistic/automatic/pistol/APS(src)
-	new /obj/item/ammo_box/magazine/pistolm9mm(src)
-	new /obj/item/ammo_box/magazine/pistolm9mm(src)
-	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
-	new /obj/item/reagent_containers/syringe/stimulants(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/grenade/chem_grenade/incendiary(src)
 	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.
@@ -594,16 +692,3 @@
 	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/bikehorn(src)
 	new /obj/item/implanter/sad_trombone(src)
-
-obj/item/storage/backpack/duffelbag/syndie/shredderbundle
-	desc = "A large duffel bag containing two CX Shredders, some magazines, an elite hardsuit, and a chest rig."
-
-/obj/item/storage/backpack/duffelbag/syndie/shredderbundle/PopulateContents()
-	new /obj/item/ammo_box/magazine/flechette/shredder(src)
-	new /obj/item/ammo_box/magazine/flechette/shredder(src)
-	new /obj/item/ammo_box/magazine/flechette/shredder(src)
-	new /obj/item/ammo_box/magazine/flechette/shredder(src)
-	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
-	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
-	new /obj/item/storage/belt/military(src)
-	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)

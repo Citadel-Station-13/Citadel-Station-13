@@ -350,6 +350,19 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/storage/belt/military/engineer
+	name = "engineering chest rig"
+	desc = "A set of tactical webbing worn by combat engineers."
+
+/obj/item/storage/belt/military/engineer/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,"red")
+	new /obj/item/extinguisher/mini(src)
+	new /obj/item/clothing/glasses/hud/diagnostic/night(src)
+
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
 
@@ -495,7 +508,14 @@
 		/obj/item/grenade/plastic/c4,
 		))
 
+/obj/item/storage/belt/grenade/full
+	name = "grenadier belt"
+	desc = "A belt for holding grenades."
+	icon_state = "grenadebeltnew"
+	item_state = "security"
+
 /obj/item/storage/belt/grenade/full/PopulateContents()
+	new /obj/item/grenade/flashbang(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/grenade/smokebomb(src)
 	new /obj/item/grenade/smokebomb(src)
@@ -599,7 +619,7 @@
 	icon_state = "bandolier-durathread"
 	item_state = "bandolier-durathread"
 	resistance_flags = FIRE_PROOF
-	
+
 /obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)

@@ -19,3 +19,15 @@
 	caliber = "a556"
 	max_ammo = 30
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/a57x28
+	name = "toploader magazine (5.7x28mm)"
+	icon_state = "5.56m"
+	ammo_type = /obj/item/ammo_casing/a57x28
+	caliber = "a57x28"
+	max_ammo = 48
+	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/a57x28/hp
+	name = "toploader magazine (5.7x28mm HP)"
+	ammo_type = /obj/item/ammo_casing/a57x28/hp

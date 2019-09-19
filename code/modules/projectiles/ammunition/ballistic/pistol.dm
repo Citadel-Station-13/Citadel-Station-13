@@ -29,6 +29,11 @@
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/c9mm
 
+/obj/item/ammo_casing/c9mm/hp
+	name = "9mm hollow-point bullet casing"
+	desc = "A 9mm hollow-point bullet casing."
+	projectile_type =/obj/item/projectile/bullet/c9mm_hp
+
 /obj/item/ammo_casing/c9mm/ap
 	name = "9mm armor-piercing bullet casing"
 	desc = "A 9mm armor-piercing bullet casing."

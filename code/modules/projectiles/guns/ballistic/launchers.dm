@@ -75,7 +75,7 @@
 		chamber_round()
 
 /obj/item/gun/ballistic/rocketlauncher
-	name = "\improper PML-9"
+	name = "PML-9 Rocket Launcher"
 	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
 	icon_state = "rocketlauncher"
 	item_state = "rocketlauncher"
