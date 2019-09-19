@@ -32,19 +32,23 @@
 	var/addiction_stage3_end = 30
 	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
-	var/self_consuming = FALSE
+	var/self_consuming = FALSE  //I think this uhhh, makes weird stuff happen when metabolising, but... doesn't seem to do what I think, so I'm gonna leave it.
 	//Fermichem vars:
 	var/purity = 1 						//How pure a chemical is from 0 - 1.
-	var/addProc = FALSE 				//If the chemical should force an on_new() call
 	var/turf/loc = null 				//Should be the creation location!
 	var/pH = 7							//pH of the specific reagent, used for calculating the sum pH of a holder.
 	var/ImpureChem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
 	var/InverseChemVal 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
 	var/InverseChem 		= "fermiTox"// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
-	var/DoNotSplit			= FALSE		// If impurity is handled within the main chem itself
-	var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
 	var/metabolizing = FALSE
-	var/invisible = FALSE //Set to true if it doesn't appear on handheld health analyzers.
+	var/reagentFlags //REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
+	//REAGENT_DEAD_PROCESS  Calls on_mob_dead() if present in a dead body
+	//REAGENT_DONOTSPLIT	Do not split the chem at all during processing
+	//REAGENT_ONLYINVERSE	Only invert chem, no splitting
+	//REAGENT_ONMOBMERGE	Call on_mob_life proc when reagents are merging.
+	//REAGENT_INVISIBLE		Doesn't appear on handheld health analyzers.
+	//REAGENT_FORCEONNEW	Forces a on_new() call without a data overhead
+	//REAGENT_SNEAKYNAME    When metabolised it takes the name of the splitting chem
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -68,6 +72,15 @@
 	return
 
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
+	current_cycle++
+	if(holder)
+		holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+	return
+
+//called when a mob processes chems when dead.
+/datum/reagent/proc/on_mob_death(mob/living/carbon/M)
+	if(!(reagentFlags & REAGENT_DEAD_PROCESS)) //justincase
+		return
 	current_cycle++
 	if(holder)
 		holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.

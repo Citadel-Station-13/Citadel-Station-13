@@ -300,6 +300,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	description = "A chem that makes a certain chemcat angry at you if you're reading this, how did you get this???"//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
 	can_synth = FALSE
+	reagentFlags = REAGENT_INVISIBLE
 
 /datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	M.blood_volume -= 10

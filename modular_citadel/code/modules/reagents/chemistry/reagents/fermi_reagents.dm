@@ -14,7 +14,7 @@
 		return
 	if(purity < 0)
 		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-	if (purity == 1 || DoNotSplit == TRUE)
+	if (purity == 1 || (reagentFlags & REAGENT_DONOTSPLIT))
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
 		return
 	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
@@ -22,7 +22,7 @@
 		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [InverseChem]")
 		return
-	else
+	else if(!(reagentFlags & REAGENT_ONLYINVERSE))
 		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
 		M.reagents.remove_reagent(id, (impureVol), FALSE)
 		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
@@ -37,7 +37,7 @@
 		return
 	if (purity < 0)
 		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-	if (purity == 1 || DoNotSplit == TRUE)
+	if (purity == 1 || (reagentFlags & REAGENT_DONOTSPLIT))
 		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [id] in themselves")
 		return
 	else if (InverseChemVal > purity)
@@ -48,7 +48,7 @@
 				R.name = name//Negative effects are hidden
 		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [InverseChem]")
 		return
-	else
+	else if(!(reagentFlags & REAGENT_ONLYINVERSE))
 		var/impureVol = amount * (1 - purity)
 		M.reagents.remove_reagent(id, impureVol, FALSE)
 		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
@@ -77,7 +77,7 @@
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	metabolization_rate = 0.2
 	overdose_threshold = 25
-	DoNotSplit = TRUE
+	reagentFlags = REAGENT_DONOTSPLIT
 	pH = 4
 	can_synth = TRUE
 
@@ -124,7 +124,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	InverseChemVal 		= 0
 	var/obj/item/organ/tongue/nT
-	DoNotSplit = TRUE
+	reagentFlags = REAGENT_DONOTSPLIT
 	pH = 5
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
@@ -250,6 +250,7 @@
 	id = "nanite_b_goneTox"
 	description = "Poorly made, and shocks you!"
 	metabolization_rate = 1
+	reagentFlags = REAGENT_INVISIBLE
 
 //Increases shock events.
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
@@ -315,7 +316,7 @@
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	addProc = TRUE
+	reagentFlags = REAGENT_FORCEONNEW
 	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -353,6 +354,7 @@
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE
+	reagentFlags = REAGENT_INVISIBLE
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
