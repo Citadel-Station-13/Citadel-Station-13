@@ -28,9 +28,9 @@
 	var/datum/job/previewJob
 	var/highest_pref = 0
 	for(var/job in job_preferences)
-		if(job_preferences[job] > highest_pref)
+		if(job_preferences["[job]"] > highest_pref)
 			previewJob = SSjob.GetJob(job)
-			highest_pref = job_preferences[job]
+			highest_pref = job_preferences["[job]"]
 
 	if(previewJob)
 		// Silicons only need a very basic preview since there is no customization for them.
