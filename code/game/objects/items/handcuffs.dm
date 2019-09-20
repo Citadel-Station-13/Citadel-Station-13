@@ -39,6 +39,7 @@
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
+	var/demoralize_criminals = TRUE // checked on carbon/carbon.dm to decide wheter to apply the handcuffed negative moodlet or not.
 	var/trashtype = null //for disposable cuffs
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
@@ -220,6 +221,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 10 //Deciseconds = 1s
+	demoralize_criminals = FALSE
 
 /obj/item/restraints/handcuffs/fake/kinky
 	name = "kinky handcuffs"
