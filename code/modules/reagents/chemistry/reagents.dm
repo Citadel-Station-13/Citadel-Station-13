@@ -84,11 +84,11 @@
 
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
-	if (purity == 1)
-		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [id]")
+	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/M = L
-	if(!M)
+	if (purity == 1)
+		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [id]")
 		return
 	if(cached_purity == 1)
 		cached_purity = purity
@@ -137,10 +137,10 @@
 
 // Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, amount, mob/living/carbon/M, purity)
+	if(!iscarbon(M))
+		return
 	if (purity == 1)
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
-		return
-	if(!iscarbon(M))
 		return
 	cached_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
 	if (purity < 0)
