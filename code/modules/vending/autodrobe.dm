@@ -54,7 +54,7 @@
 					/obj/item/clothing/head/ushanka = 1,
 					/obj/item/clothing/suit/imperium_monk = 1,
 					/obj/item/clothing/mask/gas/cyborg = 1,
-					/obj/item/clothing/suit/holidaypriest = 1,
+					/obj/item/clothing/suit/chaplain/holidaypriest = 1,
 					/obj/item/clothing/head/wizard/marisa/fake = 1,
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 1,
 					/obj/item/clothing/under/sundress = 1,
@@ -122,7 +122,7 @@
 		           /obj/item/clothing/shoes/roman = 1,
 		           /obj/item/shield/riot/roman/fake = 1,
 		           /obj/item/skub = 1,
-		           /obj/item/clothing/under/lobster = 1,	 // CIT CHANGES	           
+		           /obj/item/clothing/under/lobster = 1,	 // CIT CHANGES
 		           /obj/item/clothing/head/lobsterhat = 1,
 		           /obj/item/clothing/head/drfreezehat = 1,
 		           /obj/item/clothing/suit/dracula = 1,

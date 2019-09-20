@@ -1,5 +1,5 @@
 /datum/species/synth
-	name = "Synth" //inherited from the real species, for health scanners and things
+	name = "Synthetic" //inherited from the real species, for health scanners and things
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0

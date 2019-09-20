@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - tweak: "all chaplain suits can hold the same items in suit storage"
+  - code_imp: "improvement to organisation for chaplain suits"
