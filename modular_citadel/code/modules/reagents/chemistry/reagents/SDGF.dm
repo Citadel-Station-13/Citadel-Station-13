@@ -301,7 +301,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	description = "Impure synthetic-derived growth factor causes certain cells to undergo cell death, causing clone damage, and damaging blood cells."//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
 	can_synth = FALSE
-	chemical_flags = REAGENT_INVISIBLE
 
 /datum/reagent/impure/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	M.blood_volume -= 10
