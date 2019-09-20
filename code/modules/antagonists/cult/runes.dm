@@ -180,7 +180,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_name = "Offer"
 	cultist_desc = "offers a noncultist above it to Nar'Sie, either converting them or sacrificing them."
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
-	invocation = "Mah'weyh pleggh at e'ntrath!"
+	invocation = "Mah'weyh pleggh at e'ntrath."
 	icon_state = "3"
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
@@ -213,7 +213,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
-		invocation = "Mah'weyh pleggh at e'ntrath!"
+		invocation = "Mah'weyh pleggh at e'ntrath."
 		..()
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
@@ -223,7 +223,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
-		invocation = "Barhah hra zar'garis!"
+		invocation = "Barhah hra zar'garis."
 		..()
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
