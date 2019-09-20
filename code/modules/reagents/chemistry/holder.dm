@@ -749,7 +749,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < CHEMICAL_QUANTISATION_LEVEL)
+		if((R.volume < 0.01) && !fermiIsReacting)
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
