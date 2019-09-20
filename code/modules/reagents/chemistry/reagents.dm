@@ -90,13 +90,12 @@
 	var/mob/living/carbon/M = L
 	if(!M)
 		return
-	if(chemical_flags & REAGENT_DONOTSPLIT)
-		return
-
 	if(cached_purity == 1)
 		cached_purity = purity
-	else if(cached_purity < 0)
+	else if(purity < 0)
 		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+	if(chemical_flags & REAGENT_DONOTSPLIT)
+		return
 
 	if ((inverse_chem_val > purity) && (inverse_chem))//Turns all of a added reagent into the inverse chem
 		M.reagents.remove_reagent(id, amount, FALSE)
@@ -143,13 +142,11 @@
 		return
 	if(!iscarbon(M))
 		return
+	cached_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
+	if (purity < 0)
+		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
-
-	if(cached_purity == 1)
-		cached_purity = purity
-	else if (purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
 
 	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
 		M.reagents.remove_reagent(id, amount, FALSE)

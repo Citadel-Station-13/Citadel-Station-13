@@ -280,8 +280,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Unobtainable, used in clone spawn.
 /datum/reagent/fermi/SDGFheal
-	name = "synthetic-derived growth factor"
+	name = "synthetic-derived healing factor"
 	id = "SDGFheal"
+	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
 	metabolization_rate = 1
 	can_synth = FALSE
 
@@ -295,9 +296,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Unobtainable, used if SDGF is impure but not too impure
 /datum/reagent/impure/SDGFtox
-	name = "synthetic-derived growth factor"
+	name = "Synthetic-derived apoptosis factor"
 	id = "SDGFtox"
-	description = "A chem that makes a certain chemcat angry at you if you're reading this, how did you get this???"//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
+	description = "Impure synthetic-derived growth factor causes certain cells to undergo cell death, causing clone damage, and damaging blood cells."//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
 	can_synth = FALSE
 	chemical_flags = REAGENT_INVISIBLE
@@ -309,9 +310,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Fail state of SDGF
 /datum/reagent/impure/SDZF
-	name = "synthetic-derived growth factor"
+	name = "synthetic-derived zombie factor"
 	id = "SDZF"
-	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
+	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. Emulates normal synthetic-derived growth factor, but produces a hostile zombie at the end of it."
 	color = "#a502e0" // rgb: 96, 0, 255
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger

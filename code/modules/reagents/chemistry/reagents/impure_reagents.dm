@@ -7,16 +7,17 @@
 
 
 /datum/reagent/impure/fermiTox
-	name = "FermiTox"
+	name = "Chemical Isomers"
 	id = "fermiTox"
-	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
+	description = "Toxic chemical isomers made from impure reactions. At low volumes will cause light toxin damage, but as the volume increases, it deals larger amounts, damages the liver, then eventually the heart."
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE
+    var/potency = 1 //potency multiplies the volume when added.
 
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
-//TODO: liver damage.
+//TODO: liver damage, 100+ heart
 /datum/reagent/impure/fermiTox/on_mob_life(mob/living/carbon/C, method)
 	if(C.dna && istype(C.dna.species, /datum/species/jelly))
 		C.adjustToxLoss(-2)

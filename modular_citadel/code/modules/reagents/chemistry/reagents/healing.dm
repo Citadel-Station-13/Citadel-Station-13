@@ -74,9 +74,9 @@
 	..()
 
 /datum/reagent/impure/yamerol_tox
-	name = "Yamerol"
+	name = "Yamer oh no"
 	id = "yamerol_tox"
-	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
+	description = "A dangerous, cloying toxin that stucks to a patient’s respiratory system, damaging their tongue, lungs and causing suffocation."
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6

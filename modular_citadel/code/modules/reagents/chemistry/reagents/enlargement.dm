@@ -140,7 +140,7 @@
 /datum/reagent/fermi/BEsmaller
 	name = "Modesty milk"
 	id = "BEsmaller"
-	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix."
+	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix. Produced by reacting impure Succubus milk."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	metabolization_rate = 0.25
@@ -311,7 +311,7 @@
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Chastity draft"
 	id = "PEsmaller"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a smaller gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace."
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a smaller gentleman's package via a potent testosterone mix. Produced by reacting impure Incubus draft."
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	metabolization_rate = 0.5

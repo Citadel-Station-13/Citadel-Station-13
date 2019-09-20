@@ -198,7 +198,7 @@
 		//empulse((get_turf(C)), 3, 2)//So the nanites randomize
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
-		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
+		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
 	N.nanite_volume = -2
@@ -208,10 +208,10 @@
 	O.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
-	name = "Naninte bain"
+	name = "Electromagnetic crystals"
 	id = "nanite_b_goneTox"
-	description = "Poorly made, and shocks you!"
-	metabolization_rate = 1
+	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
+	metabolization_rate = 0.5
 	chemical_flags = REAGENT_INVISIBLE
 
 //Increases shock events.
