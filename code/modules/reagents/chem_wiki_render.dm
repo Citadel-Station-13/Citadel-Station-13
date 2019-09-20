@@ -57,6 +57,10 @@
 			else if(istype(R, /datum/reagent/drug))
 				drug += generate_chemwiki_line(R, X, processCR)
 
+			/* when merged
+			else if(istype(R, /datum/reagent/impure))
+			*/
+
 			else
 				remainder += generate_chemwiki_line(R, X, processCR)
 
@@ -67,7 +71,7 @@
 		processCR = FALSE
 
 	to_chat(usr, "finished chems")
-	log_sql("------------BEGINNING OF REAGENTS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
+	var/wholeString = ("\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
 
 	prefix = "|Name | Reagents | Reaction vars | Description |\n|---|---|---|----------|\n"
 	var/CRparse = ""
@@ -78,8 +82,14 @@
 		for(var/datum/chemical_reaction/CR in GLOB.chemical_reactions_list[reagent])
 			CRparse += generate_chemreactwiki_line(CR)
 
-	log_sql("------------BEGINNING OF REACTIONS VAR DUMP:------------------\n----------------------------------------------------------------------------------\n\n\n# CHEMICAL REACTIONS\n\n[prefix][CRparse]\n")
+	wholeString += ("\n# CHEMICAL REACTIONS\n\n[prefix][CRparse]\n")
+	text2file(wholeString, "[GLOB.log_directory]/chem_parse.md")
 	to_chat(usr, "finished reactions")
+	to_chat(usr, "Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.md OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .md default program! Try downloading it instead, and use that file to set a default program! Also have a cute day.)")
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
