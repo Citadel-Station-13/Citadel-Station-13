@@ -85,7 +85,7 @@
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
 	if (purity == 1)
-		log_game("CHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
+		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [id]")
 		return
 	var/mob/living/carbon/M = L
 	if(!M)
@@ -150,7 +150,7 @@
 		cached_purity = purity
 	else if (purity < 0)
 		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-		
+
 	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
 		M.reagents.remove_reagent(id, amount, FALSE)
 		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
