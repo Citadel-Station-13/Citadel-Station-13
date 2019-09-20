@@ -1385,8 +1385,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink that is guaranteed to knock you silly."
 	//SplitChem			= TRUE
 	impure_chem 			= "neuroweak"
-	inverse_chem_val 		= 0 //Clear conversion
-	inverse_chem		= "neuroweak"
+	inverse_chem_val 		= 0.5 //Clear conversion
+	inverse_chem			= "neuroweak"
 
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))

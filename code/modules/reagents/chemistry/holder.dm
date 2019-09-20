@@ -466,7 +466,7 @@
 
 			if (C.FermiChem == TRUE && !continue_reacting)
 				if (chem_temp > C.ExplodeTemp) //This is first to ensure explosions.
-					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
+					var/datum/chemical_reaction/Ferm = selected_reaction
 					fermiIsReacting = FALSE
 					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
@@ -539,7 +539,7 @@
 	return 0
 
 /datum/reagents/process()
-	var/datum/chemical_reaction/fermi/C = fermiReactID
+	var/datum/chemical_reaction/C = fermiReactID
 
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
@@ -571,16 +571,16 @@
 		return
 
 /datum/reagents/proc/fermiEnd()
-	var/datum/chemical_reaction/fermi/C = fermiReactID
+	var/datum/chemical_reaction/C = fermiReactID
 	STOP_PROCESSING(SSprocessing, src)
 	fermiIsReacting = FALSE
-	reactedVol = 0
-	targetVol = 0
 	//pH check, handled at the end to reduce calls.
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.pH_check()
-	C.FermiFinish(src, my_atom)
+	C.FermiFinish(src, my_atom, reactedVol)
+	reactedVol = 0
+	targetVol = 0
 	handle_reactions()
 	update_total()
 	//Reaction sounds and words
@@ -591,7 +591,7 @@
 		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 /datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
-	var/datum/chemical_reaction/fermi/C = selected_reaction
+	var/datum/chemical_reaction/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
 	var/stepChemAmmount = 0
@@ -700,7 +700,7 @@
 	return (reactedVol)
 
 //Currently calculates it irrespective of required reagents at the start
-/datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/fermi/C, holder)
+/datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/C, holder)
 	var/list/cached_reagents = reagent_list
 	var/i = 0
 	var/cachedPurity
@@ -709,6 +709,14 @@
 			cachedPurity += R.purity
 			i++
 	return cachedPurity/i
+
+/datum/reagents/proc/uncache_purity(id)
+	var/datum/reagent/R = has_reagent("[id]")
+	if(!R)
+		return
+	if(R.cached_purity == 1)
+		return
+	R.purity = R.cached_purity
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
@@ -880,7 +888,7 @@
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
 			if(isliving(my_atom))
-				if(R.reagent_flags & REAGENT_ONMOBMERGE)//Forces on_mob_add proc when a chem is merged
+				if(R.chemical_flags & REAGENT_ONMOBMERGE)//Forces on_mob_add proc when a chem is merged
 					R.on_mob_add(my_atom, amount)
 			R.on_merge(data, amount, my_atom, other_purity)
 			if(!no_react)
@@ -899,7 +907,7 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	if(R.reagent_flags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
+	if(R.chemical_flags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
 		R.on_new(pH) //Add more as desired.
 
 

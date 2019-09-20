@@ -143,7 +143,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	reagent_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
+	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
 	can_synth = FALSE
 
 
@@ -156,7 +156,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	creatorGender = "Mistress"
 	creatorName = "Fermis Yakumo"
 	purity = 1
-	reagent_flags = REAGENT_DONOTSPLIT
 
 /datum/reagent/fermi/enthrall/test/on_new()
 	id = "enthrall"
@@ -305,7 +304,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#2C051A" // rgb: , 0, 255
 	metabolization_rate = 0.1
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses."
-	reagent_flags = REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DONOTSPLIT
 	can_synth = FALSE
 	var/mob/living/carbon/love
 

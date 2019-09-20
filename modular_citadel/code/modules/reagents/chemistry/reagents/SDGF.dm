@@ -294,21 +294,21 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
-/datum/reagent/fermi/SDGFtox
+/datum/reagent/impure/SDGFtox
 	name = "synthetic-derived growth factor"
 	id = "SDGFtox"
 	description = "A chem that makes a certain chemcat angry at you if you're reading this, how did you get this???"//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
 	can_synth = FALSE
-	reagent_flags = REAGENT_INVISIBLE
+	chemical_flags = REAGENT_INVISIBLE
 
-/datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
+/datum/reagent/impure/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	M.blood_volume -= 10
 	M.adjustCloneLoss(2, 0)
 	..()
 
 //Fail state of SDGF
-/datum/reagent/fermi/SDZF
+/datum/reagent/impure/SDZF
 	name = "synthetic-derived growth factor"
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
@@ -316,9 +316,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger
 	can_synth = TRUE
-	reagent_flags = REAGENT_SNEAKYNAME
+	chemical_flags = REAGENT_SNEAKYNAME
 
-/datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
+/datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal
 		if(20)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")

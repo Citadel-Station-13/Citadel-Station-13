@@ -73,16 +73,15 @@
 	C.adjustOxyLoss(-3)
 	..()
 
-/datum/reagent/fermi/yamerol_tox
+/datum/reagent/impure/yamerol_tox
 	name = "Yamerol"
 	id = "yamerol_tox"
 	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6
-	reagent_flags = REAGENT_INVISIBLE
 
-/datum/reagent/fermi/yamerol_tox/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/yamerol_tox/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 

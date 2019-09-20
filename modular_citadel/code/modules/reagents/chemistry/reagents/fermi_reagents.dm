@@ -9,7 +9,7 @@
 	//SplitChem = TRUE
 	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
 	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
-	inverse_chem		= "fermiTox"
+	inverse_chem			= "fermiTox"
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
@@ -39,7 +39,7 @@
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	metabolization_rate = 0.2
 	overdose_threshold = 25
-	reagent_flags = REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DONOTSPLIT
 	pH = 4
 	can_synth = TRUE
 
@@ -86,7 +86,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	inverse_chem_val 		= 0
 	var/obj/item/organ/tongue/nT
-	reagent_flags = REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_DONOTSPLIT
 	pH = 5
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
@@ -212,7 +212,7 @@
 	id = "nanite_b_goneTox"
 	description = "Poorly made, and shocks you!"
 	metabolization_rate = 1
-	reagent_flags = REAGENT_INVISIBLE
+	chemical_flags = REAGENT_INVISIBLE
 
 //Increases shock events.
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
@@ -278,7 +278,7 @@
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	reagent_flags = REAGENT_FORCEONNEW
+	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -308,23 +308,6 @@
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1)
 	holder.clear_reagents()
-
-/datum/reagent/fermi/fermiTox
-	name = "FermiTox"
-	id = "fermiTox"
-	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
-	data = "merge"
-	color = "FFFFFF"
-	can_synth = FALSE
-	reagent_flags = REAGENT_INVISIBLE
-
-//I'm concerned this is too weak, but I also don't want deathmixes.
-/datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
-	if(C.dna && istype(C.dna.species, /datum/species/jelly))
-		C.adjustToxLoss(-2)
-	else
-		C.adjustToxLoss(2)
-	..()
 
 /datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"

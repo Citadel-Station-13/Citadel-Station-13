@@ -385,7 +385,7 @@ SLIME SCANNER
 			if(M.reagents.reagent_list.len)
 				var/list/datum/reagent/reagents = list()
 				for(var/datum/reagent/R in M.reagents.reagent_list)
-					if(R.reagent_flags & REAGENT_INVISIBLE)
+					if(R.chemical_flags & REAGENT_INVISIBLE)
 						continue
 					reagents += R
 
