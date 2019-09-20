@@ -39,8 +39,8 @@
 
 /obj/item/twohanded/kinetic_crusher/examine(mob/living/user)
 	..()
-	to_chat(user, "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>[force + detonation_damage]</b> damage.</span>")
-	to_chat(user, "<span class='notice'>Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.</span>")
+	to_chat(user, "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>[force_wielded + detonation_damage]</b> damage.</span>")
+	to_chat(user, "<span class='notice'>Does <b>[force_wielded + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force_wielded + detonation_damage]</b>.</span>")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
 		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
@@ -97,7 +97,7 @@
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 		D.fire()
 		charged = FALSE
-		icon_state = "mining_hammer1_uncharged"
+		update_icon()
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
 	if(proximity_flag && isliving(target))
@@ -132,7 +132,7 @@
 /obj/item/twohanded/kinetic_crusher/proc/Recharge()
 	if(!charged)
 		charged = TRUE
-		icon_state = "mining_hammer1"
+		update_icon()
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 
 /obj/item/twohanded/kinetic_crusher/ui_action_click(mob/user, actiontype)
