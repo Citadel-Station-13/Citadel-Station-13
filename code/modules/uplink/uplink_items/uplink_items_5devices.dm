@@ -50,36 +50,6 @@
 
 //Any-one
 
-/datum/uplink_item/devices/emag
-	name = "Cryptographic Sequencer"
-	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Starts with only 10 charges"
-	item = /obj/item/card/emag
-	cost = 6
-
-/datum/uplink_item/devices/emagrecharge
-	name = "Electromagnet Charging Device"
-	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
-	item = /obj/item/emagrecharge
-	cost = 2
-
-/datum/uplink_item/devices/camera_bug
-	name = "Camera Bug"
-	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
-			Bugging cameras allows you to disable them remotely."
-	item = /obj/item/camera_bug
-	cost = 1
-	surplus = 90
-
-/datum/uplink_item/devices/encryptionkey
-	name = "Syndicate Encryption Key"
-	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
-			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
-	item = /obj/item/encryptionkey/syndicate
-	cost = 2
-	surplus = 75
-	restricted = TRUE
-
 /datum/uplink_item/devices/binary
 	name = "Binary Translator Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
@@ -89,13 +59,6 @@
 	cost = 2
 	surplus = 75
 	restricted = TRUE
-
-/datum/uplink_item/devices/hacked_module
-	name = "Hacked AI Law Upload Module"
-	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
-			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/aiModule/syndicate
-	cost = 5
 
 /datum/uplink_item/devices/compressionkit
 	name = "Bluespace Compression Kit"
@@ -114,6 +77,21 @@
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
 
+/datum/uplink_item/devices/emag
+	name = "Cryptographic Sequencer"
+	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
+			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Starts with only 10 charges"
+	item = /obj/item/card/emag
+	cost = 6
+
+/datum/uplink_item/devices/camera_bug
+	name = "Camera Bug"
+	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
+			Bugging cameras allows you to disable them remotely."
+	item = /obj/item/camera_bug
+	cost = 1
+	surplus = 90
+
 /datum/uplink_item/devices/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
 	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. \
@@ -121,6 +99,19 @@
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
+
+/datum/uplink_item/devices/emagrecharge
+	name = "Electromagnet Charging Device"
+	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
+	item = /obj/item/emagrecharge
+	cost = 2
+
+/datum/uplink_item/devices/hacked_module
+	name = "Hacked AI Law Upload Module"
+	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
+			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
+	item = /obj/item/aiModule/syndicate
+	cost = 5
 
 /datum/uplink_item/devices/singularity_beacon
 	name = "Power Beacon"
@@ -138,3 +129,12 @@
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
 	item = /obj/item/powersink
 	cost = 7
+
+/datum/uplink_item/devices/encryptionkey
+	name = "Syndicate Encryption Key"
+	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
+			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+	item = /obj/item/encryptionkey/syndicate
+	cost = 2
+	surplus = 75
+	restricted = TRUE

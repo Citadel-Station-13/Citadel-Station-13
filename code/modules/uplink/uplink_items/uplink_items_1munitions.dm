@@ -9,6 +9,14 @@
 
 //Non-Clown-ops
 
+/datum/uplink_item/munitions/pistol
+	name = "Stechkin Pistol"
+	desc = "A small, easily concealable handgun, which fires 10mm rounds from an 8 round magazine. \
+			The preferred weapon for stealth operations on a budget. Compatible with supressors."
+	item = /obj/item/gun/ballistic/automatic/pistol
+	cost = 6
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/munitions/revolver
 	name = "Syndicate Revolver"
 	desc = "A bulky and powerful hand cannon that fires devastating .357 rounds from 7 chambers. \
@@ -16,14 +24,6 @@
 	item = /obj/item/gun/ballistic/revolver/syndie
 	cost = 13
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/munitions/pistol
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun, which fires 10mm rounds from an 8 round magazine. \
-			The preferred weapon for stealth operations on a budget. Compatible with supressors."
-	item = /obj/item/gun/ballistic/automatic/pistol
-	cost = 6
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/machinepistol
@@ -47,6 +47,25 @@
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 //Only Nukie-Ops
+
+/datum/uplink_item/munitions/sniper
+	name = "Anti-Material Sniper Rifle"
+	desc = "A long-range, scoped, specialist rifle that fires devastating .50 caliber rounds from a 5 round magazine. \
+			Incredible at neutralizing nearly any kind of individual target, but absolutely terrible at close range, or against multiple opponents."
+	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
+	cost = 16
+	surplus = 25
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/munitions/antitank
+	name = "Anti-Material Pistol"
+	desc = "Essentially an anti-material snipe rifle stripped down of all rifling. \
+			Fires .50 caliber rounds from a 5 round magazine, but with terrible accuracy. \
+			Cheaper than the revolver, and absolutely devastating if it hits"
+	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
+	cost = 14
+	surplus = 25
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/munitions/shotgun
 	name = "Bulldog Shotgun"
@@ -76,22 +95,11 @@
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/munitions/pdw
-	name = "M-90gl PDW"
-	desc = "A compact personal defense weapon that fires armor piercing 5.7x28mm ammunition in 4-round bursts from a 48 round magazine. \
-			This specific model comes with an underbarrel grenade launcher, for flushing out enemies behind cover. \
-			While expensive, it is the most versatile and effective of its size on offer."
-	item = /obj/item/gun/ballistic/automatic/m90
-	cost = 22
-	surplus = 50
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/munitions/bolt_action
-	name = "Surplus Rifle"
-	desc = "A horribly outdated bolt action weapon that fires 7.62x51mm rounds from a 5-round clip. \
-			Generally only purchased as a last resort, but suprisingly robust on a per shot basis."
-	item = /obj/item/gun/ballistic/shotgun/boltaction
-	cost = 2
+/datum/uplink_item/munitions/ion
+	name = "Ion Rifle"
+	desc = "A man-portable anti-electronics weapon designed to disrupt electrical systems and mechanical targets."
+	item = /obj/item/gun/energy/ionrifle //They get one on base, so they can have more then one
+	cost = 12
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/munitions/machinegun
@@ -103,20 +111,24 @@
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/munitions/sniper
-	name = "Anti-Material Sniper Rifle"
-	desc = "A long-range, scoped, specialist rifle that fires devastating .50 caliber rounds from a 5 round magazine. \
-			Incredible at neutralizing nearly any kind of individual target, but absolutely terrible at close range, or against multiple opponents."
-	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
-	cost = 16
-	surplus = 25
+/datum/uplink_item/munitions/pdw
+	name = "M-90gl PDW"
+	desc = "A compact personal defense weapon that fires armor piercing 5.7x28mm ammunition in 4-round bursts from a 48 round magazine. \
+			This specific model comes with an underbarrel grenade launcher, for flushing out enemies behind cover. \
+			While expensive, it is the most versatile and effective of its size on offer."
+	item = /obj/item/gun/ballistic/automatic/m90
+	cost = 22
+	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/munitions/ion
-	name = "Ion Rifle"
-	desc = "A man-portable anti-electronics weapon designed to disrupt electrical systems and mechanical targets."
-	item = /obj/item/gun/energy/ionrifle //They get one on base, so they can have more then one
-	cost = 12
+/datum/uplink_item/munitions/flamethrower
+	name = "Plasma Flamethrower"
+	desc = "A flamethrower, fueled by a tank of highly flammable biotoxins stolen from Nanotrasen \
+			Make a statement by roasting the filth in their own greed. Use with extreme caution. \
+			Ensure the igniter is on before firing."
+	item = /obj/item/flamethrower/full/tank
+	cost = 4
+	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 //CURRENTLY UNABLE TO LOAD ROCKETS INTO LAUNCHER. UNCOMMENT ONCE FIXED
@@ -129,25 +141,14 @@
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)*/
 
-/datum/uplink_item/munitions/flamethrower
-	name = "Plasma Flamethrower"
-	desc = "A flamethrower, fueled by a tank of highly flammable biotoxins stolen from Nanotrasen \
-			Make a statement by roasting the filth in their own greed. Use with extreme caution. \
-			Ensure the igniter is on before firing."
-	item = /obj/item/flamethrower/full/tank
-	cost = 4
-	surplus = 40
+/datum/uplink_item/munitions/bolt_action
+	name = "Surplus Rifle"
+	desc = "A horribly outdated bolt action weapon that fires 7.62x51mm rounds from a 5-round clip. \
+			Generally only purchased as a last resort, but suprisingly robust on a per shot basis."
+	item = /obj/item/gun/ballistic/shotgun/boltaction
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/munitions/antitank
-	name = "Anti-Material Pistol"
-	desc = "Essentially an anti-material snipe rifle stripped down of all rifling. \
-			Fires .50 caliber rounds from a 5 round magazine, but with terrible accuracy. \
-			Cheaper than the revolver, and absolutely devastating if it hits"
-	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
-	cost = 14
-	surplus = 25
-	include_modes = list(/datum/game_mode/nuclear)
 
 //Only Clown-ops
 
@@ -161,12 +162,12 @@
 
 //Both Ops
 
-/datum/uplink_item/munitions/foamsmg
-	name = "Toy Submachine Gun"
-	desc = "A Donksoft bullpup submachine gun that fires riot grade darts from a 28-round magazine."
-	item = /obj/item/gun/ballistic/automatic/c20r/toy
-	cost = 6
-	surplus = 0
+/datum/uplink_item/munitions/medgun
+	name = "Medbeam Gun"
+	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
+			operatives in the fight, even while under fire. Don't cross the streams!"
+	item = /obj/item/gun/medbeam
+	cost = 15
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/foammachinegun
@@ -178,12 +179,12 @@
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/munitions/medgun
-	name = "Medbeam Gun"
-	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
-			operatives in the fight, even while under fire. Don't cross the streams!"
-	item = /obj/item/gun/medbeam
-	cost = 15
+/datum/uplink_item/munitions/foamsmg
+	name = "Toy Submachine Gun"
+	desc = "A Donksoft bullpup submachine gun that fires riot grade darts from a 28-round magazine."
+	item = /obj/item/gun/ballistic/automatic/c20r/toy
+	cost = 6
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 //Anyone Can use

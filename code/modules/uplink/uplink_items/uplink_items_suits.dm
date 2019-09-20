@@ -26,17 +26,17 @@
 
 //Non-Any-Ops
 
-/datum/uplink_item/suits/turtlenck
-	name = "Tactical Turtleneck"
-	desc = "A weakly armored suit that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
-	item = /obj/item/clothing/under/syndicate
-	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
-
 /datum/uplink_item/suits/turtlenck_skirt
 	name = "Tactical Skirtleneck"
 	desc = "A weakly armored skirt that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
 	item = /obj/item/clothing/under/syndicate/skirt
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/turtlenck
+	name = "Tactical Turtleneck"
+	desc = "A weakly armored suit that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
+	item = /obj/item/clothing/under/syndicate
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
 

@@ -10,14 +10,6 @@
 
 //Non-Clown-Ops
 
-/datum/uplink_item/cqc/sword
-	name = "Energy Sword"
-	desc = "A small, pocketable device that can produce a deadly blade of energy when activated. Can block some attacks, but don't rely on it. \
-			Activating it or attacking with it produces a loud, distinctive noise."
-	item = /obj/item/melee/transforming/energy/sword/saber
-	cost = 7
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/cqc/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword requires to hands to weild, and does slightly more damage than a standard energy sword. \
@@ -29,6 +21,14 @@
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
+
+/datum/uplink_item/cqc/sword
+	name = "Energy Sword"
+	desc = "A small, pocketable device that can produce a deadly blade of energy when activated. Can block some attacks, but don't rely on it. \
+			Activating it or attacking with it produces a loud, distinctive noise."
+	item = /obj/item/melee/transforming/energy/sword/saber
+	cost = 7
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/cqc/rapier
 	name = " Plastitanium Rapier"
@@ -77,6 +77,14 @@ datum/uplink_item/cqc/taeclowndo_shoes
 
 //Both Ops
 
+/datum/uplink_item/cqc/cqc
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical hand-to-hand Close-Quarters Combat before self-destructing."
+	item = /obj/item/book/granter/martial/cqc
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cost = 13
+	surplus = 0
+
 /datum/uplink_item/cqc/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
@@ -85,14 +93,6 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	cost = 17
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/cqc/cqc
-	name = "CQC Manual"
-	desc = "A manual that teaches a single user tactical hand-to-hand Close-Quarters Combat before self-destructing."
-	item = /obj/item/book/granter/martial/cqc
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	cost = 13
-	surplus = 0
 
 /datum/uplink_item/cqc/combatglovesnano
 	name = "Nanotech Combat Gloves"
@@ -104,18 +104,12 @@ datum/uplink_item/cqc/taeclowndo_shoes
 
 //Any-one
 
-/datum/uplink_item/cqc/edagger
-	name = "Energy Dagger"
-	desc = "A tiny dagger made of energy that looks and functions as a pen when deactivated. Activating or attacking with it produces a loud, distinctive noise. \
-			Very easy to conceal, often goes unnoticed during searches, and makes an effective weapon when thrown."
-	item = /obj/item/pen/edagger
-	cost = 2
 
-/datum/uplink_item/cqc/switchblade
-	name = "Switchblade"
-	desc = "A small, retractable blade that can easily be concealed in one's pocket.  \
-			It is a lot quieter than the edagger but for a greater cost, while being much more likely to be noticed in a search."
-	item = /obj/item/switchblade
+/datum/uplink_item/cqc/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of throwing weapons, containing 5 shurikens and 2 reinforced bolas. \
+			The bolas can knock a target down and slow them, while the shurikens will embed into targets."
+	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
 
 /datum/uplink_item/cqc/dehy_carp
@@ -124,6 +118,13 @@ datum/uplink_item/cqc/taeclowndo_shoes
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
+
+/datum/uplink_item/cqc/edagger
+	name = "Energy Dagger"
+	desc = "A tiny dagger made of energy that looks and functions as a pen when deactivated. Activating or attacking with it produces a loud, distinctive noise. \
+			Very easy to conceal, often goes unnoticed during searches, and makes an effective weapon when thrown."
+	item = /obj/item/pen/edagger
+	cost = 2
 
 /datum/uplink_item/cqc/rapid
 	name = "Gloves of the North Star"
@@ -146,9 +147,9 @@ datum/uplink_item/cqc/taeclowndo_shoes
 	item = /obj/item/storage/toolbox/plastitanium
 	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
-/datum/uplink_item/cqc/throwingweapons
-	name = "Box of Throwing Weapons"
-	desc = "A box of throwing weapons, containing 5 shurikens and 2 reinforced bolas. \
-			The bolas can knock a target down and slow them, while the shurikens will embed into targets."
-	item = /obj/item/storage/box/syndie_kit/throwing_weapons
+/datum/uplink_item/cqc/switchblade
+	name = "Switchblade"
+	desc = "A small, retractable blade that can easily be concealed in one's pocket.  \
+			It is a lot quieter than the edagger but for a greater cost, while being much more likely to be noticed in a search."
+	item = /obj/item/switchblade
 	cost = 3

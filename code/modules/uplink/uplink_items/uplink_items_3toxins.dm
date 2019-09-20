@@ -64,14 +64,12 @@
 
 //Any-one
 
-/datum/uplink_item/toxins/rad_laser
-	name = "Radioactive Microlaser"
-	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
-			powerful burst of radiation, which, after a short delay, can incapacitate all but the most protected \
-			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
-			and wavelength, which controls the delay before the effect kicks in."
-	item = /obj/item/healthanalyzer/rad_laser
-	cost = 3
+/datum/uplink_item/toxins/syringe
+	name = "Box of Syringes"
+	desc = "A box of seven syringes, perfect for use with the dart gun."
+	item = /obj/item/storage/box/syringes
+	cost = 1
+	surplus = 0
 
 /datum/uplink_item/toxins/dart_pistol
 	name = "Dart Pistol"
@@ -81,19 +79,21 @@
 	cost = 4
 	surplus = 50
 
-/datum/uplink_item/toxins/syringe
-	name = "Box of Syringes"
-	desc = "A box of seven syringes, perfect for use with the dart gun."
-	item = /obj/item/storage/box/syringes
-	cost = 1
-	surplus = 0
-
 /datum/uplink_item/toxins/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/storage/box/syndie_kit/chemical
 	cost = 6
 	surplus = 50
+
+/datum/uplink_item/toxins/rad_laser
+	name = "Radioactive Microlaser"
+	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
+			powerful burst of radiation, which, after a short delay, can incapacitate all but the most protected \
+			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
+			and wavelength, which controls the delay before the effect kicks in."
+	item = /obj/item/healthanalyzer/rad_laser
+	cost = 3
 
 /datum/uplink_item/toxins/romerol_kit
 	name = "Romerol"

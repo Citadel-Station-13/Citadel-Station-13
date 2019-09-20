@@ -9,20 +9,20 @@
 
 //Non-Clown-Ops
 
-/datum/uplink_item/explosives/incendiary
-	name = "Incendiary Grenade"
-	desc = "A spicy grenade with a five-second fuse. Upon detonation, it will set anything in an area around it on fire. \
-			Perfect for striking fear into your enemies."
-	item = /obj/item/grenade/chem_grenade/incendiary
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/explosives/frag
 	name = "Fragmentation Grenade"
 	desc = "The classic fragmentation grenade is a high explosive grenade with a five-second fuse. Upon damage it will seriously injure \
 			anyone in the immediate area. A weaker version of the minibomb."
 	item = /obj/item/grenade/syndieminibomb/concussion/frag
 	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/explosives/incendiary
+	name = "Incendiary Grenade"
+	desc = "A spicy grenade with a five-second fuse. Upon detonation, it will set anything in an area around it on fire. \
+			Perfect for striking fear into your enemies."
+	item = /obj/item/grenade/chem_grenade/incendiary
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/explosives/syndicate_minibomb
@@ -48,15 +48,6 @@
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/explosives/tearstache
-	name = "Teachstache Grenade"
-	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
-		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
-	item = /obj/item/grenade/chem_grenade/teargas/moustache
-	cost = 3
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/explosives/clown_bomb_clownops
 	name = "Clown Bomb"
 	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
@@ -66,6 +57,15 @@
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/explosives/tearstache
+	name = "Teachstache Grenade"
+	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
+		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
+	item = /obj/item/grenade/chem_grenade/teargas/moustache
+	cost = 3
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
@@ -91,6 +91,15 @@
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/explosives/buzzkill
+	name = "Buzzkill Grenade Box"
+	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
+			with random toxins. Courtesy of the BLF and Tiger Cooperative."
+	item = /obj/item/storage/box/syndie_kit/bee_grenades
+	cost = 15
+	surplus = 35
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/explosives/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
@@ -102,24 +111,6 @@
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
-/datum/uplink_item/explosives/viscerators
-	name = "Viscerator Delivery Grenade"
-	desc = "A unique grenade that deploys a swarm of viscerator drones upon activation, which will chase down and shred \
-			any non-operatives in the area."
-	item = /obj/item/grenade/spawnergrenade/manhacks
-	cost = 5
-	surplus = 35
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/explosives/buzzkill
-	name = "Buzzkill Grenade Box"
-	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
-			with random toxins. Courtesy of the BLF and Tiger Cooperative."
-	item = /obj/item/storage/box/syndie_kit/bee_grenades
-	cost = 15
-	surplus = 35
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate detonator is a companion device to the Syndicate bomb. Simply press the included button \
@@ -130,7 +121,37 @@
 	cost = 3
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/explosives/viscerators
+	name = "Viscerator Delivery Grenade"
+	desc = "A unique grenade that deploys a swarm of viscerator drones upon activation, which will chase down and shred \
+			any non-operatives in the area."
+	item = /obj/item/grenade/spawnergrenade/manhacks
+	cost = 5
+	surplus = 35
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 //Any-one
+
+//datum/uplink_item/explosives/doorcharge
+//	name = "Airlock Charge"
+//	desc = "A small explosive charged that can be placed into the wiring of any airlock. \
+//			The moment someone attempts to open the airlock, the charge will detonate, destroying the airlock and injuring anyone nearby."
+//	item = /obj/item/doorCharge
+//	cost = 4
+
+/datum/uplink_item/explosives/flashbang
+	name = "Box of Flashbangs"
+	desc = "A box of four non-lethal grenade with a five-second fuse that can be used to blind, deafen, and incapacitate nearby opponents. \
+			Just be careful not to be in the blast radius."
+	item = /obj/item/storage/box/syndie_kit/flashbang
+	cost = 2
+
+/datum/uplink_item/explosives/emp
+	name = "Box of EMP Grenades"
+	desc = "A box of five rather useful utility grenades with a five-second fuse that generates a small electro-magnetic pulse upon detonation. \
+			Useful for disabling cyborgs, mechs, and other electronic devices."
+	item = /obj/item/storage/box/syndie_kit/emp
+	cost = 1
 
 /datum/uplink_item/explosives/c4
 	name = "Composition C-4"
@@ -158,13 +179,6 @@
 	cost = 5
 	restricted = TRUE
 
-//datum/uplink_item/explosives/doorcharge
-//	name = "Airlock Charge"
-//	desc = "A small explosive charged that can be placed into the wiring of any airlock. \
-//			The moment someone attempts to open the airlock, the charge will detonate, destroying the airlock and injuring anyone nearby."
-//	item = /obj/item/doorCharge
-//	cost = 4
-
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
@@ -173,25 +187,11 @@
 	cost = 6
 	surplus = 8
 
-/datum/uplink_item/explosives/flashbang
-	name = "Box of Flashbangs"
-	desc = "A box of four non-lethal grenade with a five-second fuse that can be used to blind, deafen, and incapacitate nearby opponents. \
-			Just be careful not to be in the blast radius."
-	item = /obj/item/storage/box/syndie_kit/flashbang
-	cost = 2
-
 /datum/uplink_item/explosives/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 6
-
-/datum/uplink_item/explosives/emp
-	name = "Box of EMP Grenades"
-	desc = "A box of five rather useful utility grenades with a five-second fuse that generates a small electro-magnetic pulse upon detonation. \
-			Useful for disabling cyborgs, mechs, and other electronic devices."
-	item = /obj/item/storage/box/syndie_kit/emp
-	cost = 1
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"

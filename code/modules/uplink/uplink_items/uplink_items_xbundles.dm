@@ -77,44 +77,12 @@
 	cost = 25 //Worth 43
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/bundles_TC/shredder
-	name = "Shredder Kit"
-	desc = "A truly horrific weapon designed simply to maim its victim, the CX Shredder is banned by several intergalactic treaties. \
-			This kit contains one CX Shredder with an assortment of six spare magazines, two fragmentation grenades, a stimulants injector, and a bar of soap."
-	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
-	cost = 25 //Worth 41
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/bundles_TC/knight
-	name = "Energy Knight Kit"
-	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield, \
-			a CNS Rebooter implant, no slip shoes, and an adrenals implanter."
-	item = /obj/item/storage/backpack/duffelbag/syndie/knight
-	cost = 25 //Worth 42
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/bundles_TC/cqc
-	name = "Close Quarters Combat Kit"
-	desc = "Reign supreme in hand to hand combat with this kit. Includes a CQC manual, gloves of the north star \
-			an adrenal mask, throwing weapons, a cryptographic sequencer, a bluespace launchpad, soap, and an EMP implanter."
-	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
-	cost = 25 //Worth 39
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/bundles_TC/sniper
-	name = "Sniper Kit"
-	desc = "A specialist kit for long ranged assassinations. Includes a syndicate .50 caliber sniper rifle, with an assortment of three magazines, \
-			a sharp-looking tactical turtleneck suit and tie, a suppressor, an energy dagger, and a door charge."
-	item = /obj/item/storage/briefcase/sniperbundle
-	cost = 25 //Worth 40
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/bundles_TC/infiltrator
-	name = "Infiltration Kit"
-	desc = "Sneak behind enemy lines and complete key objectives for your team. Includes an additional stechkin pistol, two suppressors, four 10mm magazines, \
-			a switchblade, two smoke grenades, a cryptographic sequencer with a spare recharger, a camera bug, a radio jammer, an AI detector, and a stealth implanter."
-	item = /obj/item/storage/backpack/duffelbag/syndie/infiltrator
-	cost = 25 //Worth 39
+/datum/uplink_item/bundles_TC/bioterror
+	name = "Bioterrorist Kit"
+	desc = "An incredibly dangerous kit for biological warfare. Handle with care. Includes a handheld bioterror chem sprayer, a dart gun, \
+			a poison kit, a bioterror kit, and the terrifying Fungal Tuberculosis kit. Seal suit and internals before use."
+	item = /obj/item/storage/backpack/duffelbag/syndie/bioterror
+	cost = 25 //Worth 44!
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/medic
@@ -134,6 +102,22 @@
 	cost = 25 //Worth ~36
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/bundles_TC/cqc
+	name = "Close Quarters Combat Kit"
+	desc = "Reign supreme in hand to hand combat with this kit. Includes a CQC manual, gloves of the north star \
+			an adrenal mask, throwing weapons, a cryptographic sequencer, a bluespace launchpad, soap, and an EMP implanter."
+	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	cost = 25 //Worth 39
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/bundles_TC/knight
+	name = "Energy Knight Kit"
+	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield, \
+			a CNS Rebooter implant, no slip shoes, and an adrenals implanter."
+	item = /obj/item/storage/backpack/duffelbag/syndie/knight
+	cost = 25 //Worth 42
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/bundles_TC/grenadier
 	name = "Grenadier's Belt"
 	desc = "KABOOM BABY! Includes a grenade belt jam packed with a serious arsenal of explosives. Includes 10 fragmentation grenades, two minibombs \
@@ -151,12 +135,12 @@
 	cost = 25 //Worth 42
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/bundles_TC/bioterror
-	name = "Bioterrorist Kit"
-	desc = "An incredibly dangerous kit for biological warfare. Handle with care. Includes a handheld bioterror chem sprayer, a dart gun, \
-			a poison kit, a bioterror kit, and the terrifying Fungal Tuberculosis kit. Seal suit and internals before use."
-	item = /obj/item/storage/backpack/duffelbag/syndie/bioterror
-	cost = 25 //Worth 44!
+/datum/uplink_item/bundles_TC/infiltrator
+	name = "Infiltration Kit"
+	desc = "Sneak behind enemy lines and complete key objectives for your team. Includes an additional stechkin pistol, two suppressors, four 10mm magazines, \
+			a switchblade, two smoke grenades, a cryptographic sequencer with a spare recharger, a camera bug, a radio jammer, an AI detector, and a stealth implanter."
+	item = /obj/item/storage/backpack/duffelbag/syndie/infiltrator
+	cost = 25 //Worth 39
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/pyro
@@ -166,6 +150,22 @@
 			and a fireproof elite syndicate hardsuit to keep you safe from the flames. We are not responsible for any friendly fire that results from the purchase of this kit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/pyro
 	cost = 25 //Worth 39
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/bundles_TC/shredder
+	name = "Shredder Kit"
+	desc = "A truly horrific weapon designed simply to maim its victim, the CX Shredder is banned by several intergalactic treaties. \
+			This kit contains one CX Shredder with an assortment of six spare magazines, two fragmentation grenades, a stimulants injector, and a bar of soap."
+	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	cost = 25 //Worth 41
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/bundles_TC/sniper
+	name = "Sniper Kit"
+	desc = "A specialist kit for long ranged assassinations. Includes a syndicate .50 caliber sniper rifle, with an assortment of three magazines, \
+			a sharp-looking tactical turtleneck suit and tie, a suppressor, an energy dagger, and a door charge."
+	item = /obj/item/storage/briefcase/sniperbundle
+	cost = 25 //Worth 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 //Both Ops

@@ -46,13 +46,14 @@
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/implants/xray
-	name = "X-ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/xray_eyes
-	cost = 10
-	surplus = 0
+/datum/uplink_item/implants/macrobomb
+	name = "Macrobomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
+			Upon death, releases a massive explosion that will wipe out everything nearby."
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
+	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
+	restricted = TRUE
 
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
@@ -63,14 +64,13 @@
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/implants/macrobomb
-	name = "Macrobomb Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
-			Upon death, releases a massive explosion that will wipe out everything nearby."
-	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
-	cost = 20
+/datum/uplink_item/implants/xray
+	name = "X-ray Vision Implant"
+	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
+	item = /obj/item/autosurgeon/xray_eyes
+	cost = 10
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
-	restricted = TRUE
 
 //Both Ops
 
@@ -83,6 +83,12 @@
 	item = /obj/item/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 	player_minimum = 25
+
+/datum/uplink_item/implants/emp
+	name = "EMP Implant"
+	desc = "An implant injected into the body, and later activated at the user's will. It will create a small EMP blast around the user."
+	item = /obj/item/storage/box/syndie_kit/imp_emp
+	cost = 1
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -99,16 +105,6 @@
 	cost = 4
 	restricted = TRUE
 
-/datum/uplink_item/implants/uplink
-	name = "Uplink Implant"
-	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals and must be charged by the use of physical telecrystals. \
-			Undetectable (except via surgery), and excellent for escaping confinement."
-	item = /obj/item/storage/box/syndie_kit/imp_uplink
-	cost = 4
-	// An empty uplink is kinda useless.
-	surplus = 0
-	restricted = TRUE
-
 /datum/uplink_item/implants/stealthimplant
 	name = "Stealth Implant"
 	desc = "This one-of-a-kind implant will make you almost invisible as long as you don't don't excessively move around. \
@@ -123,8 +119,12 @@
 	item = /obj/item/storage/box/syndie_kit/imp_storage
 	cost = 8
 
-/datum/uplink_item/implants/emp
-	name = "EMP Implant"
-	desc = "An implant injected into the body, and later activated at the user's will. It will create a small EMP blast around the user."
-	item = /obj/item/storage/box/syndie_kit/imp_emp
-	cost = 1
+/datum/uplink_item/implants/uplink
+	name = "Uplink Implant"
+	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals and must be charged by the use of physical telecrystals. \
+			Undetectable (except via surgery), and excellent for escaping confinement."
+	item = /obj/item/storage/box/syndie_kit/imp_uplink
+	cost = 4
+	// An empty uplink is kinda useless.
+	surplus = 0
+	restricted = TRUE
