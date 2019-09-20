@@ -13,7 +13,7 @@
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE
-    var/potency = 1 //potency multiplies the volume when added.
+	var/potency = 1 //potency multiplies the volume when added.
 
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
