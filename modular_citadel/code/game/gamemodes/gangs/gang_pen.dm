@@ -26,6 +26,9 @@
 	if(!M.client || !M.mind)
 		to_chat(user, "<span class='warning'>A braindead gangster is an useless gangster!</span>")
 		return
+	if(M.mind.assigned_role in list("Captain"))
+		to_chat(user, "<span class='warning'>This mind is to loyal to be a gangster!</span>")
+		return
 	var/datum/team/gang/gang = L.gang
 	if(!add_gangster(user, gang, M.mind))
 		return
@@ -51,9 +54,6 @@
 		return
 	if(check && HAS_TRAIT(gangster_mind.current, TRAIT_MINDSHIELD))  //Check to see if the potential gangster is implanted
 		to_chat(user, "<span class='danger'>This mind is too strong to control!</span>")
-		return
-	if(M.mind.assigned_role in list("Captain")
-		to_chat(user, "<span class='danger'>This mind is too loyal to control!</span>")
 		return
 	var/mob/living/carbon/human/H = gangster_mind.current // we are sure the dude's human cause it's checked in attack()
 	H.silent = max(H.silent, 5)
