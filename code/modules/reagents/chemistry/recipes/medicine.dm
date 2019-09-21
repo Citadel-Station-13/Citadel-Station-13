@@ -78,14 +78,14 @@
 	OptimalTempMin 		= 305		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 315 		// Upper end for above
 	ExplodeTemp 		= 1050 		// Temperature at which reaction explodes
-	OptimalpHMin 		= 9 		// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMin 		= 8.5 		// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	OptimalpHMax 		= 9.5 		// Higest value for above
 	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 0.01 		// Temperature change per 1u produced
-	HIonRelease 		= 0.01 		// pH change per 1u reaction (inverse for some reason)
+	HIonRelease 		= 0.015 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 0.05 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	PurityMin 			= 0
