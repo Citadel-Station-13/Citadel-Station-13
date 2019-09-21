@@ -15,7 +15,7 @@
 	Nanotrasen Science Directorate"}
 
 /datum/station_goal/bluespace_tap/on_report()
-	var/datum/supply_packs/misc/bluespace_tap/P = SSshuttle.supply_packs["[/datum/supply_packs/misc/bluespace_tap]"]
+	var/datum/supply_pack/P  = SSshuttle.supply_packs["[/datum/supply_pack/engineering/bluespace_tap]"]
 	P.special_enabled = TRUE
 
 /datum/station_goal/bluespace_tap/check_completion()
@@ -39,7 +39,7 @@
 	product_path = path
 	product_cost = cost
 
-//circuit board for building it
+//circuit board for building
 /obj/item/circuitboard/machine/bluespace_tap
 	name = "Bluespace Tap (Machine Board)"
 	build_path = /obj/machinery/power/bluespace_tap
@@ -48,9 +48,10 @@
 							/obj/item/stack/sheet/mineral/diamond = 11, //diamond gears/pick
 							/obj/item/stack/sheet/mineral/wood = 2, //diamond pickaxe handle
 							/obj/item/stack/sheet/mineral/gold = 16, //gold gears
-							/obj/item/stack/sheet/mineral/metal = 40, //iron gears
+							/obj/item/stack/sheet/metal = 40, //iron gears
 							/obj/item/stack/cable_coil = 1, //redstone dust
-							/obj/item/stack/ore/bluespace_crystal = 20 //powered by BS)
+							/obj/item/stack/ore/bluespace_crystal = 20 //powered by BS
+							)
 
 /obj/effect/spawner/lootdrop/bluespace_tap
 	name = "bluespace tap reward spawner"
@@ -86,30 +87,30 @@
 /obj/effect/spawner/lootdrop/bluespace_tap/cultural
 	name = "cultural artifacts"
 	loot = list(
-		/obj/vehicle/space/speedbike/red = 1,
-		/obj/item/grenade/clusterbuster/honk = 10,
+		/obj/vehicle/ridden/space/speedbike/red = 1,
+		//obj/item/grenade/clusterbuster/honk = 10,
 		/obj/item/toy/katana = 10,
 		/obj/item/stack/tile/brass/fifty = 20,
 		/obj/item/stack/sheet/mineral/abductor/fifty = 20,
 		/obj/item/sord = 20,
 		/obj/item/toy/syndicateballoon = 15,
-		/obj/item/lighter/zippo/ = 5,
-		/obj/item/gun/projectile/automatic/c20r/toy = 1,
-		/obj/item/gun/projectile/automatic/l6_saw/toy = 1,
-		/obj/item/gun/projectile/automatic/toy/pistol = 2,
-		/obj/item/gun/projectile/automatic/toy/pistol/enforcer = 1,
-		/obj/item/gun/ballistic/automatic/toy/pistol/stealth = 1,
+		/obj/item/lighter/slime = 5,
+		//obj/item/gun/projectile/automatic/c20r/toy = 1,
+		//obj/item/gun/projectile/automatic/l6_saw/toy = 1,
+		//obj/item/gun/projectile/automatic/toy/pistol = 2,
+		//obj/item/gun/projectile/automatic/toy/pistol/enforcer = 1,
+		//obj/item/gun/ballistic/automatic/toy/pistol/stealth = 1,
 		/obj/item/gun/ballistic/automatic/x9/toy = 1,
-		/obj/item/gun/projectile/shotgun/toy = 1,
-		/obj/item/gun/projectile/shotgun/toy/crossbow = 1,
-		/obj/item/gun/projectile/shotgun/toy/tommygun = 1,
-		/obj/item/gun/projectile/automatic/sniper_rifle/toy = 1,
+		//obj/item/gun/projectile/shotgun/toy = 1,
+		//obj/item/gun/projectile/shotgun/toy/crossbow = 1,
+		//obj/item/gun/projectile/shotgun/toy/tommygun = 1,
+		//obj/item/gun/projectile/automatic/sniper_rifle/toy = 1,
 		/obj/item/twohanded/dualsaber/toy = 5,
-		/obj/machinery/snow_machine = 10,
+		//obj/machinery/snow_machine = 10,
 		/obj/item/clothing/head/kitty = 5,
 		/obj/item/coin/antagtoken = 5,
-		/obj/item/toy/prizeball/figure = 15,
-		/obj/item/toy/prizeball/therapy = 10,
+		//obj/item/toy/prizeball/figure = 15,
+		//obj/item/toy/prizeball/therapy = 10,
 		/obj/item/bedsheet/patriot = 2,
 		/obj/item/bedsheet/rainbow = 2,
 		/obj/item/bedsheet/captain = 2,
@@ -122,21 +123,18 @@
 /obj/effect/spawner/lootdrop/bluespace_tap/organic
 	name = "organic objects"
 	loot = list(
-		/obj/item/seeds/random/labelled = 50,
-		/obj/item/guardiancreator/biological = 5,
-		/obj/item/organ/internal/vocal_cords/adamantine = 15,
-		/obj/item/reagent_containers/glass/bottle/reagent/omnizine = 15,
+		//obj/item/seeds/random/labelled = 50,
+		//obj/item/guardiancreator/biological = 5,
+		//obj/item/organ/internal/vocal_cords/adamantine = 15,
+		//obj/item/reagent_containers/glass/bottle/reagent/mutagen = 15,
 		/obj/item/dnainjector/xraymut = 5,
 		/obj/item/dnainjector/telemut = 5,
-		/obj/item/dnainjector/midgit = 5,
-		/obj/item/dnainjector/morph = 5,
-		/obj/item/dnainjector/regenerate = 5,
-		/mob/living/simple_animal/pet/corgi = 5,
+		//obj/item/dnainjector/regenerate = 5,
+		/mob/living/simple_animal/pet/dog/corgi = 5,
 		/mob/living/simple_animal/pet/cat = 5,
 		/mob/living/simple_animal/pet/fox = 5,
 		/mob/living/simple_animal/pet/penguin = 5,
-		/mob/living/simple_animal/pig = 5,
-		/obj/item/slimepotion/sentience = 5,
+		//obj/item/slimepotion/sentience = 5,
 		/obj/item/clothing/mask/cigarette/cigar/havana = 3
 	)
 
@@ -144,25 +142,23 @@
 	name = "fancy food"
 	lootcount = 3
 	loot = list(
-		/obj/item/reagent_containers/food/snacks/wingfangchu = 100,
-		/obj/item/reagent_containers/food/snacks/hotdog = 100,
-		/obj/item/reagent_containers/food/snacks/sliceable/turkey = 100,
-		/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit = 100,
-		/obj/item/reagent_containers/food/snacks/appletart = 100,
-		/obj/item/reagent_containers/food/snacks/sliceable/cheesecake = 100,
-		/obj/item/reagent_containers/food/snacks/sliceable/bananacake = 100,
-		/obj/item/reagent_containers/food/snacks/sliceable/chocolatecake = 100,
-		/obj/item/reagent_containers/food/snacks/meatballsoup = 100,
-		/obj/item/reagent_containers/food/snacks/mysterysoup = 100,
-		/obj/item/reagent_containers/food/snacks/stew = 100,
-		/obj/item/reagent_containers/food/snacks/hotchili = 100,
-		/obj/item/reagent_containers/food/snacks/burrito = 100,
-		/obj/item/reagent_containers/food/snacks/fishburger = 100,
+		/obj/item/reagent_containers/food/snacks/soup/wingfangchu = 100,
+		/obj/item/reagent_containers/food/snacks/butterdog = 100,
+		/obj/item/reagent_containers/food/snacks/pie/plump_pie = 100,
+		/obj/item/reagent_containers/food/snacks/store/cake/cheese= 100,
+		/obj/item/reagent_containers/food/snacks/soup/clownstears = 100,
+		/obj/item/reagent_containers/food/snacks/store/cake/chocolate = 100,
+		/obj/item/reagent_containers/food/snacks/soup/meatball = 100,
+		/obj/item/reagent_containers/food/snacks/soup/mystery = 100,
+		/obj/item/reagent_containers/food/snacks/soup/stew = 100,
+		/obj/item/reagent_containers/food/snacks/soup/hotchili = 100,
+		/obj/item/reagent_containers/food/snacks/fuegoburrito = 100,
+		/obj/item/reagent_containers/food/snacks/burger/fish = 100,
 		/obj/item/reagent_containers/food/snacks/cubancarp = 100,
 		/obj/item/reagent_containers/food/snacks/fishandchips = 100,
-		/obj/item/reagent_containers/food/snacks/meatpie = 100,
-		/obj/item/pizzabox/hawaiian = 100,
-		/obj/item/reagent_containers/food/snacks/sliceable/xenomeatbread = 100,
+		/obj/item/reagent_containers/food/snacks/pie/meatpie = 100,
+		/obj/item/reagent_containers/food/snacks/pizza/margherita = 100,
+		/obj/item/reagent_containers/food/snacks/store/bread/xenomeat = 100,
 		/obj/item/reagent_containers/food/snacks/burger/roburger = 5, //fuck xenobio lol
 	)
 
@@ -210,16 +206,54 @@
 	var/actual_power_usage = 500
 	var/total_points = 0	//total amount of points ever earned, for tracking station goal
 	density = 1
-	interact_offline = 1
 	luminosity = 1
 	var/max_level = 20	//max power input level, I don't expect this to be ever reached
+	var/emagged = 0 //emagged needs to be a number but i need a bool for oui so here we are. 2 vars.
+	var/safty = FALSE
+
 	var/static/product_list = list(	//list of items the bluespace tap can produce
 	new /datum/data/bluespace_tap_product("Unknown Head Cover", /obj/effect/spawner/lootdrop/bluespace_tap/hat, 10000),
 	new /datum/data/bluespace_tap_product("Unknown Snack", /obj/effect/spawner/lootdrop/bluespace_tap/food, 12000),
 	new /datum/data/bluespace_tap_product("Unknown Cultural Artifact", /obj/effect/spawner/lootdrop/bluespace_tap/cultural, 15000),
-	new /datum/data/bluespace_tap_product("Unknown Biological Artifact", /obj/effect/spawner/lootdrop/bluespace_tap/organic, 20000)
+	new /datum/data/bluespace_tap_product("Unknown Biological Artifact", /obj/effect/spawner/lootdrop/bluespace_tap/organic, 20000),
 	new /datum/data/bluespace_tap_product("Unknown Weapon", /obj/effect/spawner/lootdrop/bluespace_tap/weapon, 40000)
 	)
+//a modifcation of the usual spawner for my purposes, spawns faster, has more health, spawns less total monsters
+/mob/living/simple_animal/hostile/spawner/nether/bluespace_tap
+	spawn_time = 300	//30 seconds, same as necropolis tendrils
+	max_mobs = 5		//Dont' want them overrunning the station
+	health = 150		//but also don't want them to be destroyed too easily
+	maxHealth = 150
+	pressure_resistance = 100	//pressure moving portals felt very silly
+
+//var/list/listed_items = list()//a list of lists, each inner list equals a datum
+//	for(var/key = 1 to length(product_list))
+//		var/datum/data/bluespace_tap_product/A = product_list[key]
+//		listed_items.Add(list(
+//				"key" = key,
+//	/			"name" = A.product_name,
+	//			"price" = A.product_cost
+	//			))
+
+/obj/machinery/power/bluespace_tap/oui_data(mob/user)
+	var/list/data = list()
+	data["level"] = input_level
+	data["points"] = points
+	data["total_points"] = total_points
+	data["power_use"] = actual_power_usage
+	data["available_power"] = surplus()
+	data["max_level"] = max_level
+	data["emagged"] = safty
+	data["product"] = product_list//listed_items
+
+var/ggoui = new /datum/oracle_ui/themed/nano(src, 540, 380, "bluespace_tap")
+/obj/machinery/power/bluespace_tap/emag_act(var/mob/living/user as mob)
+	if(!emagged)
+		emagged = 1
+		if(user)
+			user.visible_message("[user.name] emags the [src.name].","<span class='warning'>You override the safety protocols.</span>")
+	if(!safty)
+		safty = TRUE
 
 /obj/machinery/power/bluespace_tap/New()
 	..()
@@ -280,7 +314,6 @@
 		points += points_to_add	//point generation, emagging gets you 'free' points at the cost of higher anomaly chance
 		total_points += points_to_add
 		if(prob(input_level - 7 + (emagged * 5)))	//at dangerous levels, start doing freaky shit. prob with values less than 0 treat it as 0, so only occurs if input level > 7
-			event_announcement.Announce("Unexpected power spike during Bluespace Tap Operation. Extra-dimensional intruder alert. Expected location: [get_area(src).name].", "Bluespace Tap Malfunction")
 			if(!emagged)
 				input_level = 0	//as hilarious as it would be for the tap to spawn in even more nasties because you can't get to it to turn it off, that might be too much for now. Unless sabotage is involved
 			for(var/i = 1, i <= rand(1, 3), i++)	//freaky shit here, 1-3 freaky portals
@@ -288,8 +321,20 @@
 				var/mob/living/simple_animal/hostile/spawner/nether/bluespace_tap/portal = new(src)
 				portal.forceMove(location)
 
+//HON HON BAGUETTE OUI OUI
+
+/obj/machinery/power/bluespace_tap/attack_hand(mob/user)
+	add_fingerprint(user)
+	ggoui.render(user)
+
+/obj/machinery/power/bluespace_tap/attack_ai(mob/user)
+	ggoui.render(user)
+/*
+
+*/
 
 
+/*left in case we ever switch to nanoui (lol)
 /obj/machinery/power/bluespace_tap/ui_data(mob/user, ui_key = "main", datum/topic_state/state = default_state)
 	var/data[0]
 
@@ -354,7 +399,7 @@
 		produce(key)
 
 
-/* left in case we ever switch to nanoui (lol)
+
 /obj/machinery/power/bluespace_tap/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	//stolen from SMES code
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -368,7 +413,7 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
-*/
+
 
 /obj/machinery/power/bluespace_tap/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -376,19 +421,9 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "Bluespace Rift Tunneler", name, 540, 380, master_ui, state)
 		ui.open()
-
+*/
 
 //emaging provides slightly more points but at much greater risk
-/obj/machinery/power/bluespace_tap/emag_act(var/mob/living/user as mob)
-	if(!emagged)
-		emagged = 1
-		if(user)
-			user.visible_message("[user.name] emags the [src.name].","<span class='warning'>You override the safety protocols.</span>")
 
-//a modifcation of the usual spawner for my purposes, spawns faster, has more health, spawns less total monsters
-/mob/living/simple_animal/hostile/spawner/nether/bluespace_tap
-	spawn_time = 300	//30 seconds, same as necropolis tendrils
-	max_mobs = 5		//Dont' want them overrunning the station
-	health = 150		//but also don't want them to be destroyed too easily
-	maxHealth = 150
-	pressure_resistance = 100	//pressure moving portals felt very silly
+
+
