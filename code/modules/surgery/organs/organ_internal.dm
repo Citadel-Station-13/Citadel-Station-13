@@ -203,7 +203,7 @@
 /mob/living/proc/regenerate_organs()
 	return 0
 
-/mob/living/carbon/regenerate_organs()
+/mob/living/carbon/regenerate_organs(only_one = FALSE)
 	var/breathes = TRUE
 	var/blooded = TRUE
 	if(dna && dna.species)
@@ -222,6 +222,8 @@
 			else
 				LI = new()
 			LI.Insert(src)
+			if(only_one)
+				return TRUE
 
 		if(has_stomach && !getorganslot(ORGAN_SLOT_STOMACH))
 			var/obj/item/organ/stomach/S
@@ -231,14 +233,20 @@
 			else
 				S = new()
 			S.Insert(src)
+			if(only_one)
+				return TRUE
 
 	if(breathes && !getorganslot(ORGAN_SLOT_LUNGS))
 		var/obj/item/organ/lungs/L = new()
 		L.Insert(src)
+		if(only_one)
+			return TRUE
 
 	if(blooded && !getorganslot(ORGAN_SLOT_HEART))
 		var/obj/item/organ/heart/H = new()
 		H.Insert(src)
+		if(only_one)
+			return TRUE
 
 	if(!getorganslot(ORGAN_SLOT_TONGUE))
 		var/obj/item/organ/tongue/T
@@ -250,7 +258,10 @@
 
 		// if they have no mutant tongues, give them a regular one
 		T.Insert(src)
-	else
+		if(only_one)
+			return TRUE
+
+	else if (!only_one)
 		var/obj/item/organ/tongue/oT = getorganslot(ORGAN_SLOT_TONGUE)
 		if(oT.name == "fluffy tongue")
 			var/obj/item/organ/tongue/T
@@ -271,6 +282,8 @@
 		else
 			E = new()
 		E.Insert(src)
+		if(only_one)
+			return TRUE
 
 	if(!getorganslot(ORGAN_SLOT_EARS))
 		var/obj/item/organ/ears/ears
@@ -280,9 +293,13 @@
 			ears = new
 
 		ears.Insert(src)
+		if(only_one)
+			return TRUE
 
 	if(!getorganslot(ORGAN_SLOT_TAIL))
 		var/obj/item/organ/tail/tail
 		if(dna && dna.species && dna.species.mutanttail)
 			tail = new dna.species.mutanttail
 			tail.Insert(src)
+			if(only_one)
+				return TRUE

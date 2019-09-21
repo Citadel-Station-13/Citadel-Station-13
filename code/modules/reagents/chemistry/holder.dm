@@ -496,7 +496,12 @@
 
 		//Standard reaction mechanics:
 			else
-				if (C.FermiChem == TRUE)//Just to make sure
+				if (C.FermiChem == TRUE)//Just to make sure, should only proc when grenades are combining.
+					if (chem_temp > C.ExplodeTemp) //To allow fermigrenades
+						var/datum/chemical_reaction/fermi/Ferm = selected_reaction
+						fermiIsReacting = FALSE
+						SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
+						Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
 					return 0
 
 				for(var/B in cached_required_reagents) //
@@ -550,6 +555,10 @@
 	if (multiplier == 0)
 		fermiEnd()
 		return
+	for(var/P in C.required_catalysts)
+		if(!has_reagent(P))
+			fermiEnd()
+			return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
 
@@ -676,7 +685,7 @@
 					STOP_PROCESSING(SSprocessing, src)
 					return 0
 
-	C.FermiCreate(src)//proc that calls when step is done
+	C.FermiCreate(src, addChemAmmount, purity)//proc that calls when step is done
 
 	//Apply pH changes and thermal output of reaction to beaker
 	chem_temp = round(cached_temp + (C.ThermicConstant * addChemAmmount))
