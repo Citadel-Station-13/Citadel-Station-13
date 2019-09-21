@@ -277,6 +277,7 @@
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
+				log_combat(M, src, "disarmed")
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				if(!lying)				//CITADEL EDIT
