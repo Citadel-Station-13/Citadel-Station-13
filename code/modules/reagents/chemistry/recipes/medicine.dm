@@ -102,8 +102,7 @@
 		St.volume *= St.purity
 		St.purity = 1
 	N.volume -= 0.002
-	St.data.["grown_volume"] += added_volume
-	St.data = St.data.["grown_volume"]
+	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
 
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"

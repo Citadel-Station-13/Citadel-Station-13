@@ -115,35 +115,34 @@
 				to_chat(M, "<span class='danger'>You feel your [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	if(method==INJECT)
-		data.["injected_vol"] += reac_volume
-		message_admins("inject! [data.["injected_vol"]], [reac_volume]")
+		data["injected_vol"] = data["injected_vol"] + reac_volume
 	..()
 
 /datum/reagent/synthtissue/on_mob_life(mob/living/carbon/C)
 	if(!iscarbon(C))
 		return ..()
-	if(data.["injected_vol"] > 14)
-		if(data.["grown_volume"] > 150) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
+	if(data["injected_vol"] > 14)
+		if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
 					C.reagents.remove_reagent(id, 15)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 
-	data.["injected_vol"] -= metabolization_rate
+	data["injected_vol"] -= metabolization_rate
 	..()
 
 /datum/reagent/synthtissue/on_merge(passed_data)
-	if(passed_data.["grown_volume"] > data.["grown_volume"])
-		data.["grown_volume"] = passed_data.["grown_volume"]
-	if(!data)
-		data = passed_data
+	if(!passed_data)
+		return ..()
+	if(passed_data["grown_volume"] > data["grown_volume"])
+		data["grown_volume"] = passed_data["grown_volume"]
 	..()
 
 /datum/reagent/synthtissue/on_new(passed_data)
-	if(passed_data.["grown_volume"] > data.["grown_volume"])
-		data.["grown_volume"] = passed_data.["grown_volume"]
-	if(!data)
-		data = passed_data
+	if(!passed_data)
+		return ..()
+	if(passed_data["grown_volume"] > data["grown_volume"])
+		data["grown_volume"] = passed_data["grown_volume"]
 	..()
 
 /datum/reagent/synthtissue/
