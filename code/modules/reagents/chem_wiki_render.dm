@@ -133,6 +133,8 @@
 	for(var/i = 1, i <= 2, i+=1)
 		for(var/X in GLOB.chemical_reagents_list)
 			R = GLOB.chemical_reagents_list[X]
+			if(!R.description) //No description? It's not worth my time.
+				continue
 
 			for(var/Y in dispensable_reagents) //Why do you have to do this
 				if(R.id == Y)
@@ -206,7 +208,7 @@
 
 	to_chat(usr, "finished chems")
 
-	var/wholeString = ("\n# DISPENCEABLE REAGENTS\n\n[prefix][basic]\n\n# COMPONENT REAGENTS\n\n[prefix][upgraded]\n\n# GRINDABLE REAGENTS\n\n[prefix][grinded]\n")
+	var/wholeString = ("\n# DISPENCEABLE REAGENTS\n\n[prefix][basic]\n\n# COMPONENT REAGENTS\n\n[prefix][upgraded]\n\n# GROUND REAGENTS\n\n[prefix][grinded]\n")
 	wholeString += ("\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# IMPURE REAGENTS\n\n[prefix][impure]\n\n# GENERAL REAGENTS\n\n[prefix][remainder]\n\n# DISPENCEABLE SOFT DRINKS\n\n[prefix][drinks]\n\n# DISPENCEABLE HARD DRINKS\n\n[prefix][alco]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n\n# BLOB REAGENTS\n\n[prefix][blob]\n")
 
 	prefix = "|Name | Reagents | Reaction vars | Description |\n|---|---|---|----------|\n"
@@ -290,11 +292,12 @@
 	//Description, OD, Addict, Meta
 	outstring += "[R.description] | <ul><li>Metabolism_rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
 
-	if(R.impure_chem != "fermiTox" || !R.impure_chem)
+
+	if(R.impure_chem && R.impure_chem != "fermiTox")
 		R3 = GLOB.chemical_reagents_list[R.impure_chem]
 		outstring += "<li>Impure chem:<a href=\"#[R3.name]\">[R3.name]</a></li>"
 
-	if(R.inverse_chem != "fermiTox" || !R.inverse_chem)
+	if(R.inverse_chem && R.impure_chem != "fermiTox")
 		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
 		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> "
 
