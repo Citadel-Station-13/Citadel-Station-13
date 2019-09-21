@@ -129,7 +129,7 @@
 		"applejack"
 	)
 
-
+	var/breakout = FALSE
 	for(var/i = 1, i <= 2, i+=1)
 		for(var/X in GLOB.chemical_reagents_list)
 			R = GLOB.chemical_reagents_list[X]
@@ -139,28 +139,36 @@
 			for(var/Y in dispensable_reagents) //Why do you have to do this
 				if(R.id == Y)
 					basic += generate_chemwiki_line(R, X, processCR)
+					breakout = TRUE
 					continue
 
 			for(var/Y in components)
 				if(R.id == Y)
 					upgraded += generate_chemwiki_line(R, X, processCR)
+					breakout = TRUE
 					continue
 
 			for(var/Y in dispence_drinks)
 				if(R.id == Y)
 					drinks += generate_chemwiki_line(R, X, processCR)
+					breakout = TRUE
 					continue
 
 			for(var/Y in dispence_alco)
 				if(R.id == Y)
 					alco += generate_chemwiki_line(R, X, processCR)
+					breakout = TRUE
 					continue
 
 			for(var/Y in grind)
 				if(R.id == Y)
 					grinded += generate_chemwiki_line(R, X, processCR)
+					breakout = TRUE
 					continue
 
+			if(breakout)
+				breakout = FALSE
+				continue
 
 			if(istype(R, /datum/reagent/medicine))
 				medicine += generate_chemwiki_line(R, X, processCR)
