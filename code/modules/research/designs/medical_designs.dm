@@ -192,6 +192,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/bsblood_bag
+	name = "Blue Space Empty Blood Bag"
+	desc = "A large sterilized plastic bag for blood."
+	id = "bsblood_bag"
+	build_path = /obj/item/reagent_containers/blood/bluespace
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 4500, MAT_BLUESPACE = 250)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cloning_disk
 	name = "Cloning Data Disk"
 	desc = "Produce additional disks for storing genetic data."
@@ -746,6 +756,13 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
+	
+/datum/design/surgery/experimental_dissection
+	name = "Experimental Dissection"
+	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/bioware/experimental_dissection
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
@@ -815,6 +832,22 @@
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
 	surgery = /datum/surgery/advanced/bioware/vein_threading
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/ligament_hook
+	name = "Ligament Hook"
+	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
+	However this weakens the connection, making them easier to detach as well."
+	id = "surgery_ligament_hook"
+	surgery = /datum/surgery/advanced/bioware/ligament_hook
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/ligament_reinforcement
+	name = "Ligament Reinforcement"
+	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
+	However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+	id = "surgery_ligament_reinforcement"
+	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/necrotic_revival
