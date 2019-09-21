@@ -98,11 +98,10 @@
 /datum/reagent/synthtissue
 	name = "Synthtissue"
 	id = "synthtissue"
-	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage."
+	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.1
-	var/grown_volume = 0
-	var/injected_vol = 0
+	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
@@ -115,23 +114,38 @@
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-	if(method == INJECT)
-		injected_vol += reac_volume
+	if(method==INJECT)
+		data.["injected_vol"] += reac_volume
+		message_admins("inject! [data.["injected_vol"]], [reac_volume]")
 	..()
 
 /datum/reagent/synthtissue/on_mob_life(mob/living/carbon/C)
 	if(!iscarbon(C))
 		return ..()
-	if(injected_vol >= 20)
-		if(grown_volume > 150) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
-			if(volume >= 20)
-				C.regenerate_organs(only_one = TRUE)
-				C.reagents.remove_reagent(id, 20)
+	if(data.["injected_vol"] > 14)
+		if(data.["grown_volume"] > 150) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
+			if(volume >= 14)
+				if(C.regenerate_organs(only_one = TRUE))
+					C.reagents.remove_reagent(id, 15)
+					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
+
+	data.["injected_vol"] -= metabolization_rate
 	..()
 
-/datum/reagent/synthtissue/on_merge(data)
-	if(data > grown_volume)
-		grown_volume = data
+/datum/reagent/synthtissue/on_merge(passed_data)
+	if(passed_data.["grown_volume"] > data.["grown_volume"])
+		data.["grown_volume"] = passed_data.["grown_volume"]
+	if(!data)
+		data = passed_data
 	..()
+
+/datum/reagent/synthtissue/on_new(passed_data)
+	if(passed_data.["grown_volume"] > data.["grown_volume"])
+		data.["grown_volume"] = passed_data.["grown_volume"]
+	if(!data)
+		data = passed_data
+	..()
+
+/datum/reagent/synthtissue/
 
 //NEEDS ON_MOB_DEAD()

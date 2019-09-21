@@ -3,7 +3,7 @@
 //TBD: Add heart damage, have heart reconstruction seperate from organ reconstruction, and find a better name for this. I can imagine people getting it confused with manipulation.
 
 /datum/surgery/graft_synthtissue
-	name = "Graft_synthtissue"
+	name = "Graft synthtissue"
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES)
 	steps = list(
@@ -21,7 +21,7 @@
 	name = "graft synthtissue"
 	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	repeatable = TRUE
-	time = 25
+	time = 50
 	chems_needed = list("synthtissue")
 	var/obj/item/organ/chosen_organ
 
@@ -36,9 +36,10 @@
 				O.on_find(user)
 				organs -= O
 				organs[O.name] = O
-			chosen_organ = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
+			chosen_organ = input("Target which organ?", "Surgery", null, null) as null|anything in organs
+			chosen_organ = organs[chosen_organ]
 			if(chosen_organ.organ_flags & ORGAN_FAILING)
-				to_chat(user, "<span class='notice'>[target]'s [chosen_organ] is too damaged to repair graft onto!</span>")
+				to_chat(user, "<span class='notice'>[target]'s [chosen_organ] is too damaged to graft onto!</span>")
 				return -1
 
 	user.visible_message("[user] begins to repair damaged portions of [target]'s [chosen_organ].</span>")
