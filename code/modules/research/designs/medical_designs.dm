@@ -192,6 +192,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/bsblood_bag
+	name = "Blue Space Empty Blood Bag"
+	desc = "A large sterilized plastic bag for blood."
+	id = "bsblood_bag"
+	build_path = /obj/item/reagent_containers/blood/bluespace
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 4500, MAT_BLUESPACE = 250)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cloning_disk
 	name = "Cloning Data Disk"
 	desc = "Produce additional disks for storing genetic data."
