@@ -27,9 +27,138 @@
 	var/fermi = ""
 	var/remainder = ""
 	var/drug = ""
+	var/basic = ""
+	var/upgraded = ""
+	var/drinks = ""
+	var/alco = ""
+	var/grinded = ""
+	//var/impure
+
+	//Chem_dispencer
+	var/list/dispensable_reagents = list(
+		"hydrogen",
+		"lithium",
+		"carbon",
+		"nitrogen",
+		"oxygen",
+		"fluorine",
+		"sodium",
+		"aluminium",
+		"silicon",
+		"phosphorus",
+		"sulfur",
+		"chlorine",
+		"potassium",
+		"iron",
+		"copper",
+		"mercury",
+		"radium",
+		"water",
+		"ethanol",
+		"sugar",
+		"sacid",
+		"welding_fuel",
+		"silver",
+		"iodine",
+		"bromine",
+		"stable_plasma"
+	)
+	var/list/components = list(
+		"oil",
+		"ammonia",
+		"ash",
+		"acetone",
+		"phenol",
+		"diethylamine",
+		"saltpetre",
+		"sodiumchloride",
+		"lye"
+	)
+
+	var/list/grind = list(
+		"bluespace",
+		"gold",
+		"plasma",
+		"uranium"
+	)
+
+	//Bartender
+	var/dispence_drinks = list(
+		"water",
+		"ice",
+		"coffee",
+		"cream",
+		"tea",
+		"icetea",
+		"cola",
+		"spacemountainwind",
+		"dr_gibb",
+		"space_up",
+		"tonic",
+		"sodawater",
+		"lemon_lime",
+		"pwr_game",
+		"shamblers",
+		"sugar",
+		"orangejuice",
+		"grenadine",
+		"limejuice",
+		"tomatojuice",
+		"lemonjuice",
+		"menthol"
+	)
+	var/dispence_alco = list(
+		"beer",
+		"kahlua",
+		"whiskey",
+		"wine",
+		"vodka",
+		"gin",
+		"rum",
+		"tequila",
+		"vermouth",
+		"cognac",
+		"ale",
+		"absinthe",
+		"hcider",
+		"creme_de_menthe",
+		"creme_de_cacao",
+		"triple_sec",
+		"sake",
+		"applejack"
+	)
+
+
 	for(var/i = 1, i <= 2, i+=1)
 		for(var/X in GLOB.chemical_reagents_list)
 			R = GLOB.chemical_reagents_list[X]
+
+			for(var/Y in dispensable_reagents) //Why do you have to do this
+				if(R.id == Y)
+					basic += generate_chemwiki_line(R, X, processCR)
+					continue
+
+			for(var/Y in components)
+				if(R.id == Y)
+					upgraded += generate_chemwiki_line(R, X, processCR)
+					continue
+
+			for(var/Y in dispence_drinks)
+				if(R.id == Y)
+					drinks += generate_chemwiki_line(R, X, processCR)
+					continue
+
+			for(var/Y in dispence_alco)
+				if(R.id == Y)
+					alco += generate_chemwiki_line(R, X, processCR)
+					continue
+
+			for(var/Y in dispence_alco)
+				if(R.id == Y)
+					grinded += generate_chemwiki_line(R, X, processCR)
+					continue
+
+
 			if(istype(R, /datum/reagent/medicine))
 				medicine += generate_chemwiki_line(R, X, processCR)
 
@@ -59,6 +188,7 @@
 
 			/* when merged
 			else if(istype(R, /datum/reagent/impure))
+				impure += generate_chemwiki_line(R, X, processCR)
 			*/
 
 			else
@@ -71,7 +201,9 @@
 		processCR = FALSE
 
 	to_chat(usr, "finished chems")
-	var/wholeString = ("\n# BASIC REAGENTS\n\n[prefix][remainder]\n\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
+
+	var/wholeString = ("\n# DISPENCEABLE REAGENTS\n\n[prefix][basic]\n\n# UPGRADED DISPENCEABLE REAGENTS\n\n[prefix][upgraded]\n\n# GRINDABLE REAGENTS\n\n[prefix][grind]\n")
+	wholeString += ("\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# GENERAL REAGENTS\n\n[prefix][remainder]\n\n# DISPENCEABLE SOFT DRINKS\n\n[prefix][drinks]\n\n# DISPENCEABLE HARD DRINKS\n\n[prefix][alco]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n")
 
 	prefix = "|Name | Reagents | Reaction vars | Description |\n|---|---|---|----------|\n"
 	var/CRparse = ""
