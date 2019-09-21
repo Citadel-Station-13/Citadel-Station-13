@@ -714,6 +714,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
+	message = emoji_parse(message)
 	if(prob(1))
 		message += "\nSent from my PDA"
 	// Send the signal
