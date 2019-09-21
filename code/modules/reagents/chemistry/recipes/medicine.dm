@@ -82,16 +82,16 @@
 	OptimalpHMax 		= 9.5 		// Higest value for above
 	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT 		= 2.5 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 0.01 		// Temperature change per 1u produced
 	HIonRelease 		= 0.01 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 0.02 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 0.05 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	PurityMin 			= 0
 
 /datum/chemical_reaction/synthtissue/FermiCreate(datum/reagents/holder, added_volume, added_purity)
-	var/datum/reagent/St = holder.has_reagent("synthtissue")
+	var/datum/reagent/synthtissue/St = holder.has_reagent("synthtissue")
 	var/datum/reagent/N = holder.has_reagent("nutriment")
 	if(!St)
 		return
@@ -102,6 +102,8 @@
 		St.volume *= St.purity
 		St.purity = 1
 	N.volume -= 0.002
+	St.grown_volume += added_volume
+	St.data = St.grown_volume
 
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"

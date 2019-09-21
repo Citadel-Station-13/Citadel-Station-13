@@ -5,7 +5,7 @@
 /datum/surgery/graft_synthtissue
 	name = "Graft_synthtissue"
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list(BODY_ZONE_CHEST)
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES)
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,

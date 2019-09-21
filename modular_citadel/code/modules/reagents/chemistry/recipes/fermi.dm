@@ -2,7 +2,7 @@
 	mix_sound = 'sound/effects/bubbles.ogg'
 
 //Called for every reaction step
-/datum/chemical_reaction/proc/FermiCreate(datum/reagents)
+/datum/chemical_reaction/proc/FermiCreate(datum/reagents/holder, added_volume, added_purity)
 	return
 
 //Called when reaction STOP_PROCESSING

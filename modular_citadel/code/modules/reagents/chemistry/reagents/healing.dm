@@ -100,18 +100,38 @@
 	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage."
 	pH = 7.6
+	var/grown_volume = 0
+	var/injected_vol = 0
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+	cached_method = method
 	if(iscarbon(M))
 		var/target = M.zone_selected
 		if (M.stat == DEAD)
 			show_message = 0
 		if(method in list(PATCH, TOUCH))
-			M.apply_damage(volume*1.25, BRUTE, target)
-			M.apply_damage(volume*1.25, BURN, target)
+			M.apply_damage(reac_volume*-1.25, BRUTE, target)
+			M.apply_damage(reac_volume*-1.25, BURN, target)
 			if(show_message)
-				to_chat(M, "<span class='danger'>You feel your damaged [target] heal! It stings like hell!</span>")
+				to_chat(M, "<span class='danger'>You feel your [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if(method == INJECT)
+		injected_vol += reac_volume
+	..()
+
+/datum/reagent/synthtissue/on_mob_life(mob/living/carbon/C)
+	if(!iscarbon(C))
+		return ..()
+	if(cached_method == INJECT)
+		if(grown_volume > 150) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
+			if(volume >= 20)
+				C.regenerate_organs(only_one = TRUE)
+				C.reagents.remove_reagent(id, 20)
+	..()
+
+/datum/reagent/synthtissue/on_merge(data)
+	if(data > grown_volume)
+		grown_volume = data
 	..()
 
 //NEEDS ON_MOB_DEAD()
