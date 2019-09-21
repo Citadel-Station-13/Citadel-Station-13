@@ -67,7 +67,7 @@
 	name = "rubbershot pellet"
 	damage = 2
 	stamina = 15
- 
+
 /obj/item/projectile/bullet/pellet/Range()
 	..()
 	if(damage > 0)
