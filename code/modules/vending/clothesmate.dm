@@ -99,7 +99,9 @@
 		            /obj/item/clothing/suit/jacket/letterman_red = 3,
 		            /obj/item/clothing/ears/headphones = 10,
 		            /obj/item/clothing/suit/apron/purple_bartender = 4,
-		            /obj/item/clothing/under/rank/bartender/purple = 4)
+		            /obj/item/clothing/under/rank/bartender/purple = 4,
+		            /obj/item/clothing/accessory/attrocious_pokadots = 8,
+		            /obj/item/clothing/accessory/black_white_pokadots = 8)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 		              /obj/item/clothing/mask/balaclava = 3,
@@ -109,7 +111,8 @@
 		              /obj/item/clothing/suit/jacket/letterman_syndie = 5,
 		              /obj/item/clothing/under/jabroni = 2,
 		              /obj/item/clothing/suit/vapeshirt = 2,
-		              /obj/item/clothing/under/geisha = 4)
+		              /obj/item/clothing/under/geisha = 4,
+		              /obj/item/clothing/accessory/syndi_pokadots = 4)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered = 4,
 		           /obj/item/clothing/head/mailman = 2,
 		           /obj/item/clothing/under/rank/mailman = 2,
@@ -117,7 +120,8 @@
 		           /obj/item/clothing/suit/jacket/leather/overcoat = 4,
 		           /obj/item/clothing/under/pants/mustangjeans = 3,
 		           /obj/item/clothing/neck/necklace/dope = 5,
-		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 5)
+		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
+		           /obj/item/clothing/accessory/nt_pokadots = 5)
 	refill_canister = /obj/item/vending_refill/clothing
 
 /obj/item/vending_refill/clothing

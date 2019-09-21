@@ -2,15 +2,15 @@
 	mix_sound = 'sound/effects/bubbles.ogg'
 
 //Called for every reaction step
-/datum/chemical_reaction/fermi/proc/FermiCreate(holder)
+/datum/chemical_reaction/proc/FermiCreate(holder)
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder)
+/datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder)
 	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
-/datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+/datum/chemical_reaction/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
 	if (Exploding == TRUE)
 		return
 
@@ -101,10 +101,10 @@
 	PurityMin			= 0.4 //The minimum purity something has to be above, otherwise it explodes.
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
-	if(!locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list)
+	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
+	if(!E)
 		return
 	var/turf/open/location = get_turf(my_atom)
-	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	if(location)
 		E.location_created = location
 		E.data.["location_created"] = location
@@ -381,6 +381,9 @@
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.3
+
+/datum/chemical_reaction/fermi/furranium/organic
+	required_reagents = list("aphro" = 0.1, "catnip" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
 
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
