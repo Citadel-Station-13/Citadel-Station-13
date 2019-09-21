@@ -62,6 +62,16 @@
 	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
 
+/obj/item/clothing/shoes/sneakers/noslip
+	desc = "A pair of black shoes, they have the soles of galoshes making them unable to be slipped on a wet surface."
+	name = "black shoes"
+	icon_state = "black"
+	permeability_coefficient = 0.30
+	clothing_flags = NOSLIP
+	strip_delay = 50
+	equip_delay_other = 50
+	resistance_flags = NONE
+
 /obj/item/clothing/shoes/galoshes/dry/step_action()
 	var/turf/open/t_loc = get_turf(src)
 	SEND_SIGNAL(t_loc, COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
