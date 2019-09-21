@@ -6,9 +6,9 @@
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	ImpureChem 			= "yamerol_tox"
-	InverseChemVal 		= 0.4
-	InverseChem 		= "yamerol_tox"
+	impure_chem 			= "yamerol_tox"
+	inverse_chem_val 		= 0.4
+	inverse_chem		= "yamerol_tox"
 	can_synth = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
@@ -73,15 +73,15 @@
 	C.adjustOxyLoss(-3)
 	..()
 
-/datum/reagent/fermi/yamerol_tox
-	name = "Yamerol"
+/datum/reagent/impure/yamerol_tox
+	name = "Yamer oh no"
 	id = "yamerol_tox"
-	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
+	description = "A dangerous, cloying toxin that stucks to a patient’s respiratory system, damaging their tongue, lungs and causing suffocation."
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6
 
-/datum/reagent/fermi/yamerol_tox/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/yamerol_tox/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
