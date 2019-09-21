@@ -95,12 +95,13 @@
 	..()
 
 
-/datum/reagent/fermi/synthtissue
+/datum/reagent/synthtissue
 	name = "Synthtissue"
 	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage."
+	pH = 7.6
 
-/datum/reagent/fermi/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/target = M.zone_selected
 		if (M.stat == DEAD)
@@ -112,3 +113,5 @@
 				to_chat(M, "<span class='danger'>You feel your damaged [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
+
+//NEEDS ON_MOB_DEAD()

@@ -30,19 +30,25 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/onDamage(damage_mod)
-	if (maxHealth == "alien")
-		return
+/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
 	if (maxHealth == "bone")
+		if(owner)
+			return
 		var/target = owner.get_bodypart(BODY_ZONE_HEAD)
-		owner.apply_damage(damage_mod, BURN, target)
-		to_chat(owner, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
-		return
-	if(damage+damage_mod < 0)
-		damage = 0
+		owner.apply_damage(d, BURN, target)
+		to_chat(owner, "<span class='userdanger'>You feel your skull burning! Oof, your bones!</span>")
 		return
 
-	damage += damage_mod
+	if(!d) //Micro-optimization.
+		return
+	if(maximum < damage)
+		return
+	damage = CLAMP(damage + d, 0, maximum)
+	var/mess = check_damage_thresholds(owner)
+	prev_damage = damage
+	if(mess && owner)
+		to_chat(owner, mess)
+
 	if ((damage / maxHealth) > 1)
 		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
@@ -167,7 +173,7 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
-	maxHealth = "alien" //Their blood is acid, so, no, though a tongueless xeno might be funny
+	maxHealth = 500 //They've a little mouth for a tongue, so it's pretty rhobust
 	modifies_speech = TRUE // not really, they just hiss
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,

@@ -97,6 +97,9 @@
 					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
 					AROUSAL:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=arousal' id='arousal'>[M.getArousalLoss()]</a>
+					"}
+			if(GLOB.Debug2)
+				atomsnowflake += {"
 					HEART:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=heart' id='heart'>[M.getOrganLoss(ORGAN_SLOT_HEART)]</a>
 					LIVER:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=liver' id='liver'>[M.getOrganLoss(ORGAN_SLOT_LIVER)]</a>
 					LUNGS:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=lungs' id='lungs'>[M.getOrganLoss(ORGAN_SLOT_LUNGS)]</a>
@@ -105,7 +108,9 @@
 					STOMACH:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stomach' id='stomach'>[M.getOrganLoss(ORGAN_SLOT_STOMACH)]</a>
 					TONGUE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=tongue' id='tongue'>[M.getOrganLoss(ORGAN_SLOT_TONGUE)]</a>
 					APPENDIX:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=appendix' id='appendix'>[M.getOrganLoss(ORGAN_SLOT_APPENDIX)]</a>
-				</font>
+					"}
+			atomsnowflake += {"
+			</font>
 			"}
 		else
 			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b id='name'>[D]</b></a>"

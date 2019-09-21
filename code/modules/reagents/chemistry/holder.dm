@@ -550,6 +550,10 @@
 	if (multiplier == 0)
 		fermiEnd()
 		return
+	for(var/P in C.required_catalysts)
+		if(!has_reagent(P))
+			fermiEnd()
+			return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
 
@@ -676,7 +680,7 @@
 					STOP_PROCESSING(SSprocessing, src)
 					return 0
 
-	C.FermiCreate(src)//proc that calls when step is done
+	C.FermiCreate(src, addChemAmmount, purity)//proc that calls when step is done
 
 	//Apply pH changes and thermal output of reaction to beaker
 	chem_temp = round(cached_temp + (C.ThermicConstant * addChemAmmount))
