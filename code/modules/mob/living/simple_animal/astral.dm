@@ -60,6 +60,6 @@
 
 //Delete the mob if there's no mind! Pay that mob no mind.
 /mob/living/simple_animal/astral/Life()
-	if(!src.mind)
+	if(!mind)
 		qdel(src)
 	..()
