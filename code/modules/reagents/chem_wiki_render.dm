@@ -1,14 +1,45 @@
 //Generates a markdown txt file for use with the wiki
 
+/proc/find_reagent(input)
+	. = FALSE
+	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
+		return input
+	else
+		for(var/X in GLOB.chemical_reagents_list)
+			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+			if(input == replacetext(lowertext(R.name), " ", ""))
+				return X
+			if(input == replacetext(lowertext(R.id), " ", ""))
+				return X
+
+
+
+
 /client/proc/generate_wikichem_list()
 	set name = "Generate Wikichems"
 	set category = "Debug"
 	set desc = "Generate a huge loglist of all the chems. Do not click unless you want lag."
 
-	message_admins("Someone pressed the lag button. (Generate Wikichems)")
-	to_chat(usr, "Generating list")
-	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties |\n|---|---|---|-----------|---|\n"
 
+
+	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties |\n|---|---|---|-----------|---|\n"
+	var/input_reagent = replacetext(lowertext(input("Input the name/id of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	if(input_reagent)
+		var/input_reagent2 = find_reagent(input_reagent)
+		if(!input_reagent2)
+			to_chat(usr, "Unable to find reagent, stopping proc.")
+		var/single_parse = generate_chemwiki_line(input_reagent2, input_reagent, FALSE)
+		text2file(single_parse, "[GLOB.log_directory]/chem_parse.md")
+		to_chat(usr, "[single_parse].")
+
+		single_parse = generate_chemwiki_line(input_reagent2, input_reagent, FALSE)
+		text2file(single_parse, "[GLOB.log_directory]/chem_parse.md")
+		to_chat(usr, "[single_parse].")
+		to_chat(usr, "Saved line to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.md OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .md default program! Try downloading it instead, and use that file to set a default program! Also have a cute day.)")
+		//Do things here
+		return
+	to_chat(usr, "Generating big list")
+	message_admins("Someone pressed the lag button. (Generate Wikichems)")
     ///datum/reagent/medicine, /datum/reagent/toxin, /datum/reagent/consumable, /datum/reagent/plantnutriment, /datum/reagent/uranium,
     ///datum/reagent/colorful_reagent, /datum/reagent/mutationtoxin, /datum/reagent/fermi, /datum/reagent/drug, /datum/reagent/impure
 
@@ -298,7 +329,7 @@
 		outstring += " | "
 
 	//Description, OD, Addict, Meta
-	outstring += "[R.description] | <ul><li>Metabolism_rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
+	outstring += "[R.description] | <ul><li>Metabolism rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
 
 
 	if(R.impure_chem && R.impure_chem != "fermiTox")
