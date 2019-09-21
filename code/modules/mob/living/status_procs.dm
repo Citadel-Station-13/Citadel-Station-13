@@ -66,10 +66,17 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(isnull(override_hardstun)? amount : override_hardstun, ignore_canknockdown))
 			return
+		//STAMINA COMBAT START
+		adjustStaminaLoss(isnull(override_stamdmg)? amount * 0.25 : override_stamdmg)
+		if(isnull(override_hardstun))
+			amount *= 0.01
+		else
+			amount = override_hardstun
+		//END
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(K)
 			K.duration = max(world.time + (isnull(override_hardstun)? amount : override_hardstun), K.duration)
-		else if((amount || override_hardstun) > 0)
+		else if(amount > 0)
 			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating, override_hardstun, override_stamdmg)
 		return K
 
