@@ -79,4 +79,4 @@
 	var/n_color = input(H, "Choose your [garment_type]'\s color.", "Character Preference", default_color) as color|null
 	if(!n_color || !H.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return default_color
-	return sanitize_hexcolor(n_color)
+	return sanitize_hexcolor(n_color, 3, FALSE, default_color)
