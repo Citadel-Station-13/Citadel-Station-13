@@ -53,12 +53,12 @@
 				to_chat(user, "<span class='notice'>[chosen_organ] is too damaged to graft onto!</span>")
 				return -1
 
+			if(health_restored != 10)
+				health_restored = 10
+			health_restored += (Sf.data["grown_volume"]/10)
 
 	user.visible_message("[user] begins to graft synthtissue onto [chosen_organ].</span>")
 	target.reagents.remove_reagent("synthtissue", 10)
-	if(health_restored != 10)
-		health_restored = 10
-	health_restored += (Sf.data["grown_volume"]/10)
 
 /datum/surgery_step/graft_synthtissue/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully repairs part of [chosen_organ].", "<span class='notice'>You succeed in repairing parts of [chosen_organ].</span>")
