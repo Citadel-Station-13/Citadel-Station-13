@@ -380,7 +380,8 @@
 	var/obj/effect/temp_visual/curse/wasting_effect = new
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse, _duration)
-	duration = _duration
+	if(_duration)
+		duration = _duration
 	. = ..()
 	if(.)
 		apply_curse(set_curse)
