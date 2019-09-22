@@ -109,6 +109,7 @@
 #define TRAIT_NODEATH			"nodeath"
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
+#define TRAIT_MINDSHIELD		"mindshield"
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_FEARLESS			"fearless"
 #define TRAIT_UNSTABLE			"unstable"
