@@ -222,7 +222,7 @@
 
 /datum/component/mood/proc/DecreaseSanity(datum/source, amount, minimum = SANITY_INSANE)
 	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
-		IncreaseSanity(0.5)
+		IncreaseSanity(src, 0.5)
 	else
 		sanity = max(minimum, sanity - amount)
 		if(sanity < SANITY_UNSTABLE)
@@ -237,7 +237,7 @@
 	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
 		return
 	if(sanity > maximum)
-		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
+		DecreaseSanity(src, 0.5) //Removes some sanity to go back to our current limit.
 	else
 		sanity = min(maximum, sanity + amount)
 		if(sanity > SANITY_CRAZY)
