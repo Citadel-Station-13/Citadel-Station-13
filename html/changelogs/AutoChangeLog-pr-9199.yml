@@ -1,0 +1,7 @@
+author: "Tupinambis"
+delete-after: True
+changes: 
+  - balance: "added a small fire delay (3 ticks) to automatic shotguns"
+  - balance: "Reduced buckshot brute damage by 20%. (12.5 -> 10 brute per pellet) (75 -> 60 brute at close range)"
+  - balance: "Reduced rubbershot stamina damage by 40% (25 -> 15 stamina per pellet) (150 -> 90 stamina at close range)"
+  - balance: "Reduced beanbag stamina damage by 12.5% (80 -> 70 stamina per shot)"
