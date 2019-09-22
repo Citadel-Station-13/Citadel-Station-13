@@ -363,7 +363,8 @@
 	if(!set_curse)
 		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
-		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse, duration)
+
 	else
 		C.apply_curse(set_curse)
 		C.duration += duration * 0.5 //additional curses add half their duration
@@ -378,7 +379,8 @@
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
 
-/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
+/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse, _duration)
+	duration = _duration
 	. = ..()
 	if(.)
 		apply_curse(set_curse)
