@@ -70,5 +70,5 @@
 		return
 	affected_mob.playsound_local(affected_mob, 'sound/effects/curse5.ogg', 40, 1, -1)
 	to_chat(affected_mob, "<span class='revendanger'>You sense the terrific curse of a vengeful ghost befall upon you...</span>")
-	target_mob.apply_necropolis_curse(null, 7 MINUTES) //Once the blight has done its course without being cured beforehand, it will cast a necrocurse to compensate how underpowered it's.
+	affected_mob.apply_necropolis_curse(null, 7 MINUTES) //Once the blight has done its course without being cured beforehand, it will cast a necrocurse to compensate how underpowered it's.
 	cure()
