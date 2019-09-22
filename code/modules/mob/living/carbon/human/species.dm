@@ -1338,10 +1338,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
-		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
-			. -= 2
-		else if(istype(T) && T.allow_thrust(0.01, H))
-			. -= 2
+		if(istype(J) && J.full_speed && J.allow_thrust(0.005, H))	//Prevents stacking
+			. -= 0.4
+		else if(istype(T) && T.allow_thrust(0.005, H))
+			. -= 0.4
 
 	if(!ignoreslow && gravity)
 		if(H.wear_suit)
