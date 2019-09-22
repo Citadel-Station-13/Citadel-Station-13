@@ -4,7 +4,7 @@
 	ranged_message = "charges"
 	ranged_cooldown_time = 20
 	damage_coeff = list(BRUTE = 0, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
-	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
+	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, take half damage, immunity to brute damage, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
