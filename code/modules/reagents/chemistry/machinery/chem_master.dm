@@ -397,9 +397,9 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				if(istype(R, /datum/reagent/fermi))
+				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+				if(Rcr && Rcr.FermiChem)
 					fermianalyze = TRUE
-					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
 					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
 

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some overlay bug that happens when legcuffed and then handcuffed."

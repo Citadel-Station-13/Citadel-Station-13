@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	22
+#define SAVEFILE_VERSION_MAX	23
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -49,8 +49,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_style = "mono"
 	if(current_version < 20)
 		pda_color = "#808000"
-	if(current_version < 21)
+	if((current_version < 21) && features["meat_type"] && (features["meat_type"] == null))
+		features["meat_type"] = "Mammalian"
+	if(current_version < 22)
+
 		job_preferences = list() //It loaded null from nonexistant savefile field.
+
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
 		var/job_civilian_low = 0
@@ -101,9 +105,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					else if(job_engsec_low & fval)
 						new_value = JP_LOW
 			if(new_value)
-				job_preferences[initial(J.title)] = new_value
-	if((current_version < 22) && features["meat_type"] && (features["meat_type"] == null))
-		features["meat_type"] = "Mammalian"
+				job_preferences["[initial(J.title)]"] = new_value
+	else if(current_version < 23) // we are fixing a gamebreaking bug.
+		job_preferences = list() //It loaded null from nonexistant savefile field.
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -457,9 +461,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	underwear						= sanitize_inlist(underwear, GLOB.underwear_list)
 	undie_color						= sanitize_hexcolor(undie_color, 3, FALSE, initial(undie_color))
 	undershirt						= sanitize_inlist(undershirt, GLOB.undershirt_list)
-	shirt_color						= sanitize_hexcolor(shirt_color, 6, FALSE, initial(shirt_color))
+	shirt_color						= sanitize_hexcolor(shirt_color, 3, FALSE, initial(shirt_color))
 	socks							= sanitize_inlist(socks, GLOB.socks_list)
-	socks_color						= sanitize_hexcolor(socks_color, 6, FALSE, initial(socks_color))
+	socks_color						= sanitize_hexcolor(socks_color, 3, FALSE, initial(socks_color))
 	age								= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color						= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)
@@ -485,7 +489,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
 	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
+		if(job_preferences["[j]"] != JP_LOW && job_preferences["[j]"] != JP_MEDIUM && job_preferences["[j]"] != JP_HIGH)
 			job_preferences -= j
 
 	all_quirks = SANITIZE_LIST(all_quirks)

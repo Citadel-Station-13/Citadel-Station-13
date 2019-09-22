@@ -1039,7 +1039,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !jobban_isbanned(user, SSjob.overflow_role))
+			if((job_preferences["[SSjob.overflow_role]"] == JP_LOW) && (rank != SSjob.overflow_role) && !jobban_isbanned(user, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
@@ -1054,7 +1054,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/prefUpperLevel = -1 // level to assign on left click
 			var/prefLowerLevel = -1 // level to assign on right click
 
-			switch(job_preferences[job.title])
+			switch(job_preferences["[job.title]"])
 				if(JP_HIGH)
 					prefLevelLabel = "High"
 					prefLevelColor = "slateblue"
@@ -1079,7 +1079,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 			if(rank == SSjob.overflow_role)//Overflow is special
-				if(job_preferences[SSjob.overflow_role] == JP_LOW)
+				if(job_preferences["[SSjob.overflow_role]"] == JP_LOW)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"
@@ -1115,11 +1115,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (level == JP_HIGH) // to high
 		//Set all other high to medium
 		for(var/j in job_preferences)
-			if(job_preferences[j] == JP_HIGH)
-				job_preferences[j] = JP_MEDIUM
+			if(job_preferences["[j]"] == JP_HIGH)
+				job_preferences["[j]"] = JP_MEDIUM
 				//technically break here
 
-	job_preferences[job.title] = level
+	job_preferences["[job.title]"] = level
 	return TRUE
 
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
@@ -1147,7 +1147,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			jpval = JP_HIGH
 
 	if(role == SSjob.overflow_role)
-		if(job_preferences[job.title] == JP_LOW)
+		if(job_preferences["[job.title]"] == JP_LOW)
 			jpval = null
 		else
 			jpval = JP_LOW
