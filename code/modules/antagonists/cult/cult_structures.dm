@@ -84,9 +84,13 @@
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
-	var/static/radial_whetstone = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener")
-	var/static/radial_shell = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct-cult")
-	var/static/radial_unholy_water = image(icon = 'icons/obj/chemical.dmi', icon_state = "holyflask", color = "#333333")
+	var/static/image/radial_whetstone = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener")
+	var/static/image/radial_shell = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct-cult")
+	var/static/image/radial_unholy_water = image(icon = 'icons/obj/chemical.dmi', icon_state = "holyflask")
+
+/obj/structure/destructible/cult/talisman/Initialize()
+	. = ..()
+	radial_unholy_water.color = "#333333"
 
 /obj/structure/destructible/cult/talisman/ui_interact(mob/user)
 	. = ..()
@@ -130,9 +134,9 @@
 	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
-	var/static/radial_flagellant = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes")
-	var/static/radial_shielded = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor")
-	var/static/radial_mirror = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "mirror_shield")
+	var/static/image/radial_flagellant = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes")
+	var/static/image/radial_shielded = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor")
+	var/static/image/radial_mirror = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "mirror_shield")
 
 /obj/structure/destructible/cult/forge/ui_interact(mob/user)
 	. = ..()
@@ -255,9 +259,9 @@
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
-	var/static/radial_blindfold = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold")
-	var/static/radial_curse = image(icon = 'icons/obj/cult.dmi', icon_state ="shuttlecurse")
-	var/static/radial_veilwalker = image(icon = 'icons/obj/cult.dmi', icon_state ="shifter")
+	var/static/image/radial_blindfold = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold")
+	var/static/image/radial_curse = image(icon = 'icons/obj/cult.dmi', icon_state ="shuttlecurse")
+	var/static/image/radial_veilwalker = image(icon = 'icons/obj/cult.dmi', icon_state ="shifter")
 
 /obj/structure/destructible/cult/tome/ui_interact(mob/user)
 	. = ..()
