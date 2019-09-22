@@ -259,9 +259,10 @@
 	var/static/radial_curse = image(icon = 'icons/obj/cult.dmi', icon_state ="shuttlecurse")
 	var/static/radial_veilwalker = image(icon = 'icons/obj/cult.dmi', icon_state ="shifter")
 
-/obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
+/obj/structure/destructible/cult/tome/ui_interact(mob/user)
 	. = ..()
-	if(.)
+
+	if(!user.canUseTopic(src, TRUE))
 		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>These books won't open and it hurts to even try and read the covers.</span>")
