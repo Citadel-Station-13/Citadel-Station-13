@@ -154,7 +154,7 @@
 //melts glass beakers
 /obj/item/reagent_containers/proc/pH_check()
 	if(beaker_weakness_bitflag & PH_WEAK)
-		if((reagents.pH < 2) || (reagents.pH > 12))
+		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
 			START_PROCESSING(SSobj, src)
 
 
@@ -165,12 +165,12 @@
 	var/cause
 	if(beaker_weakness_bitflag & PH_WEAK)
 		if(reagents.pH < 1.5)
-			damage = (2 - reagents.pH)/20
+			damage = (1.5 - reagents.pH)/15
 			cause = "from the extreme pH"
 			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
 		if(reagents.pH > 12.5)
-			damage = (reagents.pH - 12)/20
+			damage = (reagents.pH - 12.5)/15
 			cause = "from the extreme pH"
 			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
