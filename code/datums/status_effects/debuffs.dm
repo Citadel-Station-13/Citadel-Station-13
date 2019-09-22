@@ -358,7 +358,7 @@
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/mob/living/proc/apply_necropolis_curse(set_curse)
+/mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
 		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
@@ -366,11 +366,11 @@
 		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
 	else
 		C.apply_curse(set_curse)
-		C.duration += 3000 //additional curses add 5 minutes
+		C.duration += duration * 0.5 //additional curses add half their duration
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 6000 //you're cursed for 10 minutes have fun
+	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
