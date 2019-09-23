@@ -356,22 +356,13 @@
 
 	if(!mob_occupant)
 		return
-<<<<<<< HEAD
 
-	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_NOBREATH, "cloning")
-=======
-	current_insurance = null
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_NOBREATH, CLONING_POD_TRAIT)
->>>>>>> 5c41cc6f52... Muscled Veins experimental surgery (#44481)
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
