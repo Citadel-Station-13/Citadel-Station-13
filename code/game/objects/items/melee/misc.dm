@@ -505,3 +505,81 @@
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
 	update_icon()
+
+/obj/item/twohanded/required/electrostaff
+	icon = 'icons/obj/estaff.dmi'
+	icon_state = "electrostaff_0"
+	item_state = "electrostaff_0"
+	lefthand_file = 'icons/mob/inhands/weapons/estaff_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/estaff_righthand.dmi'
+	name = "riot suppression electrostaff"
+	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
+	force = 1
+	damtype = "fire"
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = ITEM_SLOT_BACK
+	sharpness = FALSE
+	force_unwielded = 1
+	force_wielded = 1
+	throwforce = 1
+	throw_speed = 1
+	light_range = 7
+	light_power = 1
+	block_chance = 30
+	light_color = LIGHT_COLOR_CYAN
+	materials = list(MAT_METAL=1337, MAT_GLASS=750, MAT_SILVER=750, MAT_BLUESPACE=50)
+	hitsound = 'sound/weapons/staff.ogg'
+	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
+	var/power = "suppresive"
+	var/lethal = FALSE
+	var/stun_stam_cost_coeff = 1.25
+	var/hardstun_ds = 1
+	var/softstun_ds = 2
+	var/stam_dmg = 45
+
+/obj/item/twohanded/required/electrostaff/examine(mob/living/user)
+	..()
+	to_chat(user, "<span class='notice'>Use the staff inhand to change between suppresive and lethal power levels. The power level is currently <b>[power]</b>.</span>")
+
+/obj/item/twohanded/required/electrostaff/attack_self(mob/user)
+	lethal = !lethal
+	if(lethal)
+		empower(user)
+		power = "lethal"
+		light_color = LIGHT_COLOR_CYAN
+		force = 20
+		force_wielded = 20
+		throwforce = 20
+	else
+		enervate(user)
+		power = "suppressive"
+		light_color = LIGHT_COLOR_YELLOW
+		force = 1
+		force_wielded = 1
+		throwforce = 1
+
+	playsound(src.loc, 'sound/weapons/Taser.ogg', 10, 1)
+	add_fingerprint(user)
+
+/obj/item/twohanded/required/electrostaff/proc/empower(user)
+	to_chat(user, "<span class ='notice'>You twist the handle of [src], and agitated </span><span class = 'yellow><b>yellow</b></span><span class ='notice'> electric bolts spit out from the ends of the staff.</span>")
+	icon_state = "electrostaff_0"
+	item_state = "electrostaff_0"
+
+/obj/item/twohanded/required/electrostaff/proc/enervate(user)
+	to_chat(user, "<span class ='notice'>You twist the handle of [src], and angry <b>blue</b> electric bolts spit out from the ends of the staff.</span>")
+	icon_state = "electrostaff_1"
+	item_state = "electrostaff_1"
+
+/obj/item/twohanded/required/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 10 //Ineffective.
+	return ..()
+
+/obj/item/twohanded/required/electrostaff/attack(mob/living/target, mob/living/user)
+	..()
+	if(!lethal)
+		target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+		user.adjustStaminaLossBuffered(getweight())
+	else
+		return
