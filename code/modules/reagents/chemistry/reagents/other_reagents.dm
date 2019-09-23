@@ -219,9 +219,12 @@
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
-			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
+			var/msg = FALSE
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
+				inform = TRUE
+			if(msg)
+				to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
