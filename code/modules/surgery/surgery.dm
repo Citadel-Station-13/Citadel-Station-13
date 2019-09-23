@@ -37,7 +37,7 @@
 	return ..()
 
 
-/datum/surgery/proc/can_start(mob/user, mob/living) //FALSE to not show in list
+/datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
@@ -65,7 +65,7 @@
 				return TRUE
 
 
-	var/turf/T = get_turf(target)
+	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
 		if(!table.computer)
@@ -143,7 +143,12 @@
 
 /obj/item/disk/surgery/debug/Initialize()
 	. = ..()
-	surgeries = subtypesof(/datum/surgery/advanced)
+	surgeries = list()
+	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
+	for(var/i in req_tech_surgeries)
+		var/datum/surgery/beep = i
+		if(initial(beep.requires_tech))
+			surgeries += beep
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
