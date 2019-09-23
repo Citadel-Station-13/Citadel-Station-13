@@ -36,6 +36,7 @@
 /datum/action/innate/cult/blood_magic/Activate()
 	if(holy_dispel)
 		to_chat(owner, "<span class='cultbold'>Holy water currently scours your body, nullifying the power of the rites!</span>")
+		return
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
 	for(var/obj/effect/rune/empower/R in range(1, owner))
