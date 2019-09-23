@@ -210,8 +210,8 @@
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, id)
-	if(iscultist(M))
-		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
+	if(iscultist(L))
+		for(var/datum/action/innate/cult/blood_magic/BM in L.actions)
 			BM.holy_dispel = FALSE
 	return ..()
 
