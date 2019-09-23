@@ -17,7 +17,7 @@
 							<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 10}'>10</ui-button>
 							<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 1000}'>All</ui-button>
 							<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": -1}'>Custom</ui-button>
-							<ui-button action='analyze' params='{"id": "{{id}}"}'>Analyze</ui-button>
+							<ui-button action='analyzeBeak' params='{"id": "{{id}}"}'>Analyze</ui-button>
 						</div>
 					</ui-section>
 			{{else}}
@@ -41,7 +41,7 @@
 						<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 10}'>10</ui-button>
 						<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 1000}'>All</ui-button>
 						<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": -1}'>Custom</ui-button>
-						<ui-button action='analyze' params='{"id": "{{id}}"}'>Analyze</ui-button>
+						<ui-button action='analyzeBuff' params='{"id": "{{id}}"}'>Analyze</ui-button>
 					</div>
 				</ui-section>
 			{{/each}}
