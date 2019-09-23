@@ -200,22 +200,17 @@
 	pH = 7.5 //God is alkaline
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
-	..()
+	. = ..()
 	ADD_TRAIT(L, TRAIT_HOLY, id)
+
+	if(is_servant_of_ratvar(L))
+		to_chat(L, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
+	else if(iscultist(L))
+		to_chat(L, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, id)
-	..()
-
-/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(is_servant_of_ratvar(M))
-		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
-	..()
-
-/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(iscultist(M))
-		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
-	..()
+	return ..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(!data)
