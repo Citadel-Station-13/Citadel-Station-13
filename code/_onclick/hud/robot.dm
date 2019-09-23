@@ -88,6 +88,16 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
+/obj/screen/robot/sensors
+	name = "Sensor Augmentation"
+	icon_state = "cyborg_sensor"
+
+/obj/screen/robot/sensors/Click()
+	if(..())
+		return
+	var/mob/living/silicon/S = usr
+	S.toggle_sensors()
+
 /datum/hud/robot
 	ui_style = 'icons/mob/screen_cyborg.dmi'
 
@@ -133,7 +143,7 @@
 	static_inventory += using
 
 //Sec/Med HUDs
-	using = new /obj/screen/ai/sensors()
+	using = new /obj/screen/robot/sensors()
 	using.screen_loc = ui_borg_sensor
 	static_inventory += using
 
