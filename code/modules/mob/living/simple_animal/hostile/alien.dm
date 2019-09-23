@@ -176,6 +176,7 @@
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target
+		SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
 		return TRUE

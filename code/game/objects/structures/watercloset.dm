@@ -317,6 +317,7 @@
 
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
+	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
@@ -330,12 +331,14 @@
 		var/turf/tile = loc
 		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		tile.clean_blood()
+		SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
+	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
@@ -553,6 +556,7 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
+		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		O.clean_blood()
 		O.acid_level = 0
 		create_reagents(5)

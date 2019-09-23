@@ -157,7 +157,6 @@
 		cut_overlay(damaged_clothes_icons[index], TRUE)
 
 
-
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
