@@ -915,7 +915,7 @@ $(function() {
 
 		$.ajax({
 			type: 'GET',
-			url: 'browserOutput_white.css',
+			url: 'browserOutput.css',
 			success: function(styleData) {
 				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 
