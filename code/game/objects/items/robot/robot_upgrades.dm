@@ -404,7 +404,7 @@
 		to produce more advanced and complex medical reagents."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/medical
+	module_type = list(/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical,
 		/obj/item/robot_module/medihound)
 	var/list/additional_reagents = list()
