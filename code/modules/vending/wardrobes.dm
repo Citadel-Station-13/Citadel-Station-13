@@ -318,10 +318,10 @@
 					/obj/item/clothing/under/rank/chaplain = 2,
 					/obj/item/clothing/under/rank/chaplain/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
-					/obj/item/clothing/suit/nun = 2,
+					/obj/item/clothing/suit/chaplain/nun = 2,
 					/obj/item/clothing/head/nun_hood = 2,
-					/obj/item/clothing/suit/holidaypriest = 2,
-					/obj/item/clothing/suit/pharaoh = 2,
+					/obj/item/clothing/suit/chaplain/holidaypriest = 2,
+					/obj/item/clothing/suit/chaplain/pharaoh = 2,
 					/obj/item/clothing/head/nemes = 1,
 					/obj/item/clothing/head/pharaoh = 1,
 					/obj/item/storage/fancy/candle_box = 3)

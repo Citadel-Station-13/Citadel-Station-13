@@ -536,12 +536,12 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
-/datum/reagent/mutationtoxin/moth
-	name = "Moth Mutation Toxin"
+/datum/reagent/mutationtoxin/insect
+	name = "Insect Mutation Toxin"
 	id = "mothmutationtoxin"
 	description = "A glowing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/moth
+	race = /datum/species/insect
 	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
 
 /datum/reagent/mutationtoxin/pod
@@ -1445,9 +1445,6 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
-
-
-
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
 /datum/reagent/plantnutriment
@@ -1489,15 +1486,7 @@
 	tox_prob = 15
 	pH = 1
 
-
-
-
-
-
-
 // GOON OTHERS
-
-
 
 /datum/reagent/oil
 	name = "Oil"
@@ -2039,4 +2028,17 @@
 	color = "#BCC740" //RGB: 188, 199, 64
 	taste_description = "plant dust"
 
+/datum/reagent/pax/catnip
+	name = "catnip"
+	id = "catnip"
+	taste_description = "grass"
+	description = "A colorless liquid that makes people more peaceful and felines more happy."
+	metabolization_rate = 1.75 * REAGENTS_METABOLISM
 
+/datum/reagent/pax/catnip/on_mob_life(mob/living/carbon/M)
+	if(prob(20))
+		M.emote("nya")
+	if(prob(20))
+		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
+	M.adjustArousalLoss(2)
+	..()

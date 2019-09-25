@@ -188,6 +188,15 @@
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = TRUE
 
+/obj/item/firing_pin/holy
+	name = "blessed pin"
+	desc = "A firing pin that only responds to those who are holier than thou."
+
+/obj/item/firing_pin/holy/pin_auth(mob/living/user)
+	if(user.mind.isholy)
+		return TRUE
+	return FALSE
+
 // Laser tag pins
 /obj/item/firing_pin/tag
 	name = "laser tag firing pin"

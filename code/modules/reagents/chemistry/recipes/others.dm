@@ -629,7 +629,7 @@
 	required_temp = 450
 
 /datum/chemical_reaction/moff
-	name = "moth mutation toxic"
+	name = "insect mutation toxic"
 	id = "moffs"
 	results = list("mothmutationtoxin" = 1)
 	required_reagents  = list("liquid_dark_matter" = 2, "ammonia" = 5, "lithium" = 1, "stablemutationtoxin" = 1)
