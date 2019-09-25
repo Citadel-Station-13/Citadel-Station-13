@@ -434,19 +434,42 @@
 				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else
+			//Do they have a melon? Are they a felon?
+			//This is bad code but it'll work until I finish my dumb thesis and other projects
+			var/melonPower = 1
+			var/obj/item/W1 = M.l_hand
+			var/obj/item/W2 = M.r_hand
+			if(istype(W1, /obj/item/reagent_containers/food/snacks/grown/holymelon))
+				var/obj/item/reagent_containers/food/snacks/grown/holymelon/melon = W1
+
+			if(istype(W2, /obj/item/reagent_containers/food/snacks/grown/holymelon))
+				var/obj/item/reagent_containers/food/snacks/grown/holymelon/melon = W2
+				melonPower = 1 - ((melon.potency * 7)/1000) //reduction = 1 - 0.3
+
+				melon.potency -= 20
+				if(melon.potency < 0)
+					melon.name = "Unholy melon"
+					target.visible_message("<span class='warning'>[L] starts to give off an unholy glow!</span>", \
+										   "<span class='userdanger'>Your Unholy melon begins to glow, emitting a blanket of darkness which surrounds you and makes you succumb futher!</span>")
+
+				else
+					target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
+									   "<span class='userdanger'>Your Holy melon begins to glow, emitting a blanket of holy light which surrounds you and protects you from the flash of light!</span>")
+
+
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
-			L.Knockdown(160)
-			L.adjustStaminaLoss(140) //Ensures hard stamcrit
+			L.Knockdown(160 * melonPower)
+			L.adjustStaminaLoss(140 * melonPower) //Ensures hard stamcrit
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
 				S.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/C = L
-				C.silent += 6
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(15)
+				C.silent += 6 * melonPower
+				C.stuttering += 15 * melonPower
+				C.cultslurring += 15 * melonPower
+				C.Jitter(15 * melonPower)
 			if(is_servant_of_ratvar(L))
 				L.adjustBruteLoss(15)
 		uses--

@@ -60,4 +60,4 @@
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE) //deliver us from evil o melon god
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE) //deliver us from evil o melon god
