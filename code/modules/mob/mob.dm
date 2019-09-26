@@ -726,15 +726,27 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 			mob_spell_list -= S
 			qdel(S)
 
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+
+//REWORKED anti_magic_check , if you're porting something from another codebase, and it uses anti_magic_check, and you're looking for ways to get it to work, then essentially:
+// anti_magic_check() = !is_magic_susceptible()
+//If you're using this to cast a spell, you can use the returned value to adjust stun, damage, and whatever numerics involved too, otherwise it'll work unless 100% resistance
+//USED TO return nothing if no magic resist, and an atom if resisted
+//Checks to see if user is succeptable to magic, 0 means immune, 1 is normal, less than 1 is extra succeptable
+/mob/proc/is_magic_susceptible(magic = TRUE, holy = FALSE)
 	if(!magic && !holy)
 		return
 	var/list/protection_sources = list()
 	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
-			return pick(protection_sources)
+			var/resist_value = 0
+			for(var/i in protection_sources)
+				var/resist_value += [protection_sources[i]] //gets the ADDITIVE percentage
+			resist_value = 1 - (resist_value/100) //turns it into a multipliable form. I.e. 1 is no effect, 0.6 is a 40% reduction, 1.2 is a 20% extention.
+			if(resist_value <= 0) //If your resistance is over 100%, then you resist all effects.
+				resist_value = 0
+			return resist_value
 		else
-			return src
+			return 1 //changed from src to 1
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
