@@ -62,5 +62,5 @@
 	. = ..()
 	if(regaents.has_reagent("holywater"))
 		var/datum/reagent/R = has_reagent("holywater")
-	var/holy_reist = (R.volume * 2.5) //20u = 50%
+	var/holy_reist = (R.volume * 3) //20u = 60%
 	AddComponent(/datum/component/anti_magic, FALSE, holy_reist) //deliver us from evil o melon god

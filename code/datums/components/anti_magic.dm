@@ -12,8 +12,12 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(_magic)
+		if(_magic == TRUE)
+			_magic = 100
 		magic["[parent]"] += _magic
 	if(_holy)
+		if(_holy == TRUE)
+			_holy = 100
 		holy["[parent]"] += _holy
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)

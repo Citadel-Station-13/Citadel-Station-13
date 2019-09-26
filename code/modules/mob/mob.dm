@@ -731,7 +731,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 // anti_magic_check() = !is_magic_susceptible()
 //If you're using this to cast a spell, you can use the returned value to adjust stun, damage, and whatever numerics involved too, otherwise it'll work unless 100% resistance
 //USED TO return nothing if no magic resist, and an atom if resisted
-//Checks to see if user is succeptable to magic, 0 means immune, 1 is normal, less than 1 is extra succeptable
+//Checks to see if user is succeptable to magic, 0 means immune, 1 is normal, greater than 1 is extra succeptable
 /mob/proc/is_magic_susceptible(magic = TRUE, holy = FALSE, message = "")
 	if(!magic && !holy)
 		return
