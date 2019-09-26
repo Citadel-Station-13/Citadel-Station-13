@@ -60,4 +60,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, FALSE, TRUE) //deliver us from evil o melon god
+	if(regaents.has_reagent("holywater"))
+		var/datum/reagent/R = has_reagent("holywater")
+	var/holy_reist = (R.volume * 2.5) //20u = 50%
+	AddComponent(/datum/component/anti_magic, FALSE, holy_reist) //deliver us from evil o melon god

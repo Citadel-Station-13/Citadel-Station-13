@@ -33,13 +33,13 @@
 
 
 	if(_holy && LAZYLEN(holy))
-	var/temp_holy = holy
+		var/temp_holy = holy
 
-	for(var/i in holy) //Merge duplicate entries into one single entry
-	    if(protection_sources[i])
-	        protection_sources[i] += holy[i]
-			temp_holy -= "[i]"
-	protection_sources += temp_holy
+		for(var/i in holy) //Merge duplicate entries into one single entry
+		    if(protection_sources[i])
+		        protection_sources[i] += holy[i]
+				temp_holy -= "[i]"
+		protection_sources += temp_holy
 
 	if(!len(protection_sources))//If no sources then nothing
 		return
