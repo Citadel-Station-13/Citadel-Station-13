@@ -1445,9 +1445,6 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
-
-
-
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
 /datum/reagent/plantnutriment
@@ -1489,15 +1486,7 @@
 	tox_prob = 15
 	pH = 1
 
-
-
-
-
-
-
 // GOON OTHERS
-
-
 
 /datum/reagent/oil
 	name = "Oil"
@@ -2031,6 +2020,13 @@
 /datum/reagent/changeling_string/Destroy()
 	qdel(original_dna)
 	return ..()
+
+/datum/reagent/mustardgrind
+	name = "Mustardgrind"
+	id = "mustardgrind"
+	description = "A powerd that is mixed with water and enzymes to make mustard."
+	color = "#BCC740" //RGB: 188, 199, 64
+	taste_description = "plant dust"
 
 /datum/reagent/pax/catnip
 	name = "catnip"
