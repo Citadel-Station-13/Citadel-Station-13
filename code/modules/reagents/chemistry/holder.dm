@@ -496,7 +496,12 @@
 
 		//Standard reaction mechanics:
 			else
-				if (C.FermiChem == TRUE)//Just to make sure
+				if (C.FermiChem == TRUE)//Just to make sure, should only proc when grenades are combining.
+					if (chem_temp > C.ExplodeTemp) //To allow fermigrenades
+						var/datum/chemical_reaction/fermi/Ferm = selected_reaction
+						fermiIsReacting = FALSE
+						SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
+						Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
 					return 0
 
 				for(var/B in cached_required_reagents) //
@@ -741,7 +746,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < CHEMICAL_QUANTISATION_LEVEL)
+		if((R.volume < 0.01) && !fermiIsReacting)
 			del_reagent(R.id)
 		else
 			total_volume += R.volume

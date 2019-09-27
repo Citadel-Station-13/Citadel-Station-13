@@ -153,6 +153,7 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
+	body_parts_covered = NONE
 
 //Security
 /obj/item/clothing/suit/security/officer
@@ -215,3 +216,4 @@
 	item_state = "techpriesthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+	mutantrace_variation = MUTANTRACE_VARIATION

@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
 	var/mob/living/carbon/summoner
-	var/range = 10 //how far from the user the spirit can be
+	var/range = 13 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
 	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"

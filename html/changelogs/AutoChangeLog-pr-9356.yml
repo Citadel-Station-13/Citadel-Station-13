@@ -1,0 +1,9 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Expands the chapel mass driver room to make it easier to use"
+  - rscadd: "Rearranges the chapel backroom so there are now six coffins and burial garments roundstart"
+  - tweak: "Cleans up the Janitor's office"
+  - tweak: "Readjusts the station exterior so mass-driven coffins (hopefully) have less friction"
+  - bugfix: "Adds a fan to the chapel driver"
+  - bugfix: "The Janitor missed a few spots around the newly renovated Maintenance Garden"
