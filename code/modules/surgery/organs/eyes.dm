@@ -32,6 +32,8 @@
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	..()
+	if(damage == initial(damage))
+		clear_eye_trauma()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner
 		old_eye_color = HMN.eye_color
@@ -46,7 +48,9 @@
 	M.update_tint()
 	owner.update_sight()
 
+
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
+	clear_eye_trauma()
 	..()
 	if(ishuman(M) && eye_color)
 		var/mob/living/carbon/human/HMN = M
@@ -65,7 +69,7 @@
 	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
 	if(damage > 20)
 		damaged = TRUE
-		if((organ_flags & ORGAN_FAILING))
+		if(organ_flags & ORGAN_FAILING)
 			C.become_blind(EYE_DAMAGE)
 		else if(damage > 30)
 			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
@@ -77,6 +81,11 @@
 		C.clear_fullscreen("eye_damage")
 	return
 
+/obj/item/organ/eyes/proc/clear_eye_trauma()
+	var/mob/living/carbon/C = owner
+	C.clear_fullscreen("eye_damage")
+	C.cure_blind(EYE_DAMAGE)
+	damaged = FALSE
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
