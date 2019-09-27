@@ -4,6 +4,7 @@
 	desc = "Prepare blood magic by carving runes into your flesh. This rite is most effective with an <b>empowering rune</b>"
 	var/list/spells = list()
 	var/channeling = FALSE
+	var/holy_dispel = FALSE
 
 /datum/action/innate/cult/blood_magic/Grant()
 	..()
@@ -33,6 +34,9 @@
 			B.button.moved = B.button.screen_loc
 
 /datum/action/innate/cult/blood_magic/Activate()
+	if(holy_dispel)
+		to_chat(owner, "<span class='cultbold'>Holy water currently scours your body, nullifying the power of the rites!</span>")
+		return
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
 	for(var/obj/effect/rune/empower/R in range(1, owner))
@@ -64,7 +68,7 @@
 			qdel(nullify_spell)
 		return
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
+	if(QDELETED(src) || owner.incapacitated() || !BS || holy_dispel || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
 		return
 	to_chat(owner,"<span class='warning'>You begin to carve unnatural symbols into your flesh!</span>")
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -73,7 +77,7 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
 		return
-	if(do_after(owner, 100 - rune*60, target = owner))
+	if(do_after(owner, 100 - rune*60, target = owner) && !holy_dispel)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.bleed(40 - rune*32)
