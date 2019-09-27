@@ -187,6 +187,7 @@
 	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
+	organ_flags = ORGAN_NO_SPOIL
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
 	maxHealth = 75 //Take brute damage instead
@@ -268,6 +269,7 @@
 	icon_state = "tonguecybernetic"
 	taste_sensitivity = 10
 	maxHealth = 60 //It's robotic!
+	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
@@ -277,3 +279,4 @@
 	say_mod = "beeps"
 	desc = "A voice synthesizer used by IPCs to smoothly interface with organic lifeforms."
 	electronics_magic = FALSE
+	organ_flags = ORGAN_SYNTHETIC
