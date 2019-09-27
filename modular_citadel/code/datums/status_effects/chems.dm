@@ -741,15 +741,6 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent("neurine"))
 		deltaResist *= 1.5
-	if (!HAS_TRAIT(owner, TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
-		if (owner.reagents.has_reagent("anaphro"))
-			deltaResist *= 1.5
-		if (owner.reagents.has_reagent("anaphro+"))
-			deltaResist *= 2
-		if (owner.reagents.has_reagent("aphro"))
-			deltaResist *= 0.75
-		if (owner.reagents.has_reagent("aphro+"))
-			deltaResist *= 0.5
 
 	//Antag resistance
 	//cultists are already brainwashed by their god
