@@ -560,7 +560,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
 	item = /obj/item/book/granter/martial/cqc
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-	cost = 13
+	cost = 14
 	surplus = 0
 
 /datum/uplink_item/dangerous/phantomthief
