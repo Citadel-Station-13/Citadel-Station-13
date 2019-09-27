@@ -17,30 +17,31 @@
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
 /obj/item/organ/stomach/on_life()
-	var/mob/living/carbon/human/H = owner
-	var/datum/reagent/consumable/nutriment/Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
-
-
-	if(istype(H))
+	var/datum/reagent/consumable/nutriment/Nutri
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
+		Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
+
+		if(Nutri)
+			if(prob((damage/40) * Nutri.volume * Nutri.volume))
+				H.vomit(damage)
+				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+		else if(Nutri && damage > high_threshold)
+			if(prob((damage/10) * Nutri.volume * Nutri.volume))
+				H.vomit(damage)
+				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+
+	else if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
 
 	if(damage < low_threshold)
 		return
-
-	Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
-
-	if(Nutri)
-		if(prob((damage/40) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-	else if(Nutri && damage > high_threshold)
-		if(prob((damage/10) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
 
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)

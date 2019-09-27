@@ -31,13 +31,6 @@
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
 /obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
-	if (maxHealth == "bone")
-		if(owner)
-			return
-		var/target = owner.get_bodypart(BODY_ZONE_HEAD)
-		owner.apply_damage(d, BURN, target)
-		to_chat(owner, "<span class='userdanger'>You feel your skull burning! Oof, your bones!</span>")
-		return
 
 	if(!d) //Micro-optimization.
 		return
@@ -196,7 +189,7 @@
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
-	maxHealth = "bone" //Take brute damage instead
+	maxHealth = 75 //Take brute damage instead
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -205,6 +198,14 @@
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
+
+/obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
+	if(!owner)
+		return
+	var/target = owner.get_bodypart(BODY_ZONE_HEAD)
+	owner.apply_damage(d, BURN, target)
+	to_chat(owner, "<span class='userdanger'>You feel your skull burning! Oof, your bones!</span>")
+	return
 
 /obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
 	if (chattering)
