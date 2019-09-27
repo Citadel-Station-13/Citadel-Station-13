@@ -10,7 +10,7 @@
 	decay_factor = STANDARD_ORGAN_DECAY
 	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
 	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD	//threshold at 30
-	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD	//threshold at 20
+	low_threshold = 0.15 * STANDARD_ORGAN_THRESHOLD	//threshold at 15
 
 	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
 	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
@@ -140,11 +140,11 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	if(prob(10 * severity))
-		return
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)
-	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 25)
+	if(severity == EMP_HEAVY)
+		owner.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
+
 
 /obj/item/organ/eyes/robotic/xray
 	name = "\improper X-ray eyes"
