@@ -164,13 +164,13 @@
 	var/damage
 	var/cause
 	if(beaker_weakness_bitflag & PH_WEAK)
-		if(reagents.pH < 1.5)
-			damage = (1.5 - reagents.pH)/15
+		if(reagents.pH < 2)
+			damage = (2 - reagents.pH)/20
 			cause = "from the extreme pH"
 			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
-		if(reagents.pH > 12.5)
-			damage = (reagents.pH - 12.5)/15
+		if(reagents.pH > 12)
+			damage = (reagents.pH - 12)/20
 			cause = "from the extreme pH"
 			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
