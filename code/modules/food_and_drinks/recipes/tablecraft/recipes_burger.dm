@@ -6,6 +6,7 @@
 
 /datum/crafting_recipe/food/humanburger
 	name = "Human burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/bun = 1,
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain/human = 1
@@ -18,6 +19,7 @@
 
 /datum/crafting_recipe/food/burger
 	name = "Burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
 			/obj/item/reagent_containers/food/snacks/bun = 1
@@ -28,6 +30,7 @@
 
 /datum/crafting_recipe/food/corgiburger
 	name = "Corgi burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 1,
 			/obj/item/reagent_containers/food/snacks/bun = 1
@@ -38,6 +41,7 @@
 
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/organ/appendix = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -47,6 +51,7 @@
 
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/organ/brain = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -56,6 +61,7 @@
 
 /datum/crafting_recipe/food/xenoburger
 	name = "Xeno burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/meat/steak/xeno = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -65,6 +71,7 @@
 
 /datum/crafting_recipe/food/bearger
 	name = "Bearger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/meat/steak/bear = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -74,6 +81,7 @@
 
 /datum/crafting_recipe/food/fishburger
 	name = "Fish burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -92,6 +100,7 @@
 
 /datum/crafting_recipe/food/ghostburger
 	name = "Ghost burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/ectoplasm = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -176,7 +185,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/purple
 	subcategory = CAT_BURGER
-	
+
 /datum/crafting_recipe/food/blackburger
 	name = "Black burger"
 	reqs = list(
@@ -186,7 +195,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/black
 	subcategory = CAT_BURGER
-	
+
 /datum/crafting_recipe/food/whiteburger
 	name = "White burger"
 	reqs = list(
@@ -216,6 +225,7 @@
 
 /datum/crafting_recipe/food/bigbiteburger
 	name = "Big bite burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 3,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -225,6 +235,7 @@
 
 /datum/crafting_recipe/food/superbiteburger
 	name = "Super bite burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
 		/datum/reagent/consumable/blackpepper = 5,
@@ -240,6 +251,7 @@
 
 /datum/crafting_recipe/food/slimeburger
 	name = "Jelly burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1
@@ -249,6 +261,7 @@
 
 /datum/crafting_recipe/food/jellyburger
 	name = "Jelly burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 			/datum/reagent/consumable/cherryjelly = 5,
 			/obj/item/reagent_containers/food/snacks/bun = 1
@@ -258,6 +271,7 @@
 
 /datum/crafting_recipe/food/fivealarmburger
 	name = "Five alarm burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/grown/ghost_chili = 2,
 			/obj/item/reagent_containers/food/snacks/bun = 1
@@ -267,6 +281,7 @@
 
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
 			/obj/item/reagent_containers/food/snacks/bun = 1
@@ -285,6 +300,7 @@
 
 /datum/crafting_recipe/food/baconburger
 	name = "Bacon Burger"
+	tools = list(/obj/item/kitchen/spatula)
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/meat/bacon = 3,
 			/obj/item/reagent_containers/food/snacks/cheesewedge = 1,

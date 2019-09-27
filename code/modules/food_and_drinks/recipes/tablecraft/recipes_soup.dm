@@ -5,6 +5,7 @@
 
 /datum/crafting_recipe/food/meatballsoup
 	name = "Meatball soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -17,6 +18,7 @@
 
 /datum/crafting_recipe/food/vegetablesoup
 	name = "Vegetable soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -30,6 +32,7 @@
 
 /datum/crafting_recipe/food/nettlesoup
 	name = "Nettle soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -42,6 +45,7 @@
 
 /datum/crafting_recipe/food/wingfangchu
 	name = "Wingfangchu"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/datum/reagent/consumable/soysauce = 5,
@@ -52,6 +56,7 @@
 
 /datum/crafting_recipe/food/wishsoup
 	name = "Wish soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 20,
 		/obj/item/reagent_containers/glass/bowl = 1
@@ -61,6 +66,7 @@
 
 /datum/crafting_recipe/food/hotchili
 	name = "Hot chili"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
@@ -72,6 +78,7 @@
 
 /datum/crafting_recipe/food/coldchili
 	name = "Cold chili"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
@@ -83,6 +90,7 @@
 
 /datum/crafting_recipe/food/tomatosoup
 	name = "Tomato soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -93,6 +101,7 @@
 
 /datum/crafting_recipe/food/eyeballsoup
 	name = "Eyeball soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -102,9 +111,9 @@
 	result = /obj/item/reagent_containers/food/snacks/soup/tomato/eyeball
 	subcategory = CAT_SOUP
 
-
 /datum/crafting_recipe/food/milosoup
 	name = "Milo soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -116,6 +125,7 @@
 
 /datum/crafting_recipe/food/bloodsoup
 	name = "Blood soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/blood = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -126,6 +136,7 @@
 
 /datum/crafting_recipe/food/slimesoup
 	name = "Slime soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 			/datum/reagent/water = 10,
 			/datum/reagent/toxin/slimejelly = 5,
@@ -136,6 +147,7 @@
 
 /datum/crafting_recipe/food/clownstears
 	name = "Clowns tears"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -147,6 +159,7 @@
 
 /datum/crafting_recipe/food/mysterysoup
 	name = "Mystery soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -160,6 +173,7 @@
 
 /datum/crafting_recipe/food/mushroomsoup
 	name = "Mushroom soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/water = 5,
@@ -171,6 +185,7 @@
 
 /datum/crafting_recipe/food/beetsoup
 	name = "Beet soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -182,6 +197,7 @@
 
 /datum/crafting_recipe/food/stew
 	name = "Stew"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -197,6 +213,7 @@
 
 /datum/crafting_recipe/food/spacylibertyduff
 	name = "Spacy liberty duff"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -207,6 +224,7 @@
 
 /datum/crafting_recipe/food/amanitajelly
 	name = "Amanita jelly"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
@@ -217,6 +235,7 @@
 
 /datum/crafting_recipe/food/sweetpotatosoup
 	name = "Sweet potato soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/sugar = 5,
@@ -228,6 +247,7 @@
 
 /datum/crafting_recipe/food/redbeetsoup
 	name = "Red beet soup"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/spoon)
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,

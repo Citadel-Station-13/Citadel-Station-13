@@ -42,6 +42,7 @@
 
 /datum/crafting_recipe/food/spidereggsham
 	name = "Spider eggs ham"
+	tools = list(/obj/item/kitchen/spatula, /obj/item/kitchen/frying_pan)
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
@@ -54,6 +55,7 @@
 
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"
+	tools = list(/obj/item/kitchen/spatula, /obj/item/kitchen/frying_pan)
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
 		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
@@ -64,6 +66,7 @@
 
 /datum/crafting_recipe/food/bearsteak
 	name = "Filet migrawr"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/datum/reagent/consumable/ethanol/manly_dorf = 5,
 		/obj/item/reagent_containers/food/snacks/meat/steak/bear = 1,
@@ -160,6 +163,7 @@
 
 /datum/crafting_recipe/food/ricepork
 	name = "Rice and pork"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2

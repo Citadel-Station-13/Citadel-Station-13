@@ -5,6 +5,7 @@
 
 /datum/crafting_recipe/food/tomatopasta
 	name = "Tomato pasta"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 2
@@ -22,6 +23,7 @@
 
 /datum/crafting_recipe/food/spaghettimeatball
 	name = "Spaghetti meatball"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
 		/obj/item/reagent_containers/food/snacks/faggot = 2
@@ -31,6 +33,7 @@
 
 /datum/crafting_recipe/food/spesslaw
 	name = "Spesslaw"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
 		/obj/item/reagent_containers/food/snacks/faggot = 4
@@ -40,6 +43,7 @@
 
 /datum/crafting_recipe/food/beefnoodle
 	name = "Beef noodle"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
@@ -51,6 +55,7 @@
 
 /datum/crafting_recipe/food/chowmein
 	name = "Chowmein"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
@@ -62,6 +67,7 @@
 
 /datum/crafting_recipe/food/butternoodles
 	name = "Butter Noodles"
+	tools = list(/obj/item/kitchen/pot, /obj/item/kitchen/fork)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
 		/obj/item/reagent_containers/food/snacks/butter = 1

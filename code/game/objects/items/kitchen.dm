@@ -1,11 +1,14 @@
 /* Kitchen tools
  * Contains:
  *		Fork
+ *		Spoon
  *		Kitchen knives
  *		Ritual Knife
  *		Butcher's cleaver
  *		Combat Knife
  *		Rolling Pins
+ *		Frying Pan
+ *		Spatula
  */
 
 /obj/item/kitchen
@@ -53,6 +56,13 @@
 	else
 		return ..()
 
+
+/obj/item/kitchen/spoon
+	name = "spoon"
+	desc = "Goes with a fork."
+	icon_state = "spoon"
+	force = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
@@ -181,3 +191,58 @@
 /obj/item/kitchen/knife/scimiar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force
+
+/obj/item/kitchen/frying_pan
+	name = "frying pan"
+	desc = "A metal pan used in a lot of cooking."
+	icon_state = "cooking_pan"
+	force = 5
+	throwforce = 2
+	throw_speed = 1
+	throw_range = 9
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "dinked")
+
+/obj/item/kitchen/spatula
+	name = "spatula"
+	desc = "A not so golden spatula useful for cooking."
+	icon_state = "cooking_spatula_alt"
+	force = 2
+	throwforce = 3
+	throw_speed = 1
+	throw_range = 8
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("dinked", "flipped")
+
+/obj/item/kitchen/pot
+	name = "cooking pot"
+	desc = "A large pot that is ment for making soups and stews. Can NOT be filled by hand."
+	icon_state = "cooking_pot"
+	force = 8
+	throwforce = 12
+	throw_speed = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("potted", "bludgeoned")
+
+/obj/item/kitchen/cooking_tray
+	name = "cooking oven pan"
+	desc = "A metal oven pan for cooking things."
+	icon_state = "cooking_tray"
+	force = 4
+	throwforce = 7
+	throw_speed = 1
+	throw_range = 2
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("bludgeoned", "battered")
+
+/obj/item/kitchen/muffen_tray
+	name = "muffen tray"
+	desc = "A metal pan for cooking things."
+	icon_state = "cooking_muffen_tray"
+	force = 4
+	throwforce = 7
+	throw_speed = 1
+	throw_range = 2
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("bludgeoned", "battered")

@@ -73,8 +73,9 @@ datum/crafting_recipe/food/donut/meat
 ////////////////////////////////////////////////WAFFLES AND PANCAKES////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/waffles
-	time = 15
 	name = "Waffles"
+	tools = list(/obj/item/kitchen/frying_pan)
+	time = 15
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
@@ -84,6 +85,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/soylenviridians
 	name = "Soylent viridians"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
 		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
@@ -93,6 +95,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/soylentgreen
 	name = "Soylent green"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
 		/obj/item/reagent_containers/food/snacks/meat/slab/human = 2
@@ -100,9 +103,9 @@ datum/crafting_recipe/food/donut/meat
 	result = /obj/item/reagent_containers/food/snacks/soylentgreen
 	subcategory = CAT_PASTRY
 
-
 /datum/crafting_recipe/food/rofflewaffles
 	name = "Roffle waffles"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/datum/reagent/drug/mushroomhallucinogen = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2
@@ -112,6 +115,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/pancakes
 	name = "Pancake"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
@@ -120,6 +124,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/bbpancakes
 	name = "Blueberry pancake"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/berries = 1
@@ -129,6 +134,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/ccpancakes
 	name = "Chocolate chip pancake"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
@@ -162,8 +168,8 @@ datum/crafting_recipe/food/donut/meat
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/muffin
-	time = 15
 	name = "Muffin"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
@@ -173,6 +179,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/berrymuffin
 	name = "Berry muffin"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
@@ -183,6 +190,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/booberrymuffin
 	name = "Booberry muffin"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
@@ -194,6 +202,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
+	tools = list(/obj/item/kitchen/muffen_tray) //Its with the muffens
 	reqs = list(
 		/datum/reagent/water = 5,
 		/datum/reagent/consumable/soysauce = 5,
@@ -281,6 +290,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
@@ -309,6 +319,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/cherrycupcake
 	name = "Cherry cupcake"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cherries = 1
@@ -318,6 +329,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/bluecherrycupcake
 	name = "Blue cherry cupcake"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 1
@@ -327,6 +339,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/strawberrycupcake
 	name = "Strawberry cherry cupcake"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
@@ -336,6 +349,7 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/honeybun
 	name = "Honey bun"
+	tools = list(/obj/item/kitchen/muffen_tray)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/datum/reagent/consumable/honey = 5

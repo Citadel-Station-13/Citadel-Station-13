@@ -51,6 +51,7 @@
 
 /datum/crafting_recipe/food/loadedbakedpotato
 	name = "Loaded baked potato"
+	tools = list(/obj/item/kitchen/cooking_tray)
 	time = 40
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
@@ -79,6 +80,7 @@
 
 /datum/crafting_recipe/food/beans
 	name = "Beans"
+	tools = list(/obj/item/kitchen/pot)
 	time = 40
 	reqs = list(/datum/reagent/consumable/ketchup = 5,
 		/obj/item/reagent_containers/food/snacks/grown/soybeans = 2
@@ -269,7 +271,6 @@
 	category = CAT_FOOD
 	subcategory = CAT_MISCFOOD
 
-
 /datum/crafting_recipe/food/powercrepe
 	name = "Powercrepe"
 	time = 40
@@ -285,6 +286,7 @@
 
 /datum/crafting_recipe/food/taco
 	name ="Classic Taco"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/tortilla = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
@@ -296,6 +298,7 @@
 
 /datum/crafting_recipe/food/tacoplain
 	name ="Plain Taco"
+	tools = list(/obj/item/kitchen/frying_pan)
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/tortilla = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,

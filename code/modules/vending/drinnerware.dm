@@ -1,12 +1,18 @@
 /obj/machinery/vending/dinnerware
 	name = "\improper Plasteel Chef's Dinnerware Vendor"
 	desc = "A kitchen and restaurant equipment vendor."
-	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
+	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils."
 	icon_state = "dinnerware"
 	products = list(/obj/item/storage/bag/tray = 8,
 		            /obj/item/kitchen/fork = 6,
+		            /obj/item/kitchen/spoon = 6,
 		            /obj/item/kitchen/knife = 6,
 		            /obj/item/kitchen/rollingpin = 2,
+		            /obj/item/kitchen/frying_pan = 2,
+		            /obj/item/kitchen/spatula = 2,
+		            /obj/item/kitchen/pot = 2,
+		            /obj/item/kitchen/cooking_tray = 2,
+		            /obj/item/kitchen/muffen_tray = 2,
 		            /obj/item/reagent_containers/food/drinks/drinkingglass = 8,
 		            /obj/item/clothing/suit/apron/chef = 2,
 		            /obj/item/storage/box/cups = 2,
