@@ -105,9 +105,10 @@
 		. = TRUE //don't do attack animation.
 		var/cached_Bdamage = brainmob?.health
 		var/datum/reagent/medicine/neurine/N = reagents.has_reagent("neurine")
+		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent("mannitol")
 
 		if(O.reagents.has_reagent("mannitol"))//Just a quick way to bolster the effects if someone mixes up a batch.
-			N.volume *= 1.5
+			N.volume *= (M1.volume*0.5)
 
 		if(!O.reagents.has_reagent("neurine", 10))
 			to_chat(user, "<span class='warning'>There's not enough neurine in [O] to restore [src]!</span>")
@@ -119,10 +120,10 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		setOrganDamage((damage - (0.10 * maxHealth)*N.volume))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
+		setOrganDamage((damage - (0.10 * maxHealth)*(N.volume/10)))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 
-		if(cached_Bdamage) //Fixing dead brains yeilds a trauma
+		if(cached_Bdamage <= HEALTH_THRESHOLD_DEAD) //Fixing dead brains yeilds a trauma
 			if((cached_Bdamage <= HEALTH_THRESHOLD_DEAD) && (brainmob.health > HEALTH_THRESHOLD_DEAD))
 				if(prob(90))
 					gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -149,7 +150,7 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		setOrganDamage((damage - (0.05 * maxHealth)*M.volume))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
+		setOrganDamage((damage - (0.05 * maxHealth)*(M.volume/10)))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
