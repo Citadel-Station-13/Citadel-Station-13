@@ -30,6 +30,14 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
+/obj/item/organ/tongue/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(organ_flags & ORGAN_SYNTHETIC)
+		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
+		owner.say("The pH is appropriately [pick(errormessage)].")
+
 /obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
 
 	if(!d) //Micro-optimization.
