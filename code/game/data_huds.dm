@@ -162,6 +162,7 @@
 	holder.icon_state = "hud[RoundHealth(src)]"
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
+	med_hud_set_radstatus()
 
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
@@ -211,11 +212,11 @@
 				holder.icon_state = "hudhealthy"
 
 
-/mob/living/carbon/proc/med_hud_set_radstatus()
+/mob/living/proc/med_hud_set_radstatus()
 	var/image/radholder = hud_list[RAD_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	radholder.pixel_y = I.Height() - world.icon_size
-	var/mob/living/carbon/M = src
+	var/mob/living/M = src
 	var/rads = M.radiation
 	switch(rads)
 		if(-INFINITY to RAD_MOB_SAFE)
