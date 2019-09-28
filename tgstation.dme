@@ -2955,7 +2955,6 @@
 #include "modular_citadel\code\game\objects\items\storage\firstaid.dm"
 #include "modular_citadel\code\game\objects\structures\tables_racks.dm"
 #include "modular_citadel\code\game\objects\structures\beds_chairs\chair.dm"
-#include "modular_citadel\code\game\objects\structures\beds_chairs\sofa.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\fitness.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\secure\citadel_lockers.dm"
