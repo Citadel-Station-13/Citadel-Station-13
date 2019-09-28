@@ -17,6 +17,8 @@
 	//Eye colour
 	var/eye_color = "000"
 
+	var/horn_color = "85615a"	//specific horn colors, because why not?
+
 	var/skin_tone = "caucasian1"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
@@ -25,11 +27,11 @@
 	var/age = 30		//Player's age
 
 	var/underwear = "Nude"	//Which underwear the player wants
-	var/undie_color = "#FFFFFF"
+	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude" //Which undershirt the player wants
-	var/shirt_color = "#FFFFFF"
+	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
-	var/socks_color = "#FFFFFF"
+	var/socks_color = "FFFFFF"
 	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 

@@ -356,6 +356,7 @@
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 	new /obj/item/razor(src)
 
 /obj/item/storage/backpack/duffelbag/sec
@@ -377,6 +378,7 @@
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"
@@ -407,6 +409,7 @@
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
+	new /obj/item/pipe_dispenser(src)
 
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"
@@ -469,6 +472,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/implantcase(src)
 	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
 	name = "advanced surgery duffel bag"
@@ -488,6 +492,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/implantcase(src)
 	new /obj/item/implanter(src)
+	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"

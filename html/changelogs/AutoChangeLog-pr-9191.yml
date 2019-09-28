@@ -1,0 +1,6 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "can now carry people on your back by aggressive grabbing them while they are laying down and then dragging their sprite onto yours."
+  - tweak: "dragging people who are prone is now much slower, and carrying them will allow you to move faster at the cost of taking 5 seconds to lift them up onto your back."
+  - tweak: "pacifists can now aggressive grab (cannot table slam people though)"

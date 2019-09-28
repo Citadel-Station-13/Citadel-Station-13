@@ -1459,6 +1459,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A cheap bottle of one use syndicate brand super glue. \
 			Use on any item to make it undroppable. \
 			Be careful not to glue an item you're already holding!"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	item = /obj/item/syndie_glue
 	cost = 2
 
@@ -1837,7 +1838,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
-	cost = 15
+	cost = 8
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun

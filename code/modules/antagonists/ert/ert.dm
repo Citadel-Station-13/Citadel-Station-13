@@ -36,29 +36,41 @@
 
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
-/datum/antagonist/ert/security/red
+/datum/antagonist/ert/security/amber
 	outfit = /datum/outfit/ert/security/alert
+
+/datum/antagonist/ert/security/red
+	outfit = /datum/outfit/ert/security/alert/red
 
 /datum/antagonist/ert/engineer
 	role = "Engineer"
 	outfit = /datum/outfit/ert/engineer
 
-/datum/antagonist/ert/engineer/red
+/datum/antagonist/ert/engineer/amber
 	outfit = /datum/outfit/ert/engineer/alert
+
+/datum/antagonist/ert/engineer/red
+	outfit = /datum/outfit/ert/engineer/alert/red
 
 /datum/antagonist/ert/medic
 	role = "Medical Officer"
 	outfit = /datum/outfit/ert/medic
 
-/datum/antagonist/ert/medic/red
+/datum/antagonist/ert/medic/amber
 	outfit = /datum/outfit/ert/medic/alert
+
+/datum/antagonist/ert/medic/red
+	outfit = /datum/outfit/ert/medic/alert/red
 
 /datum/antagonist/ert/commander
 	role = "Commander"
 	outfit = /datum/outfit/ert/commander
 
-/datum/antagonist/ert/commander/red
+/datum/antagonist/ert/commander/amber
 	outfit = /datum/outfit/ert/commander/alert
+
+/datum/antagonist/ert/commander/red
+	outfit = /datum/outfit/ert/commander/alert/red
 
 /datum/antagonist/ert/deathsquad
 	name = "Deathsquad Trooper"

@@ -115,7 +115,7 @@
 	display_name = "Advanced Surgery"
 	description = "When simple medicine doesn't cut it."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("surgery_lobotomy", "surgery_reconstruction", "organbox")
+	design_ids = list("surgery_lobotomy", "surgery_reconstruction", "surgery_toxinhealing", "organbox", "surgery_exp_dissection")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -124,7 +124,7 @@
 	display_name = "Experimental Surgery"
 	description = "When evolution isn't fast enough."
 	prereq_ids = list("adv_surgery")
-	design_ids = list("surgery_revival","surgery_pacify","surgery_vein_thread","surgery_nerve_splice","surgery_nerve_ground","surgery_viral_bond")
+	design_ids = list("surgery_revival","surgery_pacify","surgery_vein_thread","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_viral_bond")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -172,7 +172,7 @@
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
-	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "tray_goggles_prescription", "engine_goggles_prescription", "mesons_prescription")
+	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "tray_goggles_prescription", "engine_goggles_prescription", "mesons_prescription", "rcd_upgrade")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	export_price = 5000
 
@@ -272,7 +272,7 @@
 	display_name = "Bluespace Pockets"
 	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
 	prereq_ids = list("adv_power", "adv_bluespace", "adv_biotech", "adv_plasma")
-	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding")
+	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5500)
 	export_price = 5000
 
@@ -446,15 +446,6 @@
 	design_ids = list("hdd_basic", "hdd_advanced", "hdd_super", "hdd_cluster", "ssd_small", "ssd_micro", "netcard_basic", "netcard_advanced", "netcard_wired",
 	"portadrive_basic", "portadrive_advanced", "portadrive_super", "cardslot", "aislot", "miniprinter", "APClink", "bat_control", "bat_normal", "bat_advanced",
 	"bat_super", "bat_micro", "bat_nano", "cpu_normal", "pcpu_normal", "cpu_small", "pcpu_small")
-
-/datum/techweb_node/computer_board_gaming
-	id = "computer_board_gaming"
-	display_name = "Arcade Games"
-	description = "For the slackers on the station."
-	prereq_ids = list("comptech")
-	design_ids = list("arcade_battle", "arcade_orion", "slotmachine") // Magic money
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-	export_price = 2000
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -1007,7 +998,7 @@
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
 	boost_item_paths = list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien, /obj/item/retractor/alien, /obj/item/circular_saw/alien,
-	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor,
+	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
 	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 20000
@@ -1021,7 +1012,7 @@
 	prereq_ids = list("alientech", "adv_biotech")
 	design_ids = list("alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery")
 	boost_item_paths = list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien, /obj/item/retractor/alien, /obj/item/circular_saw/alien,
-	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor,
+	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
 	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 20000
@@ -1033,7 +1024,7 @@
 	description = "Alien engineering tools"
 	prereq_ids = list("alientech", "adv_engi")
 	design_ids = list("alien_wrench", "alien_wirecutters", "alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool")
-	boost_item_paths = list(/obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor,
+	boost_item_paths = list(/obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
 	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 20000
