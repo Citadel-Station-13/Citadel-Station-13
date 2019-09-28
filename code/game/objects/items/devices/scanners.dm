@@ -190,6 +190,14 @@ SLIME SCANNER
 			if(Br.cached_size>5)
 				msg += "\t<span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>\n"
 
+		if (M.getOrganLoss(ORGAN_SLOT_BRAIN) >= 200 || !M.getorgan(/obj/item/organ/brain))
+			msg += "\t<span class='alert'>Subject's brain function is non-existent.</span>\n"
+		else if (M.getOrganLoss(ORGAN_SLOT_BRAIN) >= 120)
+			msg += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>\n"
+		else if (M.getOrganLoss(ORGAN_SLOT_BRAIN) >= 45)
+			msg += "\t<span class='alert'>Brain damage detected.</span>\n"
+
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(LAZYLEN(C.get_traumas()))
 			var/list/trauma_text = list()
@@ -342,9 +350,9 @@ SLIME SCANNER
 				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 			else
 				minor_damage += "</span>"
-			to_chat(user, minor_damage)
-			to_chat(user, major_damage)
-			to_chat(user, max_damage)
+			msg += "[minor_damage]"
+			msg += "[major_damage]"
+			msg += "[max_damage]"
 
 
 	// Species and body temperature
