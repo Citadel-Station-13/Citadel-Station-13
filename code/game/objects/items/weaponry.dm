@@ -69,6 +69,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/claymore/Initialize()
 	. = ..()
@@ -81,7 +82,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	flags_1 = CONDUCT_1
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3
@@ -91,6 +92,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/claymore/highlander/Destroy()
@@ -222,10 +224,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/katana/cursed
 	slot_flags = null
-	item_flags = NODROP
+
+/obj/item/katana/cursed/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
@@ -249,13 +255,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
 		remove_item_from_storage(user)
-		qdel(I)
+		if (!user.transferItemToLoc(I, S))
+			return
+		S.CheckParts(list(I))
 		qdel(src)
 
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/assembly/igniter) && !(I.item_flags & NODROP))
+	else if(istype(I, /obj/item/assembly/igniter) && !HAS_TRAIT(I, TRAIT_NODROP))
 		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -418,7 +426,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	item_flags = NODROP | ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 24
 	throwforce = 0
@@ -427,6 +435,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+
+/obj/item/mounted_chainsaw/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/mounted_chainsaw/Destroy()
 	var/obj/item/bodypart/part
@@ -502,6 +515,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_able = 0
 	total_mass = 2.7 //a regular wooden major league baseball bat weighs somewhere between 2 to 3.4 pounds, according to google
 
+/obj/item/melee/baseball_bat/chaplain
+	name = "blessed baseball bat"
+	desc = "There ain't a cult in the league that can withstand a swatter."
+	force = 14
+	throwforce = 14
+	obj_flags = UNIQUE_RENAME
+	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+
+/obj/item/melee/baseball_bat/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
@@ -551,6 +577,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(picksound == 2)
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
 	return 1
+
+/obj/item/melee/baseball_bat/ablative/syndi
+	name = "syndicate major league bat"
+	desc = "A metal bat made by the syndicate for the major league team."
+	force = 18 //Spear damage...
+	throwforce = 30
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

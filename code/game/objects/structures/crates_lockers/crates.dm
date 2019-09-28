@@ -54,6 +54,12 @@
 		manifest = null
 		update_icon()
 
+/obj/structure/closet/crate/handle_lock_addition()
+	return
+
+/obj/structure/closet/crate/handle_lock_removal()
+	return
+
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)

@@ -361,14 +361,16 @@
 		return
 	button_icon_state = "warp_down"
 	owner.update_action_buttons()
+	QDEL_NULL(warping)
+	if(!do_teleport(user, T, channel = TELEPORT_CHANNEL_CULT, forced = TRUE))
+		to_chat(user, "<span class='bold sevtug_small'>Warp Failed. Something deflected our attempt to warp to [AR].</span>")
+		return
 	T.visible_message("<span class='warning'>[user] warps in!</span>")
 	playsound(user, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
-	user.forceMove(get_turf(T))
 	user.setDir(SOUTH)
 	flash_color(user, flash_color = "#AF0AAF", flash_time = 5)
 	R.remove_eye_control(user)
-	QDEL_NULL(warping)
 
 /datum/action/innate/servant_warp/proc/is_canceled()
 	return !cancel

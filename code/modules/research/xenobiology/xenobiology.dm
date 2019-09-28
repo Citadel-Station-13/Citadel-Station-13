@@ -494,7 +494,7 @@
 			to_chat(user, "<span class='warning'>You feel your body vibrating...</span>")
 			if(do_after(user, 25, target = user))
 				to_chat(user, "<span class='warning'>You teleport!</span>")
-				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg')
+				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -510,7 +510,7 @@
 				if(teleport_x && teleport_y && teleport_z)
 					var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 					to_chat(user, "<span class='notice'>You snap back to your anchor point!</span>")
-					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg')
+					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 					return 450
 
 
@@ -708,7 +708,7 @@
 	imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
-	SM.access_card.item_flags |= NODROP
+	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"

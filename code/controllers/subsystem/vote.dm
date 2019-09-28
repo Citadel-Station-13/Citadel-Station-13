@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(vote)
 
 	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
 
+	var/list/stored_gamemode_votes = list() //Basically the last voted gamemode is stored here for end-of-round use.
+
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
@@ -85,15 +87,20 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
+	var/was_roundtype_vote = mode == "roundtype"
 	if(winners.len > 0)
 		if(question)
 			text += "<b>[question]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
+		if(was_roundtype_vote)
+			stored_gamemode_votes = list()
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[choices[i]] = votes
 			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes

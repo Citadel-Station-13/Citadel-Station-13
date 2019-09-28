@@ -1,0 +1,4 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - imageadd: "RCL now show what color is currently in use"

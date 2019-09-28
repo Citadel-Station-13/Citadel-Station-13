@@ -139,12 +139,14 @@
 
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return
 	to_chat(user, "<span class='notice'>You short out [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -189,10 +191,16 @@
 		data["beakerCurrentVolume"] = beakerCurrentVolume
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerCurrentpH"] = beaker.reagents.pH
+		//pH accuracy
+		for(var/obj/item/stock_parts/capacitor/C in component_parts)
+			data["partRating"]= 10**(C.rating-1)
+
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 		data["beakerTransferAmounts"] = null
+		data["beakerCurrentpH"] = null
 
 	var/chemicals[0]
 	var/recipes[0]

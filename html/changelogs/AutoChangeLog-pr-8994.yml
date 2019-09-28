@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "the oxyloss fullscreen overlays now also take in consideration 1/5 of the user stamina loss."

@@ -19,6 +19,7 @@
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/stored_power = 0
+	var/last_push
 	var/active = 0
 	var/locked = FALSE
 	var/drainratio = 1
@@ -61,9 +62,9 @@
 			loaded_tank.air_contents.gases[/datum/gas/oxygen] -= gasdrained
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide] += gasdrained*2
 			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
-			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			stored_power-=bitcoins_mined
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE)
+			last_push = stored_power
+			stored_power = 0
 
 /obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
@@ -170,9 +171,9 @@
 	. = ..()
 	if(active)
 		if(!bitcoinmining)
-			to_chat(user, "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and is processing <b>[DisplayPower((RAD_COLLECTOR_OUTPUT)*((60 SECONDS)/SSmachines.wait))]</b> per minute. <br>The <b>plasma</b> within it's tank is being irradiated into <b>tritium</b>.</span>")
 		else
-			to_chat(user, "<span class='notice'>[src]'s display states that it has stored a total of <b>[stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b>, and producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it's producing a total of <b>[(last_push*RAD_COLLECTOR_MINING_CONVERSION_RATE)*((60 SECONDS)/SSmachines.wait)]</b> research points per minute. <br>The <b>tritium</b> and <b>oxygen</b> within it's tank is being combusted into <b>carbon dioxide</b>.</span>")
 	else
 		if(!bitcoinmining)
 			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>")

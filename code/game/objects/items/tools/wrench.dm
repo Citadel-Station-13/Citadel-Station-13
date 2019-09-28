@@ -32,8 +32,14 @@
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "wrench_brass"
+	icon_state = "wrench_clock"
 	toolspeed = 0.5
+
+/obj/item/wrench/bronze
+	name = "bronze plated wrench"
+	desc = "A bronze plated wrench."
+	icon_state = "wrench_brass"
+	toolspeed = 0.95
 
 /obj/item/wrench/abductor
 	name = "alien wrench"
@@ -42,7 +48,6 @@
 	icon_state = "wrench"
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
-
 
 /obj/item/wrench/power
 	name = "hand drill"
@@ -108,3 +113,11 @@
 	user.dust()
 
 	return OXYLOSS
+
+/obj/item/wrench/advanced
+	name = "advanced wrench"
+	desc = "A wrench that uses the same magnetic technology that abductor tools use, but slightly more ineffeciently."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "wrench"
+	usesound = 'sound/effects/empulse.ogg'
+	toolspeed = 0.2

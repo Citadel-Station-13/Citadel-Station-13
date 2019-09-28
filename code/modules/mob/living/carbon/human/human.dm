@@ -252,7 +252,7 @@
 
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-				if(pocket_item.item_flags & NODROP)
+				if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
 					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
 			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
@@ -623,6 +623,7 @@
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
+	undershirt = "Nude"
 	update_body()
 	update_hair()
 	update_genitals()
@@ -801,6 +802,11 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
+		if(hud_used.staminas)
+			hud_used.staminas.icon_state = staminahudamount()
+		if(hud_used.staminabuffer)
+			hud_used.staminabuffer.icon_state = staminabufferhudamount()
+
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -811,6 +817,8 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	if(blood_volume < (BLOOD_VOLUME_NORMAL*blood_ratio))
+		blood_volume = (BLOOD_VOLUME_NORMAL*blood_ratio)
 	..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
@@ -899,12 +907,9 @@
 		stop_pulling()
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(istype(bp, /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.blocks_shove_knockdown)
-				return TRUE
+	for(var/obj/item/clothing/C in get_equipped_items()) //doesn't include pockets
+		if(C.blocks_shove_knockdown)
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/clear_shove_slowdown()
@@ -1029,8 +1034,8 @@
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
 
-/mob/living/carbon/human/species/moth
-	race = /datum/species/moth
+/mob/living/carbon/human/species/insect
+	race = /datum/species/insect
 
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush

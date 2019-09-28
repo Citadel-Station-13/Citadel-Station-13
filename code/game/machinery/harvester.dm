@@ -65,7 +65,7 @@
 			if(!isitem(A))
 				continue
 			var/obj/item/I = A
-			if(!(I.item_flags & NODROP))
+			if(!HAS_TRAIT(I, TRAIT_NODROP))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return
@@ -158,11 +158,13 @@
 		open_machine()
 
 /obj/machinery/harvester/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	allow_living = TRUE
 	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
+	return TRUE
 
 /obj/machinery/harvester/container_resist(mob/living/user)
 	if(!harvesting)

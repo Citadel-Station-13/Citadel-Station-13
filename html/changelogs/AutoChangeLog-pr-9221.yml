@@ -1,0 +1,9 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "holy lasrifle, hypertool, divine lightblade, and blessed baseball bat. Four new holy weapons!"
+  - balance: "stamina and force tweaks for most holy weapons."
+  - tweak: "prayer beads no longer deconvert after a 10 second timer, now just inject holy water for delayed effect"
+  - tweak: "cultist runes are now destroyed with a bible or a null rod"
+  - tweak: "bo-staff now functions as a nerfed sleepy carp staff"
+  - bugfix: "fixed kevinz code to add in non-null rod child items as holy weapons"

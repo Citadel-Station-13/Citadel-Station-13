@@ -75,7 +75,7 @@
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
-	desc = "A rubber pig mask."
+	desc = "A rubber pig mask with a builtin voice modulator."
 	icon_state = "pig"
 	item_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -92,7 +92,11 @@
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!" //It's only ever going to be attached to your face.
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
-	item_flags = NODROP
+
+/obj/item/clothing/mask/pig/cursed/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
+	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
 
 ///frog mask - reeee!!
 /obj/item/clothing/mask/frog
@@ -114,16 +118,19 @@
 
 /obj/item/clothing/mask/frog/cursed
 	clothing_flags = NONE
-	item_flags = NODROP //reee!!
+
+/obj/item/clothing/mask/frog/cursed/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
 
 /obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
 	var/mob/living/carbon/C = user
-	if(C.wear_mask == src)
-		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	if(C.wear_mask == src && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_ITEM_TRAIT))
+		to_chat(user, "<span class='userdanger'><B>[src] was cursed! Ree!!</B></span>")
 	return ..()
 
 /obj/item/clothing/mask/cowmask
-	name = "Cow mask"
+	name = "Cow mask with a builtin voice modulator."
 	desc = "A rubber cow mask,"
 	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
@@ -137,12 +144,17 @@
 	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Moooooooo!","Moo!","Moooo!")
 
+
 /obj/item/clothing/mask/cowmask/cursed
 	name = "cow face"
 	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this persons face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
-	item_flags = NODROP
+
+/obj/item/clothing/mask/cowmask/cursed/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
+	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
@@ -157,12 +169,17 @@
 	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
+
 /obj/item/clothing/mask/horsehead/cursed
 	name = "horse face"
 	desc = "It initially looks like a mask, but it's melded into the poor person's face."
 	clothing_flags = NONE
 	flags_inv = HIDEFACIALHAIR
-	item_flags = NODROP
+
+/obj/item/clothing/mask/horsehead/cursed/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
+	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)
 
 /obj/item/clothing/mask/rat
 	name = "rat mask"
@@ -296,3 +313,9 @@
 			message = replacetextEx(message,regex(capitalize(key),"g"), "[capitalize(value)]")
 			message = replacetextEx(message,regex(key,"g"), "[value]")
 	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/mask/bandana/durathread
+	name = "durathread bandana"
+	desc =  "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
+	icon_state = "banddurathread"
+

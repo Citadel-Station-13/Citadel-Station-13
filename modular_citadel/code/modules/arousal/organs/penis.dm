@@ -12,28 +12,61 @@
 	size 					= 2 //arbitrary value derived from length and girth for sprites.
 	var/length 				= 6	//inches
 	var/cached_length			//used to detect a change in length
-	var/girth  				= 0
+	var/girth  				= 4.38
 	var/girth_ratio 		= COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
 	var/list/dickflags 		= list()
 	var/list/knotted_types 	= list("knotted", "barbed, knotted")
+	var/prev_length			= 6 //really should be renamed to prev_length
+
+/obj/item/organ/genital/penis/Initialize()
+	. = ..()
+	/* I hate genitals.*/
 
 /obj/item/organ/genital/penis/update_size()
-	if(length == cached_length)
+	var/mob/living/carbon/human/o = owner
+	if(!ishuman(o) || !o)
 		return
-	switch(length)
-		if(-INFINITY to 5)
+	if(cached_length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
+		var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
+		to_chat(o, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
+		P.Remove(o)
+	switch(round(cached_length))
+		if(0 to 4) //If modest size
+			length = cached_length
 			size = 1
-		if(5 to 9)
+			if(owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.remove_status_effect(/datum/status_effect/chem/penis_enlarger)
+		if(5 to 10) //If modest size
+			length = cached_length
 			size = 2
-		if(15 to INFINITY)
-			size = 3//no new sprites for anything larger yet
-/*		if(9 to 15)
+			if(owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.remove_status_effect(/datum/status_effect/chem/penis_enlarger)
+		if(11 to 20) //If massive
+			length = cached_length
 			size = 3
-		if(15 to INFINITY)
-			size = 3*/
-	girth = (length * girth_ratio)
-	cached_length = length
+			if(owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.remove_status_effect(/datum/status_effect/chem/penis_enlarger)
+		if(21 to 35) //If massive and due for large effects
+			length = cached_length
+			size = 3
+			if(!owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.apply_status_effect(/datum/status_effect/chem/penis_enlarger)
+		if(36 to INFINITY) //If comical
+			length = cached_length
+			size = 4 //no new sprites for anything larger yet
+			if(!owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.apply_status_effect(/datum/status_effect/chem/penis_enlarger)
+
+	if (round(length) > round(prev_length))
+		to_chat(o, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
+	else if ((round(length) < round(prev_length)) && (length > 0.5))
+		to_chat(o, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
+	prev_length = length
+	icon_state = sanitize_text("penis_[shape]_[size]")
+	girth = (length * girth_ratio)//Is it just me or is this ludicous, why not make it exponentially decay?
+
+	//I have no idea on how to update sprites and I hate it
 
 /obj/item/organ/genital/penis/update_appearance()
 	var/string
