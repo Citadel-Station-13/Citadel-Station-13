@@ -30,14 +30,15 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
-	if (maxHealth == "bone")
-		if(owner)
-			return
-		var/target = owner.get_bodypart(BODY_ZONE_HEAD)
-		owner.apply_damage(d, BURN, target)
-		to_chat(owner, "<span class='userdanger'>You feel your skull burning! Oof, your bones!</span>")
+/obj/item/organ/tongue/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
 		return
+	if(organ_flags & ORGAN_SYNTHETIC)
+		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
+		owner.say("The pH is appropriately [pick(errormessage)].")
+
+/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
 
 	if(!d) //Micro-optimization.
 		return
@@ -194,9 +195,10 @@
 	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
+	organ_flags = ORGAN_NO_SPOIL
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
-	maxHealth = "bone" //Take brute damage instead
+	maxHealth = 75 //Take brute damage instead
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -205,6 +207,14 @@
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
+
+/obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
+	if(!owner)
+		return
+	var/target = owner.get_bodypart(BODY_ZONE_HEAD)
+	owner.apply_damage(d, BURN, target)
+	to_chat(owner, "<span class='userdanger'>You feel your skull burning! Oof, your bones!</span>")
+	return
 
 /obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
 	if (chattering)
@@ -267,6 +277,7 @@
 	icon_state = "tonguecybernetic"
 	taste_sensitivity = 10
 	maxHealth = 60 //It's robotic!
+	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
@@ -276,3 +287,4 @@
 	say_mod = "beeps"
 	desc = "A voice synthesizer used by IPCs to smoothly interface with organic lifeforms."
 	electronics_magic = FALSE
+	organ_flags = ORGAN_SYNTHETIC

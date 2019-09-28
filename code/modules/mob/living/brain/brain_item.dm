@@ -10,7 +10,7 @@
 	organ_flags = ORGAN_VITAL
 	attack_verb = list("attacked", "slapped", "whacked")
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
-	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
+	decay_factor = STANDARD_ORGAN_DECAY	/ 4		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 
 	maxHealth	= BRAIN_DAMAGE_DEATH
 	low_threshold = 45
@@ -105,9 +105,10 @@
 		. = TRUE //don't do attack animation.
 		var/cached_Bdamage = brainmob?.health
 		var/datum/reagent/medicine/neurine/N = reagents.has_reagent("neurine")
+		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent("mannitol")
 
 		if(O.reagents.has_reagent("mannitol"))//Just a quick way to bolster the effects if someone mixes up a batch.
-			N.volume *= 1.5
+			N.volume *= (M1.volume*0.5)
 
 		if(!O.reagents.has_reagent("neurine", 10))
 			to_chat(user, "<span class='warning'>There's not enough neurine in [O] to restore [src]!</span>")
@@ -119,12 +120,12 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		setOrganDamage((damage - (0.10 * maxHealth)*N.volume))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
+		setOrganDamage((damage - (0.10 * maxHealth)*(N.volume/10)))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 
-		if(cached_Bdamage) //Fixing dead brains yeilds a trauma
+		if(cached_Bdamage <= HEALTH_THRESHOLD_DEAD) //Fixing dead brains yeilds a trauma
 			if((cached_Bdamage <= HEALTH_THRESHOLD_DEAD) && (brainmob.health > HEALTH_THRESHOLD_DEAD))
-				if(prob(90))
+				if(prob(80))
 					gain_trauma_type(BRAIN_TRAUMA_MILD)
 				else if(prob(50))
 					gain_trauma_type(BRAIN_TRAUMA_SEVERE)
@@ -149,7 +150,7 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
-		setOrganDamage((damage - (0.05 * maxHealth)*M.volume))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
+		setOrganDamage((damage - (0.05 * maxHealth)*(M.volume/10)))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
@@ -250,12 +251,17 @@
 /obj/item/organ/brain/decay()
 	if(damage <= BRAIN_DAMAGE_DEATH) //rip
 		brain_death = FALSE
+	applyOrganDamage(maxHealth * decay_factor)
 
-/obj/item/organ/brain/process()	//needs to run in life AND death
+
+/obj/item/organ/brain/applyOrganDamage(var/d, var/maximum = maxHealth)
 	..()
+
+
+/obj/item/organ/brain/check_damage_thresholds(mob/M)
+	. = ..()
 	//if we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
-		prev_damage = damage
 		return
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
@@ -270,15 +276,18 @@
 
 	if (owner)
 		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
+			var/brain_message
 			if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
-				to_chat(owner, "<span class='warning'>You feel lightheaded.</span>")
+				brain_message = "<span class='warning'>You feel lightheaded.</span>"
 			else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
-				to_chat(owner, "<span class='warning'>You feel less in control of your thoughts.</span>")
+				brain_message = "<span class='warning'>You feel less in control of your thoughts.</span>"
 			else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
-				to_chat(owner, "<span class='warning'>You can feel your mind flickering on and off...</span>")
-	//update our previous damage holder after we've checked our boundaries
-	prev_damage = damage
-	return
+				brain_message = "<span class='warning'>You can feel your mind flickering on and off...</span>"
+
+			if(.)
+				. += "\n[brain_message]"
+			else
+				return brain_message
 
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)

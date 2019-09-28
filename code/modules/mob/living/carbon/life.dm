@@ -386,11 +386,13 @@
 	if(stat != DEAD)
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
-			O.on_life()
+			if(O)
+				O.on_life()
 	else
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
-			O.decay() //Needed so organs decay while inside the body.
+			if(O)
+				O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)

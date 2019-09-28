@@ -145,6 +145,4 @@
 		data["grown_volume"] = passed_data["grown_volume"]
 	..()
 
-/datum/reagent/synthtissue/
-
 //NEEDS ON_MOB_DEAD()

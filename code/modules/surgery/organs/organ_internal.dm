@@ -71,23 +71,23 @@
 /obj/item/organ/process()
 	decay() //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/decay()	//runs decay when outside of a person
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+/obj/item/organ/proc/on_death()	//runs decay when outside of a person
+	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN | ORGAN_NO_SPOIL))
 		return
 	applyOrganDamage(maxHealth * decay_factor)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	if(isFailing())
-		return
-	///Damage decrements by a percent of its maxhealth
-	var/healing_amount = -(maxHealth * healing_factor)
-	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount) //to FERMI_TWEAK
+	if(!(organ_flags & ORGAN_FAILING))
+		///Damage decrements by a percent of its maxhealth
+		var/healing_amount = -(maxHealth * healing_factor)
+		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+		healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
+		applyOrganDamage(healing_amount) //to FERMI_TWEAK
+		//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(isFailing())
+	if(!organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken!</span>"
 			return
