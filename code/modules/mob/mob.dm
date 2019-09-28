@@ -732,24 +732,31 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 //If you're using this to cast a spell, you can use the returned value to adjust stun, damage, and whatever numerics involved too, otherwise it'll work unless 100% resistance
 //USED TO return nothing if no magic resist, and an atom if resisted
 //Checks to see if user is succeptable to magic, 0 means immune, 1 is normal, greater than 1 is extra succeptable
-/mob/proc/is_magic_susceptible(magic = TRUE, holy = FALSE, message = "")
+/mob/proc/is_magic_susceptible(magic = TRUE, holy = FALSE, message)
 	if(!magic && !holy)
 		return
+	if(!message)
+		message = "glows brightly, protecting [src]!"
 	var/list/protection_sources = list()
 	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
 			var/resist_value = 0
 			for(var/i in protection_sources)
-				var/resist_value += [protection_sources[i]] //gets the ADDITIVE percentage
+				message_admins("[i]")
+				resist_value += [protection_sources[i]] //gets the ADDITIVE percentage
 				if(message)
 					visible_message("<span class='warning'>The [i] [message]!</span>", \
 									   "<span class='userdanger'>Your [i] tries to protect you from the spell!</span>")
 			resist_value = 1 - (resist_value/100) //turns it into a multipliable form. I.e. 1 is no effect, 0.6 is a 40% reduction, 1.2 is a 20% extention.
 			if(resist_value <= 0) //If your resistance is over 100%, then you resist all effects.
 				resist_value = 0
+				visible_message("<span class='warning'>[src] shimmers as the spell is fully blocked!</span>", \
+								   "<span class='userdanger'>Your resistance fully protect you from the spell!</span>")
 			return resist_value
 		else
 			return 1 //changed from src to 1
+
+
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

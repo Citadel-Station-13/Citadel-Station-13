@@ -125,16 +125,19 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs(FALSE)
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && number_legs)
+		var/m_susc = is_magic_susceptible()
+		if(!m_susc)
+			return FALSE
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
-				owner.Knockdown(20)
+				owner.Knockdown(20 * m_susc)
 			if(iscultist(owner))
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_L_LEG)
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_R_LEG)
+				owner.apply_damage((cultist_damage_on_toggle * 0.5) * m_susc, BURN, BODY_ZONE_L_LEG)
+				owner.apply_damage((cultist_damage_on_toggle * 0.5) * m_susc, BURN, BODY_ZONE_R_LEG)
 			else
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, BODY_ZONE_L_LEG)
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, BODY_ZONE_R_LEG)
+				owner.apply_damage((leg_damage_on_toggle * 0.5) * m_susc, BURN, BODY_ZONE_L_LEG)
+				owner.apply_damage((leg_damage_on_toggle * 0.5) * m_susc, BURN, BODY_ZONE_R_LEG)
 		if(owner.m_intent != MOVE_INTENT_WALK)
 			if(!iscultist(owner))
 				to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
@@ -218,14 +221,18 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.anti_magic_check() && owner.stat != DEAD && severity)
+	else if(owner.stat != DEAD && severity)
+		var/m_susc = L.is_magic_susceptible("tries to defy the Mania Motor!")
+		if(!m_susc || prob((m_susc*100)))
+			return
+		severity *= m_susc
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
 				if(add_servant_of_ratvar(owner))
 					owner.log_message("conversion was done with a Mania Motor", LOG_ATTACK, color="#BE8700")
-			owner.Unconscious(100)
+			owner.Unconscious(100 * m_susc)
 		else
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
@@ -238,7 +245,7 @@
 			if(owner.confused < 25)
 				owner.confused = min(owner.confused + round(severity * 0.025, 1), 25) //2.5% of severity per second above 20 severity
 			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
-		severity--
+		severity-= max(1, m_susc)
 
 /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 	id = "cult_ghost"

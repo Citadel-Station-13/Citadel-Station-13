@@ -25,25 +25,18 @@
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
-	if(magic["source"])
-		magic -= list("[parent]" = _magic)
-	if(holy["source"])
-		holy -= list("[parent]" = _holy)
+	if(magic["[source]"])
+		magic -= magic[parent]
+	if(holy["[source]"])
+		holy -= holy[parent]
 
 //Returns the percentage resist, if the spell is holy AND magic, and the item is holy AND magic, then it will use both of the object's resist boons.
 /datum/component/anti_magic/proc/can_protect(datum/source, _magic, _holy, list/protection_sources)
 	if(_magic && LAZYLEN(magic))
 		protection_sources += magic
 
-
 	if(_holy && LAZYLEN(holy))
-		var/temp_holy = holy
-
-		for(var/i in holy) //Merge duplicate entries into one single entry
-		    if(protection_sources[i])
-		        protection_sources[i] += holy[i]
-				temp_holy -= "[i]"
-		protection_sources += temp_holy
+		protection_sources += holy
 
 	if(!len(protection_sources))//If no sources then nothing
 		return

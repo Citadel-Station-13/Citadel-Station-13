@@ -183,26 +183,22 @@
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
 			return
-		var/atom/O = L.anti_magic_check()
+		var/m_susc = L.is_magic_susceptible("glows white-hot against [L] as it absorbs [src]'s power!")
 		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
-		if(O)
-			if(isitem(O))
-				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>", \
-				"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs [src]'s power!</span>")
-			else if(ismob(O))
-				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>")
+		if(!m_susc)
 			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 		else
 			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
 			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-			L.Knockdown(15, TRUE, FALSE, 15)
-			L.apply_status_effect(STATUS_EFFECT_KINDLE)
-			L.flash_act(1, 1)
+			L.Knockdown(15*m_susc, TRUE, FALSE, 15)
+			if(prob((m_susc*100)))
+				L.apply_status_effect(STATUS_EFFECT_KINDLE)
+				L.flash_act(1, 1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
 				S.emp_act(EMP_HEAVY)
 			if(iscultist(L))
-				L.adjustFireLoss(15)
+				L.adjustFireLoss(15*m_susc)
 	..()
 
 
