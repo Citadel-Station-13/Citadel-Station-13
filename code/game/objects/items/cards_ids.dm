@@ -186,6 +186,35 @@ update_label("John Doe", "Clowny")
 
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
+
+/obj/item/card/id/sec
+	icon_state = "sec"
+	item_state = "card-id"
+
+/obj/item/card/id/medical
+	icon_state = "medical"
+	item_state = "card-id"
+
+/obj/item/card/id/science
+	icon_state = "science"
+	item_state = "card-id"
+
+/obj/item/card/id/engineer
+	icon_state = "engineer"
+	item_state = "card-id"
+
+/obj/item/card/id/cargo
+	icon_state = "cargo"
+	item_state = "card-id"
+
+/obj/item/card/id/white
+	icon_state = "white"
+	item_state = "card-id"
+
+/obj/item/card/id/clown
+	icon_state = "clown"
+	item_state = "card-id"
+
 /obj/item/card/id/silver
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
@@ -193,6 +222,30 @@ update_label("John Doe", "Clowny")
 	item_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/id/silver/hop
+	icon_state = "hop"
+	item_state = "silver_id"
+
+/obj/item/card/id/silver/hos
+	icon_state = "hos"
+	item_state = "silver_id"
+
+/obj/item/card/id/silver/ce
+	icon_state = "ce"
+	item_state = "silver_id"
+
+/obj/item/card/id/silver/rd
+	icon_state = "rd"
+	item_state = "silver_id"
+
+/obj/item/card/id/silver/cmo
+	icon_state = "cmo"
+	item_state = "silver_id"
+
+/obj/item/card/id/silver/qm
+	icon_state = "qm"
+	item_state = "silver_id"
 
 /obj/item/card/id/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
@@ -210,6 +263,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate
 	name = "agent card"
+	icon_state = "syndicate"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
@@ -260,6 +314,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
+	icon_state = "syndicate"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
@@ -393,6 +448,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/away/hotel/securty
 	name = "Officer ID"
+	icon_state = "sec"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/old
@@ -403,22 +459,26 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
+	icon_state = "sec"
 	assignment = "Charlie Station Security Officer"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
+	icon_state = "science"
 	assignment = "Charlie Station Scientist"
 	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
+	icon_state = "engineer"
 	assignment = "Charlie Station Engineer"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
+	icon_state = "engineer"
 	access = list(ACCESS_ENGINE_EQUIP)

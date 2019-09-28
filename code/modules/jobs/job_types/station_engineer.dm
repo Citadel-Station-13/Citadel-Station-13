@@ -24,6 +24,7 @@
 	name = "Station Engineer"
 	jobtype = /datum/job/engineer
 
+	id = /obj/item/card/id/engineer
 	belt = /obj/item/storage/belt/utility/full/engi
 	l_pocket = /obj/item/pda/engineering
 	ears = /obj/item/radio/headset/headset_eng

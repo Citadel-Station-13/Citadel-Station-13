@@ -22,6 +22,7 @@
 	name = "Scientist"
 	jobtype = /datum/job/scientist
 
+	id = /obj/item/card/id/science
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
 	uniform = /obj/item/clothing/under/rank/scientist

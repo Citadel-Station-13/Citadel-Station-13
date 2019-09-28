@@ -22,6 +22,7 @@
 	name = "Shaft Miner (Lavaland)"
 	jobtype = /datum/job/mining
 
+	id = /obj/item/card/id/cargo
 	belt = /obj/item/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/workboots/mining
@@ -47,7 +48,7 @@
 	name = "Shaft Miner (Asteroid)"
 	uniform = /obj/item/clothing/under/rank/miner
 	shoes = /obj/item/clothing/shoes/workboots
-	
+
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Lavaland + Equipment)"
 	suit = /obj/item/clothing/suit/hooded/explorer/standard
