@@ -96,29 +96,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-
-
-/obj/item/clothing/under/officeruniform
-	name = "officer's uniform"
-	desc = "Bestraft die Juden fur ihre Verbrechen."
-	icon_state = "officeruniform"
-	item_state = "officeruniform"
-	item_color = "officeruniform"
-	can_adjust = 0
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-
-
-/obj/item/clothing/under/soldieruniform
-	name = "soldier's uniform"
-	desc = "Bestraft die Verbundeten fur ihren Widerstand."
-	icon_state = "soldieruniform"
-	item_state = "soldieruniform"
-	item_color = "soldieruniform"
-	can_adjust = 0
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-
+	
 */
 /obj/item/clothing/under/squatter_outfit
 	name = "slav squatter tracksuit"
