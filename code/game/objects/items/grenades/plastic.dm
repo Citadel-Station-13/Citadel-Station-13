@@ -174,6 +174,7 @@
 	gender = PLURAL
 	var/open_panel = 0
 	can_attach_mob = TRUE
+	full_damage_on_mobs = TRUE
 
 /obj/item/grenade/plastic/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
