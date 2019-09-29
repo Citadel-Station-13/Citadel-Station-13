@@ -32,16 +32,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun/light)
 	ammo_x_offset = 2
 
-
-/obj/item/gun/energy/plasma/MP40k
-	name = "Plasma MP40k"
-	desc = "A plasma MP40k. Ich liebe den geruch von plasma am morgen."
-	icon_state = "PlasMP"
-	item_state = null
-	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun/MP40k)
-	ammo_x_offset = 3
-
 //Laser rifles, technically lazer, but w/e
 
 /obj/item/gun/energy/laser/rifle
