@@ -1,5 +1,5 @@
-//Looking for organ traumas?
-//They're not here, look in datums/organ_damage
+//Looking for brain traumas?
+//They're not here, look in datums/brain_damage
 
 //Organ trauma's are the hip new thing from Fermis
 //They apply when an organ has been damaged
@@ -12,11 +12,40 @@
 //They need to be diagnosed, i.e. they are NOT to be displayed easily on scanners. This is antithetical to the design
 //Try to make the diagnosis process use any many techniques as possible avalible in medbay.
 //Biopsies, ect.
+
+/*TRAUMA TYPES:
+Infection: Persists through organ transfer and can develop resistances to antibiotics (the cure) when administered to incorrect organs.
+Generally cured via reagents, and detected by increased patient temperature. Microscopy of a biopsied agar can be used to confirm.
+Severity will grow over time naturally, and require constant levels of antibiotics present in a patient over time to reduce.
+
+Physiological: Caused by a physical deformation of the organ. Treated either by medication, or cured by grafting. Incorrect cures can cause inflamation, masking it as infectious.
+Any organ damage taken with the trauma will increase the severity.
+
+Genetic: Persists through cloning. Always present in monkey organs. Generally treatable but not curable.
+
+Autoimmune: Strength is equal to patient health. Can be given targeted immunosuppressants to treat, but will make any infections present reach max_severity.
+
+Allergies: Reagent based reactions. Requires antihistamines.
+
+Defiencies: The oposite of Allergies, without the reagent causes problems.
+*/
+
+/*TODO:
+1. bacteria datum
+    different types with png
+    microscope
+    organs get infected if they decay too long.
+2. Biopsies
+3. Antibiotic reagents
+    Antibiotics cause liver stress
+    Something to do with appendix for bacteria
+
+
 /datum/organ_trauma
 	var/name = "Organ Trauma"
 	var/scan_desc //description when detected by a health scanner, to aid DIAGNOSIS, not to outright tell them what it is.
-	var/mob/living/carbon/owner //the poor bastard
-	var/obj/item/organ/organ //the poor bastard's organ
+	var/mob/living/carbon/owner //the poor bugger
+	var/obj/item/organ/organ //the poor bugger's organ
     //Do I want these?
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
@@ -24,8 +53,12 @@
 	var/random_gain = TRUE //can this be gained through random traumas?
     var/can_cure = TRUE
     var/severity = 1 //How bad the trauma is, usually made worse by incorrect diagnosis.
-    var/max_severity = 3
+    var/max_severity = 3 //How bad something can get.
     var/trauma_slot //What type the organ is, i.e. tongue/lung/ect
+
+    var/trauma_flags //What kind of trauma it is.
+    var/antibiotic_resistance = list() //What antibiotics the infection is resistant to, either innately or
+
 
 //obj/organ/organ_traumas
 ////////////////////////////////////ORGAN OBJ PROCS////////////////////////////////////
@@ -166,7 +199,7 @@
 
 //Called when correct treatment is given
 /datum/organ_trauma/proc/decrease_severity()
-    if(!can_cure)
+    if(!can_cure && severity == 1)
         return
     severity--
     if(!severity)
