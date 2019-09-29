@@ -1,25 +1,5 @@
 
 	//VG Ports
-/obj/item/clothing/head/helmet/space/hardsuit/nazi
-	name = "nazi hardhelmet"
-	desc = "This is the face of das vaterland's top elite. Gas or energy are your only escapes."
-	item_state = "hardsuit0-nazi"
-	icon_state = "hardsuit0-nazi"
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
-	item_color = "nazi"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-
-/obj/item/clothing/suit/space/hardsuit/nazi
-	name = "nazi hardsuit"
-	desc = "The attire of a true krieger. All shall fall, and only das vaterland will remain."
-	item_state = "hardsuit-nazi"
-	icon_state = "hardsuit-nazi"
-	slowdown = 1
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
-	allowed = list(/obj/item/gun,/obj/item/flashlight,/obj/item/tank,/obj/item/melee/)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/nazi
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-
 /obj/item/clothing/head/helmet/space/hardsuit/soviet
 	name = "soviet hardhelmet"
 	desc = "Crafted with the pride of the proletariat. The vengeful gaze of the visor roots out all fascists and capitalists."
