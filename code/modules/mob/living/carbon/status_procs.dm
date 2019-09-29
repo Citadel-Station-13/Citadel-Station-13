@@ -67,7 +67,7 @@
 	disgust = CLAMP(amount, 0, DISGUST_LEVEL_MAXEDOUT)
 
 
-////////////////////////////////////////TRAUMAS/////////////////////////////////////////
+////////////////////////////////////////BRAIN TRAUMAS/////////////////////////////////////////
 
 /mob/living/carbon/proc/get_traumas()
 	. = list()
@@ -100,5 +100,39 @@
 
 /mob/living/carbon/proc/cure_all_traumas(resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.cure_all_traumas(resilience)
+
+
+////////////////////////////////////////ORGAN TRAUMAS/////////////////////////////////////////
+
+/mob/living/carbon/proc/get_organ_traumas(organ)
+	. = list()
+	var/obj/item/organ/O = getorganslot(organ)
+	if(O)
+		. = O.organ_traumas
+
+/mob/living/carbon/proc/has_organ_trauma_type(organ, trauma_type)
+	var/obj/item/organ/O = getorganslot(organ)
+	if(O)
+		. = O.has_organ_trauma_type(trauma_type)
+
+/mob/living/carbon/proc/gain_organ_trauma(organ, datum/organ_trauma/trauma)
+	var/obj/item/organ/O = getorganslot(organ)
+	if(O)
+		. = O.gain_organ_trauma(trauma)
+
+/mob/living/carbon/proc/gain_organ_trauma_type(organ, organ_trauma_type = /datum/organ_trauma, resilience)
+	var/obj/item/organ/O = getorganslot(organ)
+	if(B)
+		. = B.gain_trauma_type(organ_trauma_type, resilience)
+
+/mob/living/carbon/proc/cure_trauma_type(organ_trauma_type = /datum/organ_trauma, resilience)
+	var/obj/item/organ/organ/B = getorganslot(ORGAN_SLOT_organ)
+	if(B)
+		. = B.cure_trauma_type(organ_trauma_type, resilience)
+
+/mob/living/carbon/proc/cure_all_traumas(resilience)
+	var/obj/item/organ/organ/B = getorganslot(ORGAN_SLOT_organ)
 	if(B)
 		. = B.cure_all_traumas(resilience)

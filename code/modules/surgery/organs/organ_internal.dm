@@ -29,6 +29,8 @@
 	var/high_threshold_cleared
 	var/low_threshold_cleared
 
+	var/list/datum/organ_trauma/organ_traumas = list()
+
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
