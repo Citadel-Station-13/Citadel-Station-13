@@ -65,22 +65,6 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
-/obj/item/clothing/suit/officercoat
-	name = "Officer's Coat"
-	desc = "Ein Mantel gemacht, um die Juden zu bestrafen."
-	icon_state = "officersuit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
-
-/obj/item/clothing/suit/soldiercoat
-	name = "Soldier's Coat"
-	desc = "Und das heiﬂt: Erika."
-	icon_state = "soldiersuit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
-
 /obj/item/clothing/suit/russofurcoat
 	name = "russian fur coat"
 	desc = "Let the land do the fighting for you."
