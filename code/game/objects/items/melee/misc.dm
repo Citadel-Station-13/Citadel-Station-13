@@ -538,7 +538,7 @@
 	var/stam_dmg = 45
 
 /obj/item/twohanded/required/electrostaff/examine(mob/living/user)
-	..()
+	. = ..()
 	to_chat(user, "<span class='notice'>Use the staff inhand to change between suppresive and lethal power levels. The power level is currently <b>[power]</b>.</span>")
 
 /obj/item/twohanded/required/electrostaff/attack_self(mob/user)
@@ -577,7 +577,7 @@
 	return ..()
 
 /obj/item/twohanded/required/electrostaff/attack(mob/living/target, mob/living/user)
-	..()
+	. = ..()
 	if(!lethal)
 		target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
 		user.adjustStaminaLossBuffered(getweight())
