@@ -985,3 +985,4 @@
 		M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 	else
 		M.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+	..()
