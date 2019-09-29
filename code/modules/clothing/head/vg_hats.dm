@@ -82,27 +82,6 @@
 	item_state = "nr_helmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 
-/obj/item/clothing/head/stalhelm
-	name = "Stalhelm"
-	desc = "Ein Helm, um die Nazi-Interesse an fremden Raumstationen zu sichern."
-	icon_state = "stalhelm"
-	item_state = "stalhelm"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-
-/obj/item/clothing/head/panzer
-	name = "Panzer Cap"
-	desc = "Command any mech in style."
-	icon_state = "panzercap"
-	item_state = "panzercap"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-
-/obj/item/clothing/head/naziofficer
-	name = "Officer Cap"
-	desc = "Style is all that matters."
-	icon_state = "officercap"
-	item_state = "officercap"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-
 /obj/item/clothing/head/russobluecamohat
 	name = "russian blue camo beret"
 	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
