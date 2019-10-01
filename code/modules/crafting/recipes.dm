@@ -133,6 +133,18 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/minigun
+	name = "Laser Minigun"
+	result = /obj/item/minigunpack2
+	reqs = list(/obj/item/gun/energy/laser/carbine = 3,
+				/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/stack/cable_coil = 30,
+				/obj/item/stock_parts/cell/bluespace = 2)
+	tools = list(TOOL_WIRECUTTER, TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 150
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
