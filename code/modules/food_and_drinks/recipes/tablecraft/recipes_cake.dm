@@ -169,6 +169,15 @@
 	result = /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/peachcake
+	name = "Peach cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/peach = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/peach_cake
+	subcategory = CAT_CAKE
+
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
 	reqs = list(
