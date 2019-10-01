@@ -6,7 +6,7 @@
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
-	container_HP = 3
+	container_HP = 2
 
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
@@ -115,7 +115,6 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 	beaker_weakness_bitflag = PH_WEAK
-	container_HP = 5
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -128,27 +127,29 @@
 	update_icon()
 
 /obj/item/reagent_containers/glass/beaker/update_icon()
+	if(!cached_icon)
+		cached_icon = icon_state
 	cut_overlays()
 
 	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[cached_icon]10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
 			if(0 to 9)
-				filling.icon_state = "[icon_state]-10"
+				filling.icon_state = "[cached_icon]-10"
 			if(10 to 24)
-				filling.icon_state = "[icon_state]10"
+				filling.icon_state = "[cached_icon]10"
 			if(25 to 49)
-				filling.icon_state = "[icon_state]25"
+				filling.icon_state = "[cached_icon]25"
 			if(50 to 74)
-				filling.icon_state = "[icon_state]50"
+				filling.icon_state = "[cached_icon]50"
 			if(75 to 79)
-				filling.icon_state = "[icon_state]75"
+				filling.icon_state = "[cached_icon]75"
 			if(80 to 90)
-				filling.icon_state = "[icon_state]80"
+				filling.icon_state = "[cached_icon]80"
 			if(91 to INFINITY)
-				filling.icon_state = "[icon_state]100"
+				filling.icon_state = "[cached_icon]100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
@@ -167,7 +168,7 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
-	container_HP = 6
+	container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
@@ -227,7 +228,7 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
-	container_HP = 8
+	container_HP = 4
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -284,7 +285,7 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
-	container_HP = 2
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/bucket/Initialize()
 	beaker_weakness_bitflag |= TEMP_WEAK
@@ -338,7 +339,7 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	container_HP = 2
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
 	beaker_weakness_bitflag |= TEMP_WEAK
@@ -354,7 +355,7 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
-	container_HP = 2
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()

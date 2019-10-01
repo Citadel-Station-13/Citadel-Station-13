@@ -200,22 +200,20 @@
 	pH = 7.5 //God is alkaline
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
-	..()
+	. = ..()
 	ADD_TRAIT(L, TRAIT_HOLY, id)
+
+	if(is_servant_of_ratvar(L))
+		to_chat(L, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
+	else if(iscultist(L))
+		to_chat(L, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, id)
-	..()
-
-/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(is_servant_of_ratvar(M))
-		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
-	..()
-
-/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(iscultist(M))
-		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
-	..()
+	if(iscultist(L))
+		for(var/datum/action/innate/cult/blood_magic/BM in L.actions)
+			BM.holy_dispel = FALSE
+	return ..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(!data)
@@ -224,9 +222,11 @@
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
-			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				qdel(BS)
+			if(!BM.holy_dispel)
+				BM.holy_dispel = TRUE
+				to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
+				for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+					qdel(BS)
 	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
@@ -536,12 +536,12 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
-/datum/reagent/mutationtoxin/moth
-	name = "Moth Mutation Toxin"
+/datum/reagent/mutationtoxin/insect
+	name = "Insect Mutation Toxin"
 	id = "mothmutationtoxin"
 	description = "A glowing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/moth
+	race = /datum/species/insect
 	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
 
 /datum/reagent/mutationtoxin/pod
@@ -1445,9 +1445,6 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
-
-
-
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
 /datum/reagent/plantnutriment
@@ -1489,15 +1486,7 @@
 	tox_prob = 15
 	pH = 1
 
-
-
-
-
-
-
 // GOON OTHERS
-
-
 
 /datum/reagent/oil
 	name = "Oil"
@@ -2031,3 +2020,25 @@
 /datum/reagent/changeling_string/Destroy()
 	qdel(original_dna)
 	return ..()
+
+/datum/reagent/mustardgrind
+	name = "Mustardgrind"
+	id = "mustardgrind"
+	description = "A powerd that is mixed with water and enzymes to make mustard."
+	color = "#BCC740" //RGB: 188, 199, 64
+	taste_description = "plant dust"
+
+/datum/reagent/pax/catnip
+	name = "catnip"
+	id = "catnip"
+	taste_description = "grass"
+	description = "A colorless liquid that makes people more peaceful and felines more happy."
+	metabolization_rate = 1.75 * REAGENTS_METABOLISM
+
+/datum/reagent/pax/catnip/on_mob_life(mob/living/carbon/M)
+	if(prob(20))
+		M.emote("nya")
+	if(prob(20))
+		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
+	M.adjustArousalLoss(2)
+	..()
