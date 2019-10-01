@@ -182,7 +182,7 @@
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
 		return ..()
-	N.nanite_volume += -cached_purity*2//0.5 seems to be the default to me, so it'll neuter them.
+	N.nanite_volume += -cached_purity*5//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
@@ -191,17 +191,19 @@
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
-		//empulse((get_turf(C)), 3, 2)//So the nanites randomize
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
 		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
 	if(isnull(N))
 		return ..()
-	N.nanite_volume += -4*cached_purity
+	N.nanite_volume += -10*cached_purity
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	O.emp_act(EMP_HEAVY)
+
+/datum/reagent/fermi/nanite_b_gone/reaction_turf(var/turf/T)
+	T.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Naninte bain"
