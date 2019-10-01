@@ -62,4 +62,4 @@
 /mob/living/simple_animal/astral/Life()
 	if(!mind)
 		qdel(src)
-	..()
+	. = ..()
