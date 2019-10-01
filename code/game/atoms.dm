@@ -236,6 +236,7 @@
 	. = P.on_hit(src, 0, def_zone)
 
 //used on altdisarm() for special interactions between the shoved victim (target) and the src, with user being the one shoving the target on it.
+// IMPORTANT: if you wish to add a new own shove_act() to a certain object, remember to add SHOVABLE_ONTO to its obj_flags bitfied var first.
 /atom/proc/shove_act(mob/living/target, mob/living/user)
 	return FALSE
 
