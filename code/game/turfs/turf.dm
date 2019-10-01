@@ -382,7 +382,7 @@
 		if(ismob(A) || .)
 			A.ratvar_act()
 
-/turf/proc/shove_act(mob/living/target, mob/living/user)
+/turf/shove_act(mob/living/target, mob/living/user)
 	for(var/obj/O in contents)
 		if(O.shove_act(target, user))
 			return TRUE
