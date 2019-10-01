@@ -382,6 +382,12 @@
 		if(ismob(A) || .)
 			A.ratvar_act()
 
+/turf/proc/shove_act(mob/living/target, mob/living/user)
+	for(var/obj/O in contents)
+		if(O.shove_act(target, user))
+			return TRUE
+	return FALSE
+
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
 	underlay_appearance.icon_state = icon_state
