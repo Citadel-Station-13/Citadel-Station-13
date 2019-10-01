@@ -453,7 +453,7 @@
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -796,21 +796,21 @@
 
 /obj/item/melee/ghost_sword/proc/ghost_check()
 	var/list/mob/dead/observer/current_spirits = list()
-	
+
 	recursive_orbit_collect(src, current_spirits)
 	recursive_orbit_collect(loc, current_spirits)		//anything holding us
-	
+
 	for(var/i in spirits - current_spirits)
 		var/mob/dead/observer/G = i
 		G.invisibility = GLOB.observer_default_invisibility
- 	
+
 	for(var/i in current_spirits)
 		var/mob/dead/observer/G = i
 		G.invisibility = 0
-	
+
 	spirits = current_spirits
 	return length(spirits)
- 
+
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
 	force = 0
 	var/ghost_counter = ghost_check()
