@@ -137,15 +137,13 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
-	if(target.Adjacent(src))
-		if(!target.resting)
-			target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-		user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
-			"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-		log_combat(user, target, "shoved", "onto [src] (table)")
-		return TRUE
-	return FALSE
+	if(!target.resting)
+		target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
+		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+	log_combat(user, target, "shoved", "onto [src] (table)")
+	return TRUE
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))

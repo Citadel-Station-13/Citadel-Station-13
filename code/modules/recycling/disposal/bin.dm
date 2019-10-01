@@ -143,7 +143,7 @@
 		return FALSE
 
 /obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
-	if(target.Adjacent(src) && can_stuff_mob_in(target, user, TRUE))
+	if(can_stuff_mob_in(target, user, TRUE))
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 		target.forceMove(src)
 		user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
