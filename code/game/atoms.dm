@@ -235,6 +235,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
+//used on altdisarm() for special interactions between the shoved victim (target) and the src, with user being the one shoving the target on it.
 /atom/proc/shove_act(mob/living/target, mob/living/user)
 	return FALSE
 

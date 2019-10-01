@@ -141,16 +141,7 @@
 		if(!pushing)
 			to_chat(user, "<span class='warning'>[target] doesn't fit inside [src]!</span>")
 		return FALSE
-
-/obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
-	if(can_stuff_mob_in(target, user, TRUE))
-		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-		target.forceMove(src)
-		user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
-			"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		log_combat(user, target, "shoved", "into [src] (disposal bin)")
-		return TRUE
-	return FALSE
+	return TRUE
 
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)
@@ -280,6 +271,7 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 	var/datum/oracle_ui/themed/nano/ui
+	obj_flags = CAN_BE_HIT | USES_TGUI | SHOVABLE_ONTO
 
 /obj/machinery/disposal/bin/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -374,6 +366,17 @@
 			return ..()
 	else
 		return ..()
+
+/obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
+	if(can_stuff_mob_in(target, user, TRUE))
+		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+		target.forceMove(src)
+		user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
+			"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		log_combat(user, target, "shoved", "into [src] (disposal bin)")
+		return TRUE
+	return FALSE
+
 
 /obj/machinery/disposal/bin/flush()
 	..()
