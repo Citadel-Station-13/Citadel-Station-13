@@ -94,7 +94,8 @@
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_NOGUNS)
-	mutantlungs = /obj/item/organ/lungs/ashwalker
+	mutantlungs = /obj/item/organ/lungs/ashwalker //Lungs that keep them from breathing station atmosphere.
+	no_equip = list(SLOT_WEAR_MASK) //Now asswalkers can't bypass internals issues preventing them from getting onto station.
 	burnmod = 0.9
 	brutemod = 0.9
 
