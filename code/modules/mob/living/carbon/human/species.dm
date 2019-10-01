@@ -1821,12 +1821,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!target.resting)
 			target.adjustStaminaLoss(5)
 
+		if(target.is_shove_knockdown_blocked())
+			return
 
 		var/turf/target_oldturf = target.loc
 		var/shove_dir = get_dir(user.loc, target_oldturf)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
 		var/obj/structure/table/target_table
+		var/obj/machinery/disposal/bin/target_disposal_bin
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
 		//Thank you based whoneedsspace
@@ -1836,23 +1839,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		else
 			target.Move(target_shove_turf, shove_dir)
 			if(get_turf(target) == target_oldturf)
-				if(target_shove_turf.density)
-					shove_blocked = TRUE
-				else
-					var/thoushallnotpass = FALSE
-					for(var/obj/O in target_shove_turf)
-						if(istype(O, /obj/structure/table))
-							target_table = O
-						else if(!O.CanPass(src, target_shove_turf))
-							shove_blocked = TRUE
-							thoushallnotpass = TRUE
-					if(thoushallnotpass)
-						target_table = null
+				target_table = locate(/obj/structure/table) in target_shove_turf.contents
+				target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
+				shove_blocked = TRUE
 
-		if(target.is_shove_knockdown_blocked())
-			return
-
-		if(shove_blocked || target_table)
+		if(shove_blocked && !target.buckled)
 			var/directional_blocked = FALSE
 			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
 				var/target_turf = get_turf(target)
@@ -1866,7 +1857,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 							directional_blocked = TRUE
 							break
 			var/targetatrest = target.resting
-			if(((!target_table && !target_collateral_human) || directional_blocked) && !targetatrest)
+			if(((!target_table && !(target_disposal_bin && target.Adjacent(target_disposal_bin)) && !target_collateral_human) || directional_blocked) && !targetatrest)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1876,8 +1867,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
 					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
-				target.forceMove(target_shove_turf)
-				log_combat(user, target, "shoved", "onto [target_table]")
+				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+				log_combat(user, target, "shoved", "onto [target_table] (table)")
 			else if(target_collateral_human && !targetatrest)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				if(!target_collateral_human.resting)
@@ -1885,6 +1876,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
+			else if(target_disposal_bin)
+				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.forceMove(target_disposal_bin)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [target_disposal_bin]!</span>",
+					"<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "into [target_disposal_bin] (disposal bin)")
 
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
