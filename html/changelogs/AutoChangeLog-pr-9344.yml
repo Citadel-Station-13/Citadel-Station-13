@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by Time-Green and Qustinnus)"
+delete-after: True
+changes: 
+  - tweak: "loot crates can't explode after unlocking anymore"
+  - bugfix: "jumping into loot crates no longers causes them to go boom"
+  - bugfix: "You can now deconstruct abandoned crates with a welder without making them go boom. After unlocking them, of course."

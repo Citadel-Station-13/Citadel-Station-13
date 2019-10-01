@@ -1,0 +1,13 @@
+author: "Ghommie (original PRs by Mickyan, Anturk, ShizCalev, nemvar and Naksu)"
+delete-after: True
+changes: 
+  - rscadd: "After rigorous mandatory art training for the crew, many new graffiti styles are now available"
+  - bugfix: "Cleaned up some crayon and spraycan code for futureproofing."
+  - bugfix: "Spraypainting blast doors no longer makes them see-through."
+  - balance: "Paint remover now works on blast doors and the like."
+  - rscadd: "Most objects can now be colored using a spray can."
+  - spellcheck: "Added visible message to spraying objects and windows."
+  - rscadd: "Colored lights now shine in different colours."
+  - rscdel: "Removed individual buttons text in crayon/spraycan UI, speeding it up."
+  - bugfix: "Text mode buffer is actually visible in the UI."
+  - tweak: "Last letter of a text mode buffer no longer rotates out to be replaced with \"a\", allowing the text mode to be used for individual symbols."

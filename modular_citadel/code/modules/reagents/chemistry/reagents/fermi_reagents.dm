@@ -16,7 +16,7 @@
 //When merging two fermichems, see above
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
-	
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -330,6 +330,8 @@
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
@@ -350,6 +352,8 @@
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return

@@ -133,10 +133,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	return
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
-/datum/species/proc/qualifies_for_rank(rank, list/features)
-	if(rank in GLOB.command_positions)
-		return 0
-	return 1
+/datum/species/proc/qualifies_for_rank(rank, list/features) //SPECIES JOB RESTRICTIONS
+	//if(rank in GLOB.command_positions) Left as an example: The format qualifies for rank takes.
+	//	return 0 //It returns false when it runs the proc so they don't get jobs from the global list.
+	return 1 //It returns 1 to say they are a-okay to continue.
 
 //Will regenerate missing organs
 /datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
@@ -1343,10 +1343,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
-		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
-			. -= 2
-		else if(istype(T) && T.allow_thrust(0.01, H))
-			. -= 2
+		if(istype(J) && J.full_speed && J.allow_thrust(0.005, H))	//Prevents stacking
+			. -= 0.4
+		else if(istype(T) && T.allow_thrust(0.005, H))
+			. -= 0.4
 
 	if(!ignoreslow && gravity)
 		if(H.wear_suit)

@@ -1,0 +1,4 @@
+author: "lolman360"
+delete-after: True
+changes: 
+  - bugfix: "Fixes an undocumented change to the naming of Plasmamen."
