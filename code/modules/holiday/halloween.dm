@@ -264,3 +264,15 @@
 	category = "Holiday"
 	item = /obj/item/card/emag/halloween
 	surplus = 0
+
+//Jacq test
+/mob/living/simple_animal/jacq
+	name = "Jacqueline"
+	real_name = "Jacqueline"
+	icon = 'icons/obj/halloween_items.dmi'
+	icon_state = "jacqueline"
+	maxHealth = 1e6
+	health = 1e6
+	speak_emote = list("croons")
+	emote_hear = list("spooks","giggles")
+	density = FALSE
