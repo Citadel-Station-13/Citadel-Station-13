@@ -203,7 +203,7 @@
 	O.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_gone/reaction_turf(var/turf/T)
-	T.emp_act(EMP_HEAVY)
+	T.emp_act(EMP_LIGHT)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Naninte bain"
