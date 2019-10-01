@@ -39,7 +39,7 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 3. Antibiotic reagents
     Antibiotics cause liver stress
     Something to do with appendix for bacteria
-
+*/
 
 /datum/organ_trauma
 	var/name = "Organ Trauma"
