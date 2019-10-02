@@ -61,7 +61,7 @@
 	teamsize = 1
 	opendoors = FALSE
 	enforce_human = FALSE
-	roles = /datum/antagonist/greybois
+	roles = list(/datum/antagonist/greybois)
 	leader_role = /datum/antagonist/greybois/greygod
 	rename_team = "Emergency Assistants"
 	polldesc = "an Emergency Assistant"

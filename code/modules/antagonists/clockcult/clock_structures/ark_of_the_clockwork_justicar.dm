@@ -132,9 +132,9 @@
 			continue
 		if(isliving(M.current) && M.current.stat != DEAD)
 			var/turf/t_turf = isAI(M.current) ? get_step(get_step(src, NORTH),NORTH) : get_turf(src) // AI too fat, must make sure it always ends up a 2 tiles north instead of on the ark.
-			do_teleport(M, t_turf, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
-		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
-		M.current.clear_fullscreen("flash", 5)
+			do_teleport(M.current, t_turf, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
+			M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			M.current.clear_fullscreen("flash", 5)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, FALSE)
 	recalls_remaining--
 	recalling = FALSE

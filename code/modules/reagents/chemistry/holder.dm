@@ -1,4 +1,4 @@
-#define CHEMICAL_QUANTISATION_LEVEL 0.0001
+#define CHEMICAL_QUANTISATION_LEVEL 0.001
 
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -496,7 +496,12 @@
 
 		//Standard reaction mechanics:
 			else
-				if (C.FermiChem == TRUE)//Just to make sure
+				if (C.FermiChem == TRUE)//Just to make sure, should only proc when grenades are combining.
+					if (chem_temp > C.ExplodeTemp) //To allow fermigrenades
+						var/datum/chemical_reaction/fermi/Ferm = selected_reaction
+						fermiIsReacting = FALSE
+						SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
+						Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
 					return 0
 
 				for(var/B in cached_required_reagents) //
@@ -741,11 +746,10 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < CHEMICAL_QUANTISATION_LEVEL)
+		if((R.volume < 0.01) && !fermiIsReacting)
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-
 	return 0
 
 /datum/reagents/proc/clear_reagents()
@@ -874,7 +878,7 @@
 		var/datum/reagent/R = A
 		if (R.id == reagent) //IF MERGING
 			//Add amount and equalize purity
-			R.volume += amount
+			R.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
 			R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
 
 			update_total()
@@ -896,7 +900,7 @@
 	var/datum/reagent/R = new D.type(data)
 	cached_reagents += R
 	R.holder = src
-	R.volume = amount
+	R.volume = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	R.purity = other_purity
 	R.loc = get_turf(my_atom)
 	if(data)
