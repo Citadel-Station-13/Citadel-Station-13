@@ -123,15 +123,16 @@ There are several things that need to be remembered:
 			if(U.adjusted == ALT_STYLE)
 				t_color = "[t_color]_d"
 
-		if(U.mutantrace_variation)
-			if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
-				U.alternate_worn_icon = 'modular_citadel/icons/mob/uniform_digi.dmi'
-				if(U.adjusted == ALT_STYLE)
-					t_color = "[t_color]_d_l"
-				else if(U.adjusted == NORMAL_STYLE)
-					t_color = "[t_color]_l"
-			else
-				U.alternate_worn_icon = null
+		if(!U.alternate_worn_icon)
+			if(U.mutantrace_variation)
+				if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
+					U.alternate_worn_icon = 'modular_citadel/icons/mob/uniform_digi.dmi'
+					if(U.adjusted == ALT_STYLE)
+						t_color = "[t_color]_d_l"
+					else if(U.adjusted == NORMAL_STYLE)
+						t_color = "[t_color]_l"
+				else
+					U.alternate_worn_icon = null
 
 		var/mutable_appearance/uniform_overlay
 
@@ -388,21 +389,22 @@ There are several things that need to be remembered:
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		if(!no_taur_thanks && S.mutantrace_variation) //Just make sure we've got this checked too
-			if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
-			else
-				S.alternate_worn_icon = null
-
-			if(S.tauric == TRUE) //Are we a suit with tauric mode possible?
-				if(S.taurmode == SNEK_TAURIC)
-					S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
-				if(S.taurmode == PAW_TAURIC)
-					S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
-				if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE)
+		if(!S.alternate_worn_icon)
+			if(!no_taur_thanks && S.mutantrace_variation) //Just make sure we've got this checked too
+				if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
 					S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
-				else if(S.taurmode == NOT_TAURIC && S.adjusted == NORMAL_STYLE)
+				else
 					S.alternate_worn_icon = null
+
+				if(S.tauric == TRUE) //Are we a suit with tauric mode possible?
+					if(S.taurmode == SNEK_TAURIC)
+						S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
+					if(S.taurmode == PAW_TAURIC)
+						S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
+					if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE)
+						S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
+					else if(S.taurmode == NOT_TAURIC && S.adjusted == NORMAL_STYLE)
+						S.alternate_worn_icon = null
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
