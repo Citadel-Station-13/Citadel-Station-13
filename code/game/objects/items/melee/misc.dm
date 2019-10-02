@@ -526,7 +526,7 @@
 	light_range = 7
 	light_power = 1
 	block_chance = 30
-	light_color = LIGHT_COLOR_CYAN
+	light_color = LIGHT_COLOR_YELLOW
 	materials = list(MAT_METAL=20000, MAT_GLASS=2000, MAT_SILVER=4000, MAT_BLUESPACE=500)
 	hitsound = 'sound/weapons/staff.ogg'
 	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
@@ -562,7 +562,7 @@
 	add_fingerprint(user)
 
 /obj/item/twohanded/required/electrostaff/proc/empower(user)
-	to_chat(user, "<span class ='notice'>You twist the handle of [src], and agitated </span><span class = 'yellow><b>yellow</b></span><span class ='notice'> electric bolts spit out from the ends of the staff.</span>")
+	to_chat(user, "<span class ='notice'>You twist the handle of [src], and agitated </span><span style = 'color:yellow'><b>yellow</b></span><span class ='notice'> electric bolts spit out from the ends of the staff.</span>")
 	icon_state = "electrostaff_0"
 	item_state = "electrostaff_0"
 
