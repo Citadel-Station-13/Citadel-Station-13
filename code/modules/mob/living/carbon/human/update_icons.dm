@@ -123,7 +123,7 @@ There are several things that need to be remembered:
 			if(U.adjusted == ALT_STYLE)
 				t_color = "[t_color]_d"
 
-		if(!U.alternate_worn_icon)
+		if(!U.force_alternate_icon)
 			if(U.mutantrace_variation)
 				if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
 					U.alternate_worn_icon = 'modular_citadel/icons/mob/uniform_digi.dmi'
@@ -389,7 +389,7 @@ There are several things that need to be remembered:
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		if(!S.alternate_worn_icon)
+		if(!S.force_alternate_icon)
 			if(!no_taur_thanks && S.mutantrace_variation) //Just make sure we've got this checked too
 				if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
 					S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
