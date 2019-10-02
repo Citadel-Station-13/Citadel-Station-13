@@ -338,3 +338,13 @@
 	build_path = /obj/item/suppressor
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/tele_shield
+	name = "Security Riot Supression Staf"
+	desc = "A large quarterstaff, with massive silver electrodes mounted at the end. Can be used lethally or non-lethally. Requires two hands to hold."
+	id = "estaff"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_SILVER = 4000, MAT_BLUESPACE= 2000)
+	build_path = /obj/item/twohanded/required/electrostaff
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
