@@ -527,7 +527,7 @@
 	light_power = 1
 	block_chance = 30
 	light_color = LIGHT_COLOR_YELLOW
-	materials = list(MAT_METAL=20000, MAT_GLASS=2000, MAT_SILVER=4000, MAT_BLUESPACE=500)
+	materials = list(MAT_METAL=1000)
 	hitsound = 'sound/weapons/staff.ogg'
 	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
 	var/power = "suppresive"
