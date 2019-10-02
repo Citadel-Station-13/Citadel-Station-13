@@ -1700,6 +1700,7 @@
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\holidays.dm"
+#include "code\modules\holiday\jacqueen.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
 #include "code\modules\holodeck\holo_effect.dm"

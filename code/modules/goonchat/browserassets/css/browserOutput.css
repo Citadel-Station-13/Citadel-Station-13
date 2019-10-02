@@ -17,7 +17,7 @@ body {
     line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	word-wrap: break-word;		
+	word-wrap: break-word;
 	scrollbar-face-color:#1A1A1A;
 	scrollbar-track-color:#171717;
 	scrollbar-highlight-color:#171717;
@@ -404,6 +404,7 @@ h1.alert, h2.alert		{color: #99aab5;}
 .redtext				{color: #c51e1e;	font-size: 24px;}
 .clown					{color: #ff70c1;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
+.spooky					{color: #FF9100;}
 .velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
 @keyframes velvet {
 	0% { color: #400020; }
