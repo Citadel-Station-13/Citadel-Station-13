@@ -278,8 +278,7 @@
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
 
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
-	if(wielded)
-		return 0
+	return FALSE
 
 /obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
