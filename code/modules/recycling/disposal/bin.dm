@@ -368,14 +368,14 @@
 		return ..()
 
 /obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
-	if(can_stuff_mob_in(target, user, TRUE))
-		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-		target.forceMove(src)
-		user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
-			"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		log_combat(user, target, "shoved", "into [src] (disposal bin)")
-		return TRUE
-	return FALSE
+	if(!can_stuff_mob_in(target, user, TRUE))
+		return FALSE
+	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.forceMove(src)
+	user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
+		"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, target, "shoved", "into [src] (disposal bin)")
+	return TRUE
 
 
 /obj/machinery/disposal/bin/flush()
