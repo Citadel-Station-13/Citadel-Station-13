@@ -39,7 +39,7 @@
 	required_count = 15
 	wanted_types = list(/obj/item/ammo_casing/shotgun/techshell)
 
-/datum/bounty/item/security/WT550
+/datum/bounty/item/security/wt550
 	name = "Spare WT-550 clips"
 	description = "Nanotrasen Military Academy's ammunition is running low, please send in spare ammo for practice."
 	reward = 1500
