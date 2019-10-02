@@ -57,7 +57,7 @@
 		hatArmor = (cached_purity/10)
 	else
 		hatArmor = (cached_purity/10)
-	if(hatArmor > 100)
+	if(hatArmor > 90)
 		return ..()
 	var/obj/item/W = M.head
 	W.armor = W.armor.modifyAllRatings(hatArmor)

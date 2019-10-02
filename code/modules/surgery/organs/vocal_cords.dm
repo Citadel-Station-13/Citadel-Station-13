@@ -1082,7 +1082,7 @@
 			switch(E.phase)
 				if(1 to 2)
 					E.phase = -1
-					to_chat(C, "<span class='big warning'>You suddenly forget [E.master]'s modulus operandi and their political affiliations!</b></span>")
+					to_chat(C, "<span class='big warning'>You have no recollection of being enthralled by [E.master]!</b></span>")
 					to_chat(user, "<span class='notice'><i>You revert [C] back to their state before enthrallment.</i></span>")
 				if(3)
 					E.phase = 0
