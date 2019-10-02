@@ -13,7 +13,7 @@
 
 
 /mob/living/jacq/Destroy() //I.e invincible
-	visible_message("<span class='spooky'><b>[src]</b> cackles, \"You'll nae get rid a me that easily!\"</span>")
+	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 1)
 	var/mob/living/jacq/Jacq = new src.type(loc)
 	Jacq.tricked = tricked
@@ -22,7 +22,7 @@
 	..()
 
 /mob/living/jacq/death() //What is alive may never die
-	visible_message("<span class='spooky'><b>[src]</b> cackles, \"You'll nae get rid a me that easily!\"</span>")
+	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 1)
 	health = 20
 	poof()
@@ -56,7 +56,7 @@
 			gender = "lassie"
 
 		if(!progression[C])
-			visible_message("<span class='spooky'><b>[src] smiles ominously at [L],</b> \"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, right in tae flesh fer ye.\"</span>")
+			visible_message("<b>[src] smiles ominously at [L],</b> <span class='spooky'>\"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, right in tae flesh fer ye.\"</span>")
 			sleep(20)
 			visible_message("<span class='spooky'><b>[src] smiles ominously at [L],</b> \"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, right in tae flesh fer ye.\"</span>")
 
@@ -95,3 +95,7 @@
 //Candies
 /obj/item/reagent_containers/food/snacks/special_candy
 	name = "Magic candy"
+
+/obj/item/reagent_containers/food/snacks/special_candy/Initialize()
+	reagents.add_reagent(get_random_reagent_id(), 5)
+	..()
