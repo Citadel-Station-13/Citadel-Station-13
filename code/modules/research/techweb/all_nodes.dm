@@ -694,6 +694,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/electrostaff
+	id = "electrostaff"
+	display_name = "Riot Suppression Equipment"
+	description = "Speak softly and carry a massive stunbaton."
+	prereq_ids = list("adv_weaponry", "electric_weapons", "adv_bluespace")
+	design_ids = list("estaff")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 1000
+
 ////////////////////////mech technology////////////////////////
 /datum/techweb_node/adv_mecha
 	id = "adv_mecha"
