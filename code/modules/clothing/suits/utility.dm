@@ -130,7 +130,7 @@
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
-	rad_flags = RAD_PROTECT_CONTENTS
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/radiation
@@ -150,5 +150,5 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	resistance_flags = NONE
-	rad_flags = RAD_PROTECT_CONTENTS
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	tauric = TRUE		//Citadel Add for tauric hardsuits
