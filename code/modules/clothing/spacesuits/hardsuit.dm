@@ -433,7 +433,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_OCLOTHING)
 
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical
