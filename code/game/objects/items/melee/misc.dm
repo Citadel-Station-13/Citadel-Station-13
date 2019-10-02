@@ -530,6 +530,7 @@
 	materials = list(MAT_METAL=1000)
 	hitsound = 'sound/weapons/staff.ogg'
 	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
+	var/total_mass = 5
 	var/power = "suppresive"
 	var/lethal = FALSE
 	var/stun_stam_cost_coeff = 1.25
