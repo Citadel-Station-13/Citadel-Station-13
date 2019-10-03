@@ -80,6 +80,9 @@
 			var/obj/item/bodypart/BP = X
 			var/brutedamage = BP.brute_dam
 
+			if(BP.status == BODYPART_ROBOTIC) //for the moment, synth limbs won't bleed, but soon, my pretty.
+				continue
+
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
 			temp_bleed += 0.5*BP.embedded_objects.len
@@ -95,12 +98,12 @@
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
 	if(blood_volume)
-		blood_volume = max(blood_volume - amt, 0)
+		//blood_volume = max(blood_volume - amt, 0) // We don't want to double dip our blood loss, commented out for postarity
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
 			if(amt >= 10)
-				add_splatter_floor(src.loc)
+				add_splatter_floor(src.loc) //10u blood splatter every time
 			else
-				add_splatter_floor(src.loc, 1)
+				add_splatter_floor(src.loc, 1) //1u blood dropplet
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -277,6 +280,7 @@
 		var/obj/effect/decal/cleanable/blood/drip/drop = locate() in T
 		if(drop)
 			if(drop.drips < 5)
+				src.transfer_blood_to(drop, 1)
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
@@ -287,6 +291,7 @@
 		else
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
+			src.transfer_blood_to(drop, 1)
 			return
 
 	// Find a blood decal or create a new one.
@@ -296,6 +301,7 @@
 	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
+	src.transfer_blood_to(B, 10) // give 10u of blood to the splatter, enough to be worrysome, but not instantly fatal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)
 

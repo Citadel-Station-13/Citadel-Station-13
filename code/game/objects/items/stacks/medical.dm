@@ -89,6 +89,8 @@
 			var/mob/living/carbon/human/H = C
 			if(stop_bleeding)
 				if(!H.bleedsuppress) //so you can't stack bleed suppression
+					if(H.bleed_rate)
+						H.bleed_rate = 0	//stops accumulated bleeding instantly as well on application.
 					H.suppress_bloodloss(stop_bleeding)
 		if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 			if(affecting.heal_damage(heal_brute, heal_burn))
@@ -125,7 +127,7 @@
 	icon_state = "gauze"
 	stop_bleeding = 1800
 	self_delay = 20
-	max_amount = 12
+	max_amount = 50	//50 uses should make medbay's supplies stretch further.
 
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)

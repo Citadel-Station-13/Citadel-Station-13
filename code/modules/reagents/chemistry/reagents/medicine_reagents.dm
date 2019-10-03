@@ -63,6 +63,9 @@
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume = (BLOOD_VOLUME_NORMAL*M.blood_ratio)
+		var/mob/living/carbon/human/H = M
+		if(H.bleed_rate)
+			H.bleed_rate = 0
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -144,6 +147,9 @@
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
+		var/mob/living/carbon/human/H = M
+		if(H.bleed_rate)
+			H.bleed_rate = 0
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
@@ -192,6 +198,9 @@
 		M.adjustFireLoss(-1.5 * power, 0)
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
+		var/mob/living/carbon/human/H = M
+		if(H.bleed_rate)
+			H.bleed_rate = 0
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	..()
@@ -406,6 +415,9 @@
 		if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
+			var/mob/living/carbon/human/H = M
+			if(H.bleed_rate)
+				H.bleed_rate = 0
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
@@ -545,6 +557,9 @@
 		M.adjustBruteLoss(-4*REM, 0) //Twice as effective as styptic powder for severe bruising
 	else
 		M.adjustBruteLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
+	var/mob/living/carbon/human/H = M
+	if(H.bleed_rate)
+		H.bleed_rate = 0
 	..()
 	. = 1
 
@@ -1133,6 +1148,9 @@
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
 	M.adjustStaminaLoss(-20*REM,0)
+	var/mob/living/carbon/human/H = M
+	if(H.bleed_rate)
+		H.bleed_rate = 0
 	..()
 	. = 1
 
@@ -1180,6 +1198,9 @@
 	M.adjustStaminaLoss(-13 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
+	var/mob/living/carbon/human/H = M	//I guess technically this should stop bleeding too
+	if(H.bleed_rate)
+		H.bleed_rate = 0
 	..()
 	. = 1
 

@@ -165,11 +165,15 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.bleed(damage)
-			else
-				L.add_splatter_floor(target_loca)
+			if(prob(33)) //not all projectiles will delete blood, but when it does...
+				if(iscarbon(L))
+					var/mob/living/carbon/C = L
+					C.bleed(damage)
+					var/mob/living/carbon/human/H = C
+					if(prob(40))	//an addtional randomness to causing lasting bleeding, this heals in handle_blood at 0.5 per tick.
+						H.bleed_rate += rand(3,9)	//being shot is usually more significant than a cut on your arm from a knife
+				else
+					L.add_splatter_floor(target_loca)
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
