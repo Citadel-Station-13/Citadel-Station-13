@@ -60,7 +60,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(istype(O, /obj/item/bedsheet))
 		new /obj/item/bedsheet/cosmos(get_turf(O))
 		qdel(O)
-
+	..()
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/carbon/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
