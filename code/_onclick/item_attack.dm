@@ -130,7 +130,9 @@
 					C.bleed(totitemdamage)
 					var/mob/living/carbon/human/H = C
 					if(prob(40))	//an addtional randomness to causing lasting bleeding, reminder that this heals every tick at a rate of 0.5, so minor bleeding will stop naturally
-						H.bleed_rate += rand(1,3)
+						var/armorsave = H.getarmor(H, "melee")
+						if(armorsave <= 15) // armor is useful again!
+							H.bleed_rate += rand(1,3)
 				else
 					add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood

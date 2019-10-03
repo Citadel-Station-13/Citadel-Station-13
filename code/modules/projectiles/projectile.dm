@@ -161,17 +161,31 @@
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
+			var/obj/item/bodypart/B = L.get_bodypart(def_zone)
+			if(B.status == BODYPART_ROBOTIC) // So if you hit a robotic, it sparks instead of bloodspatters
+				do_sparks(2, FALSE, target.loc)
+				if(prob(25))
+					new /obj/effect/decal/cleanable/oil(target_loca)
 			if(isalien(L))
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
+
 			if(prob(33)) //not all projectiles will delete blood, but when it does...
 				if(iscarbon(L))
 					var/mob/living/carbon/C = L
 					C.bleed(damage)
 					var/mob/living/carbon/human/H = C
 					if(prob(40))	//an addtional randomness to causing lasting bleeding, this heals in handle_blood at 0.5 per tick.
-						H.bleed_rate += rand(3,9)	//being shot is usually more significant than a cut on your arm from a knife
+						var/armorsave //all of these are assuming the projectile deals Brute, the tags are just to ensure correct defense checks
+						if(flag == "bullet")
+							armorsave = H.getarmor(B, "bullet")
+						else if(flag == "energy")
+							armorsave = H.getarmor(B, "energy")
+						else if(flag == "magic")
+							armorsave = H.getarmor(B, "magic")
+						if(armorsave <= 20) // armor is useful again, yay.
+							H.bleed_rate += rand(3,9)	//being shot is usually more significant than a cut on your arm from a knife
 				else
 					L.add_splatter_floor(target_loca)
 		else if(impact_effect_type && !hitscan)
