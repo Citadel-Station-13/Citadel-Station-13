@@ -37,10 +37,12 @@
 				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/firing_pin/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
+	return TRUE
 
 /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
 	gun = G
@@ -185,6 +187,15 @@
 /obj/item/firing_pin/dna/dredd
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = TRUE
+
+/obj/item/firing_pin/holy
+	name = "blessed pin"
+	desc = "A firing pin that only responds to those who are holier than thou."
+
+/obj/item/firing_pin/holy/pin_auth(mob/living/user)
+	if(user.mind.isholy)
+		return TRUE
+	return FALSE
 
 // Laser tag pins
 /obj/item/firing_pin/tag

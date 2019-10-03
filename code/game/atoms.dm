@@ -235,6 +235,11 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
+//used on altdisarm() for special interactions between the shoved victim (target) and the src, with user being the one shoving the target on it.
+// IMPORTANT: if you wish to add a new own shove_act() to a certain object, remember to add SHOVABLE_ONTO to its obj_flags bitfied var first.
+/atom/proc/shove_act(mob/living/target, mob/living/user)
+	return FALSE
+
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
 		if(istype(src.loc, container))
@@ -289,8 +294,11 @@
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
 
+/atom/proc/prevent_content_explosion()
+	return FALSE
+
 /atom/proc/contents_explosion(severity, target)
-	return
+	return //For handling the effects of explosions on contents that would not normally be effected
 
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
@@ -376,7 +384,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 
 /atom/proc/emag_act()
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)

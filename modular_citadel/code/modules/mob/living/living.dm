@@ -8,6 +8,14 @@
 	var/intentionalresting = FALSE
 	var/attemptingcrawl = FALSE
 
+	//Sprint buffer---
+	var/sprint_buffer = 42					//Tiles
+	var/sprint_buffer_max = 42
+	var/sprint_buffer_regen_ds = 0.3		//Tiles per world.time decisecond
+	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
+	var/sprint_stamina_cost = 0.55			//stamina loss per tile while insufficient sprint buffer.
+	//---End
+
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
 	if(resting)
@@ -118,3 +126,7 @@
 		filters -= CIT_FILTER_STAMINACRIT
 		update_canmove()
 	update_health_hud()
+
+/mob/living/proc/update_hud_sprint_bar()
+	if(hud_used && hud_used.sprint_buffer)
+		hud_used.sprint_buffer.update_to_mob(src)

@@ -1,3 +1,5 @@
+#define LUNGS_MAX_HEALTH 300
+
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -54,8 +56,40 @@
 
 	var/crit_stabilizing_reagent = "epinephrine"
 
+	//health
+	var/maxHealth = LUNGS_MAX_HEALTH
+	var/damage = 0
+
+//TODO: lung health affects lung function
+/obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M) //damage might be too low atm.
+	if (maxHealth == INFINITY)
+		return
+	if(damage+damage_mod < 0)
+		damage = 0
+		return
+
+	damage += damage_mod
+	if ((damage / maxHealth) > 1)
+		to_chat(M, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
+		M.emote("gasp")
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Lungs lost")
+		qdel(src)
+	else if ((damage / maxHealth) > 0.75)
+		to_chat(M, "<span class='warning'>It's getting really hard to breathe!!</span>")
+		M.emote("gasp")
+		M.Dizzy(3)
+	else if ((damage / maxHealth) > 0.5)
+		M.Dizzy(2)
+		to_chat(M, "<span class='notice'>Your chest is really starting to hurt.</span>")
+		M.emote("cough")
+	else if ((damage / maxHealth) > 0.2)
+		to_chat(M, "<span class='notice'>You feel an ache within your chest.</span>")
+		M.emote("cough")
+		M.Dizzy(1)
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
+//TODO: add lung damage = less oxygen gains
+	var/breathModifier = (5-(5*(damage/maxHealth)/2)) //range 2.5 - 5
 	if((H.status_flags & GODMODE))
 		return
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -124,7 +158,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5)
+				H.adjustOxyLoss(-breathModifier) //More damaged lungs = slower oxy rate up to a factor of half
 			gas_breathed = breath_gases[/datum/gas/oxygen]
 			H.clear_alert("not_enough_oxy")
 
@@ -153,7 +187,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5)
+				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath_gases[/datum/gas/nitrogen]
 			H.clear_alert("nitro")
 
@@ -190,7 +224,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5)
+				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide]
 			H.clear_alert("not_enough_co2")
 
@@ -220,7 +254,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5)
+				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath_gases[/datum/gas/plasma]
 			H.clear_alert("not_enough_tox")
 
@@ -244,6 +278,9 @@
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				H.emote(pick("giggle", "laugh"))
+				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		else
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	// BZ
 
@@ -288,51 +325,52 @@
 		gas_breathed = breath_gases[/datum/gas/stimulum]
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount("stimulum")
-			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
+			H.reagents.add_reagent("stimulum", max(0, 5 - existing))
 		breath_gases[/datum/gas/stimulum]-=gas_breathed
 
 	// Miasma
 		if (breath_gases[/datum/gas/miasma])
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma])
+			if(miasma_pp > MINIMUM_MOLES_DELTA_TO_MOVE)
 
-			//Miasma sickness
-			if(prob(0.5 * miasma_pp))
-				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
-				miasma_disease.name = "Unknown"
-				miasma_disease.try_infect(owner)
+				//Miasma sickness
+				if(prob(0.05 * miasma_pp))
+					var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+					miasma_disease.name = "Unknown"
+					miasma_disease.try_infect(owner)
 
-			// Miasma side effects
-			switch(miasma_pp)
-				if(1 to 5)
-					// At lower pp, give out a little warning
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
-					if(prob(5))
-						to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
-				if(5 to 15)
-					//At somewhat higher pp, warning becomes more obvious
-					if(prob(15))
-						to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
-				if(15 to 30)
-					//Small chance to vomit. By now, people have internals on anyway
-					if(prob(5))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
-				if(30 to INFINITY)
-					//Higher chance to vomit. Let the horror start
-					if(prob(15))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
-				else
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				// Miasma side effects
+				switch(miasma_pp)
+					if(1 to 5)
+						// At lower pp, give out a little warning
+						SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+						if(prob(5))
+							to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+					if(5 to 15)
+						//At somewhat higher pp, warning becomes more obvious
+						if(prob(15))
+							to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+							SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+					if(15 to 30)
+						//Small chance to vomit. By now, people have internals on anyway
+						if(prob(5))
+							to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+							SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+							owner.vomit()
+					if(30 to INFINITY)
+						//Higher chance to vomit. Let the horror start
+						if(prob(15))
+							to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+							SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+							owner.vomit()
+					else
+						SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
-			// Then again, this is a purely hypothetical scenario and hardly reachable
-			owner.adjust_disgust(0.1 * miasma_pp)
+				// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
+				// Then again, this is a purely hypothetical scenario and hardly reachable
+				owner.adjust_disgust(0.1 * miasma_pp)
 
-			breath_gases[/datum/gas/miasma]-=gas_breathed
+				breath_gases[/datum/gas/miasma]-=gas_breathed
 
 		// Clear out moods when no miasma at all
 		else
@@ -367,10 +405,13 @@
 		var/cold_modifier = H.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
 			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
+			adjustLungLoss((cold_level_3_damage*cold_modifier*2), H)
 		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
 			H.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
+			adjustLungLoss((cold_level_2_damage*cold_modifier*2), H)
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
 			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
+			adjustLungLoss((cold_level_1_damage*cold_modifier*2), H)
 		if(breath_temperature < cold_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
@@ -379,10 +420,13 @@
 		var/heat_modifier = H.dna.species.heatmod
 		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
 			H.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
+			adjustLungLoss((heat_level_1_damage*heat_modifier*2), H)
 		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
 			H.apply_damage_type(heat_level_2_damage*heat_modifier, heat_damage_type)
+			adjustLungLoss((heat_level_2_damage*heat_modifier*2), H)
 		if(breath_temperature > heat_level_3_threshold)
 			H.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
+			adjustLungLoss((heat_level_3_damage*heat_modifier*2), H)
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
@@ -401,12 +445,14 @@
 	safe_oxygen_max = 0 // Like, at all.
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
+	maxHealth = INFINITY//I don't understand how plamamen work, so I'm not going to try t give them special lungs atm
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
 	synthetic = TRUE
+	maxHealth = 400
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()
@@ -426,6 +472,7 @@
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
+	maxHealth = 550
 
 /obj/item/organ/lungs/ashwalker
 	name = "ash lungs"
@@ -442,3 +489,14 @@
 	heat_level_1_threshold = 400 // better adapted for heat, obv. Lavaland standard is 300
 	heat_level_2_threshold = 600 // up 200 from level 1, 1000 is silly but w/e for level 3
 
+/obj/item/organ/lungs/slime
+	name = "vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses."
+
+	safe_toxins_max = 0 //We breathe this to gain POWER.
+
+/obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
+	. = ..()
+	if (breath && breath.gases[/datum/gas/plasma])
+		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma])
+		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.

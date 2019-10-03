@@ -1,0 +1,6 @@
+author: "Alonefromhell"
+delete-after: True
+changes: 
+  - rscadd: "Ported Oracle UI, a framework for self-updating and neat UI's"
+  - refactor: "Paper now uses OUI"
+  - refactor: "Bins now use OUI"

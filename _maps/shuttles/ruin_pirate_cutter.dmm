@@ -1,6 +1,80 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/bed,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/obj/item/bedsheet/pirate,
+/turf/open/floor/plasteel/dark/side{
+	dir = 6
+	},
+/area/shuttle/caravan/pirate)
+"ab" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_y = -30;
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/pirate)
+"ac" = (
+/obj/structure/bed,
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/item/bedsheet/pirate,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/pirate)
+"ad" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/caravan/pirate)
+"ae" = (
+/obj/structure/rack,
+/obj/item/storage/bag/money/vault,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/mob/living/simple_animal/parrot{
+	faction = list("pirate");
+	name = "Pegwing"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/pirate)
 "af" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/pirate)
+"ag" = (
+/obj/machinery/light/small,
+/obj/structure/bed,
+/obj/item/bedsheet/pirate,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "aE" = (
 /obj/structure/closet{
@@ -83,18 +157,6 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/pirate)
-"fS" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -222,18 +284,6 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
-/area/shuttle/caravan/pirate)
-"ku" = (
-/obj/structure/rack,
-/obj/item/storage/bag/money/vault,
-/mob/living/simple_animal/parrot{
-	faction = list("pirate");
-	name = "Pegwing"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "kY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -502,13 +552,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
-"tM" = (
-/mob/living/simple_animal/hostile/pirate/ranged{
-	environment_smash = 0
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
 /obj/item/retractor,
@@ -534,17 +577,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/shuttle/caravan/pirate)
-"vq" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel/dark/side{
-	dir = 6
-	},
 /area/shuttle/caravan/pirate)
 "vW" = (
 /obj/machinery/light/small{
@@ -731,32 +763,6 @@
 /obj/structure/closet/crate/secure/loot,
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/pirate)
-"EB" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
-/obj/machinery/turretid{
-	icon_state = "control_kill";
-	lethal = 1;
-	locked = 0;
-	pixel_y = -30;
-	req_access = null
-	},
-/mob/living/simple_animal/hostile/pirate/ranged{
-	environment_smash = 0
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
@@ -1018,12 +1024,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
-"Wb" = (
-/obj/machinery/light/small,
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/pirate)
 "Xq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -1181,7 +1181,7 @@ su
 Ag
 af
 jo
-tM
+ad
 sr
 af
 af
@@ -1253,9 +1253,9 @@ Jv
 af
 aE
 SF
-vq
+aa
 NM
-fS
+ac
 RC
 oF
 af
@@ -1272,7 +1272,7 @@ hZ
 wZ
 de
 iF
-Wb
+ag
 af
 Jv
 Jv
@@ -1286,7 +1286,7 @@ xg
 qC
 pK
 Sk
-ku
+ae
 af
 qo
 Jv
@@ -1374,7 +1374,7 @@ Jv
 Jv
 Bi
 oO
-EB
+ab
 bd
 Bi
 Jv

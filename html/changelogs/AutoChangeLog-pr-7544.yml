@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Reduced the default/baseline nanite pool amount from 100 nanites to 25 nanites, and reduced the maximum nanite amount from 500 nanites to 125 nanites. The safety threshold was reduced from 50 nanites to 12 nanites."

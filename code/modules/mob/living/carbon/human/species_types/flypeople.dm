@@ -1,5 +1,5 @@
 /datum/species/fly
-	name = "Flyperson"
+	name = "Anthromorphic Fly"
 	id = "fly"
 	say_mod = "buzzes"
 	species_traits = list(NOEYES)

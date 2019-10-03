@@ -31,8 +31,14 @@
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "crowbar_brass"
+	icon_state = "crowbar_clock"
 	toolspeed = 0.5
+
+/obj/item/crowbar/bronze
+	name = "bronze plated crowbar"
+	desc = "A bronze plated crowbar."
+	icon_state = "crowbar_brass"
+	toolspeed = 0.95
 
 /obj/item/crowbar/abductor
 	name = "alien crowbar"
@@ -41,7 +47,6 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "crowbar"
 	toolspeed = 0.1
-
 
 /obj/item/crowbar/large
 	name = "crowbar"
@@ -86,3 +91,11 @@
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(cutjaws)
+
+/obj/item/crowbar/advanced
+	name = "advanced crowbar"
+	desc = "A scientist's almost successful reproduction of an abductor's crowbar, it uses the same technology combined with a handle that can't quite hold it."
+	icon = 'icons/obj/advancedtools.dmi'
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	icon_state = "crowbar"
+	toolspeed = 0.2

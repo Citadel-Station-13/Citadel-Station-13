@@ -64,7 +64,7 @@
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
-	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(force && damtype != STAMINA && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
@@ -171,3 +171,7 @@
 		if(prob(2))
 			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 	return 1
+
+/obj/item/proc/getweight()
+	return total_mass || w_class * 1.25
+

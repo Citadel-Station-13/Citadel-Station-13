@@ -231,6 +231,9 @@
 	// Same for anyone with an abductor multitool.
 	else if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
 		reveal_wires = TRUE
+	// and advanced multitool
+	else if(user.is_holding_item_of_type(/obj/item/multitool/advanced))
+		reveal_wires = TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
 	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)

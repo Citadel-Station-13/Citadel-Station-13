@@ -4,7 +4,6 @@
 
 /datum/job/hop
 	minimal_player_age = 20
-	head_announce = list("Service")
 	exp_type_department = EXP_TYPE_SERVICE
 
 	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,

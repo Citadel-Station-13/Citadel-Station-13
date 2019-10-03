@@ -82,6 +82,12 @@
 	required_temp = 374
 	mob_react = FALSE
 
+/datum/chemical_reaction/mustard
+	name = "Mustard"
+	id = "mustard"
+	results = list("mustard" = 5)
+	required_reagents = list("mustardgrind" = 1, "water"  = 10, "enzyme"= 1)
+
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
@@ -528,6 +534,16 @@
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
 	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life") // Lol.
 
+//This is missing, I'm adding it back (see tgwiki). Not sure why we don't have it.
+/datum/chemical_reaction/life_friendly
+	name = "Life (Friendly)"
+	id = "life_friendly"
+	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "sugar" = 1)
+	required_temp = 374
+
+/datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)
+	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (friendly)", FRIENDLY_SPAWN) //Pray for cute cats
+
 /datum/chemical_reaction/corgium
 	name = "corgium"
 	id = "corgium"
@@ -613,7 +629,7 @@
 	required_temp = 450
 
 /datum/chemical_reaction/moff
-	name = "moth mutation toxic"
+	name = "insect mutation toxic"
 	id = "moffs"
 	results = list("mothmutationtoxin" = 1)
 	required_reagents  = list("liquid_dark_matter" = 2, "ammonia" = 5, "lithium" = 1, "stablemutationtoxin" = 1)

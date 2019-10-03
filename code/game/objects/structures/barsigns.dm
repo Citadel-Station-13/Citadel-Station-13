@@ -112,12 +112,16 @@
 
 
 /obj/structure/sign/barsign/emag_act(mob/user)
+	. = ..()
 	if(broken || (obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(10 SECONDS)
+	addtimer(CALLBACK(src, .proc/syndie_bar_good), 10 SECONDS)
+	return TRUE
+
+/obj/structure/sign/barsign/proc/syndie_bar_good()
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	req_access = list(ACCESS_SYNDICATE)
 
@@ -293,6 +297,16 @@
 	name = "The Lightbulb"
 	icon = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+
+/datum/barsign/cybersylph
+	name = "Cyber Sylph's"
+	icon = "cybersylph"
+	desc = "A cafe renowed for its out-of-boundaries futuristic insignia."
+
+/datum/barsign/meow_mix
+	name = "Meow Mix"
+	icon = "meow_mix"
+	desc = "No, we don't serve catnip, officer!"
 
 /datum/barsign/hiddensigns
 	hidden = TRUE

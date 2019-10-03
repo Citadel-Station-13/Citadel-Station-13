@@ -68,7 +68,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
-	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft." //Current note in the notepad function
@@ -123,7 +122,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item = new inserted_item(src)
 	else
 		inserted_item =	new /obj/item/pen(src)
-	update_icon()
+	update_icon(FALSE, TRUE)
 
 /obj/item/pda/CtrlShiftClick(mob/living/user)
 	. = ..()
@@ -144,8 +143,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || M.incapacitated() || !in_range(M,src))
 		return
 	icon = new_icon
-	set_new_overlays()
-	update_icon()
+	update_icon(FALSE, TRUE)
 	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays()
@@ -187,8 +185,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/pref_skin = GLOB.pda_reskins[user.client.prefs.pda_skin]
 		if(icon != pref_skin)
 			icon = pref_skin
-			set_new_overlays()
-			update_icon()
+			update_icon(FALSE, TRUE)
 		equipped = TRUE
 
 /obj/item/pda/proc/update_label()
@@ -203,7 +200,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/GetID()
 	return id
 
-/obj/item/pda/update_icon(alert = FALSE)
+/obj/item/pda/update_icon(alert = FALSE, new_overlays = FALSE)
+	if(new_overlays)
+		set_new_overlays()
 	cut_overlays()
 	add_overlay(alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN])
 	var/mutable_appearance/overlay = new()
@@ -715,6 +714,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
+	var/emoji_message = emoji_parse(message)
 	if(prob(1))
 		message += "\nSent from my PDA"
 	// Send the signal
@@ -735,7 +735,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		"name" = "[owner]",
 		"job" = "[ownjob]",
 		"message" = message,
-		"targets" = string_targets
+		"targets" = string_targets,
+		"emoji_message" = emoji_message
 	))
 	if (picture)
 		signal.data["photo"] = picture
@@ -752,13 +753,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Log it in our logs
 	tnote += "<i><b>&rarr; To [target_text]:</b></i><br>[signal.format_message()]<br>"
 	// Show it to ghosts
-	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message()]</span>"
+	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message(TRUE)]</span>"
 	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
-	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
+	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[emoji_message]\"</span>")
 	if (!silent)
 		playsound(src, 'sound/machines/terminal_success.ogg', 15, 1)
 	// Reset the photo
@@ -788,7 +789,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message(TRUE)] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
 
 	update_icon(TRUE)
 

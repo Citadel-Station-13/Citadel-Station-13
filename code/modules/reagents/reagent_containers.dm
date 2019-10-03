@@ -1,3 +1,6 @@
+#define PH_WEAK 		(1 << 0)
+#define TEMP_WEAK 		(1 << 1)
+
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -12,6 +15,9 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
+	var/beaker_weakness_bitflag = NONE//Bitflag!
+	var/container_HP = 2
+	var/cached_icon
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -123,9 +129,91 @@
 
 	reagents.clear_reagents()
 
+//melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
+	if(beaker_weakness_bitflag & TEMP_WEAK)
+		var/list/seen = viewers(5, get_turf(src))
+		var/iconhtml = icon2html(src, seen)
+		for(var/mob/H in seen)
+			to_chat(H, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
+			playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+		qdel(src)
 	..()
 
+//melts plastic beakers
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
+	temp_check()
+
+/obj/item/reagent_containers/proc/temp_check()
+	if(beaker_weakness_bitflag & TEMP_WEAK)
+		if(reagents.chem_temp >= 444)//assuming polypropylene
+			START_PROCESSING(SSobj, src)
+
+//melts glass beakers
+/obj/item/reagent_containers/proc/pH_check()
+	if(beaker_weakness_bitflag & PH_WEAK)
+		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
+			START_PROCESSING(SSobj, src)
+
+
+/obj/item/reagent_containers/process()
+	if(!cached_icon)
+		cached_icon = icon_state
+	var/damage
+	var/cause
+	if(beaker_weakness_bitflag & PH_WEAK)
+		if(reagents.pH < 2)
+			damage = (2 - reagents.pH)/20
+			cause = "from the extreme pH"
+			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+
+		if(reagents.pH > 12)
+			damage = (reagents.pH - 12)/20
+			cause = "from the extreme pH"
+			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+
+	if(beaker_weakness_bitflag & TEMP_WEAK)
+		if(reagents.chem_temp >= 444)
+			if(damage)
+				damage += (reagents.chem_temp/444)/5
+			else
+				damage = (reagents.chem_temp/444)/5
+			if(cause)
+				cause += " and "
+			cause += "from the high temperature"
+			playsound(get_turf(src), 'sound/FermiChem/heatdam.ogg', 50, 1)
+
+	if(!damage || damage <= 0)
+		STOP_PROCESSING(SSobj, src)
+
+	container_HP -= damage
+
+	var/list/seen = viewers(5, get_turf(src))
+	var/iconhtml = icon2html(src, seen)
+
+	var/damage_percent = ((container_HP / initial(container_HP)*100))
+	switch(damage_percent)
+		if(-INFINITY to 0)
+			for(var/mob/M in seen)
+				to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts [cause]!</span>")
+				playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times beakers have melted")
+			STOP_PROCESSING(SSobj, src)
+			qdel(src)
+			return
+		if(0 to 35)
+			icon_state = "[cached_icon]_m3"
+			desc = "[initial(desc)] It is severely deformed."
+		if(35 to 70)
+			icon_state = "[cached_icon]_m2"
+			desc = "[initial(desc)] It is deformed."
+		if(70 to 85)
+			desc = "[initial(desc)] It is mildly deformed."
+			icon_state = "[cached_icon]_m1"
+
+	update_icon()
+	if(prob(25))
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s is damaged by [cause] and begins to deform!</span>")

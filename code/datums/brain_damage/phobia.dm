@@ -31,6 +31,8 @@
 
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return
 	if(is_blind(owner))
 		return
 	if(world.time > next_check && world.time > next_scare)
@@ -70,6 +72,8 @@
 /datum/brain_trauma/mild/phobia/on_hear(message, speaker, message_language, raw_message, radio_freq)
 	if(!owner.can_hear() || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
 		return message
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return message
 	for(var/word in trigger_words)
 		var/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
 
@@ -78,14 +82,15 @@
 			break
 	return message
 
-/datum/brain_trauma/mild/phobia/on_say(message)
+/datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return
 	for(var/word in trigger_words)
 		var/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
 
-		if(findtext(message, reg))
+		if(findtext(speech_args[SPEECH_MESSAGE], reg))
 			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"[word]\"!</span>")
-			return ""
-	return message
+			speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120

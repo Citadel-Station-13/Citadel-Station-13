@@ -64,6 +64,8 @@
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
+	var/list/learned_recipes //List of learned recipe TYPES.
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -130,7 +132,8 @@
 			L.update_arousal_hud() //Removes the old icon
 
 /datum/mind/proc/store_memory(new_text)
-	memory += "[new_text]<BR>"
+	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
+		memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
 	memory = null
@@ -233,13 +236,10 @@
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
-		if(istype(I, /obj/item/pda))
-			var/obj/item/pda/P = I
-			P.lock_code = ""
-
-		else if(istype(I, /obj/item/radio))
-			var/obj/item/radio/R = I
-			R.traitor_frequency = 0
+		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink)
+//Todo make this reset signal
+		if(O)
+			O.unlock_code = null
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
 	remove_changeling()
@@ -304,33 +304,22 @@
 		. = 0
 	else
 		. = uplink_loc
-		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
-		var/unlock_note
-
-		if(uplink_loc == R)
-			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
-
-			if(!silent)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
-			unlock_note = "<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name])."
-		else if(uplink_loc == PDA)
-			PDA.lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-
-			if(!silent)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
-			unlock_note = "<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name])."
-
-		else if(uplink_loc == P)
-			P.traitor_unlock_degrees = rand(1, 360)
-
-			if(!silent)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
-			unlock_note = "<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name])."
+		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
+		if(!U)
+			CRASH("Uplink creation failed.")
+		U.setup_unlock_code()
+		if(!silent)
+			if(uplink_loc == R)
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(U.unlock_code)] to unlock its hidden features.")
+			else if(uplink_loc == PDA)
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[U.unlock_code]\" into the ringtone select to unlock its hidden features.")
+			else if(uplink_loc == P)
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [U.unlock_code] from its starting position to unlock its hidden features.")
 
 		if(uplink_owner)
-			uplink_owner.antag_memory += unlock_note + "<br>"
+			uplink_owner.antag_memory += U.unlock_note + "<br>"
 		else
-			traitor_mob.mind.store_memory(unlock_note)
+			traitor_mob.mind.store_memory(U.unlock_note)
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
@@ -791,6 +780,11 @@
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
+
+/datum/mind/proc/has_martialart(var/string)
+	if(martial_art && martial_art.id == string)
+		return martial_art
+	return FALSE
 
 /mob/dead/new_player/sync_mind()
 	return

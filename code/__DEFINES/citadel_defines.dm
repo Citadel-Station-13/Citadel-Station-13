@@ -12,7 +12,7 @@
 #define ui_boxcraft "EAST-4:22,SOUTH+1:6"
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
-#define ui_boxvore	"EAST-4:22,SOUTH+1:6"
+#define ui_boxvore	"EAST-5:22,SOUTH+1:6"
 
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
@@ -40,7 +40,7 @@
 #define BALLS_SACK_SIZE_DEF	8
 #define BALLS_SACK_SIZE_MAX 40
 
-#define CUM_RATE			5
+#define CUM_RATE			0.035
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1//amount of nutrition required per life()
 
@@ -89,17 +89,6 @@
 //Damage stuffs
 #define AROUSAL "arousal"
 
-//DNA stuffs. Remember to change this if upstream adds more snowflake options
-
-
-//Species stuffs. Remember to change this if upstream updates species flags
-#define MUTCOLORS2		35
-#define MUTCOLORS3		36
-#define NOAROUSAL		37 //Stops all arousal effects
-#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
-#define MATRIXED		39	//if icon is color matrix'd
-#define SKINTONE		40	//uses skin tones
-
 //Citadel istypes
 #define isgenital(A) (istype(A, /obj/item/organ/genital))
 
@@ -115,22 +104,21 @@
 
 //xenobio console upgrade stuff
 #define XENOBIO_UPGRADE_MONKEYS				1
-#define XENOBIO_UPGRADE_SLIMEBASIC		2
+#define XENOBIO_UPGRADE_SLIMEBASIC			2
 #define XENOBIO_UPGRADE_SLIMEADV			4
 
 //stamina stuff
-#define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_CRIT									140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
-#define STAMINA_SOFTCRIT_TRADITIONAL	0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
 #define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
-#define MIN_MELEE_STAMCOST						1.25 //Minimum cost for swinging items around. Will be extra useful when stats and skills are introduced.
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
 //Citadel toggles because bitflag memes
-#define MEDIHOUND_SLEEPER 1
-#define EATING_NOISES	2
-#define DIGESTION_NOISES 4
+#define MEDIHOUND_SLEEPER	(1<<0)
+#define EATING_NOISES		(1<<1)
+#define DIGESTION_NOISES	(1<<2)
 
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
 

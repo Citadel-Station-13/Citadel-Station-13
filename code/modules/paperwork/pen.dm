@@ -25,7 +25,6 @@
 	pressure_resistance = 2
 	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
-	var/traitor_unlock_degrees = 0
 	var/degrees = 0
 	var/font = PEN_FONT
 
@@ -165,7 +164,7 @@
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
+	reagents.add_reagent("chloralhydrate", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 
