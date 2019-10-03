@@ -14,7 +14,6 @@
 	fluid_id = "semen"
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
-	var/size_linked = FALSE
 
 /obj/item/organ/genital/testicles/generate_fluid()
 	if(!linked_organ && !update_link())
@@ -23,16 +22,12 @@
 	if(. && reagents.holder_full())
 		to_chat(owner, "Your balls finally feel full, again.")
 
-/obj/item/organ/genital/testicles/update_link(removing = FALSE)
-	. = ..()
-	if(. && !size_linked)
-		size = linked_organ.size
-		update()
-		size_linked = TRUE
+/obj/item/organ/genital/testicles/upon_link()
+	size = linked_organ.size
+	update_size()
+	update_appearance()
 
-/obj/item/organ/genital/testicles/update_size(new_size)
-	if(new_size)
-		size = CLAMP(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
+/obj/item/organ/genital/testicles/update_size(modified = FALSE)
 	switch(size)
 		if(BALLS_SIZE_MIN)
 			size_name = "average"

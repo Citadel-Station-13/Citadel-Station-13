@@ -68,7 +68,7 @@
 
 /obj/item/organ/genital/breasts/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	var/new_value = CLAMP(cached_size + modifier, min, max)
-	if(new_value == prev_size)
+	if(new_value == cached_size)
 		return
 	prev_size = cached_size
 	cached_size = new_value
@@ -97,7 +97,7 @@
 		var/status_effect = owner.has_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
 		if(enlargement && !status_effect)
 			owner.apply_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
-		else if(status_effect)
+		else if(!enlargement && status_effect)
 			owner.remove_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
 
 	if(rounded_cached < 16 && owner)//Because byond doesn't count from 0, I have to do this.

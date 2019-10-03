@@ -7,6 +7,7 @@
 	slot = ORGAN_SLOT_PENIS
 	masturbation_verb = "stroke"
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
+	linked_organ_slot = ORGAN_SLOT_TESTICLES
 	fluid_transfer_factor = 0.5
 	size = 2 //arbitrary value derived from length and girth for sprites.
 	layer_index = PENIS_LAYER_INDEX
@@ -17,13 +18,13 @@
 
 /obj/item/organ/genital/penis/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	var/new_value = CLAMP(length + modifier, min, max)
-	if(new_value == prev_length)
+	if(new_value == length)
 		return
 	prev_length = length
 	length = CLAMP(length + modifier, min, max)
 	update()
 
-/obj/item/organ/genital/penis/update_size()
+/obj/item/organ/genital/penis/update_size(modified = FALSE)
 	if(length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		if(owner)
 			to_chat(owner, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
@@ -51,10 +52,11 @@
 		var/status_effect = owner.has_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
 		if(enlargement && !status_effect)
 			owner.apply_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
-		else if(status_effect)
+		else if(!enlargement && status_effect)
 			owner.remove_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
 	if(linked_organ)
-		linked_organ.update_size(new_size - size)
+		linked_organ.size = CLAMP(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
+		linked_organ.update()
 	size = new_size
 
 	if(owner)

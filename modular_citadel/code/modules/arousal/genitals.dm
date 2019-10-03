@@ -16,7 +16,7 @@
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
-	var/linked_organ_slot //only one of the two organs needs this to be set up. update_link() will handle linking the rest.
+	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 
 /obj/item/organ/genital/Initialize(mapload, mob/living/carbon/human/H)
@@ -114,7 +114,6 @@
 /obj/item/organ/genital/proc/update_appearance()
 	if(!owner || owner.stat == DEAD)
 		aroused_state = FALSE
-	return
 
 /obj/item/organ/genital/on_life()
 	if(!reagents || !owner)
@@ -138,9 +137,13 @@
 
 /obj/item/organ/genital/proc/update_link(removing = FALSE)
 	if(!removing && owner)
+		if(linked_organ)
+			return
 		linked_organ = owner.getorganslot(linked_organ_slot)
 		if(linked_organ)
 			linked_organ.linked_organ = src
+			linked_organ.upon_link()
+			upon_link()
 			return TRUE
 	else
 		if(linked_organ)
@@ -148,11 +151,15 @@
 		linked_organ = null
 	return FALSE
 
+//post organ duo making arrangements.
+/obj/item/organ/genital/proc/upon_link()
+	return
+
 /obj/item/organ/genital/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(.)
 		update()
-		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update)
+		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
 /obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
@@ -313,6 +320,7 @@
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
+				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
 				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
 			else
 				standing += genital_overlay

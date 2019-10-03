@@ -74,7 +74,7 @@
 
 #define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
 
-#define STATUS_EFFECT_PENIS_ENLARGEMENT //More applied slowdown, just like the above.
+#define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
 /////////////
 // NEUTRAL //
 /////////////
