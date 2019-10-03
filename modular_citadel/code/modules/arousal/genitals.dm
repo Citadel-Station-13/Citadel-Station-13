@@ -211,7 +211,7 @@
 
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
 	. = ..()
-	if(!. && !(slot in GLOB.no_genitals_update_slots)) //the item was successfully equipped, and the chosen slot wasn't merely storage or hands.
+	if(!. && I && slot && !(slot in GLOB.no_genitals_update_slots)) //the item was successfully equipped, and the chosen slot wasn't merely storage or hands.
 		update_genitals()
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force)
