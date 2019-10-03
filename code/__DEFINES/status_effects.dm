@@ -72,6 +72,9 @@
 
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
+#define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
+
+#define STATUS_EFFECT_PENIS_ENLARGEMENT //More applied slowdown, just like the above.
 /////////////
 // NEUTRAL //
 /////////////

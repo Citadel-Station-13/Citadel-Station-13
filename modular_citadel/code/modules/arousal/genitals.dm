@@ -105,6 +105,9 @@
 		picked_organ.toggle_visibility(picked_visibility)
 	return
 
+/obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
+	return
+
 /obj/item/organ/genital/proc/update_size()
 	return
 
@@ -215,34 +218,23 @@
 	if(!QDELETED(src))
 		dna.species.handle_genitals(src)
 
-//fermichem procs
-/mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
-	dna.species.handle_genitals(src)//should work.
-	//dna.species.handle_breasts(src)
-
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()
-	var/organCheck = FALSE
-	var/breastCheck = FALSE
-	var/willyCheck = FALSE
 	if(!canbearoused)
-		ADD_TRAIT(src, TRAIT_PHARMA, "pharma")//Prefs prevent unwanted organs.
-		return
-	for(var/O in internal_organs)
-		if(istype(O, /obj/item/organ/genital))
-			organCheck = TRUE
-			if(istype(O, /obj/item/organ/genital/penis))
-				willyCheck = TRUE
-			if(istype(O, /obj/item/organ/genital/breasts))
-				breastCheck = TRUE
+		return FALSE
+
+	var/organCheck = locate(/obj/item/organ/genital) in internal_organs
+	var/breastCheck = getorganslot(ORGAN_SLOT_BREASTS)
+	var/willyCheck = getorganslot(ORGAN_SLOT_PENIS)
+
 	if(organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
 		if(MUTCOLORS)
 			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "[src.dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "[src.dna.species.fixed_mut_color]"
+				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
+				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
 				return
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "[dna.features["mcolor"]]"
@@ -252,7 +244,7 @@
 			dna.features["breasts_color"] = dna.features["cock_color"]
 		else if (willyCheck == FALSE)
 			dna.features["cock_color"] = dna.features["breasts_color"]
-	return
+	return TRUE
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
 	if(!H)//no args
@@ -263,6 +255,7 @@
 
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
+	H.remove_overlay(GENITALS_EXPOSED_LAYER)
 	//start scanning for genitals
 
 	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
@@ -329,6 +322,7 @@
 
 	if(LAZYLEN(fully_exposed))
 		H.overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
+		H.apply_overlay(GENITALS_EXPOSED_LAYER)
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
