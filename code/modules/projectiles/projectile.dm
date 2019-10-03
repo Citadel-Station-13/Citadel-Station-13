@@ -177,7 +177,7 @@
 					C.bleed(damage)
 					var/mob/living/carbon/human/H = C
 					if(prob(40))	//an addtional randomness to causing lasting bleeding, this heals in handle_blood at 0.5 per tick.
-						var/armorsave //all of these are assuming the projectile deals Brute, the tags are just to ensure correct defense checks
+						var/armorsave //all of these are assuming the projectile deals Brute, the tags are just to ensure correct defense checks.
 						if(flag == "bullet")
 							armorsave = H.getarmor(B, "bullet")
 						else if(flag == "energy")
