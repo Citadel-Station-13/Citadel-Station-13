@@ -421,6 +421,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#FFEBEB"
 	pH = 11.5
 	metabolization_rate = 5 * REAGENTS_METABOLISM
+	overdose_threshold = 40
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
@@ -440,6 +441,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
+
+/datum/reagent/medicine/synthflesh/overdose_start(mob/living/M)
+	metabolization_rate = 15 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/charcoal
 	name = "Charcoal"
