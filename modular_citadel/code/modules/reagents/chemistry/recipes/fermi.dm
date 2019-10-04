@@ -456,7 +456,7 @@
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
 	results = list("basic_buffer" = 1.5)
-	required_reagents = list("lye" = 0.2, "ethanol" = 0.5, "water" = 0.5, "lithium" = 0.5)
+	required_reagents = list("lye" = 0.3, "ethanol" = 0.6, "water" = 0.6)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:x
 	OptimalTempMin 	= 250
