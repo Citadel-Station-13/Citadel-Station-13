@@ -4,7 +4,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 */
 
 /obj/item/dogborg/jaws
-	var/cellcost = 0
 	name = "Dogborg jaws"
 	desc = "The jaws of the debug errors oh god."
 	icon = 'icons/mob/dogborg.dmi'
@@ -19,8 +18,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	name = "combat jaws"
 	desc = "The jaws of the law. Very sharp."
 	icon_state = "jaws"
-	force = 12
-	cellcost = 250
+	force = 10 //Lowered to match secborg. No reason it should be more than a secborg's baton.
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
 
 
@@ -34,12 +32,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
-	if(user.cell.charge <= cellcost)
-		to_chat(src,"<span class='danger'>Insufficent energy for jaws!</span>")
-		return
-	else
-		user.cell.use(cellcost)
-		user.do_attack_animation(A, ATTACK_EFFECT_BITE)
+	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
