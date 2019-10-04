@@ -24,15 +24,31 @@
 	var/list/frozen_crew = list()
 	var/list/frozen_items = list()
 
+	// Used for containing rare items traitors need to steal, so it's not
+	// game-over if they get iced
+	var/list/objective_items = list()
+	// A cache of theft datums so you don't have to re-create them for
+	// each item check
+	var/list/theft_cache = list()
+
 	var/storage_type = "crewmembers"
 	var/storage_name = "Cryogenic Oversight Control"
 	var/allow_items = TRUE
 
-/obj/machinery/computer/cryopod/ui_interact(mob/user = usr)
-	. = ..()
+/obj/machinery/computer/cryopod/New()
+	..()
+	for(var/T in potential_theft_objectives)
+		theft_cache += new T
+
+/obj/machinery/computer/cryopod/attack_ai()
+	attack_hand()
+
+/obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
+	if(!is_operational())
+		return
 
 	user.set_machine(src)
-	add_fingerprint(user)
+	add_fingerprint(usr)
 
 	var/dat
 
@@ -49,10 +65,14 @@
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
 	if(..())
-		return 1
+		return
+
+	if(!usr.canUseTopic(src))
+		return
 
 	var/mob/user = usr
 
+	user.set_machine(src)
 	add_fingerprint(user)
 
 	if(href_list["log"])
@@ -119,6 +139,8 @@
 	name = "Circuit board (Cryogenic Oversight Console)"
 	build_path = "/obj/machinery/computer/cryopod"
 
+/obj/machinery/computer/cryopod/contents_explosion()
+	return
 
 //Cryopods themselves.
 /obj/machinery/cryopod
@@ -176,10 +198,10 @@
 		/obj/item/gun/energy/laser/cyborg
 	)
 
-/obj/machinery/cryopod/Initialize()
+/obj/machinery/cryopod/Initialize(mapload)
 	. = ..()
 	update_icon()
-	find_control_computer(TRUE)
+	find_control_computer(mapload)
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
 	for(var/obj/machinery/computer/cryopod/C in get_area(src))
@@ -244,6 +266,9 @@
 
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
+	if(!control_computer)
+		find_control_computer()
+
 	var/mob/living/mob_occupant = occupant
 
 	//Update any existing objectives involving this mob.
