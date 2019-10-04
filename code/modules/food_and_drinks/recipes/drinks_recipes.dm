@@ -382,7 +382,7 @@
 	results = list("neurotoxin" = 2)
 	required_reagents = list("gargleblaster" = 1, "morphine" = 1)
 	//FermiChem vars: Easy to make, but hard to make potent
-	OptimalTempMin 		= 200 // Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMin 		= 100 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax		= 950 // Upper end for above
 	ExplodeTemp			= 999 //Temperature at which reaction explodes
 	OptimalpHMin		= 4.6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
@@ -816,10 +816,10 @@
 	id = "catnip_tea"
 	results = list("catnip_tea" = 3)
 	required_reagents = list("tea" = 5, "catnip" = 2)
-	
+
 /datum/chemical_reaction/commander_and_chief
-	name = "Commander and Chief" 
-	id = "commander_and_chief" 
-	results = list("commander_and_chief" = 50) 
+	name = "Commander and Chief"
+	id = "commander_and_chief"
+	results = list("commander_and_chief" = 50)
 	required_reagents = list("alliescocktail" = 50, "champagne" = 20, "doctorsdelight" = 10, "quintuple_sec" = 10, "screwdrivercocktail" = 10)
-	mix_message = "When your powers combine, I am Captain Pl-..."	
+	mix_message = "When your powers combine, I am Captain Pl-..."
