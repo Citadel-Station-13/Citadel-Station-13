@@ -82,9 +82,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		ui = new(user, src, ui_key, "crew", "crew monitor", 800, 600 , master_ui, state)
 		ui.open()
 
-/datum/crewmonitor/proc/show(mob/M, source)
+/datum/crewmonitor/proc/show(mob/M, source, state = GLOB.default_state)
 	ui_sources[M] = source
-	ui_interact(M)
+	ui_interact(M, state = state)
 
 /datum/crewmonitor/ui_host(mob/user)
 	return ui_sources[user]
