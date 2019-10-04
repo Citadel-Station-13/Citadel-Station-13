@@ -20,36 +20,66 @@
 	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) //Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
 	var/mode = null
 
+	var/menu = 1 //Which menu screen to display
+
 	//Used for logging people entering cryosleep and important items they are carrying.
 	var/list/frozen_crew = list()
 	var/list/frozen_items = list()
 
-	var/storage_type = "crewmembers"
-	var/storage_name = "Cryogenic Oversight Control"
+	// Used for containing rare items traitors need to steal, so it's not
+	// game-over if they get iced
+	var/list/objective_items = list()
+	// A cache of theft datums so you don't have to re-create them for
+	// each item check
+	var/list/theft_cache = list()
+
 	var/allow_items = TRUE
 
 /obj/machinery/computer/cryopod/attack_ai()
 	attack_hand()
 
-/obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
+/obj/machinery/computer/cryopod/ui_interact(mob/user = usr)
 	if(!is_operational())
 		return
 
 	user.set_machine(src)
 	add_fingerprint(user)
 
-	var/dat
+	var/dat = ""
 
-	dat += "<hr/><br/><b>[storage_name]</b><br/>"
-	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
-	dat += "<a href='?src=[REF(src)];log=1'>View storage log</a>.<br>"
-	if(allow_items)
-		dat += "<a href='?src=[REF(src)];view=1'>View objects</a>.<br>"
-		dat += "<a href='?src=[REF(src)];item=1'>Recover object</a>.<br>"
-		dat += "<a href='?src=[REF(src)];allitems=1'>Recover all objects</a>.<br>"
+	dat += "<h2>Welcome, [user.real_name].</h2><hr/>"
+	dat += "<br><br>"
 
-	user << browse(dat, "window=cryopod_console")
-	onclose(user, "cryopod_console")
+	switch(src.menu)
+		if(1)
+			dat += "<a href='byond://?src=[REF(src)];menu=2'>View crew storage log</a><br><br>"
+			if(allow_items)
+				dat += "<a href='byond://?src=[REF(src)];menu=3'>View objects storage log</a><br><br>"
+				dat += "<a href='byond://?src=[REF(src)];item=1'>Recover object</a><br><br>"
+				dat += "<a href='byond://?src=[REF(src)];allitems=1'>Recover all objects</a><br>"
+		if(2)
+			dat += "<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"
+			dat += "<h3>Recently stored Crew</h3><br/><hr/><br/>"
+			if(!frozen_crew.len)
+				dat += "There has been no storage usage at this terminal.<br/>"
+			else
+				for(var/person in frozen_crew)
+					dat += "[person]<br/>"
+			dat += "<hr/>"
+		if(3)
+			dat += "<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"
+			dat += "<h3>Recently stored objects</h3><br/><hr/><br/>"
+			if(!frozen_items.len)
+				dat += "There has been no storage usage at this terminal.<br/>"
+			else
+				for(var/obj/item/I in frozen_items)
+					dat += "[I.name]<br/>"
+			dat += "<hr/>"
+
+	var/datum/browser/popup = new(user, "cryopod_console", "Cryogenic System Control")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
 	if(..())
@@ -59,64 +89,68 @@
 
 	add_fingerprint(user)
 
-	if(href_list["log"])
-
-		var/dat = "<b>Recently stored [storage_type]</b><br/><hr/><br/>"
-		for(var/person in frozen_crew)
-			dat += "[person]<br/>"
-		dat += "<hr/>"
-
-		user << browse(dat, "window=cryolog")
-
-	if(href_list["view"])
-		if(!allow_items) return
-
-		var/dat = "<b>Recently stored objects</b><br/><hr/><br/>"
-		for(var/obj/item/I in frozen_items)
-			dat += "[I.name]<br/>"
-		dat += "<hr/>"
-
-		user << browse(dat, "window=cryoitems")
-
-	else if(href_list["item"])
+	if(href_list["item"])
 		if(!allowed(user))
 			to_chat(user, "<span class='warning'>Access Denied.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			updateUsrDialog()
 			return
 		if(!allow_items) return
 
 		if(frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			updateUsrDialog()
 			return
 
 		var/obj/item/I = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in frozen_items
+		playsound(src, "terminal_type", 25, 0)
 		if(!I)
 			return
 
 		if(!(I in frozen_items))
 			to_chat(user, "<span class='notice'>\The [I] is no longer in storage.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			updateUsrDialog()
 			return
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>")
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
-		I.forceMove(get_turf(src))
+		I.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(I)
 		frozen_items -= I
+		updateUsrDialog()
 
 	else if(href_list["allitems"])
+		playsound(src, "terminal_type", 25, 0)
 		if(!allowed(user))
 			to_chat(user, "<span class='warning'>Access Denied.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			updateUsrDialog()
 			return
 		if(!allow_items) return
 
 		if(frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>")
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		for(var/obj/item/I in frozen_items)
-			I.forceMove(get_turf(src))
+			I.forceMove(drop_location())
 			frozen_items -= I
+			updateUsrDialog()
 
+	else if (href_list["menu"])
+		src.menu = text2num(href_list["menu"])
+		playsound(src, "terminal_type", 25, 0)
+		updateUsrDialog()
+
+	ui_interact(usr)
 	updateUsrDialog()
 	return
 
@@ -250,12 +284,74 @@
 
 			despawn_occupant()
 
+#define CRYO_DESTROY 0
+#define CRYO_PRESERVE 1
+#define CRYO_OBJECTIVE 2
+
+/obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
+	for(var/datum/objective_item/steal/T in control_computer.theft_cache)
+		if(istype(I, T.targetitem) && T.check_special_completion(I))
+			return CRYO_OBJECTIVE
+	for(var/T in preserve_items)
+		if(istype(I, T) && !(I.type in do_not_preserve_items))
+			return CRYO_PRESERVE
+	return CRYO_DESTROY
+
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	if(!control_computer)
 		find_control_computer()
 
 	var/mob/living/mob_occupant = occupant
+
+	//Handle Borg stuff first
+	if(iscyborg(mob_occupant))
+		var/mob/living/silicon/robot/R = mob_occupant
+		if(!istype(R)) return ..()
+
+		R.contents -= R.mmi
+		qdel(R.mmi)
+		for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
+			for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
+				if(should_preserve_item(O) != CRYO_DESTROY) // Preserve important things inside the item
+					continue
+				O.forceMove(src)
+			R.module.remove_module(I, TRUE)	//delete the module itself so it doesn't transfer over.
+
+	//Drop all items into the pod.
+	for(var/obj/item/I in mob_occupant)
+		mob_occupant.doUnEquip(I)
+		I.forceMove(src)
+
+		if(I.contents.len) //Make sure we catch anything not handled by qdel() on the items.
+			if(should_preserve_item(I) != CRYO_DESTROY) // Don't remove the contents of things that need preservation
+				continue
+			for(var/obj/item/O in I.contents)
+				if(istype(O, /obj/item/tank)) //Stop eating pockets, you fuck!
+					continue
+				O.forceMove(src)
+
+	//Delete all items not on the preservation list.
+	var/list/items = contents
+	items -= occupant // Don't delete the occupant
+
+	for(var/obj/item/I in items)
+		if(istype(I, /obj/item/pda))
+			var/obj/item/pda/P = I
+			QDEL_NULL(P.id)
+			qdel(P)
+			continue
+
+		var/preserve = should_preserve_item(I)
+		if(preserve == CRYO_DESTROY)
+			qdel(I)
+		else if(control_computer && control_computer.allow_items)
+			control_computer.frozen_items += I
+			if(preserve == CRYO_OBJECTIVE)
+				control_computer.objective_items += I
+			I.loc = null
+		else
+			I.forceMove(loc)
 
 	//Update any existing objectives involving this mob.
 	for(var/datum/objective/O in GLOB.objectives)
@@ -313,30 +409,6 @@
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
 		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
-
-	for(var/obj/item/W in mob_occupant.GetAllContents())
-		if(W.loc.loc && (( W.loc.loc == loc ) || (W.loc.loc == control_computer)))
-			continue//means we already moved whatever this thing was in
-			//I'm a professional, okay
-		for(var/T in preserve_items)
-			if(istype(W, T))
-				if(control_computer && control_computer.allow_items)
-					control_computer.frozen_items += W
-					mob_occupant.transferItemToLoc(W, control_computer, TRUE)
-				else
-					mob_occupant.transferItemToLoc(W, loc, TRUE)
-
-	for(var/obj/item/W in mob_occupant.GetAllContents())
-		qdel(W)//because we moved all items to preserve away
-		//and yes, this totally deletes their bodyparts one by one, I just couldn't bother
-
-	if(iscyborg(mob_occupant))
-		var/mob/living/silicon/robot/R = occupant
-		if(!istype(R)) return ..()
-
-		R.contents -= R.mmi
-		qdel(R.mmi)
-
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
 		mob_occupant.ghostize(0) // Players who cryo out may not re-enter the round
@@ -344,6 +416,10 @@
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)
+
+#undef CRYO_DESTROY
+#undef CRYO_PRESERVE
+#undef CRYO_OBJECTIVE
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
 	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
