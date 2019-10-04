@@ -24,21 +24,9 @@
 	var/list/frozen_crew = list()
 	var/list/frozen_items = list()
 
-	// Used for containing rare items traitors need to steal, so it's not
-	// game-over if they get iced
-	var/list/objective_items = list()
-	// A cache of theft datums so you don't have to re-create them for
-	// each item check
-	var/list/theft_cache = list()
-
 	var/storage_type = "crewmembers"
 	var/storage_name = "Cryogenic Oversight Control"
 	var/allow_items = TRUE
-
-/obj/machinery/computer/cryopod/New()
-	..()
-	for(var/T in potential_theft_objectives)
-		theft_cache += new T
 
 /obj/machinery/computer/cryopod/attack_ai()
 	attack_hand()
@@ -48,7 +36,7 @@
 		return
 
 	user.set_machine(src)
-	add_fingerprint(usr)
+	add_fingerprint(user)
 
 	var/dat
 
@@ -65,14 +53,10 @@
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
 	if(..())
-		return
-
-	if(!usr.canUseTopic(src))
-		return
+		return TRUE
 
 	var/mob/user = usr
 
-	user.set_machine(src)
 	add_fingerprint(user)
 
 	if(href_list["log"])
@@ -134,6 +118,7 @@
 			frozen_items -= I
 
 	updateUsrDialog()
+	return
 
 /obj/item/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"
@@ -208,6 +193,7 @@
 		control_computer = C
 		if(C)
 			return C
+		break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
@@ -215,7 +201,7 @@
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
 
-	return null
+	return control_computer != null
 
 /obj/machinery/cryopod/close_machine(mob/user)
 	if(!control_computer)
@@ -383,7 +369,7 @@
 
 	var/generic_plsnoleave_message = " Please adminhelp before leaving the round, even if there are no administrators online!"
 
-	if(target == user && world.time - target.client.cryo_warned > 5 * 600)//if we haven't warned them in the last 5 minutes
+	if(target == user && world.time - target.client.cryo_warned > 5 MINUTES)//if we haven't warned them in the last 5 minutes
 		var/caught = FALSE
 		if(target.mind.assigned_role in GLOB.command_positions)
 			alert("<span class='userdanger'>You're a Head of Staff![generic_plsnoleave_message] Be sure to put your locker items back into your locker!</span>")
@@ -391,13 +377,13 @@
 		if(iscultist(target) || is_servant_of_ratvar(target))
 			to_chat(target, "<span class='userdanger'>You're a Cultist![generic_plsnoleave_message]</span>")
 			caught = TRUE
-		if(istype(SSticker.mode, /datum/antagonist/blob))
-			if(target.mind in GLOB.overminds)
-				alert("<span class='userdanger'>You're a Blob![generic_plsnoleave_message]</span>")
-				caught = TRUE
 		if(is_devil(target))
 			alert("<span class='userdanger'>You're a Devil![generic_plsnoleave_message]</span>")
 			caught = TRUE
+		if(istype(SSticker.mode, /datum/antagonist/gang))
+			if(target.mind.has_antag_datum(/datum/antagonist/gang))
+				alert("<span class='userdanger'>You're a Gangster![generic_plsnoleave_message]</span>")
+				caught = TRUE
 		if(istype(SSticker.mode, /datum/antagonist/rev))
 			if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
 				alert("<span class='userdanger'>You're a Head Revolutionary![generic_plsnoleave_message]</span>")
@@ -410,8 +396,9 @@
 			target.client.cryo_warned = world.time
 			return
 
-	if(!Adjacent(user))
+	if(!target || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
 		return
+		//rerun the checks in case of shenanigans
 
 	if(target == user)
 		visible_message("[user] starts climbing into the cryo pod.")
@@ -421,7 +408,6 @@
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
-
 	close_machine(target)
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
