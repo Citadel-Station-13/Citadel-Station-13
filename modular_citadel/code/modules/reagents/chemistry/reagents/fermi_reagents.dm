@@ -328,7 +328,6 @@
 	color = "#fbc314"
 	pH = 0
 	can_synth = TRUE
-	addProc  = TRUE
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
@@ -352,7 +351,6 @@
 	color = "#3853a4"
 	pH = 14
 	can_synth = TRUE
-	addProc  = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
 	if(holder.has_reagent("stabilizing_agent"))
