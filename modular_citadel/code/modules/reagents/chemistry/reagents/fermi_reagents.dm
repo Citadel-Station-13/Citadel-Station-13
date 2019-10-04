@@ -205,7 +205,7 @@
 	for(var/active_turf in react_turfs)
 		if(T == active_turf)
 			return
-	react_list += T
+	react_turfs += T
 	T.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
