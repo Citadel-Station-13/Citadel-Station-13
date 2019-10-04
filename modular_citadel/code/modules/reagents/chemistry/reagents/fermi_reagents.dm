@@ -177,7 +177,7 @@
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
 	can_synth = FALSE
-	var/react_turfs = list()
+	var/react_objs = list()
 
 /datum/reagent/fermi/nanite_b_gone/on_mob_life(mob/living/carbon/C)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
@@ -200,13 +200,12 @@
 	N.nanite_volume += -10*cached_purity
 	..()
 
-
-/datum/reagent/fermi/nanite_b_gone/reaction_turf(var/turf/T)
-	for(var/active_turf in react_turfs)
-		if(T == active_turf)
+datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
+	for(var/active_obj in react_objs)
+		if(O == active_obj)
 			return
-	react_turfs += T
-	T.emp_act(EMP_HEAVY)
+	react_objs += O
+	O.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Naninte bain"
