@@ -1665,7 +1665,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFD6" // very very light yellow
 	taste_description = "alkali" //who put ACID for NaOH ????
-	pH = 11
+	pH = 11.9
 
 /datum/reagent/drying_agent
 	name = "Drying agent"
