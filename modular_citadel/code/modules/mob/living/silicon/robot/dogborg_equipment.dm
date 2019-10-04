@@ -4,7 +4,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 */
 
 /obj/item/dogborg/jaws
-	var/cellcost
+	var/cellcost = 0
 	name = "Dogborg jaws"
 	desc = "The jaws of the debug errors oh god."
 	icon = 'icons/mob/dogborg.dmi'
@@ -20,7 +20,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	desc = "The jaws of the law. Very sharp."
 	icon_state = "jaws"
 	force = 12
-	cellcost = 1000 // Secborg can only harm with the baton, why does the K9 get a free module to do 12 damage with?
+	cellcost = 250
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
 
 
@@ -29,14 +29,17 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	desc = "Rubberized teeth designed to protect accidental harm. Sharp enough for specialized tasks however."
 	icon_state = "smalljaws"
 	force = 6
-	cellcost = 500 // Less cell use for the smaller jaws.
 	attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
 	var/status = 0
 
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
-	user.cell.use(cellcost)
-	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
+	if(user.cell.charge <= cellcost)
+		to_chat(src,"<span class='danger'>Insufficent energy for jaws!</span>")
+		return
+	else
+		user.cell.use(cellcost)
+		user.do_attack_animation(A, ATTACK_EFFECT_BITE)
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
@@ -352,7 +355,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		pixel_y = 10
 		update_icons()
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
-		cell.use(750) //Same as stunbaton
+		cell.use(750) //Less than a stunbaton since stunbatons hit everytime.
 		weather_immunities -= "lava"
 
 /mob/living/silicon/robot/throw_impact(atom/A)
