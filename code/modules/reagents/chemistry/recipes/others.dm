@@ -702,7 +702,7 @@
 	name = "liquid royal black carpet"
 	id = "royalblackcarpet"
 	results = list("royalblackcarpet" = 2)
-	required_reagents = list("carpet" = 1, "black_pepper" = 1)
+	required_reagents = list("carpet" = 1, "blackpepper" = 1)
 
 /datum/chemical_reaction/carpet/royalblue
 	name = "liquid royal blue carpet"
