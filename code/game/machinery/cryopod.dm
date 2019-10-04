@@ -333,7 +333,7 @@
 
 	//Delete all items not on the preservation list.
 	var/list/items = contents
-	items -= occupant // Don't delete the occupant
+	items -= mob_occupant // Don't delete the occupant
 
 	for(var/obj/item/I in items)
 		if(istype(I, /obj/item/pda))
