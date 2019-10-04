@@ -323,9 +323,11 @@
 		return FALSE
 	if(!resilience)
 		resilience = initial(trauma.resilience)
+	if(!owner)
+		return FALSE
 	if(owner.stat == DEAD)
 		return FALSE
-		
+
 	var/resilience_tier_count = 0
 	for(var/X in traumas)
 		if(istype(X, trauma))

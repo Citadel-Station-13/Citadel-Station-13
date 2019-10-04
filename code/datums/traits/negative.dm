@@ -345,10 +345,12 @@
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+	var/datum/brain_trauma/severe/mute/mute
 
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(TRAIT_MUTE, TRAUMA_RESILIENCE_SURGERY)
+	mute = new
+	H.gain_trauma(mute, TRAUMA_RESILIENCE_SURGERY)
 
 /datum/quirk/mute/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
