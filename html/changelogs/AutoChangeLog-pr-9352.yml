@@ -1,0 +1,4 @@
+author: "JTGSZ"
+delete-after: True
+changes: 
+  - tweak: "Gave Qualifies_for_Rank Check back its checks in job controller."

@@ -319,9 +319,11 @@
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
@@ -339,9 +341,11 @@
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)

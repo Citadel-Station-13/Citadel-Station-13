@@ -42,26 +42,32 @@
 			if (500 to 750)
 				for(var/turf/turf in range(1,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.1
 
 			if (751 to 1100)
 				for(var/turf/turf in range(2,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.2
 
 			if (1101 to 1500) //If you're crafty
 				for(var/turf/turf in range(3,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.3
 
 			if (1501 to 2500) //requested
 				for(var/turf/turf in range(4,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.4
 
 			if (2501 to 5000)
 				for(var/turf/turf in range(5,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.5
 
 			if (5001 to INFINITY)
 				for(var/turf/turf in range(6,T))
 					new /obj/effect/hotspot(turf)
+				volume*=1.6
 
 
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
@@ -84,7 +90,7 @@
 
 	if (pH > 10) //if alkaline, small explosion.
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round((volume/30)*(pH-9)), T, 0, 0)
+		e.set_up(round((volume/28)*(pH-9)), T, 0, 0)
 		e.start()
 
 	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
@@ -155,12 +161,16 @@
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!
 	var/turf/T = get_turf(my_atom)
-	var/mob/living/simple_animal/slime/S = new(T,"green")
-	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	S.name = "Living teratoma"
-	S.real_name = "Living teratoma"
-	S.rabid = 1//Make them an angery boi
-	S.color = "#810010"
+	var/amount_to_spawn = round((volume/100), 1)
+	if(amount_to_spawn <= 0)
+		amount_to_spawn = 1
+	for(var/i in 1 to amount_to_spawn)
+		var/mob/living/simple_animal/slime/S = new(T,"green")
+		S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+		S.name = "Living teratoma"
+		S.real_name = "Living teratoma"
+		S.rabid = 1//Make them an angery boi
+		S.color = "#810010"
 	my_atom.reagents.clear_reagents()
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
@@ -371,11 +381,15 @@
 	PurityMin		= 0.5
 
 /datum/chemical_reaction/fermi/hatmium/FermiExplode(src, var/atom/my_atom, volume, temp, pH)
-	var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
-	hat.animate_atom_living()
+	var/amount_to_spawn = round((volume/100), 1)
+	if(amount_to_spawn <= 0)
+		amount_to_spawn = 1
+	for(var/i in 1 to amount_to_spawn)
+		var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
+		hat.animate_atom_living()
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The makes an off sounding pop, as a hat suddenly climbs out of the beaker!</b></span>")
+		to_chat(M, "<span class='warning'>The [my_atom] makes an off sounding pop, as a hat suddenly climbs out of it!</b></span>")
 	my_atom.reagents.clear_reagents()
 
 /datum/chemical_reaction/fermi/furranium
@@ -438,8 +452,8 @@
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 2
-	OptimalpHMax 	= 6
+	OptimalpHMin 	= 0
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4
@@ -460,14 +474,14 @@
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
 	results = list("basic_buffer" = 1.5)
-	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "water" = 0.5)
+	required_reagents = list("lye" = 0.3, "ethanol" = 0.6, "water" = 0.6)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:x
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 5
-	OptimalpHMax 	= 12
+	OptimalpHMin 	= 0
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4

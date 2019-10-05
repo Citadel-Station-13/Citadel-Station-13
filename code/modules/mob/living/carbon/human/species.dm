@@ -133,10 +133,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	return
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
-/datum/species/proc/qualifies_for_rank(rank, list/features)
-	if(rank in GLOB.command_positions)
-		return 0
-	return 1
+/datum/species/proc/qualifies_for_rank(rank, list/features) //SPECIES JOB RESTRICTIONS
+	//if(rank in GLOB.command_positions) Left as an example: The format qualifies for rank takes.
+	//	return 0 //It returns false when it runs the proc so they don't get jobs from the global list.
+	return 1 //It returns 1 to say they are a-okay to continue.
 
 //Will regenerate missing organs
 /datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
@@ -1338,10 +1338,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
-		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
-			. -= 2
-		else if(istype(T) && T.allow_thrust(0.01, H))
-			. -= 2
+		if(istype(J) && J.full_speed && J.allow_thrust(0.005, H))	//Prevents stacking
+			. -= 0.4
+		else if(istype(T) && T.allow_thrust(0.005, H))
+			. -= 0.4
 
 	if(!ignoreslow && gravity)
 		if(H.wear_suit)
@@ -1821,67 +1821,36 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!target.resting)
 			target.adjustStaminaLoss(5)
 
+		if(target.is_shove_knockdown_blocked())
+			return
 
 		var/turf/target_oldturf = target.loc
 		var/shove_dir = get_dir(user.loc, target_oldturf)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
-		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
-		if(target_collateral_human)
+		if(target_collateral_human && !target_collateral_human.resting)
 			shove_blocked = TRUE
 		else
+			target_collateral_human = null
 			target.Move(target_shove_turf, shove_dir)
 			if(get_turf(target) == target_oldturf)
-				if(target_shove_turf.density)
-					shove_blocked = TRUE
-				else
-					var/thoushallnotpass = FALSE
-					for(var/obj/O in target_shove_turf)
-						if(istype(O, /obj/structure/table))
-							target_table = O
-						else if(!O.CanPass(src, target_shove_turf))
-							shove_blocked = TRUE
-							thoushallnotpass = TRUE
-					if(thoushallnotpass)
-						target_table = null
+				shove_blocked = TRUE
 
-		if(target.is_shove_knockdown_blocked())
-			return
-
-		if(shove_blocked || target_table)
-			var/directional_blocked = FALSE
-			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
-				var/target_turf = get_turf(target)
-				for(var/obj/O in target_turf)
-					if(O.flags_1 & ON_BORDER_1 && O.dir == shove_dir && O.density)
-						directional_blocked = TRUE
-						break
-				if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
-					for(var/obj/O in target_shove_turf)
-						if(O.flags_1 & ON_BORDER_1 && O.dir == turn(shove_dir, 180) && O.density)
-							directional_blocked = TRUE
-							break
+		if(shove_blocked && !target.buckled)
+			var/directional_blocked = !target.Adjacent(target_shove_turf)
 			var/targetatrest = target.resting
-			if(((!target_table && !target_collateral_human) || directional_blocked) && !targetatrest)
+			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "knocking them down")
-			else if(target_table)
-				if(!targetatrest)
-					target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
-					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
-				target.forceMove(target_shove_turf)
-				log_combat(user, target, "shoved", "onto [target_table]")
 			else if(target_collateral_human && !targetatrest)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-				if(!target_collateral_human.resting)
-					target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
