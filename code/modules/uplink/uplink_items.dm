@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Shredder Kit"
 	desc = "A truly horrific weapon designed simply to maim its victim, the CX Shredder is banned by several intergalactic treaties. \
 			This kit contains one CX Shredder with an assortment of six spare magazines, two fragmentation grenades, a stimulants injector, and a bar of soap."
-	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
+	item = /obj/item/storage/backpack/duffelbag/syndie/shredder
 	cost = 25 //Worth 41
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A brutally simple double barrel shotgun, precut for portability. \
 			Designed for close quarter target elimination. Pre-loaded with buckshot shells"
 	item = /obj/item/gun/ballistic/revolver/doublebarrel/sawn
-	cost = 10
+	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/munitions/shotgun
@@ -634,7 +634,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun
-	cost = 2
+	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/buck
@@ -653,14 +653,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			Shoots multiple pellets that will set any target hit on fire. Great against crowds."
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/ammo/shotgun/scatter
 	name = "12g Scatter Laser shot Slugs"
 	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun. \
 			Mostly useful against hostiles using bullet proof gear."
 	item = /obj/item/ammo_box/magazine/m12g/scatter
-	cost = 4 // most armor has less laser protection then bullet
+	cost = 3 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
