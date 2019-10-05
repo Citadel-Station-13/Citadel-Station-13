@@ -49,6 +49,8 @@
 // Simple animals have only one belly.  This creates it (if it isn't already set up)
 /mob/living/simple_animal/init_vore()
 	vore_init = TRUE
+	if(CHECK_BITFIELD(flags_1, HOLOGRAM_1))
+		return
 	if(vore_organs.len)
 		return
 	if(no_vore) //If it can't vore, let's not give it a stomach.
@@ -104,6 +106,9 @@
 
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user) || user.stat) return
+
+	if(!vore_active)
+		return
 
 	if(vore_selected.digest_mode == DM_HOLD)
 		var/confirm = alert(usr, "Enabling digestion on [name] will cause it to digest all stomach contents. Using this to break OOC prefs is against the rules. Digestion will disable itself after 20 minutes.", "Enabling [name]'s Digestion", "Enable", "Cancel")

@@ -60,18 +60,6 @@
 		B.can_taste = 1
 		return TRUE
 
-/*
-// Hide vore organs in contents
-//
-/datum/proc/view_variables_filter_contents(list/L)
-	return 0
-
-/mob/living/view_variables_filter_contents(list/L)
-	. = ..()
-	var/len_before = L.len
-	L -= vore_organs
-	. += len_before - L.len*/
-
 // Handle being clicked, perhaps with something to devour
 //
 
@@ -121,21 +109,12 @@
 /mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
-/*
-/mob/living/proc/eat_held_mob(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	var/belly
-	if(user != pred)
-		belly = input("Choose Belly") in pred.vore_organs
-	else
-		belly = pred.vore_selected
-	return perform_the_nom(user, prey, pred, belly)*/
 
 /mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-//	return//disabled until I can make that toggle work
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
@@ -182,9 +161,13 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+
+	// incredibly contentious eating noises time
+	var/turf/source = get_turf(user)
+	var/sound/eating = GLOB.vore_sounds[belly.vore_sound]
+	for(var/mob/living/M in get_hearers_in_view(3, source))
 		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-			playsound(get_turf(user),"[belly.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+			SEND_SOUND(M, eating)
 
 	// Actually shove prey into the belly.
 	belly.nom_mob(prey, user)
@@ -214,41 +197,7 @@
 
 //
 //End vore code.
-/*
-	//Handle case: /obj/item/holder
-		if(/obj/item/holder/micro)
-			var/obj/item/holder/H = I
 
-			if(!isliving(user)) return 0 // Return 0 to continue upper procs
-			var/mob/living/attacker = user  // Typecast to living
-
-			if (is_vore_predator(src))
-				for (var/mob/living/M in H.contents)
-					attacker.eat_held_mob(attacker, M, src)
-				return 1 //Return 1 to exit upper procs
-			else
-				log_attack("[attacker] attempted to feed [H.contents] to [src] ([src.type]) but it failed.")
-
- // I just can't imagine this not being complained about
-	//Handle case: /obj/item/radio/beacon
-		if(/obj/item/radio/beacon)
-			var/confirm = alert(user, "[src == user ? "Eat the beacon?" : "Feed the beacon to [src]?"]", "Confirmation", "Yes!", "Cancel")
-			if(confirm == "Yes!")
-				var/bellychoice = input("Which belly?","Select A Belly") in src.vore_organs
-				var/datum/belly/B = src.vore_organs[bellychoice]
-				src.visible_message("<span class='warning'>[user] is trying to stuff a beacon into [src]'s [bellychoice]!</span>","<span class='warning'>[user] is trying to stuff a beacon into you!</span>")
-				if(do_after(user,30,src))
-					user.drop_item()
-					I.loc = src
-					B.internal_contents += I
-					src.visible_message("<span class='warning'>[src] is fed the beacon!</span>","You're fed the beacon!")
-					playsound(get_turf(src), B.vore_sound,50,0,-6,0)
-					return 1
-				else
-					return 1 //You don't get to hit someone 'later'
-
-	return 0
-*/
 
 //
 // Our custom resist catches for /mob/living
@@ -272,7 +221,7 @@
 	if(isbelly(loc))
 		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
-		src.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)
+		SEND_SOUND(src, preyloop)
 	else
 		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
 

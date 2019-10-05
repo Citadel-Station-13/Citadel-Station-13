@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed people being shovable hrough windows, windoors and the such."
+  - rscadd: "You can now shove people into disposal bins."
+  - refactor: "refactored altdisarm(), ergo the \"shoving people around\" proc."

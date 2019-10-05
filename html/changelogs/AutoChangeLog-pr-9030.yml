@@ -1,0 +1,4 @@
+author: "CameronWoof"
+delete-after: True
+changes: 
+  - bugfix: "Attaching a beaker that contains water to an IV stand no longer causes a visual glitch"

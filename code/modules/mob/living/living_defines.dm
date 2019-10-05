@@ -2,7 +2,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	pressure_resistance = 10
 
 	var/resize = 1 //Badminnery resize
@@ -77,6 +77,7 @@
 	var/stun_absorption = null //converted to a list of stun absorption sources this mob has when one is added
 
 	var/blood_volume = 0 //how much blood the mob has
+	var/blood_ratio = 1 //How much blood the mob needs, in terms of ratio (i.e 1.2 will require BLOOD_VOLUME_NORMAL of 672) DO NOT GO ABOVE 3.55 Well, actually you can but, then they can't get enough blood.
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
@@ -109,3 +110,5 @@
 	//List of active diseases
 	var/list/diseases = list() // list of all diseases in a mob
 	var/list/disease_resistances = list()
+
+	var/drag_slowdown = TRUE //Whether the mob is slowed down when dragging another prone mob

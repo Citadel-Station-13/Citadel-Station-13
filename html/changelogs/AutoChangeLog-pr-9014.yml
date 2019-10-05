@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes freshly cloned people starting with undershirts. Fixes random characters possibly rolling with undergarments of the opposite gender (Doesn't affect preferences' freedom of choice)."

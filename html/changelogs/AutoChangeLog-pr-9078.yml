@@ -1,0 +1,7 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - rscdel: "Removed racism"
+  - tweak: "Teleporter calibration actually matters to all roundstart players"
+  - balance: "Slows down teleportation with the console/hub/teleporter setup if you care for your species."
+  - balance: "Dedicated non-humans can now get hulk without having to become human."

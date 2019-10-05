@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - admin: "Bugtesting zone upgrades for easy bug/game testing"

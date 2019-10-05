@@ -281,6 +281,17 @@
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[GLOB.TAB]Round ID: <b>[info]</b>"
+
+	var/list/voting_results = SSvote.stored_gamemode_votes
+
+	if(length(voting_results))
+		parts += "[GLOB.TAB]Voting: "
+		var/total_score = 0
+		for(var/choice in voting_results)
+			var/score = voting_results[choice]
+			total_score += score
+			parts += "[GLOB.TAB][GLOB.TAB][choice]: [score]"
+
 	parts += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -297,6 +308,13 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[GLOB.TAB]<i>Nobody died this shift!</i>"
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		parts += "[GLOB.TAB]Threat level: [mode.threat_level]"
+		parts += "[GLOB.TAB]Threat left: [mode.threat]"
+		parts += "[GLOB.TAB]Executed rules:"
+		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
+			parts += "[GLOB.TAB][GLOB.TAB][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost] threat"
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

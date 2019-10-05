@@ -30,24 +30,16 @@
 		"<span class='info'>You kneel[M == user ? null : " next to [M]"] and begin a prayer to [deity_name].</span>")
 
 	praying = TRUE
-	if(do_after(user, 100, target = M))
+	if(do_after(user, 20, target = M))
 		if(istype(M, /mob/living/carbon/human)) // This probably should not work on catpeople. They're unholy abominations.
 			var/mob/living/carbon/human/target = M
-
-			if(iscultist(M) || is_servant_of_ratvar(M)) //ripped from holywater code.
-				if(iscultist(M))
-					SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
-				else if(is_servant_of_ratvar(M))
-					remove_servant_of_ratvar(M)
-
+			M.reagents.add_reagent("holywater", 5)
 			to_chat(target, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
 			target.adjustToxLoss(-5, TRUE, TRUE)
 			target.adjustOxyLoss(-5)
 			target.adjustBruteLoss(-5)
 			target.adjustFireLoss(-5)
-
 			praying = FALSE
-
 	else
 		to_chat(user, "<span class='notice'>Your prayer to [deity_name] was interrupted.</span>")
 		praying = FALSE

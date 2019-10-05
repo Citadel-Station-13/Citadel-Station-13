@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
-	radio_channel = "Supply"
+	radio_channel = RADIO_CHANNEL_SUPPLY
 
 	bot_type = MULE_BOT
 	model = "MULE"
@@ -115,6 +115,7 @@
 	return
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 	if(emagged < 1)
 		emagged = TRUE
 	if(!open)
@@ -122,6 +123,7 @@
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, 0)
+	return TRUE
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)

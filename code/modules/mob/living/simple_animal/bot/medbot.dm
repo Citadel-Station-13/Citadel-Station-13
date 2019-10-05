@@ -17,7 +17,7 @@
 	status_flags = (CANPUSH | CANSTUN)
 
 	radio_key = /obj/item/encryptionkey/headset_med
-	radio_channel = "Medical"
+	radio_channel = RADIO_CHANNEL_MEDICAL
 
 	bot_type = MED_BOT
 	model = "Medibot"
@@ -240,7 +240,7 @@
 			step_to(src, (get_step_away(src,user)))
 
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)

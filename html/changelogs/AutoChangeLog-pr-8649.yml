@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "The default amount of z-levels reserved specifically for space ruin generation has been increased from 1 to 2"
