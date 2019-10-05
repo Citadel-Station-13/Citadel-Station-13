@@ -1,3 +1,16 @@
+/datum/round_event_control/jacqueline
+	name = "Jacqueline the Pumpqueen"
+	holidayID = "Jacqueline"
+	typepath = /datum/round_event/jacq
+	weight = -1							//forces it to be called, regardless of weight
+	max_occurrences = 1
+	earliest_start = 0 MINUTES
+
+/datum/round_event/jaqc/start()
+	..()
+	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_living_list)
+		new /mob/living/jacq(Poly.loc)//She poofs on init, so it doesn't matter, so long as poly exists.
+
 //Whacha doing in here like? Yae wan tae ruin ta magicks?
 /mob/living/jacq
 	name = "Jacqueline the Pumpqueen"
@@ -11,6 +24,8 @@
 	var/tricked = list() //Those who have been tricked
 	var/progression = list() //Keep track of where people are in the story.
 
+/mob/living/jacq/Initialize()
+	poof()
 
 /mob/living/jacq/Destroy() //I.e invincible
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
@@ -18,7 +33,6 @@
 	var/mob/living/jacq/Jacq = new src.type(loc)
 	Jacq.tricked = tricked
 	Jacq.progression = progression
-	Jacq.poof()
 	..()
 
 /mob/living/jacq/death() //What is alive may never die
