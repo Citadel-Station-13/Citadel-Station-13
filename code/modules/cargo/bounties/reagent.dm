@@ -109,10 +109,9 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/patron,\
 		/datum/reagent/consumable/ethanol/quadruple_sec,\
 		/datum/reagent/consumable/ethanol/quintuple_sec,\
-		/datum/reagent/consumable/bluecherryshake,\
 		/datum/reagent/consumable/doctor_delight,\
 		/datum/reagent/consumable/ethanol/silencer)
-		
+
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name

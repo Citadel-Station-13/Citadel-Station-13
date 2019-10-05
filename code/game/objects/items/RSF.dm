@@ -134,12 +134,14 @@ RSF
 	return
 
 /obj/item/cookiesynth/emag_act(mob/user)
+	. = ..()
 	obj_flags ^= EMAGGED
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
 	else
 		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
-		toxin = 0
+		toxin = FALSE
+	return TRUE
 
 /obj/item/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
@@ -180,7 +182,7 @@ RSF
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
-		S.reagents.add_reagent("chloralhydratedelayed", 10)
+		S.reagents.add_reagent("chloralhydrate", 10)
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

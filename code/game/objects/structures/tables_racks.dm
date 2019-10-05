@@ -21,6 +21,7 @@
 	anchored = TRUE
 	layer = TABLE_LAYER
 	climbable = TRUE
+	obj_flags = CAN_BE_HIT|SHOVABLE_ONTO
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
@@ -115,6 +116,9 @@
 	log_combat(user, pushed_mob, "placed")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='danger'>Throwing [pushed_mob] onto the table might hurt them!</span>")
+		return
 	var/added_passtable = FALSE
 	if(!pushed_mob.pass_flags & PASSTABLE)
 		added_passtable = TRUE
@@ -125,13 +129,22 @@
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
 	pushed_mob.Knockdown(40)
-	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
-								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
-	log_combat(user, pushed_mob, "pushed")
+	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
+								"<span class='userdanger'>[user] slams you onto [src]!</span>")
+	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+
+/obj/structure/table/shove_act(mob/living/target, mob/living/user)
+	if(!target.resting)
+		target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
+		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	target.forceMove(src.loc)
+	log_combat(user, target, "shoved", "onto [src] (table)")
+	return TRUE
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -254,6 +267,53 @@
 	qdel(src)
 
 /obj/structure/table/glass/narsie_act()
+	color = NARSIE_WINDOW_COLOUR
+	for(var/obj/item/shard/S in debris)
+		S.color = NARSIE_WINDOW_COLOUR
+
+/*
+ * Plasmaglass tables
+ */
+/obj/structure/table/plasmaglass
+	name = "plasmaglass table"
+	desc = "A glasstable, but it's pink and more sturdy. What will Nanotrasen design next with plasma?"
+	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
+	icon_state = "plasmaglass_table"
+	climbable = TRUE
+	buildstack = /obj/item/stack/sheet/plasmaglass
+	canSmoothWith = null
+	max_integrity = 270
+	resistance_flags = ACID_PROOF
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	var/list/debris = list()
+
+/obj/structure/table/plasmaglass/New()
+	. = ..()
+	debris += new frame
+	debris += new /obj/item/shard/plasma
+
+/obj/structure/table/plasmaglass/Destroy()
+	QDEL_LIST(debris)
+	. = ..()
+
+/obj/structure/table/plasmaglass/proc/check_break(mob/living/M)
+	return
+
+/obj/structure/table/plasmaglass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(disassembled)
+			..()
+			return
+		else
+			var/turf/T = get_turf(src)
+			playsound(T, "shatter", 50, 1)
+			for(var/X in debris)
+				var/atom/movable/AM = X
+				AM.forceMove(T)
+				debris -= AM
+	qdel(src)
+
+/obj/structure/table/plasmaglass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/shard/S in debris)
 		S.color = NARSIE_WINDOW_COLOUR

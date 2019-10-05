@@ -128,6 +128,18 @@
 	result = /obj/item/reagent_containers/food/snacks/pigblanket
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/corndog
+	name = "Corndog meal"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/datum/reagent/consumable/mustard = 5,
+		/datum/reagent/consumable/ketchup = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/corndog
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/ratkebab
 	name = "Rat Kebab"
 	reqs = list(

@@ -65,6 +65,7 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
@@ -73,6 +74,7 @@
 		update_icon()
 	playsound(src, "sparks", 75, 1, -1)
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
+	return TRUE
 
 /obj/machinery/recycler/update_icon()
 	..()

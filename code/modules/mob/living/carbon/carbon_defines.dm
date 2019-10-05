@@ -2,7 +2,7 @@
 	gender = MALE
 	pressure_resistance = 15
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
 	var/list/stomach_contents		= list()
@@ -61,6 +61,5 @@
 	var/next_hallucination = 0
 	var/cpr_time = 1 //CPR cooldown.
 	var/damageoverlaytemp = 0
-	var/stamdamageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects

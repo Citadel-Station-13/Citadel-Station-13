@@ -59,6 +59,9 @@
 /obj/item/ammo_casing/energy/laser/redtag/hitscan
 	projectile_type = /obj/item/projectile/beam/lasertag/redtag/hitscan
 
+/obj/item/ammo_casing/energy/laser/redtag/hitscan/holy
+	projectile_type = /obj/item/projectile/beam/lasertag/redtag/hitscan/holy
+
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50
@@ -68,3 +71,9 @@
 	projectile_type = /obj/item/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
+
+/obj/item/ammo_casing/energy/laser/weak
+	projectile_type = /obj/item/projectile/beam/weak/minigun
+	e_cost = 10
+	fire_sound = 'sound/weapons/gatling.ogg'
+	click_cooldown_override = 1
