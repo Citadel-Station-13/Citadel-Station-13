@@ -1,7 +1,6 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define PLAYER_SCALING 1.5
 #define CHALLENGE_TIME_LIMIT 3000
-#define CHALLENGE_MIN_PLAYERS 50
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
@@ -62,7 +61,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
-    
+
   GLOB.war_declared = TRUE
 	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
 	var/actual_players = GLOB.joined_player_list.len - nukeops.len
@@ -79,11 +78,6 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
 
-	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
-	var/actual_players = GLOB.joined_player_list.len - nukeops.len
-	if(actual_players < CHALLENGE_MIN_PLAYERS)
-		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
-		return FALSE
 	if(!user.onSyndieBase())
 		to_chat(user, "You have to be at your base to use this.")
 		return FALSE
@@ -102,5 +96,4 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
-#undef CHALLENGE_MIN_PLAYERS
 #undef CHALLENGE_SHUTTLE_DELAY
