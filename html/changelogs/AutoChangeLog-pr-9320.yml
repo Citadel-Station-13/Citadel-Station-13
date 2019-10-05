@@ -1,0 +1,5 @@
+author: "Ghommie (original PR by harmonyn)"
+delete-after: True
+changes: 
+  - balance: "Resisting out of bucklecuffs takes more/less time depending on the handcuffs you used, i.e., fake handcuffs will not bucklecuff someone for ages."
+  - tweak: "fake handcuffs shouldn't no longer demoralize restrained criminals scums."

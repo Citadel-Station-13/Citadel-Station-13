@@ -81,6 +81,7 @@
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
 	. = ..()
@@ -105,6 +106,7 @@
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/datum/component/mobhook
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
@@ -391,6 +393,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bspace_biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/bag/bio/holding/ComponentInitialize()
 	. = ..()

@@ -1,0 +1,6 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - balance: "The point production mode of radiation collectors has been reverted to the original behavior of using all of the stored power every process cycle instead of just 4% of it"
+  - tweak: "Radiation collectors now display the amount of power/research points they're producing per minute rather than per process cycle, which should hopefully clear up a lot of confusion."
+  - tweak: "Radiation collectors also display what's happening to the gas within them, which should make it a lot more obvious as to how you get tritium."

@@ -13,11 +13,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	circuit = /obj/item/circuitboard/computer/card
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
-	var/authenticated = 0
 	var/mode = 0
 	var/printing = null
-	var/list/region_access = null
-	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
 
 	//Cooldown for closing positions in seconds

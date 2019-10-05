@@ -215,8 +215,7 @@ SLIME SCANNER
 		msg += "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>\n"
 	if(M.radiation)
 		msg += "\t<span class='alert'>Subject is irradiated.</span>\n"
-		if(advanced)
-			msg += "\t<span class='info'>Radiation Level: [M.radiation]%.</span>\n"
+		msg += "\t<span class='info'>Radiation Level: [M.radiation] rad</span>\n"
 
 	if(advanced && M.hallucinating())
 		msg += "\t<span class='info'>Subject is hallucinating.</span>\n"

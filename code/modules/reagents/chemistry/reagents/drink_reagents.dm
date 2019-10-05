@@ -13,6 +13,7 @@
 	glass_icon_state = "glass_orange"
 	glass_name = "glass of orange juice"
 	glass_desc = "Vitamins! Yay!"
+	pH = 3.3
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getOxyLoss() && prob(30))
@@ -45,6 +46,7 @@
 	glass_icon_state = "glass_green"
 	glass_name = "glass of lime juice"
 	glass_desc = "A glass of sweet-sour lime juice."
+	pH = 2.2
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getToxLoss() && prob(20))
@@ -125,6 +127,7 @@
 	glass_icon_state  = "lemonglass"
 	glass_name = "glass of lemon juice"
 	glass_desc = "Sour..."
+	pH = 2
 
 /datum/reagent/consumable/banana
 	name = "Banana Juice"
@@ -883,3 +886,23 @@
 		to_chat(M, "<span class = 'notice'>[pick("Diamond skies where white deer fly.","Sipping strawberry tea.","Silver raindrops drift through timeless, Neverending June.","Crystal ... pearls free, with love!","Beaming love into me.")]</span>")
 	..()
 	. = 1
+
+/datum/reagent/consumable/catnip_tea
+	name = "Catnip Tea"
+	id = "catnip_tea"
+	description = "A sleepy and tasty catnip tea!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "sugar and catnip"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of catnip tea"
+	glass_desc = "A purrfect drink for a cat."
+
+/datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(min(50 - M.getStaminaLoss(), 3))
+	if(prob(20))
+		M.emote("nya")
+	if(prob(20))
+		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
+	M.adjustArousalLoss(5)
+	..()

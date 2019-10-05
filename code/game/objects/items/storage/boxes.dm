@@ -33,6 +33,7 @@
 	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //exploits ahoy
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
