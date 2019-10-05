@@ -1,4 +1,4 @@
-GLOBAL_INIT_LIST(singularity_beacons)
+GLOBAL_VAR_INIT(singularity_counter, 0)
 
 #define METEOR_DISASTER_MODIFIER 0.5
 
@@ -29,7 +29,7 @@ GLOBAL_INIT_LIST(singularity_beacons)
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return
-	GLOB.singularity_beacons += src
+	GLOB.singularity_counter++
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
 		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
 	for(var/obj/singularity/singulo in GLOB.singularities)
@@ -49,7 +49,7 @@ GLOBAL_INIT_LIST(singularity_beacons)
 	active = 0
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
-	GLOB.singularity_beacons -= src
+	GLOB.singularity_counter--
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
 		W.weight -= round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
 
