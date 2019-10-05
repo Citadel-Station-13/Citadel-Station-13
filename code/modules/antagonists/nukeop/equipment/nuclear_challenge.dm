@@ -1,6 +1,8 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define PLAYER_SCALING 1.5
 #define CHALLENGE_TIME_LIMIT 3000
+#define CHALLENGE_PLAYERS_TARGET 50 //target players population. anything below is a malus to the challenge tc bonus.
+#define TELECRYSTALS_MALUS_SCALING 1 //the higher the value, the bigger the malus.
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
@@ -65,8 +67,11 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
   GLOB.war_declared = TRUE
 	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
 	var/actual_players = GLOB.joined_player_list.len - nukeops.len
+	var/tc_malus = 0
+	if(actual_players < CHALLENGE_PLAYERS_TARGET)
+		tc_malus = (CHALLENGE_TELECRYSTALS - actual_players * INVERSE(CHALLENGE_PLAYERS_TARGET)) * TELECRYSTALS_MALUS_SCALING
 
-	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS + CEILING(PLAYER_SCALING * actual_players, 1))
+	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS - tc_malus + CEILING(PLAYER_SCALING * actual_players, 1))
 
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
@@ -96,4 +101,6 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
+#undef CHALLENGE_PLAYERS_TARGET
+#undef TELECRYSTALS_MALUS_SCALING
 #undef CHALLENGE_SHUTTLE_DELAY
