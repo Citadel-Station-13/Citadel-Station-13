@@ -14,7 +14,7 @@
 
 /datum/config_entry/string/stationname	// station name (the name of the station in-game)
 
-/datum/config_entry/number/lobby_co	untdown	// In between round countdown.
+/datum/config_entry/number/lobby_countdown	// In between round countdown.
 	config_entry_value = 120
 	min_val = 0
 
