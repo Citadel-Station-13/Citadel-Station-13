@@ -1,0 +1,7 @@
+author: "Ghommie (original PR by 81Denton, kriskog and nemvar)"
+delete-after: True
+changes: 
+  - spellcheck: "Sleepers now show a message if players try to unscrew the maintenance hatch while they're occupied or open. Fixed typos in sleeper/organ harvester messages."
+  - tweak: "Sleepers and dna scanners can now be pried open with crowbars."
+  - tweak: "You can open and close sleepers and dna scanners by alt-clicking them."
+  - bugfix: "The scanner's hatch now must be closed (on top of being unoccupied), just like sleepers, before being screwdriverable. This fixes a tricky door stuck issue with the machine."
