@@ -31,7 +31,7 @@ GLOBAL_INIT_LIST(singularity_beacons)
 		return
 	GLOB.singularity_beacons += src
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
-		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER))
+		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
 	for(var/obj/singularity/singulo in GLOB.singularities)
 		if(singulo.z == z)
 			singulo.target = src
@@ -51,7 +51,7 @@ GLOBAL_INIT_LIST(singularity_beacons)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 	GLOB.singularity_beacons -= src
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
-		W.weight -= round(initial(W.weight) * METEOR_DISASTER_MODIFIER))
+		W.weight -= round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
 
 
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user)
