@@ -4,7 +4,7 @@
   * Checks that the src_object is in the user's hands or adjacent, or block view updates entirely.
  **/
 
-GLOBAL_DATUM_INIT(non_concealed_update /datum/ui_state/non_concealed_update, new)
+GLOBAL_DATUM_INIT(non_concealed_update, /datum/ui_state/non_concealed_update, new)
 
 /datum/ui_state/non_concealed_update/can_use_topic(src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)
