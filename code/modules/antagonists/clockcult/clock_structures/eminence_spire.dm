@@ -64,7 +64,7 @@
 	message_admins("<span class='danger'>Admin [key_name_admin(user)] directly became the Eminence of the cult!</span>")
 	log_admin("Admin [key_name(user)] made themselves the Eminence.")
 	var/mob/camera/eminence/eminence = new(get_turf(src))
-	eminence.key = user.transfer_ckey(eminence, FALSE)
+	user.transfer_ckey(eminence, FALSE)
 	hierophant_message("<span class='bold large_brass'>Ratvar has directly assigned the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
 		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
