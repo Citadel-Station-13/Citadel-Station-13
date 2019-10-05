@@ -36,6 +36,7 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/shard = 1,
 				/obj/item/stack/rods = 1)
+	parts = list(/obj/item/shard = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -179,11 +180,11 @@
 	name = "Smart dartgun"
 	result =  /obj/item/gun/syringe/dart
 	reqs = list(/obj/item/stack/sheet/metal = 15,
-	/obj/item/stack/sheet/glass = 10,
-	/obj/item/tank/internals = 1,
-	/obj/item/reagent_containers/glass/beaker = 1,
-	/obj/item/stack/sheet/plastic = 10,
-	/obj/item/stack/cable_coil = 2)
+				/obj/item/stack/sheet/glass = 10,
+				/obj/item/tank/internals = 1,
+				/obj/item/reagent_containers/glass/beaker = 1,
+				/obj/item/stack/sheet/plastic = 10,
+				/obj/item/stack/cable_coil = 2)
 	time = 150 //It's a gun
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -211,6 +212,17 @@
 	time = 10
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/minigun
+	name = "Laser Minigun"
+	result = /obj/item/minigunpack2
+	reqs = list(/obj/item/gun/energy/laser/carbine = 3,
+				/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/stack/cable_coil = 30,
+				/obj/item/stock_parts/cell/bluespace = 2)
+	tools = list(TOOL_WIRECUTTER, TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 150
+	category = CAT_WEAPONRY
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
@@ -244,8 +256,8 @@
 	name = "Medical smartdart"
 	result =  /obj/item/reagent_containers/syringe/dart
 	reqs = list(/obj/item/stack/sheet/metal = 1,
-	/obj/item/stack/sheet/glass = 1,
-	/obj/item/stack/sheet/plastic = 1)
+				/obj/item/stack/sheet/glass = 1,
+				/obj/item/stack/sheet/plastic = 1)
 	time = 10
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -275,7 +287,8 @@
 /datum/crafting_recipe/dragonsbreath
 	name = "Dragonsbreath Shell"
 	result = /obj/item/ammo_casing/shotgun/dragonsbreath
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1, /datum/reagent/phosphorus = 5)
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/phosphorus = 5)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
