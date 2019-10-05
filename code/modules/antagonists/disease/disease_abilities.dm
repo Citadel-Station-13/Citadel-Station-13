@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	new /datum/disease_ability/symptom/medium/heal/mind_restoration,
 	new /datum/disease_ability/symptom/powerful/fire,
 	new /datum/disease_ability/symptom/powerful/flesh_eating,
-	new /datum/disease_ability/symptom/powerful/genetic_mutation,
+//	new /datum/disease_ability/symptom/powerful/genetic_mutation,
 	new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
 	new /datum/disease_ability/symptom/powerful/heal/starlight,
 	new /datum/disease_ability/symptom/powerful/heal/oxygen,
