@@ -1,3 +1,7 @@
+GLOBAL_INIT_LIST(singularity_beacons)
+
+#define METEOR_DISASTER_MODIFIER 0.5
+
 ////////////////////////////////////////
 //Singularity beacon
 ////////////////////////////////////////
@@ -18,11 +22,16 @@
 	var/icontype = "beacon"
 
 
+
+
 /obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
 	if(surplus() < 1500)
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return
+	GLOB.singularity_beacons += src
+	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
+		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER))
 	for(var/obj/singularity/singulo in GLOB.singularities)
 		if(singulo.z == z)
 			singulo.target = src
@@ -40,6 +49,9 @@
 	active = 0
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
+	GLOB.singularity_beacons -= src
+	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
+		W.weight -= round(initial(W.weight) * METEOR_DISASTER_MODIFIER))
 
 
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user)
@@ -133,3 +145,5 @@
 /obj/item/sbeacondrop/clownbomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a silly explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb/badmin/clown
+
+#undef METEOR_DISASTER_MODIFIER
