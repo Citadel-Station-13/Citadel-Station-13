@@ -1,3 +1,18 @@
+//Conversation
+#define JACQ_HELLO (1<<0)
+#define JACQ_CANDIES (1<<1)
+#define JACQ_HEAD (1<<2)
+#define JACQ_FAR (1<<3)
+#define JACQ_WITCH (1<<4)
+#define JACQ_EXPELL (1<<5)
+#define JACQ_DATE (1<<6)
+//Tricks
+#define JACQ_TRICKED (1<<0)
+#define JACQ_LATERN (1<<1)
+#define JACQ_DULLA (1<<2)
+
+////ROUND EVENT
+
 /datum/round_event_control/jacqueline
 	name = "Jacqueline the Pumpqueen"
 	holidayID = "Jacqueline"
@@ -10,6 +25,8 @@
 	..()
 	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_living_list)
 		new /mob/living/jacq(Poly.loc)//She poofs on init, so it doesn't matter, so long as poly exists.
+
+/////// MOBS
 
 //Whacha doing in here like? Yae wan tae ruin ta magicks?
 /mob/living/jacq
@@ -61,6 +78,10 @@
 /mob/living/jacq/proc/chit_chat(mob/living/L)
 	var/mob/living/carbon/C = L
 
+	if(!iscarbon)
+		//Maybe? It seems like a lot of faff for something that is very unlikely to happen.
+		return
+
 	//Very important
 	var/gender = "lamb"
 	if(C)
@@ -69,25 +90,62 @@
 		if(C.gender == FEMALE)
 			gender = "lassie"
 
-		if(!progression[C])
-			visible_message("<b>[src] smiles ominously at [L],</b> <span class='spooky'>\"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, right in tae flesh fer ye.\"</span>")
-			sleep(20)
-			visible_message("<span class='spooky'><b>[src] smiles ominously at [L],</b> \"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, right in tae flesh fer ye.\"</span>")
 
-	var/choices = list("Trick", "Treat")
+
+	if(!progression["[C.real_name]"] ||  !(progression["[C.real_name]"] & JACQ_HELLO))
+		visible_message("<b>[src] smiles ominously at [L],</b> <span class='spooky'>\"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")
+		sleep(20)
+		visible_message("<span class='spooky'><b>[src] continues,</b> says, ”Ah’m sure yae well stunned, but ah’ve got nae taem fer that. Ah’m after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give you a treat, or if yae feeling bold, Ah ken trick ye instead.</span>” giving [L] a wide grin.")
+		if(!progression["[C.real_name]"])
+		 	progression["[C.real_name]"] += JACQ_HELLO //TO MAKE SURE THAT THE LIST ENTRY EXISTS.
+		else
+			progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HELLO
+		return
+
+
+	var/choices = list("Trick", "Treat", "How do I get candies?")
 	var/choice = input(usr, "Trick or Treat?", "Trick or Treat?") in choices
 	switch(choice)
 		if("Trick")
+			trick(C)
 			return
 		if("Treat")
+			if(check_candies())
+				Treat()
+			else
+				visible_message("<b>[src] raises an eyebrown,</b> <span class='spooky'>\"You've nae got any candies I want! They're the orange ones, now bugger off an go get em first.\"</span>")
 			return
+		if("How do I get candies?")
+			visible_message("<b>[src] says,</b> <span class='spooky'>\"Gae find my familiar; Bartholomew. Ee's tendin the cauldron which ken bring out t' magic energy in items scattered aroond. Knowing him, ee's probably gone tae somewhere with books.\"</span>")
+			return
+	return
+
+/mob/living/jacq/proc/treat(mob/living/carbon/C)
+	if(!progression["[C.real_name]"]) //I really don't want to get here without a hello.
+		progression["[C.real_name]"] += JACQ_HELLO
+
+
+		if(progression["[C.real_name]"] & JACQ_TRICKED)
+
+		if(progression["[C.real_name]"] & JACQ)
+
+		if(progression["[C.real_name]"] & )
+
+		if(progression["[C.real_name]"] & )
+
+		if(progression["[C.real_name]"] & )
+
+		if(progression["[C.real_name]"] & )
+
+	if("Why do you want the candies?")
+		visible_message("<b>[src] says,</b> <span class='spooky'>\ ”Ave you tried them? They’re full of all sorts of reagents. Ah’m after them so ah ken magic em up an hopefully find rare stuff for me brews. Honestly it’s a lot easier magicking up tatt for you lot than runnin aroond on me own like. I'd ask me familiars but most a my familiars are funny fellows 'n constantly bugger off on adventures when given simple objectives like; Go grab me a tea cake or watch over me cauldron. I mean, ye might run into Bartholomew my cat. ee’s supposed to be tending my cauldron, but I’ve no idea where ee’s got tae.\"</span>")
 
 /*
 visible_message("<span class='spooky'><b>[src] smiles ominously at [L],</b> ”Well halò there [gender]! Ah’m Jacqueline, tae great Pumpqueen, right in tae flesh fer ye.”</span>")
 says, ”Ah’m sure yae well stunned, but ah’ve got nae taem fer that. Ah’m after yer candies. If yae get mae enoof o the wee buggers, I’ll give you a treat, or if yae feeling bold, Ah ken trick ye instaed.” giving [L] a wide grin.
 
 Why do you want the candies?
-”Have you tried them? They’re full of all sorts of reagents. I’m after them so I can magic them up and hopefully find some rare stuff for me brews. Honestly it’s a lot cheaper magicking up tatt for you lot than sending a familiar off to pick them up for me. Most of my familiars are funny fellows and constantly go off on adventures when given simple objectives like; Go grab me a tea cake or watch over me cauldron. I mean, you might run into Bernkastel my cat. She’s supposed to be tending my cauldron, but I’ve no idea where she’s got to.
+
 What is that on your head?
 Points at the pumpkin atop her head, ”This thing? This isn’t any ordinary pumpkin! My mother grew this monster over a year of love, dedication and hard work. Honestly it felt like she loved this thing more than she any of her kids, which I know isn’t true and it’s not like she was heartless or anything but.. well, we had a falling out when I got back home with all me stuff in tow. And all she had done is sent me owl after owl over the last year about this bloody pumpkin and I had enough. So I took it, and put it on my head. You know, as you do. I am the great Pumpqueen after all, I deserve this.
 Isn’t it a bit far to get candy?
