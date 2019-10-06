@@ -7,6 +7,8 @@
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE
 	use_power = IDLE_POWER_USE
+	var/reward = 0
+	var/factionname = "blank"
 	var/busy = FALSE
 	var/hacked = FALSE
 	var/console_link = TRUE		//allow console link.
