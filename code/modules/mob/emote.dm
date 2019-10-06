@@ -37,6 +37,10 @@
 	. = ..()
 	if(.)
 		user.spin(20, 1)
+		if(user.client)
+			for(var/i in list(NORTH,EAST,SOUTH,WEST,NORTH,EAST,SOUTH,WEST,NORTH,EAST,SOUTH,WEST,NORTH,EAST,SOUTH,WEST,NORTH,EAST,SOUTH,WEST,NORTH)) //spin length is 20
+				user.client.setDir(i)
+				sleep(1)
 
 		if(iscyborg(user) && user.has_buckled_mobs())
 			var/mob/living/silicon/robot/R = user
