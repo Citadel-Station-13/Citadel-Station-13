@@ -27,8 +27,10 @@
 							"human",
 							"lizard",
 							"fly",
-							"moth",
+							"insect",
 							"plasmaman",
+							"mammal",
+							"xeno",
 							"other"
 							)
 
@@ -215,6 +217,7 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	for(var/id in SSresearch.techweb_designs)
@@ -223,3 +226,4 @@
 			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
 	obj_flags |= EMAGGED
+	return TRUE

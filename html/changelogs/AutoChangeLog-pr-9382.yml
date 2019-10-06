@@ -1,0 +1,4 @@
+author: "Chayse"
+delete-after: True
+changes: 
+  - bugfix: "Borgs now have the necessary dexterity to unbuckle people from themselves and from bucklable objects."

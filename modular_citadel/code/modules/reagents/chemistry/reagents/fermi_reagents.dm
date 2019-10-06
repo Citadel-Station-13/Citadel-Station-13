@@ -6,58 +6,17 @@
 	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
+	SplitChem = TRUE
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
 	. = ..()
-	if(!M)
-		return
-	if(purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-	if (purity == 1 || DoNotSplit == TRUE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
-		return
-	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(id, amount, FALSE)
-		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [InverseChem]")
-		return
-	else
-		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
-		M.reagents.remove_reagent(id, (impureVol), FALSE)
-		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [ImpureChem]")
-	return
+
 
 //When merging two fermichems, see above
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
-	if(!ishuman(M))
-		return
-	if (purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-	if (purity == 1 || DoNotSplit == TRUE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [id] in themselves")
-		return
-	else if (InverseChemVal > purity)
-		M.reagents.remove_reagent(id, amount, FALSE)
-		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
-		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
-			if(R.name == "")
-				R.name = name//Negative effects are hidden
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [InverseChem]")
-		return
-	else
-		var/impureVol = amount * (1 - purity)
-		M.reagents.remove_reagent(id, impureVol, FALSE)
-		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
-		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
-			if(R.name == "")
-				R.name = name//Negative effects are hidden
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [id]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [ImpureChem]")
-	return
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -372,9 +331,11 @@
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
@@ -392,9 +353,11 @@
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)

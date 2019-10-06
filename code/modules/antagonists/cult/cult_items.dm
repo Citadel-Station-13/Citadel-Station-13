@@ -666,6 +666,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	slot_flags = 0
 	force = 17
+	force_unwielded = 17
 	force_wielded = 24
 	throwforce = 40
 	throw_speed = 2

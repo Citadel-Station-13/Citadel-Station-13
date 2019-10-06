@@ -23,30 +23,48 @@
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chaplain
-/obj/item/clothing/suit/nun
+/obj/item/clothing/suit/chaplain
+	name = "chaplain suit"
+	desc = "A piece of clothing adorned by the gods of Coding. Should never exist in this mortal realm."
+	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/suit/chaplain/nun
 	name = "nun robe"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
 	item_state = "nun"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/clothing/suit/studentuni
+/obj/item/clothing/suit/chaplain/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
 	icon_state = "studentuni"
 	item_state = "studentuni"
 	body_parts_covered = ARMS|CHEST
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/clothing/suit/witchhunter
+/obj/item/clothing/suit/chaplain/witchhunter
 	name = "witchunter garb"
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/suit/chaplain/pharaoh
+	name = "pharaoh tunic"
+	desc = "Lavish space tomb not included."
+	icon_state = "pharaoh"
+	icon_state = "pharaoh"
+	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/chaplain/holidaypriest
+	name = "holiday priest"
+	desc = "This is a nice holiday, my son."
+	icon_state = "holidaypriest"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
@@ -135,6 +153,7 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
+	body_parts_covered = NONE
 
 //Security
 /obj/item/clothing/suit/security/officer
@@ -197,3 +216,4 @@
 	item_state = "techpriesthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+	mutantrace_variation = MUTANTRACE_VARIATION

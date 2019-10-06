@@ -13,7 +13,6 @@
 	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	layer = BELOW_OBJ_LAYER
-	var/obj/item/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
@@ -48,18 +47,23 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
+/obj/machinery/mineral/ore_redemption/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
+
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		return
 
-	if(istype(O, /obj/item/stack/ore/bluespace_crystal/refined))
+	if(O.refined_type == null)
 		return
 
 	ore_buffer -= O
 
 	if(O && O.refined_type)
-		points += O.points * point_upgrade * O.amount
+		points += O.points * O.amount
 
 	var/material_amount = mat_container.get_item_material_amount(O)
 
@@ -72,11 +76,8 @@
 	else
 		var/mats = O.materials & mat_container.materials
 		var/amount = O.amount
-		var/id = inserted_id && inserted_id.registered_name
-		if (id)
-			id = " (ID: [id])"
 		mat_container.insert_item(O, sheet_per_ore) //insert it
-		materials.silo_log(src, "smelted", amount, "ores[id]", mats)
+		materials.silo_log(src, "smelted", amount, "ores", mats)
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
@@ -168,15 +169,7 @@
 		return
 
 	if(!powered())
-		return
-	if(istype(W, /obj/item/card/id))
-		var/obj/item/card/id/I = user.get_active_held_item()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.transferItemToLoc(I, src))
-				return
-			inserted_id = I
-			interact(user)
-		return
+		return ..()
 
 	if(istype(W, /obj/item/disk/design_disk))
 		if(user.transferItemToLoc(W, src))
@@ -205,9 +198,6 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-	if(inserted_id)
-		data["hasID"] = TRUE
-		data["claimedPoints"] = inserted_id.mining_points
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -245,32 +235,24 @@
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
-		if("Eject")
-			if(!inserted_id)
-				return
-			usr.put_in_hands(inserted_id)
-			inserted_id = null
-			return TRUE
-		if("Insert")
-			var/obj/item/card/id/I = usr.get_active_held_item()
-			if(istype(I))
-				if(!usr.transferItemToLoc(I,src))
-					return
-				inserted_id = I
-			else
-				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
-			return TRUE
 		if("Claim")
-			if(inserted_id)
-				inserted_id.mining_points += points
-				points = 0
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(points)
+				if(I)
+					I.mining_points += points
+					points = 0
+				else
+					to_chat(usr, "<span class='warning'>No ID detected.</span>")
+			else
+				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
 		if("Release")
 			if(!mat_container)
 				return
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
-			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
+			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
 				var/mat_id = params["id"]
@@ -293,6 +275,7 @@
 				var/list/mats = list()
 				mats[mat_id] = MINERAL_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
+				//Logging deleted for quick coding
 			return TRUE
 		if("diskInsert")
 			var/obj/item/disk/design_disk/disk = usr.get_active_held_item()
@@ -321,7 +304,7 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			if((check_access(inserted_id) || allowed(usr)) && alloy)
+			if((check_access(inserted_scan_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])

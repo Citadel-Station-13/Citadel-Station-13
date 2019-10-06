@@ -120,7 +120,7 @@
 	return dat
 
 /mob/living/simple_animal/bot/firebot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 1)
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
