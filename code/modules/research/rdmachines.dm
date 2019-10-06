@@ -7,8 +7,6 @@
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	var/reward = 0
-	var/factionname = "blank"
 	var/busy = FALSE
 	var/hacked = FALSE
 	var/console_link = TRUE		//allow console link.
@@ -16,6 +14,8 @@
 	var/disabled = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
+	var/reward = 0
+	var/factionname = "blank"
 
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
