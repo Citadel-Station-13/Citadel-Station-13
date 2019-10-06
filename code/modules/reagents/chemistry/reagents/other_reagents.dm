@@ -38,6 +38,21 @@
 	if(volume >= 3 && istype(O))
 		O.add_blood_DNA(data)
 
+/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
+	if(!istype(T))
+		return
+	if(reac_volume < 3)
+		return
+
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	if(!B)
+		B = new(T)
+	if(data["blood_DNA"])
+		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+	if(!B.reagents)
+		B.reagents.add_reagent(id, reac_volume)
+	B.update_icon()
+
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
@@ -101,18 +116,6 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
 			. += D
-
-/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
-	if(!istype(T))
-		return
-	if(reac_volume < 3)
-		return
-
-	T.add_blood_DNA(data)
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	if(!B.reagents)
-		B.reagents.add_reagent(id, reac_volume)
-	B.update_icon()
 
 /datum/reagent/blood/synthetics
 	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)

@@ -414,10 +414,8 @@
 		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	blood_overlay = image(blood_splatter_icon)
-	blood_overlay.color = blood_DNA_to_color()
-	add_overlay(blood_overlay)
+		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
+		add_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	. = ..()
