@@ -32,6 +32,9 @@
 		head.throwforce = 25
 		myhead = new /obj/item/dullahan_relay (head, H)
 		H.put_in_hands(head)
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		for(/datum/action/item_action/organ_action/OA in eyes.actions)
+			OA.Toggle()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
 	H.flags_1 |= ~HEAR_1
