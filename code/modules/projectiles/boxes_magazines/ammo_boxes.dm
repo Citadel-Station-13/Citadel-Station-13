@@ -3,13 +3,19 @@
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/a357/ap
+	name = "speed loader (.357 AP)"
+	ammo_type = /obj/item/ammo_casing/a357/ap
 
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "38"
+	caliber = "38"
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
@@ -18,6 +24,21 @@
 /obj/item/ammo_box/c38/lethal
 	name = "speed loader (.38)"
 	ammo_type = /obj/item/ammo_casing/c38/lethal
+
+/obj/item/ammo_box/c38/trac
+	name = "speed loader (.38 TRAC)"
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	ammo_type = /obj/item/ammo_casing/c38/trac
+
+/obj/item/ammo_box/c38/hotshot
+	name = "speed loader (.38 Hot Shot)"
+	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	ammo_type = /obj/item/ammo_casing/c38/hotshot
+
+/obj/item/ammo_box/c38/iceblox
+	name = "speed loader (.38 Iceblox)"
+	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
