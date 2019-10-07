@@ -131,7 +131,7 @@
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
-				if(is_eligible(I.imp_in))
+				if(is_eligible(M))
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L

@@ -82,7 +82,7 @@
 						if (M.timeofdeath + 6000 < world.time)
 							continue
 
-					var/turf/tr = get_turf(W.imp_in)
+					var/turf/tr = get_turf(M)
 					if (tr.z == sr.z && tr)
 						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 						if (direct < 20)
