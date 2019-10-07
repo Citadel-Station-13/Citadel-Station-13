@@ -45,7 +45,7 @@
 	var/list/species_restricted = null
 	//Basically syntax is species_restricted = list("Species Name","Species Name")
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
-	//You append this to clothing objects.j
+	//You append this to clothing objects.
 
 
 /obj/item/clothing/Initialize()
