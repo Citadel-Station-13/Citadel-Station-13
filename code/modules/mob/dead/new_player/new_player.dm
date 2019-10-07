@@ -315,7 +315,7 @@
 			return "Your account is not old enough for [jobtitle]."
 		if(JOB_UNAVAILABLE_SLOTFULL)
 			return "[jobtitle] is already filled to capacity."
-		if(JOB_UNAVAILABLE_SPECIESLOCK) //NSV13 EDIT BEGIN
+		if(JOB_UNAVAILABLE_SPECIESLOCK)
 			return "Your species cannot play as a [jobtitle]"
 	return "Error: Unknown job availability."
 
