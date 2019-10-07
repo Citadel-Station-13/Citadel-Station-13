@@ -231,7 +231,6 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		update_icon()
 	else
 		return ..()
 
@@ -250,6 +249,7 @@
 		beaker = new_beaker
 	else
 		beaker = null
+	update_icon()
 	return TRUE
 
 /obj/machinery/computer/pandemic/on_deconstruction()
