@@ -9,6 +9,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+		//Let's the pAI card be used as an ID in hand or thrown (Still sorting out undefined var error when nulling this)
+	//var/obj/item/card/id/paiCard_ID = null
 
 /obj/item/paicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!</span>")

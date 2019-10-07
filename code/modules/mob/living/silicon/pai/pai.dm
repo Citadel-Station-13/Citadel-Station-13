@@ -55,6 +55,7 @@
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/holoform = FALSE
+	var/idmod = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
@@ -289,3 +290,38 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/obj/item/paicard/attackby(obj/item/W, mob/user, params)
+	..()
+	user.set_machine(src)
+	if (pai && pai.idmod == TRUE)
+		if (istype(W, /obj/item/card/id))
+			var/obj/item/card/id/idcard = W
+			pai.pda.attackby(idcard, user, params)
+			pai.pda.owner = pai.name
+			pai.pda.ownjob = idcard.assignment
+			pai.pda.name = pai.name + " (" + pai.pda.ownjob + ")"
+			pai.access_card = idcard
+			//paiCard_ID = idcard
+	else
+		to_chat(user, "The pAI is not correctly configured for this item.")
+
+//Lets anyone Alt Click the pAI card to remove the ID
+/obj/item/paicard/AltClick()
+	..()
+
+	if (pai.pda.id)
+		pai.pda.remove_id()
+		pai.access_card = null
+	//	paiCard_ID = null
+
+//ID Reader supporting proc to remove the ID on the pAI's end
+/mob/living/silicon/pai/proc/paiRemoveID(obj/item/pda/paiPDA)
+	if (paiPDA.id)
+		usr.put_in_hands(paiPDA.id)
+		to_chat(usr, "<span class='notice'>You eject the ID.</span>")
+		paiPDA.id = null
+		access_card = null
+		//paiCard_ID = null
+	else
+		return

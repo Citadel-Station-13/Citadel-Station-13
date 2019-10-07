@@ -675,7 +675,8 @@
 		else
 			to_chat(user, "It looks very robust.")
 
-	if(issilicon(user) && (!stat & BROKEN))
+//No longer gives pAI the borg/AI text about manipulating doors
+	if(issilicon(user) && (!stat & BROKEN) && !ispAI(user))
 		to_chat(user, "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>")
 		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>")
 		to_chat(user, "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>")

@@ -20,6 +20,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
+															"id reader" = 30
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -64,6 +65,8 @@
 				left_part = softwareCamera()
 			if("signaller")
 				left_part = softwareSignal()
+			if("idReader")
+				left_part = softwareIDReader()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -269,6 +272,15 @@
 				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+
+		if("idReader")
+			if(href_list["toggle"])
+				idmod = TRUE
+				pda.owner = name
+			if(href_list["ejectID"])
+				paiRemoveID(pda)
+
+
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -323,6 +335,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=camerajack;sub=0'>Camera Jack</a> <br>"
 		if(s == "door jack")
 			dat += "<a href='byond://?src=[REF(src)];software=doorjack;sub=0'>Door Jack</a> <br>"
+		if(s == "id reader")
+			dat += "<a href='byond://?src=[REF(src)];software=idReader;sub=0'>ID Scanner Software</a>[(idmod) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 	dat += "<br>"
 	dat += "<br>"
 	dat += "<a href='byond://?src=[REF(src)];software=buy;sub=0'>Download additional software</a>"
@@ -624,4 +638,13 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
+	return dat
+
+// ID Reader
+/mob/living/silicon/pai/proc/softwareIDReader()
+	var/dat = {"<h3>ID Hosting Software</h3><br>
+				When enabled, this device will be able to host one ID card for use with Station airlocks.<br><br>
+				The device is currently [idmod ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[idmod ? "" : "<a href='byond://?src=[REF(src)];software=idReader;sub=0;toggle=1'>Activate ID Hosting Software</a><br>"]"}
+
+	dat += {"Hosted ID: <a href='byond://?src=[REF(src)];software=idReader;sub=0;ejectID=1'>[pda.id ? "[pda.id.registered_name], [pda.id.assignment]" : "----------"]"}
 	return dat

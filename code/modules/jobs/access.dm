@@ -5,8 +5,12 @@
 	if(src.check_access(null))
 		return TRUE
 	if(issilicon(M))
-		if(ispAI(M))
-			return FALSE
+		if(ispAI(M)) //Got rid of pAI having hard coded no access
+			var/mob/living/silicon/pai/P = M
+			if (check_access(P.access_card))
+				return TRUE
+			else
+				return FALSE
 		return TRUE	//AI can do whatever it wants
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
