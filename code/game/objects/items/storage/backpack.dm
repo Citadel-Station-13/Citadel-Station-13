@@ -482,13 +482,6 @@
 	new /obj/item/ammo_box/magazine/smgm10mm(src)
 	new /obj/item/ammo_box/magazine/smgm10mm(src)
 	new /obj/item/shield/energy(src)
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/plastic/x4(src)
-	new /obj/item/grenade/plastic/x4(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/shredder
 	name = "assault trooper duffel bag"
@@ -498,13 +491,10 @@
 	new /obj/item/gun/ballistic/automatic/flechette(src)
 	new /obj/item/ammo_box/magazine/flechette/s(src)
 	new /obj/item/ammo_box/magazine/flechette/s(src)
-	new /obj/item/ammo_box/magazine/flechette/s(src)
-	new /obj/item/ammo_box/magazine/flechette(src)
 	new /obj/item/ammo_box/magazine/flechette(src)
 	new /obj/item/ammo_box/magazine/flechette(src)
 	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
 	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/reagent_containers/syringe/stimulants(src)
 	new /obj/item/soap/syndie(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/donk
@@ -516,13 +506,13 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src)
 	new /obj/item/soap/syndie(src)
+	new /obj/item/grenade/clusterbuster/soap(src)
+	new /obj/item/grenade/chem_grenade/teargas/moustache(src)
 	new /obj/item/disk/nuclear/fake(src)
 	new /obj/item/slimepotion/slime/sentience/nuclear(src)
 	new /obj/item/storage/box/syndie_kit/chameleon/broken(src)
 	new /obj/item/toy/cards/deck/syndicate(src)
-	new /obj/item/storage/box/syndie_kit/bee_grenades(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/bioterror
 	name = "bioterrorist duffel bag"
@@ -530,9 +520,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/bioterror/PopulateContents()
 	new /obj/item/reagent_containers/spray/chemsprayer/bioterror(src)
-	new /obj/item/gun/syringe/syndicate(src)
 	new /obj/item/storage/box/syndie_kit/bioterror(src)
-	new /obj/item/storage/box/syndie_kit/chemical(src)
 	new /obj/item/storage/box/syndie_kit/tuberculosisgrenade(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/knight
@@ -556,9 +544,7 @@
 	new /obj/item/clothing/gloves/rapid(src)
 	new /obj/item/soap/syndie(src)
 	new /obj/item/clothing/glasses/phantomthief/syndicate(src)
-	new /obj/item/storage/box/syndie_kit/imp_emp(src)
 	new /obj/item/card/emag(src)
-	new /obj/item/storage/briefcase/launchpad(src)
 	new /obj/item/storage/box/syndie_kit/throwing_weapons(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/infiltrator/PopulateContents()
@@ -573,9 +559,7 @@
 	new /obj/item/grenade/smokebomb(src)
 	new /obj/item/grenade/smokebomb(src)
 	new /obj/item/card/emag(src)
-	new /obj/item/emagrecharge(src)
 	new /obj/item/camera_bug(src)
-	new /obj/item/jammer(src)
 	new /obj/item/multitool/ai_detect(src)
 	new /obj/item/implanter/stealth(src)
 
@@ -587,13 +571,10 @@
 	new /obj/item/storage/belt/military/engineer(src)
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/encryptionkey/binary(src)
-	new /obj/item/flashlight/emp(src)
 	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 	new /obj/item/grenade/plastic/c4(src)
-	new /obj/item/grenade/plastic/c4(src)
-	new /obj/item/grenade/plastic/x4(src)
 	new /obj/item/grenade/plastic/x4(src)
 	new /obj/item/grenade/spawnergrenade/manhacks(src)
 
@@ -611,8 +592,6 @@
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
 	new /obj/item/grenade/chem_grenade/incendiary(src)
 	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/reagent_containers/syringe/stimulants(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med
 	name = "medical duffel bag"
@@ -667,9 +646,10 @@
 	new /obj/item/gun/medbeam(src)
 	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/healthanalyzer/advanced(src)
-	new /obj/item/gun/ballistic/automatic/c20r(src)
-	new /obj/item/ammo_box/magazine/smgm10mm(src)
-	new /obj/item/ammo_box/magazine/smgm10mm(src)
+	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
@@ -686,11 +666,8 @@
 	new /obj/item/gun/ballistic/automatic/l6_saw(src)
 	new /obj/item/ammo_box/magazine/mm556x45(src)
 	new /obj/item/ammo_box/magazine/mm556x45(src)
-	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.
 /obj/item/storage/backpack/duffelbag/clown/syndie/ComponentInitialize()

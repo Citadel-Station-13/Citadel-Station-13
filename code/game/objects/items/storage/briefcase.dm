@@ -89,8 +89,6 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
 	new /obj/item/suppressor(src)
 	new /obj/item/pen/edagger(src)
-	new /obj/item/doorCharge(src)
-
 
 /obj/item/storage/briefcase/modularbundle
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding."
