@@ -195,6 +195,7 @@
 		return ..()
 
 /obj/machinery/shieldgen/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return
@@ -202,6 +203,7 @@
 	locked = FALSE
 	playsound(src, "sparks", 100, 1)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	return TRUE
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -387,6 +389,7 @@
 	add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return
@@ -394,6 +397,7 @@
 	locked = FALSE
 	playsound(src, "sparks", 100, 1)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	return TRUE
 
 //////////////Containment Field START
 /obj/machinery/shieldwall

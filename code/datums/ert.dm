@@ -21,8 +21,8 @@
 
 /datum/ert/amber
 	code = "Amber"
-	leader_role = /datum/antagonist/ert/commander/red
-	roles = list(/datum/antagonist/ert/security/red, /datum/antagonist/ert/medic/red, /datum/antagonist/ert/engineer/red)
+	leader_role = /datum/antagonist/ert/commander/amber
+	roles = list(/datum/antagonist/ert/security/amber, /datum/antagonist/ert/medic/amber, /datum/antagonist/ert/engineer/amber)
 
 /datum/ert/red
 	leader_role = /datum/antagonist/ert/commander/red
@@ -55,3 +55,13 @@
 	rename_team = "Inquisition"
 	mission = "Destroy any traces of paranormal activity aboard the station."
 	polldesc = "a Nanotrasen paranormal response team"
+
+/datum/ert/greybois
+	code = "Green"
+	teamsize = 1
+	opendoors = FALSE
+	enforce_human = FALSE
+	roles = list(/datum/antagonist/greybois)
+	leader_role = /datum/antagonist/greybois/greygod
+	rename_team = "Emergency Assistants"
+	polldesc = "an Emergency Assistant"

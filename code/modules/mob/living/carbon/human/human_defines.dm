@@ -1,5 +1,5 @@
 /mob/living/carbon/human
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD,RAD_HUD)
 	hud_type = /datum/hud/human
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	pressure_resistance = 25
@@ -17,6 +17,8 @@
 	//Eye colour
 	var/eye_color = "000"
 
+	var/horn_color = "85615a"	//specific horn colors, because why not?
+
 	var/skin_tone = "caucasian1"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
@@ -25,11 +27,11 @@
 	var/age = 30		//Player's age
 
 	var/underwear = "Nude"	//Which underwear the player wants
-	var/undie_color = "#FFFFFF"
+	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude" //Which undershirt the player wants
-	var/shirt_color = "#FFFFFF"
+	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
-	var/socks_color = "#FFFFFF"
+	var/socks_color = "FFFFFF"
 	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
@@ -48,6 +50,7 @@
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/name_override //For temporary visible name changes
+	var/genital_override = FALSE //Force genitals on things incase of chems
 
 	var/nameless = FALSE //For drones of both the insectoid and robotic kind. And other types of nameless critters.
 

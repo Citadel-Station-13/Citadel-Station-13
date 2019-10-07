@@ -163,7 +163,37 @@ SLIME SCANNER
 		msg += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>\n"
 	else if (M.getBrainLoss() >= 45)
 		msg += "\t<span class='alert'>Brain damage detected.</span>\n"
-	if(iscarbon(M))
+	if(ishuman(M) && advanced) // Should I make this not advanced?
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/liver/L = H.getorganslot("liver")
+		if(L)
+			if(L.swelling > 20)
+				msg += "\t<span class='danger'>Subject is suffering from an enlarged liver.</span>\n" //i.e. shrink their liver or give them a transplant.
+		else
+			msg += "\t<span class='danger'>Subject's liver is missing.</span>\n"
+		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
+		if(T)
+			if(T.damage > 40)
+				msg += "\t<span class='danger'>Subject is suffering from severe burn tissue on their tongue.</span>\n" //i.e. their tongue is shot
+			if(T.name == "fluffy tongue")
+				msg += "\t<span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>\n"
+		else
+			msg += "\t<span class='danger'>Subject's tongue is missing.</span>\n"
+		var/obj/item/organ/lungs/Lung = H.getorganslot("lungs")
+		if(Lung)
+			if(Lung.damage > 150)
+				msg += "\t<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>\n" //i.e. Their lungs are shot
+		else
+			msg += "\t<span class='danger'>Subject's lungs have collapsed from trauma!</span>\n"
+		var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
+		if(P)
+			if(P.length>20)
+				msg += "\t<span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>\n"
+		var/obj/item/organ/genital/breasts/Br = H.getorganslot("breasts")
+		if(Br)
+			if(Br.cached_size>5)
+				msg += "\t<span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>\n"
+
 		var/mob/living/carbon/C = M
 		if(LAZYLEN(C.get_traumas()))
 			var/list/trauma_text = list()
@@ -183,13 +213,23 @@ SLIME SCANNER
 			msg += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>\n"
 	if(advanced)
 		msg += "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>\n"
-	if (M.radiation)
+	if(M.radiation)
 		msg += "\t<span class='alert'>Subject is irradiated.</span>\n"
-		if(advanced)
-			msg += "\t<span class='info'>Radiation Level: [M.radiation]%.</span>\n"
+		msg += "\t<span class='info'>Radiation Level: [M.radiation] rad</span>\n"
 
 	if(advanced && M.hallucinating())
 		msg += "\t<span class='info'>Subject is hallucinating.</span>\n"
+
+	//MKUltra
+	if(advanced && M.has_status_effect(/datum/status_effect/chem/enthrall))
+		msg += "\t<span class='info'>Subject has abnormal brain fuctions.</span>\n"
+
+	//Astrogen shenanigans
+	if(advanced && M.reagents.has_reagent("astral"))
+		if(M.mind)
+			msg += "\t<span class='danger'>Warning: subject may be possesed.</span>\n"
+		else
+			msg += "\t<span class='notice'>Subject appears to be astrally projecting.</span>\n"
 
 	//Eyes and ears
 	if(advanced)
@@ -256,6 +296,7 @@ SLIME SCANNER
 			for(var/obj/item/bodypart/org in damaged)
 				msg += "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]\n"
 
+
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -310,7 +351,7 @@ SLIME SCANNER
 				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
@@ -318,9 +359,9 @@ SLIME SCANNER
 					blood_type = R.name
 				else
 					blood_type = blood_id
-			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
+			if(C.blood_volume <= (BLOOD_VOLUME_SAFE*C.blood_ratio) && C.blood_volume > (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
-			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
+			else if(C.blood_volume <= (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
 			else
 				msg += "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>\n"

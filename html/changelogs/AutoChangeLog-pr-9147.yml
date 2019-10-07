@@ -1,0 +1,5 @@
+author: "Code-Cygnet"
+delete-after: True
+changes: 
+  - rscadd: "Added new things - Mind trait, alcohol reagent, chemical reagent, drink sprite and recipe."
+  - imageadd: "added commander_and_chief sprite to drinks.dmi"
