@@ -500,6 +500,7 @@
 			H.regenerate_icons()
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
+		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		user.clean_blood()
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
