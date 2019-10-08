@@ -4,6 +4,7 @@
 		return FALSE
 	name = M.name
 	real_name = M.real_name
+	mind.name = M.real_name
 	return TRUE
 
 /mob/living/carbon/build_virtual_character(mob/M)
@@ -31,8 +32,6 @@
 	if(outfit)
 		var/datum/outfit/O = new outfit()
 		O.equip(src)
-	name = M.name
-	real_name = M.real_name
 
 /datum/action/quit_vr
 	name = "Quit Virtual Reality"
