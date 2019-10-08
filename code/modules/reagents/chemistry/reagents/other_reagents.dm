@@ -2115,7 +2115,7 @@
 	can_synth = FALSE
 	var/datum/dna/original_dna
 	var/reagent_ticks = 0
-	invisible = TRUE
+	chemical_flags = REAGENT_INVISIBLE
 
 /datum/reagent/changeling_string/on_mob_metabolize(mob/living/carbon/C)
 	if(C && C.dna && data["desired_dna"])

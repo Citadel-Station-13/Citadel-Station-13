@@ -441,7 +441,7 @@ SLIME SCANNER
 			if(M.reagents.reagent_list.len)
 				var/list/datum/reagent/reagents = list()
 				for(var/datum/reagent/R in M.reagents.reagent_list)
-					if(R.invisible)
+					if(R.chemical_flags & REAGENT_INVISIBLE)
 						continue
 					reagents += R
 
@@ -460,6 +460,21 @@ SLIME SCANNER
 					msg += "<span class='danger'>[R.name]</span>\n"
 			else
 				msg += "<span class='notice'>Subject is not addicted to any reagents.</span>\n"
+
+			if(M.reagents.has_reagent("fermiTox"))
+				var/datum/reagent/fermiTox = M.reagents.has_reagent("fermiTox")
+				switch(fermiTox.volume)
+					if(5 to 10)
+						msg += "<span class='notice'>Subject contains a low amount of toxic isomers.</span>\n"
+					if(10 to 25)
+						msg += "<span class='danger'>Subject contains toxic isomers.</span>\n"
+					if(25 to 50)
+						msg += "<span class='danger'>Subject contains a substantial amount of toxic isomers.</span>\n"
+					if(50 to 95)
+						msg += "<span class='danger'>Subject contains a high amount of toxic isomers.</span>\n"
+					if(95 to INFINITY)
+						msg += "<span class='danger'>Subject contains a extremely dangerous amount of toxic isomers.</span>\n"
+
 			msg += "*---------*</span>"
 			to_chat(user, msg)
 
