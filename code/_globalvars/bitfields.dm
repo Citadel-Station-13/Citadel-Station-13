@@ -199,5 +199,4 @@ GLOBAL_LIST_INIT(bitfields, list(
 	      "ORGAN_EXTERNAL" = ORGAN_EXTERNAL,
 	      "ORGAN_VITAL" = ORGAN_VITAL,
 	      "ORGAN_NO_SPOIL" = ORGAN_NO_SPOIL
-	    ),
 		))
