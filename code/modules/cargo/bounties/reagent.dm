@@ -109,7 +109,6 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/patron,\
 		/datum/reagent/consumable/ethanol/quadruple_sec,\
 		/datum/reagent/consumable/ethanol/quintuple_sec,\
-		/datum/reagent/consumable/bluecherryshake,\
 		/datum/reagent/consumable/doctor_delight,\
 		/datum/reagent/consumable/ethanol/silencer)
 

@@ -82,6 +82,12 @@
 	required_temp = 374
 	mob_react = FALSE
 
+/datum/chemical_reaction/mustard
+	name = "Mustard"
+	id = "mustard"
+	results = list("mustard" = 5)
+	required_reagents = list("mustardgrind" = 1, "water"  = 10, "enzyme"= 1)
+
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
@@ -488,12 +494,6 @@
 	results = list("acetone" = 3)
 	required_reagents = list("oil" = 1, "welding_fuel" = 1, "oxygen" = 1)
 
-/datum/chemical_reaction/carpet
-	name = "carpet"
-	id = "carpet"
-	results = list("carpet" = 2)
-	required_reagents = list("space_drugs" = 1, "blood" = 1)
-
 /datum/chemical_reaction/oil
 	name = "Oil"
 	id = "oil"
@@ -623,7 +623,7 @@
 	required_temp = 450
 
 /datum/chemical_reaction/moff
-	name = "moth mutation toxic"
+	name = "insect mutation toxic"
 	id = "moffs"
 	results = list("mothmutationtoxin" = 1)
 	required_reagents  = list("liquid_dark_matter" = 2, "ammonia" = 5, "lithium" = 1, "stablemutationtoxin" = 1)
@@ -635,3 +635,77 @@
 	results = list("shadowmutationtoxin" = 1)
 	required_reagents  = list("liquid_dark_matter" = 5, "synaptizine" = 10, "oculine" = 10, "stablemutationtoxin" = 1)
 	required_temp = 600
+
+// Liquid Carpets
+
+/datum/chemical_reaction/carpet
+	name = "carpet"
+	id = "carpet"
+	results = list("carpet" = 2)
+	required_reagents = list("space_drugs" = 1, "blood" = 1)
+
+/datum/chemical_reaction/carpet/black
+	name = "liquid black carpet"
+	id = "blackcarpet"
+	results = list("blackcarpet" = 2)
+	required_reagents = list("carpet" = 1, "carbon" = 1)
+
+/datum/chemical_reaction/carpet/blackred
+	name = "liquid red black carpet"
+	id = "blackredcarpet"
+	results = list("blackredcarpet" = 2)
+	required_reagents = list("carpet" = 1, "charcoal" = 1)
+
+/datum/chemical_reaction/carpet/monochrome
+	name = "liquid monochrome carpet"
+	id = "monochromecarpet"
+	results = list("monochromecarpet" = 2)
+	required_reagents = list("carpet" = 1, "oil" = 1)
+
+/datum/chemical_reaction/carpet/blue
+	name = "liquid blue carpet"
+	id = "bluecarpet"
+	results = list("bluecarpet" = 2)
+	required_reagents = list("carpet" = 1, "tonic" = 1)
+
+/datum/chemical_reaction/carpet/cyan
+	name = "liquid cyan carpet"
+	id = "cyancarpet"
+	results = list("cyancarpet" = 2)
+	required_reagents = list("carpet" = 1, "ice" = 1)
+
+/datum/chemical_reaction/carpet/green
+	name = "liquid green carpet"
+	id = "greencarpet"
+	results = list("greencarpet" = 2)
+	required_reagents = list("carpet" = 1, "sacid" = 1)
+
+/datum/chemical_reaction/carpet/orange
+	name = "liquid orange carpet"
+	id = "orangecarpet"
+	results = list("orangecarpet" = 2)
+	required_reagents = list("carpet" = 1, "orangejuice" = 1)
+
+/datum/chemical_reaction/carpet/purple
+	name = "liquid purple carpet"
+	id = "purplecarpet"
+	results = list("purplecarpet" = 2)
+	required_reagents = list("carpet" = 1, "stable_plasma" = 1)
+
+/datum/chemical_reaction/carpet/red
+	name = "liquid red carpet"
+	id = "redcarpet"
+	results = list("redcarpet" = 2)
+	required_reagents = list("carpet" = 1, "welding_fuel" = 1)
+
+/datum/chemical_reaction/carpet/royalblack
+	name = "liquid royal black carpet"
+	id = "royalblackcarpet"
+	results = list("royalblackcarpet" = 2)
+	required_reagents = list("carpet" = 1, "blackpepper" = 1)
+
+/datum/chemical_reaction/carpet/royalblue
+	name = "liquid royal blue carpet"
+	id = "royalbluecarpet"
+	results = list("royalbluecarpet" = 2)
+	required_reagents = list("carpet" = 1, "clonexadone" = 1)

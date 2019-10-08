@@ -151,7 +151,7 @@
 			if(2)
 				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
 				H.confused += 15
-				H.adjustBrainLoss(10, 160)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
 				H.hallucination += 60
 
@@ -167,7 +167,7 @@
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
 	randomize_human(owner)
-	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/moth, /datum/species/fly))
+	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/insect, /datum/species/fly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling

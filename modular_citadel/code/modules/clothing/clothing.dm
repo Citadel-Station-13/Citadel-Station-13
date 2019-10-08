@@ -38,6 +38,8 @@
 	var/secondary_color = "#FFFFFF"
 	var/tertiary_color = "#808080"
 
+	var/force_alternate_icon = FALSE
+
 /obj/item/clothing/update_icon()	// picks the colored overlays from the ICON file
 	..()
 	if(hasprimary)	//Checks if the overlay is enabled

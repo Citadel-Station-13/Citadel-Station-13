@@ -39,6 +39,14 @@
 /obj/item/projectile/beam/weak
 	damage = 15
 
+/obj/item/projectile/beam/weak/minigun
+	damage = 12.5
+	armour_penetration = 40
+
+/obj/item/projectile/beam/weak/minigun/Initialize()
+	.=..()
+	speed = pick(0.7,0.75,0.8,0.85,0.9,0.95,1,1.05,1.1,1.15)
+
 /obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
@@ -150,6 +158,11 @@
 
 /obj/item/projectile/beam/lasertag/redtag/hitscan
 	hitscan = TRUE
+
+/obj/item/projectile/beam/lasertag/redtag/hitscan/holy
+	name = "lasrifle beam"
+	damage = 0.1
+	damage_type = BURN
 
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Sofas can't be wielded and transformed back into plain chairs anymore."

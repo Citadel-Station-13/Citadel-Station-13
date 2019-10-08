@@ -13,11 +13,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	circuit = /obj/item/circuitboard/computer/card
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
-	var/authenticated = 0
 	var/mode = 0
 	var/printing = null
-	var/list/region_access = null
-	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
 
 	//Cooldown for closing positions in seconds
@@ -377,7 +374,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					else
 						if((ACCESS_HOP in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
-							region_access |= 6
 							get_subordinates("Head of Personnel")
 						if((ACCESS_HOS in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
@@ -391,6 +387,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if((ACCESS_CE in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Chief Engineer")
+						if((ACCESS_QM in scan.access) && ((target_dept==6) || !target_dept))
+							region_access |= 6
+							get_subordinates("Quartermaster")
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && issilicon(usr)) && (!modify))
@@ -610,7 +609,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		typed_circuit.target_dept = target_dept
 	else
 		target_dept = typed_circuit.target_dept
-	var/list/dept_list = list("general","security","medical","science","engineering")
+	var/list/dept_list = list("civilian","security","medical","science","engineering","cargo")
 	name = "[dept_list[target_dept]] department console"
 
 /obj/machinery/computer/card/minor/hos
@@ -634,3 +633,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "idce"
 
 	light_color = LIGHT_COLOR_YELLOW
+
+/obj/machinery/computer/card/minor/qm
+	target_dept = 6
+	icon_screen = "idqm"
+
+	light_color = LIGHT_COLOR_ORANGE
