@@ -35,6 +35,13 @@
 	else
 		..()
 
+/obj/mecha/combat/neovgre/moved_inside(mob/living/carbon/human/H)
+	var/Itemlist = H.held_items
+	for(var/obj/item/W in Itemlist)
+		to_chat(H, "<span class='brass'>You safely store [W] inside [src].</span>")
+		qdel(W)
+	. = ..()
+
 /obj/mecha/combat/neovgre/obj_destruction()
 	for(var/mob/M in src)
 		to_chat(M, "<span class='brass'>You are consumed by the fires raging within Neovgre...</span>")
