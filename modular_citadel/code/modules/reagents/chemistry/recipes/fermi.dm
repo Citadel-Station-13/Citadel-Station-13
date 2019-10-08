@@ -2,11 +2,29 @@
 	mix_sound = 'sound/effects/bubbles.ogg'
 
 //Called for every reaction step
-/datum/chemical_reaction/proc/FermiCreate(holder)
+/datum/chemical_reaction/proc/FermiCreate(datum/reagents/holder, added_volume, added_purity)
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder)
+/datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder, var/atom/my_atom, reactVol)
+	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+		for(var/id in results)
+			var/datum/reagent/R = my_atom.reagents.has_reagent("[id]")
+			if(R.purity == 1)
+				continue
+
+			var/cached_volume = R.volume
+			if(clear_conversion == REACTION_CLEAR_INVERSE && R.inverse_chem)
+				if(R.inverse_chem_val > R.purity)
+					my_atom.reagents.remove_reagent(R.id, cached_volume, FALSE)
+					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
+
+			else if (clear_conversion == REACTION_CLEAR_IMPURE && R.impure_chem)
+				var/impureVol = cached_volume * (1 - R.purity)
+				my_atom.reagents.remove_reagent(R.id, (impureVol), FALSE)
+				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
+				R.cached_purity = R.purity
+				R.purity = 1
 	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
@@ -434,8 +452,8 @@
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 2
-	OptimalpHMax 	= 6
+	OptimalpHMin 	= 0
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4
@@ -456,14 +474,14 @@
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
 	results = list("basic_buffer" = 1.5)
-	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "water" = 0.5)
+	required_reagents = list("lye" = 0.3, "ethanol" = 0.6, "water" = 0.6)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:x
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 5
-	OptimalpHMax 	= 12
+	OptimalpHMin 	= 0
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4

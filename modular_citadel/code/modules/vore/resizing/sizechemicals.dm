@@ -84,7 +84,7 @@
 	return
 
 /datum/reagent/medicine/sizeoxadone/overdose_process(mob/living/M)
-	M.adjustBrainLoss(1)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 	M.adjustToxLoss(1)
 	..()
 	. = 1

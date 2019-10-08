@@ -110,6 +110,9 @@ SUBSYSTEM_DEF(job)
 		if(job.required_playtime_remaining(player.client))
 			JobDebug("FOC player not enough xp, Player: [player]")
 			continue
+		if(!player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+			JobDebug("FOC non-human failed, Player: [player]")
+			continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
@@ -143,6 +146,10 @@ SUBSYSTEM_DEF(job)
 
 		if(!job.player_old_enough(player.client))
 			JobDebug("GRJ player not old enough, Player: [player]")
+			continue
+
+		if(!player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+			JobDebug("GRJ non-human failed, Player: [player]")
 			continue
 
 		if(job.required_playtime_remaining(player.client))
@@ -326,6 +333,10 @@ SUBSYSTEM_DEF(job)
 
 				if(job.required_playtime_remaining(player.client))
 					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
+					continue
+			
+				if(!player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+					JobDebug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
 				if(player.mind && job.title in player.mind.restricted_roles)

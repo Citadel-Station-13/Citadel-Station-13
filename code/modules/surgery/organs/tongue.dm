@@ -10,8 +10,7 @@
 	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
-	var/maxHealth = TONGUE_MAX_HEALTH
-	var/damage = 0
+	maxHealth = TONGUE_MAX_HEALTH
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
@@ -31,27 +30,34 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/proc/adjustTongueLoss(mob/living/carbon/M, damage_mod)
-	if (maxHealth == "alien")
+/obj/item/organ/tongue/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
 		return
-	if (maxHealth == "bone")
-		var/target = M.get_bodypart(BODY_ZONE_HEAD)
-		M.apply_damage(damage_mod, BURN, target)
-		to_chat(M, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
-		return
-	if(damage+damage_mod < 0)
-		damage = 0
-		return
+	if(organ_flags & ORGAN_SYNTHETIC)
+		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
+		owner.say("The pH is appropriately [pick(errormessage)].")
 
-	damage += damage_mod
+/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
+
+	if(!d) //Micro-optimization.
+		return
+	if(maximum < damage)
+		return
+	damage = CLAMP(damage + d, 0, maximum)
+	var/mess = check_damage_thresholds(owner)
+	prev_damage = damage
+	if(mess && owner)
+		to_chat(owner, mess)
+
 	if ((damage / maxHealth) > 1)
-		to_chat(M, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
+		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
 	else if ((damage / maxHealth) > 0.85)
-		to_chat(M, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
+		to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
 	else if ((damage / maxHealth) > 0.5)
-		to_chat(M, "<span class='notice'>Your tongue is really starting to hurt.</span>")
+		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
 
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
@@ -168,7 +174,7 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
-	maxHealth = "alien" //Their blood is acid, so, no, though a tongueless xeno might be funny
+	maxHealth = 500 //They've a little mouth for a tongue, so it's pretty rhobust
 	modifies_speech = TRUE // not really, they just hiss
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
@@ -189,9 +195,10 @@
 	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
+	organ_flags = ORGAN_NO_SPOIL
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
-	maxHealth = "bone" //Take brute damage instead
+	maxHealth = 75 //Take brute damage instead
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -200,6 +207,14 @@
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
+
+/obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
+	if(!owner)
+		return
+	var/target = owner.get_bodypart(BODY_ZONE_HEAD)
+	owner.apply_damage(d, BURN, target)
+	to_chat(owner, "<span class='userdanger'>You feel your skull burning! Oof, your bones!</span>")
+	return
 
 /obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
 	if (chattering)
@@ -262,6 +277,7 @@
 	icon_state = "tonguecybernetic"
 	taste_sensitivity = 10
 	maxHealth = 60 //It's robotic!
+	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
@@ -271,3 +287,4 @@
 	say_mod = "beeps"
 	desc = "A voice synthesizer used by IPCs to smoothly interface with organic lifeforms."
 	electronics_magic = FALSE
+	organ_flags = ORGAN_SYNTHETIC

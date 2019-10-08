@@ -1,0 +1,8 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - tweak: "tweaked beaker health and allows use of syringes/droppers on chem_heaters"
+  - soundadd: "added a sound for when beakers take temperature damage."
+  - imageadd: "added some icons for melting beakers"
+  - refactor: "refactored how beakers take damage"
+  - bugfix: "fixes how beakers would only take one instance of damage on pH damage"

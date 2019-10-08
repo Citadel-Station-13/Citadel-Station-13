@@ -534,6 +534,17 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_heart_u
+	name = "Upgraded Cybernetic Heart"
+	desc = "An upgraded cybernetic heart"
+	id = "cybernetic_heart_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 50
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
+	build_path = /obj/item/organ/heart/cybernetic/upgraded
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cybernetic_liver_u
 	name = "Upgraded Cybernetic Liver"
 	desc = "An upgraded cybernetic liver"
@@ -710,6 +721,28 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_ears
+	name = "Cybernetic Ears"
+	desc = "A pair of cybernetic ears."
+	id = "cybernetic_ears"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 30
+	materials = list(MAT_METAL = 250, MAT_GLASS = 400)
+	build_path = /obj/item/organ/ears/cybernetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_ears_u
+	name = "Upgraded Cybernetic Ears"
+	desc = "A pair of upgraded cybernetic ears."
+	id = "cybernetic_ears_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
+	build_path = /obj/item/organ/ears/cybernetic/upgraded
+	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////
