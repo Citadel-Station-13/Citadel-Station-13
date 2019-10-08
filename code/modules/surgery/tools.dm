@@ -29,7 +29,7 @@
 		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine(mob/living/user)
-	to_chat(user, "<span class = 'notice> It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>"
+	to_chat(user, "<span class = 'notice> It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>")
 
 /obj/item/retractor/augment
 	name = "retractor"
@@ -131,7 +131,7 @@
 		icon_state = "surgicaldrill_a"
 
 /obj/item/surgicaldrill/advanced/examine(mob/living/user)
-	to_chat(user, "<span class = 'notice> It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode.</span>"
+	to_chat(user, "<span class = 'notice> It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode.</span>")
 
 /obj/item/surgicaldrill/augment
 	name = "surgical drill"
@@ -203,7 +203,7 @@
 		icon_state = "scalpel_a"
 
 /obj/item/scalpel/advanced/examine(mob/living/user)
-	to_chat(user, "<span class = 'notice> It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode. </span>"
+	to_chat(user, "<span class = 'notice> It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode. </span>")
 
 /obj/item/scalpel/augment
 	name = "scalpel"
