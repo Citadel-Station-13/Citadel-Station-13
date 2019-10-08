@@ -39,3 +39,12 @@
 #define THICKMATERIAL				(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define VOICEBOX_TOGGLABLE (1<<6) // The voicebox in this clothing can be toggled.
 #define VOICEBOX_DISABLED (1<<7) // The voicebox is currently turned off.
+
+// Flags for the organ_flags var on /obj/item/organ
+
+#define ORGAN_SYNTHETIC			(1<<0)	//Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
+#define ORGAN_FROZEN			(1<<1)	//Frozen organs, don't deteriorate
+#define ORGAN_FAILING			(1<<2)	//Failing organs perform damaging effects until replaced or fixed
+#define ORGAN_EXTERNAL			(1<<3)	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
+#define ORGAN_VITAL				(1<<4)	//Currently only the brain
+#define ORGAN_NO_SPOIL			(1<<5)	//Currently only the brain

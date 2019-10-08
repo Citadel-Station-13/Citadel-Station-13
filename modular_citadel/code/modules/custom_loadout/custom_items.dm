@@ -499,4 +499,6 @@
 	desc = "Old style flight goggles with a leather cap attached."
 	icon_state = "flight-g"
 	item_state = "flight-g"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	actions_types = list(/datum/action/item_action/toggle)

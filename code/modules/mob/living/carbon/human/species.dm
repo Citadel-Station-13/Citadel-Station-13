@@ -1221,9 +1221,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(mood && mood.sanity > SANITY_DISTURBED)
 			hunger_rate *= max(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 
-		if(H.satiety > 0)
+		// Whether we cap off our satiety or move it towards 0
+		if(H.satiety > MAX_SATIETY)
+			H.satiety = MAX_SATIETY
+		else if(H.satiety > 0)
 			H.satiety--
-		if(H.satiety < 0)
+		else if(H.satiety < -MAX_SATIETY)
+			H.satiety = -MAX_SATIETY
+		else if(H.satiety < 0)
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
@@ -1708,7 +1713,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BODY_ZONE_HEAD)
 				if(!I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
-						H.adjustBrainLoss(20)
+						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 						if(H.stat == CONSCIOUS)
 							H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
 											"<span class='userdanger'>[H] has been knocked senseless!</span>")
@@ -1717,7 +1722,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
-						H.adjustBrainLoss(I.force * 0.2)
+						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, I.force * 0.2)
 
 					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
@@ -1832,7 +1837,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
-		if(target_collateral_human && target_collateral_human.resting)
+		if(target_collateral_human && !target_collateral_human.resting)
 			shove_blocked = TRUE
 		else
 			target_collateral_human = null
@@ -1843,7 +1848,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
 			var/targetatrest = target.resting
-			if((directional_blocked || (!target_collateral_human && !target_shove_turf.shove_act(target, user))) && !targetatrest)
+			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1936,7 +1941,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			else
 				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
 		if(BRAIN)
-			H.adjustBrainLoss(damage * hit_percent * H.physiology.brain_mod)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * hit_percent * H.physiology.brain_mod)
 		if(AROUSAL)											//Citadel edit - arousal
 			H.adjustArousalLoss(damage * hit_percent)
 	return 1
