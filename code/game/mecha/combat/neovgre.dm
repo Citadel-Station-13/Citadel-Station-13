@@ -36,8 +36,8 @@
 		..()
 
 /obj/mecha/combat/neovgre/moved_inside(mob/living/carbon/human/H)
-	var/Itemlist = H.held_items
-	for(var/obj/item/W in Itemlist)
+	var/list/Itemlist = H.get_contents()
+	for(var/obj/item/clockwork/slab/W in Itemlist)
 		to_chat(H, "<span class='brass'>You safely store [W] inside [src].</span>")
 		qdel(W)
 	. = ..()
