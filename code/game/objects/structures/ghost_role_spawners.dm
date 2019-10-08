@@ -561,7 +561,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton/pirate
+	mob_species = /datum/species/skeleton/space
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE

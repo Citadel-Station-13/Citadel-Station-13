@@ -6,8 +6,10 @@
 	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
-	var/cached_purity = 1
-	SplitChem = TRUE
+	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
+	inverse_chem			= "fermiTox"
+
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
@@ -35,7 +37,7 @@
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	metabolization_rate = 0.2
 	overdose_threshold = 25
-	DoNotSplit = TRUE
+	chemical_flags = REAGENT_DONOTSPLIT
 	pH = 4
 	can_synth = TRUE
 
@@ -82,9 +84,9 @@
 	color = "#f9b9bc" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	InverseChemVal 		= 0
+	inverse_chem_val 		= 0
 	var/obj/item/organ/tongue/nT
-	DoNotSplit = TRUE
+	chemical_flags = REAGENT_DONOTSPLIT
 	pH = 5
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
@@ -171,9 +173,9 @@
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
 	overdose_threshold = 15
-	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
-	InverseChem 		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	impure_chem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.25
+	inverse_chem		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
 	can_synth = FALSE
@@ -194,7 +196,7 @@
 	if(prob(10))
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
-		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
+		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
 	N.nanite_volume += -10*cached_purity
@@ -208,10 +210,11 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	O.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
-	name = "Naninte bain"
+	name = "Electromagnetic crystals"
 	id = "nanite_b_goneTox"
-	description = "Poorly made, and shocks you!"
-	metabolization_rate = 1
+	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
+	metabolization_rate = 0.5
+	chemical_flags = REAGENT_INVISIBLE
 
 //Increases shock events.
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
@@ -249,8 +252,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if((method==VAPOR) && (!C.wear_mask))
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
-		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-		L.adjustLungLoss(acidstr*2, C)
+		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, acidstr*2)
 		C.apply_damage(acidstr/5, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
@@ -277,7 +279,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	addProc = TRUE
+	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -307,22 +309,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1)
 	holder.clear_reagents()
-
-/datum/reagent/fermi/fermiTox
-	name = "FermiTox"
-	id = "fermiTox"
-	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
-	data = "merge"
-	color = "FFFFFF"
-	can_synth = FALSE
-
-//I'm concerned this is too weak, but I also don't want deathmixes.
-/datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
-	if(C.dna && istype(C.dna.species, /datum/species/jelly))
-		C.adjustToxLoss(-2)
-	else
-		C.adjustToxLoss(2)
-	..()
 
 /datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"

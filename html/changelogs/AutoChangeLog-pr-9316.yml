@@ -1,0 +1,5 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - rscadd: "on_mob_dead(), bitflags and CHECK_MULTIPLE_BITFIELDS"
+  - refactor: "refactored fermichem vars, moved impure chems into their own reagents subtype"
