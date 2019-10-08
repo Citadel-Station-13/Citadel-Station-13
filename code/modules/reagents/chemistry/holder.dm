@@ -567,7 +567,8 @@
 	reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	if(round(reactedVol, CHEMICAL_QUANTISATION_LEVEL) == round(targetVol, CHEMICAL_QUANTISATION_LEVEL))
 		fermiEnd()
-	
+	if(!reactedVol)
+		fermiEnd()
 	return
 
 /datum/reagents/proc/fermiEnd()
@@ -587,9 +588,10 @@
 	handle_reactions()
 	update_total()
 	//Reaction sounds and words
-	playsound(get_turf(my_atom), C.mix_sound, 80, 1)
-	var/iconhtml = icon2html(my_atom)
-	my_atom.visible_message("<span class='notice'>[iconhtml] [C.mix_message]</span>")
+	var/list/seen = viewers(5, get_turf(my_atom))
+	var/iconhtml = icon2html(my_atom, seen)
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 /datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
@@ -642,7 +644,6 @@
 	//ONLY WORKS FOR ONE PRODUCT AT THE MOMENT
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/P in cached_results)
-		//stepChemAmmount = CLAMP(((deltaT * multiplier), 0, ((targetVol - reactedVol)/cached_results[P]))  //used to have multipler, now it does
 		stepChemAmmount = (multiplier*cached_results[P])
 		if (stepChemAmmount > C.RateUpLim)
 			stepChemAmmount = C.RateUpLim
@@ -653,7 +654,7 @@
 			addChemAmmount = CHEMICAL_QUANTISATION_LEVEL
 		removeChemAmmount = (addChemAmmount/cached_results[P])
 		//This is kept for future bugtesters.
-		message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
+		//message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
 
 	//remove reactants
 	for(var/B in cached_required_reagents)
@@ -816,7 +817,7 @@
 	if(!isnum(amount) || !amount)
 		return FALSE
 
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small ammount problems.
+	if(amount < CHEMICAL_QUANTISATION_LEVEL)//To prevent small ammount problems.
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
