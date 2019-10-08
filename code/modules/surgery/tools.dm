@@ -28,8 +28,8 @@
 		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
 		icon_state = "retractor_a"
 
-/obj/item/retractor/advanced/examine()
-	. += " It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
+/obj/item/retractor/advanced/examine(mob/living/user)
+	to_chat(user, "<span class = 'notice> It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>"
 
 /obj/item/retractor/augment
 	name = "retractor"
@@ -130,8 +130,8 @@
 		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
 		icon_state = "surgicaldrill_a"
 
-/obj/item/surgicaldrill/advanced/examine()
-	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."
+/obj/item/surgicaldrill/advanced/examine(mob/living/user)
+	to_chat(user, "<span class = 'notice> It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode.</span>"
 
 /obj/item/surgicaldrill/augment
 	name = "surgical drill"
@@ -193,7 +193,7 @@
 		tool_behaviour = TOOL_SAW
 		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
 		set_light(2)
-			force += 1 //we don't want to ruin sharpened stuff
+		force += 1 //we don't want to ruin sharpened stuff
 	icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
@@ -202,8 +202,8 @@
 		force -= 1
 		icon_state = "scalpel_a"
 
-/obj/item/scalpel/advanced/examine()
-	. += " It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode."
+/obj/item/scalpel/advanced/examine(mob/living/user)
+	to_chat(user, "<span class = 'notice> It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode. </span>"
 
 /obj/item/scalpel/augment
 	name = "scalpel"
