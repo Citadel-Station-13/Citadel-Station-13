@@ -233,11 +233,15 @@
 #define OFFSET_S_STORE "s_store"
 #define OFFSET_FACEMASK "mask"
 #define OFFSET_HEAD "head"
-#define OFFSET_FACE "face"
+#define OFFSET_EYES "eyes"
+#define OFFSET_LIPS "lips"
 #define OFFSET_BELT "belt"
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HAIR "hair"
+#define OFFSET_FHAIR "fhair"
+#define OFFSET_MUTPARTS "mutantparts"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN				18	//youngest a character can be //CITADEL EDIT - 17 --> 18
