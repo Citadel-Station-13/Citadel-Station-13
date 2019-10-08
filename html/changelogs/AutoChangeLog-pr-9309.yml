@@ -1,0 +1,6 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - rscadd: "graft synthtissue surgery, new reagent synthtissue"
+  - tweak: "neurine fixes brain objs
+merge: combines fermichem's lung damage with tg's"
