@@ -660,6 +660,9 @@
 		if (addChemAmmount < CHEMICAL_QUANTISATION_LEVEL)
 			addChemAmmount = CHEMICAL_QUANTISATION_LEVEL
 		removeChemAmmount = (addChemAmmount/cached_results[P])
+		//keep limited.
+		addChemAmmount = round(addChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
+		removeChemAmmount = round(removeChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
 		//This is kept for future bugtesters.
 		//message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
 
