@@ -190,10 +190,10 @@
 			else if(istype(R, /datum/reagent/blob))
 				blob += generate_chemwiki_line(R, X, processCR)
 
-			/* when merged
+			/*
 			else if(istype(R, /datum/reagent/impure))
 				impure += generate_chemwiki_line(R, X, processCR)
-			*/
+				*/
 
 			else
 				remainder += generate_chemwiki_line(R, X, processCR)
