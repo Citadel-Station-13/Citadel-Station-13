@@ -335,7 +335,7 @@
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
@@ -357,7 +357,7 @@
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)

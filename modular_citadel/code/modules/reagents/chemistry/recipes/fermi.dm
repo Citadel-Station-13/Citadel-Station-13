@@ -434,8 +434,8 @@
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 2
-	OptimalpHMax 	= 6
+	OptimalpHMin 	= 0
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4
@@ -456,14 +456,14 @@
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
 	results = list("basic_buffer" = 1.5)
-	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "water" = 0.5)
+	required_reagents = list("lye" = 0.3, "ethanol" = 0.6, "water" = 0.6)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:x
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 5
-	OptimalpHMax 	= 12
+	OptimalpHMin 	= 0
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4

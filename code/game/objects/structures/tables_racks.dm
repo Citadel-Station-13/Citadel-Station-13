@@ -21,6 +21,7 @@
 	anchored = TRUE
 	layer = TABLE_LAYER
 	climbable = TRUE
+	obj_flags = CAN_BE_HIT|SHOVABLE_ONTO
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
@@ -135,6 +136,15 @@
 		return
 	var/mob/living/carbon/human/H = pushed_mob
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+
+/obj/structure/table/shove_act(mob/living/target, mob/living/user)
+	if(!target.resting)
+		target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
+		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	target.forceMove(src.loc)
+	log_combat(user, target, "shoved", "onto [src] (table)")
+	return TRUE
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
