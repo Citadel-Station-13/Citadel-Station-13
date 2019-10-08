@@ -35,7 +35,7 @@
 				B = new C.dna.species.mutant_brain()
 			else
 				B = new()
-			B.vital = FALSE
+			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 			B.Insert(C)
 	if(ishuman(user))

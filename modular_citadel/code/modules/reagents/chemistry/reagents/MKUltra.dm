@@ -295,7 +295,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Thralls mindbroken")
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.2)//should be ~30 in total
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)//should be ~30 in total
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
@@ -342,7 +342,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 				M.Stun(10)
 				M.emote("whimper")//does this exist?
 				to_chat(M, "[(M.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
-				M.adjustBrainLoss(0.5)//I found out why everyone was so damaged!
+				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)//I found out why everyone was so damaged!
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)

@@ -254,7 +254,7 @@
 				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
 				return
 
-			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
+			if(BM.stat == DEAD || (M.brain && M.brain.organ_flags & ORGAN_FAILING))
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 

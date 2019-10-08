@@ -123,7 +123,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Damage the clone
 				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
-				SM.setBrainLoss(40)
+				SM.setOrganLoss(ORGAN_SLOT_BRAIN, 40)
 				SM.nutrition = startHunger/2
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
@@ -249,7 +249,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.adjustToxLoss(-(bodydamage/10), 0)
 			SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/1.5
 			SM.adjustCloneLoss((bodydamage/10), 0)
-			SM.setBrainLoss((bodydamage/10))
+			SM.setOrganLoss(ORGAN_SLOT_BRAIN, (bodydamage/10))
 			SM.nutrition = 400
 		if(bodydamage>200)
 			SM.gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -289,7 +289,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume += 10
 	M.adjustCloneLoss(-2, 0)
-	M.setBrainLoss(-1)
+	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	M.nutrition += 10
 	..()
 
