@@ -205,8 +205,6 @@
 
 #define MAX_CHICKENS 50
 
-#define UNHEALING_EAR_DAMAGE 100
-
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
@@ -257,6 +255,9 @@
 // Roundstart trait system
 
 #define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
+
+#define MAX_REVIVE_FIRE_DAMAGE 180
+#define MAX_REVIVE_BRUTE_DAMAGE 180
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

@@ -26,12 +26,14 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
+	decay_factor = 0
 
 /obj/item/organ/vocal_cords/adamantine
 	name = "adamantine vocal cords"
 	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Adamantine golems use this to broadcast messages to nearby golems."
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
 	icon_state = "adamantine_cords"
+	decay_factor = 0
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
 	if(!IsAvailable())
@@ -62,6 +64,7 @@
 	var/cooldown_mod = 1
 	var/base_multiplier = 1
 	spans = list("colossus","yell")
+	decay_factor = 0
 
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
@@ -623,10 +626,6 @@
 /datum/action/item_action/organ_action/velvet
 	name = "Velvet chords"
 	var/obj/item/organ/vocal_cords/velvet/cords = null
-	//icon_icon = 'icons/mob/screen_alert.dmi'
-	//button_icon_state = "velvet_chords"
-	//icon = 'icons/mob/screen_alert.dmi'
-	//icon_state = "in_love"
 
 /datum/action/item_action/organ_action/velvet/New()
 	..()
@@ -991,7 +990,7 @@
 			if (HAS_TRAIT(H, TRAIT_DEAF))//How the heck you managed to get here I have no idea, but just in case!
 				speaktrigger += "I can barely hear you! "
 			//And the brain damage. And the brain damage. And the brain damage. And the brain damage. And the brain damage.
-			switch(H.getBrainLoss())
+			switch(H.getOrganLoss(ORGAN_SLOT_BRAIN))
 				if(20 to 40)
 					speaktrigger += "I have a mild head ache, "
 				if(40 to 80)

@@ -16,7 +16,12 @@
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 
-/datum/species/zombie/check_roundstart_eligible()
+/datum/species/zombie/notspaceproof
+	id = "notspaceproofzombie"
+	blacklisted = 0
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH)
+
+/datum/species/zombie/notspaceproof/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()

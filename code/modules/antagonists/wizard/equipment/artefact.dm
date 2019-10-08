@@ -198,7 +198,7 @@
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
 
-	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.set_species(/datum/species/skeleton/space, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
