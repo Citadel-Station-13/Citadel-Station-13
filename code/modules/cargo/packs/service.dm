@@ -33,6 +33,32 @@
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
+/datum/supply_pack/service/carpet_exotic
+	name = "Exotic Carpet Crate"
+	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
+	cost = 10000
+	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "exotic carpet crate"
+
 /datum/supply_pack/service/food_cart
 	name = "Food Cart Crate"
 	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
