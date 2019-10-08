@@ -25,10 +25,12 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 
 
 /obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
+	if(active)
+		return FALSE
 	if(surplus() < 1500)
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
-		return
+		return FALSE
 	GLOB.singularity_counter++
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
 		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
@@ -36,22 +38,26 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
-	active = 1
+	active = TRUE
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
+	return TRUE
 
 
-/obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
+/obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user)
+	if(!active)
+		return FALSE
 	for(var/obj/singularity/singulo in GLOB.singularities)
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
-	active = 0
+	active = FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 	GLOB.singularity_counter--
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
 		W.weight -= round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
+	return TRUE
 
 
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user)
