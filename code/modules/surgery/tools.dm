@@ -19,14 +19,14 @@
 
 /obj/item/retractor/advanced/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-		if(tool_behaviour == TOOL_RETRACTOR)
-			tool_behaviour = TOOL_HEMOSTAT
-			to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in hemostat mode.</span>")
-			icon_state = "hemostat_a"
-		else
-			tool_behaviour = TOOL_RETRACTOR
-			to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
-			icon_state = "retractor_a"
+	if(tool_behaviour == TOOL_RETRACTOR)
+		tool_behaviour = TOOL_HEMOSTAT
+		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in hemostat mode.</span>")
+		icon_state = "hemostat_a"
+	else
+		tool_behaviour = TOOL_RETRACTOR
+		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
+		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine()
 	. += " It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
@@ -189,18 +189,18 @@
 
 /obj/item/scalpel/advanced/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
-		if(tool_behaviour == TOOL_SCALPEL)
-			tool_behaviour = TOOL_SAW
-			to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
-			set_light(2)
-				force += 1 //we don't want to ruin sharpened stuff
-		icon_state = "saw_a"
-		else
-			tool_behaviour = TOOL_SCALPEL
-			to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
-			set_light(1)
-			force -= 1
-			icon_state = "scalpel_a"
+	if(tool_behaviour == TOOL_SCALPEL)
+		tool_behaviour = TOOL_SAW
+		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
+		set_light(2)
+			force += 1 //we don't want to ruin sharpened stuff
+	icon_state = "saw_a"
+	else
+		tool_behaviour = TOOL_SCALPEL
+		to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
+		set_light(1)
+		force -= 1
+		icon_state = "scalpel_a"
 
 /obj/item/scalpel/advanced/examine()
 	. += " It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode."
