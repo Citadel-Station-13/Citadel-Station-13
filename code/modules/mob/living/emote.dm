@@ -58,9 +58,9 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
-	if(user.reagents && (user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty")))
+	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
 		return FALSE
 
 /datum/emote/living/dance

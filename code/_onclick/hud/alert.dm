@@ -213,6 +213,12 @@ or something covering your eyes."
 	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
 	icon_state = "high"
 
+/obj/screen/alert/hypnosis
+	name = "Hypnosis"
+	desc = "Something's hypnotizing you, but you're not really sure about what."
+	icon_state = "hypnosis"
+	var/phrase
+
 /obj/screen/alert/drunk //Not implemented
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."

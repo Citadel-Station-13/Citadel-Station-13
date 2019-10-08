@@ -69,3 +69,17 @@
 /datum/status_effect/in_love/tick()
 	if(date)
 		new /obj/effect/temp_visual/love_heart/invisible(get_turf(date.loc), owner)
+
+/datum/status_effect/throat_soothed
+	id = "throat_soothed"
+	duration = 60 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/throat_soothed/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+
+/datum/status_effect/throat_soothed/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")

@@ -110,6 +110,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_SIXTHSENSE		"sixthsense"
 #define TRAIT_FEARLESS			"fearless"
 #define TRAIT_UNSTABLE			"unstable"
 #define TRAIT_PARALYSIS_L_ARM	"para-l-arm" //These are used for brain-based paralysis, where replacing the limb won't fix it
@@ -117,6 +118,7 @@
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
+#define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
 #define	TRAIT_STRONG_GRABBER	"strong_grabber"
 #define	TRAIT_CALCIUM_HEALER	"calcium_healer"
@@ -174,6 +176,7 @@
 #define CULT_TRAIT "cult"
 #define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
+#define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines

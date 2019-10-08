@@ -514,12 +514,14 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			prefs = new
 
-		var/adminoverride = 0
+		var/override = FALSE
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+			override = TRUE
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue

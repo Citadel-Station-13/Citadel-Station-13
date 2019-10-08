@@ -7,6 +7,8 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
+#define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
+
 ///////////
 // BUFFS //
 ///////////
@@ -71,6 +73,8 @@
 #define STATUS_EFFECT_KINDLE /datum/status_effect/kindle //A knockdown reduced by 1 second for every 3 points of damage the target takes.
 
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
+
+#define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
 
 /////////////
 // NEUTRAL //

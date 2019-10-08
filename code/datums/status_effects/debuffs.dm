@@ -534,8 +534,7 @@ datum/status_effect/pacify
 	tick_interval = 10
 	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
 	var/stun = TRUE
-	var/triggered = FALSE
-	alert_type = null
+	alert_type = /obj/screen/alert/status_effect/trance
 
 /obj/screen/alert/status_effect/trance
 	name = "Trance"
@@ -543,17 +542,6 @@ datum/status_effect/pacify
 	icon_state = "high"
 
 /datum/status_effect/trance/tick()
-	if(HAS_TRAIT(owner, "hypnotherapy"))
-		if(triggered == TRUE)
-			UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-			RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
-			ADD_TRAIT(owner, TRAIT_MUTE, "trance")
-			if(!owner.has_quirk(/datum/quirk/monochromatic))
-				owner.add_client_colour(/datum/client_colour/monochrome)
-			to_chat(owner, "<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
-			triggered = FALSE
-		else
-			return
 	if(stun)
 		owner.Stun(60, TRUE, TRUE)
 	owner.dizziness = 20
@@ -561,47 +549,88 @@ datum/status_effect/pacify
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	if(HAS_TRAIT(owner, "hypnotherapy"))
-		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/listen)
-		return TRUE
-	alert_type = /obj/screen/alert/status_effect/trance
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
 	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
-	if(!owner.has_quirk(/datum/quirk/monochromatic))
-		owner.add_client_colour(/datum/client_colour/monochrome)
+	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
 
-/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE, source_quirk = FALSE)//hypnoquirk makes no visible message, prevents self antag messages, and places phrase below objectives.
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
 	duration = _duration
 	stun = _stun
-	if(source_quirk == FALSE && HAS_TRAIT(owner, "hypnotherapy"))
-		REMOVE_TRAIT(owner, "hypnotherapy", ROUNDSTART_TRAIT)
 	return ..()
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
-	if(!owner.has_quirk(/datum/quirk/monochromatic))
-		owner.remove_client_colour(/datum/client_colour/monochrome)
+	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
-/datum/status_effect/trance/proc/listen(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	to_chat(owner, "<span class='notice'><i>[speaker] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
-	triggered = TRUE
-
-/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())
 		return
-	if(speaker == owner)
+	if(hearing_args[HEARING_SPEAKER] == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
-	if(HAS_TRAIT(C, "hypnotherapy"))
-		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message, TRUE), 10)
-	else
-		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)
+	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
+
+/datum/status_effect/spasms
+	id = "spasms"
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+
+/datum/status_effect/spasms/tick()
+	if(prob(15))
+		switch(rand(1,5))
+			if(1)
+				if((!owner.lying && !owner.buckled) && isturf(owner.loc))
+					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
+					step(owner, pick(GLOB.cardinals))
+			if(2)
+				if(owner.incapacitated())
+					return
+				var/obj/item/I = owner.get_active_held_item()
+				if(I)
+					to_chat(owner, "<span class='warning'>Your fingers spasm!</span>")
+					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
+					I.attack_self(owner)
+			if(3)
+				var/prev_intent = owner.a_intent
+				owner.a_intent = INTENT_HARM
+
+				var/range = 1
+				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
+					range = 7
+
+				var/list/mob/living/targets = list()
+				for(var/mob/M in oview(owner, range))
+					if(isliving(M))
+						targets += M
+				if(LAZYLEN(targets))
+					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
+					owner.ClickOn(pick(targets))
+				owner.a_intent = prev_intent
+			if(4)
+				var/prev_intent = owner.a_intent
+				owner.a_intent = INTENT_HARM
+				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
+				owner.ClickOn(owner)
+				owner.a_intent = prev_intent
+			if(5)
+				if(owner.incapacitated())
+					return
+				var/obj/item/I = owner.get_active_held_item()
+				var/list/turf/targets = list()
+				for(var/turf/T in oview(owner, 3))
+					targets += T
+				if(LAZYLEN(targets) && I)
+					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
+					owner.throw_item(pick(targets))
