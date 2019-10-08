@@ -32559,18 +32559,15 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "byc" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/computer/card/minor/qm{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -32610,6 +32607,11 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/item/stamp/qm,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
