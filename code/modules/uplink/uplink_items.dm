@@ -610,7 +610,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/storage/box/syndie_kit/chemical
-	cost = 6
+	cost = 8
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/romerol_kit

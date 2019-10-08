@@ -132,7 +132,7 @@
 			new /obj/item/card/emag(src) // 6 tc
 
 		if("ninja") // 40~ tc worth
-			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc? 
+			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc?
 			new /obj/item/implanter/adrenalin(src) // 8 tc
 			new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/throwing_star(src)
@@ -250,7 +250,7 @@
 	new /obj/item/reagent_containers/glass/bottle/coniine(src)
 	new /obj/item/reagent_containers/glass/bottle/curare(src)
 	new /obj/item/reagent_containers/glass/bottle/amanitin(src)
-	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/pen/sleepy(src)
 
 /obj/item/storage/box/syndie_kit/nuke
 	name = "box"
