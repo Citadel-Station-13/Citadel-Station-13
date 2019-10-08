@@ -25,17 +25,18 @@
 			else //ingest, patch or inject
 				L.ForceContractDisease(D)
 
-/datum/reagent/blood/on_mob_life(mob/living/L)	//needed so we don't nuke people with massive toxins now. Because apparently being hyperlethal is preferable to stamina drain
-	if(iscarbon(L))
-		var/mob/living/carbon/C = L
-		var/blood_id = C.get_blood_id()
-		if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
-			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-				C.adjustToxLoss(2*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
-				. = 1
-			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-				. = 1
+/datum/reagent/blood/on_mob_life(mob/living/carbon/C, method=INJECT, reac_volume)	//needed so we don't nuke people with massive toxins now. Because apparently being hyperlethal is preferable to stamina drain
+	if(!istype(C))
+		return
+	var/blood_id = C.get_blood_id()
+	if((blood_id == "blood" || blood_id == "jellyblood") && (!(method == INJECT) || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+			C.adjustToxLoss(2*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
+			. = 1
+		else
+			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+			. = 1
+
 	..()
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)

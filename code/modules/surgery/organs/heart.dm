@@ -82,7 +82,7 @@
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
-			
+
 	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='userdanger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>")
@@ -221,7 +221,7 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 	name = "IPC heart"
 	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
 	icon_state = "heart-c"
-	synthetic = TRUE
+	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/heart/ipc/emp_act()
 	. = ..()
