@@ -1,0 +1,4 @@
+author: "Weblure"
+delete-after: True
+changes: 
+  - rscadd: "Added the relevant Beepsky animations from TG's aibots.dmi file to Cit's aibots.dmi file."

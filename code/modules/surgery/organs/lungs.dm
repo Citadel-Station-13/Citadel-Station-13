@@ -8,6 +8,19 @@
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
 
+	var/failed = FALSE
+	var/operated = FALSE	//whether we can still have our damages fixed through surgery
+
+	//health
+	maxHealth = LUNGS_MAX_HEALTH
+
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+
+	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
+	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
+	high_threshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
+
 	//Breath damage
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -56,36 +69,35 @@
 
 	var/crit_stabilizing_reagent = "epinephrine"
 
-	//health
-	var/maxHealth = LUNGS_MAX_HEALTH
-	var/damage = 0
+
 
 //TODO: lung health affects lung function
-/obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M) //damage might be too low atm.
+/obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
+	var/cached_damage = damage
 	if (maxHealth == INFINITY)
 		return
-	if(damage+damage_mod < 0)
-		damage = 0
+	if(cached_damage+damage_mod < 0)
+		cached_damage = 0
 		return
 
-	damage += damage_mod
-	if ((damage / maxHealth) > 1)
-		to_chat(M, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
-		M.emote("gasp")
+	cached_damage += damage_mod
+	if ((cached_damage/ maxHealth) > 1)
+		to_chat(owner, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
+		owner.emote("gasp")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Lungs lost")
-		qdel(src)
-	else if ((damage / maxHealth) > 0.75)
-		to_chat(M, "<span class='warning'>It's getting really hard to breathe!!</span>")
-		M.emote("gasp")
-		M.Dizzy(3)
-	else if ((damage / maxHealth) > 0.5)
-		M.Dizzy(2)
-		to_chat(M, "<span class='notice'>Your chest is really starting to hurt.</span>")
-		M.emote("cough")
-	else if ((damage / maxHealth) > 0.2)
-		to_chat(M, "<span class='notice'>You feel an ache within your chest.</span>")
-		M.emote("cough")
-		M.Dizzy(1)
+		//qdel(src) - Handled elsewhere for now.
+	else if ((cached_damage / maxHealth) > 0.75)
+		to_chat(owner, "<span class='warning'>It's getting really hard to breathe!!</span>")
+		owner.emote("gasp")
+		owner.Dizzy(3)
+	else if ((cached_damage / maxHealth) > 0.5)
+		owner.Dizzy(2)
+		to_chat(owner, "<span class='notice'>Your chest is really starting to hurt.</span>")
+		owner.emote("cough")
+	else if ((cached_damage / maxHealth) > 0.2)
+		to_chat(owner, "<span class='notice'>You feel an ache within your chest.</span>")
+		owner.emote("cough")
+		owner.Dizzy(1)
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 //TODO: add lung damage = less oxygen gains
@@ -289,7 +301,7 @@
 			H.hallucination += 10
 			H.reagents.add_reagent("bz_metabolites",5)
 			if(prob(33))
-				H.adjustBrainLoss(3, 150)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 		else if(bz_pp > 0.01)
 			H.hallucination += 5
@@ -405,13 +417,13 @@
 		var/cold_modifier = H.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
 			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
-			adjustLungLoss((cold_level_3_damage*cold_modifier*2), H)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, (cold_level_3_damage*cold_modifier*2))
 		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
 			H.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
-			adjustLungLoss((cold_level_2_damage*cold_modifier*2), H)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, (cold_level_2_damage*cold_modifier*2))
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
 			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
-			adjustLungLoss((cold_level_1_damage*cold_modifier*2), H)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, (cold_level_1_damage*cold_modifier*2))
 		if(breath_temperature < cold_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
@@ -420,16 +432,28 @@
 		var/heat_modifier = H.dna.species.heatmod
 		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
 			H.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
-			adjustLungLoss((heat_level_1_damage*heat_modifier*2), H)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, (heat_level_1_damage*heat_modifier*2))
 		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
 			H.apply_damage_type(heat_level_2_damage*heat_modifier, heat_damage_type)
-			adjustLungLoss((heat_level_2_damage*heat_modifier*2), H)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, (heat_level_2_damage*heat_modifier*2))
 		if(breath_temperature > heat_level_3_threshold)
 			H.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
-			adjustLungLoss((heat_level_3_damage*heat_modifier*2), H)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, (heat_level_3_damage*heat_modifier*2))
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
+
+
+/obj/item/organ/lungs/on_life()
+	..()
+	if((!failed) && ((organ_flags & ORGAN_FAILING)))
+		if(owner.stat == CONSCIOUS)
+			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
+								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
+		failed = TRUE
+	else if(!(organ_flags & ORGAN_FAILING))
+		failed = FALSE
+	return
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
@@ -451,14 +475,16 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
-	synthetic = TRUE
+	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = 400
+	safe_oxygen_min = 13
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	owner.losebreath = 20
+	owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 25)
 
 
 /obj/item/organ/lungs/cybernetic/upgraded
@@ -495,8 +521,24 @@
 
 	safe_toxins_max = 0 //We breathe this to gain POWER.
 
+	cold_level_1_threshold = 285 // Remember when slimes used to be succeptable to cold? Well....
+	cold_level_2_threshold = 260
+	cold_level_3_threshold = 230
+
+	maxHealth = 250
+
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	. = ..()
 	if (breath && breath.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma])
 		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+
+/obj/item/organ/lungs/yamerol
+	name = "Yamerol lungs"
+	desc = "A temporary pair of lungs made from self assembling yamerol molecules."
+	maxHealth = 200
+	color = "#68e83a"
+
+/obj/item/organ/lungs/yamerol/on_life()
+	..()
+	damage += 2 //Yamerol lungs are temporary

@@ -28,7 +28,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/datum/mind/originalmind
 	var/antiGenetics = 255
 	var/sleepytime = 0
-	InverseChemVal = 0.25
+	inverse_chem_val = 0.25
 	can_synth = FALSE
 
 /datum/action/chem/astral
