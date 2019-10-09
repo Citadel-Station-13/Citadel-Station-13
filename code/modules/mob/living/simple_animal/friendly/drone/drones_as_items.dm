@@ -40,7 +40,7 @@
 	. = ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/item/drone_shell/attack_ghost(mob/user)
+/obj/item/drone_shell/attack_ghost(mob/dead/observer/user)
 	if(jobban_isbanned(user,"drone") || QDELETED(src) || QDELETED(user))
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
@@ -49,6 +49,9 @@
 		if(user.client.player_age < DRONE_MINIMUM_AGE)
 			to_chat(user, "<span class='danger'>You're too new to play as a drone! Please try again in [DRONE_MINIMUM_AGE - user.client.player_age] days.</span>")
 			return
+	if(user.reenter_round_timeout > world.realtime)
+		to_chat(user, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((user.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
+		return
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return

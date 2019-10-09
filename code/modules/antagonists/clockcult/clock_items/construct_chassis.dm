@@ -39,7 +39,10 @@
 	. = ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/construct_chassis/attack_ghost(mob/user)
+/obj/item/clockwork/construct_chassis/attack_ghost(mob/dead/observer/user)
+	if(user.reenter_round_timeout > world.realtime)
+		to_chat(user, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((user.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
+		return
 	if(!SSticker.mode)
 		to_chat(user, "<span class='danger'>You cannot use that before the game has started.</span>")
 		return

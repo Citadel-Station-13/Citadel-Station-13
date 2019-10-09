@@ -69,6 +69,11 @@ SUBSYSTEM_DEF(pai)
 					candidate.comments = copytext(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
 
 			if("submit")
+				if(isobserver(usr))
+					var/mob/dead/observer/O = usr
+					if(O.reenter_round_timeout > world.realtime)
+						to_chat(O, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((O.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
+						return
 				if(candidate)
 					candidate.ready = 1
 					for(var/obj/item/paicard/p in pai_card_list)

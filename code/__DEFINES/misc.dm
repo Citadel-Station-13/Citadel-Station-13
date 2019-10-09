@@ -221,6 +221,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Same as above except gets the area instead
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
+//Used to prevent cryo/suicidees from coming back into the round as ghost roles or mid round antags before a given duration has passed.
+#define SUICIDE_REENTER_ROUND_TIMER 40 MINUTES
+
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"

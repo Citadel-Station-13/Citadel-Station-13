@@ -411,7 +411,8 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(0) // Players who cryo out may not re-enter the round
+		mob_occupant.suiciding = TRUE //to penalize them from making a ghost role / midround antag comeback right away.
+		mob_occupant.ghostize(0)
 
 	QDEL_NULL(occupant)
 	open_machine()

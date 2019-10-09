@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	var/can_reenter_corpse
-	var/can_reenter_round = TRUE
+	var/reenter_round_timeout = 0 // used to prevent people from coming back through ghost roles/midround antags as they suicide/cryo for a duration set by SUICIDE_REENTER_ROUND_TIMER.
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -267,7 +267,7 @@ Works together with spawning an observer, noted above.
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
-			ghost.can_reenter_round = (can_reenter_corpse && !suiciding)
+			ghost.reenter_round_timeout = suiciding ? world.realtime + SUICIDE_REENTER_ROUND_TIMER : 0
 			ghost.key = key
 			return ghost
 
@@ -282,7 +282,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // CITADEL EDIT
 	if(istype(loc, /obj/machinery/cryopod))
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [SUICIDE_REENTER_ROUND_TIMER/600] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")//darn copypaste
 			return
 		var/obj/machinery/cryopod/C = loc
@@ -295,7 +295,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [SUICIDE_REENTER_ROUND_TIMER/600] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
@@ -306,7 +306,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [SUICIDE_REENTER_ROUND_TIMER/600] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 	if(response != "Ghost")
 		return
 	ghostize(0)
@@ -617,8 +617,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
 		return 0
 
-	if(!can_reenter_round)
-		to_chat(src, "<span class='warning'>You are unable to re-enter the round.</span>")
+	if(reenter_round_timeout > world.realtime)
+		to_chat(src, "<span class='warning'>You are unable to re-enter the round yet. Your ghost role blacklist will expire in [round((reenter_round_timeout - world.realtime)/600)] minutes.</span>")
 		return FALSE
 
 	if(can_reenter_corpse && mind && mind.current)

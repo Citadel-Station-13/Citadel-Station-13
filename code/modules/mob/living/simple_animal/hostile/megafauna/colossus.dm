@@ -582,6 +582,9 @@ Difficulty: Very Hard
 	if(.)
 		return
 	if(ready_to_deploy)
+		if(user.reenter_round_timeout > world.realtime)
+			to_chat(user, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((user.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
+			return
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))

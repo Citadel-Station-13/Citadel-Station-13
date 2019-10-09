@@ -83,10 +83,14 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 //Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
 /obj/item/mmi/posibrain/proc/activate(mob/user)
-	if(QDELETED(brainmob))
+	if(QDELETED(brainmob) || is_occupied() || jobban_isbanned(user,"posibrain") || QDELETED(src) || QDELETED(user))
 		return
-	if(is_occupied() || jobban_isbanned(user,"posibrain") || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
-		return
+
+	if(isobserver(user))
+		var/mob/dead/observer/O = user
+		if(O.reenter_round_timeout > world.realtime)
+			to_chat(user, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((O.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
+			return
 
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || QDELETED(src))
