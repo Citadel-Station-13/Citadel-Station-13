@@ -21,6 +21,7 @@
 	var/progression = list() //Keep track of where people are in the story.
 
 /mob/living/simple_animal/jacq/Initialize()
+	..()
 	poof()
 
 /mob/living/simple_animal/jacq/Destroy() //I.e invincible
