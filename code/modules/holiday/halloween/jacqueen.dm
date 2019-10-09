@@ -20,12 +20,12 @@
 /datum/round_event/jacq/start()
 	..()
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
-		new /mob/living/jacq(Ian.loc)//She poofs on init, so it doesn't matter, so long as Ian exists.
+		new /mob/living/simple_animal/jacq(Ian.loc)//She poofs on init, so it doesn't matter, so long as Ian exists.
 
 /////// MOBS
 
 //Whacha doing in here like? Yae wan tae ruin ta magicks?
-/mob/living/jacq
+/mob/living/simple_animal/jacq
 	name = "Jacqueline the Pumpqueen"
 	real_name = "Jacqueline"
 	icon = 'icons/obj/halloween_items.dmi'
@@ -37,53 +37,56 @@
 	var/tricked = list() //Those who have been tricked
 	var/progression = list() //Keep track of where people are in the story.
 
-/mob/living/jacq/Initialize()
+/mob/living/simple_animal/jacq/Initialize()
 	poof()
 
-/mob/living/jacq/Destroy() //I.e invincible
+/mob/living/simple_animal/jacq/Destroy() //I.e invincible
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 1)
-	var/mob/living/jacq/Jacq = new src.type(loc)
+	var/mob/living/simple_animal/jacq/Jacq = new src.type(loc)
 	Jacq.tricked = tricked
 	Jacq.progression = progression
 	..()
 
-/mob/living/jacq/death() //What is alive may never die
+/mob/living/simple_animal/jacq/death() //What is alive may never die
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 1)
 	health = 20
 	poof()
 
-/mob/living/jacq/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == INTENT_HELP)
 		chit_chat(M)
 		M.Stun(0)
 	else
 		..()
 
-/mob/living/jacq/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
 	if(M.a_intent == INTENT_HELP)
 		chit_chat(M)
 		M.Stun(0)
 	else
 		..()
 
-/mob/living/jacq/proc/poof()
+/mob/living/simple_animal/jacq/proc/poof()
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.add_reagent("secretcatchem", (10))
-	s.set_up(R, 2, loc)
+	s.set_up(R, 1, loc)
 	s.start()
 
 	for(var/i = 1, i <= 5, i+=1)//try 5 times to teleport
 		var/area/A = GLOB.sortedAreas["[pick(destinations)]"]
+		message_admins("[A] Trying")
 		if(A && istype(A))
 			if(forceMove(safepick(get_area_turfs(A))))
+				message_admins("[A] Moved")
 				return TRUE
+	message_admins("Failed to move")
 	return FALSE
 
 //Ye wee bugger, gerrout of it. Ye've nae tae enjoy reading the code fer mae secrets like.
-/mob/living/jacq/proc/chit_chat(mob/living/L)
+/mob/living/simple_animal/jacq/proc/chit_chat(mob/living/L)
 	var/mob/living/carbon/C = L
 	if(!iscarbon(L))
 		//Maybe? It seems like a lot of faff for something that is very unlikely to happen.
@@ -98,8 +101,8 @@
 			gender = "lassie"
 
 	if(!progression["[C.real_name]"] ||  !(progression["[C.real_name]"] & JACQ_HELLO))
-		visible_message("<b>[src] smiles ominously at [L],</b> <span class='spooky'>\"Well hal� there [gender]! Ah�m Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")
-		sleep(20)
+		visible_message("<b>[src] smiles ominously at [L],</b> <span class='spooky'>\"Well halo there [gender]! Ah'm Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")
+		sleep(50)
 		visible_message("<span class='spooky'><b>[src] continues,</b> says, \"Ah'm sure yae well stunned, but ah've got nae taem fer that. Ah'm after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give ye a treat, or if yae feeling bold, Ah ken trick ye instead.</span>\" giving [L] a wide grin.")
 		if(!progression["[C.real_name]"])
 			progression["[C.real_name]"] += JACQ_HELLO //TO MAKE SURE THAT THE LIST ENTRY EXISTS.
@@ -108,7 +111,7 @@
 		return
 
 	var/choices = list("Trick", "Treat", "How do I get candies?")
-	var/choice = input(usr, "Trick or Treat?", "Trick or Treat?") in choices
+	var/choice = input(C, "Trick or Treat?", "Trick or Treat?") in choices
 	switch(choice)
 		if("Trick")
 			trick(C)
@@ -123,7 +126,7 @@
 			visible_message("<b>[src] says,</b> <span class='spooky'>\"Gae find my familiar; Bartholomew. Ee's tendin the cauldron which ken bring oot t' magic energy in items scattered aroond. Knowing him, ee's probably gone tae somewhere with books.\"</span>")
 			return
 
-/mob/living/jacq/proc/treat(mob/living/carbon/C, gender)
+/mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src] gives off a glowing smile,</b> <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
 	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Plushie - 1 candy", "Can I ask you a question instead?")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
@@ -226,7 +229,7 @@
 					visible_message("<b>[src] shurgs,</b> <span class='spooky'>\"Suit yerself then.\"</span>")
 
 
-/mob/living/jacq/proc/trick(mob/living/carbon/C, gender)
+/mob/living/simple_animal/jacq/proc/trick(mob/living/carbon/C, gender)
 	var/option
 	if(ishuman(C))
 		option = rand(1,7)
@@ -277,7 +280,7 @@
 	poof()
 
 //Blame Fel
-/mob/living/jacq/proc/dating_start(mob/living/carbon/C, gender)
+/mob/living/simple_animal/jacq/proc/dating_start(mob/living/carbon/C, gender)
 	var/candies = pollGhostCandidates("Do you want to go on a date with [C] as Jacqueline the great pumpqueen?")
 	//sleep(30) //If the poll doesn't autopause.
 	if(candies)
@@ -338,7 +341,7 @@ var/datum/reagent/mutationtoxin/pumpkinhead
 	mutationtext = "<span class='spooky'>The pain subsides. You feel your head roll off your shoulders."
 	//I couldn't get the replace head sprite with a pumpkin to work so, it is what it is.
 
-/mob/living/jacq/proc/check_candies(mob/living/carbon/C)
+/mob/living/simple_animal/jacq/proc/check_candies(mob/living/carbon/C)
 	var/invs = C.get_contents()
 	var/candy_count = 0
 	for(var/item in invs)
@@ -346,7 +349,7 @@ var/datum/reagent/mutationtoxin/pumpkinhead
 			candy_count++
 	return candy_count
 
-/mob/living/jacq/proc/take_candies(mob/living/carbon/C, candy_amount = 1)
+/mob/living/simple_animal/jacq/proc/take_candies(mob/living/carbon/C, candy_amount = 1)
 	var/inv = C.get_contents()
 	var/candies = list()
 	for(var/item in inv)
