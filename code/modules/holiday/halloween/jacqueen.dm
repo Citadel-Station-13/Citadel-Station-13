@@ -26,14 +26,14 @@
 
 /mob/living/simple_animal/jacq/Destroy() //I.e invincible
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
-	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 1)
+	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.5)
 	var/mob/living/simple_animal/jacq/Jacq = new src.type(loc)
 	Jacq.progression = progression
 	..()
 
 /mob/living/simple_animal/jacq/death() //What is alive may never die
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
-	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 1)
+	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.5)
 	health = 20
 	poof()
 
@@ -54,7 +54,7 @@
 
 	var/hp_list = list()
 	for(var/obj/machinery/holopad/hp in world)
-		hp_list += "hp"
+		hp_list += hp
 
 	var/obj/machinery/holopad/hp = pick(hp_list)
 	if(forceMove(pick(hp.loc)))
@@ -133,7 +133,6 @@
 				return
 
 			var/reward = new /obj/item/toy/plush/random(C.loc)
-			C.put_in_hands(reward)
 			poof()
 			return
 
@@ -223,6 +222,7 @@
 		if(2)
 			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"Off comes your head, atleast you're not dead.\"</span>")
 			C.reagents.add_reagent("pumpkinmutationtoxin", 5)
+			//doesn't work
 		if(3)
 			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"If only you had a better upbringing, your ears are now full of my singing!\"</span>")
 			var/spowoky = "https://www.youtube.com/watch?v=PFrPrIxluWk"
@@ -230,17 +230,19 @@
 			var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 			var/list/output = world.shelleo("[ytdl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
-			var/stdout = output[SHELLEO_STDOUT]
+			var/stdout = output[SHELLEO_STDOUT] //unknown value:
 			var/list/data = json_decode(stdout)
 			var/web_sound_url = data["url"]
 			var/client/C2 = C.client
 			C2.chatOutput.sendMusic(web_sound_url, 1)//I hope this works!
+			//doesn't work
 		if(4)
-			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"You're cute little bumpkin, In your hand is a pumpkin!\"</span>")
-			for(var/obj/item/I in C.held_items)
-				C.dropItemToGround(I, TRUE)
+			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
+			if(H.head)
+				var/obj/item/W = H.head
+				C.dropItemToGround(W, TRUE)
 			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
-			put_in_hands(jaqc_latern)
+			H.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
 		if(5)
 			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
 			C.reagents.add_reagent("eigenstate", 30)
@@ -312,7 +314,7 @@
 	else
 		..()
 
-var/datum/reagent/mutationtoxin/pumpkinhead
+/datum/reagent/mutationtoxin/pumpkinhead
 	name = "Pumpkin head mutation toxin"
 	id = "pumpkinmutationtoxin"
 	race = /datum/species/dullahan
