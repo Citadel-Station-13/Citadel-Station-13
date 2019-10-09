@@ -469,7 +469,7 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(starting_points = 60, mind_transfer = TRUE)
+/mob/proc/become_overmind(starting_points = 60, mind_transfer = FALSE)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
 	if(mind && mind_transfer)
 		mind.transfer_to(B)
@@ -536,7 +536,7 @@
 	if(!mobpath)
 		return
 	if(mind)
-		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No")
+		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
 
 	if(notransform)
 		return
@@ -571,7 +571,7 @@
 	if(!mobpath)
 		return
 	if(mind)
-		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No")
+		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
 
 	var/mob/new_mob = new mobpath(src.loc)
 
