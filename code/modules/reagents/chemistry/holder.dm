@@ -553,8 +553,8 @@
 		fermiEnd()
 		return
 
-	for(var/datum/reagent/P in C.required_catalysts)
-		if(!has_reagent(P.id))
+	for(var/P in C.required_catalysts)
+		if(!has_reagent(P))
 			fermiEnd()
 			return
 

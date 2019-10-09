@@ -296,6 +296,8 @@
 	//Temp, Explosions and pH
 	if(CR)
 		outstring += "<ul>[(CR.FermiChem?"<li>Min react temp: [CR.OptimalTempMin]K</li>":"[(CR.required_temp?"<li>Min react temp: [CR.required_temp]K</li>":"")]")] [(CR.FermiChem?"<li>Explosion_temp: [CR.ExplodeTemp]K</li>":"")] [(CR.FermiChem?"<li>pH range: [max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]</li>":"")] "
+		if(CR.FermiChem)
+			outstring += "[(CR.PurityMin?"<li>Min explosive purity: [CR.PurityMin]</li>":"")] [(CR.FermiExplode?"<li>Special explosion: Yes</li>":"")]"
 	else
 		outstring += ""
 
@@ -336,7 +338,7 @@
 
 	if(R.inverse_chem && R.impure_chem != "fermiTox")
 		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
-		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> "
+		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> [(R3.inverse_chem_val?"<li>Inverse purity: [R3.inverse_chem_val]</li>":"")] "
 
 
 
@@ -346,10 +348,6 @@
 			I = istype(I, CR.required_container) if you can work out how to get this to work, by all means.
 			outstring += "<li>Required container: [I.name]</li>"*/
 			outstring += "<li>Required container: [CR.required_container]</li>"
-
-		if(CR.FermiChem)
-			outstring += "<li>Minimum purity: [CR.PurityMin]</li> [(CR.FermiExplode?"<li>Special explosion: Yes</li>":"")]"
-
 
 	outstring += "</ul>|\n"
 	return outstring
