@@ -267,7 +267,11 @@ Works together with spawning an observer, noted above.
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
-			ghost.reenter_round_timeout = suiciding ? world.realtime + SUICIDE_REENTER_ROUND_TIMER : 0
+			if(suiciding)
+				var/penalty = SUICIDE_REENTER_ROUND_TIMER
+				if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+					penalty += ROUNDSTART_QUITTER_TIME_LIMIT - world.time
+				ghost.reenter_round_timeout = world.realtime + penalty
 			ghost.key = key
 			return ghost
 
@@ -280,9 +284,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	var/penalty = SUICIDE_REENTER_ROUND_TIMER
+	if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT)
+		penalty += ROUNDSTART_QUITTER_TIME_LIMIT - world.time
 // CITADEL EDIT
 	if(istype(loc, /obj/machinery/cryopod))
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [SUICIDE_REENTER_ROUND_TIMER/600] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [round(penalty/600, 600)] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")//darn copypaste
 			return
 		var/obj/machinery/cryopod/C = loc
@@ -295,7 +302,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [SUICIDE_REENTER_ROUND_TIMER/600] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [round(penalty/600, 600)] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
@@ -306,7 +313,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [SUICIDE_REENTER_ROUND_TIMER/600] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	var/penalty = SUICIDE_REENTER_ROUND_TIMER
+	if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT)
+		penalty += ROUNDSTART_QUITTER_TIME_LIMIT - world.time
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [round(penalty/600, 600)] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 	if(response != "Ghost")
 		return
 	ghostize(0)
