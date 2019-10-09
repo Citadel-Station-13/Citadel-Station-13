@@ -194,7 +194,7 @@
 		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
 		set_light(2)
 		force += 1 //we don't want to ruin sharpened stuff
-	icon_state = "saw_a"
+		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
 		to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
