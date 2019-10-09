@@ -1010,10 +1010,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"aez" = (
-/obj/machinery/keycard_auth,
-/turf/closed/wall,
-/area/quartermaster/qm)
 "aeB" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
@@ -9291,7 +9287,6 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /obj/effect/turf_decal/tile/neutral{
@@ -9919,7 +9914,6 @@
 	pixel_x = 32
 	},
 /obj/item/reagent_containers/glass/bucket,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -10581,8 +10575,6 @@
 	},
 /obj/item/storage/box/lights/mixed,
 /obj/item/lightreplacer,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11320,7 +11312,6 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "aze" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -12595,7 +12586,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aBy" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
@@ -12640,7 +12630,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aBB" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -27651,7 +27640,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aZh" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -27660,6 +27648,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/computer/card/minor/qm{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -88714,6 +88705,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "cSK" = (
@@ -89886,6 +89880,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -127439,6 +127436,22 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
+"ost" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -25
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/qm)
 "owr" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -174988,7 +175001,7 @@ aaa
 aaa
 aad
 aQQ
-aez
+aQQ
 aUp
 aVY
 aXE
@@ -175245,7 +175258,7 @@ aaa
 aaa
 aad
 aQR
-aSs
+ost
 aUq
 aVR
 aXF

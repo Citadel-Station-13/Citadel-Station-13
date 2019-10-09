@@ -57,13 +57,14 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
+		if(!(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
 
 		brainmob.reset_perspective()
 		brain = newbrain
+		brain.organ_flags |= ORGAN_FROZEN
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
@@ -100,6 +101,7 @@
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
 		brain.forceMove(get_turf(src))
+	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 
 
