@@ -332,7 +332,6 @@
 	//Description, OD, Addict, Meta
 	outstring += "[R.description] | <ul><li>Metabolism rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
 
-
 	if(R.impure_chem && R.impure_chem != "fermiTox")
 		R3 = GLOB.chemical_reagents_list[R.impure_chem]
 		outstring += "<li>Impure chem:<a href=\"#[R3.name]\">[R3.name]</a></li>"
@@ -340,8 +339,6 @@
 	if(R.inverse_chem && R.impure_chem != "fermiTox")
 		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
 		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> [(R3.inverse_chem_val?"<li>Inverse purity: [R3.inverse_chem_val]</li>":"")] "
-
-
 
 	if(CR)
 		if(CR.required_container)
@@ -352,9 +349,6 @@
 
 	outstring += "</ul>|\n"
 	return outstring
-
-
-
 
 //Generate the big list of reaction based reactions.
 //|Name | Reagents | Reaction vars | Description | Chem properties
