@@ -3,7 +3,7 @@
 
 /obj/effect/landmark/barthpot/Initialize()
     new /obj/item/barthpot(loc)
-    new /mob/living/simple_animal/pet/cat/jacq(loc)
+    new /mob/living/simple_animal/jacq(loc)
 
 /obj/item/barthpot
     name = "Bartholomew"
