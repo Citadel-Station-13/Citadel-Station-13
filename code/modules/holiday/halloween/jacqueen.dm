@@ -6,10 +6,6 @@
 #define JACQ_WITCH (1<<4)
 #define JACQ_EXPELL (1<<5)
 #define JACQ_DATE (1<<6)
-//Tricks
-#define JACQ_TRICKED (1<<0)
-#define JACQ_LATERN (1<<1)
-#define JACQ_DULLA (1<<2)
 
 ////ROUND EVENT
 
@@ -24,7 +20,7 @@
 /datum/round_event/jaqc/start()
 	..()
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
-		new /mob/living/jacq(Poly.loc)//She poofs on init, so it doesn't matter, so long as Ian exists.
+		new /mob/living/jacq(Ian.loc)//She poofs on init, so it doesn't matter, so long as Ian exists.
 
 /////// MOBS
 
@@ -280,6 +276,7 @@
 				key = C2.key
 				message_admins("[C2]/[C2.key] has agreed to go on a date with [C] as Jacqueline.")
 				log_game("HALLOWEEN: [C2]/[C2.key] has agreed to go on a date with [C] as Jacqueline")
+				to_chat(src, "<span class='big spooky'>You are Jacqueline the great pumpqueen, witch Extraordinaire! You’re a very Scottish lass with a kind heart, but also a little crazy. You also blew up the wizarding school and you’re suspended for a while, so you visited the station before heading home. On your head lies the prize pumpkin of your Mother’s pumpkin patch. You’re currently on a date with [C] and well, I didn’t think anyone would get this far. <i> Please be good so I can do events like this in the future. </i> </span>")
 				return
 			else
 				candies =- C2
