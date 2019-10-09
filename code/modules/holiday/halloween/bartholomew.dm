@@ -55,8 +55,9 @@
     var/length = LAZYLEN(items_list)
     if(length == 5)
         return TRUE
-    var/metalist = GLOB.maintenance_loot
+    //var/metalist = pickweight(GLOB.maintenance_loot)
     for(var/i = length, i <= 5, i+=1)
-        var/obj/item = pick(metalist)
+        var/obj/item = pickweight(GLOB.maintenance_loot)
+        message_admins("[item]")
         items_list += item
     return TRUE

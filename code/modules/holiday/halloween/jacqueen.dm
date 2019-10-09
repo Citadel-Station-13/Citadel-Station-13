@@ -78,9 +78,9 @@
 		sleep(20)
 		visible_message("<span class='spooky'><b>[src] continues,</b> says, \"Ah'm sure yae well stunned, but ah've got nae taem fer that. Ah'm after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give ye a treat, or if yae feeling bold, Ah ken trick ye instead.</span>\" giving [C] a wide grin.")
 		if(!progression["[C.real_name]"])
-			progression["[C.real_name]"] += JACQ_HELLO //TO MAKE SURE THAT THE LIST ENTRY EXISTS.
-		else
-			progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HELLO
+			progression["[C.real_name]"] = NONE //TO MAKE SURE THAT THE LIST ENTRY EXISTS.
+
+		progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HELLO
 
 	var/choices = list("Trick", "Treat", "How do I get candies?")
 	var/choice = input(C, "Trick or Treat?", "Trick or Treat?") in choices
@@ -141,7 +141,7 @@
 			var/choices = list()
 			//Figure out where the C is in the story
 			if(!progression["[C.real_name]"]) //I really don't want to get here withoot a hello, but just to be safe
-				progression["[C.real_name]"] += JACQ_HELLO
+				progression["[C.real_name]"] = NONE
 			if(!progression["[C.real_name]"] & JACQ_FAR)
 				if(progression["[C.real_name]"] & JACQ_CANDIES)
 					choices += "You really came all this way for candy?"
