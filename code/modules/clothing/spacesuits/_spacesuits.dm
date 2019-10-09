@@ -22,6 +22,7 @@
 	resistance_flags = NONE
 	dog_fashion = null
 	mutantrace_variation = MUTANTRACE_VARIATION
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -44,4 +45,5 @@
 	strip_delay = 80
 	equip_delay_other = 80
 	resistance_flags = NONE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //rated for cosmic radation :honk:
 	tauric = TRUE		//Citadel Add for tauric hardsuits

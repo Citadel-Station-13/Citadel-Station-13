@@ -67,7 +67,7 @@
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	vital = FALSE
+	organ_flags = 0 
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"

@@ -35,7 +35,7 @@ var opts = {
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
-	'darkmode':false, //Are we using darkmode? If not WHY ARE YOU LIVING IN 2009???
+	'colorPreset': 0, 	// index in the color presets list.
 
 	//Options menu
 	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
@@ -73,6 +73,14 @@ var opts = {
 
 };
 
+// Array of names for chat display color presets.
+// If not set to normal, a CSS file `browserOutput_${name}.css` will be added to the head.
+var colorPresets = [
+	'normal',
+	'light',
+	'dark'
+]
+
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
 }
@@ -94,6 +102,12 @@ if (typeof String.prototype.trim !== 'function') {
 	String.prototype.trim = function () {
 		return this.replace(/^\s+|\s+$/g, '');
 	};
+}
+
+function updateColorPreset() {
+	var el = $("#colorPresetLink")[0];
+	el.href = "browserOutput_"+colorPresets[opts.colorPreset]+".css";
+	runByond('?_src_=chat&proc=colorPresetPost&preset='+colorPresets[opts.colorPreset]);
 }
 
 // Linkify the contents of a node, within its parent.
@@ -395,19 +409,6 @@ function toHex(n) {
 	return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
 }
 
-function swap() { //Swap to darkmode
-	if (opts.darkmode){
-		document.getElementById("sheetofstyles").href = "browserOutput_white.css";
-		opts.darkmode = false;
-		runByond('?_src_=chat&proc=swaptolightmode');
-	} else {
-		document.getElementById("sheetofstyles").href = "browserOutput.css";
-		opts.darkmode = true;
-		runByond('?_src_=chat&proc=swaptodarkmode');
-	}
-	setCookie('darkmode', (opts.darkmode ? 'true' : 'false'), 365);
-}
-
 function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
@@ -615,7 +616,7 @@ $(function() {
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
-		'sdarkmode': getCookie('darkmode'),
+		'scolorPreset': getCookie('colorpreset'),
 	};
 
 	if (savedConfig.sfontSize) {
@@ -625,9 +626,6 @@ $(function() {
 	if (savedConfig.slineHeight) {
 		$("body").css('line-height', savedConfig.slineHeight);
 		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
-	}
-	if(savedConfig.sdarkmode == 'true'){
-		swap();
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -654,6 +652,13 @@ $(function() {
 		opts.highlightColor = savedConfig.shighlightColor;
 		internalOutput('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
+
+	if (savedConfig.scolorPreset) {
+		opts.colorPreset = Number(savedConfig.scolorPreset);
+		updateColorPreset();
+		internalOutput('<span class="internal boldnshit">Loaded color preset of: '+colorPresets[opts.colorPreset]+'</span>', 'internal');
+	}
+
 	if (savedConfig.smusicVolume) {
 		var newVolume = clamp(savedConfig.smusicVolume, 0, 100);
 		$('#adminMusic').prop('volume', newVolume / 100);
@@ -839,9 +844,6 @@ $(function() {
 	$('#toggleOptions').click(function(e) {
 		handleToggleClick($subOptions, $(this));
 	});
-	$('#darkmodetoggle').click(function(e) {
-		swap();
-	});
 	$('#toggleAudio').click(function(e) {
 		handleToggleClick($subAudio, $(this));
 	});
@@ -913,7 +915,7 @@ $(function() {
 
 		$.ajax({
 			type: 'GET',
-			url: 'browserOutput_white.css',
+			url: 'browserOutput.css',
 			success: function(styleData) {
 				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 
@@ -992,6 +994,13 @@ $(function() {
 		opts.messageCount = 0;
 	});
 	
+	$('#changeColorPreset').click(function() {
+		opts.colorPreset = (opts.colorPreset+1) % colorPresets.length;
+		updateColorPreset();
+		setCookie('colorpreset', opts.colorPreset, 365);
+		internalOutput('<span class="internal boldnshit">Changed color preset to: '+colorPresets[opts.colorPreset]);
+	});
+
 	$('#musicVolumeSpan').hover(function() {
 		$('#musicVolumeText').addClass('hidden');
 		$('#musicVolume').removeClass('hidden');
