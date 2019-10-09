@@ -57,5 +57,6 @@
         return TRUE
     var/metalist = GLOB.maintenance_loot
     for(var/i = length, i <= 5, i+=1)
-        items_list += pick(metalist)
+        var/obj/item = pick(metalist)
+        items_list += item
     return TRUE
