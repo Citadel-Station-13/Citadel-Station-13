@@ -227,7 +227,7 @@
 			C.reagents.add_reagent("secretcatchem", 30)
 		if(7)
 			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"While you may not be a ghost, for this sheet you'll always be it's host.\"</span>")
-			C.place_on_head(new /obj/item/bedsheet/sticky(C))
+			C.place_on_head(new /obj/item/clothing/suit/ghost_sheet/sticky(C))
 
 /*Will you go on a date with me?
 ”…You want tae ask me oot on a date? Me? After all that nonsense Ah just said? It seems a waste of a candy honestly.”
@@ -242,7 +242,7 @@ visible_message("<span class='spooky'><b>[src] cackles,</b> "You'll nae get rid 
 (the last message is if I can't get a ghost/a person in it)
 */
 
-/obj/item/bedsheet/sticky
+/obj/item/clothing/suit/ghost_sheet/sticky
 	item_flags = NODROP
 
 var/datum/reagent/mutationtoxin/pumpkinhead
