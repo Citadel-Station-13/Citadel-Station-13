@@ -3,14 +3,15 @@
 /proc/find_reagent(input)
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		return input
+		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
+		return R
 	else
 		for(var/X in GLOB.chemical_reagents_list)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
 			if(input == replacetext(lowertext(R.name), " ", ""))
-				return X
+				return R
 			if(input == replacetext(lowertext(R.id), " ", ""))
-				return X
+				return R
 
 
 
