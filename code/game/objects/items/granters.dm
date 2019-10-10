@@ -440,20 +440,20 @@
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
 
-//Later content when I have free time - Trilby Date:02-Aug-2019
+/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
+	name = "Cooking with Ice"
+	desc = "A cook book that teaches you many old icecream treats."
+	crafting_recipe_types = list(/datum/crafting_recipe/food/banana_split, /datum/crafting_recipe/food/root_float, /datum/crafting_recipe/food/bluecharrie_float, /datum/crafting_recipe/food/charrie_float)
+	icon_state = "cooking_learing_ice"
+	oneuse = FALSE
+	remarks = list("Looks like these would sell much better in a plasma fire...", "Using glass bowls rather then cones?", "Mixing soda and ice-cream?", "Tall glasses with of liquids and solids...", "Just add a bit of icecream and cherry on top?")
+
+//Later content when I have free time - Trilby Date:24-Aug-2019
 
 /obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
 	name = "Under The Oven"
 	desc = "A cook book that teaches you many illegal and fun candys. MALF AI approved, and a best seller on the blackmarket."
 	crafting_recipe_types = list()
 	icon_state = "cooking_learing_illegal"
-	oneuse = FALSE
-	remarks = list()
-
-/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
-	name = "Cooking with Ice"
-	desc = "A cook book that teaches you many old icecream treats."
-	crafting_recipe_types = list()
-	icon_state = "cooking_learing_ice"
 	oneuse = FALSE
 	remarks = list()

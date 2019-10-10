@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>, a [src.module.name]!\n"
 	if(desc)
 		msg += "[desc]\n"
 

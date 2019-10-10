@@ -1762,15 +1762,31 @@
 					/obj/item/stack/tile/carpet/black/fifty)
 	crate_name = "premium carpet crate"
 
-/datum/supply_pack/service/carpet2
-	name = "Premium Carpet Crate #2"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
+/datum/supply_pack/service/carpet_exotic
+	name = "Exotic Carpet Crate"
+	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
+	cost = 4000
+	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
 					/obj/item/stack/tile/carpet/blackred/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate #2"
+	crate_name = "exotic carpet crate"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"

@@ -1373,6 +1373,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
+	id = "neurotoxin"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
 	boozepwr = 50
@@ -1382,6 +1383,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
+	//SplitChem			= TRUE
+	impure_chem 			= "neuroweak"
+	inverse_chem_val 		= 0.5 //Clear conversion
+	inverse_chem			= "neuroweak"
 
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
@@ -1389,18 +1394,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
 	M.dizziness +=2
-	M.adjustBrainLoss(1*REM, 150)
-	if(prob(20))
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
+	if(prob(20) && !holder.has_reagent("neuroweak"))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
 		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
 	if(current_cycle > 5)
-		if(prob(20))
+		if(prob(20) && !holder.has_reagent("neuroweak"))
 			var/t = pickt()
 			ADD_TRAIT(M, t, type)
 			M.adjustStaminaLoss(10)
 		if(current_cycle > 30)
-			M.adjustBrainLoss(2*REM)
+			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 			if(current_cycle > 50 && prob(15))
 				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 					M.set_heartattack(TRUE)
@@ -1415,6 +1420,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, type)
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, type)
 	M.adjustStaminaLoss(10)
+	..()
+
+/datum/reagent/consumable/ethanol/neuroweak
+	name = "Neuro-Smash"
+	id = "neuroweak"
+	description = "A mostly safe alcoholic drink for the true daredevils. Counteracts Neurotoxins."
+	boozepwr = 60
+	pH = 8
+
+/datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent("neurotoxin"))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		M.reagents.remove_reagent("neurotoxin", 1.5 * REAGENTS_METABOLISM, FALSE)
+	if(holder.has_reagent("fentanyl"))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		M.reagents.remove_reagent("fentanyl", 0.75 * REAGENTS_METABOLISM, FALSE)
+	else
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REM, 150)
+		M.dizziness +=2
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
@@ -2121,6 +2145,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "planet_cracker"
 	glass_name = "Planet Cracker"
 	glass_desc = "Although historians believe the drink was originally created to commemorate the end of an important conflict in man's past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
+
+/datum/reagent/consumable/ethanol/commander_and_chief
+	name = "Commander and Chief"
+	id = "commander_and_chief"
+	description = "A cocktail for the captain on the go."
+	color = "#ffffc9"
+	boozepwr = 50
+	quality = DRINK_FANTASTIC
+	taste_description = "Tastes like...duty and responsibility?"
+	glass_icon_state = "commander_and_chief"
+	glass_name = "Commander and Chief"
+	glass_desc = "The gems of this majestic chalice represent the departments and their Heads."
+
+/datum/reagent/consumable/ethanol/commander_and_chief/on_mob_life(mob/living/carbon/M)
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CAPTAIN_METABOLISM))
+		M.heal_bodypart_damage(2,2,2)
+		M.adjustBruteLoss(-3.5,0)
+		M.adjustOxyLoss(-3.5,0)
+		M.adjustFireLoss(-3.5,0)
+		M.adjustToxLoss(-3.5,0)
+		M.radiation = max(M.radiation - 25, 0)
+		. = 1
+	return ..()
 
 /datum/reagent/consumable/ethanol/fruit_wine
 	name = "Fruit Wine"

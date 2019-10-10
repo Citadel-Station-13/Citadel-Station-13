@@ -1,0 +1,5 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "made laser minigun not shitcode and also craftable"
+  - soundadd: "added new fire sounds for the laser minigun"

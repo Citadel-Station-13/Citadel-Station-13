@@ -1,9 +1,13 @@
 #define ICECREAM_VANILLA 1
 #define ICECREAM_CHOCOLATE 2
 #define ICECREAM_STRAWBERRY 3
-#define ICECREAM_BLUE 4
-#define CONE_WAFFLE 5
-#define CONE_CHOC 6
+#define ICECREAM_PEACH 4
+#define ICECREAM_GRAPE 5
+#define ICECREAM_BLUE 6
+#define CONE_WAFFLE 7
+#define CONE_CHOC 8
+
+
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
@@ -26,7 +30,9 @@
 		"cocoa" = 5,
 		"vanilla" = 5,
 		"berryjuice" = 5,
-		"singulo" = 5)
+		"singulo" = 5,
+		"peachjuice" = 5,
+		"grapejuice" = 5)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -34,6 +40,10 @@
 			return list("milk", "ice", "cocoa")
 		if(ICECREAM_STRAWBERRY)
 			return list("milk", "ice", "berryjuice")
+		if(ICECREAM_PEACH)
+			return list("milk", "ice", "peachjuice")
+		if(ICECREAM_GRAPE)
+			return list("milk", "ice", "grapejuice")
 		if(ICECREAM_BLUE)
 			return list("milk", "ice", "singulo")
 		if(CONE_WAFFLE)
@@ -50,6 +60,10 @@
 			return "chocolate"
 		if(ICECREAM_STRAWBERRY)
 			return "strawberry"
+		if(ICECREAM_PEACH)
+			return "peach"
+		if(ICECREAM_GRAPE)
+			return "grape"
 		if(ICECREAM_BLUE)
 			return "blue"
 		if(CONE_WAFFLE)
@@ -62,7 +76,7 @@
 
 /obj/machinery/icecream_vat/Initialize()
 	. = ..()
-	while(product_types.len < 6)
+	while(product_types.len < 8)
 		product_types.Add(5)
 	create_reagents(100, OPENCONTAINER | NO_REACT)
 	for(var/reagent in icecream_vat_reagents)
@@ -76,6 +90,8 @@
 	dat += "<b>Vanilla ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_VANILLA]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_VANILLA];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_VANILLA];amount=5'><b>x5</b></a> [product_types[ICECREAM_VANILLA]] scoops left. (Ingredients: milk, ice)<br>"
 	dat += "<b>Strawberry ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_STRAWBERRY]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_STRAWBERRY];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_STRAWBERRY];amount=5'><b>x5</b></a> [product_types[ICECREAM_STRAWBERRY]] dollops left. (Ingredients: milk, ice, berry juice)<br>"
 	dat += "<b>Chocolate ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_CHOCOLATE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CHOCOLATE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CHOCOLATE];amount=5'><b>x5</b></a> [product_types[ICECREAM_CHOCOLATE]] dollops left. (Ingredients: milk, ice, coco powder)<br>"
+	dat += "<b>Peach ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_PEACH]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_PEACH];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_PEACH];amount=5'><b>x5</b></a> [product_types[ICECREAM_PEACH]] dollops left. (Ingredients: milk, ice, peach juice)<br>"
+	dat += "<b>Grape ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_GRAPE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_GRAPE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_GRAPE];amount=5'><b>x5</b></a> [product_types[ICECREAM_GRAPE]] dollops left. (Ingredients: milk, ice, grape juice)<br>"
 	dat += "<b>Blue ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_BLUE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=5'><b>x5</b></a> [product_types[ICECREAM_BLUE]] dollops left. (Ingredients: milk, ice, singulo)<br></div>"
 	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
 	dat += "<b>Waffle cones:</b> <a href='?src=[REF(src)];cone=[CONE_WAFFLE]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=5'><b>x5</b></a> [product_types[CONE_WAFFLE]] cones left. (Ingredients: flour, sugar)<br>"
@@ -207,6 +223,12 @@
 		if ("strawberry")
 			desc = "A delicious [cone_type] cone filled with strawberry ice cream. Definitely not made with real strawberries."
 			reagents.add_reagent("berryjuice", 2)
+		if ("peach")
+			desc = "A delicious [cone_type] cone filled with peach ice cream. Definitely made with real peaches!"
+			reagents.add_reagent("peachjuice", 2)
+		if ("grape")
+			desc = "A delicious [cone_type] cone filled with grape ice cream. Surprisingly, made with real pink grape, likely not real sugarcanes used."
+			reagents.add_reagent("grapejuice", 2)
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
 			reagents.add_reagent("singulo", 2)
@@ -228,6 +250,8 @@
 #undef ICECREAM_VANILLA
 #undef ICECREAM_CHOCOLATE
 #undef ICECREAM_STRAWBERRY
+#undef ICECREAM_PEACH
+#undef ICECREAM_GRAPE
 #undef ICECREAM_BLUE
 #undef CONE_WAFFLE
 #undef CONE_CHOC

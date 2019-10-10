@@ -210,13 +210,13 @@
 		add_fingerprint(user)
 
 /obj/machinery/suit_storage_unit/proc/cook()
+	var/mob/living/mob_occupant = occupant
 	if(uv_cycles)
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
 		update_icon()
 		if(occupant)
-			var/mob/living/mob_occupant = occupant
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -246,9 +246,25 @@
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
-			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
-				var/datum/component/radioactive/contamination = I.GetComponent(/datum/component/radioactive)
+			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
+			if(suit)
+				things_to_clear += suit
+				things_to_clear += suit.GetAllContents()
+			if(helmet)
+				things_to_clear += helmet
+				things_to_clear += helmet.GetAllContents()
+			if(mask)
+				things_to_clear += mask
+				things_to_clear += mask.GetAllContents()
+			if(storage)
+				things_to_clear += storage
+				things_to_clear += storage.GetAllContents()
+			if(occupant)
+				things_to_clear += occupant
+				things_to_clear += occupant.GetAllContents()
+			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
+				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
+				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
 				if(contamination)
 					qdel(contamination)
 		open_machine(FALSE)

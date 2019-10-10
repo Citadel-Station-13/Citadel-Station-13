@@ -1,0 +1,4 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "Fixes small residues of chems that won't go away!"

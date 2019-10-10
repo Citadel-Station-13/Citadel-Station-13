@@ -116,6 +116,8 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
+#define BIOWARE_DISSECTION "dissected"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -203,8 +205,6 @@
 
 #define MAX_CHICKENS 50
 
-#define UNHEALING_EAR_DAMAGE 100
-
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
@@ -256,6 +256,9 @@
 
 #define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
+#define MAX_REVIVE_FIRE_DAMAGE 180
+#define MAX_REVIVE_BRUTE_DAMAGE 180
+
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
@@ -264,3 +267,6 @@
 #define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define PULL_PRONE_SLOWDOWN 0.6
+#define HUMAN_CARRY_SLOWDOWN 0

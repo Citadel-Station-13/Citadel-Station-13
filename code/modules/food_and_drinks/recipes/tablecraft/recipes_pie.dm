@@ -215,3 +215,12 @@
 	        )
 	result = /obj/item/reagent_containers/food/snacks/pie/cocolavatart
 	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/peachpie
+	name = "Peach Pie"
+	reqs = list(
+            /obj/item/reagent_containers/food/snacks/pie/plain = 1,
+	        /obj/item/reagent_containers/food/snacks/grown/peach = 3
+	        )
+	result = /obj/item/reagent_containers/food/snacks/pie/peachpie
+	subcategory = CAT_PIE
