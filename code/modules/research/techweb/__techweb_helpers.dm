@@ -39,6 +39,7 @@
 			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected!")
 			SSresearch.errored_datums[DN] = initial(DN.id)
 			continue
+		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	SSresearch.techweb_designs = returned
 	verify_techweb_designs()
