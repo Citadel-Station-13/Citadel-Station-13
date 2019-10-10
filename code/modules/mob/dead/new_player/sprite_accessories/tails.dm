@@ -558,7 +558,7 @@
 
 /datum/sprite_accessory/mam_tails_animated/horse
 	name = "Horse"
-	icon_state = "Horse"
+	icon_state = "horse"
 	color_src = HAIR
 
 /datum/sprite_accessory/mam_tails/husky

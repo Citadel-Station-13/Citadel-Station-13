@@ -24477,22 +24477,20 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bfB" = (
-/obj/structure/table,
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
 	pixel_x = -30
 	},
-/obj/item/paper_bin{
-	layer = 2.9
-	},
-/obj/item/pen,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/computer/card/minor/qm{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -27566,6 +27564,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
 "bnx" = (
@@ -29314,6 +29313,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "brb" = (
@@ -30153,6 +30155,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bsI" = (
@@ -30164,6 +30167,7 @@
 	name = "Medbay"
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bsJ" = (
@@ -62094,6 +62098,7 @@
 	name = "Port Emergency Storage";
 	req_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
 "xSX" = (

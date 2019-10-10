@@ -146,6 +146,9 @@ LOG_MANIFEST
 ## Enable logging pictures
 # LOG_PICTURES
 
+## log virus and actions
+LOG_VIRUS
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 

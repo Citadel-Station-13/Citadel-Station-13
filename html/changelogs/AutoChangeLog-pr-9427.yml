@@ -1,0 +1,7 @@
+author: "Ghommie && Kevinz000"
+delete-after: True
+changes: 
+  - balance: "Lichdom and necromantic stone skeletons are now of the spaceproof kind too."
+  - tweak: "skeletons now also like dairy products."
+  - rscdel: "Halloween roundstart skeletons and zombies are no more spaceproof."
+  - rscadd: "You can choose to set your species to zombie or skeleton through the pride mirror yet again, Alas they are not of the spaceproof kind either."
