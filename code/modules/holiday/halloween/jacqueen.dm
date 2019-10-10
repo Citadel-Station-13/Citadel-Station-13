@@ -132,7 +132,7 @@
 				visible_message("<b>[src] raises an eyebrown,</b> <span class='spooky'>\"It's 1 candy per plushie [gender]! Thems the rules!\"</span>")
 				return
 
-			var/reward = new /obj/item/toy/plush/random(C.loc)
+			new /obj/item/toy/plush/random(C.loc)
 			poof()
 			return
 
