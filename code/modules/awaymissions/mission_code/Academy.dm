@@ -210,8 +210,6 @@
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)
-				if (istype(I, /obj/item/implant))
-					continue
 				qdel(I)
 		if(5)
 			//Monkeying

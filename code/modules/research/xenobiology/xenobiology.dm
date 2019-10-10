@@ -705,7 +705,7 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
 /obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
-	var/obj/item/implant/radio/syndicate/imp = new(src)
+	var/obj/item/implant/radio/syndicate/imp = new
 	imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
@@ -969,7 +969,7 @@
 
 	to_chat(user, "<span class='notice'>You feed the potion to [M].</span>")
 	to_chat(M, "<span class='notice'>Your mind tingles as you are fed the potion. You can hear radio waves now!</span>")
-	var/obj/item/implant/radio/slime/imp = new(src)
+	var/obj/item/implant/radio/slime/imp = new
 	imp.implant(M, user)
 	qdel(src)
 
