@@ -346,7 +346,8 @@
 //Potions
 /obj/item/reagent_containers/potion_container
 	name = "potion"
-	//TODO icons
+	icon = 'icons/obj/halloween_items.dmi'
+	icon_state = "jacq_potion"
 
 /obj/item/reagent_containers/potion_container/Initialize()
 	..()
@@ -363,6 +364,8 @@
 //Candies
 /obj/item/reagent_containers/food/snacks/special_candy
 	name = "Magic candy"
+	icon = 'icons/obj/halloween_items.dmi'
+	icon_state = "jacq_candy"
 
 /obj/item/reagent_containers/food/snacks/special_candy/Initialize()
 	reagents.add_reagent(get_random_reagent_id(), 5)
