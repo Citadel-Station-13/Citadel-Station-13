@@ -98,7 +98,7 @@
 		var/datum/species/abductor/S = H.dna.species
 		if(S.scientist)
 			return TRUE
-	
+
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
@@ -106,7 +106,7 @@
 			return FALSE
 		if(type in SP.advanced_surgeries)
 			return TRUE
-	
+
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)
@@ -120,14 +120,14 @@
 	name = "Surgery Procedure Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	materials = list(/datum/material/iron=300, /datum/material/glass=100)
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
 	name = "Debug Surgery Disk"
 	desc = "A disk that contains all existing surgery procedures."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
 /obj/item/disk/surgery/debug/Initialize()
 	. = ..()

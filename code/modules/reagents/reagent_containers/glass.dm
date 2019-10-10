@@ -113,7 +113,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	materials = list(MAT_GLASS=500)
+	materials = list(/datum/material/glass=500)
 	beaker_weakness_bitflag = PH_WEAK
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
@@ -164,7 +164,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
-	materials = list(MAT_GLASS=2500)
+	materials = list(/datum/material/glass=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -174,7 +174,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 150 units. Is able to resist acid and alkaline solutions, but melts at 444K"
 	icon_state = "beakerwhite"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
+	materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 150
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150)
@@ -193,7 +193,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 200 units. Is able to withstand all chemical situations."
 	icon_state = "beakergold"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
+	materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
 	volume = 200
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,200)
@@ -207,7 +207,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	materials = list(MAT_METAL=3000)
+	materials = list(/datum/material/iron=3000)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -224,7 +224,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS=3000)
+	materials = list(/datum/material/glass=3000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -266,7 +266,7 @@
 	item_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	materials = list(MAT_METAL=200)
+	materials = list(/datum/material/iron=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -336,7 +336,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
-	materials = list(MAT_GLASS=0)
+	materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	container_HP = 1
@@ -351,7 +351,7 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	materials = list(MAT_GLASS=0)
+	materials = list(/datum/material/glass=0)
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20

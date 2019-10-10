@@ -5,7 +5,7 @@
 	id = "flightsuit"
 	build_type = PROTOLATHE
 	build_path = /obj/item/clothing/suit/space/hardsuit/flightsuit
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)	//This expensive enough for you?
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/diamond = 200, /datum/material/gold = 3000, /datum/material/silver = 3000, /datum/material/titanium = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -16,7 +16,7 @@
 	id = "flightpack"
 	build_type = PROTOLATHE
 	build_path = /obj/item/flightpack
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 4000, MAT_GOLD = 12000, MAT_SILVER = 12000, MAT_URANIUM = 20000, MAT_PLASMA = 16000, MAT_TITANIUM = 16000)	//This expensive enough for you?
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/diamond = 4000, /datum/material/gold = 12000, /datum/material/silver = 12000, /datum/material/uranium = 20000, /datum/material/plasma = 16000, /datum/material/titanium = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -27,7 +27,7 @@
 	id = "flightshoes"
 	build_type = PROTOLATHE
 	build_path = /obj/item/clothing/shoes/flightshoes
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_PLASMA = 2000, MAT_TITANIUM = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/gold = 1500, /datum/material/silver = 1500, /datum/material/plasma = 2000, /datum/material/titanium = 2000)
 	construction_time = 100
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING */
@@ -38,7 +38,7 @@
 	id = "chardsuit"
 	build_type = PROTOLATHE
 	build_path = /obj/item/clothing/suit/space/hardsuit/engine
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/diamond = 200, /datum/material/gold = 3000, /datum/material/silver = 3000, /datum/material/titanium = 16000)
 	construction_time = 100
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -49,7 +49,7 @@
 	id = "hardsuitjpack"
 	build_type = PROTOLATHE
 	build_path = /obj/item/tank/jetpack/suit
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 2000, MAT_GOLD = 6000, MAT_SILVER = 6000, MAT_URANIUM = 10000, MAT_PLASMA = 8000, MAT_TITANIUM = 16000)
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/diamond = 2000, /datum/material/gold = 6000, /datum/material/silver = 6000, /datum/material/uranium = 10000, /datum/material/plasma = 8000, /datum/material/titanium = 16000)
 	construction_time = 100
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

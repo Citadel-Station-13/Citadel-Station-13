@@ -2,7 +2,7 @@
 	name = "owo"
 	desc = "someone's bussin"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 

@@ -26,7 +26,7 @@
 	desc = "A 20 round magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -35,7 +35,7 @@
 	name = "WT-550 Semi-Auto SMG Armour Piercing Magazine (4.6x30mm AP)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_ap"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -43,7 +43,7 @@
 	name = "WT-550 Semi-Auto SMG Incendiary Magazine (4.6x30mm IC)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_ic"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -51,7 +51,7 @@
 	name = "WT-550 Semi-Auto SMG Uranium Magazine (4.6x30mm TX)"
 	desc = "A 20 round uranium tipped magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_tx"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/uranium = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -59,7 +59,7 @@
 	name = "WT-550 Semi-Auto SMG rubberbullets Magazine (4.6x30mm rubber)"
 	desc = "A 20 round rubber shots magazine for the out of date security WT-550 Semi-Auto SMG"
 	id = "mag_oldsmg_rubber"
-	materials = list(MAT_METAL = 6000)
+	materials = list(/datum/material/iron = 6000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrubber
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -102,7 +102,7 @@
 	desc = "A stunning shell for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -112,7 +112,7 @@
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
 	id = "techshotshell"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 200)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 200)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
@@ -122,7 +122,7 @@
 	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
 	id = "shotgundartcryostatis"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3500)
+	materials = list(/datum/material/iron = 3500)
 	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -136,7 +136,7 @@
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 300)
 	build_path = /obj/item/firing_pin/test_range
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -146,7 +146,7 @@
 	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
+	materials = list(/datum/material/silver = 600, /datum/material/diamond = 600, /datum/material/uranium = 200)
 	build_path = /obj/item/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -160,7 +160,7 @@
 	desc = "Beefed up version of a standard laser gun."
 	id = "lasercarbine"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500)
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 10000, /datum/material/gold = 2500, /datum/material/silver = 2500)
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -170,7 +170,7 @@
 	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	id = "stunrevolver"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, /datum/material/silver = 10000)
 	build_path = /obj/item/gun/energy/tesla_revolver
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -180,7 +180,7 @@
 	desc = "An energy gun with an experimental miniaturized reactor."
 	id = "nuclear_gun"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 1000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 1000)
 	build_path = /obj/item/gun/energy/e_gun/nuclear
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -190,7 +190,7 @@
 	desc = "A powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
 	id = "beamrifle"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_DIAMOND = 5000, MAT_URANIUM = 8000, MAT_SILVER = 4500, MAT_GOLD = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
 	build_path = /obj/item/gun/energy/beam_rifle
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -200,7 +200,7 @@
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
+	materials = list(/datum/material/gold = 5000,/datum/material/uranium = 10000)
 	reagents_list = list("mutagen" = 40)
 	build_path = /obj/item/gun/energy/decloner
 	category = list("Weapons")
@@ -211,7 +211,7 @@
 	desc = "A gun that fires many syringes."
 	id = "rapidsyringe"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
 	build_path = /obj/item/gun/syringe/rapidsyringe
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -221,7 +221,7 @@
 	desc = "A gun that shoots temperature beam like projectiles to change temperature."
 	id = "temp_gun"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 500, /datum/material/silver = 3000)
 	build_path = /obj/item/gun/energy/temperature
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -231,7 +231,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
 	id = "flora_gun"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500)
 	reagents_list = list("radium" = 20)
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
@@ -242,7 +242,7 @@
 	desc = "Not quite as menacing as it sounds"
 	id = "xray_laser"
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000, MAT_URANIUM = 4000, MAT_METAL = 5000, MAT_TITANIUM = 2000, MAT_BLUESPACE = 2000)
+	materials = list(/datum/material/gold = 5000, /datum/material/uranium = 4000, /datum/material/iron = 5000, /datum/material/titanium = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/gun/energy/xray
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -252,7 +252,7 @@
 	desc = "How to dismantle a cyborg : The gun."
 	id = "ioncarbine"
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 6000, MAT_METAL = 8000, MAT_URANIUM = 2000)
+	materials = list(/datum/material/silver = 6000, /datum/material/iron = 8000, /datum/material/uranium = 2000)
 	build_path = /obj/item/gun/energy/ionrifle/carbine
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -262,7 +262,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 2000, MAT_BLUESPACE = 3000)
+	materials = list(/datum/material/silver = 2000, /datum/material/iron = 5000, /datum/material/diamond = 2000, /datum/material/bluespace = 3000)
 	build_path = /obj/item/gun/energy/wormhole_projector
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -272,7 +272,7 @@
 	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
 	id = "gravitygun"
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 8000, MAT_URANIUM = 8000, MAT_GLASS = 12000, MAT_METAL = 12000, MAT_DIAMOND = 3000, MAT_BLUESPACE = 3000)
+	materials = list(/datum/material/silver = 8000, /datum/material/uranium = 8000, /datum/material/glass = 12000, /datum/material/iron = 12000, /datum/material/diamond = 3000, /datum/material/bluespace = 3000)
 	build_path = /obj/item/gun/energy/gravity_gun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -282,7 +282,7 @@
 	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1500, /datum/material/uranium = 1500, /datum/material/silver = 1500)
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -296,7 +296,7 @@
 	desc = "A grenade that affects a larger area and use larger containers."
 	id = "large_Grenade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000)
+	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/grenade/chem_grenade/large
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -306,7 +306,7 @@
 	desc = "An advanced grenade that is able to self ignite its mixture."
 	id = "pyro_Grenade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_PLASMA = 500)
+	materials = list(/datum/material/iron = 2000, /datum/material/plasma = 500)
 	build_path = /obj/item/grenade/chem_grenade/pyro
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
@@ -316,7 +316,7 @@
 	desc = "An advanced grenade that rapidly cools its contents upon detonation."
 	id = "cryo_Grenade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
 	build_path = /obj/item/grenade/chem_grenade/cryo
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
@@ -326,7 +326,7 @@
 	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
 	id = "adv_Grenade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 500)
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
@@ -340,7 +340,7 @@
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	id = "tele_shield"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_SILVER = 300, MAT_TITANIUM = 200)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 4000, /datum/material/silver = 300, /datum/material/titanium = 200)
 	build_path = /obj/item/shield/riot/tele
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -350,7 +350,7 @@
 	desc = "A reverse-engineered suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
 	build_path = /obj/item/suppressor
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

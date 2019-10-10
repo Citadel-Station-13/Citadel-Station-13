@@ -749,24 +749,24 @@
 	name = "Defibrillator Healing Disk"
 	desc = "An upgrade which increases the healing power of the defibrillator"
 	icon_state = "heal_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_shock
 	name = "Defibrillator Anti-Shock Disk"
 	desc = "A safety upgrade that guarantees only the patient will get shocked"
 	icon_state = "zap_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_decay
 	name = "Defibrillator Body-Decay Extender Disk"
 	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
 	icon_state = "body_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 16000, /datum/material/silver = 6000, /datum/material/titanium = 2000)
 
 /obj/item/disk/medical/defib_speed
 	name = "Defibrillator Fast Charge Disk"
 	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	icon_state = "fast_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
+	materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/gold = 26000, /datum/material/silver = 26000)
 
 #undef HALFWAYCRITDEATH

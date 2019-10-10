@@ -7,7 +7,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	id = "health_hud"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/health
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -17,7 +17,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status. This one has a prescription lens."
 	id = "health_hud_prescription"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 350)
 	build_path = /obj/item/clothing/glasses/hud/health/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -27,7 +27,7 @@
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	id = "health_hud_night"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_SILVER = 350)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/silver = 350)
 	build_path = /obj/item/clothing/glasses/hud/health/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -37,7 +37,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
 	id = "security_hud"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/security
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -47,7 +47,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status. This one has a prescription lens."
 	id = "security_hud_prescription"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -57,7 +57,7 @@
 	desc = "A heads-up display which provides id data and vision in complete darkness."
 	id = "security_hud_night"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_GOLD = 350)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/gold = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -67,7 +67,7 @@
 	desc = "A HUD used to analyze and determine faults within robotic machinery."
 	id = "diagnostic_hud"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -77,7 +77,7 @@
 	desc = "A HUD used to analyze and determine faults within robotic machinery. This one has a prescription lens."
 	id = "diagnostic_hud_prescription"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 350)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/gold = 350)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -87,7 +87,7 @@
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "diagnostic_hud_night"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_PLASMA = 300)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/plasma = 300)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -97,7 +97,7 @@
 	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
 	id = "scigoggles"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -107,7 +107,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	id = "mesons"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/meson
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
@@ -117,7 +117,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition. Prescription lens has been added into this design."
 	id = "mesons_prescription"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 350)
 	build_path = /obj/item/clothing/glasses/meson/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
@@ -127,7 +127,7 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	id = "engine_goggles"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_PLASMA = 100)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100)
 	build_path = /obj/item/clothing/glasses/meson/engine
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -137,7 +137,7 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes. Prescription lens has been added into this design."
 	id = "engine_goggles_prescription"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_PLASMA = 100, MAT_SILVER = 350)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100, /datum/material/silver = 350)
 	build_path = /obj/item/clothing/glasses/meson/engine/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -147,7 +147,7 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	id = "tray_goggles"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -157,7 +157,7 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes.  Prescription lens has been added into this design."
 	id = "tray_goggles_prescription"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 150)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 150)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -167,7 +167,7 @@
 	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."
 	id = "nvgmesons"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/meson/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
@@ -177,7 +177,7 @@
 	desc = "Goggles that let you see through darkness unhindered."
 	id = "night_visision_goggles"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
@@ -187,7 +187,7 @@
 	desc = "Goggles that let you see through darkness unhindered. Corrects vision."
 	id = "night_visision_goggles_glasses"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/night/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
@@ -201,7 +201,7 @@
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
 	id = "weldingmask"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -211,7 +211,7 @@
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	id = "portaseeder"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 400)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 400)
 	build_path = /obj/item/storage/bag/plants/portaseeder
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -221,7 +221,7 @@
 	desc = "Damn son, where'd you find this?"
 	id = "air_horn"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_BANANIUM = 1000)
+	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
 	build_path = /obj/item/bikehorn/airhorn
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL	//HONK!
@@ -231,7 +231,7 @@
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	id = "magboots"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
+	materials = list(/datum/material/iron = 4500, /datum/material/silver = 1500, /datum/material/gold = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -241,7 +241,7 @@
 	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
 	id = "scigoggles"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -251,7 +251,7 @@
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL=200, MAT_GLASS=100)
+	materials = list(/datum/material/iron=200, /datum/material/glass=100)
 	build_path = /obj/item/disk/plantgene
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -261,7 +261,7 @@
 	desc = "A roasting stick for cooking sausages in exotic ovens."
 	id = "roastingstick"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL=1000, MAT_GLASS=500, MAT_BLUESPACE = 250)
+	materials = list(/datum/material/iron=1000, /datum/material/glass=500, /datum/material/bluespace = 250)
 	build_path = /obj/item/melee/roastingstick
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -271,7 +271,7 @@
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	id = "locator"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL=1000, MAT_GLASS=500, MAT_SILVER = 500)
+	materials = list(/datum/material/iron=1000, /datum/material/glass=500, /datum/material/silver = 500)
 	build_path = /obj/item/locator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -285,7 +285,7 @@
 	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
 	id = "advmop"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
 	build_path = /obj/item/mop/advanced
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -295,7 +295,7 @@
 	desc = "A device to automatically replace lights. Refill with working light bulbs."
 	id = "light_replacer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000)
 	build_path = /obj/item/lightreplacer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -305,7 +305,7 @@
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
 	id = "blutrash"
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PLASMA = 1500)
+	materials = list(/datum/material/gold = 1500, /datum/material/uranium = 250, /datum/material/plasma = 1500)
 	build_path = /obj/item/storage/bag/trash/bluespace
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -315,7 +315,7 @@
 	desc = "A floor buffer that can be attached to vehicular janicarts."
 	id = "buffer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/janiupgrade
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -329,7 +329,7 @@
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -339,7 +339,7 @@
 	desc = "A holographic projector that creates holographic security barriers."
 	id = "holosignsec"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/security
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -349,7 +349,7 @@
 	desc = "A holographic projector that creates holographic engineering barriers."
 	id = "holosignengi"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/engineering
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -359,7 +359,7 @@
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric conditions."
 	id = "holosignatmos"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/atmos
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -369,7 +369,7 @@
 	desc = "A device which can project temporary forcefields to seal off an area."
 	id = "forcefield_projector"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 1000)
 	build_path = /obj/item/forcefield_projector
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -384,7 +384,7 @@
 	desc = "Adds the computer frame and machine frame to the RCD."
 	id = "rcd_upgrade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
 	build_path = /obj/item/rcd_upgrade
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -394,7 +394,7 @@
 	desc = "An experimental welder capable of self-fuel generation."
 	id = "exwelder"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -404,7 +404,7 @@
 	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
 	id = "handdrill"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	materials = list(/datum/material/iron = 3500, /datum/material/silver = 1500, /datum/material/titanium = 2500)
 	build_path = /obj/item/screwdriver/power
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -415,7 +415,7 @@
 	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
 	build_path = /obj/item/crowbar/power
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -425,7 +425,7 @@
 	id = "alien_wrench"
 	build_path = /obj/item/wrench/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -435,7 +435,7 @@
 	id = "alien_wirecutters"
 	build_path = /obj/item/wirecutters/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -445,7 +445,7 @@
 	id = "alien_screwdriver"
 	build_path = /obj/item/screwdriver/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -455,7 +455,7 @@
 	id = "alien_crowbar"
 	build_path = /obj/item/crowbar/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -465,7 +465,7 @@
 	id = "alien_welder"
 	build_path = /obj/item/weldingtool/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -475,7 +475,7 @@
 	id = "alien_multitool"
 	build_path = /obj/item/multitool/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -484,7 +484,7 @@
 	desc = "Allows for the construction of a quantum keycard."
 	id = "quantum_keycard"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_SILVER = 500, MAT_BLUESPACE = 1000)
+	materials = list(/datum/material/glass = 500, /datum/material/iron = 500, /datum/material/silver = 500, /datum/material/bluespace = 1000)
 	build_path = /obj/item/quantum_keycard
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -494,7 +494,7 @@
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
 	id = "anomaly_neutralizer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GOLD = 2000, MAT_PLASMA = 5000, MAT_URANIUM = 2000)
+	materials = list(/datum/material/iron = 2000, /datum/material/gold = 2000, /datum/material/plasma = 5000, /datum/material/uranium = 2000)
 	build_path = /obj/item/anomaly_neutralizer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -504,7 +504,7 @@
 	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution."
 	id   = "pHmeter"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_SILVER = 100, MAT_DIAMOND = 100)
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 100, /datum/material/diamond = 100)
 	build_path = /obj/item/fermichem/pHmeter
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -518,7 +518,7 @@
 	desc = "An experimental suit of armour capable of utilizing an implanted anomaly core to protect the user."
 	id = "reactive_armour"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_DIAMOND = 5000, MAT_URANIUM = 8000, MAT_SILVER = 4500, MAT_GOLD = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -532,7 +532,7 @@
 	desc = "A blue print of a early model of the Meteor defence turret."
 	id = "meteor_defence"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50000, MAT_GLASS = 50000, MAT_SILVER = 8500, MAT_GOLD = 8500, MAT_TITANIUM = 7500, MAT_URANIUM = 7500)
+	materials = list(/datum/material/iron = 50000, /datum/material/glass = 50000, /datum/material/silver = 8500, /datum/material/gold = 8500, /datum/material/titanium = 7500, /datum/material/uranium = 7500)
 	build_path = /obj/machinery/satellite/meteor_shield/sci
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -542,7 +542,7 @@
 	desc = "A disk containing debugging programming to solve and monitor meteors more effectively."
 	id = "meteor_disk"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 2500, MAT_GOLD = 1000)
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 1500, /datum/material/silver = 2500, /datum/material/gold = 1000)
 	build_path = /obj/item/disk/meteor
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

@@ -24,7 +24,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
-	materials = list(MAT_METAL = 1000)
+	materials = list(/datum/material/iron = 1000)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -67,7 +67,7 @@
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	materials = list(MAT_METAL = 1000)
+	materials = list(/datum/material/iron = 1000)
 	total_mass = 3.4
 
 /obj/item/melee/sabre/Initialize()

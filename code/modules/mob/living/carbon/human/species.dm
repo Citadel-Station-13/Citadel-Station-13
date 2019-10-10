@@ -1887,6 +1887,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(hit_percent <= 0)

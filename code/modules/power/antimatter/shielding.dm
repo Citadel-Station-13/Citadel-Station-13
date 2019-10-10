@@ -243,7 +243,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	materials = list(MAT_METAL=100)
+	materials = list(/datum/material/iron=100)
 
 /obj/item/am_shielding_container/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/multitool) && istype(src.loc, /turf))

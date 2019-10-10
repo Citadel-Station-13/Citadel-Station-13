@@ -37,7 +37,7 @@
 
 /obj/machinery/autoylathe/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASTIC), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/plastic), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 
 	wires = new /datum/wires/autoylathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autoylathe
@@ -117,11 +117,11 @@
 		use_power(amount_inserted / 10)
 	else
 		switch(id_inserted)
-			if (MAT_METAL)
+			if (/datum/material/iron)
 				flick("autolathe_o",src)//plays metal insertion animation
-			if (MAT_GLASS)
+			if (/datum/material/glass)
 				flick("autolathe_r",src)//plays glass insertion animation
-			if (MAT_PLASTIC)
+			if (/datum/material/plastic)
 				flick("autolathe_o",src)//plays metal insertion animation
 		use_power(amount_inserted / 10)
 	updateUsrDialog()
@@ -152,13 +152,13 @@
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
-			var/metal_cost = being_built.materials[MAT_METAL]
-			var/glass_cost = being_built.materials[MAT_GLASS]
-			var/plastic_cost = being_built.materials[MAT_PLASTIC]
+			var/metal_cost = being_built.materials[/datum/material/iron]
+			var/glass_cost = being_built.materials[/datum/material/glass]
+			var/plastic_cost = being_built.materials[/datum/material/plastic]
 			var/power = max(2000, (metal_cost+glass_cost+plastic_cost)*multiplier/5)
 
 			GET_COMPONENT(materials, /datum/component/material_container)
-			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff) && (materials.amount(MAT_PLASTIC) >= plastic_cost*multiplier*coeff))
+			if((materials.amount(/datum/material/iron) >= metal_cost*multiplier*coeff) && (materials.amount(/datum/material/glass) >= glass_cost*multiplier*coeff) && (materials.amount(/datum/material/plastic) >= plastic_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
@@ -184,7 +184,7 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
-	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier, MAT_PLASTIC=plastic_cost*coeff*multiplier)
+	var/list/materials_used = list(/datum/material/iron=metal_cost*coeff*multiplier, /datum/material/glass=glass_cost*coeff*multiplier, /datum/material/plastic=plastic_cost*coeff*multiplier)
 	materials.use_amount(materials_used)
 
 	if(is_stack)
@@ -255,7 +255,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			GET_COMPONENT(materials, /datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS] ?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC] ?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[/datum/material/iron] ?round(materials.amount(/datum/material/iron)/D.materials[/datum/material/iron]):INFINITY,D.materials[/datum/material/glass] ?round(materials.amount(/datum/material/glass)/D.materials[/datum/material/glass]):INFINITY,D.materials[/datum/material/plastic] ?round(materials.amount(/datum/material/plastic)/D.materials[/datum/material/plastic]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -287,7 +287,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			GET_COMPONENT(materials, /datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS] ?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC] ?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[/datum/material/iron] ?round(materials.amount(/datum/material/iron)/D.materials[/datum/material/iron]):INFINITY,D.materials[/datum/material/glass] ?round(materials.amount(/datum/material/glass)/D.materials[/datum/material/glass]):INFINITY,D.materials[/datum/material/plastic] ?round(materials.amount(/datum/material/plastic)/D.materials[/datum/material/plastic]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -315,23 +315,23 @@
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
 	GET_COMPONENT(materials, /datum/component/material_container)
-	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
+	if(D.materials[/datum/material/iron] && (materials.amount(/datum/material/iron) < (D.materials[/datum/material/iron] * coeff * amount)))
 		return FALSE
-	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))
+	if(D.materials[/datum/material/glass] && (materials.amount(/datum/material/glass) < (D.materials[/datum/material/glass] * coeff * amount)))
 		return FALSE
-	if(D.materials[MAT_PLASTIC] && (materials.amount(MAT_PLASTIC) < (D.materials[MAT_PLASTIC] * coeff * amount)))
+	if(D.materials[/datum/material/plastic] && (materials.amount(/datum/material/plastic) < (D.materials[/datum/material/plastic] * coeff * amount)))
 		return FALSE
 	return TRUE
 
 /obj/machinery/autoylathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
-	if(D.materials[MAT_METAL])
-		dat += "[D.materials[MAT_METAL] * coeff] metal "
-	if(D.materials[MAT_GLASS])
-		dat += "[D.materials[MAT_GLASS] * coeff] glass "
-	if(D.materials[MAT_PLASTIC])
-		dat += "[D.materials[MAT_PLASTIC] * coeff] plastic"
+	if(D.materials[/datum/material/iron])
+		dat += "[D.materials[/datum/material/iron] * coeff] metal "
+	if(D.materials[/datum/material/glass])
+		dat += "[D.materials[/datum/material/glass] * coeff] glass "
+	if(D.materials[/datum/material/plastic])
+		dat += "[D.materials[/datum/material/plastic] * coeff] plastic"
 	return dat
 
 /obj/machinery/autoylathe/proc/reset(wire)
