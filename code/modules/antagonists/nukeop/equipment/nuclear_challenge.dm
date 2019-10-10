@@ -69,7 +69,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 	var/actual_players = GLOB.joined_player_list.len - nukeops.len
 	var/tc_malus = 0
 	if(actual_players < CHALLENGE_PLAYERS_TARGET)
-		tc_malus = FLOOR((CHALLENGE_TELECRYSTALS - actual_players * INVERSE(CHALLENGE_PLAYERS_TARGET)) * TELECRYSTALS_MALUS_SCALING, 1)
+		tc_malus = FLOOR(((CHALLENGE_TELECRYSTALS / CHALLENGE_PLAYERS_TARGET) * (CHALLENGE_PLAYERS_TARGET - actual_players)) * TELECRYSTALS_MALUS_SCALING, 1)
 
 	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS - tc_malus + CEILING(PLAYER_SCALING * actual_players, 1))
 
