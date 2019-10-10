@@ -325,7 +325,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			var/turf/open/T = get_turf(user)
 			if(istype(T))
-				T.atmos_spawn_air("nitrogen=40;TEMP=2.7")
+				T.atmos_spawn_air("n2=40;TEMP=2.7")
 			to_chat(user, "<span class='warning'>You activate [src], and icy air bursts out of your skin!</span>")
 			return 900
 
