@@ -238,11 +238,11 @@
 			//doesn't work
 		if(4)
 			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
-			if(H.head)
-				var/obj/item/W = H.head
+			if(C.head)
+				var/obj/item/W = C.head
 				C.dropItemToGround(W, TRUE)
 			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
-			H.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
+			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
 		if(5)
 			visible_message("<b>[src] waves their arms around,</b> <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
 			C.reagents.add_reagent("eigenstate", 30)
