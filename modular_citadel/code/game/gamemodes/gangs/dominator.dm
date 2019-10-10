@@ -1,6 +1,7 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 //32 instead of 40 for safety reasons. How many turfs aren't walls around dominator for it to work
-#define DOM_REQUIRED_TURFS 32
+//Update ppl somehow fuckup at 32, now we are down to 25. I hope to god they don't try harder to wall it.
+#define DOM_REQUIRED_TURFS 25
 #define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
@@ -85,6 +86,9 @@
 	if(gang && gang.domination_time != NOT_DOMINATING)
 		var/time_remaining = gang.domination_time_remaining()
 		if(time_remaining > 0)
+			if(!is_station_level(z))
+				explosion(src, 5, 10, 20, 30) //you now get a nice explosion if this moves off station.
+				qdel(src) //to make sure it doesn't continue to exist.
 			if(excessive_walls_check())
 				gang.domination_time += 20
 				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
@@ -164,7 +168,7 @@
 		examine(user)
 		return
 
-	if(tempgang.domination_time != NOT_DOMINATING)
+	if(tempgang.domination_time != NOT_DOMINATING) 
 		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
 		return
 
