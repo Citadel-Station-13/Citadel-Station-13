@@ -190,10 +190,10 @@
 			else if(istype(R, /datum/reagent/blob))
 				blob += generate_chemwiki_line(R, X, processCR)
 
-			/* when merged
+			/*
 			else if(istype(R, /datum/reagent/impure))
 				impure += generate_chemwiki_line(R, X, processCR)
-			*/
+				*/
 
 			else
 				remainder += generate_chemwiki_line(R, X, processCR)
@@ -290,12 +290,12 @@
 	//Description, OD, Addict, Meta
 	outstring += "[R.description] | <ul><li>Metabolism_rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
 
-	if(R.ImpureChem != "fermiTox" || !R.ImpureChem)
-		R3 = GLOB.chemical_reagents_list[R.ImpureChem]
+	if(R.impure_chem != "fermiTox" && R.impure_chem)
+		R3 = GLOB.chemical_reagents_list[R.impure_chem]
 		outstring += "<li>Impure chem:<a href=\"#[R3.name]\">[R3.name]</a></li>"
 
-	if(R.InverseChem != "fermiTox" || !R.InverseChem)
-		R3 = GLOB.chemical_reagents_list[R.InverseChem]
+	if(R.inverse_chem != "fermiTox" && R.inverse_chem)
+		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
 		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> "
 
 
