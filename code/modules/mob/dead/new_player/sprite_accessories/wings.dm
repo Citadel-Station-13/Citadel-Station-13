@@ -27,6 +27,16 @@
 	dimension_y = 34
 	locked = TRUE
 
+// Decorative wings
+/datum/sprite_accessory/deco_wings
+	icon = 'icons/mob/wings.dmi'
+	color_src = null
+
+/datum/sprite_accessory/deco_wings/none
+	name = "None"
+	icon_state = "none"
+
+
 //INSECT WINGS
 
 /datum/sprite_accessory/insect_wings
