@@ -28,8 +28,9 @@
 
 /mob/living/simple_animal/jacq/Life()
 	..()
-	if((last_poof+3 MINUTES) < world.realtime)
-		poof()
+	if(!ckey)
+		if((last_poof+3 MINUTES) < world.realtime)
+			poof()
 
 /mob/living/simple_animal/jacq/Destroy() //I.e invincible
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
@@ -45,15 +46,17 @@
 	poof()
 
 /mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
-	canmove = FALSE
-	chit_chat(M)
-	canmove = TRUE
+	if(!ckey)
+		canmove = FALSE
+		chit_chat(M)
+		canmove = TRUE
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
-	canmove = FALSE
-	chit_chat(M)
-	canmove = TRUE
+	if(!ckey)
+		canmove = FALSE
+		chit_chat(M)
+		canmove = TRUE
 	..()
 
 /mob/living/simple_animal/jacq/proc/poof()
