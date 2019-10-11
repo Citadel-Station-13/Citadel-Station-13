@@ -49,6 +49,7 @@
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This one contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/secborg)
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 5

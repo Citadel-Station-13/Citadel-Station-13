@@ -54391,6 +54391,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"ggg" = (
+/mob/living/simple_animal/hostile/retaliate/goose,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "gih" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -99284,7 +99288,7 @@ cBk
 jhD
 cBo
 alQ
-alb
+ggg
 cBw
 noC
 aiS
