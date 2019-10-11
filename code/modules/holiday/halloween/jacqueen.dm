@@ -389,7 +389,7 @@
 
 /obj/item/reagent_containers/potion_container/throw_impact(atom/target)
 	..()
-	sleep(50)
+	sleep(20)
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	s.set_up(src.reagents, 3, src.loc)
 	s.start()
