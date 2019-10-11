@@ -769,8 +769,8 @@
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-	if(!reagent_list)
-		pH = 7
+	if(!reagent_list || !total_volume)
+		pH = REAGENT_NORMAL_PH
 	return 0
 
 /datum/reagents/proc/clear_reagents()
