@@ -29,7 +29,7 @@
 	if(!istype(C))
 		return
 	var/blood_id = C.get_blood_id()
-	if((blood_id == "blood" || blood_id == "jellyblood") && (!(method == INJECT) || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+	if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 			C.adjustToxLoss(2*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
 			. = 1
