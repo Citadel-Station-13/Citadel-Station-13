@@ -172,7 +172,7 @@
 		blobber.adjustHealth(blobber.maxHealth * 0.5)
 		blob_mobs += blobber
 		var/mob/dead/observer/C = pick(candidates)
-		blobber.key = C.key
+		C.transfer_ckey(blobber)
 		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
 		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
