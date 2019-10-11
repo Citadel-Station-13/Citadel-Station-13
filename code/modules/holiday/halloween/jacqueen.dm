@@ -19,6 +19,8 @@
 	health = INFINITY
 	density = FALSE
 	speech_span = "spooky"
+	friendly = "pets"
+	response_help  = "chats with"
 	var/last_poof
 	var/progression = list() //Keep track of where people are in the story.
 
@@ -205,24 +207,34 @@
 				if("Why do you want the candies?")
 					visible_message("<b>[src]</b> says, <span class='spooky'>\"Ave ye tried them? They're full of all sorts of reagents. Ah'm after them so ah ken magic em up an hopefully find rare stuff fer me brews. Honestly it's a lot easier magicking up tatt fer ye lot than runnin aroond on me own like. I'd ask me familiars but most a my familiars are funny fellows 'n constantly bugger off on adventures when given simple objectives like; Go grab me a tea cake or watch over me cauldron. Ah mean, ye might run into Bartholomew my cat. Ee's supposed tae be tending my cauldron, but I've nae idea where ee's got tae.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_CANDIES
+					sleep(30)
+					poof()
 
 				if("You really came all this way for candy?")
 					visible_message("<b>[src]</b> looks tae the side sheepishly, <span class='spooky'>\"Aye, well, tae be honest, Ah'm here tae see me sis, but dunnae let her knew that. She's an alchemist too like, but she dunnae use a caldron like mae, she buggered off like tae her posh ivory tower tae learn bloody chemistry instead!\"</span> <b>[src]</b> scowls, <span class='spooky'>\"She's tae black sheep o' the family too, so we dunnae see eye tae eye sometimes on alchemy. Ah mean, she puts <i> moles </i> in her brews! Ye dunnae put moles in yer brews! Yae threw your brews at tae wee bastards an blew em up!\"</span> <b>[src]</b> sighs, <span class='spooky'>\"But she's a heart o gold so.. Ah wanted tae see her an check up oon her, make sure she's okay.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_FAR
+					sleep(30)
+					poof()
 
 				if("What is that on your head?")
 					visible_message("<b>[src]</b> pats the pumpkin atop her head, <span class='spooky'>\"This thing? This ain't nae ordinary pumpkin! Me Ma grew this monster ooer a year o love, dedication an hard work. Honestly it felt like she loved this thing more than any of us, which Ah knew ain't true an it's not like she was hartless or anything but.. well, we had a falling oot when Ah got back home with all me stuff in tow. An all she had done is sent me owl after owl over t' last year aboot this bloody pumpkin and ah had enough. So ah took it, an put it on me head. You know, as ye do. Ah am the great Pumpqueen after all, Ah deserve this.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HEAD
+					sleep(30)
+					poof()
 
 				if("Are you a witch?")
 					visible_message("<b>[src]</b> grumbles, <span class='spooky'>\"If ye must know, Ah got kicked oot of the witch academy fer being too much of a \"loose cannon\". A bloody loose cannon? Nae they were just pissed off Ah had the brass tae proclaim myself as the Pumpqueen! And also maybe the time Ah went and blew up one of the towers by trying tae make a huge batch of astrogen might've had something tae do with it. Ah mean it would've worked fine if the cauldrons weren't so shite and were actually upgraded by the faculty. So technically no, I'm not a witch.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_WITCH
+					sleep(30)
+					poof()
 
 				if("So you got ex-spell-ed?")
 					visible_message("<b>[src]</b> Gives you a blank look at the pun, before continuing, <span class='spooky'>\"Not quite, Ah know Ah ken get back into the academy, it's only an explosion, they happen all the time, but, tae be fair it's my fault that things came tae their explosive climax. You don't know what it's like when you're after a witch doctorate, everyone else is doing well, everyone's making new spells and the like, and I'm just good at making explosions really, or fireworks. So, Ah did something Ah knew was dangerous, because Ah had tae do something tae stand oot, but Ah know this life ain't fer me, Ah don't want tae be locked up in dusty towers, grinding reagent after reagent together, trying tae find new reactions, some of the wizards in there haven't left fer years. Ah want tae live, Ah want tae fly around on a broom, turn people into cats fer a day and disappear cackling! That's what got me into witchcraft!\"</span> she throws her arms up in the arm, spinning the pumpkin upon her head slightly. She carefully spins it back to face you, giving oot a soft sigh, <span class='spooky'>\"Ah know my mother's obsession with this dumb thing on my head is just her trying tae fill the void of me and my sis moving oot, and it really shouldn't be on my head. And Ah know that I'm really here tae get help from my sis.. She's the sensible one, and she gives good hugs.\"</span>")
 					sleep(30)
 					visible_message("<b>[src]</b> says, <span class='spooky'>\"Thanks [C], Ah guess Ah didn't realise Ah needed someone tae talk tae but, I'm glad ye spent all your candies talking tae me. Funny how things seem much worse in yer head.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_EXPELL
+					sleep(30)
+					poof()
 
 				if("Can I take you out on a date?")
 					visible_message("<b>[src]</b> blushes, <span class='spooky'>\"...You want tae ask me oot on a date? Me? After all that nonsense Ah just said? It seems a waste of a candy honestly.\"</span>")
