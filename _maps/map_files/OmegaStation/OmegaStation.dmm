@@ -26273,7 +26273,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aUZ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/landmark/barthpot,
 /turf/open/floor/wood,
 /area/library)
 "aVa" = (

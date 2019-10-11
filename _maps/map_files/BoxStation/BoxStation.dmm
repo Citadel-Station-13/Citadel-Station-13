@@ -57422,6 +57422,10 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"moD" = (
+/obj/effect/landmark/barthpot,
+/turf/open/floor/wood,
+/area/library)
 "mpI" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood{
@@ -102489,7 +102493,7 @@ aQq
 aRP
 aIt
 aIt
-aIt
+moD
 aWd
 aXV
 aIt
