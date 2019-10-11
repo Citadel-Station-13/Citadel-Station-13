@@ -31,7 +31,7 @@
 /mob/living/simple_animal/jacq/Life()
 	..()
 	if(!ckey)
-		if((last_poof+3 MINUTES) < world.realtime)
+		if((last_poof+4 MINUTES) < world.realtime)
 			poof()
 
 /mob/living/simple_animal/jacq/Destroy() //I.e invincible
