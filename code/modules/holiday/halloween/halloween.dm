@@ -47,7 +47,7 @@
 	if(prob(30))
 		set_spooky_trap()
 
-/obj/structure/closet/dump_contents()
+/obj/structure/closet/dump_contents(var/override = TRUE)
 	..()
 	trigger_spooky_trap()
 
