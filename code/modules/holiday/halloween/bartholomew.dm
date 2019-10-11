@@ -142,7 +142,7 @@
     //var/metalist = pickweight(GLOB.maintenance_loot)
     for(var/i = length, i <= 5, i+=1)
         var/obj/item = pickweight(rand_items)
-        if(item in no_list)
+        if(!item)
             i-=1
             continue
         items_list += item
