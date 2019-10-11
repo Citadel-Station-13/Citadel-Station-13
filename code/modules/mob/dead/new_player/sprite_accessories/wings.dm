@@ -30,7 +30,15 @@
 // Decorative wings
 /datum/sprite_accessory/deco_wings
 	icon = 'icons/mob/wings.dmi'
-	color_src = null
+
+/datum/sprite_accessory/deco_wings/angel
+	name = "Angel"
+	icon_state = "angel"
+	color_src = 0
+	dimension_x = 46
+	center = TRUE
+	dimension_y = 34
+	locked = TRUE
 
 /datum/sprite_accessory/deco_wings/none
 	name = "None"
