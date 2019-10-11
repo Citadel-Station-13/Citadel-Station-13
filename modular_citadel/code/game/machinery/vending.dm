@@ -67,7 +67,7 @@
 				/obj/item/reagent_containers/glass/bottle/camphor = 5
 				)
 	premium = list(
-				/obj/item/clothing/accessory/skullcodpiece/fake = 1,
+				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
 				/obj/item/clothing/under/gear_harness = 10,
 				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10
 				)
