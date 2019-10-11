@@ -266,7 +266,7 @@
 		if(3)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"If only you had a better upbringing, your ears are now full of my singing!\"</span>")
 			var/client/C2 = C.client
-			C2.chatOutput.sendMusic("https://r7---sn-8pgbpohxqp5-ac5s.googlevideo.com/videoplayback?expire=1570819286&ei=dnigXYTiBMLRVNztg9gM&ip=77.102.34.231&id=o-AP8PCBwt0qmzHIAk-FSIJnf_Xw_dgxjA68-Di8J1GwSE&itag=18&source=youtube&requiressl=yes&mm=31%2C29&mn=sn-8pgbpohxqp5-ac5s%2Csn-aigl6nl7&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=2828750&mime=video%2Fmp4&gir=yes&clen=5905497&ratebypass=yes&dur=138.158&lmt=1540846216924007&mt=1570797587&fvip=5&fexp=23842630&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AHylml4wRAIgew1V2b-qkhVv615GHSY8hvWYFoHdE4uhrc0iqS7FwrgCIHuxn3Qh0oz8WOv3m6vU0WE95GCzE-RhICfKFmX0Y5kf&sig=ALgxI2wwRQIhAMrZpFtHYr5jMZCvZAWabAF3BEkFDjWfGEV27PvykOcHAiA14Oq3ir2OSEVpEmfWW4nEhuIljF7xEIQCeNJDXdo9bw==", 1)//I hope this works!
+			C2.chatOutput.sendMusic("https://a.uguu.se/rQ8FxxUQ1Xzc_SpOwOkyOwOkyPumpkinSong-PFrPrIxluWk.mp4", 1)//I hope this works!
 		if(4)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
 			if(C.head)
