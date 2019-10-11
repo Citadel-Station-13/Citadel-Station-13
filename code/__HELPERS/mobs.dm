@@ -70,6 +70,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.deco_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.deco_wings_list)
 	if(!GLOB.insect_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
 	if(!GLOB.insect_fluffs_list.len)
@@ -138,6 +140,7 @@
 		"tail_lizard"		= pick(GLOB.tails_list_lizard),
 		"tail_human"		= "None",
 		"wings"				= "None",
+		"deco_wings"		= "None",
 		"snout"				= pick(GLOB.snouts_list),
 		"horns"				= pick(GLOB.horns_list),
 		"ears"				= "None",
