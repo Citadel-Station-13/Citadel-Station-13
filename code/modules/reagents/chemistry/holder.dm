@@ -763,7 +763,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume == 0)//For clarity
+		if(R.volume <= 0)//For clarity
 			del_reagent(R.id)
 		if((R.volume < 0.01) && !fermiIsReacting)
 			del_reagent(R.id)
