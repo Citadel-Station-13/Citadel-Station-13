@@ -59,6 +59,7 @@
 				/obj/item/clothing/neck/petcollar/locked = 2,
 				/obj/item/key/collar = 2,
 				/obj/item/clothing/head/kitty = 3,
+				/obj/item/clothing/head/rabbitears = 3,
 				/obj/item/clothing/under/mankini = 2,
 				/obj/item/clothing/under/jabroni = 2,
 				/obj/item/dildo/flared/huge = 1,
