@@ -54388,7 +54388,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "ggg" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/simple_animal/hostile/retaliate/goose,
 /turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/dorms)
 "gih" = (

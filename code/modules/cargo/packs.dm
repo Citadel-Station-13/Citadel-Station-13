@@ -2237,13 +2237,6 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goose)
 	crate_name = "goose crate"
 
-/datum/supply_pack/critter/goose/vomit
-	name = "Vomit Goose Crate"
-	desc = "Angry and violent birds. Evil, evil creatures. This one pukes!"
-	cost = 5000
-	contains = list(/mob/living/simple_animal/hostile/retaliate/goose/vomit/cargo)
-	crate_name = "vomit goose crate"
-
 /datum/supply_pack/critter/monkey
 	name = "Monkey Cube Crate"
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"

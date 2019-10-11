@@ -78455,7 +78455,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "dbq" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/simple_animal/hostile/retaliate/goose,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
