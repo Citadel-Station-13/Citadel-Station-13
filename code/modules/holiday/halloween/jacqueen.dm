@@ -26,7 +26,7 @@
 	..()
 	poof()
 
-/mob/living/simple_animal/jacq/life()
+/mob/living/simple_animal/jacq/Life()
 	..()
 	if((last_poof+3 MINUTES) < world.realtime)
 		poof()
