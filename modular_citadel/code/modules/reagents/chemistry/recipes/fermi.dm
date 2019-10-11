@@ -104,8 +104,8 @@
 /datum/chemical_reaction/fermi/eigenstate
 	name = "Eigenstasium"
 	id = "eigenstate"
-	results = list("eigenstate" = 0.1)
-	required_reagents = list("bluespace" = 0.1, "stable_plasma" = 0.1, "sugar" = 0.1)
+	results = list("eigenstate" = 1)
+	required_reagents = list("bluespace" = 1, "stable_plasma" = 1, "sugar" = 1)
 	mix_message = "the reaction zaps suddenly!"
 	//FermiChem vars:
 	OptimalTempMin 		= 350 // Lower area of bell curve for determining heat based rate reactions
@@ -138,8 +138,8 @@
 /datum/chemical_reaction/fermi/SDGF
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
-	results = list("SDGF" = 0.3)
-	required_reagents = list("stable_plasma" = 0.15, "clonexadone" = 0.15, "uranium" = 0.15, "synthflesh" = 0.15)
+	results = list("SDGF" = 3)
+	required_reagents = list("stable_plasma" = 1.5, "clonexadone" = 1.5, "uranium" = 1.5, "synthflesh" = 1.5)
 	mix_message = "the reaction gives off a blorble!"
 	required_temp = 1
 	//FermiChem vars:
@@ -179,8 +179,8 @@
 /datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
 	id = "breast_enlarger"
-	results = list("breast_enlarger" = 0.8)
-	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.1, "synthflesh" = 0.2, "silicon" = 0.3, "aphro" = 0.3)
+	results = list("breast_enlarger" = 8)
+	required_reagents = list("salglu_solution" = 1, "milk" = 1, "synthflesh" = 2, "silicon" = 3, "aphro" = 3)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -219,8 +219,8 @@
 /datum/chemical_reaction/fermi/penis_enlarger
 	name = "Incubus draft"
 	id = "penis_enlarger"
-	results = list("penis_enlarger" = 0.8)
-	required_reagents = list("blood" = 0.5, "synthflesh" = 0.2, "carbon" = 0.2, "aphro" = 0.2, "salglu_solution" = 0.1,)
+	results = list("penis_enlarger" = 8)
+	required_reagents = list("blood" = 5, "synthflesh" = 2, "carbon" = 2, "aphro" = 2, "salglu_solution" = 1)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -258,8 +258,8 @@
 /datum/chemical_reaction/fermi/astral
 	name = "Astrogen"
 	id = "astral"
-	results = list("astral" = 0.5)
-	required_reagents = list("eigenstate" = 0.1, "plasma" = 0.3, "synaptizine" = 0.1, "aluminium" = 0.5)
+	results = list("astral" = 5)
+	required_reagents = list("eigenstate" = 1, "plasma" = 3, "synaptizine" = 1, "aluminium" = 5)
 	//FermiChem vars:
 	OptimalTempMin 			= 700
 	OptimalTempMax			= 800
@@ -281,8 +281,12 @@
 /datum/chemical_reaction/fermi/enthrall/ //check this
 	name = "MKUltra"
 	id = "enthrall"
-	results = list("enthrall" = 0.5)
-	required_reagents = list("cocoa" = 0.1, "neurine" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
+	results = list("enthrall" = 5)
+	required_reagents = list("cocoa" = 1, "neurine" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
+	results = list("enthrall" = 5)
+	//required_reagents = list("iron" = 1, "iodine" = 1) Test vars
+	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
+	required_reagents = list("cocoa" = 1, "bluespace" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1) //TEMPORARY UNTIL HEADMINS GIVE THE OKAY FOR MK USE.
 	required_catalysts = list("blood" = 1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
@@ -358,8 +362,8 @@
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
 	id = "hatmium"
-	results = list("hatmium" = 0.5)
-	required_reagents = list("ethanol" = 0.1, "nutriment" = 0.3, "cooking_oil" = 0.2, "iron" = 0.1, "gold" = 0.3)
+	results = list("hatmium" = 5)
+	required_reagents = list("ethanol" = 1, "nutriment" = 3, "cooking_oil" = 2, "iron" = 1, "gold" = 3)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 500
@@ -393,8 +397,8 @@
 /datum/chemical_reaction/fermi/furranium
 	name = "Furranium"
 	id = "furranium"
-	results = list("furranium" = 0.5)
-	required_reagents = list("aphro" = 0.1, "moonsugar" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
+	results = list("furranium" = 5)
+	required_reagents = list("aphro" = 1, "moonsugar" = 1, "silver" = 2, "salglu_solution" = 1)
 	mix_message = "You think you can hear a howl come from the beaker."
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -413,7 +417,7 @@
 	PurityMin		= 0.3
 
 /datum/chemical_reaction/fermi/furranium/organic
-	required_reagents = list("aphro" = 0.1, "catnip" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
+	required_reagents = list("aphro" = 1, "catnip" = 1, "silver" = 2, "salglu_solution" = 1)
 
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
@@ -444,8 +448,8 @@
 /datum/chemical_reaction/fermi/acidic_buffer//done test
 	name = "Acetic acid buffer"
 	id = "acidic_buffer"
-	results = list("acidic_buffer" = 2) //acetic acid
-	required_reagents = list("salglu_solution" = 0.2, "ethanol" = 0.6, "oxygen" = 0.6, "water" = 0.6)
+	results = list("acidic_buffer" = 10) //acetic acid
+	required_reagents = list("salglu_solution" = 1, "ethanol" = 3, "oxygen" = 3, "water" = 3)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
@@ -471,10 +475,10 @@
 /datum/chemical_reaction/fermi/basic_buffer//done test
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
-	results = list("basic_buffer" = 1.5)
-	required_reagents = list("lye" = 0.3, "ethanol" = 0.6, "water" = 0.6)
+	results = list("basic_buffer" = 5)
+	required_reagents = list("lye" = 1, "ethanol" = 2, "water" = 2)
 	required_catalysts = list("sacid" = 1) //vagely acetic
-	//FermiChem vars:x
+	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
@@ -503,8 +507,8 @@
 /datum/chemical_reaction/fermi/secretcatchem //DONE
 	name = "secretcatchem"
 	id = "secretcatchem"
-	results = list("secretcatchem" = 0.5)
-	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "clonexadone" = 0.1)//Yes this will make a plushie if you don't lucky guess. It'll eat all your reagents too.
+	results = list("secretcatchem" = 5)
+	required_reagents = list("stable_plasma" = 1, "sugar" = 1, "cream" = 1, "clonexadone" = 1)//Yes this will make a plushie if you don't lucky guess. It'll eat all your reagents too.
 	required_catalysts = list("SDGF" = 1)
 	required_temp = 600
 	mix_message = "the reaction gives off a meow!"
@@ -537,7 +541,7 @@
 	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
 	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "uranium", "milk")
-	required_reagents[pick(additions)] = rand(0.1, 0.5)//weird
+	required_reagents[pick(additions)] = rand(1, 5)//weird
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	SSblackbox.record_feedback("tally", "catgirlium")//log
@@ -556,8 +560,8 @@
 /datum/chemical_reaction/fermi/yamerol//done test
 	name = "Yamerol"
 	id = "yamerol"
-	results = list("yamerol" = 1.5)
-	required_reagents = list("perfluorodecalin" = 0.5, "salbutamol" = 0.5, "water" = 0.5)
+	results = list("yamerol" = 3)
+	required_reagents = list("perfluorodecalin" = 1, "salbutamol" = 1, "water" = 1)
 	//FermiChem vars:
 	OptimalTempMin 	= 300
 	OptimalTempMax 	= 500

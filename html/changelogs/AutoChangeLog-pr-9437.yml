@@ -1,0 +1,4 @@
+author: "JTGSZ"
+delete-after: True
+changes: 
+  - rscadd: "Optional species based clothing restrictions"
