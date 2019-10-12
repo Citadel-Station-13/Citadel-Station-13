@@ -75,15 +75,17 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
-		var/datum/material/mat = materials.materials[M]
-		var/sheets = round(mat.amount) / MINERAL_MATERIAL_AMOUNT
+		var/datum/material/mat = M
+		var/amount = materials.materials[M]
+		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
+		var/ref = REF(M)
 		if (sheets)
 			if (sheets >= 1)
-				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=1'>Eject</a>"
+				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</a>"
 			else
 				ui += "<span class='linkOff'>Eject</span>"
 			if (sheets >= 20)
-				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=20'>20x</a>"
+				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=20'>20x</a>"
 			else
 				ui += "<span class='linkOff'>20x</span>"
 			ui += "<b>[mat.name]</b>: [sheets] sheets<br>"
@@ -148,7 +150,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 	else if(href_list["ejectsheet"])
-		var/eject_sheet = href_list["ejectsheet"]
+		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
 		GET_COMPONENT(materials, /datum/component/material_container)
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()

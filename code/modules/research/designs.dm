@@ -7,15 +7,6 @@ For the materials datum, it assumes you need reagents unless specified otherwise
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
 The currently supporting non-reagent materials. All material amounts are set as the define MINERAL_MATERIAL_AMOUNT, which defaults to 2000
-- /datum/material/iron (/obj/item/stack/metal).
-- /datum/material/glass (/obj/item/stack/glass).
-- /datum/material/plasma (/obj/item/stack/plasma).
-- /datum/material/silver (/obj/item/stack/silver).
-- /datum/material/gold (/obj/item/stack/gold).
-- /datum/material/uranium (/obj/item/stack/uranium).
-- /datum/material/diamond (/obj/item/stack/diamond).
-- /datum/material/bananium (/obj/item/stack/bananium).
-(Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
@@ -51,6 +42,19 @@ other types of metals and chemistry for reagents).
 /datum/design/Destroy()
 	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
 	return ..()
+
+/datum/design/proc/InitializeMaterials()
+	var/list/temp_list = list()
+	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
+		var/amount = materials[i]
+		if(!istext(i)) //Not a category, so get the ref the normal way
+			var/datum/material/M =  getmaterialref(i)
+			temp_list[M] = amount
+		else
+			temp_list[i] = amount
+	materials = temp_list
+	for(var/i in materials)
+		to_chat("[i] [materials[i]]")
 
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)

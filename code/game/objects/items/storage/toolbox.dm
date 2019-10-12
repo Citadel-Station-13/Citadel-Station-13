@@ -3,8 +3,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	materials = list(/datum/material/iron = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	custom_materials = list(/datum/material/iron = 500) //Toolboxes by default use iron as their core, custom material.
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	var/can_rubberify = TRUE
@@ -46,6 +47,9 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
+	icon_state = "red"
+	item_state = "toolbox_red"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -70,6 +74,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -98,6 +103,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -119,6 +125,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	force = 15
 	throwforce = 18
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
@@ -138,6 +145,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -159,6 +167,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("robusted", "crushed", "smashed")
 	can_rubberify = FALSE
+	material_flags = MATERIAL_NO_COLOR
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
@@ -200,6 +209,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	w_class = WEIGHT_CLASS_HUGE		//heyo no bohing this!
 	force = 18		//spear damage
 	can_rubberify = FALSE
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/plastitanium/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -215,6 +225,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "green"
 	item_state = "toolbox_green"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
@@ -244,6 +255,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	throwforce = 14
 	throw_speed = 5
 	throw_range = 10
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -269,6 +281,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	force = 0
 	throwforce = 0
 	can_rubberify = FALSE
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/proc/rubberify()
 	name = "rubber [name]"
@@ -301,10 +314,11 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	flags_1 = null
 	materials = null
 	damtype = STAMINA
-	force = 17
-	throwforce = 17
+	force = 15
+	throwforce = 15
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/rubber/Initialize()
 	icon_state = pick("blue", "red", "yellow", "green")

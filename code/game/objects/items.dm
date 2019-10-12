@@ -67,7 +67,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials
+	var/list/materials //materials in this object, and the amount
 	var/reskinned = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
@@ -115,6 +115,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/Initialize()
 
 	materials =	typelist("materials", materials)
+
+	if(materials) //Otherwise, use the instances already provided.
+		var/list/temp_list = list()
+		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
+			var/amount = materials[i]
+			var/datum/material/M = getmaterialref(i)
+			temp_list[M] = amount
+		materials = temp_list
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)

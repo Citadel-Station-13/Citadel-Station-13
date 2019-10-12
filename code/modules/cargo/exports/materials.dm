@@ -14,10 +14,10 @@
 	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
-	if(!(material_id in I.materials))
+	if(!(getmaterialref(material_id) in I.materials))
 		return 0
 
-	var/amount = I.materials[material_id]
+	var/amount = I.materials[getmaterialref(material_id)]
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
