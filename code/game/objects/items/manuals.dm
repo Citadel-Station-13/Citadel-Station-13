@@ -244,7 +244,7 @@
 	..()
 
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
+	var/wikiurl = CONFIG_GET(string/wikiurltg)
 	if(wikiurl)
 		dat = {"
 
