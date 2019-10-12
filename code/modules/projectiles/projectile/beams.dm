@@ -42,6 +42,7 @@
 /obj/item/projectile/beam/weak/minigun
 	damage = 12.5
 	armour_penetration = 40
+	lagshot = TRUE //these are pretty spammy.
 
 /obj/item/projectile/beam/weak/minigun/Initialize()
 	.=..()
@@ -59,6 +60,7 @@
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
+	lagshot = TRUE //anything shotgun-like needs to have this.
 
 /obj/item/projectile/beam/xray
 	name = "\improper X-ray beam"
