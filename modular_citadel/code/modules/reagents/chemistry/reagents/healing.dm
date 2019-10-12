@@ -104,6 +104,7 @@
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+	message_admins("mob: data: [data["injected_vol"]] passed: [reac_volume]")
 	if(iscarbon(M))
 		var/target = M.zone_selected
 		if (M.stat == DEAD)
@@ -115,7 +116,7 @@
 				to_chat(M, "<span class='danger'>You feel your [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	if(method==INJECT)
-		data["injected_vol"] = data["injected_vol"] + reac_volume
+		data["injected_vol"] = reac_volume
 	..()
 
 /datum/reagent/synthtissue/on_mob_life(mob/living/carbon/C)
@@ -136,6 +137,10 @@
 		return ..()
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
+	message_admins("merge: data: [data["injected_vol"]] passed: [passed_data["injected_vol"]]")
+	if(iscarbon(holder.my_atom))
+		data["injected_vol"] = data["injected_vol"] + passed_data["injected_vol"]
+		passed_data["injected_vol"] = 0
 	..()
 
 /datum/reagent/synthtissue/on_new(passed_data)

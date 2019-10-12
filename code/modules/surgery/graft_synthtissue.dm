@@ -61,8 +61,8 @@
 	target.reagents.remove_reagent("synthtissue", 10)
 
 /datum/surgery_step/graft_synthtissue/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully grafts synthtissue to [chosen_organ].", "<span class='notice'>You succeed in grafting 10u to [chosen_organ].</span>")
-	chosen_organ.applyOrganDamage(health_restored)
+	user.visible_message("[user] successfully grafts synthtissue to [chosen_organ].", "<span class='notice'>You succeed in grafting 10u of the synthflesh to the [chosen_organ].</span>")
+	chosen_organ.applyOrganDamage(-health_restored)
 	return TRUE
 
 /datum/surgery_step/graft_synthtissue/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
