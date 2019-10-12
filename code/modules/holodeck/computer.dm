@@ -112,7 +112,7 @@
 				load_program(A)
 		if("safety")
 			if(!issilicon(usr) && !IsAdminGhost(usr))
-				var/msg = "[key_name(usr)] attempted to emag the holodeck using a href exploit!"
+				var/msg = "[key_name(usr)] attempted to emag the holodeck using a href they shouldn't have!"
 				message_admins(msg)
 				log_admin(msg)
 				return
