@@ -1,5 +1,4 @@
 #define BASE_HUMAN_REWARD 500
-#define EXPDIS_FAIL_MSG "<span class='notice'>You dissect [target], but do not find anything particularly interesting.</span>"
 
 /datum/surgery/advanced/experimental_dissection
 	name = "Dissection"
@@ -88,7 +87,6 @@
 	display_results(user, target, "<span class='notice'>You dissect [target], but do not find anything particularly interesting.</span>",
 	"[user] dissects [target], however it seems [user.p_they()] didn't find anything useful.",
 	"[user] dissects [target], but looks a little dissapointed.")
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (check_value(target) * 0.2)))
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (round(check_value(target, surgery) * 0.01))))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
@@ -112,6 +110,4 @@
 	requires_tech = TRUE
 	replaced_by = null
 
-
-#undef BASE_HUMAN_REWARD
 #undef EXPDIS_FAIL_MSG
