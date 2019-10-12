@@ -402,7 +402,7 @@
 
 
 				for(var/B in cached_required_reagents)
-					if(!has_reagent(B, cached_required_reagents[B]*CHEMICAL_QUANTISATION_LEVEL))//Allows vols at less than 1 to react.
+					if(!has_reagent(B, cached_required_reagents[B]))//Allows vols at less than 1 to react.
 						break
 					total_matching_reagents++
 				for(var/B in cached_required_catalysts)
