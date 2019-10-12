@@ -19,7 +19,7 @@
 //repair organs
 /datum/surgery_step/graft_synthtissue
 	name = "graft synthtissue"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	repeatable = TRUE
 	time = 75
 	chems_needed = list("synthtissue")
@@ -61,8 +61,9 @@
 	target.reagents.remove_reagent("synthtissue", 10)
 
 /datum/surgery_step/graft_synthtissue/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully repairs part of [chosen_organ].", "<span class='notice'>You succeed in repairing parts of [chosen_organ].</span>")
+	user.visible_message("[user] successfully grafts synthtissue to [chosen_organ].", "<span class='notice'>You succeed in grafting 10u to [chosen_organ].</span>")
 	chosen_organ.applyOrganDamage(health_restored)
+	return TRUE
 
 /datum/surgery_step/graft_synthtissue/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] accidentally damages part of [chosen_organ]!</span>", "<span class='warning'>You damage [chosen_organ]! Apply more synthtissue if it's run out.</span>")
