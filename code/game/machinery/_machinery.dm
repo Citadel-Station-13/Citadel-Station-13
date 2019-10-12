@@ -186,6 +186,7 @@ Class Procs:
 		if(isliving(A))
 			var/mob/living/L = A
 			L.update_canmove()
+	SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 	occupant = null
 
 /obj/machinery/proc/can_be_occupant(atom/movable/am)
@@ -498,6 +499,7 @@ Class Procs:
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if (AM == occupant)
+		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
@@ -566,6 +568,7 @@ Class Procs:
 		updateUsrDialog()
 
 /obj/machinery/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
 		return
 	if(inserted_modify_id)

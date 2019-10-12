@@ -22,12 +22,14 @@
 			<ui-section label='Name'>
 				{{data.vr_avatar.name}}
 			</ui-section>
-			<ui-section label='Status'>
-				{{data.vr_avatar.status}}
-			</ui-section>
-			<ui-section label='Health'>
-				<ui-bar min='0' max='{{adata.vr_avatar.maxhealth}}' value='{{adata.vr_avatar.health}}' state='{{healthState(adata.vr_avatar.health)}}'>{{Math.round(adata.vr_avatar.health)}}/{{adata.vr_avatar.maxhealth}}</ui-bar>
-			</ui-section>
+			{{#if data.isliving}}
+				<ui-section label='Status'>
+					{{data.vr_avatar.status}}
+				</ui-section>
+				<ui-section label='Health'>
+					<ui-bar min='0' max='{{adata.vr_avatar.maxhealth}}' value='{{adata.vr_avatar.health}}' state='{{healthState(adata.vr_avatar.health)}}'>{{Math.round(adata.vr_avatar.health)}}/{{adata.vr_avatar.maxhealth}}</ui-bar>
+				</ui-section>
+			{{/if}}
 		</ui-display>
 	{{else}}
 		<ui-display title='Virtual Avatar'>

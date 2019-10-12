@@ -6,7 +6,7 @@
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"
-	implements = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 65)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 65)
 	time = 64
 	var/obj/item/implant/I = null
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

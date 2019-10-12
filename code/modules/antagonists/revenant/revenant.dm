@@ -377,14 +377,15 @@
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || QDELETED(revenant) || inert)
 		return
-	var/key_of_revenant
+	var/key_of_revenant = FALSE
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
 	forceMove(drop_location()) //In case it's in a backpack or someone's hand
 	revenant.forceMove(loc)
 	if(old_key)
 		for(var/mob/M in GLOB.dead_mob_list)
 			if(M.client && M.client.key == old_key) //Only recreates the mob if the mob the client is in is dead
-				key_of_revenant = old_key
+				M.transfer_ckey(revenant.key, FALSE)
+				key_of_revenant = TRUE
 				break
 	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
@@ -396,22 +397,21 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 		var/mob/dead/observer/C = pick(candidates)
-		key_of_revenant = C.key
-		if(!key_of_revenant)
+		C.transfer_ckey(revenant.key, FALSE)
+		if(!revenant.key)
 			qdel(revenant)
 			message_admins("No ckey was found for the new revenant. Oh well!")
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 
-	message_admins("[key_of_revenant] has been [old_key == key_of_revenant ? "re":""]made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.")
+	message_admins("[key_of_revenant] has been [old_key == revenant.key ? "re":""]made into a revenant by reforming ectoplasm.")
+	log_game("[key_of_revenant] was [old_key == revenant.key ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
 
 	revenant.essence = essence
 	revenant.essence_regen_cap = essence
 	revenant.death_reset()
-	revenant.key = key_of_revenant
 	revenant = null
 	qdel(src)
 

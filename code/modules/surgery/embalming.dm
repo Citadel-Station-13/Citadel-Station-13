@@ -1,6 +1,6 @@
 /datum/surgery/embalming //Fast and easy way to husk bodys
 	name = "Embalming"
-	desc = "A surgical procedure that prevents a corps from producing."
+	desc = "A surgical procedure that prevents a corpse from producing miasma."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/embalming,
 				/datum/surgery_step/close)
@@ -11,7 +11,7 @@
 
 /datum/surgery_step/embalming
 	name = "embalming body"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
 	time = 10
 	chems_needed = list("drying_agent", "sterilizine")

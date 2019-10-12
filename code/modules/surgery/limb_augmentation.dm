@@ -2,7 +2,7 @@
 //SURGERY STEPS
 /datum/surgery_step/replace
 	name = "sever muscles"
-	implements = list(/obj/item/scalpel = 100, TOOL_WIRECUTTER = 55)
+	implements = list(TOOL_SCALPEL = 100, TOOL_WIRECUTTER = 55)
 	time = 32
 
 

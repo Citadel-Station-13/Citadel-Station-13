@@ -22,6 +22,7 @@
 	return S
 
 /obj/item/organ/body_egg/alien_embryo/on_life()
+	. = ..()
 	switch(stage)
 		if(2, 3)
 			if(prob(2))
@@ -86,7 +87,7 @@
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = ghost.key
+	ghost.transfer_ckey(new_xeno, FALSE)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
 	new_xeno.canmove = 0 //so we don't move during the bursting animation
 	new_xeno.notransform = 1

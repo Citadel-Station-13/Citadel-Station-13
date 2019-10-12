@@ -46,7 +46,7 @@
 			D.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
 			A.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
-				D.adjustBrainLoss(5)
+				D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			A.Stun(rand(10,45))
 			D.Knockdown(rand(5,30))//CIT CHANGE - makes stuns from martial arts always use Knockdown instead of Stun for the sake of consistency
 		if(5,6)
