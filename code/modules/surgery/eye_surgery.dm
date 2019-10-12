@@ -7,7 +7,7 @@
 //fix eyes
 /datum/surgery_step/fix_eyes
 	name = "fix eyes"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 45, /obj/item/pen = 25)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 45, /obj/item/pen = 25)
 	time = 64
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
@@ -37,7 +37,7 @@
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
-		target.adjustBrainLoss(70)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
 	else
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain! Or would have, if [target] had a brain.</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain! Or would have, if [target] had a brain.</span>",
