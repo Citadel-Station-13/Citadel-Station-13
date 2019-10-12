@@ -544,18 +544,18 @@
 
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
-	var/multiplier = 0
-
+	var/multiplier = INFINITY
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.0001))
 	if (multiplier <= 0)//clarity
 		fermiEnd()
 		return
 
-	for(var/P in C.required_catalysts)
-		if(!has_reagent(P))
-			fermiEnd()
-			return
+	if(C.required_catalysts)
+		for(var/P in C.required_catalysts)
+			if(!has_reagent(P))
+				fermiEnd()
+				return
 
 	if (!fermiIsReacting)
 		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
