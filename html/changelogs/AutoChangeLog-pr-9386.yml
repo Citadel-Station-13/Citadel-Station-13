@@ -1,0 +1,4 @@
+author: "original by Bumtickley00, port by sishen1542"
+delete-after: True
+changes: 
+  - tweak: "Suit storage units will now also remove radiation from mobs."
