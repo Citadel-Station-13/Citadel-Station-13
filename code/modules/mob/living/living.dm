@@ -346,6 +346,11 @@
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return TRUE
 
+/mob/living/canUseStorage()
+	if (get_num_arms() <= 0)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/InCritical()
 	return (health <= crit_threshold && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
@@ -476,7 +481,6 @@
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
-	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
@@ -503,6 +507,13 @@
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
 		mood.sanity = SANITY_GREAT
 		mood.update_mood()
+	//Heal all organs
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.internal_organs)
+			for(var/organ in C.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -901,7 +912,7 @@
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
-		new_mob.key = key
+		transfer_ckey(new_mob)
 
 	for(var/para in hasparasites())
 		var/mob/living/simple_animal/hostile/guardian/G = para

@@ -96,7 +96,7 @@
 	display_name = "Advanced Surgery Tools"
 	description = "Refined and improved redesigns for the run-of-the-mill medical utensils."
 	prereq_ids = list("adv_biotech", "adv_surgery")
-	design_ids = list("drapes", "retractor_adv", "hemostat_adv", "cautery_adv", "surgicaldrill_adv", "scalpel_adv", "circular_saw_adv")
+	design_ids = list("drapes", "retractor_adv", "surgicaldrill_adv", "scalpel_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -517,8 +517,17 @@
 	display_name = "Cybernetic Organs"
 	description = "We have the technology to rebuild him."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("cybernetic_heart", "cybernetic_liver", "cybernetic_liver_u", "cybernetic_lungs", "cybernetic_lungs_u", "cybernetic_tongue")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	design_ids = list("cybernetic_ears", "cybernetic_heart", "cybernetic_liver", "cybernetic_lungs", "cybernetic_tongue")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	export_price = 5000
+
+/datum/techweb_node/cyber_organs_upgraded
+	id = "cyber_organs_upgraded"
+	display_name = "Upgraded Cybernetic Organs"
+	description = "We have the technology to upgrade him."
+	prereq_ids = list("cyber_organs")
+	design_ids = list("cybernetic_ears_u", "cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 5000
 
 /datum/techweb_node/cyber_implants
@@ -1045,7 +1054,7 @@
 	boost_item_paths = list()
 	for(var/path in GLOB.uplink_items)
 		var/datum/uplink_item/UI = new path
-		if(!UI.item)
+		if(!UI.item || !UI.illegal_tech)
 			continue
 		boost_item_paths |= UI.item	//allows deconning to unlock.
 

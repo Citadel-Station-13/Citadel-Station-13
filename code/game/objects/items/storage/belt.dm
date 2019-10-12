@@ -185,12 +185,9 @@
 	content_overlays = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
-	new /obj/item/hemostat/adv(src)
-	new /obj/item/circular_saw/adv(src)
-	new /obj/item/scalpel/adv(src)
-	new /obj/item/retractor/adv(src)
-	new /obj/item/cautery/adv(src)
-	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/surgicaldrill/advanced(src)
 	new /obj/item/surgical_drapes(src)
 
 /obj/item/storage/belt/security

@@ -13,6 +13,10 @@
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs)
 
+	for(var/X in implants)
+		var/obj/item/implant/I = X
+		qdel(I)
+
 	spawn_gibs(no_bodyparts)
 	qdel(src)
 

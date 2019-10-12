@@ -142,6 +142,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.7
 
 /obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
