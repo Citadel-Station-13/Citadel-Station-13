@@ -4,3 +4,4 @@
 	icon_state = "spellcard"
 	damage_type = BURN
 	damage = 2
+	lagshot = TRUE
