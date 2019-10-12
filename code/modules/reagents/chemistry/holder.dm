@@ -503,6 +503,8 @@
 
 				for(var/B in cached_required_reagents) //
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
+				if(multiplier < 1)
+					return 0
 
 				for(var/B in cached_required_reagents)
 					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1, ignore_pH = TRUE)
@@ -545,11 +547,11 @@
 
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
-	var/multiplier = INFINITY
+	var/multiplier = 0
 
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.0001))
-	if (multiplier == 0)//clarity
+	if (multiplier <= 0)//clarity
 		fermiEnd()
 		return
 
