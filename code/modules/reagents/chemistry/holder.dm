@@ -128,14 +128,12 @@
 
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
-	if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
-		pH = 7
 	if(total_volume > 0)
 		var/part = amount / total_volume
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			remove_reagent(R.id, R.volume * part, ignore_pH = TRUE)
-
+		pH = REAGENT_NORMAL_PH
 		update_total()
 		handle_reactions()
 		return amount
@@ -502,9 +500,8 @@
 					return 0
 
 				for(var/B in cached_required_reagents) //
-					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
-				if(multiplier < 1)
-					return 0
+					multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+
 
 				for(var/B in cached_required_reagents)
 					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1, ignore_pH = TRUE)
@@ -771,7 +768,7 @@
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-	if(!reagent_list || !total_volume)
+	if(!total_volume)
 		pH = REAGENT_NORMAL_PH
 	return 0
 
@@ -871,7 +868,6 @@
 	var/new_total = cached_total + amount
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
-
 	var/cached_pH = pH
 
 
@@ -965,7 +961,7 @@
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
-				pH = 7
+				pH = REAGENT_NORMAL_PH
 			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
 			else if (!ignore_pH)
 				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
