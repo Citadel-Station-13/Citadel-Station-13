@@ -400,6 +400,7 @@
 	name = "Magic candy"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "jacq_candy"
+	desc = "A candy with strange magic within. Be careful, as the magic isn't always helpful."
 
 /obj/item/reagent_containers/food/snacks/special_candy/Initialize()
 	.=..()

@@ -1,13 +1,5 @@
 /obj/effect/landmark/barthpot
     name = "barthpot"
-    var/created = FALSE
-
-/obj/effect/landmark/barthpot/Initialize()
-    if(!created) //I dunno why they spawn twice but, this is to prevent that.
-        new /obj/item/barthpot(loc)
-        new /mob/living/simple_animal/jacq(loc)
-        created = TRUE
-    ..()
 
 /obj/item/barthpot
     name = "Bartholomew"
