@@ -61,6 +61,7 @@
 	return S
 
 /obj/item/organ/heart/on_life()
+	..()
 	if(owner.client && beating)
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
