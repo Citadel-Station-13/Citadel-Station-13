@@ -866,7 +866,7 @@
 			piggyback(target)
 			return
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
-		else if(user != target && can_be_firemanned(target))
+		else if(user != target)
 			fireman_carry(target)
 			return
 	. = ..()

@@ -16,7 +16,7 @@
 
 /datum/surgery_step/bionecrosis
 	name = "start bionecrosis"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
 	time = 50
 	chems_needed = list("zombiepowder", "rezadone")
