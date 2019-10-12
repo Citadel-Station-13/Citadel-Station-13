@@ -18,8 +18,9 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	name = "combat jaws"
 	desc = "The jaws of the law. Very sharp."
 	icon_state = "jaws"
-	force = 12
+	force = 10 //Lowered to match secborg. No reason it should be more than a secborg's baton.
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
+
 
 /obj/item/dogborg/jaws/small
 	name = "puppy jaws"
@@ -32,7 +33,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
 	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
-	log_combat(user, A, "bit")
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
@@ -307,8 +307,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /mob/living/silicon/robot
 	var/leaping = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 50 //Nearly doubled, u happy?
-	var/pounce_spoolup = 3
+	var/pounce_cooldown_time = 20 //Buffed to counter balance changes
+	var/pounce_spoolup = 1
 	var/leap_at
 	var/disabler
 	var/laser
@@ -338,7 +338,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
 
-	if(cell.charge <= 500)
+	if(cell.charge <= 750)
 		to_chat(src,"<span class='danger'>Insufficent reserves for jump actuators!</span>")
 		return
 
@@ -348,7 +348,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		pixel_y = 10
 		update_icons()
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
-		cell.use(500) //Doubled the energy consumption
+		cell.use(750) //Less than a stunbaton since stunbatons hit everytime.
 		weather_immunities -= "lava"
 
 /mob/living/silicon/robot/throw_impact(atom/A)
@@ -366,13 +366,13 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(iscarbon(L) ? 450 : 45) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
+				L.Knockdown(iscarbon(L) ? 225 : 45) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 				log_combat(src, L, "borg pounced")
 			else
-				Knockdown(45, 1, 1)
+				Knockdown(15, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
@@ -380,7 +380,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
 			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
-			Knockdown(45, 1, 1)
+			Knockdown(15, 1, 1)
 
 		if(leaping)
 			leaping = 0

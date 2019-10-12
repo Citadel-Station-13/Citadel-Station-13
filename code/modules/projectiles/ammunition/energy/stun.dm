@@ -25,3 +25,6 @@
 	fire_sound = 'sound/weapons/taser2.ogg'
 	harmful = FALSE
 	click_cooldown_override = 3.5
+
+/obj/item/ammo_casing/energy/disabler/secborg
+	e_cost = 50
