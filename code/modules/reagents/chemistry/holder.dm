@@ -768,7 +768,7 @@
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-	if(!total_volume)
+	if(!reagent_list || !total_volume)
 		pH = REAGENT_NORMAL_PH
 	return 0
 
