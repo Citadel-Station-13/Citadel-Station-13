@@ -14,6 +14,7 @@
 /obj/item/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
 	damage = 5
+	lagshot = TRUE // fires 4 at once
 
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
@@ -58,6 +59,7 @@
 /obj/item/projectile/bullet/pellet
 	var/tile_dropoff = 0.75
 	var/tile_dropoff_s = 1.25
+	lagshot = TRUE
 
 /obj/item/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
@@ -94,7 +96,9 @@
 /obj/item/projectile/bullet/scattershot
 	damage = 20
 	stamina = 65
+	lagshot = TRUE //Should be easy enough to tell the deathmech is shooting hurty at you without to_chat
 
 /obj/item/projectile/bullet/seed
 	damage = 4
 	stamina = 1
+	lagshot = TRUE //Just to be safe.
