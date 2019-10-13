@@ -74,7 +74,7 @@
 /obj/item/organ/proc/on_death()	//runs decay when outside of a person
 	if(organ_flags & ORGAN_SYNTHETIC)
 		return
-	 if(organ_flags & ORGAN_FROZEN)
+	if(organ_flags & ORGAN_FROZEN)
 	 	return
 	if(organ_flags & ORGAN_NO_SPOIL)
 		return
