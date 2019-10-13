@@ -8,6 +8,7 @@
     anchored = TRUE
     var/items_list = list()
     speech_span = "spooky"
+    var/active = TRUE
 
 /obj/item/barthpot/Destroy()
     var/obj/item/barthpot/n = new src(loc)
@@ -16,6 +17,9 @@
 
 
 /obj/item/barthpot/attackby(obj/item/I, mob/user, params)
+    if(!active)
+        say("Meow!")
+        return
     for(var/I2 in items_list)
         if(istype(I, I2))
             qdel(I)

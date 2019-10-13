@@ -23,6 +23,7 @@
 	response_help  = "chats with"
 	var/last_poof
 	var/progression = list() //Keep track of where people are in the story.
+	var/active = TRUE //Turn this to false to keep normal mob behavour
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
@@ -48,6 +49,8 @@
 	poof()
 
 /mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
+	if(!active)
+		return ..()
 	if(!ckey)
 		canmove = FALSE
 		chit_chat(M)
@@ -55,6 +58,8 @@
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
+	if(!active)
+		return ..()
 	if(!ckey)
 		canmove = FALSE
 		chit_chat(M)
