@@ -19,9 +19,6 @@
 		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
 		qdel(Poly)
 
-	for(var/obj/effect/landmark/barthpot/bp in GLOB.landmarks_list)
-		new /obj/item/barthpot(bp.loc)
-		new /mob/living/simple_animal/jacq(bp.loc)
 
 /datum/round_event/spooky/announce(fake)
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")

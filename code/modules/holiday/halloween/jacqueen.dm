@@ -7,6 +7,25 @@
 #define JACQ_EXPELL (1<<5)
 #define JACQ_DATE (1<<6)
 
+/////// EVENT
+/datum/round_event_control/jacqueen
+	name = "Jacqueline's visit"
+	holidayID = "jacqueen"
+	typepath = /datum/round_event/jacqueen
+	weight = -1							//forces it to be called, regardless of weight
+	max_occurrences = 1
+	earliest_start = 0 MINUTES
+
+/datum/round_event/jacqueen/start()
+	..()
+
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+		playsound(H, 'sound/spookoween/ahaha.ogg', 100, 0.25)
+
+	for(var/obj/effect/landmark/barthpot/bp in GLOB.landmarks_list)
+		new /obj/item/barthpot(bp.loc)
+		new /mob/living/simple_animal/jacq(bp.loc)
+
 /////// MOBS
 
 //Whacha doing in here like? Yae wan tae ruin ta magicks?
