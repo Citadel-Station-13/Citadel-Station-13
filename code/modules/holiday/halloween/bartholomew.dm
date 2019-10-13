@@ -31,6 +31,9 @@
     say("It doesn't seem like that's magical enough!")
 
 /obj/item/barthpot/attack_hand(mob/user)
+    if(!active)
+        say("Meow!")
+        return
     say("Hello there, I'm Bartholomew, Jacqueline's Familiar.")
     sleep(20)
     say("I'm currently seeking items to put into my pot, if we get the right items, it should crystalise into a magic candy!")
