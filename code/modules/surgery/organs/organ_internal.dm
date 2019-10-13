@@ -74,10 +74,6 @@
 /obj/item/organ/proc/on_death()	//runs decay when outside of a person
 	if(CHECK_MULTIPLE_BITFIELDS(organ_flags, ORGAN_SYNTHETIC|ORGAN_FROZEN|ORGAN_NO_SPOIL))
 		return
-	if(organ_flags & ORGAN_FROZEN)
-		return
-	if(organ_flags & ORGAN_NO_SPOIL)
-		return
 	applyOrganDamage(maxHealth * decay_factor)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
