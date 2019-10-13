@@ -1,5 +1,3 @@
-
-
 //Glorified teleporter that puts you in a new human body.
 // it's """VR"""
 /obj/machinery/vr_sleeper
@@ -12,9 +10,10 @@
 	circuit = /obj/item/circuitboard/machine/vr_sleeper
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
-	var/mob/living/carbon/human/virtual_reality/vr_human
+	var/mob/living/vr_mob
+	var/virtual_mob_type = /mob/living/carbon/human
 	var/vr_category = "default" //Specific category of spawn points to pick from
-	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
+	var/allow_creating_vr_mobs = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/only_current_user_can_interact = FALSE
 
 /obj/machinery/vr_sleeper/Initialize()
@@ -44,7 +43,7 @@
 
 /obj/machinery/vr_sleeper/Destroy()
 	open_machine()
-	cleanup_vr_human()
+	cleanup_vr_mob()
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -54,23 +53,27 @@
 	only_current_user_can_interact = TRUE
 
 /obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
-	return
+	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /obj/machinery/vr_sleeper/emag_act(mob/user)
+	. = ..()
+	if(!(obj_flags & EMAGGED))
+		return
+	obj_flags |= EMAGGED
 	you_die_in_the_game_you_die_for_real = TRUE
 	sparks.start()
 	addtimer(CALLBACK(src, .proc/emagNotify), 150)
+	return TRUE
 
 /obj/machinery/vr_sleeper/update_icon()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
 /obj/machinery/vr_sleeper/open_machine()
-	if(!state_open)
-		if(vr_human)
-			vr_human.revert_to_reality(FALSE)
-		if(occupant)
-			SStgui.close_user_uis(occupant, src)
-		..()
+	if(state_open)
+		return
+	if(occupant)
+		SStgui.close_user_uis(occupant, src)
+	return ..()
 
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -90,22 +93,20 @@
 		if("vr_connect")
 			var/mob/living/carbon/human/human_occupant = occupant
 			if(human_occupant && human_occupant.mind && usr == occupant)
+
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
-				if(vr_human && vr_human.stat == CONSCIOUS && !vr_human.real_mind)
-					SStgui.close_user_uis(occupant, src)
-					human_occupant.audiovisual_redirect = vr_human
-					vr_human.real_mind = human_occupant.mind
-					vr_human.ckey = human_occupant.ckey
-					to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
+				if(vr_mob && (!istype(vr_mob) || !vr_mob.InCritical()) && !vr_mob.GetComponent(/datum/component/virtual_reality))
+					vr_mob.AddComponent(/datum/component/virtual_reality, human_occupant, src, you_die_in_the_game_you_die_for_real)
+					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 				else
-					if(allow_creating_vr_humans)
+					if(allow_creating_vr_mobs)
 						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
 						var/obj/effect/landmark/vr_spawn/V = get_vr_spawnpoint()
 						var/turf/T = get_turf(V)
 						if(T)
 							SStgui.close_user_uis(occupant, src)
-							build_virtual_human(occupant, T, V.vr_outfit)
-							to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
+							new_player(occupant, T, V.vr_outfit)
+							to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
@@ -113,8 +114,8 @@
 			. = TRUE
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
-				if(vr_human)
-					cleanup_vr_human()
+				if(vr_mob)
+					cleanup_vr_mob()
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE
@@ -127,19 +128,22 @@
 
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()
-	if(vr_human && !QDELETED(vr_human))
+	if(vr_mob && !QDELETED(vr_mob))
 		data["can_delete_avatar"] = TRUE
-		var/status
-		switch(vr_human.stat)
-			if(CONSCIOUS)
-				status = "Conscious"
-			if(DEAD)
-				status = "Dead"
-			if(UNCONSCIOUS)
-				status = "Unconscious"
-			if(SOFT_CRIT)
-				status = "Barely Conscious"
-		data["vr_avatar"] = list("name" = vr_human.name, "status" = status, "health" = vr_human.health, "maxhealth" = vr_human.maxHealth)
+		data["vr_avatar"] = list("name" = vr_mob.name)
+		data["isliving"] = istype(vr_mob)
+		if(data["isliving"])
+			var/status
+			switch(vr_mob.stat)
+				if(CONSCIOUS)
+					status = "Conscious"
+				if(DEAD)
+					status = "Dead"
+				if(UNCONSCIOUS)
+					status = "Unconscious"
+				if(SOFT_CRIT)
+					status = "Barely Conscious"
+			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
 	data["toggle_open"] = state_open
 	data["emagged"] = you_die_in_the_game_you_die_for_real
 	data["isoccupant"] = (user == occupant)
@@ -153,40 +157,25 @@
 	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
 		GLOB.vr_spawnpoints[V.vr_category] = V
 
-/obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, var/datum/outfit/outfit, transfer = TRUE)
-	if(H)
-		cleanup_vr_human()
-		vr_human = new /mob/living/carbon/human/virtual_reality(location)
-		vr_human.mind_initialize()
-		vr_human.vr_sleeper = src
-		vr_human.real_mind = H.mind
-		H.dna.transfer_identity(vr_human)
-		vr_human.name = H.name
-		vr_human.real_name = H.real_name
-		vr_human.socks = H.socks
-		vr_human.socks_color = H.socks_color
-		vr_human.undershirt = H.undershirt
-		vr_human.shirt_color = H.shirt_color
-		vr_human.underwear = H.underwear
-		vr_human.undie_color = H.undie_color
-		vr_human.updateappearance(TRUE, TRUE, TRUE)
-		vr_human.give_genitals(TRUE) //CITADEL ADD
-		if(outfit)
-			var/datum/outfit/O = new outfit()
-			O.equip(vr_human)
-		if(transfer && H.mind)
-			SStgui.close_user_uis(H, src)
-			H.audiovisual_redirect = vr_human
-			vr_human.ckey = H.ckey
+/obj/machinery/vr_sleeper/proc/new_player(mob/living/carbon/human/H, location, datum/outfit/outfit, transfer = TRUE)
+	if(!H)
+		return
+	cleanup_vr_mob()
+	vr_mob = new virtual_mob_type(location)
+	if(vr_mob.build_virtual_character(H, outfit))
+		var/mob/living/carbon/human/vr_H = vr_mob
+		vr_H.updateappearance(TRUE, TRUE, TRUE)
+	if(!transfer || !H.mind)
+		return
+	vr_mob.AddComponent(/datum/component/virtual_reality, H, src, you_die_in_the_game_you_die_for_real)
 
-/obj/machinery/vr_sleeper/proc/cleanup_vr_human()
-	if(vr_human)
-		vr_human.vr_sleeper = null // Prevents race condition where a new human could get created out of order and set to null.
-		QDEL_NULL(vr_human)
+/obj/machinery/vr_sleeper/proc/cleanup_vr_mob()
+	if(vr_mob)
+		QDEL_NULL(vr_mob)
 
 /obj/machinery/vr_sleeper/proc/emagNotify()
-	if(vr_human)
-		vr_human.Dizzy(10)
+	if(vr_mob)
+		vr_mob.Dizzy(10)
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
@@ -218,6 +207,7 @@
 	color = "#00FF00"
 	invisibility = INVISIBILITY_ABSTRACT
 	var/area/vr_area
+	var/list/corpse_party
 
 /obj/effect/vr_clean_master/Initialize()
 	. = ..()
@@ -230,7 +220,8 @@
 			qdel(casing)
 		for(var/obj/effect/decal/cleanable/C in vr_area)
 			qdel(C)
-		for (var/mob/living/carbon/human/virtual_reality/H in vr_area)
-			if (H.stat == DEAD && !H.vr_sleeper && !H.real_mind)
-				qdel(H)
+		for (var/A in corpse_party)
+			var/mob/M = A
+			if(get_area(M) == vr_area && M.stat == DEAD)
+				qdel(M)
 		addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)

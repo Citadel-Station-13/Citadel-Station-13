@@ -130,15 +130,6 @@
 	else
 		return ..()
 
-/obj/item/melee/transforming/energy/sword/cx/chaplain
-	name = "divine lightblade"
-	force_on = 20		//haha i'll regret this
-	block_chance = 50
-
-/obj/item/melee/transforming/energy/sword/cx/chaplain/Initialize()
-	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
-
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
 /obj/item/toy/sword/cx
@@ -270,6 +261,24 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
 	spinnable = FALSE
 	total_mass_on = 4
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "\improper divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
 
 /obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)

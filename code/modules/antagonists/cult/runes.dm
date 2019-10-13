@@ -61,8 +61,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(do_after(user, 15, target = src))
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
-	else if(istype(I, /obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+	else if(istype(I, /obj/item/storage/book/bible) || istype(I, /obj/item/nullrod))
+		user.say("BEGONE FOUL MAGICKS!!", forced = "bible")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
@@ -185,9 +185,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
 	rune_in_use = FALSE
-	var/mob/living/currentconversionman
-	var/conversiontimeout
-	var/conversionresult
 
 /obj/effect/rune/convert/do_invoke_glow()
 	return
@@ -233,37 +230,18 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
+
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
-			to_chat(M, "<span class='danger'>You need at least two invokers to convert [convertee]!</span>")
+			to_chat(M, "<span class='warning'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
-	if(convertee.anti_magic_check(TRUE, TRUE))
+	if(convertee.anti_magic_check(TRUE, TRUE, FALSE, 0)) //Not chargecost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
 		return 0
-	to_chat(convertee, "<span class='cult italic'><b>The world goes red. All at once you are aware of an evil, eldritch truth taking roots into your mind.\n\
-	<a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie</a></b>, or suffer a fate worse than death.</span>")
-	INVOKE_ASYNC(src, .proc/optinalert, convertee)
-	currentconversionman = convertee
-	conversiontimeout = world.time + (14 SECONDS)
-	convertee.Stun(140)
-	ADD_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
-	flash_color(convertee, list("#960000", "#960000", "#960000", rgb(0,0,0)), 50)
-	conversionresult = FALSE
-	while(world.time < conversiontimeout && convertee && !conversionresult)
-		stoplag(1)
-	currentconversionman = null
-	if(!convertee)
-		return FALSE
-	REMOVE_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
-	if(get_turf(convertee) != get_turf(src))
-		return FALSE
-	if(!conversionresult)
-		do_sacrifice(convertee, invokers, TRUE)
-		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -275,6 +253,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	SSticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.special_role = ROLE_CULTIST
+	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
+	and something evil takes root.</b></span>")
 	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
 	</b></span>")
 	if(ishuman(convertee))
@@ -284,18 +264,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.cultslurring = 0
 	return 1
 
-/obj/effect/rune/convert/proc/optinalert(mob/living/convertee)
-	var/alert = alert(convertee, "Will you embrace the Geometer of Blood or perish in futile resistance?", "Choose your own fate", "Join the Blood Cult", "Suffer a horrible demise")
-	if(alert == "Join the Blood Cult")
-		signmeup(convertee)
-
-/obj/effect/rune/convert/proc/signmeup(mob/living/convertee)
-	if(currentconversionman == usr)
-		conversionresult = TRUE
-	else
-		to_chat(usr, "<span class='cult italic'>Your fate has already been set in stone.</span>")
-
-/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
+/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	var/mob/living/first_invoker = invokers[1]
 	if(!first_invoker)
 		return FALSE
@@ -305,7 +274,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 
 	var/big_sac = FALSE
-	if(!force_a_sac && (((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			to_chat(M, "<span class='cult italic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
@@ -344,10 +313,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
 			sacrificial.gib()
 	return TRUE
-
-/obj/effect/rune/convert/Topic(href, href_list)
-	if(href_list["signmeup"])
-		signmeup(usr)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"
@@ -610,7 +575,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(0)
-			mob_to_revive.key = C.key
+			C.transfer_ckey(mob_to_revive, FALSE)
 		else
 			fail_invoke()
 			return
@@ -905,7 +870,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 		var/obj/structure/emergency_shield/invoker/N = new(T)
-		new_human.key = ghost_to_spawn.key
+		ghost_to_spawn.transfer_ckey(new_human, FALSE)
 		SSticker.mode.add_cultist(new_human.mind, 0)
 		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b></span>")
 

@@ -198,7 +198,7 @@
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
 
-	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.set_species(/datum/species/skeleton/space, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
@@ -405,8 +405,12 @@
 	var/breakout = 0
 	while(breakout < 50)
 		if(!T)
-			break
+			end_effect(user)
+			return
 		var/turf/potential_T = find_safe_turf()
+		if(!potential_T)
+			end_effect(user)
+			return
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
 			user.canmove = 0

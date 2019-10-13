@@ -444,7 +444,13 @@
 //	M.Login()	//wat
 	return
 
-
+/mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
+	if(!ckey)
+		return FALSE
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
+	new_mob.ckey = ckey
+	return TRUE
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -452,18 +458,28 @@
 	reset_perspective(null)
 	unset_machine()
 
+GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
+
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .click macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".dblclick"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .dblclick macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -524,7 +540,12 @@
 		return
 	if(isAI(M))
 		return
-	show_inv(usr)
+
+/mob/MouseDrop_T(atom/dropping, atom/user)
+	. = ..()
+	if(ismob(dropping) && dropping != user)
+		var/mob/M = dropping
+		M.show_inv(user)
 
 /mob/proc/is_muzzled()
 	return 0
@@ -794,6 +815,9 @@
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
+
+/mob/proc/canUseStorage()
+	return FALSE
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.

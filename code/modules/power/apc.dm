@@ -267,7 +267,7 @@
 		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 
 	to_chat(user, "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>")
-	
+
 	if(issilicon(user))
 		to_chat(user, "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>")
 
@@ -747,7 +747,7 @@
 	if(damage_flag == "melee" && damage_amount < damage_deflection)
 		return 0
 	. = ..()
-	
+
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
@@ -759,21 +759,23 @@
 			update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED) && !malfhack)
-		if(opened)
-			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
-		else if(panel_open)
-			to_chat(user, "<span class='warning'>You must close the panel first!</span>")
-		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "<span class='warning'>Nothing happens!</span>")
-		else
-			flick("apc-spark", src)
-			playsound(src, "sparks", 75, 1)
-			obj_flags |= EMAGGED
-			locked = FALSE
-			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
-			update_icon()
-
+	. = ..()
+	if(obj_flags & EMAGGED || malfhack)
+		return
+	if(opened)
+		to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
+	else if(panel_open)
+		to_chat(user, "<span class='warning'>You must close the panel first!</span>")
+	else if(stat & (BROKEN|MAINT))
+		to_chat(user, "<span class='warning'>Nothing happens!</span>")
+	else
+		flick("apc-spark", src)
+		playsound(src, "sparks", 75, 1)
+		obj_flags |= EMAGGED
+		locked = FALSE
+		to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
+		update_icon()
+	return TRUE
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -800,8 +802,6 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
-	if(ui)
-		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(

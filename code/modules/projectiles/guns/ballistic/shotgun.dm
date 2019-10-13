@@ -40,7 +40,7 @@
 	if(istype(user) && user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return//CIT CHANGE - ditto
-	pump(user)
+	pump(user, TRUE)
 	recentpump = world.time + 10
 	if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
 		user.adjustStaminaLossBuffered(2) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
@@ -52,7 +52,9 @@
 		process_fire(user, user, FALSE)
 		. = 1
 
-/obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
+/obj/item/gun/ballistic/shotgun/proc/pump(mob/M, visible = TRUE)
+	if(visible)
+		M.visible_message("<span class='warning'>[M] racks [src].</span>", "<span class='warning'>You rack [src].</span>")
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pump_unload(M)
 	pump_reload(M)
@@ -93,7 +95,7 @@
 
 /obj/item/gun/ballistic/shotgun/riot/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/circular_saw) || istype(A, /obj/item/gun/energy/plasmacutter))
+	if(A.tool_behaviour == TOOL_SAW || istype(A, /obj/item/gun/energy/plasmacutter))
 		sawoff(user)
 	if(istype(A, /obj/item/melee/transforming/energy))
 		var/obj/item/melee/transforming/energy/W = A
@@ -205,6 +207,7 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
+	fire_delay = 3
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 	unique_reskin = list("Tatical" = "cshotgun",

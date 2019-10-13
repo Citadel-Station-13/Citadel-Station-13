@@ -58,6 +58,10 @@
 	if (CONFIG_GET(flag/log_game))
 		WRITE_LOG(GLOB.world_game_log, "GAME: [text]")
 
+/proc/log_virus(text)
+	if (CONFIG_GET(flag/log_virus))
+		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
+
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")

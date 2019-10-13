@@ -64,9 +64,6 @@
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
 
-	if(scanner.occupant && scanner.scan_level > 2)
-		scan_occupant(scanner.occupant)
-
 	for(var/datum/data/record/R in records)
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
 
@@ -162,11 +159,11 @@
 
 	if(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL)
 		if(!autoprocess)
-			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
+			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoclone</a>"
 		else
-			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
+			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoclone</a>"
 	else
-		dat += "<span class='linkOff'>Autoprocess</span>"
+		dat += "<span class='linkOff'>Autoclone</span>"
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 
@@ -231,7 +228,7 @@
 				dat += "<h4>[src.active_record.fields["name"]]</h4>"
 				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
 
-				var/obj/item/implant/health/H = locate(src.active_record.fields["imp"])
+				var/obj/item/implant/health/H = locate(active_record.fields["imp"])
 
 				if ((H) && (istype(H)))
 					dat += "<b>Health Implant Data:</b><br />[H.sensehealth()]<br><br />"

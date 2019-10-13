@@ -1,0 +1,5 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - tweak: "Alkaline buffer recipe so people don't get grumpy and expanded the pH range"
+  - bugfix: "fixes buffers"

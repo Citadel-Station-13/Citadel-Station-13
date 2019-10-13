@@ -192,6 +192,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/bsblood_bag
+	name = "Blue Space Empty Blood Bag"
+	desc = "A large sterilized plastic bag for blood."
+	id = "bsblood_bag"
+	build_path = /obj/item/reagent_containers/blood/bluespace
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 4500, MAT_BLUESPACE = 250)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cloning_disk
 	name = "Cloning Data Disk"
 	desc = "Produce additional disks for storing genetic data."
@@ -524,6 +534,17 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_heart_u
+	name = "Upgraded Cybernetic Heart"
+	desc = "An upgraded cybernetic heart"
+	id = "cybernetic_heart_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 50
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
+	build_path = /obj/item/organ/heart/cybernetic/upgraded
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cybernetic_liver_u
 	name = "Upgraded Cybernetic Liver"
 	desc = "An upgraded cybernetic liver"
@@ -580,63 +601,34 @@
 
 /datum/design/retractor_adv
 	name = "Advanced Retractor"
-	desc = "A high-class, premium retractor, featuring precision crafted, silver-plated hook-ends and an electrum handle."
+	desc = "An almagation of rods and gears, able to function as both a surgical clamp and retractor. "
 	id = "retractor_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1500, MAT_GOLD = 1000)
-	build_path = /obj/item/retractor/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/hemostat_adv
-	name = "Advanced Hemostat"
-	desc = "An exceptionally fine pair of arterial forceps. These appear to be plated in electrum and feel soft to the touch."
-	id = "hemostat_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
-	build_path = /obj/item/hemostat/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/cautery_adv
-	name = "Electrocautery" //This is based on real-life science.
-	desc = "A high-tech unipolar Electrocauter. This tiny device contains an extremely powerful microbattery that uses arcs of electricity to painlessly sear wounds shut. It seems to recharge with the user's body-heat. Wow!"
-	id = "cautery_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
-	build_path = /obj/item/cautery/adv
+	build_path = /obj/item/retractor/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgicaldrill_adv
-	name = "Surgical Autodrill"
-	desc = "With a diamond tip and built-in depth and safety sensors, this drill alerts the user before overpenetrating a patient's skull or tooth. There also appears to be a disable switch."
+	name = "Surgical Laser Drill"
+	desc = "It projects a high power laser used for medical applications."
 	id = "surgicaldrill_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 2500, MAT_SILVER = 6000, MAT_GOLD = 5500, MAT_DIAMOND = 3500)
-	build_path = /obj/item/surgicaldrill/adv
+	build_path = /obj/item/surgicaldrill/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/scalpel_adv
-	name = "Precision Scalpel"
-	desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
+	name = "Laser Scalpel"
+	desc = "An advanced scalpel which uses laser technology to cut."
 	id = "scalpel_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 4000, MAT_GOLD = 2500)
-	build_path = /obj/item/scalpel/adv
+	build_path = /obj/item/scalpel/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/circular_saw_adv
-	name = "Diamond-Grit Circular Saw"
-	desc = "For those Assistants with REALLY thick skulls."
-	id = "circular_saw_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 6000, MAT_SILVER = 6500, MAT_GOLD = 7500, MAT_DIAMOND = 4500)
-	build_path = /obj/item/circular_saw/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 //////////Alien Surgery Tools////////////
@@ -702,6 +694,28 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_ears
+	name = "Cybernetic Ears"
+	desc = "A pair of cybernetic ears."
+	id = "cybernetic_ears"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 30
+	materials = list(MAT_METAL = 250, MAT_GLASS = 400)
+	build_path = /obj/item/organ/ears/cybernetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_ears_u
+	name = "Upgraded Cybernetic Ears"
+	desc = "A pair of upgraded cybernetic ears."
+	id = "cybernetic_ears_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
+	build_path = /obj/item/organ/ears/cybernetic/upgraded
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////
 ///Surgery Designs///
 /////////////////////
@@ -713,6 +727,13 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
+
+/datum/design/surgery/experimental_dissection
+	name = "Experimental Dissection"
+	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/bioware/experimental_dissection
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
@@ -740,6 +761,13 @@
 	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
 	id = "surgery_reconstruction"
 	surgery = /datum/surgery/advanced/reconstruction
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/surgery_toxinhealing
+	name = "Body Rejuvenation"
+	desc = "A surgical procedure that helps deal with oxygen  deprecation, and treat toxic damaged. Works on corpses and alive alike without chemicals."
+	id = "surgery_toxinhealing"
+	surgery = /datum/surgery/advanced/toxichealing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/revival
@@ -775,6 +803,22 @@
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
 	surgery = /datum/surgery/advanced/bioware/vein_threading
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/ligament_hook
+	name = "Ligament Hook"
+	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
+	However this weakens the connection, making them easier to detach as well."
+	id = "surgery_ligament_hook"
+	surgery = /datum/surgery/advanced/bioware/ligament_hook
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/ligament_reinforcement
+	name = "Ligament Reinforcement"
+	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
+	However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+	id = "surgery_ligament_reinforcement"
+	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/necrotic_revival

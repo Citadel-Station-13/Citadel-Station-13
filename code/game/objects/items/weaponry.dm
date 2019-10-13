@@ -229,7 +229,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed
 	slot_flags = null
 
-/obj/item/katana/Initialize()
+/obj/item/katana/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -255,7 +255,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
 		remove_item_from_storage(user)
-		qdel(I)
+		if (!user.transferItemToLoc(I, S))
+			return
+		S.CheckParts(list(I))
 		qdel(src)
 
 		user.put_in_hands(S)
@@ -434,6 +436,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1
 
 /obj/item/mounted_chainsaw/Initialize()
 	. = ..()
@@ -513,6 +517,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_able = 0
 	total_mass = 2.7 //a regular wooden major league baseball bat weighs somewhere between 2 to 3.4 pounds, according to google
 
+/obj/item/melee/baseball_bat/chaplain
+	name = "blessed baseball bat"
+	desc = "There ain't a cult in the league that can withstand a swatter."
+	force = 14
+	throwforce = 14
+	obj_flags = UNIQUE_RENAME
+	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+
+/obj/item/melee/baseball_bat/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
@@ -562,6 +579,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(picksound == 2)
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
 	return 1
+
+/obj/item/melee/baseball_bat/ablative/syndi
+	name = "syndicate major league bat"
+	desc = "A metal bat made by the syndicate for the major league team."
+	force = 18 //Spear damage...
+	throwforce = 30
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

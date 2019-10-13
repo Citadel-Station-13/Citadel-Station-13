@@ -96,7 +96,10 @@
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
-	to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+	if(vial)
+		to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+	else
+		to_chat(user, "It has no vial loaded in.")
 	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
 
 /obj/item/hypospray/mkii/proc/unload_hypo(obj/item/I, mob/user)
@@ -141,12 +144,18 @@
 
 // Gunna allow this for now, still really don't approve - Pooj
 /obj/item/hypospray/mkii/emag_act(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		to_chat(user, "[src] happens to be already overcharged.")
+		return
 	inject_wait = COMBAT_WAIT_INJECT
 	spray_wait = COMBAT_WAIT_SPRAY
 	spray_self = COMBAT_SELF_INJECT
 	inject_self = COMBAT_SELF_SPRAY
 	penetrates = TRUE
 	to_chat(user, "You overcharge [src]'s control circuit.")
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/hypospray/mkii/attack_hand(mob/user)
 	. = ..() //Don't bother changing this or removing it from containers will break.

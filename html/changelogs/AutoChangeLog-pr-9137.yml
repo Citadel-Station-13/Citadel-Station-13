@@ -1,0 +1,5 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "added in the assistant response team"
+  - bugfix: "fixed up access on the centcom hangar button"

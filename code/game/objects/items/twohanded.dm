@@ -35,7 +35,7 @@
 	if(!wielded || !user)
 		return
 	wielded = 0
-	if(force_unwielded)
+	if(!isnull(force_unwielded))
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
@@ -304,7 +304,7 @@
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE//this cant possibly be a good idea
+		B.organ_flags &= ~ORGAN_VITAL	//this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
 			if(user.is_holding(src))
@@ -487,6 +487,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+	var/icon_prefix = "spearglass"
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
@@ -529,7 +530,7 @@
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
-		icon_state = "spearglass[wielded]"
+		icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
@@ -556,6 +557,13 @@
 				src.war_cry = input
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/shard/tip = locate() in parts_list
+	if (istype(tip, /obj/item/shard/plasma))
+		force_wielded = 19
+		force_unwielded = 11
+		throwforce = 21
+		icon_prefix = "spearplasma"
+	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
 	if(S)
 		if(S.explosive)
@@ -591,6 +599,8 @@
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 
 /obj/item/twohanded/required/chainsaw/Initialize()
 	. = ..()

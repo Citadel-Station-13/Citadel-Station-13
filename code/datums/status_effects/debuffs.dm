@@ -259,9 +259,9 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
+	var/obj/item/twohanded/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -358,19 +358,20 @@
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/mob/living/proc/apply_necropolis_curse(set_curse)
+/mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
 		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
-		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse, duration)
+
 	else
 		C.apply_curse(set_curse)
-		C.duration += 3000 //additional curses add 5 minutes
+		C.duration += duration * 0.5 //additional curses add half their duration
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 6000 //you're cursed for 10 minutes have fun
+	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
@@ -378,7 +379,9 @@
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
 
-/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
+/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse, _duration)
+	if(_duration)
+		duration = _duration
 	. = ..()
 	if(.)
 		apply_curse(set_curse)

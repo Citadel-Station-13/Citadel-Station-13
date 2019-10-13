@@ -589,6 +589,7 @@
 	item_state = "b_suit"
 	item_color = "sailor"
 	can_adjust = FALSE
+
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
@@ -596,12 +597,15 @@
 	item_state = "plasmaman"
 	item_color = "plasmaman"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+	slowdown = 1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
 	strip_delay = 80
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
+
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>")
@@ -618,6 +622,7 @@
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/water(get_turf(H))
 	return 0
+
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
 	if (istype(E, /obj/item/extinguisher_refill))
@@ -631,11 +636,13 @@
 			return
 		return
 	return
+
 /obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	icon = 'icons/obj/device.dmi'
+
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
@@ -703,14 +710,6 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
-/obj/item/clothing/under/durathread
-	name = "durathread jumpsuit"
-	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
-	icon_state = "durathread"
-	item_state = "durathread"
-	item_color = "durathread"
-	can_adjust = FALSE
-	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 
 /obj/item/clothing/under/gear_harness
 	name = "gear harness"
@@ -718,3 +717,22 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
 	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/under/durathread
+	name = "durathread jumpsuit"
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "durathread"
+	item_state = "durathread"
+	item_color = "durathread"
+	can_adjust = TRUE
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
+
+/obj/item/clothing/under/duraskirt
+	name = "durathread jumpskirt"
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer. Being a short skirt, it naturally doesn't protect the legs."
+	icon_state = "duraskirt"
+	item_state = "duraskirt"
+	item_color = "durathread"
+	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)

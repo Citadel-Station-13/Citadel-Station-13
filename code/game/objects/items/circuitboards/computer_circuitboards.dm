@@ -59,7 +59,7 @@
 	name = "Department Management Console (Computer Board)"
 	build_path = /obj/machinery/computer/card/minor
 	var/target_dept = 1
-	var/list/dept_list = list("General","Security","Medical","Science","Engineering")
+	var/list/dept_list = list("Civilian","Security","Medical","Science","Engineering","Cargo")
 
 /obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -162,10 +162,11 @@
 
 /obj/item/circuitboard/computer/prisoner
 	name = "Prisoner Management Console (Computer Board)"
-	build_path = /obj/machinery/computer/prisoner
+	build_path = /obj/machinery/computer/prisoner/management
+
 /obj/item/circuitboard/computer/gulag_teleporter_console
 	name = "Labor Camp teleporter console (Computer Board)"
-	build_path = /obj/machinery/computer/gulag_teleporter_computer
+	build_path = /obj/machinery/computer/prisoner/gulag_teleporter_computer
 
 /obj/item/circuitboard/computer/rdconsole/production
 	name = "R&D Console Production Only (Computer Board)"
@@ -217,10 +218,13 @@
 		to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	contraband = TRUE
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"
@@ -234,8 +238,12 @@
 		obj_flags &= ~EMAGGED
 
 /obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
-		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
-		obj_flags |= EMAGGED
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+	if(obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"

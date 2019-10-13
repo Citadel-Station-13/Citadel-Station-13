@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - bugfix: "The server no longer attempts to check if the CID matches the IP of any bans, or if the IP matches any CIDs of any active bans, during client analyzation"

@@ -30,7 +30,9 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_fluff, GLOB.insect_fluffs_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/deco_wings, GLOB.deco_wings_list)
 
 //CIT CHANGES START HERE, ADDS SNOWFLAKE BODYPARTS AND MORE
 	//mammal bodyparts (fucking furries)
@@ -44,6 +46,9 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, GLOB.xeno_head_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, GLOB.xeno_tail_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, GLOB.xeno_dorsal_list)
+	//ipcs
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list, roundstart = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list, roundstart = TRUE)
 	//genitals
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
 	for(var/K in GLOB.cock_shapes_list)
@@ -53,7 +58,11 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	GLOB.breasts_size_list = list ("a", "b", "c", "d", "e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")
+	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ",
+	"cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret",
+	"baloney pony", "schlanger", "Mutton dagger", "old blind bob","Hanging Johnny", "fishing rod", "Tally whacker", "polly rocket",
+	"One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett",
+	"Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior")
 	for(var/K in GLOB.breasts_shapes_list)
 		var/datum/sprite_accessory/breasts/value = GLOB.breasts_shapes_list[K]
 		GLOB.breasts_shapes_icons[K] = value.icon_state
@@ -62,6 +71,7 @@
 	for(var/K in GLOB.balls_shapes_list)
 		var/datum/sprite_accessory/testicles/value = GLOB.balls_shapes_list[K]
 		GLOB.balls_shapes_icons[K] = value.icon_state
+
 //END OF CIT CHANGES
 
 	//Species

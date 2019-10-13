@@ -75,6 +75,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	var/restricted = FALSE // Adds restrictions for VR/Events
+	var/illegal_tech = TRUE // Can this item be deconstructed to unlock certain techweb research nodes?
 
 /datum/uplink_item/New()
 	. = ..()
@@ -769,6 +770,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/ammo_box/a357
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade"
@@ -898,6 +900,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/ammo_box/foambox/riot
 	cost = 2
 	surplus = 0
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/bioterror
 	name = "Box of Bioterror Syringes"
@@ -1269,8 +1272,43 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
-	category = "Space Suits and Hardsuits"
+	category = "Space Suits, Hardsuits and Clothing"
 	surplus = 40
+
+/datum/uplink_item/suits/turtlenck
+	name = "Tactical Turtleneck"
+	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	item = /obj/item/clothing/under/syndicate
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/turtlenck_skirt
+	name = "Tactical Skirtleneck"
+	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	item = /obj/item/clothing/under/syndicate/skirt
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
+
+/datum/uplink_item/suits/padding
+	name = "Soft Padding"
+	desc = "Padding to add to a jumpsuit to help against melee and bullets."
+	item = /obj/item/clothing/accessory/padding
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/kevlar
+	name = "Kevlar sheets"
+	desc = "Kevlar sheets to add to jumpsuit to help against bullets and melee."
+	item = /obj/item/clothing/accessory/kevlar
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/plastic
+	name = "Plastic sheet"
+	desc = "Plastic body sheet to add to a jumpsuit to help against laser and energy harm."
+	item = /obj/item/clothing/accessory/plastics
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
@@ -1424,6 +1462,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A cheap bottle of one use syndicate brand super glue. \
 			Use on any item to make it undroppable. \
 			Be careful not to glue an item you're already holding!"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	item = /obj/item/syndie_glue
 	cost = 2
 
@@ -1451,9 +1490,10 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
 	desc = "When screwed to wiring attached to an electric grid and activated, this large device pulls any \
-			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
-			in containment. Because of its size, it cannot be carried. Ordering this \
-			sends you a small beacon that will teleport the larger beacon to your location upon activation."
+			active gravitational singularities or tesla balls towards it (provided they are not safely \
+			contained), as well as increasing the odds of incoming meteor waves. \
+			Because of its size, it cannot be carried. Ordering this sends you a small beacon \
+			that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/sbeacondrop
 	cost = 14
 
@@ -1802,7 +1842,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
-	cost = 15
+	cost = 8
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
@@ -1890,6 +1930,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
+	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
@@ -1913,9 +1954,11 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	surplus = 40
+	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
+	illegal_tech = FALSE

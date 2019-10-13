@@ -279,12 +279,12 @@
 	name = "\improper Melon Seed \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets, shaped as seed."
 	icon_state = "mecha_scatter"
-	equip_cooldown = 30
+	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/seed
-	projectiles = 4
-	projectile_energy_cost = 55
+	projectiles = 20
+	projectile_energy_cost = 25
 	projectiles_per_shot = 10
-	variance = 20
+	variance = 25
 	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg

@@ -287,6 +287,8 @@
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
 
+			update_pull_movespeed()
+
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
@@ -300,6 +302,7 @@
 
 /mob/living/stop_pulling()
 	..()
+	update_pull_movespeed()
 	update_pull_hud_icon()
 
 /mob/living/verb/stop_pulling1()
@@ -342,6 +345,11 @@
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return TRUE
+
+/mob/living/canUseStorage()
+	if (get_num_arms() <= 0)
+		return FALSE
+	return TRUE
 
 /mob/living/proc/InCritical()
 	return (health <= crit_threshold && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
@@ -473,7 +481,6 @@
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
-	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
@@ -500,6 +507,13 @@
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
 		mood.sanity = SANITY_GREAT
 		mood.update_mood()
+	//Heal all organs
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.internal_organs)
+			for(var/organ in C.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -520,6 +534,10 @@
 
 	var/old_direction = dir
 	var/turf/T = loc
+
+	if(pulling)
+		update_pull_movespeed()
+
 	. = ..()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
@@ -894,7 +912,7 @@
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
-		new_mob.key = key
+		transfer_ckey(new_mob)
 
 	for(var/para in hasparasites())
 		var/mob/living/simple_animal/hostile/guardian/G = para
@@ -1023,6 +1041,9 @@
 			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
+		if (pulledby)
+			var/mob/living/L = pulledby
+			L.update_pull_movespeed()
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)

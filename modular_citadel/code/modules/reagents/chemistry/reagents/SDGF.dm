@@ -54,9 +54,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/pollStarted = FALSE
 	var/location_created
 	var/startHunger
-	ImpureChem 			= "SDGFtox"
-	InverseChemVal 		= 0.5
-	InverseChem 		= "SDZF"
+	impure_chem 			= "SDGFtox"
+	inverse_chem_val 		= 0.5
+	inverse_chem		= "SDZF"
 	can_synth = TRUE
 
 
@@ -81,9 +81,19 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
-				var/mob/dead/observer/C = pick(candies)
-				message_admins("Ghost candidate found! [C] key [C.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
-				SM.key = C.key
+
+
+				candies = shuffle(candies)//Shake those ghosts up!
+				for(var/mob/dead/observer/C2 in candies)
+					if(C2.key && C2)
+						C2.transfer_ckey(SM, FALSE)
+						message_admins("Ghost candidate found! [C2] key [C2.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
+						log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
+						break
+					else
+						candies =- C2
+				if(!SM.mind) //Something went wrong, use alt mechanics
+					return ..()
 				SM.mind.enslave_mind_to_creator(M)
 
 				//If they're a zombie, they can try to negate it with this.
@@ -113,7 +123,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Damage the clone
 				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
-				SM.setBrainLoss(40)
+				SM.setOrganLoss(ORGAN_SLOT_BRAIN, 40)
 				SM.nutrition = startHunger/2
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
@@ -239,7 +249,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.adjustToxLoss(-(bodydamage/10), 0)
 			SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/1.5
 			SM.adjustCloneLoss((bodydamage/10), 0)
-			SM.setBrainLoss((bodydamage/10))
+			SM.setOrganLoss(ORGAN_SLOT_BRAIN, (bodydamage/10))
 			SM.nutrition = 400
 		if(bodydamage>200)
 			SM.gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -270,8 +280,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Unobtainable, used in clone spawn.
 /datum/reagent/fermi/SDGFheal
-	name = "synthetic-derived growth factor"
+	name = "synthetic-derived healing factor"
 	id = "SDGFheal"
+	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
 	metabolization_rate = 1
 	can_synth = FALSE
 
@@ -279,34 +290,35 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume += 10
 	M.adjustCloneLoss(-2, 0)
-	M.setBrainLoss(-1)
+	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	M.nutrition += 10
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
-/datum/reagent/fermi/SDGFtox
-	name = "synthetic-derived growth factor"
+/datum/reagent/impure/SDGFtox
+	name = "Synthetic-derived apoptosis factor"
 	id = "SDGFtox"
-	description = "A chem that makes a certain chemcat angry at you if you're reading this, how did you get this???"//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
+	description = "Impure synthetic-derived growth factor causes certain cells to undergo cell death, causing clone damage, and damaging blood cells."//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
 	can_synth = FALSE
 
-/datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
+/datum/reagent/impure/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	M.blood_volume -= 10
 	M.adjustCloneLoss(2, 0)
 	..()
 
 //Fail state of SDGF
-/datum/reagent/fermi/SDZF
-	name = "synthetic-derived growth factor"
+/datum/reagent/impure/SDZF
+	name = "synthetic-derived zombie factor"
 	id = "SDZF"
-	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
+	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. Emulates normal synthetic-derived growth factor, but produces a hostile zombie at the end of it."
 	color = "#a502e0" // rgb: 96, 0, 255
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger
 	can_synth = TRUE
+	chemical_flags = REAGENT_SNEAKYNAME
 
-/datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
+/datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal
 		if(20)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")

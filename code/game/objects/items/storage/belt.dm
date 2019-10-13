@@ -40,6 +40,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -184,12 +185,9 @@
 	content_overlays = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
-	new /obj/item/hemostat/adv(src)
-	new /obj/item/circular_saw/adv(src)
-	new /obj/item/scalpel/adv(src)
-	new /obj/item/retractor/adv(src)
-	new /obj/item/cautery/adv(src)
-	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/surgicaldrill/advanced(src)
 	new /obj/item/surgical_drapes(src)
 
 /obj/item/storage/belt/security
@@ -344,6 +342,7 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
@@ -431,6 +430,48 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/durathread
+	name = "durathread toolbelt"
+	desc = "A toolbelt made out of durathread, it seems resistant enough to hold even big tools like an RCD, it also has higher capacity."
+	icon_state = "webbing-durathread"
+	item_state = "webbing-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/durathread/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 14
+	STR.max_combined_w_class = 32
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/multitool,
+		/obj/item/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
+		/obj/item/extinguisher/mini,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
+		/obj/item/forcefield_projector,
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer,
+		/obj/item/rcd_ammo,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/stack/rods,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/grenade/chem_grenade/metalfoam,
+		/obj/item/grenade/chem_grenade/smart_metal_foam
+		))
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
@@ -488,6 +529,7 @@
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/wands/ComponentInitialize()
 	. = ..()
@@ -549,6 +591,22 @@
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/ammo_casing/shotgun
+		))
+
+/obj/item/storage/belt/bandolier/durathread
+	name = "durathread bandolier"
+	desc = "An double stacked bandolier made out of durathread."
+	icon_state = "bandolier-durathread"
+	item_state = "bandolier-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 32
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/ammo_casing
 		))
 
 /obj/item/storage/belt/medolier

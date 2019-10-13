@@ -241,13 +241,14 @@
 				var/obj/item/I = pick_n_take(unattached_flesh)
 				if(isorgan(I))
 					var/obj/item/organ/O = I
+					O.organ_flags &= ~ORGAN_FROZEN
 					O.Insert(mob_occupant)
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
 					BP.attach_limb(mob_occupant)
 
 			//Premature clones may have brain damage.
-			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
+			mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, -((speed_coeff / 2) * dmg_mult))
 
 			use_power(7500) //This might need tweaking.
 
@@ -261,6 +262,7 @@
 			for(var/i in unattached_flesh)
 				if(isorgan(i))
 					var/obj/item/organ/O = i
+					O.organ_flags &= ~ORGAN_FROZEN
 					O.Insert(mob_occupant)
 				else if(isbodypart(i))
 					var/obj/item/bodypart/BP = i
@@ -320,10 +322,12 @@
 		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
+	. = ..()
 	if(!occupant)
 		return
 	to_chat(user, "<span class='warning'>You corrupt the genetic compiler.</span>")
 	malfunction()
+	return TRUE
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
@@ -344,6 +348,9 @@
 	if(mess) //Clean that mess and dump those gibs!
 		for(var/obj/fl in unattached_flesh)
 			fl.forceMove(T)
+			if(istype(fl, /obj/item/organ))
+				var/obj/item/organ/O = fl
+				O.organ_flags &= ~ORGAN_FROZEN
 		unattached_flesh.Cut()
 		mess = FALSE
 		new /obj/effect/gibspawner/generic(get_turf(src))
@@ -440,7 +447,7 @@
 		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
+	//H.setOrganLoss(ORGAN_SLOT_BRAIN, CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
 
 	// brain function, they also have no limbs or internal organs.
@@ -456,8 +463,9 @@
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o
-		if(!istype(organ) || organ.vital)
+		if(!istype(organ) || (organ.organ_flags & ORGAN_VITAL))
 			continue
+		organ.organ_flags |= ORGAN_FROZEN
 		organ.Remove(H, special=TRUE)
 		organ.forceMove(src)
 		unattached_flesh += organ
