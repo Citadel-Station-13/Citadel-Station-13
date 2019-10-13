@@ -536,3 +536,10 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+//Random citadel thing for halloween species
+/proc/force_enable_halloween_species()
+	var/list/oldlist = SSevents.holidays
+	SSevents.holidays = list(HALLOWEEN = new /datum/holiday/halloween)
+	generate_selectable_species(FALSE)
+	SSevents.holidays = oldlist
