@@ -1,3 +1,5 @@
+#define VAMP_DRAIN_BOOST_FACTOR 3
+
 /datum/species/vampire
 	name = "Vampire"
 	id = "vampire"
@@ -100,7 +102,7 @@
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
 			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = CLAMP(H.blood_volume + drained_blood * VAMP_DRAIN_BOOST_FACTOR, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
 				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
 
