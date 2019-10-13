@@ -104,7 +104,6 @@
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
-	message_admins("mob: data: [data["injected_vol"]] passed: [reac_volume]")
 	if(iscarbon(M))
 		var/target = M.zone_selected
 		if (M.stat == DEAD)
@@ -137,7 +136,6 @@
 		return ..()
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
-	message_admins("merge: data: [data["injected_vol"]] passed: [passed_data["injected_vol"]]")
 	if(iscarbon(holder.my_atom))
 		data["injected_vol"] = data["injected_vol"] + passed_data["injected_vol"]
 		passed_data["injected_vol"] = 0
