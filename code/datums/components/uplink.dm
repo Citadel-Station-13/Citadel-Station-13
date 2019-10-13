@@ -24,8 +24,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
+	var/datum/ui_state/checkstate
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -57,6 +58,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = _enabled
 	gamemode = _gamemode
 	telecrystals = starting_tc
+	checkstate = _checkstate
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -115,6 +117,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+	state = checkstate ? checkstate : state
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -122,6 +125,12 @@ GLOBAL_LIST_EMPTY(uplinks)
 		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
 		ui.set_style("syndicate")
 		ui.open()
+
+/datum/component/uplink/ui_host(mob/user)
+	if(istype(parent, /obj/item/implant)) //implants are like organs, not really located inside mobs codewise.
+		var/obj/item/implant/I = parent
+		return I.imp_in
+	return ..()
 
 /datum/component/uplink/ui_data(mob/user)
 	if(!user.mind)

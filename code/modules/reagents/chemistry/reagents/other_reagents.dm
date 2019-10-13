@@ -3,6 +3,7 @@
 	name = "Blood"
 	id = "blood"
 	color = "#C80000" // rgb: 200, 0, 0
+	description = "Blood from a human, or otherwise."
 	metabolization_rate = 5 //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3

@@ -413,3 +413,16 @@
 /obj/item/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/radio/internal
+	var/obj/item/implant/radio/implant
+
+/obj/item/radio/internal/Initialize(mapload, obj/item/implant/radio/_implant)
+	. = ..()
+	implant = _implant
+
+/obj/item/radio/internal/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
+	else
+		return ..()

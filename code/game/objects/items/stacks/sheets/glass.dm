@@ -89,6 +89,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
+	tableVariant = /obj/structure/table/plasmaglass
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50

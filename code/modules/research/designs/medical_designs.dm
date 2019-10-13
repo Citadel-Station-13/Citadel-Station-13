@@ -601,63 +601,34 @@
 
 /datum/design/retractor_adv
 	name = "Advanced Retractor"
-	desc = "A high-class, premium retractor, featuring precision crafted, silver-plated hook-ends and an electrum handle."
+	desc = "An almagation of rods and gears, able to function as both a surgical clamp and retractor. "
 	id = "retractor_adv"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/gold = 1000)
-	build_path = /obj/item/retractor/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/hemostat_adv
-	name = "Advanced Hemostat"
-	desc = "An exceptionally fine pair of arterial forceps. These appear to be plated in electrum and feel soft to the touch."
-	id = "hemostat_adv"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/gold = 1500)
-	build_path = /obj/item/hemostat/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/cautery_adv
-	name = "Electrocautery" //This is based on real-life science.
-	desc = "A high-tech unipolar Electrocauter. This tiny device contains an extremely powerful microbattery that uses arcs of electricity to painlessly sear wounds shut. It seems to recharge with the user's body-heat. Wow!"
-	id = "cautery_adv"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/gold = 1500)
-	build_path = /obj/item/cautery/adv
+	build_path = /obj/item/retractor/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgicaldrill_adv
-	name = "Surgical Autodrill"
-	desc = "With a diamond tip and built-in depth and safety sensors, this drill alerts the user before overpenetrating a patient's skull or tooth. There also appears to be a disable switch."
+	name = "Surgical Laser Drill"
+	desc = "It projects a high power laser used for medical applications."
 	id = "surgicaldrill_adv"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2500, /datum/material/silver = 6000, /datum/material/gold = 5500, /datum/material/diamond = 3500)
-	build_path = /obj/item/surgicaldrill/adv
+	build_path = /obj/item/surgicaldrill/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/scalpel_adv
-	name = "Precision Scalpel"
-	desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
+	name = "Laser Scalpel"
+	desc = "An advanced scalpel which uses laser technology to cut."
 	id = "scalpel_adv"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 1500, /datum/material/silver = 4000, /datum/material/gold = 2500)
-	build_path = /obj/item/scalpel/adv
+	build_path = /obj/item/scalpel/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/circular_saw_adv
-	name = "Diamond-Grit Circular Saw"
-	desc = "For those Assistants with REALLY thick skulls."
-	id = "circular_saw_adv"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 7500, /datum/material/glass = 6000, /datum/material/silver = 6500, /datum/material/gold = 7500, /datum/material/diamond = 4500)
-	build_path = /obj/item/circular_saw/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 //////////Alien Surgery Tools////////////

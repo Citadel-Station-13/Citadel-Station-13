@@ -35,11 +35,11 @@
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
 		for(var/obj/item/implant/chem/C in GLOB.tracked_chem_implants)
-			Tr = get_turf(C)
-			if((Tr) && (Tr.z != src.z))
-				continue//Out of range
 			if(!C.imp_in)
 				continue
+			Tr = get_turf(C.imp_in)
+			if((Tr) && (Tr.z != src.z))
+				continue//Out of range
 			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
 			dat += "| Inject: "
 			dat += "<A href='?src=[REF(src)];inject1=[REF(C)]'>(<font class='bad'>(1)</font>)</A>"
@@ -48,9 +48,9 @@
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/implant/tracking/T in GLOB.tracked_implants)
-			if(!isliving(T.imp_in))
+			if(!T.imp_in || !isliving(T.imp_in))
 				continue
-			Tr = get_turf(T)
+			Tr = get_turf(T.imp_in)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
 
