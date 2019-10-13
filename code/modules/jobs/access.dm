@@ -195,13 +195,13 @@
 		if(ACCESS_CARGO_BOT)
 			return "Delivery Chutes"
 		if(ACCESS_SECURITY)
-			return "Security"
+			return "Security Equipment"
 		if(ACCESS_BRIG)
-			return "Holding Cells"
+			return "Holding Cells and Prisoner Management"
 		if(ACCESS_COURT)
 			return "Courtroom"
 		if(ACCESS_FORENSICS_LOCKERS)
-			return "Forensics"
+			return "Forensics Lockers"
 		if(ACCESS_MEDICAL)
 			return "Medical"
 		if(ACCESS_GENETICS)
@@ -239,7 +239,7 @@
 		if(ACCESS_EVA)
 			return "EVA"
 		if(ACCESS_HEADS)
-			return "Bridge"
+			return "Bridge and Command Equipment"
 		if(ACCESS_CAPTAIN)
 			return "Captain"
 		if(ACCESS_ALL_PERSONAL_LOCKERS)
@@ -311,7 +311,7 @@
 		if(ACCESS_GATEWAY)
 			return "Gateway"
 		if(ACCESS_SEC_DOORS)
-			return "Brig"
+			return "Security SubDepartment Doors"
 		if(ACCESS_MINERAL_STOREROOM)
 			return "Mineral Storage"
 		if(ACCESS_MINISAT)
