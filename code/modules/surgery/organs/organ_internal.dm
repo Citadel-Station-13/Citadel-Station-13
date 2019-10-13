@@ -72,7 +72,11 @@
 	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/on_death()	//runs decay when outside of a person
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN | ORGAN_NO_SPOIL))
+	if(organ_flags & ORGAN_SYNTHETIC)
+		return
+	 if(organ_flags & ORGAN_FROZEN)
+	 	return
+	if(organ_flags & ORGAN_NO_SPOIL)
 		return
 	applyOrganDamage(maxHealth * decay_factor)
 
