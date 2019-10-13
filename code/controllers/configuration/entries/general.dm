@@ -187,7 +187,7 @@
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
-	config_entry_value = "https://github.com/Citadel-Station-13/Citadel-Station-13"
+	config_entry_value = "https://www.github.com/tgstation/-tg-station"
 
 /datum/config_entry/string/roundstatsurl
 
