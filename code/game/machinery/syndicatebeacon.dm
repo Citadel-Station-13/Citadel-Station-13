@@ -17,12 +17,9 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 	stat = 0
 	verb_say = "states"
 	var/cooldown = 0
-
-	var/active = 0
+	var/active = FALSE
+	var/meteor_buff = FALSE
 	var/icontype = "beacon"
-
-
-
 
 /obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
 	if(active)
@@ -31,9 +28,8 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return FALSE
-	GLOB.singularity_counter++
-	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
-		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
+	if(is_station_level(z))
+		increment_meteor_waves()
 	for(var/obj/singularity/singulo in GLOB.singularities)
 		if(singulo.z == z)
 			singulo.target = src
@@ -42,7 +38,6 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
 	return TRUE
-
 
 /obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user)
 	if(!active)
@@ -54,15 +49,24 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 	active = FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
+	if(meteor_buff)
+		decrement_meteor_waves()
+	return TRUE
+
+/obj/machinery/power/singularity_beacon/proc/increment_meteor_waves()
+	meteor_buff = TRUE
+	GLOB.singularity_counter++
+	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
+		W.weight += round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
+
+/obj/machinery/power/singularity_beacon/proc/decrement_meteor_waves()
+	meteor_buff = FALSE
 	GLOB.singularity_counter--
 	for(var/datum/round_event_control/meteor_wave/W in SSevents.control)
 		W.weight -= round(initial(W.weight) * METEOR_DISASTER_MODIFIER)
-	return TRUE
-
 
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user)
 	return
-
 
 /obj/machinery/power/singularity_beacon/attack_hand(mob/user)
 	. = ..()
@@ -103,6 +107,12 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 /obj/machinery/power/singularity_beacon/process()
 	if(!active)
 		return
+
+	var/is_on_station = is_station_level(z)
+	if(meteor_buff && !is_on_station)
+		decrement_meteor_waves()
+	else if(!meteor_buff && is_on_station)
+		increment_meteor_waves()
 
 	if(surplus() >= 1500)
 		add_load(1500)
