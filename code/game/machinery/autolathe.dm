@@ -164,7 +164,7 @@
 			for(var/MAT in being_built.materials)
 				total_amount += being_built.materials[MAT]
 
-				var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
+			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
 
 			GET_COMPONENT(materials, /datum/component/material_container)
 

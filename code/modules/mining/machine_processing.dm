@@ -113,7 +113,7 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/datum/material/M in materials.materials)
 		var/amount = materials.materials[M]
-		dat += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
+		dat += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
 		if (selected_material == M)
 			dat += " <i>Smelting</i>"
 		else

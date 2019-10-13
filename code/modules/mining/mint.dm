@@ -36,7 +36,7 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/datum/material/M in materials.materials)
 		var/amount = materials.get_material_amount(M)
-		if(!M.amount && chosen != M)
+		if(!amount && chosen != M)
 			continue
 		dat += "<br><b>[M.name] amount:</b> [amount] cm<sup>3</sup> "
 		if (chosen == M)

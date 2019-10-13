@@ -414,9 +414,10 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	set_pin_data(IC_OUTPUT, 2, materials.total_amount)
 	for(var/I in 1 to mtypes.len)
-		var/datum/material/M = materials.materials[mtypes[I]]
+		var/datum/material/M = materials.materials[getmaterialref(I)]
+		var/amount = materials[M]
 		if(M)
-			set_pin_data(IC_OUTPUT, I+2, M.amount)
+			set_pin_data(IC_OUTPUT, I+2, amount)
 	push_data()
 
 /obj/item/integrated_circuit/manipulation/matman/proc/is_insertion_ready(mob/user)
@@ -451,7 +452,7 @@
 						continue
 					if(!mt) //Invalid input
 						if(U>0)
-							if(materials.retrieve_amount(U, mtypes[I], T))
+							if(materials.retrieve_sheets(U, getmaterialref(mtypes[I]), T))
 								suc = TRUE
 					else
 						if(mt.transer_amt_to(materials, U, mtypes[I]))
