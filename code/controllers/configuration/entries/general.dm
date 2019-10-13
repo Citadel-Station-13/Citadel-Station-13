@@ -181,10 +181,10 @@
 	config_entry_value = "http://www.tgstation13.org/wiki"
 
 /datum/config_entry/string/forumurl
-	config_entry_value = "https://citadel-station.net/forum/"
+	config_entry_value = "http://tgstation13.org/phpBB/index.php"
 
 /datum/config_entry/string/rulesurl
-	config_entry_value = "https://katlin.dog/citadel-rules/main"
+	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
 	config_entry_value = "https://github.com/Citadel-Station-13/Citadel-Station-13"
