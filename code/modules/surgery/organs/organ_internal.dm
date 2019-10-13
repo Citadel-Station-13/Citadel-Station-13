@@ -75,7 +75,7 @@
 	if(organ_flags & ORGAN_SYNTHETIC)
 		return
 	if(organ_flags & ORGAN_FROZEN)
-	 	return
+		return
 	if(organ_flags & ORGAN_NO_SPOIL)
 		return
 	applyOrganDamage(maxHealth * decay_factor)
