@@ -761,6 +761,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					S = GLOB.wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
+				if("deco_wings")
+					S = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("insect_wings")
