@@ -11,8 +11,7 @@
 
 /datum/surgery_step/embalming
 	name = "embalming body"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
-	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
+	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30) 
 	time = 10
 	chems_needed = list("drying_agent", "sterilizine")
 	require_all_chems = FALSE
