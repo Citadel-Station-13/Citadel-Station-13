@@ -384,6 +384,35 @@
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_part)
 			. = TRUE
+
+		if("createDart")
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+
+			var/amount_full = 0
+			var/vol_part = min(reagents.total_volume, 20)
+			if(text2num(many))
+				amount_full = round(reagents.total_volume / 20)
+				vol_part = reagents.total_volume % 20
+			var/name = stripped_input(usr, "Name:","Name your SmartDart!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				return
+
+			var/obj/item/reagent_containers/glass/bottle/vial/small/P
+			for(var/i = 0; i < amount_full; i++)
+				P = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				P.name = trim("[name] SmartDart")
+				adjust_item_drop_location(P)
+				reagents.trans_to(P, 20)
+
+			if(vol_part)
+				P = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				P.name = trim("[name] SmartDart")
+				adjust_item_drop_location(P)
+				reagents.trans_to(P, vol_part)
+			. = TRUE
+
 		//END CITADEL ADDITIONS
 		if("analyzeBeak")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
