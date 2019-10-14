@@ -353,7 +353,8 @@ LINEN BINS
 			sheets.Remove(B)
 
 		else
-			B = new pick(sheet_types)
+			var/chosen = pick(sheet_types)
+			B = new chosen
 
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
@@ -377,7 +378,8 @@ LINEN BINS
 			sheets.Remove(B)
 
 		else
-			B = new pick(sheet_types)
+			var/chosen = pick(sheet_types)
+			B = new chosen
 
 		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
