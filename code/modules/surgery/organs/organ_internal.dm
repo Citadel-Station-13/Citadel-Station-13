@@ -99,7 +99,7 @@
 //Checks to see if the organ is frozen from temperature
 /obj/item/organ/proc/is_cold()
 	if(istype(loc, /obj/))//Freezer of some kind, I hope.
-		if(istype(loc, /obj/structure/closet/crate/freezer) || istype(loc, /obj/structure/closet/secure_closet/freezer) || istype(loc, /obj/structure/bodycontainer))
+		if(istype(loc, /obj/structure/closet/crate/freezer) || istype(loc, /obj/structure/closet/secure_closet/freezer) || istype(loc, /obj/structure/bodycontainer) || istype(loc, /obj/item/autosurgeon))
 			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
 				organ_flags |= ORGAN_FROZEN
 		return
