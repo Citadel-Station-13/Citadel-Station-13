@@ -19,29 +19,6 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	mutant_organs = list(/obj/item/organ/dwarfgland) //Dwarven alcohol gland, literal gland warrior
 	mutantliver = /obj/item/organ/liver/dwarf //Dwarven super liver (Otherwise they r doomed)
 	
-	//Pixel X, and Pixel Y offsets on mob drawing. It handles the offset in update_icons.dm
-	//X is Horizontal, Y is Vertical. These are general offsets, directional offsets do not exist.
-	offset_features = list(
-		OFFSET_UNIFORM = list(0,0), 
-		OFFSET_ID = list(0,0), 
-		OFFSET_GLOVES = list(0,0), 
-		OFFSET_GLASSES = list(0,0), 
-		OFFSET_EARS = list(0,0), 
-		OFFSET_SHOES = list(0,0), 
-		OFFSET_S_STORE = list(0,0), 
-		OFFSET_FACEMASK = list(0,0), 
-		OFFSET_HEAD = list(0,0), 
-		OFFSET_HAIR = list(0,0), 
-		OFFSET_FHAIR = list(0,0), 
-		OFFSET_EYES = list(0,0),
-		OFFSET_LIPS = list(0,0),
-		OFFSET_BELT = list(0,0), 
-		OFFSET_BACK = list(0,0), 
-		OFFSET_SUIT = list(0,0), 
-		OFFSET_NECK = list(0,0),
-		OFFSET_MUTPARTS = list(0,0)
-		)
-
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.
 
@@ -111,8 +88,8 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	var/stored_alcohol = 250 //They start with 250 units, that ticks down and eventaully bad effects occur
 	var/max_alcohol = 500 //Max they can attain, easier than you think to OD on alcohol.
 	var/heal_rate = 0.5 //The rate they heal damages over 400 alcohol stored. Default is 0.5 so we times 3 since 3 seconds.
-	var/alcohol_rate = 10 //Its times 0.025 making it tick down by .25 per loop per 10. EX: 20 = .50
-	var/filth_counter = 0 //Holder for the filth check cycle, basically it compares against this.
+	var/alcohol_rate = 0.25 //Its times 0.025 making it tick down by .25 per loop per 10. EX: 20 = .50
+	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
@@ -123,23 +100,22 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	return S
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
+	. = ..()
 	dwarf_cycle_ticker()
 
 //Handles the delayed tick cycle by just adding on increments per each on_life() tick
 /obj/item/organ/dwarfgland/proc/dwarf_cycle_ticker()
-	if(owner.stat != DEAD) //We make sure they are not dead, so they don't increment any tickers.
-		dwarf_eth_ticker++
-		dwarf_filth_ticker++
+	if(owner.stat == DEAD)
+		return //We make sure they are not dead, so they don't increment any tickers.
+	dwarf_eth_ticker++
+	dwarf_filth_ticker++
+	
 	if(dwarf_filth_ticker >= 4) //Should be around 4-8 seconds since a tick is around 2 seconds. 
 		dwarf_filth_cycle()		//On_life will adjust regarding other factors, so we are along for the ride.
 		dwarf_filth_ticker = 0 //We set the ticker back to 0 to go again.
 	if(dwarf_eth_ticker >= 1) //Alcohol reagent check should be around 2 seconds, since a tick is around 2 seconds.
 		dwarf_eth_cycle()
 		dwarf_eth_ticker = 0
-	//Debug messages:
-	//to_chat(owner, "<span class = 'danger'>FILTH VIEW: [filth_counter], FILTH CYCLE TICKER: [dwarf_filth_ticker]</span>")
-	//to_chat(owner, "<span class = 'danger'>ALCOHOL COUNTER: [stored_alcohol], ETH CYCLE TICKER: [dwarf_eth_ticker].</span>")
-
 
 //If this still friggin uses too much CPU, I'll make a for view subsystem If I have to.
 /obj/item/organ/dwarfgland/proc/dwarf_filth_cycle()
@@ -149,7 +125,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	for(var/fuck in view(owner,7)) //hello byond for view loop.
 		if(istype(fuck, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = fuck
-			if(H.stat == DEAD)
+			if(H.stat == DEAD || (HAS_TRAIT(H, TRAIT_FAKEDEATH)))
 				filth_counter += 10
 		if(istype(fuck, /obj/effect/decal/cleanable/blood))
 			if(istype(fuck, /obj/effect/decal/cleanable/blood/gibs))
@@ -196,7 +172,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 			if(stored_alcohol > max_alcohol) //Dwarves technically start at 250 alcohol stored.
 				stored_alcohol = max_alcohol
 	var/heal_amt = heal_rate
-	stored_alcohol -= alcohol_rate * 0.025 //The rate it decreases from the gland
+	stored_alcohol -= alcohol_rate
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating
 		owner.adjustBruteLoss(-heal_amt) //But its alcohol, there will be other issues here.
 		owner.adjustFireLoss(-heal_amt) //Unless they drink casually all the time.
