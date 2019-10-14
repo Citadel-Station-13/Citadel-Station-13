@@ -96,7 +96,6 @@
 	name = "Snow"
 	icon_state = "snow"
 
-
 /datum/sprite_accessory/deco_wings/angel
 	name = "Angel"
 	icon_state = "angel"
@@ -159,7 +158,6 @@
 /datum/sprite_accessory/insect_wings/punished
 	name = "Burnt Off"
 	icon_state = "punished"
-	locked = TRUE
 
 /datum/sprite_accessory/insect_wings/firewatch
 	name = "Firewatch"
