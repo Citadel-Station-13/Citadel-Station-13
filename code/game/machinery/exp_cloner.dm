@@ -49,7 +49,7 @@
 	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
-	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)
+	var/list/candidates = pollCandidatesForMob("Do you want and agree to play as a [clonename]'s defective clone, respect their character and not engage in ERP as them without permission from the original?", null, null, null, 100, H, POLL_IGNORE_CLONE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		C.transfer_ckey(H)
