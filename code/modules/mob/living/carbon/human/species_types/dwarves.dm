@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	var/stored_alcohol = 250 //They start with 250 units, that ticks down and eventaully bad effects occur
 	var/max_alcohol = 500 //Max they can attain, easier than you think to OD on alcohol.
 	var/heal_rate = 0.5 //The rate they heal damages over 400 alcohol stored. Default is 0.5 so we times 3 since 3 seconds.
-	var/alcohol_rate = 0.25 //Its times 0.025 making it tick down by .25 per loop per 10. EX: 20 = .50
+	var/alcohol_rate = 0.25 //The rate the alcohol ticks down per each iteration of dwarf_eth_ticker completing.
 	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 			if(stored_alcohol > max_alcohol) //Dwarves technically start at 250 alcohol stored.
 				stored_alcohol = max_alcohol
 	var/heal_amt = heal_rate
-	stored_alcohol -= alcohol_rate
+	stored_alcohol -= alcohol_rate //Subtracts alcohol_Rate from stored alcohol so EX: 250 - 0.25 per each loop that occurs.
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating
 		owner.adjustBruteLoss(-heal_amt) //But its alcohol, there will be other issues here.
 		owner.adjustFireLoss(-heal_amt) //Unless they drink casually all the time.
