@@ -10,7 +10,7 @@
 	. = ..()
 	if(!. || L.anchored)
 		return
-	do_teleport(M, get_turf(L), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(L, get_turf(L), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/item/melee/baton/cattleprod/teleprod/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
