@@ -233,6 +233,8 @@
 //Mood
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
+#define COMSIG_INCREASE_SANITY "decrease_sanity" //Called when you want to increase sanity from anywhere in the code.
+#define COMSIG_DECREASE_SANITY "increase_sanity" //Same as above but to decrease sanity instead.
 
 //NTnet
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
