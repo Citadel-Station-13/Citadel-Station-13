@@ -2068,6 +2068,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\bugmen.dm"
 #include "code\modules\mob\living\carbon\human\species_types\corporate.dm"
 #include "code\modules\mob\living\carbon\human\species_types\dullahan.dm"
+#include "code\modules\mob\living\carbon\human\species_types\dwarves.dm"
 #include "code\modules\mob\living\carbon\human\species_types\felinid.dm"
 #include "code\modules\mob\living\carbon\human\species_types\flypeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\furrypeople.dm"
