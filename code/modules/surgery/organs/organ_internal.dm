@@ -41,6 +41,9 @@
 		else
 			qdel(replaced)
 
+	//Hopefully this doesn't cause problems
+	organ_flags &= ~ORGAN_FROZEN
+
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
@@ -64,26 +67,82 @@
 		A.Remove(M)
 	START_PROCESSING(SSobj, src)
 
-
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()
+/obj/item/organ/process()	//runs decay when outside of a person AND ONLY WHEN OUTSIDE (i.e. long obj).
 	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/on_death()	//runs decay when outside of a person
-	if(CHECK_MULTIPLE_BITFIELDS(organ_flags, ORGAN_SYNTHETIC|ORGAN_FROZEN|ORGAN_NO_SPOIL))
+//Sources; life.dm process_organs
+/obj/item/organ/proc/on_death() //Runs when outside AND inside.
+	decay()
+
+//Applys the slow damage over time decay
+/obj/item/organ/proc/decay()
+	if(!can_decay())
+		STOP_PROCESSING(SSobj, src)
+		return
+	is_cold()
+	if(organ_flags & ORGAN_FROZEN)
 		return
 	applyOrganDamage(maxHealth * decay_factor)
 
+/obj/item/organ/proc/can_decay()
+	if(organ_flags & ORGAN_NO_SPOIL)
+		return FALSE
+	if(organ_flags & ORGAN_SYNTHETIC)
+		return FALSE
+	if((organ_flags & ORGAN_FAILING) || damage >= maxHealth)
+		return FALSE
+	return TRUE
+
+//Checks to see if the organ is frozen from temperature
+/obj/item/organ/proc/is_cold()
+	if(istype(loc, /obj/))//Freezer of some kind, I hope.
+		if(istype(loc, /obj/structure/closet/crate/freezer) || istype(loc, /obj/structure/closet/secure_closet/freezer) || istype(loc, /obj/structure/bodycontainer))
+			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
+				organ_flags |= ORGAN_FROZEN
+		return
+
+	var/local_temp
+	if(istype(loc, /turf/))//Only concern is adding an organ to a freezer when the area around it is cold.
+		var/turf/T = loc
+		var/datum/gas_mixture/enviro = T.return_air()
+		local_temp = enviro.temperature
+
+	if(istype(loc, /mob/))
+		var/mob/M = loc
+		var/turf/T = M.loc
+		var/datum/gas_mixture/enviro = T.return_air()
+		local_temp = enviro.temperature
+
+	else if(owner)
+		//Don't interfere with bodies frozen by structures.
+		if(istype(owner.loc, /obj/structure/closet/crate/freezer) || istype(owner.loc, /obj/structure/closet/secure_closet/freezer) || istype(owner.loc, /obj/structure/bodycontainer))
+			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
+				organ_flags |= ORGAN_FROZEN
+			return TRUE
+		local_temp = owner.bodytemperature
+
+	if(!local_temp)//Shouldn't happen but in case
+		return
+	if(local_temp < 154)//I have a pretty shaky citation that states -120 allows indefinite cyrostorage
+		organ_flags |= ORGAN_FROZEN
+		return TRUE
+	organ_flags &= ~ORGAN_FROZEN
+	return FALSE
+
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	if(!(organ_flags & ORGAN_FAILING))
-		///Damage decrements by a percent of its maxhealth
-		var/healing_amount = -(maxHealth * healing_factor)
-		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-		healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-		applyOrganDamage(healing_amount) //to FERMI_TWEAK
-		//Make it so each threshold is stuck.
+	if(organ_flags & ORGAN_FAILING)
+		return
+	if(is_cold())
+		return
+	///Damage decrements by a percent of its maxhealth
+	var/healing_amount = -(maxHealth * healing_factor)
+	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
+	applyOrganDamage(healing_amount) //to FERMI_TWEAK
+	//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
@@ -177,6 +236,8 @@
 			return low_threshold_passed
 	else
 		organ_flags &= ~ORGAN_FAILING
+		if(!owner)//Processing is stopped when the organ is dead and outside of someone. This hopefully should restart it if a removed organ is repaired outside of a body.
+			START_PROCESSING(SSobj, src)
 		if(prev_damage > low_threshold && damage <= low_threshold)
 			return low_threshold_cleared
 		if(prev_damage > high_threshold && damage <= high_threshold)
