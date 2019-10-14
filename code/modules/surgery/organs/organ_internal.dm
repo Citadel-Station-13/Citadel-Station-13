@@ -110,13 +110,13 @@
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
-	if(istype(loc, /mob/))
+	else if(istype(loc, /mob/))
 		var/mob/M = loc
 		var/turf/T = M.loc
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
-	else if(owner)
+	if(owner)
 		//Don't interfere with bodies frozen by structures.
 		if(istype(owner.loc, /obj/structure/closet/crate/freezer) || istype(owner.loc, /obj/structure/closet/secure_closet/freezer) || istype(owner.loc, /obj/structure/bodycontainer))
 			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
