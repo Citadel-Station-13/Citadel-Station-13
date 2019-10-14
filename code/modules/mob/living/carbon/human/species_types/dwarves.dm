@@ -7,7 +7,6 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
-	//they can grab burning objects and get hurt, and jump straight to aggro grab.
 	inherent_traits = list() 
 	default_features = list("mcolor" = "FFF", "wings" = "None")
 	limbs_id = "human"
