@@ -53,6 +53,7 @@
 	has_snowflake_deadsprite = TRUE
 	dogborg = TRUE
 	cyborg_pixel_offset = -16
+	borghealth = 80
 
 /obj/item/robot_module/k9/do_transform_animation()
 	..()

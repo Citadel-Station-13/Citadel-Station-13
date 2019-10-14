@@ -263,7 +263,14 @@ ALLOW_AI
 ## Allow the AI Multicamera feature to be used by AI players
 ALLOW_AI_MULTICAM
 
+## CYBORG ##
+## Uncomment to disable the ability for cyborg flashes to knock down carbon targets
+#DISABLE_BORG_FLASH_KNOCKDOWN
+
 ## Secborg ###
+## Uncomment to bring secborgs and K-9s back in line with the rest of the modules available. This is strongly recommended if you have secborgs configured to be available at all times.
+#WEAKEN_SECBORG
+
 ## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 

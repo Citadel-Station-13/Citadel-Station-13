@@ -201,8 +201,10 @@
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdowns) && iscarbon(M) && !M.resting)
+		M.Knockdown(80)
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
 	..()

@@ -8,6 +8,8 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 
+	var/borghealth = 100
+
 	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
 	var/list/emag_modules = list() //ditto
 	var/list/ratvar_modules = list() //ditto ditto
@@ -195,6 +197,8 @@
 	R.update_module_innate()
 	RM.rebuild_modules()
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
+	R.maxHealth = borghealth
+	R.health = min(borghealth, R.health)
 	qdel(src)
 	return RM
 
@@ -351,6 +355,14 @@
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
 	For Crewsimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+
+/obj/item/robot_module/security/Initialize()
+	. = ..()
+	if(!CONFIG_GET(flag/weaken_secborg))
+		for(var/obj/item/gun/energy/disabler/cyborg/pewpew in basic_modules)
+			basic_modules -= pewpew
+			basic_modules += new /obj/item/gun/energy/e_gun/advtaser/cyborg(src)
+			qdel(pewpew)
 
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"

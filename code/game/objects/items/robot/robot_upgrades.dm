@@ -89,32 +89,36 @@
 		R.speed = initial(R.speed)
 
 /obj/item/borg/upgrade/disablercooler
-	name = "cyborg rapid disabler cooling module"
-	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
+	name = "cyborg rapid energy blaster cooling module"
+	desc = "Used to cool a mounted energy-based firearm, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
-		if(!T)
-			to_chat(user, "<span class='notice'>There's no disabler in this unit!</span>")
+		var/successflag
+		for(var/obj/item/gun/energy/T in R.module.modules)
+			if(T.charge_delay <= 2)
+				successflag = successflag || 2
+				continue
+			T.charge_delay = max(2, T.charge_delay - 4)
+			successflag = 1
+		if(!successflag)
+			to_chat(user, "<span class='notice'>There's no energy-based firearm in this unit!</span>")
 			return FALSE
-		if(T.charge_delay <= 2)
+		if(successflag == 2)
 			to_chat(R, "<span class='notice'>A cooling unit is already installed!</span>")
 			to_chat(user, "<span class='notice'>There's no room for another cooling unit!</span>")
 			return FALSE
 
-		T.charge_delay = max(2 , T.charge_delay - 4)
-
 /obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
-		if(!T)
-			return FALSE
-		T.charge_delay = initial(T.charge_delay)
+		for(var/obj/item/gun/energy/T in R.module.modules)
+			T.charge_delay = initial(T.charge_delay)
+			return .
+		return FALSE
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
