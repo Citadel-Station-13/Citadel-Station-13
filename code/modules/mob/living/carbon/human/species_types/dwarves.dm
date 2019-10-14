@@ -89,7 +89,6 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	var/max_alcohol = 500 //Max they can attain, easier than you think to OD on alcohol.
 	var/heal_rate = 0.5 //The rate they heal damages over 400 alcohol stored. Default is 0.5 so we times 3 since 3 seconds.
 	var/alcohol_rate = 0.25 //The rate the alcohol ticks down per each iteration of dwarf_eth_ticker completing.
-	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
@@ -122,6 +121,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	if(!owner?.client || !owner?.mind)
 		return
 	//Filth Reactions - Since miasma now exists
+	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
 	for(var/fuck in view(owner,7)) //hello byond for view loop.
 		if(istype(fuck, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = fuck
@@ -160,7 +160,6 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 				owner.adjustToxLoss(15)
 				owner.vomit(40)
 	CHECK_TICK //Check_tick right here, its motherfuckin magic. (To me at least)
-
 
 //Handles the dwarf alcohol cycle tied to on_life, it ticks in dwarf_cycle_ticker.
 /obj/item/organ/dwarfgland/proc/dwarf_eth_cycle()
