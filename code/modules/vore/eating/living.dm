@@ -126,7 +126,7 @@
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return FALSE
+		return
 
 	if (!prey.devourable)
 		to_chat(user, "This can't be eaten!")
@@ -151,9 +151,14 @@
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
-	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
+	var/swallow_time
+	if(delay)
+		swallow_time = delay
+	else
+		swallow_time = istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
-	if(!do_mob(src, user, swallow_time))
+	//Timer and progress bar
+	if(!do_after(user, swallow_time, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
@@ -161,13 +166,6 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-
-	// incredibly contentious eating noises time
-	var/turf/source = get_turf(user)
-	var/sound/eating = GLOB.vore_sounds[belly.vore_sound]
-	for(var/mob/living/M in get_hearers_in_view(3, source))
-		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-			SEND_SOUND(M, eating)
 
 	// Actually shove prey into the belly.
 	belly.nom_mob(prey, user)
@@ -218,9 +216,9 @@
 /mob/living/proc/preyloop_refresh()
 	set name = "Internal loop refresh"
 	set category = "Vore"
+	src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 	if(isbelly(loc))
-		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
-		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+		var/sound/preyloop = sound('sound/vore/prey/loop.ogg')
 		SEND_SOUND(src, preyloop)
 	else
 		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")

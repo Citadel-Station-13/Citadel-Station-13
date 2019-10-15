@@ -170,12 +170,21 @@
 
 	//Sound w/ antispam flag setting
 	if(vore_sound && !recent_sound)
-		var/turf/source = get_turf(owner)
-		var/sound/eating = GLOB.vore_sounds[vore_sound]
-		for(var/mob/living/M in get_hearers_in_view(3, source))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, eating)
-				recent_sound = TRUE
+		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+			LAZYCLEARLIST(hearing_mobs)
+			for(var/mob/living/H in get_hearers_in_view(3, owner))
+				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+					continue
+				LAZYADD(hearing_mobs, H)
+			last_hearcheck = world.time
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			else if(H && H in contents && H.client)
+				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			recent_sound = TRUE
 
 	//Messages if it's a mob
 	if(isliving(thing))
@@ -214,10 +223,22 @@
 	owner.update_icons()
 
 	if(!silent)
-		for(var/mob/living/M in get_hearers_in_view(2, get_turf(owner)))
-			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
-				var/sound/releasement = GLOB.release_sounds[release_sound]
-				SEND_SOUND(M, releasement)
+		if(release_sound && !recent_sound)
+			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+				LAZYCLEARLIST(hearing_mobs)
+				for(var/mob/living/H in get_hearers_in_view(3, owner))
+					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+						continue
+					LAZYADD(hearing_mobs, H)
+				last_hearcheck = world.time
+			for(var/mob/living/H in hearing_mobs)
+				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				else if(H && H in contents && H.client)
+					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				recent_sound = TRUE
 		owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 
 	return count
@@ -259,10 +280,22 @@
 	owner.update_icons()
 
 	if(!silent)
-		for(var/mob/living/H in get_hearers_in_view(2, get_turf(owner)))
-			if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
-				var/sound/releasement = GLOB.release_sounds[release_sound]
-				SEND_SOUND(H, releasement)
+		if(release_sound && !recent_sound)
+			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+				LAZYCLEARLIST(hearing_mobs)
+				for(var/mob/living/H in get_hearers_in_view(3, owner))
+					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+						continue
+					LAZYADD(hearing_mobs, H)
+					last_hearcheck = world.time
+			for(var/mob/living/H in hearing_mobs)
+				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				else if(H && H in contents && H.client)
+					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				recent_sound = TRUE
 		owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
 
 	return TRUE
@@ -312,11 +345,22 @@
 	for(var/mob/living/M in contents)
 		M.cure_blind("belly_[REF(src)]")
 //	target.nom_mob(content, target.owner)
-	if(!silent)
-		var/sound/eating = GLOB.vore_sounds[vore_sound]
-		for(var/mob/living/M in get_hearers_in_view(3, src))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, eating)
+	if(vore_sound && !recent_sound && !silent)
+		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+			LAZYCLEARLIST(hearing_mobs)
+			for(var/mob/living/H in get_hearers_in_view(3, owner))
+				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+					continue
+				LAZYADD(hearing_mobs, H)
+				last_hearcheck = world.time
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			else if(H && H in contents && H.client)
+				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			recent_sound = TRUE
 
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
@@ -524,23 +568,31 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-	var/sound/struggle_snuggle = sound(get_sfx("struggle_sound"))
+	var/sound/pred_struggle_snuggle = sound(get_sfx("struggle_sound"))
+	var/sound/prey_struggle_snuggle = sound(get_sfx("prey_struggle"))
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
 
+	LAZYCLEARLIST(hearing_mobs)
+	for(var/mob/living/H in get_hearers_in_view(3, owner))
+		if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+			continue
+		LAZYADD(hearing_mobs, H)
+
 	if(is_wet)
-		for(var/mob/living/M in get_hearers_in_view(3, src))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, struggle_snuggle)
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+				SEND_SOUND(H,pred_struggle_snuggle)
+			else if(H && H in contents && H.client)
+				SEND_SOUND(H,prey_struggle_snuggle)
 
 	else
-		for(var/mob/living/M in get_hearers_in_view(3, src))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, struggle_rustle)
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client)
+				SEND_SOUND(H, struggle_rustle)
 
-	var/list/watching = hearers(3, owner)
-	for(var/mob/living/M in watching)
-		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES)) //Might as well censor the normies here too.
-			M.show_message(struggle_outer_message, 1) // visible
+	for(var/mob/living/H in hearing_mobs)
+		if(H && H.client && (isturf(H.loc)))
+			H.show_message(struggle_outer_message, 1) // visible
 
 	to_chat(R,struggle_user_message)
 

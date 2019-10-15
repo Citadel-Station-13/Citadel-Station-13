@@ -548,7 +548,7 @@
 		selected.vore_verb = new_verb
 
 	if(href_list["b_release"])
-		var/choice = input(user,"Currently set to [selected.release_sound]","Select Sound") as null|anything in GLOB.release_sounds
+		var/choice = input(user,"Currently set to [selected.release_sound]","Select Sound") as null|anything in GLOB.pred_release_sounds
 
 		if(!choice)
 			return
@@ -556,12 +556,12 @@
 		selected.release_sound = choice
 
 	if(href_list["b_releasesoundtest"])
-		var/sound/releasetest = GLOB.release_sounds[selected.release_sound]
+		var/sound/releasetest = GLOB.prey_release_sounds[selected.release_sound]
 		if(releasetest)
 			SEND_SOUND(user, releasetest)
 
 	if(href_list["b_sound"])
-		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.vore_sounds
+		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.pred_vore_sounds
 
 		if(!choice)
 			return
@@ -569,7 +569,7 @@
 		selected.vore_sound = choice
 
 	if(href_list["b_soundtest"])
-		var/sound/voretest = GLOB.vore_sounds[selected.vore_sound]
+		var/sound/voretest = GLOB.prey_vore_sounds[selected.vore_sound]
 		if(voretest)
 			SEND_SOUND(user, voretest)
 
