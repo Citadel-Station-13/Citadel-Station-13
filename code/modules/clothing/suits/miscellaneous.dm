@@ -324,6 +324,22 @@
 	item_state = "officertanjacket"
 	body_parts_covered = CHEST|ARMS
 
+/obj/item/clothing/suit/ran
+	name = "Kitsune costume"
+	desc = "A costume that looks like a certain shikigami, is super fluffy."
+	icon_state = "ran_suit"
+	item_state = "ran_suit"
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+	heat_protection = CHEST|GROIN //fluffy tails!
+
+/obj/item/clothing/head/ran
+	name = "Kitsune hat"
+	desc = "A hat that looks like it keeps any fluffy ears contained super warm, has little charms over it."
+	icon_state = "ran_hat"
+	item_state = "ran_hat"
+	flags_inv = HIDEEARS
+
 /*
  * Misc
  */
