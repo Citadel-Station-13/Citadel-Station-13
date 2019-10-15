@@ -5898,6 +5898,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"alN" = (
+/obj/machinery/camera{
+	c_tag = "Dormitory Toilets";
+	dir = 1
+	},
+/obj/structure/table,
+/obj/structure/bedsheetbin/towel,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
 "alO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -15668,13 +15677,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aJz" = (
-/obj/machinery/camera{
-	c_tag = "Dormitory Toilets";
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/crew_quarters/toilet)
 "aJA" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Kitchen Maintenance";
@@ -90144,7 +90146,7 @@ aDL
 aFf
 aGk
 aHU
-aJz
+alN
 aAh
 aLQ
 aJq
