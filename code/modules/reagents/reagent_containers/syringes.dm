@@ -307,7 +307,7 @@
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
 				to_chat(user, "<span class='notice'>You soak the [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
-			if (reagents.total_volume >= reagents.maximum_volume)
+			if (round(reagents.total_volume,1) >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
 

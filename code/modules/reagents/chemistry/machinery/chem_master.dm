@@ -390,6 +390,11 @@
 			if(reagents.total_volume == 0)
 				return
 
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				if(!(istype(R, /datum/reagent/medicine)))
+					visible_message("<b>The [src]</b> beeps, \"<span class='warning'>SmartDarts are insoluble with non-medicinal compounds.\"</span>")
+					return
+
 			var/amount_full = 0
 			var/vol_part = min(reagents.total_volume, 20)
 			if(text2num(many))
@@ -405,12 +410,16 @@
 				P.name = trim("[name] SmartDart")
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, 20)
+				P.mode=!mode
+				P.update_icon()
 
 			if(vol_part)
 				P = new /obj/item/reagent_containers/syringe/dart(drop_location())
 				P.name = trim("[name] SmartDart")
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_part)
+				P.mode=!mode
+				P.update_icon()
 			. = TRUE
 
 		//END CITADEL ADDITIONS
