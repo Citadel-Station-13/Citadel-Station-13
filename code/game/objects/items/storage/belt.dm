@@ -620,13 +620,37 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 15
 	STR.display_numerical_stacking = FALSE
+	STR.allow_quick_gather = TRUE
+	STR.allow_quick_empty = TRUE
+	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/syringe/dart
 		))
+		GET_COMPONENT(STR, /datum/component/storage)
 
 /obj/item/storage/belt/medolier/full/PopulateContents()
 	for(var/i in 1 to 16)
 		new /obj/item/reagent_containers/syringe/dart/(src)
+
+/obj/item/storage/belt/medolier/afterattack(obj/target, mob/user , proximity)
+	if(busy)
+		return
+	if(!proximity)
+		return
+	if(!target.reagents)
+		return
+
+	for(var/obj/item/reagent_containers/syringe/dart/D in contents)
+		if(round(target.reagents.total_volume, 1) <= 0)
+			to_chat(user, "<span class='notice'>You soak as many of the darts as you can with the contents from [target].</span>")
+
+			return
+		if(D.mode == SYRINGE_INJECT)
+			continue
+
+		D.afterattack(target, user, proximity)
+	to_chat(user, "<span class='notice'>You soak all of the darts with the contents from [target].</span>")
+	..()
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
