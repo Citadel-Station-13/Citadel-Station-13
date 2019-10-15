@@ -899,13 +899,26 @@
 /datum/crafting_recipe/smartdartgun
 	name = "Smart dartgun"
 	result =  /obj/item/gun/syringe/dart
-	reqs = list(/obj/item/stack/sheet/metal = 15,
-	/obj/item/stack/sheet/glass = 10,
+	reqs = list(/obj/item/stack/sheet/metal = 10,
+	/obj/item/stack/sheet/glass = 5,
 	/obj/item/tank/internals = 1,
 	/obj/item/reagent_containers/glass/beaker = 1,
-	/obj/item/stack/sheet/plastic = 10,
-	/obj/item/stack/cable_coil = 2)
+	/obj/item/stack/sheet/plastic = 5,
+	/obj/item/stack/cable_coil = 1)
 	time = 150 //It's a gun
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/rapiddartgun
+	name = "Rapid Smart dartgun - larger size beaker = larger mag."
+	result = /obj/item/gun/syringe/dart/rapiddart
+	reqs = list(
+		/obj/item/gun/syringe/dart = 1,
+		/obj/item/stack/sheet/plastic = 5,
+		/obj/item/stack/cable_coil = 1
+	)
+	parts = list(/obj/item/reagent_containers/glass/beaker = 1)
+	time = 120 //Modifying your gun
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
@@ -932,7 +945,7 @@
 				/obj/item/stack/sheet/leather = 2)
 	time = 50
 	category = CAT_CLOTHING
-	
+
 	/datum/crafting_recipe/durathread_helmet
 	name = "Makeshift Durathread Helmet"
 	result = /obj/item/clothing/head/helmet/durathread
@@ -948,4 +961,3 @@
 				/obj/item/stack/sheet/leather = 3)
 	time = 50
 	category = CAT_CLOTHING
-

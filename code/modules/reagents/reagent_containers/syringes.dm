@@ -323,8 +323,9 @@
 
 	rounded_vol = "empty"
 	if(reagents && reagents.total_volume)
-		if(volume/reagents.total_volume == 1)
+		if(round(volume,1)/reagents.total_volume == 1)
 			rounded_vol="full"
+			mode = SYRINGE_INJECT
 
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"

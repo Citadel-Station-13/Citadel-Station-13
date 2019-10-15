@@ -122,3 +122,36 @@
 	else
 		to_chat(user, "<span class='notice'>You can't put the [A] into \the [src]!</span>")
 		return FALSE
+
+/obj/item/gun/syringe/dart/rapiddart
+	name = "Repeating dart gun"
+	icon_state = "rapiddartgun"
+	item_state = "rapiddartgun"
+	max_syringes = 1
+
+/obj/item/gun/syringe/dart/rapiddart/Initialize()
+	.=..()
+	update_capacity()
+
+/obj/item/gun/syringe/dart/rapiddart/proc/update_capacity()
+	var/obj/item/reagent_containers/glass/beaker/B = locate(/obj/item/reagent_containers/glass/beaker) in src
+
+	if(istype(B, /obj/item/reagent_containers/glass/beaker/large))
+		desc = "[initial(desc)] A modification of the dart gun's pressure chamber has been perfomed using a [B], extending it's holding size to [max_syringes]."
+		max_syringes = 2
+		return
+	else if(istype(B, /obj/item/reagent_containers/glass/beaker/plastic))
+		desc = "[initial(desc)] A modification of the dart gun's pressure chamber has been perfomed using a [B], extending it's holding size to [max_syringes]."
+		max_syringes = 3
+		return
+	else if(istype(B, /obj/item/reagent_containers/glass/beaker/meta))
+		desc = "[initial(desc)] A modification of the dart gun's pressure chamber has been perfomed using a [B], extending it's holding size to [max_syringes]."
+		max_syringes = 4
+		return
+	else if(istype(B, /obj/item/reagent_containers/glass/beaker/bluespace))
+		desc = "[initial(desc)] A modification of the dart gun's pressure chamber has been perfomed using a [B], extending it's holding size to [max_syringes]."
+		max_syringes = 6
+		return
+	else
+		max_syringes = 1
+		desc = "[initial(desc)] It has a [B] strapped to it, but it doesn't seem to be doing anything."

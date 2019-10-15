@@ -404,22 +404,22 @@
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 
-			var/obj/item/reagent_containers/glass/bottle/vial/small/P
+			var/obj/item/reagent_containers/syringe/dart/D
 			for(var/i = 0; i < amount_full; i++)
-				P = new /obj/item/reagent_containers/syringe/dart(drop_location())
-				P.name = trim("[name] SmartDart")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, 20)
-				P.mode=!mode
-				P.update_icon()
+				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				D.name = trim("[name] SmartDart")
+				adjust_item_drop_location(D)
+				reagents.trans_to(D, 20)
+				D.mode=!mode
+				D.update_icon()
 
 			if(vol_part)
-				P = new /obj/item/reagent_containers/syringe/dart(drop_location())
-				P.name = trim("[name] SmartDart")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, vol_part)
-				P.mode=!mode
-				P.update_icon()
+				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				D.name = trim("[name] SmartDart")
+				adjust_item_drop_location(D)
+				reagents.trans_to(D, vol_part)
+				D.mode=!mode
+				D.update_icon()
 			. = TRUE
 
 		//END CITADEL ADDITIONS
