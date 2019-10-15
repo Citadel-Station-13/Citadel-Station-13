@@ -129,6 +129,8 @@
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/carp
+	devourable = TRUE
+	digestable = TRUE
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
