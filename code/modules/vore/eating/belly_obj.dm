@@ -145,8 +145,11 @@
 
 		//ommitted list
 		// "shrink_grow_size",
-/obj/belly/New(var/newloc)
-	. = ..(newloc)
+/obj/belly/Initialize()
+	. = ..()
+	take_ownership(src.loc)
+
+/obj/belly/proc/take_ownership(var/newloc)
 	//If not, we're probably just in a prefs list or something.
 	if(isliving(newloc))
 		owner = loc
