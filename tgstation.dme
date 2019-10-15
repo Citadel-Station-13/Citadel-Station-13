@@ -3086,7 +3086,6 @@
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\spinfusor.dm"
 #include "modular_citadel\code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "modular_citadel\code\modules\projectiles\guns\energy\laser.dm"
-#include "modular_citadel\code\modules\projectiles\projectile\energy.dm"
 #include "modular_citadel\code\modules\projectiles\projectiles\reusable.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\astrogen.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\eigentstasium.dm"

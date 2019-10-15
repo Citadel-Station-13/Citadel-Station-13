@@ -80,6 +80,36 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+//TASER
+/datum/status_effect/electrode
+	id = "tased"
+	blocks_combatmode = TRUE
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+
+/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
+		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
+
+/datum/status_effect/electrode/on_remove()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
+	. = ..()
+
+/datum/status_effect/electrode/tick()
+	if(owner)
+		owner.adjustStaminaLoss(10) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+
+/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
+	return 2
+
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
