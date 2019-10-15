@@ -35,8 +35,8 @@
 // Update fullness based on size & quantity of belly contents
 /mob/living/simple_animal/proc/update_fullness(var/atom/movable/M)
 	var/new_fullness = 0
-	for(var/I in vore_organs)
-		var/obj/belly/B = vore_organs[I]
+	for(var/belly in vore_organs)
+		var/obj/belly/B = vore_organs[belly]
 		if (!(M in B.contents))
 			return FALSE // Nothing's inside
 		new_fullness += M
@@ -44,7 +44,7 @@
 	vore_fullness = new_fullness
 
 /mob/living/simple_animal/death()
-	release_vore_contents(silent = TRUE)
+	release_vore_contents()
 	. = ..()
 
 // Simple animals have only one belly.  This creates it (if it isn't already set up)
@@ -52,16 +52,15 @@
 	vore_init = TRUE
 	if(CHECK_BITFIELD(flags_1, HOLOGRAM_1))
 		return
-	if(!vore_active)
-		return
-	if(vore_organs.len)
-		return
-	if(no_vore) //If it can't vore, let's not give it a stomach.
+	if(!vore_active || no_vore) //If it can't vore, let's not give it a stomach.
 		return
 	if(vore_active && !IsAdvancedToolUser()) //vore active, but doesn't have thumbs to grab people with.
 		verbs |= /mob/living/simple_animal/proc/animal_nom
 
-	var/obj/belly/B = new /obj/belly(src)
+	if(LAZYLEN(vore_organs))
+		return
+
+	var/obj/belly/B = new (src)
 	vore_selected = B
 	B.immutable = TRUE
 	B.name = vore_stomach_name ? vore_stomach_name : "stomach"
@@ -128,13 +127,12 @@
 // Simple nom proc for if you get ckey'd into a simple_animal mob! Avoids grabs.
 //
 /mob/living/simple_animal/proc/animal_nom(var/mob/living/T in oview(1))
-	set name = "Animal Nom"
+	set name = "Animal Nom (pull target)"
 	set category = "Vore"
 	set desc = "Since you can't grab, you get a verb!"
 
 	if (stat != CONSCIOUS)
 		return
-	if (T.devourable == FALSE)
-		to_chat(usr, "<span class='warning'>You can't eat this!</span>")
+	if(!T.devourable)
 		return
-	return vore_attack(usr,T,usr)
+	return vore_attack(src,T,src)

@@ -27,7 +27,7 @@
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	spawn(10 SECONDS) // long delay because the server delays in its startup. just on the safe side.
+	spawn(2 SECONDS) // long delay because the server delays in its startup. just on the safe side.
 		if(M)
 			M.init_vore()
 
@@ -84,7 +84,7 @@
 			return
 		feed_self_to_grabbed(user, pred)
 
-	if(pred == user) //you click yourself
+	else if(pred == user) //you click yourself
 		if(!is_vore_predator(src))
 			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
 			return
