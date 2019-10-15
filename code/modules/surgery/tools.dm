@@ -30,7 +30,7 @@
 
 /obj/item/retractor/advanced/examine(mob/living/user)
 	. = ..()
-	to_chat(user, "<span class = 'notice> It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>")
+	to_chat(user, "<span class = 'notice> It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>")
 
 /obj/item/retractor/augment
 	name = "retractor"
