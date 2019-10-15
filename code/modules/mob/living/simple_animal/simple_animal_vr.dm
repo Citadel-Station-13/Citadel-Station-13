@@ -35,8 +35,8 @@
 /mob/living/simple_animal/proc/update_fullness(var/atom/movable/M)
 	var/new_fullness = 0
 	for(var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if (!(M in B.internal_contents))
+		var/obj/belly/B = vore_organs[I]
+		if (!(M in B.contents))
 			return FALSE // Nothing's inside
 		new_fullness += M
 
@@ -60,7 +60,7 @@
 
 	var/obj/belly/B = new /obj/belly(src)
 	vore_selected = B
-	B.immutable = 1
+	B.immutable = TRUE
 	B.name = vore_stomach_name ? vore_stomach_name : "stomach"
 	B.desc = vore_stomach_flavor ? vore_stomach_flavor : "Your surroundings are warm, soft, and slimy. Makes sense, considering you're inside \the [name]."
 	B.digest_mode = vore_default_mode

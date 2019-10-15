@@ -31,7 +31,7 @@
 	for(var/mob/living/M in contents)
 		if(isbelly(M.loc))
 			if(world.time > M.next_preyloop)
-				if(is_wet)
+				if(is_wet && wet_loop)
 					if(!M.client)
 						continue
 					M.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case

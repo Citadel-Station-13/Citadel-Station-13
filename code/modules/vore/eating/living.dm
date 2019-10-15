@@ -8,7 +8,7 @@
 	var/feeding = FALSE						// Are we going to feed someone else?
 	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
-	var/openpanel = 0						// Is the vore panel open?
+	var/openpanel = FALSE					// Is the vore panel open?
 	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
 	var/vore_init = FALSE					//Has this mob's vore been initialized yet?
@@ -23,7 +23,7 @@
 	M.verbs += /mob/living/proc/escapeOOC
 
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
-		return 1
+		return TRUE
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
@@ -31,8 +31,8 @@
 		if(M)
 			M.init_vore()
 
-	//Return 1 to hook-caller
-	return 1
+	//return TRUE to hook-caller
+	return TRUE
 
 /mob/living/proc/init_vore()
 	vore_init = TRUE
@@ -54,10 +54,10 @@
 		LAZYINITLIST(vore_organs)
 		var/obj/belly/B = new /obj/belly(src)
 		vore_selected = B
-		B.immutable = 1
+		B.immutable = TRUE
 		B.name = "Stomach"
 		B.desc = "It appears to be rather warm and wet. Makes sense, considering it's inside [name]."
-		B.can_taste = 1
+		B.can_taste = TRUE
 		return TRUE
 
 // Handle being clicked, perhaps with something to devour
@@ -183,7 +183,7 @@
 	if(prey.ckey)
 		prey_stat = prey.stat//only return this if they're not an unmonkey or whatever
 		if(!prey.client)//if they disconnected, tell us
-			prey_braindead = 1
+			prey_braindead = TRUE
 	if (pred == user)
 		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
 		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
@@ -212,7 +212,7 @@
 
 	//Other overridden resists go here
 
-	return 0
+	return FALSE
 
 // internal slimy button in case the loop stops playing but the player wants to hear it
 /mob/living/proc/preyloop_refresh()
@@ -265,28 +265,28 @@
 //
 /mob/living/proc/save_vore_prefs()
 	if(!client || !client.prefs_vr)
-		return 0
+		return FALSE
 	if(!copy_to_prefs_vr())
-		return 0
+		return FALSE
 	if(!client.prefs_vr.save_vore())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/apply_vore_prefs()
 	if(!client || !client.prefs_vr)
-		return 0
+		return FALSE
 	if(!client.prefs_vr.load_vore())
-		return 0
+		return FALSE
 	if(!copy_from_prefs_vr())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/copy_to_prefs_vr()
 	if(!client || !client.prefs_vr)
 		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
-		return 0
+		return FALSE
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
@@ -302,7 +302,7 @@
 
 	P.belly_prefs = serialized
 
-	return 1
+	return TRUE
 
 //
 //	Proc for applying vore preferences, given bellies
@@ -310,7 +310,7 @@
 /mob/living/proc/copy_from_prefs_vr()
 	if(!client || !client.prefs_vr)
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
-		return 0
+		return FALSE
 	vorepref_init = TRUE
 
 	var/datum/vore_preferences/P = client.prefs_vr
@@ -325,7 +325,7 @@
 	for(var/entry in P.belly_prefs)
 		list_to_object(entry,src)
 
-	return 1
+	return TRUE
 
 //
 // Release everything in every vore organ
