@@ -127,15 +127,9 @@
 	name = "Repeating dart gun"
 	icon_state = "rapiddartgun"
 	item_state = "rapiddartgun"
-	max_syringes = 1
 
-/obj/item/gun/syringe/dart/rapiddart/Initialize()
-	update_capacity()
-	.=..()
-
-/obj/item/gun/syringe/dart/rapiddart/proc/update_capacity()
-	var/obj/item/reagent_containers/glass/beaker/B = locate(/obj/item/reagent_containers/glass/beaker) in src
-	message_admins("found[B]")
+/obj/item/gun/syringe/dart/rapiddart/CheckParts(list/parts_list)
+	var/obj/item/reagent_containers/glass/beaker/B = locate(/obj/item/reagent_containers/glass/beaker) in parts_list
 
 	if(istype(B, /obj/item/reagent_containers/glass/beaker/large))
 		desc = "[initial(desc)] A modification of the dart gun's pressure chamber has been perfomed using a [B], extending it's holding size to [max_syringes]."
@@ -156,3 +150,4 @@
 	else
 		max_syringes = 1
 		desc = "[initial(desc)] It has a [B] strapped to it, but it doesn't seem to be doing anything."
+	..()
