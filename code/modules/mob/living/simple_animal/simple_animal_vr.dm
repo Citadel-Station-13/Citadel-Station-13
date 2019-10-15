@@ -29,6 +29,7 @@
 /mob/living/simple_animal/Destroy()
 	release_vore_contents(include_absorbed = TRUE, silent = TRUE)
 	prey_excludes.Cut()
+	QDEL_NULL_LIST(vore_organs)
 	. = ..()
 
 // Update fullness based on size & quantity of belly contents

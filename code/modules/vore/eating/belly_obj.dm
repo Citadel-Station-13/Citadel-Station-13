@@ -169,13 +169,13 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(vore_sound && (world.time > recent_sound))
+	if(vore_sound && !recent_sound)
 		var/turf/source = get_turf(owner)
 		var/sound/eating = GLOB.vore_sounds[vore_sound]
 		for(var/mob/living/M in get_hearers_in_view(3, source))
 			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 				SEND_SOUND(M, eating)
-				recent_sound = (world.time + 20 SECONDS)
+				recent_sound = TRUE
 
 	//Messages if it's a mob
 	if(isliving(thing))
