@@ -88,20 +88,18 @@
 	applyOrganDamage(maxHealth * decay_factor)
 
 /obj/item/organ/proc/can_decay()
-	if(organ_flags & ORGAN_NO_SPOIL)
-		return FALSE
-	if(organ_flags & ORGAN_SYNTHETIC)
-		return FALSE
-	if((organ_flags & ORGAN_FAILING) || damage >= maxHealth)
+	if(CHECK_BITFIELD(organ_flags, ORGAN_NO_SPOIL | ORGAN_SYNTHETIC | ORGAN_FAILING))
 		return FALSE
 	return TRUE
 
 //Checks to see if the organ is frozen from temperature
 /obj/item/organ/proc/is_cold()
+	var/freezing_objects = list(/obj/structure/closet/crate/freezer, /obj/structure/closet/secure_closet/freezer, /obj/structure/bodycontainer, /obj/item/autosurgeon)
 	if(istype(loc, /obj/))//Freezer of some kind, I hope.
-		if(istype(loc, /obj/structure/closet/crate/freezer) || istype(loc, /obj/structure/closet/secure_closet/freezer) || istype(loc, /obj/structure/bodycontainer) || istype(loc, /obj/item/autosurgeon))
+		if(is_type_in_list(loc, freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
 				organ_flags |= ORGAN_FROZEN
+			return TRUE
 		return
 
 	var/local_temp
@@ -110,7 +108,7 @@
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
-	else if(istype(loc, /mob/))
+	else if(istype(loc, /mob/) && !owner)
 		var/mob/M = loc
 		var/turf/T = M.loc
 		var/datum/gas_mixture/enviro = T.return_air()
@@ -118,7 +116,7 @@
 
 	if(owner)
 		//Don't interfere with bodies frozen by structures.
-		if(istype(owner.loc, /obj/structure/closet/crate/freezer) || istype(owner.loc, /obj/structure/closet/secure_closet/freezer) || istype(owner.loc, /obj/structure/bodycontainer))
+		if(is_type_in_list(loc, freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
@@ -146,7 +144,7 @@
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(!organ_flags & ORGAN_FAILING)
+	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken!</span>"
 			return
