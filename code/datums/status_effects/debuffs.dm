@@ -105,7 +105,7 @@
 
 /datum/status_effect/electrode/tick()
 	if(owner)
-		owner.adjustStaminaLoss(10) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 
 /datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
 	return 2
