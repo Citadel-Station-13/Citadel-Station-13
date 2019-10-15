@@ -110,14 +110,18 @@
 
 	else if(istype(loc, /mob/) && !owner)
 		var/mob/M = loc
+		if(is_type_in_list(M.loc, freezing_objects))
+			if(!(organ_flags & ORGAN_FROZEN))
+				organ_flags |= ORGAN_FROZEN
+			return TRUE
 		var/turf/T = M.loc
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
 	if(owner)
 		//Don't interfere with bodies frozen by structures.
-		if(is_type_in_list(loc, freezing_objects))
-			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
+		if(is_type_in_list(owner.loc, freezing_objects))
+			if(!(organ_flags & ORGAN_FROZEN))
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
 		local_temp = owner.bodytemperature
