@@ -110,15 +110,15 @@
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	target = null
+	if(imp_t)
+		UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+		impt_t = null
 	if(regime_set == "Teleporter")
 		regime_set = "Gate"
 	else
 		regime_set = "Teleporter"
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
-	if(imp_t)
-		UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
-		imp_t = null
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
@@ -139,11 +139,13 @@
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = M
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
-		if(!desc)
-			target = null
+		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY)) //check if we are still around
 			return
 		target = L[desc]
-		if(isliving(target)) //we need to make sure the living mob is still implanted to be a valid target
+		if(imp_t)
+			UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+			impt_t = null
+		if(isliving(target)) //make sure the living mob is still implanted to be a valid target
 			var/mob/living/M = target
 			var/obj/item/implant/tracking/I = locate() in M.implants
 			if(I)
@@ -165,6 +167,8 @@
 			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
 			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
+		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY)) //again, check if we are still around
+			return
 		var/obj/machinery/teleport/station/target_station = L[desc]
 		if(!target_station || !target_station.teleporter_hub)
 			return
