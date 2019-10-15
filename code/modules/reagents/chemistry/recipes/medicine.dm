@@ -71,8 +71,8 @@
 /datum/chemical_reaction/synthtissue
 	name = "Synthtissue"
 	id = "synthtissue"
-	results = list("synthtissue" = 0.05)
-	required_reagents = list("synthflesh" = 0.01)
+	results = list("synthtissue" = 5)
+	required_reagents = list("synthflesh" = 1)
 	required_catalysts = list("nutriment" = 0.1)
 	//FermiChem vars:
 	OptimalTempMin 		= 305		// Lower area of bell curve for determining heat based rate reactions
@@ -101,7 +101,8 @@
 	if(St.purity < 1)
 		St.volume *= St.purity
 		St.purity = 1
-	N.volume -= 0.002
+	var/amount = CLAMP(0.002, 0, N.volume)
+	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
 
 /datum/chemical_reaction/styptic_powder

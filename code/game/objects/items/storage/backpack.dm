@@ -493,12 +493,9 @@
 	desc = "A large duffel bag for holding surgical tools. Bears the logo of an advanced med-tech firm."
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv/PopulateContents()
-	new /obj/item/hemostat/adv(src)
-	new /obj/item/circular_saw/adv(src)
-	new /obj/item/scalpel/adv(src)
-	new /obj/item/retractor/adv(src)
-	new /obj/item/cautery/adv(src)
-	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/surgicaldrill/advanced(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)

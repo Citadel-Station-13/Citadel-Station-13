@@ -260,20 +260,20 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = 1)
-	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
-			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
-			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-			ghost.can_reenter_corpse = can_reenter_corpse
-			if(suiciding)
-				var/penalty = SUICIDE_REENTER_ROUND_TIMER
-				if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
-					penalty += ROUNDSTART_QUITTER_TIME_LIMIT - world.time
-				ghost.reenter_round_timeout = world.realtime + penalty
-			ghost.key = key
-			return ghost
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE)
+	if(!key || cmptext(copytext(key,1,2),"@") || (!special && SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special) & COMPONENT_BLOCK_GHOSTING))
+		return //mob has no key, is an aghost or some component hijacked.
+	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
+	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
+	ghost.can_reenter_corpse = can_reenter_corpse
+	if(suiciding)
+		var/penalty = SUICIDE_REENTER_ROUND_TIMER
+		if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+			penalty += ROUNDSTART_QUITTER_TIME_LIMIT - world.time
+		ghost.reenter_round_timeout = world.realtime + penalty
+	transfer_ckey(ghost, FALSE)
+	return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -283,6 +283,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
+		return
 
 	var/penalty = SUICIDE_REENTER_ROUND_TIMER
 	if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT)
@@ -313,9 +316,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
+		return
+
 	var/penalty = SUICIDE_REENTER_ROUND_TIMER
 	if(world.time < ROUNDSTART_QUITTER_TIME_LIMIT)
 		penalty += ROUNDSTART_QUITTER_TIME_LIMIT - world.time
+
 	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round for the next [round(penalty/600, 600)] minutes! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 	if(response != "Ghost")
 		return
@@ -358,7 +365,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	mind.current.key = key
+	transfer_ckey(mind.current, FALSE)
 	return 1
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -638,7 +645,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
-	target.key = key
+	transfer_ckey(target, FALSE)
 	target.faction = list("neutral")
 	return 1
 

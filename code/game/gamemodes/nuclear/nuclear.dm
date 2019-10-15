@@ -155,9 +155,9 @@
 		var/obj/item/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
+	var/obj/item/implant/weapons_auth/W = new
 	W.implant(H)
-	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
+	var/obj/item/implant/explosive/E = new
 	E.implant(H)
 	H.faction |= ROLE_SYNDICATE
 	H.update_icons()
