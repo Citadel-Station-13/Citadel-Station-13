@@ -52,6 +52,8 @@
 	vore_init = TRUE
 	if(CHECK_BITFIELD(flags_1, HOLOGRAM_1))
 		return
+	if(!vore_active)
+		return
 	if(vore_organs.len)
 		return
 	if(no_vore) //If it can't vore, let's not give it a stomach.
