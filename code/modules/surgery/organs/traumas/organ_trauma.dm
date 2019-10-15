@@ -41,8 +41,11 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
     Something to do with appendix for bacteria
 */
 
+//ORGAN_SLOT_HEART, ORGAN_SLOT_LIVER, ORGAN_SLOT_LUNG, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_TONGUE, ORGAN_SLOT_APPENDIX
+
 /datum/organ_trauma
 	var/name = "Organ Trauma"
+	var/trauma_slot = list()//ORGAN_SLOTs of where the trauma can go
 	var/scan_desc //description when detected by a health scanner, to aid DIAGNOSIS, not to outright tell them what it is.
 	var/mob/living/carbon/owner //the poor bugger
 	var/obj/item/organ/organ //the poor bugger's organ
@@ -54,21 +57,25 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
     var/can_cure = TRUE
     var/severity = 1 //How bad the trauma is, usually made worse by incorrect diagnosis.
     var/max_severity = 3 //How bad something can get.
-    var/trauma_slot //What type the organ is, i.e. tongue/lung/ect
 
     var/trauma_flags //What kind of trauma it is.
-    var/antibiotic_resistance = list() //What antibiotics the infection is resistant to, either innately or
 
+	var/datum/bacteria //If it has a bacterial infection
 
 //obj/organ/organ_traumas
 ////////////////////////////////////ORGAN OBJ PROCS////////////////////////////////////
+//Organ obj vars:
+//var/list/datum/organ_trauma/organ_traumas = list()
+//var/total_trauma_damage = 0
 
+//Checks to see if the organ has a trauma and returns it
 /obj/item/organ/proc/has_organ_trauma_type(organ_trauma_type = /datum/organ_trauma)
 	for(var/X in organ_traumas)
 		var/datum/organ_trauma/OT = X
 		if(istype(OT, organ_trauma_type))
 			return OT
 
+//Returns traumas currently applied to an organ
 /obj/item/organ/proc/get_organ_traumas_type(organ_trauma_type = /datum/organ_trauma)
 	. = list()
 	for(var/X in organ_traumas)
@@ -76,11 +83,13 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 		if(istype(OT, organ_trauma_type))
 			. += OT
 
+//Checks to see if the organ can gain the trauma by blocking dupes,
+//ensuring correct slot, ensuring passed argument is a path and limiting total num traumas
 /obj/item/organ/proc/can_gain_organ_trauma(datum/organ_trauma/trauma)
     for(var/X in organ_traumas)//No duplicates
         if(X == trauma)
             return FALSE
-    if(slot != trauma_slot)//correct slots only please
+    if(!is_correct_slot())//correct slots only please
         return FALSE
 	if(!ispath(trauma))//Make sure it's a path
 		trauma = trauma.type
@@ -88,7 +97,15 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 		return FALSE
 	return TRUE
 
-//Proc to use when directly adding a trauma to the organ, so extra args can be given
+//Checks to see if the current trauma can be assinged to the current organ
+/obj/item/organ/proc/is_correct_slot()
+	var/is_correct = FALSE
+	for(var/O in trauma.trauma_slot)
+		if(O == slot)
+			is_correct = TRUE
+	return is_correct
+
+//Proc to use when directly adding a trauma to the organ, so extra args can be given, -1 = max severity
 /obj/item/organ/proc/gain_organ_trauma(datum/organ_trauma/trauma, _severity = 1)
 	if(!can_gain_trauma(trauma))
 		return
@@ -108,7 +125,10 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 	if(owner)
 		actual_trauma.owner = owner
 		actual_trauma.on_gain()
-        actual_trauma.severity = _severity //Set severity
+		if(_severity = -1)
+			actual_trauma.severity = max_severity //Set severity
+		else
+			actual_trauma.severity = _severity //Set severity
 
 	SSblackbox.record_feedback("tally", "organ_traumas", 1, actual_trauma.type)
 
@@ -121,7 +141,7 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 	var/list/datum/organ_trauma/possible_traumas = list()
 	for(var/T in subtypesof(organ_trauma_type))
 		var/datum/organ_trauma/OT = T
-		if(can_gain_trauma(OT) && initial(OT.random_gain) && (_slot == OT.trauma_slot))
+		if(can_gain_trauma(OT) && initial(OT.random_gain) && (is_correct_slot()))
 			possible_traumas += OT
 
 	if(!LAZYLEN(possible_traumas))
@@ -154,6 +174,9 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
     qdel(trauma)
     return TRUE
 
+////////////////////////////////////ORGAN PROCS
+
+
 
 ////////////////////////////////////ACTIVE///////////////////////////////////
 
@@ -176,8 +199,15 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 /datum/organ_trauma/proc/cure_expose()
 	return
 
+//Called when exposed to incorrect treatment
+/datum/organ_trauma/proc/exacerbate_condition()
+	return
+
 //Called when given to a mob
 /datum/organ_trauma/proc/on_gain()
+	if(trauma_flags == ORGAN_TRAUMA_BACTERIA)
+		bacteria = new/datum/bacterium()
+		organ.organ_flags |= ORGAN_INFECTION
     if(gain_text && owner)//generally no message, diagnosics isn't a simple art!
         to_chat(owner, gain_text)
     return
@@ -189,26 +219,34 @@ Defiencies: The oposite of Allergies, without the reagent causes problems.
 		to_chat(owner, lose_text)
     return
 
-//Called when incorrect treatment is given
+//Called when the thing gets swords_lefthand
 /datum/organ_trauma/proc/increase_severity()
     if(max_severity > severity)
         severity++
+		on_increase()
     else
-        can_cure = FALSE
+		if(trauma_flags & ORGAN_TRAUMA_PERMA_MAX) //If it reaches endstate, is the organ uncureable?
+			can_cure = FALSE
     return
+
+//called when condition worsens
+/datum/organ_trauma/proc/on_increase()
+	return
 
 //Called when correct treatment is given
 /datum/organ_trauma/proc/decrease_severity()
-    if(!can_cure && severity == 1)
-        return
     severity--
     if(!severity)
         if(can_cure)
             qdel(src)
+			return
+		severity = 1
+	on_decrease()
 
 
-//Called when hearing a spoken message
-
+//called when condition weakens
+/datum/organ_trauma/proc/on_decrease()
+	return
 
 //Called when speaking
 /datum/organ_trauma/proc/handle_speech(datum/source, list/speech_args)

@@ -29,7 +29,10 @@
 	var/high_threshold_cleared
 	var/low_threshold_cleared
 
+	//Organ Trauma vars:
 	var/list/datum/organ_trauma/organ_traumas = list()
+	var/total_trauma_damage = 0//I.e how much the organ is damaged by, used to calculate maxHealth and show symptoms, such as jaundice
+
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -237,7 +240,7 @@
 	var/delta = damage - prev_damage
 	if(delta > 0)
 		if(damage >= maxHealth)
-			organ_flags |= ORGAN_FAILING 
+			organ_flags |= ORGAN_FAILING
 			return now_failing
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			return high_threshold_passed

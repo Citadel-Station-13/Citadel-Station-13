@@ -63,3 +63,6 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+
+	//bacterial infections
+	var/list/datum/bacterium/bacteria = list() //List of infections and where (i.e. ORGAN_SLOT_X = bacterium)
