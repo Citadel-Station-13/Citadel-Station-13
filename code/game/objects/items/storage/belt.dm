@@ -40,6 +40,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -184,12 +185,9 @@
 	content_overlays = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
-	new /obj/item/hemostat/adv(src)
-	new /obj/item/circular_saw/adv(src)
-	new /obj/item/scalpel/adv(src)
-	new /obj/item/retractor/adv(src)
-	new /obj/item/cautery/adv(src)
-	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/surgicaldrill/advanced(src)
 	new /obj/item/surgical_drapes(src)
 
 /obj/item/storage/belt/security
@@ -344,6 +342,7 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
@@ -530,6 +529,7 @@
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/wands/ComponentInitialize()
 	. = ..()
@@ -599,7 +599,7 @@
 	icon_state = "bandolier-durathread"
 	item_state = "bandolier-durathread"
 	resistance_flags = FIRE_PROOF
-	
+
 /obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)

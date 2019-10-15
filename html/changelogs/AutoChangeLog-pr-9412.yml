@@ -1,0 +1,4 @@
+author: "Ghommie (original PR by AnturK)"
+delete-after: True
+changes: 
+  - bugfix: "Supermatter now melt walls if it finds itself in one."

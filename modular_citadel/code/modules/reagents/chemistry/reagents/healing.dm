@@ -6,9 +6,9 @@
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	ImpureChem 			= "yamerol_tox"
-	InverseChemVal 		= 0.4
-	InverseChem 		= "yamerol_tox"
+	impure_chem 			= "yamerol_tox"
+	inverse_chem_val 		= 0.4
+	inverse_chem		= "yamerol_tox"
 	can_synth = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
@@ -73,15 +73,15 @@
 	C.adjustOxyLoss(-3)
 	..()
 
-/datum/reagent/fermi/yamerol_tox
-	name = "Yamerol"
+/datum/reagent/impure/yamerol_tox
+	name = "Yamer oh no"
 	id = "yamerol_tox"
-	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
+	description = "A dangerous, cloying toxin that stucks to a patient’s respiratory system, damaging their tongue, lungs and causing suffocation."
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6
 
-/datum/reagent/fermi/yamerol_tox/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/yamerol_tox/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
@@ -100,7 +100,7 @@
 	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
-	metabolization_rate = 0.1
+	metabolization_rate = 0.05 //Give them time to graft
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
@@ -115,7 +115,7 @@
 				to_chat(M, "<span class='danger'>You feel your [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	if(method==INJECT)
-		data["injected_vol"] = data["injected_vol"] + reac_volume
+		data["injected_vol"] = reac_volume
 	..()
 
 /datum/reagent/synthtissue/on_mob_life(mob/living/carbon/C)
@@ -136,6 +136,9 @@
 		return ..()
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
+	if(iscarbon(holder.my_atom))
+		data["injected_vol"] = data["injected_vol"] + passed_data["injected_vol"]
+		passed_data["injected_vol"] = 0
 	..()
 
 /datum/reagent/synthtissue/on_new(passed_data)

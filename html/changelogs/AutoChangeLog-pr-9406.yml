@@ -1,0 +1,6 @@
+author: "Twaticus & Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Added new carpets from TauCetiStation!"
+  - rscadd: "More Liquid carpet chemicals, mix carpet with certain reagents to get different colors!"
+  - refactor: "Tablets have a better means of being assembled codewise. nothing's different on player end."

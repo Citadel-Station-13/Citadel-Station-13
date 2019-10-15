@@ -35,6 +35,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+		handle_death()
 		rot()
 
 	//Updates the number of stored chemicals for powers
@@ -42,6 +43,12 @@
 
 	if(stat != DEAD)
 		return 1
+
+//Procs called while dead
+/mob/living/carbon/proc/handle_death()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		if(R.chemical_flags & REAGENT_DEAD_PROCESS)
+			R.on_mob_dead(src)
 
 ///////////////
 // BREATHING //

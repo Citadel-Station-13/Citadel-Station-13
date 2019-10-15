@@ -348,10 +348,15 @@
 		if(temp)
 			var/update = 0
 			var/dmg = rand(M.force/2, M.force)
+			var/atom/throw_target = get_edge_target_turf(src, M.dir)
 			switch(M.damtype)
 				if("brute")
-					if(M.force > 20)
-						Unconscious(20)
+					if(M.force > 35) // durand and other heavy mechas
+						Knockdown(50)
+						src.throw_at(throw_target, rand(1,5), 7)
+					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
+						Knockdown(30)
+						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 				if("fire")

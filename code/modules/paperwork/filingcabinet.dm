@@ -67,6 +67,9 @@
 
 /obj/structure/filingcabinet/ui_interact(mob/user)
 	. = ..()
+	if(isobserver(user))
+		return
+
 	if(contents.len <= 0)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return

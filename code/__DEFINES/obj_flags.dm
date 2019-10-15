@@ -10,6 +10,7 @@
 #define UNIQUE_RENAME			(1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
 #define FROZEN					(1<<8)
+#define SHOVABLE_ONTO			(1<<9) //called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -46,4 +47,4 @@
 #define ORGAN_FAILING			(1<<2)	//Failing organs perform damaging effects until replaced or fixed
 #define ORGAN_EXTERNAL			(1<<3)	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 #define ORGAN_VITAL				(1<<4)	//Currently only the brain
-#define ORGAN_NO_SPOIL			(1<<5)	//Currently only the brain
+#define ORGAN_NO_SPOIL			(1<<5)	//Do not spoil under any circumstances

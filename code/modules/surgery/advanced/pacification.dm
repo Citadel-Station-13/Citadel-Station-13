@@ -17,7 +17,7 @@
 		return FALSE
 /datum/surgery_step/pacify
 	name = "rewire brain"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	time = 40
 
 /datum/surgery_step/pacify/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -37,4 +37,4 @@
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
 			"[user] completes the surgery on [target]'s brain.")
 	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-	return FALSE 
+	return FALSE
