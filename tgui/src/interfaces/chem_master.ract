@@ -84,7 +84,7 @@
 			<br/>
 			<ui-button action='createDart' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create SmartDart (max 20µ)</ui-button>
 			<br/>
-			<ui-button action='createDart' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Dispense Buffer to SmartDarts </ui-button>
+			<ui-button action='createDart' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create multiple SmartDarts </ui-button>
 			<br/>
 			
 	</ui-display>

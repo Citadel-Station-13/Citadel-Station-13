@@ -323,7 +323,7 @@
 
 	rounded_vol = "empty"
 	if(reagents && reagents.total_volume)
-		if(round(volume,1)/reagents.total_volume == 1)
+		if(volume/round(reagents.total_volume, 1) == 1)
 			rounded_vol="full"
 			mode = SYRINGE_INJECT
 

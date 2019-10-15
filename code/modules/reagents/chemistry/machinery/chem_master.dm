@@ -386,38 +386,32 @@
 			. = TRUE
 
 		if("createDart")
-			var/many = params["many"]
-			if(reagents.total_volume == 0)
-				return
-
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			for(var/datum/reagent/R in reagents.reagent_list)
 				if(!(istype(R, /datum/reagent/medicine)))
 					visible_message("<b>The [src]</b> beeps, \"<span class='warning'>SmartDarts are insoluble with non-medicinal compounds.\"</span>")
 					return
 
-			var/amount_full = 0
-			var/vol_part = min(reagents.total_volume, 20)
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+			var/amount = 1
+			var/vol_each = min(reagents.total_volume, 20)
 			if(text2num(many))
-				amount_full = round(reagents.total_volume / 20)
-				vol_part = reagents.total_volume % 20
-			var/name = stripped_input(usr, "Name:","Name your SmartDart!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many darts?", amount) as num|null), 0, 10)
+				if(!amount)
+					return
+				vol_each = min(reagents.total_volume / amount, 20)
+
+			var/name = stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 
 			var/obj/item/reagent_containers/syringe/dart/D
-			for(var/i = 0; i < amount_full; i++)
+			for(var/i = 0; i < amount; i++)
 				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
 				D.name = trim("[name] SmartDart")
 				adjust_item_drop_location(D)
-				reagents.trans_to(D, 20)
-				D.mode=!mode
-				D.update_icon()
-
-			if(vol_part)
-				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
-				D.name = trim("[name] SmartDart")
-				adjust_item_drop_location(D)
-				reagents.trans_to(D, vol_part)
+				reagents.trans_to(D, vol_each)
 				D.mode=!mode
 				D.update_icon()
 			. = TRUE

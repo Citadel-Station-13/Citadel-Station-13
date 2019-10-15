@@ -910,12 +910,13 @@
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/rapiddartgun
-	name = "Rapid Smart dartgun - larger size beaker = larger mag."
+	name = "Rapid Smart dartgun"
 	result = /obj/item/gun/syringe/dart/rapiddart
 	reqs = list(
 		/obj/item/gun/syringe/dart = 1,
 		/obj/item/stack/sheet/plastic = 5,
-		/obj/item/stack/cable_coil = 1
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/reagent_containers/glass/beaker = 1
 	)
 	parts = list(/obj/item/reagent_containers/glass/beaker = 1)
 	time = 120 //Modifying your gun
