@@ -108,8 +108,8 @@
 						/obj/item/clothing/under/sailor = 1,
 						/obj/item/clothing/ears/headphones = 2,
 						/obj/item/clothing/head/wig/random = 3,
-						/obj/item/clothing/suit/ran = 1,
-						/obj/item/clothing/head/ran = 1)
+						/obj/item/clothing/suit/ran = 2,
+						/obj/item/clothing/head/ran = 2)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 		              /obj/item/clothing/head/powdered_wig = 1,
 		              /obj/item/gun/magic/wand = 2,
