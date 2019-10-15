@@ -10,6 +10,7 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
 	var/turf/target
+	var/obj/item/implant/imp_t
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()
@@ -115,6 +116,9 @@
 		regime_set = "Teleporter"
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
+	if(imp_t)
+		UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+		imp_t = null
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
@@ -135,12 +139,16 @@
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = M
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
+		if(!desc)
+			target = null
+			return
 		target = L[desc]
 		if(isliving(target)) //we need to make sure the living mob is still implanted to be a valid target
 			var/mob/living/M = target
 			var/obj/item/implant/tracking/I = locate() in M.implants
 			if(I)
 				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, .proc/untarget_implant, I)
+				imp_t = I
 			else
 				target = null
 				return
