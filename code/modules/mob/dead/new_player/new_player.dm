@@ -145,7 +145,13 @@
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
-
+		if(!SSticker || !SSticker.IsRoundInProgress())
+			var/msg = "[key_name(usr)] attempted to join the round using a href that shouldn't be available at this moment!"
+			log_admin(msg)
+			message_admins(msg)
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
+			
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
