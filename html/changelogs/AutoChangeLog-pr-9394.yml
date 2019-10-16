@@ -1,0 +1,5 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - bugfix: "Readjusts positioning of Delta's QM keycard device"
+  - bugfix: "Cleaned up a few spots I missed in #9356, particularly around the janitor's office"

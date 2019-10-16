@@ -357,8 +357,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
-	var/obj/item/implant/radio/imp = locate() in src
-	if(imp && imp.radio.on)
+	var/obj/item/implant/radio/imp = locate() in implants
+	if(imp?.radio.on)
 		if(message_mode == MODE_HEADSET)
 			imp.radio.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE

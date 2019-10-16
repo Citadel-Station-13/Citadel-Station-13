@@ -86,7 +86,7 @@
 
 	var/static/image/radial_whetstone = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener")
 	var/static/image/radial_shell = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct-cult")
-	var/static/image/radial_unholy_water = image(icon = 'icons/obj/chemical.dmi', icon_state = "holyflask")
+	var/static/image/radial_unholy_water = image(icon = 'icons/obj/drinks.dmi', icon_state = "holyflask")
 
 /obj/structure/destructible/cult/talisman/Initialize()
 	. = ..()
