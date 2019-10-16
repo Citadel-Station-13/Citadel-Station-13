@@ -12,10 +12,12 @@
 	var/operated = FALSE	//whether we can still have our damages fixed through surgery
 
 	//health
-	maxHealth = LUNGS_MAX_HEALTH
+	maxHealth = 3 * STANDARD_ORGAN_THRESHOLD
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
+	high_threshold = 0.6 * LUNGS_MAX_HEALTH	//threshold at 180
+	low_threshold = 0.3 * LUNGS_MAX_HEALTH	//threshold at 90
 
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
 	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
