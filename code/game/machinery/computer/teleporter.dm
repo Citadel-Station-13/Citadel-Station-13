@@ -112,7 +112,7 @@
 	target = null
 	if(imp_t)
 		UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
-		impt_t = null
+		imp_t = null
 	if(regime_set == "Teleporter")
 		regime_set = "Gate"
 	else
@@ -144,7 +144,7 @@
 		target = L[desc]
 		if(imp_t)
 			UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
-			impt_t = null
+			imp_t = null
 		if(isliving(target)) //make sure the living mob is still implanted to be a valid target
 			var/mob/living/M = target
 			var/obj/item/implant/tracking/I = locate() in M.implants
