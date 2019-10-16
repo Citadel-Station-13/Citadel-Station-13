@@ -60,6 +60,7 @@
 	if(LAZYLEN(vore_organs))
 		return
 
+	LAZYINITLIST(vore_organs)
 	var/obj/belly/B = new (src)
 	vore_selected = B
 	B.immutable = TRUE
