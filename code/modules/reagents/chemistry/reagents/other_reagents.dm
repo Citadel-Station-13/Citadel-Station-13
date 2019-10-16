@@ -33,12 +33,12 @@
 	if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 			C.adjustToxLoss(2*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
-			. = 1
+			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM) //but it should still refill blood
 		else
 			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-			. = 1
 
-	..()
+	holder.remove_reagent(id, 1)
+	return TRUE
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
