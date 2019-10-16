@@ -494,9 +494,10 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 
-/obj/item/clothing/glasses/flight
+/obj/item/clothing/head/flight
 	name = "flight goggles"
 	desc = "Old style flight goggles with a leather cap attached."
 	icon_state = "flight-g"
 	item_state = "flight-g"
-	actions_types = list(/datum/action/item_action/toggle)
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'

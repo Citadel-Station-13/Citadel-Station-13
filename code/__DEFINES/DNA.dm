@@ -106,6 +106,7 @@
 #define SKINTONE		23	//uses skin tones
 #define HORNCOLOR		24
 
+//organ slots
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
@@ -134,3 +135,8 @@
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
 
+
+////organ defines
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+#define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes

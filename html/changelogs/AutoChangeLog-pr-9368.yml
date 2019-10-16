@@ -1,0 +1,6 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - tweak: "made the autoprocess button relevant"
+  - tweak: "changes so that spooktober starts earlier"
+  - bugfix: "fixed the dark blue lum major effect"
