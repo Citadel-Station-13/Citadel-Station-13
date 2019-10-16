@@ -146,10 +146,11 @@
 			if(!amount)
 				if(prob(5))
 					visible_message("[src] pings.")
+					playsound(loc, 'sound/machines/beep.ogg', 50, 1)
 				return
 
 			// If the human is losing too much blood, beep.
-			if(attached.blood_volume < ((BLOOD_VOLUME_SAFE*attached.blood_ratio) && prob(5)))
+			if(attached.blood_volume < ((BLOOD_VOLUME_SAFE*attached.blood_ratio) && prob(5) && ishuman(attached))) //really couldn't care less about monkeys
 				visible_message("[src] beeps loudly.")
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)
@@ -183,7 +184,9 @@
 	if(usr.incapacitated())
 		return
 	if(beaker)
-		beaker.forceMove(drop_location())
+		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
+			if(!usr.put_in_hands(beaker))
+				beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

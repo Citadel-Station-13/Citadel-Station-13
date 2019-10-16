@@ -26,19 +26,22 @@
 			else //ingest, patch or inject
 				L.ForceContractDisease(D)
 
-/datum/reagent/blood/on_mob_life(mob/living/carbon/C, method=INJECT, reac_volume)	//needed so we don't nuke people with massive toxins now. Because apparently being hyperlethal is preferable to stamina drain
-	if(!istype(C))
-		return
-	var/blood_id = C.get_blood_id()
-	if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
-		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-			C.adjustToxLoss(2*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
-			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM) //but it should still refill blood
-		else
-			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		var/blood_id = C.get_blood_id()
+		if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM * C.blood_ratio)
+			// we don't care about bloodtype here, we're just refilling the mob
 
-	holder.remove_reagent(id, 1)
-	return TRUE
+	if(reac_volume >= 10 && istype(L) && method != INJECT)
+		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
+	var/blood_id = C.get_blood_id()
+	if((blood_id == "blood" || blood_id == "jellyblood"))
+		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
+			C.adjustToxLoss(rand(2,8)*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain beneficial toxin as slime person
+	..()
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
