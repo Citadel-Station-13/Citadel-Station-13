@@ -60880,6 +60880,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"vkd" = (
+/obj/effect/landmark/barthpot,
+/turf/open/floor/carpet,
+/area/library/lounge)
 "vlF" = (
 /obj/item/coin/silver,
 /obj/effect/decal/cleanable/oil{
@@ -79876,7 +79880,7 @@ ckT
 xhj
 xhj
 cwK
-xhj
+vkd
 xhj
 cxn
 xhj

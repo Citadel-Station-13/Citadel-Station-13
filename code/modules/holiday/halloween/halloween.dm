@@ -5,19 +5,27 @@
 
 //spooky recipes
 
-/datum/recipe/sugarcookie/spookyskull
-	reagents = list("flour" = 5, "sugar" = 5, "milk" = 5)
-	items = list(
-		/obj/item/reagent_containers/food/snacks/egg,
+/datum/crafting_recipe/food/sugarcookie/spookyskull
+	time = 15
+	name = "Sugar cookie"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
+	subcategory = CAT_PASTRY
 
-/datum/recipe/sugarcookie/spookycoffin
-	reagents = list("flour" = 5, "sugar" = 5, "coffee" = 5)
-	items = list(
-		/obj/item/reagent_containers/food/snacks/egg,
+/datum/crafting_recipe/food/sugarcookie/spookycoffin
+	time = 15
+	name = "Sugar cookie"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/coffee = 5,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
+	subcategory = CAT_PASTRY
+
 
 //////////////////////////////
 //Spookoween trapped closets//
@@ -34,12 +42,12 @@
 	var/trapped = 0
 	var/mob/trapped_mob
 
-/obj/structure/closet/initialize()
+/obj/structure/closet/Initialize()
 	..()
 	if(prob(30))
 		set_spooky_trap()
 
-/obj/structure/closet/dump_contents()
+/obj/structure/closet/dump_contents(var/override = TRUE)
 	..()
 	trigger_spooky_trap()
 
