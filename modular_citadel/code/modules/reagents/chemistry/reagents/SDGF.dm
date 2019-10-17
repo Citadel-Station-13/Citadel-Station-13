@@ -68,11 +68,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			startHunger = M.nutrition
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
-				candies = pollGhostCandidates("Do you want to play as a clone of [M], and do you agree to respect their character and act in a similar manner to them? Do not engage in ERP as them unless you have LOOC permission from them, and ensure it is permission from the original, not a clone.")
+				candies = pollGhostCandidates("Do you want and agree to play as a clone of [M], respect their character and not engage in ERP without permission from the original?", ignore_category = POLL_IGNORE_CLONE)
 				log_game("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
 		if(20 to INFINITY)
 			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
-				log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [candies]")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				var/typepath = M.type
 				var/mob/living/carbon/human/fermi_Gclone = new typepath(M.loc)
@@ -86,12 +85,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				candies = shuffle(candies)//Shake those ghosts up!
 				for(var/mob/dead/observer/C2 in candies)
 					if(C2.key && C2)
-						SM.key = C2.key
+						C2.transfer_ckey(SM, FALSE)
 						message_admins("Ghost candidate found! [C2] key [C2.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
 						log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
 						break
 					else
-						candies =- C2
+						candies -= C2
 				if(!SM.mind) //Something went wrong, use alt mechanics
 					return ..()
 				SM.mind.enslave_mind_to_creator(M)
