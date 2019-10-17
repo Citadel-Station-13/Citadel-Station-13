@@ -104,6 +104,7 @@
 	var/amount = CLAMP(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
+	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"
 
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"
