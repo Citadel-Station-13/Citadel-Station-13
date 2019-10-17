@@ -10,7 +10,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)
+	var/obj/item/implant/mindshield/L = new
 	L.implant(H, null, 1)
 
 	var/obj/item/radio/R = H.ears

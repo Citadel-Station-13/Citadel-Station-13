@@ -1,0 +1,8 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "Heart, Tongue and stomach regen."
+  - bugfix: "lung damage threshholds."
+  - bugfix: "Graft synthtissue"
+  - bugfix: "Skeleton's burning for no reason"
+  - bugfix: "Organ freezing handling."

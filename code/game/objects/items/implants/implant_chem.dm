@@ -3,6 +3,7 @@
 	desc = "Injects things."
 	icon_state = "reagents"
 	activated = FALSE
+	var/obj/item/imp_chemholder/chemholder
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -29,6 +30,26 @@
 	GLOB.tracked_chem_implants -= src
 	return ..()
 
+/obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(chemholder)
+		chemholder.forceMove(target)
+		return
+	chemholder = new(imp_in, src)
+	reagents.trans_to(chemholder, reagents.total_volume)
+
+/obj/item/implant/chem/removed(mob/target, silent = FALSE, special = 0)
+	. = ..()
+	if(!.)
+		return
+	if(!special)
+		chemholder.reagents.trans_to(src, chemholder.reagents.total_volume)
+		QDEL_NULL(chemholder)
+	else
+		chemholder?.moveToNullspace()
+
 /obj/item/implant/chem/trigger(emote, mob/living/source)
 	if(emote == "deathgasp")
 		if(istype(source) && !(source.stat == DEAD))
@@ -45,12 +66,11 @@
 		injectamount = reagents.total_volume
 	else
 		injectamount = cause
-	reagents.trans_to(R, injectamount)
+	chemholder.reagents.trans_to(R, injectamount)
 	to_chat(R, "<span class='italics'>You hear a faint beep.</span>")
-	if(!reagents.total_volume)
+	if(!chemholder.reagents.total_volume)
 		to_chat(R, "<span class='italics'>You hear a faint click from your chest.</span>")
 		qdel(src)
-
 
 /obj/item/implantcase/chem
 	name = "implant case - 'Remote Chemical'"
@@ -61,5 +81,19 @@
 	if(istype(W, /obj/item/reagent_containers/syringe) && imp)
 		W.afterattack(imp, user, TRUE, params)
 		return TRUE
+	else
+		return ..()
+
+/obj/item/imp_chemholder
+	var/obj/item/implant/chem/implant
+
+/obj/item/imp_chemholder/Initialize(mapload, obj/item/implant/chem/_implant)
+	. = ..()
+	create_reagents(50)
+	implant = _implant
+
+/obj/item/imp_chemholder/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
 	else
 		return ..()
