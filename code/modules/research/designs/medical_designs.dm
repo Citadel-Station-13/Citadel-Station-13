@@ -793,18 +793,18 @@
 	id = "surgery_heal_burn_upgrade_femto"
 
 /datum/design/surgery/healing/combo
-	name = "Tend Wounds (Physical)"
+	name = "Tend Wounds (Mixture)"
 	desc = "A surgical procedure that repairs both bruises and burns. Repair efficiency is not as high as the individual surgeries but it is faster."
 	surgery = /datum/surgery/healing/combo
 	id = "surgery_heal_combo"
 
 /datum/design/surgery/healing/combo_upgrade
-	name = "Tend Wounds (Physical) Upgrade"
+	name = "Tend Wounds (Mixture) Upgrade"
 	surgery = /datum/surgery/healing/combo/upgraded
 	id = "surgery_heal_combo_upgrade"
 
 /datum/design/surgery/healing/combo_upgrade_2
-	name = "Tend Wounds (Physical) Upgrade"
+	name = "Tend Wounds (Mixture) Upgrade"
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
