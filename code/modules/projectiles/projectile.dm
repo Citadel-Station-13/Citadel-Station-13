@@ -166,12 +166,12 @@
 				do_sparks(2, FALSE, target.loc)
 				if(prob(25))
 					new /obj/effect/decal/cleanable/oil(target_loca)
-			if(isalien(L))
+			else if(isalien(L))
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 
-			if(prob(33)) //not all projectiles will delete blood, but when it does...
+			if(prob(65)) //not all projectiles will delete blood, but when it does...
 				if(iscarbon(L))
 					var/mob/living/carbon/C = L
 					C.bleed(damage)
