@@ -303,9 +303,10 @@
 			drawing = pick(all_drawables)
 
 	var/temp = "rune"
-	if(is_alpha(drawing))
+	var/ascii = (length(drawing) == 1) ? TRUE : FALSE
+	if(ascii && is_alpha(drawing))
 		temp = "letter"
-	else if(is_digit(drawing))
+	else if(ascii && is_digit(drawing))
 		temp = "number"
 	else if(drawing in punctuation)
 		temp = "punctuation mark"

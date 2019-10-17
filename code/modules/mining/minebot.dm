@@ -49,7 +49,7 @@
 	toggle_mode_action.Grant(src)
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action = new()
 	dump_ore_action.Grant(src)
-	var/obj/item/implant/radio/mining/imp = new(src)
+	var/obj/item/implant/radio/mining/imp = new
 	imp.implant(src)
 
 	access_card = new /obj/item/card/id(src)

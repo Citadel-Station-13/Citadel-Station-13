@@ -1,6 +1,7 @@
 /obj/item/organ/alien
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
+	organ_flags = ORGAN_NO_SPOIL
 
 /obj/item/organ/alien/Initialize()
 	. = ..()

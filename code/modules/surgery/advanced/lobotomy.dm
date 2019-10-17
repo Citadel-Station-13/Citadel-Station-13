@@ -21,7 +21,7 @@
 	return TRUE
 /datum/surgery_step/lobotomize
 	name = "perform lobotomy"
-	implements = list(/obj/item/scalpel = 85, /obj/item/melee/transforming/energy/sword = 55, /obj/item/kitchen/knife = 35,
+	implements = list(TOOL_SCALPEL = 85, /obj/item/melee/transforming/energy/sword = 55, /obj/item/kitchen/knife = 35,
 		/obj/item/shard = 25, /obj/item = 20)
 	time = 100
 /datum/surgery_step/lobotomize/tool_check(mob/user, obj/item/tool)
