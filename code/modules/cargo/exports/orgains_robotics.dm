@@ -139,8 +139,3 @@
 	cost = 5
 	unit_name = "surgery tool"
 	export_types = list(/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw, /obj/item/surgical_drapes)
-
-/datum/export/robotics/surgery_gear_adv
-	cost = 75
-	unit_name = "advanced surgery tool"
-	export_types = list(/obj/item/retractor/adv, /obj/item/hemostat/adv, /obj/item/cautery/adv, /obj/item/surgicaldrill/adv, /obj/item/scalpel/adv, /obj/item/circular_saw/adv)
