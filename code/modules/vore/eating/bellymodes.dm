@@ -18,27 +18,29 @@
 			return SSBELLIES_PROCESSED
 
 	next_process = times_fired + (6 SECONDS/wait) //Set up our next process time.
+	var/to_update = FALSE
 
 /////////////////////////// Auto-Emotes ///////////////////////////
 	if(contents.len && next_emote <= times_fired)
 		next_emote = times_fired + round(emote_time/wait,1)
 		var/list/EL = emote_lists[digest_mode]
-		for(var/mob/living/M in contents)
-			if(M.digestable || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
-				to_chat(M,"<span class='notice'>[pick(EL)]</span>")
+		if(LAZYLEN(EL))
+			for(var/mob/living/M in contents)
+				if(M.digestable || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
+					to_chat(M,"<span class='notice'>[pick(EL)]</span>")
 
 ///////////////////// Prey Loop Refresh/hack //////////////////////
 	for(var/mob/living/M in contents)
-		if(isbelly(M.loc))
+		if(M && isbelly(M.loc))
 			if(world.time > M.next_preyloop)
-				if(is_wet)
+				if(is_wet && wet_loop)
 					if(!M.client)
 						continue
 					M.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 					if(M.client.prefs.cit_toggles & DIGESTION_NOISES)
-						var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+						var/sound/preyloop = sound('sound/vore/prey/loop.ogg')
 						M.playsound_local(get_turf(src),preyloop, 80,0, channel = CHANNEL_PREYLOOP)
-						M.next_preyloop = (world.time + 52 SECONDS)
+						M.next_preyloop = (world.time + 51 SECONDS)
 
 
 /////////////////////////// Exit Early ////////////////////////////
@@ -56,7 +58,6 @@
 	var/sound/prey_death = sound(get_sfx("death_prey"))
 	var/sound/pred_digest = sound(get_sfx("digest_pred"))
 	var/sound/pred_death = sound(get_sfx("death_pred"))
-	var/turf/source = get_turf(owner)
 
 ///////////////////////////// DM_HOLD /////////////////////////////
 	if(digest_mode == DM_HOLD)
@@ -70,18 +71,18 @@
 
 		for (var/mob/living/M in contents)
 			if(prob(25))
-				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/living/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, owner))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
 				for(var/mob/living/H in hearing_mobs)
-					if(!isbelly(H.loc))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
-					else if(H in contents)
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+						SEND_SOUND(H,pred_digest)
+					else if(H && H in contents && H.client)
+						SEND_SOUND(H,prey_digest)
 
 			//Pref protection!
 			if (!M.digestable || M.absorbed)
@@ -107,21 +108,22 @@
 				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>")
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/living/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, owner))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
 				for(var/mob/living/H in hearing_mobs)
-					if(!isbelly(H.loc))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
-					else if(H in contents)
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
+					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+						SEND_SOUND(H,pred_death)
+					else if(H && H in contents && H.client)
+						SEND_SOUND(H,prey_death)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
 				digestion_death(M)
 				owner.update_icons()
+				to_update = TRUE
 				continue
 
 
@@ -136,48 +138,45 @@
 			if(istype(T,/obj/item/reagent_containers/food) || istype(T,/obj/item/organ))
 				digest_item(T)
 
-		owner.updateVRPanel()
-
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		for (var/mob/living/M in contents)
 			if(prob(25))
-				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/living/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, owner))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
 				for(var/mob/living/H in hearing_mobs)
-					if(!isbelly(H.loc))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
-					else if(H in contents)
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+						SEND_SOUND(H,pred_digest)
+					else if(H && H in contents && H.client)
+						SEND_SOUND(H,prey_digest)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
 					M.adjustBruteLoss(-3)
 					M.adjustFireLoss(-3)
 					owner.nutrition -= 5
-		return
 
 ////////////////////////// DM_NOISY /////////////////////////////////
 //for when you just want people to squelch around
 	if(digest_mode == DM_NOISY)
 		if(prob(35))
-			if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 				LAZYCLEARLIST(hearing_mobs)
-				for(var/mob/living/H in get_hearers_in_view(3, source))
+				for(var/mob/living/H in get_hearers_in_view(3, owner))
 					if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 						continue
 					LAZYADD(hearing_mobs, H)
 				last_hearcheck = world.time
 			for(var/mob/living/H in hearing_mobs)
-				if(!isbelly(H.loc))
-					H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
-				else if(H in contents)
-					H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+					SEND_SOUND(H,pred_digest)
+				else if(H && H in contents && H.client)
+					SEND_SOUND(H,prey_digest)
 
 
 //////////////////////////// DM_ABSORB ////////////////////////////
@@ -186,18 +185,18 @@
 		for (var/mob/living/M in contents)
 
 			if(prob(10))//Less often than gurgles. People might leave this on forever.
-				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/living/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, owner))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
 				for(var/mob/living/H in hearing_mobs)
-					if(!isbelly(H.loc))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
-					else if(H in contents)
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+						SEND_SOUND(H,pred_digest)
+					else if(H && H in contents && H.client)
+						SEND_SOUND(H,prey_digest)
 
 			if(M.absorbed)
 				continue
@@ -208,16 +207,18 @@
 				owner.nutrition += oldnutrition
 			else if(M.nutrition < 100) //When they're finally drained.
 				absorb_living(M)
+				to_update = TRUE
 
 //////////////////////////// DM_UNABSORB ////////////////////////////
 	else if(digest_mode == DM_UNABSORB)
 
 		for (var/mob/living/M in contents)
 			if(M.absorbed && owner.nutrition >= 100)
-				M.absorbed = 0
+				M.absorbed = FALSE
 				to_chat(M,"<span class='notice'>You suddenly feel solid again </span>")
 				to_chat(owner,"<span class='notice'>You feel like a part of you is missing.</span>")
 				owner.nutrition -= 100
+				to_update = TRUE
 
 //////////////////////////DM_DRAGON /////////////////////////////////////
 //because dragons need snowflake guts
@@ -228,18 +229,18 @@
 
 		for (var/mob/living/M in contents)
 			if(prob(55)) //if you're hearing this, you're a vore ho anyway.
-				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/living/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, owner))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
 				for(var/mob/living/H in hearing_mobs)
-					if(!isbelly(H.loc))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
-					else if(H in contents)
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+						SEND_SOUND(H,pred_digest)
+					else if(H && H in contents && H.client)
+						SEND_SOUND(H,prey_digest)
 
 		//No digestion protection for megafauna.
 
@@ -261,22 +262,23 @@
 				to_chat(owner, "<span class='warning'>[digest_alert_owner]</span>")
 				to_chat(M, "<span class='warning'>[digest_alert_prey]</span>")
 				M.visible_message("<span class='notice'>You watch as [owner]'s guts loudly rumble as it finishes off a meal.</span>")
-				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/living/H in get_hearers_in_view(3, source))
+					for(var/mob/living/H in get_hearers_in_view(3, owner))
 						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
 				for(var/mob/living/H in hearing_mobs)
-					if(!isbelly(H.loc))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
-					else if(H in contents)
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
+					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+						SEND_SOUND(H,pred_death)
+					else if(H && H in contents && H.client)
+						SEND_SOUND(H,prey_death)
 				M.spill_organs(FALSE,TRUE,TRUE)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
 				digestion_death(M)
 				owner.update_icons()
+				to_update = TRUE
 				continue
 
 
@@ -291,4 +293,11 @@
 			if(istype(T,/obj/item/reagent_containers/food) || istype(T,/obj/item/organ))
 				digest_item(T)
 
-		owner.updateVRPanel()
+	if(to_update)
+		for(var/mob/living/M in contents)
+			if(M.client)
+				M.updateVRPanel()
+		if(owner.client)
+			owner.updateVRPanel()
+
+	return SSBELLIES_PROCESSED

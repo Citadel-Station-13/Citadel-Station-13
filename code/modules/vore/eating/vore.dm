@@ -84,22 +84,22 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 
 /datum/vore_preferences/proc/load_vore()
 	if(!client || !client_ckey)
-		return 0 //No client, how can we save?
+		return FALSE //No client, how can we save?
 	if(!client.prefs || !client.prefs.default_slot)
-		return 0 //Need to know what character to load!
+		return FALSE //Need to know what character to load!
 
 	slot = client.prefs.default_slot
 
 	load_path(client_ckey,slot)
 
-	if(!path) return 0 //Path couldn't be set?
+	if(!path) return FALSE //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
 		save_vore() //Make the file first
-		return 1
+		return TRUE
 
 	var/list/json_from_file = json_decode(file2text(path))
 	if(!json_from_file)
-		return 0 //My concern grows
+		return FALSE //My concern grows
 
 	var/version = json_from_file["version"]
 	json_from_file = patch_version(json_from_file,version)
@@ -120,11 +120,11 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
-	return 1
+	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
 	if(!path)
-		return 0
+		return FALSE
 
 	var/version = VORE_VERSION	//For "good times" use in the future
 	var/list/settings_list = list(
@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	var/json_to_file = json_encode(settings_list)
 	if(!json_to_file)
 		testing("Saving: [path] failed jsonencode")
-		return 0
+		return FALSE
 
 	//Write it out
 //#ifdef RUST_G
@@ -153,9 +153,9 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 //#endif
 	if(!fexists(path))
 		testing("Saving: [path] failed file write")
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /* commented out list things
 	"allowmobvore"			= allowmobvore,
