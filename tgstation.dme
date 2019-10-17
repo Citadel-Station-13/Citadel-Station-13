@@ -3118,4 +3118,9 @@
 #include "modular_citadel\code\modules\vore\eating\voreitems.dm"
 #include "modular_citadel\code\modules\vore\eating\vorepanel_vr.dm"
 #include "modular_citadel\interface\skin.dmf"
+#include "F:\Games\GITHUBHARD\UNGA\Blinstation.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\chrimbus.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\Infernus.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\OhmStation.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\spook2.dmm"
 // END_INCLUDE
