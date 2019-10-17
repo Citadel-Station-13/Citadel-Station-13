@@ -99,7 +99,7 @@
 	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
-	metabolization_rate = 0.1
+	metabolization_rate = 0.05 //Give them time to graft
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
@@ -114,7 +114,7 @@
 				to_chat(M, "<span class='danger'>You feel your [target] heal! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	if(method==INJECT)
-		data["injected_vol"] = data["injected_vol"] + reac_volume
+		data["injected_vol"] = reac_volume
 	..()
 
 /datum/reagent/synthtissue/on_mob_life(mob/living/carbon/C)
@@ -135,6 +135,9 @@
 		return ..()
 	if(passed_data["grown_volume"] > data["grown_volume"])
 		data["grown_volume"] = passed_data["grown_volume"]
+	if(iscarbon(holder.my_atom))
+		data["injected_vol"] = data["injected_vol"] + passed_data["injected_vol"]
+		passed_data["injected_vol"] = 0
 	..()
 
 /datum/reagent/synthtissue/on_new(passed_data)
