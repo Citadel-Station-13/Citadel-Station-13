@@ -1,0 +1,4 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - bugfix: "you can no longer have infinite ebows"

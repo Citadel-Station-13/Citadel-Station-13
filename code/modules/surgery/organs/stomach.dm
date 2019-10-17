@@ -17,6 +17,7 @@
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
 /obj/item/organ/stomach/on_life()
+	..()
 	var/datum/reagent/consumable/nutriment/Nutri
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
