@@ -411,8 +411,7 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.suiciding = TRUE //to penalize them from making a ghost role / midround antag comeback right away.
-		mob_occupant.ghostize(0)
+		mob_occupant.ghostize(FALSE, penalize = TRUE)
 
 	QDEL_NULL(occupant)
 	open_machine()

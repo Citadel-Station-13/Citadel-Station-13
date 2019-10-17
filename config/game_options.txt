@@ -471,6 +471,18 @@ MIDROUND_ANTAG_TIME_CHECK 60
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.7
 
+## A time, in real-time deciseconds, applied upon suicide, cryosleep or ghosting whilst alive
+## during which the player shouldn't be able to come back through
+## midround playable roles or mob spawners.
+## Set to 0 to completely disable it.
+SUICIDE_REENTER_ROUND_TIMER 18000
+
+## A time, in real-time deciseconds, below which the player receives
+## a timed penalty, for purposes similar to the aforementioned one (can also stack)
+## and equal to this config difference with world.time.
+## Both configs are indipendent from each other, disabling one won't affect the other.
+ROUNDSTART_SUICIDE_TIME_LIMIT 18000
+
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
 
