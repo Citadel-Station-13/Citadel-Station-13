@@ -236,10 +236,12 @@
 /datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
-	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. It is mildly poisonous taken orally or by injection. If overdosed, deals brute and minor liver damage."
 	reagent_state = LIQUID
 	pH = 7.2
 	color = "#ffeac9"
+	metabolization_rate = 5 * REAGENTS_METABOLISM
+	overdose_threshold = 50
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -260,6 +262,15 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/silver_sulfadiazine/overdose_start(mob/living/M)
+	metabolization_rate = 15 * REAGENTS_METABOLISM
+	M.adjustBruteLoss(2*REM, 0)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.applyLiverDamage(1)
+	..()
+	. = 1
+
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
@@ -271,7 +282,7 @@
 	pH = 10.7
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
-	if(M.getFireLoss() > 50)
+	if(M.getFireLoss() > 25)
 		M.adjustFireLoss(-4*REM, 0) //Twice as effective as silver sulfadiazine for severe burns
 	else
 		M.adjustFireLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
@@ -287,10 +298,12 @@
 /datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
-	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. It is poisonous if taken orally or by injection. If overdosed, deals brute and minor liver damage."
 	reagent_state = LIQUID
 	color = "#FF9696"
 	pH = 6.7
+	metabolization_rate = 5 * REAGENTS_METABOLISM
+	overdose_threshold = 50
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -309,6 +322,15 @@
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2*REM, 0)
+	..()
+	. = 1
+
+datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
+	metabolization_rate = 15 * REAGENTS_METABOLISM
+	M.adjustBruteLoss(2*REM, 0)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.applyLiverDamage(1)
 	..()
 	. = 1
 
@@ -398,22 +420,34 @@
 /datum/reagent/medicine/synthflesh
 	name = "Synthflesh"
 	id = "synthflesh"
-	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
+	description = "Has a 100% chance of healing large amounts of brute and burn damage very quickly. One unit of the chemical will heal one point of damage. Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 	pH = 11.5
+	metabolization_rate = 5 * REAGENTS_METABOLISM
+	overdose_threshold = 40
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		if (M.stat == DEAD)
 			show_message = 0
-		if(method in list(PATCH, TOUCH))
-			M.adjustBruteLoss(-1.25 * reac_volume)
-			M.adjustFireLoss(-1.25 * reac_volume)
+		if(method in list(INGEST, VAPOR))
+			var/mob/living/carbon/C = M
+			C.losebreath++
+			C.emote("cough")
+			to_chat(M, "<span class='danger'>You feel your throat closing up!</span>")
+		else if(method == INJECT)
+			return
+		else if(method in list(PATCH, TOUCH))
+			M.adjustBruteLoss(-1 * reac_volume)
+			M.adjustFireLoss(-1 * reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
+
+/datum/reagent/medicine/synthflesh/overdose_start(mob/living/M)
+	metabolization_rate = 15 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/charcoal
 	name = "Charcoal"
@@ -545,7 +579,7 @@
 
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
-	if(M.getBruteLoss() > 50)
+	if(M.getBruteLoss() > 25)
 		M.adjustBruteLoss(-4*REM, 0) //Twice as effective as styptic powder for severe bruising
 	else
 		M.adjustBruteLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
