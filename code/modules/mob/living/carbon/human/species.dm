@@ -9,9 +9,29 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
-	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+	var/sexes = 1 // whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 
-	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
+	//Species Icon Drawing Offsets - Pixel X, Pixel Y, Aka X = Horizontal and Y = Vertical, from bottom left corner
+	var/list/offset_features = list(
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,0),
+		OFFSET_GLASSES = list(0,0),
+		OFFSET_EARS = list(0,0),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,0),
+		OFFSET_HEAD = list(0,0),
+		OFFSET_EYES = list(0,0),
+		OFFSET_LIPS = list(0,0),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,0),
+		OFFSET_HAIR = list(0,0),
+		OFFSET_FHAIR = list(0,0),
+		OFFSET_SUIT = list(0,0),
+		OFFSET_NECK = list(0,0),
+		OFFSET_MUTPARTS = list(0,0)
+		)
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -401,6 +421,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			facial_overlay.alpha = hair_alpha
 
+			if(OFFSET_FHAIR in H.dna.species.offset_features)
+				facial_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FHAIR][1]
+				facial_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FHAIR][2]
+
 			standing += facial_overlay
 
 	if(H.head)
@@ -458,9 +482,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
-				if(OFFSET_FACE in H.dna.species.offset_features)
-					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+
+				if(OFFSET_HAIR in H.dna.species.offset_features)
+					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_HAIR][1]
+					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_HAIR][2]
+
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -481,9 +507,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+
+			if(OFFSET_LIPS in H.dna.species.offset_features)
+				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_LIPS][1]
+				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_LIPS][2]
+
 			standing += lip_overlay
 
 		// eyes
@@ -496,9 +524,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			if((EYECOLOR in species_traits) && has_eyes)
 				eye_overlay.color = "#" + H.eye_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+
+			if(OFFSET_EYES in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_EYES][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_EYES][2]
+
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
@@ -784,6 +814,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				bodypart = "snout"
 			if(bodypart == "xenohead")
 				bodypart = "xhead"
+			if(bodypart == "insect_wings" || bodypart == "deco_wings")
+				bodypart = "insect_wings"
 
 			if(S.gender_specific)
 				accessory_overlay.icon_state = "[g]_[bodypart]_[S.icon_state]_[layertext]"
@@ -853,6 +885,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					for(var/index=1, index<=husklist.len, index++)
 						husklist[index] = husklist[index]/255
 					accessory_overlay.color = husklist
+
+			if(OFFSET_MUTPARTS in H.dna.species.offset_features)
+				accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
+				accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
+
 			standing += accessory_overlay
 
 			if(S.hasinner)
@@ -864,6 +901,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 				if(S.center)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, S.dimension_x, S.dimension_y)
+
+				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
+					inner_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
+					inner_accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
 
 				standing += inner_accessory_overlay
 
@@ -905,6 +946,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 					if(HORNCOLOR)
 						extra_accessory_overlay.color = "#[H.horn_color]"
+
+				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
+					extra_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
+					extra_accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
+
 				standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
@@ -939,6 +985,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 							extra2_accessory_overlay.color = "#[H.hair_color]"
 					if(HORNCOLOR)
 						extra2_accessory_overlay.color = "#[H.horn_color]"
+
+				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
+					extra2_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
+					extra2_accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
+
 				standing += extra2_accessory_overlay
 
 
@@ -1345,9 +1396,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
-		if(istype(J) && J.full_speed && J.allow_thrust(0.005, H))	//Prevents stacking
+		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
 			. -= 0.4
-		else if(istype(T) && T.allow_thrust(0.005, H))
+		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 0.4
 
 	if(!ignoreslow && gravity)

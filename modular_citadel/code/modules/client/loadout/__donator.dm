@@ -450,5 +450,5 @@ datum/gear/darksabresheath
 /datum/gear/donorgoggles
 	name = "Flight Goggles"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/glasses/flight
+	path = /obj/item/clothing/head/flight
 	ckeywhitelist = list("maxlynchy")

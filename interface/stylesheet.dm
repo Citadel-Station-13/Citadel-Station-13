@@ -153,6 +153,7 @@ h1.alert, h2.alert		{color: #000000;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
+.spooky					{color: #FF9100;}
 .velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
 @keyframes velvet {
 	0% { color: #400020; }
