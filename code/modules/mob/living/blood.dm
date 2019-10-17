@@ -283,7 +283,6 @@
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
-			//	src.transfer_blood_to(drop, 2)
 				drop.update_icon()
 				return
 			else
@@ -293,7 +292,6 @@
 		else
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
-		//	src.transfer_blood_to(drop, 2)
 			drop.update_icon()
 			return
 
@@ -304,7 +302,6 @@
 	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
-//	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA
 
