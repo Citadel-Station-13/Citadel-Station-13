@@ -2,6 +2,17 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
+/obj/structure/table,
+/obj/structure/bedsheetbin/towel,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet/restrooms)
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -20376,6 +20387,7 @@
 /obj/machinery/keycard_auth{
 	pixel_y = 23
 	},
+/obj/item/clipboard,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aNS" = (
@@ -21064,6 +21076,7 @@
 	departmentType = 2;
 	pixel_x = 32
 	},
+/obj/item/stamp/qm,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aPl" = (
@@ -21619,11 +21632,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aQt" = (
-/obj/structure/table,
-/obj/item/clipboard,
-/obj/item/stamp/qm,
 /obj/machinery/status_display/supply{
 	pixel_x = 32
+	},
+/obj/machinery/computer/card/minor/qm{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -43775,6 +43788,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bGt" = (
+/obj/effect/landmark/barthpot,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -57384,6 +57398,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cha" = (
@@ -57404,6 +57419,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "chb" = (
@@ -66400,6 +66416,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
@@ -78455,6 +78474,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "dbq" = (
+/mob/living/simple_animal/hostile/retaliate/goose,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -80877,15 +80897,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
-"dhD" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/freezer,
-/area/crew_quarters/toilet/restrooms)
 "dhE" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -118782,7 +118793,7 @@ aBu
 aCB
 aDU
 aFg
-dhD
+aab
 axC
 axC
 axC

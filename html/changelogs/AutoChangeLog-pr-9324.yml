@@ -1,0 +1,5 @@
+author: "TerraGS / Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Adds toggleable light and blinking charge indicator to kinetic crusher"
+  - rscadd: "Kinetic crusher can now be one-hand carried. You'll still need two hand to use it."

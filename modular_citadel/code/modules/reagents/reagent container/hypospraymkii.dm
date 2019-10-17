@@ -96,7 +96,10 @@
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
-	to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+	if(vial)
+		to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+	else
+		to_chat(user, "It has no vial loaded in.")
 	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
 
 /obj/item/hypospray/mkii/proc/unload_hypo(obj/item/I, mob/user)

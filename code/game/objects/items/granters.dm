@@ -302,7 +302,7 @@
 	spellname = "charge"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% postconsumer wizard."
-	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
+	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO", "Just wait faster is all...")
 
 /obj/item/book/granter/spell/charge/recoil(mob/user)
 	..()
