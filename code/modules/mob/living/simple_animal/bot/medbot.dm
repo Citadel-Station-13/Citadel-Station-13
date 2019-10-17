@@ -398,13 +398,10 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/medbot/proc/get_avoidchem_toxin(mob/M)
-	return toxlover_check(M)? null : treatment_tox_avoid
+	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? null : treatment_tox_avoid
 
 /mob/living/simple_animal/bot/medbot/proc/get_healchem_toxin(mob/M)
-	return toxlover_check(M)? treatment_tox_toxlover : treatment_tox
-
-/mob/living/simple_animal/bot/medbot/proc/toxlover_check(mob/M)
-	return HAS_TRAIT(M, TRAIT_TOXINLOVER)
+	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? treatment_tox_toxlover : treatment_tox
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
 	if(iscarbon(A))
