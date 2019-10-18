@@ -34,8 +34,11 @@
 	pen = null
 	return ..()
 
+/obj/item/projectile/bullet/reusable/foam_dart/toy //Placeholder while I work out a more permanent solution
+	name = "foam dart"
+
 /obj/item/projectile/bullet/reusable/foam_dart/riot
 	name = "riot foam dart"
 	icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	stamina = 25
+	stamina = 20

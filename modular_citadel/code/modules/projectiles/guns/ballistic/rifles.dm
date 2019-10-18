@@ -191,9 +191,10 @@
 	item_flags = NEEDS_PERMIT
 	casing_ejector = 0
 	spread = 30		//Assault Rifleeeeeee
-	w_class = WEIGHT_CLASS_NORMAL
-	burst_size = 4	//Shh.
-	fire_delay = 1
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	burst_size = 3	//Shh.
+	fire_delay = 1.1
 	var/body_color = "#3333aa"
 
 /obj/item/gun/ballistic/automatic/AM4B/update_icon()
@@ -240,6 +241,7 @@
 	item_flags = NEEDS_PERMIT
 	casing_ejector = 0
 	spread = 45		//Assault Rifleeeeeee
-	w_class = WEIGHT_CLASS_NORMAL
-	burst_size = 4	//Shh.
-	fire_delay = 1
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	burst_size = 3	//Shh.
+	fire_delay = 1.1

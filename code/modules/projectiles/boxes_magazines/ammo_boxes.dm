@@ -62,11 +62,12 @@
 	name = "ammo box (Foam Darts)"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
-	max_ammo = 40
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/toy
+	max_ammo = 60
 	materials = list(MAT_METAL = 500)
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	max_ammo = 30 //Heavier darts, take more space. 
 	materials = list(MAT_METAL = 50000)

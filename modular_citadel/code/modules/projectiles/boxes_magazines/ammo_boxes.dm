@@ -2,7 +2,7 @@
 	name = "ammo box (Lastag Foam Darts)"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/tag
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/toy/tag
 	max_ammo = 40
 	color = "#FF00FF"
 
@@ -10,7 +10,7 @@
 	name = "ammo box (Lastag Red Foam Darts)"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/tag/red
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/toy/tag/red
 	max_ammo = 40
 	color = "#FF0000"
 
@@ -18,6 +18,6 @@
 	name = "ammo box (Lastag Blue Foam Darts)"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/tag/blue
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/toy/tag/blue
 	max_ammo = 40
 	color = "#0000FF"

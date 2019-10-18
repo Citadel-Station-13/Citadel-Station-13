@@ -57,6 +57,9 @@
 		to_chat(user, "<span class='notice'>You remove [FD.pen] from [src].</span>")
 		FD.pen = null
 
+/obj/item/ammo_casing/caseless/foam_dart/toy
+	name = "foam dart"
+
 /obj/item/ammo_casing/caseless/foam_dart/riot
 	name = "riot foam dart"
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
