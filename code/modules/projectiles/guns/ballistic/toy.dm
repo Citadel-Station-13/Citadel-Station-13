@@ -1,3 +1,5 @@
+#define riot_modded = 0
+
 /obj/item/gun/ballistic/automatic/toy
 	name = "foam force SMG"
 	desc = "A prototype three-round burst toy submachine gun. Ages 8 and up."
@@ -13,6 +15,8 @@
 	clumsy_check = 0
 	item_flags = NONE
 	casing_ejector = FALSE
+
+
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/firing_pin
