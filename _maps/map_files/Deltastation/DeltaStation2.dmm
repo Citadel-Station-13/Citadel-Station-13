@@ -124,6 +124,36 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+"aaq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/structure/bedsheetbin/towel,
+/turf/open/floor/plasteel,
+/area/crew_quarters/toilet/restrooms)
+"aar" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/bedsheetbin/color,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/crew_quarters/dorms)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -27640,7 +27670,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aZh" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -27649,6 +27678,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/computer/card/minor/qm{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -80843,21 +80875,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
-"cFc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/toilet/restrooms)
 "cFd" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -84350,19 +84367,6 @@
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cKT" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/crew_quarters/dorms)
 "cKU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -88703,6 +88707,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "cSK" = (
@@ -89875,6 +89882,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -127144,6 +127154,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"kZu" = (
+/obj/effect/landmark/barthpot,
+/turf/open/floor/wood,
+/area/library)
 "lak" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -160643,7 +160657,7 @@ caG
 chU
 cjt
 ckR
-cmt
+kZu
 cnR
 cpv
 cqQ
@@ -172734,7 +172748,7 @@ bsE
 cAm
 cBI
 cDo
-cFc
+aaq
 cAm
 cHW
 cIW
@@ -177107,7 +177121,7 @@ cFr
 cGP
 cqd
 cJe
-cKT
+aar
 cMq
 cAw
 cPM

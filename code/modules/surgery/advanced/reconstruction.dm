@@ -11,13 +11,13 @@
 				/datum/surgery_step/reconstruct,
 				/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
 
 /datum/surgery_step/reconstruct
 	name = "repair body"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	repeatable = TRUE
 	time = 25
 

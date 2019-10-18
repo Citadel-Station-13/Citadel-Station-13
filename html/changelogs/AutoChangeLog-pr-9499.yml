@@ -1,0 +1,4 @@
+author: "r4d6"
+delete-after: True
+changes: 
+  - rscadd: "Added blindfolds to the Loadout list"

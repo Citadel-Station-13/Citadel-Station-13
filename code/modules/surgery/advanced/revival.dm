@@ -8,7 +8,8 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/revive,
 				/datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 /datum/surgery/advanced/revival/can_start(mob/user, mob/living/carbon/target)
@@ -63,7 +64,7 @@
 		user.visible_message("...[target] wakes up, alive and aware!", "<span class='notice'><b>IT'S ALIVE!</b></span>")
 		target.visible_message("...[target] wakes up, alive and aware!")
 		target.emote("gasp")
-		target.adjustBrainLoss(50, 199) //MAD SCIENCE
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
 		return TRUE
 	else
 		user.visible_message("...[target.p_they()] convulses, then lies still.")
@@ -75,5 +76,5 @@
 		"[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.",
 		"[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.")
 	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, 1)
-	target.adjustBrainLoss(15, 199)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 199)
 	return FALSE
