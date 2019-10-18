@@ -433,9 +433,9 @@
 				. += image(body_markings_icon, "[body_markings]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
-	var/list/aux
+	var/list/aux = list()
 	var/image/marking
-	var/list/auxmarking
+	var/list/auxmarking = list()
 
 	. += limb
 
