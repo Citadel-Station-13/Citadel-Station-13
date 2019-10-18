@@ -48,8 +48,9 @@
 	if(visualsOnly)
 		return
 
-	if(!preference_source)
-		H.apply_pref_name("clown", preference_source) //rename the mob AFTER they're equipped so their ID gets updated properly.
+	var/client/C = H.client || preference_source
+	if(C)
+		H.apply_pref_name("clown", C) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	else
 		H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names))
 	H.dna.add_mutation(CLOWNMUT)
