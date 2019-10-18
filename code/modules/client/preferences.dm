@@ -1730,13 +1730,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_insect_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_wings_list
 					if(new_insect_wings)
 						features["insect_wings"] = new_insect_wings
-				
+
 				if("deco_wings")
 					var/new_deco_wings
 					new_deco_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.deco_wings_list
 					if(new_deco_wings)
 						features["deco_wings"] = new_deco_wings
-				
+
 				if("insect_fluffs")
 					var/new_insect_fluff
 					new_insect_fluff = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_fluffs_list
@@ -2276,10 +2276,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.undie_color = undie_color
 	character.shirt_color = shirt_color
 	character.socks_color = socks_color
-
-
-	character.backbag = backbag
-	character.jumpsuit_style = jumpsuit_style
 
 	var/datum/species/chosen_species
 	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))

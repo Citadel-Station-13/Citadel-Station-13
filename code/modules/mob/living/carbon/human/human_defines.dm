@@ -32,8 +32,6 @@
 	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
 	var/socks_color = "FFFFFF"
-	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
-	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots
 	var/obj/item/wear_suit = null

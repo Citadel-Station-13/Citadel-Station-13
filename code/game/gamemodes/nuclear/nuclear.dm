@@ -144,7 +144,7 @@
 /datum/outfit/syndicate/no_crystals
 	tc = 0
 
-/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_SYNDICATE)
 	R.freqlock = TRUE
