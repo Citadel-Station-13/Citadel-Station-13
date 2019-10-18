@@ -215,18 +215,3 @@
 /datum/sprite_accessory/insect_wings/feathery
 	name = "Feathery"
 	icon_state = "feathery"
-
-/datum/sprite_accessory/insect_fluff/colored1
-	name = "Colored (Primary)"
-	icon_state = "snowplain"
-	color_src = MUTCOLORS
-
-/datum/sprite_accessory/insect_fluff/colored2
-	name = "Colored (Secondary)"
-	icon_state = "snowplain"
-	color_src = MUTCOLORS2
-
-/datum/sprite_accessory/insect_fluff/colored3
-	name = "Colored (Tertiary)"
-	icon_state = "snowplain"
-	color_src = MUTCOLORS3
