@@ -1,5 +1,4 @@
 #define STUNBATON_CHARGE_LENIENCY 0.3
-#define STUNBATON_DEPLETION_RATE 0.006
 
 /obj/item/melee/baton
 	name = "stunbaton"
@@ -77,7 +76,7 @@
 	update_icon()
 
 /obj/item/melee/baton/process()
-	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
+	deductcharge(hitcost * 0.004, FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -252,4 +251,3 @@
 	. = ..()
 
 #undef STUNBATON_CHARGE_LENIENCY
-#undef STUNBATON_DEPLETION_RATE
