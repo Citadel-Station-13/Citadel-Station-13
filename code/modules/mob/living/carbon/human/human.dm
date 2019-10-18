@@ -34,6 +34,8 @@
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
 
+	GLOB.human_list += src
+
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
@@ -43,6 +45,7 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
+	GLOB.human_list -= src
 	return ..()
 
 

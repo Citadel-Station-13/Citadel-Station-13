@@ -32,7 +32,8 @@
 	if(prob(75))
 		all_the_same = 1
 
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
