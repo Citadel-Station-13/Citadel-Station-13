@@ -30,6 +30,7 @@
 // Decorative wings
 /datum/sprite_accessory/deco_wings
 	icon = 'icons/mob/wings.dmi'
+	color_src = WINGCOLOR
 
 /datum/sprite_accessory/deco_wings/plain
 	name = "Plain"
@@ -104,6 +105,22 @@
 	center = TRUE
 	dimension_y = 34
 
+/datum/sprite_accessory/deco_wings/bee
+	name = "Bee"
+	icon_state = "bee"
+
+/datum/sprite_accessory/deco_wings/fairy
+	name = "Fairy"
+	icon_state = "fairy"
+
+/datum/sprite_accessory/deco_wings/bat
+	name = "Bat"
+	icon_state = "bat"
+
+/datum/sprite_accessory/deco_wings/feathery
+	name = "Feathery"
+	icon_state = "feathery"
+
 /datum/sprite_accessory/deco_wings/none
 	name = "None"
 	icon_state = "none"
@@ -113,7 +130,7 @@
 
 /datum/sprite_accessory/insect_wings
 	icon = 'icons/mob/wings.dmi'
-	color_src = null
+	color_src = WINGCOLOR
 
 /datum/sprite_accessory/insect_wings/none
 	name = "None"
@@ -183,10 +200,21 @@
 	name = "Snow"
 	icon_state = "snow"
 
-/datum/sprite_accessory/insect_wings/colored
-	name = "Colored (Hair)"
-	icon_state = "snowplain"
-	color_src = HAIR
+/datum/sprite_accessory/insect_wings/bee
+	name = "Bee"
+	icon_state = "bee"
+
+/datum/sprite_accessory/insect_wings/fairy
+	name = "Fairy"
+	icon_state = "fairy"
+
+/datum/sprite_accessory/insect_wings/bat
+	name = "Bat"
+	icon_state = "bat"
+
+/datum/sprite_accessory/insect_wings/feathery
+	name = "Feathery"
+	icon_state = "feathery"
 
 /datum/sprite_accessory/insect_fluff/colored1
 	name = "Colored (Primary)"
@@ -202,24 +230,3 @@
 	name = "Colored (Tertiary)"
 	icon_state = "snowplain"
 	color_src = MUTCOLORS3
-
-/datum/sprite_accessory/insect_wings/bee
-	name = "Bee"
-	icon_state = "bee"
-
-/datum/sprite_accessory/insect_wings/bee_color
-	name = "Bee (Hair colored)"
-	icon_state = "bee"
-	color_src = HAIR
-
-/datum/sprite_accessory/insect_wings/fairy
-	name = "Fairy"
-	icon_state = "fairy"
-
-/datum/sprite_accessory/insect_wings/bat
-	name = "Bat"
-	icon_state = "bat"
-
-/datum/sprite_accessory/insect_wings/feathery
-	name = "Feathery"
-	icon_state = "feathery"
