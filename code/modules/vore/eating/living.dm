@@ -8,7 +8,7 @@
 	var/feeding = FALSE						// Are we going to feed someone else?
 	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
-	var/openpanel = 0						// Is the vore panel open?
+	var/openpanel = FALSE					// Is the vore panel open?
 	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
 	var/vore_init = FALSE					//Has this mob's vore been initialized yet?
@@ -23,16 +23,16 @@
 	M.verbs += /mob/living/proc/escapeOOC
 
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
-		return 1
+		return TRUE
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	spawn(10 SECONDS) // long delay because the server delays in its startup. just on the safe side.
+	spawn(2 SECONDS) // long delay because the server delays in its startup. just on the safe side.
 		if(M)
 			M.init_vore()
 
-	//Return 1 to hook-caller
-	return 1
+	//return TRUE to hook-caller
+	return TRUE
 
 /mob/living/proc/init_vore()
 	vore_init = TRUE
@@ -54,10 +54,10 @@
 		LAZYINITLIST(vore_organs)
 		var/obj/belly/B = new /obj/belly(src)
 		vore_selected = B
-		B.immutable = 1
+		B.immutable = TRUE
 		B.name = "Stomach"
 		B.desc = "It appears to be rather warm and wet. Makes sense, considering it's inside [name]."
-		B.can_taste = 1
+		B.can_taste = TRUE
 		return TRUE
 
 // Handle being clicked, perhaps with something to devour
@@ -84,7 +84,7 @@
 			return
 		feed_self_to_grabbed(user, pred)
 
-	if(pred == user) //you click yourself
+	else if(pred == user) //you click yourself
 		if(!is_vore_predator(src))
 			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
 			return
@@ -126,7 +126,7 @@
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return FALSE
+		return
 
 	if (!prey.devourable)
 		to_chat(user, "This can't be eaten!")
@@ -151,9 +151,14 @@
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
-	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
+	var/swallow_time
+	if(delay)
+		swallow_time = delay
+	else
+		swallow_time = istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
-	if(!do_mob(src, user, swallow_time))
+	//Timer and progress bar
+	if(!do_after(user, swallow_time, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
@@ -161,13 +166,6 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-
-	// incredibly contentious eating noises time
-	var/turf/source = get_turf(user)
-	var/sound/eating = GLOB.vore_sounds[belly.vore_sound]
-	for(var/mob/living/M in get_hearers_in_view(3, source))
-		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-			SEND_SOUND(M, eating)
 
 	// Actually shove prey into the belly.
 	belly.nom_mob(prey, user)
@@ -183,7 +181,7 @@
 	if(prey.ckey)
 		prey_stat = prey.stat//only return this if they're not an unmonkey or whatever
 		if(!prey.client)//if they disconnected, tell us
-			prey_braindead = 1
+			prey_braindead = TRUE
 	if (pred == user)
 		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
 		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
@@ -212,15 +210,15 @@
 
 	//Other overridden resists go here
 
-	return 0
+	return FALSE
 
 // internal slimy button in case the loop stops playing but the player wants to hear it
 /mob/living/proc/preyloop_refresh()
 	set name = "Internal loop refresh"
 	set category = "Vore"
+	src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 	if(isbelly(loc))
-		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
-		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+		var/sound/preyloop = sound('sound/vore/prey/loop.ogg')
 		SEND_SOUND(src, preyloop)
 	else
 		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
@@ -265,28 +263,28 @@
 //
 /mob/living/proc/save_vore_prefs()
 	if(!client || !client.prefs_vr)
-		return 0
+		return FALSE
 	if(!copy_to_prefs_vr())
-		return 0
+		return FALSE
 	if(!client.prefs_vr.save_vore())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/apply_vore_prefs()
 	if(!client || !client.prefs_vr)
-		return 0
+		return FALSE
 	if(!client.prefs_vr.load_vore())
-		return 0
+		return FALSE
 	if(!copy_from_prefs_vr())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/copy_to_prefs_vr()
 	if(!client || !client.prefs_vr)
 		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
-		return 0
+		return FALSE
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
@@ -302,7 +300,7 @@
 
 	P.belly_prefs = serialized
 
-	return 1
+	return TRUE
 
 //
 //	Proc for applying vore preferences, given bellies
@@ -310,7 +308,7 @@
 /mob/living/proc/copy_from_prefs_vr()
 	if(!client || !client.prefs_vr)
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
-		return 0
+		return FALSE
 	vorepref_init = TRUE
 
 	var/datum/vore_preferences/P = client.prefs_vr
@@ -325,7 +323,7 @@
 	for(var/entry in P.belly_prefs)
 		list_to_object(entry,src)
 
-	return 1
+	return TRUE
 
 //
 // Release everything in every vore organ

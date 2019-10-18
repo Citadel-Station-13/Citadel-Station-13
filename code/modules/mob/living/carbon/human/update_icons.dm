@@ -123,26 +123,20 @@ There are several things that need to be remembered:
 			if(U.adjusted == ALT_STYLE)
 				t_color = "[t_color]_d"
 
-		if(!U.force_alternate_icon)
-			if(U.mutantrace_variation)
-				if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
-					U.alternate_worn_icon = 'modular_citadel/icons/mob/uniform_digi.dmi'
-					if(U.adjusted == ALT_STYLE)
-						t_color = "[t_color]_d_l"
-					else if(U.adjusted == NORMAL_STYLE)
-						t_color = "[t_color]_l"
-				else
-					U.alternate_worn_icon = null
+		var/alt_worn = U.alternate_worn_icon
+
+		if(!U.force_alternate_icon && U.mutantrace_variation && U.suit_style == DIGITIGRADE_SUIT_STYLE)
+			alt_worn = 'modular_citadel/icons/mob/uniform_digi.dmi'
 
 		var/mutable_appearance/uniform_overlay
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = ((w_uniform.alternate_worn_icon) ? w_uniform.alternate_worn_icon : 'icons/mob/uniform.dmi'), isinhands = FALSE, femaleuniform = U.fitted)
+				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (alt_worn ? alt_worn : 'icons/mob/uniform.dmi'), isinhands = FALSE, femaleuniform = U.fitted)
 
 		if(!uniform_overlay)
-			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = ((w_uniform.alternate_worn_icon) ? w_uniform.alternate_worn_icon : 'icons/mob/uniform.dmi'), isinhands = FALSE)
+			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (alt_worn ? alt_worn : 'icons/mob/uniform.dmi'), isinhands = FALSE)
 
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
