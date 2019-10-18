@@ -47,8 +47,9 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
 
-	if(preference_source)
-		H.apply_pref_name("mime", preference_source)
+	var/client/C = H.client || preference_source
+	if(C)
+		H.apply_pref_name("mime", C)
 	else
 		H.fully_replace_character_name(H.real_name, pick(GLOB.mime_names))
 
