@@ -4,24 +4,34 @@
 
 /obj/machinery/autoylathe
 	name = "autoylathe"
-	desc = "It produces items using plastic, metal and glass."
+	desc = "It produces toys using plastic, metal and glass."
 	icon_state = "autolathe"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autoylathe
+	layer = BELOW_OBJ_LAYER
+
+	var/operating = FALSE
+	var/list/L = list()
+	var/list/LL = list()
 	var/hacked = FALSE
-	var/disabled = FALSE
+	var/disabled = 0
 	var/shocked = FALSE
+	var/hack_wire
+	var/disable_wire
+	var/shock_wire
+
 	var/busy = FALSE
 	var/prod_coeff = 1
+
 	var/datum/design/being_built
 	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
+
 	var/list/categories = list(
 							"Toys",
 							"Figurines",
@@ -36,8 +46,8 @@
 							)
 
 /obj/machinery/autoylathe/Initialize()
-	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASTIC), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	. = ..()
 
 	wires = new /datum/wires/autoylathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autoylathe
@@ -47,7 +57,8 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/autoylathe/interact(mob/user)
+/obj/machinery/autoylathe/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -79,9 +90,6 @@
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
-		return TRUE
-
-	if(exchange_parts(user, O))
 		return TRUE
 
 	if(default_deconstruction_crowbar(O))
@@ -148,6 +156,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
+			multiplier = CLAMP(multiplier,1,50)
 
 			/////////////////
 
@@ -194,6 +203,7 @@
 	else
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
+			new_item.materials = new_item.materials.Copy()
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autoylathe_crafted(src)
@@ -347,7 +357,7 @@
 				disabled = FALSE
 
 /obj/machinery/autoylathe/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(stat & (BROKEN|NOPOWER))    // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

@@ -4,6 +4,7 @@
 	status_flags = GODMODE|CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
+	no_vore = TRUE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 

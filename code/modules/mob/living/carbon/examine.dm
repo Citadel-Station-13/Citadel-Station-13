@@ -91,6 +91,7 @@
 
 	if(combatmode)
 		msg += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]\n"
+	msg += common_trait_examine()
 
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(mood)

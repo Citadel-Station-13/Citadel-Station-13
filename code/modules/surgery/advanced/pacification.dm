@@ -7,7 +7,8 @@
 				/datum/surgery_step/clamp_bleeders,
 				/datum/surgery_step/pacify,
 				/datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)

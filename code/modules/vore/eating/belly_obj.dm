@@ -38,6 +38,7 @@
 	var/swallow_time = 10 SECONDS			// for mob transfering automation
 	var/vore_capacity = 1					// simple animal nom capacity
 	var/is_wet = TRUE						// Is this belly inside slimy parts?
+	var/wet_loop = TRUE						// Does this belly have a slimy internal loop?
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY,DM_ABSORB,DM_UNABSORB)	// Possible digest modes
@@ -138,13 +139,17 @@
 		"digest_messages_prey",
 		"examine_messages",
 		"emote_lists",
-		"is_wet"
+		"is_wet",
+		"wet_loop"
 		)
 
 		//ommitted list
 		// "shrink_grow_size",
-/obj/belly/New(var/newloc)
-	. = ..(newloc)
+/obj/belly/Initialize()
+	. = ..()
+	take_ownership(src.loc)
+
+/obj/belly/proc/take_ownership(var/newloc)
 	//If not, we're probably just in a prefs list or something.
 	if(isliving(newloc))
 		owner = loc
@@ -152,13 +157,11 @@
 		SSbellies.belly_list += src
 
 /obj/belly/Destroy()
+	SSbellies.belly_list -= src
 	if(owner)
-		Remove(owner)
-	return ..()
-
-/obj/belly/proc/Remove(mob/living/owner)
-	owner.vore_organs -= src
-	owner = null
+		owner.vore_organs -= src
+		owner = null
+	. = ..()
 
 // Called whenever an atom enters this belly
 /obj/belly/Entered(var/atom/movable/thing,var/atom/OldLoc)
@@ -169,13 +172,22 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(is_wet && (world.time > recent_sound))
-		var/turf/source = get_turf(owner)
-		var/sound/eating = GLOB.vore_sounds[vore_sound]
-		for(var/mob/living/M in get_hearers_in_view(3, source))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, eating)
-				recent_sound = (world.time + 20 SECONDS)
+	if(vore_sound && !recent_sound)
+		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+			LAZYCLEARLIST(hearing_mobs)
+			for(var/mob/living/H in get_hearers_in_view(3, owner))
+				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+					continue
+				LAZYADD(hearing_mobs, H)
+			last_hearcheck = world.time
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			else if(H && H in contents && H.client)
+				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			recent_sound = TRUE
 
 	//Messages if it's a mob
 	if(isliving(thing))
@@ -187,7 +199,7 @@
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
 /obj/belly/proc/release_all_contents(var/include_absorbed = FALSE, var/silent = FALSE)
-	var/atom/destination = drop_location()
+//	var/atom/destination = drop_location()
 	//Don't bother if we don't have contents
 	if(!contents.len)
 		return FALSE
@@ -207,22 +219,30 @@
 			SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 			SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
-		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
-		count++
-	for(var/mob/living/M in get_hearers_in_view(2, get_turf(owner)))
-		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
-			var/sound/releasement = GLOB.release_sounds[release_sound]
-			SEND_SOUND(M, releasement)
+		count += release_specific_contents(AM, silent = TRUE)
 
 	//Clean up our own business
 	items_preserved.Cut()
-	if(isanimal(owner))
-		owner.update_icons()
+	owner.update_icons()
 
 	if(!silent)
+		if(release_sound && !recent_sound)
+			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+				LAZYCLEARLIST(hearing_mobs)
+				for(var/mob/living/H in get_hearers_in_view(3, owner))
+					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+						continue
+					LAZYADD(hearing_mobs, H)
+				last_hearcheck = world.time
+			for(var/mob/living/H in hearing_mobs)
+				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				else if(H && H in contents && H.client)
+					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				recent_sound = TRUE
 		owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
-	items_preserved.Cut()
-	owner.update_icons()
 
 	return count
 
@@ -235,16 +255,13 @@
 
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
 	items_preserved -= M
-	if(!silent)
-		for(var/mob/living/H in get_hearers_in_view(2, get_turf(owner)))
-			if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
-				var/sound/releasement = GLOB.release_sounds[release_sound]
-				SEND_SOUND(H, releasement)
+
 
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M
 		var/mob/living/OW = owner
-		ML.stop_sound_channel(CHANNEL_PREYLOOP)
+		if(ML.client)
+			ML.stop_sound_channel(CHANNEL_PREYLOOP) //Stop the internal loop, it'll restart if the isbelly check on next tick anyway
 		ML.cure_blind("belly_[REF(src)]")
 		SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
 		SEND_SIGNAL(ML, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
@@ -263,12 +280,27 @@
 				Pred.reagents.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
 
 	//Clean up our own business
-	if(isanimal(owner))
-		owner.update_icons()
+	owner.update_icons()
 
 	if(!silent)
+		if(release_sound && !recent_sound)
+			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+				LAZYCLEARLIST(hearing_mobs)
+				for(var/mob/living/H in get_hearers_in_view(3, owner))
+					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+						continue
+					LAZYADD(hearing_mobs, H)
+					last_hearcheck = world.time
+			for(var/mob/living/H in hearing_mobs)
+				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				else if(H && H in contents && H.client)
+					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
+					SEND_SOUND(H,releasement)
+				recent_sound = TRUE
 		owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
-	owner.update_icons()
+
 	return TRUE
 
 // Actually perform the mechanics of devouring the tasty prey.
@@ -312,15 +344,26 @@
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
 	if(!(content in src) || !istype(target))
 		return
+	content.forceMove(target)
 	for(var/mob/living/M in contents)
 		M.cure_blind("belly_[REF(src)]")
-	target.nom_mob(content, target.owner)
-	if(!silent)
-		var/turf/source = get_turf(owner)
-		var/sound/eating = GLOB.vore_sounds[vore_sound]
-		for(var/mob/living/M in get_hearers_in_view(3, source))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, eating)
+//	target.nom_mob(content, target.owner)
+	if(vore_sound && !recent_sound && !silent)
+		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+			LAZYCLEARLIST(hearing_mobs)
+			for(var/mob/living/H in get_hearers_in_view(3, owner))
+				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+					continue
+				LAZYADD(hearing_mobs, H)
+				last_hearcheck = world.time
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			else if(H && H in contents && H.client)
+				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
+				SEND_SOUND(H,eating)
+			recent_sound = TRUE
 
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
@@ -424,9 +467,12 @@
 		if(!M.dropItemToGround(W))
 			qdel(W)
 
+	//Incase they have the loop going, let's double check to stop it.
+	M.stop_sound_channel(CHANNEL_PREYLOOP)
+
 	// Delete the digested mob
 	qdel(M)
-	M.stop_sound_channel(CHANNEL_PREYLOOP)
+
 	//Update owner
 	owner.updateVRPanel()
 
@@ -470,7 +516,7 @@
 /obj/belly/drop_location()
 	//Should be the case 99.99% of the time
 	if(owner)
-		return owner.loc
+		return owner.drop_location()
 	//Sketchy fallback for safety, put them somewhere safe.
 	else if(ismob(src))
 		testing("[src] (\ref[src]) doesn't have an owner, and dropped someone at a latespawn point!")
@@ -525,24 +571,31 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-	var/turf/source = get_turf(owner)
-	var/sound/struggle_snuggle = sound(get_sfx("struggle_sound"))
+	var/sound/pred_struggle_snuggle = sound(get_sfx("struggle_sound"))
+	var/sound/prey_struggle_snuggle = sound(get_sfx("prey_struggle"))
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
 
+	LAZYCLEARLIST(hearing_mobs)
+	for(var/mob/living/H in get_hearers_in_view(3, owner))
+		if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
+			continue
+		LAZYADD(hearing_mobs, H)
+
 	if(is_wet)
-		for(var/mob/living/M in get_hearers_in_view(3, source))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, struggle_snuggle)
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
+				SEND_SOUND(H,pred_struggle_snuggle)
+			else if(H && H in contents && H.client)
+				SEND_SOUND(H,prey_struggle_snuggle)
 
 	else
-		for(var/mob/living/M in get_hearers_in_view(3, source))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				SEND_SOUND(M, struggle_rustle)
+		for(var/mob/living/H in hearing_mobs)
+			if(H && H.client)
+				SEND_SOUND(H, struggle_rustle)
 
-	var/list/watching = hearers(3, owner)
-	for(var/mob/living/M in watching)
-		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES)) //Might as well censor the normies here too.
-			M.show_message(struggle_outer_message, 1) // visible
+	for(var/mob/living/H in hearing_mobs)
+		if(H && H.client && (isturf(H.loc)))
+			H.show_message(struggle_outer_message, 1) // visible
 
 	to_chat(R,struggle_user_message)
 
@@ -551,8 +604,10 @@
 			to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
 			to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 			if(do_after(R, escapetime))
-				if((owner.stat || escapable) && (R.loc == src)) //Can still escape?
+				if((escapable) && (R.loc == src)) //Can still escape?
 					release_specific_contents(R)
+					to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")
+					to_chat(owner,"<span class='warning'>[R] climbs out of your [lowertext(name)]!</span>")
 					return
 				else if(R.loc != src) //Aren't even in the belly. Quietly fail.
 					return
@@ -560,41 +615,41 @@
 					to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
 					to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
 					return
-	else if(prob(transferchance) && transferlocation) //Next, let's have it see if they end up getting into an even bigger mess then when they started.
-		var/obj/belly/dest_belly
-		for(var/belly in owner.vore_organs)
-			var/obj/belly/B = belly
-			if(B.name == transferlocation)
-				dest_belly = B
-				break
+		else if(prob(transferchance) && transferlocation) //Next, let's have it see if they end up getting into an even bigger mess then when they started.
+			var/obj/belly/dest_belly
+			for(var/belly in owner.vore_organs)
+				var/obj/belly/B = belly
+				if(B.name == transferlocation)
+					dest_belly = B
+					break
 
-		if(!dest_belly)
-			to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had it's transfer chance and transfer location cleared as a precaution.</span>")
-			transferchance = 0
-			transferlocation = null
+			if(!dest_belly)
+				to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had it's transfer chance and transfer location cleared as a precaution.</span>")
+				transferchance = 0
+				transferlocation = null
+				return
+
+			to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed and your struggles only results in you sliding into [owner]'s [transferlocation]!</span>")
+			to_chat(owner,"<span class='warning'>Someone slid into your [transferlocation] due to their struggling inside your [lowertext(name)]!</span>")
+			transfer_contents(R, dest_belly)
 			return
 
-		to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed and your struggles only results in you sliding into [owner]'s [transferlocation]!</span>")
-		to_chat(owner,"<span class='warning'>Someone slid into your [transferlocation] due to their struggling inside your [lowertext(name)]!</span>")
-		transfer_contents(R, dest_belly)
-		return
+		else if(prob(absorbchance) && digest_mode != DM_ABSORB) //After that, let's have it run the absorb chance.
+			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to cling more tightly...</span>")
+			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] start to cling onto its contents...</span>")
+			digest_mode = DM_ABSORB
+			return
 
-	else if(prob(absorbchance) && digest_mode != DM_ABSORB) //After that, let's have it run the absorb chance.
-		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to cling more tightly...</span>")
-		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] start to cling onto its contents...</span>")
-		digest_mode = DM_ABSORB
-		return
+		else if(prob(digestchance) && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
+			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get more active...</span>")
+			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become active!</span>")
+			digest_mode = DM_DIGEST
+			return
 
-	else if(prob(digestchance) && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
-		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get more active...</span>")
-		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become active!</span>")
-		digest_mode = DM_DIGEST
-		return
-
-	else //Nothing interesting happened.
-		to_chat(R,"<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
-		to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
-		return
+		else //Nothing interesting happened.
+			to_chat(R,"<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
+			to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
+			return
 
 /obj/belly/proc/get_mobs_and_objs_in_belly()
 	var/list/see = list()
@@ -641,6 +696,7 @@
 	dupe.swallow_time = swallow_time
 	dupe.vore_capacity = vore_capacity
 	dupe.is_wet = is_wet
+	dupe.wet_loop = wet_loop
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings
