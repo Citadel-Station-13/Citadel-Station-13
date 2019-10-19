@@ -89,19 +89,19 @@
 			return
 		if(ishuman(LM)) //for proper humans, they're special
 			var/mob/living/carbon/human/H = LM
-			var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
+			var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
 
 			if (H.dna.features["taur"] == "Naga" || H.dna.features["taur"] == "Tentacle") //are we a naga or tentacle taur creature
 				playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
 				return
 
-			if(H.shoes || feetCover) //are we wearing shoes
+			if(feetCover) //are we wearing shoes
 				playsound(T, pick(GLOB.footstep[T.footstep][1]),
 					GLOB.footstep[T.footstep][2] * v,
 					TRUE,
 					GLOB.footstep[T.footstep][3] + e)
 
-			if((!H.shoes && !feetCover)) //are we NOT wearing shoes
+			if(!feetCover) //are we NOT wearing shoes
 				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 					GLOB.barefootstep[T.barefootstep][2] * v,
 					TRUE,

@@ -197,6 +197,7 @@
 	#define COMPONENT_DELETE_OLD_IMPLANT 4
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"	//called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 	//This uses all return values of COMSIG_IMPLANT_OTHER
+#define COMSIG_IMPLANT_REMOVING "implant_removing"				//from base of /obj/item/implant/proc/removed() (list/args)
 
 // /obj/item/pda signals
 #define COMSIG_PDA_CHANGE_RINGTONE "pda_change_ringtone"		//called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
