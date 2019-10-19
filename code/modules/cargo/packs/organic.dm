@@ -69,6 +69,31 @@
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
 
+/datum/supply_pack/organic/cooking_tools
+	name = "Kitchen Cooking Set"
+	desc = "Trays, pots and pans, what more do you need to start cooking up a fine meal?. Contains two frying pans, spatulas, pots both cooking and muffen trays as well as spoons and plates"
+	cost = 1200 //In case someone steals the cooks tools
+	contains = list(/obj/item/kitchen/frying_pan,
+					/obj/item/kitchen/frying_pan,
+					/obj/item/kitchen/spatula,
+					/obj/item/kitchen/spatula,
+					/obj/item/kitchen/pot,
+					/obj/item/kitchen/pot,
+					/obj/item/kitchen/cooking_tray,
+					/obj/item/kitchen/cooking_tray,
+					/obj/item/kitchen/muffen_tray,
+					/obj/item/kitchen/muffen_tray,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/kitchen/spoon,
+					/obj/item/kitchen/spoon,
+					/obj/item/kitchen/spoon,
+					/obj/item/kitchen/spoon,
+					/obj/item/kitchen/spoon)
+	crate_name = "kitchen cutlery deluxe set"
+
 /datum/supply_pack/organic/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
 	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
