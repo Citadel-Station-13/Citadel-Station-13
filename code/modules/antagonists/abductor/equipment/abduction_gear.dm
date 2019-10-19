@@ -55,7 +55,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
+/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return 1
 

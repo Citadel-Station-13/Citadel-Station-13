@@ -193,7 +193,7 @@
 		remove_paddles(user)
 		update_icon()
 
-/obj/item/defibrillator/item_action_slot_check(slot, mob/user)
+/obj/item/defibrillator/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == user.getBackSlot())
 		return 1
 
@@ -244,7 +244,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 
-/obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
+/obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == user.getBeltSlot())
 		return TRUE
 

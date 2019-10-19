@@ -27,7 +27,7 @@
 	qdel(blaster)
 	return ..()
 
-/obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
+/obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot != SLOT_GLASSES)
 		return 0
 	return ..()

@@ -62,16 +62,16 @@
 	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/zoom_out_amt = 0
-	var/datum/action/toggle_scope_zoom/azoom
+	var/datum/action/item_action/toggle_scope_zoom/azoom
 
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
 		pin = new pin(src)
 	if(gun_light)
-		alight = new /datum/action/item_action/toggle_gunlight(src)
-	build_zooming()
-
+		alight = new (src)
+	if(zoomable)
+		azoom = new (src)
 
 /obj/item/gun/CheckParts(list/parts_list)
 	..()
@@ -372,6 +372,13 @@
 	else
 		return ..()
 
+/obj/item/gun/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
+		zoom(user)
+	else if(istype(action, alight))
+		toggle_gunlight()
+	return ..()
+
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
 		return
@@ -407,21 +414,10 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/gun/pickup(mob/user)
-	..()
-	if(azoom)
-		azoom.Grant(user)
-	if(alight)
-		alight.Grant(user)
-
-/obj/item/gun/dropped(mob/user)
-	..()
-	if(zoomed)
-		zoom(user,FALSE)
-	if(azoom)
-		azoom.Remove(user)
-	if(alight)
-		alight.Remove(user)
+/obj/item/gun/item_action_slot_check(slot, mob/user, datum/action/A)
+	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != SLOT_HANDS)
+		return FALSE
+	return ..()
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
@@ -468,29 +464,25 @@
 // ZOOMING //
 /////////////
 
-/datum/action/toggle_scope_zoom
+/datum/action/item_action/toggle_scope_zoom
 	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
-	var/obj/item/gun/gun = null
 
-/datum/action/toggle_scope_zoom/Trigger()
-	gun.zoom(owner)
+/datum/action/item_action/toggle_scope_zoom/Trigger()
+	var/obj/item/gun/G = target
+	G.zoom(owner)
 
-/datum/action/toggle_scope_zoom/IsAvailable()
+/datum/action/item_action/toggle_scope_zoom/IsAvailable()
 	. = ..()
-	if(!gun)
-		return FALSE
 	if(!.)
-		gun.zoom(owner, FALSE)
-	if(!owner.get_held_index_of_item(gun))
-		return FALSE
+		var/obj/item/gun/G = target
+		G.zoom(owner, FALSE)
 
-/datum/action/toggle_scope_zoom/Remove(mob/living/L)
-	gun.zoom(L, FALSE)
-	..()
-
+/datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
+	var/obj/item/gun/G = target
+	G.zoom(L, FALSE)
+	return ..()
 
 /obj/item/gun/proc/zoom(mob/living/user, forced_zoom)
 	if(!user || !user.client)
@@ -525,15 +517,6 @@
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed
-
-//Proc, so that gun accessories/scopes/etc. can easily add zooming.
-/obj/item/gun/proc/build_zooming()
-	if(azoom)
-		return
-
-	if(zoomable)
-		azoom = new()
-		azoom.gun = src
 
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)

@@ -47,7 +47,7 @@
 		suit.RemoveHelmet()
 		soundloop.stop(user)
 
-/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
+/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_HEAD)
 		return 1
 
@@ -158,7 +158,7 @@
 			var/datum/action/A = X
 			A.Remove(user)
 
-/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
+/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
 		return 1
 

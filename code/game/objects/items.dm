@@ -408,12 +408,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
-		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
+		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
-/obj/item/proc/item_action_slot_check(slot, mob/user)
+/obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE

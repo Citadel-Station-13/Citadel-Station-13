@@ -37,7 +37,7 @@
 				PA = new(src)
 				user.put_in_hands(PA)
 
-/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user)
+/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_BACK)
 		return 1
 

@@ -51,8 +51,10 @@
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
-/obj/item/gun/ballistic/automatic/ui_action_click()
-	burst_select()
+/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, action)
+	. = ..()
+	if(istype(action, /datum/action/item_action/toggle_firemode))
+		burst_select()
 
 /obj/item/gun/ballistic/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
