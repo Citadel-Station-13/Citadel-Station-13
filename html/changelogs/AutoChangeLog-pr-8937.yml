@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "sort of overhauled darkmode/lightmode to /vg/station's, also reincluding the pre-existing black'n'white theme."
+  - bugfix: "Fixed LOOC color, fixed .userlove and .love span classes being a bit too blurry on dark mode."

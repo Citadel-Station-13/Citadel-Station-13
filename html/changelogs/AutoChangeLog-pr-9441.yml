@@ -1,0 +1,6 @@
+author: "lolman360"
+delete-after: True
+changes: 
+  - tweak: "chainsaw kind of weapons and the mecha drill and the CLAMP can now be used with 100% accuracy for surgery"
+  - refactor: "surgery tools now work on defines"
+  - balance: "advanced surgerytools can now switch types instead of  just being faster"

@@ -311,3 +311,25 @@
 		set_light(0)
 		lightCycle = 0
 		active = FALSE
+
+// kevin is into feet
+/obj/item/clothing/shoes/wraps
+	name = "gilded leg wraps"
+	desc = "Ankle coverings. These ones have a golden design."
+	icon_state = "gildedcuffs"
+	body_parts_covered = FALSE
+
+/obj/item/clothing/shoes/wraps/silver
+	name = "silver leg wraps"
+	desc = "Ankle coverings. Not made of real silver."
+	icon_state = "silvergildedcuffs"
+
+/obj/item/clothing/shoes/wraps/red
+	name = "red leg wraps"
+	desc = "Ankle coverings. Show off your style with these shiny red ones!"
+	icon_state = "redcuffs"
+
+/obj/item/clothing/shoes/wraps/blue
+	name = "blue leg wraps"
+	desc = "Ankle coverings. Hang ten, brother."
+	icon_state = "bluecuffs"

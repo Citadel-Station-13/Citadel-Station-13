@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	var/can_rubberify = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //very protecc too
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
