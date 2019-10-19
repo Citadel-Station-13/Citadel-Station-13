@@ -1,0 +1,7 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "Almost all clothing and most weaponds can be sold for pocket change"
+  - tweak: "Cargo costs of packets and selling"
+  - balance: "Lowered mat selling as well as most if not all bountys"
+  - code_imp: "Adds more files for easy finding/adding in packs"

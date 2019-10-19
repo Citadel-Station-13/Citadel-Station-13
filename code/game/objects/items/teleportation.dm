@@ -187,8 +187,13 @@
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/atom/T = L[t1]
+	var/implantcheckmate = FALSE
+	if(isliving(T))
+		var/mob/living/M = T
+		if(!locate(/obj/item/implant/tracking) in M.implants) //The user was too slow and let the target mob's tracking implant expire or get removed.
+			implantcheckmate = TRUE
 	var/area/A = get_area(T)
-	if(A.noteleport)
+	if(A.noteleport || implantcheckmate)
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	current_location = get_turf(user)	//Recheck.
