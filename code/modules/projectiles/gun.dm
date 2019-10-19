@@ -377,7 +377,6 @@
 		zoom(user)
 	else if(istype(action, alight))
 		toggle_gunlight()
-	return ..()
 
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
@@ -469,10 +468,6 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 
-/datum/action/item_action/toggle_scope_zoom/Trigger()
-	var/obj/item/gun/G = target
-	G.zoom(owner)
-
 /datum/action/item_action/toggle_scope_zoom/IsAvailable()
 	. = ..()
 	if(!.)
@@ -485,16 +480,15 @@
 	return ..()
 
 /obj/item/gun/proc/zoom(mob/living/user, forced_zoom)
-	if(!user || !user.client)
+	if(!(user?.client))
 		return
 
-	switch(forced_zoom)
-		if(FALSE)
-			zoomed = FALSE
-		if(TRUE)
-			zoomed = TRUE
-		else
-			zoomed = !zoomed
+	if(!isnull(forced_zoom))
+		if(zoomed == forced_zoom)
+			return
+		zoomed = forced_zoom
+	else
+		zoomed = !zoomed
 
 	if(zoomed)
 		var/_x = 0
@@ -516,7 +510,6 @@
 		user.client.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
-	return zoomed
 
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)
