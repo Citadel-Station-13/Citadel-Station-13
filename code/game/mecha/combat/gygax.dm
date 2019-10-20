@@ -40,6 +40,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
 	ME.attach(src)
+	trackers -= /obj/item/mecha_parts/mecha_tracking(src)
 
 /obj/mecha/combat/gygax/dark/add_cell(obj/item/stock_parts/cell/C=null)
 	if(C)
