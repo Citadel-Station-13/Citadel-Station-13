@@ -1,14 +1,14 @@
 /mob/living/carbon/human/say_mod(input, message_mode)
 	verb_say = dna.species.say_mod
-	switch(slurring)
-		if(10 to 25)
-			return "jumbles"
-		if(25 to 50)
-			return "slurs"
-		if(50 to INFINITY)
-			return "garbles"
-		else
-			. = ..()
+	. = ..()
+	if(message_mode != MODE_CUSTOM_SAY && message_mode != MODE_WHISPER_CRIT)
+		switch(slurring)
+			if(10 to 25)
+				return "jumbles"
+			if(25 to 50)
+				return "slurs"
+			if(50 to INFINITY)
+				return "garbles"
 
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))

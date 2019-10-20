@@ -3,9 +3,11 @@
 
 /mob/say_mod(input, message_mode)
 	var/customsayverb = findtext(input, "*")
-	if(customsayverb)
+	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
+		message_mode = MODE_CUSTOM_SAY
 		return lowertext(copytext(input, 1, customsayverb))
-	. = ..()
+	else
+		return ..()
 
 /atom/movable/proc/attach_spans(input, list/spans)
 	var/customsayverb = findtext(input, "*")
