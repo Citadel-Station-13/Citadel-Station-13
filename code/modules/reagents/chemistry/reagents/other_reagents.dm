@@ -2119,26 +2119,22 @@
 	chemical_flags = REAGENT_INVISIBLE
 
 /datum/reagent/changeling_string/on_mob_metabolize(mob/living/carbon/C)
-	if(C && C.dna && data["desired_dna"])
+	if(ishuman(C) && C.dna && data["desired_dna"])
 		original_dna = new C.dna.type
 		C.dna.copy_dna(original_dna)
 		var/datum/dna/new_dna = data["desired_dna"]
-		new_dna.copy_dna(C.dna)
+		new_dna.transfer_identity(C, TRUE)
 		C.real_name = new_dna.real_name
-		C.updateappearance(mutcolor_update=1)
-		C.update_body()
+		C.updateappearance(mutcolor_update = TRUE)
 		C.domutcheck()
-		C.regenerate_icons()
 	..()
 
 /datum/reagent/changeling_string/on_mob_end_metabolize(mob/living/carbon/C)
 	if(original_dna)
-		original_dna.copy_dna(C.dna)
+		original_dna.transfer_identity(C, TRUE)
 		C.real_name = original_dna.real_name
-		C.updateappearance(mutcolor_update=1)
-		C.update_body()
+		C.updateappearance(mutcolor_update = TRUE)
 		C.domutcheck()
-		C.regenerate_icons()
 	..()
 
 /datum/reagent/changeling_string/Destroy()
