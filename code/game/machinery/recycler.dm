@@ -99,7 +99,7 @@
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
 	var/list/to_eat
 	if(isitem(AM0))
-		to_eat = AM0.GetAllContents()
+		to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
 	else
 		to_eat = list(AM0)
 
