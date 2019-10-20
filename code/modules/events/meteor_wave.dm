@@ -32,8 +32,10 @@
 		determine_wave_type()
 
 /datum/round_event/meteor_wave/proc/determine_wave_type()
+	/* Disabled until someone balances this. It's too powerful.
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		wave_name = "halloween"
+	*/
 	if(!wave_name)
 		wave_name = pickweight(list(
 			"normal" = 50,
