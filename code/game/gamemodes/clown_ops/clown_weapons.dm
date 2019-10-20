@@ -285,7 +285,6 @@
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
 /obj/mecha/combat/honker/dark/loaded/Initialize()
-	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana()//Needed more offensive weapons.
