@@ -1912,6 +1912,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			Radio headset does not include encryption key. No gun included."
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
 
+/datum/uplink_item/badass/claymore
+	name = "Claymore"
+	cost = 8
+	player_minimum = 25
+	desc = "A claymore. We don't know why you'd do this."
+	item = /obj/item/claymore
+
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
