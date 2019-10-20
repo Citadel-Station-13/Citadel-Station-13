@@ -4,6 +4,8 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return TRUE
+	if (HAS_TRAIT(M, TRAIT_ALL_ACCESS)) //obvious
+		return TRUE
 	if(issilicon(M))
 		if(ispAI(M))
 			return FALSE
