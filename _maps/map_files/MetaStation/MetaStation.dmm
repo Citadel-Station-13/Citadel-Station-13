@@ -43788,6 +43788,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bGt" = (
+/obj/effect/landmark/barthpot,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
