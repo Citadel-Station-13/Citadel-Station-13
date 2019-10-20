@@ -3,6 +3,8 @@ GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as t
 
 GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
+#define CANT_REENTER_ROUND -1
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -274,6 +276,8 @@ Works together with spawning an observer, noted above.
 			penalty += roundstart_quit_limit - world.time
 		if(penalty)
 			ghost.reenter_round_timeout = world.realtime + penalty
+			if(ghost.reenter_round_timeout - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+				ghost.reenter_round_timeout = CANT_REENTER_ROUND
 	transfer_ckey(ghost, FALSE)
 	return ghost
 
@@ -289,17 +293,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
 
-	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer)
-	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit)
+	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 	if(world.time < roundstart_quit_limit)
 		penalty += roundstart_quit_limit - world.time
+	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+		penalty = CANT_REENTER_ROUND
 
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles for the next [round(penalty/600)] minutes" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty != CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 		if(istype(loc, /obj/machinery/cryopod))
@@ -317,15 +323,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
 
-	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer)
-	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit)
+	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 	if(world.time < roundstart_quit_limit)
 		penalty += roundstart_quit_limit - world.time
+	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+		penalty = CANT_REENTER_ROUND
 
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles for the next [round(penalty/600)] minutes" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty != CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 	if(response != "Ghost")
 		return
 	ghostize(0, penalize = TRUE)
+
+/mob/dead/observer/proc/can_reenter_round(silent = FALSE)
+	if(reenter_round_timeout != CANT_REENTER_ROUND && reenter_round_timeout <= world.realtime)
+		return TRUE
+	if(!silent)
+		to_chat(src, "<span class='warning'>You are unable to reenter the round[reenter_round_timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(reenter_round_timeout - world.realtime)]" : ""].</span>")
+	return FALSE
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
@@ -613,6 +628,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Possess!"
 	set desc= "Take over the body of a mindless creature!"
 
+	if(reenter_round_timeout > world.realtime)
+		to_chat(src, "<span class='warning'>You are unable to re-enter the round yet. Your ghost role blacklist will expire in [DisplayTimeText(reenter_round_timeout - world.realtime)].</span>")
+		return FALSE
+
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
@@ -632,10 +651,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(istype (target, /mob/living/simple_animal/hostile/spawner))
 		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
 		return 0
-
-	if(reenter_round_timeout > world.realtime)
-		to_chat(src, "<span class='warning'>You are unable to re-enter the round yet. Your ghost role blacklist will expire in [round((reenter_round_timeout - world.realtime)/600)] minutes.</span>")
-		return FALSE
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
@@ -881,3 +896,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
+
+#undef CANT_REENTER_ROUND

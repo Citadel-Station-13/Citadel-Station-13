@@ -71,9 +71,8 @@ SUBSYSTEM_DEF(pai)
 			if("submit")
 				if(isobserver(usr))
 					var/mob/dead/observer/O = usr
-					if(O.reenter_round_timeout > world.realtime)
-						to_chat(O, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((O.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
-						return
+					if(!O.can_reenter_round())
+						return FALSE
 				if(candidate)
 					candidate.ready = 1
 					for(var/obj/item/paicard/p in pai_card_list)
@@ -153,6 +152,8 @@ SUBSYSTEM_DEF(pai)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
+			if(!G.can_reenter_round()) // this should use notify_ghosts() instead one day.
+				return FALSE
 			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()

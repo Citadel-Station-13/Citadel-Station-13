@@ -21,7 +21,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, ignore_dnr_observers = TRUE)
 	GLOB.poi_list |= src
 	if(isnull(possible_seasonal_hats))
 		build_seasonal_hats()
@@ -49,9 +49,8 @@
 		if(user.client.player_age < DRONE_MINIMUM_AGE)
 			to_chat(user, "<span class='danger'>You're too new to play as a drone! Please try again in [DRONE_MINIMUM_AGE - user.client.player_age] days.</span>")
 			return
-	if(user.reenter_round_timeout > world.realtime)
-		to_chat(user, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((user.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
-		return
+	if(!user.can_reenter_round())
+		return FALSE
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return

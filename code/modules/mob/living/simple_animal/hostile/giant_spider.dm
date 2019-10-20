@@ -83,20 +83,19 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
-		return 0
+		return FALSE
 	if(isobserver(user))
 		var/mob/dead/observer/O = user
-		if(O.reenter_round_timeout > world.realtime)
-			to_chat(O, "<span class='warning'>You are unable to reenter the round yet. Your ghost role blacklist will expire in [round((O.reenter_round_timeout - world.realtime)/600)] minutes.</span>")
-			return
+		if(!O.can_reenter_round())
+			return FALSE
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
-		return 1
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
-		return 1
+		return TRUE
 	user.transfer_ckey(src, FALSE)
-	return 1
+	return TRUE
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
