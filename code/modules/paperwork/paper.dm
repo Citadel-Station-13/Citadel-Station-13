@@ -72,7 +72,7 @@
 	if(isAI(target))
 		var/mob/living/silicon/ai/ai = target
 		return get_dist(src, ai.current) < 2
-	if(iscyborg(target))
+	if(iscyborg(target) || istype(loc, /obj/machinery/door/airlock))
 		return get_dist(src, target) < 2
 	return ..()
 
