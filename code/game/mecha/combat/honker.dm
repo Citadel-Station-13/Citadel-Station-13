@@ -109,7 +109,6 @@
 	output += ..()
 	return output
 
-
 /obj/mecha/combat/honker/get_equipment_list()
 	if(!equipment.len)
 		return
@@ -118,8 +117,6 @@
 		output += "<div id='[REF(MT)]'>[MT.get_equip_info()]</div>"
 	output += "</div>"
 	return output
-
-
 
 /obj/mecha/combat/honker/mechstep(direction)
 	var/result = step(src,direction)
@@ -153,7 +150,3 @@
 	for (var/i=0;i<6;i++)
 		color = color+pick(colors)
 	return color
-
-/obj/mecha/combat/Initialize()
-	. = ..()
-	trackers += new /obj/item/mecha_parts/mecha_tracking(src)
