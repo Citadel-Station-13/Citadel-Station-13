@@ -71,9 +71,3 @@
 	projectile_type = /obj/item/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
-
-/obj/item/ammo_casing/energy/laser/weak
-	projectile_type = /obj/item/projectile/beam/weak/minigun
-	e_cost = 10
-	fire_sound = 'sound/weapons/gatling.ogg'
-	click_cooldown_override = 1
