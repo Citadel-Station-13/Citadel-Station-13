@@ -40,12 +40,11 @@
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage * hit_percent)
-		if(BRAIN)
-			adjustBrainLoss(damage * hit_percent)
 		//citadel code
 		if(AROUSAL)
 			adjustArousalLoss(damage * hit_percent)
 	return TRUE
+
 
 
 //These procs fetch a cumulative total damage from all bodyparts
@@ -112,6 +111,51 @@
 	if(!diff)
 		return
 	adjustStaminaLoss(diff, updating, forced)
+
+/** adjustOrganLoss
+  * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount (damage to be done), and maximum (currently an arbitrarily large number, can be set so as to limit damage)
+  * outputs:
+  * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the damage proc on that organ.
+  */
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O && !(status_flags & GODMODE))
+		if(!maximum)
+			maximum = O.maxHealth
+		O.applyOrganDamage(amount, maximum)
+		O.onDamage(amount, maximum)
+
+/** setOrganLoss
+  * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)
+  * outputs:
+  * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the set damage proc on that organ, which can
+  *				 set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+  */
+/mob/living/carbon/setOrganLoss(slot, amount)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O && !(status_flags & GODMODE))
+		O.setOrganDamage(amount)
+		O.onSetDamage(amount)
+
+/** getOrganLoss
+  * inputs: slot (organ slot, like ORGAN_SLOT_HEART)
+  * outputs: organ damage
+  * description: If an organ exists in the slot requested, return the amount of damage that organ has
+  */
+/mob/living/carbon/getOrganLoss(slot)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O)
+		return O.damage
+
+/mob/living/carbon/proc/adjustAllOrganLoss(amount, maximum)
+	for(var/obj/item/organ/O in internal_organs)
+		if(O && !(status_flags & GODMODE))
+			continue
+		if(!maximum)
+			maximum = O.maxHealth
+		O.applyOrganDamage(amount, maximum)
+		O.onDamage(amount, maximum)
+
 
 ////////////////////////////////////////////
 
@@ -213,24 +257,25 @@
 		update_damage_overlays()
 	update_stamina()
 
-/mob/living/carbon/getBrainLoss()
+/* TO_REMOVE
+/mob/living/carbon/getOrganLoss(ORGAN_SLOT_BRAIN)
 	. = 0
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.get_brain_damage()
 
 //Some sources of brain damage shouldn't be deadly
-/mob/living/carbon/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
+/mob/living/carbon/adjustOrganLoss(ORGAN_SLOT_BRAIN, amount, maximum = BRAIN_DAMAGE_DEATH)
 	if(status_flags & GODMODE)
 		return FALSE
-	var/prev_brainloss = getBrainLoss()
+	var/prev_brainloss = getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
 		return
 	B.adjust_brain_damage(amount, maximum)
 	if(amount <= 0) //cut this early
 		return
-	var/brainloss = getBrainLoss()
+	var/brainloss = getOrganLoss(ORGAN_SLOT_BRAIN)
 	if(brainloss > BRAIN_DAMAGE_MILD)
 		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_MILD)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -253,3 +298,4 @@
 	if(B)
 		var/adjusted_amount = amount - B.get_brain_damage()
 		B.adjust_brain_damage(adjusted_amount, null)
+*/

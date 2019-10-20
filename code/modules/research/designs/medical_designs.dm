@@ -534,6 +534,17 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_heart_u
+	name = "Upgraded Cybernetic Heart"
+	desc = "An upgraded cybernetic heart"
+	id = "cybernetic_heart_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 50
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
+	build_path = /obj/item/organ/heart/cybernetic/upgraded
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cybernetic_liver_u
 	name = "Upgraded Cybernetic Liver"
 	desc = "An upgraded cybernetic liver"
@@ -590,63 +601,34 @@
 
 /datum/design/retractor_adv
 	name = "Advanced Retractor"
-	desc = "A high-class, premium retractor, featuring precision crafted, silver-plated hook-ends and an electrum handle."
+	desc = "An almagation of rods and gears, able to function as both a surgical clamp and retractor. "
 	id = "retractor_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1500, MAT_GOLD = 1000)
-	build_path = /obj/item/retractor/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/hemostat_adv
-	name = "Advanced Hemostat"
-	desc = "An exceptionally fine pair of arterial forceps. These appear to be plated in electrum and feel soft to the touch."
-	id = "hemostat_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
-	build_path = /obj/item/hemostat/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/cautery_adv
-	name = "Electrocautery" //This is based on real-life science.
-	desc = "A high-tech unipolar Electrocauter. This tiny device contains an extremely powerful microbattery that uses arcs of electricity to painlessly sear wounds shut. It seems to recharge with the user's body-heat. Wow!"
-	id = "cautery_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
-	build_path = /obj/item/cautery/adv
+	build_path = /obj/item/retractor/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgicaldrill_adv
-	name = "Surgical Autodrill"
-	desc = "With a diamond tip and built-in depth and safety sensors, this drill alerts the user before overpenetrating a patient's skull or tooth. There also appears to be a disable switch."
+	name = "Surgical Laser Drill"
+	desc = "It projects a high power laser used for medical applications."
 	id = "surgicaldrill_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 2500, MAT_SILVER = 6000, MAT_GOLD = 5500, MAT_DIAMOND = 3500)
-	build_path = /obj/item/surgicaldrill/adv
+	build_path = /obj/item/surgicaldrill/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/scalpel_adv
-	name = "Precision Scalpel"
-	desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
+	name = "Laser Scalpel"
+	desc = "An advanced scalpel which uses laser technology to cut."
 	id = "scalpel_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 4000, MAT_GOLD = 2500)
-	build_path = /obj/item/scalpel/adv
+	build_path = /obj/item/scalpel/advanced
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/circular_saw_adv
-	name = "Diamond-Grit Circular Saw"
-	desc = "For those Assistants with REALLY thick skulls."
-	id = "circular_saw_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 6000, MAT_SILVER = 6500, MAT_GOLD = 7500, MAT_DIAMOND = 4500)
-	build_path = /obj/item/circular_saw/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 //////////Alien Surgery Tools////////////
@@ -712,6 +694,28 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_ears
+	name = "Cybernetic Ears"
+	desc = "A pair of cybernetic ears."
+	id = "cybernetic_ears"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 30
+	materials = list(MAT_METAL = 250, MAT_GLASS = 400)
+	build_path = /obj/item/organ/ears/cybernetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_ears_u
+	name = "Upgraded Cybernetic Ears"
+	desc = "A pair of upgraded cybernetic ears."
+	id = "cybernetic_ears_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
+	build_path = /obj/item/organ/ears/cybernetic/upgraded
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////
 ///Surgery Designs///
 /////////////////////
@@ -723,13 +727,23 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
-	
+
 /datum/design/surgery/experimental_dissection
-	name = "Experimental Dissection"
-	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
-	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/advanced/bioware/experimental_dissection
+	name = "Advanced Dissection"
+	desc = "A surgical procedure which analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_adv_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/adv
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/experimental_dissection/exp
+	name = "Experimental Dissection"
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/exp
+
+/datum/design/surgery/experimental_dissection/ext
+	name = "Extraterrestrial Dissection"
+	id = "surgery_ext_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/alien
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
@@ -752,12 +766,48 @@
 	surgery = /datum/surgery/advanced/viral_bonding
 	research_icon_state = "surgery_chest"
 
-/datum/design/surgery/reconstruction
-	name = "Reconstruction"
-	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
-	id = "surgery_reconstruction"
-	surgery = /datum/surgery/advanced/reconstruction
+/datum/design/surgery/healing
+	name = "Tend Wounds"
+	desc = "An upgraded version of the original surgery."
+	id = "surgery_healing_base" //holder because travis cries otherwise. Not used in techweb unlocks.
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/healing/brute_upgrade
+	name = "Tend Wounds (Brute) Upgrade"
+	surgery = /datum/surgery/healing/brute/upgraded
+	id = "surgery_heal_brute_upgrade"
+
+/datum/design/surgery/healing/brute_upgrade_2
+	name = "Tend Wounds (Brute) Upgrade"
+	surgery = /datum/surgery/healing/brute/upgraded/femto
+	id = "surgery_heal_brute_upgrade_femto"
+
+/datum/design/surgery/healing/burn_upgrade
+	name = "Tend Wounds (Burn) Upgrade"
+	surgery = /datum/surgery/healing/burn/upgraded
+	id = "surgery_heal_burn_upgrade"
+
+/datum/design/surgery/healing/burn_upgrade_2
+	name = "Tend Wounds (Burn) Upgrade"
+	surgery = /datum/surgery/healing/brute/upgraded/femto
+	id = "surgery_heal_burn_upgrade_femto"
+
+/datum/design/surgery/healing/combo
+	name = "Tend Wounds (Mixture)"
+	desc = "A surgical procedure that repairs both bruises and burns. Repair efficiency is not as high as the individual surgeries but it is faster."
+	surgery = /datum/surgery/healing/combo
+	id = "surgery_heal_combo"
+
+/datum/design/surgery/healing/combo_upgrade
+	name = "Tend Wounds (Mixture) Upgrade"
+	surgery = /datum/surgery/healing/combo/upgraded
+	id = "surgery_heal_combo_upgrade"
+
+/datum/design/surgery/healing/combo_upgrade_2
+	name = "Tend Wounds (Mixture) Upgrade"
+	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
+	surgery = /datum/surgery/healing/combo/upgraded/femto
+	id = "surgery_heal_combo_upgrade_femto"
 
 /datum/design/surgery/surgery_toxinhealing
 	name = "Body Rejuvenation"
@@ -799,6 +849,13 @@
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
 	surgery = /datum/surgery/advanced/bioware/vein_threading
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/muscled_veins
+	name = "Vein Muscle Membrane"
+	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing them to pump blood without a heart."
+	id = "surgery_muscled_veins"
+	surgery = /datum/surgery/advanced/bioware/muscled_veins
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/ligament_hook

@@ -45,7 +45,7 @@
 	death = FALSE
 	anchored = FALSE
 	density = FALSE
-	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
+	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You would never leave its beautiful expanse. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 	assignedrole = "Ash Walker"
 
@@ -561,7 +561,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton/pirate
+	mob_species = /datum/species/skeleton/space
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE

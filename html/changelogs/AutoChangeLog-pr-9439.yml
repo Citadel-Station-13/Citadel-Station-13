@@ -1,0 +1,5 @@
+author: "JTGSZ"
+delete-after: True
+changes: 
+  - tweak: "Gang Dominator excessive wall check tweaked to 25 open turfs"
+  - bugfix: "Gang Dominator no longer functions off-station."

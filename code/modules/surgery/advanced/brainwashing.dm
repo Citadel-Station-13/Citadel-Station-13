@@ -12,9 +12,10 @@
 	/datum/surgery_step/clamp_bleeders,
 	/datum/surgery_step/brainwash,
 	/datum/surgery_step/close)
-	
-	species = list(/mob/living/carbon/human)
+
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
+
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
@@ -24,7 +25,7 @@
 	return TRUE
 /datum/surgery_step/brainwash
 	name = "brainwash"
-	implements = list(/obj/item/hemostat = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(TOOL_HEMOSTAT = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
 	time = 200
 	var/objective
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -56,7 +57,7 @@
 		display_results(user, target, "<span class='warning'>You screw up, bruising the brain tissue!</span>",
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
 			"[user] completes the surgery on [target]'s brain.")
-		target.adjustBrainLoss(40)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
 	else
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
 	return FALSE

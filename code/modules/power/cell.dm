@@ -191,7 +191,7 @@
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
-	maxcharge = 1750	//35/17/8 disabler/laser/taser shots.
+	maxcharge = 1250	//25/12/6 disabler/laser/taser shots.
 	materials = list(MAT_GLASS=40)
 
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
