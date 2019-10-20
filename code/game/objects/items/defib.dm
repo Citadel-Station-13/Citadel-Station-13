@@ -301,6 +301,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/disarm_shock_time = 10
 
 	var/datum/component/mobhook
 
@@ -478,7 +479,7 @@
 	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
 			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
 	busy = TRUE
-	if(do_after(user, disarm_shock_time, target = M))
+	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, target = M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
 		M.adjustStaminaLoss(50)
