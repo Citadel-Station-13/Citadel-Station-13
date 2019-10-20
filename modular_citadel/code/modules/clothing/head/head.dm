@@ -18,3 +18,12 @@
 
 /datum/component/storage/concrete/pockets/tiny/spacenam
 	attack_hand_interact = TRUE		//So you can actually see what you stuff in there
+
+/obj/item/clothing/head/assu_helmet
+	name = "ASSU helmet"
+	icon = 'modular_citadel/icons/obj/clothing/assu.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/assu.dmi'
+	icon_state = "assu_helmet"
+	item_state = "assu_helmet"
+	desc = "A cheap replica of old riot helmet without visor. It has \"A.S.S.U.\" written on the front."
+	flags_inv = HIDEHAIR
