@@ -36,8 +36,8 @@
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
 		H.nutrition += light_amount * light_nutrition_gain_factor
-		if(H.nutrition > NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL
+		if(H.nutrition >= NUTRITION_LEVEL_FULL)
+			H.nutrition = NUTRITION_LEVEL_FULL - 1
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(light_bruteheal, light_burnheal)
 			H.adjustToxLoss(-light_toxheal)

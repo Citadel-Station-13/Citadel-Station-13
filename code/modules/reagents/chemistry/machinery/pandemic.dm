@@ -244,9 +244,9 @@
 
 /obj/machinery/computer/pandemic/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			if(!user.put_in_hands(beaker))
+				beaker.forceMove(drop_location())
 	if(new_beaker)
 		beaker = new_beaker
 	else

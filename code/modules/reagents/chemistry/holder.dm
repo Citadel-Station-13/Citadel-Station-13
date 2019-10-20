@@ -128,14 +128,12 @@
 
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
-	if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
-		pH = 7
 	if(total_volume > 0)
 		var/part = amount / total_volume
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			remove_reagent(R.id, R.volume * part, ignore_pH = TRUE)
-
+		pH = REAGENT_NORMAL_PH
 		update_total()
 		handle_reactions()
 		return amount
@@ -404,7 +402,7 @@
 
 
 				for(var/B in cached_required_reagents)
-					if(!has_reagent(B, cached_required_reagents[B]*CHEMICAL_QUANTISATION_LEVEL))//Allows vols at less than 1 to react.
+					if(!has_reagent(B, cached_required_reagents[B]))//Allows vols at less than 1 to react.
 						break
 					total_matching_reagents++
 				for(var/B in cached_required_catalysts)
@@ -504,6 +502,7 @@
 				for(var/B in cached_required_reagents) //
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
 
+
 				for(var/B in cached_required_reagents)
 					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1, ignore_pH = TRUE)
 
@@ -546,17 +545,17 @@
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
 	var/multiplier = INFINITY
-
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.0001))
-	if (multiplier == 0)//clarity
+	if (multiplier <= 0)//clarity
 		fermiEnd()
 		return
 
-	for(var/P in C.required_catalysts)
-		if(!has_reagent(P))
-			fermiEnd()
-			return
+	if(C.required_catalysts)
+		for(var/P in C.required_catalysts)
+			if(!has_reagent(P))
+				fermiEnd()
+				return
 
 	if (!fermiIsReacting)
 		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
@@ -869,7 +868,6 @@
 	var/new_total = cached_total + amount
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
-
 	var/cached_pH = pH
 
 
@@ -963,7 +961,7 @@
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
-				pH = 7
+				pH = REAGENT_NORMAL_PH
 			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
 			else if (!ignore_pH)
 				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))

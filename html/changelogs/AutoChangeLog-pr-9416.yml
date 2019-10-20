@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "Singularity beacons now also moderately increases the odds meteor waves, while lowering their estimeed arrival countdown."
