@@ -352,3 +352,20 @@
 	if(istype(T))
 		T.atmos_spawn_air("plasma=50;TEMP=[T20C]")
 	owner.vomit()
+
+/obj/item/organ/heart/gland/access
+	true_name = "anagraphic electro-scrambler"
+	cooldown_low = 1800
+	cooldown_high = 2400
+	uses = 0
+	icon_state = "mindshock"
+	mind_control_uses = 1
+	mind_control_duration = 900
+
+/obj/item/organ/heart/gland/access/Insert(mob/living/carbon/M, special = 0)
+	..()
+	ADD_TRAIT(owner, TRAIT_ALL_ACCESS, ORGAN_TRAIT)
+
+/obj/item/organ/heart/gland/access/Remove(mob/living/carbon/M, special = 0)
+	REMOVE_TRAIT(owner, TRAIT_ALL_ACCESS, ORGAN_TRAIT)
+	..()
