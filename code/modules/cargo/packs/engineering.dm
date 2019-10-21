@@ -55,7 +55,7 @@
 /datum/supply_pack/engineering/engihardsuit
 	name = "Engineering Hardsuit"
 	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and mask!"
-	cost = 2750
+	cost = 2250
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
@@ -84,7 +84,7 @@
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
-	cost = 2750	//Made of pure-grade bullshittinium
+	cost = 2300	//Made of pure-grade bullshittinium
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow)
@@ -121,6 +121,18 @@
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+
+/datum/supply_pack/engineering/siezedpower
+	name = "Siezed Power Cell Crate"
+	desc = "We took the means of power! Contains three high-voltage plus power cells."
+	cost = 1300
+	contraband = TRUE
+	contains = list(/obj/item/stock_parts/cell/high/plus,
+					/obj/item/stock_parts/cell/high/plus,
+					/obj/item/stock_parts/cell/high/plus)
+	crate_name = "siezed crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire shuttle engine into one tiny little crate. Requires CE access to open."
@@ -129,7 +141,22 @@
 	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-	special = TRUE
+
+/datum/supply_pack/engineering/siezedproduction 
+	name = "The Means of Production"
+	desc = "We will win for we have took over the production! S five metal sheets, five wire, three matter bins, one manipulater and one sheet of glass."
+	cost = 1500
+	contraband = TRUE
+	contains = list(/obj/item/stock_parts/cell/high/plus,
+					/obj/item/circuitboard/machine/autolathe,
+					/obj/item/stack/cable_coil/random/five,
+					/obj/item/stack/sheet/metal/five,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stack/sheet/glass,)
+	crate_name = "siezed crate"
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
@@ -182,7 +209,6 @@
 					/obj/item/dna_probe
 					)
 	crate_name= "dna samplers crate"
-
 
 /datum/supply_pack/engineering/shield_sat
 	name = "Shield Generator Satellite"
