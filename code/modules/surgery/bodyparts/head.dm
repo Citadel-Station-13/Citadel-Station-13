@@ -32,6 +32,8 @@
 
 	var/lip_style = null
 	var/lip_color = "white"
+	//If the head is a special sprite
+	var/custom_head
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
 	if(!((owner.stat == DEAD) || owner.InFullCritical()))
@@ -128,6 +130,8 @@
 	add_overlay(standing)
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
+	if(custom_head)
+		return
 	cut_overlays()
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.

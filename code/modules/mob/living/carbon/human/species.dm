@@ -13,19 +13,19 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	//Species Icon Drawing Offsets - Pixel X, Pixel Y, Aka X = Horizontal and Y = Vertical, from bottom left corner
 	var/list/offset_features = list(
-		OFFSET_UNIFORM = list(0,0), 
-		OFFSET_ID = list(0,0), 
-		OFFSET_GLOVES = list(0,0), 
-		OFFSET_GLASSES = list(0,0), 
-		OFFSET_EARS = list(0,0), 
-		OFFSET_SHOES = list(0,0), 
-		OFFSET_S_STORE = list(0,0), 
-		OFFSET_FACEMASK = list(0,0), 
-		OFFSET_HEAD = list(0,0), 
-		OFFSET_EYES = list(0,0), 
-		OFFSET_LIPS = list(0,0), 
-		OFFSET_BELT = list(0,0), 
-		OFFSET_BACK = list(0,0), 
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,0),
+		OFFSET_GLASSES = list(0,0),
+		OFFSET_EARS = list(0,0),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,0),
+		OFFSET_HEAD = list(0,0),
+		OFFSET_EYES = list(0,0),
+		OFFSET_LIPS = list(0,0),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,0),
 		OFFSET_HAIR = list(0,0),
 		OFFSET_FHAIR = list(0,0),
 		OFFSET_SUIT = list(0,0),
@@ -422,8 +422,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			facial_overlay.alpha = hair_alpha
 
 			if(OFFSET_FHAIR in H.dna.species.offset_features)
-				facial_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FHAIR][1] 
-				facial_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FHAIR][2] 
+				facial_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FHAIR][1]
+				facial_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FHAIR][2]
 
 			standing += facial_overlay
 
@@ -761,6 +761,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					S = GLOB.wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
+				if("deco_wings")
+					S = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("insect_wings")
@@ -812,6 +814,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				bodypart = "snout"
 			if(bodypart == "xenohead")
 				bodypart = "xhead"
+			if(bodypart == "insect_wings" || bodypart == "deco_wings")
+				bodypart = "insect_wings"
 
 			if(S.gender_specific)
 				accessory_overlay.icon_state = "[g]_[bodypart]_[S.icon_state]_[layertext]"
@@ -883,7 +887,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					accessory_overlay.color = husklist
 
 			if(OFFSET_MUTPARTS in H.dna.species.offset_features)
-				accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1] 
+				accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
 				accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
 
 			standing += accessory_overlay
@@ -899,7 +903,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, S.dimension_x, S.dimension_y)
 
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
-					inner_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1] 
+					inner_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
 					inner_accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
 
 				standing += inner_accessory_overlay
@@ -942,11 +946,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 					if(HORNCOLOR)
 						extra_accessory_overlay.color = "#[H.horn_color]"
-			
+
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
-					extra_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1] 
+					extra_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
 					extra_accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
-			
+
 				standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
@@ -983,7 +987,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						extra2_accessory_overlay.color = "#[H.horn_color]"
 
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
-					extra2_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1] 
+					extra2_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
 					extra2_accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
 
 				standing += extra2_accessory_overlay

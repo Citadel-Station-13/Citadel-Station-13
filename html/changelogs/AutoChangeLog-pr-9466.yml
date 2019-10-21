@@ -1,0 +1,5 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - tweak: "Security borgs and K9s are now only available during red alert or higher."
+  - server: "Headmins or other folks with access to the server's config can choose the minimum alert level for secborgs to be chosen via the MINIMUM_SECBORG_ALERT config option. See the default game_options.txt for more info."
