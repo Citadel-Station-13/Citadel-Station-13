@@ -1717,14 +1717,14 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			Simply insert into research console of choice and import the files from the disk. You might research some useful gear from this."
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
-	restricted_roles = list("Research Director", "Scientist")
+	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor")
+	restricted_roles = list("Medical Doctor", "Roboticist")
 	cost = 3
 
 /datum/uplink_item/role_restricted/clown_bomb
