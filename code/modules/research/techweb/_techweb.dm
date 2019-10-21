@@ -54,7 +54,7 @@
 	organization = "Aliens"
 
 /datum/techweb/abductor/New()
-	var/datum/techweb_node/alien_tech/Node = new()
+	var/datum/techweb_node/alientech/Node = new()
 	research_node(Node, TRUE)
 
 /datum/techweb/science	//Global science techweb for RND consoles.
