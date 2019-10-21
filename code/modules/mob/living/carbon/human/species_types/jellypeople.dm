@@ -4,7 +4,7 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,WINGCOLOR)
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_snouts", "taur", "deco_wings") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None") //CIT CHANGE
