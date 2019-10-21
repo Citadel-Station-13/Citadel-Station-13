@@ -643,4 +643,3 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
