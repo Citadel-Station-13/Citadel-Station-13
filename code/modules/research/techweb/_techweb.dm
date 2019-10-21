@@ -49,6 +49,14 @@
 	var/datum/techweb_node/syndicate_basic/Node = new()
 	research_node(Node, TRUE)
 
+/datum/techweb/abductor
+	id = "ABDUCTOR"
+	organization = "Aliens"
+
+/datum/techweb/abductor/New()
+	var/datum/techweb_node/alien_tech/Node = new()
+	research_node(Node, TRUE)
+
 /datum/techweb/science	//Global science techweb for RND consoles.
 	id = "SCIENCE"
 	organization = "Nanotrasen"
