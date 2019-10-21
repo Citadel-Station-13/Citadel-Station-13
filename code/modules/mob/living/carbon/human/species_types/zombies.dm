@@ -18,6 +18,7 @@
 
 /datum/species/zombie/notspaceproof
 	id = "notspaceproofzombie"
+	limbs_id = "zombie"
 	blacklisted = 0
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH)
 
