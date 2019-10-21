@@ -87,7 +87,7 @@
 /datum/supply_pack/security/armory/mindshield
 	name = "Mindshield Implants Crate"
 	desc = "Prevent against radical thoughts with three Mindshield implants. Requires Armory access to open."
-	cost = 4000
+	cost = 3000 //Lowered untill cargo rework MK II is done
 	contains = list(/obj/item/storage/lockbox/loyalty)
 	crate_name = "mindshield implant crate"
 
@@ -175,7 +175,7 @@
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
 	desc = "Contains two fullbody sets of tough, fireproof, pressurized suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."
-	cost = 6750
+	cost = 6000
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/suit/space/swat,
@@ -199,7 +199,7 @@
 /datum/supply_pack/security/armory/woodstock
 	name = "Classic WoodStock Shotguns Crate"
 	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
-	cost = 3500
+	cost = 3000
 	contains = list(/obj/item/gun/ballistic/shotgun,
 					/obj/item/gun/ballistic/shotgun,
 					/obj/item/gun/ballistic/shotgun)
@@ -208,7 +208,7 @@
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Semi-Auto Rifle Crate"
 	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
-	cost = 3250
+	cost = 2550
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
 					/obj/item/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
@@ -216,7 +216,7 @@
 /datum/supply_pack/security/armory/wt550ammo
 	name = "WT-550 Semi-Auto SMG Ammo Crate"
 	desc = "Contains four 20-round magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 2750
+	cost = 1750
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
@@ -226,7 +226,7 @@
 /datum/supply_pack/security/armory/wt550ammo_nonlethal // Takes around 12 shots to stun crit someone
 	name = "WT-550 Semi-Auto SMG Non-Lethal Ammo Crate"
 	desc = "Contains four 20-round magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 1200
+	cost = 1000
 	contains = list(/obj/item/ammo_box/magazine/wt550m9/wtrubber,
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber,
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber,
@@ -236,7 +236,7 @@
 /datum/supply_pack/security/armory/wt550ammo_special
 	name = "WT-550 Semi-Auto SMG Special Ammo Crate"
 	desc = "Contains 2 20-round Armour Piercing and Incendiary magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 3500
+	cost = 3000
 	contains = list(/obj/item/ammo_box/magazine/wt550m9/wtap,
 					/obj/item/ammo_box/magazine/wt550m9/wtap,
 					/obj/item/ammo_box/magazine/wt550m9/wtic,
