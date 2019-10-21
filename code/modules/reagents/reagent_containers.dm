@@ -156,8 +156,16 @@
 	if(beaker_weakness_bitflag & PH_WEAK)
 		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
 			START_PROCESSING(SSobj, src)
-	else if((reagents.pH < -1) || (reagents.pH > 15))
-		START_PROCESSING(SSobj, src)
+	else if((reagents.pH < -3) || (reagents.pH > 17))
+		var/list/seen = viewers(5, get_turf(src))
+		var/iconhtml = icon2html(src, seen)
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s is damaged by the super pH and begins to deform!</span>")
+		if(reagents.pH < -3)
+			reagents.pH = -3
+		else
+			reagents.pH = 17
+		container_HP -= 1
 
 
 /obj/item/reagent_containers/process()
