@@ -29,3 +29,12 @@
 /obj/item/disk/tech_disk/illegal/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/syndicate
+
+/obj/item/disk/tech_disk/abductor
+	name = "Alien technology desk"
+	desc = "A technology disk that holds the secrets of the Grays."
+	materials = list()
+
+/obj/item/disk/tech_disk/abductor/Initialize()
+	. = ..()
+	stored_research = new /datum/techweb/abductor
