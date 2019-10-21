@@ -2,6 +2,13 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
+"ab" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -16,17 +23,7 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"ah" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"ai" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"aj" = (
+"af" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
@@ -37,7 +34,12 @@
 	name = "Asteroid emergency shuttle";
 	width = 28
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"ah" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/door/airlock/titanium{
@@ -618,7 +620,7 @@ aa
 aa
 "}
 (12,1,1) = {"
-ai
+ab
 at
 at
 at
@@ -708,7 +710,7 @@ aa
 aa
 "}
 (18,1,1) = {"
-aj
+af
 at
 at
 at

@@ -490,6 +490,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aP" = (
@@ -562,6 +563,7 @@
 	preferred_direction = 2;
 	port_direction = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aX" = (
@@ -796,6 +798,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bw" = (

@@ -165,6 +165,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/shuttle/arrival)
 "o" = (
@@ -449,6 +450,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
+"T" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/arrival)
 "U" = (
 /obj/machinery/computer{
 	dir = 1;
@@ -480,7 +485,7 @@
 
 (1,1,1) = {"
 a
-d
+T
 f
 g
 n
@@ -632,7 +637,7 @@ a
 "}
 (9,1,1) = {"
 a
-d
+T
 f
 g
 n
