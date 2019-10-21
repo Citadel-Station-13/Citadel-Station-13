@@ -1711,6 +1711,14 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
 
+/datum/uplink_item/role_restricted/alientech
+	name = "Alien Research Disk"
+	desc = "A technology disk holding a terabyte of highly confidential abductor technology. \
+			Simply insert into research console of choice and import the files from the disk. You might research some useful gear from this."
+	item = /obj/item/disk/tech_disk/abductor
+	cost = 12
+	restricted_roles = list("Research Director", "Scientist")
+
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
