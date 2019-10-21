@@ -13,7 +13,7 @@
 /mob/living/silicon/robot/proc/get_cit_modules()
 	var/list/modulelist = list()
 	modulelist["MediHound"] = /obj/item/robot_module/medihound
-	if(!CONFIG_GET(flag/disable_secborg))
+	if(BORG_SEC_AVAILABLE)
 		modulelist["Security K-9"] = /obj/item/robot_module/k9
 	modulelist["Scrub Puppy"] = /obj/item/robot_module/scrubpup
 	modulelist["Borgi"] = /obj/item/robot_module/borgi
