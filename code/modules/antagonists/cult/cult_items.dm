@@ -64,8 +64,13 @@
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	item_flags = NEEDS_PERMIT | NODROP | DROPDEL
+	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
+
+/obj/item/melee/cultblade/ghost/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -100,7 +105,6 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	actions_types = list()
-	item_flags = SLOWS_WHILE_IN_HAND
 	var/datum/action/innate/dash/cult/jaunt
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
@@ -298,7 +302,12 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+
+/obj/item/clothing/head/culthood/alt/ghost/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -307,7 +316,11 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+
+/obj/item/clothing/suit/cultrobes/alt/ghost/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/clothing/head/magus
 	name = "magus helm"
@@ -554,7 +567,7 @@
 	var/mob/living/carbon/C = user
 	if(C.pulling)
 		var/atom/movable/pulled = C.pulling
-		pulled.forceMove(T)
+		do_teleport(pulled, T, channel = TELEPORT_CHANNEL_CULT)
 		. = pulled
 
 /obj/item/cult_shift/attack_self(mob/user)
@@ -579,13 +592,12 @@
 		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
-		C.forceMove(destination)
-		if(pulled)
-			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
-
-		new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
-		playsound(destination, "sparks", 50, 1)
+		if(do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
+			if(pulled)
+				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
+			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
+			playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
+			playsound(destination, "sparks", 50, 1)
 
 	else
 		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
@@ -654,6 +666,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	slot_flags = 0
 	force = 17
+	force_unwielded = 17
 	force_wielded = 24
 	throwforce = 40
 	throw_speed = 2
@@ -796,7 +809,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = ABSTRACT | NODROP | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0
@@ -805,6 +818,9 @@
 	var/firing = FALSE
 	var/angle
 
+/obj/item/blood_beam/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
 	. = ..()

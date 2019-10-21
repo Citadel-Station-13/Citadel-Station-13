@@ -1,0 +1,4 @@
+author: "UristMcAstronaut"
+delete-after: True
+changes: 
+  - bugfix: "allows a pai to activate its holoform while in a pai connector without getting derped."

@@ -5,6 +5,7 @@
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	slot_flags = ITEM_SLOT_OCLOTHING
+	body_parts_covered = CHEST
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	var/suittoggled = FALSE
@@ -28,7 +29,6 @@
 				H.update_inv_wear_suit()
 			else if(adjusted == ALT_STYLE)
 				adjusted = NORMAL_STYLE
-				H.update_inv_wear_suit()
 
 		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
 			if(H.dna.features["taur"] in list("Naga", "Tentacle"))

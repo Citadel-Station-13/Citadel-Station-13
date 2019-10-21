@@ -6,6 +6,7 @@
 
 /datum/martial_art/cqc
 	name = "CQC"
+	id = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
 	var/just_a_cook = FALSE
@@ -78,7 +79,7 @@
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
 		D.SetSleeping(300)
-		D.adjustBrainLoss(15, 150)
+		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)

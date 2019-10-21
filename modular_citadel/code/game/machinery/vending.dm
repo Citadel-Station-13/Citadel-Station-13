@@ -1,7 +1,3 @@
-/obj/machinery/vending/security
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/ssword_kit = 1)
-	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/ssword_kit = 1)
-
 /obj/machinery/vending/medical
 	products = list(/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
@@ -26,12 +22,13 @@
 					/obj/item/storage/hypospraykit/toxin = 2,
 					/obj/item/storage/hypospraykit/o2 = 2,
 					/obj/item/storage/hypospraykit/brute = 2,
+					/obj/item/storage/hypospraykit/enlarge = 2,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5)
-					
+
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	premium = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
-	
+
 #define STANDARD_CHARGE 1
 #define CONTRABAND_CHARGE 2
 #define COIN_CHARGE 3
@@ -46,18 +43,33 @@
 	vend_reply = "Have fun, you shameless pervert!"
 	products = list(
 				/obj/item/clothing/under/maid = 5,
-				/obj/item/clothing/under/stripper_pink = 5,
-				/obj/item/clothing/under/stripper_green = 5,
-				/obj/item/dildo/custom = 5
-				)
-	contraband = list(/obj/item/restraints/handcuffs/fake/kinky = 5,
 				/obj/item/clothing/neck/petcollar = 5,
-				/obj/item/clothing/under/mankini = 1,
-				/obj/item/dildo/flared/huge = 1
+				/obj/item/clothing/neck/petcollar/choker = 5,
+				/obj/item/clothing/neck/petcollar/leather = 5,
+				/obj/item/restraints/handcuffs/fake/kinky = 5,
+				/obj/item/clothing/glasses/sunglasses/blindfold = 4,
+				/obj/item/clothing/mask/muzzle = 4,
+				/obj/item/clothing/under/stripper_pink = 3,
+				/obj/item/clothing/under/stripper_green = 3,
+				/obj/item/dildo/custom = 5,
+				/obj/item/electropack/shockcollar = 3,
+				/obj/item/assembly/signaler = 3
+				)
+	contraband = list(
+				/obj/item/clothing/neck/petcollar/locked = 2,
+				/obj/item/key/collar = 2,
+				/obj/item/clothing/head/kitty = 3,
+				/obj/item/clothing/head/rabbitears = 3,
+				/obj/item/clothing/under/mankini = 2,
+				/obj/item/clothing/under/jabroni = 2,
+				/obj/item/dildo/flared/huge = 3,
+				/obj/item/reagent_containers/glass/bottle/crocin = 5,
+				/obj/item/reagent_containers/glass/bottle/camphor = 5
 				)
 	premium = list(
-				/obj/item/electropack/shockcollar = 3,
-				/obj/item/clothing/neck/petcollar/locked = 1
+				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
+				/obj/item/clothing/under/gear_harness = 10,
+				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10
 				)
 	refill_canister = /obj/item/vending_refill/kink
 /*

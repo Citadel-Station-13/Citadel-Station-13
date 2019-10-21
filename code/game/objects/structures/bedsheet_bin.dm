@@ -225,6 +225,39 @@ LINEN BINS
 	item_color = "ian"
 	dream_messages = list("a dog", "a corgi", "woof", "bark", "arf")
 
+/obj/item/bedsheet/runtime
+	icon_state = "sheetruntime"
+	item_color = "runtime"
+	dream_messages = list("a kitty", "a cat", "meow", "purr", "nya~")
+
+/obj/item/bedsheet/pirate
+	name = "pirate's bedsheet"
+	desc = "It has a Jolly Roger emblem on it and has a faint scent of grog."
+	icon_state = "sheetpirate"
+	item_color = "black"
+	dream_messages = list("doing whatever oneself wants", "cause a pirate is free", "being a pirate", "stealing", "landlubbers", "gold", "a buried treasure", "yarr", "avast", "a swashbuckler", "sailing the Seven Seas", "a parrot", "a monkey", "an island", "a talking skull")
+
+/obj/item/bedsheet/gondola
+	name = "gondola bedsheet"
+	desc = "A precious bedsheet made from the hide of a rare and peculiar critter."
+	icon_state = "sheetgondola"
+	item_color = "cargo"
+	var/g_mouth
+	var/g_eyes
+
+/obj/item/bedsheet/gondola/Initialize()
+	. = ..()
+	g_mouth = "sheetgondola_mouth[rand(1, 4)]"
+	g_eyes = "sheetgondola_eyes[rand(1, 4)]"
+	add_overlay(g_mouth)
+	add_overlay(g_eyes)
+
+/obj/item/bedsheet/gondola/worn_overlays(isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += mutable_appearance(icon_file, g_mouth)
+		. += mutable_appearance(icon_file, g_eyes)
+
 /obj/item/bedsheet/cosmos
 	name = "cosmic space bedsheet"
 	desc = "Made from the dreams of those who wonder at the stars."
@@ -255,18 +288,19 @@ LINEN BINS
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	var/amount = 10
+	var/list/sheet_types = list(/obj/item/bedsheet)
+	var/static/allowed_sheets = list(/obj/item/bedsheet, /obj/item/reagent_containers/rag/towel)
 	var/list/sheets = list()
 	var/obj/item/hidden = null
-
 
 /obj/structure/bedsheetbin/examine(mob/user)
 	..()
 	if(amount < 1)
-		to_chat(user, "There are no bed sheets in the bin.")
+		to_chat(user, "There are no sheets in the bin.")
 	else if(amount == 1)
-		to_chat(user, "There is one bed sheet in the bin.")
+		to_chat(user, "There is one sheet in the bin.")
 	else
-		to_chat(user, "There are [amount] bed sheets in the bin.")
+		to_chat(user, "There are [amount] sheets in the bin.")
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -285,8 +319,9 @@ LINEN BINS
 	..()
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/bedsheet))
+	if(is_type_in_list(I, allowed_sheets))
 		if(!user.transferItemToLoc(I, src))
+			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot place it into the bin!</span>")
 			return
 		sheets.Add(I)
 		amount++
@@ -307,18 +342,19 @@ LINEN BINS
 	. = ..()
 	if(.)
 		return
-	if(user.lying)
+	if(user.incapacitated())
 		return
 	if(amount >= 1)
 		amount--
 
-		var/obj/item/bedsheet/B
+		var/obj/item/B
 		if(sheets.len > 0)
 			B = sheets[sheets.len]
 			sheets.Remove(B)
 
 		else
-			B = new /obj/item/bedsheet(loc)
+			var/chosen = pick(sheet_types)
+			B = new chosen
 
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
@@ -330,19 +366,20 @@ LINEN BINS
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
-
 	add_fingerprint(user)
+
 /obj/structure/bedsheetbin/attack_tk(mob/user)
 	if(amount >= 1)
 		amount--
 
-		var/obj/item/bedsheet/B
+		var/obj/item/B
 		if(sheets.len > 0)
 			B = sheets[sheets.len]
 			sheets.Remove(B)
 
 		else
-			B = new /obj/item/bedsheet(loc)
+			var/chosen = pick(sheet_types)
+			B = new chosen
 
 		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
@@ -352,5 +389,11 @@ LINEN BINS
 			hidden.forceMove(drop_location())
 			hidden = null
 
+/obj/structure/bedsheetbin/towel
+	desc = "It looks rather cosy. This one is designed to hold towels."
+	sheet_types = list(/obj/item/reagent_containers/rag/towel)
 
-	add_fingerprint(user)
+/obj/structure/bedsheetbin/color
+	sheet_types = list(/obj/item/bedsheet, /obj/item/bedsheet/blue, /obj/item/bedsheet/green, /obj/item/bedsheet/orange, \
+						/obj/item/bedsheet/purple, /obj/item/bedsheet/red, /obj/item/bedsheet/yellow, /obj/item/bedsheet/brown, \
+						/obj/item/bedsheet/black)

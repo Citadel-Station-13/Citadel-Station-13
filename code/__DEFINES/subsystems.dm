@@ -81,9 +81,11 @@
 #define INIT_ORDER_STICKY_BAN		-10
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_SHUTTLE			-21
-#define INIT_ORDER_SQUEAK			-40
+#define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
-#define INIT_ORDER_PERSISTENCE		-100
+#define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
+
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
@@ -93,6 +95,7 @@
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
 #define FIRE_PRIORITY_VIS			10
+#define FIRE_PRIORITY_VORE			10
 #define FIRE_PRIORITY_GARBAGE		15
 #define FIRE_PRIORITY_WET_FLOORS	20
 #define FIRE_PRIORITY_AIR			20
@@ -113,6 +116,7 @@
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110
 #define FIRE_PRIORITY_TICKER		200
+#define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 

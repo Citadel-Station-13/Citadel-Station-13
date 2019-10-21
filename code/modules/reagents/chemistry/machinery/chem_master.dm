@@ -1,3 +1,6 @@
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -13,12 +16,25 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
+	var/chosenPillStyle = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	var/list/pillStyles
+	var/fermianalyze //Give more detail on fermireactions on analysis
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
+
+	//Calculate the span tags and ids fo all the available pill icons
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	pillStyles = list()
+	for (var/x in 1 to PILL_STYLE_COUNT)
+		var/list/SL = list()
+		SL["id"] = x
+		SL["htmltag"] = assets.icon_tag("pill[x]")
+		pillStyles += list(SL)
+
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -87,12 +103,9 @@
 		updateUsrDialog()
 		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
-		if(bottle)
-			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
-			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		bottle = I
+		replace_pillbottle(user, I)
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		updateUsrDialog()
 	else
@@ -116,21 +129,38 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/chem_master/on_deconstruction()
-	replace_beaker(usr)
+/obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
 		bottle.forceMove(drop_location())
-		adjust_item_drop_location(bottle)
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(bottle)
+	if(new_bottle)
+		bottle = new_bottle
+	else
 		bottle = null
+	update_icon()
+	return TRUE
+
+/obj/machinery/chem_master/on_deconstruction()
+	replace_beaker(usr)
+	replace_pillbottle(usr)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+		assets.send(user)
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
+//Insert our custom spritesheet css link into the html
+/obj/machinery/chem_master/ui_base_html(html)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
@@ -141,7 +171,8 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
-
+	data["fermianalyze"] = fermianalyze
+	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
 		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
@@ -160,6 +191,9 @@
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 
+	//Calculated at init time as it never changes
+	data["pillStyles"] = pillStyles
+
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -171,22 +205,21 @@
 			. = TRUE
 
 		if("ejectp")
-			if(bottle)
-				bottle.forceMove(drop_location())
-				adjust_item_drop_location(bottle)
-				bottle = null
-				. = TRUE
+			replace_pillbottle(usr)
+			. = TRUE
 
 		if("transferToBuffer")
 			if(beaker)
 				var/id = params["id"]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
+					end_fermi_reaction()
 					beaker.reagents.trans_id_to(src, id, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
+						end_fermi_reaction()
 						beaker.reagents.trans_id_to(src, id, useramount)
 						. = TRUE
 
@@ -199,6 +232,12 @@
 					. = TRUE
 				else
 					reagents.remove_reagent(id, amount)
+					. = TRUE
+			else if (amount == -1) // -1 means custom amount
+				useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
+				if (useramount > 0)
+					end_fermi_reaction()
+					reagents.trans_id_to(beaker, id, useramount)
 					. = TRUE
 
 		if("toggleMode")
@@ -221,19 +260,25 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
-				var/target_loc = drop_location()
+				var/target_loc = bottle ? bottle : drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
 					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
-				for(var/i = 0; i < amount; i++)
+				for(var/i in 1 to amount)
 					if(i < drop_threshold)
 						P = new(target_loc)
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
+					if(chosenPillStyle == RANDOM_PILL_STYLE)
+						P.icon_state ="pill[rand(1,21)]"
+					else
+						P.icon_state = "pill[chosenPillStyle]"
+					if(P.icon_state == "pill4")
+						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
@@ -247,6 +292,10 @@
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10)
 			. = TRUE
+
+		if("pillStyle")
+			var/id = text2num(params["id"])
+			chosenPillStyle = id
 
 		if("createPatch")
 			var/many = params["many"]
@@ -289,7 +338,7 @@
 				var/vol_part = min(reagents.total_volume, 30)
 				if(text2num(many))
 					amount_full = round(reagents.total_volume / 30)
-					vol_part = reagents.total_volume % 30
+					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
@@ -314,10 +363,10 @@
 				return
 
 			var/amount_full = 0
-			var/vol_part = min(reagents.total_volume, 30)
+			var/vol_part = min(reagents.total_volume, 60)
 			if(text2num(many))
-				amount_full = round(reagents.total_volume / 30)
-				vol_part = reagents.total_volume % 30
+				amount_full = round(reagents.total_volume / 60)
+				vol_part = reagents.total_volume % 60
 			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
@@ -327,7 +376,7 @@
 				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
 				P.name = trim("[name] hypovial")
 				adjust_item_drop_location(P)
-				reagents.trans_to(P, 30)
+				reagents.trans_to(P, 60)
 
 			if(vol_part)
 				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
@@ -335,8 +384,40 @@
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_part)
 			. = TRUE
+
+		if("createDart")
+			for(var/datum/reagent/R in reagents.reagent_list)
+				if(!(istype(R, /datum/reagent/medicine)))
+					visible_message("<b>The [src]</b> beeps, \"<span class='warning'>SmartDarts are insoluble with non-medicinal compounds.\"</span>")
+					return
+
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+			var/amount = 1
+			var/vol_each = min(reagents.total_volume, 20)
+			if(text2num(many))
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many darts?", amount) as num|null), 0, 10)
+				if(!amount)
+					return
+				vol_each = min(reagents.total_volume / amount, 20)
+
+			var/name = stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				return
+
+			var/obj/item/reagent_containers/syringe/dart/D
+			for(var/i = 0; i < amount; i++)
+				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				D.name = trim("[name] SmartDart")
+				adjust_item_drop_location(D)
+				reagents.trans_to(D, vol_each)
+				D.mode=!mode
+				D.update_icon()
+			. = TRUE
+
 		//END CITADEL ADDITIONS
-		if("analyze")
+		if("analyzeBeak")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
 				var/state = "Unknown"
@@ -348,7 +429,45 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+				if(Rcr && Rcr.FermiChem)
+					fermianalyze = TRUE
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
+
+					if(!targetReagent)
+						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				screen = "analyze"
+				return
+
+		if("analyzeBuff")
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			if(R)
+				var/state = "Unknown"
+				if(initial(R.reagent_state) == 1)
+					state = "Solid"
+				else if(initial(R.reagent_state) == 2)
+					state = "Liquid"
+				else if(initial(R.reagent_state) == 3)
+					state = "Gas"
+				var/const/P = 3 //The number of seconds between life ticks
+				var/T = initial(R.metabolization_rate) * (60 / P)
+				if(istype(R, /datum/reagent/fermi))
+					fermianalyze = TRUE
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					var/datum/reagent/targetReagent = reagents.has_reagent("[R.id]")
+
+					if(!targetReagent)
+						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 				screen = "analyze"
 				return
 
@@ -358,6 +477,9 @@
 
 
 
+/obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
+	if(beaker.reagents.fermiIsReacting)
+		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
@@ -396,3 +518,6 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+#undef PILL_STYLE_COUNT
+#undef RANDOM_PILL_STYLE

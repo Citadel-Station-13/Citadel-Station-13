@@ -1,4 +1,4 @@
-/obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
+/obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals, pokadots, and armbands, this accessory system is being kept as-is
 	name = "Accessory"
 	desc = "Something has gone wrong!"
 	icon = 'icons/obj/clothing/accessories.dmi'
@@ -354,3 +354,68 @@
 	item_color = "skull"
 	above_suit = TRUE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+
+/obj/item/clothing/accessory/skullcodpiece/fake
+	name = "false codpiece"
+	desc = "A plastic ornament, intended to protect the important things in life. It's not very good at it."
+	icon_state = "skull"
+	item_color = "skull"
+	above_suit = TRUE
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/////////////////////
+//Synda Accessories//
+/////////////////////
+
+/obj/item/clothing/accessory/padding
+	name = "soft padding"
+	desc = "Some long sheets of padding to help soften the blows of a physical attacks."
+	icon_state = "padding"
+	item_color = "nothing"
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+
+/obj/item/clothing/accessory/kevlar
+	name = "kevlar sheets"
+	desc = "Long thin sheets of kevlar to help resist bullets and some physical attacks."
+	icon_state = "padding"
+	item_color = "nothing"
+	armor = list("melee" = 10, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+
+/obj/item/clothing/accessory/plastics
+	name = "underling plastic sheet"
+	desc = "A full body sheet of white plastic to help defuse lasers and energy based weapons."
+	icon_state = "plastics"
+	item_color = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = -40)
+
+/////////////////////
+//Pokadots On Pants//
+/////////////////////
+
+/obj/item/clothing/accessory/attrocious_pokadots
+	name = "atrocious pokadots"
+	desc = "They look like something out of a thrift store. Attaches to clothing not to be worn by itself."
+	icon_state = "attrocious_pokadots"
+	item_color = "attrocious_pokadots"
+	attack_verb = list("horrifed", "eye bleeded")
+
+/obj/item/clothing/accessory/black_white_pokadots
+	name = "checkered pokadots"
+	desc = "You can play a game of chess on these! Attaches to clothing not to be worn by itself."
+	icon_state = "black_white_pokadots"
+	item_color = "black_white_pokadots"
+	attack_verb = list("check", "mate")
+
+/obj/item/clothing/accessory/nt_pokadots
+	name = "blue and white pokadots"
+	desc = "To show your pride in your workplace, in the most annoying possable way. Attaches to clothing not to be worn by itself."
+	icon_state = "nt_pokadots"
+	item_color = "nt_pokadots"
+	attack_verb = list("eye bleeded", "annoyed")
+
+/obj/item/clothing/accessory/syndi_pokadots
+	name = "black and red pokadots"
+	desc = "King me. Attaches to clothing not to be worn by itself." //checkers!
+	icon_state = "syndi_pokadots"
+	item_color = "syndi_pokadots"
+	attack_verb = list("jumped", "taken")

@@ -189,7 +189,7 @@
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!spans)
-		spans = M.get_spans()
+		spans = list(M.speech_span)
 	if(!language)
 		language = M.get_default_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
@@ -221,7 +221,7 @@
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
-		if(channel == "department")
+		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
@@ -413,3 +413,16 @@
 /obj/item/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/radio/internal
+	var/obj/item/implant/radio/implant
+
+/obj/item/radio/internal/Initialize(mapload, obj/item/implant/radio/_implant)
+	. = ..()
+	implant = _implant
+
+/obj/item/radio/internal/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
+	else
+		return ..()

@@ -27,7 +27,7 @@
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/running_anim = FALSE
 
@@ -167,10 +167,11 @@
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
+		var/msg = "Patient fully restored."
 		if(autoeject) // Eject if configured.
-			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
+			msg += " Auto ejecting patient now."
 			open_machine()
+		radio.talk_into(src, msg, radio_channel)
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -392,6 +393,21 @@
 				beaker = null
 				. = TRUE
 	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !state_open)
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.

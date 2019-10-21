@@ -234,7 +234,7 @@
 
 /datum/component/storage/proc/quick_empty(mob/M)
 	var/atom/A = parent
-	if((!ishuman(M) && (A.loc != M)) || (M.stat != CONSCIOUS) || M.restrained() || !M.canmove)
+	if(!M.canUseStorage() || !A.Adjacent(M) || M.incapacitated())
 		return
 	if(check_locked(null, M, TRUE))
 		return FALSE
@@ -592,7 +592,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(HAS_TRAIT(I, TRAIT_NODROP)) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()

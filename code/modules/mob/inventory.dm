@@ -158,7 +158,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -275,7 +275,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((I.item_flags & NODROP) && !force)
+	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
 		return FALSE
 	return TRUE
 
@@ -309,13 +309,13 @@
 //DO NOT CALL THIS PROC
 //use one of the above 3 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP_1 for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP_1.
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
-	if((I.item_flags & NODROP) && !force)
+	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)

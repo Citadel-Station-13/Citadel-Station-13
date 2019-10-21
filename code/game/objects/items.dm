@@ -33,6 +33,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -67,6 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
+	var/reskinned = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -229,9 +231,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		research_msg += "None"
 	research_msg += "."
 	to_chat(user, research_msg.Join())
-
-/obj/item/proc/speechModification(message)			//for message modding by mask slot.
-	return message
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -422,10 +421,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-//Set disable_warning to 1 if you wish it to not give you outputs.
+//Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
-		return 0
+		return FALSE
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
@@ -515,12 +514,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-	M.adjust_blurriness(3)
-	M.adjust_eye_damage(rand(2,4))
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(eyes.eye_damage >= 10)
+	M.adjust_blurriness(3)
+	eyes.applyOrganDamage(rand(2,4))
+	if(eyes.damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
@@ -534,7 +533,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Knockdown(40)
-		if (prob(eyes.eye_damage - 10 + 1))
+		if (prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
 
@@ -581,6 +580,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
+/obj/item/proc/get_worn_belt_overlay(icon_file)
+	return
 
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
@@ -646,11 +648,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""
-
-
-//when an item modify our speech spans when in our active hand. Override this to modify speech spans.
-/obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
-	return
 
 /obj/item/hitby(atom/movable/AM)
 	return
@@ -825,6 +822,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (item_flags & NODROP)
+	if (HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()

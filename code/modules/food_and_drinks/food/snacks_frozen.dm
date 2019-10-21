@@ -28,6 +28,50 @@
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
 
+/obj/item/reagent_containers/food/snacks/banana_split
+	name = "banana split"
+	trash = /obj/item/reagent_containers/food/drinks/drinkingglass
+	desc = "A long glass dish filled with ice-cream, chocolate and a banana down the middle. A timeless classic by any standards."
+	icon_state = "banana_split"
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 3)
+	list_reagents = list("nutriment" = 3, "banana" = 10, "vitamin" = 2)
+	filling_color = "#FFFACD"
+	tastes = list("ice cream" = 1, "banana" = 1, "charries" = 1)
+	foodtype = FRUIT | DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/cola_float
+	name = "Root Beer Float"
+	trash = /obj/item/reagent_containers/food/drinks/drinkingglass
+	desc = "A glass filled with cream, soda and ice-cream with a cherry on top."
+	icon_state = "cola_float"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	filling_color = "#FFFACD"
+	tastes = list("ice cream" = 1, "space coal" = 1, "cherries" = 1)
+	foodtype = FRUIT | DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/charrie_float
+	name = "Cherry Shake"
+	trash = /obj/item/reagent_containers/food/drinks/drinkingglass
+	desc = "Cherries mixed with ice-cream, known for its filling tastes"
+	icon_state = "cherryshake"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "cherryshake" = 15)
+	filling_color = "#FFFACD"
+	tastes = list("ice cream" = 1, "charries" = 1)
+	foodtype = FRUIT | DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/bluecharrie_float
+	name = "Blue Cherry Shake"
+	trash = /obj/item/reagent_containers/food/drinks/drinkingglass
+	desc = "Cherries mixed with ice-cream, known for its filling tastes. This one is a exotic blue!"
+	icon_state = "bluecherryshake"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "bluecherryshake" = 10)
+	filling_color = "#FFFACD"
+	tastes = list("ice cream" = 1, "blue cherries" = 1)
+	foodtype = FRUIT | DAIRY | SUGAR
+
 /obj/item/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
 	desc = "The best icecream in space."
@@ -88,7 +132,7 @@
 
 /obj/item/reagent_containers/food/snacks/snowcones/orange
 	name = "orange flavored snowcone"
-	desc = "A mix of different flavors dizzled on a snowball in a paper cup."
+	desc = "A orange flavor dizzled on a snowball in a paper cup."
 	icon_state = "orange_sc"
 	list_reagents = list("nutriment" = 1, "orangejuice" = 10)
 	tastes = list("ice" = 1, "water" = 1, "berries" = 5)
@@ -126,11 +170,27 @@
 	tastes = list("ice" = 1, "water" = 1, "berries" = 5)
 	foodtype = FRUIT
 
+/obj/item/reagent_containers/food/snacks/snowcones/peach
+	name = "peach flavored snowcone"
+	desc = "A peach flavord snowball in a paper cup."
+	icon_state = "peach_sc"
+	list_reagents = list("nutriment" = 1, "peachjuice" = 10)
+	tastes = list("ice" = 1, "water" = 1, " peach" = 5)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/snacks/snowcones/strawberry
+	name = "strawberry flavored snowcone"
+	desc = "A strawberry flavord snowball in a paper cup."
+	icon_state = "blue_sc"
+	list_reagents = list("nutriment" = 1, "berryjuice" = 10)
+	tastes = list("ice" = 1, "water" = 1, " strawberry" = 5)
+	foodtype = FRUIT
+
 /obj/item/reagent_containers/food/snacks/snowcones/fruitsalad
 	name = "mixed fruit flavored snowcone"
 	desc = "A mix of different flavors dizzled on a snowball in a paper cup."
 	icon_state = "fruitsalad_sc"
-	list_reagents = list("nutriment" = 1, "lemonjuice" = 5, "limejuice" = 5, "lemonjuice" = 5, "orangejuice" = 5)
+	list_reagents = list("nutriment" = 1, "limejuice" = 5, "lemonjuice" = 5, "orangejuice" = 5)
 	tastes = list("ice" = 1, "water" = 1, "fruits" = 25)
 	foodtype = FRUIT
 

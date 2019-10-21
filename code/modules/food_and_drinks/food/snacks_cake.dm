@@ -17,21 +17,21 @@
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/store/cake/plain
-	name = "vanilla cake"
+	name = "plain cake"
 	desc = "A plain cake, not a lie."
 	icon_state = "plaincake"
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/cake
 	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
-	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
+	tastes = list("sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/cakeslice/plain
-	name = "vanilla cake slice"
+	name = "plain cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
 	filling_color = "#FFD700"
 	customfoodfilling = 1
-	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
+	tastes = list("sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/store/cake/carrot
@@ -147,7 +147,6 @@
 	tastes = list("cake" = 5, "sweetness" = 2, "sourness" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
-
 /obj/item/reagent_containers/food/snacks/store/cake/chocolate
 	name = "chocolate cake"
 	desc = "A cake with added chocolate."
@@ -185,7 +184,6 @@
 	list_reagents = list("nutriment" = 4, "sprinkles" = 2, "vitamin" = 1)
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
-
 
 /obj/item/reagent_containers/food/snacks/store/cake/apple
 	name = "apple cake"
@@ -248,7 +246,6 @@
 /obj/item/reagent_containers/food/snacks/store/cake/bsvc // blackberry strawberries vanilla cake
 	name = "blackberry and strawberry vanilla cake"
 	desc = "A plain cake, filled with assortment of blackberries and strawberries!"
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "blackbarry_strawberries_cake_vanilla_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/bsvc
 	bonus_reagents = list("nutriment" = 14, "vitamin" = 4)
@@ -258,7 +255,6 @@
 /obj/item/reagent_containers/food/snacks/cakeslice/bsvc
 	name = "blackberry and strawberry vanilla cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "blackbarry_strawberries_cake_vanilla_slice"
 	filling_color = "#FFD700"
 	tastes = list("blackbarry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2,"cake" = 3)
@@ -267,7 +263,6 @@
 /obj/item/reagent_containers/food/snacks/store/cake/bscc // blackbarry strawberries chocolate cake
 	name = "blackberry and strawberry chocolate cake"
 	desc = "A plain cake, filled with assortment of blackberries and strawberries!"
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "blackbarry_strawberries_cake_coco_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	bonus_reagents = list("nutriment" = 14, "vitamin" = 4, "cocoa" = 5)
@@ -277,16 +272,14 @@
 /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	name = "blackberry and strawberry chocolate cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "blackbarry_strawberries_cake_coco_cake_slice"
 	filling_color = "#FFD700"
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
-obj/item/reagent_containers/food/snacks/store/cake/holy_cake
+/obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 	name = "angel food cake"
 	desc = "A cake made for angels and chaplains alike! Contains holy water."
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "holy_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/holy_cake_slice
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3, "holy_water" = 10)
@@ -296,7 +289,6 @@ obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 /obj/item/reagent_containers/food/snacks/cakeslice/holy_cake_slice
 	name = "angel food cake slice"
 	desc = "A slice of heavenly cake."
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "holy_cake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 5, "sweetness" = 1, "clouds" = 1)
@@ -305,7 +297,6 @@ obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	name = "pound cake"
 	desc = "A condensed cake made for filling people up quickly."
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "pound_cake"
 	slices_num = 7 //Its ment to feed the party
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
@@ -316,16 +307,14 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
 	name = "pound cake slice"
 	desc = "A slice of condensed cake made for filling people up quickly."
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "pound_cake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 5, "sweetness" = 5, "batter" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR | JUNKFOOD
 
-obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
+/obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
 	name = "hardware cake"
 	desc = "A cake that is made with electronic boards and leaks acid..."
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "hardware_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
 	bonus_reagents = list("sacid" = 15, "oil" = 15)
@@ -335,8 +324,58 @@ obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
 /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
 	name = "hardware cake slice"
 	desc = "A slice of electronic boards and some acid."
-	icon = 'modular_citadel/icons/obj/food/cake.dmi'
 	icon_state = "hardware_cake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("acid" = 1, "metal" = 1, "regret" = 10)
 	foodtype = GRAIN | GROSS
+
+/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
+	name = "vanilla cake"
+	desc = "A vanilla frosted cake."
+	icon_state = "vanillacake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
+	bonus_reagents = list("sugar" = 15, "vanilla" = 15)
+	tastes = list("cake" = 1, "sugar" = 1, "vanilla" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
+	name = "vanilla cake slice"
+	desc = "A slice of vanilla frosted cake."
+	icon_state = "vanillacake_slice"
+	filling_color = "#00FFFF"
+	tastes = list("cake" = 1, "sugar" = 1, "vanilla" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/store/cake/clown_cake
+	name = "clown cake"
+	desc = "A funny cake with a clown face on it."
+	icon_state = "clowncake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/clown_slice
+	bonus_reagents = list("sugar" = 15, "laugher" = 15)
+	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/clown_slice
+	name = "clown cake slice"
+	desc = "A slice of bad jokes, and silly props."
+	icon_state = "clowncake_slice"
+	filling_color = "#00FFFF"
+	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/store/cake/peach_cake
+	name = "peach cake"
+	desc = "A peach filled cake."
+	icon_state = "peachcake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
+	bonus_reagents = list("sugar" = 5, "peachjuice" = 15)
+	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
+	name = "peach cake slice"
+	desc = "A slice of peach cake."
+	icon_state = "peach_slice"
+	filling_color = "#00FFFF"
+	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY

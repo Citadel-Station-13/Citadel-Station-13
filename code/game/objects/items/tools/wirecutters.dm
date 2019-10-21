@@ -63,11 +63,18 @@
 
 /obj/item/wirecutters/brass
 	name = "brass wirecutters"
-	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	desc = "A pair of eloquent wirecutters made of brass. The handle feels freezing cold to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "cutters_brass"
+	icon_state = "cutters_clock"
 	random_color = FALSE
 	toolspeed = 0.5
+
+/obj/item/wirecutters/bronze
+	name = "bronze plated wirecutters"
+	desc = "A pair of wirecutters plated with bronze."
+	icon_state = "cutters_brass"
+	random_color = FALSE
+	toolspeed = 0.95 //Wire cutters have 0 time bars though
 
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"
@@ -75,7 +82,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cutters"
 	toolspeed = 0.1
-
 	random_color = FALSE
 
 /obj/item/wirecutters/cyborg
@@ -119,3 +125,11 @@
 		return
 	else
 		..()
+
+/obj/item/wirecutters/advanced
+	name = "advanced wirecutters"
+	desc = "A set of reproduction alien wirecutters, they have a silver handle with an exceedingly sharp blade."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "cutters"
+	toolspeed = 0.2
+	random_color = FALSE

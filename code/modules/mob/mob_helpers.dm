@@ -429,8 +429,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
-		M.ghostize(0)
-		M.key = C.key
+		M.ghostize(FALSE, TRUE)
+		C.transfer_ckey(M, FALSE)
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
@@ -486,3 +486,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/can_hear()
 	. = TRUE
+
+//Examine text for traits shared by multiple types. I wish examine was less copypasted.
+/mob/proc/common_trait_examine()
+	if(HAS_TRAIT(src, TRAIT_DISSECTED))
+		var/dissectionmsg = ""
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
+			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
+			dissectionmsg = " via Experimental Dissection"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
+			dissectionmsg = " via Thorough Dissection"
+		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"

@@ -325,7 +325,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			var/turf/open/T = get_turf(user)
 			if(istype(T))
-				T.atmos_spawn_air("nitrogen=40;TEMP=2.7")
+				T.atmos_spawn_air("n2=40;TEMP=2.7")
 			to_chat(user, "<span class='warning'>You activate [src], and icy air bursts out of your skin!</span>")
 			return 900
 
@@ -494,7 +494,7 @@
 			to_chat(user, "<span class='warning'>You feel your body vibrating...</span>")
 			if(do_after(user, 25, target = user))
 				to_chat(user, "<span class='warning'>You teleport!</span>")
-				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg')
+				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -510,7 +510,7 @@
 				if(teleport_x && teleport_y && teleport_z)
 					var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 					to_chat(user, "<span class='notice'>You snap back to your anchor point!</span>")
-					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg')
+					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 					return 450
 
 
@@ -523,7 +523,8 @@
 /obj/item/slime_extract/pyrite/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/chosen = pick(difflist(subtypesof(/obj/item/toy/crayon),typesof(/obj/item/toy/crayon/spraycan)))
+			var/blacklisted_cans = list(/obj/item/toy/crayon/spraycan/borg, /obj/item/toy/crayon/spraycan/infinite)
+			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - blacklisted_cans)
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
@@ -633,6 +634,12 @@
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
 
+	if(M.rabid) //Stops being rabid, but doesn't become truly docile.
+		to_chat(M, "<span class='warning'>You absorb the potion, and your rabid hunger finally settles to a normal desire to feed.</span>")
+		to_chat(user, "<span class='notice'>You feed the slime the potion, calming its rabid rage.</span>")
+		M.rabid = FALSE
+		qdel(src)
+		return
 	M.docile = 1
 	M.nutrition = 700
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
@@ -674,7 +681,7 @@
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		SM.key = C.key
+		C.transfer_ckey(SM, FALSE)
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
@@ -698,11 +705,11 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
 /obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
-	var/obj/item/implant/radio/syndicate/imp = new(src)
+	var/obj/item/implant/radio/syndicate/imp = new
 	imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
-	SM.access_card.item_flags |= NODROP
+	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
@@ -962,7 +969,7 @@
 
 	to_chat(user, "<span class='notice'>You feed the potion to [M].</span>")
 	to_chat(M, "<span class='notice'>Your mind tingles as you are fed the potion. You can hear radio waves now!</span>")
-	var/obj/item/implant/radio/slime/imp = new(src)
+	var/obj/item/implant/radio/slime/imp = new
 	imp.implant(M, user)
 	qdel(src)
 

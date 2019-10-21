@@ -20,35 +20,34 @@
 		else
 			return "000"
 
-/proc/random_underwear(gender)//Cit change - makes random underwear always return nude
+#define UNDIE_COLORABLE(U) (U?.has_color)
+
+/proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
-	return "Nude"
-	/*switch(gender)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+	switch(gender)
 		if(MALE)
 			return pick(GLOB.underwear_m)
 		if(FEMALE)
 			return pick(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)*/
+			return pick(GLOB.underwear_list)
 
-/proc/random_undershirt(gender)//Cit change - makes random undershirts always return nude
+/proc/random_undershirt(gender)
 	if(!GLOB.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
-	return "Nude"
-	/*switch(gender)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/top, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+	switch(gender)
 		if(MALE)
 			return pick(GLOB.undershirt_m)
 		if(FEMALE)
 			return pick(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)*/
+			return pick(GLOB.undershirt_list)
 
-/proc/random_socks()//Cit change - makes random socks always return nude
+/proc/random_socks()
 	if(!GLOB.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return "Nude"
-	//return pick(GLOB.socks_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
+	return pick(GLOB.socks_list)
 
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
@@ -60,7 +59,7 @@
 	if(!GLOB.horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, GLOB.horns_list)
 	if(!GLOB.ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.horns_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.ears_list)
 	if(!GLOB.frills_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
 	if(!GLOB.spines_list.len)
@@ -71,8 +70,12 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
-	if(!GLOB.moth_wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
+	if(!GLOB.deco_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/deco_wings, GLOB.deco_wings_list)
+	if(!GLOB.insect_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
+	if(!GLOB.insect_fluffs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_fluff, GLOB.insect_fluffs_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -131,22 +134,24 @@
 
 	//CIT CHANGE - changes this entire return to support cit's snowflake parts
 	return(list(
-		"mcolor" = color1,
-		"mcolor2" = color2,
-		"mcolor3" = color3,
-		"tail_lizard" = pick(GLOB.tails_list_lizard),
-		"tail_human" = "None",
-		"wings" = "None",
-		"snout" = pick(GLOB.snouts_list),
-		"horns" = pick(GLOB.horns_list),
-		"ears" = "None",
-		"frills" = pick(GLOB.frills_list),
-		"spines" = pick(GLOB.spines_list),
-		"body_markings" = pick(GLOB.body_markings_list),
-		"legs" = pick("Normal Legs","Digitigrade Legs"),
-		"caps" = pick(GLOB.caps_list),
-		"moth_wings" = pick(GLOB.moth_wings_list),
-		"taur" = "None",
+		"mcolor"			= color1,
+		"mcolor2"			= color2,
+		"mcolor3"			= color3,
+		"tail_lizard"		= pick(GLOB.tails_list_lizard),
+		"tail_human"		= "None",
+		"wings"				= "None",
+		"deco_wings"		= "None",
+		"snout"				= pick(GLOB.snouts_list),
+		"horns"				= pick(GLOB.horns_list),
+		"ears"				= "None",
+		"frills"			= pick(GLOB.frills_list),
+		"spines"			= pick(GLOB.spines_list),
+		"body_markings"		= pick(GLOB.body_markings_list),
+		"legs"				= pick("Plantigrade","Digitigrade"),
+		"caps"				= pick(GLOB.caps_list),
+		"insect_wings"		= pick(GLOB.insect_wings_list),
+		"insect_fluff"		= "None",
+		"taur"				= "None",
 		"mam_body_markings" = pick(snowflake_markings_list),
 		"mam_ears" 			= pick(snowflake_ears_list),
 		"mam_snouts"		= pick(snowflake_mam_snouts_list),
@@ -190,6 +195,7 @@
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
 		"breasts_shape"		= "Pair",
 		"breasts_fluid" 	= "milk",
+		"breasts_producing" = FALSE,
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
 		"vag_color"			= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
@@ -201,9 +207,11 @@
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
-		"ipc_screen" = "Sunburst",
-		"ipc_antenna" = "None",
-		"flavor_text"		= ""))
+		"ipc_screen"		= "Sunburst",
+		"ipc_antenna"		= "None",
+		"flavor_text"		= "",
+		"meat_type"			= "Mammalian"
+		))
 
 /proc/random_hair_style(gender)
 	switch(gender)

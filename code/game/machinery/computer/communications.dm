@@ -6,7 +6,6 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_HEADS)
 	circuit = /obj/item/circuitboard/computer/communications
-	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/datum/comm_message/messages = list()
 	var/datum/comm_message/currmsg
@@ -432,6 +431,7 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
@@ -440,6 +440,7 @@
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()

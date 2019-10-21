@@ -43,8 +43,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
-	var/mob/living/summoner
-	var/range = 10 //how far from the user the spirit can be
+	var/mob/living/carbon/summoner
+	var/range = 13 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
 	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"
@@ -149,6 +149,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		death(TRUE)
 		qdel(src)
 	snapback()
+	if(HAS_TRAIT(summoner, TRAIT_NODEATH) && (istype(summoner.wear_neck, /obj/item/clothing/neck/necklace/memento_mori)))
+		REMOVE_TRAIT(summoner, TRAIT_NODEATH, "memento_mori")
+		to_chat(summoner,"<span class='danger'>You feel incredibly vulnerable as the memento mori pulls your life force in one too many directions!")
 
 /mob/living/simple_animal/hostile/guardian/Stat()
 	..()
@@ -426,9 +429,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				to_chat(G, "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>")
 				to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>")
 				message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(G)])")
-				G.ghostize(0)
+				G.ghostize(FALSE)
 				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
-				G.key = C.key
+				C.transfer_ckey(G)
 				G.reset = 1
 				switch(G.namedatum.theme)
 					if("tech")

@@ -585,7 +585,7 @@ Difficulty: Very Hard
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+			user.transfer_ckey(W, FALSE)
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
@@ -649,7 +649,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize()
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, send_the_signal = TRUE)
 	. = ..()
 	if(.)
 		death()
@@ -745,6 +745,12 @@ Difficulty: Very Hard
 	return
 
 /obj/structure/closet/stasis/ex_act()
+	return
+
+/obj/structure/closet/stasis/handle_lock_addition()
+	return
+
+/obj/structure/closet/stasis/handle_lock_removal()
 	return
 
 /obj/effect/proc_holder/spell/targeted/exit_possession

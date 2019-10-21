@@ -27,7 +27,7 @@
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
-		if(bp && istype(bp , /obj/item/clothing))
+		if(istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
 				protection += C.armor.getRating(d_type)
@@ -348,10 +348,15 @@
 		if(temp)
 			var/update = 0
 			var/dmg = rand(M.force/2, M.force)
+			var/atom/throw_target = get_edge_target_turf(src, M.dir)
 			switch(M.damtype)
 				if("brute")
-					if(M.force > 20)
-						Unconscious(20)
+					if(M.force > 35) // durand and other heavy mechas
+						Knockdown(50)
+						src.throw_at(throw_target, rand(1,5), 7)
+					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
+						Knockdown(30)
+						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 				if("fire")
@@ -654,6 +659,7 @@
 
 	if(health >= 0)
 		if(src == M)
+			var/to_send = ""
 			visible_message("[src] examines [p_them()]self.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
@@ -700,53 +706,100 @@
 				var/no_damage
 				if(status == "OK" || status == "no damage")
 					no_damage = TRUE
-				to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
+				to_send += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>\n"
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+					to_send += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>\n"
 
 			for(var/t in missing)
-				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
+				to_send += "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>\n"
 
 			if(bleed_rate)
-				to_chat(src, "<span class='danger'>You are bleeding!</span>")
+				to_send += "<span class='danger'>You are bleeding!</span>\n"
 			if(getStaminaLoss())
 				if(getStaminaLoss() > 30)
-					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
+					to_send += "<span class='info'>You're completely exhausted.</span>\n"
 				else
-					to_chat(src, "<span class='info'>You feel fatigued.</span>")
+					to_send += "<span class='info'>You feel fatigued.</span>\n"
 			if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
 				if(toxloss)
 					if(toxloss > 10)
-						to_chat(src, "<span class='danger'>You feel sick.</span>")
+						to_send += "<span class='danger'>You feel sick.</span>\n"
 					else if(toxloss > 20)
-						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
+						to_send += "<span class='danger'>You feel nauseated.</span>\n"
 					else if(toxloss > 40)
-						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+						to_send += "<span class='danger'>You feel very unwell!</span>\n"
 				if(oxyloss)
 					if(oxyloss > 10)
-						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+						to_send += "<span class='danger'>You feel lightheaded.</span>\n"
 					else if(oxyloss > 20)
-						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+						to_send += "<span class='danger'>Your thinking is clouded and distant.</span>\n"
 					else if(oxyloss > 30)
-						to_chat(src, "<span class='danger'>You're choking!</span>")
+						to_send += "<span class='danger'>You're choking!</span>\n"
 
 			switch(nutrition)
 				if(NUTRITION_LEVEL_FULL to INFINITY)
-					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+					to_send += "<span class='info'>You're completely stuffed!</span>\n"
 				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-					to_chat(src, "<span class='info'>You're well fed!</span>")
+					to_send += "<span class='info'>You're well fed!</span>\n"
 				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					to_chat(src, "<span class='info'>You're not hungry.</span>")
+					to_send += "<span class='info'>You're not hungry.</span>\n"
 				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
+					to_send += "<span class='info'>You could use a bite to eat.</span>\n"
 				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+					to_send += "<span class='info'>You feel quite hungry.</span>\n"
 				if(0 to NUTRITION_LEVEL_STARVING)
-					to_chat(src, "<span class='danger'>You're starving!</span>")
+					to_send += "<span class='danger'>You're starving!</span>\n"
+
+
+			//TODO: Convert these messages into vague messages, thereby encouraging actual dignosis.
+			//Compiles then shows the list of damaged organs and broken organs
+			var/list/broken = list()
+			var/list/damaged = list()
+			var/broken_message
+			var/damaged_message
+			var/broken_plural
+			var/damaged_plural
+			//Sets organs into their proper list
+			for(var/O in internal_organs)
+				var/obj/item/organ/organ = O
+				if(organ.organ_flags & ORGAN_FAILING)
+					if(broken.len)
+						broken += ", "
+					broken += organ.name
+				else if(organ.damage > organ.low_threshold)
+					if(damaged.len)
+						damaged += ", "
+					damaged += organ.name
+			//Checks to enforce proper grammar, inserts words as necessary into the list
+			if(broken.len)
+				if(broken.len > 1)
+					broken.Insert(broken.len, "and ")
+					broken_plural = TRUE
+				else
+					var/holder = broken[1]	//our one and only element
+					if(holder[lentext(holder)] == "s")
+						broken_plural = TRUE
+				//Put the items in that list into a string of text
+				for(var/B in broken)
+					broken_message += B
+				to_chat(src, "<span class='warning'> Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
+			if(damaged.len)
+				if(damaged.len > 1)
+					damaged.Insert(damaged.len, "and ")
+					damaged_plural = TRUE
+				else
+					var/holder = damaged[1]
+					if(holder[lentext(holder)] == "s")
+						damaged_plural = TRUE
+				for(var/D in damaged)
+					damaged_message += D
+				to_chat(src, "<span class='info'>Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.</span>")
 
 			if(roundstart_quirks.len)
-				to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
+				to_send += "<span class='notice'>You have these quirks: [get_trait_string()].</span>\n"
+
+			to_chat(src, to_send)
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)

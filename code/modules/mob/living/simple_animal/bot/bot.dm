@@ -23,6 +23,7 @@
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
+	speech_span = SPAN_ROBOT
 
 	faction = list("neutral", "silicon" , "turret")
 
@@ -60,7 +61,7 @@
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_key = null //which channels can the bot listen to
-	var/radio_channel = "Common" //The bot's default radio channel
+	var/radio_channel = RADIO_CHANNEL_COMMON //The bot's default radio channel
 	var/auto_patrol = 0// set to make bot automatically patrol
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
 	var/turf/summon_target	// The turf of a user summoning a bot.
@@ -186,22 +187,23 @@
 	qdel(src)
 
 /mob/living/simple_animal/bot/emag_act(mob/user)
+	. = ..()
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
 		emagged = 1
 		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
-		return
-	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
-		emagged = 2
-		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
-		locked = TRUE //Access denied forever!
-		bot_reset()
-		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
-		to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
-		log_combat(user, src, "emagged")
-		return
-	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
+		return TRUE
+	if(!open)
 		to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
+		return
+	emagged = 2
+	remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
+	locked = TRUE //Access denied forever!
+	bot_reset()
+	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
+	to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
+	log_combat(user, src, "emagged")
+	return TRUE
 
 /mob/living/simple_animal/bot/examine(mob/user)
 	..()
@@ -288,7 +290,7 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
-	else if(istype(W, /obj/item/hemostat) && paicard)
+	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
 			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
@@ -348,12 +350,9 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel, get_spans(), get_default_language())
+		Radio.talk_into(src, message, channel)
 	else
 		say(message)
-
-/mob/living/simple_animal/bot/get_spans()
-	return ..() | SPAN_ROBOT
 
 /mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
 	. = ..()
@@ -809,11 +808,18 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	switch(href_list["operation"])
 		if("patrol")
+			if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+				return TRUE
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
 			remote_disabled = !remote_disabled
 		if("hack")
+			if(!issilicon(usr) && !IsAdminGhost(usr))
+				var/msg = "[key_name(usr)] attempted to hack a bot with a href that shouldn't be available!"
+				message_admins(msg)
+				log_admin(msg)
+				return TRUE
 			if(emagged != 2)
 				emagged = 2
 				hacked = TRUE
@@ -916,7 +922,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(mind && paicard.pai)
 			mind.transfer_to(paicard.pai)
 		else if(paicard.pai)
-			paicard.pai.key = key
+			transfer_ckey(paicard.pai)
 		else
 			ghostize(0) // The pAI card that just got ejected was dead.
 		key = null

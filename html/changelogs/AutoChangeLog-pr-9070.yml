@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "inhands sprite for rainbow knife"
+  - tweak: "colour of highlight on the regular knife when held in the right hand"

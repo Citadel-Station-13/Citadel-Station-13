@@ -49,7 +49,7 @@
 	. = ..()
 	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
 	hidden_uplink.telecrystals = 30
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
+	var/obj/item/implant/weapons_auth/W = new
 	W.implant(src)
 
 /mob/living/simple_animal/drone/snowflake
@@ -222,7 +222,7 @@
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
+/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	. = ..()
 	if(.)
 		update_icons()

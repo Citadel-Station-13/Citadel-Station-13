@@ -422,7 +422,7 @@
 						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.item_flags |= NODROP
+							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
@@ -458,7 +458,7 @@
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
-				H.adjustBrainLoss(60, 80)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
 		if("eagles")//SCRAW
@@ -744,7 +744,7 @@
 			var/mob/chosen = players[1]
 			if (chosen.client)
 				chosen.client.prefs.copy_to(spawnedMob)
-				spawnedMob.key = chosen.key
+				chosen.transfer_ckey(spawnedMob)
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
 			var/mob/living/carbon/human/H = spawnedMob

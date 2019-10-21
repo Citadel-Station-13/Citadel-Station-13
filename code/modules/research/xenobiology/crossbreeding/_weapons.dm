@@ -7,13 +7,19 @@
 	item_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	item_flags = ABSTRACT | DROPDEL | NODROP
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
 	force = 5
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+
+/obj/item/gun/magic/bloodchill/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
@@ -21,9 +27,9 @@
 		return 0
 	charge_tick = 0
 	var/mob/living/M = loc
-	if(istype(M) && M.blood_volume >= 20)
+	if(istype(M) && M.blood_volume >= 5)
 		charges++
-		M.blood_volume -= 20
+		M.blood_volume -= 5
 	if(charges == 1)
 		recharge_newshot()
 	return 1

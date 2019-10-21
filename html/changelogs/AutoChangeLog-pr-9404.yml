@@ -1,0 +1,4 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "QM is able to hire/fire people to their department now."

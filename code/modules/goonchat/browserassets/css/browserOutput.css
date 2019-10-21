@@ -89,7 +89,7 @@ a.popt {text-decoration: none;}
 	bottom: 0;
 	right: 0;
 	padding: 8px;
-	background: #ddd;
+	background: #d0d0d0;
 	text-decoration: none;
     font-variant: small-caps;
     font-size: 1.1em;
@@ -101,9 +101,9 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 80px;
+	right: 115px;
 	width: 45px;
-	background: #ddd;
+	background: #d0d0d0;
 	height: 30px;
 	padding: 8px 0 2px 0;
 }
@@ -120,7 +120,7 @@ a.popt {text-decoration: none;}
 	right: 0;
 }
 #userBar .subCell {
-	background: #ddd;
+	background: #d0d0d0;
     height: 30px;
 	padding: 5px 0;
 	display: block;
@@ -168,7 +168,7 @@ a.popt {text-decoration: none;}
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	background: #ddd;
+	background: #d0d0d0;
 }
 .popup .close {
 	position: absolute;
@@ -185,7 +185,7 @@ a.popt {text-decoration: none;}
 .popup .close:hover {background: #999;}
 .popup .head {
 	background: #999;
-	color: #ddd;
+	color: #d0d0d0;
 	padding: 0 10px;
 	height: 30px;
 	line-height: 30px;
@@ -196,7 +196,7 @@ a.popt {text-decoration: none;}
 }
 .popup input {border: 1px solid #999; background: #fff; margin: 0; padding: 5px; outline: none; color: #333;}
 .popup input[type=text]:hover, .popup input[type=text]:active, .popup input[type=text]:focus {border-color: green;}
-.popup input[type=submit] {padding: 5px 10px; background: #999; color: #ddd; text-transform: uppercase; font-size: 0.9em; font-weight: bold;}
+.popup input[type=submit] {padding: 5px 10px; background: #999; color: #d0d0d0; text-transform: uppercase; font-size: 0.9em; font-weight: bold;}
 .popup input[type=submit]:hover, .popup input[type=submit]:focus, .popup input[type=submit]:active {background: #aaa; cursor: pointer;}
 
 .changeFont {padding: 10px;}
@@ -210,7 +210,7 @@ a.popt {text-decoration: none;}
 
 /* ADMIN CONTEXT MENU */
 .contextMenu {
-	background-color: #ddd;
+	background-color: #d0d0d0;
 	position: fixed;
 	margin: 2px;
 	width: 150px;
@@ -260,11 +260,13 @@ h1.alert, h2.alert		{color: #000000;}
 
 em						{font-style: normal;	font-weight: bold;}
 
-.ooc					{					font-weight: bold;}
+.ooc					{color: #002eb8;	font-weight: bold;}
+.looc					{color: #6699CC;	font-weight: bold;}
+.antagooc				{color: #b8002e;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 
-.adminsay   			{color: #FF4500;	font-weight: bold;}
+.adminsay   			{color: #FF4500}
 .admin					{color: #386aff;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
@@ -303,7 +305,7 @@ h1.alert, h2.alert		{color: #000000;}
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 24px;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
-.alertwarning   {color: #FF0000;    font-weight: bold}
+.alertwarning			{color: #FF0000;    font-weight: bold}
 .boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
 .announce 				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
@@ -317,8 +319,9 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
-.red                    {color: #FF0000}
-.blue                   {color: #215cff}
+.red					{color: #FF0000;}
+.pink					{color: #FF69Bf;}
+.blue					{color: #0000FF;}
 .nicegreen				{color: #14a833;}
 .userlove				{color: #FF1493;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #ff6dbc;}
 .love					{color: #ff006a;	font-style: italic;	text-shadow: 0 0 6px #ff6d6d;}
@@ -327,7 +330,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultbold				{color: #960000; font-style: italic; font-weight: bold;}
-.cultboldtalic				{color: #960000; font-weight: bold; font-size: 24px;}
+.cultboldtalic			{color: #960000; font-weight: bold; font-size: 24px;}
 
 .cultlarge				{color: #960000; font-weight: bold; font-size: 24px;}
 .narsie					{color: #960000; font-weight: bold; font-size: 120px;}
@@ -398,13 +401,39 @@ h1.alert, h2.alert		{color: #000000;}
 .redtext				{color: #FF0000;	font-size: 24px;}
 .clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
+.spooky					{color: #FF6100;}
+.velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
+@keyframes velvet {
+	0% { color: #400020; }
+	40% { color: #FF0000; }
+	50% { color: #FF8888; }
+	60% { color: #FF0000; }
+	100% { color: #400020; }
+}
+
+.hypnophrase			{color: #202020;	font-weight: bold; animation: hypnocolor 1500ms infinite;}
+@keyframes hypnocolor {
+	0% { color: #202020; }
+	25% { color: #4b02ac; }
+	50% { color: #9f41f1; }
+	75% { color: #541c9c; }
+	100% { color: #7adbf3; }
+}
+
+.phobia			{color: #dd0000;	font-weight: bold; animation: phobia 750ms infinite;}
+@keyframes phobia {
+	0% { color: #f75a5a; }
+	50% { color: #dd0000; }
+	100% { color: #f75a5a; }
+}
+
 
 .icon 					{height: 1em;	width: auto;}
 
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 16px;}
 .abductor				{color: #800080; font-style: italic;}
-.mind_control				{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
+.mind_control			{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
@@ -416,7 +445,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
 .connectionClosed.restored {background: green;}
-.internal.boldnshit {color: blue; font-weight: bold;}
+.internal.boldnshit {color: #000099; font-weight: bold;}
 
 /* HELPER CLASSES */
 .text-normal {font-weight: normal; font-style: normal;}

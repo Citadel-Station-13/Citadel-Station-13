@@ -478,18 +478,19 @@
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
 					for(var/IS in 1 to toyswordamt)
 						new /obj/item/toy/sword(Tsec)
+						toyswordamt--
 
 		if(ASSEMBLY_FIFTH_STEP)
 			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
 				if(swordamt < 3)
 					if(!user.temporarilyRemoveItemFromInventory(I))
 						return
-						created_name = "General Beepsky"
-						name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
-						icon_state = "grievous_assembly"
-						to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
-						qdel(I)
-						swordamt ++
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					swordamt ++
 				else
 					if(!can_finish_build(I, user))
 						return
@@ -505,6 +506,7 @@
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
+					swordamt--
 
 //Firebot Assembly
 /obj/item/bot_assembly/firebot

@@ -35,6 +35,8 @@
 	. = ..()
 	if(!istype(user))
 		return
+	if(slot != SLOT_GLASSES)
+		return
 	if(!combattoggle_redir)
 		combattoggle_redir = user.AddComponent(/datum/component/redirect, list(COMSIG_COMBAT_TOGGLED = CALLBACK(src, .proc/injectadrenaline)))
 
