@@ -11,6 +11,7 @@
 	. = ..()
 	if(!resting && !sprinting)
 		. += 1
+	. += speed
 
 /mob/living/silicon/robot/proc/togglesprint(shutdown = FALSE) //Basically a copypaste of the proc from /mob/living/carbon/human
 	if(!shutdown && (!cell || cell.charge < 25))
