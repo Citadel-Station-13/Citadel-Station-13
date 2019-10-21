@@ -364,3 +364,5 @@
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
+
+/datum/config_entry/flag/dynamic_voting

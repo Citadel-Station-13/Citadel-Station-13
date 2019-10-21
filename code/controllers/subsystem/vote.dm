@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
-	var/was_roundtype_vote = mode == "roundtype"
+	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
 		if(question)
 			text += "<b>[question]</b>"
@@ -124,6 +124,12 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
+#define PEACE2 "Very Calm"
+#define PEACE1 "Somewhat Calm"
+#define INDIFFERENT "Balanced"
+#define CHAOS1"Somewhat chaotic"
+#define CHAOS2 "Very chaotic"
+
 /datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
@@ -146,6 +152,17 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("dynamic")
+				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
+					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
+				GLOB.dynamic_forced_extended = .=="extended"
+				if(GLOB.dynamic_forced_extended)
+					return message_admins("Dynamic extended has been voted for.")
+				var/mean = (choices["extended"]*-2+choices[PEACE2]*-2+choices[PEACE1]*-1+choices[CHAOS1]*1+choices[CHAOS2]*2)/voted.len
+				var/variance=(((-2-mean)**2)*choices["extended"]+((-2-mean)**2)*choices[PEACE2]+((-1-mean)**2)*choices[PEACE1]+((0-mean)**2)*choices[INDIFFERENT]+((1-mean)**2)*choices[CHAOS1]+((2-mean)**2)*choices[CHAOS2])/voted.len //Sorry. Im sorry. Im trying to remove it
+				GLOB.dynamic_curve_centre = mean*(5/2)
+				GLOB.dynamic_curve_width = max(variance,0.5)
+				message_admins("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -213,6 +230,8 @@ SUBSYSTEM_DEF(vote)
 					choices[i] = 0
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
+			if("dynamic")
+				choices.Add("extended",PEACE2,PEACE1,INDIFFERENT,CHAOS1,CHAOS2)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
