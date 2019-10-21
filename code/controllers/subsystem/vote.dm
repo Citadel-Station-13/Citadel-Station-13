@@ -124,8 +124,8 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
-#define PEACE2 "Very Calm"
-#define PEACE1 "Somewhat Calm"
+#define PEACE2 "Very calm"
+#define PEACE1 "Somewhat calm"
 #define INDIFFERENT "Balanced"
 #define CHAOS1"Somewhat chaotic"
 #define CHAOS2 "Very chaotic"
