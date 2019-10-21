@@ -267,6 +267,10 @@ ALLOW_AI_MULTICAM
 ## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
+## Determines the minimum alert level for the security cyborg model to be chosen
+## 0: Green, 1:Blue, 2:Amber, 3:Red, 4:Delta
+MINIMUM_SECBORG_ALERT 3
+
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg module from being chosen
 #DISABLE_PEACEBORG
