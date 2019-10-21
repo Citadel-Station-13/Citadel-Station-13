@@ -116,7 +116,7 @@
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE
 			if(combatmode)
-				toggle_combat_mode()
+				toggle_combat_mode(TRUE)
 			recoveringstam = TRUE
 			filters += CIT_FILTER_STAMINACRIT
 			update_canmove()
