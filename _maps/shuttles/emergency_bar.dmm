@@ -42,10 +42,6 @@
 /obj/item/storage/box/drinkingglasses,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"aj" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/template_noop)
 "ak" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -76,9 +72,6 @@
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"ap" = (
-/turf/closed/wall/mineral/titanium,
-/area/template_noop)
 "aq" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -905,7 +898,7 @@ bC
 bE
 "}
 (10,1,1) = {"
-ap
+ab
 ae
 aB
 aG
@@ -930,9 +923,9 @@ bE
 "}
 (11,1,1) = {"
 aa
-ap
-ap
-ap
+ab
+ab
+ab
 ab
 aK
 aQ
@@ -950,29 +943,29 @@ bk
 bl
 bo
 ab
-ap
+ab
 "}
 (12,1,1) = {"
 aa
 aa
 aa
 aa
-ap
-aj
-ap
-aj
-ap
-ap
-ap
-aj
-aj
-aj
-ap
-ap
-ap
-aj
-ap
-aj
-ap
+ab
+ac
+ab
+ac
+ab
+ab
+ab
+ac
+ac
+ac
+ab
+ab
+ab
+ac
+ab
+ac
+ab
 aa
 "}
