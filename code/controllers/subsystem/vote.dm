@@ -155,6 +155,9 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
+				GLOB.master_mode = "dynamic"
+				if(voted.len==0)
+					return message_admins("Nobody voted in the extended vote; using default dynamic settings.")
 				GLOB.dynamic_forced_extended = choices["extended"]/voted.len > 0.5
 				if(GLOB.dynamic_forced_extended)
 					return message_admins("Dynamic extended has been voted for.")
