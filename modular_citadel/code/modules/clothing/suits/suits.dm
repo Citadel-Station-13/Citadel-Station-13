@@ -41,16 +41,3 @@
 	resistance_flags = NONE
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
-
-/obj/item/clothing/suit/assu_suit
-	name = "ASSU suit"
-	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Assistance Skipping Special Unit</i>\"."
-	icon = 'modular_citadel/icons/obj/clothing/assu.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/assu.dmi'
-	icon_state = "assu_suit"
-	item_state = "assu_suit"
-	blood_overlay_type = "armor"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	flags_inv = HIDEJUMPSUIT
-	resistance_flags = NONE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
