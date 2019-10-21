@@ -173,20 +173,16 @@
 		cached_icon = icon_state
 	var/damage
 	var/cause
-	var/pHresistance = 3
 	if(beaker_weakness_bitflag & PH_WEAK)
-		pHresistance = 0 //if weak, pH 2, else -1
+		if(reagents.pH < 2)
+			damage = (2 - reagents.pH)/20
+			cause = "from the extreme pH"
+			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
-	if(reagents.pH < (2-pHresistance)) //2 or -1
-		damage = ((2-pHresistance) - reagents.pH)/20 //2 - -3 = -1, -1 - -2 = 1 I think this is right?
-		cause = "from the extreme pH"
-		playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-
-
-	if(reagents.pH > (12+pHresistance)) //12 or 15
-		damage = (reagents.pH - (12+pHresistance))/20
-		cause = "from the extreme pH"
-		playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+		if(reagents.pH > 12)
+			damage = (reagents.pH - 12)/20
+			cause = "from the extreme pH"
+			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
 	if(beaker_weakness_bitflag & TEMP_WEAK)
 		if(reagents.chem_temp >= 444)
