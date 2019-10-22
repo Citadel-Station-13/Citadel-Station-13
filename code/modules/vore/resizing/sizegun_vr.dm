@@ -83,7 +83,7 @@
 	return 1
 */
 
-datum/design/sizeray
+/datum/design/sizeray
 	name = "Size Ray"
 	desc = "Abuse bluespace tech to alter living matter scale."
 	id = "sizeray"

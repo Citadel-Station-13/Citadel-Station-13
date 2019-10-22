@@ -9,7 +9,7 @@
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
 	item_flags = NOBLUDGEON
-	materials = list()		// To be filled later
+	custom_materials = null		// To be filled later
 	datum_flags = DF_USE_TAG
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
@@ -95,9 +95,9 @@
 			D.open()
 
 /obj/item/electronic_assembly/Initialize()
+	custom_materials[/datum/material/iron] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 	.=..()
 	START_PROCESSING(SScircuit, src)
-	materials[/datum/material/iron] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
 	//sets up diagnostic hud view
 	prepare_huds()

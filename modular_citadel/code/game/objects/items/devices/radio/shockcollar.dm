@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	strip_delay = 60
 	equip_delay_other = 60
-	materials = list(/datum/material/iron=5000, /datum/material/glass=2000)
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2000)
 	var/tagname = null
 
 /datum/design/electropack/shockcollar

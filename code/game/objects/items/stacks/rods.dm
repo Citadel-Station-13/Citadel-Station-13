@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron=1000)
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
@@ -28,9 +28,11 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-
-	recipes = GLOB.rod_recipes
 	update_icon()
+
+/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.rod_recipes
 
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
@@ -70,7 +72,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 

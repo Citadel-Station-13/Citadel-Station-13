@@ -436,7 +436,7 @@
 			if(!S)
 				activate_pin(4)
 				return
-			if(materials.insert_stack(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
+			if(materials.insert_item(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
 				AfterMaterialInsert()
 				activate_pin(3)
 			else

@@ -69,7 +69,8 @@
 	item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
-	materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
+	material_flags = MATERIAL_NO_EFFECTS
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
@@ -78,7 +79,7 @@
 	item_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
-	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/ore/glass
@@ -87,7 +88,7 @@
 	item_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
-	materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
@@ -135,7 +136,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
-	materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
@@ -149,7 +150,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
-	materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/stack/ore/gold
@@ -158,7 +159,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
-	materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/stack/ore/diamond
@@ -167,7 +168,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
-	materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/stack/ore/bananium
@@ -176,7 +177,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
-	materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/stack/ore/titanium
@@ -185,7 +186,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
-	materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
 /obj/item/stack/ore/slag
@@ -319,7 +320,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
-	material_flags = MATERIAL_ADD_PREFIX
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
@@ -448,7 +449,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
-	material_flags = MATERIAL_NO_COLOR
+	material_flags = NONE
 
 /obj/item/coin/iron
 

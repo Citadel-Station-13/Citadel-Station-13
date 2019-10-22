@@ -23,7 +23,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
-	materials = list(/datum/material/iron = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -315,7 +315,7 @@
 	max_ammo = 24
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	materials = list(/datum/material/iron = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/magrifle/toy
 	name = "foamag rifle"

@@ -19,7 +19,7 @@
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
-	materials = list()
+	custom_materials = null
 	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3
@@ -45,7 +45,7 @@
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
-	
+
 	var/structure_piercing = 1
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
