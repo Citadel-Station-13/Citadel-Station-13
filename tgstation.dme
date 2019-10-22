@@ -15,7 +15,6 @@
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
 #include "_maps\eventstations.dm"
-#include "_maps\map_files\Eventstations\codefile.dm"
 #include "_maps\map_files\Eventstations\JTGSZwork.dm"
 #include "_maps\map_files\Eventstations\PersiWork.dm"
 #include "code\_compile_options.dm"
