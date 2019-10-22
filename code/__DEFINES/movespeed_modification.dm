@@ -34,3 +34,5 @@
 
 #define MOVESPEED_ID_PRONE_DRAGGING                     "PRONE_DRAG"
 #define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"
+
+#define MOVESPEED_ID_TASED_STATUS						"TASED"
