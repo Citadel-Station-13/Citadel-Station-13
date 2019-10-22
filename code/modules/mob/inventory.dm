@@ -468,3 +468,6 @@
 			bodyparts += BP
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
+
+/mob/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return ..() && (user == src)

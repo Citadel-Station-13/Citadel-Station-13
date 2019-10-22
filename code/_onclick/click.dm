@@ -200,7 +200,7 @@
 			if (!target.loc)
 				continue
 
-			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH) && !ismob(target.loc))
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH) && target.loc.canReachInto(src, ultimate_target, next, view_only, tool))
 				next += target.loc
 
 		checking = next
@@ -214,6 +214,10 @@
 
 /mob/living/DirectAccess(atom/target)
 	return ..() + GetAllContents()
+
+//This is called reach into but it's called on the deepest things first so uh, make sure to account for that!
+/atom/proc/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return TRUE
 
 /atom/proc/AllowClick()
 	return FALSE

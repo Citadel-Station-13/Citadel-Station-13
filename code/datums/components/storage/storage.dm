@@ -96,6 +96,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_views)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
@@ -385,6 +386,11 @@
 	for(var/mob/M in can_see_contents())
 		close(M)
 		. = TRUE //returns TRUE if any mobs actually got a close(M) call
+
+/datum/component/storage/proc/check_views()
+	for(var/mob/M in can_see_contents())
+		if(!isobserver(M) && !M.CanReach(src, view_only = TRUE))
+			close(M)
 
 /datum/component/storage/proc/emp_act(datum/source, severity)
 	if(emp_shielded)
