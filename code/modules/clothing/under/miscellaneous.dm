@@ -718,7 +718,6 @@
 	item_state = "gear_harness"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/durathread
 	name = "durathread jumpsuit"
