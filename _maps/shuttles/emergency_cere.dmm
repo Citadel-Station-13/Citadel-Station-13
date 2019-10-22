@@ -507,6 +507,35 @@
 /obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
+"aW" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aX" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dheight = 0;
+	dwidth = 15;
+	height = 20;
+	name = "Cere emergency shuttle";
+	width = 42
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aY" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "aZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -639,13 +668,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"bv" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "bw" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -695,19 +717,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bE" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dheight = 0;
-	dwidth = 15;
-	height = 20;
-	name = "Cere emergency shuttle";
-	width = 42
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/closet/crate/bin,
@@ -935,12 +944,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bY" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "bZ" = (
 /obj/structure/extinguisher_cabinet{
@@ -1762,17 +1765,17 @@ ab
 ab
 ab
 ab
-bv
+aW
 ab
-bE
+aX
 ab
 aa
 aa
 aa
 ab
-bY
+aY
 ab
-bY
+aY
 ab
 aa
 aa

@@ -42,7 +42,7 @@
 	if(replaced_by == /datum/surgery)
 		return FALSE
 
-	if(HAS_TRAIT(user, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
 		if(replaced_by)
 			return FALSE
 		else
@@ -60,7 +60,7 @@
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
 		if(SP)
 			if (replaced_by in SP.advanced_surgeries)
-				return FALSE
+				return .
 			if(type in SP.advanced_surgeries)
 				return TRUE
 
@@ -69,7 +69,7 @@
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
 		if(!table.computer)
-			return FALSE
+			return .
 		if(table.computer.stat & (NOPOWER|BROKEN))
 			return .
 		if(replaced_by in table.computer.advanced_surgeries)

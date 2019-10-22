@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The alien-bursting-from-your-thorax and the xeno \"hud\" embryo stage images will now properly delete them once the embryo egg lifecycle is complete."

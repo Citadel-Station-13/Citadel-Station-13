@@ -112,6 +112,11 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"w" = (
+/obj/machinery/door/airlock/titanium,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "x" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -197,6 +202,7 @@
 	width = 14;
 	name = "Birdboat emergency escape shuttle"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "L" = (
@@ -574,7 +580,7 @@ p
 u
 b
 b
-G
+w
 K
 b
 b
