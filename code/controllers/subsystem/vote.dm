@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(vote)
 				GLOB.dynamic_curve_centre = mean*(5/2)
 				GLOB.dynamic_curve_width = max(variance,0.5)
 				message_admins("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
-				log_admins("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
+				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
