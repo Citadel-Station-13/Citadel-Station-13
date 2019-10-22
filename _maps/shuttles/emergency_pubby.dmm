@@ -58,6 +58,29 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"am" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"an" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 8;
+	dwidth = 27;
+	height = 8;
+	name = "PubbyStation emergency shuttle";
+	port_direction = 4;
+	preferred_direction = 1;
+	width = 46
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ap" = (
 /obj/structure/chair/comfy,
 /obj/machinery/computer/security/telescreen/entertainment{
@@ -132,12 +155,6 @@
 /area/shuttle/escape)
 "ax" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"ay" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "az" = (
 /obj/structure/chair/comfy{
@@ -675,21 +692,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bL" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dir = 8;
-	dwidth = 27;
-	height = 8;
-	name = "PubbyStation emergency shuttle";
-	port_direction = 4;
-	preferred_direction = 1;
-	width = 46
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "bO" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Cockpit";
@@ -1071,17 +1073,17 @@ ab
 ab
 ab
 ab
-ay
+am
 ab
-ay
+am
 ab
 ab
 aa
 ab
 ab
-bL
+an
 ab
-ay
+am
 ab
 ac
 ab

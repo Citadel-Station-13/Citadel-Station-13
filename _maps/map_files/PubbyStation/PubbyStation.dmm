@@ -24138,8 +24138,7 @@
 	dir = 8
 	},
 /obj/machinery/keycard_auth{
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
