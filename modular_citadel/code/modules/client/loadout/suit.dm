@@ -63,6 +63,62 @@
 	name = "Winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat
+	
+/datum/gear/coat/sec
+	name = "Security winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/security
+	restricted_roles = list("Head of Security", "Warden", "Detective", "Security Officer") // Reserve it to the Security Departement
+	
+/datum/gear/coat/med
+	name = "Medical winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/medical
+	restricted_roles = list("Chief Medical Officer", "Medical Doctor") // Reserve it to Medical Doctors and their boss, the Chief Medical Officer
+	
+/* Commented out until there is a Chemistry Winter Coat
+/datum/gear/coat/med/chem
+	name = "Chemistry winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
+	restricted_roles = list("Chief Medical Officer", "Chemist") // Reserve it to Chemists and their boss, the Chief Medical Officer
+*/	
+
+/datum/gear/coat/sci
+	name = "Science winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/science
+	restricted_roles = list("Research Director", "Scientist", "Roboticist") // Reserve it to the Science Departement
+	
+/datum/gear/coat/eng
+	name = "Engineering winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/engineering
+	restricted_roles = list("Chief Engineer", "Station Engineer") // Reserve it to Station Engineers and their boss, the Chief Engineer
+	
+/datum/gear/coat/eng/atmos
+	name = "Atmospherics winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
+	restricted_roles = list("Chief Engineer", "Atmospheric Technician") // Reserve it to Atmos Techs and their boss, the Chief Engineer
+	
+/datum/gear/coat/hydro
+	name = "Hydroponics winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/hydro
+	restricted_roles = list("Head of Personnel", "Botanist") // Reserve it to Botanists and their boss, the Head of Personnel
+	
+/datum/gear/coat/cargo
+	name = "Cargo winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/cargo
+	restricted_roles = list("Quartermaster", "Cargo Technician") // Reserve it to Cargo Techs and their boss, the Quartermaster
+	
+/datum/gear/coat/miner
+	name = "Mining winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/miner
+	restricted_roles = list("Quartermaster", "Shaft Miner") // Reserve it to Miners and their boss, the Quartermaster
 
 /datum/gear/militaryjacket
 	name = "Military Jacket"
