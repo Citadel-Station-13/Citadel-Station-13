@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed mobs folded inside bluespace bodybags getting their clothing and items deleted when passing through a recycler."
