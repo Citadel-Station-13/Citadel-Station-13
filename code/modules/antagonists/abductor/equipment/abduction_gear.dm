@@ -135,12 +135,14 @@
 /obj/item/abductor/proc/AbductorCheck(mob/user)
 	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
+	if (istype(user) && user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
+		return TRUE
 	to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
 	return FALSE
 
 /obj/item/abductor/proc/ScientistCheck(mob/user)
-	var/training = HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING)
-	var/sci_training = HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
+	var/training = HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
+	var/sci_training = HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING))
 
 	if(training && !sci_training)
 		to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
