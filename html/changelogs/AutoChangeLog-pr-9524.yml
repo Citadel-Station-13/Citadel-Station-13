@@ -1,0 +1,7 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "Decorative and insect wings can now be coloured individually, similar to horns."
+  - bugfix: "people getting assigned wings if their savefile is old."
+  - rscdel: "wings that take the hair colour. Unnecessary if you can just set the colour."
+  - tweak: "Cannot make horns pure black. Trying to do so will set it to a default value."
