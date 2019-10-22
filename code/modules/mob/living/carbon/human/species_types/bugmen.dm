@@ -3,7 +3,7 @@
 	id = "insect"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS,NOEYES,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR)
+	species_traits = list(LIPS,NOEYES,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
 	mutant_bodyparts = list("mam_ears", "mam_snout", "mam_tail", "taur", "insect_wings", "mam_snouts", "insect_fluff","horns")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None",
