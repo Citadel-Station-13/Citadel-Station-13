@@ -386,7 +386,6 @@
 		return TRUE
 		//some new blood DNA was added
 
-
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.get_blood_dna_list()
@@ -402,10 +401,10 @@
 	return transfer_blood_dna(blood_dna, diseases)
 
 /obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	add_blood_overlay()
-	return TRUE //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
 	if(!blood_DNA.len)
