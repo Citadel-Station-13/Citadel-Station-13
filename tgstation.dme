@@ -14,6 +14,8 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\eventstations.dm"
+#include "_maps\map_files\Eventstations\codefile.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
