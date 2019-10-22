@@ -95,7 +95,7 @@
 			D.open()
 
 /obj/item/electronic_assembly/Initialize()
-	custom_materials[/datum/material/iron] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
+	LAZYSET(custom_materials, /datum/material/iron, round((max_complexity + max_components) * 0.25) * SScircuit.cost_multiplier)
 	.=..()
 	START_PROCESSING(SScircuit, src)
 

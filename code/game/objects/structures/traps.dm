@@ -133,7 +133,19 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-
 /obj/structure/trap/ward/New()
 	..()
 	QDEL_IN(src, time_between_triggers)
+
+/obj/structure/trap/cult
+	name = "unholy trap"
+	desc = "A trap that rings with unholy energy. You think you hear... chittering?"
+	icon_state = "trap-cult"
+
+/obj/structure/trap/cult/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
+	L.electrocute_act(10, src, safety = TRUE) // electrocute act does a message.
+	L.Knockdown(20)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	QDEL_IN(src, 30)

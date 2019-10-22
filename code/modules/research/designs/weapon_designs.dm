@@ -354,3 +354,12 @@
 	build_path = /obj/item/suppressor
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/cleric_mace
+	name = "Cleric Mace"
+	desc = "A mace fit for a cleric. Useful for bypassing plate armor, but too bulky for much else."
+	id = "cleric_mace"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 12000)
+	build_path = /obj/item/melee/cleric_mace
+	category = list("Imported")
