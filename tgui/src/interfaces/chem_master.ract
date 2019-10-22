@@ -17,7 +17,7 @@
 							<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 10}'>10</ui-button>
 							<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 1000}'>All</ui-button>
 							<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": -1}'>Custom</ui-button>
-							<ui-button action='analyze' params='{"id": "{{id}}"}'>Analyze</ui-button>
+							<ui-button action='analyzeBeak' params='{"id": "{{id}}"}'>Analyze</ui-button>
 						</div>
 					</ui-section>
 			{{else}}
@@ -41,7 +41,7 @@
 						<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 10}'>10</ui-button>
 						<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 1000}'>All</ui-button>
 						<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": -1}'>Custom</ui-button>
-						<ui-button action='analyze' params='{"id": "{{id}}"}'>Analyze</ui-button>
+						<ui-button action='analyzeBuff' params='{"id": "{{id}}"}'>Analyze</ui-button>
 					</div>
 				</ui-section>
 			{{/each}}
@@ -81,6 +81,11 @@
 			<br/>
 			<ui-button action='createVial' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Dispense Buffer to Hypo vials </ui-button>
 			<br/>
+			<br/>
+			<ui-button action='createDart' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create SmartDart (max 20µ)</ui-button>
+			<br/>
+			<ui-button action='createDart' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple SmartDarts </ui-button>
+			<br/>
 			
 	</ui-display>
 
@@ -112,6 +117,29 @@
 		<span class='highlight'>Addiction Threshold: </span>
 		<span class='content'>{{data.analyzeVars.addicD}}</span>
 		<br/>
+		{{#if data.fermianalyze}}
+			<span class='highlight'>Minumum Reaction Temperature: </span>
+			<span class='content'>{{data.analyzeVars.minTemp}}K</span>
+			<br/>
+			<span class='highlight'>Optimal Reaction Temperature: </span>
+			<span class='content'>{{data.analyzeVars.maxTemp}}K</span>
+			<br/>
+			<span class='highlight'>Explosion Reaction Temperature: </span>
+			<span class='content'>{{data.analyzeVars.eTemp}}K</span>
+			<br/>
+			<span class='highlight'>Optimal reaction pH: </span>
+			<span class='content'>{{data.analyzeVars.pHpeak}}</span>
+			<br/>
+			<span class='highlight'>Current Purity: </span>
+			<span class='content'>{{data.analyzeVars.purityF}}</span>
+			<br/>
+			<span class='highlight'>Inverse Purity Threshold: </span>
+			<span class='content'>{{data.analyzeVars.inverseRatioF}}</span>
+			<br/>
+			<span class='highlight'>Explosion Purity Threshold: </span>
+			<span class='content'>{{data.analyzeVars.purityE}}</span>
+			<br/>
+		{{/if}}
 		<br/>
 		<ui-button action='goScreen' params='{"screen": "home"}'>Back</ui-button>
 	</ui-display>

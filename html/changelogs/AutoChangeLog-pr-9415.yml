@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "war ops is now lowpop friendly and doesn't require roughly 54 starting players anymore."

@@ -1,0 +1,6 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "Tend Wounds surgery. Heal in the field, with better healing the more damage the patient has."
+  - rscdel: "Reconstruction replaced by Tend Wounds"
+  - balance: "made Revival more accessible, more viable alternative to cloning."

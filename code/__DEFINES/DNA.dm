@@ -98,7 +98,16 @@
 #define DRINKSBLOOD		15
 #define NOEYES			16
 #define MARKINGS		17
+#define MUTCOLORS2		18
+#define MUTCOLORS3		19
+#define NOAROUSAL		20	//Stops all arousal effects
+#define NOGENITALS		21	//Cannot create, use, or otherwise have genitals
+#define MATRIXED		22	//if icon is color matrix'd
+#define SKINTONE		23	//uses skin tones
+#define HORNCOLOR		24
+#define WINGCOLOR		25
 
+//organ slots
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
@@ -122,3 +131,8 @@
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PENIS "penis"
+
+////organ defines
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+#define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes

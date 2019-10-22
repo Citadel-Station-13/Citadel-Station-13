@@ -216,6 +216,9 @@
 	if(is_reebe(invoker.z))
 		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
 		return
+	if(!isturf(invoker.loc))
+		to_chat(invoker, "<span class='danger'>You must be visible to return!</span>")
+		return
 	return TRUE
 
 /datum/clockwork_scripture/abscond/recital()
@@ -224,7 +227,7 @@
 	. = ..()
 
 /datum/clockwork_scripture/abscond/scripture_effects()
-	var/mob/living/pulled_mob = invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)
+	var/mob/living/pulled_mob = (invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)) ? invoker.pulling : null
 	var/turf/T
 	if(GLOB.ark_of_the_clockwork_justiciar)
 		T = get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH)

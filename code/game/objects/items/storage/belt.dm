@@ -10,6 +10,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+	var/worn_overlays = FALSE //worn counterpart of the above.
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -23,6 +24,12 @@
 			add_overlay(M)
 	..()
 
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(!isinhands && worn_overlays)
+		for(var/obj/item/I in contents)
+			. += I.get_worn_belt_overlay(icon_file)
+
 /obj/item/storage/belt/Initialize()
 	. = ..()
 	update_icon()
@@ -33,6 +40,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -177,12 +185,9 @@
 	content_overlays = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
-	new /obj/item/hemostat/adv(src)
-	new /obj/item/circular_saw/adv(src)
-	new /obj/item/scalpel/adv(src)
-	new /obj/item/retractor/adv(src)
-	new /obj/item/cautery/adv(src)
-	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/surgicaldrill/advanced(src)
 	new /obj/item/surgical_drapes(src)
 
 /obj/item/storage/belt/security
@@ -337,6 +342,7 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
@@ -424,6 +430,48 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/durathread
+	name = "durathread toolbelt"
+	desc = "A toolbelt made out of durathread, it seems resistant enough to hold even big tools like an RCD, it also has higher capacity."
+	icon_state = "webbing-durathread"
+	item_state = "webbing-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/durathread/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 14
+	STR.max_combined_w_class = 32
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/multitool,
+		/obj/item/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
+		/obj/item/extinguisher/mini,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
+		/obj/item/forcefield_projector,
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer,
+		/obj/item/rcd_ammo,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/stack/rods,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/grenade/chem_grenade/metalfoam,
+		/obj/item/grenade/chem_grenade/smart_metal_foam
+		))
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
@@ -481,6 +529,7 @@
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/wands/ComponentInitialize()
 	. = ..()
@@ -517,12 +566,15 @@
 		/obj/item/grenade/chem_grenade,
 		/obj/item/lightreplacer,
 		/obj/item/flashlight,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/holosign_creator,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
+		/obj/item/paint/paint_remover,
 		/obj/item/assembly/mousetrap
 		))
 
@@ -541,6 +593,22 @@
 		/obj/item/ammo_casing/shotgun
 		))
 
+/obj/item/storage/belt/bandolier/durathread
+	name = "durathread bandolier"
+	desc = "An double stacked bandolier made out of durathread."
+	icon_state = "bandolier-durathread"
+	item_state = "bandolier-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 32
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/ammo_casing
+		))
+
 /obj/item/storage/belt/medolier
 	name = "medolier"
 	desc = "A medical bandolier for holding smartdarts."
@@ -552,6 +620,9 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 15
 	STR.display_numerical_stacking = FALSE
+	STR.allow_quick_gather = TRUE
+	STR.allow_quick_empty = TRUE
+	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/syringe/dart
 		))
@@ -559,6 +630,25 @@
 /obj/item/storage/belt/medolier/full/PopulateContents()
 	for(var/i in 1 to 16)
 		new /obj/item/reagent_containers/syringe/dart/(src)
+
+/obj/item/storage/belt/medolier/afterattack(obj/target, mob/user , proximity)
+	if(!(istype(target, /obj/item/reagent_containers/glass/beaker)))
+		return
+	if(!proximity)
+		return
+	if(!target.reagents)
+		return
+
+	for(var/obj/item/reagent_containers/syringe/dart/D in contents)
+		if(round(target.reagents.total_volume, 1) <= 0)
+			to_chat(user, "<span class='notice'>You soak as many of the darts as you can with the contents from [target].</span>")
+			return
+		if(D.mode == SYRINGE_INJECT)
+			continue
+
+		D.afterattack(target, user, proximity)
+
+	..()
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
@@ -653,9 +743,10 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	content_overlays = TRUE
+	worn_overlays = TRUE
 	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
 	var/starting_sword = /obj/item/melee/sabre
-	var/sword_overlay
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
@@ -682,27 +773,13 @@
 		to_chat(user, "[src] is empty.")
 
 /obj/item/storage/belt/sabre/update_icon()
-	icon_state = initial(icon_state)
-	item_state = initial(item_state)
-	sword_overlay = null
-	if(contents.len)
-		var/obj/item/I = contents[1]
-		sword_overlay = initial(I.icon_state)
-		add_overlay("-[sword_overlay]")
-		item_state += "-[I.icon_state]"
-	if(loc && isliving(loc))
+	. = ..()
+	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
-	..()
-
-/obj/item/storage/belt/sabre/worn_overlays(isinhands, icon_file)
-	. = ..()
-	if(!isinhands)
-		. += mutable_appearance(icon_file, "-[sword_overlay]")
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new starting_sword(src)
-	update_icon()
 
 /obj/item/storage/belt/sabre/rapier
 	name = "rapier sheath"

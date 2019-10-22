@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "Added towel linen bins, found in dormitory restrooms. Also enhanced the bedsheet bins found in some stations' dormitories"
+  - imageadd: "Resprited bedsheet bins in 3/4 perspective"

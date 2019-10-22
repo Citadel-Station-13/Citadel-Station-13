@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a few dozen suits' body coverage inconsistencies. These changes shouldn't affect armor and utility vests for most."

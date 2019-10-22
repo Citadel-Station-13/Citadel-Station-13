@@ -10,6 +10,7 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
 	var/turf/target
+	var/obj/item/implant/imp_t
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()
@@ -109,6 +110,9 @@
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	target = null
+	if(imp_t)
+		UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+		imp_t = null
 	if(regime_set == "Teleporter")
 		regime_set = "Gate"
 	else
@@ -124,18 +128,32 @@
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !isliving(I.loc))
+			if(!I.imp_in || !isliving(I.imp_in))
 				continue
 			else
-				var/mob/living/M = I.loc
+				var/mob/living/M = I.imp_in
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
-				if(is_eligible(I))
-					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+				if(is_eligible(M))
+					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = M
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
+		if(!user.canUseTopic(src, !issilicon(user), NO_DEXTERY)) //check if we are still around
+			return
 		target = L[desc]
+		if(imp_t)
+			UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+			imp_t = null
+		if(isliving(target)) //make sure the living mob is still implanted to be a valid target
+			var/mob/living/M = target
+			var/obj/item/implant/tracking/I = locate() in M.implants
+			if(I)
+				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, .proc/untarget_implant)
+				imp_t = I
+			else
+				target = null
+				return
 		var/turf/T = get_turf(target)
 		log_game("[key_name(user)] has set the teleporter target to [target] at [AREACOORD(T)]")
 
@@ -149,6 +167,8 @@
 			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
 			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
+		if(!user.canUseTopic(src, !issilicon(user), NO_DEXTERY)) //again, check if we are still around
+			return
 		var/obj/machinery/teleport/station/target_station = L[desc]
 		if(!target_station || !target_station.teleporter_hub)
 			return
@@ -163,6 +183,14 @@
 		if(target_station.teleporter_console)
 			target_station.teleporter_console.stat &= ~NOPOWER
 			target_station.teleporter_console.update_icon()
+
+/obj/machinery/computer/teleporter/proc/untarget_implant() //untargets from mob the racker was once implanted in to prevent issues.
+	target = null
+	if(power_station)
+		power_station.engaged = FALSE
+		power_station.teleporter_hub?.update_icon()
+	UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+	imp_t = null
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
 	var/turf/T = get_turf(AM)

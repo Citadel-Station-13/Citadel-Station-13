@@ -47,6 +47,22 @@
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/mag_oldsmg/tx_mag
+	name = "WT-550 Semi-Auto SMG Uranium Magazine (4.6x30mm TX)"
+	desc = "A 20 round uranium tipped magazine for the out of date security WT-550 Semi-Auto SMG."
+	id = "mag_oldsmg_tx"
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/mag_oldsmg/rubber_mag
+	name = "WT-550 Semi-Auto SMG rubberbullets Magazine (4.6x30mm rubber)"
+	desc = "A 20 round rubber shots magazine for the out of date security WT-550 Semi-Auto SMG"
+	id = "mag_oldsmg_rubber"
+	materials = list(MAT_METAL = 6000)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrubber
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 //////////////
 //Ammo Shells/
 //////////////

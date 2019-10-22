@@ -4,7 +4,6 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
@@ -36,6 +35,9 @@
 	var/icon_welded = "welded"
 	var/obj/item/electronics/airlock/lockerelectronics //Installed electronics
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
+	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
+	var/obj/structure/closet/eigen_target //Where you go to.
+
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
@@ -144,6 +146,8 @@
 
 /obj/structure/closet/proc/togglelock(mob/living/user)
 	add_fingerprint(user)
+	if(eigen_target)
+		return
 	if(opened)
 		return
 	if(!can_lock(user))
@@ -186,7 +190,12 @@
 	if(contents.len >= storage_capacity)
 		return -1
 	if(insertion_allowed(AM))
-		AM.forceMove(src)
+		if(eigen_teleport) // For teleporting people with linked lockers.
+			do_teleport(AM, get_turf(eigen_target), 0)
+			if(eigen_target.opened == FALSE)
+				eigen_target.bust_open()
+		else
+			AM.forceMove(src)
 		return TRUE
 	else
 		return FALSE
@@ -292,7 +301,7 @@
 	if(!istype(S))
 		return
 	var/brokenword = broken ? "broken " : null
-	user.visible_message("<span class='notice'>You begin removing the [brokenword]lock on [src]...</span>", "<span class='notice'>[user] begins removing the [brokenword]lock on [src]...</span>")
+	user.visible_message("<span class='notice'>[user] begins removing the [brokenword]lock on [src]...</span>","<span class='notice'>You begin removing the [brokenword]lock on [src]...</span>")
 	playsound(loc, S.usesound, 50, 1)
 	lock_in_use = TRUE
 	if(!do_after(user, 100 * S.toolspeed, target = src))
@@ -339,6 +348,9 @@
 
 				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 				if(W.use_tool(src, user, 40, volume=50))
+					if(eigen_teleport)
+						to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to cut!</span>")
+						return
 					if(!opened)
 						return
 					user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
@@ -363,6 +375,9 @@
 
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
+			if(eigen_teleport)
+				to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to weld!</span>")
+				return
 			if(opened)
 				return
 			welded = !welded
@@ -525,17 +540,18 @@
 	dive_into(user)
 
 /obj/structure/closet/emag_act(mob/user)
-	if(secure && !broken)
-		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
-						"<span class='italics'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, 1)
-		broken = TRUE
-		locked = FALSE
-		if(!QDELETED(lockerelectronics))
-			qdel(lockerelectronics)
-		lockerelectronics = null
-		update_icon()
+	. = ..()
+	if(!secure || broken)
+		return
+	user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
+					"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
+					"<span class='italics'>You hear a faint electrical spark.</span>")
+	playsound(src, "sparks", 50, 1)
+	broken = TRUE
+	locked = FALSE
+	if(!QDELETED(lockerelectronics))
+		QDEL_NULL(lockerelectronics)
+	update_icon()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))

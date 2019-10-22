@@ -10,9 +10,6 @@
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
-	if(!M.lying && !isslime(M))	//if they're prone or a slime
-		return
-
 	var/datum/surgery/current_surgery
 
 	for(var/datum/surgery/S in M.surgeries)
@@ -35,12 +32,17 @@
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
+			if(S.lying_required && !(M.lying))
+				continue
 			if(!S.can_start(user, M))
 				continue
-			for(var/path in S.species)
+			for(var/path in S.target_mobtypes)
 				if(istype(M, path))
 					available_surgeries[S.name] = S
 					break
+
+		if(!available_surgeries.len)
+			return
 
 		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
 		if(P && user && user.Adjacent(M) && (I in user))
@@ -60,12 +62,14 @@
 					return
 			else if(C && S.requires_bodypart)
 				return
+			if(S.lying_required && !(M.lying))
+				return
 			if(!S.can_start(user, M))
 				return
 
 			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
 				var/datum/surgery/procedure = new S.type(M, selected_zone, affecting)
-				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for surgery.", \
 					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
 				log_combat(user, M, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
@@ -110,15 +114,22 @@
 		return 0.5
 
 
-/proc/get_location_accessible(mob/living/M, location)
+/proc/get_location_accessible(mob/M, location)
 	var/covered_locations = 0	//based on body_parts_covered
 	var/face_covered = 0	//based on flags_inv
 	var/eyesmouth_covered = 0	//based on flags_cover
-	for(var/A in M.get_equipped_items())
-		var/obj/item/I = A
-		covered_locations |= I.body_parts_covered
-		face_covered |= I.flags_inv
-		eyesmouth_covered |= I.flags_cover
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
+			covered_locations |= I.body_parts_covered
+			face_covered |= I.flags_inv
+			eyesmouth_covered |= I.flags_cover
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
+				covered_locations |= I.body_parts_covered
+				face_covered |= I.flags_inv
+				eyesmouth_covered |= I.flags_cover
 
 	switch(location)
 		if(BODY_ZONE_HEAD)
@@ -162,4 +173,3 @@
 				return 0
 
 	return 1
-

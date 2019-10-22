@@ -93,34 +93,22 @@
 /obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	var/atom/A = target
-	if(!proximity && prox_check)
+	if(!proximity && prox_check || !(isobj(A) || issilicon(A) || isbot(A) || isdrone(A)))
 		return
-	//Citadel changes: modular code misfiring, so we're bypassing into main code.
+	if(istype(A, /obj/item/storage) && !(istype(A, /obj/item/storage/lockbox) || istype(A, /obj/item/storage/pod)))
+		return
 	if(!uses)
 		user.visible_message("<span class='warning'>[src] emits a weak spark. It's burnt out!</span>")
 		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
 		return
 	else if(uses <= 3)
 		playsound(src, 'sound/effects/light_flicker.ogg', 30, 1)	//Tiiiiiiny warning sound to let ya know your emag's almost dead
-
-	if(isturf(A))
+	if(!A.emag_act(user))
 		return
-	if(istype(A,/obj/item/storage/lockbox) || istype(A, /obj/item/storage/pod))
-		A.emag_act(user)
-		uses = max(uses - 1, 0)
-		if(!uses)
-			user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
-			playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
-	if(istype(A,/obj/item/storage))
-		return
-	if(!(isobj(A) || issilicon(A) || isbot(A) || isdrone(A)))
-		return
-	else
-		A.emag_act(user)
-		uses = max(uses - 1, 0)
-		if(!uses)
-			user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
-			playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
+	uses = max(uses - 1, 0)
+	if(!uses)
+		user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
+		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
 
 
 /obj/item/card/emagfake
@@ -354,12 +342,41 @@ update_label("John Doe", "Clowny")
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
-	registered_name = "Scum"
+	access = list(ACCESS_ENTER_GENPOP)
+
+	//Lavaland labor camp
 	var/goal = 0 //How far from freedom?
 	var/points = 0
+	//Genpop
+	var/sentence = 0	//When world.time is greater than this number, the card will have its ACCESS_ENTER_GENPOP access replaced with ACCESS_LEAVE_GENPOP the next time it's checked, unless this value is 0/null
+	var/crime= "\[REDACTED\]"
 
-/obj/item/card/id/prisoner/attack_self(mob/user)
-	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
+/obj/item/card/id/prisoner/GetAccess()
+	if((sentence && world.time >= sentence) || (goal && points >= goal))
+		access = list(ACCESS_LEAVE_GENPOP)
+	return ..()
+
+/obj/item/card/id/prisoner/process()
+	if(!sentence)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(world.time >= sentence)
+		playsound(loc, 'sound/machines/ping.ogg', 50, 1)
+		if(isliving(loc))
+			to_chat(loc, "<span class='boldnotice'>[src]</span><span class='notice'> buzzes: You have served your sentence! You may now exit prison through the turnstiles and collect your belongings.</span>")
+		STOP_PROCESSING(SSobj, src)
+	return
+
+/obj/item/card/id/prisoner/examine(mob/user)
+	. = ..()
+	if(sentence && world.time < sentence)
+		to_chat(user, "<span class='notice'>You're currently serving a sentence for [crime]. <b>[DisplayTimeText(sentence - world.time)]</b> left.</span>")
+	else if(goal)
+		to_chat(user, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
+	else if(!sentence)
+		to_chat(user, "<span class='warning'>You are currently serving a permanent sentence for [crime].</span>")
+	else
+		to_chat(user, "<span class='notice'>Your sentence is up! You're free!</span>")
 
 /obj/item/card/id/prisoner/one
 	name = "Prisoner #13-001"

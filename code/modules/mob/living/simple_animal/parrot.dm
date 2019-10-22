@@ -897,6 +897,11 @@
 
 	. = ..()
 
+/mob/living/simple_animal/parrot/Poly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
+		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
+
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
@@ -911,7 +916,7 @@
 		if(mind)
 			mind.transfer_to(G)
 		else
-			G.key = key
+			transfer_ckey(G)
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()

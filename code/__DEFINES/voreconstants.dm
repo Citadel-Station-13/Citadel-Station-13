@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(player_sizes_list, list("Macro" = SIZESCALE_HUGE, "Big" = SIZES
 // Edited to make the new travis check go away
 */
 
-GLOBAL_LIST_INIT(vore_sounds, list(
+GLOBAL_LIST_INIT(pred_vore_sounds, list(
 		"Gulp" = 'sound/vore/pred/swallow_01.ogg',
 		"Swallow" = 'sound/vore/pred/swallow_02.ogg',
 		"Insertion1" = 'sound/vore/pred/insertion_01.ogg',
@@ -40,7 +40,27 @@ GLOBAL_LIST_INIT(vore_sounds, list(
 		"None" = null
 		))
 
-GLOBAL_LIST_INIT(release_sounds, list(
+GLOBAL_LIST_INIT(prey_vore_sounds, list(
+		"Gulp" = 'sound/vore/prey/swallow_01.ogg',
+		"Swallow" = 'sound/vore/prey/swallow_02.ogg',
+		"Insertion1" = 'sound/vore/prey/insertion_01.ogg',
+		"Insertion2" = 'sound/vore/prey/insertion_02.ogg',
+		"Tauric Swallow" = 'sound/vore/prey/taurswallow.ogg',
+		"Stomach Move"		= 'sound/vore/prey/stomachmove.ogg',
+		"Schlorp" = 'sound/vore/prey/schlorp.ogg',
+		"Squish1" = 'sound/vore/prey/squish_01.ogg',
+		"Squish2" = 'sound/vore/prey/squish_02.ogg',
+		"Squish3" = 'sound/vore/prey/squish_03.ogg',
+		"Squish4" = 'sound/vore/prey/squish_04.ogg',
+		"Rustle (cloth)" = 'sound/effects/rustle5.ogg',
+		"Rustle 2 (cloth)"	= 'sound/effects/rustle2.ogg',
+		"Rustle 3 (cloth)"	= 'sound/effects/rustle3.ogg',
+		"Rustle 4 (cloth)"	= 'sound/effects/rustle4.ogg',
+		"Rustle 5 (cloth)"	= 'sound/effects/rustle5.ogg',
+		"None" = null
+		))
+
+GLOBAL_LIST_INIT(pred_release_sounds, list(
 		"Rustle (cloth)" = 'sound/effects/rustle1.ogg',
 		"Rustle 2 (cloth)" = 'sound/effects/rustle2.ogg',
 		"Rustle 3 (cloth)" = 'sound/effects/rustle3.ogg',
@@ -48,6 +68,18 @@ GLOBAL_LIST_INIT(release_sounds, list(
 		"Rustle 5 (cloth)" = 'sound/effects/rustle5.ogg',
 		"Stomach Move" = 'sound/vore/pred/stomachmove.ogg',
 		"Pred Escape" = 'sound/vore/pred/escape.ogg',
+		"Splatter" = 'sound/effects/splat.ogg',
+		"None" = null
+		))
+
+GLOBAL_LIST_INIT(prey_release_sounds, list(
+		"Rustle (cloth)" = 'sound/effects/rustle1.ogg',
+		"Rustle 2 (cloth)" = 'sound/effects/rustle2.ogg',
+		"Rustle 3 (cloth)" = 'sound/effects/rustle3.ogg',
+		"Rustle 4 (cloth)" = 'sound/effects/rustle4.ogg',
+		"Rustle 5 (cloth)" = 'sound/effects/rustle5.ogg',
+		"Stomach Move" = 'sound/vore/prey/stomachmove.ogg',
+		"Pred Escape" = 'sound/vore/prey/escape.ogg',
 		"Splatter" = 'sound/effects/splat.ogg',
 		"None" = null
 		))

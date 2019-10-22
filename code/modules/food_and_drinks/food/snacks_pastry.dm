@@ -308,7 +308,6 @@
 	tastes = list("bread" = 1, "egg" = 1, "cheese" = 1)
 	foodtype = GRAIN | MEAT | DAIRY
 
-
 /obj/item/reagent_containers/food/snacks/sugarcookie
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
@@ -367,6 +366,16 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cake" = 3, "blue cherry" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/strawberrycupcake
+	name = "Strawberry cupcake"
+	desc = "Strawberry inside a delicious cupcake."
+	icon_state = "strawberrycupcake"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	filling_color = "#F0E68C"
+	tastes = list("cake" = 2, "strawberry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/honeybun

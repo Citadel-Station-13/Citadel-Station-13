@@ -247,7 +247,7 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < BLOOD_VOLUME_SAFE)
+	if(blood_volume < (BLOOD_VOLUME_SAFE*blood_ratio))
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
@@ -281,6 +281,13 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
+	if(reagents.has_reagent("astral"))
+		msg += "[t_He] have wild, spacey eyes"
+		if(mind)
+			msg += " and have a strange, abnormal look to them.\n"
+		else
+			msg += " and don't look like they're all there.\n"
+
 	if(isliving(user))
 		var/mob/living/L = user
 		if(src != user && HAS_TRAIT(L, TRAIT_EMPATH) && !appears_dead)
@@ -304,6 +311,13 @@
 
 	msg += "</span>"
 
+	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
+	if(Vc)
+		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
+			if(client?.prefs.lewdchem)
+				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
+
+
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
@@ -320,6 +334,8 @@
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
+
+	msg += common_trait_examine()
 
 	var/traitstring = get_trait_string()
 	if(ishuman(user))

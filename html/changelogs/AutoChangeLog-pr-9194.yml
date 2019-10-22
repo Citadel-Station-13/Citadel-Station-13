@@ -1,0 +1,4 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - tweak: "added obj/item/key to wallet whitelist"

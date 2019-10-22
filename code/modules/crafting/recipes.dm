@@ -211,6 +211,12 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/potatos
+	name = "Potat-OS"
+	reqs = list(/obj/item/stack/cable_coil = 1, /obj/item/stack/rods = 1,  /obj/item/reagent_containers/food/snacks/grown/potato = 1, /obj/item/aicard = 1 )
+	result = /obj/item/aicard/potato
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -353,6 +359,7 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/shard = 1,
 				/obj/item/stack/rods = 1)
+	parts = list(/obj/item/shard = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -453,6 +460,12 @@
 	reqs = list(/obj/item/stack/ore/bluespace_crystal = 1,
 				/obj/item/toy/crayon/blue = 1,
 				/obj/item/bikehorn = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/toyneb
+	name = "Non-Euplastic Blade"
+	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	result = /obj/item/toy/sword/cx
 	category = CAT_MISC
 
 /datum/crafting_recipe/chemical_payload
@@ -663,12 +676,12 @@
 /datum/crafting_recipe/femur_breaker
 	name = "Femur Breaker"
 	result = /obj/structure/femur_breaker
-	time = 150 
+	time = 150
 	reqs = list(/obj/item/stack/sheet/metal = 20,
 		        /obj/item/stack/cable_coil = 30)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
@@ -874,12 +887,66 @@
 /datum/crafting_recipe/smartdartgun
 	name = "Smart dartgun"
 	result =  /obj/item/gun/syringe/dart
-	reqs = list(/obj/item/stack/sheet/metal = 15,
-	/obj/item/stack/sheet/glass = 10,
+	reqs = list(/obj/item/stack/sheet/metal = 10,
+	/obj/item/stack/sheet/glass = 5,
 	/obj/item/tank/internals = 1,
 	/obj/item/reagent_containers/glass/beaker = 1,
-	/obj/item/stack/sheet/plastic = 10,
-	/obj/item/stack/cable_coil = 2)
+	/obj/item/stack/sheet/plastic = 5,
+	/obj/item/stack/cable_coil = 1)
 	time = 150 //It's a gun
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/rapiddartgun
+	name = "Rapid Smart dartgun"
+	result = /obj/item/gun/syringe/dart/rapiddart
+	reqs = list(
+		/obj/item/gun/syringe/dart = 1,
+		/obj/item/stack/sheet/plastic = 5,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/reagent_containers/glass/beaker = 1
+	)
+	parts = list(/obj/item/reagent_containers/glass/beaker = 1)
+	time = 120 //Modifying your gun
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/durathread_duffelbag
+	name = "Durathread Dufflebag"
+	result = /obj/item/storage/backpack/duffelbag/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 7,
+				/obj/item/stack/sheet/leather = 3)
+	time = 70
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_toolbelt
+	name = "Durathread Toolbelt"
+	result = /obj/item/storage/belt/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 5,
+				/obj/item/stack/sheet/leather = 1)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_bandolier
+	name = "Durathread Bandolier"
+	result = /obj/item/storage/belt/bandolier/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 2)
+	time = 50
+	category = CAT_CLOTHING
+
+	/datum/crafting_recipe/durathread_helmet
+	name = "Makeshift Durathread Helmet"
+	result = /obj/item/clothing/head/helmet/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 4,
+				/obj/item/stack/sheet/leather = 2)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_vest
+	name = "Makeshift Durathread Armour"
+	result = /obj/item/clothing/suit/armor/vest/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 3)
+	time = 50
+	category = CAT_CLOTHING

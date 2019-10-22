@@ -49,7 +49,7 @@
 	item_color = "steele"
 	medaltype = "medal-silver"
 
-/obj/item/toy/sword/darksabre
+/obj/item/toy/darksabre
 	name = "Kiara's Sabre"
 	desc = "This blade looks as dangerous as its owner."
 	icon = 'icons/obj/custom.dmi'
@@ -58,9 +58,13 @@
 	item_state = "darksabre"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
-	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 
+/obj/item/toy/darksabre/get_belt_overlay()
+	return mutable_appearance('icons/obj/custom.dmi', "darksheath-darksabre")
+
+/obj/item/toy/darksabre/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "darksheath-darksabre")
 
 /obj/item/storage/belt/sabre/darksabre
 	name = "Ornate Sheathe"
@@ -69,32 +73,8 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
-	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 1
-	STR.rustle_sound = FALSE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/toy/sword/darksabre
-		))
-
-/obj/item/storage/belt/sabre/darksabre/update_icon()
-	icon_state = "darksheath"
-	item_state = "darksheath"
-	if(contents.len)
-		icon_state += "-darksabre"
-		item_state += "-darksabre"
-	if(loc && isliving(loc))
-		var/mob/living/L = loc
-		L.regenerate_icons()
-	..()
-
-/obj/item/storage/belt/sabre/darksabre/PopulateContents()
-	new /obj/item/toy/sword/darksabre(src)
-	update_icon()
+	fitting_swords = list(/obj/item/toy/darksabre)
+	starting_sword = /obj/item/toy/darksabre
 
 /obj/item/clothing/suit/armor/vest/darkcarapace
 	name = "Dark Armor"
@@ -342,31 +322,6 @@
 	name = "worn pet collar"
 	desc = "a pet collar that looks well used."
 
-/obj/item/clothing/neck/petcollar/naomi/examine(mob/user)
-	. = ..()
-	if(usr.ckey != "technicalmagi")
-		to_chat(user, "There's something odd about the it. You probably shouldn't wear it...")//warn people not to wear it if they're not Naomi, lest they become as crazy as she is
-
-/obj/item/clothing/neck/petcollar/naomi/equipped()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/neck/petcollar/naomi/dropped()
-	. = ..()
-	STOP_PROCESSING(SSobj, src)
-
-/obj/item/clothing/neck/petcollar/naomi/process()
-	var/mob/living/carbon/human/H
-	if(ishuman(loc))
-		H = loc
-	if(!H)
-		return
-	else if(H.get_item_by_slot(SLOT_NECK) == src)
-		if(H.arousalloss < H.max_arousal / 3)
-			H.arousalloss = H.max_arousal / 3
-		if(prob(5) && H.hallucination < 15)
-			H.hallucination += 10
-
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
 	desc = "This cloak doesn't seem too special."
@@ -492,6 +447,7 @@
 	item_state = "kimono"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/commjacket
@@ -501,6 +457,7 @@
 	item_state = "commjacket"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/mw2_russian_para
@@ -528,3 +485,19 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/blueberet
+	name = "Atmos Beret"
+	desc = "A fitted beret designed to be worn by Atmos Techs."
+	icon_state = "blueberet"
+	item_state = "blueberet"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/head/flight
+	name = "flight goggles"
+	desc = "Old style flight goggles with a leather cap attached."
+	icon_state = "flight-g"
+	item_state = "flight-g"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'

@@ -40,7 +40,7 @@
 #define BALLS_SACK_SIZE_DEF	8
 #define BALLS_SACK_SIZE_MAX 40
 
-#define CUM_RATE			5
+#define CUM_RATE			0.035
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1//amount of nutrition required per life()
 
@@ -89,17 +89,6 @@
 //Damage stuffs
 #define AROUSAL "arousal"
 
-//DNA stuffs. Remember to change this if upstream adds more snowflake options
-
-
-//Species stuffs. Remember to change this if upstream updates species flags
-#define MUTCOLORS2		35
-#define MUTCOLORS3		36
-#define NOAROUSAL		37 //Stops all arousal effects
-#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
-#define MATRIXED		39	//if icon is color matrix'd
-#define SKINTONE		40	//uses skin tones
-
 //Citadel istypes
 #define isgenital(A) (istype(A, /obj/item/organ/genital))
 
@@ -123,7 +112,6 @@
 #define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
 #define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
-#define MIN_MELEE_STAMCOST					1.25 //Minimum cost for swinging items around. Will be extra useful when stats and skills are introduced.
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 

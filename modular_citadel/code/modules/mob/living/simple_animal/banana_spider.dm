@@ -38,7 +38,7 @@
 		return
 	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
 	awakening = 1
-	
+
 	spawn(30)
 		if(!QDELETED(src))
 			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
@@ -98,7 +98,7 @@
 	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
 		return
 	sentience_act()
-	key = user.key
+	user.transfer_ckey(src, FALSE)
 	density = TRUE
 
 /mob/living/simple_animal/banana_spider/ComponentInitialize()

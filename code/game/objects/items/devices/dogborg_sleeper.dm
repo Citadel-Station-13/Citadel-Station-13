@@ -211,7 +211,7 @@
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -544,4 +544,26 @@
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
 		return
+	else if(issilicon(target))
+		var/mob/living/silicon/trashbot = target
+		if (!trashbot.devourable)
+			to_chat(user, "<span class='warning'>[target] registers an error code to your [src]</span>")
+			return
+		if(patient)
+			to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
+			return
+		if(trashbot.buckled)
+			to_chat(user,"<span class='warning'>[trashbot] is buckled and can not be put into your [src].</span>")
+			return
+		user.visible_message("<span class='warning'>[hound.name] is ingesting [trashbot] into their [src].</span>", "<span class='notice'>You start ingesting [trashbot] into your [src.name]...</span>")
+		if(do_after(user, 30, target = trashbot) && !patient && !trashbot.buckled && length(contents) < max_item_count)
+			if(!in_range(src, trashbot)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't eat them.
+			trashbot.forceMove(src)
+			trashbot.reset_perspective(src)
+			update_gut()
+			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashbot] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashbot] slips inside.</span>")
+			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
+		return
+
 	return

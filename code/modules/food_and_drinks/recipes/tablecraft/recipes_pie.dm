@@ -160,6 +160,15 @@
 	result = /obj/item/reagent_containers/food/snacks/pie/frostypie
 	subcategory = CAT_PIE
 
+/datum/crafting_recipe/food/strawberrypie
+	name = "Strawberry pie"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pie/strawberrypie
+	subcategory = CAT_PIE
+
 /datum/crafting_recipe/food/baklava
 	name = "Baklava pie"
 	reqs = list(
@@ -205,4 +214,13 @@
 	        /obj/item/slime_extract = 1
 	        )
 	result = /obj/item/reagent_containers/food/snacks/pie/cocolavatart
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/peachpie
+	name = "Peach Pie"
+	reqs = list(
+            /obj/item/reagent_containers/food/snacks/pie/plain = 1,
+	        /obj/item/reagent_containers/food/snacks/grown/peach = 3
+	        )
+	result = /obj/item/reagent_containers/food/snacks/pie/peachpie
 	subcategory = CAT_PIE

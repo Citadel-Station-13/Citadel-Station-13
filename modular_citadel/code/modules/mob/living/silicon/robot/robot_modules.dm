@@ -13,7 +13,7 @@
 /mob/living/silicon/robot/proc/get_cit_modules()
 	var/list/modulelist = list()
 	modulelist["MediHound"] = /obj/item/robot_module/medihound
-	if(!CONFIG_GET(flag/disable_secborg))
+	if(BORG_SEC_AVAILABLE)
 		modulelist["Security K-9"] = /obj/item/robot_module/k9
 	modulelist["Scrub Puppy"] = /obj/item/robot_module/scrubpup
 	modulelist["Borgi"] = /obj/item/robot_module/borgi
@@ -61,7 +61,7 @@
 
 /obj/item/robot_module/k9/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/sechoundmodels = list("Default")
+	var/list/sechoundmodels = list("Default", "Dark", "Vale")
 	if(R.client && R.client.ckey in list("nezuli"))
 		sechoundmodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sechoundmodels
@@ -70,11 +70,14 @@
 	switch(borg_icon)
 		if("Default")
 			cyborg_base_icon = "k9"
-			moduleselect_icon = "k9"
 		if("Alina")
 			cyborg_base_icon = "alina-sec"
 			special_light_key = "alina"
 			sleeper_overlay = "alinasleeper"
+		if("Dark")
+			cyborg_base_icon = "k9dark"
+		if("Vale")
+			cyborg_base_icon = "valesec"
 	return ..()
 
 /obj/item/robot_module/medihound
@@ -109,7 +112,7 @@
 
 /obj/item/robot_module/medihound/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/medhoundmodels = list("Default", "Dark")
+	var/list/medhoundmodels = list("Default", "Dark", "Vale")
 	if(R.client && R.client.ckey in list("nezuli"))
 		medhoundmodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medhoundmodels
@@ -121,6 +124,9 @@
 		if("Dark")
 			cyborg_base_icon = "medihounddark"
 			sleeper_overlay = "mdsleeper"
+		if("Vale")
+			cyborg_base_icon = "valemed"
+			sleeper_overlay = "valemedsleeper"
 		if("Alina")
 			cyborg_base_icon = "alina-med"
 			special_light_key = "alina"
@@ -313,7 +319,7 @@
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Waitress", "Heavy", "Sleek", "Butler", "Tophat", "Kent", "Bro")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Waitress", "Heavy", "Sleek", "Butler", "Tophat", "Kent", "Bro", "DarkK9", "Vale", "ValeDark")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -339,11 +345,32 @@
 			cyborg_base_icon = "heavyserv"
 			special_light_key = "heavyserv"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+		if("DarkK9")
+			cyborg_base_icon = "k50"
+			special_light_key = "k50"
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
+		if("Vale")
+			cyborg_base_icon = "valeserv"
+			special_light_key = "valeserv"
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
+		if("ValeDark")
+			cyborg_base_icon = "valeservdark"
+			special_light_key = "valeservdark"
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
 	return ..()
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/engymodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Marina", "Can", "Spider", "Loader","Handy", "Pup Dozer")
+	var/list/engymodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Marina", "Can", "Spider", "Loader","Handy", "Pup Dozer", "Vale")
 	if(R.client && R.client.ckey in list("nezuli"))
 		engymodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in engymodels
@@ -380,6 +407,14 @@
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("Pup Dozer")
 			cyborg_base_icon = "pupdozer"
+			can_be_pushed = FALSE
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
+		if("Vale")
+			cyborg_base_icon = "valeeng"
 			can_be_pushed = FALSE
 			hat_offset = INFINITY
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'

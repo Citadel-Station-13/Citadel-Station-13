@@ -131,7 +131,8 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
 		return 1
-
+	if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+		return TRUE
 	switch(href_list["operation"])
 		if("idcheck")
 			idcheck = !idcheck
@@ -190,7 +191,7 @@ Auto Patrol: []"},
 			return
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='danger'>You short out [src]'s target assessment circuits.</span>")

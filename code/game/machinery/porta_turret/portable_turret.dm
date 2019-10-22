@@ -40,6 +40,8 @@
 
 	var/stun_projectile = null		//stun mode projectile type
 	var/stun_projectile_sound
+	var/nonlethal_projectile		//projectile to use in stun mode when the target is resting, if any
+	var/nonlethal_projectile_sound
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
@@ -290,6 +292,7 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
@@ -300,6 +303,7 @@
 	update_icon()
 	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	return TRUE
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -533,13 +537,22 @@
 					T = closer
 					break
 
+	var/mob/living/carbon/C
+	if(iscarbon(target))
+		C = target
+
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
-		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		if(nonlethal_projectile && C && C.resting)
+			use_power(reqpower*0.5)
+			A = new nonlethal_projectile(T)
+			playsound(loc, nonlethal_projectile_sound, 75, 1)
+		else
+			use_power(reqpower)
+			A = new stun_projectile(T)
+			playsound(loc, stun_projectile_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
@@ -651,6 +664,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
@@ -660,6 +675,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
@@ -679,6 +696,8 @@
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
@@ -837,6 +856,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
@@ -844,6 +864,7 @@
 	locked = FALSE
 	if(user && user.machine == src)
 		attack_hand(user)
+	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))
