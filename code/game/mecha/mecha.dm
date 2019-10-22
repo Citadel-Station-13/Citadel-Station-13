@@ -1023,7 +1023,7 @@
 
 /obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
 	log.len++
-	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss")]","date","year"="[GLOB.year_integer+540]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss")]","date","year"="[GLOB.year_integer]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
 	..()
 	return log.len
 
@@ -1031,9 +1031,6 @@
 	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
-
-GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
-GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 ///////////////////////
 ///// Power stuff /////
