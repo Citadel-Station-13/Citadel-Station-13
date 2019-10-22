@@ -105,6 +105,7 @@
 #define MATRIXED		22	//if icon is color matrix'd
 #define SKINTONE		23	//uses skin tones
 #define HORNCOLOR		24
+#define WINGCOLOR		25
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
