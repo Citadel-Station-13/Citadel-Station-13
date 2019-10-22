@@ -31,7 +31,7 @@
 	stored_research = new /datum/techweb/syndicate
 
 /obj/item/disk/tech_disk/abductor
-	name = "Gray technology desk"
+	name = "Gray technology disk"
 	desc = "You feel like it's not Gray because of its color."
 	materials = list()
 
