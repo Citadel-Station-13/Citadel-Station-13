@@ -32,6 +32,7 @@
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
 	var/datum/oracle_ui/ui = null
+	var/force_stars = FALSE // If we should force the text to get obfuscated with asterisks
 
 
 /obj/item/paper/pickup(user)
@@ -59,7 +60,8 @@
 	updateinfolinks()
 
 /obj/item/paper/oui_getcontent(mob/target)
-	if(!target.is_literate())
+	if(!target.is_literate() || force_stars)
+		force_stars = FALSE
 		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 	else if(istype(target.get_active_held_item(), /obj/item/pen) | istype(target.get_active_held_item(), /obj/item/toy/crayon))
 		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>"
@@ -70,8 +72,8 @@
 	if(check_rights_for(target.client, R_FUN)) //Allows admins to view faxes
 		return TRUE
 	if(isAI(target))
-		var/mob/living/silicon/ai/ai = target
-		return get_dist(src, ai.current) < 2
+		force_stars = TRUE
+		return TRUE
 	if(iscyborg(target))
 		return get_dist(src, target) < 2
 	return ..()
@@ -133,18 +135,8 @@
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 
-
 /obj/item/paper/attack_ai(mob/living/silicon/ai/user)
-	var/dist
-	if(istype(user) && user.current) //is AI
-		dist = get_dist(src, user.current)
-	else //cyborg or AI not seeing through a camera
-		dist = get_dist(src, user)
-	if(dist < 2)
-		show_content(user)
-	else
-		to_chat(user, "<span class='notice'>You can't quite see it.</span>")
-
+	show_content(user)
 
 /obj/item/paper/proc/addtofield(id, text, links = 0)
 	var/locid = 0
