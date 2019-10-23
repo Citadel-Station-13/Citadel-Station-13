@@ -523,7 +523,6 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -586,25 +585,12 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/table,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/retractor{
-	pixel_x = 4
-	},
-/obj/item/hemostat{
-	pixel_x = -4
-	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
-/obj/item/surgicaldrill,
-/obj/item/cautery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bI" = (

@@ -457,14 +457,12 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aZ" = (
-/obj/structure/table/glass,
+/obj/machinery/sleeper,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/storage/firstaid/regular,
 /obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -504,12 +502,17 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/structure/table,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -526,29 +529,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/window/reinforced,
-/obj/structure/table/glass,
-/obj/item/defibrillator/loaded,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
-"bi" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -568,11 +553,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light,
-/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bo" = (
@@ -712,12 +694,38 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"sI" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
 "xt" = (
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Jw" = (
+/obj/structure/window/reinforced,
+/obj/structure/table/optable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "Uu" = (
 /obj/structure/window/reinforced{
@@ -806,9 +814,9 @@ aX
 bb
 be
 bh
+Jw
+bg
 bl
-bg
-bg
 ab
 aa
 bs
@@ -853,8 +861,8 @@ ab
 aZ
 bb
 bb
-bi
-bl
+bh
+sI
 bg
 bn
 ab
