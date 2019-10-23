@@ -3059,6 +3059,7 @@
 #include "modular_citadel\code\modules\custom_loadout\load_to_mob.dm"
 #include "modular_citadel\code\modules\custom_loadout\read_from_file.dm"
 #include "modular_citadel\code\modules\eventmaps\Spookystation\JTGSZwork.dm"
+#include "modular_citadel\code\modules\eventmaps\Spookystation\PersiWork.dm"
 #include "modular_citadel\code\modules\events\blob.dm"
 #include "modular_citadel\code\modules\events\wizard\magicarp.dm"
 #include "modular_citadel\code\modules\food_and_drinks\snacks\meat.dm"

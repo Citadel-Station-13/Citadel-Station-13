@@ -20,8 +20,6 @@
 //Considering I can't grab defines from everywhere, I hope you enjoy strings and numbers plebs.
 //Edit - Moved to modular citadel so we are after everything has loaded.
 
-//code/modules/holiday/halloween/iconfile32.dmi
-//modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi
 /*
 	AREAS
 			*/
@@ -29,62 +27,244 @@
 /area/eventmap
 	name = "Dont use this" //Its the parent to any dunces out there.
 	has_gravity = STANDARD_GRAVITY //We have gravity
-	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
-	requires_power = 0 // We don't need power anywhere.
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/areas.dmi' //It unsets the icon.
+	requires_power = 1 // We don't need power anywhere.			//That means you get a error icon if its in blank.
+	flags_1 = NONE
 
 /area/eventmap/outside //We are outside
 	name = "Outside"
 	icon_state = "outside"
 	outdoors = 1 //Outdoors is true, no area editing here.
 	lightswitch = 0 //Lightswitch is false, no turning the lights on outside.
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/eventmap/inside //We are inside, all things are pretty normal.
 	name = "Inside"
 	icon_state = "inside"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/eventmap/mountain //Mostly so I can see the area lines of the mountain area in the minimap.
+	name = "Mountain"
+	icon_state = "mountain"
+	outdoors = 1
+	lightswitch = 0
+/*
+	OUTSIDE WALLS I WANT NOT NEED
+										*/
+//These exist mostly to limit the amount of space we use organically really.
+//Decided to just use the denserock within the regular code.
+
+/turf/closed/indestructible/spookytime/matrixblocker
+	name = "matrix"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "matrix"
+	desc = "<font color='#157206'>You suddenly realize the truth - there is no spoon.<br>Digital simulation ends here ONCE AGAIN.</font>"
+
+
 
 /*
 	OUTSIDE TURFS WITH NO GEN JUS MIDNIGHT LIGHT BABY
 														*/
 
-//Parent of all our outside turfs.
-/turf/open/floor/spooktime/
+//Parent of all our outside turfs. Both the inside and outside should be on a parent like this.
+/turf/open/floor/spooktime //But for now, we just handle what is outside, for light control etc.
 	name = "You fucked up pal"
 	desc = "Don't use this turf its a parent and just a holder."
 	planetary_atmos = TRUE //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
-	light_range = 3
-	light_power = 0.15
-	light_color = "#00111a"
-	baseturfs = /turf/open/floor/spooktime/spooktimegrass
+	light_range = 3 //MIDNIGHT BLUE
+	light_power = 0.15 //NOT PITCH BLACK, JUST REALLY DARK
+	light_color = "#00111a" //The light can technically cycle on a timer worldwide, but no daynight cycle.
+	baseturfs = /turf/open/floor/spooktime/spooktimegrass //If we explode or die somehow, we just become grass
 	gender = PLURAL //THE GENDER IS PLURAL
-	tiled_dirt = FALSE //NO TILESMOOTHING DIRT OR SOME SHIT
+	tiled_dirt = 0 //NO TILESMOOTHING DIRT/DIRT SPAWNS OR SOME SHIT
+
+//Parent that goes into coasts too
+/turf/open/floor/spooktime/beach //laketime
+	gender = PLURAL
+	name = "sand"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "sand"
+	bullet_bounce_sound = null
+	tiled_dirt = FALSE
+
+//Beaches and coasts and sand and shit.
+/turf/open/floor/spooktime/beach/coasts
+	gender = NEUTER
+	name = "coastline"
+	icon_state = "sandwater_t_S"
+
+//The water that follows the coastline also animated.
+/turf/open/floor/spooktime/beach/coasts/coastS
+	icon_state = "sandwater_t_S"
+/turf/open/floor/spooktime/beach/coasts/coastN
+	icon_state = "sandwater_t_N"
+/turf/open/floor/spooktime/beach/coasts/coastE
+	icon_state = "sandwater_t_E"
+/turf/open/floor/spooktime/beach/coasts/coastW
+	icon_state = "sandwater_t_W"
+/turf/open/floor/spooktime/beach/coasts/coastSE
+	icon_state = "sandwater_t_SE"
+/turf/open/floor/spooktime/beach/coasts/coastSW
+	icon_state = "sandwater_t_SW"
+/turf/open/floor/spooktime/beach/coasts/coastNE
+	icon_state = "sandwater_t_NE"
+/turf/open/floor/spooktime/beach/coasts/coastNW
+	icon_state = "sandwater_t_NW"
+
+//The coastline itself with sand
+/turf/open/floor/spooktime/beach/coasts/watercoastS
+	icon_state = "sandwater_b_S"
+/turf/open/floor/spooktime/beach/coasts/watercoastN
+	icon_state = "sandwater_b_N"
+/turf/open/floor/spooktime/beach/coasts/watercoastW
+	icon_state = "sandwater_b_W"
+/turf/open/floor/spooktime/beach/coasts/watercoastE
+	icon_state = "sandwater_b_E"
+/turf/open/floor/spooktime/beach/coasts/watercoastSE
+	icon_state = "sandwater_b_SE"
+/turf/open/floor/spooktime/beach/coasts/watercoastSW
+	icon_state = "sandwater_b_SW"
+/turf/open/floor/spooktime/beach/coasts/watercoastNE
+	icon_state = "sandwater_b_NE"
+/turf/open/floor/spooktime/beach/coasts/watercoastNW
+	icon_state = "sandwater_b_NW"
+
+//Beach corners
+/turf/open/floor/spooktime/beach/coasts/innerN
+	icon_state = "sandwater_inner_N"
+/turf/open/floor/spooktime/beach/coasts/innerS
+	icon_state = "sandwater_inner_S"
+/turf/open/floor/spooktime/beach/coasts/innerE
+	icon_state = "sandwater_inner_E"
+/turf/open/floor/spooktime/beach/coasts/innerW
+	icon_state = "sandwater_inner_W"
+
+//Shallow water same color as beach water
+/turf/open/floor/spooktime/beach/water
+	name = "water"
+	icon_state = "water"
+	bullet_sizzle = 1
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
+
+//Slightly darker than the beach water color.
+/turf/open/floor/spooktime/beach/watersolid //Gotta stop you at a certain point man
+	name = "water"
+	icon_state = "water2" //Now its darker lol
+	bullet_sizzle = 1
+	density = 1 //We are now dense
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
+
+//Motion river water with the lighting on it.
+/turf/open/floor/spooktime/riverwatermotion
+	gender = PLURAL
+	name = "water"
+	desc = "Shallow water."
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "riverwater_motion"
+	slowdown = 1
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null //needs a splashing sound one day.
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
+
+//No motion river water with the lighting on it.
+/turf/open/floor/spooktime/riverwatermotion/nomotion
+	icon_state = "riverwater"
 
 //Grass with no flora generation on it.
 /turf/open/floor/spooktime/nonspooktimegrass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass... Ah, who are you kidding, it totally is real grass."
-	icon_state = "grass_1"
+	icon_state = "grass_1" //Grass of the varied variety.
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/spooktime/nongenspooktimegrass/Initialize()
+/turf/open/floor/spooktime/nongenspooktimegrass/Initialize() //Init rng icon.
 	. = ..()
 	icon_state = "grass_[rand(1,3)]"
 
+/turf/open/floor/spooktime/dirtpatch
+	desc = "clearly dirt"
+	desc = "Its dirt alright"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "smoothdarkdirt"
+	light_range = 0 //We set the lights to nothing on the CLEARLY DIRT
+	light_power = 0 //ayep
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 //Cobblestone and all of its directions tied to the parent.
-/turf/open/floor/spooktime/cobble
-	name = "cobblestone path"
+/turf/open/floor/spooktime/cobble //Middle and parent
+	name = "cobblestone path" //We don't use directional varedits otherwise the map can load them incorrect.
 	desc = "A simple but beautiful path made of various sized stones."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "cobble"
-	
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "cobble_mid" //as to why? Sometimes it will spawn the turf elsewhere and move it into place.
+	//That means the direction will change because of this movement, usually when theres things ontop of it.
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = 0
+
+/turf/open/floor/spooktime/cobble/roadmid //Center piece
+	name = "road"
+	desc = "Its asphault alright"
+	icon_state = "road"
+
+/turf/open/floor/spooktime/cobble/roadsideN //road edges, I have a lot of these
+	icon_state = "road_side_N"
+/turf/open/floor/spooktime/cobble/roadsideS //But i don't feel like adding them all for a temp map.
+	icon_state = "road_side_S"
+/turf/open/floor/spooktime/cobble/roadsideE
+	icon_state = "road_side_E"
+/turf/open/floor/spooktime/cobble/roadsideW
+	icon_state = "road_side_W"
+/turf/open/floor/spooktime/cobble/roadcornerSW
+	icon_state = "road_corner_sw"
+
+/turf/open/floor/spooktime/cobble/cornerNW //First corner
+	icon_state = "cobble_corner_nw"
+/turf/open/floor/spooktime/cobble/cornerNE //Now that these are hardcoded individuals.
+	icon_state = "cobble_corner_ne"			//Movement won't change what they are on mapload.
+/turf/open/floor/spooktime/cobble/cornerSW
+	icon_state = "cobble_corner_sw"
+/turf/open/floor/spooktime/cobble/cornerSE //I found i don't need most of these but still lol.
+	icon_state = "cobble_corner_se"
+
+/turf/open/floor/spooktime/cobble/sideN //First Side
+	icon_state = "cobble_side_n"
+/turf/open/floor/spooktime/cobble/sideS
+	icon_state = "cobble_side_s"
+/turf/open/floor/spooktime/cobble/sideE
+	icon_state = "cobble_side_e"
+/turf/open/floor/spooktime/cobble/sideW
+	icon_state = "cobble_side_w"
 /*
 	Basic Grass turf w Flora gen
 									*/
 /turf/open/floor/spooktime/spooktimegrass
-	name = "grass patch"
-	desc = "You can't tell if this is real grass... Ah, who are you kidding, it totally is real grass."
+	name = "the ground"
+	desc = "It clearly looks like grass and dirt, clearly."
 	icon_state = "grass_1"
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi' //32x32 iconfile, sry we had different sizes.
 	broken_states = list("sand")
+	footstep = FOOTSTEP_GRASS //Finally I can have my footstep noises
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	baseturfs = /turf/open/floor/spooktime/spooktimegrass //BENEATH SPOOKTIMEGRASS THERE IS SPOOKTIMEGRASS
 
@@ -96,9 +276,12 @@
 	var/obj/structure/flora/turfDebris = null
 
 
-/turf/open/floor/spooktime/spooktimegrass/Initialize()
+/turf/open/floor/spooktime/spooktimegrass/Initialize() //Considering adding dirtgen here too.
 	. = ..()
-	icon_state = "grass_[rand(1,3)]" //Icon state variation for how many states of grass I got... 3 lul
+	if(prob(5))
+		icon_state = "smoothdarkdirt" //Sometimes we can be dirt.
+	else
+		icon_state = "grass_[rand(1,3)]" //Icon state variation for how many states of grass I got... 3 lul
 	//If no fences, machines (soil patches are machines), etc. try to plant grass
 	if(!(\
 			(locate(/obj/structure) in src) || \
@@ -112,11 +295,18 @@
 //This is mostly for flora/doodads. I don't feel like there needs to be lake/cave and animals generation..
 //For the halloween map at least, so I used the f13 flora gen and appended to it instead of usin cellular automata.
 //Soooo, its just tied to the turf initialize on init right now.
+//Right now each segment generates independantly, but it wouldn't be hard to do it in a chain
+//And check for what else is there before a list of objects has the option to appear.
+//But at the same time, the stacked flora/rocks etc look pretty okay together honestly.
+
+//That being said you have somewhere around 50 seconds of init, and 160 seconds of pre-game time.
+//To finish generation if you need to split it up by chunks and add more checks.
+//Its plenty of time considering how fast it finishes like this without hiccups really.
 
 //I have turned what used to be simple into hell.
 //We can keep appending stuff here as we go, it basically just spawns it all on turf spooktimegrass on init.
-#define GRASS_SPONTANEOUS 		2 //solo grass
-#define GRASS_WEIGHT 			4 //controls probability that it spawns, and probability of how much it spreads.
+#define GRASS_SPONTANEOUS 		2 //chance it appears on the tile on its own
+#define GRASS_WEIGHT 			4 //Helps clusters form.
 #define DEADTREE_SPONTANEOUS	2 //Solo deadtree
 #define DEADTREE_WEIGHT			4
 #define AUSFLORA_SPONTANEOUS	2
