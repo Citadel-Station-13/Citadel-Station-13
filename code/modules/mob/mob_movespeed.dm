@@ -67,6 +67,7 @@
 		if(!(data[MOVESPEED_DATA_INDEX_MOVETYPE] & movement_type)) // We don't affect any of these move types, skip
 			continue
 		if(data[MOVESPEED_DATA_INDEX_BL_MOVETYPE] & movement_type) // There's a movetype here that disables this modifier, skip
+			continue
 		var/conflict = data[MOVESPEED_DATA_INDEX_CONFLICT]
 		var/amt = data[MOVESPEED_DATA_INDEX_MULTIPLICATIVE_SLOWDOWN]
 		if(conflict)

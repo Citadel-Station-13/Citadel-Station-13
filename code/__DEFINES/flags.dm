@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define GROUND (1<<0)
 #define FLYING (1<<1)
 #define VENTCRAWLING (1<<2)
+#define FLOATING (1<<3)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)

@@ -1389,7 +1389,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if (H.m_intent == MOVE_INTENT_WALK && HAS_TRAIT(H, TRAIT_SPEEDY_STEP))
 		. -= 1.5
 
-	if(!H.has_trait(TRAIT_IGNORESLOWDOWN) && gravity)
+	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)

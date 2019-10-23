@@ -500,7 +500,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if(status == "charge")
-			L.add_movespeed_modifier(MOVESPEED_ID_MKULTRA, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+			owner.add_movespeed_modifier(MOVESPEED_ID_MKULTRA, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 			status = "charged"
 			if(master.client?.prefs.lewdchem)
 				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
@@ -510,7 +510,7 @@
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
-				L.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
+				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
 				owner.Knockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
