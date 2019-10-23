@@ -203,9 +203,7 @@
 						continue_check_value = FALSE
 					new_list += temp
 				new_value = new_list
-				log_admin(new_list)
 				continue_check_value = new_list.len
-				log_admin(continue_check_value)
 		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
 			config_entry_value[new_key] = new_value
 			return TRUE
