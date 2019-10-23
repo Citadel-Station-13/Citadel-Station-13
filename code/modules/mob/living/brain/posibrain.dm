@@ -92,6 +92,17 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(posi_ask == "No" || QDELETED(src))
 		return
 	transfer_personality(user)
+	latejoin_remove()
+
+/obj/item/mmi/posibrain/Destroy()
+	latejoin_remove()
+	return ..()
+
+/obj/item/mmi/posibrain/proc/latejoin_remove()
+	GLOB.poi_list -= src
+	LAZYREMOVE(GLOB.mob_spawners[name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[name]))
+		GLOB.mob_spawners -= name
 
 /obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/C)
 	name = "[initial(name)] ([C])"
@@ -163,6 +174,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.container = src
 	if(autoping)
 		ping_ghosts("created", TRUE)
+	GLOB.poi_list |= src
+	LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/item/mmi/posibrain/attackby(obj/item/O, mob/user)
 	return
