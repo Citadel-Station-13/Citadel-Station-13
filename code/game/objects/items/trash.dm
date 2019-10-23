@@ -42,11 +42,23 @@
 /obj/item/trash/plate
 	name = "plate"
 	icon_state = "plate"
-	resistance_flags = NONE
+	desc = "A once clean plate. It can be restored to a clean state with a soap or rag"
 
 /obj/item/trash/plate/alt
-	desc = "Still some dip left. Sadly still just trash..."
-	icon_state = "plate1"
+	desc = "Still some dip left. Sadly still just trash. This can be cleaned with soap or a rag"
+	icon_state = "plate2"
+
+/obj/item/trash/plate/attackby(obj/item/A, mob/user, params)
+	.=..()
+	if(istype(A, /obj/item/reagent_containers/rag) || istype(A, /obj/item/soap))
+		to_chat(user, "<span class='notice'>You clean the plate. It's now spotless!</span>")
+		qdel(src)
+		return
+
+/obj/item/trash/plate/Destroy() //Yes bombs and shooting the plate will clean it if you were to kill the item. - See Kitchen Gun Ad, Spongbob Cleaning Cannon
+	var/turf/T = get_turf(src)
+	new /obj/item/kitchen/plate(T)
+	return ..()
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"

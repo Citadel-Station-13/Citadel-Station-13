@@ -9,6 +9,7 @@
  *		Rolling Pins
  *		Frying Pan
  *		Spatula
+ *		Plate
  */
 
 /obj/item/kitchen
@@ -187,6 +188,7 @@
 	name = "Scimitar knife"
 	desc = "A knife used to cleanly butcher. Its razor-sharp edge has been honed for butchering, but has been poorly maintained over the years."
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	icon_state = "cleaver"
 
 /obj/item/kitchen/knife/scimiar/Initialize()
 	. = ..()
@@ -246,3 +248,14 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bludgeoned", "battered")
+
+/obj/item/kitchen/plate
+	name = "clean plate"
+	desc = "A glass plate. Looks clean"
+	icon_state = "plate_clean"
+	force = 1
+	throwforce = 2
+	throw_speed = 3
+	throw_range = 8
+	w_class = WEIGHT_CLASS_TINY
+	attack_verb = list("plated", "served", "dished")

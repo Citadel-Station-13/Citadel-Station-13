@@ -53,12 +53,68 @@
 	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	category = list("initial","Dinnerware")
 
+/datum/design/plate
+	name = "Plate"
+	id = "plate"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 300)
+	build_path = /obj/item/kitchen/plate
+	category = list("initial","Dinnerware")
+
 /datum/design/shaker
 	name = "Shaker"
 	id = "shaker"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 1500)
 	build_path = /obj/item/reagent_containers/food/drinks/shaker
+	category = list("initial","Dinnerware")
+
+/datum/design/spoon
+	name = "Spoon"
+	id = "spoon"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 90)
+	build_path = /obj/item/kitchen/spoon
+	category = list("initial","Dinnerware")
+
+/datum/design/frying_pan
+	name = "Frying Pan"
+	id = "frying_pan"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/kitchen/frying_pan
+	category = list("initial","Dinnerware")
+
+/datum/design/spatula
+	name = "Spatula"
+	id = "spatula"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 800)
+	build_path = /obj/item/kitchen/spatula
+	category = list("initial","Dinnerware")
+
+/datum/design/cooking_pot
+	name = "Cooking Pot"
+	id = "cooking_pot"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 8000)
+	build_path = /obj/item/kitchen/pot
+	category = list("initial","Dinnerware")
+
+/datum/design/cooking_tray
+	name = "Cooking Tray"
+	id = "cooking_tray"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/kitchen/cooking_tray
+	category = list("initial","Dinnerware")
+
+/datum/design/muffen_tray
+	name = "Muffen Tray"
+	id = "muffen_tray"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/kitchen/muffen_tray
 	category = list("initial","Dinnerware")
 
 ////////////

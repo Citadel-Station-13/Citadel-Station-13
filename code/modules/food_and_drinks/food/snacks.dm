@@ -308,6 +308,24 @@ All foods are distributed among various categories. Use common sense.
 
 	return result
 
+//Stolen proc!//
+
+//This is apart of Trill-Co Food rework.
+/obj/item/trillcook/prepared/microwave_act(obj/machinery/microwave/M)
+	var/turf/T = get_turf(src) //Were is the microwave locate?
+	var/obj/item/result //What dish did we cook?
+	if(cooked_type) //Are we cooking something that can be made?
+		result = new cooked_type(T) //We want what we cooked
+		SSblackbox.record_feedback("tally", "food_made", 1, result.type) //Show and tell to friends are grand dishes on the statbus
+	else // We failed to make something, how is that possable?
+		result = new /obj/item/reagent_containers/food/snacks/badrecipe(T) //Fail safe so we give feedback well also being toxic food
+		if(istype(M) && M.dirty < 100) //How much gunk got on the microwave?
+			M.dirty++ //Adtive gunk to any from before
+	qdel(src)//We no longer have the prepared food
+
+	return result
+//End of stollen proc//
+
 /obj/item/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
@@ -336,7 +354,7 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
-	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
+	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks & !istype(W, /obj/item/trillcook))) //can't slip snacks inside, they're used for custom foods.
 		if(W.is_sharp())
 			return 0
 		if(stored_item)

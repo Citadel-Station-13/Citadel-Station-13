@@ -89,6 +89,7 @@
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
+	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	bitesize = 1
 	filling_color = "#FFFFF0"
@@ -106,7 +107,7 @@
 	tastes = list("egg" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/omelette	//FUCK THIS
+/obj/item/reagent_containers/food/snacks/omelette
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
