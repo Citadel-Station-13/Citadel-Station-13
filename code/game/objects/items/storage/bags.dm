@@ -39,7 +39,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
@@ -48,7 +48,7 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.can_hold = typecacheof(list(/obj/item/ammo_casing, /obj/item/trash, /obj/item/dildo, /obj/item/electronics, /obj/item/circuitboard, /obj/item/reagent_containers/food, /obj/item/stock_parts, /obj/item/paper, /obj/item/reagent_containers/syringe, /obj/item/shard, /obj/item/pen))
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
