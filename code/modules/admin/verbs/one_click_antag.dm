@@ -120,22 +120,19 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(isReadytoRumble(applicant, ROLE_VAMPIRE))
-			if(temp.age_check(applicant.client))
-				if(!(applicant.job in temp.restricted_jobs))
-					candidates += applicant
+		if(!(applicant.job in temp.restricted_jobs) && isReadytoRumble(applicant, ROLE_VAMPIRE) && temp.age_check(applicant.client))
+			candidates += applicant
 
 	if(candidates.len)
 		var/numVampires = min(candidates.len, 2)
 
-		for(var/i = 0, i<numVampires, i++)
-			H = pick(candidates)
+		for(var/i in 0 to numVampires)
+			H = pick_n_take(candidates)
 			add_vampire(H)
-			candidates.Remove(H)
 
-			return 1
+			return TRUE
 
-		return 0
+		return FALSE
 
 /datum/admins/proc/makeRevs()
 

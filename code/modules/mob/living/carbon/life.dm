@@ -730,3 +730,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return
 
 	heart.beating = !status
+
+/mob/living/carbon/Stat()
+	. = ..()
+	var/datum/antagonist/vampire/vamp = mind.has_antag_datum(/datum/antagonist/vampire)
+	if(vamp && statpanel("Status"))
+		stat("Total Blood", vamp.total_blood)
+		stat("Usable Blood", vamp.usable_blood)

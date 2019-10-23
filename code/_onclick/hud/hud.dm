@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
 
+	var/obj/screen/vampire/vamp_blood_display
+
 	var/obj/screen/blobpwrdisplay
 
 	var/obj/screen/alien_plasma_display
@@ -292,3 +294,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/update_locked_slots()
 	return
+
+/datum/hud/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+	. = ..()
+	vamp_blood_display = new /obj/screen/vampire()
+
+/datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+	. = ..()
+	vamp_blood_display = new /obj/screen/vampire()
+	infodisplay += vamp_blood_display
+
+/datum/hud/Destroy()
+	. = ..()
+	vamp_blood_display = null

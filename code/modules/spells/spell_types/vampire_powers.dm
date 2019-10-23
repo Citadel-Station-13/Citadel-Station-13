@@ -88,6 +88,7 @@
 /obj/effect/proc_holder/spell/self/rejuvenate/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/U = user
 	U.stuttering = 0
+	U.do_adrenaline(0, TRUE, 0, 0)
 
 	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V) //sanity check
@@ -117,8 +118,10 @@
 		if(do_mob(user, target, 20))
 			to_chat(user, "<span class='warning'>Your piercing gaze knocks out [target].</span>")
 			to_chat(target, "<span class='warning'>You find yourself falling asleep.</span>")
-			target.SetSleeping(400) //So its actually usefull for abducting people, just as long as cqcs sleep.
-			target.stuttering = 10
+			target.SetSleeping(400) //So its actually usefull for abducting people, should be enough to drag them off and cuff them and remove their headset.
+			//Todo, mute after the sleep and stun the target long enough for the sleep.
+
+
 
 		else
 			revert_cast(usr)
@@ -133,7 +136,7 @@
 	action_background_icon_state = "bg_demon"
 	blood_used = 50
 	vamp_req = TRUE
-
+//T0D0, steal VGs vampires polymorph.
 /obj/effect/proc_holder/spell/self/shapeshift/cast(list/targets, mob/user = usr)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -198,6 +201,7 @@
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	blood_used = 25
+	charge_max = 500 //so you cant do it twice to stamcrit.
 	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/self/screech/cast(list/targets, mob/user = usr)
@@ -206,11 +210,12 @@
 		if(C == user || (ishuman(C) && C.get_ear_protection()) || is_vampire(C))
 			continue
 		to_chat(C, "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>")
-		C.adjustStaminaLoss(100)
+		C.adjustStaminaLoss(100) //Wont stamcrit, itll just weaken people and let the vampire
 		C.adjustEarDamage(0, 30)
 		C.stuttering = 250
-		C.Stun(4)
+		C.Stun(6)
 		C.Jitter(150)
+		C.drop_all_held_items() //Not sure if stun already does it.
 	for(var/obj/structure/window/W in view(4))
 		W.take_damage(75)
 	playsound(user.loc, 'sound/effects/screech.ogg', 100, 1)
@@ -244,7 +249,7 @@
 
 /obj/effect/proc_holder/spell/bats/cast(list/targets, mob/user = usr)
 	for(var/T in targets)
-		new /mob/living/simple_animal/hostile/vampire_bat(T)
+		new /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat(T)
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform
@@ -260,7 +265,7 @@
 	addtimer(VARSET_CALLBACK(src, range, -1), 10) //Avoid fuckery
 
 /obj/effect/proc_holder/spell/targeted/vampirize
-	name = "Lilith's Pact (500)"
+	name = "Lilith's Pact (350)"
 	desc = "You drain a victim's blood, and fill them with new blood, blessed by Lilith, turning them into a new vampire."
 	gain_desc = "You have gained the ability to force someone, given time, to become a vampire."
 	action_icon = 'icons/mob/vampire.dmi'
@@ -301,6 +306,7 @@
 			to_chat(target, "<span class='userdanger'>You sign Lilith's Pact.</span>")
 			target.mind.store_memory("<B>[user] showed you the glory of Lilith. <I>You are not required to respect or obey [user] in any way</I></B>")
 			add_vampire(target)
+			//Make nearly free and work only on the dead because, yknow vampires are undead, and add enthralling for living perhaps with the same spell?
 
 
 /obj/effect/proc_holder/spell/self/revive
@@ -343,12 +349,12 @@
 		user.visible_message("<span class='warning'>Shadowy matter takes the place of [user]'s missing limbs as they reform!</span>")
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
-	user.Stun(100)
+	user.Stun(60) //Can just circumvent by becoming a bat, need to find a way around this
 
-/obj/effect/proc_holder/spell/self/summon_coat
-	name = "Summon Dracula Coat (200)"
+ /obj/effect/proc_holder/spell/self/summon_coat
+	name = "Summon Dracula Coat (80)"
 	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
-	blood_used = 200
+	blood_used = 80
 	action_icon = 'icons/mob/vampire.dmi'
 	action_icon_state = "coat"
 	action_background_icon_state = "bg_demon"
@@ -362,7 +368,7 @@
 	if(!V)
 		return
 	if(QDELETED(V.coat) || !V.coat)
-		V.coat = new /obj/item/clothing/suit/draculacoat(user.loc)
+		V.coat = new /obj/item/clothing/suit/dracula/vamp_coat(user.loc)
 	else if(get_dist(V.coat, user) > 1 || !(V.coat in user.GetAllContents()))
 		V.coat.forceMove(user.loc)
 	user.put_in_hands(V.coat)
@@ -379,7 +385,7 @@
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
-	var/mob/living/simple_animal/hostile/vampire_bat/bat
+	var/mob/living/simple_animal/hostile/retaliate/bat/vampire_bat/bat
 
 /obj/effect/proc_holder/spell/self/batform/cast(list/targets, mob/user = usr)
 	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
@@ -389,7 +395,7 @@
 		if(V.usable_blood < 15)
 			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
 			return FALSE
-		bat = new /mob/living/simple_animal/hostile/vampire_bat(user.loc)
+		bat = new /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat(user.loc)
 		user.forceMove(bat)
 		bat.controller = user
 		user.status_flags |= GODMODE

@@ -574,7 +574,6 @@
 #include "code\game\gamemodes\vampire\vampire.dm"
 #include "code\game\gamemodes\vampire\vampire_bat.dm"
 #include "code\game\gamemodes\vampire\vampire_bite.dm"
-#include "code\game\gamemodes\vampire\vampire_hud.dm"
 #include "code\game\gamemodes\vampire\vampire_objectives.dm"
 #include "code\game\gamemodes\vampire\vampire_other.dm"
 #include "code\game\gamemodes\wizard\wizard.dm"

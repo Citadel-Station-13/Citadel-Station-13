@@ -127,10 +127,14 @@
 	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
 		last_fire_update = fire_stacks
 		update_fire()
-
 	..()
 	if(dna)
 		dna.species.handle_fire(src)
+	. = ..()
+	if(mind)
+		var/datum/antagonist/vampire/L = mind.has_antag_datum(/datum/antagonist/vampire)
+		if(on_fire && stat == DEAD && L && !L.get_ability(/datum/vampire_passive/full))
+			dust()
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures

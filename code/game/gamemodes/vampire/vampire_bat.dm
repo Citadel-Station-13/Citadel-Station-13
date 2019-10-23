@@ -15,12 +15,12 @@
 	faction = list("hostile", "vampire")
 	var/mob/living/controller
 
-/mob/living/simple_animal/hostile/vampire_bat/CanAttack(atom/the_target)
+/mob/living/simple_animal/hostile/retaliate/bat/vampire_bat/CanAttack(atom/the_target)
 	. = ..()
 	if(isliving(the_target) && is_vampire(the_target))
 		return FALSE
 
-/mob/living/simple_animal/hostile/vampire_bat/death()
+/mob/living/simple_animal/hostile/retaliate/bat/vampire_bat/death()
 	if(isliving(controller))
 		controller.forceMove(loc)
 		mind.transfer_to(controller)

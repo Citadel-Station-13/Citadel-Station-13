@@ -43,7 +43,7 @@
 
 	var/list/old_antag_candidates = antag_candidates.Copy()
 	if(possible_vamps.len>0)
-		for(var/j = 0, j < num_vamp, j++)
+		for(var/j in 1 to num_vamp)
 			if(!possible_vamps.len) break
 			var/datum/mind/vamp = pick(possible_vamps)
 			pre_vamps += vamp

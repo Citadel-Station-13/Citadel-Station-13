@@ -945,15 +945,3 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
-
-/atom/prepare_huds() //we have /atom/proc/prepare_huds() but hippie has just this in their modularized folder, i wonder how to make it simpler.
-	hud_list = list()
-	for(var/hud in hud_possible)
-		var/hint = hud_possible[hud]
-		switch(hint)
-			if(HUD_LIST_LIST)
-				hud_list[hud] = list()
-			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
-				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-				hud_list[hud] = I

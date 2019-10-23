@@ -1,12 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/vampires = list()
 
-/mob/living/carbon/human/Stat()
-	. = ..()
-	var/datum/antagonist/vampire/vamp = mind.has_antag_datum(/datum/antagonist/vampire)
-	if(vamp && statpanel("Status"))
-		stat("Total Blood", vamp.total_blood)
-		stat("Usable Blood", vamp.usable_blood)
 
 /mob/living/carbon/human/Life()
 	. = ..()
@@ -55,21 +49,21 @@
 	else
 		num_vamps = max(1, min(num_players(), vampires_possible))
 
-	for(var/j = 0, j < num_vamps, j++)
+	for(var/j in 1 to num_vamps)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/vamp = pick(antag_candidates)
+		var/datum/mind/vamp = pick_n_take(antag_candidates)
 		pre_vamps += vamp
 		vamp.special_role = "Vampire"
 		vamp.restricted_roles = restricted_jobs
 		log_game("[vamp.key] (ckey) has been selected as a Vampire")
-		antag_candidates.Remove(vamp)
 
 	return pre_vamps.len > 0
 
 
 /datum/game_mode/vampire/post_setup()
-	for(var/datum/mind/vamp in pre_vamps)
+	for(var/a in pre_vamps)
+		var/datum/mind/vamp = a
 		vamp.add_antag_datum(/datum/antagonist/vampire)
 	..()
 	return TRUE
@@ -81,14 +75,14 @@
 	return vamp
 
 /proc/remove_vampire(mob/living/L)
-	if(!L || !L.mind || !is_vampire(L))
+	var/datum/antagonist/vamp = is_vampire(L)
+	if(!vamp)
 		return FALSE
-	var/datum/antagonist/vamp = L.mind.has_antag_datum(/datum/antagonist/vampire)
 	vamp.on_removal()
 	return TRUE
 
 /proc/is_vampire(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/vampire)
+	return M?.mind?.has_antag_datum(/datum/antagonist/vampire)
 
 /datum/game_mode/proc/update_vampire_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_VAMPIRE]

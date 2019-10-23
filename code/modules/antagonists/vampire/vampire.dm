@@ -16,7 +16,7 @@
 
 	var/list/powers = list() // list of current powers
 
-	var/obj/item/clothing/suit/draculacoat/coat
+	var/obj/item/clothing/suit/dracula/vamp_coat/coat
 
 	var/list/upgrade_tiers = list(
 		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
@@ -33,7 +33,7 @@
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
 		/datum/vampire_passive/full = 666,
 		/obj/effect/proc_holder/spell/self/summon_coat = 666,
-		/obj/effect/proc_holder/spell/targeted/vampirize = 666)
+		/obj/effect/proc_holder/spell/targeted/vampirize = 666) //The number has a very specific meaning.
 
 /datum/antagonist/vampire/get_admin_commands()
 	. = ..()
@@ -62,12 +62,11 @@
 	owner.current.faction += "vampire"
 	SSticker.mode.update_vampire_icons_added(owner)
 	var/mob/living/carbon/human/C = owner.current
-	if(istype(C))
-		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-		if(B)
-			B.vital = FALSE
-			B.decoy_override = TRUE
-	..()
+	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		B.vital = FALSE
+		B.decoy_override = TRUE
+
 
 /datum/antagonist/vampire/on_removal()
 	remove_vampire_powers()
@@ -83,21 +82,20 @@
 		to_chat(owner.current,"<span class='userdanger'>Your powers have been quenched! You are no longer a vampire</span>")
 	owner.special_role = null
 	var/mob/living/carbon/human/C = owner.current
-	if(istype(C))
-		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-		if(B && (B.decoy_override != initial(B.decoy_override)))
-			B.vital = TRUE
-			B.decoy_override = FALSE
-	..()
+	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B && (B.decoy_override != initial(B.decoy_override)))
+		B.vital = TRUE
+		B.decoy_override = FALSE
 
 /datum/antagonist/vampire/greet()
-	to_chat(owner, "<span class='userdanger'>You are a Vampire!</span>")
-	to_chat(owner, "<span class='danger bold'>You are a creature of the night -- holy water, the chapel, and space will cause you to burn.</span>")
-	to_chat(owner, "<span class='notice bold'>Hit someone in the head with harm intent to start sucking their blood. However, only blood from living creatures is usable!</span>")
-	to_chat(owner, "<span class='notice bold'>Coffins will heal you.</span>")
+	var/vamp_greet = "<span class='userdanger'>You are a Vampire!</span>\n"
+	vamp_greet += "<span class='danger bold'>You are a creature of the night -- holy water, the chapel, and space will cause you to burn.</span>\n"
+	vamp_greet += "<span class='notice bold'>Hit someone in the head with harm intent to start sucking their blood. However, only blood from living creatures is usable!</span>\n"
+ 	vamp_greet += "<span class='notice bold'>Coffins will heal you.</span>"
+	to_chat(owner, vamp_greet)
 	if(LAZYLEN(objectives))
 		owner.announce_objectives()
-//	owner.current.playsound_local(get_turf(owner.current), 'hippiestation/sound/ambience/antag/vampire.ogg',80,0)
+//	owner.current.playsound_local(get_turf(owner.current), 'hippiestation/sound/ambience/antag/vampire.ogg',80,0) need to find a better sound than succ
 
 /datum/antagonist/vampire/proc/give_objectives()
 	var/datum/objective/blood/blood_objective = new
@@ -105,7 +103,7 @@
 	blood_objective.gen_amount_goal()
 	add_objective(blood_objective)
 
-	for(var/i = 1, i < CONFIG_GET(number/traitor_objectives_amount), i++)
+	for(var/i in 1 to CONFIG_GET(number/traitor_objectives_amount))
 		forge_single_objective()
 
 	if(!(locate(/datum/objective/escape) in objectives))
@@ -206,13 +204,13 @@
 
 /datum/antagonist/vampire/proc/handle_bloodsucking(mob/living/carbon/human/H)
 	draining = H
-	var/mob/living/carbon/human/O = owner.current
+	var/mob/living/carbon/O = owner.current
 	var/blood = 0
 	var/old_bloodtotal = 0 //used to see if we increased our blood total
 	var/old_bloodusable = 0 //used to see if we increased our blood usable
 	log_attack("[O] ([O.ckey]) bit [H] ([H.ckey]) in the neck")
 	O.visible_message("<span class='danger'>[O] grabs [H]'s neck harshly and sinks in their fangs!</span>", "<span class='danger'>You sink your fangs into [H] and begin to drain their blood.</span>", "<span class='notice'>You hear a soft puncture and a wet sucking noise.</span>")
-	if(!iscarbon(owner))
+	if(!istype(O))
 		H.LAssailant = null
 	else
 		H.LAssailant = O
