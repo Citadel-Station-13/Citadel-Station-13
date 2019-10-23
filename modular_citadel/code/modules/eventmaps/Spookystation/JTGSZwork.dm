@@ -17,95 +17,76 @@
 */
 //Also Shrek will crash your dmlang server repeatedly if you edit him.
 
-//For some reason this file refuses to pull many defines, Here at least. So heres RANGE_TURFS again.
-#define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
-
 //Considering I can't grab defines from everywhere, I hope you enjoy strings and numbers plebs.
+//Edit - Moved to modular citadel so we are after everything has loaded.
 
 //code/modules/holiday/halloween/iconfile32.dmi
-
+//modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi
 /*
 	AREAS
 			*/
 //We are on ruin so I can inherit things from the parent elsewhere.
-/area/ruin/eventmap
+/area/eventmap
 	name = "Dont use this" //Its the parent to any dunces out there.
 	has_gravity = STANDARD_GRAVITY //We have gravity
-	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	requires_power = 0 // We don't need power anywhere.
-	ambientsounds = null //We don't inherit these from ruin.
 
-/area/ruin/eventmap/outside //We are outside
+/area/eventmap/outside //We are outside
 	name = "Outside"
 	icon_state = "outside"
 	outdoors = 1 //Outdoors is true, no area editing here.
 	lightswitch = 0 //Lightswitch is false, no turning the lights on outside.
-	//ambientsounds = list(todo: stick some frogs or something in here)
 
-/area/ruin/eventmap/inside //We are inside, all things are pretty normal.
+/area/eventmap/inside //We are inside, all things are pretty normal.
 	name = "Inside"
 	icon_state = "inside"
-	ambientsounds = null
 
 /*
 	OUTSIDE TURFS WITH NO GEN JUS MIDNIGHT LIGHT BABY
 														*/
 
-//Grass that doesn't generate but has the lighting on it.
-/turf/open/floor/grass/nongenspooktimegrass
-	baseturfs = /turf/open/floor/grass/nongenspooktimegrass
+//Parent of all our outside turfs.
+/turf/open/floor/spooktime/
+	name = "You fucked up pal"
+	desc = "Don't use this turf its a parent and just a holder."
+	planetary_atmos = TRUE //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
 	light_range = 3
 	light_power = 0.15
 	light_color = "#00111a"
+	baseturfs = /turf/open/floor/spooktime/spooktimegrass
+	gender = PLURAL //THE GENDER IS PLURAL
+	tiled_dirt = FALSE //NO TILESMOOTHING DIRT OR SOME SHIT
 
-/turf/open/floor/grass/nongenspooktimegrass/Initialize()
+//Grass with no flora generation on it.
+/turf/open/floor/spooktime/nonspooktimegrass
+	name = "grass patch"
+	desc = "You can't tell if this is real grass... Ah, who are you kidding, it totally is real grass."
+	icon_state = "grass_1"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+
+/turf/open/floor/spooktime/nongenspooktimegrass/Initialize()
 	. = ..()
 	icon_state = "grass_[rand(1,3)]"
 
-//outside cobble
-/turf/open/indestructible/cobble/spooktime/side
-	icon_state = "cobble_side"
-
-/turf/open/indestructible/cobble/spooktime/corner
-	icon_state = "cobble_corner"
-
-/turf/open/indestructible/cobble/spooktime
+//Cobblestone and all of its directions tied to the parent.
+/turf/open/floor/spooktime/cobble
 	name = "cobblestone path"
 	desc = "A simple but beautiful path made of various sized stones."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "cobble"
-	light_range = 3
-	light_power = 0.15
-	light_color = "#00111a"
 	
-	baseturfs = /turf/open/indestructible/spooktime/cobble
-
-
 /*
 	Basic Grass turf w Flora gen
 									*/
-/turf/open/floor/grass/spooktimegrass
+/turf/open/floor/spooktime/spooktimegrass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass... Ah, who are you kidding, it totally is real grass."
 	icon_state = "grass_1"
-	icon = '_maps/map_files/Eventstations/iconfile32.dmi' //32x32 iconfile, sry we had different sizes.
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi' //32x32 iconfile, sry we had different sizes.
 	broken_states = list("sand")
-	bullet_bounce_sound = null //For some reason we can't actually pull the footstep global lists in here.
-	gender = PLURAL //THE GENDER IS PLURAL
 
-	baseturfs = /turf/open/floor/grass/spooktimegrass //BENEATH SPOOKTIMEGRASS THERE IS SPOOKTIMEGRASS
-	planetary_atmos = TRUE //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
-	tiled_dirt = FALSE //NO TILESMOOTHING DIRT OR SOME SHIT
-
-	//This applies a decent amount of load once, but do you want it pitch black or midnight.
-	light_range = 3 //The light range on the baseturf - Basically so its extremely dark but not pitchblack
-	light_power = 0.15 //Light power on the - BLACKMAJOR ADJUST THESE AS YOU SEE FIT.
-	light_color = "#00111a" //A darker blue, so its not just indoor black.
-	//Sorry, no day/night cycle subsystem included since this ball will be at midnight the entire time.
+	baseturfs = /turf/open/floor/spooktime/spooktimegrass //BENEATH SPOOKTIMEGRASS THERE IS SPOOKTIMEGRASS
 
 	//Holders for what can occur on the turf.
 	var/obj/structure/flora/turfGrass = null
@@ -115,7 +96,7 @@
 	var/obj/structure/flora/turfDebris = null
 
 
-/turf/open/floor/grass/spooktimegrass/Initialize()
+/turf/open/floor/spooktime/spooktimegrass/Initialize()
 	. = ..()
 	icon_state = "grass_[rand(1,3)]" //Icon state variation for how many states of grass I got... 3 lul
 	//If no fences, machines (soil patches are machines), etc. try to plant grass
@@ -157,7 +138,7 @@
 #define DESOLATE_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 1)
 
 //I just kinda made it worse... Like a lot worse. Ngl man.
-/turf/open/floor/grass/spooktimegrass/proc/floraGen()
+/turf/open/floor/spooktime/spooktimegrass/proc/floraGen()
 	var/grassWeight = 0 //grassWeight holders for each individual layer
 	var/deadtreeWeight = 0
 	var/ausfloraWeight = 0
@@ -194,7 +175,7 @@
 
 
 	//loop through neighbouring turfs, if they have grass, then increase weight, cluster prep.
-	for(var/turf/open/floor/grass/spooktimegrass/T in RANGE_TURFS(3, src))
+	for(var/turf/open/floor/spooktime/spooktimegrass/T in RANGE_TURFS(3, src))
 		if(T.turfGrass) //We check what is around our turf
 			grassWeight += GRASS_WEIGHT //The weight is increased by grass weight per every grass we find
 		if(T.turfDeadtree)
@@ -234,7 +215,7 @@
 		turfDebris = new randDebris(src)
 
 //Make sure we delete the objects if we ever change turfs
-/turf/open/floor/grass/spooktimegrass/ChangeTurf()
+/turf/open/floor/spooktime/spooktimegrass/ChangeTurf()
 	if(turfGrass)
 		qdel(turfGrass)
 	if(turfDeadtree)
@@ -250,19 +231,19 @@
 //Grass baseturf helper, more than likely completely unneeded since its set on the original turf too.
 /obj/effect/baseturf_helper/spooktimegrass
 	name = "grass baseturf helper" //Basically just changes the baseturf into grass
-	baseturf = /turf/open/floor/grass/spooktimegrass //Wherever it is at.
+	baseturf = /turf/open/floor/spooktime/spooktimegrass //Wherever it is at.
 
 /* so we can't break this */
-/turf/open/floor/grass/spooktimegrass/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/spooktime/spooktimegrass/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return //No replacing it
 
-/turf/open/floor/grass/spooktimegrass/burn_tile()
+/turf/open/floor/spooktime/spooktimegrass/burn_tile()
 	return //No burning it
 
-/turf/open/floor/grass/spooktimegrass/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
+/turf/open/floor/spooktime/spooktimegrass/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return //No slippery
 
-/turf/open/floor/grass/spooktimegrass/MakeDry()
+/turf/open/floor/spooktime/spooktimegrass/MakeDry()
 	return //No making it dry.
 
 /*
@@ -273,7 +254,7 @@
 //Stripped the other segments out, people don't need hay and interactions right now you know man?
 //Technically we could also randomize the pixel_x, pixel_y placement of these guys for more dynamic thickets.
 /obj/structure/flora/grass/spookytime
-	icon = '_maps/map_files/Eventstations/iconfile32.dmi' //32x32 iconfile
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi' //32x32 iconfile
 	desc = "Some dry, virtually dead grass, cause its fall and not a wasteland this time."
 	icon_state = "tall_grass_1"
 
@@ -284,7 +265,7 @@
 /obj/structure/flora/tree/spookytime
 	name = "dead tree"
 	desc = "It's a tree. Useful for combustion and/or construction."
-	icon = '_maps/map_files/Eventstations/iconfile64.dmi' //64x64 iconfile
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile64.dmi' //64x64 iconfile
 	icon_state = "deadtree_1"
 	log_amount = 3
 	density = 1
@@ -298,7 +279,7 @@
 /obj/structure/flora/tree/spookytimexl
 	name = "tall dead tree"
 	desc = "It's a tree. Useful for combustion and/or construction. This ones quite tall"
-	icon = '_maps/map_files/Eventstations/talltree128.dmi'
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/talltree128.dmi'
 	icon_state = "tree_1"
 	log_amount = 12
 	density = 1
@@ -312,7 +293,7 @@
 /obj/structure/flora/tree/spookybranch
 	name = "fallen branch"
 	desc = "A branch from a tree"
-	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "branch_1"
 	log_amount = 1
 	density = 0
@@ -326,7 +307,7 @@
 /obj/structure/flora/tree/spookylog
 	name = "fallen tree"
 	desc = "A tree, that turned horizontal after it died"
-	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "timber"
 	log_amount = 5
 	density = 0
@@ -336,7 +317,7 @@
 /obj/structure/flora/spookyrock
 	name = "rock"
 	desc = "Its a rock man. Hard as shit, and for you quite impassible."
-	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "rock_1"
 	density = 1
 
