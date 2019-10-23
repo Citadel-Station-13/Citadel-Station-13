@@ -7,6 +7,7 @@
 
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
+	config_tag = "traitor"
 	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
@@ -48,6 +49,7 @@
 
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
+	config_tag = "traitorbro"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother/
 	restricted_roles = list("AI", "Cyborg")
@@ -100,6 +102,7 @@
 
 /datum/dynamic_ruleset/roundstart/changeling
 	name = "Changelings"
+	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
 	restricted_roles = list("AI", "Cyborg")
@@ -149,6 +152,7 @@
 // Dynamic is a wonderful thing that adds wizards to every round and then adds even more wizards during the round.
 /datum/dynamic_ruleset/roundstart/wizard
 	name = "Wizard"
+	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
 	minimum_required_age = 14
@@ -194,6 +198,7 @@
 
 /datum/dynamic_ruleset/roundstart/bloodcult
 	name = "Blood Cult"
+	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
@@ -254,6 +259,7 @@
 
 /datum/dynamic_ruleset/roundstart/nuclear
 	name = "Nuclear Emergency"
+	config_tag = "nuclear"
 	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
@@ -343,6 +349,7 @@
 
 /datum/dynamic_ruleset/roundstart/delayed/revs
 	name = "Revolution"
+	config_tag = "revolution"
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV
@@ -433,6 +440,7 @@
 
 /datum/dynamic_ruleset/roundstart/extended
 	name = "Extended"
+	config_tag = "extended"
 	antag_flag = null
 	antag_datum = null
 	restricted_roles = list()
@@ -456,6 +464,7 @@
 
 /datum/dynamic_ruleset/roundstart/clockcult
 	name = "Clockcult"
+	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	antag_datum = /datum/antagonist/clockcult
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
@@ -559,6 +568,7 @@
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops
 	name = "Clown Ops"
+	config_tag = "clownops"
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -584,6 +594,7 @@
 
 /datum/dynamic_ruleset/roundstart/devil
 	name = "Devil"
+	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
 	antag_datum = /datum/antagonist/devil
 	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
@@ -642,6 +653,7 @@
 
 /datum/dynamic_ruleset/roundstart/monkey
 	name = "Monkey"
+	config_tag = "monkey"
 	antag_flag = ROLE_MONKEY
 	antag_datum = /datum/antagonist/monkey/leader
 	restricted_roles = list("Cyborg", "AI")
@@ -704,6 +716,7 @@
 
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
+	config_tag = "meteor"
 	persistent = TRUE
 	required_candidates = 0
 	weight = 3

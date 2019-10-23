@@ -3,6 +3,8 @@
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
 	var/ruletype = "" 
+	/// For config purposes, similar to config_tag for secret game modes.
+	var/config_tag = null
 	/// If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every time it ticks.
 	var/persistent = FALSE 
 	/// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
@@ -65,7 +67,18 @@
 		restricted_roles += protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_roles += "Assistant"
-
+	var/weights = CONFIG_GET(keyed_list/dynamic_weight)
+	var/costs = CONFIG_GET(keyed_list/dynamic_cost)
+	var/requirementses = CONFIG_GET(keyed_list/dynamic_requirements) // can't damn well use requirements
+	var/high_population_requirements = CONFIG_GET(keyed_list/dynamic_high_population_requirement)
+	if(config_tag in weights)
+		weight = weights[config_tag]
+	if(config_tag in costs)
+		cost = costs[config_tag]
+	if(config_tag in requirements)
+		requirements = requirementses[config_tag]
+	if(config_tag in high_population_requirements)
+		high_population_requirement = high_population_requirements[config_tag]
 	if (istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
 	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.

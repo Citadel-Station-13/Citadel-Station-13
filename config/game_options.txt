@@ -255,6 +255,36 @@ EVENTS_MIN_TIME_MUL 1
 EVENTS_MIN_PLAYERS_MUL 1
 
 
+
+### DYNAMIC MODE ###
+
+## How many roundstart players required for high population override to take effect.
+DYNAMIC_HIGH_POP_LIMIT 55
+
+## Pop range per requirement.
+## If the value is five the range is:
+## 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
+## If it is six the range is:
+## 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+
+## If it is seven the range is:
+## 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
+## Options outside this range can be used, of course.
+DYNAMIC_POP_PER_REQUIREMENT 6
+
+## All of these have a default in place, so omission will simply use the default. Traitorbro values are here for demonstration.
+
+## 1 -> 9, probability for this rule to be picked against other rules/
+DYNAMIC_WEIGHT TRAITORBRO,4
+
+## Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
+DYNAMIC_COST TRAITORBRO,10
+
+##With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops. Pop values are determined by dynamic's pop-per-requirement. By default, it's 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+.
+DYNAMIC_REQUIREMENTS TRAITORBRO,40 30 30 20 20 15 15 15 10 10
+
+## An alternative, static requirement used instead when pop is over mode's high_pop_limit.
+DYNAMIC_HIGH_POPULATION_REQUIREMENT TRAITORBRO,10
+
 ## AI ###
 
 ## Allow the AI job to be picked.
