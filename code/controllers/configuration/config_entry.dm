@@ -194,18 +194,18 @@
 				continue_check_value = new_value
 			if(VALUE_MODE_NUM_LIST)
 				// this is all copy+pasted from number list up there, but it's super basic so I don't see it being changed soon
-				var/list/new_list
-				var/list/values = splittext(str_val," ")
+				var/list/new_list = list()
+				var/list/values = splittext(key_value," ")
 				for(var/I in values)
 					var/temp = text2num(I)
 					if(isnull(temp))
 						log_admin("invalid number list entry in [key_name]: [I]")
-						return FALSE
+						continue_check_value = FALSE
 					new_list += temp
-				if(!(new_list.len)) // 
-					log_admin("empty number list for [key_name]")
-					return FALSE
 				new_value = new_list
+				log_admin(new_list)
+				continue_check_value = new_list.len
+				log_admin(continue_check_value)
 		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
 			config_entry_value[new_key] = new_value
 			return TRUE

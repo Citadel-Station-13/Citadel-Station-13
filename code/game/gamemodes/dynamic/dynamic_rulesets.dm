@@ -75,7 +75,7 @@
 		weight = weights[config_tag]
 	if(config_tag in costs)
 		cost = costs[config_tag]
-	if(config_tag in requirements)
+	if(config_tag in requirementses)
 		requirements = requirementses[config_tag]
 	if(config_tag in high_population_requirements)
 		high_population_requirement = high_population_requirements[config_tag]
