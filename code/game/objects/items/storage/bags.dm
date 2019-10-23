@@ -21,7 +21,7 @@
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.allow_quick_empty = TRUE
 	STR.display_numerical_stacking = TRUE
@@ -44,7 +44,7 @@
 
 /obj/item/storage/bag/trash/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
@@ -85,7 +85,7 @@
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
 
@@ -110,7 +110,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
 	STR.max_w_class = WEIGHT_CLASS_HUGE
@@ -136,7 +136,7 @@
 		return
 	if (istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
 		for(var/A in tile)
 			if (!is_type_in_typecache(A, STR.can_hold))
@@ -166,7 +166,7 @@
 
 /obj/item/storage/bag/ore/cyborg/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
 	STR.max_w_class = WEIGHT_CLASS_HUGE
@@ -178,7 +178,7 @@
 
 /obj/item/storage/bag/ore/large/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
 	STR.max_w_class = WEIGHT_CLASS_HUGE
@@ -191,7 +191,7 @@
 
 /obj/item/storage/bag/ore/holding/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.max_items = INFINITY
 	STR.max_combined_w_class = INFINITY
 	STR.max_combined_stack_amount = INFINITY
@@ -209,7 +209,7 @@
 
 /obj/item/storage/bag/plants/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
@@ -249,7 +249,7 @@
 
 /obj/item/storage/bag/sheetsnatcher/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/sheet))
 	STR.cant_hold = typecacheof(list(/obj/item/stack/sheet/mineral/sandstone, /obj/item/stack/sheet/mineral/wood))
@@ -266,7 +266,7 @@
 
 /obj/item/storage/bag/sheetsnatcher/borg/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.max_combined_stack_amount = 500
 
 // -----------------------------
@@ -283,7 +283,7 @@
 
 /obj/item/storage/bag/books/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 21
 	STR.max_items = 7
@@ -308,15 +308,14 @@
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.insert_preposition = "on"
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
 	// Drop all the things. All of them.
 	var/list/obj/item/oldContents = contents.Copy()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.quick_empty()
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	// Make each item scatter a bit
 	for(var/obj/item/I in oldContents)
 		spawn()
@@ -362,7 +361,7 @@
 
 /obj/item/storage/bag/chemistry/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
@@ -382,7 +381,7 @@
 
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 200
 	STR.max_items = 25
 	STR.insert_preposition = "in"
@@ -397,6 +396,6 @@
 
 /obj/item/storage/bag/bio/holding/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = INFINITY
 	STR.max_items = 100

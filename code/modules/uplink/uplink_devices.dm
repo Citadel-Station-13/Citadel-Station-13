@@ -25,18 +25,18 @@
 
 /obj/item/uplink/nuclear/Initialize()
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/uplink/nuclear_restricted/Initialize()
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.allow_restricted = FALSE
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/uplink/clownop/Initialize()
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear/clown_ops)
 
 /obj/item/uplink/old
@@ -45,7 +45,7 @@
 
 /obj/item/uplink/old/Initialize(mapload, owner, tc_amount = 10)
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "dusty radio"
 
 // Multitool uplink

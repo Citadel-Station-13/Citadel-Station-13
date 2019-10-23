@@ -917,7 +917,7 @@
 					speaktrigger += "[(H.client?.prefs.lewdchem?"You are my whole world and all of my being belongs to you, ":"I cannot think of anything else but aiding your cause, ")] "//Redflags!!
 
 			//mood
-			GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+			var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 			switch(mood.sanity)
 				if(SANITY_GREAT to INFINITY)
 					speaktrigger += "I'm beyond elated!! " //did you mean byond elated? hohoho

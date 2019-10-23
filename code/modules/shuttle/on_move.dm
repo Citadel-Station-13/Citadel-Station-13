@@ -290,7 +290,7 @@ All ShuttleMove procs go here
 	// ignores the movement of the shuttle from the staging area on CentCom to
 	// the station as it is loaded in.
 	if (oldT && !is_centcom_level(oldT.z))
-		GET_COMPONENT(STR, /datum/component/storage/concrete/emergency)
+		var/datum/component/storage/concrete/emergency/STR = GetComponent(/datum/component/storage/concrete/emergency)
 		STR?.unlock_me()
 
 /************************************Mob move procs************************************/

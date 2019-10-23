@@ -24,7 +24,7 @@
 		if(H.sprinting && charge)
 			charge--
 			new_speed = chargespeed
-	GET_COMPONENT(D, /datum/component/riding)
+	var/datum/component/riding/D = GetComponent(/datum/component/riding)
 	D.vehicle_move_delay = new_speed
 	for(var/i in progressbars_by_rider)
 		var/datum/progressbar/B = progressbars_by_rider[i]
