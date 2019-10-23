@@ -106,6 +106,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "at" = (
@@ -174,6 +175,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aD" = (
@@ -227,6 +229,7 @@
 /obj/docking_port/mobile/emergency{
 	name = "Scrapheap Challenge"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aL" = (
@@ -309,6 +312,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ba" = (
