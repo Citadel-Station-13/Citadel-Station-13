@@ -135,18 +135,18 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
-	for(var/obj/item/W in mob_occupant)
-		if(!is_type_in_typecache(W, telegulag_required_items))
-			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
-				if(istype(W, /obj/item/restraints/handcuffs))
-					W.forceMove(get_turf(src))
-					continue
-				if(linked_reclaimer)
-					linked_reclaimer.stored_items[mob_occupant] += W
-					linked_reclaimer.contents += W
-					W.forceMove(linked_reclaimer)
-				else
-					W.forceMove(src)
+	for(var/obj/item/W in mob_occupant.get_equipped_items(TRUE))
+		if(is_type_in_typecache(W, telegulag_required_items) || !mob_occupant.temporarilyRemoveItemFromInventory(W))
+			continue
+		if(istype(W, /obj/item/restraints/handcuffs))
+			W.forceMove(get_turf(src))
+			continue
+		if(linked_reclaimer)
+			linked_reclaimer.stored_items[mob_occupant] += W
+			linked_reclaimer.contents += W
+			W.forceMove(linked_reclaimer)
+		else
+			W.forceMove(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
