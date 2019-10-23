@@ -432,6 +432,14 @@
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
 
+/obj/item/book/granter/crafting_recipe/threads //Durathread crafting book
+	name = "Credible Threads"
+	desc = "A simple book about sewing and usefull clothing crafting with cloth and durathreads."
+	crafting_recipe_types = list(/datum/crafting_recipe/durathread_duffelbag, /datum/crafting_recipe/durathread_toolbelt, /datum/crafting_recipe/durathread_bandolier, /datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest)
+	icon_state = "tailers_art1"
+	oneuse = FALSE
+	remarks = list("Durathread is cloth thats also fire-resistant?", "Strong threads that can be used with leather for some light weight storage!", "The cloth can withstand a beating it said but not that much...")
+
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101 //We start at 101 for 103 and 105
 	name = "Cooking Desserts 101"
 	desc = "A cook book that teaches you some more of the newest desserts. AI approved, and a best seller on Honkplanet."
