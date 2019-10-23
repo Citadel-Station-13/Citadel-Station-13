@@ -37,40 +37,6 @@
 
 //---//
 
-/datum/round_event_control/wizard/shufflenames //Face/off joke
-	name = "Change Faces!"
-	weight = 4
-	typepath = /datum/round_event/wizard/shufflenames
-	max_occurrences = 5
-	earliest_start = 0 MINUTES
-
-/datum/round_event/wizard/shufflenames/start()
-	var/list/mobnames = list()
-	var/list/mobs	 = list()
-
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		mobnames += H.real_name
-		mobs += H
-
-	if(!mobs)
-		return
-
-	shuffle_inplace(mobnames)
-	shuffle_inplace(mobs)
-
-	for(var/mob/living/carbon/human/H in mobs)
-		if(!mobnames)
-			break
-		H.real_name = mobnames[mobnames.len]
-		mobnames.len -= 1
-
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(0, H.loc)
-		smoke.start()
-
-//---//
-
 /datum/round_event_control/wizard/shuffleminds //Basically Mass Ranged Mindswap
 	name = "Change Minds!"
 	weight = 1
