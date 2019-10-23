@@ -146,5 +146,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-
 	foodtype = MEAT
