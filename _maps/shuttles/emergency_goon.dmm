@@ -28,6 +28,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "h" = (
@@ -41,6 +42,7 @@
 	name = "NES Port";
 	width = 19
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
@@ -67,9 +69,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
+/obj/machinery/sleeper,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "r" = (
@@ -92,11 +92,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"v" = (
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "w" = (
 /obj/machinery/door/airlock/public/glass{
@@ -186,12 +181,18 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"P" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "Q" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "R" = (
 /obj/machinery/light/small,
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "S" = (
@@ -272,8 +273,8 @@ X
 c
 d
 q
-v
-q
+n
+P
 d
 H
 H
@@ -284,7 +285,7 @@ Y
 (4,1,1) = {"
 d
 l
-n
+q
 n
 R
 d

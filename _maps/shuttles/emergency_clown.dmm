@@ -342,6 +342,11 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"bL" = (
+/obj/item/toy/snappop/phoenix,
+/obj/item/pneumatic_cannon/pie/selfcharge,
+/turf/open/floor/bluespace,
+/area/shuttle/escape)
 "Zf" = (
 /obj/structure/closet/emcloset,
 /obj/item/toy/sword,
@@ -471,7 +476,7 @@ bg
 (6,1,1) = {"
 ac
 ag
-ak
+bL
 aq
 ab
 av
