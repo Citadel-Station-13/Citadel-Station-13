@@ -1,3 +1,23 @@
+//Halloween Fluff Papers!
+
+/obj/item/paper/pamphlet/balls/spookyasylum
+	name = "ASYLUMNAME Pamphlet"
+	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more information.</center>"
+
+/obj/item/paper/fluff/balls/spookyasylum/cell03
+	name = "Cell 3 Patient Information"
+	info = "<b>Name:</b> J. Crane<br><b>Age:</b> 46 <b>Gender:</b> M <b>Height:</b> 183cm <b>Weight:</b> 81kg<br><b>Notes:</b> Patient exhibits violent tendencies and is not to be released from restraints under any circumstances. To reduce risk of violent outbreaks, birds; which patient has a strong phobia towards; are no longer allowed in proximity of cells, this includes the chief of staff's pet parrot."
+
+/obj/item/paper/fluff/balls/spookyasylum/cell04
+	name = "Cell 4 Patient Information"
+	info = "<b>Name:</b> Fidel S.<br><b>Age:</b> 20 <b>Gender:</b> M <b>Height:</b> 170cm <b>Weight:</b> 68kg<br><b>Notes:</b> Patient appears to be under the delusion that he is a dog, suffers from incontinence, and bites staff. Patient to be kept restrained in cell after attacking orderly Robinson, do not remove patient's muzzle outside designated meal periods."
+
+/obj/item/paper/fluff/balls/spookyasylum/traffickingvictim
+	name = "Cell 1 Patient Information"
+	info = "<b>Name:</b> S. Albright<br><b>Age:</b> 26 <b>Gender:</b> F <b>Height:</b> 174cm <b>Weight:</b> 63kg<br><b>Notes:</b> \[The notes are crossed out and unreadable, but there is writing on the back of the paper] Buyer found in Sol system, wealthy Martian man looking for a cheap bride, doesn't mind poor condition of the merchandise. Will be packaging with the next supply ship for transport."
+
+//Dorm Buttons
+
 /obj/machinery/button/door/dorms/dorm01
     name = "dorm 1 button"
     id = "D100"
@@ -134,6 +154,7 @@
     pixel_x = -24
     pixel_y = 8
 
+//Dorm Doors
 
 /obj/machinery/door/airlock/wood/dorms/dorm01
 	name = "Room 1"
@@ -223,6 +244,7 @@
 	name = "Recovery Room 2"
 	id_tag = "D121"
 
+//Luxury Dorm Shutters
 
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury01
 	name = "Luxury Dorm 1"
