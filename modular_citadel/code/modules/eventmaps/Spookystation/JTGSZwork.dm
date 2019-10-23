@@ -1,21 +1,21 @@
 /*
-⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
-⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
-⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀ 
-⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀ 
-⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆ 
-⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿ 
-⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀ 
+⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆
+⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿
+⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀
 ⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀ 		WARNING: THE SHITCODE BELOW HAS BEEN HASTILY
 ⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀ 		COPY AND PASTED, PORTED FROM AWKWARD PLACES, AND PROBABLY MADE WORSE.
-⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀ 
-⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀ 
+⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀ WELCOME TO JT's TG-CODE HALLOWEEN BALL CODEFILE.
 ⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀ 					ALL OF IT WILL HOPEFULLY BE BELOW.
-⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
+⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉
 */
-//Also Shrek will crash your dmlang server if you edit him.
+//Also Shrek will crash your dmlang server repeatedly if you edit him.
 
 //For some reason this file refuses to pull many defines, Here at least. So heres RANGE_TURFS again.
 #define RANGE_TURFS(RADIUS, CENTER) \
@@ -23,6 +23,67 @@
     locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
+
+//Considering I can't grab defines from everywhere, I hope you enjoy strings and numbers plebs.
+
+//code/modules/holiday/halloween/iconfile32.dmi
+
+/*
+	AREAS
+			*/
+//We are on ruin so I can inherit things from the parent elsewhere.
+/area/ruin/eventmap
+	name = "Dont use this" //Its the parent to any dunces out there.
+	has_gravity = STANDARD_GRAVITY //We have gravity
+	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
+	requires_power = 0 // We don't need power anywhere.
+	ambientsounds = null //We don't inherit these from ruin.
+
+/area/ruin/eventmap/outside //We are outside
+	name = "Outside"
+	icon_state = "outside"
+	outdoors = 1 //Outdoors is true, no area editing here.
+	lightswitch = 0 //Lightswitch is false, no turning the lights on outside.
+	//ambientsounds = list(todo: stick some frogs or something in here)
+
+/area/ruin/eventmap/inside //We are inside, all things are pretty normal.
+	name = "Inside"
+	icon_state = "inside"
+	ambientsounds = null
+
+/*
+	OUTSIDE TURFS WITH NO GEN JUS MIDNIGHT LIGHT BABY
+														*/
+
+//Grass that doesn't generate but has the lighting on it.
+/turf/open/floor/grass/nongenspooktimegrass
+	baseturfs = /turf/open/floor/grass/nongenspooktimegrass
+	light_range = 3
+	light_power = 0.15
+	light_color = "#00111a"
+
+/turf/open/floor/grass/nongenspooktimegrass/Initialize()
+	. = ..()
+	icon_state = "grass_[rand(1,3)]"
+
+//outside cobble
+/turf/open/indestructible/cobble/spooktime/side
+	icon_state = "cobble_side"
+
+/turf/open/indestructible/cobble/spooktime/corner
+	icon_state = "cobble_corner"
+
+/turf/open/indestructible/cobble/spooktime
+	name = "cobblestone path"
+	desc = "A simple but beautiful path made of various sized stones."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cobble"
+	light_range = 3
+	light_power = 0.15
+	light_color = "#00111a"
+	
+	baseturfs = /turf/open/indestructible/spooktime/cobble
+
 
 /*
 	Basic Grass turf w Flora gen
@@ -35,23 +96,23 @@
 	broken_states = list("sand")
 	bullet_bounce_sound = null //For some reason we can't actually pull the footstep global lists in here.
 	gender = PLURAL //THE GENDER IS PLURAL
-	
+
 	baseturfs = /turf/open/floor/grass/spooktimegrass //BENEATH SPOOKTIMEGRASS THERE IS SPOOKTIMEGRASS
-	planetary_atmos = TRUE //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA	
+	planetary_atmos = TRUE //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
 	tiled_dirt = FALSE //NO TILESMOOTHING DIRT OR SOME SHIT
-	
+
 	//This applies a decent amount of load once, but do you want it pitch black or midnight.
 	light_range = 3 //The light range on the baseturf - Basically so its extremely dark but not pitchblack
 	light_power = 0.15 //Light power on the - BLACKMAJOR ADJUST THESE AS YOU SEE FIT.
 	light_color = "#00111a" //A darker blue, so its not just indoor black.
 	//Sorry, no day/night cycle subsystem included since this ball will be at midnight the entire time.
-	
+
 	//Holders for what can occur on the turf.
-	var/obj/structure/flora/turfGrass
-	var/obj/structure/flora/turfDeadtree
-	var/obj/structure/flora/turfAusflora
-	var/obj/structure/flora/turfRocks
-	var/obj/structure/flora/turfDebris
+	var/obj/structure/flora/turfGrass = null
+	var/obj/structure/flora/turfDeadtree = null
+	var/obj/structure/flora/turfAusflora = null
+	var/obj/structure/flora/turfRocks = null
+	var/obj/structure/flora/turfDebris = null
 
 
 /turf/open/floor/grass/spooktimegrass/Initialize()
@@ -80,7 +141,7 @@
 #define AUSFLORA_SPONTANEOUS	2
 #define AUSFLORA_WEIGHT			4
 #define ROCKS_SPONTANEOUS		2 //Technically this can be moved to the desolate spawn list tied to grass.
-#define ROCKS_WEIGHT			1 //Lower weight cause rock clusters were too common.
+#define ROCKS_WEIGHT			1 //Lower weight cause rock clusters were too common...But cool honestly.
 #define DEBRIS_SPONTANEOUS		2
 #define DEBRIS_WEIGHT			2
 
@@ -96,13 +157,13 @@
 #define DESOLATE_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 1)
 
 //I just kinda made it worse... Like a lot worse. Ngl man.
-/turf/open/floor/grass/spooktimegrass/proc/floraGen()	
+/turf/open/floor/grass/spooktimegrass/proc/floraGen()
 	var/grassWeight = 0 //grassWeight holders for each individual layer
 	var/deadtreeWeight = 0
 	var/ausfloraWeight = 0
 	var/rocksWeight = 0
 	var/debrisWeight = 0
-	
+
 	var/randGrass = null //The random plant picked
 	var/randDeadtree = null //The random deadtree picked
 	var/randAusflora = null //The random Ausflora picked
@@ -126,12 +187,12 @@
 	if(prob(ROCKS_SPONTANEOUS))
 		randRocks = pickweight(ROCKS_SPAWN_LIST)
 		turfRocks = new randRocks(src)
-	
+
 	if(prob(DEBRIS_SPONTANEOUS))
 		randDebris = pickweight(DEBRIS_SPAWN_LIST)
 		turfDebris = new randDebris(src)
 
-	
+
 	//loop through neighbouring turfs, if they have grass, then increase weight, cluster prep.
 	for(var/turf/open/floor/grass/spooktimegrass/T in RANGE_TURFS(3, src))
 		if(T.turfGrass) //We check what is around our turf
@@ -144,7 +205,7 @@
 			rocksWeight += ROCKS_WEIGHT
 		if(T.turfDebris)
 			debrisWeight += DEBRIS_WEIGHT
-	
+
 
 	//Below is where we handle clusters really.
 	//use weight to try to spawn grass
@@ -155,11 +216,11 @@
 		else //Else.
 			randGrass = pickweight(DESOLATE_SPAWN_LIST) //We pick from boys that are fine being alone.
 		turfGrass = new randGrass(src) //And at the end we set the turfgrass to this object.
-	
+
 	if(prob(deadtreeWeight)) //We can technically redirect individuals down here too, but lets just focus on clumps.
 		randDeadtree = pickweight(DEAD_TREE_SPAWN_LIST)
 		turfDeadtree = new randDeadtree(src)
-	
+
 	if(prob(ausfloraWeight))
 		randAusflora = pickweight(AUSFLORA_SPAWN_LIST)
 		turfAusflora = new randAusflora(src)
@@ -210,6 +271,7 @@
 
 //For ease of use, I'm appending ausflora variations here too.
 //Stripped the other segments out, people don't need hay and interactions right now you know man?
+//Technically we could also randomize the pixel_x, pixel_y placement of these guys for more dynamic thickets.
 /obj/structure/flora/grass/spookytime
 	icon = '_maps/map_files/Eventstations/iconfile32.dmi' //32x32 iconfile
 	desc = "Some dry, virtually dead grass, cause its fall and not a wasteland this time."
@@ -225,6 +287,7 @@
 	icon = '_maps/map_files/Eventstations/iconfile64.dmi' //64x64 iconfile
 	icon_state = "deadtree_1"
 	log_amount = 3
+	density = 1
 	obj_integrity = 100
 	max_integrity = 100
 
@@ -238,6 +301,7 @@
 	icon = '_maps/map_files/Eventstations/talltree128.dmi'
 	icon_state = "tree_1"
 	log_amount = 12
+	density = 1
 	obj_integrity = 200
 	max_integrity = 200
 
@@ -251,6 +315,7 @@
 	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
 	icon_state = "branch_1"
 	log_amount = 1
+	density = 0
 	obj_integrity = 30
 	max_integrity = 30
 
@@ -264,6 +329,7 @@
 	icon = '_maps/map_files/Eventstations/iconfile32.dmi'
 	icon_state = "timber"
 	log_amount = 5
+	density = 0
 	obj_integrity = 100
 	max_integrity = 100 //only got one state man.
 
