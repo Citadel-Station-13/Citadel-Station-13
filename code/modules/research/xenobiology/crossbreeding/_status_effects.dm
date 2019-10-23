@@ -699,7 +699,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA).
+	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
