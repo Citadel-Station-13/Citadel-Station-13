@@ -384,3 +384,7 @@
 /datum/config_entry/keyed_list/dynamic_requirements
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM_LIST
+
+/datum/config_entry/keyed_list/dynamic_high_population_requirement
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
