@@ -88,7 +88,12 @@
 /obj/effect/proc_holder/spell/self/rejuvenate/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/U = user
 	U.stuttering = 0
-	U.do_adrenaline(0, TRUE, 0, 0)
+	U.SetSleeping(0)
+	U.SetUnconscious(0)
+	U.resting = 0
+	U.lying = 0
+	U.update_canmove()
+
 
 	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V) //sanity check
@@ -104,22 +109,23 @@
 
 
 /obj/effect/proc_holder/spell/targeted/hypnotise
-	name = "Hypnotize (20)"
+	name = "Hypnotize (30)"
 	desc= "A piercing stare that incapacitates your victim for a good length of time."
 	action_icon_state = "hypnotize"
-	blood_used = 20
+	blood_used = 30
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
-
+//Todo, make the targeted abilities auto activate if theres only one target in range.
 /obj/effect/proc_holder/spell/targeted/hypnotise/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
 		user.visible_message("<span class='warning'>[user]'s eyes flash briefly as he stares into [target]'s eyes</span>")
-		if(do_mob(user, target, 20))
+		override_hardstun = 50
+		if(do_mob(user, target, 50))
 			to_chat(user, "<span class='warning'>Your piercing gaze knocks out [target].</span>")
 			to_chat(target, "<span class='warning'>You find yourself falling asleep.</span>")
 			target.SetSleeping(400) //So its actually usefull for abducting people, should be enough to drag them off and cuff them and remove their headset.
-			//Todo, mute after the sleep and stun the target long enough for the sleep.
+			target.silent = (600) //So the victim wont call for help immediatly. Only in actuality 200 ticks if the victim is not woken up manually by other means.
 
 
 
@@ -144,7 +150,7 @@
 		randomize_human(H)
 	user.regenerate_icons()
 
-/obj/effect/proc_holder/spell/self/cloak
+/obj/effect/proc_holder/spell/self/cloak //Needs a complete redo, it was originally useless and is even more due to the cloak being bright for some reason
 	name = "Cloak of Darkness"
 	desc = "Toggles whether you are currently cloaking yourself in darkness."
 	gain_desc = "You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness."
