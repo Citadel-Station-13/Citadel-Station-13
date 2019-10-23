@@ -28,20 +28,20 @@ a:visited {color: #7c00e6;}
 #userBar .toggle {background: #272727;}
 
 /* MOTD */
-.motd {color: #E0E0E0;	font-family: Verdana, sans-serif;}
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #E0E0E0;	text-decoration: underline;}
+.motd {color: #E0E0E0;}
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #E0E0E0;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #E0E0E0;}
 
-h1, h2, h3, h4, h5, h6	{color: #E0E0E0;font-family: Georgia, Verdana, sans-serif;}
+h1, h2, h3, h4, h5, h6	{color: #E0E0E0;}
 h1.alert, h2.alert		{color: #E0E0E0;}
 
-.ooc					{color: #cca300;	font-weight: bold;}
-.looc					{color: #d8b555;	font-weight: bold;}
-.antagooc				{color: #ce254f;	font-weight: bold;}
-.adminobserverooc		{color: #0099cc;	font-weight: bold;}
-.adminooc				{color: #3d5bc3;	font-weight: bold;}
+.ooc					{color: #cca300;}
+.looc					{color: #d8b555;}
+.antagooc				{color: #ce254f;}
+.adminobserverooc		{color: #0099cc;}
+.adminooc				{color: #3d5bc3;}
 
-.admin					{color: #5975da;	font-weight: bold;}
+.admin					{color: #5975da;}
 
 .deadsay				{color: #e2c1ff;}
 .radio					{color: #1ecc43;}
@@ -65,82 +65,82 @@ h1.alert, h2.alert		{color: #99aab5;}
 .disarm					{color: #b42525;}
 .passive				{color: #a00f0f;}
 
-.userdanger				{color: #c51e1e;	font-weight: bold; font-size: 24px;}
+.userdanger				{color: #c51e1e;}
 .danger					{color: #c51e1e;}
-.warning				{color: #c51e1e;	font-style: italic;}
-.alertwarning			{color: #c51e1e;    font-weight: bold}
-.boldwarning			{color: #c51e1e;	font-style: italic;	font-weight: bold}
-.announce 				{color: #c51e1e;	font-weight: bold;}
-.boldannounce			{color: #c51e1e;	font-weight: bold;}
-.greenannounce			{color: #059223;	font-weight: bold;}
+.warning				{color: #c51e1e;}
+.alertwarning			{color: #c51e1e;}
+.boldwarning			{color: #c51e1e;}
+.announce 				{color: #c51e1e;}
+.boldannounce			{color: #c51e1e;}
+.greenannounce			{color: #059223;}
 .info					{color: #6685f5;}
 .notice					{color: #6685f5;}
-.boldnotice				{color: #6685f5;	font-weight: bold;}
+.boldnotice				{color: #6685f5;}
 .adminnotice			{color: #6685f5;}
-.adminhelp              {color: #ff0000;    font-weight: bold;}
-.unconscious			{color: #E0E0E0;	font-weight: bold;}
-.red					{color: #FF0000}
+.adminhelp              {color: #ff0000;}
+.unconscious			{color: #E0E0E0;}
+.red					{color: #FF0000;}
 .pink					{color: #ff70c1;}
-.blue					{color: #215cff}
+.blue					{color: #215cff;}
 .green					{color: #059223;}
 .nicegreen				{color: #059223;}
-.userlove				{color: #ff42a6;	font-style: italic; font-weight: bold;	text-shadow: 0 0 6px #82365e;}
-.love					{color: #ff4591;	font-style: italic;	text-shadow: 0 0 6px #994449;}
+.userlove				{color: #ff42a6; text-shadow: 0 0 6px #82365e;}
+.love					{color: #ff4591; text-shadow: 0 0 6px #994449;}
 .shadowling				{color: #8e8a99;}
 .cult					{color: #aa1c1c;}
 
-.cultitalic				{color: #aa1c1c;	font-style: italic;}
-.cultbold				{color: #aa1c1c; font-style: italic; font-weight: bold;}
-.cultboldtalic			{color: #aa1c1c; font-weight: bold; font-size: 24px;}
+.cultitalic				{color: #aa1c1c;}
+.cultbold				{color: #aa1c1c;}
+.cultboldtalic			{color: #aa1c1c;}
 
-.cultlarge				{color: #aa1c1c; font-weight: bold; font-size: 24px;}
-.narsie					{color: #aa1c1c; font-weight: bold; font-size: 120px;}
-.narsiesmall			{color: #aa1c1c; font-weight: bold; font-size: 48px;}
-.hierophant				{color: #b441ee; font-weight: bold; font-style: italic;}
-.hierophant_warning		{color: #c56bf1; font-style: italic;}
+.cultlarge				{color: #aa1c1c;}
+.narsie					{color: #aa1c1c;}
+.narsiesmall			{color: #aa1c1c;}
+.hierophant				{color: #b441ee;}
+.hierophant_warning		{color: #c56bf1;}
 .purple					{color: #9956d3;}
 .holoparasite			{color: #88809c;}
 
 .revennotice			{color: #3645aa;}
-.revenboldnotice		{color: #3645aa;	font-weight: bold;}
-.revenbignotice			{color: #3645aa;	font-weight: bold; font-size: 24px;}
-.revenminor				{color: #823ddd}
-.revenwarning			{color: #8911d9;	font-style: italic;}
-.revendanger			{color: #8911d9;	font-weight: bold; font-size: 24px;}
+.revenboldnotice		{color: #3645aa;}
+.revenbignotice			{color: #3645aa;}
+.revenminor				{color: #823ddd;}
+.revenwarning			{color: #8911d9;}
+.revendanger			{color: #8911d9;}
 .umbra					{color: #7c00e6;}
-.umbra_emphasis			{color: #7c00e6;	font-weight: bold;	font-style: italic;}
-.umbra_large			{color: #7c00e6; font-size: 24px; font-weight: bold; font-style: italic;}
+.umbra_emphasis			{color: #7c00e6;}
+.umbra_large			{color: #7c00e6;}
 
-.deconversion_message	{color: #a947ff; font-size: 24px; font-style: italic;}
+.deconversion_message	{color: #a947ff;}
 
 .alloy					{color: #545b64;}
-.heavy_alloy			{color: #545b64; font-weight: bold; font-style: italic;}
-.nezbere_large			{color: #545b64; font-size: 24px; font-weight: bold; font-style: italic;}
-.nezbere				{color: #545b64; font-weight: bold; font-style: italic;}
+.heavy_alloy			{color: #545b64;}
+.nezbere_large			{color: #545b64;}
+.nezbere				{color: #545b64;}
 .nezbere_small			{color: #545b64;}
-.inathneq_large			{color: #1d7dc7; font-size: 24px; font-weight: bold; font-style: italic;}
-.inathneq				{color: #1d7dc7; font-weight: bold; font-style: italic;}
+.inathneq_large			{color: #1d7dc7;}
+.inathneq				{color: #1d7dc7;}
 .inathneq_small			{color: #1d7dc7;}
-.neovgre_large			{color: #7c0622; font-size: 24px; font-weight: bold; font-style: italic;}
-.neovgre				{color: #7c0622; font-weight: bold; font-style: italic;}
+.neovgre_large			{color: #7c0622;}
+.neovgre				{color: #7c0622;}
 .neovgre_small			{color: #7c0622;}
 
 .newscaster				{color: #c05d5d;}
-.ghostalert				{color: #6600ff;	font-style: italic; font-weight: bold;}
+.ghostalert				{color: #6600ff;}
 
 .alien					{color: #855d85;}
 .noticealien			{color: #059223;}
-.alertalien				{color: #059223;	font-weight: bold;}
-.changeling				{color: #059223;	font-style: italic;}
+.alertalien				{color: #059223;}
+.changeling				{color: #059223;}
 
 .spider					{color: #8800ff;}
 
 .interface				{color: #750e75;}
 
-.greentext				{color: #059223;	font-size: 24px;}
-.redtext				{color: #c51e1e;	font-size: 24px;}
-.clown					{color: #ff70c1;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
-.velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
+.greentext				{color: #059223;}
+.redtext				{color: #c51e1e;}
+.clown					{color: #ff70c1;}
+.velvet					{color: #660015;}
 @keyframes velvet {
 	0% { color: #890020; }
 	40% { color: #c51e1e; }
@@ -149,11 +149,11 @@ h1.alert, h2.alert		{color: #99aab5;}
 	100% { color: #890020; }
 }
 
-.abductor				{color: #c204c2; font-style: italic;}
-.mind_control			{color: #df3da9; font-size: 3; font-weight: bold; font-style: italic;}
+.abductor				{color: #c204c2;}
+.mind_control			{color: #df3da9;}
 .drone					{color: #979795;}
 
 .monkeyhive				{color: #a56408;}
-.monkeylead				{color: #af6805;	font-size: 2;}
+.monkeylead				{color: #af6805;}
 
-.internal.boldnshit {color: #3d5bc3; font-weight: bold;}
+.internal.boldnshit {color: #3d5bc3;}
