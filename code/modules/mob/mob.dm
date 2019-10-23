@@ -959,3 +959,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/setMovetype(newval)
+	. = ..()
+	update_movespeed(FALSE)

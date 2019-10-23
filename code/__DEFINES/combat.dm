@@ -104,8 +104,7 @@
 #define SHOVE_KNOCKDOWN_HUMAN 30
 #define SHOVE_KNOCKDOWN_TABLE 30
 #define SHOVE_KNOCKDOWN_COLLATERAL 10
-//Shove slowdown
-#define SHOVE_SLOWDOWN_ID "shove_slowdown"
+//for the shove slowdown, see __DEFINES/movespeed_modification.dm
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
