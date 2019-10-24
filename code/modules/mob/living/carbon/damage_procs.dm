@@ -37,7 +37,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent) : BP.heal_damage(0, 0, abs(damage * hit_percent)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount, forced = forced) : BP.heal_damage(0, 0, abs(damage_amount, forced = forced)))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
