@@ -307,7 +307,7 @@
 			if(C.head)
 				var/obj/item/W = C.head
 				C.dropItemToGround(W, TRUE)
-			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
+			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc/sticky
 			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
 		if(5)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
@@ -348,15 +348,21 @@
 	sleep(20)
 	poof()
 
+/obj/item/clothing/head/hardhat/pumpkinhead/extra_bright
+	brightness_on = 3
+
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 	name = "Jacq o' latern"
 	desc = "A jacqueline o' lantern! You can't seem to get rid of it."
 	icon_state = "hardhat0_pumpkin_j"
 	item_state = "hardhat0_pumpkin_j"
 	item_color = "pumpkin_j"
+	brightness_on = 3
+
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/sticky
 	brightness_on = 4
 
-/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/sticky/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 

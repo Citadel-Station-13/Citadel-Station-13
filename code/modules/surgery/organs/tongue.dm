@@ -233,7 +233,7 @@
 	name = "plasma bone \"tongue\""
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
-	maxHealth = "alien"
+	maxHealth = "100"
 	modifies_speech = FALSE
 
 /obj/item/organ/tongue/robot

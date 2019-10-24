@@ -30,7 +30,7 @@
 	name = "Dont use this" //Its the parent to any dunces out there.
 	has_gravity = STANDARD_GRAVITY //We have gravity
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/areas.dmi' //It unsets the icon. don't make a err icon.
-	requires_power = 0 // We don't need power anywhere.	
+	requires_power = 0 // We don't need power anywhere.
 	flags_1 = NONE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
@@ -421,7 +421,7 @@
 								  /obj/structure/flora/tree/jungle = 1,\
 							 	  /obj/structure/flora/tree/jungle/small = 1\
 								  )
-								 
+
 #define AUSFLORA_SPAWN_LIST list(/obj/structure/flora/ausbushes = 3,\
 								/obj/structure/flora/ausbushes/grassybush = 3,\
 								 /obj/structure/flora/ausbushes/fernybush = 1,\
@@ -540,8 +540,8 @@
 	baseturf = /turf/open/floor/spooktime/spooktimegrass //Wherever it is at.
 
 /* so we can't break this */
-/turf/open/floor/spooktime/spooktimegrass/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	return //No replacing it
+//turf/open/floor/spooktime/spooktimegrass/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+//	return //No replacing it
 
 /turf/open/floor/spooktime/spooktimegrass/burn_tile()
 	return //No burning it
@@ -601,7 +601,7 @@
 	sound_ao.output_atoms = outside_areas //The output atom is now set to the areas
 	sound_ai.output_atoms = inside_areas
 	sound_am.output_atoms = mountain_areas
-	
+
 	sound_ao.start() //Outside - We can hear it begin
 
 /datum/weather/long_rain/start()
