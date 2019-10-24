@@ -8913,7 +8913,6 @@
 /obj/item/stack/sheet/mineral/diamond,
 /obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
 /area/eventmap/mountaininside)
 "Gz" = (
 /turf/open/floor/plasteel/damturf/scorched2,
@@ -47809,13 +47808,13 @@ aN
 aN
 aN
 aN
+aN
 YI
 aN
 aN
 aN
 aN
 Ws
-aN
 aN
 aN
 aN
@@ -48578,6 +48577,7 @@ aN
 aN
 aN
 aN
+aN
 YI
 aN
 aN
@@ -48588,7 +48588,6 @@ aN
 aN
 aN
 Fc
-aN
 aN
 aN
 aN
@@ -49095,6 +49094,7 @@ aN
 aN
 aN
 aN
+aN
 Fc
 aN
 aN
@@ -49102,7 +49102,6 @@ aN
 aN
 aN
 YI
-aN
 aN
 aN
 aN
@@ -49609,13 +49608,13 @@ aN
 aN
 aN
 aN
-Ws
-aN
-aN
-aN
 aN
 Ws
 aN
+aN
+aN
+aN
+Ws
 aN
 aN
 aN
@@ -50131,8 +50130,8 @@ aN
 aN
 aN
 aN
-Fc
 aN
+Fc
 aN
 aN
 aN
