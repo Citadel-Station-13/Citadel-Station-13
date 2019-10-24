@@ -239,12 +239,13 @@
 	equip_delay_other = 140
 	var/datum/brain_trauma/mild/phobia/paranoia
 	var/warped = FALSE
+	var/charges = 6
 
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
-	if(!warped)
-		AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD,  6, TRUE, null, CALLBACK(src, .proc/warp_up))
-	else
+	if(warped) // originally !warped
+		//AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD,  6, TRUE, null, CALLBACK(src, .proc/warp_up)) //Citadel doesn't have tg's updated antimagic
+	//else
 		warp_up()
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
@@ -273,6 +274,13 @@
 	. = ..()
 	if(paranoia)
 		QDEL_NULL(paranoia)
+
+/obj/item/clothing/head/foilhat/proc/take_hit()
+	if (warped)
+		return
+	charges--
+	if (charges <= 0)
+		warp_up() // Kind of a weird workaround since Citadel doens't like tg's updates to the antimagic component
 
 /obj/item/clothing/head/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
