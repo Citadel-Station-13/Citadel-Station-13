@@ -2984,7 +2984,6 @@
 #include "modular_citadel\code\game\machinery\doors\airlock.dm"
 #include "modular_citadel\code\game\machinery\doors\airlock_types.dm"
 #include "modular_citadel\code\game\objects\cit_screenshake.dm"
-#include "modular_citadel\code\game\objects\ids.dm"
 #include "modular_citadel\code\game\objects\items.dm"
 #include "modular_citadel\code\game\objects\tools.dm"
 #include "modular_citadel\code\game\objects\effects\spawner\spawners.dm"
