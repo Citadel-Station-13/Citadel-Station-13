@@ -16,38 +16,43 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉
 */
 //Also Shrek will crash your dmlang server repeatedly if you edit him.
-
+//JT is weird, considering my handle is a acronym.
 //Considering I can't grab defines from everywhere, I hope you enjoy strings and numbers plebs.
 //Update - Moved to modular citadel so we are after everything has loaded...probably we gucci - jtgsz
 
 /*
 	AREAS
 			*/
-//We are on ruin so I can inherit things from the parent elsewhere.
+//This is generally how you handle planet areas, gen 1 large outside area is good for outside effects.
+//PS: Mountain has a soundloop, outside has a soundloop, inside has a soundloop, mountaininside is silent
+//This is for the rain weather my man.
 /area/eventmap
 	name = "Dont use this" //Its the parent to any dunces out there.
 	has_gravity = STANDARD_GRAVITY //We have gravity
-	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/areas.dmi' //It unsets the icon.
-	requires_power = 1 // We don't need power anywhere.			//That means you get a error icon if its in blank.
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/areas.dmi' //It unsets the icon. don't make a err icon.
+	requires_power = 0 // We don't need power anywhere.	
 	flags_1 = NONE
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/eventmap/outside //We are outside
 	name = "Outside"
 	icon_state = "outside"
 	outdoors = 1 //Outdoors is true, no area editing here.
-	lightswitch = 0 //Lightswitch is false, no turning the lights on outside.
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/eventmap/inside //We are inside, all things are pretty normal.
 	name = "Inside"
 	icon_state = "inside"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/eventmap/mountain //Mostly so I can see the area lines of the mountain area in the minimap.
 	name = "Mountain"
 	icon_state = "mountain"
-	outdoors = 1
-	lightswitch = 0
+	var/mountain = 1
+
+/area/eventmap/mountaininside
+	name = "Silent Mountain Inside"
+	icon_state = "mountain_inside"
+	outdoors = 0
+
 /*
 	OUTSIDE WALLS I WANT NOT NEED
 										*/
@@ -64,11 +69,17 @@
 	OUTSIDE TURFS WITH NO GEN JUS MIDNIGHT LIGHT BABY
 														*/
 
+//In a ideal world, we would have split the turfs onto a single parent.
+//Then we would tree from INSIDE and OUTSIDE, with outside having the lighting set, for the day/night subsystem to change.
+//Outside would also have the planetary atmos and config on it.
+//Inside would be a case to case basis depending on if you want it to scrub or not.. and not have the lighting.
+//This is not a ideal world.
+
 //Parent of all our outside turfs. Both the inside and outside should be on a parent like this.
 /turf/open/floor/spooktime //But for now, we just handle what is outside, for light control etc.
 	name = "You fucked up pal"
 	desc = "Don't use this turf its a parent and just a holder."
-	planetary_atmos = 1 //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
+	planetary_atmos = 1 //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA. AKA SUPERSCRUBBER
 	light_range = 3 //MIDNIGHT BLUE
 	light_power = 0.15 //NOT PITCH BLACK, JUST REALLY DARK
 	light_color = "#00111a" //The light can technically cycle on a timer worldwide, but no daynight cycle.
@@ -186,6 +197,7 @@
 //Shallow water same color as beach water
 /turf/open/floor/spooktime/beach/water
 	name = "water"
+	desc = "Its water that seems to be a bit deep, still can wade through though."
 	icon_state = "water"
 	bullet_sizzle = 1
 	footstep = FOOTSTEP_WATER
@@ -196,6 +208,7 @@
 //Slightly darker than the beach water color.
 /turf/open/floor/spooktime/beach/watersolid //Gotta stop you at a certain point man
 	name = "water"
+	desc = "Water thats deep enough to where your spaceman ass cannot swim."
 	icon_state = "water2" //Now its darker lol
 	bullet_sizzle = 1
 	density = 1 //We are now dense
@@ -238,6 +251,7 @@
 	. = ..()
 	icon_state = "grass_[rand(1,3)]"
 
+//Dirt patches with no lighting.
 /turf/open/floor/spooktime/dirtpatch
 	name = "clearly dirt"
 	desc = "Its dirt alright"
@@ -250,6 +264,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+//Snow with no planetary atmos, so the map doesn't atmos crash.
 /turf/open/floor/spooktime/snow
 	gender = PLURAL
 	name = "snow"
@@ -285,22 +300,6 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = 0
 
-/turf/open/floor/spooktime/cobble/roadmid //Center piece
-	name = "road"
-	desc = "Its asphault alright"
-	icon_state = "road"
-
-/turf/open/floor/spooktime/cobble/roadsideN //road edges, I have a lot of these
-	icon_state = "road_side_N"
-/turf/open/floor/spooktime/cobble/roadsideS //But i don't feel like adding them all for a temp map.
-	icon_state = "road_side_S"
-/turf/open/floor/spooktime/cobble/roadsideE
-	icon_state = "road_side_E"
-/turf/open/floor/spooktime/cobble/roadsideW
-	icon_state = "road_side_W"
-/turf/open/floor/spooktime/cobble/roadcornerSW
-	icon_state = "road_corner_sw"
-
 /turf/open/floor/spooktime/cobble/cornerNW //First corner
 	icon_state = "cobble_corner_nw"
 /turf/open/floor/spooktime/cobble/cornerNE //Now that these are hardcoded individuals.
@@ -318,6 +317,26 @@
 	icon_state = "cobble_side_e"
 /turf/open/floor/spooktime/cobble/sideW
 	icon_state = "cobble_side_w"
+
+//A tiny tiny bit of the total road icon file from f13 edited for grass not desert hastily.
+//Theres something like 30 pieces including crosswalks, sidewalks, potholes and other shit in it man.
+/turf/open/floor/spooktime/cobble/roadmid //Center piece
+	name = "road"
+	desc = "Its asphault alright"
+	icon_state = "road"
+
+/turf/open/floor/spooktime/cobble/roadsideN //road edges, I have a lot of these
+	icon_state = "road_side_N"
+/turf/open/floor/spooktime/cobble/roadsideS //But i don't feel like adding them all for a temp map.
+	icon_state = "road_side_S"
+/turf/open/floor/spooktime/cobble/roadsideE
+	icon_state = "road_side_E"
+/turf/open/floor/spooktime/cobble/roadsideW
+	icon_state = "road_side_W"
+/turf/open/floor/spooktime/cobble/roadcornerSW
+	icon_state = "road_corner_sw"
+
+
 /*
 	Basic Grass turf w Flora gen
 									*/
@@ -355,8 +374,9 @@
 		floraGen() //And off we go riding into hell.
 	update_icon()
 
-//FEEL FREE TO FIDDLE WITH THIS BLACKMAJOR/FERMI/ETC. I'm still going to tune it in initially tho. -JTGSZ
-//It'll work alongside any trees you place too, so its all gucci man dw.
+/*
+	FLORA GEN PROCEDURE
+						*/
 
 //This is mostly for flora/doodads. I don't feel like there needs to be lake/cave and animals generation..
 //For the halloween map at least, so I used the f13 flora gen and appended to it instead of usin cellular automata.
@@ -365,23 +385,24 @@
 //And check for what else is there before a list of objects has the option to appear.
 //Or even change weighting based on the weight of other things that the turf has checked in its range.
 //But at the same time, the stacked flora/rocks etc look pretty okay together honestly.
-//On the other side of the coin, you could even adjust their pixelx and y.
+//On the other side of the coin, you could even adjust their pixel x and y for better thickets.
 //Since after-all things in nature don't just occupy one spot each a lot of the time.
 
 //That being said you have somewhere around 50 seconds of init, and 160 seconds of pre-game time.
 //To finish generation if you need to split it up by chunks and add more checks.
-//Its plenty of time considering how fast it finishes like this without hiccups really.
+//Its more time than you could ever want considering how fast it finishes like this without hiccups really.
+//Ironically, not very resource intensive or slow to do this much of it.
 
 //I have turned what used to be simple into hell.
 //We can keep appending stuff here as we go, it basically just spawns it all on turf spooktimegrass on init.
 
-		    //=========>Set value // Initial Reference Value <=============
+//============> Current Set value // JTGSZ Tuned Reference Value <==============
 #define GRASS_SPONTANEOUS 		2//2 //chance it appears on the tile on its own
 #define GRASS_WEIGHT 			4//4 //multiplier increase if theres some nearby
-#define TREE_SPONTANEOUS		4//2
+#define TREE_SPONTANEOUS		4//4
 #define TREE_WEIGHT				4//4
 #define AUSFLORA_SPONTANEOUS	2//2
-#define AUSFLORA_WEIGHT			3//4
+#define AUSFLORA_WEIGHT			3//3
 #define ROCKS_SPONTANEOUS		2//2 //Technically this can be moved to the desolate spawn list tied to grass.
 #define ROCKS_WEIGHT			1//1 //Lower weight cause rock clusters were too common...But cool honestly.
 #define DEBRIS_SPONTANEOUS		2//2
@@ -390,16 +411,16 @@
 //These are basically what can spawn in the lists, the number is the weight.
 //The weight dictates how likely it is to spawn over other things in the lists. If you were to use pickweight.
 #define LUSH_GRASS_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 4,\
- 								/obj/structure/flora/ausbushes/lavendergrass = 3,\
-								  /obj/structure/flora/ausbushes/sparsegrass = 6,\
+ 								   /obj/structure/flora/ausbushes/lavendergrass = 3,\
+								   /obj/structure/flora/ausbushes/sparsegrass = 6,\
 								   /obj/structure/flora/ausbushes/fullgrass = 1\
 								   )
 
 #define TREE_SPAWN_LIST list(/obj/structure/flora/tree/spookytime = 9,\
-								 /obj/structure/flora/tree/spookytimexl = 2,\
-								 /obj/structure/flora/tree/jungle = 1,\
-								 /obj/structure/flora/tree/jungle/small = 1\
-								 )
+								  /obj/structure/flora/tree/spookytimexl = 2,\
+								  /obj/structure/flora/tree/jungle = 1,\
+							 	  /obj/structure/flora/tree/jungle/small = 1\
+								  )
 								 
 #define AUSFLORA_SPAWN_LIST list(/obj/structure/flora/ausbushes = 3,\
 								/obj/structure/flora/ausbushes/grassybush = 3,\
@@ -438,8 +459,8 @@
 
 	//spontaneously spawn the objects based on probability from the define.
 	//Ngl, a lot of this is going to be have to generate in certain orders later in this proc.
-	if(prob(GRASS_SPONTANEOUS))
-		randGrass = pickweight(LUSH_GRASS_SPAWN_LIST) //Create a new grass object at this location, and assign var
+	if(prob(GRASS_SPONTANEOUS)) //If probability THE DEFINE NUMBER
+		randGrass = pickweight(LUSH_GRASS_SPAWN_LIST) //randgrass is assigned a obj from the weighted list
 		turfGrass = new randGrass(src) //The var on the turf now has a new randgrass from the list.
 
 	if(prob(TREE_SPONTANEOUS))
@@ -475,7 +496,7 @@
 
 	//Below is where we handle clusters really.
 	//use weight to try to spawn grass
-	if(prob(grassWeight)) //Basically after the earlier calc, we now roll probability.
+	if(prob(grassWeight)) //Basically the probability goes by the DEFINE WEIGHT the more of it is around.
 		//If surrounded on 5+ sides, pick from lush
 		if(grassWeight == (5 * GRASS_WEIGHT)) //If we are five times the define value, aka 5 detected.
 			randGrass = pickweight(LUSH_GRASS_SPAWN_LIST) //We weighted pick from the lush list, aka boys that can be together.
@@ -532,10 +553,96 @@
 	return //No making it dry.
 
 /*
+	HERE COMES THE MOTHERFUCKING RAIN
+										*/
+/datum/weather/long_rain
+	name = "Long rain at midnight"
+	desc = "The planet sometimes rains, nothing special about it really."
+
+	telegraph_duration = 130
+	telegraph_message = "<span class='notice'>Water droplets begin falling from the sky.</span>"
+	telegraph_overlay = "regular_rain" //Ya my apologies for not making a new rain icon
+
+	weather_message = "<span class='notice'>The droplets become a downpour, rain now falls all around you from the night sky.</span>"
+	weather_overlay = "regular_rain" //But I need to work on my mouse on the day of 10/24/2019, so lets call it here.
+	weather_duration_lower = 18000 //30 minutes minimum
+	weather_duration_upper = 36000 //1 hour
+
+	end_duration = 100
+	end_message = "<span class='notice'>The downpour gradually slows until it stops.</span>"
+
+	area_type = /area/eventmap/outside
+	target_trait = ZTRAIT_STATION
+
+	barometer_predictable = TRUE
+
+	var/datum/looping_sound/active_outside_longrain/sound_ao = new(list(), FALSE, TRUE) //Outside
+	var/datum/looping_sound/active_inside_longrain/sound_ai = new(list(), FALSE, TRUE) //Inside
+	var/datum/looping_sound/active_mountain_longrain/sound_am = new(list(), FALSE, TRUE) //Mountain
+
+/datum/weather/long_rain/telegraph() //Yeah, I'm sorry but I just stole ash storm sound loops
+	. = ..()
+	var/list/inside_areas = list() //It already handled inside and outside areas lol.
+	var/list/outside_areas = list() //Now this is what I call, some real disgusting lazy list abuse
+	var/list/mountain_areas = list()
+	var/list/eligible_areas = list()
+	for(var/z in impacted_z_levels) //We check the Z level
+		eligible_areas += SSmapping.areas_in_z["[z]"] //And append them to eligible areas list
+	for(var/i in 1 to eligible_areas.len) //We check the list
+		var/area/place = eligible_areas[i] //Place is the list
+		if(istype(place, /area/eventmap/outside)) //If the place is this path
+			outside_areas += place //Outside areas is the place
+		if(istype(place, /area/eventmap/inside))
+			inside_areas += place
+		if(istype(place, /area/eventmap/mountain))
+			mountain_areas += place
+		CHECK_TICK //We check the tick this all occurs on.
+
+	sound_ao.output_atoms = outside_areas //The output atom is now set to the areas
+	sound_ai.output_atoms = inside_areas
+	sound_am.output_atoms = mountain_areas
+	
+	sound_ao.start() //Outside - We can hear it begin
+
+/datum/weather/long_rain/start()
+	. = ..()
+	sound_am.start() //Mountain - We only hear after it begins
+	sound_ai.start() //Inside - Ditto
+
+/datum/weather/long_rain/end()
+	. = ..()
+	sound_am.stop() //Mountain
+
+	sound_ao.stop() //Outside - And then we stop it all, but only people outside hear the entire segment
+	sound_ai.stop() //Inside
+
+/datum/looping_sound/active_outside_longrain
+	mid_sounds = list('modular_citadel/code/modules/eventmaps/Spookystation/outsideloop1.ogg'=1,
+					  'modular_citadel/code/modules/eventmaps/Spookystation/outsideloop2.ogg'=1)
+	mid_length = 3.8 //ahahaa aaaaaaaaaa fucking shit man, but its what I got.
+	volume = 70
+	start_sound = 'sound/ambience/acidrain_start.ogg'
+	start_length = 13
+	end_sound = 'sound/ambience/acidrain_end.ogg'
+
+/datum/looping_sound/active_inside_longrain
+	mid_sounds = list('modular_citadel/code/modules/eventmaps/Spookystation/insideloop1.ogg'=1,
+					'modular_citadel/code/modules/eventmaps/Spookystation/insideloop2.ogg'=1,
+					'modular_citadel/code/modules/eventmaps/Spookystation/insideloop3.ogg'=1,
+					'modular_citadel/code/modules/eventmaps/Spookystation/insideloop4.ogg'=1)
+	mid_length = 5.1 //AAAAAAAAAAAAAAAAAAAAAAA
+	volume = 60
+
+/datum/looping_sound/active_mountain_longrain
+	mid_sounds = list('modular_citadel/code/modules/eventmaps/Spookystation/basecaveloop.ogg'=1)
+	mid_length = 12 //Why are we still here? Just to suffer?
+	volume = 60
+
+/*
 	The Flora that is generated onto the basic grassturf, or can be placed for tone building.
 																								*/
 
-//For ease of use, I'm appending ausflora variations here too.
+//For ease of use, I should have appended it all here..
 //Stripped the other segments out, people don't need hay and interactions right now you know man?
 //Technically we could also randomize the pixel_x, pixel_y placement of these guys for more dynamic thickets.
 /obj/structure/flora/grass/spookytime

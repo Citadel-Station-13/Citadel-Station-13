@@ -11,7 +11,7 @@
 "ad" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "ae" = (
 /turf/closed/indestructible/wood,
 /area/eventmap/inside)
@@ -1496,7 +1496,7 @@
 "eY" = (
 /obj/item/storage/crayons,
 /turf/open/floor/spooktime/beach,
-/area/eventmap/mountain)
+/area/eventmap/outside)
 "eZ" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Fore Starboard";
@@ -8233,28 +8233,29 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "ze" = (
 /obj/item/reagent_containers/food/drinks/bottle/trappist,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "zh" = (
 /obj/structure/punching_bag,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "zp" = (
 /obj/item/reagent_containers/food/snacks/kebab/rat/double,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "zv" = (
-/obj/structure/spacevine,
-/turf/open/floor/spooktime/beach,
-/area/eventmap/mountain)
+/obj/structure/flora/tree/jungle,
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/spooktime/spooktimegrass,
+/area/eventmap/outside)
 "zy" = (
 /obj/item/shared_storage/blue,
 /turf/open/floor/wood,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "zE" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -8279,7 +8280,7 @@
 "zZ" = (
 /obj/item/storage/pill_bottle/happy,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountain)
 "Ah" = (
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8287,24 +8288,24 @@
 "Ao" = (
 /obj/item/chair,
 /turf/open/floor/plasteel/damturf/platdmg3,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ap" = (
 /obj/item/stack/sheet/mineral/mythril,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "At" = (
 /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Aw" = (
 /obj/item/storage/pill_bottle/happiness,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "AA" = (
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountain)
 "AD" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -8312,7 +8313,7 @@
 "AG" = (
 /obj/item/lighter/gold,
 /turf/open/floor/carpet/purple,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "AJ" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastNE,
 /area/eventmap/outside)
@@ -8491,6 +8492,9 @@
 /obj/item/storage/fancy/cigarettes/cigpack_midori,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Bz" = (
+/turf/open/floor/carpet/purple,
+/area/eventmap/mountaininside)
 "BA" = (
 /obj/item/reagent_containers/pill/zoom,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8565,7 +8569,7 @@
 "Cl" = (
 /obj/item/scythe,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountain)
 "Cm" = (
 /obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/dark,
@@ -8589,13 +8593,16 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/wood,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
+"CE" = (
+/turf/open/floor/wood/damturf/broken2,
+/area/eventmap/mountaininside)
 "CF" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/wood/damturf/broken5,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "CI" = (
 /turf/open/indestructible/cobble,
 /area/eventmap/outside)
@@ -8725,11 +8732,11 @@
 /obj/item/reagent_containers/food/snacks/spiderlollipop,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/damturf/scorched2,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "DD" = (
 /obj/item/storage/pill_bottle/stimulant,
 /turf/open/floor/plasteel/damturf/platdmg1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "DE" = (
 /obj/item/reagent_containers/pill/breast_enlargement,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8739,14 +8746,11 @@
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
-"DS" = (
-/turf/open/floor/spooktime/beach/water,
-/area/eventmap/mountain)
 "DZ" = (
 /obj/item/coin/diamond,
 /obj/item/stack/sheet/mineral/silver,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Eb" = (
 /obj/item/lighter,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8754,19 +8758,17 @@
 "Eo" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
-"Er" = (
-/obj/machinery/door/airlock/abandoned,
-/obj/machinery/door/airlock/survival_pod,
-/turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ez" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/spooktime/beach,
-/area/eventmap/mountain)
+/area/eventmap/outside)
+"ED" = (
+/turf/closed/wall/mineral/wood,
+/area/eventmap/mountaininside)
 "EF" = (
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "EJ" = (
 /obj/item/flashlight/glowstick/cyan,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8781,12 +8783,16 @@
 	icon_state = "wood-broken5"
 	},
 /area/eventmap/inside)
+"ER" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/wood,
+/area/eventmap/mountaininside)
 "EX" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/damturf/scorched1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "EZ" = (
 /obj/item/storage/pill_bottle/breast_enlargement,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -8805,25 +8811,22 @@
 "Fm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Fn" = (
 /obj/item/reagent_containers/food/snacks/sausage,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Fq" = (
 /obj/item/autosurgeon/penis,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
 "Fw" = (
-/turf/open/floor/spooktime/cobble,
-/area/eventmap/inside)
+/turf/closed/wall/rust,
+/area/eventmap/mountaininside)
 "FA" = (
 /obj/item/restraints/handcuffs,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/mountain)
-"FB" = (
-/turf/open/floor/spooktime/beach/coasts/coastNW,
 /area/eventmap/mountain)
 "FE" = (
 /turf/open/floor/spooktime/beach/coasts/coastN,
@@ -8837,24 +8840,24 @@
 /obj/item/reagent_containers/food/snacks/pastatomato,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "FM" = (
 /obj/item/reagent_containers/food/snacks/toastedsandwich,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "FR" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 30
 	},
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "FT" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "FV" = (
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8866,15 +8869,15 @@
 "Gc" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Gd" = (
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ge" = (
 /obj/structure/closet/cabinet,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Gg" = (
 /obj/structure/flora/rock/pile/icy,
 /obj/structure/flora/tree/spookytime,
@@ -8883,16 +8886,20 @@
 "Gk" = (
 /obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Gn" = (
 /obj/structure/closet/gimmick/tacticool,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Go" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/eventmap/mountaininside)
 "Gq" = (
 /obj/structure/bed,
 /obj/item/bedsheet/pirate,
 /turf/open/floor/wood/damturf/broken6,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Gr" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -8901,15 +8908,16 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Gy" = (
 /obj/item/stack/sheet/mineral/diamond,
 /obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/plasteel/dark,
 /area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Gz" = (
 /turf/open/floor/plasteel/damturf/scorched2,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "GD" = (
 /obj/structure/flora/tree/spookytime,
 /turf/open/floor/spooktime/nonspooktimegrass,
@@ -8917,11 +8925,11 @@
 "GJ" = (
 /obj/item/chair,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "GL" = (
 /obj/item/chair/wood,
 /turf/open/floor/plasteel/damturf/scorched,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "GM" = (
 /turf/open/floor/spooktime/cobble/roadsideE,
 /area/eventmap/outside)
@@ -8932,13 +8940,13 @@
 "Ha" = (
 /obj/structure/piano/unanchored,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Hd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/item/flashlight,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Hf" = (
 /obj/structure/curtain{
 	color = "#B22222"
@@ -8952,7 +8960,7 @@
 "Hi" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/plasteel/stairs,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Hk" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastE,
 /area/eventmap/outside)
@@ -8971,19 +8979,16 @@
 "HE" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "HF" = (
 /obj/item/reagent_containers/food/snacks/khachapuri,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "HN" = (
 /obj/item/chair/wood,
 /turf/open/floor/wood,
 /area/eventmap/inside)
-"HZ" = (
-/turf/open/floor/spooktime/beach/coasts/coastS,
-/area/eventmap/mountain)
 "Ic" = (
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/spooktime/beach/coasts/coastS,
@@ -8998,15 +9003,18 @@
 "Ip" = (
 /turf/open/floor/spooktime/beach/coasts/coastSW,
 /area/eventmap/outside)
+"Iq" = (
+/turf/open/floor/sepia,
+/area/eventmap/mountaininside)
 "Is" = (
 /obj/item/storage/pill_bottle/dice,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Iv" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "IH" = (
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9015,11 +9023,11 @@
 /obj/item/reagent_containers/food/snacks/pancakes,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/damturf/damage4,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "IT" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "IV" = (
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -9027,19 +9035,17 @@
 "Jb" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Jk" = (
 /obj/item/reagent_containers/food/drinks/bottle/blazaam,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
-"Jn" = (
-/obj/structure/spacevine,
-/obj/structure/spacevine,
-/turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountain)
 "Jr" = (
 /turf/closed/wall/rust,
 /area/eventmap/mountain)
+"Jw" = (
+/turf/open/floor/wood/damturf/broken3,
+/area/eventmap/mountaininside)
 "JG" = (
 /obj/item/pizzabox/infinite,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9055,30 +9061,26 @@
 /area/eventmap/outside)
 "Ka" = (
 /turf/open/floor/plasteel/damturf/damage2,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Kg" = (
 /obj/item/shared_storage/red,
 /turf/open/floor/wood,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Kh" = (
 /obj/structure/table,
 /obj/item/storage/pill_bottle/lsd,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ki" = (
 /turf/open/floor/plasteel/damturf/damage1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Kj" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
-"Kk" = (
-/obj/item/lighter/gold,
-/turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountaininside)
 "Kq" = (
 /turf/open/floor/spooktime/cobble/roadsideS,
 /area/eventmap/outside)
@@ -9091,7 +9093,7 @@
 	name = "Bathroom"
 	},
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ky" = (
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9117,7 +9119,7 @@
 /area/eventmap/mountain)
 "Ln" = (
 /turf/closed/indestructible/rock,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Lr" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -9125,19 +9127,15 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Lt" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Lx" = (
 /obj/item/coin/antagtoken,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
-"LA" = (
-/obj/item/pizzabox/meat,
-/turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountaininside)
 "LF" = (
 /obj/item/chair,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9145,7 +9143,7 @@
 "LG" = (
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "LM" = (
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/beach/watersolid,
@@ -9157,16 +9155,22 @@
 /obj/item/stack/sheet/mineral/diamond,
 /obj/item/stack/sheet/mineral/adamantine,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "LW" = (
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/beach/coasts/innerS,
-/area/eventmap/mountain)
+/area/eventmap/outside)
 "LZ" = (
 /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
+"Mb" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/sepia,
+/area/eventmap/mountaininside)
 "Mc" = (
 /obj/item/scythe,
 /turf/open/floor/wood{
@@ -9179,13 +9183,16 @@
 "Ml" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Mn" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Mp" = (
+/turf/open/floor/wood,
+/area/eventmap/mountaininside)
 "Mu" = (
 /obj/item/storage/fancy/rollingpapers,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9194,6 +9201,9 @@
 /obj/item/reagent_containers/food/urinalcake,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"ME" = (
+/turf/open/floor/carpet/red,
+/area/eventmap/mountaininside)
 "MM" = (
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/spooktime/cobble,
@@ -9208,11 +9218,11 @@
 /obj/structure/table,
 /obj/item/storage/pill_bottle/penis_enlargement,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "MX" = (
 /obj/item/storage/pill_bottle/breast_enlargement,
 /turf/open/floor/plasteel/damturf/scorched,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Nl" = (
 /obj/structure/closet/athletic_mixed,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9229,6 +9239,10 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"NG" = (
+/obj/structure/chair/sofa,
+/turf/open/floor/wood,
+/area/eventmap/mountaininside)
 "NS" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -9240,45 +9254,41 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Oj" = (
 /obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ow" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Oy" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastNW,
 /area/eventmap/outside)
 "OC" = (
 /turf/open/floor/plasteel/damturf/platdmg3,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "OD" = (
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Pb" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
 /turf/open/floor/carpet/purple,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Pj" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Pm" = (
 /obj/item/candle/infinite,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
-"Pv" = (
-/obj/structure/spacevine,
-/turf/open/floor/spooktime/beach/coasts/coastE,
-/area/eventmap/mountain)
 "PA" = (
 /obj/item/skub,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9290,21 +9300,21 @@
 "PJ" = (
 /obj/item/soap/homemade,
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "PL" = (
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "PM" = (
 /obj/machinery/recycler/lumbermill,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "PO" = (
 /turf/open/floor/plasteel/damturf/platdmg2,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "PT" = (
 /turf/closed/wall,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "PY" = (
 /obj/item/reagent_containers/food/drinks/bottle/grappa,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9313,15 +9323,22 @@
 /obj/item/lighter/gold,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Qe" = (
+/turf/open/floor/carpet/green,
+/area/eventmap/mountaininside)
+"Qq" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/eventmap/mountaininside)
 "Qz" = (
 /obj/item/reagent_containers/food/snacks/roastparsnip,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "QI" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "QK" = (
 /turf/open/floor/spooktime/beach,
 /area/eventmap/outside)
@@ -9329,21 +9346,21 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "QV" = (
 /obj/structure/dresser,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "QW" = (
 /obj/item/reagent_containers/food/snacks/khinkali,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "QX" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ra" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -9358,19 +9375,19 @@
 "Re" = (
 /obj/item/restraints/handcuffs,
 /turf/open/floor/carpet/red,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ri" = (
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Rk" = (
 /obj/structure/table/reinforced,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Rm" = (
 /turf/open/floor/plasteel/damturf/damage5,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Rv" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -9381,7 +9398,7 @@
 /area/eventmap/outside)
 "RB" = (
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "RD" = (
 /obj/structure/spacevine,
 /turf/closed/indestructible/rock,
@@ -9399,7 +9416,7 @@
 /area/eventmap/inside)
 "RS" = (
 /turf/open/floor/plasteel/damturf/damage4,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "RV" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastS,
 /area/eventmap/outside)
@@ -9415,7 +9432,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/chair/stool,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Sj" = (
 /obj/item/chair/stool,
 /turf/open/floor/wood,
@@ -9427,17 +9444,17 @@
 "St" = (
 /obj/item/storage/pill_bottle/zoom,
 /turf/open/floor/plasteel/damturf/scorched1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Sw" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/spooktime/cobble,
-/area/eventmap/inside)
+/area/eventmap/outside)
 "Sy" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/spooktime/cobble,
-/area/eventmap/inside)
+/area/eventmap/outside)
 "SG" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/structure/chair/comfy/shuttle{
@@ -9452,15 +9469,12 @@
 /obj/structure/bonfire,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
-"SO" = (
-/turf/open/floor/spooktime/beach/coasts/coastSE,
-/area/eventmap/mountain)
 "SP" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "SR" = (
 /obj/item/flashlight/flare,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9469,7 +9483,7 @@
 /obj/structure/table/reinforced,
 /obj/item/twohanded/binoculars,
 /turf/open/floor/plating,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "SW" = (
 /obj/item/a_gift/anything,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9479,14 +9493,15 @@
 	pixel_x = 28
 	},
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
+"Ti" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/wood,
+/area/eventmap/mountaininside)
 "Tm" = (
 /obj/structure/sink/puddle,
 /turf/open/floor/spooktime/beach,
-/area/eventmap/mountain)
-"Ts" = (
-/turf/open/floor/spooktime/beach/coasts/coastW,
-/area/eventmap/mountain)
+/area/eventmap/outside)
 "Tu" = (
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/open/floor/wood,
@@ -9506,11 +9521,11 @@
 "TM" = (
 /obj/item/soap/syndie,
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "TN" = (
 /obj/item/storage/firstaid/tactical,
 /turf/open/floor/plasteel/damturf/platdmg1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "TO" = (
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9524,14 +9539,14 @@
 "TU" = (
 /obj/machinery/power/port_gen/pacman/mrs,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "TX" = (
 /turf/open/floor/plasteel/damturf/scorched1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ue" = (
 /obj/item/flashlight/seclite,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountain)
 "Uf" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/tree/spookytimexl,
@@ -9543,11 +9558,11 @@
 /area/eventmap/mountain)
 "Ur" = (
 /turf/open/floor/plasteel/damturf/platdmg1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ut" = (
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Uu" = (
 /obj/item/storage/firstaid/ancient,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9565,14 +9580,14 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/kahlua,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "UE" = (
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
 "UK" = (
 /turf/open/floor/plasteel/damturf/scorched,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "UL" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -9581,7 +9596,7 @@
 "UM" = (
 /obj/item/storage/pill_bottle/lsd,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountain)
 "Vd" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "topdoor"
@@ -9595,7 +9610,7 @@
 /obj/item/coin/diamond,
 /obj/item/stack/sheet/mineral/adamantine,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Vm" = (
 /obj/item/reagent_containers/food/drinks/bottle/fernet,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9609,7 +9624,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/cognac,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Vy" = (
 /obj/item/lighter/greyscale,
 /turf/open/floor/wood,
@@ -9617,7 +9632,10 @@
 "VC" = (
 /obj/item/storage/box/handcuffs,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
+"VD" = (
+/turf/open/floor/wood/damturf/broken1,
+/area/eventmap/mountaininside)
 "VE" = (
 /obj/item/pizzabox/meat,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9647,12 +9665,12 @@
 /obj/item/reagent_containers/food/snacks/nachos,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Wj" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
 /turf/open/floor/carpet/green,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Wk" = (
 /obj/item/clothing/head/squatter_hat,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9694,7 +9712,7 @@
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/sepia,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "WQ" = (
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/spooktime/beach/coasts/coastE,
@@ -9713,26 +9731,22 @@
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "WZ" = (
 /turf/open/floor/spooktime/beach/coasts/innerS,
 /area/eventmap/outside)
 "Xv" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Xw" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/space/basic,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "XE" = (
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
-"XG" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
 "XI" = (
 /obj/item/storage/pill_bottle/penis_enlargement,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9744,11 +9758,15 @@
 "XK" = (
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "XP" = (
 /obj/structure/girder,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"XQ" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/wood,
+/area/eventmap/mountaininside)
 "XS" = (
 /turf/open/floor/spooktime/beach/coasts/coastS,
 /area/eventmap/outside)
@@ -9766,42 +9784,38 @@
 "Yb" = (
 /obj/item/chair,
 /turf/open/floor/plasteel/damturf/scorched2,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Yf" = (
 /obj/item/reagent_containers/food/drinks/bottle/cream,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Yh" = (
 /obj/item/reagent_containers/food/snacks/sashimi,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
-"Ym" = (
-/obj/structure/bonfire,
-/turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/outside)
+/area/eventmap/mountaininside)
 "Yp" = (
 /obj/structure/chair/sofa/left,
 /obj/item/flashlight/seclite,
 /turf/open/floor/carpet/red,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Yr" = (
 /obj/structure/chair/sofa,
 /turf/open/floor/carpet/red,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Ys" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/trappist,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Yw" = (
 /obj/item/restraints/handcuffs,
 /turf/open/floor/wood,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Yz" = (
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/damturf/scorched2,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "YA" = (
 /obj/structure/table,
 /obj/item/lighter/greyscale,
@@ -9828,11 +9842,11 @@
 /obj/item/coin/diamond,
 /obj/item/stack/sheet/mineral/mythril,
 /turf/open/floor/plasteel/dark,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "YM" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/damturf/scorched1,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "YO" = (
 /obj/item/stack/sheet/mineral/sandstone/thirty,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9848,14 +9862,11 @@
 /obj/item/reagent_containers/food/drinks/bottle/trappist,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
-"Za" = (
-/turf/open/floor/spooktime/beach/coasts/innerE,
-/area/eventmap/mountain)
 "Zb" = (
 /obj/item/reagent_containers/food/snacks/powercrepe,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Zg" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -9867,16 +9878,19 @@
 	dir = 1
 	},
 /turf/open/floor/spooktime/dirtpatch,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Zm" = (
 /obj/item/reagent_containers/food/snacks/scotchegg,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "Zz" = (
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"ZA" = (
+/turf/open/floor/plasteel,
+/area/eventmap/mountaininside)
 "ZB" = (
 /obj/structure/bonfire,
 /turf/open/floor/wood,
@@ -9884,15 +9898,15 @@
 "ZC" = (
 /obj/item/flashlight,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "ZI" = (
 /obj/item/lighter/gold,
 /turf/open/floor/carpet/green,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "ZJ" = (
 /obj/item/lipstick/random,
 /turf/open/floor/plasteel,
-/area/eventmap/inside)
+/area/eventmap/mountaininside)
 "ZM" = (
 /obj/structure/flora/bush,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -9901,10 +9915,7 @@
 /obj/structure/fluff/broken_flooring,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/eventmap/inside)
-"ZQ" = (
-/turf/open/floor/spooktime/beach/coasts/coastE,
-/area/eventmap/mountain)
+/area/eventmap/mountaininside)
 "ZR" = (
 /turf/open/floor/spooktime/cobble/roadsideN,
 /area/eventmap/outside)
@@ -13411,13 +13422,13 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
-fw
-fw
-fw
-fw
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
 ac
 ac
 ac
@@ -13668,13 +13679,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 ad
-lz
+ZA
 OC
-lz
+ZA
 Fm
-fw
+Fw
 ac
 ac
 ac
@@ -13699,7 +13710,7 @@ ac
 ac
 ac
 ac
-LU
+gs
 ac
 ac
 ac
@@ -13925,13 +13936,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ob
-lz
-lz
-lz
+ZA
+ZA
+ZA
 Fm
-fw
+Fw
 ac
 ac
 ac
@@ -13952,11 +13963,11 @@ ac
 ac
 ac
 ac
-LU
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -14182,13 +14193,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 TU
-lz
-nm
-lz
+ZA
+Qq
+ZA
 PM
-fw
+Fw
 ac
 ac
 ac
@@ -14208,11 +14219,11 @@ ac
 ac
 ac
 ac
-LU
-LU
+gs
+gs
 Jk
-LU
-LU
+gs
+gs
 Ue
 ac
 ac
@@ -14439,13 +14450,13 @@ ac
 ac
 ac
 ac
-fw
-lz
-lz
+Fw
+ZA
+ZA
 Rm
 ZJ
-lz
-fw
+ZA
+Fw
 ac
 ac
 yO
@@ -14465,12 +14476,12 @@ ac
 ac
 ac
 ac
-LU
-LU
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -14696,14 +14707,14 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Hd
-lz
-lz
-lz
-lz
-fw
-fw
+ZA
+ZA
+ZA
+ZA
+Fw
+Fw
 Sy
 yO
 WA
@@ -14724,10 +14735,10 @@ ac
 ac
 ac
 zZ
-LU
-Kk
-LU
-LU
+gs
+Qd
+gs
+gs
 ac
 ac
 ac
@@ -14953,15 +14964,15 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Rk
 Sg
 RB
-lz
+ZA
 RB
-lz
+ZA
 Hi
-Fw
+pR
 yO
 WA
 WA
@@ -14981,11 +14992,11 @@ ac
 ac
 ac
 UM
-LU
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -15210,14 +15221,14 @@ ac
 ac
 ac
 ac
-fw
+Fw
 SV
 Gc
 HE
 UK
-lz
-fw
-fw
+ZA
+Fw
+Fw
 Sw
 yO
 WA
@@ -15237,12 +15248,12 @@ ac
 ac
 ac
 ac
-LU
-Ym
-LU
-LU
-LA
-LU
+gs
+Sl
+gs
+gs
+VE
+gs
 ac
 ac
 ac
@@ -15467,13 +15478,13 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
-fw
-fw
-fw
-fw
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
 ac
 pR
 yO
@@ -15494,10 +15505,10 @@ ac
 ac
 ac
 AA
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -15750,10 +15761,10 @@ ac
 ac
 ac
 ac
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
 Cl
 ac
 ac
@@ -16007,11 +16018,11 @@ ac
 ac
 ac
 ac
-XG
-LU
-LU
-LU
-LU
+NF
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -16265,10 +16276,10 @@ ac
 ac
 ac
 ac
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -16522,10 +16533,10 @@ ac
 ac
 ac
 ac
-LU
-LU
-LU
-LU
+gs
+gs
+gs
+gs
 ac
 ac
 ac
@@ -16779,7 +16790,7 @@ ac
 ac
 ac
 ac
-Nv
+ZS
 ac
 ac
 ac
@@ -17036,7 +17047,7 @@ ac
 ac
 ac
 ac
-Jn
+yV
 ac
 ac
 ac
@@ -17291,9 +17302,9 @@ ac
 ac
 ac
 ac
-Nv
-Nv
-Nv
+ZS
+ZS
+ZS
 ac
 ac
 ac
@@ -17549,8 +17560,8 @@ ac
 aN
 Nv
 IV
-Nv
-Nv
+ZS
+ZS
 ac
 ac
 ac
@@ -17807,9 +17818,9 @@ aN
 aN
 LU
 aN
-Nv
-Nv
-Nv
+ZS
+ZS
+ZS
 ac
 ac
 ac
@@ -18065,8 +18076,8 @@ aN
 aN
 aN
 aN
-Nv
-Nv
+ZS
+ZS
 ac
 ac
 ac
@@ -18324,7 +18335,7 @@ aN
 aN
 aN
 aN
-Jn
+yV
 ac
 ac
 ac
@@ -20238,7 +20249,7 @@ gs
 gs
 Ri
 Ki
-fw
+Fw
 Ln
 ac
 ac
@@ -20490,12 +20501,12 @@ ac
 ac
 ac
 Ln
-fw
-fw
+Fw
+Fw
 Zk
 EF
 Ur
-fw
+Fw
 Ln
 ac
 ac
@@ -20751,8 +20762,8 @@ Ln
 Jb
 EF
 PO
-nm
-fw
+Qq
+Fw
 Ln
 ac
 ac
@@ -21004,13 +21015,13 @@ ac
 ac
 ac
 Ln
-fw
+Fw
 UK
 EF
 EF
 EF
 Ln
-fw
+Fw
 ac
 ac
 ac
@@ -21260,7 +21271,7 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Xv
 Ur
 EF
@@ -21521,10 +21532,10 @@ PT
 RB
 Ki
 RS
-nm
+Qq
 UK
 RB
-fw
+Fw
 ac
 ac
 ac
@@ -21774,14 +21785,14 @@ ac
 ac
 ac
 ac
-fw
-fw
+Fw
+Fw
 Eo
 RB
 EF
 LG
 Gz
-fw
+Fw
 ac
 ac
 ac
@@ -22031,14 +22042,14 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ln
-fw
+Fw
 Ln
 EF
 RB
 Ln
-fw
+Fw
 ac
 ac
 ac
@@ -22288,14 +22299,14 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ln
 Ln
 Ln
 Fm
 Ln
 Ln
-fw
+Fw
 ac
 ac
 ac
@@ -22542,16 +22553,16 @@ ac
 ac
 ac
 Ln
-fw
+Fw
 PT
 Ln
-fw
+Fw
 Ln
 Ln
-fw
+Fw
 RB
-fw
-fw
+Fw
+Fw
 Ln
 ac
 ac
@@ -22798,18 +22809,18 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ln
 PL
 Rm
 Ln
 EF
 VC
-fw
+Fw
 Fm
 Ka
 TX
-fw
+Fw
 ac
 ac
 ac
@@ -23055,9 +23066,9 @@ ac
 ac
 ac
 ac
-fw
+Fw
 UK
-nm
+Qq
 Aw
 UK
 RB
@@ -23065,8 +23076,8 @@ Fm
 RB
 RB
 LZ
-nm
-fw
+Qq
+Fw
 ac
 ac
 ac
@@ -23312,18 +23323,18 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ow
 RB
 RB
 Is
-nm
+Qq
 PL
-fw
+Fw
 yW
 Fm
 EF
-fw
+Fw
 ac
 ac
 ac
@@ -23569,14 +23580,14 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ln
-fw
+Fw
 Ln
-fw
+Fw
 Ln
 Ln
-fw
+Fw
 Ur
 EF
 PL
@@ -23833,11 +23844,11 @@ Ln
 Ln
 Ln
 Ln
-fw
+Fw
 PT
-fw
+Fw
 Ln
-fw
+Fw
 ac
 ac
 ac
@@ -31508,13 +31519,13 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
-fw
-fw
-fw
-fw
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
 ac
 ac
 ac
@@ -31765,13 +31776,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 DC
 OC
 ze
 YM
 Gz
-fw
+Fw
 ac
 ac
 ac
@@ -32022,13 +32033,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 PO
 TX
 Ki
 Gz
 Ao
-fw
+Fw
 ac
 ac
 ac
@@ -32279,13 +32290,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 GJ
 Fn
 Zb
 zp
 TX
-fw
+Fw
 ac
 ac
 ZS
@@ -32536,13 +32547,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Rm
 HF
 Zm
 Yh
 At
-fw
+Fw
 ac
 ac
 ac
@@ -32793,13 +32804,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 EX
 IJ
 FK
 Qz
 UK
-fw
+Fw
 ac
 gs
 yV
@@ -33050,13 +33061,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Yb
 Wi
 QW
 FM
 TX
-fw
+Fw
 ac
 ZS
 ZS
@@ -33307,13 +33318,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ur
 Gd
 EF
 Ki
 OC
-fw
+Fw
 Zk
 gs
 gs
@@ -33564,7 +33575,7 @@ ac
 ac
 ac
 ac
-fw
+Fw
 XK
 Ka
 Gz
@@ -33821,11 +33832,11 @@ ac
 ac
 ac
 gs
-fw
-fw
+Fw
+Fw
 EF
 EF
-fw
+Fw
 EF
 EF
 GJ
@@ -38976,7 +38987,7 @@ gs
 ac
 ac
 ac
-ac
+gs
 gs
 gs
 ac
@@ -39234,7 +39245,7 @@ ac
 gs
 gs
 gs
-ac
+gs
 ac
 ac
 ac
@@ -39490,7 +39501,7 @@ gs
 gs
 gs
 gs
-ac
+gs
 ac
 ac
 ac
@@ -47798,12 +47809,12 @@ aN
 aN
 aN
 aN
+YI
 aN
 aN
 aN
 aN
-aN
-aN
+Ws
 aN
 aN
 aN
@@ -48056,7 +48067,7 @@ aN
 aN
 aN
 aN
-aN
+Fc
 aN
 aN
 YI
@@ -48567,16 +48578,16 @@ aN
 aN
 aN
 aN
+YI
+aN
+aN
+YI
 aN
 aN
 aN
 aN
 aN
-aN
-aN
-aN
-aN
-aN
+Fc
 aN
 aN
 aN
@@ -49084,13 +49095,13 @@ aN
 aN
 aN
 aN
+Fc
 aN
 aN
 aN
 aN
 aN
-aN
-aN
+YI
 aN
 aN
 aN
@@ -49351,7 +49362,7 @@ aN
 aN
 aN
 aN
-aN
+zv
 aN
 Vt
 aN
@@ -49598,12 +49609,12 @@ aN
 aN
 aN
 aN
+Ws
 aN
 aN
 aN
 aN
-aN
-aN
+Ws
 aN
 aN
 aN
@@ -50120,7 +50131,7 @@ aN
 aN
 aN
 aN
-aN
+Fc
 aN
 aN
 aN
@@ -50372,16 +50383,16 @@ aN
 aN
 aN
 aN
+Fc
 aN
-aN
-aN
+YI
 aN
 aN
 YI
 YI
 aN
 aN
-aN
+Ws
 aN
 aN
 aN
@@ -51144,13 +51155,13 @@ aN
 aN
 aN
 aN
+Ws
 aN
 aN
 aN
 aN
 aN
-aN
-aN
+Ws
 aN
 ab
 fr
@@ -58962,7 +58973,7 @@ aN
 aN
 aN
 aN
-aN
+ab
 cy
 fZ
 ah
@@ -59016,11 +59027,11 @@ Zg
 ac
 ac
 gs
-Dk
-Dk
+QK
+QK
 ac
-zv
-zv
+PI
+PI
 ac
 ac
 gs
@@ -59264,23 +59275,23 @@ ac
 ac
 ac
 ac
-fp
-fp
-fp
-fp
-cy
-fp
+ED
+ED
+ED
+ED
+Go
+ED
 ac
 ac
 ZS
 gs
-Dk
-Dk
-Dk
-Dk
-zv
-Dk
-Dk
+QK
+QK
+QK
+QK
+PI
+QK
+QK
 gs
 ac
 ac
@@ -59521,24 +59532,24 @@ ac
 ac
 ac
 ac
-fp
-bB
-De
-ah
-JM
-fp
+ED
+ER
+Jw
+Mp
+VD
+ED
 ac
 ac
 ac
 ZS
-Dk
-Dk
-Dk
-Dk
-Dk
-Dk
-Dk
-Dk
+QK
+QK
+QK
+QK
+QK
+QK
+QK
+QK
 ac
 ac
 ac
@@ -59778,24 +59789,24 @@ ac
 ac
 ac
 ac
-fp
-bC
-ah
-ah
+ED
+NG
+Mp
+Mp
 Yw
-fp
+ED
 ac
 ac
 ac
-zv
+PI
 LW
-ZQ
-ZQ
-ZQ
-ZQ
-ZQ
-ZQ
-ZQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
 ac
 LM
 LM
@@ -60035,24 +60046,24 @@ ac
 ac
 ac
 ac
-fp
-bD
-Cc
-RP
-ah
-fp
+ED
+Ti
+XQ
+CE
+Mp
+ED
 ac
 ac
 ac
-zv
-HZ
-DS
-DS
-DS
-DS
-DS
-DS
-DS
+PI
+XS
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
 LM
 LM
 VG
@@ -60292,25 +60303,25 @@ ac
 ac
 ac
 ac
-fp
+ED
 CF
-ah
-ah
-ah
-fp
+Mp
+Mp
+Mp
+ED
 ac
 ac
 ac
-Pv
-SO
-DS
-DS
-DS
-DS
-DS
-DS
-DS
-DS
+VY
+Cs
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
 VG
 VG
 UL
@@ -60549,25 +60560,25 @@ ac
 ac
 ac
 ac
-fp
+ED
 zy
 Kg
 CA
 Gq
-fp
+ED
 ac
 ac
 ac
-DS
-DS
-DS
-DS
-DS
-DS
-DS
-DS
-DS
-DS
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
+Tw
 LM
 LM
 ac
@@ -60806,23 +60817,23 @@ ac
 ac
 ac
 ac
-fp
-fp
-fp
-fp
-fp
-fp
+ED
+ED
+ED
+ED
+ED
+ED
 ac
 ac
 VG
-DS
-DS
-DS
-DS
-DS
-FB
-Ts
-Ts
+Tw
+Tw
+Tw
+Tw
+Tw
+Wd
+zP
+zP
 ac
 ac
 ac
@@ -61071,15 +61082,15 @@ ac
 ac
 ac
 VG
-DS
-DS
-DS
-FB
-Ts
-Ts
-Za
-Dk
-Dk
+Tw
+Tw
+Tw
+Wd
+zP
+zP
+JU
+QK
+QK
 ac
 ac
 ac
@@ -61329,13 +61340,13 @@ VG
 VG
 VG
 LM
-DS
-FB
-Za
-Dk
-Dk
-Dk
-Dk
+Tw
+Wd
+JU
+QK
+QK
+QK
+QK
 ac
 ac
 ac
@@ -61586,12 +61597,12 @@ VG
 VG
 LM
 ac
-Ts
-Za
+zP
+JU
 eY
-Dk
+QK
 Tm
-Dk
+QK
 gs
 ac
 ac
@@ -61845,8 +61856,8 @@ ac
 ac
 ac
 Ez
-Dk
-Dk
+QK
+QK
 gs
 ac
 ac
@@ -62102,7 +62113,7 @@ ac
 ac
 ac
 ac
-Dk
+QK
 gs
 Dk
 ac
@@ -63688,7 +63699,7 @@ RP
 Vy
 ah
 cy
-aN
+ab
 aN
 aN
 aN
@@ -65876,8 +65887,8 @@ ac
 PT
 PT
 PT
-fw
-fw
+Fw
+Fw
 ac
 ac
 ac
@@ -66134,7 +66145,7 @@ PT
 YJ
 DZ
 Gy
-fw
+Fw
 ac
 ac
 ac
@@ -66391,7 +66402,7 @@ PT
 Vj
 Lx
 Ap
-fw
+Fw
 ac
 ac
 ac
@@ -66644,7 +66655,7 @@ ac
 ac
 ac
 ac
-fw
+Fw
 LV
 Ut
 WY
@@ -66901,12 +66912,12 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Xw
-fw
-fw
+Fw
+Fw
 Ln
-fw
+Fw
 Ln
 ac
 ac
@@ -67158,13 +67169,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Zk
 Ln
 TN
 PO
 OD
-fw
+Fw
 ac
 ac
 ac
@@ -67672,13 +67683,13 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ln
 DD
 Ki
 EF
 St
-fw
+Fw
 ac
 ac
 ac
@@ -67929,13 +67940,13 @@ ac
 ac
 ac
 ac
-fw
-fw
+Fw
+Fw
 Gz
 EF
-fw
+Fw
 EF
-fw
+Fw
 ac
 ac
 ac
@@ -69508,12 +69519,12 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
+Fw
+Fw
+Fw
 PT
-fw
-fw
+Fw
+Fw
 ac
 ac
 ac
@@ -69762,15 +69773,15 @@ ac
 ac
 ac
 ac
-fw
-fw
+Fw
+Fw
 PT
 PT
 QV
-lz
+ZA
 Kj
 Gx
-fw
+Fw
 ac
 ac
 ac
@@ -70021,12 +70032,12 @@ ac
 ac
 PT
 Oj
-hL
+Iq
 PT
 Ge
-lz
-lz
-lz
+ZA
+ZA
+ZA
 PT
 ac
 ac
@@ -70276,14 +70287,14 @@ ac
 ac
 ac
 ac
-fw
-hI
-hL
+Fw
+Mb
+Iq
 Kx
-lz
-lz
+ZA
+ZA
 ZI
-hg
+Qe
 PT
 ac
 ac
@@ -70533,15 +70544,15 @@ ac
 ac
 ac
 ac
-fw
+Fw
 FR
 TM
-fw
-lz
-lz
-hg
-hg
-fw
+Fw
+ZA
+ZA
+Qe
+Qe
+Fw
 ac
 ac
 ac
@@ -70793,12 +70804,12 @@ ac
 PT
 Lr
 Te
-fw
+Fw
 zh
-lz
-hg
+ZA
+Qe
 Wj
-fw
+Fw
 ac
 ac
 ac
@@ -71003,12 +71014,12 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
+Fw
+Fw
+Fw
 PT
-fw
-fw
+Fw
+Fw
 ac
 ac
 ac
@@ -71047,18 +71058,18 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
-fw
-fw
+Fw
+Fw
+Fw
+Fw
+Fw
 Gk
-fw
-fw
-fw
+Fw
+Fw
+Fw
 Ln
 PO
-fw
+Fw
 Ln
 ac
 ac
@@ -71260,10 +71271,10 @@ ac
 ac
 ac
 ac
-fw
+Fw
 FR
-hL
-hL
+Iq
+Iq
 Oj
 PT
 ac
@@ -71305,12 +71316,12 @@ ac
 ac
 ac
 ac
-fw
+Fw
 QI
-lz
+ZA
 ZC
-lz
-fw
+ZA
+Fw
 PO
 Gz
 Ln
@@ -71518,19 +71529,19 @@ ac
 ac
 ac
 PT
-hI
-hL
+Mb
+Iq
 PJ
-hL
+Iq
 PT
 PT
 PT
 PT
-fw
-fw
+Fw
+Fw
 PT
-fw
-fw
+Fw
+Fw
 ac
 gs
 gs
@@ -71564,16 +71575,16 @@ ac
 ac
 PT
 Ha
-cs
-cs
-lz
-fw
+ME
+ME
+ZA
+Fw
 EF
 RS
 Ur
 EF
 Ln
-fw
+Fw
 ac
 ac
 ac
@@ -71774,20 +71785,20 @@ ac
 ac
 ac
 ac
-fw
+Fw
 WO
 Te
-hL
-hL
-fw
+Iq
+Iq
+Fw
 PT
 QI
-lz
+ZA
 Ml
 SP
-lz
+ZA
 Ha
-fw
+Fw
 ac
 gs
 gs
@@ -71821,8 +71832,8 @@ ac
 ac
 PT
 Ob
-cs
-cs
+ME
+ME
 RB
 TX
 TX
@@ -72031,20 +72042,20 @@ ac
 ac
 ac
 ac
-fw
-fw
-fw
+Fw
+Fw
+Fw
 Kx
-fw
-fw
-fw
+Fw
+Fw
+Fw
 QI
-cs
+ME
 Yr
-cs
+ME
 Re
-lz
-fw
+ZA
+Fw
 EF
 gs
 gs
@@ -72076,18 +72087,18 @@ gs
 gs
 ac
 ac
-fw
-lz
-lz
+Fw
+ZA
+ZA
 QS
 MS
-fw
+Fw
 Ln
 Ln
 Gz
 MX
 Ln
-fw
+Fw
 ac
 ac
 ac
@@ -72289,18 +72300,18 @@ ac
 ac
 ac
 ac
-fw
-lz
-lz
+Fw
+ZA
+ZA
 Gx
 IT
-fw
-lz
-cs
+Fw
+ZA
+ME
 Yp
-cs
-cs
-lz
+ME
+ME
+ZA
 Gk
 EF
 gs
@@ -72333,18 +72344,18 @@ gs
 gs
 gs
 ac
-fw
-Er
-fw
-fw
-fw
-fw
-fw
-fw
+Fw
+Gk
+Fw
+Fw
+Fw
+Fw
+Fw
+Fw
 Ln
-fw
-fw
-fw
+Fw
+Fw
+Fw
 ac
 ac
 ac
@@ -72548,17 +72559,17 @@ ac
 ac
 PT
 QV
-lz
-lz
-lz
+ZA
+ZA
+ZA
 Gk
-lz
-cs
-cs
-cs
-cs
+ZA
+ME
+ME
+ME
+ME
 QX
-fw
+Fw
 Zk
 gs
 gs
@@ -72803,19 +72814,19 @@ ac
 ac
 ac
 ac
-fw
+Fw
 Ge
-lz
+ZA
 AG
-iq
-fw
-lz
+Bz
+Fw
+ZA
 Pj
 Yf
 UD
 MS
 Vv
-fw
+Fw
 Lt
 gs
 gs
@@ -73062,17 +73073,17 @@ ac
 ac
 PT
 Ys
-lz
-iq
-iq
-fw
-fw
+ZA
+Bz
+Bz
+Fw
+Fw
 PT
-fw
+Fw
 PT
-fw
-fw
-fw
+Fw
+Fw
+Fw
 ac
 Il
 gs
@@ -73320,9 +73331,9 @@ ac
 PT
 Kh
 FT
-iq
+Bz
 Pb
-fw
+Fw
 ac
 ac
 ac
@@ -73574,12 +73585,12 @@ ac
 ac
 ac
 ac
-fw
-fw
+Fw
+Fw
 PT
 PT
-fw
-fw
+Fw
+Fw
 ac
 ac
 ac
