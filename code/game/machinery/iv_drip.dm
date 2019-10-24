@@ -8,14 +8,14 @@
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/mob/living/carbon/attached = null
+	var/mob/living/carbon/attached
 	var/mode = IV_INJECTING
-	var/obj/item/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass))
 
-/obj/machinery/iv_drip/Initialize()
+/obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -84,6 +84,8 @@
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")
+			log_combat(usr, target, "attached", src, "containing: [beaker.name] - ([beaker.reagents.log_list()])")
+			add_fingerprint(usr)
 			attached = target
 			START_PROCESSING(SSmachines, src)
 			update_icon()
@@ -100,6 +102,8 @@
 			return
 		beaker = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
+		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([beaker.reagents.log_list()])", LOG_ATTACK)
+		add_fingerprint(user)
 		update_icon()
 		return
 	else
@@ -142,10 +146,11 @@
 			if(!amount)
 				if(prob(5))
 					visible_message("[src] pings.")
+					playsound(loc, 'sound/machines/beep.ogg', 50, 1)
 				return
 
 			// If the human is losing too much blood, beep.
-			if(attached.blood_volume < ( (BLOOD_VOLUME_SAFE*attached.blood_ratio) && prob(5) ) )
+			if(attached.blood_volume < ((BLOOD_VOLUME_SAFE*attached.blood_ratio) && prob(5) && ishuman(attached))) //really couldn't care less about monkeys
 				visible_message("[src] beeps loudly.")
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)
@@ -178,9 +183,10 @@
 
 	if(usr.incapacitated())
 		return
-
 	if(beaker)
-		beaker.forceMove(drop_location())
+		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
+			if(!usr.put_in_hands(beaker))
+				beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 
@@ -195,27 +201,27 @@
 
 	if(usr.incapacitated())
 		return
-
 	mode = !mode
 	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
-	..()
+	. = ..()
 	if(get_dist(user, src) > 2)
 		return
 
-	to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
+	. += "[src] is [mode ? "injecting" : "taking blood"].\n"
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			to_chat(user, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
+			. += "\t<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>\n"
 		else
-			to_chat(user, "<span class='notice'>Attached is an empty [beaker.name].</span>")
+			. += "\t<span class='notice'>Attached is an empty [beaker.name].</span>\n"
 	else
-		to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
+		. += "\t<span class='notice'>No chemicals are attached.</span>\n"
 
-	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+	. += "\t<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+	to_chat(user,.)
 
 #undef IV_TAKING
 #undef IV_INJECTING

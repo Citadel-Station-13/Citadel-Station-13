@@ -1,0 +1,7 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Added RGB blood effects, know whose blood this is by color!"
+  - rscadd: "Added Synthetics blood, and a machine that produces it. A universal donor for medical to heal people with. Make it via medical protolathe!"
+  - bugfix: "With hearts, slimepeople shouldn't die from the effects of not having a heart."
+  - bugfix: "Plasma vessels from xenomorphs will restore blood if you're on resin."

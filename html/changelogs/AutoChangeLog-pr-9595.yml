@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Examining a spaceman, and other things that use get_examine_string(), will now actually properly show when an item is blood-stained."
