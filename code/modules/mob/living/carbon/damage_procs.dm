@@ -19,13 +19,13 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage_amount, forced = forced) : BP.heal_damage(abs(damage_amount, forced = forced), 0))
+				if(damage > 0 ? BP.receive_damage(damage_amount) : BP.heal_damage(abs(damage_amount), 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, damage_amount, forced = forced) : BP.heal_damage(0, abs(damage_amount, forced = forced)))
+				if(damage > 0 ? BP.receive_damage(0, damage_amount) : BP.heal_damage(0, abs(damage_amount)))
 					update_damage_overlays()
 			else
 				adjustFireLoss(damage_amount, forced = forced)
@@ -37,7 +37,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount, forced = forced) : BP.heal_damage(0, 0, abs(damage_amount, forced = forced)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
