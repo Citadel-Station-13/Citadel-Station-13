@@ -351,17 +351,17 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		cell.use(750) //Less than a stunbaton since stunbatons hit everytime.
 		weather_immunities -= "lava"
 
-/mob/living/silicon/robot/throw_impact(atom/A)
+/mob/living/silicon/robot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 
 	if(!leaping)
 		return ..()
 
-	if(A)
-		if(isliving(A))
-			var/mob/living/L = A
+	if(hit_atom)
+		if(isliving(hit_atom))
+			var/mob/living/L = hit_atom
 			var/blocked = 0
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
+			if(ishuman(hit_atom))
+				var/mob/living/carbon/human/H = hit_atom
 				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 					blocked = 1
 			if(!blocked)
@@ -377,8 +377,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
-		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
+		else if(hit_atom.density && !hit_atom.CanPass(src))
+			visible_message("<span class ='danger'>[src] smashes into [hit_atom]!</span>", "<span class ='userdanger'>You smash into [hit_atom]!</span>")
 			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
 			Knockdown(15, 1, 1)
 
