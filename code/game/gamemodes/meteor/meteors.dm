@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
-		new /obj/effect/decal/cleanable/xenoblood(T)
+		new /obj/effect/decal/cleanable/blood/xeno(T)
 
 //Station buster Tunguska
 /obj/effect/meteor/tunguska
