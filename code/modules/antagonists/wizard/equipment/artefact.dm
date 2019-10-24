@@ -324,14 +324,11 @@
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()
-	possible = list()
+	LAZYINITLIST(possible)
 	if(!voodoo_link)
 		return
-	var/list/prints = voodoo_link.return_fingerprints()
-	if(!length(prints))
-		return FALSE
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(prints[md5(H.dna.uni_identity)])
+		if(md5(H.dna.uni_identity) in voodoo_link.fingerprints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
