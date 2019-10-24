@@ -163,15 +163,26 @@
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
-			if(isalien(L))
+			var/obj/item/bodypart/B = L.get_bodypart(def_zone)
+			if(B.status == BODYPART_ROBOTIC) // So if you hit a robotic, it sparks instead of bloodspatters
+				do_sparks(2, FALSE, target.loc)
+				if(prob(25))
+					new /obj/effect/decal/cleanable/oil(target_loca)
+			else if(isalien(L))
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color(H.dna.blood_type))
+				else
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
+
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.bleed(damage)
 			else
 				L.add_splatter_floor(target_loca)
+
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
