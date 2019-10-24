@@ -18,7 +18,7 @@
 //Also Shrek will crash your dmlang server repeatedly if you edit him.
 
 //Considering I can't grab defines from everywhere, I hope you enjoy strings and numbers plebs.
-//Edit - Moved to modular citadel so we are after everything has loaded.
+//Update - Moved to modular citadel so we are after everything has loaded...probably we gucci - jtgsz
 
 /*
 	AREAS
@@ -54,13 +54,11 @@
 //These exist mostly to limit the amount of space we use organically really.
 //Decided to just use the denserock within the regular code.
 
-/turf/closed/indestructible/spookytime/matrixblocker
+/turf/closed/indestructible/spookytime/matrixblocker //Two times the reference power.
 	name = "matrix"
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "matrix"
 	desc = "<font color='#157206'>You suddenly realize the truth - there is no spoon.<br>Digital simulation ends here ONCE AGAIN.</font>"
-
-
 
 /*
 	OUTSIDE TURFS WITH NO GEN JUS MIDNIGHT LIGHT BABY
@@ -70,7 +68,7 @@
 /turf/open/floor/spooktime //But for now, we just handle what is outside, for light control etc.
 	name = "You fucked up pal"
 	desc = "Don't use this turf its a parent and just a holder."
-	planetary_atmos = TRUE //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
+	planetary_atmos = 1 //REVERT TO INITIAL AIR GASMIX OVER TIME WITH LINDA
 	light_range = 3 //MIDNIGHT BLUE
 	light_power = 0.15 //NOT PITCH BLACK, JUST REALLY DARK
 	light_color = "#00111a" //The light can technically cycle on a timer worldwide, but no daynight cycle.
@@ -78,19 +76,65 @@
 	gender = PLURAL //THE GENDER IS PLURAL
 	tiled_dirt = 0 //NO TILESMOOTHING DIRT/DIRT SPAWNS OR SOME SHIT
 
+
+//Damaged plasteel plates, cause fuck varediting all these icons my man.
+//Just search damturf for the tree
+
+/turf/open/floor/plasteel/damturf //ez search plasteel parent
+/turf/open/floor/plasteel/damturf/damage1
+	icon_state = "damaged1"
+/turf/open/floor/plasteel/damturf/damage2
+	icon_state = "damaged2"
+/turf/open/floor/plasteel/damturf/
+	icon_state = "damaged3"
+/turf/open/floor/plasteel/damturf/damage4
+	icon_state = "damaged4"
+/turf/open/floor/plasteel/damturf/damage5
+	icon_state = "damaged5"
+/turf/open/floor/plasteel/damturf/scorched
+	icon_state = "panelscorched"
+/turf/open/floor/plasteel/damturf/scorched1
+	icon_state = "floorscorched1"
+/turf/open/floor/plasteel/damturf/scorched2
+	icon_state = "floorscorched2"
+/turf/open/floor/plasteel/damturf/platdmg1
+	icon_state = "platingdmg1"
+/turf/open/floor/plasteel/damturf/platdmg2
+	icon_state = "platingdmg2"
+/turf/open/floor/plasteel/damturf/platdmg3
+	icon_state = "platingdmg3"
+
+/turf/open/floor/wood/damturf //ez search wood parent
+/turf/open/floor/wood/damturf/broken1
+	icon_state = "wood-broken"
+/turf/open/floor/wood/damturf/broken2
+	icon_state = "wood-broken2"
+/turf/open/floor/wood/damturf/broken3
+	icon_state = "wood-broken3"
+/turf/open/floor/wood/damturf/broken4
+	icon_state = "wood-broken4"
+/turf/open/floor/wood/damturf/broken5
+	icon_state = "wood-broken5"
+/turf/open/floor/wood/damturf/broken6
+	icon_state = "wood-broken6"
+/turf/open/floor/wood/damturf/broken7
+	icon_state = "wood-broken7"
+
 //Parent that goes into coasts too
 /turf/open/floor/spooktime/beach //laketime
 	gender = PLURAL
 	name = "sand"
+	desc = "ITS SAND!"
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_dirt = 0
 
 //Beaches and coasts and sand and shit.
 /turf/open/floor/spooktime/beach/coasts
 	gender = NEUTER
 	name = "coastline"
+	desc = "The coastline of a sandy shore"
 	icon_state = "sandwater_t_S"
 
 //The water that follows the coastline also animated.
@@ -168,7 +212,7 @@
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "riverwater_motion"
 	slowdown = 1
-	bullet_sizzle = TRUE
+	bullet_sizzle = 1
 	bullet_bounce_sound = null //needs a splashing sound one day.
 	footstep = FOOTSTEP_WATER
 	barefootstep = FOOTSTEP_WATER
@@ -195,7 +239,7 @@
 	icon_state = "grass_[rand(1,3)]"
 
 /turf/open/floor/spooktime/dirtpatch
-	desc = "clearly dirt"
+	name = "clearly dirt"
 	desc = "Its dirt alright"
 	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
 	icon_state = "smoothdarkdirt"
@@ -205,6 +249,28 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/spooktime/snow
+	gender = PLURAL
+	name = "snow"
+	icon = 'icons/turf/snow.dmi'
+	desc = "Looks cold."
+	icon_state = "snow"
+	slowdown = 2
+	light_range = 0
+	light_power = 0
+	bullet_sizzle = 1
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/spooktime/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
+/turf/open/floor/spooktime/snow/crowbar_act(mob/living/user, obj/item/I)
+	return
+
 
 //Cobblestone and all of its directions tied to the parent.
 /turf/open/floor/spooktime/cobble //Middle and parent
@@ -270,7 +336,7 @@
 
 	//Holders for what can occur on the turf.
 	var/obj/structure/flora/turfGrass = null
-	var/obj/structure/flora/turfDeadtree = null
+	var/obj/structure/flora/turfTree = null
 	var/obj/structure/flora/turfAusflora = null
 	var/obj/structure/flora/turfRocks = null
 	var/obj/structure/flora/turfDebris = null
@@ -278,7 +344,7 @@
 
 /turf/open/floor/spooktime/spooktimegrass/Initialize() //Considering adding dirtgen here too.
 	. = ..()
-	if(prob(5))
+	if(prob(1))
 		icon_state = "smoothdarkdirt" //Sometimes we can be dirt.
 	else
 		icon_state = "grass_[rand(1,3)]" //Icon state variation for how many states of grass I got... 3 lul
@@ -297,7 +363,10 @@
 //Soooo, its just tied to the turf initialize on init right now.
 //Right now each segment generates independantly, but it wouldn't be hard to do it in a chain
 //And check for what else is there before a list of objects has the option to appear.
+//Or even change weighting based on the weight of other things that the turf has checked in its range.
 //But at the same time, the stacked flora/rocks etc look pretty okay together honestly.
+//On the other side of the coin, you could even adjust their pixelx and y.
+//Since after-all things in nature don't just occupy one spot each a lot of the time.
 
 //That being said you have somewhere around 50 seconds of init, and 160 seconds of pre-game time.
 //To finish generation if you need to split it up by chunks and add more checks.
@@ -305,38 +374,64 @@
 
 //I have turned what used to be simple into hell.
 //We can keep appending stuff here as we go, it basically just spawns it all on turf spooktimegrass on init.
-#define GRASS_SPONTANEOUS 		2 //chance it appears on the tile on its own
-#define GRASS_WEIGHT 			4 //Helps clusters form.
-#define DEADTREE_SPONTANEOUS	2 //Solo deadtree
-#define DEADTREE_WEIGHT			4
-#define AUSFLORA_SPONTANEOUS	2
-#define AUSFLORA_WEIGHT			4
-#define ROCKS_SPONTANEOUS		2 //Technically this can be moved to the desolate spawn list tied to grass.
-#define ROCKS_WEIGHT			1 //Lower weight cause rock clusters were too common...But cool honestly.
-#define DEBRIS_SPONTANEOUS		2
-#define DEBRIS_WEIGHT			2
 
-//Enjoy the horizontals. These are basically what can spawn in the lists, the number is the weight.
-//The weight dictates how likely it is to spawn over other things in the lists. If it is to spawn.
-#define LUSH_GRASS_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 10)
-#define DEAD_TREE_SPAWN_LIST list(/obj/structure/flora/tree/spookytime = 8, /obj/structure/flora/tree/spookytimexl = 2)
-#define AUSFLORA_SPAWN_LIST list(/obj/structure/flora/ausbushes = 1)
-#define ROCKS_SPAWN_LIST	list(/obj/structure/flora/spookyrock = 1)
-#define DEBRIS_SPAWN_LIST	list(/obj/structure/flora/tree/spookybranch = 5, /obj/structure/flora/tree/spookylog = 1)
+		    //=========>Set value // Initial Reference Value <=============
+#define GRASS_SPONTANEOUS 		2//2 //chance it appears on the tile on its own
+#define GRASS_WEIGHT 			4//4 //multiplier increase if theres some nearby
+#define TREE_SPONTANEOUS		4//2
+#define TREE_WEIGHT				4//4
+#define AUSFLORA_SPONTANEOUS	2//2
+#define AUSFLORA_WEIGHT			3//4
+#define ROCKS_SPONTANEOUS		2//2 //Technically this can be moved to the desolate spawn list tied to grass.
+#define ROCKS_WEIGHT			1//1 //Lower weight cause rock clusters were too common...But cool honestly.
+#define DEBRIS_SPONTANEOUS		2//2
+#define DEBRIS_WEIGHT			2//2
+
+//These are basically what can spawn in the lists, the number is the weight.
+//The weight dictates how likely it is to spawn over other things in the lists. If you were to use pickweight.
+#define LUSH_GRASS_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 4,\
+ 								/obj/structure/flora/ausbushes/lavendergrass = 3,\
+								  /obj/structure/flora/ausbushes/sparsegrass = 6,\
+								   /obj/structure/flora/ausbushes/fullgrass = 1\
+								   )
+
+#define TREE_SPAWN_LIST list(/obj/structure/flora/tree/spookytime = 9,\
+								 /obj/structure/flora/tree/spookytimexl = 2,\
+								 /obj/structure/flora/tree/jungle = 1,\
+								 /obj/structure/flora/tree/jungle/small = 1\
+								 )
+								 
+#define AUSFLORA_SPAWN_LIST list(/obj/structure/flora/ausbushes = 3,\
+								/obj/structure/flora/ausbushes/grassybush = 3,\
+								 /obj/structure/flora/ausbushes/fernybush = 1,\
+								 /obj/structure/flora/ausbushes/sunnybush = 1,\
+								 /obj/structure/flora/ausbushes/reedbush = 1,\
+								 /obj/structure/flora/ausbushes/palebush = 1,\
+								 /obj/structure/flora/ausbushes/stalkybush = 1\
+								 )
+
+#define ROCKS_SPAWN_LIST	list(/obj/structure/flora/spookyrock = 1\
+								)
+
+#define DEBRIS_SPAWN_LIST	list(/obj/structure/flora/tree/spookybranch = 5, \
+								/obj/structure/flora/tree/spookylog = 1\
+								)
 
 //Lists that occur when the cluster doesn't happen but probability dictates it tries.
-#define DESOLATE_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 1)
+#define DESOLATE_SPAWN_LIST list(/obj/structure/flora/grass/spookytime = 1,\
+								/obj/structure/flora/ausbushes/sparsegrass = 1\
+								)
 
 //I just kinda made it worse... Like a lot worse. Ngl man.
 /turf/open/floor/spooktime/spooktimegrass/proc/floraGen()
 	var/grassWeight = 0 //grassWeight holders for each individual layer
-	var/deadtreeWeight = 0
+	var/treeWeight = 0
 	var/ausfloraWeight = 0
 	var/rocksWeight = 0
 	var/debrisWeight = 0
 
 	var/randGrass = null //The random plant picked
-	var/randDeadtree = null //The random deadtree picked
+	var/randTree = null //The random deadtree picked
 	var/randAusflora = null //The random Ausflora picked
 	var/randRocks = null //The random rock picked
 	var/randDebris = null //The random wood debris picked
@@ -347,9 +442,9 @@
 		randGrass = pickweight(LUSH_GRASS_SPAWN_LIST) //Create a new grass object at this location, and assign var
 		turfGrass = new randGrass(src) //The var on the turf now has a new randgrass from the list.
 
-	if(prob(DEADTREE_SPONTANEOUS))
-		randDeadtree = pickweight(DEAD_TREE_SPAWN_LIST)
-		turfDeadtree = new randDeadtree(src)
+	if(prob(TREE_SPONTANEOUS))
+		randTree = pickweight(TREE_SPAWN_LIST)
+		turfTree = new randTree(src)
 
 	if(prob(AUSFLORA_SPONTANEOUS))
 		randAusflora = pickweight(AUSFLORA_SPAWN_LIST)
@@ -368,8 +463,8 @@
 	for(var/turf/open/floor/spooktime/spooktimegrass/T in RANGE_TURFS(3, src))
 		if(T.turfGrass) //We check what is around our turf
 			grassWeight += GRASS_WEIGHT //The weight is increased by grass weight per every grass we find
-		if(T.turfDeadtree)
-			deadtreeWeight += DEADTREE_WEIGHT
+		if(T.turfTree)
+			treeWeight += TREE_WEIGHT
 		if(T.turfAusflora)
 			ausfloraWeight += AUSFLORA_WEIGHT
 		if(T.turfRocks)
@@ -382,15 +477,15 @@
 	//use weight to try to spawn grass
 	if(prob(grassWeight)) //Basically after the earlier calc, we now roll probability.
 		//If surrounded on 5+ sides, pick from lush
-		if(grassWeight == (5 * GRASS_WEIGHT)) //If the grassweight is equivalent to 5 times GRASSWEIGHT which is 4
-			randGrass = pickweight(LUSH_GRASS_SPAWN_LIST) //We pick from the lush list, aka boys that can be together.
+		if(grassWeight == (5 * GRASS_WEIGHT)) //If we are five times the define value, aka 5 detected.
+			randGrass = pickweight(LUSH_GRASS_SPAWN_LIST) //We weighted pick from the lush list, aka boys that can be together.
 		else //Else.
-			randGrass = pickweight(DESOLATE_SPAWN_LIST) //We pick from boys that are fine being alone.
+			randGrass = pickweight(DESOLATE_SPAWN_LIST) //We weighted pick from boys that are fine being alone.
 		turfGrass = new randGrass(src) //And at the end we set the turfgrass to this object.
 
-	if(prob(deadtreeWeight)) //We can technically redirect individuals down here too, but lets just focus on clumps.
-		randDeadtree = pickweight(DEAD_TREE_SPAWN_LIST)
-		turfDeadtree = new randDeadtree(src)
+	if(prob(treeWeight)) //We can technically redirect individuals down here too, but lets just focus on clumps.
+		randTree = pickweight(TREE_SPAWN_LIST)
+		turfTree = new randTree(src)
 
 	if(prob(ausfloraWeight))
 		randAusflora = pickweight(AUSFLORA_SPAWN_LIST)
@@ -408,8 +503,8 @@
 /turf/open/floor/spooktime/spooktimegrass/ChangeTurf()
 	if(turfGrass)
 		qdel(turfGrass)
-	if(turfDeadtree)
-		qdel(turfDeadtree)
+	if(turfTree)
+		qdel(turfTree)
 	if(turfAusflora)
 		qdel(turfAusflora)
 	if(turfRocks)
