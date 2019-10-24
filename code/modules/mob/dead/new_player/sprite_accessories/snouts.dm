@@ -194,6 +194,10 @@
 	name = "Mammal, Short ALT"
 	icon_state = "scanidalt"
 
+/datum/sprite_accessory/mam_snouts/scanidalt2
+	name = "Mammal, Short ALT 2"
+	icon_state = "scanidalt2"
+
 /datum/sprite_accessory/mam_snouts/wolf
 	name = "Mammal, Thick"
 	icon_state = "wolf"
@@ -305,6 +309,10 @@
 /datum/sprite_accessory/mam_snouts/fscanidalt
 	name = "Mammal, Short ALT (Top)"
 	icon_state = "fscanidalt"
+
+/datum/sprite_accessory/mam_snouts/fscanidalt2
+	name = "Mammal, Short ALT 2 (Top)"
+	icon_state = "fscanidalt2"
 
 /datum/sprite_accessory/mam_snouts/fwolf
 	name = "Mammal, Thick (Top)"

@@ -176,6 +176,10 @@
 	name = "Axolotl"
 	icon_state = "axolotl"
 
+/datum/sprite_accessory/mam_ears/bat
+	name = "Bat"
+	icon_state = "bat"
+
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
 	icon_state = "bear"

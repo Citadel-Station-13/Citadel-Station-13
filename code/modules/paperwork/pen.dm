@@ -158,6 +158,7 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 
 

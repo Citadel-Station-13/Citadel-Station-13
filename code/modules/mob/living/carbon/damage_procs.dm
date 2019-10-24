@@ -85,7 +85,7 @@
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
-			blood_volume -= 5*amount
+			blood_volume -= 3*amount // x5 is too much, x3 should be still penalizing enough.
 		else
 			blood_volume -= amount
 	return ..()

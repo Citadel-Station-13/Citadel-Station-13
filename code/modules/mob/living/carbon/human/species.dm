@@ -339,7 +339,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	if(C.dna.species.exotic_bloodtype)
-		C.dna.blood_type = random_blood_type()
+		if(!new_species.exotic_bloodtype)
+			C.dna.blood_type = random_blood_type()
+		else
+			C.dna.blood_type = new_species.exotic_bloodtype
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
@@ -1024,6 +1027,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			return "TAUR"
 	//END EDIT
 
+/* TODO: Snowflake trail marks
+// Impliments different trails for species depending on if they're wearing shoes.
+/datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)
+	if(H.lying)
+		return /obj/effect/decal/cleanable/blood/footprints/tracks/body
+	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
+		var/obj/item/clothing/shoes/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
+		return shoes.move_trail
+	else
+		return move_trail */
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
