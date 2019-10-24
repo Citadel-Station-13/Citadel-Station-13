@@ -487,6 +487,26 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/can_hear()
 	. = TRUE
 
+/proc/bloodtype_to_color(var/type)
+	. = BLOOD_COLOR_HUMAN
+	switch(type)
+		if("U")//Universal blood; a bit orange
+			. = BLOOD_COLOR_UNIVERSAL
+		if("SY")//Synthetics blood; blue
+			. = BLOOD_COLOR_SYNTHETIC
+		if("L")//lizard, a bit pink/purple
+			. = BLOOD_COLOR_LIZARD
+		if("X*")//xeno blood; greenish yellow
+			. = BLOOD_COLOR_XENO
+		if("HF")// Oil/Hydraulic blood. something something why not. reee
+			. = BLOOD_COLOR_OIL
+		if("GEL")// slimepeople blood, rgb 0, 255, 144
+			. = BLOOD_COLOR_SLIME
+		if("BUG")// yellowish, like, y'know bug guts I guess.
+			. = BLOOD_COLOR_BUG
+		//add more stuff to the switch if you have more blood colors for different types
+		// the defines are in _DEFINES/misc.dm
+
 //Examine text for traits shared by multiple types. I wish examine was less copypasted.
 /mob/proc/common_trait_examine()
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))

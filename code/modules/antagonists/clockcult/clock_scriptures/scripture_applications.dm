@@ -119,3 +119,33 @@
 	var/datum/clockwork_scripture/create_object/construct/clockwork_marauder/CM = new()
 	CM.recent_marauders--
 	qdel(CM)
+
+//Summon Neovgre: Summon a very powerful combat mech that explodes when destroyed for massive damage.
+/datum/clockwork_scripture/create_object/summon_arbiter
+	descname = "Powerful Assault Mech"
+	name = "Summon Neovgre, the Anima Bulwark"
+	desc = "Calls forth the mighty Anima Bulwark, a weapon of unmatched power,\
+			 mech with superior defensive and offensive capabilities. It will \
+			 steadily regenerate HP and triple its regeneration speed while standing \
+			 on a clockwork tile. It will automatically draw power from nearby sigils of \
+			 transmission should the need arise. Its Arbiter laser cannon can decimate foes \
+			 from a range and is capable of smashing through any barrier presented to it. \
+			 Be warned, choosing to pilot Neovgre is a lifetime commitment, once you are \
+			 in you cannot leave and when it is destroyed it will explode catastrophically with you inside."
+	invocations = list("By the strength of the alloy...!!", "...call forth the Arbiter!!")
+	channel_time = 200 // This is a strong fucking weapon, 20 seconds channel time is getting off light I tell ya.
+	power_cost = 75000 //75 KW
+	usage_tip = "Neovgre is a powerful mech that will crush your enemies!"
+	invokers_required = 5
+	multiple_invokers_used = TRUE
+	object_path = /obj/mecha/combat/neovgre
+	tier = SCRIPTURE_APPLICATION
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 2
+	creator_message = "<span class='brass'>Neovgre, the Anima Bulwark towers over you... your enemies reckoning has come.</span>"
+
+/datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()
+	if(GLOB.neovgre_exists)
+		to_chat(invoker, "<span class='brass'>\"You've already got one...\"</span>")
+		return FALSE
+	return ..()
