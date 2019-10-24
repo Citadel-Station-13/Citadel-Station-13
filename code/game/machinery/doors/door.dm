@@ -326,7 +326,7 @@
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
-		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+		//add_blood_DNA doesn't work for borgs/xenos, but add_blood_floor does.
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.bleed(DOOR_CRUSH_DAMAGE)

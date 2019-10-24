@@ -117,6 +117,23 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
+"aw" = (
+/obj/machinery/door/airlock/bananium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	name = "Snappop(tm)!"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ax" = (
+/obj/machinery/door/airlock/bananium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
@@ -137,6 +154,8 @@
 /obj/machinery/door/airlock/bananium/glass{
 	name = "Emergency Shuttle Greentext"
 	},
+/obj/structure/fans/tiny,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aC" = (
@@ -169,15 +188,6 @@
 /obj/structure/table,
 /obj/item/toy/sword,
 /turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
-"aI" = (
-/obj/machinery/door/airlock/bananium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	name = "Snappop(tm)!"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "aJ" = (
 /obj/item/toy/snappop/phoenix,
@@ -232,12 +242,6 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
-"aQ" = (
-/obj/machinery/door/airlock/bananium{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "aR" = (
 /obj/item/toy/snappop/phoenix,
@@ -338,6 +342,11 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"bL" = (
+/obj/item/toy/snappop/phoenix,
+/obj/item/pneumatic_cannon/pie/selfcharge,
+/turf/open/floor/bluespace,
+/area/shuttle/escape)
 "Zf" = (
 /obj/structure/closet/emcloset,
 /obj/item/toy/sword,
@@ -354,15 +363,15 @@ ab
 ab
 ab
 ab
-aI
+aw
 ab
 ac
 ac
 ac
 ab
-aQ
+ax
 ab
-aQ
+ax
 ab
 ab
 ab
@@ -467,7 +476,7 @@ bg
 (6,1,1) = {"
 ac
 ag
-ak
+bL
 aq
 ab
 av

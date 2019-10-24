@@ -57,7 +57,7 @@
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
-	S.icon_state = "heart-off"
+	S.icon_state = "[icon_base]-off"
 	return S
 
 /obj/item/organ/heart/on_life()
@@ -89,6 +89,12 @@
 			owner.visible_message("<span class='userdanger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>")
 		owner.set_heartattack(TRUE)
 		failed = TRUE
+
+obj/item/organ/heart/slime
+	name = "slime heart"
+	desc = "It seems we've gotten to the slimy core of the matter."
+	icon_state = "heart-s-on"
+	icon_base = "heart-s"
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -211,6 +217,19 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 	ramount = 0
 
 
+
+/obj/item/organ/heart/ipc
+	name = "IPC heart"
+	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
+	icon_state = "heart-c"
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/heart/ipc/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	Stop()
+	addtimer(CALLBACK(src, .proc/Restart), 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
