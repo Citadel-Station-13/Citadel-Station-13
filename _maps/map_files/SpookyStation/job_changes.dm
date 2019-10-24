@@ -1,3 +1,5 @@
+#define JOB_MODIFICATION_MAP_NAME "SpookyStation"
+
 MAP_REMOVE_JOB(geneticist)
 MAP_REMOVE_JOB(virologist)
 MAP_REMOVE_JOB(lawyer)
