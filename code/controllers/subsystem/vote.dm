@@ -209,6 +209,7 @@ SUBSYSTEM_DEF(vote)
 				choices.Add(config.votable_modes)
 			if("map")
 				choices.Add(config.maplist)
+				map_pop_check()
 				for(var/i in choices)//this is necessary because otherwise we'll end up with a bunch of /datum/map_config's as the default vote value instead of 0 as intended
 					choices[i] = 0
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
@@ -245,6 +246,29 @@ SUBSYSTEM_DEF(vote)
 			generated_actions += V
 		return 1
 	return 0
+
+/datum/controller/subsystem/vote/proc/map_pop_check()
+	var/players = GLOB.clients.len
+	for (var/map in choices)
+		if (!map)
+			choices.Remove(map)
+		if (!(map in global.config.maplist))
+			choices.Remove(map)
+			continue
+		var/datum/map_config/VM = global.config.maplist[map]
+		if (!VM)
+			choices.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			choices.Remove(map)
+			continue
+		if (VM.config_min_users > 0 && players < VM.config_min_users)
+			choices.Remove(map)
+			continue
+		if (VM.config_max_users > 0 && players > VM.config_max_users)
+			choices.Remove(map)
+			continue
+	return
 
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
