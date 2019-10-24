@@ -36,6 +36,12 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
+	var/icon/blood_splatter_icon
+	var/list/fingerprints
+	var/list/fingerprintshidden
+	var/list/blood_DNA
+	var/list/suit_fibers
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -220,7 +226,7 @@
 	return FALSE
 
 /atom/proc/CheckExit()
-	return 1
+	return TRUE
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -254,14 +260,27 @@
 	if(article)
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
+
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
+///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, get_examine_string(user, TRUE))
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]."
+	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		f_name += "<span class='danger'>blood-stained</span> [name]!"
+
+	to_chat(user, "[icon2html(src, user)] That's [f_name]")
+
+//	to_chat(user, "[get_examine_string(user, TRUE)].")
 
 	if(desc)
 		to_chat(user, desc)
@@ -326,12 +345,14 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	var/blood_id = get_blood_id()
+	if(!(blood_id =="blood" || blood_id == "jellyblood"))
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	var/blood_id = get_blood_id()
+	if(!(blood_id =="blood" || blood_id == "jellyblood"))
 		return
 	var/list/blood_dna = list()
 	if(dna)
@@ -349,18 +370,116 @@
 	var/new_blood_dna = L.get_blood_dna_list()
 	if(!new_blood_dna)
 		return FALSE
-	var/old_length = blood_DNA_length()
-	add_blood_DNA(new_blood_dna)
-	if(blood_DNA_length() == old_length)
+	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
+	var/old_length = blood_DNA.len
+	blood_DNA |= new_blood_dna
+	if(blood_DNA.len == old_length)
 		return FALSE
 	return TRUE
+
+//to add blood dna info to the object's blood_DNA list
+/atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
+	LAZYINITLIST(blood_DNA)
+	var/old_length = blood_DNA.len
+	blood_DNA |= blood_dna
+	if(blood_DNA.len > old_length)
+		return TRUE
+		//some new blood DNA was added
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
-	return add_blood_DNA(blood_dna)
+	return add_blood_DNA(blood_dna, M.diseases)
+
+//to add blood onto something, with blood dna info to include.
+/atom/proc/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	return FALSE
+
+/obj/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	return transfer_blood_dna(blood_dna, diseases)
+
+/obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	. = ..()
+	if(!.)
+		return
+	add_blood_overlay()
+
+/obj/item/proc/add_blood_overlay()
+	if(!blood_DNA.len)
+		return
+	if(initial(icon) && initial(icon_state))
+		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
+		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
+		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
+		add_overlay(blood_splatter_icon)
+
+/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	. = ..()
+	transfer_blood = rand(2, 4)
+
+/turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
+	if(!B)
+		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
+	B.transfer_blood_dna(blood_dna, diseases) //give blood info to the blood decal.
+	return TRUE //we bloodied the floor
+
+/mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	if(head)
+		head.add_blood_DNA(blood_dna, diseases)
+		update_inv_head()
+	else if(wear_mask)
+		wear_mask.add_blood_DNA(blood_dna, diseases)
+		update_inv_wear_mask()
+	if(wear_neck)
+		wear_neck.add_blood_DNA(blood_dna, diseases)
+		update_inv_neck()
+	if(wear_suit)
+		wear_suit.add_blood_DNA(blood_dna, diseases)
+		update_inv_wear_suit()
+	else if(w_uniform)
+		w_uniform.add_blood_DNA(blood_dna, diseases)
+		update_inv_w_uniform()
+	if(gloves)
+		var/obj/item/clothing/gloves/G = gloves
+		G.add_blood_DNA(blood_dna, diseases)
+	else
+		transfer_blood_dna(blood_dna, diseases)
+		bloody_hands = rand(2, 4)
+	update_inv_gloves()	//handles bloody hands overlays and updating
+	return TRUE
+
+/atom/proc/blood_DNA_to_color()
+	var/list/colors = list()//first we make a list of all bloodtypes present
+	for(var/bloop in blood_DNA)
+		if(colors[blood_DNA[bloop]])
+			colors[blood_DNA[bloop]]++
+		else
+			colors[blood_DNA[bloop]] = 1
+
+	var/final_rgb = BLOOD_COLOR_HUMAN	//a default so we don't have white blood graphics if something messed up
+
+	if(colors.len)
+		var/sum = 0 //this is all shitcode, but it works; trust me
+		final_rgb = bloodtype_to_color(colors[1])
+		sum = colors[colors[1]]
+		if(colors.len > 1)
+			var/i = 2
+			while(i <= colors.len)
+				var/tmp = colors[colors[i]]
+				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
+				sum += tmp
+				i++
+
+	return final_rgb
+
+/atom/proc/clean_blood()
+	if(islist(blood_DNA))
+		blood_DNA = null
+		return TRUE
 
 /atom/proc/wash_cream()
 	return TRUE

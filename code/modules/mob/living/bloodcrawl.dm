@@ -147,9 +147,9 @@
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	//Makes the mob have the color of the blood pool it came out of
-	var/newcolor = rgb(149, 10, 10)
-	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
-		newcolor = rgb(43, 186, 0)
+	var/newcolor = BLOOD_COLOR_HUMAN
+	if(istype(B, /obj/effect/decal/cleanable/blood/xeno))
+		newcolor = BLOOD_COLOR_XENO
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
 	spawn(30)

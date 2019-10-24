@@ -1,9 +1,9 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
-	color = "#C80000" // rgb: 200, 0, 0
-	description = "Blood from a human, or otherwise."
+	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
+	description = "Blood from some creature."
 	metabolization_rate = 5 //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
@@ -28,27 +28,75 @@
 
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
-			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-				C.reagents.add_reagent("toxin", reac_volume * 0.5)
-			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		var/blood_id = C.get_blood_id()
+		if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM * C.blood_ratio)
+			// we don't care about bloodtype here, we're just refilling the mob
 
-	if(reac_volume >= 10 && istype(L))
+	if(reac_volume >= 10 && istype(L) && method != INJECT)
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
+	var/blood_id = C.get_blood_id()
+	if((blood_id == "blood" || blood_id == "jellyblood"))
+		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
+			C.adjustToxLoss(rand(2,8)*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain beneficial toxin as slime person
+	..()
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
-		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		O.add_blood_DNA(data)
+
+/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
+	if(!istype(T))
+		return
+	if(reac_volume < 3)
+		return
+
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	if(!B)
+		B = new(T)
+	if(data["blood_DNA"])
+		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+	if(!B.reagents)
+		B.reagents.add_reagent(id, reac_volume)
+	B.update_icon()
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
+		color = bloodtype_to_color(data["blood_type"])
+		if(data["blood_type"] == "SY")
+			name = "Synthetic Blood"
+			taste_description = "oily"
+
+		if(data["blood_type"] == "X*")
+			name = "Xenomorph Blood"
+			taste_description = "acidic heresy"
+			shot_glass_icon_state = "shotglassgreen"
+			pH = 2.5
+
+		if(data["blood_type"] == "HF")
+			name = "Hydraulic Blood"
+			taste_description = "burnt oil"
+			pH = 9.75
+
+		if(data["blood_type"] == "BUG")
+			name = "Insect Blood"
+			taste_description = "greasy"
+			pH = 7.25
+
+		if(data["blood_type"] == "L")
+			name = "Lizard Blood"
+			taste_description = "spicy"
+			pH = 6.85
+
+
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
 		if(data["blood_DNA"] != mix_data["blood_DNA"])
-			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
+			data["cloneable"] = FALSE //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
 		if(data["viruses"] || mix_data["viruses"])
 
 			var/list/mix1 = data["viruses"]
@@ -78,26 +126,110 @@
 			var/datum/disease/D = thing
 			. += D
 
-/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
-	if(!istype(T))
-		return
-	if(reac_volume < 3)
-		return
+/datum/reagent/blood/synthetics
+	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Synthetic Blood"
+	id = "syntheticblood"
+	taste_description = "oily"
+	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
 
-	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
-	if(!B)
-		B = new(T)
-	if(data["blood_DNA"])
-		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+/datum/reagent/blood/lizard
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_LIZARD, "blood_type"="L","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Lizard Blood"
+	id = "lizardblood"
+	taste_description = "spicy"
+	color = BLOOD_COLOR_LIZARD // rgb: 11, 7, 48
+	pH = 6.85
+
+/datum/reagent/blood/jellyblood
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Slime Jelly Blood"
+	id = "jellyblood"
+	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
+	color = BLOOD_COLOR_SLIME
+	taste_description = "slime"
+	taste_mult = 1.3
+	pH = 4
+
+/datum/reagent/blood/xenomorph
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Xenomorph Blood"
+	id = "xenoblood"
+	taste_description = "acidic heresy"
+	color = BLOOD_COLOR_XENO // greenish yellow ooze
+	shot_glass_icon_state = "shotglassgreen"
+	pH = 2.5
+
+/datum/reagent/blood/oil
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Hydraulic Blood"
+	id = "oilblood"
+	taste_description = "burnt oil"
+	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
+	pH = 9.75
+
+/datum/reagent/blood/insect
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_BUG, "blood_type"="BUG","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Insectoid Blood"
+	id = "bugblood"
+	taste_description = "waxy"
+	color = BLOOD_COLOR_BUG // Bug colored, I guess.
+	pH = 7.25
+
+
+/datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		if(M.dna?.species?.exotic_bloodtype != "GEL")
+			to_chat(M, "<span class='danger'>Your insides are burning!</span>")
+		M.adjustToxLoss(rand(20,60)*REM, 0)
+		. = 1
+	else if(prob(40) && isjellyperson(M))
+		M.heal_bodypart_damage(2*REM)
+		. = 1
+	..()
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
 	id = "liquidgibs"
-	color = "#FF9966"
+	color = BLOOD_COLOR_HUMAN
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= "O+","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	pH = 7.45
+
+/datum/reagent/liquidgibs/xeno
+	name = "Liquid xeno gibs"
+	id = "liquidxenogibs"
+	color = BLOOD_COLOR_XENO
+	taste_description = "blended heresy"
+	shot_glass_icon_state = "shotglassgreen"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	pH = 2.5
+
+/datum/reagent/liquidgibs/slime
+	name = "Slime sludge"
+	id = "liquidslimegibs"
+	color = BLOOD_COLOR_SLIME
+	taste_description = "slime"
+	shot_glass_icon_state = "shotglassgreen"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	pH = 4
+
+/datum/reagent/liquidgibs/synth
+	name = "Synthetic sludge"
+	id = "liquidsyntheticgibs"
+	color = BLOOD_COLOR_SYNTHETIC
+	taste_description = "jellied plastic"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+
+/datum/reagent/liquidgibs/oil
+	name = "Hydraulic sludge"
+	id = "liquidoilgibs"
+	color = BLOOD_COLOR_OIL
+	taste_description = "chunky burnt oil"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	pH = 9.75
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -585,6 +717,30 @@
 	race = /datum/species/android
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
+//Citadel Races
+/datum/reagent/mutationtoxin/mammal
+	name = "Mammal Mutation Toxin"
+	id = "mammalmutationtoxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/mammal
+	mutationtext = "<span class='danger'>The pain subsides. You feel... fluffier.</span>"
+
+/datum/reagent/mutationtoxin/insect
+	name = "Insect Mutation Toxin"
+	id = "insectmutationtoxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/insect
+	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to dark, moist areas.</span>"
+
+/datum/reagent/mutationtoxin/xenoperson
+	name = "Xeno-Hybrid Mutation Toxin"
+	id = "xenopersonmutationtoxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/xeno
+	mutationtext = "<span class='danger'>The pain subsides. You feel... oddly longing for the Queen.</span>" //sadly, not the British one.
 
 //BLACKLISTED RACES
 /datum/reagent/mutationtoxin/skeleton
@@ -947,18 +1103,29 @@
 	reagent_state = SOLID
 	taste_description = "iron"
 	pH = 6
-
+	overdose_threshold = 30
 	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
-		C.blood_volume += 0.5
+		C.blood_volume += 0.01 //we'll have synthetics from medbay.
 	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
 			M.reagents.add_reagent("toxin", reac_volume)
+	..()
+
+/datum/reagent/iron/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
+
+/datum/reagent/iron/overdose_process(mob/living/carbon/C)
+	if(prob(20))
+		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		if (istype(L))
+			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
 	..()
 
 /datum/reagent/gold
@@ -1077,17 +1244,19 @@
 	pH = 5.5
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/effect/decal/cleanable))
+	if(istype(O, /obj/effect/decal/cleanable)  || istype(O, /obj/item/projectile/bullet/reusable/foam_dart) || istype(O, /obj/item/ammo_casing/caseless/foam_dart))
 		qdel(O)
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+			O.clean_blood()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -1105,26 +1274,33 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+				I.clean_blood()
 			if(C.wear_mask)
-				if(SEND_SIGNAL(C.wear_mask, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+				SEND_SIGNAL(C.wear_mask, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+				if(C.wear_mask.clean_blood())
 					C.update_inv_wear_mask()
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = C
 				if(H.head)
-					if(SEND_SIGNAL(H.head, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					SEND_SIGNAL(H.head, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+					if(H.head.clean_blood())
 						H.update_inv_head()
 				if(H.wear_suit)
-					if(SEND_SIGNAL(H.wear_suit, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					SEND_SIGNAL(H.wear_suit, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+					if(H.wear_suit.clean_blood())
 						H.update_inv_wear_suit()
 				else if(H.w_uniform)
-					if(SEND_SIGNAL(H.w_uniform, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					SEND_SIGNAL(H.w_uniform, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+					if(H.w_uniform.clean_blood())
 						H.update_inv_w_uniform()
 				if(H.shoes)
-					if(SEND_SIGNAL(H.shoes, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					SEND_SIGNAL(H.shoes, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+					if(H.shoes.clean_blood())
 						H.update_inv_shoes()
 				H.wash_cream()
-			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+			M.clean_blood()
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
