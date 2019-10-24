@@ -110,7 +110,7 @@
 
 /obj/effect/proc_holder/spell/targeted/hypnotise
 	name = "Hypnotize (30)"
-	desc= "A piercing stare that incapacitates your victim for a good length of time."
+	desc= "A piercing stare that knocks out your victim for a good length of time, and makes them forget what recently happened."
 	action_icon_state = "hypnotize"
 	blood_used = 30
 	action_icon = 'icons/mob/vampire.dmi'
@@ -120,14 +120,12 @@
 /obj/effect/proc_holder/spell/targeted/hypnotise/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
 		user.visible_message("<span class='warning'>[user]'s eyes flash briefly as he stares into [target]'s eyes</span>")
-		override_hardstun = 50
-		if(do_mob(user, target, 50))
+		if(do_mob(user, target, 40))
 			to_chat(user, "<span class='warning'>Your piercing gaze knocks out [target].</span>")
 			to_chat(target, "<span class='warning'>You find yourself falling asleep.</span>")
 			target.SetSleeping(400) //So its actually usefull for abducting people, should be enough to drag them off and cuff them and remove their headset.
-			target.silent = (600) //So the victim wont call for help immediatly. Only in actuality 200 ticks if the victim is not woken up manually by other means.
-
-
+			sleep(400)
+			to_chat(target, "<span class='warning'>You wake up with a wicked headache and dont remember what happened recently.</span>") //Maybe give them the trauma that gives them a objective about what they hear? For now, thisll hopefully let the vampire suck someone without having to kill them.
 
 		else
 			revert_cast(usr)
@@ -357,7 +355,7 @@
 	user.regenerate_organs()
 	user.Stun(60) //Can just circumvent by becoming a bat, need to find a way around this
 
- /obj/effect/proc_holder/spell/self/summon_coat
+ /obj/effect/proc_holder/spell/self/summon_coat //Becomes a basic wizard spell which you need wizard clothes to do, possibly tied to making the coat itself a subtype of something?
 	name = "Summon Dracula Coat (80)"
 	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
 	blood_used = 80

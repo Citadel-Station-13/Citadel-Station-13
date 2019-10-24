@@ -18,3 +18,5 @@
 		return FALSE
 	V.handle_bloodsucking(src)
 	return TRUE
+//Todo, its possible to still suck blood for a vampire if you convert them while sucking their blood already.
+//And make a aggressive grab needed to suck.

@@ -7,7 +7,7 @@
 	roundend_category = "vampires"
 	job_rank = ROLE_VAMPIRE
 
-	var/usable_blood = 0
+	var/usable_blood = 30
 	var/total_blood = 0
 	var/fullpower = FALSE
 	var/draining
@@ -31,7 +31,7 @@
 		/obj/effect/proc_holder/spell/self/screech = 315,
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
-		/datum/vampire_passive/full = 666,
+		/datum/vampire_passive/full = 666, 
 		/obj/effect/proc_holder/spell/self/summon_coat = 666,
 		/obj/effect/proc_holder/spell/targeted/vampirize = 666) //The number has a very specific meaning.
 
@@ -307,7 +307,7 @@
 		return 0
 
 	if(light_available <= 0.25)
-		H.alpha = round((255 * 0.15))
+		H.alpha = round((255 * 0.05))
 		return 1
 	else
 		H.alpha = round((255 * 0.80))
