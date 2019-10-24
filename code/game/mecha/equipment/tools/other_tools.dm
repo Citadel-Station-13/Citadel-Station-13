@@ -84,7 +84,7 @@
 	switch(mode)
 		if(1)
 			if(!locked)
-				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRON)
+				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					occupant_message("Unable to lock on [target]")
 					return
 				locked = target
