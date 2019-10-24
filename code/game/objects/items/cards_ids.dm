@@ -451,3 +451,58 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
+
+//Polychromatic Knight Badge
+
+/obj/item/card/id/knight
+	var/id_color = "#00FF00" //defaults to green
+	name = "knight badge"
+	icon_state = "knight"
+	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID"
+
+/obj/item/card/id/knight/update_label(newname, newjob)
+	if(newname || newjob)
+		name = "[(!newname)	? "knight badge"	: "[newname]'s Knight Badge"][(!newjob) ? "" : " ([newjob])"]"
+		return
+
+	name = "[(!registered_name)	? "knight badge"	: "[registered_name]'s Knight Badge"][(!assignment) ? "" : " ([assignment])"]"
+
+/obj/item/card/id/knight/update_icon()
+	var/mutable_appearance/id_overlay = mutable_appearance(icon, "knight_overlay")
+
+	if(id_color)
+		id_overlay.color = id_color
+	cut_overlays()
+
+	add_overlay(id_overlay)
+
+/obj/item/card/id/knight/AltClick(mob/living/user)
+	. = ..()
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",id_color) as color|null
+		if(!in_range(src, user) || !energy_color_input)
+			return
+		if(user.incapacitated() || !istype(user))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return
+		id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+
+/obj/item/card/id/knight/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/card/id/knight/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+
+/obj/item/card/id/knight/blue
+	id_color = "#0000FF"
+
+/obj/item/card/id/knight/captain
+	id_color = "#FFD700"
