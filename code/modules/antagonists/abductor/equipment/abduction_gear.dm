@@ -798,7 +798,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 
-	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
+	var/static/list/injected_reagents = list("corazone")
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()
