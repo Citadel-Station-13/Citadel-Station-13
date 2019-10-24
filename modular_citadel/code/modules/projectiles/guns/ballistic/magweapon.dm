@@ -111,6 +111,7 @@
 	casing_ejector = FALSE
 	fire_delay = 2
 	recoil = 0.1
+	inaccuracy_modifier = 0.25
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -225,7 +226,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/magrifle
-	click_cooldown_override = 3
+	click_cooldown_override = 2.5
 	delay = 3
 
 /obj/item/ammo_casing/caseless/anlmagm
@@ -234,12 +235,12 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmagrifle
-	click_cooldown_override = 3
+	click_cooldown_override = 2.5
 	delay = 3
 
 ///magazines///
 
-/obj/item/ammo_box/magazine/mmag/
+/obj/item/ammo_box/magazine/mmag
 	name = "magrifle magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
@@ -268,10 +269,12 @@
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
 	burst_size = 1
+	actions_types = null
 	fire_delay = 3
 	spread = 0
 	recoil = 0.1
 	casing_ejector = FALSE
+	inaccuracy_modifier = 0.5
 	weapon_weight = WEAPON_MEDIUM
 	dualwield_spread_mult = 1.4
 

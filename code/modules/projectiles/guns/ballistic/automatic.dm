@@ -2,6 +2,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/alarmed = 0
 	var/select = 1
+	var/automatic_burst_overlay = TRUE
 	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 2
@@ -19,10 +20,11 @@
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
-	if(!select)
-		add_overlay("[initial(icon_state)]semi")
-	if(select == 1)
-		add_overlay("[initial(icon_state)]burst")
+	if(automatic_burst_overlay)
+		if(!select)
+			add_overlay("[initial(icon_state)]semi")
+		if(select == 1)
+			add_overlay("[initial(icon_state)]burst")
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/attackby(obj/item/A, mob/user, params)
@@ -112,7 +114,6 @@
 /obj/item/gun/ballistic/automatic/c20r/afterattack()
 	. = ..()
 	empty_alarm()
-	return
 
 /obj/item/gun/ballistic/automatic/c20r/update_icon()
 	..()
@@ -124,16 +125,17 @@
 	icon_state = "wt550"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
-	fire_delay = 4
 	can_suppress = FALSE
 	burst_size = 2
+	fire_delay = 1
 	can_bayonet = TRUE
 	knife_x_offset = 25
 	knife_y_offset = 12
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/wt550/enable_burst()
 	. = ..()
-	spread = 5
+	spread = 15
 
 /obj/item/gun/ballistic/automatic/wt550/disable_burst()
 	. = ..()
@@ -141,7 +143,7 @@
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
-	icon_state = "wt550[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
+	icon_state = "wt550[magazine ? "-[CEILING((	(get_ammo(FALSE) / magazine.max_ammo) * 20) /4, 1)*4]" : "-0"]"	//Sprites only support up to 20.
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
