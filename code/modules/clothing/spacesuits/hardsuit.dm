@@ -887,7 +887,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/Initialize()
 	. = ..()
-	if(istype(loc, obj/item/clothing/suit/space/hardsuit/lavaknight))
+	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/lavaknight))
 		var/obj/item/clothing/suit/space/hardsuit/lavaknight/S = loc
 		energy_color = S.energy_color
 	update_icon()
