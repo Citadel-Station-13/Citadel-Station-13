@@ -102,6 +102,8 @@
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
+#define iscow(A) (istype(A, /mob/living/simple_animal/cow))
+
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
 #define isdrone(A) (istype(A, /mob/living/simple_animal/drone))

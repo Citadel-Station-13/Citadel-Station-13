@@ -124,6 +124,32 @@
 	taste_sensitivity = 101 // ayys cannot taste anything.
 	maxHealth = 120 //Ayys probe a lot
 	modifies_speech = TRUE
+	var/mothership
+
+/obj/item/organ/tongue/abductor/attack_self(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	var/obj/item/organ/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	if(!istype(T))
+		return
+
+	if(T.mothership == mothership)
+		to_chat(H, "<span class='notice'>[src] is already attuned to the same channel as your own.</span>")
+		return
+
+	H.visible_message("<span class='notice'>[H] holds [src] in their hands, and concentrates for a moment.</span>", "<span class='notice'>You attempt to modify the attunation of [src].</span>")
+	if(do_after(H, delay=15, target=src))
+		to_chat(H, "<span class='notice'>You attune [src] to your own channel.</span>")
+		mothership = T.mothership
+
+/obj/item/organ/tongue/abductor/examine(mob/M)
+	. = ..()
+	if(HAS_TRAIT(M, TRAIT_ABDUCTOR_TRAINING) || HAS_TRAIT(M.mind, TRAIT_ABDUCTOR_TRAINING) || isobserver(M))
+		if(!mothership)
+			. += "<span class='notice'>It is not attuned to a specific mothership.</span>"
+		else
+			. += "<span class='notice'>It is attuned to [mothership].</span>"
 
 /obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
 	//Hacks

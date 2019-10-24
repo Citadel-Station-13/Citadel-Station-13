@@ -655,3 +655,67 @@
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
+
+/obj/machinery/chem_dispenser/abductor
+	name = "reagent synthesizer"
+	desc = "Synthesizes a variety of reagents using proto-matter."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "chem_dispenser"
+	has_panel_overlay = FALSE
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
+	working_state = null
+	nopower_state = null
+	dispensable_reagents = list(
+		"hydrogen",
+		"lithium",
+		"carbon",
+		"nitrogen",
+		"oxygen",
+		"fluorine",
+		"sodium",
+		"aluminium",
+		"silicon",
+		"phosphorus",
+		"sulfur",
+		"chlorine",
+		"potassium",
+		"iron",
+		"copper",
+		"mercury",
+		"radium",
+		"water",
+		"ethanol",
+		"sugar",
+		"sacid",
+		"welding_fuel",
+		"silver",
+		"iodine",
+		"bromine",
+		"stable_plasma",
+		"oil",
+		"ammonia",
+		"ash",
+		"acetone",
+		"phenol",
+		"diethylamine",
+		"mine_salve",
+		"toxin",
+		"space_drugs",
+		"plasma",
+		"frostoil",
+		"uranium",
+		"histamine",
+		"morphine"
+	)
+
+/obj/machinery/chem_dispenser/abductor/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
