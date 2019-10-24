@@ -261,7 +261,17 @@
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
 
+	var/should_override = FALSE
+
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
+		should_override = TRUE
+
+	
+	if(blood_DNA && !istype(src, /obj/effect/decal))
+		override[EXAMINE_POSITION_BEFORE] = " blood-stained "
+		should_override = TRUE
+
+	if(should_override)
 		. = override.Join("")
 
 ///Generate the full examine string of this atom (including icon for goonchat)
@@ -269,18 +279,7 @@
 	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]."
-	if(src.blood_DNA && !istype(src, /obj/effect/decal))
-		if(gender == PLURAL)
-			f_name = "some "
-		else
-			f_name = "a "
-		f_name += "<span class='danger'>blood-stained</span> [name]!"
-
-	to_chat(user, "[icon2html(src, user)] That's [f_name]")
-
-//	to_chat(user, "[get_examine_string(user, TRUE)].")
+	to_chat(user, "[get_examine_string(user, TRUE)].")
 
 	if(desc)
 		to_chat(user, desc)
