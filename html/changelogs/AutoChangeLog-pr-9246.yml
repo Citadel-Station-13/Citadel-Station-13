@@ -1,0 +1,8 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "blood on your body floating a bit to your right if you're a taur"
+  - bugfix: "some suits having no icon on tauric characters"
+  - tweak: "front facing CMO hardsuit icon for naga taurs"
+  - tweak: "colour of medical cross on CMO hardsuit for taurs"
+  - bugfix: "taur body and jumpsuit showing through mining suits"

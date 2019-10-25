@@ -502,7 +502,7 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
-	GET_COMPONENT(mood, /datum/component/mood)
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
 		mood.sanity = SANITY_GREAT

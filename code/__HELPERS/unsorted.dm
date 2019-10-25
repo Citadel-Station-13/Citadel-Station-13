@@ -756,7 +756,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
 GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
@@ -1550,3 +1549,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
+
+/proc/CallAsync(datum/source, proctype, list/arguments)
+	set waitfor = FALSE
+	return call(source, proctype)(arglist(arguments))

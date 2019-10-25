@@ -283,6 +283,12 @@
 	results = list("regen_jelly" = 2)
 	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
 
+/datum/chemical_reaction/jelly_convert
+	name = "Blood Jelly Conversion"
+	id = "blood_jelly"
+	results = list("slimejelly" = 1)
+	required_reagents = list("toxin" = 1, "jellyblood" = 1)
+
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = "corazone"
