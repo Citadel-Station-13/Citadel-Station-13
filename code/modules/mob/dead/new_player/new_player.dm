@@ -151,7 +151,7 @@
 			message_admins(msg)
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
-			
+
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
