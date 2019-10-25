@@ -5,6 +5,7 @@
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
 	beating = TRUE
+	var/true_name = "baseline placebo referencer"
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0
@@ -15,6 +16,11 @@
 	var/mind_control_uses = 1
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
+
+/obj/item/organ/heart/gland/examine(mob/user)
+	. = ..()
+	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
+		to_chat(user, "<span class='notice'>It is \a [true_name].</span>")
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -42,19 +48,19 @@
 
 /obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
-		return
+		return FALSE
 	mind_control_uses--
 	to_chat(owner, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
 	to_chat(owner, "<span class='mind_control'>[command]</span>")
 	active_mind_control = TRUE
-	log_admin("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
+	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	update_gland_hud()
 
 	addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
 
 /obj/item/organ/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
-		return
+		return FALSE
 	to_chat(owner, "<span class='userdanger'>You feel the compulsion fade, and you completely forget about your previous orders.</span>")
 	active_mind_control = FALSE
 
@@ -95,6 +101,7 @@
 	return
 
 /obj/item/organ/heart/gland/heals
+	true_name = "coherency harmonizer"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
@@ -109,6 +116,7 @@
 	owner.adjustOxyLoss(-20)
 
 /obj/item/organ/heart/gland/slime
+	true_name = "gastric animation galvanizer"
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1
@@ -130,6 +138,7 @@
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
+	true_name = "neural crosstalk uninhibitor"
 	cooldown_low = 400
 	cooldown_high = 700
 	uses = -1
@@ -151,11 +160,12 @@
 			if(2)
 				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
 				H.confused += 15
-				H.adjustBrainLoss(10, 160)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
 				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
+	true_name = "anthropmorphic translocator"
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = -1
@@ -167,10 +177,11 @@
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
 	randomize_human(owner)
-	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/moth, /datum/species/fly))
+	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/insect, /datum/species/fly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
+	true_name = "pliant cartilage enabler"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -183,6 +194,7 @@
 	owner.ventcrawler = VENTCRAWLER_ALWAYS
 
 /obj/item/organ/heart/gland/viral
+	true_name = "contamination incubator"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -217,6 +229,7 @@
 	return A
 
 /obj/item/organ/heart/gland/trauma
+	true_name = "white matter randomiser"
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = 5
@@ -235,6 +248,7 @@
 			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
 /obj/item/organ/heart/gland/spiderman
+	true_name = "araneae cloister accelerator"
 	cooldown_low = 450
 	cooldown_high = 900
 	uses = -1
@@ -249,6 +263,7 @@
 	S.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg
+	true_name = "roe/enzymatic synthesizer"
 	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
@@ -264,6 +279,7 @@
 	new /obj/item/reagent_containers/food/snacks/egg/gland(T)
 
 /obj/item/organ/heart/gland/electric
+	true_name = "electron accumulator/discharger"
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = -1
@@ -289,6 +305,7 @@
 	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
 /obj/item/organ/heart/gland/chem
+	true_name = "intrinsic pharma-provider"
 	cooldown_low = 50
 	cooldown_high = 50
 	uses = -1
@@ -315,6 +332,7 @@
 	..()
 
 /obj/item/organ/heart/gland/plasma
+	true_name = "effluvium sanguine-synonym emitter"
 	cooldown_low = 1200
 	cooldown_high = 1800
 	uses = -1

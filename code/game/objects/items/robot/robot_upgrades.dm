@@ -9,7 +9,7 @@
 	var/locked = FALSE
 	var/installed = 0
 	var/require_module = 0
-	var/module_type = null
+	var/list/module_type
 	// if true, is not stored in the robot to be ejected
 	// if module is reset
 	var/one_use = FALSE
@@ -18,7 +18,7 @@
 	if(R.stat == DEAD)
 		to_chat(user, "<span class='notice'>[src] will not function on a deceased cyborg.</span>")
 		return FALSE
-	if(module_type && !istype(R.module, module_type))
+	if(module_type && !is_type_in_list(R.module, module_type))
 		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
 		to_chat(user, "There's no mounting point for the module!")
 		return FALSE
@@ -93,7 +93,6 @@
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	//module_type = /obj/item/robot_module/security
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -141,7 +140,7 @@
 	desc = "A diamond drill replacement for the mining module's standard drill."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
+	module_type = list(/obj/item/robot_module/miner)
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -173,7 +172,7 @@
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
+	module_type = list(/obj/item/robot_module/miner)
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -200,7 +199,7 @@
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/janitor
+	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
 
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -227,7 +226,7 @@
 	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/janitor
+	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
 
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -276,7 +275,7 @@
 	icon_state = "ash_plating"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
+	module_type = list(/obj/item/robot_module/miner)
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -405,7 +404,9 @@
 		to produce more advanced and complex medical reagents."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/medical
+	module_type = list(/obj/item/robot_module/medical,
+		/obj/item/robot_module/syndicate_medical,
+		/obj/item/robot_module/medihound)
 	var/list/additional_reagents = list()
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
@@ -467,7 +468,9 @@
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/medical
+	module_type = list(/obj/item/robot_module/medical,
+		/obj/item/robot_module/syndicate_medical,
+		/obj/item/robot_module/medihound)
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -489,7 +492,9 @@
 		out procedures"
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/medical
+	module_type = list(/obj/item/robot_module/medical,
+		/obj/item/robot_module/syndicate_medical,
+		/obj/item/robot_module/medihound)
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -514,7 +519,7 @@
 		/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical,
 		/obj/item/robot_module/medihound,
-		/obj/item/robot_module/borgi) 
+		/obj/item/robot_module/borgi)
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -598,7 +603,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "borgrped"
 	require_module = TRUE
-	module_type = /obj/item/robot_module/engineering
+	module_type = list(/obj/item/robot_module/engineering)
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -626,7 +631,9 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer_crew"
 	require_module = TRUE
-	module_type = /obj/item/robot_module/medical
+	module_type = list(/obj/item/robot_module/medical,
+		/obj/item/robot_module/syndicate_medical,
+		/obj/item/robot_module/medihound)
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -664,3 +671,33 @@
 	desc = "Allows you to to turn a cyborg into a clown, honk."
 	icon_state = "cyborg_upgrade3"
 	new_module = /obj/item/robot_module/clown
+
+// Citadel's Vtech Controller
+/obj/effect/proc_holder/silicon/cyborg/vtecControl
+	name = "vTec Control"
+	desc = "Allows finer-grained control of the vTec speed boost."
+	action_icon = 'icons/mob/actions.dmi'
+	action_icon_state = "Chevron_State_0"
+
+	var/currentState = 0
+	var/maxReduction = 1
+
+
+/obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
+	var/mob/living/silicon/robot/self = usr
+
+	currentState = (currentState + 1) % 3
+
+	if(istype(self))
+		switch(currentState)
+			if (0)
+				self.speed = initial(self.speed)
+			if (1)
+				self.speed = initial(self.speed) - maxReduction * 0.5
+			if (2)
+				self.speed = initial(self.speed) - maxReduction * 1
+
+	action.button_icon_state = "Chevron_State_[currentState]"
+	action.UpdateButtonIcon()
+
+	return

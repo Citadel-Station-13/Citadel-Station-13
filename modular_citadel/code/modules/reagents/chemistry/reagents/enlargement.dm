@@ -26,9 +26,9 @@
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 17
 	metabolization_rate = 0.25
-	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.35
-	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
+	impure_chem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.35
+	inverse_chem		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_add(mob/living/carbon/M)
@@ -140,7 +140,7 @@
 /datum/reagent/fermi/BEsmaller
 	name = "Modesty milk"
 	id = "BEsmaller"
-	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix."
+	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix. Produced by reacting impure Succubus milk."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	metabolization_rate = 0.25
@@ -211,9 +211,9 @@
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 17 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
-	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.35
-	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
+	impure_chem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.35
+	inverse_chem		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_add(mob/living/carbon/M)
@@ -311,7 +311,7 @@
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Chastity draft"
 	id = "PEsmaller"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a smaller gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace."
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a smaller gentleman's package via a potent testosterone mix. Produced by reacting impure Incubus draft."
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	metabolization_rate = 0.5

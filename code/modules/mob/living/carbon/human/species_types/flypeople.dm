@@ -1,5 +1,5 @@
 /datum/species/fly
-	name = "Flyperson"
+	name = "Anthromorphic Fly"
 	id = "fly"
 	say_mod = "buzzes"
 	species_traits = list(NOEYES)
@@ -10,6 +10,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
+	exotic_bloodtype = "BUG"
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")

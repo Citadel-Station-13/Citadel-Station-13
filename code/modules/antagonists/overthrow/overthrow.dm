@@ -107,9 +107,9 @@
 /datum/antagonist/overthrow/proc/equip_overthrow()
 	if(!owner || !owner.current || !ishuman(owner.current)) // only equip existing human overthrow members. This excludes the AI, in particular.
 		return
-	var/obj/item/implant/storage/S = locate(/obj/item/implant/storage) in owner.current
+	var/obj/item/implant/storage/S = locate(/obj/item/implant/storage) in owner.current.implants
 	if(!S)
-		S = new(owner.current)
+		S = new
 		S.implant(owner.current)
 	var/I = pick(possible_useful_items)
 	if(ispath(I)) // in case some admin decides to fuck the list up for fun

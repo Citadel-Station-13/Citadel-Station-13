@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
-	
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
-		owner.current.key = C.key
+		C.transfer_ckey(owner.current, FALSE)
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()

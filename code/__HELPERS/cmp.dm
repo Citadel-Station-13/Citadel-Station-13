@@ -81,3 +81,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
+
+/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
+	return A.display_order - B.display_order

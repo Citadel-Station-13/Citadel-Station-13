@@ -413,9 +413,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
+	dat += "</b>[FOURSPACES][TicketHref("Refresh", ref_src)][FOURSPACES][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
-		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
+		dat += "[FOURSPACES][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [GAMETIMESTAMP("hh:mm:ss", closed_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 	if(closed_at)
 		dat += "<br>Closed at: [GAMETIMESTAMP("hh:mm:ss", closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
@@ -423,7 +423,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks(ref_src)]<br>"
+		dat += "<b>DISCONNECTED</b>[FOURSPACES][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in _interactions)
 		dat += "[I]<br>"

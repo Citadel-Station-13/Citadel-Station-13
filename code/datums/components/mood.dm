@@ -21,6 +21,8 @@
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	RegisterSignal(parent, COMSIG_INCREASE_SANITY, .proc/IncreaseSanity)
+	RegisterSignal(parent, COMSIG_DECREASE_SANITY, .proc/DecreaseSanity)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
@@ -129,29 +131,31 @@
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2)
+			DecreaseSanity(src, 0.2)
 		if(2)
-			DecreaseSanity(0.125, SANITY_CRAZY)
+			DecreaseSanity(src, 0.125, SANITY_CRAZY)
 		if(3)
-			DecreaseSanity(0.075, SANITY_UNSTABLE)
+			DecreaseSanity(src, 0.075, SANITY_UNSTABLE)
 		if(4)
-			DecreaseSanity(0.025, SANITY_DISTURBED)
+			DecreaseSanity(src, 0.025, SANITY_DISTURBED)
 		if(5)
-			IncreaseSanity(0.1)
+			IncreaseSanity(src, 0.1)
 		if(6)
-			IncreaseSanity(0.15)
+			IncreaseSanity(src, 0.15)
 		if(7)
-			IncreaseSanity(0.20)
+			IncreaseSanity(src, 0.20)
 		if(8)
-			IncreaseSanity(0.25, SANITY_GREAT)
+			IncreaseSanity(src, 0.25, SANITY_GREAT)
 		if(9)
-			IncreaseSanity(0.4, SANITY_GREAT)
+			IncreaseSanity(src, 0.4, SANITY_GREAT)
 
+/*
 	if(insanity_effect != holdmyinsanityeffect)
 		if(insanity_effect > holdmyinsanityeffect)
 			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
 		else
 			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
+*/
 
 	if(HAS_TRAIT(owner, TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -214,13 +218,13 @@
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
 	if(newval == insanity_effect)
 		return
-	var/mob/living/master = parent
-	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	//var/mob/living/master = parent
+	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
-/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
+/datum/component/mood/proc/DecreaseSanity(datum/source, amount, minimum = SANITY_INSANE)
 	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
-		IncreaseSanity(0.5)
+		IncreaseSanity(src, 0.5)
 	else
 		sanity = max(minimum, sanity - amount)
 		if(sanity < SANITY_UNSTABLE)
@@ -229,13 +233,13 @@
 			else
 				insanity_effect = (MINOR_INSANITY_PEN)
 
-/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
+/datum/component/mood/proc/IncreaseSanity(datum/source, amount, maximum = SANITY_NEUTRAL)
 	// Disturbed stops you from getting any more sane - I'm just gonna bung this in here
 	var/mob/living/owner = parent
 	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
 		return
 	if(sanity > maximum)
-		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
+		DecreaseSanity(src, 0.5) //Removes some sanity to go back to our current limit.
 	else
 		sanity = min(maximum, sanity + amount)
 		if(sanity > SANITY_CRAZY)

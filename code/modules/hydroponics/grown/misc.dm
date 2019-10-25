@@ -1,7 +1,7 @@
 // Starthistle
 /obj/item/seeds/starthistle
 	name = "pack of starthistle seeds"
-	desc = "A robust species of weed that often springs up in-between the cracks of spaceship parking lots."
+	desc = "A robust species of weed that often springs up in-between the cracks of spaceship parking lots. Grind down these seeds for a substitution for mustardgrind."
 	icon_state = "seed-starthistle"
 	species = "starthistle"
 	plantname = "Starthistle"
@@ -9,9 +9,10 @@
 	endurance = 50 // damm pesky weeds
 	maturation = 5
 	production = 1
-	yield = 2
+	yield = 6
 	potency = 10
 	growthstages = 3
+	grind_results = list("mustardgrind" = 1)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/harebell)

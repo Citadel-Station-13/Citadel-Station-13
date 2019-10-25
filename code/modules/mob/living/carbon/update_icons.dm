@@ -97,8 +97,12 @@
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
+	var/dam_colors = "#E62525"
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		dam_colors = bloodtype_to_color(H.dna.blood_type)
 
-	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)
+	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER, color = dam_colors)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
 	for(var/X in bodyparts)
@@ -189,7 +193,7 @@
 		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
 		legcuffs.color = legcuffed.color
 
-		overlays_standing[HANDCUFF_LAYER] = legcuffs
+		overlays_standing[LEGCUFF_LAYER] = legcuffs
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = legcuffed)
 

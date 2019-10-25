@@ -73,6 +73,10 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
+/obj/structure/destructible/cult/proc/check_menu(mob/living/user)
+	if(!user || user.incapacitated() || !iscultist(user) || !anchored || cooldowntime > world.time)
+		return FALSE
+	return TRUE
 
 /obj/structure/destructible/cult/talisman
 	name = "altar"
@@ -80,9 +84,18 @@
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
-/obj/structure/destructible/cult/talisman/attack_hand(mob/living/user)
+	var/static/image/radial_whetstone = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener")
+	var/static/image/radial_shell = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct-cult")
+	var/static/image/radial_unholy_water = image(icon = 'icons/obj/drinks.dmi', icon_state = "holyflask")
+
+/obj/structure/destructible/cult/talisman/Initialize()
 	. = ..()
-	if(.)
+	radial_unholy_water.color = "#333333"
+
+/obj/structure/destructible/cult/talisman/ui_interact(mob/user)
+	. = ..()
+
+	if(!user.canUseTopic(src, TRUE))
 		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>")
@@ -91,22 +104,27 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the altar...",,"Eldritch Whetstone","Construct Shell","Flask of Unholy Water")
-	var/list/pickedtype = list()
+
+	to_chat(user, "<span class='cultitalic'>You study the schematics etched into the altar...</span>")
+
+	var/list/options = list("Eldritch Whetstone" = radial_whetstone, "Construct Shell" = radial_shell, "Flask of Unholy Water" = radial_unholy_water)
+	var/choice = show_radial_menu(user, src, options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/reward
 	switch(choice)
 		if("Eldritch Whetstone")
-			pickedtype += /obj/item/sharpener/cult
+			reward = /obj/item/sharpener/cult
 		if("Construct Shell")
-			pickedtype += /obj/structure/constructshell
+			reward = /obj/structure/constructshell
 		if("Flask of Unholy Water")
-			pickedtype += /obj/item/reagent_containers/glass/beaker/unholywater
-	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+			reward = /obj/item/reagent_containers/glass/beaker/unholywater
+
+	if(!QDELETED(src) && reward && check_menu(user))
 		cooldowntime = world.time + 2400
-		for(var/N in pickedtype)
-			new N(get_turf(src))
-			to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
+		new reward(get_turf(src))
+		to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
 
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
@@ -116,9 +134,14 @@
 	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
-/obj/structure/destructible/cult/forge/attack_hand(mob/living/user)
+	var/static/image/radial_flagellant = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes")
+	var/static/image/radial_shielded = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor")
+	var/static/image/radial_mirror = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "mirror_shield")
+
+/obj/structure/destructible/cult/forge/ui_interact(mob/user)
 	. = ..()
-	if(.)
+
+	if(!user.canUseTopic(src, TRUE))
 		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The heat radiating from [src] pushes you back.</span>")
@@ -129,24 +152,26 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice
-	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
-		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
-	else
-		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
-	var/list/pickedtype = list()
+
+	to_chat(user, "<span class='cultitalic'>You study the schematics etched into the forge...</span>")
+
+
+	var/list/options = list("Shielded Robe" = radial_shielded, "Flagellant's Robe" = radial_flagellant, "Mirror Shield" = radial_mirror)
+	var/choice = show_radial_menu(user, src, options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/reward
 	switch(choice)
 		if("Shielded Robe")
-			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/cult_shield
+			reward = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
+			reward = /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Mirror Shield")
-			pickedtype += /obj/item/shield/mirror
-	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+			reward = /obj/item/shield/mirror
+
+	if(!QDELETED(src) && reward && check_menu(user))
 		cooldowntime = world.time + 2400
-		for(var/N in pickedtype)
-			new N(get_turf(src))
-			to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating the [choice]!</span>")
+		new reward(get_turf(src))
+		to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating the [choice]!</span>")
 
 
 
@@ -234,9 +259,14 @@
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
-/obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
+	var/static/image/radial_blindfold = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold")
+	var/static/image/radial_curse = image(icon = 'icons/obj/cult.dmi', icon_state ="shuttlecurse")
+	var/static/image/radial_veilwalker = image(icon = 'icons/obj/cult.dmi', icon_state ="shifter")
+
+/obj/structure/destructible/cult/tome/ui_interact(mob/user)
 	. = ..()
-	if(.)
+
+	if(!user.canUseTopic(src, TRUE))
 		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>These books won't open and it hurts to even try and read the covers.</span>")
@@ -247,21 +277,27 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Zealot's Blindfold","Shuttle Curse","Veil Walker Set")
-	var/list/pickedtype = list()
+
+	to_chat(user, "<span class='cultitalic'>You flip through the black pages of the archives...</span>")
+
+	var/list/options = list("Zealot's Blindfold" = radial_blindfold, "Shuttle Curse" = radial_curse, "Veil Walker Set" = radial_veilwalker)
+	var/choice = show_radial_menu(user, src, options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/reward
 	switch(choice)
 		if("Zealot's Blindfold")
-			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
+			reward = /obj/item/clothing/glasses/hud/health/night/cultblind
 		if("Shuttle Curse")
-			pickedtype += /obj/item/shuttle_curse
+			reward = /obj/item/shuttle_curse
 		if("Veil Walker Set")
-			pickedtype += /obj/item/cult_shift
-			pickedtype += /obj/item/flashlight/flare/culttorch
-	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+			reward = /obj/effect/spawner/bundle/veil_walker
+	if(!QDELETED(src) && reward && check_menu(user))
 		cooldowntime = world.time + 2400
-		for(var/N in pickedtype)
-			new N(get_turf(src))
-			to_chat(user, "<span class='cultitalic'>You summon the [choice] from the archives!</span>")
+		new reward(get_turf(src))
+		to_chat(user, "<span class='cultitalic'>You summon the [choice] from the archives!</span>")
+
+/obj/effect/spawner/bundle/veil_walker
+	items = list(/obj/item/cult_shift, /obj/item/flashlight/flare/culttorch)
 
 /obj/effect/gateway
 	name = "gateway"

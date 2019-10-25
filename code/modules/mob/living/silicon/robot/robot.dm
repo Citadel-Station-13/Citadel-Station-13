@@ -226,6 +226,9 @@
 		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
+	if(!CONFIG_GET(flag/disable_secborg) && GLOB.security_level < CONFIG_GET(number/minimum_secborg_alert))
+		to_chat(src, "<span class='notice'>NOTICE: Due to local station regulations, the security cyborg module and its variants are only available during [num2seclevel(CONFIG_GET(number/minimum_secborg_alert))] alert and greater.</span>")
+
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
@@ -234,7 +237,7 @@
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-	if(!CONFIG_GET(flag/disable_secborg))
+	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
 
 	modulelist += get_cit_modules() //Citadel change - adds Citadel's borg modules.
@@ -1216,20 +1219,21 @@
 		return
 	if(incapacitated())
 		return
-	if(M.incapacitated())
-		return
 	if(module)
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
+		if(M.get_num_arms() <= 0)
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
+		else
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
-		GET_COMPONENT(riding_datum, /datum/component/riding)
+		var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 		if(istype(riding_datum))
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)

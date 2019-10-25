@@ -955,6 +955,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"abn" = (
+/obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Locker Room East";
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/bedsheetbin/color,
+/turf/open/floor/plasteel/white/corner,
+/area/crew_quarters/dorms)
 "abo" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -15282,19 +15295,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"aAJ" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/obj/machinery/camera{
-	c_tag = "Locker Room East";
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/crew_quarters/dorms)
 "aAK" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall,
@@ -26273,7 +26273,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aUZ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/landmark/barthpot,
 /turf/open/floor/wood,
 /area/library)
 "aVa" = (
@@ -27285,6 +27285,9 @@
 	dir = 2
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -28598,6 +28601,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aYU" = (
@@ -29133,6 +29139,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
@@ -30064,10 +30073,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbs" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbt" = (
@@ -43068,7 +43075,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "vsf" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -82325,7 +82332,7 @@ awQ
 axK
 ayC
 awQ
-aAJ
+abn
 aBT
 awQ
 aDI

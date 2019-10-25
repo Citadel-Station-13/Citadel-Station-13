@@ -53,7 +53,7 @@
 	if(mind && isliving(M))
 		mind.transfer_to(M, 1) // second argument to force key move to new mob
 	else
-		M.key = key
+		transfer_ckey(M)
 
 	if(delete_old_mob)
 		QDEL_IN(src, 1)

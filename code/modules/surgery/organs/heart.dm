@@ -4,11 +4,23 @@
 	icon_state = "heart-on"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
+
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = 3 * STANDARD_ORGAN_DECAY		//designed to fail about 5 minutes after death
+
+	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
+	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
+	now_fixed = "<span class='info'>Your heart begins to beat again.</span>"
+	high_threshold_cleared = "<span class='info'>The pain in your chest has died down, and your breathing becomes more relaxed.</span>"
+
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
+
+	var/failed = FALSE		//to prevent constantly running failing code
+	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -45,11 +57,13 @@
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
-	S.icon_state = "heart-off"
+	S.icon_state = "[icon_base]-off"
 	return S
 
 /obj/item/organ/heart/on_life()
+	..()
 	if(owner.client && beating)
+		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
@@ -70,11 +84,24 @@
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
+	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
+		if(owner.stat == CONSCIOUS)
+			owner.visible_message("<span class='userdanger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>")
+		owner.set_heartattack(TRUE)
+		failed = TRUE
+
+obj/item/organ/heart/slime
+	name = "slime heart"
+	desc = "It seems we've gotten to the slimy core of the matter."
+	icon_state = "heart-s-on"
+	icon_base = "heart-s"
+
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
+	decay_factor = 0
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
@@ -153,18 +180,61 @@
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-c"
-	synthetic = TRUE
+	organ_flags = ORGAN_SYNTHETIC
 
-/obj/item/organ/heart/cybernetic/emp_act()
+/obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
+	addtimer(CALLBACK(src, .proc/Restart), 20/severity SECONDS)
+	damage += 100/severity
+
+/obj/item/organ/heart/cybernetic/upgraded
+	name = "upgraded cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
+	icon_state = "heart-c-u"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+
+	//I put it on upgraded for now.
+	var/dose_available = TRUE
+	var/rid = /datum/reagent/medicine/epinephrine
+	var/ramount = 10
+
+obj/item/organ/heart/cybernetic/upgraded/on_life()
+	. = ..()
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
+		owner.reagents.add_reagent(rid, ramount)
+		used_dose()
+	if(ramount < 10) //eats your nutrition to regen epinephrine
+		var/regen_amount = owner.nutrition/2000
+		owner.nutrition -= regen_amount
+		ramount += regen_amount
+
+/obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
+	. = ..()
+	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
+	ramount = 0
+
+
+
+/obj/item/organ/heart/ipc
+	name = "IPC heart"
+	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
+	icon_state = "heart-c"
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/heart/ipc/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	Stop()
+	addtimer(CALLBACK(src, .proc/Restart), 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	synthetic = TRUE //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
 	var/min_next_adrenaline = 0
 
 /obj/item/organ/heart/freedom/on_life()

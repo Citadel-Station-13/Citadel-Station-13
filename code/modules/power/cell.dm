@@ -20,6 +20,7 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
+	rad_flags = RAD_NO_CONTAMINATE // Prevent the same cheese as with the stock parts
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -191,7 +192,7 @@
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
-	maxcharge = 1750	//35/17/8 disabler/laser/taser shots.
+	maxcharge = 1250	//25/12/6 disabler/laser/taser shots.
 	materials = list(MAT_GLASS=40)
 
 /obj/item/stock_parts/cell/secborg/empty/Initialize()

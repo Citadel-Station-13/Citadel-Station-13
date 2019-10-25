@@ -90,7 +90,7 @@
 	if(key)
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return 1
-	key = user.key
+	user.transfer_ckey(src, FALSE)
 	return 1
 
 //nursemaids - these create webs and eggs

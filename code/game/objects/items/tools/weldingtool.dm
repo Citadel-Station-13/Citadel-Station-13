@@ -360,7 +360,7 @@
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "brasswelder"
+	icon_state = "clockwelder"
 	item_state = "brasswelder"
 
 /obj/item/weldingtool/bronze

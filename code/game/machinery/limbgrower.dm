@@ -27,8 +27,10 @@
 							"human",
 							"lizard",
 							"fly",
-							"moth",
+							"insect",
 							"plasmaman",
+							"mammal",
+							"xeno",
 							"other"
 							)
 

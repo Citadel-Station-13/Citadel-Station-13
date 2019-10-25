@@ -447,4 +447,8 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/head/blueberet
 	ckeywhitelist = list("foxystalin")
 
-
+/datum/gear/donorgoggles
+	name = "Flight Goggles"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/flight
+	ckeywhitelist = list("maxlynchy")

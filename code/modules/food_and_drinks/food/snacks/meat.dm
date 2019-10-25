@@ -108,7 +108,7 @@
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtype = MEAT | RAW | GROSS
 
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 	icon_state = "mothmeat"
 	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
 	filling_color = "#BF896B"

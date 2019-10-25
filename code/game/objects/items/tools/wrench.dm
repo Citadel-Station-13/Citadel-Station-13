@@ -32,7 +32,7 @@
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "wrench_brass"
+	icon_state = "wrench_clock"
 	toolspeed = 0.5
 
 /obj/item/wrench/bronze

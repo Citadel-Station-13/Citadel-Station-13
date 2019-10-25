@@ -11,7 +11,7 @@
 
 /obj/item/storage/book/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!istype(C.head, /obj/item/clothing/head))
-				C.adjustBrainLoss(10, 80)
+				C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 80)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)

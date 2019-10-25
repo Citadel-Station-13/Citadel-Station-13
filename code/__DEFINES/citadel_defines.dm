@@ -89,27 +89,10 @@
 //Damage stuffs
 #define AROUSAL "arousal"
 
-//DNA stuffs. Remember to change this if upstream adds more snowflake options
-
-
-//Species stuffs. Remember to change this if upstream updates species flags
-#define MUTCOLORS2		35
-#define MUTCOLORS3		36
-#define NOAROUSAL		37 //Stops all arousal effects
-#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
-#define MATRIXED		39	//if icon is color matrix'd
-#define SKINTONE		40	//uses skin tones
-
 //Citadel istypes
 #define isgenital(A) (istype(A, /obj/item/organ/genital))
 
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
-#define isipcperson(A) (is_species(A, /datum/species/ipc))
-#define ismammal(A) (is_species(A, /datum/species/mammal))
-#define isavian(A) (is_species(A, /datum/species/avian))
-#define isaquatic(A) (is_species(A, /datum/species/aquatic))
-#define isinsect(A) (is_species(A, /datum/species/insect))
-#define isxenoperson(A) (is_species(A, /datum/species/xeno))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 

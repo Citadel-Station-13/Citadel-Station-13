@@ -4,6 +4,7 @@
 	desc = "Prepare blood magic by carving runes into your flesh. This rite is most effective with an <b>empowering rune</b>"
 	var/list/spells = list()
 	var/channeling = FALSE
+	var/holy_dispel = FALSE
 
 /datum/action/innate/cult/blood_magic/Grant()
 	..()
@@ -33,6 +34,9 @@
 			B.button.moved = B.button.screen_loc
 
 /datum/action/innate/cult/blood_magic/Activate()
+	if(holy_dispel)
+		to_chat(owner, "<span class='cultbold'>Holy water currently scours your body, nullifying the power of the rites!</span>")
+		return
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
 	for(var/obj/effect/rune/empower/R in range(1, owner))
@@ -64,7 +68,7 @@
 			qdel(nullify_spell)
 		return
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
+	if(QDELETED(src) || owner.incapacitated() || !BS || holy_dispel || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
 		return
 	to_chat(owner,"<span class='warning'>You begin to carve unnatural symbols into your flesh!</span>")
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -73,7 +77,7 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
 		return
-	if(do_after(owner, 100 - rune*60, target = owner))
+	if(do_after(owner, 100 - rune*60, target = owner) && !holy_dispel)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.bleed(40 - rune*32)
@@ -644,6 +648,11 @@
 	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Clicking the hand will potentially let you focus the spell into something stronger.</b>"
 	color = "#7D1717"
 
+/obj/item/melee/blood_magic/manipulator/examine(mob/user)
+	. = ..()
+	if(iscultist(user))
+		to_chat(user, "<span class='cultitalic'>The [name] currently has <b>[uses]</b> blood charges left.</span>")
+
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
 		if(ishuman(target))
@@ -678,9 +687,9 @@
 					if(ratio>1)
 						ratio = 1
 						uses -= round(overall_damage)
-						H.visible_message("<span class='warning'>[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"]'s blood magic!</span>")
+						H.visible_message("<span class='warning'>[H] is fully healed by [H==user ? "[H.p_their()]":"[user]'s"] blood magic!</span>")
 					else
-						H.visible_message("<span class='warning'>[H] is partially healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic.</span>")
+						H.visible_message("<span class='warning'>[H] is partially healed by [H==user ? "[H.p_their()]":"[user]'s"] blood magic.</span>")
 						uses = 0
 					ratio *= -1
 					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
@@ -762,7 +771,7 @@
 		switch(choice)
 			if("Blood Spear (150)")
 				if(uses < 150)
-					to_chat(user, "<span class='cultitalic'>You need 200 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 150 charges to perform this rite.</span>")
 				else
 					uses -= 150
 					var/turf/T = get_turf(user)
@@ -778,7 +787,7 @@
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
 			if("Blood Bolt Barrage (300)")
 				if(uses < 300)
-					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 300 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
 					uses -= 300
@@ -790,7 +799,7 @@
 						qdel(rite)
 			if("Blood Beam (500)")
 				if(uses < 500)
-					to_chat(user, "<span class='cultitalic'>You need 600 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 500 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
 					uses -= 500

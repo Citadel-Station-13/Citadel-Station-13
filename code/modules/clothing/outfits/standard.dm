@@ -399,7 +399,7 @@
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 
-	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
+	var/obj/item/implant/mindshield/L = new //Here you go Deuryn
 	L.implant(H, null, 1)
 
 
@@ -426,7 +426,7 @@
 
 /datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
-	uniform = /obj/item/clothing/under/patriotsuit 
+	uniform = /obj/item/clothing/under/patriotsuit
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	shoes = /obj/item/clothing/shoes/magboots/advance
 	suit_store = /obj/item/tank/internals/oxygen

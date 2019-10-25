@@ -136,7 +136,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
-	DoNotSplit = TRUE
 	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
 	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
@@ -144,20 +143,19 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
+	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
 	can_synth = FALSE
 
 
 /datum/reagent/fermi/enthrall/test
 	name = "MKUltraTest"
 	id = "enthrallTest"
-	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of joy, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	description = "A forbidden deep red mixture that makes you like Fermis a little too much. Unobtainable and due to be removed from the wiki."
 	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
 	creatorID  = "honkatonkbramblesnatch"//ckey
 	creatorGender = "Mistress"
 	creatorName = "Fermis Yakumo"
 	purity = 1
-	DoNotSplit = TRUE
 
 /datum/reagent/fermi/enthrall/test/on_new()
 	id = "enthrall"
@@ -295,18 +293,18 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Thralls mindbroken")
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.2)//should be ~30 in total
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)//should be ~30 in total
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
 /datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
-	name = "MKUltra"
+	name = "Gaseous MKUltra"
 	id = "enthrallExplo"
-	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of desire, inducing a chemial love for another. Also, how the HECC did you get this?"
+	description = "A forbidden deep red gas that overwhelms a foreign body, causing the person they next lay their eyes on to become more interesting. Studies have shown that people are 66% more likely to make friends with this in the air. Produced when MKUltra explodes."
 	color = "#2C051A" // rgb: , 0, 255
 	metabolization_rate = 0.1
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses."
-	DoNotSplit = TRUE
+	chemical_flags = REAGENT_DONOTSPLIT
 	can_synth = FALSE
 	var/mob/living/carbon/love
 
@@ -342,7 +340,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 				M.Stun(10)
 				M.emote("whimper")//does this exist?
 				to_chat(M, "[(M.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
-				M.adjustBrainLoss(0.5)//I found out why everyone was so damaged!
+				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)//I found out why everyone was so damaged!
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)

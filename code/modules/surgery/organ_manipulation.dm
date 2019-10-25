@@ -1,6 +1,6 @@
 /datum/surgery/organ_manipulation
-	name = "Organ manipulation"
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	name = "organ manipulation"
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
 	steps = list(
@@ -26,7 +26,7 @@
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-	species = list(/mob/living/carbon/alien/humanoid)
+	target_mobtypes = list(/mob/living/carbon/alien/humanoid)
 	steps = list(
 		/datum/surgery_step/saw,
 		/datum/surgery_step/incise,
@@ -62,7 +62,7 @@
 	name = "manipulate organs"
 	repeatable = 1
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
-	var/implements_extract = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 55)
+	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
 /datum/surgery_step/manipulate_organs/New()

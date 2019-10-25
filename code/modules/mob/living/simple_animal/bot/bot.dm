@@ -290,7 +290,7 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
-	else if(istype(W, /obj/item/hemostat) && paicard)
+	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
 			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
@@ -808,11 +808,18 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	switch(href_list["operation"])
 		if("patrol")
+			if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+				return TRUE
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
 			remote_disabled = !remote_disabled
 		if("hack")
+			if(!issilicon(usr) && !IsAdminGhost(usr))
+				var/msg = "[key_name(usr)] attempted to hack a bot with a href that shouldn't be available!"
+				message_admins(msg)
+				log_admin(msg)
+				return TRUE
 			if(emagged != 2)
 				emagged = 2
 				hacked = TRUE
@@ -915,7 +922,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(mind && paicard.pai)
 			mind.transfer_to(paicard.pai)
 		else if(paicard.pai)
-			paicard.pai.key = key
+			transfer_ckey(paicard.pai)
 		else
 			ghostize(0) // The pAI card that just got ejected was dead.
 		key = null

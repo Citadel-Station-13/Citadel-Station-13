@@ -1,5 +1,5 @@
 /mob/living/carbon/human
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD,RAD_HUD)
 	hud_type = /datum/hud/human
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	pressure_resistance = 25
@@ -16,6 +16,10 @@
 
 	//Eye colour
 	var/eye_color = "000"
+
+	var/horn_color = "85615a"	//specific horn colors, because why not?
+
+	var/wing_color = "fff"		//wings too
 
 	var/skin_tone = "caucasian1"	//Skin tone
 
@@ -46,6 +50,9 @@
 
 	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
+
+	var/blood_state = BLOOD_STATE_NOT_BLOODY
+	var/list/blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 	var/name_override //For temporary visible name changes
 	var/genital_override = FALSE //Force genitals on things incase of chems

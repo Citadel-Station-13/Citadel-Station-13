@@ -1,0 +1,11 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Added new wings to Insects and separated fluff from old ones, they're Insect's new body markings now without being per-limb (for now)."
+  - rscadd: "Horns are now available to mammals, and they have their own color."
+  - rscadd: "Legs are no longer a binary hack code, but actually something that can be changed. Framework for tauric adaptations."
+  - rscdel: "Purged Modular Citadel's sprite_accessories."
+  - bugfix: "improved the quality of a number of sprites."
+  - tweak: "Moths are now all insects. Avians and Aquatics are all anthromorphics. Just as planned."
+  - rscadd: "Anthromorphs can choose their preferred gibbing meat. I guess. Snowflakes are weird."
+  - bugfix: "Additional Gentlemen names."

@@ -169,3 +169,10 @@
 
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
+
+/datum/mood_event/revenant_blight
+	description = "<span class='umbra'>Just give up, honk...</span>\n"
+	mood_change = -5
+
+/datum/mood_event/revenant_blight/add_effects()
+	description = "<span class='umbra'>Just give up, [pick("no one will miss you", "there is nothing you can do to help", "even a clown would be more useful than you", "does it even matter in the end?")]...</span>\n"

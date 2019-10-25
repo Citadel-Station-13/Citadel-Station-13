@@ -13,6 +13,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	var/works_from_distance = FALSE
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE	//cutting down on exploits
 
 /obj/item/storage/part_replacer/pre_attack(obj/machinery/T, mob/living/user, params)
 	if(!istype(T) || !T.component_parts)
@@ -67,6 +68,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
+	rad_flags = RAD_NO_CONTAMINATE
 
 /obj/item/stock_parts/Initialize()
 	. = ..()

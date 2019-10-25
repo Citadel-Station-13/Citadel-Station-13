@@ -70,12 +70,12 @@ Also, you never added distance checking after target is selected. I've went ahea
 	var/mob/living/caster = user//The wizard/whomever doing the body transferring.
 
 	//MIND TRANSFER BEGIN
-	var/mob/dead/observer/ghost = victim.ghostize(0)
+	var/mob/dead/observer/ghost = victim.ghostize(FALSE, TRUE)
 	caster.mind.transfer_to(victim)
 
 	ghost.mind.transfer_to(caster)
 	if(ghost.key)
-		caster.key = ghost.key	//have to transfer the key since the mind was not active
+		ghost.transfer_ckey(caster)	//have to transfer the key since the mind was not active
 	qdel(ghost)
 
 	//MIND TRANSFER END
