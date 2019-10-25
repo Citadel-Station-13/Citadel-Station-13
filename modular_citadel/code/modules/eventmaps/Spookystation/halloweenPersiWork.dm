@@ -309,14 +309,3 @@
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury04
 	name = "Luxury Dorm 4"
 	id = "L03"
-
-//This is just so I don't have to mass varedit!
-
-/obj/structure/falsewall/halloweenBall/wood
-	name = "wooden wall"
-	desc = "A wall with wooden plating. Stiff."
-	icon = 'icons/turf/walls/wood_wall.dmi'
-	icon_state = "wood"
-	mineral = /obj/item/stack/sheet/mineral/wood
-	walltype = /turf/closed/wall/mineral/wood
-	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood, /turf/closed/indestructible/wood)

@@ -599,6 +599,17 @@
 	..()
 
 /*
+	WALLS - BECAUSE I HAD TO REPLACE ALL OF THEM ON THE MAP AND DO IT RIGHT THIS TIME
+																						*/
+/turf/closed/wall/mineral/wood
+
+
+/obj/structure/falsewall/wood
+
+//Due to the behavior of walls generally, I'm not going to make a microcosm of full flexibility
+//and functionability for a ball map, but heres everything we are usually using for future reference.
+
+/*
 	TURF DIRECTIONALS, OVERALL SPAMMED STUFF ETC
 												*/
 
