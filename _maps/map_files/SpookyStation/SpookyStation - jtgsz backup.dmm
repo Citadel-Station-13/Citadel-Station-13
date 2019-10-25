@@ -67,9 +67,11 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "ap" = (
-/obj/structure/fluff/bus/dense,
-/turf/open/floor/plasteel/dark,
-/area/eventmap/outside)
+/obj/structure/bed,
+/obj/effect/spawner/lootdrop/bedsheet,
+/mob/living/simple_animal/lazy_bones,
+/turf/open/floor/carpet/royalblue,
+/area/eventmap/inside)
 "aq" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/eventmap/inside)
@@ -561,7 +563,9 @@
 "cc" = (
 /obj/machinery/holopad,
 /mob/living/simple_animal/jacq{
-	active = 0
+	active = 0;
+	light_color = "#EE9933";
+	light_range = 5
 	},
 /turf/open/floor/carpet,
 /area/eventmap/inside)
@@ -585,6 +589,9 @@
 /area/eventmap/inside)
 "cg" = (
 /obj/structure/table/wood/fancy,
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc{
+	light_range = 3
+	},
 /turf/open/floor/carpet,
 /area/eventmap/inside)
 "ch" = (
@@ -687,7 +694,7 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "cA" = (
-/obj/item/flashlight/lantern,
+/obj/effect/wisp/pumpkin,
 /turf/open/floor/spooktime/nonspooktimegrass,
 /area/eventmap/inside)
 "cB" = (
@@ -932,9 +939,10 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "dt" = (
-/obj/structure/flora/tree/jungle/small,
-/turf/open/floor/spooktime/nonspooktimegrass,
-/area/eventmap/outside)
+/obj/machinery/vending/kink,
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "du" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/carpet/royalblack,
@@ -1806,11 +1814,10 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "fY" = (
-/obj/item/wisp_lantern{
-	light_color = "#FFCC66"
+/turf/open/floor/spooktime/cobble/sideW{
+	icon_state = "cobble_corner_nw"
 	},
-/turf/open/floor/wood,
-/area/eventmap/inside)
+/area/eventmap/outside)
 "fZ" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
@@ -2444,6 +2451,8 @@
 /area/eventmap/inside)
 "hT" = (
 /obj/structure/table/wood/fancy/royalblack,
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc,
+/obj/effect/wisp/pumpkin,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "hU" = (
@@ -3778,26 +3787,8 @@
 /turf/open/floor/carpet/royalblue,
 /area/eventmap/inside)
 "mp" = (
-/obj/structure/bed,
-/obj/effect/spawner/lootdrop/bedsheet,
-/mob/living/simple_animal/hostile/skeleton{
-	a_intent = "friendly";
-	anchored = 1;
-	attack_sound = 'sound/vox_fem/bone.ogg';
-	attacktext = "petpats";
-	buckle_lying = 1;
-	buckled = 1;
-	canmove = 0;
-	lying = 1;
-	melee_damage_lower = 0;
-	melee_damage_type = "arousal";
-	melee_damage_upper = 1;
-	name = "Lazy Bones";
-	resting = 1;
-	speed = 0;
-	staminaloss = 2.14748e+009
-	},
-/turf/open/floor/carpet/royalblue,
+/obj/item/wisp_lantern/pumpkin,
+/turf/open/floor/wood,
 /area/eventmap/inside)
 "mq" = (
 /obj/structure/bedsheetbin/color,
@@ -4335,9 +4326,10 @@
 	},
 /area/eventmap/inside)
 "nV" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/head/hardhat/pumpkinhead/extra_bright,
+/obj/item/clothing/head/hardhat/pumpkinhead/extra_bright,
 /turf/open/floor/wood,
-/turf/open/floor/carpet/blackred,
 /area/eventmap/inside)
 "nW" = (
 /obj/item/storage/box/bodybags{
@@ -4748,18 +4740,20 @@
 /area/eventmap/inside)
 "pg" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/clothing/head/hardhat/pumpkinhead/jaqc,
-/turf/open/floor/wood,
-/area/eventmap/inside)
-"ph" = (
-/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/head/hardhat/pumpkinhead/extra_bright,
+/obj/item/clothing/head/hardhat/pumpkinhead/extra_bright,
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
 /area/eventmap/inside)
+"ph" = (
+/turf/open/floor/spooktime/cobble/sideW{
+	icon_state = "cobble_side_n"
+	},
+/area/eventmap/outside)
 "pi" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/clothing/head/hardhat/pumpkinhead,
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "pj" = (
@@ -5350,6 +5344,7 @@
 /area/eventmap/inside)
 "qW" = (
 /obj/structure/table/wood/fancy/green,
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -7180,10 +7175,10 @@
 /turf/open/floor/spooktime/nonspooktimegrass,
 /area/eventmap/outside)
 "wi" = (
-/obj/structure/fluff/bus/passable{
-	icon_state = "wheredahoodat"
+/obj/structure/fluff/bus/dense,
+/turf/open/floor/spooktime/cobble/sideW{
+	icon_state = "cobble_side_n"
 	},
-/turf/open/floor/spooktime/nonspooktimegrass,
 /area/eventmap/outside)
 "wj" = (
 /obj/structure/fluff/bus/dense{
@@ -8198,7 +8193,6 @@
 	},
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -8223,6 +8217,35 @@
 "yO" = (
 /turf/open/floor/spooktime/cobble/sideS,
 /area/eventmap/outside)
+"yP" = (
+/obj/structure/fluff/bus/passable{
+	icon_state = "wheredahoodat"
+	},
+/turf/open/floor/spooktime/cobble/sideW{
+	icon_state = "cobble_side_n"
+	},
+/area/eventmap/outside)
+"yQ" = (
+/turf/open/floor/spooktime/cobble/sideW{
+	icon_state = "cobble_corner_ne"
+	},
+/area/eventmap/outside)
+"yR" = (
+/obj/effect/landmark/start/research_director,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
+"yS" = (
+/obj/effect/landmark/start/head_of_personnel,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
+"yT" = (
+/obj/effect/landmark/start/captain,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
+"yU" = (
+/obj/effect/landmark/start/quartermaster,
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
 "yV" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -8234,28 +8257,137 @@
 	},
 /turf/open/floor/plating,
 /area/eventmap/mountaininside)
+"yX" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
+"yY" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
+"yZ" = (
+/obj/effect/landmark/start/librarian,
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
+"za" = (
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zb" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zc" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/spooktime/cobble/sideW,
+/area/eventmap/outside)
+"zd" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
 "ze" = (
 /obj/item/reagent_containers/food/drinks/bottle/trappist,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountaininside)
+"zf" = (
+/obj/effect/landmark/start/lawyer,
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
+"zg" = (
+/obj/effect/landmark/start/roboticist,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
 "zh" = (
 /obj/structure/punching_bag,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"zi" = (
+/obj/effect/landmark/start,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zj" = (
+/obj/effect/landmark/start,
+/turf/open/floor/spooktime/cobble/cornerSW,
+/area/eventmap/outside)
+"zk" = (
+/obj/effect/landmark/start,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
+"zl" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
+"zm" = (
+/obj/effect/landmark/start/mime,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
+"zn" = (
+/obj/effect/landmark/start/chief_engineer,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zo" = (
+/obj/effect/landmark/start/clown,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
 "zp" = (
 /obj/item/reagent_containers/food/snacks/kebab/rat/double,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"zq" = (
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zr" = (
+/obj/effect/landmark/start/cyborg,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zs" = (
+/obj/effect/landmark/start/atmospheric_technician,
+/turf/open/floor/spooktime/cobble/roadmid,
+/area/eventmap/outside)
+"zt" = (
+/obj/structure/piano,
+/turf/open/floor/plasteel,
+/area/eventmap/mountaininside)
+"zu" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/spooktime/cobble,
+/area/eventmap/outside)
 "zv" = (
 /obj/structure/flora/tree/jungle,
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
+"zw" = (
+/obj/machinery/vending/medical,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"zx" = (
+/obj/structure/mineral_door/wood,
+/turf/closed/indestructible/wood,
+/area/eventmap/inside)
 "zy" = (
 /obj/item/shared_storage/blue,
 /turf/open/floor/wood,
 /area/eventmap/mountaininside)
+"zz" = (
+/obj/machinery/light/small,
+/obj/structure/closet/crate,
+/obj/item/twohanded/fireaxe,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/matches,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"zA" = (
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/spooktime/cobble/sideS,
+/area/eventmap/outside)
 "zE" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -8472,22 +8604,6 @@
 "Bq" = (
 /turf/open/floor/plasteel/dark,
 /area/space)
-"Br" = (
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Bs" = (
-/obj/effect/landmark/start,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Bw" = (
-/obj/effect/landmark/start/mime,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Bx" = (
-/obj/effect/landmark/start/atmospheric_technician,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "By" = (
 /obj/item/storage/fancy/cigarettes/cigpack_midori,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8518,77 +8634,21 @@
 "BN" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastW,
 /area/eventmap/outside)
-"BT" = (
-/obj/effect/landmark/start/captain,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"BU" = (
-/obj/effect/landmark/start/cargo_technician,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "BW" = (
 /obj/item/lighter/greyscale,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
-"BX" = (
-/obj/effect/landmark/start/quartermaster,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"BZ" = (
-/obj/effect/landmark/start/chief_engineer,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Ca" = (
-/obj/effect/landmark/start/research_director,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Cb" = (
-/obj/effect/landmark/start/librarian,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "Cc" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood,
 /area/eventmap/inside)
-"Ce" = (
-/obj/effect/landmark/start/roboticist,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Cf" = (
-/obj/effect/landmark/start/lawyer,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Cg" = (
-/obj/effect/landmark/start/clown,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Ch" = (
-/obj/effect/landmark/start/scientist,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "Cl" = (
 /obj/item/scythe,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
-"Cm" = (
-/obj/effect/landmark/start/cyborg,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Cn" = (
-/obj/effect/landmark/start/shaft_miner,
-/turf/open/floor/plasteel/dark,
-/area/space)
-"Co" = (
-/obj/effect/landmark/start/head_of_personnel,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "Cs" = (
 /turf/open/floor/spooktime/beach/coasts/coastSE,
 /area/eventmap/outside)
-"Cv" = (
-/obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "CA" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -8808,6 +8868,10 @@
 "Fi" = (
 /turf/open/floor/spooktime/beach/coasts/innerW,
 /area/eventmap/outside)
+"Fl" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/spooktime/riverwatermotion,
+/area/eventmap/outside)
 "Fm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -8936,10 +9000,13 @@
 /obj/item/clothing/mask/frog,
 /turf/open/floor/spooktime/beach/coasts/coastS,
 /area/eventmap/outside)
-"Ha" = (
-/obj/structure/piano/unanchored,
-/turf/open/floor/plasteel,
-/area/eventmap/mountaininside)
+"GZ" = (
+/obj/machinery/vending/medical,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Hd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
@@ -8984,6 +9051,13 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"HK" = (
+/obj/structure/closet/crate,
+/obj/item/twohanded/fireaxe,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/matches,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "HN" = (
 /obj/item/chair/wood,
 /turf/open/floor/wood,
@@ -9260,6 +9334,16 @@
 	},
 /turf/open/floor/sepia,
 /area/eventmap/mountaininside)
+"Ou" = (
+/obj/structure/closet/crate,
+/obj/item/twohanded/fireaxe,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/matches,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Ow" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
@@ -22385,7 +22469,7 @@ aN
 aN
 aN
 aN
-aN
+bK
 ab
 pR
 pR
@@ -22642,7 +22726,7 @@ aN
 aN
 aN
 aN
-aN
+bK
 ab
 pR
 pR
@@ -22892,7 +22976,7 @@ pR
 pR
 pR
 ab
-ab
+aN
 aN
 aN
 aN
@@ -23149,15 +23233,15 @@ pR
 pR
 pR
 ab
-ab
 aN
 aN
-aN
-aN
-aN
-aN
-bK
-ab
+ae
+ae
+ae
+ar
+ar
+ae
+ae
 pR
 jt
 yO
@@ -23406,15 +23490,15 @@ pR
 pR
 pR
 ab
-ab
 aN
 aN
-aN
-aN
-aN
-aN
-bK
-ab
+ar
+HK
+Ou
+zz
+HK
+HK
+ar
 pR
 pR
 yO
@@ -23663,15 +23747,15 @@ CI
 pR
 pR
 ab
-ab
 aN
 aN
-aN
-aN
-aN
-aN
-bK
-ab
+ar
+ah
+ah
+ah
+ah
+ah
+ar
 pR
 jt
 yO
@@ -23920,20 +24004,20 @@ CI
 CI
 pR
 ab
-ab
 aN
 aN
-aN
-aN
-aN
-aN
-bK
-ab
+ae
+HK
+ah
+HK
+ah
+zz
+ae
 pR
 pR
 yO
 kA
-kA
+Fl
 kA
 kA
 kA
@@ -24177,15 +24261,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+ae
+ae
+ae
+HK
+ah
+ah
+ah
+HK
+ae
 pR
 jt
 yO
@@ -24434,15 +24518,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-au
+ae
+GZ
+aO
+aO
+aO
+ah
+ah
+HK
+ar
 pR
 pR
 yO
@@ -24478,10 +24562,10 @@ aN
 aN
 aN
 aN
-aN
-aN
-aN
-ZR
+fY
+wl
+wl
+wo
 WA
 WA
 WA
@@ -24691,18 +24775,18 @@ pR
 pR
 pR
 ab
+ar
 dt
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+aO
+aO
+aO
+ah
+ah
+ah
+ar
 pR
 jt
-yO
+zA
 kA
 kA
 kA
@@ -24735,7 +24819,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 pR
 wk
 wn
@@ -24948,15 +25032,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+ar
+cS
+aO
+aO
+aO
+ah
+ah
+ah
+ae
 pR
 pR
 yO
@@ -24992,7 +25076,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -25205,15 +25289,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+ae
+fU
+aO
+aO
+aO
+ah
+ah
+ah
+ae
 pR
 jt
 yO
@@ -25249,7 +25333,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -25462,15 +25546,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+ar
+cS
+aO
+aO
+aO
+ah
+ah
+ah
+ar
 pR
 pR
 yO
@@ -25506,7 +25590,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -25719,15 +25803,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+ar
+cP
+aO
+aO
+aO
+ah
+ah
+ah
+ar
 pR
 jt
 yO
@@ -25763,7 +25847,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -25976,15 +26060,15 @@ pR
 pR
 pR
 ab
-ab
-aN
-aN
-aN
-aN
-aN
-aN
-bK
-ab
+ae
+GZ
+aO
+aO
+aO
+ah
+ah
+ah
+ae
 pR
 pR
 yO
@@ -26020,7 +26104,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Du
 av
 CW
@@ -26233,15 +26317,15 @@ pR
 pR
 pR
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-bK
-at
+ae
+ar
+ae
+zx
+zx
+zx
+ae
+ar
+ae
 pR
 pR
 yO
@@ -26277,7 +26361,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Dv
 bs
 CX
@@ -26492,11 +26576,11 @@ pR
 pR
 pR
 pR
+zu
 pR
 pR
 pR
-pR
-pR
+zu
 pR
 pR
 pR
@@ -26534,7 +26618,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Dw
 bs
 CY
@@ -26791,7 +26875,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 as
 bs
 CX
@@ -27048,7 +27132,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Dx
 bs
 CX
@@ -27305,7 +27389,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Dw
 bs
 CX
@@ -27562,7 +27646,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Dw
 bs
 CX
@@ -27819,7 +27903,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Dv
 bs
 CX
@@ -28076,7 +28160,7 @@ aN
 aN
 aN
 aN
-ap
+wi
 Bf
 Vd
 CZ
@@ -28333,7 +28417,7 @@ aN
 aN
 aN
 aN
-wi
+yP
 wj
 CV
 Da
@@ -28590,7 +28674,7 @@ aN
 aN
 aN
 aN
-ab
+ph
 yO
 WA
 WA
@@ -28847,13 +28931,13 @@ aN
 aN
 aN
 aN
-ab
-yO
-WA
-WA
-WA
-WA
-WA
+ph
+yR
+za
+zg
+zn
+zq
+zs
 Kq
 aN
 aN
@@ -29104,13 +29188,13 @@ aN
 aN
 aN
 aN
-ab
-yO
-WA
-WA
-WA
-WA
-WA
+ph
+yS
+zb
+zb
+zb
+zb
+zb
 Kq
 aN
 aN
@@ -29361,13 +29445,13 @@ Ws
 aN
 aN
 aN
-ab
-yO
-WA
-WA
-WA
-WA
-WA
+ph
+yT
+zb
+zi
+zi
+zi
+zb
 Kq
 aN
 aN
@@ -29618,13 +29702,13 @@ aN
 aN
 aN
 aN
-ab
-pR
-wl
-wo
+ph
+yU
+zc
+zj
 WA
-WA
-WA
+zi
+zb
 Kq
 aN
 aN
@@ -29875,13 +29959,13 @@ aN
 aN
 aN
 aN
-ab
-pR
-pR
-yO
-WA
-WA
-WA
+ph
+yX
+zd
+zk
+zi
+zi
+zb
 Kq
 aN
 aN
@@ -30132,13 +30216,13 @@ ab
 ab
 ab
 ab
-ab
-pR
-pR
-yO
-WA
-WA
-WA
+ph
+yY
+zd
+zl
+zb
+zb
+zb
 Kq
 aN
 aN
@@ -30389,12 +30473,12 @@ ab
 ab
 ab
 ab
-ab
-pR
-pR
-yO
-WA
-WA
+ph
+yZ
+zf
+zm
+zo
+zr
 WA
 Kq
 aN
@@ -30646,7 +30730,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -30903,7 +30987,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -31155,11 +31239,11 @@ ah
 ah
 ah
 cy
-pR
-pR
-pR
-pR
-pR
+wl
+wl
+wl
+wl
+wl
 pR
 pR
 pR
@@ -31669,11 +31753,11 @@ ah
 ah
 ah
 cy
-pR
-pR
-pR
-pR
-pR
+wk
+wk
+wk
+wk
+wk
 pR
 pR
 pR
@@ -31931,7 +32015,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -32188,7 +32272,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 wm
 yO
@@ -32445,7 +32529,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -32697,11 +32781,11 @@ ah
 ah
 ah
 cy
-pR
-pR
-pR
-pR
-pR
+wl
+wl
+wl
+wl
+wl
 pR
 pR
 pR
@@ -33211,11 +33295,11 @@ ah
 ah
 ah
 cy
-pR
-pR
-pR
-pR
-pR
+wk
+wk
+wk
+wk
+wk
 pR
 pR
 pR
@@ -33473,7 +33557,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -33730,7 +33814,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -33987,7 +34071,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -34244,7 +34328,7 @@ ab
 ab
 ab
 ab
-ab
+ph
 pR
 pR
 yO
@@ -34501,7 +34585,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 pR
 pR
 yO
@@ -34758,7 +34842,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 pR
 wk
 wn
@@ -35015,7 +35099,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -35272,7 +35356,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -35529,7 +35613,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -35786,7 +35870,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -36043,7 +36127,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -36300,7 +36384,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -36557,7 +36641,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -36814,7 +36898,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -37071,7 +37155,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -37328,7 +37412,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -37585,7 +37669,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -37842,7 +37926,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -38099,7 +38183,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -38356,7 +38440,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -38613,7 +38697,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -38870,7 +38954,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -39127,7 +39211,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -39384,7 +39468,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 yO
 WA
 WA
@@ -39641,7 +39725,7 @@ aN
 aN
 aN
 aN
-aN
+ph
 pR
 wl
 wo
@@ -39898,9 +39982,9 @@ aN
 aN
 aN
 aN
-aN
-aN
-aN
+ph
+pR
+pR
 yO
 WA
 WA
@@ -40155,10 +40239,10 @@ aN
 aN
 aN
 aN
-aN
-aN
-aN
-yO
+yQ
+wk
+wk
+wn
 WA
 WA
 WA
@@ -42414,7 +42498,7 @@ ab
 ae
 dj
 dH
-ah
+kp
 ae
 ex
 ah
@@ -44342,12 +44426,12 @@ AY
 Bb
 Bi
 Bm
-Ca
-Ch
-Ce
-BZ
-Cv
-Bx
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -44599,12 +44683,12 @@ AY
 Bc
 Bi
 Bn
-Co
-Br
-Br
-Br
-Br
-Br
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -44856,12 +44940,12 @@ AY
 Bd
 Bi
 Bm
-BT
-Br
-Bs
-Bs
-Bs
-Br
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -45113,12 +45197,12 @@ AY
 Be
 Bi
 Bm
-BX
-Br
-Bs
 Bq
-Bs
-Br
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -45370,12 +45454,12 @@ AY
 Bc
 Bi
 Bm
-BU
-Br
-Bs
-Bs
-Bs
-Br
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -45627,12 +45711,12 @@ AY
 Bc
 Bi
 Bm
-Cn
-Br
-Br
-Br
-Br
-Br
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -45884,11 +45968,11 @@ AY
 Bb
 Bi
 Bm
-Cb
-Cf
-Bw
-Cg
-Cm
+Bq
+Bq
+Bq
+Bq
+Bq
 Bq
 Bq
 Bq
@@ -54518,13 +54602,13 @@ kz
 fl
 fp
 ah
-pg
+nV
 ah
 hg
 hg
 hg
 ah
-lj
+pi
 ah
 fp
 sm
@@ -54775,13 +54859,13 @@ mP
 nK
 fp
 ah
-ph
+pg
 ah
 hg
 hg
 hg
 ah
-lj
+pi
 ah
 fp
 sm
@@ -55032,7 +55116,7 @@ mh
 kS
 fp
 ah
-lj
+nV
 ah
 hg
 hg
@@ -55289,13 +55373,13 @@ kz
 ah
 fp
 ah
+nV
+ah
+hg
+hg
+hg
+ah
 pi
-ah
-hg
-hg
-hg
-ah
-lj
 hx
 fp
 sm
@@ -58632,9 +58716,9 @@ fp
 fp
 fp
 fp
-nV
-nV
-nV
+op
+op
+op
 fp
 qY
 gj
@@ -59396,7 +59480,7 @@ kl
 kI
 fp
 lH
-mp
+ap
 mW
 fp
 on
@@ -63493,7 +63577,7 @@ aN
 aN
 vq
 fp
-fY
+mp
 aO
 aO
 aO
@@ -71573,7 +71657,7 @@ ac
 ac
 ac
 PT
-Ha
+zt
 ME
 ME
 ZA
@@ -71796,7 +71880,7 @@ ZA
 Ml
 SP
 ZA
-Ha
+zt
 Fw
 ac
 gs
