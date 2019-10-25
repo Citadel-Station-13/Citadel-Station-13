@@ -111,7 +111,9 @@
 				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
 			if(ZOOM_LOCK_OFF)
 				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
-	reset_zooming()
+		reset_zooming()
+	else
+		return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
