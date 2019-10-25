@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Silicons can now operate teleporter, medical and security records console from a distance again."
