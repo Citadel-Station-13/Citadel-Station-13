@@ -127,8 +127,8 @@
 	name = "ghost"
 	real_name = "ghost"
 	icon = 'icons/mob/mob.dmi'
-	maxHealth = 1e6
-	health = 1e6
+	maxHealth = 120
+	health = 120
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
 	density = FALSE
@@ -195,8 +195,8 @@
 	icon_dead = "scary_clown"
 	icon_gib = "scary_clown"
 	speak = list("...", ". . .")
-	maxHealth = 1e6
-	health = 1e6
+	maxHealth = 120
+	health = 120
 	emote_see = list("silently stares")
 	unsuitable_atmos_damage = 0
 	var/timer
