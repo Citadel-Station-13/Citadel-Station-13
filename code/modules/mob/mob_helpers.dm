@@ -88,7 +88,7 @@
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
-				newletter=" *BURP*."
+				newletter=" BURP!"
 		if(rand(1,100) <= strength*0.5)
 			if(rand(1,5) == 1)
 				newletter+="'"
