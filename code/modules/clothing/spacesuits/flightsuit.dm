@@ -547,7 +547,7 @@
 	changeWearer()
 	..()
 
-/obj/item/flightpack/item_action_slot_check(slot)
+/obj/item/flightpack/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_BACK)
 		return TRUE
 
@@ -574,7 +574,7 @@
 		momentum_speed_y = 0
 	momentum_speed = max(momentum_speed_x, momentum_speed_y)
 
-/obj/item/flightpack/item_action_slot_check(slot)
+/obj/item/flightpack/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_BACK
 
 /obj/item/flightpack/proc/enable_stabilizers()
@@ -730,7 +730,7 @@
 		if(!active)
 			clothing_flags &= ~NOSLIP
 
-/obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
+/obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_SHOES
 
 /obj/item/clothing/shoes/flightshoes/proc/delink_suit()

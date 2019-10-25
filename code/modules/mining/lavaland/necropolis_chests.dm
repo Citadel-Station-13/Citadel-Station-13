@@ -205,7 +205,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
 
-/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
+/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
@@ -796,21 +796,21 @@
 
 /obj/item/melee/ghost_sword/proc/ghost_check()
 	var/list/mob/dead/observer/current_spirits = list()
-	
+
 	recursive_orbit_collect(src, current_spirits)
 	recursive_orbit_collect(loc, current_spirits)		//anything holding us
-	
+
 	for(var/i in spirits - current_spirits)
 		var/mob/dead/observer/G = i
 		G.invisibility = GLOB.observer_default_invisibility
- 	
+
 	for(var/i in current_spirits)
 		var/mob/dead/observer/G = i
 		G.invisibility = 0
-	
+
 	spirits = current_spirits
 	return length(spirits)
- 
+
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
 	force = 0
 	var/ghost_counter = ghost_check()
