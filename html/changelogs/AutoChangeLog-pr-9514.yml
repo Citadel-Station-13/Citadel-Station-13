@@ -1,0 +1,6 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "Four colour variants of ankle coverings. Select them on the loadout screen."
+  - imageadd: "ankle coverings"
+  - tweak: "allows for shoes that don't cover your feet to be taken into account for footstep sound effects and glass shards"

@@ -264,6 +264,7 @@
 	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
 	category = "Holiday"
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+	cost = 12
 	surplus = 0
 
 /datum/uplink_item/device_tools/emag/hack_o_lantern

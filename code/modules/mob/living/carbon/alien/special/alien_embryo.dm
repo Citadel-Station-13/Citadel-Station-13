@@ -111,7 +111,7 @@
 	else //When it is removed via surgery at a late stage, rather than forced.
 		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
 		owner.adjustBruteLoss(40)
-		owner.cut_overlay(overlay)
+	owner.cut_overlay(overlay)
 	qdel(src)
 
 
@@ -119,19 +119,19 @@
 Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
+/obj/item/organ/body_egg/alien_embryo/AddInfectionImages(mob/living/carbon/C)
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
-			var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
+			var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
 			alien.client.images += I
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
+/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages(mob/living/carbon/C)
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
-				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == owner)
+				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == C)
 					qdel(I)

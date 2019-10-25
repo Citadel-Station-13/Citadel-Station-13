@@ -149,11 +149,13 @@
 		if(9)
 			IncreaseSanity(src, 0.4, SANITY_GREAT)
 
+/*
 	if(insanity_effect != holdmyinsanityeffect)
 		if(insanity_effect > holdmyinsanityeffect)
 			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
 		else
 			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
+*/
 
 	if(HAS_TRAIT(owner, TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -216,8 +218,8 @@
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
 	if(newval == insanity_effect)
 		return
-	var/mob/living/master = parent
-	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	//var/mob/living/master = parent
+	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
 /datum/component/mood/proc/DecreaseSanity(datum/source, amount, minimum = SANITY_INSANE)
@@ -263,8 +265,6 @@
 
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
-
-	return the_event
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	var/datum/mood_event/event = mood_events[category]

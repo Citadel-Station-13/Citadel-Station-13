@@ -1,0 +1,9 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - code_imp: "surgery cleanup"
+  - tweak: "dissection available round-start"
+  - rscadd: "better dissection surgeries from RnD, gives more points"
+  - rscadd: "abductors can now see what glands do"
+  - code_imp: "antagonist abductors now have a surgeon trait that teaches them every surgery rather than having it just check if they're an abductor"
+  - rscadd: "muscled veins surgery"
