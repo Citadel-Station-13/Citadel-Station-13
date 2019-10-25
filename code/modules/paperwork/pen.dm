@@ -158,6 +158,7 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 
 
@@ -200,7 +201,7 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 	update_icon()
 

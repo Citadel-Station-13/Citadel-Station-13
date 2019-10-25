@@ -251,6 +251,7 @@
 		M.apply_water()
 
 	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	clean_blood()
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)

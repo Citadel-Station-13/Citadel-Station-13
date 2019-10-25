@@ -180,7 +180,7 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(!gloves && bloody_hands)
-		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
+		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER, color = blood_DNA_to_color())
 		if(get_num_arms() < 2)
 			if(has_left_hand())
 				bloody_overlay.icon_state = "bloodyhands_left"
@@ -270,6 +270,32 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
 		inv.update_icon()
+/*
+	if(!shoes && bloody_feet)
+		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
+		if(dna.features["taur"] != "None")
+			if(dna.features["taur"] in GLOB.noodle_taurs)
+				bloody_overlay = mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "snekbloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
+				if(get_num_legs() < 2)
+					if(has_left_leg())
+						bloody_overlay.icon_state = "snekbloodyfeet_left"
+					else if(has_right_leg())
+						bloody_overlay.icon_state = "snekbloodyfeet_right"
+			else if(dna.features["taur"] in GLOB.paw_taurs)
+				bloody_overlay = mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "pawbloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
+				if(get_num_legs() < 2)
+					if(has_left_leg())
+						bloody_overlay.icon_state = "pawbloodyfeet_left"
+					else if(has_right_leg())
+						bloody_overlay.icon_state = "pawbloodyfeet_right"
+		else
+			if(get_num_legs() < 2)
+				if(has_left_leg())
+					bloody_overlay.icon_state = "bloodyfeet_left"
+				else if(has_right_leg())
+					bloody_overlay.icon_state = "bloodyfeet_right"
+
+		overlays_standing[GLOVES_LAYER] = bloody_overlay*/
 
 	if(shoes)
 		var/obj/item/clothing/shoes/S = shoes
