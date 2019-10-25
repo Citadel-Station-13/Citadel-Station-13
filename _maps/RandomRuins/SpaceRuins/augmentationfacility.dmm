@@ -90,6 +90,9 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/organ/cyberimp/chest/reviver,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 3
+	},
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "s" = (
@@ -145,9 +148,6 @@
 "A" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/mmi/posibrain{
-	pixel_y = 9
-	},
 /obj/item/mmi,
 /turf/open/floor/plasteel,
 /area/ruin/powered)

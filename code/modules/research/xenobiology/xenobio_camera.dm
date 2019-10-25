@@ -29,8 +29,6 @@
 	var/datum/action/innate/slime_scan/scan_action
 	var/datum/action/innate/feed_potion/potion_action
 
-	var/datum/component/redirect/listener
-
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
@@ -50,7 +48,7 @@
 	scan_action = new
 	potion_action = new
 	stored_slimes = list()
-	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
+	RegisterSignal(src, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
