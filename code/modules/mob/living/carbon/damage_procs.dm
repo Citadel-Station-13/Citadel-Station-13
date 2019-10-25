@@ -1,8 +1,8 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
 	var/hit_percent = (100-blocked)/100
-	if(hit_percent <= 0)
+	if(!forced && hit_percent <= 0)
 		return 0
 
 	var/obj/item/bodypart/BP = null
@@ -15,34 +15,35 @@
 		if(!BP)
 			BP = bodyparts[1]
 
+	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage * hit_percent, 0) : BP.heal_damage(abs(damage * hit_percent), 0))
+				if(damage > 0 ? BP.receive_damage(damage_amount) : BP.heal_damage(abs(damage_amount), 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage * hit_percent)
+				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, damage * hit_percent) : BP.heal_damage(0, abs(damage * hit_percent)))
+				if(damage > 0 ? BP.receive_damage(0, damage_amount) : BP.heal_damage(0, abs(damage_amount)))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage * hit_percent)
+				adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			adjustToxLoss(damage * hit_percent)
+			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage * hit_percent)
+			adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
-			adjustCloneLoss(damage * hit_percent)
+			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent) : BP.heal_damage(0, 0, abs(damage * hit_percent)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
 					update_damage_overlays()
 			else
-				adjustStaminaLoss(damage * hit_percent)
+				adjustStaminaLoss(damage_amount, forced = forced)
 		//citadel code
 		if(AROUSAL)
-			adjustArousalLoss(damage * hit_percent)
+			adjustArousalLoss(damage_amount, forced = forced)
 	return TRUE
 
 
@@ -85,7 +86,7 @@
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
-			blood_volume -= 5*amount
+			blood_volume -= 3*amount // x5 is too much, x3 should be still penalizing enough.
 		else
 			blood_volume -= amount
 	return ..()

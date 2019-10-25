@@ -206,8 +206,8 @@
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
 	if(newval == insanity_effect)
 		return
-	var/mob/living/master = parent
-	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	//var/mob/living/master = parent
+	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
 /datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = -INFINITY, maximum = INFINITY)
@@ -230,8 +230,6 @@
 
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
-
-	return the_event
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	var/datum/mood_event/event = mood_events[category]

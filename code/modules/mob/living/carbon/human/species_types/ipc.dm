@@ -12,8 +12,8 @@
 	default_features = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	mutanttongue = /obj/item/organ/tongue/robot/ipc
-
-	exotic_blood = "oil"
+	mutant_heart = /obj/item/organ/heart/ipc
+	exotic_bloodtype = "HF"
 
 	var/datum/action/innate/monitor_change/screen
 

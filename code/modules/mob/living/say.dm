@@ -391,16 +391,16 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 0
 
 /mob/living/say_mod(input, message_mode)
-	if(message_mode == MODE_WHISPER)
-		. = verb_whisper
-	else if(message_mode == MODE_WHISPER_CRIT)
+	. = ..()
+	if(message_mode == MODE_WHISPER_CRIT)
 		. = "[verb_whisper] in [p_their()] last breath"
-	else if(stuttering)
-		. = "stammers"
-	else if(derpspeech)
-		. = "gibbers"
-	else
-		. = ..()
+	else if(message_mode != MODE_CUSTOM_SAY)
+		if(message_mode == MODE_WHISPER)
+			. = verb_whisper
+		else if(stuttering)
+			. = "stammers"
+		else if(derpspeech)
+			. = "gibbers"
 
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)
