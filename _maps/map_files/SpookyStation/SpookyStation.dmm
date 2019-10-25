@@ -448,6 +448,9 @@
 /area/eventmap/outside)
 "bH" = (
 /obj/machinery/autoylathe,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/spooktime/cobble/sideS,
 /area/eventmap/outside)
 "bI" = (
@@ -914,6 +917,9 @@
 /area/eventmap/inside)
 "dp" = (
 /obj/structure/easel,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -969,6 +975,7 @@
 /area/eventmap/inside)
 "dz" = (
 /obj/machinery/vending/wardrobe/robo_wardrobe,
+/obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "dA" = (
@@ -987,6 +994,15 @@
 	},
 /obj/item/clothing/suit/armor/riot/knight,
 /obj/item/clothing/suit/armor/riot/knight{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/helmet/knight{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/knight,
+/obj/item/clothing/head/helmet/knight{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -1080,6 +1096,15 @@
 	},
 /obj/item/clothing/suit/armor/riot/knight/yellow,
 /obj/item/clothing/suit/armor/riot/knight/yellow{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/helmet/knight/yellow{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/knight/yellow,
+/obj/item/clothing/head/helmet/knight/yellow{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -1196,6 +1221,18 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
+/obj/item/clothing/head/helmet/knight/red{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/knight/red,
+/obj/item/clothing/head/helmet/knight/red{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "eh" = (
@@ -1232,6 +1269,15 @@
 	pixel_y = 4
 	},
 /obj/item/stamp/clown,
+/obj/item/clothing/head/helmet/knight/blue{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/knight/blue,
+/obj/item/clothing/head/helmet/knight/blue{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "em" = (
@@ -1330,11 +1376,21 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "ex" = (
-/obj/structure/closet/secure_closet/medical3,
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "ey" = (
-/obj/effect/landmark/start/medical_doctor,
+/obj/structure/closet/crate/medical{
+	icon_state = "medicalcrateopen"
+	},
+/obj/item/gun/magic/wand/resurrection,
+/obj/item/gun/magic/wand/resurrection,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/paper/fluff/balls/spookyasylum/healstaffnote,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "ez" = (
@@ -1463,6 +1519,9 @@
 /area/eventmap/inside)
 "eR" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -4394,8 +4453,8 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "og" = (
-/obj/structure/falsewall/wood,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/falsewall/halloweenBall/wood,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "oh" = (
@@ -5194,11 +5253,11 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "qu" = (
-/obj/structure/falsewall/wood,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/falsewall/halloweenBall/wood,
 /turf/open/floor/plasteel/dark,
 /area/eventmap/inside)
 "qv" = (
@@ -5622,10 +5681,10 @@
 /turf/open/floor/plasteel/dark,
 /area/eventmap/inside)
 "rP" = (
-/obj/structure/falsewall/wood,
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "stickyweb2"
 	},
+/obj/structure/falsewall/halloweenBall/wood,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "rQ" = (
@@ -5873,14 +5932,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sE" = (
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sF" = (
 /obj/machinery/light/small{
@@ -5890,18 +5945,14 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sG" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sH" = (
 /obj/machinery/light/small/broken{
@@ -5909,9 +5960,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sI" = (
 /obj/item/bodypart/head,
@@ -5921,9 +5970,7 @@
 	icon_state = "gibbearcore"
 	},
 /obj/item/stamp/ce,
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sJ" = (
 /obj/machinery/light/small{
@@ -5931,9 +5978,7 @@
 	},
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/clothing/neck/petcollar,
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "sK" = (
 /obj/machinery/shower{
@@ -6134,30 +6179,22 @@
 /obj/effect/decal/cleanable/blood/splatter{
 	icon_state = "floor4-old"
 	},
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "tu" = (
 /obj/item/organ/heart,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "tv" = (
 /obj/item/pet_carrier,
 /obj/item/reagent_containers/glass/bottle/hexacrocin,
 /obj/effect/decal/cleanable/semen,
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "tw" = (
 /obj/item/toy/tennis/red,
-/turf/open/floor/mineral/bananium{
-	color = "white"
-	},
+/turf/open/floor/mineral/titanium/white,
 /area/eventmap/inside)
 "tx" = (
 /obj/machinery/light/small{
@@ -6278,6 +6315,9 @@
 /area/eventmap/inside)
 "tO" = (
 /obj/machinery/camera/emp_proof,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/sepia,
 /area/eventmap/inside)
 "tP" = (
@@ -6509,6 +6549,9 @@
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/orange,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/sepia,
 /area/eventmap/inside)
 "uu" = (
@@ -7050,6 +7093,7 @@
 "vQ" = (
 /obj/item/clothing/head/helmet/justice,
 /obj/structure/closet/secure_closet/warden,
+/obj/item/clothing/suit/armor/hos/trenchcoat,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "vR" = (
@@ -7251,9 +7295,6 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "wu" = (
-/obj/item/clothing/head/helmet/justice/escape{
-	name = "justice helmet"
-	},
 /obj/machinery/button/door{
 	id = "armory";
 	name = "Armory Shutters";
@@ -7635,6 +7676,9 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/eventmap/inside)
 "xz" = (
@@ -7779,6 +7823,7 @@
 	name = "dust"
 	},
 /obj/item/toy/toy_dagger,
+/obj/item/clothing/suit/cultrobes,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "xQ" = (
@@ -7848,6 +7893,9 @@
 /area/eventmap/inside)
 "xT" = (
 /obj/structure/closet/secure_closet/hos,
+/obj/item/clothing/head/helmet/justice/escape{
+	name = "justice helmet"
+	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "xU" = (
@@ -8361,13 +8409,6 @@
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
-"zw" = (
-/obj/machinery/vending/medical,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/eventmap/inside)
 "zx" = (
 /obj/structure/mineral_door/wood,
 /turf/closed/indestructible/wood,
@@ -8385,9 +8426,14 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "zA" = (
-/obj/machinery/vending/autodrobe,
-/turf/open/floor/spooktime/cobble/sideS,
-/area/eventmap/outside)
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "zE" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -8638,8 +8684,16 @@
 /obj/item/lighter/greyscale,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"BY" = (
+/obj/structure/falsewall/halloweenBall/wood,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Cc" = (
 /obj/item/flashlight/lantern,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Ci" = (
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "Cl" = (
@@ -8869,9 +8923,12 @@
 /turf/open/floor/spooktime/beach/coasts/innerW,
 /area/eventmap/outside)
 "Fl" = (
-/obj/structure/mineral_door/wood,
-/turf/open/floor/spooktime/riverwatermotion,
-/area/eventmap/outside)
+/obj/machinery/vending/clothing,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Fm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -9069,6 +9126,11 @@
 "Ih" = (
 /turf/open/floor/wood/damturf/broken6,
 /area/eventmap/inside)
+"Ik" = (
+/obj/structure/closet/athletic_mixed,
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Il" = (
 /obj/item/chair/wood,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9088,6 +9150,13 @@
 /obj/structure/closet/cardboard,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountaininside)
+"IA" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "IH" = (
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9116,6 +9185,13 @@
 "Jr" = (
 /turf/closed/wall/rust,
 /area/eventmap/mountain)
+"Jv" = (
+/obj/structure/closet/chefcloset,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Jw" = (
 /turf/open/floor/wood/damturf/broken3,
 /area/eventmap/mountaininside)
@@ -9359,6 +9435,11 @@
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"OU" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/head/HoS/beret/syndicate,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Pb" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
@@ -9783,6 +9864,13 @@
 "WA" = (
 /turf/open/floor/spooktime/cobble/roadmid,
 /area/eventmap/outside)
+"WG" = (
+/obj/machinery/washing_machine,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "WL" = (
 /obj/structure/closet/gimmick/russian,
 /turf/open/floor/spooktime/dirtpatch,
@@ -20391,10 +20479,10 @@ aN
 aN
 aN
 ae
+zA
 cM
 cM
-cM
-cM
+IA
 ae
 aN
 aN
@@ -21419,10 +21507,10 @@ aN
 aN
 ae
 cE
+mE
 ah
 ah
-ah
-ah
+mE
 dx
 ae
 bF
@@ -21720,7 +21808,7 @@ ae
 ae
 ae
 ae
-dW
+BY
 ae
 ae
 ae
@@ -21932,7 +22020,7 @@ aN
 aN
 aN
 ae
-cG
+ex
 ah
 by
 by
@@ -23002,7 +23090,7 @@ ae
 rx
 ah
 ah
-tl
+Ik
 ae
 ur
 uG
@@ -23218,7 +23306,7 @@ aN
 aN
 aN
 ae
-cS
+Fl
 ah
 by
 by
@@ -23989,7 +24077,7 @@ aN
 aN
 aN
 ae
-cX
+WG
 db
 by
 by
@@ -24017,7 +24105,7 @@ pR
 pR
 yO
 kA
-Fl
+kA
 kA
 kA
 kA
@@ -24249,7 +24337,7 @@ ae
 cX
 ah
 ah
-ah
+mB
 dE
 dE
 dE
@@ -24786,7 +24874,7 @@ ah
 ar
 pR
 jt
-zA
+yO
 kA
 kA
 kA
@@ -28149,7 +28237,7 @@ ae
 ae
 ae
 ae
-dW
+BY
 ae
 aN
 aN
@@ -28395,7 +28483,7 @@ pV
 kp
 qs
 ah
-dW
+BY
 ah
 ah
 ah
@@ -28404,7 +28492,7 @@ ah
 ah
 ah
 ah
-dW
+BY
 ah
 wX
 ae
@@ -28908,7 +28996,7 @@ ah
 gB
 gB
 bI
-bR
+vw
 ae
 rF
 ae
@@ -29689,7 +29777,7 @@ hL
 hL
 ae
 ah
-dW
+BY
 oy
 oy
 oy
@@ -30202,7 +30290,7 @@ ae
 ae
 ae
 ae
-dW
+BY
 ae
 ae
 wY
@@ -30458,7 +30546,7 @@ ah
 ah
 ah
 ah
-ah
+mE
 ah
 ah
 wC
@@ -31208,7 +31296,7 @@ bJ
 bJ
 bJ
 ah
-ah
+mE
 ah
 ah
 ah
@@ -33264,7 +33352,7 @@ bJ
 bJ
 bJ
 ah
-ah
+mB
 bR
 lQ
 ah
@@ -34056,7 +34144,7 @@ ah
 ah
 ah
 ah
-ah
+mB
 ah
 ah
 ah
@@ -35339,7 +35427,7 @@ rK
 rJ
 sz
 ae
-tK
+Jv
 ah
 ae
 kY
@@ -35837,7 +35925,7 @@ ae
 kX
 ah
 kj
-lv
+OU
 mF
 ah
 os
@@ -39134,9 +39222,9 @@ by
 by
 ah
 ar
-yO
-yO
-yO
+CI
+CI
+CI
 yO
 ab
 aN
@@ -40444,7 +40532,7 @@ ab
 ab
 ab
 ae
-eq
+GZ
 eP
 ah
 fC
@@ -40734,7 +40822,7 @@ ae
 ae
 ae
 ae
-dW
+BY
 ae
 ae
 ae
@@ -42500,8 +42588,8 @@ dj
 dH
 kp
 ae
-ex
-ah
+ew
+Ci
 dy
 ae
 ah
@@ -43012,7 +43100,7 @@ ab
 ae
 ae
 ae
-dW
+BY
 ae
 ae
 ae
@@ -45843,7 +45931,7 @@ ef
 ae
 eG
 eU
-ex
+ew
 ae
 gf
 gy
