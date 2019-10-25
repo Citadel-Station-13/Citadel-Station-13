@@ -19,6 +19,6 @@
 ////////This is Eggs Benedict///////////////////////////////////////
 /obj/item/trillcook/prepared/benedict
 	name = "Prepared eggs"
-	desc = "Looks ready to cook an omelette!"
+	desc = "Looks ready to cook a benedict!"
 	icon_state = "cooking_pan_prepared_alt"
 	cooked_type = /obj/item/trillcook/finished/benedict

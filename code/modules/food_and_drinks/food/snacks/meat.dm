@@ -4,17 +4,36 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
-	desc = "A slab of meat."
+	desc = "A slab of meat. Looks ready to be placed in a pan"
 	icon_state = "meat"
 	dried_type = /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
 	list_reagents = list("nutriment" = 3, "cooking_oil" = 2) //Meat has fats that a food processor can process into cooking oil
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain
+	var/pan_type = /obj/item/trillcook/prepared/steaks
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain
 	slices_num = 3
 	filling_color = "#FF0000"
 	tastes = list("meat" = 1)
 	foodtype = MEAT | RAW
+
+///////////////////////Trill Cooking Interjection//////////////////////////////////////////////
+
+/obj/item/reagent_containers/food/snacks/meat/slab/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>You could <b>use</b> a <b>pan</b> on <b>this</b>.</span>")
+//trying to be suddle might have to change this to a more OOC message saying "attack pan with meat to start cooking"
+
+/obj/item/reagent_containers/food/snacks/meat/slab/attackby(obj/item/M, mob/user, params)
+	.=..()
+	if(istype(M, /obj/item/kitchen/frying_pan))
+		var/P = pan_type //What we cooked
+		new P(src) //This spawns the new pan
+		to_chat(user, "<span class='notice'>You place the meat slab in the pan.</span>")
+		qdel(src) //This is to remove the attacked item
+		qdel(M) //This is to remove the meat slab
+		return
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/meat/slab/initialize_slice(obj/item/reagent_containers/food/snacks/meat/rawcutlet/slice, reagents_per_slice)
 	..()
@@ -25,16 +44,13 @@
 	slice.name = "raw [name] cutlet"
 	slice.meat_type = name
 
-/obj/item/reagent_containers/food/snacks/meat/slab/initialize_cooked_food(obj/item/reagent_containers/food/snacks/S, cooking_efficiency)
-	..()
-	S.name = "[name] steak"
 
 ///////////////////////////////////// HUMAN MEATS //////////////////////////////////////////////////////
 
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human
 	name = "meat"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain/human
+	pan_type = /obj/item/trillcook/prepared/steaks/human
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain/human
 	tastes = list("tender meat" = 1)
 	foodtype = MEAT | RAW | GROSS
@@ -47,16 +63,6 @@
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
 		slice.name = "raw [subjectjob] cutlet"
-
-/obj/item/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/reagent_containers/food/snacks/meat/S, cooking_efficiency)
-	..()
-	S.subjectname = subjectname
-	S.subjectjob = subjectjob
-	if(subjectname)
-		S.name = "[subjectname] meatsteak"
-	else if(subjectjob)
-		S.name = "[subjectjob] meatsteak"
-
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
@@ -139,7 +145,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat
 	name = "synthmeat"
 	desc = "A synthetic slab of meat."
-	foodtype = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
+	foodtype = RAW | MEAT //Blood is used in the production of this meat thus its non-vegan.
 
 /obj/item/reagent_containers/food/snacks/meat/slab/meatproduct
 	name = "meat product"
@@ -167,7 +173,7 @@
 	icon_state = "tomatomeat"
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#FF0000"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/killertomato
+	pan_type = /obj/item/trillcook/prepared/steaks/plant
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/killertomato
 	tastes = list("tomato" = 1)
 	foodtype = FRUIT
@@ -178,11 +184,10 @@
 	icon_state = "bearmeat"
 	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2, "cooking_oil" = 6)
 	filling_color = "#FFB6C1"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/bear
+	pan_type = /obj/item/trillcook/prepared/steaks/bear
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtype = RAW | MEAT
-
 
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	name = "xeno meat"
@@ -191,7 +196,7 @@
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	bitesize = 4
 	filling_color = "#32CD32"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/xeno
+	pan_type = /obj/item/trillcook/prepared/steaks/xeno
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/xeno
 	tastes = list("meat" = 1, "acid" = 1)
 	foodtype = RAW | MEAT
@@ -202,11 +207,10 @@
 	icon_state = "spidermeat"
 	list_reagents = list("nutriment" = 3, "toxin" = 3, "vitamin" = 1)
 	filling_color = "#7CFC00"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/spider
+	pan_type = /obj/item/trillcook/prepared/steaks/spider
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/spider
 	tastes = list("cobwebs" = 1)
 	foodtype = RAW | MEAT | TOXIC
-
 
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath
 	name = "goliath meat"
@@ -234,6 +238,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/gorilla
 	name = "gorilla meat"
 	desc = "Much meatier than monkey meat."
+	pan_type = /obj/item/trillcook/prepared/steaks/large
 	list_reagents = list("nutriment" = 5, "vitamin" = 1, "cooking_oil" = 5) //Plenty of fat!
 
 /obj/item/reagent_containers/food/snacks/meat/rawbacon
@@ -263,7 +268,7 @@
 	list_reagents = list("nutriment" = 3, "tranquility" = 5, "cooking_oil" = 3)
 	tastes = list("meat" = 4, "tranquility" = 1)
 	filling_color = "#9A6750"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/gondola
+	pan_type = /obj/item/trillcook/prepared/steaks/gondola
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/gondola
 	foodtype = RAW | MEAT
 
@@ -280,6 +285,11 @@
 	filling_color = "#B22222"
 	foodtype = MEAT
 	tastes = list("meat" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/steak/large
+	name = "large steak"
+	desc = "A large piece of hot spicy meat."
+	list_reagents = list("nutriment" = 10)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/plain
     foodtype = MEAT
