@@ -470,7 +470,7 @@
 /////////////////////////////////////////////////////
 
 /obj/item/twohanded/dualsaber/hypereutactic
-	icon = 'icons/obj/1x2'
+	icon = 'icons/obj/1x2.dmi'
 	icon_state = "hypereutactic"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
