@@ -36,3 +36,7 @@ endmap
 
 map runtimestation
 endmap
+
+map spookystation
+	minplayers 150
+endmap
