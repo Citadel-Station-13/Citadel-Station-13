@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - tweak: "Costs of crates and paperwork"
+  - rscadd: "Adds 2 more crates hacked only"

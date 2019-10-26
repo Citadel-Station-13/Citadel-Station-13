@@ -6,6 +6,7 @@
  *		Spears
  *		CHAINSAWS
  *		Bone Axe and Spear
+ *		And more
  */
 
 /*##################################################################
@@ -346,7 +347,8 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+
+	clean_blood()
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -462,6 +464,116 @@
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
 	else
 		return ..()
+
+/////////////////////////////////////////////////////
+//	HYPEREUTACTIC Blades	/////////////////////////
+/////////////////////////////////////////////////////
+
+/obj/item/twohanded/dualsaber/hypereutactic
+	icon = 'icons/obj/1x2.dmi'
+	icon_state = "hypereutactic"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	item_state = "hypereutactic"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	name = "hypereutactic blade"
+	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
+	force = 7
+	force_unwielded = 7
+	force_wielded = 40
+	wieldsound = 'sound/weapons/nebon.ogg'
+	unwieldsound = 'sound/weapons/neboff.ogg'
+	hitsound_on = 'sound/weapons/nebhit.ogg'
+	slowdown_wielded = 1
+	armour_penetration = 60
+	light_color = "#37FFF7"
+	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
+	spinnable = FALSE
+	total_mass_on = 4
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "\improper divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/update_icon()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "hypereutactic_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "hypereutactic_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(gem_overlay)
+
+	if(wielded)
+		add_overlay(blade_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+	clean_blood()
+
+/obj/item/twohanded/dualsaber/hypereutactic/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(!energy_color_input || !user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+			return
+		light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
+		gem_inhand.color = light_color
+		. += gem_inhand
+		if(wielded)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "hypereutactic_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/twohanded/dualsaber/hypereutactic/examine(mob/user)
+	..()
+	if(!hacked)
+		to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+
+/obj/item/twohanded/dualsaber/hypereutactic/rainbow_process()
+	. = ..()
+	update_icon()
+	update_light()
 
 //spears
 /obj/item/twohanded/spear
@@ -624,7 +736,7 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
 	if(on)
@@ -847,18 +959,20 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/datum/component/mobhook
+	var/mob/listeningTo
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/Destroy()
+	listeningTo = null
+	return ..()
 
 /obj/item/twohanded/binoculars/wield(mob/user)
 	. = ..()
 	if(!wielded)
 		return
-	if(QDELETED(mobhook))
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
-	else
-		user.TakeComponent(mobhook)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
+	listeningTo = user
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
@@ -882,7 +996,8 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	. = ..()
-	mobhook.RemoveComponent()
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()

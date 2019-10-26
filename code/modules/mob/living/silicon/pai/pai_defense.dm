@@ -81,8 +81,11 @@
 /mob/living/silicon/pai/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/pai/adjustStaminaLoss(amount)
-	take_holo_damage(amount & 0.25)
+/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health, forced = FALSE)
+	if(forced)
+		take_holo_damage(amount)
+	else
+		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/adjustOrganLoss(slot, amount, maximum = 500) //I kept this in, unlike tg
 	Knockdown(amount * 0.2)
