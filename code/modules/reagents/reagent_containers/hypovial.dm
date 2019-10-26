@@ -1,7 +1,8 @@
+//hypovials used with the MkII hypospray. See hypospray.dm.
+
 /obj/item/reagent_containers/glass/bottle/vial
 	name = "broken hypovial"
 	desc = "A hypovial compatible with most hyposprays."
-	icon = 'modular_citadel/icons/obj/vial.dmi'
 	icon_state = "hypovial"
 	spillable = FALSE
 	var/comes_with = list() //Easy way of doing this.
@@ -34,7 +35,7 @@
 /obj/item/reagent_containers/glass/bottle/vial/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('modular_citadel/icons/obj/vial.dmi', "hypovial10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "hypovial10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -86,7 +87,7 @@
 /obj/item/reagent_containers/glass/bottle/vial/large/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('modular_citadel/icons/obj/vial.dmi', "hypoviallarge10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "hypoviallarge10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
