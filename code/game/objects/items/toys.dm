@@ -276,6 +276,106 @@
 /obj/item/toy/sword/getweight()
 	return (active ? total_mass_on : total_mass) || w_class *1.25
 
+/obj/item/toy/sword/cx
+	name = "\improper DX Non-Euplastic LightSword"
+	desc = "A deluxe toy replica of an energy sword. Realistic visuals and sounds! Ages 8 and up."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "cxsword_hilt"
+	item_state = "cxsword"
+	active = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("poked", "jabbed", "hit")
+	light_color = "#37FFF7"
+	var/light_brightness = 3
+	actions_types = list()
+
+/obj/item/toy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/toy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
+/obj/item/toy/sword/cx/attack_self(mob/user)
+	active = !( active )
+
+	if (active)
+		to_chat(user, "<span class='notice'>You activate the holographic blade with a press of a button.</span>")
+		playsound(user, 'sound/weapons/nebon.ogg', 50, 1)
+		w_class = WEIGHT_CLASS_BULKY
+		attack_verb = list("slashed", "stabbed", "ravaged")
+		set_light(light_brightness)
+		update_icon()
+
+	else
+		to_chat(user, "<span class='notice'>You deactivate the holographic blade with a press of a button.</span>")
+		playsound(user, 'sound/weapons/neboff.ogg', 50, 1)
+		w_class = WEIGHT_CLASS_SMALL
+		attack_verb = list("poked", "jabbed", "hit")
+		set_light(0)
+		update_icon()
+
+	add_fingerprint(user)
+
+/obj/item/toy/sword/cx/update_icon()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "cxsword_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "cxsword_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(gem_overlay)
+
+	if(active)
+		add_overlay(blade_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+/obj/item/toy/sword/cx/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(energy_color_input)
+			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(active)
+		if(isinhands)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/toy/sword/cx))
+		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
+			new /obj/item/twohanded/dualsaber/hypereutactic/toy(user.loc)
+			qdel(W)
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/toy/sword/cx/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+
 /*
  * Foam armblade
  */
@@ -336,6 +436,30 @@
 
 /obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
 	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy
+	name = "\improper DX Hyper-Euplastic LightSword"
+	desc = "A supermassive toy envisioned to cleave the very fabric of space and time itself in twain. Realistic visuals and sounds! Ages 8 and up."
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 5
+	force_unwielded = 0
+	force_wielded = 0
+	attack_verb = list("attacked", "struck", "hit")
+	total_mass_on = TOTAL_MASS_TOY_SWORD
+	slowdown_wielded = 0
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/IsReflect()//Stops it from reflecting energy projectiles
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
+	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
+	desc = "A custom-built toy with fancy rainbow lights built-in."
+	hacked = TRUE
 
 /obj/item/toy/katana
 	name = "replica katana"

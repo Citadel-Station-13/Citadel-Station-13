@@ -235,6 +235,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aP" = (
@@ -282,6 +283,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aX" = (
@@ -375,7 +377,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "bk" = (
-/obj/structure/kitchenspike,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bl" = (
@@ -420,6 +424,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bs" = (
@@ -460,13 +465,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bA" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/sleeper,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
@@ -487,17 +489,12 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "bE" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/sleeper,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bF" = (
@@ -567,13 +564,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
-"bP" = (
-/obj/structure/kitchenspike,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
 "bQ" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red,
@@ -583,6 +573,56 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"bS" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bT" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/structure/kitchenspike,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bU" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ca" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cb" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cd" = (
+/obj/structure/closet/emcloset,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"ce" = (
+/obj/structure/table/optable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"cf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"cg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -712,7 +752,7 @@ aj
 ao
 ad
 aw
-ax
+aR
 ax
 aR
 ax
@@ -721,9 +761,9 @@ ax
 aR
 ax
 bj
-ax
+aR
 ab
-by
+bS
 bx
 bI
 bK
@@ -736,6 +776,30 @@ ak
 ak
 at
 ax
+aR
+ax
+ax
+ax
+aR
+aR
+aR
+aR
+aR
+ax
+ab
+bT
+bx
+bI
+ca
+cb
+"}
+(8,1,1) = {"
+ac
+ag
+ak
+ap
+ab
+ax
 aJ
 aJ
 aJ
@@ -745,30 +809,6 @@ ax
 bc
 bc
 bc
-ax
-ab
-bz
-bx
-bI
-bK
-bL
-"}
-(8,1,1) = {"
-ac
-ag
-ak
-ap
-ab
-ay
-ay
-ay
-aS
-aY
-bf
-ax
-ax
-ax
-ax
 bQ
 bv
 ad
@@ -783,6 +823,30 @@ af
 al
 aq
 au
+ay
+ay
+ay
+aS
+aY
+bf
+ax
+ax
+ax
+ax
+ax
+ad
+bA
+cg
+ce
+bK
+bL
+"}
+(10,1,1) = {"
+ac
+bU
+ak
+aq
+au
 az
 aK
 aQ
@@ -792,16 +856,16 @@ ax
 ax
 bl
 ax
-ax
+bD
 ax
 ad
-bA
 bE
-bA
+bB
+bJ
 bK
 bL
 "}
-(10,1,1) = {"
+(11,1,1) = {"
 ac
 ah
 ak
@@ -821,16 +885,16 @@ ax
 ac
 bB
 bB
-bJ
+cf
 bK
 bL
 "}
-(11,1,1) = {"
+(12,1,1) = {"
 ad
 ab
 am
 ar
-au
+ac
 aB
 aA
 aA
@@ -849,12 +913,12 @@ bB
 bK
 bL
 "}
-(12,1,1) = {"
+(13,1,1) = {"
 aa
 ad
 ab
 ad
-as
+bv
 aC
 aK
 bM
@@ -869,11 +933,11 @@ ax
 ac
 bB
 bB
-bD
+bF
 ad
 ad
 "}
-(13,1,1) = {"
+(14,1,1) = {"
 aa
 aa
 aa
@@ -892,33 +956,9 @@ ax
 ax
 ad
 bC
-bF
+cd
 ad
 ad
-aa
-"}
-(14,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-aE
-aN
-aN
-aV
-aD
-bi
-bk
-bk
-bk
-bP
-bt
-ab
-bD
-ab
-ad
-aa
 aa
 "}
 (15,1,1) = {"
@@ -927,6 +967,30 @@ aa
 aa
 aa
 ad
+aE
+aN
+aN
+aV
+aD
+bi
+bz
+bz
+bz
+bk
+bt
+ab
+cd
+ab
+ad
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
 aD
 aE
 aE

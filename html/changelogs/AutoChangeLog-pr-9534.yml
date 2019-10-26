@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "abductors now actually work"
+  - tweak: "abductor scientist has their own greet message now"

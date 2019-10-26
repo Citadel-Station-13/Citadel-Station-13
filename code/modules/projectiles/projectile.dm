@@ -88,6 +88,8 @@
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
+	var/knockdown_stamoverride
+	var/knockdown_stam_max
 	var/unconscious = 0
 	var/irradiate = 0
 	var/stutter = 0
@@ -169,7 +171,11 @@
 			else if(isalien(L))
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color(H.dna.blood_type))
+				else
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 
 			if(prob(65)) //not all projectiles will delete blood, but when it does...
 				if(iscarbon(L))
@@ -188,6 +194,7 @@
 							H.bleed_rate += rand(3,9)	//being shot is usually more significant than a cut on your arm from a knife
 				else
 					L.add_splatter_floor(target_loca)
+
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
@@ -220,7 +227,7 @@
 	else
 		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 
-	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter, knockdown_stamoverride, knockdown_stam_max)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)

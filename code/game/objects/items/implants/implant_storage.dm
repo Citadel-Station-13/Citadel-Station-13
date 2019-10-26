@@ -21,7 +21,7 @@
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
-			GET_COMPONENT_FROM(STR, /datum/component/storage, imp_e.pocket)
+			var/datum/component/storage/STR = imp_e.pocket.GetComponent(/datum/component/storage)
 			if(!STR || (STR && STR.max_items < max_slot_stacking))
 				imp_e.pocket.AddComponent(/datum/component/storage/concrete/implant)
 				qdel(src)

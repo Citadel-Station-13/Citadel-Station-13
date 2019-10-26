@@ -771,7 +771,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/turf/source = random_far_turf()
 	if(!sound_type)
-		sound_type = pick("airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
+		sound_type = pick("airlock","airlock pry","console","flash","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
@@ -788,6 +788,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				target.playsound_local(source,'sound/effects/explosion1.ogg', 50, 1)
 			else
 				target.playsound_local(source, 'sound/effects/explosion2.ogg', 50, 1)
+		if("flash")
+			target.playsound_local(source, 'sound/weapons/flash.ogg', 50, 1)
 		if("far explosion")
 			target.playsound_local(source, 'sound/effects/explosionfar.ogg', 50, 1)
 		if("glass")

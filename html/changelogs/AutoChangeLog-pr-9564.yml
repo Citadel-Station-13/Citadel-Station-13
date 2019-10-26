@@ -1,0 +1,6 @@
+author: "tinfoil hat wearer"
+delete-after: True
+changes: 
+  - rscadd: "Added a new alien technology disk to scientist and roboticist uplinks that allows them to research the heavily-guarded secrets of the Grays."
+  - tweak: "Alientech is now the only Hidden alien research. To compensate for this, alien_bio and alien_engi have had their research costs doubled and now require advanced surgery tools and experimental tools respectively to research. Their export price is also halved."
+  - balance: "roboticists now have brainwashing disks AND alien technology added to their role-restricted uplink section. alien technology gives them brainwashing at a much later date, so brainwashing is the much cheaper option for instant power. makes logical sense because doctors get it as well because they do surgery, and roboticists can now either choose to brainwash people for less price but less power or emag borgs for higher prices, limited uses, but higher power."
