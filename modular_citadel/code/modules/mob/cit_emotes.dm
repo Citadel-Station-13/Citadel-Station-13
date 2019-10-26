@@ -228,3 +228,17 @@
 		var/sound = pick('modular_citadel/sound/voice/bark1.ogg', 'modular_citadel/sound/voice/bark2.ogg')
 		playsound(user, sound, 50, 1, -1)
 	. = ..()
+
+/datum/emote/living/arf
+	key = "arf"
+	key_third_person = "arfs"
+	message = "arfs!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/arf/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/arf.ogg', 50, 1, -1)
+	. = ..()
