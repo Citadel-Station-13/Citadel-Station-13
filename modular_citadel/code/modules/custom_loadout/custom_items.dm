@@ -2,7 +2,7 @@
 //For custom items.
 
 // Unless there's a digitigrade version make sure you add mutantrace_variation = NO_MUTANTRACE_VARIATION to all clothing/under and shoes - Pooj
-// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in modular_citadel/icons/mob
+// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in icons/mob
 
 /obj/item/custom/ceb_soap
 	name = "Cebutris' Soap"
