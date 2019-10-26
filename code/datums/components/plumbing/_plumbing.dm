@@ -47,7 +47,7 @@
 	return TRUE
 
 /datum/component/plumbing/proc/send_request(dir) //this should usually be overwritten when dealing with custom pipes
-	process_request(amount = 10, reagent = null, dir = dir)
+	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = null, dir = dir)
 
 /datum/component/plumbing/proc/process_request(amount, reagent, dir)
 	var/list/valid_suppliers = list()
@@ -64,7 +64,7 @@
 		give.transfer_to(src, amount / valid_suppliers.len, reagent)
 
 /datum/component/plumbing/proc/can_give(amount, reagent)
-	if(!reagents || amount <= 0)
+	if(amount <= 0)
 		return
 
 	if(reagent) //only asked for one type of reagent
