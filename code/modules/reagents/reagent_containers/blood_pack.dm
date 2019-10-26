@@ -4,13 +4,16 @@
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "bloodpack"
 	volume = 200
+	reagent_flags = DRAINABLE
 	var/blood_type = null
 	var/labelled = 0
+	var/color_to_apply = "#FFFFFF"
+	var/mutable_appearance/fill_overlay
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_colour"=color, "blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
@@ -18,6 +21,7 @@
 		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		if(B && B.data && B.data["blood_type"])
 			blood_type = B.data["blood_type"]
+			color_to_apply = bloodtype_to_color(blood_type)
 		else
 			blood_type = null
 	update_pack_name()
@@ -45,7 +49,7 @@
 
 /obj/item/reagent_containers/blood/random/Initialize()
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "SY", "HF", "GEL", "BUG")
 	return ..()
 
 /obj/item/reagent_containers/blood/APlus
@@ -71,6 +75,18 @@
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
+
+/obj/item/reagent_containers/blood/synthetics
+	blood_type = "SY"
+
+/obj/item/reagent_containers/blood/oilblood
+	blood_type = "HF"
+
+/obj/item/reagent_containers/blood/jellyblood
+	blood_type = "GEL"
+
+/obj/item/reagent_containers/blood/insect
+	blood_type = "BUG"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))

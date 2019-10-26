@@ -400,6 +400,12 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = 0
 			break
 
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.recoveringstam)
+				. = 0
+				break
+
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0

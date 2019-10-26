@@ -8,7 +8,7 @@
 	if(isalien(target))
 		knockdown = 0
 		nodamage = TRUE
-	else if(isliving(target))
+	else if(iscarbon(target))
 		var/mob/living/L = target
 		L.Knockdown(100, TRUE, FALSE, 30, 25)
 	return ..()
