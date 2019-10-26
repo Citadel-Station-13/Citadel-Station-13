@@ -96,6 +96,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_views)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
@@ -386,6 +387,11 @@
 		close(M)
 		. = TRUE //returns TRUE if any mobs actually got a close(M) call
 
+/datum/component/storage/proc/check_views()
+	for(var/mob/M in can_see_contents())
+		if(!isobserver(M) && !M.CanReach(src, view_only = TRUE))
+			close(M)
+
 /datum/component/storage/proc/emp_act(datum/source, severity)
 	if(emp_shielded)
 		return
@@ -587,7 +593,7 @@
 		return FALSE
 	if(isitem(host))
 		var/obj/item/IP = host
-		GET_COMPONENT_FROM(STR_I, /datum/component/storage, I)
+		var/datum/component/storage/STR_I = I.GetComponent(/datum/component/storage)
 		if((I.w_class >= IP.w_class) && STR_I && !allow_big_nesting)
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")

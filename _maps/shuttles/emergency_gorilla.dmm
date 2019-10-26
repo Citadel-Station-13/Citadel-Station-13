@@ -166,7 +166,7 @@
 "aI" = (
 /obj/docking_port/mobile/emergency{
 	height = 15;
-	name = "Box emergency shuttle"
+	name = "Gorilla Emergency Shuttle"
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"

@@ -365,8 +365,17 @@
 "ga" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"gJ" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "XC" = (
 /obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ZQ" = (
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/structure/table,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 
@@ -534,7 +543,7 @@ aC
 ac
 XC
 bs
-XC
+gJ
 bi
 bk
 "}
@@ -558,7 +567,7 @@ aC
 aZ
 ga
 ga
-ga
+ZQ
 bi
 bk
 "}

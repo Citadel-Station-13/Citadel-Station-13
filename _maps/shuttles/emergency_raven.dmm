@@ -149,9 +149,6 @@
 /area/shuttle/escape)
 "as" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -228,18 +225,13 @@
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/reinforced,
-/obj/item/scalpel,
-/obj/item/circular_saw,
-/obj/item/retractor,
-/obj/item/hemostat,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/item/surgicaldrill,
-/obj/item/cautery,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aC" = (
