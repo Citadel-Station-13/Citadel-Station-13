@@ -17,7 +17,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(on)
 		if(bananium.get_material_amount(/datum/material/bananium) < 100)
 			on = !on
@@ -30,7 +30,7 @@
 			bananium.use_amount_mat(100, /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
 		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
@@ -42,7 +42,7 @@
 	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
 		update_icon()

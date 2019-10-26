@@ -195,7 +195,7 @@ effective or pretty fucking useless.
 			Deactivate()
 	return
 
-/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
+/obj/item/shadowcloak/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_BELT)
 		return 1
 

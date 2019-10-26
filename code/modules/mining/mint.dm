@@ -36,7 +36,7 @@
 	if(!T)
 		return
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/obj/item/stack/sheet/O in T)
 		var/inserted = materials.insert_item(O)
 		if(inserted)
@@ -48,7 +48,7 @@
 		return
 	var/dat = "<b>Coin Press</b><br>"
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/datum/material/M in materials.materials)
 		var/amount = materials.get_material_amount(M)
 		if(!amount && chosen != M)
@@ -81,7 +81,7 @@
 	if(processing==1)
 		to_chat(usr, "<span class='notice'>The machine is processing.</span>")
 		return
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(href_list["choose"])
 		var/datum/material/new_material = locate(href_list["choose"])
 		if(istype(new_material))

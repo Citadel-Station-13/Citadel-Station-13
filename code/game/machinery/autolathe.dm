@@ -96,7 +96,7 @@
 	popup.open()
 
 /obj/machinery/autolathe/on_deconstruction()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
@@ -181,7 +181,7 @@
 
 			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
 
-			GET_COMPONENT(materials, /datum/component/material_container)
+			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 			var/list/materials_used = list()
 			var/list/custom_materials = list() //These will apply their material effect, This should usually only be one.
@@ -227,7 +227,7 @@
 	return
 
 /obj/machinery/autolathe/proc/make_item(power, var/list/materials_used, var/list/picked_materials, multiplier, coeff, is_stack)
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
 	materials.use_materials(materials_used)
@@ -252,7 +252,7 @@
 	var/T = 0
 	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = T
 	T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -301,7 +301,7 @@
 			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
-			GET_COMPONENT(materials, /datum/component/material_container)
+			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/max_multiplier
 			for(var/datum/material/mat in D.materials)
 				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
@@ -335,7 +335,7 @@
 			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
-			GET_COMPONENT(materials, /datum/component/material_container)
+			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/max_multiplier
 			for(var/datum/material/mat in D.materials)
 				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
@@ -352,7 +352,7 @@
 	return dat
 
 /obj/machinery/autolathe/proc/materials_printout()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id
@@ -372,7 +372,7 @@
 	for(var/i in D.materials)
 		required_materials[i] = D.materials[i] * coeff * amount
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	return materials.has_materials(required_materials)
 
