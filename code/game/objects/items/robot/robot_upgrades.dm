@@ -598,10 +598,10 @@
 		R.update_transform()
 
 /obj/item/borg/upgrade/rped
-	name = "engineering cyborg RPED"
+	name = "engineering cyborg BSRPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "borgrped"
+	icon_state = "borg_BS_RPED"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/engineering)
 
@@ -609,14 +609,17 @@
 	. = ..()
 	if(.)
 
+		var/obj/item/storage/part_replacer/bluespace/cyborg/BSRPED = locate() in R
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
-		if(RPED)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED module.</span>")
+		if(BSRPED)
+			to_chat(user, "<span class='warning'>This unit is already equipped with a BSRPED module.</span>")
 			return FALSE
 
-		RPED = new(R.module)
-		R.module.basic_modules += RPED
-		R.module.add_module(RPED, FALSE, TRUE)
+		BSRPED = new(R.module)
+		SEND_SIGNAL(RPED, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+		qdel(RPED)
+		R.module.basic_modules += BSRPED
+		R.module.add_module(BSRPED, FALSE, TRUE)
 
 /obj/item/borg/upgrade/rped/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
