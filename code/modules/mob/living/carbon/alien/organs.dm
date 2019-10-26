@@ -89,6 +89,8 @@
 			owner.adjustFireLoss(-heal_amt)
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
+			if(owner.blood_volume && (owner.blood_volume < BLOOD_VOLUME_NORMAL))
+				owner.blood_volume += 5
 	else
 		owner.adjustPlasma(plasma_rate * 0.1)
 

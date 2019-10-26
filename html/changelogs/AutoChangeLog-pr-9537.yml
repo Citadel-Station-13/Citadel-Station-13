@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "Magnetic pistols now fit in boot pockets - jackboots, workboots, etc."

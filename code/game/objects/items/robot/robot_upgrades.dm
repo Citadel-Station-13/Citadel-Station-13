@@ -680,7 +680,7 @@
 	action_icon_state = "Chevron_State_0"
 
 	var/currentState = 0
-	var/maxReduction = 2
+	var/maxReduction = 1
 
 
 /obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
@@ -688,14 +688,14 @@
 
 	currentState = (currentState + 1) % 3
 
-	if(usr)
+	if(istype(self))
 		switch(currentState)
 			if (0)
-				self.speed = maxReduction
+				self.speed = initial(self.speed)
 			if (1)
-				self.speed -= maxReduction*0.5
+				self.speed = initial(self.speed) - maxReduction * 0.5
 			if (2)
-				self.speed -= maxReduction*1.25
+				self.speed = initial(self.speed) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
 	action.UpdateButtonIcon()

@@ -177,8 +177,8 @@
 /datum/map_template/shuttle/emergency/airless
 	suffix = "airless"
 	name = "Build your own shuttle kit"
-	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
-	admin_notes = "No brig, no medical facilities, no air."
+	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and lighting not included."
+	admin_notes = "No brig, no medical facilities, just an empty box."
 	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
@@ -222,9 +222,9 @@
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
 	name = "Luxury Shuttle"
-	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
-	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
-	credit_cost = 10000
+	description = "A luxurious golden shuttle complete with an indoor swimming pool. Entry is free, so long as you can afford the initial cost."
+	admin_notes = "Fancy, and very roomy!"
+	credit_cost = 17500
 
 /datum/map_template/shuttle/emergency/discoinferno
 	suffix = "discoinferno"
@@ -300,7 +300,7 @@
 	suffix = "syndicate"
 	name = "Syndicate GM Battlecruiser"
 	credit_cost = 20000
-	description = "Manufactured by the Gorlex Marauders, this cruiser has been specially designed with high occupancy in mind, while remaining robust in combat situations. Features a fully stocked EVA storage, armory, medbay, and bar!"
+	description = "(Emag only) Manufactured by the Gorlex Marauders, this cruiser has been specially designed with high occupancy in mind, while remaining robust in combat situations. Features a fully stocked EVA storage, armory, medbay, and bar!"
 	admin_notes = "An emag exclusive, stocked with syndicate equipment and turrets that will target any simplemob."
 
 /datum/map_template/shuttle/emergency/syndicate/prerequisites_met()
@@ -333,7 +333,7 @@
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
-	description = "\"I dunno, this seems kinda needlessly complicated.\"\n\
+	description = "(Emag only) \"I dunno, this seems kinda needlessly complicated.\"\n\
 	\"This shuttle has very a very high safety record, according to CentCom Officer Cadet Yins.\"\n\
 	\"Are you sure?\"\n\
 	\"Yes, it has a safety record of N-A-N, which is apparently larger than 100%.\""
@@ -341,7 +341,12 @@
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
-	credit_cost = 100000
+	credit_cost = 15000
+
+/datum/map_template/shuttle/emergency/supermatter/prerequisites_met()
+	if("emagged" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
@@ -371,6 +376,12 @@
 	name = "Omegastation Emergency Shuttle"
 	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
 	credit_cost = 1000
+
+/datum/map_template/shuttle/emergency/gorilla
+	suffix = "gorilla"
+	name = "Gorilla Cargo Freighter"
+	description = "A rustic, barely excuseable shuttle transporting important cargo. Not for crew who are about to go ape."
+	credit_cost = 2000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
