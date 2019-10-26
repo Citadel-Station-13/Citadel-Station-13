@@ -30,7 +30,7 @@
 
 /datum/export/board/SMES
 	cost = 20
-	k_elasticity = 1/2 //Only a few
+	k_elasticity = 1/30
 	unit_name = "smes board"
 	export_types = list(/obj/item/circuitboard/machine/smes)
 

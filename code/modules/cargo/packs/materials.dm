@@ -168,3 +168,19 @@
 	contains = list(/obj/structure/reagent_dispensers/watertank/high)
 	crate_name = "high-capacity water tank crate"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/loom
+	name = "Loom"
+	desc = "A large pre-made loom."
+	cost = 1000
+	contains = list(/obj/structure/loom)
+	crate_name = "loom crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/wooden_barrel
+	name = "Wooden Barrel"
+	desc = "A wooden barrles ready for storge."
+	cost = 1500
+	contains = list(/obj/structure/fermenting_barrel)
+	crate_name = "wooden barrel crate"
+	crate_type = /obj/structure/closet/crate/large
