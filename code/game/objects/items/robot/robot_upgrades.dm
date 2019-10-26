@@ -611,6 +611,10 @@
 
 		var/obj/item/storage/part_replacer/bluespace/cyborg/BSRPED = locate() in R
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
+		if(!RPED)
+			RPED = locate() in R.module
+		if(!BSRPED)
+			BSRPED = locate() in R.module //There's gotta be a smarter way to do this.
 		if(BSRPED)
 			to_chat(user, "<span class='warning'>This unit is already equipped with a BSRPED module.</span>")
 			return FALSE
