@@ -769,7 +769,7 @@
 
 /obj/item/weapon/gripper/attack_self()
 	if(wrapped)
-		forceMove(get_turf(wrapped))
+		wrapped.forceMove(get_turf(wrapped))
 		wrapped = null
 	return ..()
 
