@@ -11,6 +11,7 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/explorer
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
+	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF
 	tauric = TRUE		//Citadel Add for tauric hardsuits
@@ -129,7 +130,7 @@
 
 /obj/item/clothing/suit/hooded/explorer/seva
 	name = "SEVA Suit"
-	desc = "A fire-proof suit for exploring hot environments."
+	desc = "A fire-proof suit for exploring hot environments. Its design and material make it easier for a Goliath to keep their grip on the wearer."
 	icon_state = "seva"
 	item_state = "seva"
 	w_class = WEIGHT_CLASS_BULKY
@@ -141,7 +142,7 @@
 
 /obj/item/clothing/head/hooded/explorer/seva
 	name = "SEVA Hood"
-	desc = "A fire-proof hood for exploring hot environments."
+	desc = "A fire-proof hood for exploring hot environments. Its design and material make it easier for a Goliath to keep their grip on the wearer."
 	icon_state = "seva"
 	item_state = "seva"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -159,7 +160,7 @@
 
 /obj/item/clothing/suit/hooded/explorer/exo
 	name = "Exo-suit"
-	desc = "A robust suit for exploring dangerous environments."
+	desc = "A robust suit for fighting dangerous animals. Its design and material make it harder for a Goliath to keep their grip on the wearer."
 	icon_state = "exo"
 	item_state = "exo"
 	w_class = WEIGHT_CLASS_BULKY
@@ -170,7 +171,7 @@
 
 /obj/item/clothing/head/hooded/explorer/exo
 	name = "Exo-hood"
-	desc = "A robust helmet for exploring dangerous environments."
+	desc = "A robust helmet for fighting dangerous animals. Its design and material make it harder for a Goliath to keep their grip on the wearer."
 	icon_state = "exo"
 	item_state = "exo"
 	armor = list("melee" = 65, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 60, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)

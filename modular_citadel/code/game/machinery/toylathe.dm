@@ -4,24 +4,34 @@
 
 /obj/machinery/autoylathe
 	name = "autoylathe"
-	desc = "It produces items using plastic, metal and glass."
+	desc = "It produces toys using plastic, metal and glass."
 	icon_state = "autolathe"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autoylathe
+	layer = BELOW_OBJ_LAYER
+
+	var/operating = FALSE
+	var/list/L = list()
+	var/list/LL = list()
 	var/hacked = FALSE
-	var/disabled = FALSE
+	var/disabled = 0
 	var/shocked = FALSE
+	var/hack_wire
+	var/disable_wire
+	var/shock_wire
+
 	var/busy = FALSE
 	var/prod_coeff = 1
+
 	var/datum/design/being_built
 	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
+
 	var/list/categories = list(
 							"Toys",
 							"Figurines",
@@ -36,8 +46,8 @@
 							)
 
 /obj/machinery/autoylathe/Initialize()
-	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASTIC), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	. = ..()
 
 	wires = new /datum/wires/autoylathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autoylathe
@@ -47,7 +57,8 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/autoylathe/interact(mob/user)
+/obj/machinery/autoylathe/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -69,7 +80,7 @@
 	popup.open()
 
 /obj/machinery/autoylathe/on_deconstruction()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autoylathe/attackby(obj/item/O, mob/user, params)
@@ -79,9 +90,6 @@
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
-		return TRUE
-
-	if(exchange_parts(user, O))
 		return TRUE
 
 	if(default_deconstruction_crowbar(O))
@@ -148,6 +156,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
+			multiplier = CLAMP(multiplier,1,50)
 
 			/////////////////
 
@@ -157,7 +166,7 @@
 			var/plastic_cost = being_built.materials[MAT_PLASTIC]
 			var/power = max(2000, (metal_cost+glass_cost+plastic_cost)*multiplier/5)
 
-			GET_COMPONENT(materials, /datum/component/material_container)
+			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff) && (materials.amount(MAT_PLASTIC) >= plastic_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
@@ -181,7 +190,7 @@
 	return
 
 /obj/machinery/autoylathe/proc/make_item(power, metal_cost, glass_cost, plastic_cost, multiplier, coeff, is_stack)
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
 	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier, MAT_PLASTIC=plastic_cost*coeff*multiplier)
@@ -194,6 +203,7 @@
 	else
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
+			new_item.materials = new_item.materials.Copy()
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autoylathe_crafted(src)
@@ -205,7 +215,7 @@
 	var/T = 0
 	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = T
 	T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -254,7 +264,7 @@
 			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
-			GET_COMPONENT(materials, /datum/component/material_container)
+			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS] ?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC] ?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
@@ -286,7 +296,7 @@
 			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
-			GET_COMPONENT(materials, /datum/component/material_container)
+			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS] ?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC] ?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
@@ -301,7 +311,7 @@
 	return dat
 
 /obj/machinery/autoylathe/proc/materials_printout()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
@@ -314,7 +324,7 @@
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
 		return FALSE
 	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))
@@ -347,7 +357,7 @@
 				disabled = FALSE
 
 /obj/machinery/autoylathe/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(stat & (BROKEN|NOPOWER))    // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

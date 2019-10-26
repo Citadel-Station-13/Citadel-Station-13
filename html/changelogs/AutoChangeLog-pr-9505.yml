@@ -1,0 +1,7 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to dispense smartdarts from the chemmaster."
+  - tweak: "Tweaks medolier amd chembags to allow quickpickups of smartdarts, lets the latter soak in beakers (on the floor)"
+  - bugfix: "fixed rounding errors with smartdart mixes."
+  - imageadd: "added modified smartdartgun icon."

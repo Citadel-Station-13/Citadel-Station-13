@@ -18,9 +18,13 @@
 					return FALSE
 	return .
 
-/mob/living/carbon/proc/toggle_combat_mode()
+/mob/living/carbon/proc/toggle_combat_mode(forced)
 	if(recoveringstam)
 		return TRUE
+	if(!forced)
+		for(var/datum/status_effect/S in status_effects)
+			if(S.blocks_combatmode)
+				return TRUE
 	combatmode = !combatmode
 	if(voremode)
 		toggle_vore_mode()

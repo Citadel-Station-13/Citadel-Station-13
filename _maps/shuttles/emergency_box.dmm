@@ -2,6 +2,14 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
+"ab" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
 "ac" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -36,6 +44,23 @@
 /obj/item/crowbar,
 /obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aj" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	name = "Box emergency shuttle"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ak" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/computer/atmos_alert{
@@ -171,13 +196,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aI" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
 "aJ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -191,15 +209,6 @@
 "aM" = (
 /obj/structure/table,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aP" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "aQ" = (
 /obj/structure/extinguisher_cabinet{
@@ -234,12 +243,6 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aV" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
@@ -362,8 +365,17 @@
 "ga" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"gJ" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "XC" = (
 /obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ZQ" = (
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/structure/table,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 
@@ -375,17 +387,17 @@ aa
 ad
 ad
 ad
-aI
+ab
 ad
-aP
+aj
 ad
 ac
 ac
 ac
 ad
-aV
+ak
 ad
-aV
+ak
 ad
 ad
 ad
@@ -531,7 +543,7 @@ aC
 ac
 XC
 bs
-XC
+gJ
 bi
 bk
 "}
@@ -555,7 +567,7 @@ aC
 aZ
 ga
 ga
-ga
+ZQ
 bi
 bk
 "}

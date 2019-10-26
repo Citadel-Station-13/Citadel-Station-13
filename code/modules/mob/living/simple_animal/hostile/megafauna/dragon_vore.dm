@@ -42,7 +42,7 @@
 	autotransferwait = 200
 
 /obj/belly/megafauna/dragon/gut
-	name = "stomach"
+	name = "gut"
 	vore_capacity = 5 //I doubt this many people will actually last in the gut, but...
 	vore_sound = "Tauric Swallow"
 	desc = "With a rush of burning ichor greeting you, you're introduced to the Drake's stomach. Wrinkled walls greedily grind against you, acidic slimes working into your body as you become fuel and nutriton for a superior predator. All that's left is your body's willingness to resist your destiny."
