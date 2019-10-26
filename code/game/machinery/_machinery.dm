@@ -118,6 +118,8 @@ Class Procs:
 	var/list/region_access = null // For the identification console (card.dm)
 	var/list/head_subordinates = null // For the identification console (card.dm)
 	var/authenticated = 0 // For the identification console (card.dm)
+	var/wire_compatible = FALSE
+
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 

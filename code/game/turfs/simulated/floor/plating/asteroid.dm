@@ -143,6 +143,7 @@
 	var/list/mob_spawn_list
 	var/list/megafauna_spawn_list
 	var/list/flora_spawn_list
+	var/list/terrain_spawn_list
 	var/sanity = 1
 	var/forward_cave_dir = 1
 	var/backward_cave_dir = 2
@@ -158,7 +159,7 @@
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
-		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
+		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10,)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
@@ -174,7 +175,8 @@
 		megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
-
+	if(!terrain_spawn_list)
+		terrain_spawn_list = list(/obj/structure/geyser/random = 1)
 	. = ..()
 	if(!has_data)
 		produce_tunnel_from_data()
@@ -254,7 +256,7 @@
 	if(!sanity)
 		return
 	SpawnFlora(T)
-
+	SpawnTerrain(T) //oh yeah woo yeah
 	SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
@@ -281,6 +283,16 @@
 			if((ispath(randumb, /mob/living/simple_animal/hostile/spawner/lavaland) || istype(H, /mob/living/simple_animal/hostile/spawner/lavaland)) && get_dist(src, H) <= 2)
 				return //prevents tendrils spawning in each other's collapse range
 
+		new randumb(T)
+
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
+	if(prob(2))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		var/randumb = pickweight(terrain_spawn_list)
+		for(var/obj/structure/geyser/F in range(7, T))
+			if(istype(F, randumb))
+				return
 		new randumb(T)
 	return
 
