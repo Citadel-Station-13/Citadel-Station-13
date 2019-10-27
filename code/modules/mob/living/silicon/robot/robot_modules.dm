@@ -314,6 +314,7 @@
 		/obj/item/storage/part_replacer/cyborg,
 		/obj/item/holosign_creator/atmos,
 		/obj/item/weapon/gripper,
+		/obj/item/lightreplacer/cyborg,
 		/obj/item/geiger_counter/cyborg,
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
