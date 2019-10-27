@@ -635,8 +635,8 @@
 	alternate_worn_layer = UNDER_HEAD_LAYER
 
 /obj/item/clothing/suit/assu_suit
-	name = "ASSU suit"
-	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Assistance Skipping Special Unit</i>\"."
+	name = "DAB suit"
+	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Desperate Assistance Battle-force</i>\"."
 	icon_state = "assu_suit"
 	item_state = "assu_suit"
 	blood_overlay_type = "armor"
