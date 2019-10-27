@@ -120,6 +120,6 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 			antaglisting |= M.client
 
 	for(var/client/C in antaglisting)
-		if(!C || !istype(C))
+		if(!C || !istype(C) || !is_special_character(C.mob))
 			continue
 		to_chat(C, "<B>The Antagonist OOC channel has been [GLOB.aooc_allowed ? "enabled. If you're an antagonist, you can access it through the \"AOOC\" verb." : "disabled"].</B>")
