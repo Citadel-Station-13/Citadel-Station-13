@@ -50,7 +50,7 @@
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
-	cached_z
+	cached_z = z
 	poof()
 
 /mob/living/simple_animal/jacq/Life()
@@ -107,7 +107,7 @@
 	for(var/obj/machinery/holopad/hp in world)
 		hp_list += hp
 
-	for(var/i = length, i <= 5, i+=1)
+	for(var/i = 0, i <= 5, i+=1)
 		var/obj/machinery/holopad/hp = pick(hp_list)
 		if(forceMove(pick(hp.loc)))
 			if(z == cached_z)
