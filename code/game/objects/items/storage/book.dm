@@ -149,6 +149,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			playsound(src.loc, "punch", 25, 1, -1)
 			log_combat(user, M, "attacked", src)
 
+		if(!(user.mind && user.mind.isholy) && is_vampire(user))
+			to_chat(user, "<span class='danger'>[deity_name] channels through \the [src] and sets you ablaze for your blasphemy!</span>")
+			user.fire_stacks += 5
+			user.IgniteMob()
+			user.emote("scream", 1)
+
 	else
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)

@@ -13,6 +13,7 @@
 	var/dat = {"
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=vampire'>Make Vampires</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=clockcult'>Make Clockwork Cult</a><br>
@@ -105,6 +106,33 @@
 		return 1
 
 	return 0
+
+/datum/admins/proc/makeVampires()
+
+	var/datum/game_mode/vampire/temp = new
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
+		temp.restricted_jobs += temp.protected_jobs
+
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+		temp.restricted_jobs += "Assistant"
+
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
+		if(!(applicant.job in temp.restricted_jobs) && isReadytoRumble(applicant, ROLE_VAMPIRE) && temp.age_check(applicant.client))
+			candidates += applicant
+
+	if(candidates.len)
+		var/numVampires = min(candidates.len, 2)
+
+		for(var/i in 0 to numVampires)
+			H = pick_n_take(candidates)
+			add_vampire(H)
+
+			return TRUE
+
+		return FALSE
 
 /datum/admins/proc/makeRevs()
 
