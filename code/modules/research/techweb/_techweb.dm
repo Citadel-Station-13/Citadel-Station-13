@@ -372,3 +372,7 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
+
+/datum/techweb/specialized/autounlocking/autoylathe
+	design_autounlock_buildtypes = AUTOYLATHE
+	allowed_buildtypes = AUTOYLATHE
