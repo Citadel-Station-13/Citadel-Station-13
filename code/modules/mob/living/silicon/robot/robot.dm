@@ -942,7 +942,7 @@
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
-	return can_see(M) //stop cyborgs from using things they have lost vision of.
+	return TRUE
 
 /mob/living/silicon/robot/updatehealth()
 	..()

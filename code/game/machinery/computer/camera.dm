@@ -17,7 +17,7 @@
 		network += lowertext(i)
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if(CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !user.canUseTopic(src, !issilicon(user), FALSE))
+	if(CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !in_view_range(user, src) || !user.canUseTopic(src, !issilicon(user), FALSE))
 		user.unset_machine()
 		return
 	if(!(user in watchers))
@@ -89,7 +89,7 @@
 		user.unset_machine()
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
 		return
-	if(!C || !C.can_use() || CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !user.canUseTopic(src, !issilicon(user), FALSE))
+	if(!C || !C.can_use() || CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !in_view_range(user, src) || !user.canUseTopic(src, !issilicon(user), FALSE))
 		user.unset_machine()
 		return FALSE
 
