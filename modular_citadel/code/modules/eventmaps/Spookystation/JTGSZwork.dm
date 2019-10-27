@@ -520,6 +520,126 @@
 	volume = 60
 
 /*
+	GRANDFATHER CLOCK
+						*/
+
+/* 
+	1:00 AM		- 	overlay-2
+	2:00 AM		-	overlay-2
+	3:00 AM		-	overlay-3
+	4:00 AM		-	overlay-4
+	5:00 AM		- 	overlay-4
+	6:00 AM 	- 	overlay-6
+	7:00 AM 	- 	overlay-7
+	8:00 AM 	- 	overlay-7
+	9:00 AM 	- 	overlay-9
+	10:00 AM 	- 	overlay-10
+	11:00 AM 	- 	overlay-10
+	12:00 AM	-	overlay-0
+								 */
+
+/obj/machinery/grandfatherclock
+	name = "Grandfather Clock"
+	desc = "Keeps track of the time with its dials."
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/clock32x49.dmi'
+	icon_state = "grandfathermk4right"
+	density = 1
+	anchored = 1
+	use_power = 0
+	max_integrity = 250
+	var/HRimgstate = "gayhouroverlay-0"
+	var/MMimgstate = "gayminuteoverlay-0"
+	var/ticktocksnd_cycle_ticker = 0
+	var/dyndial_cycle_ticker = 0 //How many
+	var/playchime = 1
+	var/ticktock = 0
+
+/obj/machinery/grandfatherclock/Initialize()
+	. = ..()
+	update_icon() //We get it done
+
+/obj/machinery/grandfatherclock/process()
+	doodad_clock_ticker()
+	
+	
+/obj/machinery/grandfatherclock/proc/doodad_clock_ticker() //We basically throttle the rest of this machine here.
+	ticktocksnd_cycle_ticker++
+	dyndial_cycle_ticker++
+	
+	if(ticktocksnd_cycle_ticker >= 1) //Here is where we will play a noise TICK TOCK TICK TOCK			
+		if(ticktock) //If we are true
+			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tock.ogg', 100,0)
+			icon_state = "grandfathermk4right"
+			flick("tick", src)
+			ticktock = 0 //Play this noise set to false
+		else
+			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tick.ogg', 100,0)	
+			flick("tock", src)
+			icon_state = "grandfathermk4left"
+			ticktock = 1 //If we are not true, play this noise set to true
+
+		ticktocksnd_cycle_ticker = 0 //The delayed loop begins anew
+
+	if(dyndial_cycle_ticker >= 20) //Handles the dynamic dial
+		dyndial_cycle()
+		dyndial_cycle_ticker = 0
+
+/obj/machinery/grandfatherclock/proc/dyndial_cycle()
+	var/ass_time = STATION_TIME(FALSE)
+	var/hour = (text2num(time2text(ass_time, "hh"))%12)
+	var/minute = text2num(time2text(ass_time, "mm"))
+
+	switch(hour)
+		if(0 || 12)
+			HRimgstate = "gayhouroverlay-0"
+			if(playchime)
+				playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 1)	
+				playchime = 0 //We go to false, so it only plays once.
+		if(1 || 2)
+			HRimgstate = "gayhouroverlay-2"
+			playchime = 1 //After the 12 is over, we go back to true for the next iteration later.
+		if(3)
+			HRimgstate = "gayhouroverlay-3"
+		if(4 || 5)
+			HRimgstate = "gayhouroverlay-4"
+		if(6)
+			HRimgstate = "gayhouroverlay-6"
+		if(7 || 8)
+			HRimgstate = "gayhouroverlay-7"
+		if(9)
+			HRimgstate = "gayhouroverlay-9"
+		if(10 || 11)
+			HRimgstate = "gayhouroverlay-10"
+
+	switch(minute)
+		if(0 to 3)
+			MMimgstate = "gayminuteoverlay-0"
+		if(4 to 15)
+			MMimgstate = "gayminuteoverlay-2"
+		if(16 to 22)
+			MMimgstate = "gayminuteoverlay-3"
+		if(23 to 28)
+			MMimgstate = "gayminuteoverlay-4"
+		if(29 to 33)
+			MMimgstate = "gayminuteoverlay-6"
+		if(34 to 41)
+			MMimgstate = "gayminuteoverlay-7"
+		if(42 to 49)
+			MMimgstate = "gayminuteoverlay-9"
+		if(50 to 57)
+			MMimgstate = "gayminuteoverlay-10"
+		else 
+			MMimgstate = "gayminuteoverlay-0" //This has 58 to 60 and everything else.
+	
+	update_icon() //Everything is set, lets update.
+
+/obj/machinery/grandfatherclock/update_icon()
+	cut_overlays() //We cut the overlays.
+
+	add_overlay(MMimgstate) //And append our new states, Minute
+	add_overlay(HRimgstate) //Hour.
+
+/*
 	The Flora that is generated onto the basic grassturf, or can be placed for tone building.
 																								*/
 
