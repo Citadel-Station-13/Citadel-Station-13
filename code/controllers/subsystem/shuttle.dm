@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 	var/passive_supply_points_per_minute = 750
-	var/last_fire = 0
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -117,7 +116,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/fire_time_diff = max(0, world.time - last_fire)		//Don't want this to be below 0, seriously.
 	var/point_gain = (fire_time_diff / 600) * passive_supply_points_per_minute
 	points += point_gain
-	last_fire = world.time
 	//Cargo stuff end
 
 	if(!SSmapping.clearing_reserved_turfs)
