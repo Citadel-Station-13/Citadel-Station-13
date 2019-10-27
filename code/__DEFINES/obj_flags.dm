@@ -11,6 +11,7 @@
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
 #define FROZEN					(1<<8)
 #define SHOVABLE_ONTO			(1<<9) //called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
+#define BLOCK_Z_FALL			(1<<10)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
