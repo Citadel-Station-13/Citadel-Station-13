@@ -180,7 +180,7 @@
 
 /mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
-	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Plushie - 1 candy", "Tracker - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
+	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
