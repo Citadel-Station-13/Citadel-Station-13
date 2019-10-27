@@ -25,9 +25,8 @@
 	and you get nasty leftovers
 	*/
 	var/emptying = FALSE
-
-	ui_x = 320
-	ui_y = 310
+	var/ui_x = 320
+	var/ui_y = 310
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
@@ -67,13 +66,13 @@
 
 /obj/machinery/plumbing/acclimator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
 	if(!ui)
 		ui = new(user, src, ui_key, "acclimator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/acclimator/ui_data(mob/user)
 	var/list/data = list()
-
 	data["enabled"] = enabled
 	data["chem_temp"] = reagents.chem_temp
 	data["target_temperature"] = target_temperature

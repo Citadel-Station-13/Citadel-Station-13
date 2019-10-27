@@ -12,9 +12,9 @@
 	var/list/english_left = list()
 	///whitelist of chems but their name instead of path
 	var/list/english_right = list()
+	var/ui_x = 320
+	var/ui_y = 310
 
-	ui_x = 500
-	ui_y = 300
 
 /obj/machinery/plumbing/filter/Initialize(mapload, bolt)
 	. = ..()
@@ -22,6 +22,7 @@
 
 /obj/machinery/plumbing/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
 	if(!ui)
 		ui = new(user, src, ui_key, "chemical_filter", name, ui_x, ui_y, master_ui, state)
 		ui.open()

@@ -109,7 +109,7 @@
 		"<span class='notice'>You [anchored ? "fasten" : "unfasten"] [src]</span>")
 		var/datum/component/plumbing/CP = GetComponent(/datum/component/plumbing)
 		if(anchored)
-			CP.start()
+			CP.enable()
 		else
 			CP.disable()
 

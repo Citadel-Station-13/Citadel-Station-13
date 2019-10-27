@@ -29,7 +29,9 @@
 		if(!has_reagent)
 			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT, dir)
 			return
-	reagents.flags &= ~NO_REACT
+
+	RC.reagent_flags &= ~NO_REACT
+	reagents.handle_reactions()
 	RC.emptying = TRUE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
@@ -37,3 +39,7 @@
 	var/obj/machinery/plumbing/reaction_chamber/RC = parent
 	if(!. || !RC.emptying)
 		return FALSE
+
+
+
+
