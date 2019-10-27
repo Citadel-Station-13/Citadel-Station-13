@@ -25,7 +25,6 @@
 	for(var/obj/effect/landmark/barthpot/bp in GLOB.landmarks_list)
 		new /obj/item/barthpot(bp.loc)
 		new /mob/living/simple_animal/jacq(bp.loc)
-		new /obj/item/pinpointer/jacq(bp.loc)
 
 /////// MOBS
 
@@ -56,7 +55,7 @@
 /mob/living/simple_animal/jacq/Life()
 	..()
 	if(!ckey)
-		if((last_poof+4 MINUTES) < world.realtime)
+		if((last_poof+3 MINUTES) < world.realtime)
 			poof()
 
 /mob/living/simple_animal/jacq/Destroy() //I.e invincible
@@ -107,11 +106,31 @@
 	for(var/obj/machinery/holopad/hp in world)
 		hp_list += hp
 
-	for(var/i = 0, i <= 5, i+=1)
+	var/nono_areas = list("AI Chamber", "AI Satellite Antechamber", "AI Satellite Foyer")
+
+	for(var/i = 0, i <= 5, i+=1) //Attempts a jump 6 times.
 		var/obj/machinery/holopad/hp = pick(hp_list)
 		if(forceMove(pick(hp.loc)))
-			if(z == cached_z)
+
+			for(var/no_area in nono_areas)
+				var/turf/L1 = hp.loc
+				if(!L1) //Incase the area isn't a turf (i.e. in a locker)
+					continue
+				var/area/L2 = L1.loc
+				if(L2)
+					if(no_area == L2.name)
+						continue
+
+			//Try to go to populated areas
+			var/list/seen = viewers(8, get_turf(src))
+			for(var/victim in seen)
+				if(ishuman(victim))
+					if(z == cached_z)
+						return TRUE
+
+			if(z == cached_z)//same z level please, if no humans
 				return TRUE
+
 
 	return FALSE
 
@@ -137,7 +156,7 @@
 	if(!progression["[C.real_name]"] ||  !(progression["[C.real_name]"] & JACQ_HELLO))
 		visible_message("<b>[src]</b> smiles ominously at [C], <span class='spooky'>\"Well halo there [gender]! Ah'm Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")
 		sleep(20)
-		visible_message("<b>[src]</b> continues, says, <span class='spooky'>\"Ah'm sure yae well stunned, but ah've got nae taem fer that. Ah'm after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give ye a treat, or if yae feeling bold, Ah ken trick ye instead.</span>\" giving [C] a wide grin.")
+		visible_message("<b>[src]</b> continues, <span class='spooky'>\"Ah'm sure yae well stunned, but ah've got nae taem fer that. Ah'm after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give ye a treat, or if yae feeling bold, Ah ken trick ye instead.</span>\" giving [C] a wide grin.")
 		if(!progression["[C.real_name]"])
 			progression["[C.real_name]"] = NONE //TO MAKE SURE THAT THE LIST ENTRY EXISTS.
 
@@ -161,7 +180,7 @@
 
 /mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
-	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
+	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Plushie - 1 candy", "Tracker - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
@@ -187,7 +206,7 @@
 			//  	panic()
 			var/reward = new new_obj(C.loc)
 			C.put_in_hands(reward)
-			visible_message("<b>[src]</b> waves her hands, magicing up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			visible_message("<b>[src]</b> waves her hands, magicking up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
 			sleep(20)
 			poof()
 			return
@@ -198,7 +217,7 @@
 
 			var/reward = new /obj/item/reagent_containers/potion_container(C.loc)
 			C.put_in_hands(reward)
-			visible_message("<b>[src]</b> waves her hands, magicing up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			visible_message("<b>[src]</b> waves her hands, magicking up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
 			sleep(20)
 			poof()
 			return
@@ -208,7 +227,16 @@
 				return
 
 			new /obj/item/toy/plush/random(C.loc)
-			visible_message("<b>[src]</b> waves her hands, magicing up a plushie from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			visible_message("<b>[src]</b> waves her hands, magicking up a plushie from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			sleep(20)
+			poof()
+			return
+		if("Jacqueline Tracker - 2 candies")
+			if(!take_candies(C, 2))
+				visible_message("<b>[src]</b> raises an eyebrow, <span class='spooky'>\"It's 1 candy per plushie [gender]! Thems the rules!\"</span>")
+				return
+			new /obj/item/pinpointer/jacq(C.loc)
+			visible_message("<b>[src]</b> waves her hands, magicking up a tracker from thin air, <span class='spooky'>\"Feels weird to magic up a tracker fer meself but, here ye are [gender], enjoy! \"</span>")
 			sleep(20)
 			poof()
 			return

@@ -122,7 +122,6 @@
 	/obj/item/weldingtool = 3,
 	/obj/item/wirecutters = 2,
 	/obj/item/wrench = 4,
-	/obj/item/relic = 3,
 	/obj/item/weaponcrafting/receiver = 1,
 	/obj/item/clothing/head/cone = 2,
 	/obj/item/grenade/smokebomb = 1,
@@ -149,11 +148,15 @@
         if(!item)
             i-=1
             continue
+        for(var/obj/item_dupe in items_list) //No duplicates
+            if(item_dupe == item)
+                i-=1
+                continue
         items_list += item
     return TRUE
 
 /obj/item/pinpointer/jacq
-    name = "Jacq pinpointer"
+    name = "The Jacq-Tracq"
     desc = "A handheld tracking device that locks onto witchy signals."
 
 /obj/item/pinpointer/jacq/attack_self(mob/living/user)
