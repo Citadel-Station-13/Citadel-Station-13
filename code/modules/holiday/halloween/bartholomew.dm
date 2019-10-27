@@ -20,6 +20,7 @@
     if(!active)
         say("Meow!")
         return
+
     for(var/I2 in items_list)
         if(istype(I, I2))
             qdel(I)
@@ -36,6 +37,7 @@
         return
     say("Hello there, I'm Bartholomew, Jacqueline's Familiar.")
     sleep(20)
+
     say("I'm currently seeking items to put into my pot, if we get the right items, it should crystalise into a magic candy!")
     if(!iscarbon(user))
         say("Though... I'm not sure you can help me.")
@@ -52,6 +54,15 @@
     message += "currently seem to have the most magic potential."
     sleep(15)
     say("[message]")
+    sleep(15)
+    //To help people find her
+    for(var/mob/living/simple_animal/jacq/J in GLOB.simple_animals[1])
+        var/turf/L1 = J.loc
+        if(!L1) //Incase someone uh.. puts her in a locker
+            return
+        var/area/L2 = L1.loc
+        if(L2)
+            say("Also, it seems that Jacqueline is currently at the [L2], if you're looking for her too.")
 
 /obj/item/barthpot/proc/generate_items()
     var/length = LAZYLEN(items_list)
@@ -73,10 +84,9 @@
 	/obj/item/assembly/timer = 3,
 	/obj/item/flashlight = 4,
 	/obj/item/flashlight/pen = 1,
-	/obj/effect/spawner/lootdrop/glowstick = 4,
-	/obj/effect/spawner/lootdrop/mre = 3,
+	/obj/item/flashlight/glowstick = 4,
 	/obj/item/multitool = 2,
-	/obj/item/radio/off = 2,
+	/obj/item/radio = 2,
 	/obj/item/t_scanner = 5,
 	/obj/item/airlock_painter = 1,
 	/obj/item/stack/cable_coil/ = 4,
@@ -86,19 +96,16 @@
 	/obj/item/stack/sheet/metal = 1,
 	/obj/item/stack/sheet/mineral/plasma = 1,
 	/obj/item/stack/sheet/rglass = 1,
-	/obj/item/book/manual/wiki/engineering_construction = 1,
-	/obj/item/book/manual/wiki/engineering_hacking = 1,
 	/obj/item/clothing/head/cone = 1,
+    /obj/item/coin = 1,
 	/obj/item/coin/silver = 1,
 	/obj/item/coin/twoheaded = 1,
-	/obj/item/poster/random_contraband = 1,
-	/obj/item/poster/random_official = 1,
 	/obj/item/crowbar = 1,
 	/obj/item/crowbar/red = 1,
-	/obj/item/extinguisher = 11,
+	/obj/item/extinguisher = 3,
 	/obj/item/hand_labeler = 1,
-	/obj/item/paper/crumpled = 1,
-	/obj/item/pen = 1,
+	/obj/item/paper = 1,
+	/obj/item/pen = 3,
 	/obj/item/reagent_containers/spray/pestspray = 1,
 	/obj/item/reagent_containers/rag = 3,
 	/obj/item/stock_parts/cell = 3,
@@ -108,8 +115,8 @@
 	/obj/item/storage/box/donkpockets = 1,
 	/obj/item/storage/box/lights/mixed = 3,
 	/obj/item/storage/box/hug/medical = 1,
-	/obj/item/storage/fancy/cigarettes/dromedaryco = 1,
-	/obj/item/storage/toolbox/mechanical = 1,
+	/obj/item/storage/fancy/cigarettes = 1,
+	/obj/item/storage/toolbox = 1,
 	/obj/item/screwdriver = 3,
 	/obj/item/tank/internals/emergency_oxygen = 2,
 	/obj/item/vending_refill/cola = 1,
@@ -122,7 +129,6 @@
 	/obj/item/grenade/smokebomb = 2,
 	/obj/item/geiger_counter = 3,
 	/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 1,
-	/obj/item/radio/headset = 1,
 	/obj/item/assembly/infra = 1,
 	/obj/item/assembly/igniter = 2,
 	/obj/item/assembly/signaler = 2,
@@ -133,10 +139,10 @@
 	/obj/item/storage/secure/briefcase = 3,
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
-	/obj/item/reagent_containers/pill/floorpill = 1,
-	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 2,
+	/obj/item/reagent_containers/pill = 1,
+	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 1,
 	/obj/item/clothing/shoes = 2)
-    if(length == 5)
+    if(length >= 5)
         return TRUE
     //var/metalist = pickweight(GLOB.maintenance_loot)
     for(var/i = length, i <= 5, i+=1)
@@ -146,3 +152,12 @@
             continue
         items_list += item
     return TRUE
+
+/obj/item/pinpointer/jacq
+    name = "Jacq pinpointer"
+    desc = "A handheld tracking device that locks onto witchy signals."
+
+/obj/item/pinpointer/jacq/attack_self(mob/living/user)
+	for(var/mob/living/simple_animal/jacq/J in GLOB.simple_animals[1])
+		target = J
+	..()
