@@ -111,18 +111,18 @@
 	export_types = list(/obj/item/organ/liver)
 	exclude_types = list(/obj/item/organ/liver/cybernetic, /obj/item/organ/liver/cybernetic/upgraded)
 
-/datum/export/orgains/cybernetic
+/datum/export/organs/cybernetic
 	cost = 225
 	unit_name = "cybernetic organ"
 	export_types = list(/obj/item/organ/liver/cybernetic, /obj/item/organ/lungs/cybernetic, /obj/item/organ/eyes/robotic, /obj/item/organ/heart/cybernetic)
 	exclude_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
 
-/datum/export/orgains/upgraded
+/datum/export/organs/upgraded
 	cost = 275
 	unit_name = "upgraded cybernetic organ"
 	export_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
 
-/datum/export/orgains/tail //Shhh
+/datum/export/organs/tail //Shhh
 	cost = 500
 	unit_name = "error shipment failer"
 	export_types = list(/obj/item/organ/tail)

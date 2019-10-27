@@ -179,7 +179,7 @@
 
 /datum/supply_pack/materials/wooden_barrel
 	name = "Wooden Barrel"
-	desc = "A wooden barrles ready for storge."
+	desc = "Wooden barrels ready for storage."
 	cost = 1500
 	contains = list(/obj/structure/fermenting_barrel)
 	crate_name = "wooden barrel crate"
