@@ -40,18 +40,22 @@
 	speech_span = "spooky"
 	friendly = "pets"
 	response_help  = "chats with"
+	light_range = 3
+	light_color = "#ff9842"
 	var/last_poof
 	var/progression = list() //Keep track of where people are in the story.
 	var/active = TRUE //Turn this to false to keep normal mob behavour
+	var/cached_z
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
+	cached_z = z
 	poof()
 
 /mob/living/simple_animal/jacq/Life()
 	..()
 	if(!ckey)
-		if((last_poof+4 MINUTES) < world.realtime)
+		if((last_poof+3 MINUTES) < world.realtime)
 			poof()
 
 /mob/living/simple_animal/jacq/Destroy() //I.e invincible
@@ -64,7 +68,7 @@
 /mob/living/simple_animal/jacq/death() //What is alive may never die
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
-	health = 20
+	health = 25
 	poof()
 
 /mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
@@ -96,14 +100,37 @@
 	s.start()
 	visible_message("<b>[src]</b> disappears in a puff of smoke!")
 	canmove = TRUE
+	health = 25
 
 	var/hp_list = list()
 	for(var/obj/machinery/holopad/hp in world)
 		hp_list += hp
 
-	var/obj/machinery/holopad/hp = pick(hp_list)
-	if(forceMove(pick(hp.loc)))
-		return TRUE
+	var/nono_areas = list("AI Chamber", "AI Satellite Antechamber", "AI Satellite Foyer")
+
+	for(var/i = 0, i <= 5, i+=1) //Attempts a jump 6 times.
+		var/obj/machinery/holopad/hp = pick(hp_list)
+		if(forceMove(pick(hp.loc)))
+
+			for(var/no_area in nono_areas)
+				var/turf/L1 = hp.loc
+				if(!L1) //Incase the area isn't a turf (i.e. in a locker)
+					continue
+				var/area/L2 = L1.loc
+				if(L2)
+					if(no_area == L2.name)
+						continue
+
+			//Try to go to populated areas
+			var/list/seen = viewers(8, get_turf(src))
+			for(var/victim in seen)
+				if(ishuman(victim))
+					if(z == cached_z)
+						return TRUE
+
+			if(z == cached_z)//same z level please, if no humans
+				return TRUE
+
 
 	return FALSE
 
@@ -129,7 +156,7 @@
 	if(!progression["[C.real_name]"] ||  !(progression["[C.real_name]"] & JACQ_HELLO))
 		visible_message("<b>[src]</b> smiles ominously at [C], <span class='spooky'>\"Well halo there [gender]! Ah'm Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")
 		sleep(20)
-		visible_message("<b>[src]</b> continues, says, <span class='spooky'>\"Ah'm sure yae well stunned, but ah've got nae taem fer that. Ah'm after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give ye a treat, or if yae feeling bold, Ah ken trick ye instead.</span>\" giving [C] a wide grin.")
+		visible_message("<b>[src]</b> continues, <span class='spooky'>\"Ah'm sure yae well stunned, but ah've got nae taem fer that. Ah'm after the candies around this station. If yae get mae enoof o the wee buggers, Ah'll give ye a treat, or if yae feeling bold, Ah ken trick ye instead.</span>\" giving [C] a wide grin.")
 		if(!progression["[C.real_name]"])
 			progression["[C.real_name]"] = NONE //TO MAKE SURE THAT THE LIST ENTRY EXISTS.
 
@@ -153,11 +180,21 @@
 
 /mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
-	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Plushie - 1 candy", "Can I ask you a question instead?")
+	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
 	switch(choice_reward)
+		if("Become a pumpkinhead dullahan (perma) - 4 candies")
+			if(!take_candies(C, 4))
+				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 4 candies for that [gender]! Thems the rules!\"</span>")
+				return
+			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Off comes your head, a pumpkin taking it's stead!\"</span>")
+			C.reagents.add_reagent("pumpkinmutationtoxin", 5)
+			sleep(20)
+			poof()
+			return
+
 		if("Object - 3 candies")
 			if(!take_candies(C, 3))
 				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 3 candies per trinket [gender]! Thems the rules!\"</span>")
@@ -169,7 +206,7 @@
 			//  	panic()
 			var/reward = new new_obj(C.loc)
 			C.put_in_hands(reward)
-			visible_message("<b>[src]</b> waves her hands, magicing up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			visible_message("<b>[src]</b> waves her hands, magicking up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
 			sleep(20)
 			poof()
 			return
@@ -180,7 +217,7 @@
 
 			var/reward = new /obj/item/reagent_containers/potion_container(C.loc)
 			C.put_in_hands(reward)
-			visible_message("<b>[src]</b> waves her hands, magicing up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			visible_message("<b>[src]</b> waves her hands, magicking up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
 			sleep(20)
 			poof()
 			return
@@ -190,13 +227,22 @@
 				return
 
 			new /obj/item/toy/plush/random(C.loc)
-			visible_message("<b>[src]</b> waves her hands, magicing up a plushie from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			visible_message("<b>[src]</b> waves her hands, magicking up a plushie from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
+			sleep(20)
+			poof()
+			return
+		if("Jacqueline Tracker - 2 candies")
+			if(!take_candies(C, 2))
+				visible_message("<b>[src]</b> raises an eyebrow, <span class='spooky'>\"It's 1 candy per plushie [gender]! Thems the rules!\"</span>")
+				return
+			new /obj/item/pinpointer/jacq(C.loc)
+			visible_message("<b>[src]</b> waves her hands, magicking up a tracker from thin air, <span class='spooky'>\"Feels weird to magic up a tracker fer meself but, here ye are [gender], enjoy! \"</span>")
 			sleep(20)
 			poof()
 			return
 
 		//chitchats!
-		if("Can I ask you a question instead?")
+		if("Can I get to know you instead?")
 			var/choices = list()
 			//Figure out where the C is in the story
 			if(!progression["[C.real_name]"]) //I really don't want to get here withoot a hello, but just to be safe
@@ -243,25 +289,21 @@
 					visible_message("<b>[src]</b> says, <span class='spooky'>\"Ave ye tried them? They're full of all sorts of reagents. Ah'm after them so ah ken magic em up an hopefully find rare stuff fer me brews. Honestly it's a lot easier magicking up tatt fer ye lot than runnin aroond on me own like. I'd ask me familiars but most a my familiars are funny fellows 'n constantly bugger off on adventures when given simple objectives like; Go grab me a tea cake or watch over me cauldron. Ah mean, ye might run into Bartholomew my cat. Ee's supposed tae be tending my cauldron, but I've nae idea where ee's got tae.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_CANDIES
 					sleep(30)
-					poof()
 
 				if("You really came all this way for candy?")
-					visible_message("<b>[src]</b> looks tae the side sheepishly, <span class='spooky'>\"Aye, well, tae be honest, Ah'm here tae see me sis, but dunnae let her knew that. She's an alchemist too like, but she dunnae use a caldron like mae, she buggered off like tae her posh ivory tower tae learn bloody chemistry instead!\"</span> <b>[src]</b> scowls, <span class='spooky'>\"She's tae black sheep o' the family too, so we dunnae see eye tae eye sometimes on alchemy. Ah mean, she puts <i> moles </i> in her brews! Ye dunnae put moles in yer brews! Yae threw your brews at tae wee bastards an blew em up!\"</span> <b>[src]</b> sighs, <span class='spooky'>\"But she's a heart o gold so.. Ah wanted tae see her an check up oon her, make sure she's okay.\"</span>")
+					visible_message("<b>[src]</b> l ooks tae the side sheepishly, <span class='spooky'>\"Aye, well, tae be honest, Ah'm here tae see me sis, but dunnae let her knew that. She's an alchemist too like, but she dunnae use a caldron like mae, she buggered off like tae her posh ivory tower tae learn bloody chemistry instead!\"</span> <b>[src]</b> scowls, <span class='spooky'>\"She's tae black sheep o' the family too, so we dunnae see eye tae eye sometimes on alchemy. Ah mean, she puts <i> moles </i> in her brews! Ye dunnae put moles in yer brews! Yae threw your brews at tae wee bastards an blew em up!\"</span> <b>[src]</b> sighs, <span class='spooky'>\"But she's a heart o gold so.. Ah wanted tae see her an check up oon her, make sure she's okay.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_FAR
 					sleep(30)
-					poof()
 
 				if("What is that on your head?")
 					visible_message("<b>[src]</b> pats the pumpkin atop her head, <span class='spooky'>\"This thing? This ain't nae ordinary pumpkin! Me Ma grew this monster ooer a year o love, dedication an hard work. Honestly it felt like she loved this thing more than any of us, which Ah knew ain't true an it's not like she was hartless or anything but.. well, we had a falling oot when Ah got back home with all me stuff in tow. An all she had done is sent me owl after owl over t' last year aboot this bloody pumpkin and ah had enough. So ah took it, an put it on me head. You know, as ye do. Ah am the great Pumpqueen after all, Ah deserve this.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_HEAD
 					sleep(30)
-					poof()
 
 				if("Are you a witch?")
 					visible_message("<b>[src]</b> grumbles, <span class='spooky'>\"If ye must know, Ah got kicked oot of the witch academy fer being too much of a \"loose cannon\". A bloody loose cannon? Nae they were just pissed off Ah had the brass tae proclaim myself as the Pumpqueen! And also maybe the time Ah went and blew up one of the towers by trying tae make a huge batch of astrogen might've had something tae do with it. Ah mean it would've worked fine if the cauldrons weren't so shite and were actually upgraded by the faculty. So technically no, I'm not a witch.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_WITCH
 					sleep(30)
-					poof()
 
 				if("So you got ex-spell-ed?")
 					visible_message("<b>[src]</b> Gives you a blank look at the pun, before continuing, <span class='spooky'>\"Not quite, Ah know Ah ken get back into the academy, it's only an explosion, they happen all the time, but, tae be fair it's my fault that things came tae their explosive climax. You don't know what it's like when you're after a witch doctorate, everyone else is doing well, everyone's making new spells and the like, and I'm just good at making explosions really, or fireworks. So, Ah did something Ah knew was dangerous, because Ah had tae do something tae stand oot, but Ah know this life ain't fer me, Ah don't want tae be locked up in dusty towers, grinding reagent after reagent together, trying tae find new reactions, some of the wizards in there haven't left fer years. Ah want tae live, Ah want tae fly around on a broom, turn people into cats fer a day and disappear cackling! That's what got me into witchcraft!\"</span> she throws her arms up in the arm, spinning the pumpkin upon her head slightly. She carefully spins it back to face you, giving oot a soft sigh, <span class='spooky'>\"Ah know my mother's obsession with this dumb thing on my head is just her trying tae fill the void of me and my sis moving oot, and it really shouldn't be on my head. And Ah know that I'm really here tae get help from my sis.. She's the sensible one, and she gives good hugs.\"</span>")
@@ -269,11 +311,10 @@
 					visible_message("<b>[src]</b> says, <span class='spooky'>\"Thanks [C], Ah guess Ah didn't realise Ah needed someone tae talk tae but, I'm glad ye spent all your candies talking tae me. Funny how things seem much worse in yer head.\"</span>")
 					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_EXPELL
 					sleep(30)
-					poof()
 
 				if("Can I take you out on a date?")
 					visible_message("<b>[src]</b> blushes, <span class='spooky'>\"...You want tae ask me oot on a date? Me? After all that nonsense Ah just said? It seems a waste of a candy honestly.\"</span>")
-					progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_DATE
+					//progression["[C.real_name]"] = progression["[C.real_name]"] | JACQ_DATE
 					visible_message("<b>[src]</b> looks to the side, deep in thought.</span>")
 					dating_start(C, gender)
 
@@ -285,37 +326,34 @@
 /mob/living/simple_animal/jacq/proc/trick(mob/living/carbon/C, gender)
 	var/option
 	if(ishuman(C))
-		option = rand(1,7)
-	else
 		option = rand(1,6)
+	else
+		option = rand(1,5)
 	switch(option)
 		if(1)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Hocus pocus, making friends is now your focus!\"</span>")
-			var/datum/objective/brainwashing/objective = pick("Make a tasty sandwich for", "Compose a poem for", "Aquire a nice outfit to give to", "Strike up a conversation about pumpkins with", "Write a letter and deliver it to", "Give a nice hat to")
+			var/message = pick("make a tasty sandwich for", "compose a poem for", "aquire a nice outfit to give to", "strike up a conversation about pumpkins with", "write a letter and deliver it to", "give a nice hat to")
 			var/mob/living/L2 = pick(GLOB.player_list)
-			objective += " [L2.name]."
-			brainwash(C, objective)
+			message += " [L2.name]."
+			to_chat(C, "<span class='big warning'> You feel an overwhelming desire to [message]")
 		if(2)
-			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Off comes your head, a pumpkin taking it's stead!\"</span>")
-			C.reagents.add_reagent("pumpkinmutationtoxin", 5)
-		if(3)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"If only you had a better upbringing, your ears are now full of my singing!\"</span>")
 			var/client/C2 = C.client
-			C2.chatOutput.sendMusic("https://a.uguu.se/rQ8FxxUQ1Xzc_SpOwOkyOwOkyPumpkinSong-PFrPrIxluWk.mp4", 1)//I hope this works!
-		if(4)
+			C2.chatOutput.sendMusic("https://puu.sh/ExBbv.mp4", 1)//I hope this works!
+		if(3)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
 			if(C.head)
 				var/obj/item/W = C.head
 				C.dropItemToGround(W, TRUE)
 			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
-		if(5)
+		if(4)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
 			C.reagents.add_reagent("eigenstate", 30)
-		if(6)
+		if(5)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"A new familiar for me, and you'll see it's thee!\"</span>")
 			C.reagents.add_reagent("secretcatchem", 30)
-		if(7)
+		if(6)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"While you may not be a ghost, for this sheet you'll always be it's host.\"</span>")
 			var/mob/living/carbon/human/H = C
 			if(H.wear_suit)
