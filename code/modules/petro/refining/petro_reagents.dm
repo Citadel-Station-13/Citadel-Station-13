@@ -34,6 +34,14 @@
 	color = "#000000"
 	taste_description = "disgusting oily sludge"
 
+/datum/reagent/lightsandoil
+	name = "Refined Tar Sand"
+	id = "lightsandoil"
+	description = "A viscous mixture of hydrocarbons, most likely extracted from Lavaland. More useful now that it has been combined with lighter fractions."
+	reagent_state = LIQUID
+	color = "#000000"
+	taste_description = "disgusting oily sludge"
+
 /datum/reagent/sandoil/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(1, 0)
 	..()
@@ -76,10 +84,10 @@
 		T.AddComponent(/datum/component/thermite, reac_volume * 5)//5 times stronger than thermite because it's harder to get
 
 
-/datum/reagent/naptha
-	name = "Naptha"
-	id = "naptha"
-	description = "Liquid naptha, a light oil. Needs further refining to be turned into gasoline."
+/datum/reagent/naphtha
+	name = "Naphtha"
+	id = "naphtha"
+	description = "Liquid naphtha, a light oil. Needs further refining to be turned into gasoline."
 	reagent_state = LIQUID
 	color = "#010101"
 	taste_description = "burning and metal"
@@ -99,9 +107,3 @@
 	reagent_state = GAS
 	color = "#010101"
 
-datum/chemical_reaction/reagent_explosion/butane_explosion
-	name = "Butane explosion"
-	id = "butane_explosion"
-	required_reagents = list("butane" = 1)
-	required_temp = 672
-	strengthdiv = 4 //half strength of nitro, i think
