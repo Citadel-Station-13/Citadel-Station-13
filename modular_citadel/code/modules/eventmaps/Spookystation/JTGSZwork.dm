@@ -547,11 +547,11 @@
 	anchored = 1
 	use_power = 0
 	max_integrity = 250
-	var/HRimgstate = "gayhouroverlay-0"
-	var/MMimgstate = "gayminuteoverlay-0"
+	var/HRimgstate = "asshouroverlay-0"
+	var/MMimgstate = "assminuteoverlay-0"
 	var/ticktock = 0 // We hold this here
 	var/dyndial_cycle_ticker = 0 //How many
-	var/playchime = 1
+	var/playchime = 1 //Procs will reset their vars.
 
 /obj/machinery/grandfatherclock/Initialize()
 	. = ..()
@@ -581,54 +581,54 @@
 		dyndial_cycle_ticker = 0
 
 /obj/machinery/grandfatherclock/proc/dyndial_cycle()
-	var/ass_time = STATION_TIME(FALSE)
+	var/ass_time = STATION_TIME(TRUE) //Fun fact, space station time has a timezone offset, If its not on display time.
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
 
-	if(playchime)
-		if(hour == 11 || 12)
-			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
-			playchime = 0
-	if(!playchime && hour == 9) //Getting some kind of weird math error here, so lets just use 9 for the set.
+	//to_chat(world, "dyndial cycle current says: [hour]:[minute] - Ass_time currently says [ass_time]")
+	if(playchime && hour == 0)
+		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
+		playchime = 0
+	if(!playchime && hour == 11)
 		playchime = 1
-	
+
 	switch(hour)
-		if(0 || 12)
-			HRimgstate = "gayhouroverlay-0"
 		if(1 || 2)
-			HRimgstate = "gayhouroverlay-2"
+			HRimgstate = "asshouroverlay-2" //Now it is ass, mostly because someones going to kill me for the other names.
 		if(3)
-			HRimgstate = "gayhouroverlay-3"
+			HRimgstate = "asshouroverlay-3"
 		if(4 || 5)
-			HRimgstate = "gayhouroverlay-4"
+			HRimgstate = "asshouroverlay-4"
 		if(6)
-			HRimgstate = "gayhouroverlay-6"
+			HRimgstate = "asshouroverlay-6"
 		if(7 || 8)
-			HRimgstate = "gayhouroverlay-7"
+			HRimgstate = "asshouroverlay-7"
 		if(9)
-			HRimgstate = "gayhouroverlay-9"
+			HRimgstate = "asshouroverlay-9"
 		if(10 || 11)
-			HRimgstate = "gayhouroverlay-10"
+			HRimgstate = "asshouroverlay-10"
+		else
+			HRimgstate = "asshouroverlay-0" //Station time wraps to 0, and so does our hours.
 
 	switch(minute)
 		if(0 to 3)
-			MMimgstate = "gayminuteoverlay-0"
+			MMimgstate = "assminuteoverlay-0"
 		if(4 to 15)
-			MMimgstate = "gayminuteoverlay-2"
+			MMimgstate = "assminuteoverlay-2"
 		if(16 to 22)
-			MMimgstate = "gayminuteoverlay-3"
+			MMimgstate = "assminuteoverlay-3"
 		if(23 to 28)
-			MMimgstate = "gayminuteoverlay-4"
+			MMimgstate = "assminuteoverlay-4"
 		if(29 to 33)
-			MMimgstate = "gayminuteoverlay-6"
+			MMimgstate = "assminuteoverlay-6"
 		if(34 to 41)
-			MMimgstate = "gayminuteoverlay-7"
+			MMimgstate = "assminuteoverlay-7"
 		if(42 to 49)
-			MMimgstate = "gayminuteoverlay-9"
+			MMimgstate = "assminuteoverlay-9"
 		if(50 to 57)
-			MMimgstate = "gayminuteoverlay-10"
+			MMimgstate = "assminuteoverlay-10"
 		else 
-			MMimgstate = "gayminuteoverlay-0" //This has 58 to 60 and everything else.
+			MMimgstate = "assminuteoverlay-0" //This has 58 to 60 and everything else.
 	
 	update_icon() //Everything is set, lets update.
 
