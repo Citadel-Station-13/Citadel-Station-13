@@ -146,6 +146,9 @@
 	var/datum/component/storage/concrete/master = master()
 	return master? master.real_location() : null
 
+/datum/component/storage/proc/accessible_items()
+	return contents()
+
 /datum/component/storage/proc/canreach_react(datum/source, list/next)
 	var/datum/component/storage/concrete/master = master()
 	if(!master)
