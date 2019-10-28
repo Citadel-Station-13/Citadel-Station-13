@@ -549,10 +549,8 @@
 	max_integrity = 250
 	var/HRimgstate = "gayhouroverlay-0"
 	var/MMimgstate = "gayminuteoverlay-0"
-	var/ticktocksnd_cycle_ticker = 0
+
 	var/dyndial_cycle_ticker = 0 //How many
-	var/playchime = 1
-	var/ticktock = 0
 
 /obj/machinery/grandfatherclock/Initialize()
 	. = ..()
@@ -563,22 +561,20 @@
 	
 	
 /obj/machinery/grandfatherclock/proc/doodad_clock_ticker() //We basically throttle the rest of this machine here.
-	ticktocksnd_cycle_ticker++
+	var/ticktock = 0
 	dyndial_cycle_ticker++
 	
-	if(ticktocksnd_cycle_ticker >= 1) //Here is where we will play a noise TICK TOCK TICK TOCK			
-		if(ticktock) //If we are true
-			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tock.ogg', 100,0)
-			icon_state = "grandfathermk4right"
-			flick("tick", src)
-			ticktock = 0 //Play this noise set to false
-		else
-			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tick.ogg', 100,0)	
-			flick("tock", src)
-			icon_state = "grandfathermk4left"
-			ticktock = 1 //If we are not true, play this noise set to true
-
-		ticktocksnd_cycle_ticker = 0 //The delayed loop begins anew
+		
+	if(ticktock) //If we are true
+		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tock.ogg', 100,0)
+		icon_state = "grandfathermk4right"
+		flick("tick", src)
+		ticktock = 0 //Play this noise set to false
+	else
+		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tick.ogg', 100,0)	
+		flick("tock", src)
+		icon_state = "grandfathermk4left"
+		ticktock = 1 //If we are not true, play this noise set to true
 
 	if(dyndial_cycle_ticker >= 20) //Handles the dynamic dial
 		dyndial_cycle()
@@ -588,16 +584,21 @@
 	var/ass_time = STATION_TIME(FALSE)
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
+	//var/playchime = 1
 
+	//if(playchime)
+	//	if(hour == 11 || 12)
+	//		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
+	//		playchime = 0
+	//if(!playchime)
+	//	if(hour == 1 || 2)
+	//		playchime = 1
+	
 	switch(hour)
 		if(0 || 12)
 			HRimgstate = "gayhouroverlay-0"
-			if(playchime)
-				playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 1)	
-				playchime = 0 //We go to false, so it only plays once.
 		if(1 || 2)
 			HRimgstate = "gayhouroverlay-2"
-			playchime = 1 //After the 12 is over, we go back to true for the next iteration later.
 		if(3)
 			HRimgstate = "gayhouroverlay-3"
 		if(4 || 5)
