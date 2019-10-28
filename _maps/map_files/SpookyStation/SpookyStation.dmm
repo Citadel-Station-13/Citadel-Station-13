@@ -401,7 +401,7 @@
 /area/eventmap/inside)
 "bw" = (
 /obj/machinery/button/door/dorms/luxury2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/damturf/broken6,
 /area/eventmap/inside)
 "bx" = (
 /obj/structure/chair/stool/bar,
@@ -565,7 +565,7 @@
 /area/eventmap/inside)
 "cb" = (
 /obj/machinery/button/door/dorms/luxury3,
-/turf/open/floor/wood,
+/turf/open/floor/wood/damturf/broken1,
 /area/eventmap/inside)
 "cc" = (
 /obj/machinery/holopad,
@@ -3376,9 +3376,9 @@
 /obj/machinery/light/small,
 /obj/structure/closet/crate,
 /obj/item/twohanded/fireaxe,
-/obj/item/storage/fancy/candle_box,
 /obj/item/storage/box/matches,
 /obj/item/shovel,
+/obj/item/flashlight/flare/torch,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "kV" = (
@@ -3971,7 +3971,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/damturf/broken5,
 /area/eventmap/inside)
 "mC" = (
 /obj/item/paper/fluff/balls/spookyasylum/healstaffnote,
@@ -4002,6 +4002,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "mH" = (
@@ -4908,6 +4910,7 @@
 /obj/item/paper/fluff/balls/spookyasylum{
 	name = "MEMO: Cooks"
 	},
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/plasteel/cafeteria,
 /area/eventmap/inside)
 "pt" = (
@@ -4937,6 +4940,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/storage/box/ingredients/carnivore,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/plasteel/cafeteria,
 /area/eventmap/inside)
 "px" = (
@@ -5133,6 +5139,10 @@
 /area/eventmap/inside)
 "pX" = (
 /obj/structure/table,
+/obj/item/storage/box/ingredients/delights,
+/obj/item/storage/box/ingredients/exotic,
+/obj/item/storage/box/ingredients/italian,
+/obj/item/storage/box/ingredients/grains,
 /turf/open/floor/plasteel/cafeteria,
 /area/eventmap/inside)
 "pY" = (
@@ -5330,6 +5340,34 @@
 	dir = 1;
 	pixel_y = -32
 	},
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/cafeteria,
 /area/eventmap/inside)
 "qH" = (
@@ -6916,7 +6954,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/damturf/broken1,
 /area/eventmap/inside)
 "vp" = (
 /obj/structure/table/wood/fancy/purple,
@@ -7084,16 +7122,8 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "vP" = (
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/structure/rack,
+/obj/item/gun/ballistic/automatic/tommygun,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "vQ" = (
@@ -7290,15 +7320,7 @@
 /area/eventmap/inside)
 "wt" = (
 /obj/structure/rack,
-/obj/item/gun/energy/temperature/security{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/gun/energy/temperature/security,
-/obj/item/gun/energy/temperature/security{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "wu" = (
@@ -7308,6 +7330,7 @@
 	pixel_x = 26;
 	req_access_txt = "3"
 	},
+/obj/item/storage/box/rubbershot,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "wv" = (
@@ -7428,9 +7451,9 @@
 /turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "wQ" = (
-/obj/machinery/telecomms/allinone/indestructable,
-/turf/open/floor/sepia,
-/area/eventmap/inside)
+/obj/item/clothing/glasses/wraith_spectacles,
+/turf/open/floor/spooktime/dirtpatch,
+/area/eventmap/mountaininside)
 "wR" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
@@ -7449,28 +7472,18 @@
 /area/eventmap/inside)
 "wT" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/advtaser{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/gun/energy/e_gun/advtaser,
-/obj/item/gun/energy/e_gun/advtaser{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "wU" = (
 /obj/structure/rack,
-/obj/item/gun/energy/laser{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/item/storage/box/beanbag,
+/obj/item/storage/box/beanbag,
+/obj/item/storage/box/fireshot,
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalslugs,
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/rubbershot,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "wV" = (
@@ -7497,7 +7510,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/damturf/broken4,
 /area/eventmap/inside)
 "wX" = (
 /obj/structure/table/wood/fancy/cyan,
@@ -7845,23 +7858,8 @@
 /area/eventmap/inside)
 "xQ" = (
 /obj/structure/rack,
-/obj/item/gun/energy/tesla_revolver{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/gun/energy/tesla_revolver,
-/obj/item/gun/energy/tesla_revolver{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/armor/laserproof{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/clothing/suit/armor/laserproof{
-	pixel_x = -2;
-	pixel_y = 2
-	},
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "xR" = (
@@ -7906,7 +7904,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/damturf/broken6,
 /area/eventmap/inside)
 "xT" = (
 /obj/structure/closet/secure_closet/hos,
@@ -8525,6 +8523,13 @@
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Ak" = (
+/obj/structure/bonfire,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "Ao" = (
 /obj/item/chair,
 /turf/open/floor/plasteel/damturf/platdmg3,
@@ -8537,6 +8542,15 @@
 /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountaininside)
+"Av" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel/damturf/damage2,
+/area/eventmap/inside)
 "Aw" = (
 /obj/item/storage/pill_bottle/happiness,
 /obj/effect/decal/cleanable/dirt,
@@ -8762,6 +8776,9 @@
 /obj/item/bedsheet/pirate,
 /turf/open/floor/carpet,
 /area/eventmap/inside)
+"BU" = (
+/turf/open/floor/wood/damturf/broken7,
+/area/eventmap/inside)
 "BW" = (
 /obj/item/lighter/greyscale,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8788,9 +8805,51 @@
 /obj/item/scythe,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Cq" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/closet/crate,
+/obj/item/clothing/under/aviatoruniform,
+/obj/item/clothing/under/geisha,
+/obj/item/clothing/under/singery,
+/obj/item/clothing/shoes/simonshoes,
+/obj/item/clothing/neck/devilwings,
+/obj/item/clothing/shoes/kneesocks,
+/obj/item/clothing/gloves/bracer,
+/obj/item/clothing/gloves/doomguy,
+/obj/item/clothing/accessory/skullcodpiece,
+/obj/item/clothing/head/helmet/richard,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Cs" = (
 /turf/open/floor/spooktime/beach/coasts/coastSE,
 /area/eventmap/outside)
+"Cu" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/mask/horsehead,
+/obj/item/clothing/mask/horsehead,
+/obj/item/clothing/mask/bandana/red,
+/obj/item/clothing/mask/rat/bat,
+/obj/item/clothing/mask/rat/bear,
+/obj/item/clothing/mask/rat/bee,
+/obj/item/clothing/mask/rat/fox,
+/obj/item/clothing/mask/rat/jackal,
+/obj/item/clothing/mask/rat/raven,
+/obj/item/clothing/mask/rat/tribal,
+/obj/item/clothing/mask/frog,
+/obj/item/clothing/mask/scarecrow,
+/obj/item/clothing/mask/neorussian,
+/obj/item/clothing/mask/gondola,
+/obj/item/clothing/head/rice_hat,
+/obj/item/clothing/head/pharaoh,
+/obj/item/clothing/head/hunter,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Cv" = (
+/obj/structure/reagent_dispensers/keg/milk,
+/turf/open/floor/wood/damturf/broken3,
+/area/eventmap/inside)
 "Cz" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -8818,6 +8877,10 @@
 "CI" = (
 /turf/open/indestructible/cobble,
 /area/eventmap/outside)
+"CL" = (
+/obj/structure/reagent_dispensers/keg/gargle,
+/turf/open/floor/wood/damturf/broken1,
+/area/eventmap/inside)
 "CN" = (
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8826,6 +8889,30 @@
 /obj/structure/healingfountain,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"CT" = (
+/obj/structure/closet/crate,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "CU" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/tree/spookytime,
@@ -8958,6 +9045,10 @@
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
+"DU" = (
+/obj/item/chair/wood,
+/turf/open/floor/carpet,
+/area/eventmap/inside)
 "DZ" = (
 /obj/item/coin/diamond,
 /obj/item/stack/sheet/mineral/silver,
@@ -8967,10 +9058,29 @@
 /obj/item/lighter,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"El" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel/damturf/scorched1,
+/area/eventmap/inside)
 "Eo" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"Eu" = (
+/obj/item/storage/box/rubbershot,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Ey" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/storage/box/rubbershot,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Ez" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/spooktime/beach,
@@ -8985,6 +9095,12 @@
 /obj/item/flashlight/glowstick/cyan,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"EK" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "EL" = (
 /obj/item/flashlight/glowstick/orange,
 /turf/open/floor/spooktime/dirtpatch,
@@ -8999,6 +9115,14 @@
 /obj/structure/chair/sofa/right,
 /turf/open/floor/wood,
 /area/eventmap/mountaininside)
+"EW" = (
+/obj/machinery/shower{
+	desc = "Despite their age, they seem clean and capable of providing hot water just as well as their modern counterparts. Hopefully Nanotrasen cleaned the water pipes this well...";
+	pixel_y = 24
+	},
+/obj/item/clothing/head/tinfoil,
+/turf/open/floor/sepia,
+/area/eventmap/inside)
 "EX" = (
 /obj/machinery/light{
 	dir = 1
@@ -9043,6 +9167,10 @@
 "Fw" = (
 /turf/closed/wall/rust,
 /area/eventmap/mountaininside)
+"Fz" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/wood/damturf/broken5,
+/area/eventmap/inside)
 "FA" = (
 /obj/item/restraints/handcuffs,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9051,11 +9179,25 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
 /turf/open/floor/plasteel/freezer,
 /area/eventmap/inside)
 "FE" = (
 /turf/open/floor/spooktime/beach/coasts/coastN,
 /area/eventmap/outside)
+"FF" = (
+/obj/item/storage/box/ingredients/wildcard,
+/obj/item/storage/box/ingredients/wildcard,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
+"FG" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Containment - Particle Accelerator";
+	dir = 1;
+	network = list("singularity")
+	},
+/turf/open/floor/wood/damturf/broken2,
+/area/eventmap/inside)
 "FJ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis,
@@ -9071,6 +9213,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"FN" = (
+/obj/machinery/light/small,
+/turf/open/floor/wood/damturf/broken4,
+/area/eventmap/inside)
 "FR" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 30
@@ -9116,6 +9262,10 @@
 /obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"Gm" = (
+/obj/item/a_gift/anything,
+/turf/open/floor/sepia,
+/area/eventmap/inside)
 "Gn" = (
 /obj/structure/closet/gimmick/tacticool,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9161,6 +9311,12 @@
 "GM" = (
 /turf/open/floor/spooktime/cobble/roadsideE,
 /area/eventmap/outside)
+"GS" = (
+/obj/item/chair/wood,
+/turf/open/floor/plasteel{
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "GT" = (
 /obj/item/clothing/mask/frog,
 /turf/open/floor/spooktime/beach/coasts/coastS,
@@ -9173,6 +9329,34 @@
 	req_access = null
 	},
 /turf/open/floor/wood,
+/area/eventmap/inside)
+"Hb" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/gorilla,
+/obj/item/reagent_containers/food/snacks/meat/slab/gorilla,
+/obj/item/reagent_containers/food/snacks/meat/slab/gondola,
+/obj/item/reagent_containers/food/snacks/meat/slab/gondola,
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/turf/open/floor/plasteel/freezer,
+/area/eventmap/inside)
+"Hc" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/wood/damturf/broken2,
 /area/eventmap/inside)
 "Hd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -9222,6 +9406,12 @@
 /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Hw" = (
+/obj/structure/bonfire,
+/turf/open/floor/plasteel{
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "HD" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -9238,14 +9428,35 @@
 "HK" = (
 /obj/structure/closet/crate,
 /obj/item/twohanded/fireaxe,
-/obj/item/storage/fancy/candle_box,
 /obj/item/storage/box/matches,
 /obj/item/shovel,
+/obj/item/flashlight/flare/torch,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "HN" = (
 /obj/item/chair/wood,
 /turf/open/floor/wood,
+/area/eventmap/inside)
+"HP" = (
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
+"HS" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/head/snake,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"HV" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood/damturf/broken6,
+/area/eventmap/inside)
+"Ib" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood/damturf/broken4,
 /area/eventmap/inside)
 "Ic" = (
 /obj/item/stack/sheet/metal/fifty,
@@ -9262,6 +9473,13 @@
 /area/eventmap/inside)
 "Ih" = (
 /turf/open/floor/wood/damturf/broken6,
+/area/eventmap/inside)
+"Ii" = (
+/obj/item/chair/wood,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "chapel"
+	},
 /area/eventmap/inside)
 "Ik" = (
 /obj/structure/closet/athletic_mixed,
@@ -9303,6 +9521,13 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/damturf/damage4,
 /area/eventmap/mountaininside)
+"IR" = (
+/obj/structure/bonfire,
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "IT" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
@@ -9311,6 +9536,12 @@
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
+"Ja" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/wood/damturf/broken7,
+/area/eventmap/inside)
 "Jb" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
@@ -9319,6 +9550,13 @@
 /obj/item/reagent_containers/food/drinks/bottle/blazaam,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Jq" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc{
+	light_range = 3
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Jr" = (
 /turf/closed/wall/rust,
 /area/eventmap/mountain)
@@ -9348,6 +9586,10 @@
 /area/eventmap/inside)
 "JU" = (
 /turf/open/floor/spooktime/beach/coasts/innerE,
+/area/eventmap/outside)
+"JV" = (
+/obj/item/chair/wood,
+/turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
 "Ka" = (
 /turf/open/floor/plasteel/damturf/damage2,
@@ -9381,6 +9623,9 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"Km" = (
+/turf/open/floor/plasteel/damturf/platdmg2,
+/area/eventmap/inside)
 "Kq" = (
 /turf/open/floor/spooktime/cobble/roadsideS,
 /area/eventmap/outside)
@@ -9388,6 +9633,31 @@
 /obj/item/reagent_containers/pill/stimulant,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Ku" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/head/snake,
+/obj/item/clothing/head/pirate,
+/obj/item/clothing/head/santa,
+/obj/item/clothing/head/naziofficer,
+/obj/item/clothing/head/magus,
+/obj/item/clothing/head/mailman,
+/obj/item/clothing/head/griffin,
+/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/head/bowler,
+/obj/item/clothing/head/fedora,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Kv" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Kw" = (
+/obj/item/storage/box/ingredients/sweets,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
 "Kx" = (
 /obj/machinery/door/airlock/silver{
 	name = "Bathroom"
@@ -9409,6 +9679,21 @@
 "KQ" = (
 /turf/open/floor/spooktime/beach/coasts/coastE,
 /area/eventmap/outside)
+"KR" = (
+/obj/structure/table,
+/obj/item/storage/box/ingredients/american,
+/obj/item/storage/box/ingredients/fiesta,
+/obj/item/storage/box/ingredients/grains,
+/obj/item/storage/box/ingredients/fruity,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
+"La" = (
+/obj/item/chair/wood,
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "Lg" = (
 /obj/item/autosurgeon/gloweyes,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9418,6 +9703,7 @@
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
 "Lk" = (
+/obj/structure/mineral_door/wood,
 /turf/open/floor/wood/damturf/broken7,
 /area/eventmap/inside)
 "Ln" = (
@@ -9435,10 +9721,39 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountaininside)
+"Lv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/damturf/broken3,
+/area/eventmap/inside)
+"Lw" = (
+/obj/item/chair/wood/wings,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "Lx" = (
 /obj/item/coin/antagtoken,
 /turf/open/floor/plasteel/dark,
 /area/eventmap/mountaininside)
+"Ly" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood/damturf/broken2,
+/area/eventmap/inside)
+"LA" = (
+/obj/item/chair/wood,
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
+"LC" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "LF" = (
 /obj/item/chair,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9451,6 +9766,10 @@
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/beach/watersolid,
 /area/eventmap/mountain)
+"LN" = (
+/obj/item/storage/box/techsslug,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "LU" = (
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/outside)
@@ -9468,6 +9787,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"Ma" = (
+/obj/item/chair/wood/wings,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Mb" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -9490,6 +9813,7 @@
 /area/eventmap/outside)
 "Ml" = (
 /obj/structure/chair/sofa/right,
+/obj/item/storage/daki,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "Mn" = (
@@ -9512,6 +9836,10 @@
 "ME" = (
 /turf/open/floor/carpet/red,
 /area/eventmap/mountaininside)
+"MH" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/spooktime/riverwatermotion,
+/area/eventmap/outside)
 "MM" = (
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/spooktime/cobble,
@@ -9531,10 +9859,18 @@
 /obj/item/storage/pill_bottle/breast_enlargement,
 /turf/open/floor/plasteel/damturf/scorched,
 /area/eventmap/mountaininside)
+"Nf" = (
+/obj/item/chair/wood,
+/turf/open/floor/spooktime/nonspooktimegrass,
+/area/eventmap/outside)
 "Nl" = (
 /obj/structure/closet/athletic_mixed,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Nn" = (
+/obj/item/reagent_containers/food/condiment/mayonnaise,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
 "Nv" = (
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9551,6 +9887,19 @@
 /obj/structure/chair/sofa,
 /turf/open/floor/wood,
 /area/eventmap/mountaininside)
+"NK" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"NL" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood/damturf/broken4,
+/area/eventmap/inside)
 "NS" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -9584,7 +9933,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Oh" = (
+/obj/machinery/light/small,
+/turf/open/floor/wood/damturf/broken3,
 /area/eventmap/inside)
 "Oj" = (
 /obj/structure/toilet{
@@ -9595,12 +9948,12 @@
 "Ou" = (
 /obj/structure/closet/crate,
 /obj/item/twohanded/fireaxe,
-/obj/item/storage/fancy/candle_box,
 /obj/item/storage/box/matches,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/item/shovel,
+/obj/item/flashlight/flare/torch,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "Ow" = (
@@ -9624,6 +9977,10 @@
 /obj/structure/bedsheetbin/towel,
 /turf/open/floor/sepia,
 /area/eventmap/inside)
+"OQ" = (
+/obj/item/clothing/accessory/skullcodpiece,
+/turf/open/floor/carpet/royalblack,
+/area/eventmap/inside)
 "OU" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/head/HoS/beret/syndicate,
@@ -9638,6 +9995,10 @@
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"Pk" = (
+/obj/structure/closet/crate,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Pm" = (
 /obj/item/candle/infinite,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -9646,6 +10007,9 @@
 /obj/item/skub,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"PB" = (
+/turf/open/floor/plasteel/damturf/platdmg3,
+/area/eventmap/inside)
 "PI" = (
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/beach,
@@ -9654,6 +10018,10 @@
 /obj/item/soap/homemade,
 /turf/open/floor/sepia,
 /area/eventmap/mountaininside)
+"PK" = (
+/obj/item/clothing/neck/petcollar,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "PL" = (
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
@@ -9665,6 +10033,13 @@
 "PO" = (
 /turf/open/floor/plasteel/damturf/platdmg2,
 /area/eventmap/mountaininside)
+"PS" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel/damturf/scorched1,
+/area/eventmap/inside)
 "PT" = (
 /turf/closed/wall,
 /area/eventmap/mountaininside)
@@ -9689,6 +10064,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"Qy" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/sepia,
+/area/eventmap/inside)
 "Qz" = (
 /obj/item/reagent_containers/food/snacks/roastparsnip,
 /obj/structure/table/reinforced,
@@ -9698,6 +10078,11 @@
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"QJ" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "QK" = (
 /turf/open/floor/spooktime/beach,
 /area/eventmap/outside)
@@ -9739,6 +10124,10 @@
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountaininside)
+"Rk" = (
+/obj/item/storage/fancy/cigarettes,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Rm" = (
 /turf/open/floor/plasteel/damturf/damage5,
 /area/eventmap/mountaininside)
@@ -9761,6 +10150,57 @@
 /obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"RJ" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
 "RL" = (
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/spooktime/beach/coasts/coastNE,
@@ -9780,6 +10220,10 @@
 /area/eventmap/inside)
 "Sb" = (
 /obj/item/scythe,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Sc" = (
+/obj/structure/healingfountain,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "Se" = (
@@ -9814,6 +10258,13 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/spooktime/cobble,
 /area/eventmap/outside)
+"SB" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc{
+	light_range = 3
+	},
+/turf/open/floor/wood/damturf/broken5,
+/area/eventmap/inside)
 "SG" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/structure/chair/comfy/shuttle{
@@ -9824,6 +10275,10 @@
 	icon_state = "bus"
 	},
 /area/shuttle/arrival)
+"SK" = (
+/obj/item/storage/daki,
+/turf/open/floor/plasteel/damturf/scorched2,
+/area/eventmap/mountaininside)
 "SN" = (
 /obj/structure/bonfire,
 /turf/open/floor/spooktime/spooktimegrass,
@@ -9838,6 +10293,15 @@
 /obj/item/flashlight/flare,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"SS" = (
+/obj/item/storage/box/ingredients/vegetarian,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
+"ST" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/snacks/pastatomato,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "SV" = (
 /obj/structure/table/reinforced,
 /obj/item/twohanded/binoculars,
@@ -9847,6 +10311,11 @@
 /obj/item/a_gift/anything,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Td" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/head/scarecrow_hat,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Te" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -9857,6 +10326,10 @@
 /obj/structure/chair/sofa/left,
 /turf/open/floor/wood,
 /area/eventmap/mountaininside)
+"Tl" = (
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/turf/open/floor/plasteel/freezer,
+/area/eventmap/inside)
 "Tm" = (
 /obj/structure/sink/puddle,
 /turf/open/floor/spooktime/beach,
@@ -9872,6 +10345,22 @@
 /obj/item/fugu_gland,
 /turf/open/floor/spooktime/beach/coasts/coastN,
 /area/eventmap/outside)
+"TE" = (
+/obj/structure/closet/crate,
+/obj/item/twohanded/fireaxe,
+/obj/item/storage/box/matches,
+/obj/item/shovel,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"TF" = (
+/obj/structure/bonfire,
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/eventmap/inside)
 "TG" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/tree/jungle,
@@ -9917,6 +10406,27 @@
 "TX" = (
 /turf/open/floor/plasteel/damturf/scorched1,
 /area/eventmap/mountaininside)
+"Uc" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/gorilla,
+/obj/item/reagent_containers/food/snacks/meat/slab/gorilla,
+/obj/item/reagent_containers/food/snacks/meat/slab/gondola,
+/obj/item/reagent_containers/food/snacks/meat/slab/gondola,
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/turf/open/floor/plasteel/freezer,
+/area/eventmap/inside)
 "Ue" = (
 /obj/item/flashlight/seclite,
 /turf/open/floor/spooktime/dirtpatch,
@@ -9926,10 +10436,18 @@
 /obj/structure/flora/tree/spookytimexl,
 /turf/open/floor/spooktime/spooktimegrass,
 /area/eventmap/outside)
+"Ug" = (
+/obj/item/storage/box/stunslug,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "Ui" = (
 /obj/item/storage/pill_bottle/zoom,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Up" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood/damturf/broken1,
+/area/eventmap/inside)
 "Ur" = (
 /turf/open/floor/plasteel/damturf/platdmg1,
 /area/eventmap/mountaininside)
@@ -9977,6 +10495,12 @@
 	},
 /turf/open/floor/spooktime/cobble/roadmid,
 /area/eventmap/outside)
+"Ve" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/turf/open/floor/sepia,
+/area/eventmap/inside)
 "Vh" = (
 /turf/open/floor/wood/damturf/broken4,
 /area/eventmap/inside)
@@ -10018,6 +10542,9 @@
 /obj/item/pizzabox/meat,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"VF" = (
+/turf/open/floor/plasteel/damturf/scorched,
+/area/eventmap/inside)
 "VG" = (
 /turf/open/floor/spooktime/beach/watersolid,
 /area/eventmap/mountain)
@@ -10028,6 +10555,12 @@
 /obj/item/stack/sheet/bluespace_crystal,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"VV" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "VY" = (
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/beach/coasts/coastE,
@@ -10055,6 +10588,12 @@
 /area/eventmap/mountain)
 "Wq" = (
 /obj/item/storage/pill_bottle/dice,
+/turf/open/floor/wood,
+/area/eventmap/inside)
+"Wr" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "Ws" = (
@@ -10114,6 +10653,20 @@
 /obj/item/flashlight/glowstick/pink,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"WX" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/head/snake,
+/obj/item/clothing/head/pirate,
+/obj/item/clothing/head/santa,
+/obj/item/clothing/head/naziofficer,
+/obj/item/clothing/head/magus,
+/obj/item/clothing/head/mailman,
+/obj/item/clothing/head/griffin,
+/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/head/fedora,
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "WY" = (
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
@@ -10124,6 +10677,13 @@
 "WZ" = (
 /turf/open/floor/spooktime/beach/coasts/innerS,
 /area/eventmap/outside)
+"Xe" = (
+/obj/structure/closet/athletic_mixed,
+/turf/open/floor/wood/damturf/broken7,
+/area/eventmap/inside)
+"Xp" = (
+/turf/open/floor/plasteel/damturf/damage5,
+/area/eventmap/inside)
 "Xv" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/spooktime/dirtpatch,
@@ -10142,6 +10702,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"XH" = (
+/turf/open/floor/plasteel/damturf,
+/area/eventmap/inside)
 "XI" = (
 /obj/item/storage/pill_bottle/penis_enlargement,
 /turf/open/floor/spooktime/dirtpatch,
@@ -10232,6 +10795,10 @@
 /obj/item/lighter/greyscale,
 /turf/open/floor/wood,
 /area/eventmap/inside)
+"YE" = (
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
 "YG" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -10254,6 +10821,10 @@
 /obj/item/stack/sheet/mineral/mythril,
 /turf/open/floor/plasteel/dark,
 /area/eventmap/mountaininside)
+"YK" = (
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/plasteel/freezer,
+/area/eventmap/inside)
 "YM" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/damturf/scorched1,
@@ -10262,6 +10833,10 @@
 /obj/item/stack/sheet/mineral/sandstone/thirty,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"YP" = (
+/obj/item/reagent_containers/food/condiment/soysauce,
+/turf/open/floor/plasteel/cafeteria,
+/area/eventmap/inside)
 "YQ" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastSW,
 /area/eventmap/outside)
@@ -10323,6 +10898,10 @@
 /obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
+"ZF" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood/damturf/broken7,
+/area/eventmap/inside)
 "ZI" = (
 /obj/item/lighter/gold,
 /turf/open/floor/carpet/green,
@@ -10340,6 +10919,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/eventmap/mountaininside)
+"ZO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/damturf/broken2,
+/area/eventmap/inside)
 "ZR" = (
 /turf/open/floor/spooktime/cobble/roadsideN,
 /area/eventmap/outside)
@@ -15160,7 +15743,7 @@ ac
 ac
 zZ
 gs
-Qd
+Eb
 gs
 gs
 ac
@@ -20989,7 +21572,7 @@ aN
 aN
 aN
 ar
-ah
+De
 ah
 ah
 ah
@@ -21248,7 +21831,7 @@ aN
 fp
 cO
 ah
-ah
+BU
 de
 fp
 aN
@@ -22020,7 +22603,7 @@ cF
 ah
 by
 by
-ah
+De
 dy
 fp
 bG
@@ -22274,7 +22857,7 @@ aN
 aN
 fp
 ex
-ah
+JM
 by
 by
 ah
@@ -22321,8 +22904,8 @@ uo
 uC
 fp
 hL
+Gm
 hL
-wQ
 fp
 ab
 ab
@@ -22569,7 +23152,7 @@ pR
 pR
 pR
 cy
-ah
+BU
 ah
 ah
 ah
@@ -22828,7 +23411,7 @@ pR
 ar
 ah
 ah
-ah
+De
 ah
 fp
 up
@@ -23046,7 +23629,7 @@ aN
 fp
 fp
 cP
-ah
+RP
 ah
 df
 fp
@@ -23341,7 +23924,7 @@ pR
 oh
 fp
 rx
-ah
+Vh
 ah
 Ik
 fp
@@ -23600,7 +24183,7 @@ ar
 ry
 ah
 ah
-tl
+Xe
 fp
 fp
 fp
@@ -23817,9 +24400,9 @@ aN
 aN
 fp
 cV
-ah
+Ih
 by
-by
+OQ
 by
 by
 by
@@ -24013,7 +24596,7 @@ Ln
 Ln
 Fw
 Ur
-EF
+wQ
 PL
 Ln
 ac
@@ -24078,7 +24661,7 @@ cY
 by
 by
 by
-by
+OQ
 by
 by
 ar
@@ -24092,7 +24675,7 @@ aN
 aN
 ar
 ah
-ah
+VJ
 ah
 ah
 ah
@@ -24114,10 +24697,10 @@ ar
 ry
 ah
 ah
-ah
+VJ
 fp
 ah
-ah
+RP
 ek
 ah
 bI
@@ -24350,7 +24933,7 @@ aN
 fp
 HK
 ah
-HK
+TE
 ah
 kU
 fp
@@ -24608,7 +25191,7 @@ fp
 HK
 ah
 ah
-ah
+Vh
 HK
 fp
 pR
@@ -24864,7 +25447,7 @@ Oa
 aO
 aO
 aO
-ah
+JM
 ah
 HK
 ar
@@ -25148,7 +25731,7 @@ us
 ah
 fp
 rC
-ah
+De
 wT
 ah
 xR
@@ -25380,7 +25963,7 @@ aO
 aO
 ah
 ah
-ah
+VJ
 fp
 pR
 pR
@@ -25635,7 +26218,7 @@ cR
 aO
 aO
 aO
-ah
+CT
 ah
 ah
 fp
@@ -25661,7 +26244,7 @@ fp
 ah
 ah
 vn
-ah
+JM
 ah
 wV
 xt
@@ -25893,13 +26476,13 @@ aO
 aO
 aO
 ah
-ah
+Pk
 ah
 ar
 pR
 pR
 yO
-kA
+MH
 kA
 kA
 kA
@@ -25913,12 +26496,12 @@ ar
 rB
 bJ
 bJ
+JM
+fp
+Ib
 ah
 fp
-rC
-ah
-fp
-rC
+Ey
 ah
 wW
 ah
@@ -26149,9 +26732,9 @@ cP
 aO
 aO
 aO
+Ih
 ah
-ah
-ah
+BU
 ar
 pR
 jt
@@ -26176,9 +26759,9 @@ ah
 ah
 ar
 se
+LN
 ah
-ah
-ah
+Ug
 xV
 fp
 aN
@@ -26435,7 +27018,7 @@ fp
 vQ
 wu
 ah
-ah
+Eu
 xW
 fp
 aN
@@ -26938,13 +27521,13 @@ pR
 pR
 pR
 cy
-ah
+RP
 bJ
 bJ
 ah
 tG
 ah
-ah
+BU
 fp
 vR
 wv
@@ -27455,7 +28038,7 @@ cy
 ah
 sd
 ah
-ah
+VJ
 tG
 ah
 tn
@@ -27717,7 +28300,7 @@ fp
 ah
 ah
 fp
-ah
+Vh
 bJ
 bJ
 bJ
@@ -27968,15 +28551,15 @@ BY
 fp
 rD
 sf
-ah
+RP
 ah
 fp
 ah
-ah
+VJ
 ar
 ah
 ah
-ah
+BU
 xx
 vR
 fp
@@ -28469,14 +29052,14 @@ kS
 ah
 ah
 ah
-ah
+BU
 bI
 kS
 fp
 bR
 jo
 jo
-sy
+FG
 fp
 bI
 fp
@@ -28969,7 +29552,7 @@ bJ
 fp
 ah
 bI
-ah
+BU
 fp
 dg
 bJ
@@ -28980,14 +29563,14 @@ bJ
 bJ
 fp
 ds
-ah
+RP
 ah
 ah
 ah
 ah
 ah
 bI
-rb
+Up
 lw
 kp
 wy
@@ -29244,26 +29827,26 @@ ni
 ah
 bI
 fp
-ah
+Vh
 gB
 gB
-ah
+BU
 fp
 wz
 xy
 rF
 fp
-ah
+NK
 fp
-ah
+Ja
 fp
-ah
+NK
 fp
-ah
+NK
 fp
-ah
+Hc
 fp
-ah
+NK
 fp
 aN
 aN
@@ -29497,7 +30080,7 @@ kV
 ah
 ah
 ah
-ah
+Vh
 ah
 mA
 fp
@@ -29755,29 +30338,29 @@ ah
 mA
 mA
 ah
-ah
+JM
 mA
 fp
 Oc
 sh
-rI
-rI
+NL
+bI
 fp
 wA
 xz
 lz
 fp
 ah
+WX
 ah
-ah
-ah
+RP
 ah
 fp
 bI
+Ku
+VJ
 ah
-ah
-ah
-ah
+VJ
 fp
 aN
 aN
@@ -30024,17 +30607,17 @@ lz
 lz
 xY
 fp
+JM
 ah
+PK
 ah
-ah
-ah
-ah
+Cu
 fp
 ah
 ah
+PK
 ah
-ah
-ah
+Cu
 fp
 aN
 aN
@@ -30283,13 +30866,13 @@ rG
 fp
 cR
 Se
-eQ
+Cq
 ah
 cP
 fp
 cS
 cR
-eQ
+Cq
 ah
 cP
 fp
@@ -30780,10 +31363,10 @@ bJ
 cy
 ah
 ah
+De
 ah
 ah
-ah
-ah
+JM
 ah
 ah
 ah
@@ -31043,10 +31626,10 @@ ah
 ah
 ah
 ah
+BU
 ah
 ah
-ah
-ah
+RP
 ah
 ah
 bJ
@@ -31239,11 +31822,11 @@ aN
 aN
 aN
 fp
-VJ
-ah
+SB
+Td
 JM
 ah
-ah
+mk
 ah
 ah
 De
@@ -31292,7 +31875,7 @@ bJ
 bJ
 bJ
 fp
-ah
+De
 pG
 pG
 pG
@@ -31318,9 +31901,9 @@ bJ
 bJ
 bJ
 Za
+Vh
 ah
-ah
-ah
+RP
 bZ
 fp
 wh
@@ -31496,11 +32079,11 @@ aN
 aN
 aN
 fp
+kW
+ST
 ah
 ah
-ah
-ah
-ah
+mk
 bI
 ah
 bR
@@ -31511,11 +32094,11 @@ cm
 cf
 cm
 cf
-cm
+Km
 cf
 cm
-cf
-cm
+La
+Km
 cf
 cm
 fp
@@ -31753,8 +32336,8 @@ aN
 aN
 aN
 fp
-ah
-ah
+HS
+Jq
 ah
 ah
 fp
@@ -31766,12 +32349,12 @@ bJ
 bJ
 bJ
 ce
+IR
+Ii
 cl
-ce
+PB
 cl
-ce
-cl
-ce
+Ak
 cl
 ce
 cl
@@ -31822,7 +32405,7 @@ pG
 ah
 fp
 Ga
-ah
+RP
 ah
 ah
 ah
@@ -32015,14 +32598,14 @@ ah
 Vh
 ah
 fp
-sx
+EW
 nj
 nP
 fp
 bJ
 cg
 bJ
-cf
+VF
 cm
 cf
 cm
@@ -32038,7 +32621,7 @@ fp
 fp
 cA
 ab
-ab
+Nf
 ab
 pR
 aG
@@ -32083,7 +32666,7 @@ ah
 TW
 Jz
 bJ
-ah
+RP
 ah
 ah
 ah
@@ -32291,7 +32874,7 @@ bJ
 bJ
 fp
 bJ
-bJ
+DU
 cy
 cB
 pR
@@ -32524,11 +33107,11 @@ aN
 aN
 aN
 fp
+Sc
 ah
 ah
 ah
-ah
-ah
+cy
 bJ
 bJ
 bJ
@@ -32594,7 +33177,7 @@ sy
 fp
 xZ
 ah
-ah
+Ih
 Md
 bJ
 ah
@@ -33050,8 +33633,8 @@ fp
 bJ
 cg
 bJ
-ce
-cl
+VF
+LA
 ce
 cl
 ce
@@ -33091,7 +33674,7 @@ jl
 bJ
 bJ
 fp
-ah
+Vh
 pG
 pG
 pG
@@ -33104,9 +33687,9 @@ pG
 pG
 pG
 pG
-bZ
+Oh
 fp
-ah
+JM
 ah
 zG
 Jz
@@ -33295,7 +33878,7 @@ aN
 aN
 aN
 fp
-ah
+bB
 ah
 ah
 ah
@@ -33307,16 +33890,16 @@ fp
 bJ
 bJ
 bJ
+XH
+Hw
 cf
 cm
-cf
+La
 cm
-cf
+TF
 cm
-cf
-cm
-cf
-cm
+VF
+GS
 fp
 ab
 ab
@@ -33372,7 +33955,7 @@ fp
 fp
 kw
 ah
-ah
+RP
 ah
 bI
 ah
@@ -33552,11 +34135,11 @@ aN
 aN
 aN
 fp
+bC
+Ma
 ah
 ah
-ah
-ah
-ah
+mk
 ah
 YZ
 bR
@@ -33566,9 +34149,9 @@ ce
 cl
 ce
 cl
-ce
+Lw
 cl
-ce
+VF
 cl
 ce
 cl
@@ -33634,7 +34217,7 @@ ah
 ah
 ah
 ah
-ah
+VJ
 cy
 wk
 wk
@@ -33809,11 +34392,11 @@ aN
 aN
 aN
 fp
-VJ
+Fz
 ah
 ah
 ah
-Lk
+mk
 ah
 ah
 ah
@@ -33822,7 +34405,7 @@ bJ
 cf
 cm
 cf
-cm
+VF
 cf
 cm
 cf
@@ -34342,7 +34925,7 @@ aN
 aN
 aN
 aN
-aN
+JV
 aN
 aN
 vq
@@ -34388,7 +34971,7 @@ ah
 ah
 ah
 ah
-ah
+BU
 ah
 fp
 sx
@@ -34399,7 +34982,7 @@ hL
 hL
 zH
 ah
-ah
+VJ
 ah
 ah
 ah
@@ -34637,7 +35220,7 @@ ah
 ah
 ah
 ah
-ah
+De
 ah
 ah
 ah
@@ -34658,7 +35241,7 @@ fp
 dd
 dd
 ah
-ah
+RP
 dd
 dd
 fp
@@ -34896,11 +35479,11 @@ ah
 ah
 ah
 kj
-kW
+EK
 fp
 sg
-sg
-sg
+VV
+QJ
 sg
 sg
 fp
@@ -35159,14 +35742,14 @@ ah
 ah
 ah
 ah
-ah
+Vh
 wB
 fp
 Wu
 FC
 NX
 fp
-tK
+LC
 ah
 fp
 vo
@@ -35414,24 +35997,24 @@ ah
 qD
 ah
 ah
-eQ
+HV
 ah
 ah
 wY
 fp
-rJ
-rJ
-rJ
+Hb
+Tl
+Uc
 fp
 tK
 ah
 fp
-vp
+Kv
 ah
 vr
 vr
 ah
-vp
+Kv
 ar
 aN
 aN
@@ -35677,11 +36260,11 @@ oP
 fp
 fp
 rK
-rJ
+YK
 sz
 fp
 Jv
-ah
+Rk
 fp
 kY
 ah
@@ -35922,19 +36505,19 @@ kw
 ah
 ah
 kw
-ah
+Vh
 ah
 kw
 fp
 pu
 pH
 py
+FF
 py
-py
-py
+RJ
 hm
-py
-py
+YE
+HP
 sA
 fp
 tL
@@ -35944,7 +36527,7 @@ ah
 ah
 ah
 ah
-ah
+VJ
 ah
 fp
 aN
@@ -36163,7 +36746,7 @@ dg
 bJ
 dU
 fp
-ah
+BU
 ah
 ah
 fp
@@ -36187,7 +36770,7 @@ pv
 py
 pW
 qd
-py
+YP
 py
 rd
 py
@@ -36195,11 +36778,11 @@ pI
 py
 rd
 ah
-ah
+Vh
 fp
 ah
 ah
-ah
+De
 ah
 ah
 ah
@@ -36433,7 +37016,7 @@ ar
 fp
 fp
 kY
-ah
+RP
 ah
 kY
 ah
@@ -36444,11 +37027,11 @@ pw
 pI
 ps
 qd
-py
+Kw
 qF
 fp
 rL
-py
+YE
 sB
 fp
 tM
@@ -36700,7 +37283,7 @@ fp
 px
 py
 pX
-pX
+KR
 py
 qG
 fp
@@ -36714,7 +37297,7 @@ fp
 vr
 ah
 vp
-vp
+Kv
 ah
 vr
 ar
@@ -36952,13 +37535,13 @@ kj
 mG
 mF
 ah
-ah
+De
 oP
 py
+Nn
 py
 py
-py
-py
+SS
 py
 oP
 ah
@@ -37219,18 +37802,18 @@ oP
 fp
 fp
 bq
-ah
+JM
 ah
 fp
 bl
 cG
 fp
 ah
+JM
 ah
 ah
 ah
-ah
-ah
+VJ
 fp
 aN
 aN
@@ -37990,7 +38573,7 @@ hL
 hL
 re
 ah
-ah
+De
 ah
 tq
 hL
@@ -37999,7 +38582,7 @@ uI
 bx
 ah
 kj
-vr
+Wr
 mF
 ah
 ar
@@ -38252,12 +38835,12 @@ ah
 si
 hL
 hL
-uI
+Ve
 bx
 ah
 ah
 kY
-ah
+Ih
 ah
 fp
 aN
@@ -38505,7 +39088,7 @@ hL
 rl
 ah
 ah
-ah
+VJ
 tr
 hL
 uu
@@ -38767,7 +39350,7 @@ ts
 hL
 hL
 uI
-bx
+ZF
 ah
 ah
 kw
@@ -39211,12 +39794,12 @@ aZ
 ah
 aT
 ah
+RP
 ah
 ah
 ah
 ah
-ah
-ah
+BU
 fp
 ab
 ab
@@ -39280,7 +39863,7 @@ ak
 fp
 hL
 hL
-uI
+Qy
 bx
 ah
 ah
@@ -39460,7 +40043,7 @@ aN
 aN
 aN
 fp
-ak
+CL
 ah
 aI
 fp
@@ -39532,7 +40115,7 @@ ah
 qK
 fp
 al
-ah
+Vh
 sC
 fp
 hL
@@ -39542,7 +40125,7 @@ bx
 ah
 ah
 ah
-ah
+De
 ah
 fp
 aN
@@ -39719,10 +40302,10 @@ aN
 fp
 al
 ah
-aJ
+Cv
 fp
 bb
-ah
+JM
 bp
 bx
 by
@@ -39975,7 +40558,7 @@ aN
 aN
 fp
 am
-ah
+VJ
 aK
 fp
 bc
@@ -40031,7 +40614,7 @@ ar
 fp
 fp
 lb
-lz
+Xp
 lW
 mJ
 nm
@@ -40239,7 +40822,7 @@ be
 ah
 bf
 bx
-ah
+RP
 ah
 ah
 ah
@@ -40498,9 +41081,9 @@ bf
 ah
 ah
 ah
+Vh
 ah
-ah
-ah
+De
 cj
 fp
 fp
@@ -41003,7 +41586,7 @@ aN
 af
 ah
 ah
-ah
+RP
 ah
 aU
 fp
@@ -41264,7 +41847,7 @@ ah
 aO
 aO
 bg
-ah
+De
 ah
 bz
 bN
@@ -41276,7 +41859,7 @@ fp
 co
 cs
 ah
-ah
+Ih
 ah
 cx
 aN
@@ -41303,7 +41886,7 @@ fp
 ah
 fi
 fp
-ah
+De
 ah
 gT
 fp
@@ -41340,7 +41923,7 @@ ah
 vt
 fp
 ah
-ah
+JM
 ah
 bx
 fp
@@ -41593,7 +42176,7 @@ sE
 sE
 fp
 oO
-ah
+De
 vu
 fp
 ah
@@ -41784,7 +42367,7 @@ bz
 bP
 bN
 bT
-ah
+VJ
 ah
 fp
 cq
@@ -41814,7 +42397,7 @@ pR
 br
 fp
 et
-ah
+VJ
 ah
 fp
 gc
@@ -41822,7 +42405,7 @@ ah
 ah
 ho
 hG
-hG
+Av
 hG
 hG
 hG
@@ -42076,7 +42659,7 @@ fj
 fp
 ah
 bI
-bI
+Ly
 hp
 hH
 hH
@@ -42087,7 +42670,7 @@ hH
 hH
 kr
 ld
-lz
+Km
 lY
 mK
 lz
@@ -42113,7 +42696,7 @@ fp
 ah
 ah
 ah
-bZ
+FN
 fp
 aN
 aN
@@ -42296,7 +42879,7 @@ fp
 bq
 ah
 ah
-ah
+Ih
 ah
 bZ
 fp
@@ -42329,7 +42912,7 @@ bt
 fp
 ev
 ah
-ah
+BU
 fD
 ah
 bI
@@ -42624,7 +43207,7 @@ by
 by
 ee
 ah
-ah
+Vh
 ah
 ah
 ah
@@ -42809,7 +43392,7 @@ bi
 fp
 fp
 fp
-ah
+Vh
 ah
 fp
 fp
@@ -42859,7 +43442,7 @@ fp
 fp
 lf
 lz
-lV
+PS
 fp
 ns
 nX
@@ -43319,16 +43902,16 @@ aN
 aH
 ai
 ah
-ah
+JM
 bn
 bv
 fp
 ah
-ah
+De
 fp
 bv
 cd
-ah
+De
 ah
 ah
 cv
@@ -43360,7 +43943,7 @@ fp
 fp
 fp
 ah
-ah
+Ih
 ah
 hq
 hL
@@ -43630,7 +44213,7 @@ ke
 kt
 lb
 lz
-lW
+El
 fp
 nC
 ah
@@ -43843,7 +44426,7 @@ fp
 cb
 ah
 ah
-ah
+VJ
 ah
 cv
 aN
@@ -44166,7 +44749,7 @@ fp
 fp
 fp
 fp
-ah
+RP
 cs
 cs
 cs
@@ -44393,7 +44976,7 @@ aO
 ah
 hO
 bR
-bR
+ZO
 bR
 ah
 ah
@@ -44405,7 +44988,7 @@ aO
 ah
 ah
 ah
-ah
+Vh
 mE
 cy
 bJ
@@ -44649,18 +45232,18 @@ aO
 aO
 ah
 bR
-bR
+Lv
 ah
 ah
 ah
 ah
-ah
+Ih
 ah
 aO
 aO
 aO
 ah
-ah
+VJ
 ah
 ah
 ah
@@ -44683,7 +45266,7 @@ ah
 cs
 cs
 cs
-ah
+Vh
 fp
 ab
 ab
@@ -44981,7 +45564,7 @@ ac
 FJ
 BA
 gs
-Qd
+Eb
 ac
 ac
 ac
@@ -45122,7 +45705,7 @@ aN
 aN
 fp
 fp
-ah
+JM
 ah
 fp
 fp
@@ -45707,7 +46290,7 @@ fp
 fp
 fp
 fp
-ah
+De
 cs
 cs
 cs
@@ -46223,7 +46806,7 @@ ah
 fp
 ah
 ah
-ah
+VJ
 ah
 ah
 fp
@@ -46715,7 +47298,7 @@ fo
 lk
 fp
 ge
-ah
+RP
 ah
 mE
 ah
@@ -46974,7 +47557,7 @@ fp
 ah
 ah
 ah
-ah
+VJ
 ah
 ah
 ah
@@ -46987,7 +47570,7 @@ mE
 ah
 ah
 ah
-ah
+De
 mE
 ah
 ah
@@ -47228,12 +47811,12 @@ ab
 au
 ab
 fp
+JM
 ah
 ah
 ah
 ah
-ah
-ah
+De
 ah
 bJ
 bJ
@@ -47242,14 +47825,14 @@ ah
 ah
 ah
 ah
+JM
 ah
 ah
 ah
+VJ
 ah
 ah
-ah
-ah
-ah
+BU
 ah
 bZ
 fp
@@ -47496,13 +48079,13 @@ bJ
 bJ
 bJ
 ah
+Vh
 ah
 ah
 ah
 ah
 ah
-ah
-ah
+VJ
 ah
 ah
 ah
@@ -71747,7 +72330,7 @@ ZC
 ZA
 Fw
 PO
-Gz
+SK
 Ln
 Yz
 EF
