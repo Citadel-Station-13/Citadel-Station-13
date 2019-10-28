@@ -510,8 +510,8 @@
 						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
 					else
 						auxmarking += image(body_markings_icon, "[body_markings]_[I]", -aux_layer, image_dir)
-				. += aux
-				. += auxmarking
+			. += aux
+			. += auxmarking
 
 	else
 		limb.icon = icon
@@ -524,13 +524,13 @@
 			for(var/I in aux_icons)
 				var/aux_layer = aux_icons[I]
 				aux += image(limb.icon, "[I]", -aux_layer, image_dir)
-				. += aux
 				if(!isnull(aux_marking))
 					if(species_id == "husk")
 						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
 					else
 						auxmarking += image(body_markings_icon, "[body_markings]_[I]", -aux_layer, image_dir)
-					. += auxmarking
+			. += auxmarking
+			. += aux
 
 		if(!isnull(body_markings))
 			if(species_id == "husk")
