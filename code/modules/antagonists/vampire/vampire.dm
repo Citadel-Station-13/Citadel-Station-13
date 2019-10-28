@@ -20,7 +20,7 @@
 
 	var/list/upgrade_tiers = list(
 		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
-		/obj/effect/proc_holder/spell/self/revive = 0,
+		/obj/effect/proc_holder/spell/self/revive = 0, //So new vampires can revive themselves if they were turned while dead.
 		/obj/effect/proc_holder/spell/targeted/hypnotise = 0,
 		/datum/vampire_passive/vision = 175,
 		/obj/effect/proc_holder/spell/self/shapeshift = 175,
@@ -68,7 +68,7 @@
 		B.decoy_override = TRUE
 		*/ //Doesnt work, undefined var for unknown reasons, not extremely important anyways.
 
-/datum/antagonist/vampire/on_removal()
+/datum/antagonist/vampire/on_removal() //Fails to remove the vampire screen hud and vampire antag status.
 	remove_vampire_powers()
 	owner.current.faction -= "vampire"
 	SSticker.mode.vampires -= owner
@@ -308,7 +308,7 @@
 		return 0
 
 	if(light_available <= 0.25)
-		H.alpha = round((255 * 0.05))
+		H.alpha = 0 //Completely useless due to alpha being broken, so you either have to be completely invisible or just not.
 		return 1
 	else
 		H.alpha = round((255 * 0.80))

@@ -93,7 +93,7 @@
 	U.resting = 0
 	U.lying = 0
 	U.update_canmove()
-
+	U.adjustStaminaLoss(-50)  //Hey, lets not just stand in one place because we are too tired to move
 
 	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V) //sanity check
@@ -113,19 +113,20 @@
 	desc= "A piercing stare that knocks out your victim for a good length of time, and makes them forget what recently happened."
 	action_icon_state = "hypnotize"
 	blood_used = 30
+	charge_max = 100  //No, you cant chain this with multiple people.
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+
 //Todo, make the targeted abilities auto activate if theres only one target in range.
 /obj/effect/proc_holder/spell/targeted/hypnotise/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
 		user.visible_message("<span class='warning'>[user]'s eyes flash briefly as he stares into [target]'s eyes</span>")
+		target.Stun(40)
 		if(do_mob(user, target, 40))
 			to_chat(user, "<span class='warning'>Your piercing gaze knocks out [target].</span>")
 			to_chat(target, "<span class='warning'>You find yourself falling asleep.</span>")
 			target.SetSleeping(400) //So its actually usefull for abducting people, should be enough to drag them off and cuff them and remove their headset.
-			sleep(400)
-			to_chat(target, "<span class='warning'>You wake up with a wicked headache and dont remember what happened recently.</span>") //Maybe give them the trauma that gives them a objective about what they hear? For now, thisll hopefully let the vampire suck someone without having to kill them.
 
 		else
 			revert_cast(usr)
@@ -187,7 +188,7 @@
 	blood_used = 45
 	vamp_req = TRUE
 
-/obj/effect/proc_holder/spell/targeted/disease/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/disease/cast(list/targets, mob/user = usr) //Its actually frightningly robust, if only people thought to use it.
 	for(var/mob/living/carbon/target in targets)
 		to_chat(user, "<span class='warning'>You stealthily infect [target] with your diseased touch.</span>")
 		target.help_shake_act(user)
@@ -214,7 +215,7 @@
 		if(C == user || (ishuman(C) && C.get_ear_protection()) || is_vampire(C))
 			continue
 		to_chat(C, "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>")
-		C.adjustStaminaLoss(100) //Wont stamcrit, itll just weaken people and let the vampire
+		C.adjustStaminaLoss(100) //Wont stamcrit, itll just weaken people and let the vampire escape
 		C.adjustEarDamage(0, 30)
 		C.stuttering = 250
 		C.Stun(6)
@@ -270,8 +271,8 @@
 
 /obj/effect/proc_holder/spell/targeted/vampirize
 	name = "Lilith's Pact (350)"
-	desc = "You drain a victim's blood, and fill them with new blood, blessed by Lilith, turning them into a new vampire."
-	gain_desc = "You have gained the ability to force someone, given time, to become a vampire."
+	desc = "You drain a victim's blood, and fill them with new blood, blessed by Lilith, turning them into a new vampire. They dont have to be alive for it."
+	gain_desc = "You have gained the ability to force someone, alive or dead, given time, to become a vampire."
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "oath"
@@ -308,10 +309,9 @@
 			to_chat(target, "<span class='italics'>Strike fear into their hearts...</span>")
 			to_chat(user, "<span class='notice italics bold'>They have signed the pact!</span>")
 			to_chat(target, "<span class='userdanger'>You sign Lilith's Pact.</span>")
-			target.mind.store_memory("<B>[user] showed you the glory of Lilith. <I>You are not required to respect or obey [user] in any way</I></B>")
+			target.mind.store_memory("<B>[user] showed you the glory of Lilith. <I>Respect them and aid in their mission, however you are not required to follow their every order.</I></B>")
 			add_vampire(target)
 			//Make nearly free and work only on the dead because, yknow vampires are undead, and add enthralling for living perhaps with the same spell?
-
 
 /obj/effect/proc_holder/spell/self/revive
 	name = "Revive"
@@ -355,14 +355,15 @@
 	user.regenerate_organs()
 	user.Stun(60) //Can just circumvent by becoming a bat, need to find a way around this
 
- /obj/effect/proc_holder/spell/self/summon_coat //Becomes a basic wizard spell which you need wizard clothes to do, possibly tied to making the coat itself a subtype of something?
-	name = "Summon Dracula Coat (80)"
+ /obj/effect/proc_holder/spell/self/summon_coat
+	name = "Summon Dracula Coat (100)"
 	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
-	blood_used = 80
+	blood_used = 100
 	action_icon = 'icons/mob/vampire.dmi'
-	action_icon_state = "coat"
-	action_background_icon_state = "bg_demon"
+	action_icon_state = "coat" //The sprite is there, the path seems right, why isnt it working?
+	action_background_icon_state = "bg_vampire"
 	vamp_req = TRUE
+	clothes_req = FALSE //Hacky fix for it not working
 
 /obj/effect/proc_holder/spell/self/summon_coat/cast(list/targets, mob/user = usr)
 	if(!is_vampire(user) || !isliving(user))
@@ -372,7 +373,7 @@
 	if(!V)
 		return
 	if(QDELETED(V.coat) || !V.coat)
-		V.coat = new /obj/item/clothing/suit/dracula/vamp_coat(user.loc)
+		V.coat = new /obj/item/clothing/suit/dracula/vamp_coat
 	else if(get_dist(V.coat, user) > 1 || !(V.coat in user.GetAllContents()))
 		V.coat.forceMove(user.loc)
 	user.put_in_hands(V.coat)
