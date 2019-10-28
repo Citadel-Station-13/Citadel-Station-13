@@ -551,7 +551,7 @@
 	var/MMimgstate = "gayminuteoverlay-0"
 	var/ticktock = 0 // We hold this here
 	var/dyndial_cycle_ticker = 0 //How many
-//	var/playchime = 1
+	var/playchime = 1
 
 /obj/machinery/grandfatherclock/Initialize()
 	. = ..()
@@ -585,13 +585,12 @@
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
 
-//	if(playchime)
-//		if(hour == 11 || 12)
-//			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
-//			playchime = 0
-//	if(!playchime)
-//		if(hour == 1 || 2)
-//			playchime = 1
+	if(playchime)
+		if(hour == 11 || 12)
+			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
+			playchime = 0
+	if(!playchime && hour == 9) //Getting some kind of weird math error here, so lets just use 9 for the set.
+		playchime = 1
 	
 	switch(hour)
 		if(0 || 12)
