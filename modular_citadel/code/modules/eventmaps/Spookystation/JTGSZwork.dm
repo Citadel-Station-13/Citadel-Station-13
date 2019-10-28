@@ -446,8 +446,8 @@
 
 	weather_message = "<span class='notice'>The droplets become a downpour, rain now falls all around you from the night sky.</span>"
 	weather_overlay = "regular_rain" //But I need to work on my mouse on the day of 10/24/2019, so lets call it here.
-	weather_duration_lower = 18000 //30 minutes minimum
-	weather_duration_upper = 36000 //1 hour
+	weather_duration_lower = 12000 //these are deciseconds.
+	weather_duration_upper = 15000 
 
 	end_duration = 100
 	end_message = "<span class='notice'>The downpour gradually slows until it stops.</span>"
@@ -551,7 +551,7 @@
 	var/MMimgstate = "gayminuteoverlay-0"
 	var/ticktock = 0 // We hold this here
 	var/dyndial_cycle_ticker = 0 //How many
-	//var/playchime = 1
+//	var/playchime = 1
 
 /obj/machinery/grandfatherclock/Initialize()
 	. = ..()
@@ -585,13 +585,13 @@
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
 
-	//if(playchime)
-	//	if(hour == 11 || 12)
-	//		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
-	//		playchime = 0
-	//if(!playchime)
-	//	if(hour == 1 || 2)
-	//		playchime = 1
+//	if(playchime)
+//		if(hour == 11 || 12)
+//			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
+//			playchime = 0
+//	if(!playchime)
+//		if(hour == 1 || 2)
+//			playchime = 1
 	
 	switch(hour)
 		if(0 || 12)
@@ -930,3 +930,15 @@
 	icon_state = "road_side_W"
 /turf/open/floor/spooktime/cobble/roadcornerSW
 	icon_state = "road_corner_sw"
+
+/turf/open/indestructible/spooknecropolis
+	name = "necropolis floor"
+	desc = "It's regarding you suspiciously."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "necro1"
+	baseturfs = /turf/open/indestructible/necropolis
+	footstep = FOOTSTEP_LAVA
+	barefootstep = FOOTSTEP_LAVA
+	clawfootstep = FOOTSTEP_LAVA
+	heavyfootstep = FOOTSTEP_LAVA
+	tiled_dirt = FALSE
