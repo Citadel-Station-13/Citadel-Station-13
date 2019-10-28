@@ -549,8 +549,9 @@
 	max_integrity = 250
 	var/HRimgstate = "gayhouroverlay-0"
 	var/MMimgstate = "gayminuteoverlay-0"
-
+	var/ticktock = 0 // We hold this here
 	var/dyndial_cycle_ticker = 0 //How many
+	//var/playchime = 1
 
 /obj/machinery/grandfatherclock/Initialize()
 	. = ..()
@@ -561,10 +562,9 @@
 	
 	
 /obj/machinery/grandfatherclock/proc/doodad_clock_ticker() //We basically throttle the rest of this machine here.
-	var/ticktock = 0
+	
 	dyndial_cycle_ticker++
 	
-		
 	if(ticktock) //If we are true
 		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tock.ogg', 100,0)
 		icon_state = "grandfathermk4right"
@@ -584,7 +584,6 @@
 	var/ass_time = STATION_TIME(FALSE)
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
-	//var/playchime = 1
 
 	//if(playchime)
 	//	if(hour == 11 || 12)

@@ -950,11 +950,6 @@
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
 /area/eventmap/inside)
-"dt" = (
-/obj/machinery/vending/kink,
-/obj/machinery/vending/autodrobe,
-/turf/open/floor/wood,
-/area/eventmap/inside)
 "du" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/carpet/royalblack,
@@ -6170,10 +6165,6 @@
 	},
 /turf/open/floor/sepia,
 /area/eventmap/inside)
-"tp" = (
-/obj/machinery/door/airlock/freezer,
-/turf/open/space/basic,
-/area/eventmap/inside)
 "tq" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/sepia,
@@ -8494,7 +8485,7 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "zH" = (
-/obj/machinery/door/airlock/silver{
+/obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
 /turf/open/floor/wood,
@@ -25094,7 +25085,7 @@ pR
 pR
 ab
 ar
-dt
+cR
 aO
 aO
 aO
@@ -25608,7 +25599,7 @@ pR
 pR
 ab
 fp
-fU
+cR
 aO
 aO
 aO
@@ -27929,7 +27920,7 @@ aB
 ab
 fp
 fp
-ah
+ar
 fp
 fp
 fp
@@ -36170,7 +36161,7 @@ rd
 py
 pI
 py
-tp
+rd
 ah
 ah
 fp
