@@ -1,7 +1,7 @@
 
 #if DM_VERSION < 513
 
-#define ismovableatom(A) ismovable(A)
+#define ismovableatom(A) (istype(A, /atom/movable))
 
 #define islist(L) (istype(L, /list))
 
@@ -13,11 +13,13 @@
 
 #define TAN(x) (sin(x) / cos(x))
 
+#define arctan(x) (arcsin(x/sqrt(1+x*x)))
+
 //////////////////////////////////////////////////
 
 #else
 
-#define ismovableatom(A) (istype(A, /atom/movable))
+#define ismovableatom(A) ismovable(A)
 
 #define CLAMP01(x) clamp(x, 0, 1)
 
