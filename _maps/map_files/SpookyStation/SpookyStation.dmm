@@ -7061,17 +7061,17 @@
 	desc = "I'M WATCHING YOU, COWARD.";
 	name = "???"
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "vM" = (
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "vN" = (
 /obj/screen/alert/status_effect/blooddrunk{
 	desc = "YOUR SOUL IS MINE, MORTAL.";
 	name = "???"
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "vO" = (
 /obj/effect/decal/cleanable/dirt{
@@ -7256,7 +7256,7 @@
 /area/eventmap/outside)
 "wp" = (
 /mob/living/carbon/true_devil,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "wq" = (
 /obj/machinery/door/airlock/engineering{
@@ -7411,21 +7411,21 @@
 "wM" = (
 /obj/structure/table/wood/fancy/blackred,
 /obj/item/toy/toy_dagger,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "wN" = (
 /obj/structure/table/wood/fancy/blackred,
 /obj/item/clothing/neck/devilwings,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "wO" = (
 /obj/structure/table/wood/fancy/blackred,
 /obj/item/blood_beam,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "wP" = (
 /obj/structure/fluff/drake_statue,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "wQ" = (
 /obj/machinery/telecomms/allinone/indestructable,
@@ -7604,29 +7604,29 @@
 /area/eventmap/inside)
 "xk" = (
 /obj/structure/healingfountain,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "xl" = (
 /obj/structure/table/wood/fancy/blackred,
 /obj/item/tome,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "xm" = (
 /obj/structure/table/wood/fancy/blackred,
 /obj/item/toy/spinningtoy{
 	name = "Gate to hell"
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "xn" = (
 /obj/structure/table/wood/fancy/blackred,
 /obj/item/organ/heart/demon,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "xo" = (
 /obj/structure/bed,
 /obj/item/bedsheet/cult,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "xp" = (
 /obj/item/radio/intercom{
@@ -8055,7 +8055,7 @@
 /area/eventmap/inside)
 "yp" = (
 /obj/structure/fluff/divine/convertaltar,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "yq" = (
 /obj/machinery/dna_scannernew,
@@ -8268,14 +8268,14 @@
 	desc = "BEWARE, I LIVE.";
 	name = "???"
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "yM" = (
 /obj/screen/alert/status_effect/blooddrunk{
 	desc = "WELCOME TO HELL, CURSED ONE.";
 	name = "???"
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/spooknecropolis,
 /area/eventmap/inside)
 "yN" = (
 /turf/closed/indestructible/spookytime/matrixblocker,
@@ -9161,9 +9161,11 @@
 /turf/open/floor/spooktime/beach/coasts/coastS,
 /area/eventmap/outside)
 "GZ" = (
-/obj/machinery/vending/medical,
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/vending/medical{
+	req_access = null
 	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
@@ -9410,6 +9412,9 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Lk" = (
+/turf/open/floor/wood/damturf/broken7,
+/area/eventmap/inside)
 "Ln" = (
 /turf/closed/indestructible/rock,
 /area/eventmap/mountaininside)
@@ -9550,6 +9555,15 @@
 "NX" = (
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/freezer,
+/area/eventmap/inside)
+"Oa" = (
+/obj/machinery/vending/medical{
+	req_access = null
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/eventmap/inside)
 "Ob" = (
 /obj/machinery/light{
@@ -10113,6 +10127,12 @@
 /obj/machinery/door/airlock/vault,
 /turf/open/space/basic,
 /area/eventmap/mountaininside)
+"XC" = (
+/obj/machinery/vending/medical{
+	req_access = null
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "XE" = (
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /turf/open/floor/spooktime/dirtpatch,
@@ -10248,6 +10268,13 @@
 /obj/item/reagent_containers/food/drinks/bottle/trappist,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"YZ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood/damturf/broken3,
+/area/eventmap/inside)
 "Za" = (
 /obj/structure/chair/comfy{
 	dir = 1
@@ -24828,7 +24855,7 @@ pR
 pR
 ab
 fp
-GZ
+Oa
 aO
 aO
 aO
@@ -31207,14 +31234,14 @@ aN
 aN
 aN
 fp
+VJ
+ah
+JM
 ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
+De
 bI
 bJ
 ce
@@ -31978,9 +32005,9 @@ aN
 aN
 aN
 fp
+De
 ah
-ah
-ah
+Vh
 ah
 fp
 sx
@@ -32241,7 +32268,7 @@ ah
 ah
 fp
 fp
-ah
+Lk
 fp
 fp
 bJ
@@ -33007,7 +33034,7 @@ aN
 aN
 fp
 ah
-ah
+RP
 ah
 ah
 fp
@@ -33526,7 +33553,7 @@ ah
 ah
 ah
 ah
-bI
+YZ
 bR
 ah
 bJ
@@ -33777,11 +33804,11 @@ aN
 aN
 aN
 fp
+VJ
 ah
 ah
 ah
-ah
-ah
+Lk
 ah
 ah
 ah
@@ -36385,7 +36412,7 @@ ar
 fp
 fp
 fp
-ah
+ar
 fp
 fp
 dc
@@ -43068,7 +43095,7 @@ dV
 fp
 ey
 eQ
-eq
+XC
 fp
 ah
 mC
