@@ -78,6 +78,12 @@
 	else
 		to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
 
+/obj/item/gun/energy/kinetic_accelerator/Exited(atom/movable/AM)
+	. = ..()
+	if((AM in modkits) && istype(AM, /obj/item/borg/upgrade/modkit))
+		var/obj/item/borg/upgrade/modkit/M = AM
+		M.uninstall(src, FALSE)
+
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/borg/upgrade/modkit))
 		var/obj/item/borg/upgrade/modkit/MK = I
@@ -96,10 +102,6 @@
 	. = list()
 	for(var/A in modkits)
 		. += A
-
-/obj/item/gun/energy/kinetic_accelerator/handle_atom_del(atom/A)
-	if(A in modkits)
-		modkits -= A
 
 /obj/item/gun/energy/kinetic_accelerator/proc/modify_projectile(obj/item/projectile/kinetic/K)
 	K.kinetic_gun = src //do something special on-hit, easy!
@@ -328,15 +330,10 @@
 		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module.modules)
 			uninstall(KA)
 
-/obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
-	forceMove(get_turf(KA))
+/obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, forcemove = TRUE)
+	if(forcemove)
+		forceMove(get_turf(KA))
 	KA.modkits -= src
-
-/obj/item/borg/updgrade/modkit/Exited(atom/movable/AM)
-	. = ..()
-	if(istype(AM, /obj/item/gun/energy/kinetic_accelerator))
-		var/obj/item/gun/energy/kinetic_accelerator/KA = AM
-		KA.modkits -= src
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 
