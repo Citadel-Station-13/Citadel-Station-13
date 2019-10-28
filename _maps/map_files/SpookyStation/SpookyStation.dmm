@@ -8757,6 +8757,11 @@
 "BN" = (
 /turf/open/floor/spooktime/beach/coasts/watercoastW,
 /area/eventmap/outside)
+"BT" = (
+/obj/structure/bed,
+/obj/item/bedsheet/pirate,
+/turf/open/floor/carpet,
+/area/eventmap/inside)
 "BW" = (
 /obj/item/lighter/greyscale,
 /turf/open/floor/spooktime/dirtpatch,
@@ -64628,7 +64633,7 @@ ac
 fp
 cu
 bJ
-dU
+BT
 bJ
 De
 Hf
