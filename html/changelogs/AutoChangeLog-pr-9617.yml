@@ -1,0 +1,4 @@
+author: "JTGSZ"
+delete-after: True
+changes: 
+  - bugfix: "barricade girder walls use PlaceOnTop instead of new"
