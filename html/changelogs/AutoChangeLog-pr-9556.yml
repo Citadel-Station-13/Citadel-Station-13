@@ -1,0 +1,5 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "unable to read paper on airlocks"
+  - tweak: "ai can see paper (still just shows stars)"

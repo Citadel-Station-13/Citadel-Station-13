@@ -52,6 +52,7 @@
 
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
+	config_tag = "latejoin_traitor"
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_TRAITOR
 	restricted_roles = list("AI", "Cyborg")
@@ -72,6 +73,7 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur
 	name = "Provocateur"
+	config_tag = "latejoin_revolution"
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV
