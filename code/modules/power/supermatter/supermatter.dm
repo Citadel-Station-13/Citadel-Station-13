@@ -313,7 +313,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	T.CalculateAdjacentTurfs()
+	CALCULATE_ADJACENT_TURFS(T)
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	var/turf/T = loc
