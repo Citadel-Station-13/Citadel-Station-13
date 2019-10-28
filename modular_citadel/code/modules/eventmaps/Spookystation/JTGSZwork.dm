@@ -584,15 +584,15 @@
 	var/ass_time = STATION_TIME(FALSE)
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
-	var/playchime = 1
+	//var/playchime = 1
 
-	if(playchime)
-		if(hour == 11 || 12)
-			playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
-			playchime = 0
-	if(!playchime)
-		if(hour == 1 || 2)
-			playchime = 1
+	//if(playchime)
+	//	if(hour == 11 || 12)
+	//		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/midnightchime.ogg', 100, 0)
+	//		playchime = 0
+	//if(!playchime)
+	//	if(hour == 1 || 2)
+	//		playchime = 1
 	
 	switch(hour)
 		if(0 || 12)
