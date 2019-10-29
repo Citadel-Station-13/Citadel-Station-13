@@ -2,10 +2,6 @@
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
-//shorthand
-#define GET_COMPONENT_FROM(varname, path, target) var##path/##varname = ##target.GetComponent(##path)
-#define GET_COMPONENT(varname, path) GET_COMPONENT_FROM(varname, path, src)
-
 #define COMPONENT_INCOMPATIBLE 1
 #define COMPONENT_NOTRANSFER 2
 
@@ -230,6 +226,9 @@
 #define COMSIG_BLOOD_COLOR "blood_DNA_to_color"	//RGB blood stuff
 //Food
 #define COMSIG_FOOD_EATEN "food_eaten"		//from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
+
+//Gibs
+#define COMSIG_GIBS_STREAK "gibs_streak"						// from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
 
 //Mood
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.

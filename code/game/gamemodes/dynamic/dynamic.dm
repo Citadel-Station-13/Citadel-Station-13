@@ -107,6 +107,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// If a only ruleset has been executed.
 	var/only_ruleset_executed = FALSE
 
+/datum/game_mode/dynamic/New() // i have NO IDEA if this is the proper way to do this.
+	..()
+	pop_per_requirement = CONFIG_GET(number/dynamic_pop_per_requirement)
+	GLOB.dynamic_high_pop_limit = CONFIG_GET(number/dynamic_high_pop_limit)
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><BR>"
