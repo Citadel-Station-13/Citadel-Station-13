@@ -92,13 +92,7 @@
 	},
 /area/shuttle/arrival)
 "at" = (
-/obj/item/flashlight/lantern{
-	anchored = 1;
-	can_be_unanchored = 1;
-	light_color = "#EE9933";
-	light_range = 5;
-	on = 1
-	},
+/obj/item/flashlight/lantern,
 /turf/open/floor/spooktime/nonspooktimegrass,
 /area/eventmap/outside)
 "au" = (
@@ -957,6 +951,15 @@
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
 /area/eventmap/inside)
+"dt" = (
+/obj/item/flashlight/lantern{
+	anchored = 1;
+	can_be_unanchored = 1;
+	light_color = "#EE9933";
+	light_range = 5
+	},
+/turf/open/floor/spooktime/nonspooktimegrass,
+/area/eventmap/outside)
 "du" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/carpet/royalblack,
@@ -3194,8 +3197,8 @@
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "kn" = (
-/obj/structure/table/wood,
-/obj/item/paper/fluff/balls/spookyasylum/traffickingvictim,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "ko" = (
@@ -6679,7 +6682,6 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/paper/fluff/balls/spookyasylum/cell03,
 /turf/open/floor/carpet/royalblack,
 /area/eventmap/inside)
 "uy" = (
@@ -6689,7 +6691,6 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/paper/fluff/balls/spookyasylum/cell04,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "uz" = (
@@ -6989,6 +6990,17 @@
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
 /area/eventmap/inside)
+"vm" = (
+/obj/machinery/door/airlock/security{
+	name = "Armoury";
+	req_access_txt = "3"
+	},
+/obj/machinery/door/airlock/security{
+	name = "Armoury";
+	req_access_txt = "3"
+	},
+/turf/open/floor/wood,
+/area/eventmap/inside)
 "vn" = (
 /obj/machinery/door/airlock/security{
 	name = "Armoury";
@@ -7054,13 +7066,12 @@
 "vx" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/under/scarecrow,
-/obj/item/clothing/head/scarecrow_hat,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "vy" = (
 /obj/structure/table/wood/fancy/orange,
-/obj/item/reagent_containers/rag/towel,
+/obj/item/clothing/under/scarecrow,
+/obj/item/clothing/head/scarecrow_hat,
 /turf/open/floor/wood,
 /area/eventmap/inside)
 "vz" = (
@@ -7920,14 +7931,7 @@
 /area/eventmap/inside)
 "xQ" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/boltaction{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/gun/ballistic/shotgun/boltaction{
-	pixel_x = 4;
-	pixel_y = -4
-	},
+/obj/item/gun/ballistic/shotgun/boltaction,
 /obj/item/gun/ballistic/shotgun/boltaction,
 /turf/open/floor/wood,
 /area/eventmap/inside)
@@ -8720,6 +8724,24 @@
 "AY" = (
 /turf/open/floor/plasteel/dark,
 /area/eventmap/mountaininside)
+"AZ" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Ba" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bb" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bc" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bd" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Be" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Bf" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/structure/chair/comfy/shuttle{
@@ -8730,6 +8752,39 @@
 	icon_state = "bus"
 	},
 /area/shuttle/arrival)
+"Bg" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bh" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bi" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bj" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bk" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bl" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bm" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bn" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bo" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bp" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
+"Bq" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Bt" = (
 /obj/structure/toilet{
 	dir = 4
@@ -10249,6 +10304,9 @@
 	},
 /turf/open/floor/wood/damturf/broken5,
 /area/eventmap/inside)
+"SG" = (
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "SK" = (
 /obj/item/storage/daki,
 /turf/open/floor/plasteel/damturf/scorched2,
@@ -23367,7 +23425,7 @@ aN
 aN
 aN
 bK
-at
+ab
 pR
 pR
 pR
@@ -24125,7 +24183,7 @@ by
 by
 fp
 au
-at
+dt
 pR
 pR
 pR
@@ -25959,7 +26017,7 @@ fp
 fp
 ah
 ah
-vn
+vm
 ah
 UA
 wU
@@ -26722,7 +26780,7 @@ kA
 pR
 pR
 pR
-ar
+kn
 rB
 bJ
 bJ
@@ -28529,7 +28587,7 @@ ah
 fp
 ah
 VJ
-tG
+ar
 ah
 ah
 BU
@@ -28999,7 +29057,7 @@ ab
 ab
 ab
 pR
-at
+dt
 ab
 ab
 ab
@@ -37750,7 +37808,7 @@ ab
 pR
 pR
 yO
-at
+dt
 ab
 ab
 aF
@@ -38499,7 +38557,7 @@ ab
 ab
 ab
 ab
-at
+ab
 ab
 ab
 ab
@@ -38517,7 +38575,7 @@ bK
 ab
 ab
 ab
-at
+dt
 pR
 pR
 yO
@@ -39020,7 +39078,7 @@ ab
 ab
 ab
 ab
-at
+dt
 pR
 ab
 ab
@@ -39031,7 +39089,7 @@ bK
 ab
 ab
 ab
-at
+dt
 pR
 pR
 yO
@@ -39806,7 +39864,7 @@ ab
 pR
 pR
 yO
-at
+dt
 ab
 ab
 ab
@@ -43395,7 +43453,7 @@ ab
 fp
 dj
 dH
-kn
+kp
 fp
 ew
 Ci
@@ -44547,20 +44605,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -44804,20 +44862,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -45061,20 +45119,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -45318,20 +45376,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -45575,20 +45633,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -45832,20 +45890,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -46089,20 +46147,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -46346,20 +46404,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -46603,20 +46661,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -46860,20 +46918,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -46992,7 +47050,7 @@ pR
 ab
 fp
 fp
-ar
+ah
 fp
 fp
 fp
@@ -47117,20 +47175,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -47374,20 +47432,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -47631,20 +47689,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
@@ -47888,20 +47946,20 @@ ac
 ac
 ac
 zQ
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
+SG
 zQ
 ac
 ac
