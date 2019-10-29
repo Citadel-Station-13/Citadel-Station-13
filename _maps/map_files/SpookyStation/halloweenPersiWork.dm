@@ -16,119 +16,167 @@
 	name = "Cell 1 Patient Information"
 	info = "<b>Name:</b> S. Albright<br><b>Age:</b> 26 <b>Gender:</b> F <b>Height:</b> 174cm <b>Weight:</b> 63kg<br><b>Notes:</b> \[The notes are crossed out and unreadable, but there is writing on the back of the paper] Buyer found in Sol system, wealthy Martian man looking for a cheap bride, doesn't mind poor condition of the merchandise. Will be packaging with the next supply ship for transport."
 
+/obj/item/paper/fluff/balls/spookyasylum/healstaffnote
+    name = "Shipping Manifest 'Healing Staves'"
+    info = "Contained in this chest are several magical healing staves created by NT sanctioned warlocks, please use them in the event an employee is injured during the festivities. We hope you have a safe and enjoyable celebration, remember you are expected to return to work promptly at its conclusion.<br>We apologize in the unlikely event the contents of the crate are scattered around the asylum by its teleportation."
+
 //Dorm Buttons
 
 /obj/machinery/button/door/dorms/dorm01
     name = "dorm 1 button"
     id = "D100"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm02
     name = "dorm 2 button"
     id = "D101"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm03
     name = "dorm 3 button"
     id = "D102"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm04
     name = "dorm 4 button"
     id = "D103"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm05
     name = "dorm 5 button"
     id = "D104"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm06
     name = "dorm 6 button"
     id = "D105"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm07
     name = "dorm 7 button"
     id = "D106"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm08
     name = "dorm 8 button"
     id = "D107"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm09
     name = "dorm 9 button"
     id = "D108"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm10
     name = "dorm 10 button"
     id = "D109"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm11
     name = "dorm 11 button"
     id = "D110"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm12
     name = "dorm 12 button"
     id = "D111"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm13
     name = "dorm 13 button"
     id = "D112"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm14
     name = "dorm 14 button"
     id = "D113"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm15
     name = "dorm 15 button"
     id = "D114"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm16
     name = "dorm 16 button"
     id = "D115"
+    normaldoorcontrol = 1
     pixel_x = 24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm17
     name = "dorm 17 button"
     id = "D116"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm18
     name = "dorm 18 button"
     id = "D117"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm19
     name = "dorm 19 button"
     id = "D118"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/dorm20
     name = "dorm 20 button"
     id = "D119"
+    normaldoorcontrol = 1
     pixel_x = -24
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/patient1
     name = "door bolt"
     id = "D120"
+    normaldoorcontrol = 1
     pixel_x = 24
     pixel_y = -8
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/patient2
     name = "door bolt"
     id = "D121"
+    normaldoorcontrol = 1
     pixel_x = 24
     pixel_y = -8
+    specialfunctions = 4
 
 /obj/machinery/button/door/dorms/luxury1
     name = "Privacy Shutter Control"
@@ -261,3 +309,14 @@
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury04
 	name = "Luxury Dorm 4"
 	id = "L03"
+
+//This is just so I don't have to mass varedit!
+
+/obj/structure/falsewall/halloweenBall/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood"
+	mineral = /obj/item/stack/sheet/mineral/wood
+	walltype = /turf/closed/wall/mineral/wood
+	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood, /turf/closed/indestructible/wood)
