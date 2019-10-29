@@ -495,7 +495,12 @@
 	icon_state = "sofamiddle"
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
-	item_chair = null
+	var/mutable_appearance/armrest
+
+/obj/structure/chair/sofa/Initialize()
+	armrest = mutable_appearance(icon, "[icon_state]_armrest")
+	armrest.layer = ABOVE_MOB_LAYER
+	return ..()
 
 /obj/structure/chair/sofa/left
 	icon_state = "sofaend_left"
