@@ -388,7 +388,7 @@
 	config_entry_value = 5
 	min_val = 1
 
-/datum/config_entry/number/dynamic_latejoin_delay_min
+/datum/config_entry/number/dynamic_latejoin_delay_max
 	config_entry_value = 25
 	min_val = 1
 
