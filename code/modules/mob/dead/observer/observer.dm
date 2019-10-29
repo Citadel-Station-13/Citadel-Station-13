@@ -270,8 +270,8 @@ Works together with spawning an observer, noted above.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
 	if(penalize) //penalizing them from making a ghost role / midround antag comeback right away.
-		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer)
-		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit)
+		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
 			penalty += roundstart_quit_limit - world.time
 		if(penalty)
