@@ -1398,14 +1398,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
 		if(HAS_TRAIT(H, TRAIT_GOTTAGOFAST))
-			. -= 0.5
-		if(HAS_TRAIT(H, TRAIT_GOTTAGOREALLYFAST))
 			. -= 1
+		if(HAS_TRAIT(H, TRAIT_GOTTAGOREALLYFAST))
+			. -= 2
 		. += speedmod
 		. += H.physiology.speed_mod
 
 	if (H.m_intent == MOVE_INTENT_WALK && HAS_TRAIT(H, TRAIT_SPEEDY_STEP))
-		. -= 0.75
+		. -= 1.5
 
 	if(HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
