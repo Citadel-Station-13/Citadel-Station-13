@@ -102,7 +102,8 @@
 			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
-	if(has_buckled_mobs() && dir == NORTH)
+	. = has_buckled_mobs()
+	if(. && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
@@ -499,8 +500,14 @@
 
 /obj/structure/chair/sofa/Initialize()
 	armrest = mutable_appearance(icon, "[icon_state]_armrest")
-	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
+
+/obj/structure/chair/sofa/handle_layer()
+	. = ..()
+	if(.)
+		armrest.layer = ABOVE_MOB_LAYER
+	else
+		armrest.layer = OBJ_LAYER
 
 /obj/structure/chair/sofa/left
 	icon_state = "sofaend_left"
