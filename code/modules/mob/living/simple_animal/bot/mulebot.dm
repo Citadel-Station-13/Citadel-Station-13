@@ -476,7 +476,8 @@
 				if(isturf(next))
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.add_blood_DNA(return_blood_DNA())
+						if(blood_DNA && blood_DNA.len)
+							B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -488,7 +489,6 @@
 								newdir = 4
 							B.setDir(newdir)
 						bloodiness--
-
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
