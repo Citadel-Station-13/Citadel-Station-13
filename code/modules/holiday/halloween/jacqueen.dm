@@ -118,7 +118,6 @@
 				if(!L1) //Incase the area isn't a turf (i.e. in a locker)
 					continue
 				var/area/L2 = L1.loc
-				message_admins(L2.name)
 				if(L2)
 					if(findtext(L2.name, no_area))
 						jacq_please_no = TRUE
