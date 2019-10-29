@@ -1,6 +1,6 @@
 /obj/item/seeds/banana/Initialize()
-    . = ..()
-    mutatelist += /obj/item/seeds/banana/exotic_banana
+	. = ..()
+	mutatelist += /obj/item/seeds/banana/exotic_banana
 
 
 /obj/item/seeds/banana/exotic_banana

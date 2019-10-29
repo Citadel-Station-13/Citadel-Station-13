@@ -1192,19 +1192,19 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-    M.adjustBruteLoss(-1.5*REM, 0)
-    M.adjustFireLoss(-1.5*REM, 0)
-    M.adjustOxyLoss(-1.5*REM, 0)
-    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-    . = 1
-    ..()
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
+	..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-    M.adjustOxyLoss(2.6*REM, 0)
-    M.adjustBruteLoss(3.5*REM, 0)
-    M.adjustFireLoss(3.5*REM, 0)
-    ..()
-    . = 1
+	M.adjustOxyLoss(2.6*REM, 0)
+	M.adjustBruteLoss(3.5*REM, 0)
+	M.adjustFireLoss(3.5*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"

@@ -8,8 +8,8 @@
 	var/list/progressbars_by_rider = list()
 
 /obj/vehicle/ridden/secway/Initialize()
-    . = ..()
-    START_PROCESSING(SSfastprocess, src)
+	. = ..()
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/vehicle/ridden/secway/process()
 	var/diff = world.time - last_tick
