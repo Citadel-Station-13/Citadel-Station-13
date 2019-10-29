@@ -123,6 +123,7 @@
 						jacq_please_no = TRUE
 
 			if(jacq_please_no)
+				i-=1
 				continue
 
 			//Try to go to populated areas
