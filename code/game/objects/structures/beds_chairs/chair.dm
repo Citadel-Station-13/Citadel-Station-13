@@ -102,8 +102,7 @@
 			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
-	. = has_buckled_mobs()
-	if(. && dir == NORTH)
+	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
@@ -502,12 +501,19 @@
 	armrest = mutable_appearance(icon, "[icon_state]_armrest")
 	return ..()
 
-/obj/structure/chair/sofa/handle_layer()
+/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
 	. = ..()
-	if(.)
-		armrest.layer = ABOVE_MOB_LAYER
+	update_armrest()
+
+/obj/structure/chair/sofa/proc/update_armrest()
+	if(has_buckled_mobs())
+		add_overlay(armrest)
 	else
-		armrest.layer = OBJ_LAYER
+		cut_overlay(armrest)
+
+/obj/structure/chair/sofa/post_unbuckle_mob()
+	. = ..()
+	update_armrest()
 
 /obj/structure/chair/sofa/left
 	icon_state = "sofaend_left"
@@ -517,3 +523,6 @@
 
 /obj/structure/chair/sofa/corner
 	icon_state = "sofacorner"
+
+/obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
+	return
