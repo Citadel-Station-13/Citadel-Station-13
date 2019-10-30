@@ -106,20 +106,25 @@
 	for(var/obj/machinery/holopad/hp in world)
 		hp_list += hp
 
-	var/nono_areas = list("AI Chamber", "AI Satellite Antechamber", "AI Satellite Foyer")
+	var/nono_areas = list("AI ")
 
-	for(var/i = 0, i <= 5, i+=1) //Attempts a jump 6 times.
+	for(var/i = 0, i <= 6, i+=1) //Attempts a jump 6 times.
 		var/obj/machinery/holopad/hp = pick(hp_list)
 		if(forceMove(pick(hp.loc)))
 
+			var/jacq_please_no = FALSE
 			for(var/no_area in nono_areas)
 				var/turf/L1 = hp.loc
 				if(!L1) //Incase the area isn't a turf (i.e. in a locker)
 					continue
 				var/area/L2 = L1.loc
 				if(L2)
-					if(no_area == L2.name)
-						continue
+					if(findtext(L2.name, no_area))
+						jacq_please_no = TRUE
+
+			if(jacq_please_no)
+				i-=1
+				continue
 
 			//Try to go to populated areas
 			var/list/seen = viewers(8, get_turf(src))
@@ -127,9 +132,6 @@
 				if(ishuman(victim))
 					if(z == cached_z)
 						return TRUE
-
-			if(z == cached_z)//same z level please, if no humans
-				return TRUE
 
 
 	return FALSE
@@ -345,7 +347,7 @@
 			if(C.head)
 				var/obj/item/W = C.head
 				C.dropItemToGround(W, TRUE)
-			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
+			var/jaqc_latern = new /obj/item/clothing/head/hardhat/pumpkinhead/jaqc/sticky
 			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
 		if(4)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
@@ -386,15 +388,21 @@
 	sleep(20)
 	poof()
 
+/obj/item/clothing/head/hardhat/pumpkinhead/extra_bright
+	brightness_on = 3
+
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 	name = "Jacq o' latern"
 	desc = "A jacqueline o' lantern! You can't seem to get rid of it."
 	icon_state = "hardhat0_pumpkin_j"
 	item_state = "hardhat0_pumpkin_j"
 	item_color = "pumpkin_j"
+	brightness_on = 3
+
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/sticky
 	brightness_on = 4
 
-/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
+/obj/item/clothing/head/hardhat/pumpkinhead/jaqc/sticky/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 

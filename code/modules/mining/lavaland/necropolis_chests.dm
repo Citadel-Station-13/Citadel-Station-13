@@ -278,7 +278,7 @@
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
-		icon_state = "lantern-blue"
+		icon_state = initial(icon_state)
 		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
@@ -453,7 +453,7 @@
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
