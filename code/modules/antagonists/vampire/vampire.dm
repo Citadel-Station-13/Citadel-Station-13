@@ -16,7 +16,7 @@
 
 	var/list/powers = list() // list of current powers
 
-	var/obj/item/clothing/suit/dracula/vamp_coat/coat
+	var/obj/item/clothing/suit/hooded/vamp_coat/coat
 
 	var/list/upgrade_tiers = list(
 		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
@@ -26,9 +26,9 @@
 		/obj/effect/proc_holder/spell/self/shapeshift = 175,
 		/obj/effect/proc_holder/spell/self/cloak = 225,
 		/obj/effect/proc_holder/spell/targeted/disease = 275,
-		/obj/effect/proc_holder/spell/bats = 350,
-		/obj/effect/proc_holder/spell/self/batform = 350,
-		/obj/effect/proc_holder/spell/self/screech = 315,
+		/obj/effect/proc_holder/spell/bats = 330,
+		/obj/effect/proc_holder/spell/self/batform = 300,
+		/obj/effect/proc_holder/spell/self/screech = 380,
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
 		/datum/vampire_passive/full = 666,
@@ -69,19 +69,21 @@
 		*/ //Doesnt work, undefined var for unknown reasons, not extremely important anyways.
 
 /datum/antagonist/vampire/on_removal() //Fails to remove the vampire screen hud and vampire antag status.
-	remove_vampire_powers()
+	var/mob/living/carbon/human/H = owner.current
 	owner.current.faction -= "vampire"
 	SSticker.mode.vampires -= owner
 	owner.special_role = null
-	if(ishuman(owner.current))
-		var/mob/living/carbon/human/H = owner.current
-		if(owner && H.hud_used && H.hud_used.vamp_blood_display)
-			H.hud_used.vamp_blood_display.invisibility = INVISIBILITY_ABSTRACT
 	SSticker.mode.update_vampire_icons_removed(owner)
+	if(owner && H.hud_used && H.hud_used.vamp_blood_display)
+		H.hud_used.vamp_blood_display.invisibility = INVISIBILITY_ABSTRACT
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>Your powers have been quenched! You are no longer a vampire</span>")
 	owner.special_role = null
-	/*var/mob/living/carbon/human/C = owner.current
+	for(var/P in powers)
+		remove_ability(P)
+	owner.current.alpha = 255
+	return ..()
+/*var/mob/living/carbon/human/C = owner.current
 	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 	if(B && (B.decoy_override != initial(B.decoy_override)))
 		B.vital = TRUE
@@ -191,11 +193,11 @@
 		C.hud_used.vamp_blood_display.invisibility = FALSE
 		C.hud_used.vamp_blood_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(usable_blood, 1)]</font></div>"
 	handle_vampire_cloak()
-	if(istype(C.loc, /obj/structure/closet/coffin))
-		C.adjustBruteLoss(-4)
-		C.adjustFireLoss(-4)
-		C.adjustToxLoss(-4)
-		C.adjustOxyLoss(-4)
+	if(istype(C.loc, /obj/structure/closet/crate/coffin))
+		C.adjustBruteLoss(-6)
+		C.adjustFireLoss(-6)
+		C.adjustToxLoss(-6)
+		C.adjustOxyLoss(-6)
 		return
 	if(!get_ability(/datum/vampire_passive/full) && istype(get_area(C.loc), /area/chapel))
 		vamp_burn()
@@ -265,12 +267,6 @@
 		powers -= ability
 		owner.spell_list.Remove(ability)
 		qdel(ability)
-
-
-/datum/antagonist/vampire/proc/remove_vampire_powers()
-	for(var/P in powers)
-		remove_ability(P)
-	owner.current.alpha = 255
 
 /datum/antagonist/vampire/proc/check_vampire_upgrade(var/announce = TRUE)
 	var/list/old_powers = powers.Copy()

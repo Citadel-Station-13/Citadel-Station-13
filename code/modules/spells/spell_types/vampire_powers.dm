@@ -93,18 +93,19 @@
 	U.resting = 0
 	U.lying = 0
 	U.update_canmove()
+	U.Stun(0)
 	U.adjustStaminaLoss(-50)  //Hey, lets not just stand in one place because we are too tired to move
 
 	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V) //sanity check
 		return
 	for(var/i = 1 to 5)
-		U.adjustStaminaLoss(-10)
+		U.adjustStaminaLoss(-20)
 		if(V.get_ability(/datum/vampire_passive/regen))
-			U.adjustBruteLoss(-1)
-			U.adjustOxyLoss(-2.5)
-			U.adjustToxLoss(-1)
-			U.adjustFireLoss(-1)
+			U.adjustBruteLoss(-2)
+			U.adjustOxyLoss(-5)
+			U.adjustToxLoss(-2, TRUE)
+			U.adjustFireLoss(-2)
 		sleep(7.5)
 
 
@@ -113,7 +114,7 @@
 	desc= "A piercing stare that knocks out your victim for a good length of time, and makes them forget what recently happened."
 	action_icon_state = "hypnotize"
 	blood_used = 30
-	charge_max = 100  //No, you cant chain this with multiple people.
+	charge_max = 250  //No, you cant chain this with multiple people.
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
@@ -152,7 +153,7 @@
 /obj/effect/proc_holder/spell/self/cloak //Needs a complete redo, it was originally useless and is even more due to the cloak being bright for some reason
 	name = "Cloak of Darkness"
 	desc = "Toggles whether you are currently cloaking yourself in darkness."
-	gain_desc = "You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness."
+	gain_desc = "You have gained the Cloak of Darkness ability which when toggled makes you completely invisible in the shroud of darkness."
 	action_icon_state = "cloak"
 	charge_max = 10
 	action_icon = 'icons/mob/vampire.dmi'
@@ -187,6 +188,7 @@
 	action_background_icon_state = "bg_demon"
 	blood_used = 45
 	vamp_req = TRUE
+	charge_max = 500
 
 /obj/effect/proc_holder/spell/targeted/disease/cast(list/targets, mob/user = usr) //Its actually frightningly robust, if only people thought to use it.
 	for(var/mob/living/carbon/target in targets)
@@ -200,13 +202,13 @@
 
 /obj/effect/proc_holder/spell/self/screech
 	name = "Chiropteran Screech (25)"
-	desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
-	gain_desc = "You have gained the Chiropteran Screech ability which stuns anything with ears in a large radius and shatters glass in the process."
+	desc = "An extremely loud shriek that weakens nearby humans and breaks windows as well."
+	gain_desc = "You have gained the Chiropteran Screech ability which weakens anything with ears in a large radius and shatters glass in the process."
 	action_icon_state = "reeee"
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	blood_used = 25
-	charge_max = 500 //so you cant do it twice to stamcrit.
+	charge_max = 600 //so you cant do it twice to stamcrit.
 	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/self/screech/cast(list/targets, mob/user = usr)
@@ -232,7 +234,7 @@
 	action_icon_state = "bats"
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
-	charge_max = 1200
+	charge_max = 800
 	vamp_req = TRUE
 	blood_used = 55
 	var/num_bats = 2
@@ -330,18 +332,18 @@
 		revert_cast()
 		return
 	if(user.stat != DEAD)
-		to_chat(user, "<span class='notice'>We aren't dead enough to do that yet!</span>")
+		to_chat(user, "<span class='notice'>You aren't dead enough to do that yet!</span>")
 		revert_cast()
 		return
 	if(user.reagents.has_reagent(/datum/reagent/water/holywater))
-		to_chat(user, "<span class='danger'>We cannot revive, holy water is in our system!</span>")
+		to_chat(user, "<span class='danger'>You cannot revive, holy water is in our system!</span>")
 		return
 	var/mob/living/L = user
 	if(istype(get_area(L.loc), /area/chapel))
 		L.visible_message("<span class='warning'>[L] disintergrates into dust!</span>", "<span class='userdanger'>Holy energy seeps into our very being, disintergrating us instantly!</span>", "You hear sizzling.")
 		new /obj/effect/decal/remains/human(L.loc)
 		L.dust()
-	to_chat(L, "<span class='notice'>We begin to reanimate... this will take a minute.</span>")
+	to_chat(L, "<span class='notice'>You begin to reanimate... this will take a minute.</span>")
 	addtimer(CALLBACK(src, /obj/effect/proc_holder/spell/self/revive.proc/revive, L), 600)
 
 /obj/effect/proc_holder/spell/self/revive/proc/revive(mob/living/user)
@@ -353,17 +355,16 @@
 		user.visible_message("<span class='warning'>Shadowy matter takes the place of [user]'s missing limbs as they reform!</span>")
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
-	user.Stun(60) //Can just circumvent by becoming a bat, need to find a way around this
+	user.adjustStaminaLoss(100) //Dont be ready to skeddadle without atleast wasting some abilities.
 
- /obj/effect/proc_holder/spell/self/summon_coat
-	name = "Summon Dracula Coat (100)"
+/obj/effect/proc_holder/spell/self/summon_coat
+	name = "Summon Vampire Coat (100)"
 	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
 	blood_used = 100
 	action_icon = 'icons/mob/vampire.dmi'
 	action_icon_state = "coat" //The sprite is there, the path seems right, why isnt it working?
-	action_background_icon_state = "bg_vampire"
+	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
-	clothes_req = FALSE //Hacky fix for it not working
 
 /obj/effect/proc_holder/spell/self/summon_coat/cast(list/targets, mob/user = usr)
 	if(!is_vampire(user) || !isliving(user))
@@ -373,11 +374,11 @@
 	if(!V)
 		return
 	if(QDELETED(V.coat) || !V.coat)
-		V.coat = new /obj/item/clothing/suit/dracula/vamp_coat
+		V.coat = new /obj/item/clothing/suit/hooded/vamp_coat(user.loc)
 	else if(get_dist(V.coat, user) > 1 || !(V.coat in user.GetAllContents()))
 		V.coat.forceMove(user.loc)
 	user.put_in_hands(V.coat)
-	to_chat(user, "<span class='notice'>You summon your dracula coat.</span>")
+	to_chat(user, "<span class='notice'>You summon your vampire coat.</span>")
 
 
 /obj/effect/proc_holder/spell/self/batform

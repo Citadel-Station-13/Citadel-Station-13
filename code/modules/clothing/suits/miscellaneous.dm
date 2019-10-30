@@ -633,3 +633,38 @@
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
+
+	/*
+		In this file:
+			various vampire interactions and items
+	*/
+
+//Vampire antag clothes.
+/obj/item/clothing/suit/hooded/vamp_coat
+	name = "vampire Coat"
+	desc = "What is a man? A miserable little pile of secrets."
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "draculacoat"
+	item_state = "draculacoat"
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Whats a wee bit of cold to a undead being?
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 0, "rad" = 0) //Hey, if we are going totally ditch our disguise, why not have decent armor, and not get cheesed by explosions?
+	hoodtype = /obj/item/clothing/head/hooded/vamp_hood
+
+/obj/item/clothing/suit/hooded/vamp_coat/Initialize()
+	. = ..()
+	allowed = GLOB.security_vest_allowed
+
+/obj/item/clothing/head/hooded/vamp_hood
+	name = "vampire Coat Hood"
+	desc = "The strength of the vampire is that people will not believe in them."
+	icon_state = "chaplain_hood"
+	item_state = "chaplain_hood"
+	icon = 'icons/mob/head.dmi'
+	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 0, "rad" = 0)
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	flags_cover = HEADCOVERSEYES //Hide thine face from the human herd
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

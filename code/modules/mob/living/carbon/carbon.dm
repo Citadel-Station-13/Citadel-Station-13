@@ -959,6 +959,7 @@
 		if(V)
 			if(V.get_ability(/datum/vampire_passive/full))
 				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-				see_in_dark = max(see_in_dark, 8)
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 			else if(V.get_ability(/datum/vampire_passive/vision))
 				sight |= (SEE_MOBS)
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
