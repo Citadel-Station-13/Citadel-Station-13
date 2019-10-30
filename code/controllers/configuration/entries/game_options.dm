@@ -66,9 +66,16 @@
 
 /datum/config_entry/flag/disable_human_mood
 
+/datum/config_entry/flag/disable_borg_flash_knockdown //Should borg flashes be capable of knocking humanoid entities down?
+
+/datum/config_entry/flag/weaken_secborg //Brings secborgs and k9s back in-line with the other borg modules
+
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
+
+/datum/config_entry/number/minimum_secborg_alert	//Minimum alert level for secborgs to be chosen.
+	config_entry_value = 3
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6
@@ -364,3 +371,27 @@
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
+
+/datum/config_entry/number/dynamic_high_pop_limit
+	config_entry_value = 55
+	min_val = 1
+
+/datum/config_entry/number/dynamic_pop_per_requirement
+	config_entry_value = 6
+	min_val = 1
+
+/datum/config_entry/keyed_list/dynamic_cost
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/dynamic_weight
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/dynamic_requirements
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM_LIST
+
+/datum/config_entry/keyed_list/dynamic_high_population_requirement
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM

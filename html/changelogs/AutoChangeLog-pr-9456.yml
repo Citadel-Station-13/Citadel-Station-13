@@ -1,0 +1,7 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - rscadd: "Adds Jacqueline the Pumpqueen and her familiar Bartholomew for the spooky season"
+  - soundadd: "Adds a giggle"
+  - imageadd: "Adds cauldron, Jacq and Jacq o lanterns, and a costume for halloween!
+mapedit: adds a new landmark so Bartholomew can spawn somewhere sensible."

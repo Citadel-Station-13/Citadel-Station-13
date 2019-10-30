@@ -61,5 +61,5 @@
 		var/obj/item/new_hat = new hat_type(D)
 		D.equip_to_slot_or_del(new_hat, SLOT_HEAD)
 	D.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-	D.key = user.key
+	user.transfer_ckey(D, FALSE)
 	qdel(src)

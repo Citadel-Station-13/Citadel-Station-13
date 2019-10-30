@@ -7,7 +7,8 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/viral_bond,
 				/datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 /datum/surgery/advanced/viral_bonding/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
@@ -17,7 +18,7 @@
 	return TRUE
 /datum/surgery_step/viral_bond
 	name = "viral bond"
-	implements = list(/obj/item/cautery = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
+	implements = list(TOOL_CAUTERY  = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
 	time = 100
 	chems_needed = list("spaceacillin","virusfood","formaldehyde")
 

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Made SDGF ghost poll message less verbose, made the experimental cloner's complaint with the former, and added ghost poll ignore options for both."

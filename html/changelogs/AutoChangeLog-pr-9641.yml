@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - balance: "Trashbags now only allow accessing the first 3 items. 5 for bluespace ones.
+experimental: Storage now allows for limiting of random access"

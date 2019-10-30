@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - refactor: "turned virtual reality into a component datum, which is then applied to spawned virtual mobs.
+This fixes mob transformations (such as wabbajack and monkeyizing) breaking the previously hardcoded behaviour and trapping you in VR, also enabling a more concrete virtual reality inception experience."

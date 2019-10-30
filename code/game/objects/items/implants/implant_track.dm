@@ -15,8 +15,8 @@
 	. = ..()
 	QDEL_IN(src, lifespan)
 
-/obj/item/implant/tracking/New()
-	..()
+/obj/item/implant/tracking/Initialize()
+	. = ..()
 	GLOB.tracked_implants += src
 
 /obj/item/implant/tracking/Destroy()
@@ -27,7 +27,31 @@
 	imp_type = /obj/item/implant/tracking
 
 /obj/item/implanter/tracking/gps
-	imp_type = /obj/item/gps/mining/internal
+	imp_type = /obj/item/implant/gps
+
+/obj/item/implant/gps
+	name = "\improper GPS implant"
+	desc = "Track with this and a GPS."
+	activated = FALSE
+	var/obj/item/gps/internal/mining/real_gps
+
+/obj/item/implant/gps/implant(mob/living/target, mob/user, silent = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(real_gps)
+		real_gps.forceMove(target)
+	else
+		real_gps = new(target)
+
+/obj/item/implant/gps/removed(mob/living/source, silent = FALSE, special = 0)
+	. = ..()
+	if(!.)
+		return
+	if(!special)
+		qdel(real_gps)
+	else
+		real_gps?.moveToNullspace()
 
 /obj/item/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

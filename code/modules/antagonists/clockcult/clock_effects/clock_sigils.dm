@@ -349,7 +349,7 @@
 					to_chat(L, "<span class='userdanger'>Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!</span>")
 					message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(L)]) to replace an inactive clock cultist.")
 					L.ghostize(0)
-					L.key = C.key
+					C.transfer_ckey(L, FALSE)
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
@@ -366,6 +366,8 @@
 				break
 
 			if(!GLOB.ratvar_awakens)
+				if(GLOB.clockwork_vitality <= 0)
+					break
 				GLOB.clockwork_vitality -= vitality_used
 
 		sleep(2)

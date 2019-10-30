@@ -89,32 +89,36 @@
 		R.speed = initial(R.speed)
 
 /obj/item/borg/upgrade/disablercooler
-	name = "cyborg rapid disabler cooling module"
-	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
+	name = "cyborg rapid energy blaster cooling module"
+	desc = "Used to cool a mounted energy-based firearm, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
-		if(!T)
-			to_chat(user, "<span class='notice'>There's no disabler in this unit!</span>")
+		var/successflag
+		for(var/obj/item/gun/energy/T in R.module.modules)
+			if(T.charge_delay <= 2)
+				successflag = successflag || 2
+				continue
+			T.charge_delay = max(2, T.charge_delay - 4)
+			successflag = 1
+		if(!successflag)
+			to_chat(user, "<span class='notice'>There's no energy-based firearm in this unit!</span>")
 			return FALSE
-		if(T.charge_delay <= 2)
+		if(successflag == 2)
 			to_chat(R, "<span class='notice'>A cooling unit is already installed!</span>")
 			to_chat(user, "<span class='notice'>There's no room for another cooling unit!</span>")
 			return FALSE
 
-		T.charge_delay = max(2 , T.charge_delay - 4)
-
 /obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
-		if(!T)
-			return FALSE
-		T.charge_delay = initial(T.charge_delay)
+		for(var/obj/item/gun/energy/T in R.module.modules)
+			T.charge_delay = initial(T.charge_delay)
+			return .
+		return FALSE
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
@@ -598,10 +602,10 @@
 		R.update_transform()
 
 /obj/item/borg/upgrade/rped
-	name = "engineering cyborg RPED"
+	name = "engineering cyborg BSRPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "borgrped"
+	icon_state = "borg_BS_RPED"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/engineering)
 
@@ -609,14 +613,21 @@
 	. = ..()
 	if(.)
 
+		var/obj/item/storage/part_replacer/bluespace/cyborg/BSRPED = locate() in R
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
-		if(RPED)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED module.</span>")
+		if(!RPED)
+			RPED = locate() in R.module
+		if(!BSRPED)
+			BSRPED = locate() in R.module //There's gotta be a smarter way to do this.
+		if(BSRPED)
+			to_chat(user, "<span class='warning'>This unit is already equipped with a BSRPED module.</span>")
 			return FALSE
 
-		RPED = new(R.module)
-		R.module.basic_modules += RPED
-		R.module.add_module(RPED, FALSE, TRUE)
+		BSRPED = new(R.module)
+		SEND_SIGNAL(RPED, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+		qdel(RPED)
+		R.module.basic_modules += BSRPED
+		R.module.add_module(BSRPED, FALSE, TRUE)
 
 /obj/item/borg/upgrade/rped/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -680,7 +691,7 @@
 	action_icon_state = "Chevron_State_0"
 
 	var/currentState = 0
-	var/maxReduction = 2
+	var/maxReduction = 1
 
 
 /obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
@@ -688,14 +699,14 @@
 
 	currentState = (currentState + 1) % 3
 
-	if(usr)
+	if(istype(self))
 		switch(currentState)
 			if (0)
-				self.speed = maxReduction
+				self.speed = initial(self.speed)
 			if (1)
-				self.speed -= maxReduction*0.5
+				self.speed = initial(self.speed) - maxReduction * 0.5
 			if (2)
-				self.speed -= maxReduction*1.25
+				self.speed = initial(self.speed) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
 	action.UpdateButtonIcon()

@@ -17,7 +17,7 @@
 		network += lowertext(i)
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
+	if(CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !in_view_range(user, src) || !user.canUseTopic(src, !issilicon(user), FALSE))
 		user.unset_machine()
 		return
 	if(!(user in watchers))
@@ -30,14 +30,6 @@
 	if(!C.can_use())
 		user.unset_machine()
 		return
-	if(!issilicon(user))
-		if(!Adjacent(user))
-			user.unset_machine()
-			return
-	else if(iscyborg(user))
-		var/list/viewing = viewers(src)
-		if(!viewing.Find(user))
-			user.unset_machine()
 
 /obj/machinery/computer/security/on_unset_machine(mob/user)
 	watchers.Remove(user)
@@ -97,36 +89,22 @@
 		user.unset_machine()
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
 		return
-	if(C)
-		var/camera_fail = 0
-		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
-			camera_fail = 1
-		else if(iscyborg(user))
-			var/list/viewing = viewers(src)
-			if(!viewing.Find(user))
-				camera_fail = 1
-		else if(!issilicon(user))
-			if(!Adjacent(user))
-				camera_fail = 1
-
-		if(camera_fail)
-			user.unset_machine()
-			return 0
-
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
-		if(isAI(user))
-			var/mob/living/silicon/ai/A = user
-			A.eyeobj.setLoc(get_turf(C))
-			A.client.eye = A.eyeobj
-		else
-			user.reset_perspective(C)
-			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
-			user.clear_fullscreen("flash", 5)
-		watchers[user] = C
-		use_power(50)
-		addtimer(CALLBACK(src, .proc/use_camera_console, user), 5)
-	else
+	if(!C || !C.can_use() || CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !in_view_range(user, src) || !user.canUseTopic(src, !issilicon(user), FALSE))
 		user.unset_machine()
+		return FALSE
+
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+	if(isAI(user))
+		var/mob/living/silicon/ai/A = user
+		A.eyeobj.setLoc(get_turf(C))
+		A.client.eye = A.eyeobj
+	else
+		user.reset_perspective(C)
+		user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+		user.clear_fullscreen("flash", 5)
+	watchers[user] = C
+	use_power(50)
+	addtimer(CALLBACK(src, .proc/use_camera_console, user), 5)
 
 //returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()

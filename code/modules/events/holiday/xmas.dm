@@ -77,7 +77,7 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
-		santa.key = C.key
+		C.transfer_ckey(santa, FALSE)
 
 		santa.equipOutfit(/datum/outfit/santa)
 		santa.update_icons()

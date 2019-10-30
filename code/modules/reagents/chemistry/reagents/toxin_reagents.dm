@@ -471,7 +471,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
-	M.adjustBrainLoss(3*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
 	if(current_cycle >= 18)
@@ -950,3 +950,20 @@
 				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 				M.emote("sigh")
 	return ..()
+
+/datum/reagent/toxin/brainhurtingjuice //oof ouch
+	name = "Brain Hurting Juice"
+	id = "brainhurtingjuice"
+	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
+	toxpwr = 0
+	taste_description = "brain hurting"
+	metabolization_rate = 5
+
+/datum/reagent/toxin/brainhurtingjuice/on_mob_life(mob/living/carbon/M)
+	if(prob(50))
+		M.gain_trauma_type(BRAIN_TRAUMA_MILD)
+	else if(prob(50))
+		M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+	else
+		M.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+	..()

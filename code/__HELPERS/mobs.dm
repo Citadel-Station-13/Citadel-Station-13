@@ -70,6 +70,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.deco_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/deco_wings, GLOB.deco_wings_list)
 	if(!GLOB.insect_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
 	if(!GLOB.insect_fluffs_list.len)
@@ -138,6 +140,7 @@
 		"tail_lizard"		= pick(GLOB.tails_list_lizard),
 		"tail_human"		= "None",
 		"wings"				= "None",
+		"deco_wings"		= "None",
 		"snout"				= pick(GLOB.snouts_list),
 		"horns"				= pick(GLOB.horns_list),
 		"ears"				= "None",
@@ -396,6 +399,12 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
+
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.recoveringstam)
+				. = 0
+				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)

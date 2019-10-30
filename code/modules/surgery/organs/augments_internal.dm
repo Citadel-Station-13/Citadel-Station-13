@@ -4,6 +4,7 @@
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_SYNTHETIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
@@ -102,7 +103,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
 	..()
-	if(crit_fail)
+	if(crit_fail || !(organ_flags & ORGAN_FAILING))
 		return
 	owner.adjustStaminaLoss(-3.5) //Citadel edit, makes it more useful in Stamina based combat
 	if(owner.AmountStun() > STUN_SET_AMOUNT)
@@ -112,13 +113,15 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
-	if(crit_fail || . & EMP_PROTECT_SELF)
+	if(crit_fail || (organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
 	crit_fail = TRUE
+	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
+	organ_flags &= ~ORGAN_FAILING
 
 
 //[[[[MOUTH]]]]
