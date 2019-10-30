@@ -176,7 +176,7 @@
 		return
 
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth()
-	. = 0
+	. = ..() 
 
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
@@ -203,7 +203,6 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Initialize()
 	. = ..()
 	timer = rand(5,15)
-	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Retaliate()
 	return
@@ -235,7 +234,7 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
-	. = 0
+	. = ..() 
 	if(prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
