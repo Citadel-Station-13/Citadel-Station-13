@@ -525,9 +525,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	log_combat(user, L, "stunned")
 
 /obj/item/abductor/baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	var/obj/item/clothing/head/foilhat/F = null
-	if (istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-		F = L.get_item_by_slot(SLOT_HEAD)
 	if(L.incapacitated(TRUE, TRUE))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
 			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
