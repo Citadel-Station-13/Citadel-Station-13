@@ -45,14 +45,14 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 0.75
+	C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
 	if(C.blood_volume <= (BLOOD_VOLUME_SURVIVE*C.blood_ratio))
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
 		to_chat(C, "<span class='danger'>You don't belong here!</span>")
-		C.adjustFireLoss(20)
+		C.adjustFireLoss(5)
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
 
@@ -141,7 +141,7 @@
 	H = new(shape,src,caster)
 	if(istype(H, /mob/living/simple_animal))
 		var/mob/living/simple_animal/SA = H
-		if(ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE)))
+		if((caster.blood_volume >= (BLOOD_VOLUME_BAD*caster.blood_ratio)) || (ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE))))
 			SA.ventcrawler = FALSE
 	if(transfer_name)
 		H.name = caster.name
