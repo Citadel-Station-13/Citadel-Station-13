@@ -198,7 +198,6 @@
 	var/enthrallGender //Use master or mistress
 
 	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
-	var/datum/weakref/redirect_component //resistance
 
 	var/distancelist = list(2,1.5,1,0.8,0.6,0.5,0.4,0.3,0.2) //Distance multipliers
 
@@ -228,7 +227,7 @@
 	master = get_mob_by_key(enthrallID)
 	//if(M.ckey == enthrallID)
 	//	owner.remove_status_effect(src)//At the moment, a user can enthrall themselves, toggle this back in if that should be removed.
-	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	mental_capacity = 500 - M.getOrganLoss(ORGAN_SLOT_BRAIN)//It's their brain!
 	var/mob/living/carbon/human/H = owner
@@ -500,7 +499,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if(status == "charge")
-			ADD_TRAIT(owner, TRAIT_GOTTAGOFAST, "MKUltra")
+			owner.add_movespeed_modifier(MOVESPEED_ID_MKULTRA, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 			status = "charged"
 			if(master.client?.prefs.lewdchem)
 				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
@@ -510,7 +509,7 @@
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
-				REMOVE_TRAIT(owner, TRAIT_GOTTAGOFAST, "MKUltra")
+				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
 				owner.Knockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
@@ -566,8 +565,7 @@
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing4")
-	qdel(redirect_component.resolve())
-	redirect_component = null
+	UnregisterSignal(M, COMSIG_LIVING_RESIST)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
 	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independent!'</i></span>")

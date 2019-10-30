@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(jukeboxes)
 	wait = 5
 	var/list/songs = list()
 	var/list/activejukeboxes = list()
+	var/list/freejukeboxchannels = list()
 
 /datum/track
 	var/song_name = "generic"
@@ -21,23 +22,39 @@ SUBSYSTEM_DEF(jukeboxes)
 /datum/controller/subsystem/jukeboxes/proc/addjukebox(obj/jukebox, datum/track/T, jukefalloff = 1)
 	if(!istype(T))
 		CRASH("[src] tried to play a song with a nonexistant track")
-	var/channeltoreserve = CHANNEL_JUKEBOX_START + activejukeboxes.len - 1
-	if(channeltoreserve > CHANNEL_JUKEBOX)
+	var/channeltoreserve = pick(freejukeboxchannels)
+	if(!channeltoreserve)
 		return FALSE
+	freejukeboxchannels -= channeltoreserve
+	var/list/youvegotafreejukebox = list(T, channeltoreserve, jukebox, jukefalloff)
 	activejukeboxes.len++
-	activejukeboxes[activejukeboxes.len] = list(T, channeltoreserve, jukebox, jukefalloff)
+	activejukeboxes[activejukeboxes.len] = youvegotafreejukebox
+
+	//Due to changes in later versions of 512, SOUND_UPDATE no longer properly plays audio when a file is defined in the sound datum. As such, we are now required to init the audio before we can actually do anything with it.
+	//Downsides to this? This means that you can *only* hear the jukebox audio if you were present on the server when it started playing, and it means that it's now impossible to add loops to the jukebox track list.
+	var/sound/song_to_init = sound(T.song_path)
+	song_to_init.status = SOUND_MUTE
+	for(var/mob/M in GLOB.player_list)
+		if(!M.client)
+			continue
+		if(!(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			continue
+
+		M.playsound_local(M, null, 100, channel = youvegotafreejukebox[2], S = song_to_init)
 	return activejukeboxes.len
 
 /datum/controller/subsystem/jukeboxes/proc/removejukebox(IDtoremove)
 	if(islist(activejukeboxes[IDtoremove]))
+		var/jukechannel = activejukeboxes[IDtoremove][2]
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)
 				continue
-			M.stop_sound_channel(activejukeboxes[IDtoremove][2])
+			M.stop_sound_channel(jukechannel)
+		freejukeboxchannels |= jukechannel
 		activejukeboxes.Cut(IDtoremove, IDtoremove+1)
 		return TRUE
 	else
-		to_chat(world, "<span class='warning'>If you see this, screenshot it and send it to a dev. Tried to remove jukebox with invalid ID</span>")
+		CRASH("Tried to remove jukebox with invalid ID")
 
 /datum/controller/subsystem/jukeboxes/proc/findjukeboxindex(obj/jukebox)
 	if(activejukeboxes.len)
@@ -57,6 +74,8 @@ SUBSYSTEM_DEF(jukeboxes)
 		T.song_beat = text2num(L[3])
 		T.song_associated_id = L[4]
 		songs |= T
+	for(var/i in CHANNEL_JUKEBOX_START to CHANNEL_JUKEBOX)
+		freejukeboxchannels |= i
 	return ..()
 
 /datum/controller/subsystem/jukeboxes/fire()
@@ -64,14 +83,15 @@ SUBSYSTEM_DEF(jukeboxes)
 		return
 	for(var/list/jukeinfo in activejukeboxes)
 		if(!jukeinfo.len)
-			to_chat(world, "<span class='warning'>If you see this, screenshot it and send it to a dev. Active jukebox without any associated metadata</span>")
+			EXCEPTION("Active jukebox without any associated metadata.")
+			continue
 		var/datum/track/juketrack = jukeinfo[1]
 		if(!istype(juketrack))
-			to_chat(world, "<span class='warning'>If you see this, screenshot it and send it to a dev. After jukebox track grabbing</span>")
+			EXCEPTION("Invalid jukebox track datum.")
 			continue
 		var/obj/jukebox = jukeinfo[3]
 		if(!istype(jukebox))
-			to_chat(world, "<span class='warning'>If you see this, screenshot it and send it to a dev. Nonexistant or invalid jukebox in active jukebox list")
+			EXCEPTION("Nonexistant or invalid object associated with jukebox.")
 			continue
 		var/sound/song_played = sound(juketrack.song_path)
 		var/area/currentarea = get_area(jukebox)

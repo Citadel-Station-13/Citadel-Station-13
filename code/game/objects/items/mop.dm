@@ -27,6 +27,7 @@
 /obj/item/mop/proc/clean(turf/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+		A.clean_blood()
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)

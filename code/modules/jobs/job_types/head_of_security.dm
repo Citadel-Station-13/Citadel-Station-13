@@ -11,7 +11,7 @@
 	supervisors = "the captain"
 	selection_color = "#b90000"
 	req_admin_notify = 1
-	minimal_player_age = 14
+	minimal_player_age = 10
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SECURITY

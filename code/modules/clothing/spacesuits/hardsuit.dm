@@ -47,7 +47,7 @@
 		suit.RemoveHelmet()
 		soundloop.stop(user)
 
-/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
+/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_HEAD)
 		return 1
 
@@ -135,7 +135,7 @@
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
-		jetpack.turn_off()
+		jetpack.turn_off(user)
 		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
@@ -158,7 +158,7 @@
 			var/datum/action/A = X
 			A.Remove(user)
 
-/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
+/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
 		return 1
 
@@ -433,7 +433,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
 
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical
@@ -605,7 +605,6 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
 	item_color = "ancient"
 	resistance_flags = FIRE_PROOF
-	var/datum/component/mobhook
 
 /obj/item/clothing/suit/space/hardsuit/ancient
 	name = "prototype RIG hardsuit"
@@ -617,7 +616,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
 	resistance_flags = FIRE_PROOF
 	var/footstep = 1
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/clothing/suit/space/hardsuit/ancient/mason
 	name = "M.A.S.O.N RIG"
@@ -674,20 +673,24 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_WEAR_SUIT)
-		if (mobhook && mobhook.parent != user)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
-	else
-		QDEL_NULL(mobhook)
+	if(slot != SLOT_WEAR_SUIT)
+		if(listeningTo)
+			UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		return
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+	listeningTo = user
 
 /obj/item/clothing/suit/space/hardsuit/ancient/dropped()
 	. = ..()
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 
 /obj/item/clothing/suit/space/hardsuit/ancient/Destroy()
-	QDEL_NULL(mobhook) // mobhook is not our component
+	listeningTo = null
 	return ..()
 
 /////////////SHIELDED//////////////////////////////////
@@ -864,3 +867,133 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
+
+/*
+			CYDONIAN ARMOR THAT IS RGB AND STUFF WOOOOOOOOOO
+*/
+
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight
+	name = "cydonian helmet"
+	desc = "A helmet designed with both form and function in mind, it protects the user against physical trauma and hazardous conditions while also having polychromic light strips."
+	icon_state = "knight_cydonia"
+	item_state = "knight_yellow"
+	item_color = null
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	heat_protection = HEAD
+	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
+	brightness_on = 7
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator)
+	var/energy_color = "#35FFF0"
+	var/obj/item/clothing/suit/space/hardsuit/lavaknight/linkedsuit = null
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/Initialize()
+	. = ..()
+	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/lavaknight))
+		var/obj/item/clothing/suit/space/hardsuit/lavaknight/S = loc
+		energy_color = S.energy_color
+	update_icon()
+
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/attack_self(mob/user)
+	on = !on
+
+	if(on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_icon()
+	var/mutable_appearance/helm_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
+
+	if(energy_color)
+		helm_overlay.color = energy_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(helm_overlay)
+
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
+		energy_overlay.plane = ABOVE_LIGHTING_LAYER
+		energy_overlay.color = energy_color
+		. += energy_overlay
+
+/obj/item/clothing/suit/space/hardsuit/lavaknight
+	icon_state = "knight_cydonia"
+	name = "cydonian armor"
+	desc = "A suit designed with both form and function in mind, it protects the user against physical trauma and hazardous conditions while also having polychromic light strips."
+	item_state = "swat_suit"
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/ore, /obj/item/pickaxe)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/lavaknight
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	tauric = TRUE		//Citadel Add for tauric hardsuits
+
+	var/energy_color = "#35FFF0"
+
+/obj/item/clothing/suit/space/hardsuit/lavaknight/Initialize()
+	..()
+	light_color = energy_color
+	set_light(1)
+	update_icon()
+
+/obj/item/clothing/suit/space/hardsuit/lavaknight/update_icon()
+	var/mutable_appearance/suit_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
+
+	if(energy_color)
+		suit_overlay.color = energy_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(suit_overlay)
+
+/obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/energy_overlay
+		if(taurmode == SNEK_TAURIC)
+			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
+		else if(taurmode == PAW_TAURIC)
+			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
+		else
+			energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
+
+		energy_overlay.plane = ABOVE_LIGHTING_LAYER
+		energy_overlay.color = energy_color
+		. += energy_overlay
+
+/obj/item/clothing/suit/space/hardsuit/lavaknight/AltClick(mob/living/user)
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
+		return
+
+	if(alert("Are you sure you want to recolor your armor stripes?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",energy_color) as color|null
+		if(energy_color_input)
+			energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+			user.update_inv_wear_suit()
+			if(helmet)
+				var/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/H = helmet
+				H.energy_color = energy_color
+				user.update_inv_head()
+				H.update_icon()
+			update_icon()
+			user.update_inv_wear_suit()
+			light_color = energy_color
+			update_light()
+
+/obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")

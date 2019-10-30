@@ -29,6 +29,7 @@
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
 	mutantrace_variation = MUTANTRACE_VARIATION
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -115,6 +116,7 @@
 	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	clothing_flags = SNUG_FIT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
@@ -163,6 +165,7 @@
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -227,6 +230,7 @@
 	desc = "A crude helmet made out of bronze plates. It offers very little in the way of protection."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet_old"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
@@ -239,13 +243,13 @@
 	equip_delay_other = 140
 	var/datum/brain_trauma/mild/phobia/paranoia
 	var/warped = FALSE
-	var/charges = 6
+	clothing_flags = ANTI_TINFOIL_MANEUVER
 
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
-	if(warped) // originally !warped
-		//AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD,  6, TRUE, null, CALLBACK(src, .proc/warp_up)) //Citadel doesn't have tg's updated antimagic
-	//else
+	if(!warped)
+		AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD, 6, TRUE, null, CALLBACK(src, .proc/warp_up))
+	else
 		warp_up()
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
@@ -255,11 +259,9 @@
 	if(paranoia)
 		QDEL_NULL(paranoia)
 	paranoia = new()
-	//paranoia.clonable = FALSE citadel doesn't have this lol
 
-	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
+	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
 	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
-
 
 /obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
 	//God Im sorry
@@ -274,13 +276,6 @@
 	. = ..()
 	if(paranoia)
 		QDEL_NULL(paranoia)
-
-/obj/item/clothing/head/foilhat/proc/take_hit()
-	if (warped)
-		return
-	charges--
-	if (charges <= 0)
-		warp_up() // Kind of a weird workaround since Citadel doens't like tg's updates to the antimagic component
 
 /obj/item/clothing/head/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"

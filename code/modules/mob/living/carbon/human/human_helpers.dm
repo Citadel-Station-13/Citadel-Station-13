@@ -127,3 +127,9 @@
 			return FALSE
 
 	return .
+/*
+/mob/living/carbon/human/transfer_blood_dna(list/blood_dna)
+	..()
+	if(blood_dna.len)
+		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
+		last_blood_DNA = blood_dna[blood_dna.len]*/

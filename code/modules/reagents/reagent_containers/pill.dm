@@ -186,7 +186,6 @@
 /obj/item/reagent_containers/pill/antirad_plus
 	name = "prussian blue pill"
 	desc = "Used to treat heavy radition poisoning."
-	icon = 'modular_citadel/icons/obj/modularpills.dmi'
 	icon_state = "prussian_blue"
 	list_reagents = list("prussian_blue" = 25, "water" = 10)
 	roundstart = 1
@@ -194,7 +193,6 @@
 /obj/item/reagent_containers/pill/mutarad
 	name = "radiation treatment deluxe pill"
 	desc = "Used to treat heavy radition poisoning and genetic defects."
-	icon = 'modular_citadel/icons/obj/modularpills.dmi'
 	icon_state = "anit_rad_fixgene"
 	list_reagents = list("prussian_blue" = 15, "potass_iodide" = 15, "mutadone" = 15, "water" = 5)
 	roundstart = 1

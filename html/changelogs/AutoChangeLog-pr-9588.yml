@@ -1,0 +1,5 @@
+author: "ItzGabby"
+delete-after: True
+changes: 
+  - rscadd: "Bat Species parts for more leeway for character customization."
+  - code_imp: "Alphabetized decor wing selection window in character creator for simplicity."
