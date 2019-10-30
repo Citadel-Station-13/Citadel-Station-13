@@ -36,7 +36,8 @@
 	if(CHECK_BITFIELD(obj_flags, EMAGGED))
 		return
 	ENABLE_BITFIELD(obj_flags, EMAGGED)
-	to_chat(user, "<span class='notice'>You activate \the [src]'s emergency humanitarian protocols.</span>")
+	to_chat(user, "<span class='notice'>You stealthily activate \the [src]'s emergency humanitarian protocols.</span>")
+	return TRUE
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (!QDELETED(src))
