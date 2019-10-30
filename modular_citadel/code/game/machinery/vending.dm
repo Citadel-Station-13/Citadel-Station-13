@@ -136,10 +136,11 @@
 	machine_name 	= "KinkMate"
 	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
-
+/*
 /obj/item/vending_refill/nazi
 	machine_name 	= "nazivend"
 	icon_state 		= "refill_nazi"
+*/
 
 /obj/item/vending_refill/soviet
 	machine_name 	= "sovietvend"
