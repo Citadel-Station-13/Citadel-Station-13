@@ -1,0 +1,8 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "fixes reaction mechanics at low volumes"
+  - bugfix: "stops reactions constantly bubbling on the edge of reaction temperature"
+  - bugfix: "stops small amount reactions from occurring, and prevents disappearing tiny numbers"
+  - tweak: "Reduced minimum reaction volume from 1 to 0.01"
+  - refactor: "cleaned up Fermichem"

@@ -59,7 +59,7 @@
 	name = "Department Management Console (Computer Board)"
 	build_path = /obj/machinery/computer/card/minor
 	var/target_dept = 1
-	var/list/dept_list = list("General","Security","Medical","Science","Engineering")
+	var/list/dept_list = list("Civilian","Security","Medical","Science","Engineering","Cargo")
 
 /obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))

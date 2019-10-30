@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "cryopod UI isn't complete shit anymore"
+  - bugfix: "Cryopods purge silicon gear more efficiently now. Same with ghosts."

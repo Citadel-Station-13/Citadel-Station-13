@@ -31,6 +31,15 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/bloodbankgen
+	name = "Blood Bank Generator (Machine Board)"
+	build_path = /obj/machinery/bloodbankgen
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/glass = 1)
+
 /obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
@@ -399,6 +408,7 @@
 		/obj/machinery/smartfridge/food = "food",
 		/obj/machinery/smartfridge/drinks = "drinks",
 		/obj/machinery/smartfridge/extract = "slimes",
+		/obj/machinery/smartfridge/organ = "organs",
 		/obj/machinery/smartfridge/chemistry = "chems",
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
 		/obj/machinery/smartfridge/disks = "disks")

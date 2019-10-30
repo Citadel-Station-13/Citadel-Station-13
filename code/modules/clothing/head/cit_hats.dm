@@ -4,4 +4,3 @@
 	icon = 'modular_citadel/icons/obj/clothing/cit_hats.dmi'
 	icon_state = "hunter"
 	item_state = "hunter_worn"
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'

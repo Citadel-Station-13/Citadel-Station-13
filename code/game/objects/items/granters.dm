@@ -302,7 +302,7 @@
 	spellname = "charge"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% postconsumer wizard."
-	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
+	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO", "Just wait faster is all...")
 
 /obj/item/book/granter/spell/charge/recoil(mob/user)
 	..()
@@ -432,6 +432,14 @@
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
 
+/obj/item/book/granter/crafting_recipe/threads //Durathread crafting book
+	name = "Credible Threads"
+	desc = "A simple book about sewing and usefull clothing crafting with cloth and durathreads."
+	crafting_recipe_types = list(/datum/crafting_recipe/durathread_duffelbag, /datum/crafting_recipe/durathread_toolbelt, /datum/crafting_recipe/durathread_bandolier, /datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest)
+	icon_state = "tailers_art1"
+	oneuse = FALSE
+	remarks = list("Durathread is cloth thats also fire-resistant?", "Strong threads that can be used with leather for some light weight storage!", "The cloth can withstand a beating it said but not that much...")
+
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101 //We start at 101 for 103 and 105
 	name = "Cooking Desserts 101"
 	desc = "A cook book that teaches you some more of the newest desserts. AI approved, and a best seller on Honkplanet."
@@ -440,20 +448,20 @@
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
 
-//Later content when I have free time - Trilby Date:02-Aug-2019
+/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
+	name = "Cooking with Ice"
+	desc = "A cook book that teaches you many old icecream treats."
+	crafting_recipe_types = list(/datum/crafting_recipe/food/banana_split, /datum/crafting_recipe/food/root_float, /datum/crafting_recipe/food/bluecharrie_float, /datum/crafting_recipe/food/charrie_float)
+	icon_state = "cooking_learing_ice"
+	oneuse = FALSE
+	remarks = list("Looks like these would sell much better in a plasma fire...", "Using glass bowls rather then cones?", "Mixing soda and ice-cream?", "Tall glasses with of liquids and solids...", "Just add a bit of icecream and cherry on top?")
+
+//Later content when I have free time - Trilby Date:24-Aug-2019
 
 /obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
 	name = "Under The Oven"
 	desc = "A cook book that teaches you many illegal and fun candys. MALF AI approved, and a best seller on the blackmarket."
 	crafting_recipe_types = list()
 	icon_state = "cooking_learing_illegal"
-	oneuse = FALSE
-	remarks = list()
-
-/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
-	name = "Cooking with Ice"
-	desc = "A cook book that teaches you many old icecream treats."
-	crafting_recipe_types = list()
-	icon_state = "cooking_learing_ice"
 	oneuse = FALSE
 	remarks = list()

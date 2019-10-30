@@ -68,6 +68,44 @@
 	results = list("synthflesh" = 3)
 	required_reagents = list("blood" = 1, "carbon" = 1, "styptic_powder" = 1)
 
+/datum/chemical_reaction/synthtissue
+	name = "Synthtissue"
+	id = "synthtissue"
+	results = list("synthtissue" = 5)
+	required_reagents = list("synthflesh" = 1)
+	required_catalysts = list("nutriment" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 		= 305		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax 		= 315 		// Upper end for above
+	ExplodeTemp 		= 1050 		// Temperature at which reaction explodes
+	OptimalpHMin 		= 8.5 		// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax 		= 9.5 		// Higest value for above
+	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= 0.01 		// Temperature change per 1u produced
+	HIonRelease 		= 0.015 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 0.05 		// Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
+	PurityMin 			= 0
+
+/datum/chemical_reaction/synthtissue/FermiCreate(datum/reagents/holder, added_volume, added_purity)
+	var/datum/reagent/synthtissue/St = holder.has_reagent("synthtissue")
+	var/datum/reagent/N = holder.has_reagent("nutriment")
+	if(!St)
+		return
+	if(holder.chem_temp > 320)
+		var/temp_ratio = 1-(330 - holder.chem_temp)/10
+		holder.remove_reagent(src.id, added_volume*temp_ratio)
+	if(St.purity < 1)
+		St.volume *= St.purity
+		St.purity = 1
+	var/amount = CLAMP(0.002, 0, N.volume)
+	N.volume -= amount
+	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
+	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"
+
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
@@ -244,6 +282,12 @@
 	id = "regen_jelly"
 	results = list("regen_jelly" = 2)
 	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+
+/datum/chemical_reaction/jelly_convert
+	name = "Blood Jelly Conversion"
+	id = "blood_jelly"
+	results = list("slimejelly" = 1)
+	required_reagents = list("toxin" = 1, "jellyblood" = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"

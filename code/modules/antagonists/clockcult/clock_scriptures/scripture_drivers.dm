@@ -216,6 +216,9 @@
 	if(is_reebe(invoker.z))
 		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
 		return
+	if(!isturf(invoker.loc))
+		to_chat(invoker, "<span class='danger'>You must be visible to return!</span>")
+		return
 	return TRUE
 
 /datum/clockwork_scripture/abscond/recital()

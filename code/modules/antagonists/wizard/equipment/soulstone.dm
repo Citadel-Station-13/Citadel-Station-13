@@ -218,7 +218,7 @@
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
-	newstruct.key = target.key
+	target.transfer_ckey(newstruct)
 	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
@@ -238,12 +238,13 @@
 	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
+	QDEL_IN(T, 5)
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
 	S.canmove = FALSE//Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
-	S.key = T.key
+	T.transfer_ckey(S)
 	S.language_holder = U.language_holder.copy(S)
 	if(U)
 		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation

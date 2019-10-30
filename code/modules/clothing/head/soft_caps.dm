@@ -129,3 +129,14 @@
 	icon_state = "emtsoft"
 	item_color = "emt"
 	dog_fashion = null
+
+/obj/item/clothing/head/soft/baseball
+	name = "baseball cap"
+	desc = "It's a robust baseball hat, this one belongs to syndicate major league team."
+	icon_state = "baseballsoft"
+	item_color = "baseballsoft"
+	item_state = "baseballsoft"
+	flags_inv = HIDEEYES|HIDEFACE
+	armor = list("melee" = 35, "bullet" = 35, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 90)
+	strip_delay = 90 //You dont take a Major Leage cap
+	dog_fashion = null

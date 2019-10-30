@@ -1,4 +1,3 @@
-
 /obj/item/clothing/head/helmet/dredd
 	name = "Judge Helmet"
 	desc = "Judge, Jury, and Executioner."
@@ -12,7 +11,6 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
 	dog_fashion = null
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/helmet/aviatorhelmet
 	name = "Aviator Helmet"
@@ -21,15 +19,12 @@
 	item_state = "aviator_helmet"
 	icon_state = "aviator_helmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/helmet/biker
 	name = "Biker's Helmet"
 	desc = "This helmet should protect you from russians and masked vigilantes."
 	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "biker_helmet"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 
 /obj/item/clothing/head/helmet/richard
@@ -38,7 +33,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	icon_state = "richard"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 
 /obj/item/clothing/head/helmet/megahelmet
@@ -47,7 +41,6 @@
 	icon_state = "megahelmet"
 	item_state = "megahelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	siemens_coefficient = 1
 
 /obj/item/clothing/head/helmet/protohelmet
@@ -56,7 +49,6 @@
 	icon_state = "protohelmet"
 	item_state = "protohelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	siemens_coefficient = 1
 
 /obj/item/clothing/head/helmet/megaxhelmet
@@ -65,7 +57,6 @@
 	icon_state = "megaxhelmet"
 	item_state = "megaxhelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/helmet/joehelmet
 	name = "Sniper Helmet"
@@ -74,7 +65,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	item_state = "joehelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/helmet/doomguy
 	name = "Doomguy's helmet"
@@ -83,7 +73,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	item_state = "doom"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/neorussian
@@ -92,8 +81,6 @@
 	icon_state = "nr_helmet"
 	item_state = "nr_helmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-
 
 /obj/item/clothing/head/stalhelm
 	name = "Stalhelm"
@@ -101,7 +88,6 @@
 	icon_state = "stalhelm"
 	item_state = "stalhelm"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/panzer
 	name = "Panzer Cap"
@@ -109,7 +95,6 @@
 	icon_state = "panzercap"
 	item_state = "panzercap"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/naziofficer
 	name = "Officer Cap"
@@ -117,8 +102,6 @@
 	icon_state = "officercap"
 	item_state = "officercap"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-
 
 /obj/item/clothing/head/russobluecamohat
 	name = "russian blue camo beret"
@@ -133,7 +116,6 @@
 	icon_state = "russofurhat"
 	item_state = "russofurhat"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/squatter_hat
 	name = "slav squatter hat"
@@ -141,7 +123,6 @@
 	item_state = "squatter_hat"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	desc = "Cyka blyat."
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/snake
 	name = "snake head"
@@ -149,8 +130,6 @@
 	icon_state = "snakehead"
 	item_state = "snakehead"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-
 /obj/item/clothing/head/mummy_rags
 	name = "mummy rags"
 	desc = "Ancient rags taken off from some mummy."
@@ -158,7 +137,6 @@
 	item_state = "mummy"
 	item_color = "mummy"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/head/clownpiece
@@ -167,7 +145,6 @@
 	icon_state = "clownpiece"
 	item_state = "clownpiece"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/mitre
 	name = "mitre"
@@ -175,7 +152,6 @@
 	icon_state = "mitre"
 	item_state = "mitre"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 
 /obj/item/clothing/head/tinfoil
 	name = "tinfoil hat"
@@ -183,7 +159,6 @@
 	icon_state = "foilhat"
 	item_state = "paper"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	siemens_coefficient = 2
 
 /obj/item/clothing/head/celtic
@@ -192,4 +167,3 @@
 	icon_state = "celtic_crown"
 	item_state = "celtic_crown"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'

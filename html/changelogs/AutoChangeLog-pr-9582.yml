@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "Added configs for a bunch of Dynamic rule parameters."
+  - config: "Added defaults for all the configs (WIP)."

@@ -2,7 +2,7 @@
 	gender = MALE
 	pressure_resistance = 15
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
 	var/list/stomach_contents		= list()
@@ -49,6 +49,7 @@
 	//Gets filled up in create_bodyparts()
 
 	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
+	var/list/leg_bodyparts = list()
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()

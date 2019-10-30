@@ -447,6 +447,7 @@
 	item_state = "kimono"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/commjacket
@@ -456,6 +457,7 @@
 	item_state = "commjacket"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/mw2_russian_para
@@ -490,4 +492,20 @@
 	icon_state = "blueberet"
 	item_state = "blueberet"
 	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/head/flight
+	name = "flight goggles"
+	desc = "Old style flight goggles with a leather cap attached."
+	icon_state = "flight-g"
+	item_state = "flight-g"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/neck/necklace/onion
+	name = "Onion Necklace"
+	desc = "A string of onions sequenced together to form a necklace."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "onion"
+	item_state = "onion"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'

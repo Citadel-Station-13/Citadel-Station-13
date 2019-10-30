@@ -306,7 +306,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
 	pai.real_name = pai.name
-	pai.key = choice.key
+	choice.transfer_ckey(pai)
 	card.setPersonality(pai)
 	for(var/datum/paiCandidate/candidate in SSpai.candidates)
 		if(candidate.key == choice.key)

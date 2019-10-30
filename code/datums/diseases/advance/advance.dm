@@ -31,9 +31,9 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
-	var/oldres
+	var/oldres	//To prevent setting new cures unless resistance changes.
 
-	// The order goes from easy to cure to hard to cure.
+	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they wont react away in bodies.
 	var/static/list/advance_cures = 	list(
 									list(	// level 1
 										"copper", "silver", "iodine", "iron", "carbon"
@@ -110,14 +110,21 @@
 		return
 
 	if(symptoms && symptoms.len)
-
 		if(!processing)
 			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
-				S.Start(src)
+				if(S.Start(src)) //this will return FALSE if the symptom is neutered
+					S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
+				S.on_stage_change(src)
 
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
+
+// Tell symptoms stage changed
+/datum/disease/advance/update_stage(new_stage)
+	..()
+	for(var/datum/symptom/S in symptoms)
+		S.on_stage_change(src)
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
@@ -138,8 +145,17 @@
 	A.properties = properties.Copy()
 	A.id = id
 	A.mutable = mutable
+	A.oldres = oldres
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
+
+//Describe this disease to an admin in detail (for logging)
+/datum/disease/advance/admin_details()
+	var/list/name_symptoms = list()
+	for(var/datum/symptom/S in symptoms)
+		name_symptoms += S.name
+	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
+
 
 /*
 
@@ -191,6 +207,10 @@
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
+	if(processing && symptoms && symptoms.len)
+		for(var/datum/symptom/S in symptoms)
+			S.Start(src)
+			S.on_stage_change(src)
 	id = null
 
 	var/the_id = GetDiseaseID()
@@ -342,28 +362,28 @@
 	return id
 
 
-// Add a symptom, if it is over the limit (with a small chance to be able to go over)
-// we take a random symptom away and add the new one.
+// Add a symptom, if it is over the limit we take a random symptom away and add the new one.
 /datum/disease/advance/proc/AddSymptom(datum/symptom/S)
 
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1))
-		symptoms += S
-	else
+	if(!(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1)))
 		RemoveSymptom(pick(symptoms))
-		symptoms += S
+	symptoms += S
+	S.OnAdd(src)
 
 // Simply removes the symptom.
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
+	S.OnRemove(src)
 
 // Neuter a symptom, so it will only affect stats
 /datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
 	if(!S.neutered)
 		S.neutered = TRUE
 		S.name += " (neutered)"
+		S.OnRemove(src)
 
 /*
 
@@ -417,7 +437,7 @@
 
 	var/i = VIRUS_SYMPTOM_LIMIT
 
-	var/datum/disease/advance/D = new(0, null)
+	var/datum/disease/advance/D = new()
 	D.symptoms = list()
 
 	var/list/symptoms = list()
@@ -445,9 +465,6 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
-			AD.Refresh()
-
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 			if(!is_station_level(H.z))
 				continue
@@ -458,8 +475,8 @@
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
-
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()]")
+		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()]!")
 
 /datum/disease/advance/proc/totalStageSpeed()
 	return properties["stage_rate"]

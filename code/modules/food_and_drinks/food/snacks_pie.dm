@@ -319,8 +319,16 @@
 
 /obj/item/reagent_containers/food/snacks/pie/strawberrypie
 	name = "strawberry pie"
-	desc = "A strawberry.pie."
+	desc = "A strawberry pie."
 	icon_state = "strawberrypie"
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
 	tastes = list("strawberry" = 1, "pie" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/pie/peachpie
+	name = "peach pie"
+	desc = "A pie with peach filling."
+	icon_state = "strawberrypie"
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "peachjuice" = 15)
+	tastes = list("peach" = 1, "pie" = 1)
+	foodtype = GRAIN | FRUIT

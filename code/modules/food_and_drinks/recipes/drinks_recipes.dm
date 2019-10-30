@@ -397,13 +397,16 @@
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE //If the chemical explodes in a special way
 	PurityMin			= 0 //The minimum purity something has to be above, otherwise it explodes.
+	clear_conversion	= REACTION_CLEAR_INVERSE
 
+/*
 /datum/chemical_reaction/neurotoxin/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/consumable/ethanol/neurotoxin/Nt = locate(/datum/reagent/consumable/ethanol/neurotoxin) in my_atom.reagents.reagent_list
 	var/cached_volume = Nt.volume
 	if(Nt.purity < 0.5)
 		holder.remove_reagent(src.id, cached_volume)
 		holder.add_reagent("neuroweak", cached_volume)
+*/
 
 /datum/chemical_reaction/neurotoxin/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//reduced size
 	volume = volume/10
@@ -480,18 +483,6 @@
 	id = "vanillapudding"
 	results = list("vanillapudding" = 20)
 	required_reagents = list("vanilla" = 5, "milk" = 5, "eggyolk" = 5)
-
-/datum/chemical_reaction/cherryshake
-	name = "Cherry Shake"
-	id = "cherryshake"
-	results = list("cherryshake" = 3)
-	required_reagents = list("cherryjelly" = 1, "ice" = 1, "cream" = 1)
-
-/datum/chemical_reaction/bluecherryshake
-	name = "Blue Cherry Shake"
-	id = "bluecherryshake"
-	results = list("bluecherryshake" = 3)
-	required_reagents = list("bluecherryjelly" = 1, "ice" = 1, "cream" = 1)
 
 /datum/chemical_reaction/drunkenblumpkin
 	name = "Drunken Blumpkin"
@@ -828,10 +819,10 @@
 	id = "catnip_tea"
 	results = list("catnip_tea" = 3)
 	required_reagents = list("tea" = 5, "catnip" = 2)
-	
+
 /datum/chemical_reaction/commander_and_chief
-	name = "Commander and Chief" 
-	id = "commander_and_chief" 
-	results = list("commander_and_chief" = 50) 
+	name = "Commander and Chief"
+	id = "commander_and_chief"
+	results = list("commander_and_chief" = 50)
 	required_reagents = list("alliescocktail" = 50, "champagne" = 20, "doctorsdelight" = 10, "quintuple_sec" = 10, "screwdrivercocktail" = 10)
-	mix_message = "When your powers combine, I am Captain Pl-..."	
+	mix_message = "When your powers combine, I am Captain Pl-..."

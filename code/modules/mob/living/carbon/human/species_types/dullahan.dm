@@ -13,9 +13,12 @@
 	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	var/pumpkin = FALSE
 
 	var/obj/item/dullahan_relay/myhead
 
+/datum/species/dullahan/pumpkin
+	pumpkin = TRUE
 
 /datum/species/dullahan/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -27,11 +30,19 @@
 	H.flags_1 &= ~HEAR_1
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
+		if(pumpkin)//Pumpkinhead!
+			head.animal_origin = 100
+			head.icon = 'icons/obj/clothing/hats.dmi'
+			head.icon_state = "hardhat1_pumpkin_j"
+			head.custom_head = TRUE
 		head.drop_limb()
 		head.flags_1 = HEAR_1
 		head.throwforce = 25
 		myhead = new /obj/item/dullahan_relay (head, H)
 		H.put_in_hands(head)
+		var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
+		for(var/datum/action/item_action/organ_action/OA in E.actions)
+			OA.Trigger()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
 	H.flags_1 |= ~HEAR_1
@@ -64,7 +75,7 @@
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	vital = FALSE
+	organ_flags = ORGAN_NO_SPOIL//Do not decay
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"

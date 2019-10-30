@@ -191,6 +191,13 @@
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
 
+/datum/reagent/consumable/mustard
+	name = "Mustard"
+	id = "mustard"
+	description = "Mustard, mostly used on hotdogs, corndogs and burgers."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#DDED26" // rgb: 221, 237, 38
+	taste_description = "mustard"
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -684,7 +691,7 @@
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
-		M.adjustBrainLoss(2*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
 		M.blur_eyes(5)

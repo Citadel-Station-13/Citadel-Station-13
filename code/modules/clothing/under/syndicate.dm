@@ -67,3 +67,14 @@
 	icon_state = "syndicate_combat"
 	item_color = "syndicate_combat"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/baseball
+	name = "major league, number unknown"
+	desc = "A major league outfit with the number faded number on the back. Seems rather robust for just a game"
+	icon_state = "syndicatebaseball"
+	item_state = "syndicatebaseball"
+	item_color = "syndicatebaseball"
+	has_sensor = NO_SENSORS
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
+	alt_covers_chest = TRUE
+

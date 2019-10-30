@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - refactor: "Refactored implants to not be located inside mobs codewise, akin to organs."
+  - bugfix: "Fixed gps tracking implants."
+  - bugfix: "Fixed item not being dumped out of storage implants onto the owner's turf upon removal."

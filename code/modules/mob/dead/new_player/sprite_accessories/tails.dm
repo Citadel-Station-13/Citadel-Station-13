@@ -114,6 +114,26 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/mam_tails/batl
+	name = "Bat (Long)"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon_state = "batl"
+
+/datum/sprite_accessory/mam_tails_animated/batl
+	name = "Bat (Long)"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon_state = "batl"
+
+/datum/sprite_accessory/mam_tails/bats
+	name = "Bat (Short)"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon_state = "bats"
+
+/datum/sprite_accessory/mam_tails_animated/bats
+	name = "Bat (Short)"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon_state = "bats"
+
 /datum/sprite_accessory/tails/human/bee
 	name = "Bee"
 	icon_state = "bee"
@@ -469,6 +489,22 @@
 	name = "Axolotl"
 	icon_state = "axolotl"
 
+/datum/sprite_accessory/mam_tails/batl
+	name = "Bat (Long)"
+	icon_state = "batl"
+
+/datum/sprite_accessory/mam_tails_animated/batl
+	name = "Bat (Long)"
+	icon_state = "batl"
+
+/datum/sprite_accessory/mam_tails/bats
+	name = "Bat (Short)"
+	icon_state = "bats"
+
+/datum/sprite_accessory/mam_tails_animated/bats
+	name = "Bat (Short)"
+	icon_state = "bats"
+
 /datum/sprite_accessory/mam_tails/bee
 	name = "Bee"
 	icon_state = "bee"
@@ -558,7 +594,7 @@
 
 /datum/sprite_accessory/mam_tails_animated/horse
 	name = "Horse"
-	icon_state = "Horse"
+	icon_state = "horse"
 	color_src = HAIR
 
 /datum/sprite_accessory/mam_tails/husky

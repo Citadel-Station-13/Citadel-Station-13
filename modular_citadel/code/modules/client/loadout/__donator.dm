@@ -447,4 +447,14 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/head/blueberet
 	ckeywhitelist = list("foxystalin")
 
+/datum/gear/donorgoggles
+	name = "Flight Goggles"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/flight
+	ckeywhitelist = list("maxlynchy")
 
+/datum/gear/onionneck
+	name = "Onion Necklace"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/necklace/onion
+	ckeywhitelist = list("cdrcross")
