@@ -33,7 +33,7 @@
 		if(prob(50))
 			priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 		else
-			priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+			priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 			for(var/obj/machinery/computer/communications/C in GLOB.machines)
 				if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 					var/obj/item/paper/P = new(C.loc)

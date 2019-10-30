@@ -66,6 +66,10 @@
 
 /datum/config_entry/flag/disable_human_mood
 
+/datum/config_entry/flag/disable_borg_flash_knockdown //Should borg flashes be capable of knocking humanoid entities down?
+
+/datum/config_entry/flag/weaken_secborg //Brings secborgs and k9s back in-line with the other borg modules
+
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg

@@ -379,6 +379,12 @@
 			i++
 	return i
 
+/proc/count_occurences_of_value(list/L, val, limit) //special thanks to salmonsnake
+	. = 0
+	for (var/i in 1 to limit)
+		if (L[i] == val)
+			.++
+
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
