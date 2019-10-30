@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Plasmaman tongues no longer have a maxHealth of \"alien\", and no longer cause the organ's on_life to always runtime."
+  - bugfix: "Shooting a simplemob no longer causes runtimes prior to the blood effect being created."
+  - bugfix: "Removing a filter from an object that lacks filters no longer causes runtimes."

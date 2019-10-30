@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Cyborgs can now use camera consoles on the edge of their widescreen. These consoles are also TK friendly now."
