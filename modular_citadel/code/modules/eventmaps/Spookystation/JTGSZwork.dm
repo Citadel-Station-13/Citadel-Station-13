@@ -37,7 +37,7 @@
 /area/eventmap/outside //We are outside
 	name = "Outside"
 	icon_state = "outside"
-	outdoors = 1 //Outdoors is true, no area editing here.
+	outdoors = 0 //I set outdoors to false. So areas can be edited.
 
 /area/eventmap/inside //We are inside, all things are pretty normal.
 	name = "Inside"
@@ -121,8 +121,25 @@
 
 	baseturfs = /turf/open/floor/plating/spookbase/dirtattachmentpoint/mountain
 
+/turf/open/floor/plating/spookbase/sandattachmentpoint
+	name = "the sand"
+	desc = "Looks like its been dugged out and prepped for construction"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "dugsand"
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	attachment_holes = TRUE
+	planetary_atmos = 1
+	light_range = 3
+	light_power = 0.15
+	light_color = "#00111a"
+
+	baseturfs = /turf/open/floor/plating/spookbase/sandattachmentpoint // The sand version.
+
 /*
-	FLOOR TILE FOR GRASS
+	FLOOR TILES
 							*/
 /obj/item/stack/tile/nonspooktimegrass
 	name = "clumps of grass"
@@ -132,6 +149,14 @@
 	icon_state = "grass_clump"
 	turf_type = /turf/open/floor/spooktime/nonspooktimegrass
 	resistance_flags = FLAMMABLE
+
+/obj/item/stack/tile/normalasssand
+	name = "piles of sand"
+	singular_name = "pile of sand"
+	desc = "This is a pile of sand"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "sand_clump"
+	turf_type = /turf/open/floor/spooktime/beach
 
 /* 
 	IMPORTANT TURFS */
@@ -785,6 +810,18 @@
 	icon_state = "sand"
 	bullet_bounce_sound = null
 	tiled_dirt = 0
+	var/turfverb = "dig up"
+	
+	baseturfs = /turf/open/floor/plating/spookbase/sandattachmentpoint //Alas, now people can dig out lakes.
+
+/turf/open/floor/spooktime/beach/attackby(obj/item/C, mob/user, params) //We dig it out with a shovel.
+	if((C.tool_behaviour == TOOL_SHOVEL) && params) //And beneath it we reveal dirt
+		new /obj/item/stack/tile/normalasssand(src) //EDIT THIS
+		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+		make_plating()
+	if(..())
+		return
 
 //Beaches and coasts and sand and shit.
 /turf/open/floor/spooktime/beach/coasts
@@ -792,6 +829,9 @@
 	name = "coastline"
 	desc = "The coastline of a sandy shore"
 	icon_state = "sandwater_t_S"
+
+/turf/open/floor/spooktime/beach/coasts/attackby(obj/item/C, mob/user, params)
+	return //Upon testing, digging out the coasts makes the map look like ass.
 
 //The water that follows the coastline also animated.
 /turf/open/floor/spooktime/beach/coasts/coastS
@@ -850,6 +890,9 @@
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
 
+/turf/open/floor/spooktime/beach/water/attackby(obj/item/C, mob/user, params)
+	return //haha nope
+
 //Slightly darker than the beach water color.
 /turf/open/floor/spooktime/beach/watersolid //Gotta stop you at a certain point man
 	name = "water"
@@ -861,6 +904,9 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
+
+/turf/open/floor/spooktime/beach/watersolid/attackby(obj/item/C, mob/user, params)
+	return //You aren't digging my lake out unless I want you to fool.
 
 //Motion river water with the lighting on it.
 /turf/open/floor/spooktime/riverwatermotion
