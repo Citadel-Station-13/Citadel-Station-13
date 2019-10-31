@@ -366,10 +366,10 @@
 /obj/item/toy/plush/random
 	name = "Illegal plushie"
 	desc = "Something fucked up"
+	var/blacklisted_plushes = list(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random)
 
 /obj/item/toy/plush/random/Initialize()
-	..()
-	var/newtype = pick(subtypesof(/obj/item/toy/plush))
+	var/newtype = pick(subtypesof(/obj/item/toy/plush) - typecacheof(blacklisted_plushes))
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 
