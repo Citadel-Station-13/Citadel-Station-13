@@ -12,7 +12,7 @@
 	if(prob(90))
 		priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 		for(var/obj/machinery/computer/communications/C in GLOB.machines)
 			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 				var/obj/item/paper/P = new(C.loc)

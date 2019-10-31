@@ -1,58 +1,8 @@
-/obj/item/seeds/banana/Initialize()
-	. = ..()
-	mutatelist += /obj/item/seeds/banana/exotic_banana
-
-
-/obj/item/seeds/banana/exotic_banana
-	name = "pack of exotic banana seeds"
-	desc = "They're seeds that grow into banana trees. However, those bananas might be alive."
-	icon = 'modular_citadel/icons/mob/BananaSpider.dmi'
-	icon_state = "seed_ExoticBanana"
-	species = "banana"
-	plantname = "Exotic Banana Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
-	growing_icon = 'modular_citadel/icons/mob/BananaSpider.dmi'
-	icon_dead = "banana-dead"
-	mutatelist = list()
-	genes = list(/datum/plant_gene/trait/slip)
-	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
-
-
-/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
-	seed = /obj/item/seeds/banana/exotic_banana
-	name = "banana spider"
-	desc = "You do not know what it is, but you can bet the clown would love it."
-	icon = 'modular_citadel/icons/mob/BananaSpider.dmi'
-	icon_state = "banana"
-	item_state = "banana"
-	filling_color = "#FFFF00"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
-	foodtype = GROSS | MEAT | RAW | FRUIT
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
-	juice_results = list("banana" = 0)
-	var/awakening = 0
-
-
-/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable/attack_self(mob/user)
-	if(awakening || isspaceturf(user.loc))
-		return
-	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
-	awakening = 1
-
-	spawn(30)
-		if(!QDELETED(src))
-			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
-			S.speed += round(10 / seed.potency)
-			S.visible_message("<span class='notice'>The banana spider chitters as it stretches its legs.</span>")
-			qdel(src)
-
-
 /mob/living/simple_animal/banana_spider
-	icon = 'modular_citadel/icons/mob/BananaSpider.dmi'
 	name = "banana spider"
 	desc = "What the fuck is this abomination?"
-	icon_state = "banana"
-	icon_dead = "banana_peel"
+	icon_state = "bananaspider"
+	icon_dead = "bananaspider_peel"
 	health = 1
 	maxHealth = 1
 	turns_per_move = 5			//this isn't player speed =|
@@ -136,8 +86,7 @@
 /obj/item/reagent_containers/food/snacks/deadbanana_spider
 	name = "dead banana spider"
 	desc = "Thank god it's gone...but it does look slippery."
-	icon = 'modular_citadel/icons/mob/BananaSpider.dmi'
-	icon_state = "banana_peel"
+	icon_state = "bananaspider"
 	bitesize = 3
 	eatverb = "devours"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)

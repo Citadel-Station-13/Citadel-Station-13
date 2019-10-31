@@ -92,3 +92,7 @@ require only minor tweaks.
 #define PLACE_SAME_Z "same"
 #define PLACE_SPACE_RUIN "space"
 #define PLACE_LAVA_RUIN "lavaland"
+
+
+//Map type stuff.
+#define MAP_TYPE_STATION "station"

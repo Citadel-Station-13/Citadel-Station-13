@@ -237,7 +237,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='warning'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
-	if(convertee.anti_magic_check(TRUE, TRUE, FALSE, 0)) //Not chargecost because it can be spammed
+	if(convertee.anti_magic_check(TRUE, TRUE, chargecost = 0)) //Not major because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
@@ -767,7 +767,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/atom/I = L.anti_magic_check()
+			var/atom/I = L.anti_magic_check(chargecost = 0)
 			if(I)
 				if(isitem(I))
 					to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
@@ -797,7 +797,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			if(L.anti_magic_check())
+			if(L.anti_magic_check(chargecost = 0))
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 			if(is_servant_of_ratvar(L))

@@ -1,0 +1,5 @@
+author: "Tupinambis"
+delete-after: True
+changes: 
+  - imageadd: "Beautified and stylized the cyborg HUD sprites, animated and cleaned up some of the old, modernized APC hacking and Doomsday sprites,"
+  - tweak: "moved cyborg language select above the radio icon, instead of above the picture icon."

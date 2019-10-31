@@ -267,6 +267,7 @@
 	operation_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
+	spawn_tracked = FALSE
 
 /obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()
