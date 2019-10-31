@@ -296,15 +296,13 @@
 
 		loading = 1
 		src.updateUsrDialog()
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		say("Initiating scan...")
 
-		spawn(20)
-			src.scan_occupant(scanner.occupant)
-
-			loading = 0
-			src.updateUsrDialog()
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+		src.scan_occupant(scanner.occupant)
+		
+		loading = 0
+		src.updateUsrDialog()
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 
 		//No locking an open scanner.
