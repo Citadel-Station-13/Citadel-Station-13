@@ -1,4 +1,4 @@
-#define LOG_BURN_TIMER 150
+#define LOG_BURN_TIMER 400
 #define PAPER_BURN_TIMER 5
 #define MAXIMUM_BURN_TIMER 3000
 
@@ -12,6 +12,7 @@
 	pixel_x = -16
 	resistance_flags = FIRE_PROOF
 	var/lit = FALSE
+	light_color = "#E38C2D"
 
 	var/fuel_added = 0
 	var/flame_expiry_timer
@@ -63,6 +64,12 @@
 			[src].</span>", "<span class='notice'>You throw [T] into [src].\
 			</span>")
 		adjust_fuel_timer(PAPER_BURN_TIMER)
+		qdel(T)
+	else if(istype(T,/obj/item/grown/log))
+		user.visible_message("<span class='notice'>[user] tosses some \
+			wood into [src].</span>", "<span class='notice'>You add \
+			some fuel to [src].</span>")
+		adjust_fuel_timer(LOG_BURN_TIMER)
 		qdel(T)
 	else if(try_light(T,user))
 		return
