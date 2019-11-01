@@ -110,7 +110,7 @@
 
 /datum/bounty/item/chef/ratkebab
 	name = "Rat Kebabs"
-	description = "Centcomm is requesting some -special- kebabs for it's service staff."
+	description = "Centcom is requesting some -special- kebabs for it's service staff."
 	reward = 1800
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/kebab/rat)
@@ -129,7 +129,7 @@
 
 /datum/bounty/item/chef/waffles
 	name = "Waffles"
-	description = "Security staff at Centcomm are looking for a fun treat. Ship us some waffles so they can fill the cells."
+	description = "Security staff at Centcom are looking for a fun treat. Ship us some waffles so they can fill the cells."
 	reward = 1000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/waffles)
 

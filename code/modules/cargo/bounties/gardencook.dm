@@ -28,7 +28,7 @@
 
 /datum/bounty/item/gardencook/khinkali
 	name = "Khinkali"
-	description = "Requesting -some khinki stuff- for a private staff party at Centcomm"
+	description = "Requesting -some khinki stuff- for a private staff party at Centcom"
 	reward = 2400
 	required_count = 6
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/khinkali)

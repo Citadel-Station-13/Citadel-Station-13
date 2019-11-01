@@ -1,13 +1,13 @@
 /datum/bounty/item/silly/paper_plane
 	name = "Paper Planes"
-	description = "Centcomm is running an experiment on which type of paper plane is the most aerodynamically stable. Send us some samples to further our study."
+	description = "Centcom is running an experiment on which type of paper plane is the most aerodynamically stable. Send us some samples to further our study."
 	reward = 900
 	required_count = 15
 	wanted_types = list(/obj/item/paperplane)
 
 /datum/bounty/item/silly/mousetraps
 	name = "Mouse Traps"
-	description = "Some shoeless hoodlum is intentionally tracking paint all over Centcomm. Send us some mouse traps so we can capture the culprit."
+	description = "Some shoeless hoodlum is intentionally tracking paint all over Centcom. Send us some mouse traps so we can capture the culprit."
 	reward = 1200
 	required_count = 12
 	wanted_types = list(/obj/item/assembly/mousetrap)
@@ -27,7 +27,7 @@
 
 /datum/bounty/item/silly/peels
 	name = "Banana Peels"
-	description = "Centcomm is running an experiment to see if a slip-n-slide can be made entirely out of banana peels, but noone wants to eat that many bananas. Ship us some fresh peels."
+	description = "Centcom is running an experiment to see if a slip-n-slide can be made entirely out of banana peels, but noone wants to eat that many bananas. Ship us some fresh peels."
 	reward = 950
 	required_count = 12
 	wanted_types = list(/obj/item/grown/bananapeel)

@@ -206,7 +206,7 @@
 
 /datum/bounty/item/assistant/bolas
 	name = "Bolas"
-	description = "Centcomm's chef has lost their mind. They're streaking naked though the halls, greased up with butter and cooking oil. Send some bola's so we can capture them."
+	description = "Centcom's chef has lost their mind. They're streaking naked though the halls, greased up with butter and cooking oil. Send some bola's so we can capture them."
 	reward = 800
 	required_count = 3
 	wanted_types = list(/obj/item/restraints/legcuffs/bola)
