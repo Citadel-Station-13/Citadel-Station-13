@@ -984,10 +984,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
@@ -1308,10 +1308,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOREALLYFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
@@ -1443,7 +1443,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.dizziness = max(0, M.dizziness-6)
 	M.confused = max(0, M.confused-6)
 	M.disgust = max(0, M.disgust-6)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		mood.setSanity(min(mood.sanity+5, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
 	..()

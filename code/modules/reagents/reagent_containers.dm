@@ -26,7 +26,7 @@
 	create_reagents(volume, reagent_flags)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
-		var/list/data = list("viruses"= list(F))
+		var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY","viruses"= list(F))
 		reagents.add_reagent("blood", disease_amount, data)
 
 	add_initial_reagents()

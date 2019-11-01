@@ -117,8 +117,8 @@
 
 /datum/supply_pack/misc/paper_work
 	name = "Freelance Paper work"
-	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
-	cost = 700 // Net of 0 credits
+	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (20) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
+	cost = 700 // Net of 0 credits but makes (120 x 20 = 2400)
 	contains = list(/obj/item/folder/paperwork,
 					/obj/item/folder/paperwork,
 					/obj/item/folder/paperwork,
@@ -129,11 +129,18 @@
 					/obj/item/folder/paperwork,
 					/obj/item/folder/paperwork,
 					/obj/item/folder/paperwork,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain)
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/pen/fountain
+					)
 	crate_name = "Paperwork"
 
 /datum/supply_pack/misc/funeral
@@ -149,7 +156,7 @@
 
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"
-	cost = 15000
+	cost = 10000
 	contains = list(/obj/machinery/jukebox)
 	crate_name = "Jukebox"
 

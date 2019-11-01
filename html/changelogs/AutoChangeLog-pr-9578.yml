@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "There is now a 1% chance for the station's announcer to be the medibot voice instead of the classic TG announcer."
+  - rscadd: "The map config system has been expanded to allow mappers to specify the map type, announcer voice, ingame year, and how often a given map can be voted at roundend."
+  - bugfix: "The map vote system now takes into account map playercount limits properly."

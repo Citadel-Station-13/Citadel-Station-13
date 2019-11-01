@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "Target head and throw a hat at someone to toss it onto their head, knocking whatever they're wearing off if they are wearing a hat. Some headgear can't be knocked off this way."
