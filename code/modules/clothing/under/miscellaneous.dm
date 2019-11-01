@@ -715,8 +715,9 @@
 	name = "gear harness"
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
 	icon_state = "gear_harness"
-	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
+	item_state = "gear_harness"
 	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
 
 /obj/item/clothing/under/durathread
 	name = "durathread jumpsuit"

@@ -26,7 +26,6 @@
 	else
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 
-
 /obj/item/gun/ballistic/process_chamber(empty_chamber = 1)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(istype(AC)) //there's a chambered round
@@ -170,7 +169,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				user_dna = C.dna
-				B.add_blood_DNA(user_dna)
+				B.add_blood_DNA(user_dna, C.diseases)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)
