@@ -379,6 +379,12 @@
 			i++
 	return i
 
+/proc/count_occurences_of_value(list/L, val, limit) //special thanks to salmonsnake
+	. = 0
+	for (var/i in 1 to limit)
+		if (L[i] == val)
+			.++
+
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
@@ -514,7 +520,7 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-#if DM_VERSION > 512
+#if DM_VERSION > 513
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
 #error otherwise, update the version and bug lummox
