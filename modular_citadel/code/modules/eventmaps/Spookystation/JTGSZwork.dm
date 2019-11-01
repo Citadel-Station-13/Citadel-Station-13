@@ -1040,9 +1040,6 @@
 
 /obj/structure/trap/ctf/nomech/trap_effect(atom/L)
 	if(ismecha(L) || istype(L, /obj/item/mecha_parts) || istype(L, /obj/structure/mecha_wreckage))
-<<<<<<< HEAD
-		qdel(L)
-=======
 		qdel(L)
 
 /*
@@ -1121,4 +1118,3 @@ GLOBAL_LIST_INIT(hay_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	material_drop = /obj/item/stack/sheet/hay
 	material_drop_amount = 5
->>>>>>> BlackMajor-Ball-time
