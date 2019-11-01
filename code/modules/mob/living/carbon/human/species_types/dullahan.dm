@@ -18,6 +18,8 @@
 	var/obj/item/dullahan_relay/myhead
 
 /datum/species/dullahan/pumpkin
+	name = "Pumpkin Head Dullahan"
+	id = "pumpkindullahan"
 	pumpkin = TRUE
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -126,20 +128,24 @@
 	. = ..()
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
+	if(owner)
+		RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
+		RegisterSignal(owner, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
+	else
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/A)
+	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
+		return COMPONENT_ALLOW_EXAMINE
+
+/obj/item/dullahan_relay/proc/include_owner(list/processing_list, list/hearers)
+	if(!QDELETED(owner))
+		hearers += owner
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
 		. = PROCESS_KILL
 		qdel(src)
-
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	. = ..()
-	if(!QDELETED(owner))
-		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-		to_chat(owner,message)
-	else
-		qdel(src)
-
 
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))
