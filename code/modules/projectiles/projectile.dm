@@ -177,11 +177,7 @@
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.bleed(damage)
-			else
-				L.add_splatter_floor(target_loca)
+			L.add_splatter_floor(target_loca)
 
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
