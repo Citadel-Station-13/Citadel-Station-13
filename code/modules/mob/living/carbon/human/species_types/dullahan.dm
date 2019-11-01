@@ -29,7 +29,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	H.flags_1 &= ~HEAR_1
+	DISABLE_BITFIELD(H.flags_1, HEAR_1)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		if(pumpkin)//Pumpkinhead!
@@ -38,7 +38,7 @@
 			head.icon_state = "hardhat1_pumpkin_j"
 			head.custom_head = TRUE
 		head.drop_limb()
-		head.flags_1 = HEAR_1
+		ENABLE_BITFIELD(head.flags_1, HEAR_1)
 		head.throwforce = 25
 		myhead = new /obj/item/dullahan_relay (head, H)
 		H.put_in_hands(head)
@@ -47,7 +47,7 @@
 			OA.Trigger()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
-	H.flags_1 |= ~HEAR_1
+	ENABLE_BITFIELD(H.flags_1, HEAR_1)
 	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
