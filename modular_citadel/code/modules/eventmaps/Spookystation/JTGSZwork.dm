@@ -37,7 +37,7 @@
 /area/eventmap/outside //We are outside
 	name = "Outside"
 	icon_state = "outside"
-	outdoors = 1 //Outdoors is true, no area editing here.
+	outdoors = 0 //I set outdoors to false. So areas can be edited.
 
 /area/eventmap/inside //We are inside, all things are pretty normal.
 	name = "Inside"
@@ -106,7 +106,7 @@
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	attachment_holes = TRUE
-	planetary_atmos = 1 
+	planetary_atmos = 1
 	light_range = 3 //We reset this
 	light_power = 0.15 //The lighting will unset when people place their tiles/etc on it.
 	light_color = "#00111a" //It should be fine
@@ -121,8 +121,25 @@
 
 	baseturfs = /turf/open/floor/plating/spookbase/dirtattachmentpoint/mountain
 
+/turf/open/floor/plating/spookbase/sandattachmentpoint
+	name = "the sand"
+	desc = "Looks like its been dugged out and prepped for construction"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "dugsand"
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	attachment_holes = TRUE
+	planetary_atmos = 1
+	light_range = 3
+	light_power = 0.15
+	light_color = "#00111a"
+
+	baseturfs = /turf/open/floor/plating/spookbase/sandattachmentpoint // The sand version.
+
 /*
-	FLOOR TILE FOR GRASS
+	FLOOR TILES
 							*/
 /obj/item/stack/tile/nonspooktimegrass
 	name = "clumps of grass"
@@ -133,7 +150,15 @@
 	turf_type = /turf/open/floor/spooktime/nonspooktimegrass
 	resistance_flags = FLAMMABLE
 
-/* 
+/obj/item/stack/tile/normalasssand
+	name = "piles of sand"
+	singular_name = "pile of sand"
+	desc = "This is a pile of sand"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "sand_clump"
+	turf_type = /turf/open/floor/spooktime/beach
+
+/*
 	IMPORTANT TURFS */
 
 //Grass with no flora generation on it.
@@ -447,7 +472,7 @@
 	weather_message = "<span class='notice'>The droplets become a downpour, rain now falls all around you from the night sky.</span>"
 	weather_overlay = "regular_rain" //But I need to work on my mouse on the day of 10/24/2019, so lets call it here.
 	weather_duration_lower = 12000 //these are deciseconds.
-	weather_duration_upper = 15000 
+	weather_duration_upper = 15000
 
 	end_duration = 100
 	end_message = "<span class='notice'>The downpour gradually slows until it stops.</span>"
@@ -523,7 +548,7 @@
 	GRANDFATHER CLOCK
 						*/
 
-/* 
+/*
 	1:00 AM		- 	overlay-2
 	2:00 AM		-	overlay-2
 	3:00 AM		-	overlay-3
@@ -559,19 +584,19 @@
 
 /obj/machinery/grandfatherclock/process()
 	doodad_clock_ticker()
-	
-	
+
+
 /obj/machinery/grandfatherclock/proc/doodad_clock_ticker() //We basically throttle the rest of this machine here.
-	
+
 	dyndial_cycle_ticker++
-	
+
 	if(ticktock) //If we are true
 		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tock.ogg', 100,0)
 		icon_state = "grandfathermk4right"
 		flick("tick", src)
 		ticktock = 0 //Play this noise set to false
 	else
-		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tick.ogg', 100,0)	
+		playsound(src.loc, 'modular_citadel/code/modules/eventmaps/Spookystation/Tick.ogg', 100,0)
 		flick("tock", src)
 		icon_state = "grandfathermk4left"
 		ticktock = 1 //If we are not true, play this noise set to true
@@ -627,9 +652,9 @@
 			MMimgstate = "assminuteoverlay-9"
 		if(50 to 57)
 			MMimgstate = "assminuteoverlay-10"
-		else 
+		else
 			MMimgstate = "assminuteoverlay-0" //This has 58 to 60 and everything else.
-	
+
 	update_icon() //Everything is set, lets update.
 
 /obj/machinery/grandfatherclock/update_icon()
@@ -653,6 +678,21 @@
 /obj/structure/flora/grass/spookytime/New()
 	..()
 	icon_state = "tall_grass_[rand(1,8)]" //We have 8 states.
+
+/obj/structure/flora/grass/spookytime/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.sharpness && W.force > 0 && !(NODECONSTRUCT_1 in flags_1))
+		to_chat(user, "You begin to harvest [src]...")
+		if(do_after(user, 100/W.force, target = user))
+			to_chat(user, "<span class='notice'>You've collected [src]</span>")
+			var/obj/item/stack/sheet/hay/H = user.get_inactive_held_item()
+			if(istype(H))
+				H.add(1)
+			else
+				new /obj/item/stack/sheet/hay/(get_turf(src))
+			qdel(src)
+			return 1
+	else
+		. = ..()
 
 /obj/structure/flora/tree/spookytime
 	name = "dead tree"
@@ -785,6 +825,18 @@
 	icon_state = "sand"
 	bullet_bounce_sound = null
 	tiled_dirt = 0
+	var/turfverb = "dig up"
+
+	baseturfs = /turf/open/floor/plating/spookbase/sandattachmentpoint //Alas, now people can dig out lakes.
+
+/turf/open/floor/spooktime/beach/attackby(obj/item/C, mob/user, params) //We dig it out with a shovel.
+	if((C.tool_behaviour == TOOL_SHOVEL) && params) //And beneath it we reveal dirt
+		new /obj/item/stack/tile/normalasssand(src) //EDIT THIS
+		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+		make_plating()
+	if(..())
+		return
 
 //Beaches and coasts and sand and shit.
 /turf/open/floor/spooktime/beach/coasts
@@ -792,6 +844,9 @@
 	name = "coastline"
 	desc = "The coastline of a sandy shore"
 	icon_state = "sandwater_t_S"
+
+/turf/open/floor/spooktime/beach/coasts/attackby(obj/item/C, mob/user, params)
+	return //Upon testing, digging out the coasts makes the map look like ass.
 
 //The water that follows the coastline also animated.
 /turf/open/floor/spooktime/beach/coasts/coastS
@@ -850,6 +905,9 @@
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
 
+/turf/open/floor/spooktime/beach/water/attackby(obj/item/C, mob/user, params)
+	return //haha nope
+
 //Slightly darker than the beach water color.
 /turf/open/floor/spooktime/beach/watersolid //Gotta stop you at a certain point man
 	name = "water"
@@ -861,6 +919,9 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
+
+/turf/open/floor/spooktime/beach/watersolid/attackby(obj/item/C, mob/user, params)
+	return //You aren't digging my lake out unless I want you to fool.
 
 //Motion river water with the lighting on it.
 /turf/open/floor/spooktime/riverwatermotion
@@ -941,3 +1002,119 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
+
+//Fermis's umbrella
+
+/obj/item/umbrella
+    name = "umbrella"
+    desc = "To keep the rain off you. Use with caution on windy days."
+    icon = 'icons/obj/items_and_weapons.dmi'
+    lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+    righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+    icon_state = "umbrella_closed"
+    slot_flags = SLOT_BELT
+    force = 5
+    throwforce = 5
+    w_class = WEIGHT_CLASS_SMALL
+    var/open = FALSE
+
+/obj/item/umbrella/Initialize()
+    ..()
+    color = RANDOM_COLOUR
+    update_icon()
+
+/obj/item/umbrella/attack_self()
+    toggle_umbrella()
+
+/obj/item/umbrella/proc/toggle_umbrella()
+    open = !open
+    icon_state = "umbrella_[open ? "open" : "closed"]"
+    item_state = icon_state
+    update_icon()
+    ..()
+
+//Keep the mechs out of the mech arena
+/obj/structure/trap/ctf/nomech
+	name = "anti-mech barrier"
+	desc = "attempts to bring mechs into the regular ball space may result in spontaneous crabification"
+
+/obj/structure/trap/ctf/nomech/trap_effect(atom/L)
+	if(ismecha(L) || istype(L, /obj/item/mecha_parts) || istype(L, /obj/structure/mecha_wreckage))
+		qdel(L)
+
+/*
+	Shitty Hay Objects Sprited by me in a rush when I was half-asleep at 9am + The material
+																							*/
+
+GLOBAL_LIST_INIT(hay_recipes, list ( \
+	new/datum/stack_recipe("Rice Hat", /obj/item/clothing/head/rice_hat, 4, time = 5, one_per_turf = 0, on_floor = 0), \
+	new/datum/stack_recipe("Hay Bed", /obj/structure/bed/badhaybed, 4, time = 15, one_per_turf = 1, on_floor = 0), \
+	new/datum/stack_recipe("Wicker Basket", /obj/structure/closet/crate/awfulwickerbasket, 5, time = 40, one_per_turf = 0, on_floor = 1), \
+))
+//Thanks Gomble
+/obj/item/stack/sheet/hay
+	name = "hay"
+	desc = "A bundle of hay. Food for livestock, and useful for weaving. Hail the Wickerman."
+	singular_name = "hay stalk"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "hay"
+	item_state = "hay"
+	force = 1
+	throwforce = 1
+	throw_speed = 1
+	throw_range = 2
+	max_amount = 500
+	attack_verb = list("tickled", "poked", "whipped")
+	hitsound = 'sound/weapons/grenadelaunch.ogg'
+
+/obj/item/stack/sheet/hay/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.hay_recipes
+	return ..()
+
+/obj/item/stack/sheet/hay/fifty
+	amount = 50
+
+/obj/item/stack/sheet/hay/twenty
+	amount = 20
+
+/obj/item/stack/sheet/hay/ten
+	amount = 10
+
+/obj/item/stack/sheet/hay/five
+	amount = 5
+
+
+/obj/item/stack/sheet/update_icon()
+	var/amount = get_amount()
+	if((amount <= 4) && (amount > 0))
+		icon_state = "hay[amount]"
+	else
+		icon_state = "hay"
+
+/*
+	Hay Objects hastily drawn by me at 9am in a rush.
+														*/
+//Shitty bed
+/obj/structure/bed/badhaybed
+	name = "Low-quality Hay Bed"
+	desc = "It looks like someone hastily put this together, even if the builder didn't."
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "shitty_hay_bed"
+	anchored = 1
+	can_buckle = 1
+	buckle_lying = 1
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	integrity_failure = 30
+	buildstacktype = /obj/item/stack/sheet/hay
+	buildstackamount = 5
+
+//Awful Wicker Basket
+/obj/structure/closet/crate/awfulwickerbasket
+	name = "Low-quality Wicker Basket"
+	desc = "A handmade wicker basket, you don't know why it looks like this. But you probably don't like it."
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "shitty_basket" //yes, there is no space on crates so the other state is shitty_basketopen
+	resistance_flags = FLAMMABLE
+	material_drop = /obj/item/stack/sheet/hay
+	material_drop_amount = 5
