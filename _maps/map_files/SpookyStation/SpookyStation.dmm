@@ -968,7 +968,11 @@
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/wood,
 /area/eventmap/inside)
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 "du" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/carpet/royalblack,
@@ -7024,7 +7028,11 @@
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/wood,
 /area/eventmap/inside)
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 "vn" = (
 /obj/machinery/door/airlock/security{
 	name = "Armoury";
@@ -10693,7 +10701,11 @@
 	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 "SK" = (
 /obj/item/storage/daki,
 /turf/open/floor/plasteel/damturf/scorched2,
@@ -23968,7 +23980,11 @@ kU
 kU
 ar
 KP
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 pR
 pR
 pR
@@ -24731,7 +24747,11 @@ pR
 pR
 =======
 KP
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 pR
 yO
 ab
@@ -27331,7 +27351,11 @@ pR
 pR
 =======
 yO
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ar
 rB
 bJ
@@ -38620,7 +38644,11 @@ yO
 <<<<<<< HEAD
 at
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ab
 eX
 eX
@@ -39409,7 +39437,11 @@ pR
 pR
 pR
 pR
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 pR
 pR
 pR
@@ -39679,7 +39711,11 @@ at
 pR
 =======
 KP
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 pR
 yO
 ab
@@ -45213,7 +45249,11 @@ zQ
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -45491,7 +45531,11 @@ zQ
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -45769,7 +45813,11 @@ zQ
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -46047,7 +46095,11 @@ zQ
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -46325,7 +46377,11 @@ zQ
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -46603,7 +46659,11 @@ zQ
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -46882,7 +46942,11 @@ Dy
 FP
 Fh
 Qx
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 AY
 AY
 AY
@@ -47146,7 +47210,11 @@ LQ
 AY
 AY
 Er
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 AY
 AY
 AY
@@ -47413,7 +47481,11 @@ AY
 AY
 AY
 QF
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 AY
 AY
 AY
@@ -47682,7 +47754,11 @@ ac
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 Jx
@@ -47960,7 +48036,11 @@ ac
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -48240,7 +48320,11 @@ ac
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -48520,7 +48604,11 @@ ac
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac
@@ -48800,7 +48888,11 @@ ac
 ac
 ac
 =======
+<<<<<<< HEAD
 >>>>>>> 055ca4ab8ea5de466fbd8feb67b68586f7d83ae4
+=======
+>>>>>>> 7b3e531d3f0fbf27c5a0c8f613318ee78b3542cc
+>>>>>>> BlackMajor-Ball-time
 ac
 ac
 ac

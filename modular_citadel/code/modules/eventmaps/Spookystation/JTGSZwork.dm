@@ -679,6 +679,21 @@
 	..()
 	icon_state = "tall_grass_[rand(1,8)]" //We have 8 states.
 
+/obj/structure/flora/grass/spookytime/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.sharpness && W.force > 0 && !(NODECONSTRUCT_1 in flags_1))
+		to_chat(user, "You begin to harvest [src]...")
+		if(do_after(user, 100/W.force, target = user))
+			to_chat(user, "<span class='notice'>You've collected [src]</span>")
+			var/obj/item/stack/sheet/hay/H = user.get_inactive_held_item()
+			if(istype(H))
+				H.add(1)
+			else
+				new /obj/item/stack/sheet/hay/(get_turf(src))
+			qdel(src)
+			return 1
+	else
+		. = ..()
+
 /obj/structure/flora/tree/spookytime
 	name = "dead tree"
 	desc = "It's a tree. Useful for combustion and/or construction."
@@ -1025,4 +1040,85 @@
 
 /obj/structure/trap/ctf/nomech/trap_effect(atom/L)
 	if(ismecha(L) || istype(L, /obj/item/mecha_parts) || istype(L, /obj/structure/mecha_wreckage))
+<<<<<<< HEAD
 		qdel(L)
+=======
+		qdel(L)
+
+/*
+	Shitty Hay Objects Sprited by me in a rush when I was half-asleep at 9am + The material
+																							*/
+
+GLOBAL_LIST_INIT(hay_recipes, list ( \
+	new/datum/stack_recipe("Rice Hat", /obj/item/clothing/head/rice_hat, 4, time = 5, one_per_turf = 0, on_floor = 0), \
+	new/datum/stack_recipe("Hay Bed", /obj/structure/bed/badhaybed, 4, time = 15, one_per_turf = 1, on_floor = 0), \
+	new/datum/stack_recipe("Wicker Basket", /obj/structure/closet/crate/awfulwickerbasket, 5, time = 40, one_per_turf = 0, on_floor = 1), \
+))
+//Thanks Gomble
+/obj/item/stack/sheet/hay
+	name = "hay"
+	desc = "A bundle of hay. Food for livestock, and useful for weaving. Hail the Wickerman."
+	singular_name = "hay stalk"
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "hay"
+	item_state = "hay"
+	force = 1
+	throwforce = 1
+	throw_speed = 1
+	throw_range = 2
+	max_amount = 500
+	attack_verb = list("tickled", "poked", "whipped")
+	hitsound = 'sound/weapons/grenadelaunch.ogg'
+
+/obj/item/stack/sheet/hay/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.hay_recipes
+	return ..()
+
+/obj/item/stack/sheet/hay/fifty
+	amount = 50
+
+/obj/item/stack/sheet/hay/twenty
+	amount = 20
+
+/obj/item/stack/sheet/hay/ten
+	amount = 10
+
+/obj/item/stack/sheet/hay/five
+	amount = 5
+
+
+/obj/item/stack/sheet/update_icon()
+	var/amount = get_amount()
+	if((amount <= 4) && (amount > 0))
+		icon_state = "hay[amount]"
+	else
+		icon_state = "hay"
+
+/*
+	Hay Objects hastily drawn by me at 9am in a rush.
+														*/
+//Shitty bed
+/obj/structure/bed/badhaybed
+	name = "Low-quality Hay Bed"
+	desc = "It looks like someone hastily put this together, even if the builder didn't."
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "shitty_hay_bed"
+	anchored = 1
+	can_buckle = 1
+	buckle_lying = 1
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	integrity_failure = 30
+	buildstacktype = /obj/item/stack/sheet/hay
+	buildstackamount = 5
+
+//Awful Wicker Basket
+/obj/structure/closet/crate/awfulwickerbasket
+	name = "Low-quality Wicker Basket"
+	desc = "A handmade wicker basket, you don't know why it looks like this. But you probably don't like it."
+	icon = 'modular_citadel/code/modules/eventmaps/Spookystation/iconfile32.dmi'
+	icon_state = "shitty_basket" //yes, there is no space on crates so the other state is shitty_basketopen
+	resistance_flags = FLAMMABLE
+	material_drop = /obj/item/stack/sheet/hay
+	material_drop_amount = 5
+>>>>>>> BlackMajor-Ball-time
