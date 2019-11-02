@@ -95,45 +95,45 @@
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("secretcatchem", (10))
+	R.add_reagent("secretcatchem", 10)
 	s.set_up(R, 0, loc)
 	s.start()
 	visible_message("<b>[src]</b> disappears in a puff of smoke!")
 	canmove = TRUE
 	health = 25
 
-	var/hp_list = list()
-	for(var/obj/machinery/holopad/hp in world)
-		hp_list += hp
+	var/list/areas = list()
+	for(var/A in GLOB.teleportlocs)
+		if(findtextEx(A, "AI")
+			continue
+		areas += GLOB.teleportlocs[A]
 
-	var/nono_areas = list("AI ")
+	//Try to go to populated areas
+	var/list/pop_areas = list()
+	for(var/M in GLOB.player_list)
+		var/area/A = get_area(M)
+		pop_areas += A
 
-	for(var/i = 0, i <= 6, i+=1) //Attempts a jump 6 times.
-		var/obj/machinery/holopad/hp = pick(hp_list)
-		if(forceMove(pick(hp.loc)))
+	var/list/cool_places = uniquemergelist(areas, pop_areas)
 
-			var/jacq_please_no = FALSE
-			for(var/no_area in nono_areas)
-				var/turf/L1 = hp.loc
-				if(!L1) //Incase the area isn't a turf (i.e. in a locker)
-					continue
-				var/area/L2 = L1.loc
-				if(L2)
-					if(findtext(L2.name, no_area))
-						jacq_please_no = TRUE
+	if(!cool_places)
+		cool_places = areas
 
-			if(jacq_please_no)
-				i-=1
+	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
+		var/area/A = pick(cool_places)
+		var/list/L = list()
+
+		if(i != 6) // We need to teleport away, no matter what.
+			for(var/turf/T in get_area_turfs(A.type))
+				if(!is_blocked_turf(T))
+					L += T
+			if(!L.len)
+				cool_places -= A
 				continue
 
-			//Try to go to populated areas
-			var/list/seen = viewers(8, get_turf(src))
-			for(var/victim in seen)
-				if(ishuman(victim))
-					if(z == cached_z)
-						return TRUE
-
-
+		if(!do_teleport(src, pick(L), channel = TELEPORT_CHANNEL_MAGIC))
+			return TRUE
+		cool_places -= A
 	return FALSE
 
 /mob/living/simple_animal/jacq/proc/gender_check(mob/living/carbon/C)
