@@ -23,6 +23,8 @@
 		/datum/language/aphasia,
 		/datum/language/slime,
 	))
+	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
+	decay_factor = STANDARD_ORGAN_DECAY/2
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
@@ -209,6 +211,8 @@
 	phomeme_type = pick(phomeme_types)
 
 /obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
+	if(d < 0)
+		return
 	if(!owner)
 		return
 	var/target = owner.get_bodypart(BODY_ZONE_HEAD)
@@ -229,7 +233,6 @@
 	name = "plasma bone \"tongue\""
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
-	maxHealth = "alien"
 	modifies_speech = FALSE
 
 /obj/item/organ/tongue/robot

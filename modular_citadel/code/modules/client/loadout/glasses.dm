@@ -1,3 +1,8 @@
+/datum/gear/blindfold
+	name = "Blindfold"
+	category = SLOT_GLASSES
+	path = /obj/item/clothing/glasses/sunglasses/blindfold
+
 /datum/gear/cold
 	name = "Cold goggles"
 	category = SLOT_GLASSES

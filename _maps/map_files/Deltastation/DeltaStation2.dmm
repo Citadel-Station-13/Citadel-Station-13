@@ -89232,7 +89232,7 @@
 /area/maintenance/port)
 "cTz" = (
 /obj/effect/decal/remains/xeno,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "cTA" = (
@@ -93013,10 +93013,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cZK" = (
-/obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cZL" = (
@@ -127154,6 +127154,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"kZu" = (
+/obj/effect/landmark/barthpot,
+/turf/open/floor/wood,
+/area/library)
 "lak" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -127838,8 +127842,7 @@
 	icon_state = "airlock_control_standby";
 	id = "chapelgun";
 	name = "Mass Driver Controller";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -160653,7 +160656,7 @@ caG
 chU
 cjt
 ckR
-cmt
+kZu
 cnR
 cpv
 cqQ

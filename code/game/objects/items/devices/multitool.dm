@@ -48,7 +48,7 @@
 
 /obj/item/multitool/chaplain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/multitool/examine(mob/user)
 	..()

@@ -188,7 +188,7 @@
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
 			A = A.Copy()
-			var/list/data = list("viruses" = list(A))
+			var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY", "viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
@@ -244,9 +244,9 @@
 
 /obj/machinery/computer/pandemic/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			if(!user.put_in_hands(beaker))
+				beaker.forceMove(drop_location())
 	if(new_beaker)
 		beaker = new_beaker
 	else

@@ -104,6 +104,7 @@
 	var/amount = CLAMP(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
+	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"
 
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"
@@ -281,6 +282,12 @@
 	id = "regen_jelly"
 	results = list("regen_jelly" = 2)
 	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+
+/datum/chemical_reaction/jelly_convert
+	name = "Blood Jelly Conversion"
+	id = "blood_jelly"
+	results = list("slimejelly" = 1)
+	required_reagents = list("toxin" = 1, "jellyblood" = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"

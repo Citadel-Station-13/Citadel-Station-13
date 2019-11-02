@@ -7,34 +7,34 @@
 /datum/bounty/item/medical/lung
 	name = "Lungs"
 	description = "A recent explosion at Central Command has left multiple staff with punctured lungs. Ship spare lungs to be rewarded."
-	reward = 10000
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/organ/lungs)
 
 /datum/bounty/item/medical/appendix
 	name = "Appendix"
 	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay."
-	reward = 5000 //there are no synthetic appendixes
+	reward = 3500 //there are no synthetic appendixes
 	wanted_types = list(/obj/item/organ/appendix)
 
 /datum/bounty/item/medical/ears
 	name = "Ears"
 	description = "Multiple staff at Station 12 have been left deaf due to unauthorized clowning. Ship them new ears."
-	reward = 10000
+	reward = 5000
 	required_count = 3
 	wanted_types = list(/obj/item/organ/ears)
 
 /datum/bounty/item/medical/liver
 	name = "Livers"
 	description = "Multiple high-ranking CentCom diplomats have been hospitalized with liver failure after a recent meeting with Third Soviet Union ambassadors. Help us out, will you?"
-	reward = 10000
+	reward = 5500
 	required_count = 3
 	wanted_types = list(/obj/item/organ/liver)
 
 /datum/bounty/item/medical/eye
 	name = "Organic Eyes"
 	description = "Station 5's Research Director Willem is requesting a few pairs of non-robotic eyes. Don't ask questions, just ship them."
-	reward = 10000
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/organ/eyes)
 	exclude_types = list(/obj/item/organ/eyes/robotic)
@@ -42,7 +42,7 @@
 /datum/bounty/item/medical/tongue
 	name = "Tongues"
 	description = "A recent attack by Mime extremists has left staff at Station 23 speechless. Ship some spare tongues."
-	reward = 10000
+	reward = 4500
 	required_count = 3
 	wanted_types = list(/obj/item/organ/tongue)
 
@@ -79,7 +79,7 @@
 	required_count = 200
 	wanted_types = (L,/datum/reagent/blood)
 	if(istype(L,/datum/reagent/blood))
-	wanted_types += L 
+	wanted_types += L
 
 /datum/bounty/item/medical/bloodu //Dosnt work do to how blood is yet*
 	name = "U-Type Blood"
@@ -88,40 +88,40 @@
 	required_count = 200
 	wanted_types = (U,/datum/reagent/blood)
 	if(istype(U,/datum/reagent/blood))
-	wanted_types += U 
+	wanted_types += U
 
 */
 
 /datum/bounty/item/medical/surgery
 	name = "Surgery tool implants"
 	description = "Our medical interns keep dropping their Shambler's Juice while they're performing open heart surgery. One of them even had the audacity to say he only had two hands!"
-	reward = 10000
+	reward = 7000
 	required_count = 3
 	wanted_types = list(/obj/item/organ/cyberimp/arm/surgery)
 
 /datum/bounty/item/medical/chemmaker
 	name = "Portable Chem Dispenser"
 	description = "After a new chemist mixed up some water and a banana, we lost our only chem dispenser. Please send us a replacement and you will be compensated."
-	reward = 7000
+	reward = 5000
 	wanted_types = list(/obj/machinery/chem_dispenser)
 
 /datum/bounty/item/medical/advhealthscaner
 	name = "Advanced Health Analyzer"
 	description = "A ERT Medical unit needs the new 'advanced health analyzer', for a mission at a Station 4. Can you send some?."
-	reward = 4000
+	reward = 3000
 	required_count = 5
 	wanted_types = list(/obj/item/healthanalyzer/advanced)
 
 /datum/bounty/item/medical/wallmounts
 	name = "Defibrillator wall mounts"
 	description = "New Space OSHA regulation state that are new cloning medical wing needs a few 'Easy to access defibrillartors'. Can you send a few before we get a lawsuit?"
-	reward = 5000
+	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/machinery/defibrillator_mount)
 
 /datum/bounty/item/medical/defibrillator
 	name = "New defibillators"
 	description = "After years of storge are defibrillator units have become more liabilities then we want. Please send us some new ones to replace these old ones."
-	reward = 5000
+	reward = 2250
 	required_count = 5
 	wanted_types = list(/obj/item/defibrillator)

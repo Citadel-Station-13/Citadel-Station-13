@@ -1,0 +1,5 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "Fixes chemistry books to point to the right wiki, and keeps tg's just in case"
+  - tweak: "Changes top right wiki button location to go to both wikis"

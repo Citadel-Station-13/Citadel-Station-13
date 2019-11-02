@@ -52,13 +52,11 @@
 		switch(from.pH)
 			if(11.5 to INFINITY)
 				to_chat(src, "<span class='warning'>You taste a strong alkaline flavour!</span>")
-				T.applyOrganDamage(1)
 			if(8.5 to 11.5)
 				to_chat(src, "<span class='notice'>You taste a sort of soapy tone in the mixture.</span>")
 			if(2.5 to 5.5)
 				to_chat(src, "<span class='notice'>You taste a sort of acid tone in the mixture.</span>")
 			if(-INFINITY to 2.5)
 				to_chat(src, "<span class='warning'>You taste a strong acidic flavour!</span>")
-				T.applyOrganDamage(1)
 
 #undef DEFAULT_TASTE_SENSITIVITY

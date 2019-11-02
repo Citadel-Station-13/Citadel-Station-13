@@ -1,0 +1,4 @@
+author: "Yakumo Chen"
+delete-after: True
+changes: 
+  - balance: "removed antimagic component from holymelon"

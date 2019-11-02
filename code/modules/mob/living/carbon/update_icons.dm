@@ -23,7 +23,7 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)
-		floating = 0  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
+		setMovetype(movement_type & ~FLOATING)  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
 
 
 /mob/living/carbon
@@ -97,8 +97,12 @@
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
+	var/dam_colors = "#E62525"
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		dam_colors = bloodtype_to_color(H.dna.blood_type)
 
-	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)
+	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER, color = dam_colors)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
 	for(var/X in bodyparts)

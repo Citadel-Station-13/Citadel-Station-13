@@ -20,7 +20,7 @@
 
 	var/heat_protection = 0.5
 	var/leaping = 0
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = 1
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")

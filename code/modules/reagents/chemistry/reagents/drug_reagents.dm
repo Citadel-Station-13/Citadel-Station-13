@@ -423,7 +423,7 @@
 	. = 1
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
 	M.Jitter(5)
 	if(prob(20))
@@ -431,7 +431,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
 	if(prob(30))
@@ -439,7 +439,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
 	M.Jitter(15)
 	if(prob(40))
@@ -447,7 +447,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(SANITY_INSANE)
 	M.Jitter(20)
 	if(prob(50))
@@ -469,7 +469,7 @@
 
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -480,7 +480,7 @@
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
