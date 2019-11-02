@@ -10143,6 +10143,46 @@
 "Km" = (
 /turf/open/floor/plasteel/damturf/platdmg2,
 /area/eventmap/inside)
+"Kp" = (
+/obj/machinery/light/floor,
+/obj/item/stack/sheet/glass/fifty{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/metal{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 10000;
+	max_amount = 10000
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10000;
+	max_amount = 10000
+	},
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Kq" = (
 /turf/open/floor/spooktime/cobble/roadsideS,
 /area/eventmap/outside)
@@ -47581,7 +47621,7 @@ zQ
 RQ
 Ar
 EO
-EO
+Kp
 zQ
 Jx
 "}
