@@ -1038,9 +1038,12 @@
 	name = "anti-mech barrier"
 	desc = "attempts to bring mechs into the regular ball space may result in spontaneous crabification"
 
-/obj/structure/trap/ctf/nomech/trap_effect(atom/L)
-	if(ismecha(L) || istype(L, /obj/item/mecha_parts) || istype(L, /obj/structure/mecha_wreckage))
-		qdel(L)
+/obj/structure/trap/ctf/nomech/Crossed(atom/movable/AM)
+	if(is_type_in_typecache(AM, ignore_typecache))
+		return
+	flare()
+	if(ismecha(AM) || istype(AM, /obj/item/mecha_parts) || istype(AM, /obj/structure/mecha_wreckage))
+		qdel(AM)
 
 /*
 	Shitty Hay Objects Sprited by me in a rush when I was half-asleep at 9am + The material
