@@ -368,7 +368,6 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
-	var/heals_slimes = FALSE
 	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate and heals toxin lovers.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
