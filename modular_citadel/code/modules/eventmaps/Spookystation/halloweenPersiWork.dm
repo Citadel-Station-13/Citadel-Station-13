@@ -295,17 +295,17 @@
 //Luxury Dorm Shutters
 
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury01
-	name = "Luxury Dorm 1"
+	name = "Privacy Shutters"
 	id = "L00"
 
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury02
-	name = "Luxury Dorm 2"
+	name = "Privacy Shutters"
 	id = "L01"
 
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury03
-	name = "Luxury Dorm 3"
+	name = "Privacy Shutters"
 	id = "L02"
 
 /obj/machinery/door/poddoor/shutters/preopen/luxury_dorms/luxury04
-	name = "Luxury Dorm 4"
+	name = "Privacy Shutters"
 	id = "L03"
