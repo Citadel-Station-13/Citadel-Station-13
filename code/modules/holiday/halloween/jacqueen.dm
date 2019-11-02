@@ -121,15 +121,16 @@
 
 	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
 		var/area/A = pick(cool_places)
-		var/list/L = list()
+		var/list/area_turfs = list(get_area_turfs(A.type))
 
 		if(i != 6) // We need to teleport away, no matter what.
-			for(var/turf/T in get_area_turfs(A.type))
+			for(var/t in area_turfs)
+				var/turf/T = t
 				if(!is_blocked_turf(T))
-					L += T
-			if(!L.len)
-				cool_places -= A
-				continue
+					L -= T
+				if(!L.len)
+					cool_places -= A
+					continue
 
 		if(!do_teleport(src, pick(L), channel = TELEPORT_CHANNEL_MAGIC))
 			return TRUE
