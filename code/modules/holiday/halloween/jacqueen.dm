@@ -120,7 +120,7 @@
 
 	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
 		var/atom/A = pick(targets)
-		if(!do_teleport(src, A, channel = TELEPORT_CHANNEL_MAGIC))
+		if(do_teleport(src, A, channel = TELEPORT_CHANNEL_MAGIC))
 			return TRUE
 		targets -= A
 	return FALSE
