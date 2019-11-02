@@ -28,7 +28,7 @@ Assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
 
-/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H, client/preference_source)
+/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
 	if (CONFIG_GET(flag/grey_assistants))
