@@ -102,39 +102,27 @@
 	canmove = TRUE
 	health = 25
 
-	var/list/areas = list()
-	for(var/A in GLOB.teleportlocs)
-		if(findtextEx(A, "AI"))
-			continue
-		areas += GLOB.teleportlocs[A]
-
 	//Try to go to populated areas
 	var/list/pop_areas = list()
 	for(var/M in GLOB.player_list)
 		var/area/A = get_area(M)
 		pop_areas += A
 
-	var/list/cool_places = uniquemergelist(areas, pop_areas)
+	var/list/targets = list()
+	for(var/H in GLOB.network_holopads)
+		var/area/A = get_area(H)
+		if(findtextEx(A, "AI") || !(A in pop_areas) || !is_station_level(H))
+			continue
+		targets += H
 
-	if(!cool_places.len)
-		cool_places = areas
+	if(!targets)
+		targets = GLOB.generic_event_spawns
 
 	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
-		var/area/A = pick(cool_places)
-		var/list/area_turfs = list(get_area_turfs(A.type))
-
-		if(i != 6) // We need to teleport away, no matter what.
-			for(var/t in area_turfs)
-				var/turf/T = t
-				if(!is_blocked_turf(T))
-					L -= T
-				if(!L.len)
-					cool_places -= A
-					continue
-
-		if(!do_teleport(src, pick(L), channel = TELEPORT_CHANNEL_MAGIC))
+		var/atom/A = pick(targets)
+		if(!do_teleport(src, A, channel = TELEPORT_CHANNEL_MAGIC))
 			return TRUE
-		cool_places -= A
+		targets -= A
 	return FALSE
 
 /mob/living/simple_animal/jacq/proc/gender_check(mob/living/carbon/C)
