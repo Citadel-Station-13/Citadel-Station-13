@@ -104,8 +104,8 @@
 
 	//Try to go to populated areas
 	var/list/pop_areas = list()
-	for(var/M in GLOB.player_list)
-		var/area/A = get_area(M)
+	for(var/mob/living/L in GLOB.player_list)
+		var/area/A = get_area(L)
 		pop_areas += A
 
 	var/list/targets = list()
