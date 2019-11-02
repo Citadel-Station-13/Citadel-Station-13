@@ -104,7 +104,7 @@
 
 	var/list/areas = list()
 	for(var/A in GLOB.teleportlocs)
-		if(findtextEx(A, "AI")
+		if(findtextEx(A, "AI"))
 			continue
 		areas += GLOB.teleportlocs[A]
 
@@ -116,7 +116,7 @@
 
 	var/list/cool_places = uniquemergelist(areas, pop_areas)
 
-	if(!cool_places)
+	if(!cool_places.len)
 		cool_places = areas
 
 	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
