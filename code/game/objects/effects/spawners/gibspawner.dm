@@ -52,7 +52,6 @@
 					body_coloring = "#[skintone2hex(H.skin_tone)]"
 				else
 					body_coloring = "#[H.dna.features["mcolor"]]"
-				qdel(H)
 			else
 				dna_to_add = temp_mob.get_blood_dna_list()
 		else if(!issilicon(temp_mob))
