@@ -43,6 +43,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
+	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
 	var/skinned_type
 	var/liked_food = NONE
 	var/disliked_food = GROSS

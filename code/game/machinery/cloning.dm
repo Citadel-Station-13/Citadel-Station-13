@@ -354,7 +354,8 @@
 				O.organ_flags &= ~ORGAN_FROZEN
 		unattached_flesh.Cut()
 		mess = FALSE
-		new /obj/effect/gibspawner/generic(get_turf(src))
+		if(mob_occupant)
+			mob_occupant.spawn_gibs()
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		update_icon()
 		return
