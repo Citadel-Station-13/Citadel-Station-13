@@ -41,7 +41,6 @@
 	desc = "A tiny yet spacious pocket, usually found implanted inside sneaky syndicate agents and nowhere else."
 	component_type = /datum/component/storage/concrete/implant
 	resistance_flags = INDESTRUCTIBLE //A bomb!
-	item_flags = DROPDEL
 
 /obj/item/implanter/storage
 	name = "implanter (storage)"
