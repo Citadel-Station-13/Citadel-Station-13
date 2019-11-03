@@ -298,6 +298,7 @@
 
 	if(user)
 		user.update_inv_hands()
+		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
 
