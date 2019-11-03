@@ -559,6 +559,7 @@
 /obj/item/export/bottle
 	name = "Report this please"
 	desc = "A sealed bottle of alcohol, ready to be exported"
+	icon = 'icons/obj/drinks.dmi'
 	force = 0
 	throwforce = 0
 	throw_speed = 0
@@ -568,86 +569,112 @@
 	attack_verb = list("boop", "thunked", "shown")
 
 /obj/item/export/bottle/gin
+	icon_state = "ginbottle"
 	name = "Sealed Gin"
 
 /obj/item/export/bottle/wine
+	icon_state = "winebottle"
 	name = "Sealed Wine"
 
 /obj/item/export/bottle/whiskey
+	icon_state = "whiskeybottle"
 	name = "Sealed Whiskey"
 
 /obj/item/export/bottle/vodka
+	icon_state = "vodkabottle"
 	name = "Sealed Vodka"
 
 /obj/item/export/bottle/tequila
+	icon_state = "tequilabottle"
 	name = "Sealed Tequila"
 
 /obj/item/export/bottle/patron
+	icon_state = "patronbottle"
 	name = "Sealed Patron"
 
 /obj/item/export/bottle/rum
+	icon_state = "rumbottle"
 	name = "Sealed Rum"
 
 /obj/item/export/bottle/vermouth
+	icon_state = "vermouthbottle"
 	name = "Sealed Vermouth"
 
 /obj/item/export/bottle/kahlua
+	icon_state = "kahluabottle"
 	name = "Sealed Kahlua"
 
 /obj/item/export/bottle/goldschlager
+	icon_state = "goldschlagerbottle"
 	name = "Sealed Goldschlager"
 
 /obj/item/export/bottle/hcider
+	icon_state = "hcider"
 	name = "Sealed Cider"
 
 /obj/item/export/bottle/cognac
+	icon_state = "cognacbottle"
 	name = "Sealed Cognac"
 
 /obj/item/export/bottle/absinthe
+	icon_state = "absinthebottle"
 	name = "Sealed Unmarked Absinthe"
 
 /obj/item/export/bottle/grappa
+	icon_state = "grappabottle"
 	name = "Sealed Grappa"
 
 /obj/item/export/bottle/sake
+	icon_state = "sakebottle"
 	name = "Sealed Sake"
 
 /obj/item/export/bottle/fernet
+	icon_state = "fernetbottle"
 	name = "Sealed Fernet"
 
 /obj/item/export/bottle/applejack
+	icon_state = "applejack_bottle"
 	name = "Sealed Applejack"
 
 /obj/item/export/bottle/champagne
+	icon_state = "champagne_bottle"
 	name = "Sealed Champagne"
 
 /obj/item/export/bottle/blazaam
+	icon_state = "blazaambottle"
 	name = "Sealed Blazaam"
 
 /obj/item/export/bottle/trappist
+	icon_state = "trappistbottle"
 	name = "Sealed Trappist"
 
 /obj/item/export/bottle/grenadine
+	icon_state = "grenadine"
 	name = "Sealed Grenadine"
 
 /obj/item/export/bottle/minikeg
 	name = "Mini-Beer Keg"
+	icon_state = "keggy"
 	desc = "A small wooden barrle with metal rings, untapped beer inside."
 
 /obj/item/export/bottle/blooddrop
+	icon_state = "champagne_selling_bottle"
 	name = "Blood Drop"
 	desc = "Large red bottle filled with a mix of wine and other named brands."
 
 /obj/item/export/bottle/slim_gold
 	name = "Slim Gold "
+	icon_state = "selling_bottle_alt"
 	desc = "A gold looking yellow bottle that has a mix of different named brands."
 
 /obj/item/export/bottle/white_bloodmoon
 	name = "White Bloodmoon"
+	icon_state = "selling_bottle_basic"
 	desc = "Rather simple bottle for this kind of drink."
 
 /obj/item/export/bottle/greenroad
 	name = "Green Road"
+	icon_state = "selling_bottle"
 	desc = "Ironic name as the fruit used is from ashy plants."
 
 

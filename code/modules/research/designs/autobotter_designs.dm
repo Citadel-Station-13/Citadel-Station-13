@@ -297,7 +297,7 @@
 /datum/design/bottle/export/minikeg
 	name = "Export Design (Minikeg)"
 	desc = "Allows for the fabication, and bottling of Minikeg of craft beer."
-	id = "minikeg_export"
+	id = "minikeg"
 	category = list("Beers")
 	reagents_list = list("light_beer" = 100)
 	build_path = /obj/item/export/bottle/minikeg
@@ -305,7 +305,7 @@
 /datum/design/bottle/export/blooddrop
 	name = "Export Design (Blooddrop)"
 	desc = "Allows for the blowing, and bottling of Blooddrop bottles."
-	id = "blooddrop_export"
+	id = "blooddrop"
 	category = list("Wines")
 	reagents_list = list("champagne" = 30, "co2" = 30, "wine" = 10, "grape_juice" = 30)
 	build_path = /obj/item/export/bottle/blooddrop
@@ -313,7 +313,7 @@
 /datum/design/bottle/export/slim_gold
 	name = "Export Design (Slim Gold)"
 	desc = "Allows for the blowing, and bottling of Slim Gold bottles."
-	id = "slim_gold_export"
+	id = "slim_gold"
 	category = list("Beers")
 	reagents_list = list("gold" = 10, "co2" = 10, "rum" = 30, "beer" = 40)
 	build_path = /obj/item/export/bottle/slim_gold
@@ -321,7 +321,7 @@
 /datum/design/bottle/export/white_bloodmoon
 	name = "Export Design (White Bloodmoon)"
 	desc = "Allows for the blowing, and bottling of White Bloodmoon bottles."
-	id = "white_bloodmoon_export"
+	id = "white_bloodmoon"
 	category = list("Wines")
 	reagents_list = list("synthflesh" = 50, "blood" = 50, "gib" = 10)
 	build_path = /obj/item/export/bottle/white_bloodmoon
@@ -329,7 +329,7 @@
 /datum/design/bottle/export/greenroad
 	name = "Export Design (Greenroad)"
 	desc = "Allows for the blowing, and bottling of Greenroad bottles."
-	id = "greenroad_export"
+	id = "greenroad"
 	reagents_list = list("vitfro" = 50, "rum" = 50, "ash" = 10)
 	category = list("Beers")
 	build_path = /obj/item/export/bottle/greenroad
