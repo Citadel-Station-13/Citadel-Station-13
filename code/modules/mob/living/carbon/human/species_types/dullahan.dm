@@ -134,6 +134,7 @@
 	START_PROCESSING(SSobj, src)
 	RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
 	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
+	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 
 /obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/A)
 	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
@@ -142,6 +143,9 @@
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
 	if(!QDELETED(owner))
 		hearers += owner
+
+/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal, list/excluded_limbs)
+	excluded_limbs += BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
