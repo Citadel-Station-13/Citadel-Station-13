@@ -123,11 +123,11 @@
 /obj/effect/proc_holder/spell/targeted/hypnotise/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
 		user.visible_message("<span class='warning'>[user]'s eyes flash briefly as he stares into [target]'s eyes</span>")
-		target.Stun(40)
-		if(do_mob(user, target, 40))
+		target.Stun(50)
+		if(do_mob(user, target, 50))
 			to_chat(user, "<span class='warning'>Your piercing gaze knocks out [target].</span>")
 			to_chat(target, "<span class='warning'>You find yourself falling asleep.</span>")
-			target.SetSleeping(400) //So its actually usefull for abducting people, should be enough to drag them off and cuff them and remove their headset.
+			target.SetSleeping(250) //So its actually usefull for abducting people, should be enough to drag them off and cuff them and remove their headset.
 
 		else
 			revert_cast(usr)

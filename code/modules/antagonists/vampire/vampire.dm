@@ -304,8 +304,7 @@
 		return 0
 
 	if(light_available <= 0.25)
-		H.alpha = 0 //Completely useless due to alpha being broken, so you either have to be completely invisible or just not.
-		return 1
+		H.alpha = round((255 * 0.05))
 	else
 		H.alpha = round((255 * 0.80))
 
