@@ -450,7 +450,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		else if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1 * reac_volume)
 			M.adjustFireLoss(-1 * reac_volume)
-      var/mob/living/carbon/human/H = M
+			var/mob/living/carbon/human/H = M
 			if(H.bleed_rate)
 				H.bleed_rate = 0
 			if(show_message)
