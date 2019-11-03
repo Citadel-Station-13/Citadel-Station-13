@@ -101,6 +101,7 @@
 	desc = "An abstraction."
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
 	zone = "abstract"
+	tint = INFINITY // used to switch the vision perspective to the head on species_gain().
 
 /datum/action/item_action/organ_action/dullahan
 	name = "Toggle Perspective"
@@ -121,18 +122,18 @@
 			D.update_vision_perspective(H)
 
 /obj/item/dullahan_relay
+	name = "dullahan relay"
 	var/mob/living/owner
 	flags_1 = HEAR_1
 
-/obj/item/dullahan_relay/Initialize(mapload,new_owner)
+/obj/item/dullahan_relay/Initialize(mapload, mob/living/carbon/human/new_owner)
 	. = ..()
+	if(!new_owner)
+		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	if(owner)
-		RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
-		RegisterSignal(owner, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
-	else
-		return INITIALIZE_HINT_QDEL
+	RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
+	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 
 /obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/A)
 	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
