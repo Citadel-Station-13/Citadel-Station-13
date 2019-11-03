@@ -277,9 +277,10 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-cloth"
 	item_state = "sheet-cloth"
 	resistance_flags = FLAMMABLE
-	is_fabric = TRUE
 	force = 0
 	throwforce = 0
+	pull_effort = 30
+	loom_result = /obj/item/stack/sheet/cloth/silk
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
@@ -291,19 +292,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 
 /obj/item/stack/sheet/cloth/thirty
 	amount = 30
-
-/obj/item/stack/sheet/cloth
-	name = "cloth"
-	desc = "Is it cotton? Linen? Denim? Burlap? Canvas? You can't tell."
-	singular_name = "cloth roll"
-	icon_state = "sheet-cloth"
-	item_state = "sheet-cloth"
-	resistance_flags = FLAMMABLE
-	force = 0
-	throwforce = 0
-	pull_effort = 30
-	loom_result = /obj/item/stack/sheet/cloth/silk
-	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/silk
 	name = "silk"
