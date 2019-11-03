@@ -86,7 +86,8 @@
 								/obj/item/circuitboard/computer/arcade/amputation = 2)
 		var/thegame = pickweight(gameodds)
 		var/obj/item/circuitboard/CB = new thegame()
-		new CB.build_path(loc, CB)
+		var/obj/machinery/computer/arcade/A = new CB.build_path(loc, CB)
+		A.setDir(dir)
 		return INITIALIZE_HINT_QDEL
 	//The below object acts as a spawner with a wide array of possible picks, most being uninspired references to past/current player characters.
 	//Nevertheless, this keeps its ratio constant with the sum of all the others prizes.
