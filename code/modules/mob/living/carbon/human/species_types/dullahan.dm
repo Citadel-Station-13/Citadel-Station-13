@@ -34,9 +34,7 @@
 	if(head)
 		if(pumpkin)//Pumpkinhead!
 			head.animal_origin = 100
-			head.icon = 'icons/obj/clothing/hats.dmi'
-			head.icon_state = "hardhat1_pumpkin_j"
-			head.custom_head = TRUE
+			head.custom_head = image('icons/obj/clothing/hats.dmi', "hardhat1_pumpkin_j")
 		head.drop_limb()
 		if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
 			head.throwforce = 25
@@ -138,10 +136,9 @@
 	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
 		return COMPONENT_ALLOW_EXAMINE
 
-/obj/item/dullahan_relay/proc/include_owner(list/processing_list, list/hearers)
+/obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
 	if(!QDELETED(owner))
-		var/list/new_hearers = hearers //It throws errors on compile about invalid expressions otherwise. And so far components only allow binary return values.
-		new_hearers.Add(owner)
+		hearers += owner
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
