@@ -559,6 +559,7 @@
 /obj/item/export/bottle
 	name = "Report this please"
 	desc = "A sealed bottle of alcohol, ready to be exported"
+	icon = 'icons/obj/drinks.dmi'
 	force = 0
 	throwforce = 0
 	throw_speed = 0
