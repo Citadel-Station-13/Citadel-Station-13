@@ -228,7 +228,7 @@
 		//END EDIT
 		temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = cold ? get_cold_protection_flags(temperature) : get_heat_protection_flags(temperature)
-	var/missing_body_parts_flags = missing_body_parts_flags()
+	var/missing_body_parts_flags = ~get_body_parts_flags()
 	var/max_protection = 1
 	if(missing_body_parts_flags) //I don't like copypasta as much as proc overhead. Do you want me to make these into a macro?
 		DISABLE_BITFIELD(thermal_protection_flags, missing_body_parts_flags)

@@ -56,6 +56,7 @@
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
+#define isdullahan(A) (is_species(A, /datum/species/dullahan))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))

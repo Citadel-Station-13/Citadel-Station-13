@@ -334,7 +334,7 @@
 				S.adjusted = ALT_STYLE
 			H.update_inv_wear_suit()
 
-/mob/living/carbon/proc/missing_body_parts_flags()
+/mob/living/carbon/proc/get_body_parts_flags()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		switch(L.body_part)

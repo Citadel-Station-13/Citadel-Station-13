@@ -38,13 +38,13 @@
 			head.icon_state = "hardhat1_pumpkin_j"
 			head.custom_head = TRUE
 		head.drop_limb()
-		ENABLE_BITFIELD(head.flags_1, HEAR_1)
-		head.throwforce = 25
-		myhead = new /obj/item/dullahan_relay (head, H)
-		H.put_in_hands(head)
-		var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-		for(var/datum/action/item_action/organ_action/OA in E.actions)
-			OA.Trigger()
+		if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
+			head.throwforce = 25
+			myhead = new /obj/item/dullahan_relay (head, H)
+			H.put_in_hands(head)
+			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
+			for(var/datum/action/item_action/organ_action/OA in E.actions)
+				OA.Trigger()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
 	ENABLE_BITFIELD(H.flags_1, HEAR_1)
@@ -86,7 +86,7 @@
 /obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.dna.species.id == "dullahan")
+		if(isdullahan(H))
 			var/datum/species/dullahan/D = H.dna.species
 			if(isobj(D.myhead.loc))
 				var/obj/O = D.myhead.loc
@@ -116,7 +116,7 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.dna.species.id == "dullahan")
+		if(isdullahan(H))
 			var/datum/species/dullahan/D = H.dna.species
 			D.update_vision_perspective(H)
 
@@ -140,7 +140,8 @@
 
 /obj/item/dullahan_relay/proc/include_owner(list/processing_list, list/hearers)
 	if(!QDELETED(owner))
-		hearers += owner
+		var/list/new_hearers = hearers //It throws errors on compile about invalid expressions otherwise. And so far components only allow binary return values.
+		new_hearers.Add(owner)
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
@@ -150,7 +151,7 @@
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.dna.species.id == "dullahan")
+		if(isdullahan(H))
 			var/datum/species/dullahan/D = H.dna.species
 			D.myhead = null
 			owner.gib()
