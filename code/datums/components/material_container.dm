@@ -74,7 +74,7 @@
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
 		return
 	if(!has_space(material_amount))
-		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
+		to_chat(user, "<span class='warning'>[parent] has not enough space. Please remove materials from [parent] in order to insert more.</span>")
 		return
 	user_insert(I, user)
 

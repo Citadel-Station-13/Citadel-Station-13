@@ -23,7 +23,7 @@
 		into the [location].", "Migration Alert",
 		'sound/effects/mousesqueek.ogg')
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 		for(var/obj/machinery/computer/communications/C in GLOB.machines)
 			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 				var/obj/item/paper/P = new(C.loc)

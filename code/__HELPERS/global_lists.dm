@@ -72,6 +72,10 @@
 		var/datum/sprite_accessory/testicles/value = GLOB.balls_shapes_list[K]
 		GLOB.balls_shapes_icons[K] = value.icon_state
 
+	for(var/gpath in subtypesof(/obj/item/organ/genital))
+		var/obj/item/organ/genital/G = gpath
+		if(!CHECK_BITFIELD(initial(G.genital_flags), GENITAL_BLACKLISTED))
+			GLOB.genitals_list[initial(G.name)] = gpath
 //END OF CIT CHANGES
 
 	//Species

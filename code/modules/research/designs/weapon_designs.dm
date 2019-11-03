@@ -67,6 +67,12 @@
 //Ammo Shells/
 //////////////
 
+/datum/design/beanbag_slug/sec
+	id = "sec_beanbag"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE

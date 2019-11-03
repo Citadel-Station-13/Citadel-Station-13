@@ -13,7 +13,7 @@
 	name = "glass"
 	id = "glass"
 	desc = "Glass forged by melting sand."
-	color = "#dae6f0"
+	color = "#88cdf1"
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	integrity_modifier = 0.1
@@ -21,12 +21,17 @@
 	value_per_unit = 0.0025
 	armor_modifiers = list("melee" = 0.2, "bullet" = 0.2, "laser" = 0, "energy" = 1, "bomb" = 0, "bio" = 0.2, "rad" = 0.2, "fire" = 1, "acid" = 0.2) // yeah ok retard
 
+/*
+Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.
+Unless you know what you're doing, only use the first three numbers. They're in RGB order.
+*/
+
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
 	name = "silver"
 	id = "silver"
 	desc = "Silver"
-	color = "#bdbebf"
+	color = list(255/255, 284/255, 302/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	value_per_unit = 0.025
@@ -36,7 +41,7 @@
 	name = "gold"
 	id = "gold"
 	desc = "Gold"
-	color = "#C7ED55"
+	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
@@ -48,8 +53,8 @@
 	name = "diamond"
 	id = "diamond"
 	desc = "Highly pressurized carbon"
-	color = "#22c2d4"
-	alpha = 150
+	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	alpha = 132
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	value_per_unit = 0.25
@@ -59,7 +64,7 @@
 	name = "uranium"
 	id = "uranium"
 	desc = "Uranium"
-	color = "#1fb83b"
+	color = rgb(48, 237, 26)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 0.05
@@ -79,7 +84,7 @@
 	name = "plasma"
 	id = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	color = "#D30EB0"
+	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	value_per_unit = 0.1
@@ -101,7 +106,8 @@
 	name = "bluespace crystal"
 	id = "bluespace_crystal"
 	desc = "Crystals with bluespace properties"
-	color = "#3E65D1"
+	color = list(119/255, 217/255, 396/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	alpha = 200
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	value_per_unit = 0.15
@@ -111,7 +117,7 @@
 	name = "bananium"
 	id = "bananium"
 	desc = "Material with hilarious properties"
-	color = "#fff263"
+	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	value_per_unit = 0.5
@@ -187,13 +193,12 @@
 	name = "mythril"
 	id = "mythril"
 	desc = "How this even exists is byond me"
-	color = "#ffedee"
+	color = "#f2d5d7"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 0.75
 	armor_modifiers = list("melee" = 2, "bullet" = 2, "laser" = 2, "energy" = 2, "bomb" = 2, "bio" = 2, "rad" = 2, "fire" = 2, "acid" = 2)
 
-/*
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(istype(source, /obj/item))
@@ -203,4 +208,3 @@
 	. = ..()
 	if(istype(source, /obj/item))
 		qdel(source.GetComponent(/datum/component/fantasy))
-*/

@@ -1,0 +1,17 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - bugfix: "1. Kev asked that there were no antag datums used, so that's been changed.
+2. Tricks can no longer turn someone into a dullahan, instead you have to spend candies to get that. I felt it was too mean to turn people into that, I didn't realise you couldn't revert it.
+3. Barth will no longer as for impossible items.
+4. Barth will no longer as for the same item multiple times.
+5. Barth will now accept broader things, rather than asking for something, when meaning something specific.
+6. Jacq will now no longer poof off the z level.
+7. Jacq will (hopefully) stop spooking the AI by teleporting into there
+8. Jacq will now try to teleport to a location with someone nearby.
+9. Barth will tell you where Jacq is currently when you speak to him.
+10. You can trade 2 candies for a Jacq Tracq (tm)
+11. Jacq should stop getting mad and cover the station in gas when killed.
+12. Fixed Jacq not singing (the link died).
+13. Slightly changed wording so that people will hopefully get to know her.
+14. Jacq no longer disappears when you're getting to know her."
