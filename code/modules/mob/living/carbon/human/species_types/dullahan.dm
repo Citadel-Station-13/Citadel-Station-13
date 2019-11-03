@@ -145,7 +145,7 @@
 		hearers += owner
 
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal, list/excluded_limbs)
-	excluded_limbs += BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
+	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
