@@ -34,7 +34,9 @@
 	if(head)
 		if(pumpkin)//Pumpkinhead!
 			head.animal_origin = 100
-			head.custom_head = image('icons/obj/clothing/hats.dmi', "hardhat1_pumpkin_j")
+			head.icon = 'icons/obj/clothing/hats.dmi'
+			head.icon_state = "hardhat1_pumpkin_j"
+			head.custom_head = TRUE
 		head.drop_limb()
 		if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
 			head.throwforce = 25

@@ -264,7 +264,9 @@
 		var/atom/A = processing_list[1]
 		if(A.flags_1 & HEAR_1)
 			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
+			var/list/hearers = list()
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, hearers)
+			. += hearers
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
