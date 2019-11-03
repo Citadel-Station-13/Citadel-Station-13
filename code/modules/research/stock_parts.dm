@@ -43,7 +43,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
-	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
+	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts. Definitely not just a BSRPED painted orange."
 	icon_state = "BS_RPED"
 	w_class = WEIGHT_CLASS_NORMAL
 	works_from_distance = TRUE
@@ -52,12 +52,10 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	component_type = /datum/component/storage/concrete/bluespace/rped
 
 /obj/item/storage/part_replacer/cyborg
-	name = "rapid part exchange device"
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
-	item_state = "RPED"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
+/obj/item/storage/part_replacer/bluespace/cyborg
+	icon_state = "borg_BS_RPED"
 
 /proc/cmp_rped_sort(obj/item/A, obj/item/B)
 	return B.get_part_rating() - A.get_part_rating()

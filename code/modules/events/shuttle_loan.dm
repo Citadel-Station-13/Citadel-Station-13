@@ -32,7 +32,7 @@
 			if(prob(50))
 				priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counter Intelligence")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -43,7 +43,7 @@
 			if(prob(50))
 				priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -54,7 +54,7 @@
 			if(prob(50))
 				priority_announce("Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -65,7 +65,7 @@
 			if(prob(50))
 				priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -76,7 +76,7 @@
 			if(prob(50))
 				priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -87,7 +87,7 @@
 			if(prob(50))
 				priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead.", "CentCom Spacepizza Division")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -98,7 +98,7 @@
 			if(prob(50))
 				priority_announce("Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?", "CentCom Janitorial Division")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -110,7 +110,7 @@
 			if(prob(50))
 				priority_announce("Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it.", "CentCom Security Division")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)
@@ -122,7 +122,7 @@
 			if(prob(50))
 				priority_announce("Cargo: We have discovered a warehouse of DELTA locked crates, we cant store any more of them at CC can you take them for us?.", "CentCom Security Division")
 			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 				for(var/obj/machinery/computer/communications/C in GLOB.machines)
 					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 						var/obj/item/paper/P = new(C.loc)

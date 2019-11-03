@@ -45,8 +45,8 @@
 	RemoveInfectionImages()
 	AddInfectionImages()
 
-/obj/item/organ/body_egg/proc/AddInfectionImages()
+/obj/item/organ/body_egg/proc/AddInfectionImages(mob/living/carbon/C)
 	return
 
-/obj/item/organ/body_egg/proc/RemoveInfectionImages()
+/obj/item/organ/body_egg/proc/RemoveInfectionImages(mob/living/carbon/C)
 	return

@@ -1,0 +1,5 @@
+author: "Sirich96 and Dennok (ported by Ghommie)"
+delete-after: True
+changes: 
+  - rscadd: "Added new Teleporter Station sprites"
+  - rscadd: "Added teleport station calibration animation."
