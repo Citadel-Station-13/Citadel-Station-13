@@ -326,8 +326,8 @@
 		else if ( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(3)
-			victim.blind_eyes(2)
+			victim.blur_eyes(65) // Your eyes aren't protected my dude.
+			victim.blind_eyes(10) // They're squinted shut in reflex.
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 3, 15))
@@ -339,8 +339,8 @@
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(5)
-			victim.blind_eyes(3)
+			victim.blur_eyes(70)
+			victim.blind_eyes(10)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 5, 25))
