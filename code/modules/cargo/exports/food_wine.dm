@@ -26,12 +26,12 @@
 	unit_name = "cooked protein based food"
 	export_types = list(/obj/item/reagent_containers/food/snacks/meat/steak)
 
-/datum/export/food/douge
+/datum/export/food/dough
 	cost = 3
 	unit_name = "uncooked food base"
 	export_types = list(/obj/item/reagent_containers/food/snacks/dough, /obj/item/reagent_containers/food/snacks/flatdough)
 
-/datum/export/food/cooked_douge
+/datum/export/food/cooked_dough
 	cost = 5
 	unit_name = "cooked food base"
 	export_types = list(/obj/item/reagent_containers/food/snacks/pizzabread)
