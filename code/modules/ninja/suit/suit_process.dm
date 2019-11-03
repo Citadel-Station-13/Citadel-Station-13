@@ -9,7 +9,7 @@
 		cell.charge -= s_cost//s_cost is the default energy cost each tick, usually 5.
 		if(stealth && stealth_cooldown <= world.time)//If stealth is active.
 			cell.charge -= s_acost
-			affecting.alpha = max(affecting.alpha - 10, 10)
+			affecting.alpha = max(affecting.alpha - 10, 15)
 
 	else
 		cell.charge = 0
