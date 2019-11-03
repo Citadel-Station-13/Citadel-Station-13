@@ -565,7 +565,6 @@
 	throw_range = 0
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "beer"
-	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("boop", "thunked", "shown")
 
 /obj/item/export/bottle/gin

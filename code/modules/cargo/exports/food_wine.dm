@@ -4,6 +4,7 @@
 
 /datum/export/booze //Like the kind you bottle!
 	k_elasticity = 0
+	unit_name = "brand unit of booze"
 	include_subtypes = TRUE
 
 /datum/export/food/meat
@@ -171,3 +172,33 @@
 	unit_name = "snowcone"
 	export_types = list(/obj/item/reagent_containers/food/snacks/snowcones)
 
+/datum/export/booze/loose
+	cost = 1.5 //PER unit
+	unit_name = "station brew"
+	export_types = list(/datum/reagent/consumable/ethanol/fruit_wine)
+
+/datum/export/booze/loose/brands
+	cost = 0.1 //Most bottes are worth like 15 credits
+	unit_name = "brand booze"
+	export_types = list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/thirteenloko, /datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/gin, \
+						/datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/vermouth, /datum/reagent/consumable/ethanol/wine, /datum/reagent/consumable/ethanol/grappa, /datum/reagent/consumable/ethanol/cognac, \
+						/datum/reagent/consumable/ethanol/absinthe, /datum/reagent/consumable/ethanol/goldschlager, /datum/reagent/consumable/ethanol/patron, /datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/hcider, /datum/reagent/consumable/ethanol/champagne, \
+						/datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/trappist, /datum/reagent/consumable/ethanol/blazaam)
+
+/datum/export/booze/brands
+	cost = 100
+	unit_name = "export bottle"
+	export_types = list(/obj/item/export/bottle/kahlua, /obj/item/export/bottle/whiskey, /obj/item/export/bottle/vodka, /obj/item/export/bottle/gin, \
+						/obj/item/export/bottle/rum, /obj/item/export/bottle/tequila, /obj/item/export/bottle/vermouth, /obj/item/export/bottle/wine, /obj/item/export/bottle/grappa, /obj/item/export/bottle/cognac, \
+						/obj/item/export/bottle/absinthe, /obj/item/export/bottle/goldschlager, /obj/item/export/bottle/patron, /obj/item/export/bottle/sake, /obj/item/export/bottle/hcider, /obj/item/export/bottle/champagne, \
+						/obj/item/export/bottle/applejack, /obj/item/export/bottle/trappist, /obj/item/export/bottle/blazaam)
+
+/datum/export/booze/bottled
+	cost = 400
+	unit_name = "exotic brews"
+	export_types = list(/obj/item/export/bottle/blooddrop, /obj/item/export/bottle/slim_gold, /obj/item/export/bottle/white_bloodmoon, /obj/item/export/bottle/greenroad)
+
+/datum/export/booze/bottledkeg
+	cost = 120
+	unit_name = "exotic brews"
+	export_types = list(/obj/item/export/bottle/minikeg) //Its just beer

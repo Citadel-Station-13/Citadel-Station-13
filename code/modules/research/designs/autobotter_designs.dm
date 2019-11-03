@@ -295,11 +295,11 @@
 	build_path = /obj/item/export/bottle/grenadine
 
 /datum/design/bottle/export/minikeg
-	name = "Export Design (minikeg)"
+	name = "Export Design (Minikeg)"
 	desc = "Allows for the fabication, and bottling of Minikeg of craft beer."
 	id = "minikeg_export"
 	category = list("Beers")
-	reagents_list = list("beer" = 100)
+	reagents_list = list("light_beer" = 100)
 	build_path = /obj/item/export/bottle/minikeg
 
 /datum/design/bottle/export/blooddrop

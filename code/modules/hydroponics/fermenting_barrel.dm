@@ -69,10 +69,3 @@
 		icon_state = "barrel_open"
 	else
 		icon_state = "barrel"
-
-/datum/crafting_recipe/fermenting_barrel
-	name = "Wooden Barrel"
-	result = /obj/structure/fermenting_barrel
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 30)
-	time = 50
-	category = CAT_PRIMAL
