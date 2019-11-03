@@ -111,7 +111,7 @@
 	var/list/targets = list()
 	for(var/H in GLOB.network_holopads)
 		var/area/A = get_area(H)
-		if(findtextEx(A.name, "AI") || !(A in pop_areas) || !is_station_level(H))
+		if(!A || findtextEx(A.name, "AI") || !(A in pop_areas) || !is_station_level(H))
 			continue
 		targets += H
 
