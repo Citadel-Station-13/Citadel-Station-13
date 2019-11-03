@@ -528,7 +528,7 @@
 /atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)
@@ -829,7 +829,7 @@ Proc for attack log creation, because really why not
 		return filters[filter_data.Find(name)]
 
 /atom/movable/proc/remove_filter(name)
-	if(filter_data[name])
+	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
 		return TRUE

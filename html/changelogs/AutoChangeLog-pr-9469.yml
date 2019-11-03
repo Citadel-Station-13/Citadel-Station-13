@@ -1,0 +1,5 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - balance: "Vampires can now only ventcrawl in bat form if their blood level is below the bad blood volume (224 blood total)"
+  - balance: "Vampires now only take 5 burn per mob life cycle while within chapel areas, down from the original 20 burn per life cycle."
