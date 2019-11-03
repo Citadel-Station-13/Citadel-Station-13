@@ -10,7 +10,8 @@
 
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	var/datum/gas_mixture/air_contents = return_air()
+	return //TEMPORARY FIX FOR BALL HOTSPOTS
+	/*var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
 
@@ -48,7 +49,7 @@
 		heating.react()
 		assume_air(heating)
 		air_update_turf()
-	return igniting
+	return igniting*/
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot

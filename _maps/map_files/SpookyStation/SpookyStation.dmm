@@ -8782,6 +8782,11 @@
 /obj/item/twohanded/required/kirbyplants/photosynthetic,
 /turf/open/floor/wood,
 /area/eventmap/mountaininside)
+"AQ" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/broadcaster,
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "AU" = (
 /obj/item/reagent_containers/food/snacks/fudgedice,
 /turf/open/floor/wood{
@@ -8789,10 +8794,8 @@
 	},
 /area/eventmap/inside)
 "AY" = (
-/obj/machinery/telecomms/message_server,
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/dark,
-/area/eventmap/mountaininside)
+/turf/closed/wall/mineral/wood,
+/area/eventmap/mountain)
 "Bb" = (
 /obj/structure/cable/pink{
 	icon_state = "6-8"
@@ -9270,6 +9273,15 @@
 /obj/item/lighter,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"Ec" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/processor{
+	appearance_flags = "processor unit";
+	freq_listening = list(1347,1349,1351,1353,1355,1357,1359,1447);
+	name = "processor unit (NULL)"
+	},
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Eh" = (
 /obj/structure/bed,
 /obj/item/bedsheet/cult,
@@ -9652,6 +9664,14 @@
 "GJ" = (
 /obj/item/chair,
 /turf/open/floor/spooktime/dirtpatch,
+/area/eventmap/mountaininside)
+"GK" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/bus{
+	appearance_flags = "bus mainframe (NULL)";
+	freq_listening = list(1347,1349,1351,1353,1355,1357,1359,1447)
+	},
+/turf/open/floor/plasteel/dark,
 /area/eventmap/mountaininside)
 "GL" = (
 /obj/item/chair/wood,
@@ -10761,6 +10781,11 @@
 /obj/machinery/computer/rdconsole,
 /turf/open/floor/circuit/off,
 /area/eventmap/mountaininside)
+"Pg" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/message_server,
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Pi" = (
 /turf/closed/indestructible/riveted/hierophant,
 /area/eventmap/mountaininside)
@@ -11227,6 +11252,11 @@
 /obj/item/a_gift/anything,
 /turf/open/floor/spooktime/dirtpatch,
 /area/eventmap/mountain)
+"SX" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/receiver,
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Td" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/head/scarecrow_hat,
@@ -11242,6 +11272,9 @@
 /obj/structure/chair/sofa/left,
 /turf/open/floor/wood,
 /area/eventmap/mountaininside)
+"Tj" = (
+/turf/open/floor/wood,
+/area/eventmap/mountain)
 "Tl" = (
 /obj/item/reagent_containers/food/snacks/meat/slab/pug,
 /turf/open/floor/plasteel/freezer,
@@ -11589,6 +11622,13 @@
 /obj/structure/spacevine,
 /turf/open/floor/spooktime/beach/coasts/coastE,
 /area/eventmap/outside)
+"Wa" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/processor{
+	freq_listening = list(1359,1441)
+	},
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Wd" = (
 /turf/open/floor/spooktime/beach/coasts/coastNW,
 /area/eventmap/outside)
@@ -11744,6 +11784,13 @@
 	},
 /turf/open/floor/wood,
 /area/eventmap/inside)
+"Xm" = (
+/obj/machinery/light/floor,
+/obj/machinery/telecomms/bus{
+	freq_listening = list(1459,1441)
+	},
+/turf/open/floor/plasteel/dark,
+/area/eventmap/mountaininside)
 "Xo" = (
 /obj/item/toy/plush/lizardplushie/arfrehn,
 /obj/item/toy/plush/borgplushie{
@@ -15954,13 +16001,13 @@ ac
 gs
 gs
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+AY
+AY
+AY
+AY
+AY
+AY
 ac
 ac
 ac
@@ -16211,13 +16258,13 @@ ac
 gs
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -16468,13 +16515,13 @@ ac
 gs
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -16725,13 +16772,13 @@ ac
 gs
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -16982,13 +17029,13 @@ ac
 gs
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -17239,13 +17286,13 @@ ac
 gs
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -17496,13 +17543,13 @@ ac
 gs
 gs
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -17753,13 +17800,13 @@ ac
 gs
 gs
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 ac
 ac
 ac
@@ -18010,13 +18057,13 @@ ac
 gs
 gs
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-gs
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+AY
 gs
 ac
 ac
@@ -18267,13 +18314,13 @@ ac
 ac
 gs
 ac
-ac
-ac
-ac
-ac
-ac
-gs
-gs
+AY
+Tj
+Tj
+Tj
+Tj
+Tj
+Tj
 gs
 gs
 gs
@@ -18524,13 +18571,13 @@ ac
 ac
 gs
 ac
-ac
-ac
-ac
-ac
-gs
-gs
-gs
+AY
+AY
+AY
+AY
+AY
+AY
+AY
 gs
 gs
 gs
@@ -45820,11 +45867,11 @@ ac
 ac
 ac
 Jx
-Jx
-Jx
-Jx
-Jx
-Jx
+zQ
+zQ
+zQ
+zQ
+zQ
 "}
 (132,1,1) = {"
 Jx
@@ -46076,12 +46123,12 @@ ac
 ac
 ac
 Jx
-Jx
-Jx
-Jx
-Jx
-Jx
-Jx
+zQ
+Ec
+EO
+EO
+Wa
+zQ
 "}
 (133,1,1) = {"
 Jx
@@ -46333,12 +46380,12 @@ ac
 ac
 Jx
 Jx
-Jx
-Jx
-Jx
-Jx
-Jx
-Jx
+zQ
+GK
+EO
+EO
+SX
+zQ
 "}
 (134,1,1) = {"
 Jx
@@ -46591,11 +46638,11 @@ ac
 Jx
 zQ
 zQ
+Pg
+EO
+EO
+AQ
 zQ
-zQ
-zQ
-zQ
-Jx
 "}
 (135,1,1) = {"
 Jx
@@ -46847,12 +46894,12 @@ ac
 ac
 Jx
 zQ
-AY
+EO
 EO
 GC
 CQ
+Xm
 zQ
-Jx
 "}
 (136,1,1) = {"
 Jx
@@ -47109,7 +47156,7 @@ EO
 EO
 Xh
 zQ
-Jx
+zQ
 "}
 (137,1,1) = {"
 Jx
@@ -56079,7 +56126,7 @@ ac
 ac
 ac
 gs
-ac
+gs
 ac
 ac
 ac
@@ -57114,9 +57161,9 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
+gs
+gs
+gs
 ac
 ac
 ac
