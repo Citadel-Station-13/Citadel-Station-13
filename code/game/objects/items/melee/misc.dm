@@ -516,7 +516,7 @@
 	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
 	force = 1
 	damtype = "fire"
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_GIGANTIC
 	slot_flags = ITEM_SLOT_BACK
 	sharpness = FALSE
 	force_unwielded = 1
