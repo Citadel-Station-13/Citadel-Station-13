@@ -1329,6 +1329,14 @@
 "eP" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
+"Mb" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Shuttle EVA";
+	req_access_txt = "19"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -1645,7 +1653,7 @@ cs
 ad
 cr
 cs
-aR
+Mb
 cs
 ar
 br

@@ -89,30 +89,23 @@
 		else
 			to_chat(user, "<span class='notice'>Anomalous error. Summon a coder.</span>")
 
-	if(istype(target, /mob/living))
-		var/mob/living/victim = target
-		if(istype(victim, /mob/living/carbon/human))
-			if(user.zone_selected == "groin") // pp smol. There's probably a smarter way to do this but im retarded. If you have a simpler method let me know.
-				var/list/organs = victim.getorganszone("groin")
-				for(var/internal_organ in organs)
-					if(istype(internal_organ, /obj/item/organ/genital/penis))
-						var/obj/item/organ/genital/penis/O = internal_organ
-						playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1)
-						victim.visible_message("<span class='warning'>[user] is preparing to shrink [victim]\'s [O.name] with their bluespace compression kit!</span>")
-						if(do_mob(user, victim, 40) && charges > 0 && O.length > 0)
-							victim.visible_message("<span class='warning'>[user] has shrunk [victim]\'s [O.name]!</span>")
-							playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 50, 1)
-							sparks()
-							flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
-							charges -= 1
-							O.length -= 5
-							if(O.length < 1)
-								victim.visible_message("<span class='warning'>[user]\'s [O.name] vanishes!</span>")
-								qdel(O) // no pp for you
-							else
-								O.update_size()
-								O.update_appearance()
-
+	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_GROIN)
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
+		if(!P)
+			return
+		playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1)
+		H.visible_message("<span class='warning'>[user] is preparing to shrink [H]\'s [P.name] with their bluespace compression kit!</span>")
+		if(do_mob(user, H, 40) && charges > 0 && P.length > 0)
+			H.visible_message("<span class='warning'>[user] has shrunk [H]\'s [P.name]!</span>")
+			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 50, 1)
+			sparks()
+			flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
+			charges -= 1
+			var/p_name = P.name
+			P.modify_size(-5)
+			if(QDELETED(P))
+				H.visible_message("<span class='warning'>[H]\'s [p_name] vanishes!</span>")
 
 
 /obj/item/compressionkit/attackby(obj/item/I, mob/user, params)
