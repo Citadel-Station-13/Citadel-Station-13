@@ -70,7 +70,7 @@
 	export_types = list(/obj/item/stock_parts/cell)
 	include_subtypes = TRUE
 
-/datum/export/cell
+/datum/export/cellupgraded
 	cost = 10
 	unit_name = "upgraded power cell"
 	export_types = list(/obj/item/stock_parts/cell/upgraded, /obj/item/stock_parts/cell/upgraded/plus)
