@@ -63,13 +63,15 @@
 	name = "Winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat
-	
+
+/* Commented out until it is "balanced"
 /datum/gear/coat/sec
 	name = "Security winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/security
 	restricted_roles = list("Head of Security", "Warden", "Detective", "Security Officer") // Reserve it to the Security Departement
-	
+*/
+
 /datum/gear/coat/med
 	name = "Medical winter coat"
 	category = SLOT_WEAR_SUIT
