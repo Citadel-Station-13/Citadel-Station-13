@@ -1,0 +1,5 @@
+author: "ninjanomnom and WhoneedSpacee"
+delete-after: True
+changes: 
+  - rscadd: "Some rpg affixes now have special effects"
+  - rscadd: "New RPGLoot modifiers: Vampirism which heals you when you attack, Pyromantic which sets things you hit on fire. Shrapnel which causes projectiles fired from a gun to fire projectiles in a radius when they hit something. Finally, Summoning which summons mobs that sometimes aid you in combat."
