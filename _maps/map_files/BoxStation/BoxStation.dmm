@@ -2004,7 +2004,6 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2021,7 +2020,6 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2491,7 +2489,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "afn" = (
-/obj/structure/table,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "afo" = (
@@ -2989,12 +2987,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agu" = (
-/obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agv" = (
@@ -3020,6 +3017,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/syndicatebomb/training,
 /turf/open/floor/plasteel,
 /area/security/main)
 "agx" = (
@@ -3094,8 +3092,13 @@
 /area/security/brig)
 "agE" = (
 /obj/structure/table,
-/obj/item/folder/red,
-/obj/item/pen,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 10
+	},
+/obj/item/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = -10
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "agF" = (
@@ -3269,8 +3272,11 @@
 /turf/open/floor/plating,
 /area/security/warden)
 "agX" = (
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/structure/closet/secure_closet/warden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agY" = (
@@ -3337,14 +3343,21 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahh" = (
+/obj/item/paper_bin/bundlenatural{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/pen/fountain,
+/obj/item/folder/red,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/pen,
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahi" = (
@@ -3740,9 +3753,17 @@
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "ahQ" = (
-/obj/structure/closet/secure_closet/warden,
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -3897,30 +3918,11 @@
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "aie" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/structure/closet/wardrobe/mixed,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/pen,
-/obj/item/hand_labeler,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/item/book/manual/wiki/security_space_law,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/warden)
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aif" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -7553,12 +7555,9 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aqa" = (
-/obj/item/radio/intercom{
-	pixel_x = -32;
-	pixel_y = 35
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/machinery/recharge_station,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary)
 "aqb" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase,
@@ -7812,7 +7811,12 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aqB" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/table/glass,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aqC" = (
@@ -8189,15 +8193,13 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "arD" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
+/obj/item/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 27
 	},
-/obj/structure/closet/wardrobe/black,
-/obj/item/clothing/under/skirt/black,
-/obj/item/clothing/head/beret/black,
-/obj/item/clothing/head/beret/black,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms)
 "arE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/yellow{
@@ -8958,9 +8960,16 @@
 	},
 /area/maintenance/starboard/fore)
 "atz" = (
-/obj/structure/chair/sofa/right{
-	dir = 1
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
+/obj/structure/closet/wardrobe/black,
+/obj/item/clothing/under/skirt/black,
+/obj/item/clothing/head/beret/black,
+/obj/item/clothing/head/beret/black,
+/obj/item/clothing/under/trendy_fit,
+/obj/item/clothing/under/trendy_fit,
+/obj/item/clothing/under/sundress,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "atA" = (
@@ -9070,6 +9079,7 @@
 /obj/structure/sign/poster/contraband/lizard{
 	pixel_x = -32
 	},
+/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "atR" = (
@@ -9715,7 +9725,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avu" = (
-/obj/structure/closet/boxinggloves,
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "avv" = (
@@ -9755,11 +9767,16 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "avA" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
 	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "avB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -10115,16 +10132,15 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "awo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/closet/wardrobe/mixed,
-/obj/item/clothing/under/kilt,
-/obj/item/clothing/under/kilt,
-/obj/item/clothing/under/skirt/purple,
-/obj/item/clothing/under/skirt/red,
-/obj/item/clothing/head/beret,
-/obj/item/clothing/head/beret,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms)
 "awp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -10158,11 +10174,16 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "awu" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/wardrobe/mixed,
+/obj/item/clothing/under/kilt,
+/obj/item/clothing/under/kilt,
+/obj/item/clothing/under/skirt/purple,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/head/beret,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "awv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/sign/warning/fire{
@@ -10290,15 +10311,23 @@
 /area/maintenance/starboard/fore)
 "awK" = (
 /obj/structure/table/glass,
-/obj/item/pen,
+/obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awL" = (
-/obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+/obj/structure/table,
+/obj/item/instrument/guitar{
+	pixel_x = -7
 	},
+/obj/item/instrument/eguitar{
+	pixel_x = 5
+	},
+/obj/item/instrument/violin,
+/obj/item/instrument/trombone,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/piano_synth,
+/obj/item/instrument/recorder,
+/obj/item/instrument/accordion,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awM" = (
@@ -10919,16 +10948,15 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "axY" = (
-/obj/structure/table,
-/obj/item/instrument/guitar{
-	pixel_x = -7
+/obj/structure/cable{
+	icon_state = "2-8"
 	},
-/obj/item/instrument/eguitar{
-	pixel_x = 5
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
-/obj/item/instrument/violin,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
-/area/maintenance/starboard/fore)
+/area/maintenance/starboard/aft)
 "axZ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -11416,11 +11444,28 @@
 	},
 /area/maintenance/starboard/fore)
 "azg" = (
-/obj/machinery/light/small{
-	dir = 4;
-	light_color = "#d8b1b1"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/obj/structure/closet/lasertag/red,
+/obj/structure/closet{
+	name = "Holodeck Outfits"
+	},
+/obj/item/clothing/under/trek/Q,
+/obj/item/clothing/under/trek/command/next,
+/obj/item/clothing/under/trek/command/next,
+/obj/item/clothing/under/trek/command/next,
+/obj/item/clothing/under/trek/engsec/next,
+/obj/item/clothing/under/trek/engsec/next,
+/obj/item/clothing/under/trek/engsec/next,
+/obj/item/clothing/under/trek/engsec/next,
+/obj/item/clothing/under/trek/medsci/next,
+/obj/item/clothing/under/trek/medsci/next,
+/obj/item/clothing/under/trek/medsci/next,
+/obj/item/clothing/under/mw2_russian_para,
+/obj/item/clothing/under/mw2_russian_para,
+/obj/item/clothing/under/gladiator,
+/obj/item/clothing/under/gladiator,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azh" = (
@@ -11444,11 +11489,15 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azk" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
+/obj/structure/chair{
+	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/toilet)
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#d8b1b1"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "azl" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11747,11 +11796,9 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "azT" = (
-/obj/effect/landmark/start/mime,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/crew_quarters/theatre)
+/obj/effect/landmark/event_spawn,
+/turf/closed/wall,
+/area/crew_quarters/fitness)
 "azU" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -11876,15 +11923,10 @@
 /turf/closed/wall,
 /area/crew_quarters/toilet)
 "aAi" = (
-/obj/structure/chair/sofa/left{
-	dir = 1
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/obj/machinery/light{
-	dir = 4;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/crew_quarters/fitness)
 "aAj" = (
 /obj/structure/cable{
@@ -11932,13 +11974,30 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "aAp" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
+/obj/structure/closet{
+	name = "Suit Closet"
 	},
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/crew_quarters/theatre)
+/obj/item/clothing/under/suit_jacket/white,
+/obj/item/clothing/under/suit_jacket/tan,
+/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit_jacket/really_black,
+/obj/item/clothing/under/suit_jacket/navy,
+/obj/item/clothing/under/suit_jacket/green,
+/obj/item/clothing/under/suit_jacket/female,
+/obj/item/clothing/under/suit_jacket/checkered,
+/obj/item/clothing/under/suit_jacket/charcoal,
+/obj/item/clothing/under/suit_jacket/burgundy,
+/obj/item/clothing/under/suit_jacket,
+/obj/item/clothing/under/lawyer/black,
+/obj/item/clothing/under/lawyer/blacksuit,
+/obj/item/clothing/under/lawyer/blue,
+/obj/item/clothing/under/lawyer/bluesuit,
+/obj/item/clothing/under/lawyer/female,
+/obj/item/clothing/under/lawyer/purpsuit,
+/obj/item/clothing/under/lawyer/really_black,
+/obj/item/clothing/under/lawyer/red,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "aAq" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -11949,56 +12008,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "aAs" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 4;
 	light_color = "#d8b1b1"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-=======
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/theatre)
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/theatre)
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aAt" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "maint2"
@@ -12834,12 +12849,23 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aCo" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
+/obj/structure/closet{
+	name = "Costume Closet"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/item/clothing/head/russobluecamohat,
+/obj/item/clothing/head/russobluecamohat,
+/obj/item/clothing/head/russofurhat,
+/obj/item/clothing/head/russofurhat,
+/obj/item/clothing/head/russofurhat,
+/obj/item/clothing/head/russofurhat,
+/obj/item/clothing/under/mw2_russian_para,
+/obj/item/clothing/under/mw2_russian_para,
+/obj/item/clothing/under/mw2_russian_para,
+/obj/item/clothing/under/mw2_russian_para,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aCp" = (
@@ -12856,24 +12882,11 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "aCq" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/structure/closet/lasertag/red,
 /obj/item/clothing/under/pj/red,
 /obj/item/clothing/under/pj/red,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/crew_quarters/theatre)
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aCr" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre)
@@ -13520,29 +13533,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aDR" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/structure/closet/lasertag/blue,
 /obj/item/clothing/under/pj/blue,
 /obj/item/clothing/under/pj/blue,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-/obj/effect/landmark/event_spawn,
-/obj/effect/landmark/xmastree,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aDS" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -13613,8 +13608,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aDY" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -13628,22 +13621,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
-=======
-/obj/structure/chair/sofa/left{
-	dir = 1
-	},
-/obj/structure/window,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-/obj/structure/chair/sofa/left{
-	dir = 1
-	},
-/obj/structure/window,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aDZ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -13672,8 +13649,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aEb" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/structure/chair/wood/wings,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
@@ -13687,50 +13662,6 @@
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
-=======
-/obj/machinery/door/airlock/maintenance{
-	name = "Theatre Maintenance";
-	req_access_txt = "46"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"aEc" = (
-=======
-/obj/machinery/door/airlock/maintenance{
-	name = "Theatre Maintenance";
-	req_access_txt = "46"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"aEc" = (
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/vending/autodrobe,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/crew_quarters/theatre)
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aEd" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -14381,7 +14312,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/chapel/office)
+/area/maintenance/starboard/fore)
 "aFz" = (
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -14415,11 +14346,16 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aFE" = (
-/obj/structure/chair/sofa/right{
-	dir = 1
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/toilet)
 "aFF" = (
 /obj/structure/chair/sofa{
 	dir = 1
@@ -17284,12 +17220,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aLS" = (
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/toilet)
+/area/crew_quarters/theatre)
 "aLT" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/corner{
@@ -18941,20 +18877,11 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "aQb" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/rods/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
-/obj/item/stock_parts/cell/high/plus,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 30
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
 	},
-/obj/item/construction/rld,
-/obj/item/construction/rld,
-/turf/open/floor/plating,
-/area/engine/engineering)
+/area/crew_quarters/theatre)
 "aQc" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -19237,6 +19164,9 @@
 /area/crew_quarters/locker)
 "aQO" = (
 /obj/structure/closet/wardrobe/white,
+/obj/item/clothing/suit/ghost_sheet,
+/obj/item/clothing/suit/ghost_sheet,
+/obj/item/clothing/suit/ghost_sheet,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQP" = (
@@ -19971,18 +19901,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aSG" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/item/chair/wood,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-/obj/machinery/recharge_station,
-/turf/open/floor/plating,
-/area/space)
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aSH" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -20288,6 +20209,8 @@
 	},
 /obj/item/clothing/head/beret,
 /obj/item/clothing/head/beret,
+/obj/item/clothing/head/russobluecamohat,
+/obj/item/clothing/head/russobluecamohat,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aTx" = (
@@ -20699,30 +20622,17 @@
 /turf/open/floor/wood,
 /area/library)
 "aUC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1;
-	pixel_x = 5
-	},
-/obj/machinery/light/small{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/table/glass,
-/obj/item/paper/fluff{
-	info = "<b>Renovation Notice</b><br><br>To make way for new rooms, the bathrooms have been condensed a little.</li><li>We also added some blue tiles because we thought they looked fancy. Some lizard rolled around on them and seemed to like them, so we at Central thought we'd keep them.</li><li>We had a bit of a problem in Central Command. We tried to go for gendered shower rooms to save space, but the RD of your sister station informed us that two isn't enough, and that some girls have grown dongs. We at Central don't understand how this helps you research plasma, but we thought we'd just add two now dormitories with individual shower rooms each to accommodate the new species.";
-	name = "Renovation Notice - Bathrooms";
-	pixel_x = 7;
-	pixel_y = 3
+/obj/effect/landmark/start/mime,
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
-/obj/item/razor{
-	pixel_x = 2;
-	pixel_y = 3
+/turf/open/floor/plasteel/white/side{
+	dir = 4
 	},
-/obj/item/reagent_containers/rag/towel/random,
-/obj/item/reagent_containers/rag/towel/random,
-/obj/item/reagent_containers/rag/towel/random,
-/obj/item/reagent_containers/rag/towel/random,
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/toilet)
+/area/crew_quarters/theatre)
 "aUD" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -21168,16 +21078,16 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVA" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/machinery/requests_console{
-	department = "Locker Room";
-	pixel_x = -32
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/obj/item/clothing/under/assistantformal,
-/obj/item/clothing/under/assistantformal,
-/obj/item/clothing/under/assistantformal,
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/crew_quarters/theatre)
 "aVB" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/enzyme{
@@ -21197,13 +21107,18 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aVD" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance{
+	name = "Theatre Maintenance";
+	req_access_txt = "46"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/closet/athletic_mixed,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/turf/open/floor/plating,
+/area/crew_quarters/theatre)
 "aVE" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -22719,25 +22634,24 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYS" = (
-/obj/structure/closet,
-/obj/item/clothing/under/suit_jacket/female{
-	pixel_x = 3;
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1;
+	pixel_x = 5
 	},
-/obj/item/clothing/under/suit_jacket/really_black{
-	pixel_x = -2
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/structure/table/glass,
+/obj/item/razor{
+	pixel_x = 2;
+	pixel_y = 3
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/locker)
+/obj/item/reagent_containers/rag/towel/random,
+/obj/item/reagent_containers/rag/towel/random,
+/obj/item/reagent_containers/rag/towel/random,
+/obj/item/reagent_containers/rag/towel/random,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/toilet)
 "aYT" = (
 /obj/machinery/camera{
 	c_tag = "Hydroponics South";
@@ -23218,9 +23132,12 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bah" = (
-/obj/structure/table,
-/obj/item/weldingtool,
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bai" = (
@@ -24223,14 +24140,21 @@
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "bcO" = (
-/obj/structure/chair/sofa/left{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/noticeboard{
-	pixel_y = -27
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/theatre)
 "bcP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -28862,8 +28786,12 @@
 /turf/closed/wall,
 /area/maintenance/starboard)
 "bnt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/rack,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -44169,29 +44097,10 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bVL" = (
-<<<<<<< HEAD
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/chair/sofa/right{
-	dir = 1
-	},
-/obj/structure/window,
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_x = -32
-	},
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "bVM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -47348,9 +47257,19 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "ccS" = (
-/obj/structure/closet/lasertag/blue,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/window,
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_x = -32
+	},
+/obj/effect/landmark/start/assistant,
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "ccT" = (
 /obj/machinery/light{
 	dir = 4
@@ -47709,9 +47628,12 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cdM" = (
-/obj/effect/landmark/event_spawn,
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
+/obj/structure/window,
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "cdN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -47875,18 +47797,18 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cek" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/closet/wardrobe/grey,
+/obj/machinery/requests_console{
+	department = "Locker Room";
+	pixel_x = -32
 	},
-/obj/machinery/button/door{
-	id = "holoprivacy";
-	name = "Holodeck Privacy";
-	pixel_x = -1;
-	pixel_y = -24;
-	req_access_txt = "28"
-	},
+/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/color/grey,
+/obj/item/clothing/under/color/grey,
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/locker)
 "cel" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
@@ -48721,11 +48643,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgp" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
+/obj/structure/rack,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -48763,9 +48685,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgu" = (
-/obj/structure/rack,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgv" = (
@@ -49863,8 +49784,10 @@
 	},
 /area/maintenance/starboard/aft)
 "ciK" = (
-/obj/structure/rack,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ciL" = (
@@ -50561,12 +50484,12 @@
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "ckp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
+	lootcount = 3;
+	name = "3maintenance loot spawner"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ckq" = (
@@ -50669,6 +50592,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"ckE" = (
+/obj/structure/closet{
+	name = "Suit Closet"
+	},
+/obj/item/clothing/under/suit_jacket/white,
+/obj/item/clothing/under/suit_jacket/tan,
+/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit_jacket/really_black,
+/obj/item/clothing/under/suit_jacket/navy,
+/obj/item/clothing/under/suit_jacket/green,
+/obj/item/clothing/under/suit_jacket/female,
+/obj/item/clothing/under/suit_jacket/checkered,
+/obj/item/clothing/under/suit_jacket/charcoal,
+/obj/item/clothing/under/suit_jacket/burgundy,
+/obj/item/clothing/under/suit_jacket,
+/obj/structure/window{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/item/clothing/under/lawyer/black,
+/obj/item/clothing/under/lawyer/blacksuit,
+/obj/item/clothing/under/lawyer/blue,
+/obj/item/clothing/under/lawyer/bluesuit,
+/obj/item/clothing/under/lawyer/female,
+/obj/item/clothing/under/lawyer/purpsuit,
+/obj/item/clothing/under/lawyer/really_black,
+/obj/item/clothing/under/lawyer/red,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/locker)
 "ckF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
@@ -50693,6 +50650,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"ckJ" = (
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "ckK" = (
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot{
@@ -50757,12 +50720,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
+"ckP" = (
+/obj/structure/noticeboard{
+	pixel_y = -27
+	},
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "ckQ" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
-<<<<<<< HEAD
-<<<<<<< HEAD
 "ckR" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -50771,10 +50741,6 @@
 /obj/item/coin/gold,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "ckS" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating,
@@ -50962,13 +50928,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cls" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/starboard/aft)
 "clt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -51102,6 +51065,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
+"clH" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "clI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -51274,22 +51243,6 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/maintenance/starboard/aft)
-"cmr" = (
-/obj/structure/closet/toolcloset,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"cms" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cmt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -57972,12 +57925,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cSz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/chapel/main)
 "cSA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76452,7 +76399,7 @@ aPA
 aQO
 aTw
 aUU
-aVA
+cek
 aWn
 aXQ
 bbL
@@ -77997,7 +77944,7 @@ aTC
 aUs
 aUY
 aXv
-aYS
+ckE
 aZx
 bbO
 aPA
@@ -85245,15 +85192,7 @@ bVI
 bUw
 ccw
 chY
-<<<<<<< HEAD
-<<<<<<< HEAD
 clK
-=======
-aQb
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-aQb
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 cjM
 ckB
 ckB
@@ -87987,7 +87926,7 @@ arl
 aeW
 agQ
 ahv
-ahQ
+agX
 aiI
 aiH
 ajB
@@ -89015,7 +88954,7 @@ aeY
 agt
 agt
 ahz
-aie
+ahQ
 aiN
 ajc
 ajI
@@ -89784,7 +89723,7 @@ adg
 aeu
 alt
 agu
-agX
+agt
 ahB
 aij
 agn
@@ -92124,7 +92063,7 @@ aYI
 awr
 bHg
 aAh
-azk
+aop
 bwi
 aop
 aop
@@ -92381,22 +92320,10 @@ aYP
 baa
 aKM
 aKP
-<<<<<<< HEAD
-<<<<<<< HEAD
 aFE
 aDY
 aLQ
 aYS
-=======
-aLS
-aMu
-aUC
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-aLS
-aMu
-aUC
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 aop
 aMw
 aJq
@@ -93431,13 +93358,13 @@ bRc
 bRe
 bty
 aFj
-bVL
+ccS
 bXu
 aKR
 aFd
 aDM
 cab
-aFE
+ckJ
 aJC
 bcq
 bcq
@@ -93945,13 +93872,13 @@ bRd
 aKR
 aDO
 aFC
-aDY
+cdM
 aEu
 aKR
 aFg
 aDO
 caj
-bcO
+ckP
 aJC
 aYV
 aYV
@@ -94192,8 +94119,8 @@ avn
 awp
 aNG
 aCr
-azT
-aAp
+aLS
+aUC
 aGr
 aHI
 aOK
@@ -94441,7 +94368,7 @@ ahn
 arf
 aoI
 aqF
-awu
+awo
 arf
 aoY
 awr
@@ -94449,9 +94376,9 @@ awr
 awt
 aXj
 aCr
-aCq
-aEc
-aAs
+aQb
+aVA
+bcO
 aHK
 aCr
 bDO
@@ -94679,8 +94606,8 @@ aRw
 afp
 aRw
 abp
-aSG
-aAk
+aqa
+ahn
 aaa
 aaf
 aaf
@@ -94696,7 +94623,7 @@ anc
 anr
 anM
 aqF
-aqa
+aqF
 aqF
 aur
 aun
@@ -94706,18 +94633,8 @@ awr
 awt
 aSo
 aCr
-<<<<<<< HEAD
-<<<<<<< HEAD
 aCr
 aVD
-=======
-aEb
-aCr
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-aEb
-aCr
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 aGv
 aCr
 aCr
@@ -94946,8 +94863,8 @@ aaa
 aaa
 aaa
 adR
-aAk
-aAk
+ahn
+ahn
 aaa
 aaa
 aaa
@@ -94973,8 +94890,8 @@ aAn
 aIG
 aXl
 aBC
-aEA
 aCt
+aEA
 aGz
 aIb
 aCr
@@ -95476,12 +95393,12 @@ arf
 apu
 acN
 amP
-arD
+atz
 aAd
 atQ
-awo
+awu
 aEv
-aVD
+azg
 aAb
 aAr
 amN
@@ -95495,15 +95412,7 @@ aJD
 aCx
 awC
 awC
-<<<<<<< HEAD
-<<<<<<< HEAD
 bbs
-=======
-aDR
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-aDR
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 aHW
 awC
 awC
@@ -95738,7 +95647,7 @@ arf
 amO
 anr
 anM
-aqa
+aqF
 alK
 arf
 axZ
@@ -96257,7 +96166,7 @@ axX
 arf
 asb
 asr
-atz
+avu
 amN
 amN
 bDL
@@ -96509,7 +96418,7 @@ aaa
 aaa
 arf
 ast
-aqF
+arD
 apX
 arf
 arO
@@ -96771,7 +96680,7 @@ arf
 arf
 asZ
 att
-aAi
+avA
 awq
 aVy
 aVG
@@ -98579,15 +98488,7 @@ aCu
 aCu
 aCu
 aVx
-<<<<<<< HEAD
-<<<<<<< HEAD
 auR
-=======
-aAl
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-aAl
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 alP
 aGL
 avI
@@ -98839,27 +98740,12 @@ auR
 azj
 avz
 ccH
-<<<<<<< HEAD
-<<<<<<< HEAD
 aAX
 aAp
 aAk
 aAl
 aCq
 aDR
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-cek
-auR
-alP
-alP
-aaa
-aaa
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 alP
 aGJ
 avI
@@ -99110,27 +98996,13 @@ aaf
 auR
 auS
 ayb
-ayb
+azk
 atZ
-<<<<<<< HEAD
-<<<<<<< HEAD
 amN
 amN
 aAs
 amN
 amN
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-auR
-aBE
-alP
-aaa
-aaa
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 alP
 aGJ
 avI
@@ -99377,12 +99249,12 @@ aaa
 aaa
 aaf
 aaf
-gXs
+alO
 auR
-avu
-azg
-ccS
-amN
+auR
+auR
+azT
+aAi
 cVb
 cVb
 cVb
@@ -99635,11 +99507,11 @@ aag
 alO
 arp
 alO
-alP
-alP
-alP
-cdM
-avA
+anf
+anf
+anf
+anf
+anf
 cVb
 jbf
 wrp
@@ -100147,7 +100019,7 @@ aaf
 aaf
 aag
 alO
-alO
+anf
 alO
 aud
 auz
@@ -100413,7 +100285,7 @@ awF
 aCG
 alP
 bBM
-anf
+aBE
 aCz
 asw
 aCJ
@@ -101440,7 +101312,7 @@ alP
 aoP
 auF
 azr
-anf
+aRv
 atw
 alP
 alP
@@ -101955,7 +101827,7 @@ auD
 auF
 apE
 axJ
-axY
+awL
 alP
 aCG
 aFr
@@ -104264,7 +104136,7 @@ bxh
 clL
 anf
 alP
-awL
+aqB
 anf
 anf
 apE
@@ -104771,15 +104643,7 @@ aaa
 aaa
 gXs
 alP
-<<<<<<< HEAD
-<<<<<<< HEAD
 apD
-=======
-aqB
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
-aqB
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 ayf
 bev
 cil
@@ -105304,8 +105168,8 @@ bGS
 avI
 asA
 apE
-arx
 aCo
+aCG
 aEf
 aFw
 aGU
@@ -106149,9 +106013,9 @@ cNW
 cNW
 cNW
 cNW
-cNW
+cOe
 bag
-bah
+clH
 cko
 cAf
 aaa
@@ -106333,7 +106197,7 @@ avM
 azv
 aAA
 asB
-cSz
+aCE
 aEi
 aFw
 aHl
@@ -106401,14 +106265,14 @@ ceO
 cNW
 cgm
 chw
-ciK
+cgp
 cjC
+cgu
 ckp
 cls
-cmr
-cNW
 cOe
-cmo
+cOe
+cou
 cNW
 aaf
 aaf
@@ -106656,16 +106520,16 @@ bQZ
 cdR
 ceN
 cNW
-cgp
+axY
 chv
 ciJ
 cbf
-cbf
+ciK
 clr
-bnt
-cNW
+bah
 cOe
-cou
+cOe
+bMB
 cOT
 aaa
 aaa
@@ -106919,10 +106783,10 @@ cNW
 cNW
 cNW
 clt
-bnt
-cNW
+cQw
 cOe
-bMB
+cOe
+bNA
 cOT
 aaa
 aaa
@@ -107175,25 +107039,11 @@ chx
 cNW
 aaa
 cNW
-<<<<<<< HEAD
-<<<<<<< HEAD
 clt
 cQw
 cNW
 cNW
 cNW
-=======
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-cgr
-cms
-cNW
-cOe
-bNA
-<<<<<<< HEAD
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-=======
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 cNW
 aaf
 aaf
@@ -107447,10 +107297,10 @@ cOT
 aaa
 cOT
 clt
-bnt
+cQw
 cOe
 cOe
-cNW
+cOe
 cNW
 aaa
 aaa
@@ -107705,16 +107555,10 @@ aaa
 cOT
 clt
 cQw
-<<<<<<< HEAD
-=======
+cOe
+cOe
+cOe
 cNW
-cNW
->>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
-cNW
-cNW
-cNW
-aaa
-aaa
 aaa
 aaS
 aaS
@@ -107961,17 +107805,17 @@ ccT
 bSc
 bSc
 cfu
-cgu
+bnt
 chA
 cNW
 aaa
 cNW
 clt
 cQw
-aaf
-aaf
-aaf
-aaf
+cOe
+cOe
+cOe
+cNW
 aaf
 aaS
 aaa
@@ -108225,10 +108069,10 @@ cNW
 cNW
 clt
 cQw
-aaa
-aaa
-aaa
-aaa
+cOe
+cOe
+cOe
+cNW
 aaa
 aaS
 aaa
@@ -108481,11 +108325,11 @@ ciL
 cOe
 cOe
 clv
-cmt
-aaa
-aaa
-aaa
-aaa
+cQw
+cNW
+cNW
+cNW
+cNW
 aaa
 aba
 aaf
@@ -108741,7 +108585,7 @@ clu
 cmt
 aaa
 aaa
-aaa
+gXs
 aaa
 aaa
 aaf
@@ -109255,7 +109099,7 @@ cjD
 cjD
 cnj
 aaa
-aaa
+gXs
 aaa
 aaa
 aaf
