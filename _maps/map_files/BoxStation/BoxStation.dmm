@@ -3898,12 +3898,15 @@
 /area/security/brig)
 "aie" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/structure/closet/wardrobe/mixed,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 /obj/structure/table,
 /obj/item/folder/red,
 /obj/item/pen,
@@ -3914,6 +3917,9 @@
 /obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aif" = (
 /obj/structure/disposalpipe/segment,
@@ -11944,12 +11950,34 @@
 /area/crew_quarters/fitness)
 "aAs" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 4;
 	light_color = "#d8b1b1"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+=======
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/theatre)
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12829,16 +12857,22 @@
 /area/hallway/secondary/entry)
 "aCq" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/structure/closet/lasertag/red,
 /obj/item/clothing/under/pj/red,
 /obj/item/clothing/under/pj/red,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
 /area/crew_quarters/theatre)
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aCr" = (
 /turf/closed/wall,
@@ -13487,12 +13521,15 @@
 /area/crew_quarters/bar)
 "aDR" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/structure/closet/lasertag/blue,
 /obj/item/clothing/under/pj/blue,
 /obj/item/clothing/under/pj/blue,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/xmastree,
 /obj/effect/turf_decal/tile/bar,
@@ -13502,6 +13539,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aDS" = (
 /obj/machinery/light/small{
@@ -13574,6 +13614,7 @@
 /area/crew_quarters/bar)
 "aDY" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -13587,6 +13628,14 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
+=======
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/obj/structure/window,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 /obj/structure/chair/sofa/left{
 	dir = 1
@@ -13624,6 +13673,7 @@
 /area/maintenance/starboard/fore)
 "aEb" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/structure/chair/wood/wings,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
@@ -13651,6 +13701,21 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aEc" = (
+=======
+/obj/machinery/door/airlock/maintenance{
+	name = "Theatre Maintenance";
+	req_access_txt = "46"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"aEc" = (
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -13662,6 +13727,9 @@
 	dir = 4
 	},
 /area/crew_quarters/theatre)
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "aEd" = (
 /obj/structure/cable{
@@ -19904,10 +19972,13 @@
 /area/crew_quarters/bar)
 "aSG" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/item/chair/wood,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 /obj/machinery/recharge_station,
 /turf/open/floor/plating,
 /area/space)
@@ -44099,11 +44170,14 @@
 /area/engine/break_room)
 "bVL" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 /obj/machinery/light{
 	dir = 8
 	},
@@ -50688,6 +50762,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 <<<<<<< HEAD
+<<<<<<< HEAD
 "ckR" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -50696,6 +50771,8 @@
 /obj/item/coin/gold,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 "ckS" = (
@@ -85169,7 +85246,11 @@ bUw
 ccw
 chY
 <<<<<<< HEAD
+<<<<<<< HEAD
 clK
+=======
+aQb
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 aQb
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
@@ -92301,10 +92382,16 @@ baa
 aKM
 aKP
 <<<<<<< HEAD
+<<<<<<< HEAD
 aFE
 aDY
 aLQ
 aYS
+=======
+aLS
+aMu
+aUC
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 aLS
 aMu
@@ -94620,8 +94707,13 @@ awt
 aSo
 aCr
 <<<<<<< HEAD
+<<<<<<< HEAD
 aCr
 aVD
+=======
+aEb
+aCr
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 aEb
 aCr
@@ -95404,7 +95496,11 @@ aCx
 awC
 awC
 <<<<<<< HEAD
+<<<<<<< HEAD
 bbs
+=======
+aDR
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 aDR
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
@@ -98484,7 +98580,11 @@ aCu
 aCu
 aVx
 <<<<<<< HEAD
+<<<<<<< HEAD
 auR
+=======
+aAl
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 aAl
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
@@ -98740,6 +98840,7 @@ azj
 avz
 ccH
 <<<<<<< HEAD
+<<<<<<< HEAD
 aAX
 aAp
 aAk
@@ -98747,12 +98848,17 @@ aAl
 aCq
 aDR
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 cek
 auR
 alP
 alP
 aaa
 aaa
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 alP
 aGJ
@@ -99007,17 +99113,23 @@ ayb
 ayb
 atZ
 <<<<<<< HEAD
+<<<<<<< HEAD
 amN
 amN
 aAs
 amN
 amN
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 auR
 aBE
 alP
 aaa
 aaa
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 alP
 aGJ
@@ -104660,7 +104772,11 @@ aaa
 gXs
 alP
 <<<<<<< HEAD
+<<<<<<< HEAD
 apD
+=======
+aqB
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 =======
 aqB
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
@@ -107060,17 +107176,23 @@ cNW
 aaa
 cNW
 <<<<<<< HEAD
+<<<<<<< HEAD
 clt
 cQw
 cNW
 cNW
 cNW
 =======
+=======
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 cgr
 cms
 cNW
 cOe
 bNA
+<<<<<<< HEAD
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
+=======
 >>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 cNW
 aaf
@@ -107583,9 +107705,15 @@ aaa
 cOT
 clt
 cQw
+<<<<<<< HEAD
+=======
+cNW
+cNW
+>>>>>>> parent of 83b47d841... RLD NERF AND BUGFIX BEFORE NEW ROUND AHH SPEEEEED
 cNW
 cNW
 cNW
+aaa
 aaa
 aaa
 aaS
