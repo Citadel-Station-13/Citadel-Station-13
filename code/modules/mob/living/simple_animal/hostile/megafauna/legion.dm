@@ -135,7 +135,7 @@ Difficulty: Medium
 				last_legion = FALSE
 				break
 		if(last_legion)
-			loot = list(/obj/item/staff/storm)
+			loot = list(/obj/item/staff/storm, /obj/item/clothing/head/crown_of_the_wastes, /obj/item/clothing/ears/jewel_of_the_wastes)
 			elimination = 0
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
@@ -208,3 +208,40 @@ Difficulty: Medium
 	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
+
+//Crown and Jewel of the Wastes
+/obj/item/clothing/ears/jewel_of_the_wastes //Takes headset but makes you have ear protection + same faction as the simple mobs
+	name = "jewel of the wastes"
+	desc = "A large blood red gem with metal clasps on it side. An echoing scream can be heard if placed next to the ear"
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_EARS
+	icon_state = "jewel_of_wastes"
+	item_state = "jewel_of_wastes"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+
+/obj/item/clothing/ears/jewel_of_the_wastes/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+
+/obj/item/clothing/ears/jewel_of_the_wastes/equipped(mob/user, slot)
+	..()
+	user.faction |= "mining"
+
+/obj/item/clothing/head/crown_of_the_wastes //Stuck to head, but makes you the same faction as megafuna
+	name = "crown of the wastes"
+	desc = "Rather simple crown and much to small for The Legion to ware. Has a spot were a jewel would go, and seems to have clamps that are spring loaded..."
+	w_class = WEIGHT_CLASS_TINY
+	body_parts_covered = HEAD
+	slot_flags = ITEM_SLOT_HEAD
+	icon_state = "jewelless_crown"
+	item_state = "jewelledcrown"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+//No armor no space proofing, ask sci if you want to walk into space with just a crown
+/obj/item/clothing/head/crown_of_the_wastes/equipped(mob/user, slot)
+	..()
+	to_chat(user, "<span class='notice'>The crown's springs go off making it stuck!</span>")
+	user.faction |= "boss"
+
+/obj/item/clothing/head/crown_of_the_wastes/ComponentInitialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
