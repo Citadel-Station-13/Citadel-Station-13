@@ -53,7 +53,7 @@
 	///if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
 	if(LAZYLEN(contents))
 		return
-	if(iscarbon(hit_atom))
+	/*if(iscarbon(hit_atom))
 		var/mob/living/carbon/H = hit_atom
 		if(istype(H.head, /obj/item))
 			var/obj/item/WH = H.head
@@ -73,7 +73,7 @@
 				H.visible_message("<span class='warning'>[src] knocks [WH] off [H]'s head!</span>", "<span class='warning'>[WH] is suddenly knocked off your head by [src]!</span>")
 		if(H.equip_to_slot_if_possible(src, SLOT_HEAD, FALSE, TRUE))
 			H.visible_message("<span class='notice'>[src] lands neatly on [H]'s head!", "<span class='notice'>[src] lands perfectly onto your head!</span>")
-		return
+		*/return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
 		///hats in the borg's blacklist bounce off
