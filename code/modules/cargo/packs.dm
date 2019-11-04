@@ -2,7 +2,7 @@
 	var/name = "Crate"
 	var/group = ""
 	var/hidden = FALSE //Aka emag only
-	var/contraband = FALSE //Hacking the console with a multy tool
+	var/contraband = FALSE //Hacking the console with a multitool
 	var/cost = 700 // Minimum cost, or infinite points are possible.
 	var/access = FALSE //What access does the Crate itself need?
 	var/access_any = FALSE //Do we care about access?
