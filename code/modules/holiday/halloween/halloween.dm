@@ -175,12 +175,8 @@
 			step(I,direction)
 		return
 
-/mob/living/simple_animal/shade/howling_ghost/adjustHealth()
-	. = ..() 
-
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
-
 
 ///////////////////////////
 //Spookoween Insane Clown//
