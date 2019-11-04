@@ -25,6 +25,7 @@
 	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
 	cost = 15000
 	contraband = TRUE
+	DropPodOnly = TRUE
 	contains = list(/obj/item/stack/sheet/mineral/abductor)
 	crate_name = "alien bro alloy crate"
 
