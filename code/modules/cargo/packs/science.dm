@@ -23,7 +23,7 @@
 /datum/supply_pack/science/aliens
 	name = "Advanced Alien Alloy Crate Crate"
 	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
-	cost = 9000
+	cost = 15000
 	contraband = TRUE
 	contains = list(/obj/item/stack/sheet/mineral/abductor)
 	crate_name = "alien bro alloy crate"
@@ -166,7 +166,7 @@
 
 /datum/supply_pack/science/slime
 	name = "Slime Core Crate"
-	desc = "Ran out of slimes? No problem, contains one gray slime core. Requires Xenobio access to open.”
+	desc = "Ran out of slimes? No problem, contains one gray slime core. Requires Xenobio access to open."
 	cost = 1000
 	access = ACCESS_XENOBIOLOGY
 	contains = list(/obj/item/slime_extract/grey)
@@ -175,7 +175,7 @@
 
 /datum/supply_pack/science/supermater
 	name = "Supermatter Extraction Tools Crate"
-	desc = "Contains a set of tools to extract a sliver of supermatter. Consult your CE today!”
+	desc = "Contains a set of tools to extract a sliver of supermatter. Consult your CE today!"
 	cost = 7500 //Usefull for traitors that fucked up
 	hidden = TRUE
 	contains = list(/obj/item/nuke_core_container/supermatter,
