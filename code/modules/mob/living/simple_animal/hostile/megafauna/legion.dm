@@ -229,7 +229,7 @@ Difficulty: Medium
 
 /obj/item/clothing/head/crown_of_the_wastes //Stuck to head, but makes you the same faction as megafuna
 	name = "crown of the wastes"
-	desc = "Rather simple crown and much to small for The Legion to ware. Has a spot were a jewel would go, and seems to have clamps that are spring loaded..."
+	desc = "Rather simple crown which appears much to small for The Legion to wear. Has a spot where a jewel would go, and seems to have clamps on the inside that are spring loaded..."
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
