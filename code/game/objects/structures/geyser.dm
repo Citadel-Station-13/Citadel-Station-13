@@ -44,8 +44,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
-
+	var/list/options = list(/datum/reagent/clf3 = 2, /datum/reagent/crudeoil = 1)
 /obj/structure/geyser/random/Initialize()
 	. = ..()
 	reagent_id = pickweight(options)
