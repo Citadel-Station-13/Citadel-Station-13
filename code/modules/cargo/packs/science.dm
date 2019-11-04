@@ -131,7 +131,7 @@
 
 /datum/supply_pack/science/relic
 	name = "Relic Crate"
-	desc = "Ever want to play with old discounted toys? Look no more. Contains two relics.”
+	desc = "Ever want to play with old discounted toys? Look no more. Contains two relics."
 	cost = 1000
 	contraband = TRUE
 	contains = list(/obj/item/relic,
