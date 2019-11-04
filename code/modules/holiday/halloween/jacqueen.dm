@@ -95,45 +95,34 @@
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("secretcatchem", (10))
+	R.add_reagent("secretcatchem", 10)
 	s.set_up(R, 0, loc)
 	s.start()
 	visible_message("<b>[src]</b> disappears in a puff of smoke!")
 	canmove = TRUE
 	health = 25
 
-	var/hp_list = list()
-	for(var/obj/machinery/holopad/hp in world)
-		hp_list += hp
+	//Try to go to populated areas
+	var/list/pop_areas = list()
+	for(var/mob/living/L in GLOB.player_list)
+		var/area/A = get_area(L)
+		pop_areas += A
 
-	var/nono_areas = list("AI ")
+	var/list/targets = list()
+	for(var/H in GLOB.network_holopads)
+		var/area/A = get_area(H)
+		if(findtextEx(A, "AI") || !(A in pop_areas) || !is_station_level(H))
+			continue
+		targets += H
 
-	for(var/i = 0, i <= 6, i+=1) //Attempts a jump 6 times.
-		var/obj/machinery/holopad/hp = pick(hp_list)
-		if(forceMove(pick(hp.loc)))
+	if(!targets)
+		targets = GLOB.generic_event_spawns
 
-			var/jacq_please_no = FALSE
-			for(var/no_area in nono_areas)
-				var/turf/L1 = hp.loc
-				if(!L1) //Incase the area isn't a turf (i.e. in a locker)
-					continue
-				var/area/L2 = L1.loc
-				if(L2)
-					if(findtext(L2.name, no_area))
-						jacq_please_no = TRUE
-
-			if(jacq_please_no)
-				i-=1
-				continue
-
-			//Try to go to populated areas
-			var/list/seen = viewers(8, get_turf(src))
-			for(var/victim in seen)
-				if(ishuman(victim))
-					if(z == cached_z)
-						return TRUE
-
-
+	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
+		var/atom/A = pick(targets)
+		if(do_teleport(src, A, channel = TELEPORT_CHANNEL_MAGIC))
+			return TRUE
+		targets -= A
 	return FALSE
 
 /mob/living/simple_animal/jacq/proc/gender_check(mob/living/carbon/C)

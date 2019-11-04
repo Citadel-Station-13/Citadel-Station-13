@@ -89,7 +89,6 @@
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, src, force)
 
 		post_unbuckle_mob(.)
 

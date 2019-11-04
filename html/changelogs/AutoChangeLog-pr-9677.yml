@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Made the clone scanner lock while it's scanning."

@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - balance: "Made starlight condensation not kill slime people."
+  - balance: "Added not-killing-slime-people to the transmission threshold of plasma fixation and radioactive resonance."
