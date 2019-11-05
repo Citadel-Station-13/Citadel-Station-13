@@ -1,0 +1,112 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/turf/closed/indestructible,/area/space)
+"c" = (/turf/template_noop,/area/template_noop)
+"d" = (/turf/open/indestructible,/area/space)
+"e" = (/turf/closed/indestructible,/area/quartermaster/office)
+"f" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/obj/structure/table/wood/fancy/red,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"g" = (/turf/closed/indestructible/fakeglass,/area/space)
+"h" = (/obj/structure/chair,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"i" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/structure/chair,/turf/open/indestructible,/area/quartermaster/office)
+"j" = (/obj/effect/turf_decal/caution/stand_clear{pixel_y = 8},/turf/open/indestructible,/area/quartermaster/office)
+"k" = (/obj/machinery/autolathe{name = "public autolathe"},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/effect/turf_decal/tile/brown{dir = 1},/turf/open/indestructible,/area/quartermaster/office)
+"l" = (/obj/machinery/computer/cargo/request,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"m" = (/obj/structure/table/wood/fancy/green,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"n" = (/obj/machinery/computer/cargo,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"o" = (/turf/open/indestructible,/area/quartermaster/office)
+"p" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"q" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/open/indestructible,/area/quartermaster/office)
+"r" = (/obj/effect/turf_decal/bot,/turf/open/indestructible,/area/quartermaster/office)
+"s" = (/obj/effect/turf_decal/delivery,/turf/open/indestructible,/area/quartermaster/office)
+"t" = (/obj/structure/table/wood/fancy/green,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/indestructible,/area/quartermaster/office)
+"u" = (/obj/structure/chair/office/dark{dir = 8},/obj/effect/landmark/start/cargo_technician,/turf/open/indestructible,/area/quartermaster/office)
+"v" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/floor/plating,/area/quartermaster/office)
+"w" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/quartermaster/office)
+"x" = (/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/quartermaster/office)
+"y" = (/obj/machinery/holopad,/turf/open/indestructible,/area/quartermaster/office)
+"z" = (/obj/effect/landmark/start/quartermaster,/turf/open/indestructible,/area/quartermaster/office)
+"A" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
+"B" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/turf/open/indestructible,/area/quartermaster/office)
+"C" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/obj/structure/table/wood/fancy/red,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/turf/open/indestructible,/area/quartermaster/office)
+"D" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/turf/open/indestructible,/area/quartermaster/office)
+"E" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/turf/open/indestructible,/area/quartermaster/office)
+"F" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/obj/machinery/vending/donksofttoyvendor,/turf/open/indestructible,/area/quartermaster/office)
+"G" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/obj/machinery/vending/toyliberationstation,/turf/open/indestructible,/area/quartermaster/office)
+"H" = (/turf/closed/indestructible,/area/quartermaster/sorting)
+"I" = (/obj/machinery/conveyor{icon_state = "conveyor_map"; dir = 1},/obj/effect/turf_decal/stripes/end{icon_state = "warn_end"; dir = 1},/turf/open/floor/plating,/area/quartermaster/sorting)
+"J" = (/turf/open/indestructible,/area/quartermaster/sorting)
+"K" = (/obj/machinery/conveyor{dir = 4; id = "robo1"},/obj/effect/turf_decal/stripes/end{icon_state = "warn_end"; dir = 8},/turf/open/floor/plating,/area/quartermaster/sorting)
+"L" = (/obj/machinery/conveyor/inverted{icon_state = "conveyor_map_inverted"; dir = 10},/obj/effect/turf_decal/stripes/corner{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/plating,/area/quartermaster/sorting)
+"M" = (/obj/structure/window/spawner/west,/obj/machinery/conveyor_switch/oneway,/turf/open/indestructible,/area/quartermaster/sorting)
+"N" = (/turf/closed/indestructible/fakeglass,/area/quartermaster/sorting)
+"O" = (/obj/effect/turf_decal/loading_area{dir = 1},/turf/open/indestructible,/area/quartermaster/sorting)
+"P" = (/obj/effect/landmark/start/cargo_technician,/turf/open/indestructible,/area/quartermaster/sorting)
+"Q" = (/obj/effect/turf_decal/delivery,/turf/open/indestructible,/area/quartermaster/sorting)
+"R" = (/obj/effect/turf_decal/bot,/turf/open/indestructible,/area/quartermaster/sorting)
+"S" = (/turf/open/space/basic,/area/quartermaster/sorting)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbbgbaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbddddddddddaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacgddddddddddaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbddddddddddaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaebbbbdbbbbdbbaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaefhiijklmnooaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapqpooorstuooaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavwxoyzootoooaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaABAoooootoooaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeCDrEoFGtoooaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeHHIHJHHHaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacHKLMJJJJaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacNOOJPJJJaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacHQRJJJJJaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacHHNHSSSSaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
