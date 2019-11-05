@@ -21,6 +21,7 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_MODIFY_SANITY, .proc/modify_sanity)
+	RegisterSignal(parent, COMSIG_PARENT_QDELETED, .proc/work_around) // hacky work around to an obnoxious runtime issue we haven't found the source of yet.
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
@@ -33,6 +34,9 @@
 	STOP_PROCESSING(SSmood, src)
 	unmodify_hud()
 	return ..()
+
+/datum/component/mood/proc/work_around(datum/source) // I'm sorry and tired.
+	qdel(src)
 
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
@@ -249,7 +253,7 @@
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
-	if(!screen_obj)
+	if(!screen_obj || !parent)
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
