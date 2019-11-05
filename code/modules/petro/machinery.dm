@@ -21,17 +21,17 @@
 
 /obj/machinery/power/gasgen/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>[src] [active ? "is running":"isn't running"].</span>"
+	to_chat(user, "<span class='notice'>[src] [active ? "is running":"isn't running"].</span>")
 
 /obj/machinery/power/gasgen/attack_hand(mob/user)
 	if(!active)
 		active = 1
 		START_PROCESSING(SSobj, src)
-		to_chat(user, "<span class='notice'>You start up the [src].</span>"
+		to_chat(user, "<span class='notice'>You start up the [src].</span>")
 	else
 		active = 0
 		STOP_PROCESSING(SSobj, src)
-		to_chat(user, "<span class='notice'>You shut down the [src].</span>"
+		to_chat(user, "<span class='notice'>You shut down the [src].</span>")
 
 
 /obj/machinery/power/gasgen/Initialize(mapload)
@@ -54,7 +54,7 @@
 			STOP_PROCESSING(SSobj, src)
 			for(var/mob/living/M in viewers(get_turf(src), null))
 				M.visible_message("<span class='notice'>The [src] sputters, shudders and slides to a stop.</span>")
-			take_damage(20, BRUTE, "melee", 1) //dont let it run out of fuel
+			take_damage(20, BRUTE, "melee", 1) //dont let it run out of fuel, idiot. it'll misfire.
 
 /obj/machinery/power/gasgen/stirling
 	name = "stirling generator"
@@ -64,7 +64,6 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/stirling
-	var/active = 0 //duh
 	var/coolant_mult = 1
 
 /obj/machinery/power/gasgen/stirling/RefreshParts()
@@ -76,7 +75,7 @@
 /obj/machinery/power/gasgen/stirling/process()
 	if(reagents.total_volume >= 1)
 		if(reagents.remove_reagent("gasoline", STIRLING_FUEL_TICK) || reagents.remove_reagent("diesel", STIRLING_FUEL_TICK) || reagents.remove_reagent("kerosene", STIRLING_FUEL_TICK) || reagents.remove_reagent("butane", STIRLING_FUEL_TICK) ||reagents.remove_reagent("naptha", STIRLING_FUEL_TICK) || reagents.remove_reagent("fueloil", STIRLING_FUEL_TICK))
-			if(reagents.remove_reagent("water", ICG_FUEL_TICK)
+			if(reagents.remove_reagent("water", ICG_FUEL_TICK))
 				coolant_mult = 1.5
 			else
 				coolant_mult = 1

@@ -1,4 +1,4 @@
-obj/item/monomer
+/obj/item/monomer
 	name = "debug monomer"
 	desc = "You shouldn't see this."
 	icon_state = "datadisk0"
@@ -6,6 +6,6 @@ obj/item/monomer
 	var/monomer_type
 
 
-obj/item/monomer/initialize
+/obj/item/monomer/initialize()
 	. = ..()
 	name = "[monomer_type] monomer"
