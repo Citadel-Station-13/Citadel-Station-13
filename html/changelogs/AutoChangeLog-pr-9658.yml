@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed dogborg sleepers. Just don't tell me what is exactly fixed, cause I don't want to find out."
