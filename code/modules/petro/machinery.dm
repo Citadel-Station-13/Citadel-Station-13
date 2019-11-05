@@ -4,7 +4,7 @@
 /obj/machinery/power/gasgen
 	name = "internal combustion generator"
 	desc = "A machine that harnesses low explosives to drive an alternator."
-	icon_state = "pill_press"
+	icon_state = "icg"
 	var/power_gen = 1500
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -55,11 +55,12 @@
 			for(var/mob/living/M in viewers(get_turf(src), null))
 				M.visible_message("<span class='notice'>The [src] sputters, shudders and slides to a stop.</span>")
 			take_damage(20, BRUTE, "melee", 1) //dont let it run out of fuel, idiot. it'll misfire.
+	return
 
 /obj/machinery/power/gasgen/stirling
 	name = "stirling generator"
 	desc = "The pinnacle of heat-based generator technology, a stirling engine uses a differential between two temperatures to create power. Creates more power if actively cooled with water."
-	icon_state = "pill_press"
+	icon_state = "stirling"
 	power_gen = 750 //worse off, but more optimizable
 	density = TRUE
 	use_power = NO_POWER_USE
