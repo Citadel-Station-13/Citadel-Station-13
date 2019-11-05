@@ -47,7 +47,7 @@
 			if(do_mob(user, src, butchering.speed) && Adjacent(I))
 				butchering.Butcher(user, src)
 			return 1
-		else if(I.is_sharp() && !butchering) //give sharp objects butchering functionality, for consistency
+		else if(I.get_sharpness() && !butchering) //give sharp objects butchering functionality, for consistency
 			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
 			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
 			return
