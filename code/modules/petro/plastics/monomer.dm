@@ -6,6 +6,6 @@
 	var/monomer_type
 
 
-/obj/item/monomer/initialize()
+/obj/item/monomer/Initialize()
 	. = ..()
 	name = "[monomer_type] monomer"
