@@ -102,6 +102,8 @@
 		if(ASSEMBLY_FOURTH_STEP)
 			if(istype(W, /obj/item/weldingtool))
 				if(W.use_tool(src, user, 0, volume=40))
+					if(ASSEMBLY_FIFTH_STEP)
+						return
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
 					build_step++
@@ -148,6 +150,8 @@
 					return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(do_after(user, 40, target = src))
+					if(7)
+						return
 					if(coil.get_amount() >= 1 && build_step == 6)
 						coil.use(1)
 						to_chat(user, "<span class='notice'>You wire [src].</span>")
