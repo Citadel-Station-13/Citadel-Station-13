@@ -101,9 +101,7 @@
 
 		if(ASSEMBLY_FOURTH_STEP)
 			if(istype(W, /obj/item/weldingtool))
-				if(W.use_tool(src, user, 0, volume=40))
-					if(ASSEMBLY_FIFTH_STEP)
-						return
+				if(W.use_tool(src, user, 0, volume=40) && build_step == 4)
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
 					build_step++
@@ -150,8 +148,6 @@
 					return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(do_after(user, 40, target = src))
-					if(7)
-						return
 					if(coil.get_amount() >= 1 && build_step == 6)
 						coil.use(1)
 						to_chat(user, "<span class='notice'>You wire [src].</span>")
@@ -187,9 +183,7 @@
 		if(8)
 			if(istype(W, /obj/item/screwdriver))
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
-				if(W.use_tool(src, user, 40, volume=100))
-					if(9)
-						return
+				if(W.use_tool(src, user, 40, volume=100) && build_step == 8)
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 					build_step++
