@@ -184,6 +184,8 @@
 			if(istype(W, /obj/item/screwdriver))
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
+					if(9)
+						return
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 					build_step++
