@@ -1,3 +1,9 @@
+/datum/bounty/item/chef/birthday_cake
+	name = "Birthday Cake"
+	description = "Nanotrasen's birthday is coming up! Ship them a birthday cake to celebrate!"
+	reward = 1000
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday, /obj/item/reagent_containers/food/snacks/cakeslice/birthday)
+
 /datum/bounty/item/gardencook/carrotfries
 	name = "Carrot Fries"
 	description = "Night sight can mean life or death! A shipment of carrot fries is the order."

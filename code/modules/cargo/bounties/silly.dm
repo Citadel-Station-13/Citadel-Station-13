@@ -15,7 +15,7 @@
 /datum/bounty/item/silly/action_figures
 	name = "Action Figures"
 	description = "The vice president's son saw an ad for action figures on the telescreen and now he won't shut up about them. Ship some to ease his complaints."
-	reward = 4000
+	reward = 3000
 	required_count = 5
 	wanted_types = list(/obj/item/toy/figure)
 
@@ -40,4 +40,15 @@
 	wanted_types = list(/obj/item/clothing/shoes)
 	exclude_types = list(/obj/item/clothing/shoes/wraps, /obj/item/clothing/shoes/wraps/silver, /obj/item/clothing/shoes/wraps/red, /obj/item/clothing/shoes/wraps/blue)
 
+/datum/bounty/item/silly/sunglasses
+	name = "Sunglasses"
+	description = "A famous blues duo is passing through the sector, but they've lost their shades and they can't perform. Ship new sunglasses to CentCom to rectify this."
+	reward = 1400
+	required_count = 2
+	wanted_types = list(/obj/item/clothing/glasses/sunglasses)
 
+/datum/bounty/item/silly/strange_object
+	name = "Strange Object"
+	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
+	reward = 1000
+	wanted_types = list(/obj/item/relic)

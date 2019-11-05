@@ -1,8 +1,4 @@
-/datum/bounty/item/assistant/strange_object
-	name = "Strange Object"
-	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
-	reward = 2200
-	wanted_types = list(/obj/item/relic)
+//Moved Maint Loot and other assorted bounties to silly.dm
 
 /datum/bounty/item/assistant/scooter
 	name = "Scooter"
@@ -91,13 +87,6 @@
 	required_count = 3
 	wanted_types = list(/obj/item/storage/briefcase, /obj/item/storage/secure/briefcase)
 
-/datum/bounty/item/assistant/sunglasses
-	name = "Sunglasses"
-	description = "A famous bounty hunter is passing through the sector, and they've lost their shades. They're too embarrassed to hunt criminals with their naked eyes. Ship new sunglasses to CentCom to rectify this."
-	reward = 1750
-	required_count = 1
-	wanted_types = list(/obj/item/clothing/glasses/sunglasses)
-
 /datum/bounty/item/assistant/monkey_hide
 	name = "Monkey Hide"
 	description = "One of the scientists at CentCom is interested in testing products on monkey skin. Your mission is to acquire monkey's hide and ship it."
@@ -154,7 +143,7 @@
 // 	wanted_types = list(/obj/item/clothing/ears/earmuffs)
 
 /datum/bounty/item/assistant/cuffs
-	name = "Cuffs"
+	name = "Handcuffs"
 	description = "A large influx of escaped convicts have arrived at Central Command. Now is the perfect time to ship out spare handcuffs (or restraints)."
 	reward = 1000
 	required_count = 5
@@ -207,15 +196,22 @@
 /datum/bounty/item/assistant/bolas
 	name = "Bolas"
 	description = "Centcom's chef has lost their mind. They're streaking naked though the halls, greased up with butter and cooking oil. Send some bola's so we can capture them."
-	reward = 800
+	reward = 1000
 	required_count = 3
 	wanted_types = list(/obj/item/restraints/legcuffs/bola)
 
 /datum/bounty/item/assistant/metalshields
 	name = "Metal Shields"
 	description = "NT is testing the effects of electricity on clowns wielding metal shields. We have clowns, and we have electricity. Send us the shields."
-	reward = 1200
+	reward = 1400
 	required_count = 4
 	wanted_types = list(/obj/item/shield/makeshift)
 
-/obj/item/shield/makeshift
+/datum/bounty/item/assistant/toolbelts
+	name = "Tool Belts" 
+	description = "These things always seem to go missing. Ship us a few to help us restock."
+	reward = 1350
+	required_count = 3
+	wanted_types = list(/obj/item/storage/belt/utility)
+
+/obj/item/storage/belt/utility

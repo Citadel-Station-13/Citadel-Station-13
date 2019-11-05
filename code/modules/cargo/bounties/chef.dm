@@ -1,8 +1,4 @@
-/datum/bounty/item/chef/birthday_cake
-	name = "Birthday Cake"
-	description = "Nanotrasen's birthday is coming up! Ship them a birthday cake to celebrate!"
-	reward = 1000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday, /obj/item/reagent_containers/food/snacks/cakeslice/birthday)
+//Moved (most) bounties requiring botany to gardencook.dm Roundstart cook bounties go here.
 
 /datum/bounty/item/chef/soup
 	name = "Soup"
