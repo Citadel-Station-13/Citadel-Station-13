@@ -66,7 +66,7 @@
 /datum/reagent/diesel
 	name = "Diesel"
 	id = "diesel"
-	description = "Diesel fuel. It's quite heavy but can be used to manufacture fuel cartridges for the liquid-fuel generator."
+	description = "Diesel fuel. It's quite heavy but can be used as fuel for the liquid-fuel generator."
 	reagent_state = LIQUID
 	color = "#010101"
 	taste_description = "metal and burning"
