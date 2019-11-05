@@ -214,4 +214,9 @@
 	required_count = 3
 	wanted_types = list(/obj/item/storage/belt/utility)
 
-/obj/item/storage/belt/utility
+/datum/bounty/item/assistant/toolbelts
+	name = "Gas Masks" 
+	description = "The good news is that we have more miasma than we'll ever need. The bad news is, somone opened the release valve on the canisters. Ship us some gas masks!"
+	reward = 1100
+	required_count = 4
+	wanted_types = list(/obj/item/clothing/mask/gas)
