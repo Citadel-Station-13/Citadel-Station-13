@@ -51096,16 +51096,8 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/construction/rld{
-	desc = "This still has 'prototype' stickers on it. A light-placing light that works like the RCD, using matter units that the device can compress on the go.";
-	materials = list("$metal" = 40000);
-	name = "Prototype Rapid-Light-Device (RLD)"
-	},
-/obj/item/construction/rld{
-	desc = "This still has 'prototype' stickers on it. A light-placing light that works like the RCD, using matter units that the device can compress on the go.";
-	materials = list("$metal" = 40000);
-	name = "Prototype Rapid-Light-Device (RLD)"
-	},
+/obj/item/lightreplacer,
+/obj/item/lightreplacer,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "clL" = (
