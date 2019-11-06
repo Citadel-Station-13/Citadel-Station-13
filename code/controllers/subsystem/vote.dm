@@ -155,12 +155,9 @@ SUBSYSTEM_DEF(vote)
 				GLOB.master_mode = "dynamic"
 				if(voted.len==0)
 					return message_admins("Nobody voted in the dynamic vote; using default dynamic settings.")
-				GLOB.dynamic_forced_extended = choices["extended"]/voted.len > 0.5
-				if(GLOB.dynamic_forced_extended)
-					return message_admins("Dynamic extended has been voted for.")
-				var/mean = (choices["extended"]*-1+choices[PEACE]*-1+choices[CHAOS])/voted.len
+				var/mean = (choices[PEACE]*-1+choices[CHAOS])/voted.len
 				GLOB.dynamic_curve_centre = mean*5
-				var/variance=(((-1-mean)**2)*choices["extended"]+((-1-mean)**2)*choices[PEACE]+((1-mean)**2)*choices[CHAOS])/voted.len //Sorry. Im sorry. Im trying to remove it
+				var/variance=(((-1-mean)**2)*choices[PEACE]+((1-mean)**2)*choices[CHAOS])/voted.len
 				GLOB.dynamic_curve_width = CLAMP(variance*4,0.5,4)
 				message_admins("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
@@ -232,7 +229,7 @@ SUBSYSTEM_DEF(vote)
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("dynamic")
-				choices.Add("extended",PEACE,CHAOS)
+				choices.Add(PEACE,CHAOS)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
