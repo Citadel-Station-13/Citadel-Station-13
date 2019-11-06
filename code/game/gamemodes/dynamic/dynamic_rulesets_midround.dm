@@ -230,7 +230,7 @@
 	antag_flag = ROLE_MALF
 	enemy_roles = list("Security Officer", "Warden","Detective","Head of Security", "Captain", "Scientist", "Chemist", "Research Director", "Chief Engineer")
 	exclusive_roles = list("AI")
-	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
+	required_enemies = list(6,6,6,4,4,4,2,2,2,1)
 	required_candidates = 1
 	weight = 3
 	cost = 35
@@ -282,7 +282,7 @@
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(4,4,3,2,2,1,1,0,0,0)
 	required_candidates = 1
 	weight = 1
 	cost = 20
@@ -315,7 +315,7 @@
 	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
-	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
+	required_enemies = list(5,5,4,3,3,2,2,2,1,1)
 	required_candidates = 5
 	weight = 5
 	cost = 35
@@ -359,7 +359,7 @@
 	antag_datum = /datum/antagonist/blob
 	antag_flag = ROLE_BLOB
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(3,3,2,2,2,1,1,1,1,0)
 	required_candidates = 1
 	weight = 4
 	cost = 10
@@ -383,7 +383,7 @@
 	antag_datum = /datum/antagonist/xeno
 	antag_flag = ROLE_ALIEN
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_enemies = list(3,3,2,2,1,1,1,1,1,0)
 	required_candidates = 1
 	weight = 3
 	cost = 10
