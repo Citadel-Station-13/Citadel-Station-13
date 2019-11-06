@@ -225,7 +225,7 @@
 
 /datum/dynamic_ruleset/midround/malf
 	name = "Malfunctioning AI"
-	config_tag = "malf_ai_midround"
+	config_tag = "midround_malf_ai"
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_MALF
 	enemy_roles = list("Security Officer", "Warden","Detective","Head of Security", "Captain", "Scientist", "Chemist", "Research Director", "Chief Engineer")
