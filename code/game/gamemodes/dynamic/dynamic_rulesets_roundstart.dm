@@ -43,7 +43,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//           SYNDICATE TRAITORS             //
+//                MALF  AI                  //
 //                                          //
 //////////////////////////////////////////////
 
@@ -60,7 +60,7 @@
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	high_population_requirement = 35
-	required_type = /mob/living/silicon/ai
+	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/malf_ai/trim_candidates()
 	..()
