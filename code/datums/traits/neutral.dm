@@ -103,13 +103,13 @@
 	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
 
 /datum/quirk/libido/add()
-	quirk_holder.min_arousal += 16
-	quirk_holder.arousal_rate *= 3
+	quirk_holder.min_arousal = 16
+	quirk_holder.arousal_rate = 3
 
 /datum/quirk/libido/remove()
 	if(quirk_holder)
-		quirk_holder.min_arousal -= CLAMP(16, 0, quirk_holder.min_arousal)
-		quirk_holder.arousal_rate = round(quirk_holder.arousal_rate * 0.33, 0.1)
+		quirk_holder.min_arousal = 0
+		quirk_holder.arousal_rate = 1
 
 /datum/quirk/maso
 	name = "Masochism"
