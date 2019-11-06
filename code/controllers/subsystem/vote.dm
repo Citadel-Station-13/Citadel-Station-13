@@ -157,8 +157,8 @@ SUBSYSTEM_DEF(vote)
 					return message_admins("Nobody voted in the dynamic vote; using default dynamic settings.")
 				var/mean = (choices[PEACE]*-1+choices[CHAOS])/voted.len
 				GLOB.dynamic_curve_centre = mean*5
-				var/variance=(((-1-mean)**2)*choices[PEACE]+((1-mean)**2)*choices[CHAOS])/voted.len
-				GLOB.dynamic_curve_width = CLAMP(variance*4,0.5,4)
+				var/magic_curve_constant = (4-(abs(choices[PEACE]-choices[CHAOS])/(voted.len)))*10 //magic as hell.
+				GLOB.dynamic_curve_width = CLAMP(4-magic_curve_constant,0.5,4)
 				message_admins("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 			if("map")
