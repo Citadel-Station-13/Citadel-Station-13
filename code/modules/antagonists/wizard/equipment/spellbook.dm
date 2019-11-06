@@ -484,7 +484,7 @@
 		return 0
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/summon_guns_requirement))
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_guns_requirement))
 			return 0
 	return !CONFIG_GET(flag/no_summon_guns)
 
@@ -496,7 +496,7 @@
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.spend_threat(CONFIG_GET(number/summon_guns_cost))
+		mode.spend_threat(CONFIG_GET(number/dynamic_summon_guns_cost))
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -508,7 +508,7 @@
 		return 0
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/summon_magic_requirement))
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_magic_requirement))
 			return 0
 	return !CONFIG_GET(flag/no_summon_magic)
 
@@ -520,7 +520,7 @@
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.spend_threat(CONFIG_GET(number/summon_magic_cost))
+		mode.spend_threat(CONFIG_GET(number/dynamic_summon_magic_cost))
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -533,7 +533,7 @@
 		return 0
 	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/summon_events_requirement))
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_events_requirement))
 			return 0
 	return !CONFIG_GET(flag/no_summon_events)
 
@@ -545,7 +545,7 @@
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.spend_threat(CONFIG_GET(number/summon_events_cost))
+		mode.spend_threat(CONFIG_GET(number/dynamic_summon_events_cost))
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
