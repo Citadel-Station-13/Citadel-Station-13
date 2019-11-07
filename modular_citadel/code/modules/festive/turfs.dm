@@ -109,77 +109,101 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowWERight
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_right"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowWERightEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_right_end"
 	canSmoothWith = list(/turf/closed/festive/greybrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowWEMiddle
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_middle"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowWELeft
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_left"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowWELeftEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_we_left_end"
 	canSmoothWith = list(/turf/closed/festive/greybrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowNS
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowNSRight
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_right"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowNSRightEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_right_end"
 	canSmoothWith = list(/turf/closed/festive/greybrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowNSMiddle
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_middle"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowNSLeft
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_left"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/greybrick/windowNSLeftEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/grey_brick_window.dmi'
 	icon_state = "grey_brick_window_ns_left_end"
 	canSmoothWith = list(/turf/closed/festive/greybrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 
 
 //Red Bricks
@@ -269,77 +293,101 @@
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowWERight
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_right"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowWERightEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_right_end"
 	canSmoothWith = list(/turf/closed/festive/redbrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowWEMiddle
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_middle"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowWELeft
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_left"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowWELeftEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_we_left_end"
 	canSmoothWith = list(/turf/closed/festive/redbrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowNS
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowNSRight
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_right"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowNSRightEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_right_end"
 	canSmoothWith = list(/turf/closed/festive/redbrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowNSMiddle
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_middle"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowNSLeft
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_left"
-
+	density = TRUE
+	anchored = TRUE
+	
 /obj/structure/festive/redbrick/windowNSLeftEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
 	icon = 'modular_citadel/code/modules/festive/red_brick_window.dmi'
 	icon_state = "red_brick_window_ns_left_end"
 	canSmoothWith = list(/turf/closed/festive/redbrick)
-
+	density = TRUE
+	anchored = TRUE
+	
 //Cream Bricks
 
 /turf/closed/festive/creambrick
