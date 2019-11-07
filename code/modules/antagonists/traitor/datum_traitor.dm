@@ -77,11 +77,11 @@
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		if(GLOB.joined_player_list>=GLOB.dynamic_high_pop_limit)
-			is_hijacker = prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement)
+		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
+			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
 		else
-			var/indice_pop = min(10,round(GLOB.joined_player_list/mode.pop_per_requirement)+1)
-			is_hijacker = prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop])
+			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
+			is_hijacker = (prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
 	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
 		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
