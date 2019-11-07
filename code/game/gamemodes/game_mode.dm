@@ -309,7 +309,10 @@
 //Use return list if you want a list, with the arg being the number you want returned.
 //WARNING: THIS PROC DOES NOT TAKE INTO ACCOUNT WHAT SSPersistence ALREADY HAS FOR "ADJUST ANTAG REP". If this is used more than once
 //and the person rolls more than once, they will not get even more deduction!
-/datum/game_mode/proc/antag_pick(list/datum/mind/candidates, return_list = FALSE, fail_default_pick = TRUE)
+//More efficient if you use return list instead of calling this multiple times
+//fail_default_pick makes it use pick() instead of antag rep if it can't find anyone
+//allow_zero_if_insufficient allows it to pick people with zero rep if there isn't enough antags
+/datum/game_mode/proc/antag_pick(list/datum/mind/candidates, return_list = FALSE, fail_default_pick = TRUE, allow_zero_if_insufficient = TRUE)
 	if(!CONFIG_GET(flag/use_antag_rep)) // || candidates.len <= 1)
 		return pick(candidates)
 
@@ -323,12 +326,14 @@
 	var/list/ckey_to_mind = list()		//this is admittedly shitcode but I'm webediting
 	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory. how many tickets someone has stored
 	var/list/curr_tickets = list()				//how many tickets someone has for *this* antag roll, so with the free tickets
+	var/list/datum/mind/insufficient = list()				//who got cucked out of an antag roll due to not having *any* tickets
 	for(var/datum/mind/M in candidates)
 		var/mind_ckey = ckey(M.key)
 		var/can_spend = min(prev_tickets[mind_ckey], additional_tickets)	//they can only spend up to config/max_tickets_per_roll
 		var/amount = can_spend + free_tickets			//but they get config/default_antag_tickets for free
 		if(amount <= 0)		//if they don't have any
-			continue		//too bad!
+			insufficient += M		//too bad!
+			continue
 		curr_tickets[mind_ckey] = amount
 		ckey_to_mind[mind_ckey] = M			//make sure we can look them up after picking
 	
@@ -339,11 +344,14 @@
 			SSpersistence.antag_rep_change[ckey] = -(curr_tickets[ckey] - free_tickets)		//deduct what they spent
 		var/mind = ckey_to_mind[ckey]		//we want their mind
 		if(!mind)
-			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
-			message_admins(warning)
-			log_game(warning)
-			if(fail_default_pick)
-				mind = pick(candidates)
+			if(allow_zero_if_insufficient)		//last chance
+				mind = pick(insufficient)
+			if(!mind)		//still none
+				var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+				message_admins(warning)
+				log_game(warning)
+				if(fail_default_pick)
+					mind = pick(candidates)
 		return mind
 	else			//the far more efficient and proper use of this, to get a list
 		var/list/rolled = list()
@@ -355,7 +363,15 @@
 			rolled += ckey		//add
 			spend_tickets[ckey] = curr_tickets[ckey] - free_tickets
 			curr_tickets -= ckey			//don't roll them again
-		if(!length(rolled))
+		var/missing = return_list - length(rolled)
+		var/list/add
+		if((mising > 0) && allow_zero_if_insufficient)		//need more..
+			for(var/i in 1 to missing)
+				if(!length(insufficient))
+					break			//still not enough
+				var/datum/mind/M = pick_n_take(insufficient)
+				add += M
+		if(!length(rolled) && !length(add))		//if no one could normally roll AND no one can zero roll
 			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
 			message_admins(warning)
 			log_game(warning)
@@ -371,6 +387,8 @@
 			var/ckey = rolled[i]
 			SSpersistence.antag_rep_change[ckey] = -(spend_tickets[ckey])	//deduct what all of the folks who rolled spent
 			rolled[i] = ckey_to_mind[ckey]		//whoever called us wants minds, not ckeys
+		if(add)
+			rolled += add
 		return rolled
 
 /datum/game_mode/proc/get_players_for_role(role)
