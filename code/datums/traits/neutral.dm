@@ -108,8 +108,8 @@
 
 /datum/quirk/libido/remove()
 	if(quirk_holder)
-		quirk_holder.min_arousal = 0
-		quirk_holder.arousal_rate = 1
+		quirk_holder.min_arousal = initial(quirk_holder.min_arousal)
+		quirk_holder.arousal_rate = initial(quirk_holder.arousal_rate)
 
 /datum/quirk/maso
 	name = "Masochism"
