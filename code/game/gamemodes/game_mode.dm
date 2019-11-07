@@ -321,13 +321,11 @@
 	var/additional_tickets = CONFIG_GET(number/max_tickets_per_roll)
 	
 	var/list/ckey_to_mind = list()		//this is admittedly shitcode but I'm webediting
-	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory
-	var/list/curr_tickets = list()
-	var/list/spend_tickets = list()
+	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory. how many tickets someone has stored
+	var/list/curr_tickets = list()				//how many tickets someone has for *this* antag roll, so with the free tickets
 	for(var/datum/mind/M in candidates)
 		var/mind_ckey = ckey(M.key)
 		var/can_spend = min(prev_tickets[mind_ckey], additional_tickets)	//they can only spend up to config/max_tickets_per_roll
-		spend_tickets[mind_ckey] = can_spend
 		var/amount = can_spend + free_tickets			//but they get config/default_antag_tickets for free
 		if(amount <= 0)		//if they don't have any
 			continue		//too bad!
@@ -338,7 +336,7 @@
 		var/ckey
 		if(length(curr_tickets))
 			ckey = pickweight(curr_tickets)
-			SSpersistence.antag_rep_change[ckey] = -(spend_tickets[ckey])		//deduct what they spent
+			SSpersistence.antag_rep_change[ckey] = -(curr_tickets[ckey] - free_tickets)		//deduct what they spent
 		var/mind = ckey_to_mind[ckey]		//we want their mind
 		if(!mind)
 			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
@@ -349,11 +347,13 @@
 		return mind
 	else			//the far more efficient and proper use of this, to get a list
 		var/list/rolled = list()
+		var/list/spend_tickets = list()
 		for(var/i in 1 to return_list)
 			if(!length(curr_tickets))		//ah heck, we're out of candidates..
 				break
 			var/ckey = pickweight(curr_tickets)		//pick
 			rolled += ckey		//add
+			spend_tickets[ckey] = curr_tickets[ckey] - free_tickets
 			curr_tickets -= ckey			//don't roll them again
 		if(!length(rolled))
 			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
