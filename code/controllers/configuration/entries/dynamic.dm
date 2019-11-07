@@ -39,3 +39,28 @@
 /datum/config_entry/keyed_list/dynamic_high_population_requirement
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
+
+
+/datum/config_entry/number/dynamic_summon_guns_requirement
+	config_entry_value = 10
+	min_val = 0
+
+/datum/config_entry/number/dynamic_summon_guns_cost
+	config_entry_value = 5
+	min_val = 0
+
+/datum/config_entry/number/dynamic_summon_magic_requirement
+	config_entry_value = 10
+	min_val = 0
+
+/datum/config_entry/number/dynamic_summon_magic_cost
+	config_entry_value = 5
+	min_val = 0
+
+/datum/config_entry/number/dynamic_summon_events_requirement
+	config_entry_value = 20
+	min_val = 0
+
+/datum/config_entry/number/dynamic_summon_events_cost
+	config_entry_value = 10
+	min_val = 0

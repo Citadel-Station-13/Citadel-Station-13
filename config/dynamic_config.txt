@@ -139,3 +139,19 @@ DYNAMIC_HIGH_POPULATION_REQUIREMENT NIGHTMARE 50
 ## Latejoin antags
 DYNAMIC_HIGH_POPULATION_REQUIREMENT LATEJOIN_TRAITOR 15
 DYNAMIC_HIGH_POPULATION_REQUIREMENT LATEJOIN_REVOLUTION 50
+
+## Dynamic wizard stuff
+
+## How much threat level is required to buy summon guns. Setting to 0 makes it always available.
+DYNAMIC_SUMMON_GUNS_REQUIREMENT 10
+
+## How much summon guns reduces the round's remaining threat. Setting to 0 makes it cost none.
+DYNAMIC_SUMMON_GUNS_COST 5
+
+## As above, but for summon magic
+DYNAMIC_SUMMON_MAGIC_REQUIREMENT 10
+DYNAMIC_SUMMON_MAGIC_COST 5
+
+## As above, but for summon events
+DYNAMIC_SUMMON_EVENTS_REQUIREMENT 20
+DYNAMIC_SUMMON_EVENTS_COST 10
