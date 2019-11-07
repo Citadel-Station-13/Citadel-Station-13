@@ -305,48 +305,73 @@
 // The odds become:
 //     Player A: 150 / 250 = 0.6 = 60%
 //     Player B: 100 / 250 = 0.4 = 40%
-/datum/game_mode/proc/antag_pick(list/datum/candidates)
+
+//Use return list if you want a list, with the arg being the number you want returned.
+//WARNING: THIS PROC DOES NOT TAKE INTO ACCOUNT WHAT SSPersistence ALREADY HAS FOR "ADJUST ANTAG REP". If this is used more than once
+//and the person rolls more than once, they will not get even more deduction!
+/datum/game_mode/proc/antag_pick(list/datum/mind/candidates, return_list = FALSE, fail_default_pick = TRUE)
 	if(!CONFIG_GET(flag/use_antag_rep)) // || candidates.len <= 1)
 		return pick(candidates)
 
-	// Tickets start at 100
-	var/DEFAULT_ANTAG_TICKETS = CONFIG_GET(number/default_antag_tickets)
+	//whoever named the config entries is a bad person :(
 
-	// You may use up to 100 extra tickets (double your odds)
-	var/MAX_TICKETS_PER_ROLL = CONFIG_GET(number/max_tickets_per_roll)
-
-
-	var/total_tickets = 0
-
-	MAX_TICKETS_PER_ROLL += DEFAULT_ANTAG_TICKETS
-
-	var/p_ckey
-	var/p_rep
-
-	for(var/datum/mind/mind in candidates)
-		p_ckey = ckey(mind.key)
-		total_tickets += min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
-
-	var/antag_select = rand(1,total_tickets)
-	var/current = 1
-
-	for(var/datum/mind/mind in candidates)
-		p_ckey = ckey(mind.key)
-		p_rep = SSpersistence.antag_rep[p_ckey]
-
-		var/previous = current
-		var/spend = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
-		current += spend
-
-		if(antag_select >= previous && antag_select <= (current-1))
-			SSpersistence.antag_rep_change[p_ckey] = -(spend - DEFAULT_ANTAG_TICKETS)
-
-//			WARNING("AR_DEBUG: Player [mind.key] won spending [spend] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
-
-			return mind
-
-	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
-	return pick(candidates)
+	//Tickets you get for free
+	var/free_tickets = CONFIG_GET(number/default_antag_tickets)
+	//Max extra tickets you can use
+	var/additional_tickets = CONFIG_GET(number/max_tickets_per_roll)
+	
+	var/list/ckey_to_mind = list()		//this is admittedly shitcode but I'm webediting
+	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory
+	var/list/curr_tickets = list()
+	var/list/spend_tickets = list()
+	for(var/datum/mind/M in candidates)
+		var/mind_ckey = ckey(M.key)
+		var/can_spend = min(prev_tickets[mind_ckey], additional_tickets)	//they can only spend up to config/max_tickets_per_roll
+		spend_tickets[mind_ckey] = can_spend
+		var/amount = can_spend + free_tickets			//but they get config/default_antag_tickets for free
+		if(amount <= 0)		//if they don't have any
+			continue		//too bad!
+		curr_tickets[mind_ckey] = amount
+		ckey_to_mind[mind_ckey] = M			//make sure we can look them up after picking
+	
+	if(!return_list)		//return a single guy
+		var/ckey
+		if(length(curr_tickets))
+			ckey = pickweight(curr_tickets)
+			SSpersistence.antag_rep_change[ckey] = -(spend_tickets[ckey])		//deduct what they spent
+		var/mind = ckey_to_mind[ckey]		//we want their mind
+		if(!mind)
+			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			message_admins(warning)
+			log_game(warning)
+			if(fail_default_pick)
+				mind = pick(candidates)
+		return mind
+	else			//the far more efficient and proper use of this, to get a list
+		var/list/rolled = list()
+		for(var/i in 1 to return_list)
+			if(!length(curr_tickets))		//ah heck, we're out of candidates..
+				break
+			var/ckey = pickweight(curr_tickets)		//pick
+			rolled += ckey		//add
+			curr_tickets -= ckey			//don't roll them again
+		if(!length(rolled))
+			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			message_admins(warning)
+			log_game(warning)
+			var/list/failed = list()
+			if(fail_default_pick)
+				var/list/C = candidates.Copy()
+				for(var/i in 1 to return_list)
+					if(!length(C))
+						break
+					failed += pick_n_take(C)
+			return failed		//Wew, no one qualified!
+		for(var/i in 1 to length(rolled))
+			var/ckey = rolled[i]
+			SSpersistence.antag_rep_change[ckey] = -(spend_tickets[ckey])	//deduct what all of the folks who rolled spent
+			rolled[i] = ckey_to_mind[ckey]		//whoever called us wants minds, not ckeys
+		return rolled
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
