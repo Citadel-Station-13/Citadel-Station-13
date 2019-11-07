@@ -558,5 +558,5 @@ MONKEYCAP 64
 ## Uncomment to use TG-style combat
 #DISABLE_STAMBUFFER
 
-#Replaces standard extended/secret dichotomy with extended and 5 levels of chaos using dynamic.
+#Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
 DYNAMIC_VOTING
