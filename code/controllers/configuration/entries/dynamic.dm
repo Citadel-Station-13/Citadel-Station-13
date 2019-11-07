@@ -40,7 +40,14 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
 
+/datum/config_entry/number_list/dynamic_hijack_requirements
 
+/datum/config_entry/number/dynamic_hijack_high_population_requirement
+	config_entry_value = 25
+
+/datum/config_entry/number/dynamic_hijack_cost
+	config_entry_value = 5
+	
 /datum/config_entry/number/dynamic_summon_guns_requirement
 	config_entry_value = 10
 	min_val = 0
