@@ -420,34 +420,35 @@ SUBSYSTEM_DEF(research)
 	for(var/n in techweb_nodes)
 		var/datum/techweb_node/N = techweb_nodes[n]
 		if(!istype(N))
-			WARNING("Invalid research node with ID [n] detected and removed.")
+			stack_trace("Invalid research node with ID [n] detected and removed.")
 			techweb_nodes -= n
 			research_node_id_error(n)
+			. = FALSE
 		for(var/p in N.prereq_ids)
 			var/datum/techweb_node/P = techweb_nodes[p]
 			if(!istype(P))
-				WARNING("Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
+				stack_trace("Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.prereq_ids  -= p
 				research_node_id_error(p)
-			. = FALSE
+				. = FALSE
 		for(var/d in N.design_ids)
 			var/datum/design/D = techweb_designs[d]
 			if(!istype(D))
-				WARNING("Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
+				stack_trace("Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.design_ids -= d
 				design_id_error(d)
 				. = FALSE
 		for(var/u in N.unlock_ids)
 			var/datum/techweb_node/U = techweb_nodes[u]
 			if(!istype(U))
-				WARNING("Invalid research unlock node with ID [u] detected in node [N.display_name]\[[N.id]\] removed.")
+				stack_trace("Invalid research unlock node with ID [u] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.unlock_ids -= u
 				research_node_id_error(u)
 				. = FALSE
 		for(var/p in N.boost_item_paths)
 			if(!ispath(p))
 				N.boost_item_paths -= p
-				WARNING("[p] is not a valid path.")
+				stack_trace("[p] is not a valid path.")
 				node_boost_error(N.id, "[p] is not a valid path.")
 				. = FALSE
 			var/list/points = N.boost_item_paths[p]
@@ -464,7 +465,7 @@ SUBSYSTEM_DEF(research)
 			else if(!isnull(points))
 				N.boost_item_paths -= p
 				node_boost_error(N.id, "No valid list.")
-				WARNING("No valid list.")
+				stack_trace("No valid list.")
 				. = FALSE
 		CHECK_TICK
 
