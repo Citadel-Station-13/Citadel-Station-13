@@ -279,7 +279,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
-	pull_effort = 30
+	pull_effort = 90
+	is_fabric = TRUE
 	loom_result = /obj/item/stack/sheet/cloth/silk
 	merge_type = /obj/item/stack/sheet/cloth
 

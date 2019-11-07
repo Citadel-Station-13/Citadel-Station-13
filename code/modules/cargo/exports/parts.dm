@@ -6,14 +6,15 @@
 	export_types = list(/obj/item/solar_assembly)
 
 /datum/export/solar/tracker_board
-	cost = 30
+	cost = 10
 	unit_name = "solar tracker board"
 	export_types = list(/obj/item/electronics/tracker)
 
 /datum/export/solar/control_board
-	cost = 75
+	cost = 15
 	unit_name = "solar panel control board"
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
+	include_subtypes = FALSE
 
 /datum/export/swarmer
 	cost = 500
@@ -30,9 +31,9 @@
 
 /datum/export/board/SMES
 	cost = 20
-	k_elasticity = 1/30
 	unit_name = "smes board"
 	export_types = list(/obj/item/circuitboard/machine/smes)
+	include_subtypes = FALSE
 
 //Stock Parts
 

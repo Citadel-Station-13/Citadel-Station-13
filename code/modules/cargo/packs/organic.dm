@@ -248,16 +248,6 @@
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/rawcotton
-	name = "Raw Cotton Crate"
-	desc = "Plushies have been on the down in the market, and now due to a flood of raw cotton the price of it is so cheap, its a steal! Contains 40 raw cotton sheets."
-	cost = 800 // 100 net cost, 20 x 40 = 800. 700 proffit if turned into cloth sheets or more if turned to silk
-	contains = list(/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/ten
-					)
-	crate_name = "cotton crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
-
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
 	desc = "Big things have small beginnings. Contains thirteen different seeds."
