@@ -1529,10 +1529,10 @@
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -2263,24 +2263,6 @@
 	if(prob(20))
 		to_chat(M, "You find yourself unable to supress the desire to meow!")
 		M.emote("nya")
-	..()
-
-//Kept for legacy, I think it will break everything if you enable it.
-/datum/reagent/penis_enlargement
-	name = "Penis Enlargement"
-	id = "penis_enlargement"
-	description = "A patented chemical forumula by Doctor Ronald Hyatt that is guaranteed to bring maximum GROWTH and LENGTH to your penis, today!"
-	color = "#888888"
-	taste_description = "chinese dragon powder"
-	metabolization_rate = INFINITY //So it instantly removes all of itself. Don't want to put strain on the system.
-
-/datum/reagent/penis_enlargement/on_mob_life(mob/living/carbon/C)
-	var/obj/item/organ/genital/penis/P = C.getorganslot(ORGAN_SLOT_PENIS)
-	if(P)
-		var/added_length = round(volume/30,0.01) //Every 30u gives an extra inch. Rounded to the nearest 0.01 so float fuckery doesn't occur with the division by 30.
-		if(added_length >= 0.20) //Only add the length if it's greater than or equal to 0.2. This is to prevent people from smoking the reagents and causing the penis to update constantly.
-			P.length += added_length
-			P.update()
 	..()
 
 /datum/reagent/changeling_string

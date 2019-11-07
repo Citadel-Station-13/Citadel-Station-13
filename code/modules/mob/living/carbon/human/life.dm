@@ -18,7 +18,7 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds, times_fired)
 	set invisibility = 0
 	if (notransform)
 		return
@@ -41,7 +41,7 @@
 
 	if(stat != DEAD)
 		//process your dick energy
-		handle_arousal()
+		handle_arousal(times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()

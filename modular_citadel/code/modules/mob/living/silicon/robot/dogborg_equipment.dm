@@ -13,13 +13,23 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	w_class = 3
 	hitsound = 'sound/weapons/bite.ogg'
 	sharpness = IS_SHARP
+	var/stamtostunconversion = 0.1 //Total stamloss gets multiplied by this value for the help intent hard stun. Resting adds an additional 2x multiplier on top. Keep this low or so help me god.
+	var/stuncooldown = 4 SECONDS //How long it takes before you're able to attempt to stun a target again
+	var/nextstuntime
+
+/obj/item/dogborg/jaws/examine(mob/user)
+	. = ..()
+	if(!CONFIG_GET(flag/weaken_secborg))
+		to_chat(user, "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>")
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
 	desc = "The jaws of the law. Very sharp."
 	icon_state = "jaws"
-	force = 10 //Lowered to match secborg. No reason it should be more than a secborg's baton.
+	force = 15 //Chomp chomp. Crew harm.
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
+	stamtostunconversion = 0.2 // 100*0.2*2=40. Stun's just long enough to slap on cuffs with click delay if the target is near hard stamcrit.
+	stuncooldown = 6 SECONDS
 
 
 /obj/item/dogborg/jaws/small
@@ -31,11 +41,36 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	var/status = 0
 
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
-	..()
-	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
+	if(!istype(user))
+		return
+	if(!CONFIG_GET(flag/weaken_secborg) && user.a_intent != INTENT_HARM && istype(A, /mob/living))
+		if(A == user.pulling)
+			to_chat(user, "<span class='warning'>You already have [A] in your jaws.</span>")
+			return
+		if(nextstuntime >= world.time)
+			to_chat(user, "<span class='warning'>Your jaw servos are still recharging.</span>")
+			return
+		nextstuntime = world.time + stuncooldown
+		var/mob/living/M = A
+		var/cachedstam = M.getStaminaLoss()
+		var/totalstuntime = cachedstam * stamtostunconversion * (M.lying ? 2 : 1)
+		if(!M.resting)
+			M.Knockdown(cachedstam*2) //BORK BORK. GET DOWN.
+		M.Stun(totalstuntime)
+		user.do_attack_animation(A, ATTACK_EFFECT_BITE)
+		user.start_pulling(M, TRUE) //Yip yip. Come with.
+		user.changeNext_move(CLICK_CD_MELEE)
+		M.visible_message("<span class='danger'>[user] clamps [user.p_their()] [src] onto [M] and latches on!</span>", "<span class='userdanger'>[user] clamps [user.p_their()] [src] onto you and latches on!</span>")
+		if(totalstuntime >= 4 SECONDS)
+			playsound(usr, 'sound/effects/k9_jaw_strong.ogg', 75, FALSE, 2) //Wuff wuff. Big stun.
+		else
+			playsound(usr, 'sound/effects/k9_jaw_weak.ogg', 50, TRUE, -1) //Arf arf. Pls buff.
+	else
+		. = ..()
+		user.do_attack_animation(A, ATTACK_EFFECT_BITE)
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
-	var/mob/living/silicon/robot.R = user
+	var/mob/living/silicon/robot/R = user
 	if(R.cell && R.cell.charge > 100)
 		if(R.emagged && status == 0)
 			name = "combat jaws"
@@ -43,14 +78,18 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			desc = "The jaws of the law."
 			force = 12
 			attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
+			stamtostunconversion = 0.15
+			stuncooldown = 5 SECONDS
 			status = 1
 			to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
 		else
 			name = "puppy jaws"
 			icon_state = "smalljaws"
 			desc = "The jaws of a small dog."
-			force = 5
+			force = initial(force)
 			attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
+			stamtostunconversion = initial(stamtostunconversion)
+			stuncooldown = initial(stuncooldown)
 			status = 0
 			if(R.emagged)
 				to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
@@ -167,7 +206,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	item_flags |= NOBLUDGEON //No more attack messages
 
 /obj/item/soap/tongue/attack_self(mob/user)
-	var/mob/living/silicon/robot.R = user
+	var/mob/living/silicon/robot/R = user
 	if(R.cell && R.cell.charge > 100)
 		if(R.emagged && status == 0)
 			status = !status
@@ -187,7 +226,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	update_icon()
 
 /obj/item/soap/tongue/afterattack(atom/target, mob/user, proximity)
-	var/mob/living/silicon/robot.R = user
+	var/mob/living/silicon/robot/R = user
 	if(!proximity || !check_allowed_items(target))
 		return
 	if(R.client && (target in R.client.screen))
@@ -307,8 +346,10 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /mob/living/silicon/robot
 	var/leaping = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 20 //Buffed to counter balance changes
-	var/pounce_spoolup = 1
+	var/pounce_cooldown_time = 30 //Time in deciseconds between pounces
+	var/pounce_spoolup = 5 //Time in deciseconds for the pounce to happen after clicking
+	var/pounce_stamloss_cap = 120 //How much staminaloss pounces alone are capable of bringing a spaceman to
+	var/pounce_stamloss = 80 //Base staminaloss value of the pounce
 	var/leap_at
 	var/disabler
 	var/laser
@@ -320,13 +361,12 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/dogborg/pounce/afterattack(atom/A, mob/user)
 	var/mob/living/silicon/robot/R = user
-	if(R && !R.pounce_cooldown)
-		R.pounce_cooldown = !R.pounce_cooldown
+	if(R && (world.time >= R.pounce_cooldown))
+		R.pounce_cooldown = world.time + R.pounce_cooldown_time
 		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
+		playsound(R, 'sound/effects/servostep.ogg', 100, TRUE)
 		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), R.pounce_spoolup)
-		spawn(R.pounce_cooldown_time)
-			R.pounce_cooldown = !R.pounce_cooldown
-	else if(R && R.pounce_cooldown)
+	else if(R && (world.time < R.pounce_cooldown))
 		to_chat(R, "<span class='danger'>Your leg actuators are still recharging!</span>")
 
 /mob/living/silicon/robot/proc/leap_at(atom/A)
@@ -349,6 +389,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		update_icons()
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
 		cell.use(750) //Less than a stunbaton since stunbatons hit everytime.
+		playsound(src, 'sound/effects/stealthoff.ogg', 25, TRUE, -1)
 		weather_immunities -= "lava"
 
 /mob/living/silicon/robot/throw_impact(atom/A)
@@ -366,7 +407,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(iscarbon(L) ? 225 : 45) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
+				L.Knockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)

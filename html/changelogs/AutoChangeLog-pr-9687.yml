@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Refactored how Jacqueen teleportation destination is selected, preventing them from teleporting on off-station holopads."
