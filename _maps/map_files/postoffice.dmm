@@ -19,16 +19,16 @@
 "as" = (/obj/effect/turf_decal/delivery,/turf/open/indestructible,/area/quartermaster/office)
 "at" = (/obj/structure/table/wood/fancy/green,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/indestructible,/area/quartermaster/office)
 "au" = (/obj/structure/chair/office/dark{dir = 8},/obj/effect/landmark/start/cargo_technician,/turf/open/indestructible,/area/quartermaster/office)
-"av" = (/turf/open/space/basic,/area/quartermaster/storage)
+"av" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/airlock/mining,/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible{icon_state = "sepia"},/area/quartermaster{name = "Cargo Break Room"})
 "aw" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/quartermaster/office)
-"ax" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/airlock/mining,/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/quartermaster{name = "Cargo Break Room"})
+"ax" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/mining/glass{name = "Cargo Office"; req_access_txt = "50"},/turf/open/indestructible{icon_state = "sepia"},/area/quartermaster{name = "Cargo Break Room"})
 "ay" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/machinery/vending/cola/black,/turf/open/indestructible{icon_state = "sepia"},/area/quartermaster{name = "Cargo Break Room"})
 "az" = (/obj/effect/landmark/start/quartermaster,/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "aA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
 "aB" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/turf/open/indestructible,/area/quartermaster/office)
 "aC" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/obj/structure/table/wood/fancy/red,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/turf/open/indestructible,/area/quartermaster/office)
-"aD" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
-"aE" = (/obj/structure/closet/wardrobe/cargotech,/obj/structure/closet/secure_closet/quartermaster,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/item/stamp/qm,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
+"aD" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown,/obj/item/radio,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
+"aE" = (/obj/structure/closet/wardrobe/cargotech,/obj/structure/closet/secure_closet/quartermaster,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/item/stamp/qm,/obj/item/radio,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "aF" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/obj/machinery/vending/donksofttoyvendor,/turf/open/indestructible,/area/quartermaster/office)
 "aG" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown,/obj/machinery/vending/toyliberationstation,/turf/open/indestructible,/area/quartermaster/office)
 "aH" = (/turf/closed/indestructible,/area/quartermaster/sorting)
@@ -37,7 +37,7 @@
 "aK" = (/obj/machinery/conveyor{dir = 4; id = "robo1"},/obj/effect/turf_decal/stripes/end{icon_state = "warn_end"; dir = 8},/turf/open/floor/plating,/area/quartermaster/sorting)
 "aL" = (/obj/machinery/vending/wardrobe/cargo_wardrobe,/obj/machinery/light/small{dir = 1; light_color = "#ffc1c1"},/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "aM" = (/obj/structure/window/spawner/west,/obj/machinery/conveyor_switch/oneway,/turf/open/indestructible,/area/quartermaster/sorting)
-"aN" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
+"aN" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/item/radio,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "aO" = (/obj/effect/turf_decal/loading_area{dir = 1},/turf/open/indestructible,/area/quartermaster/sorting)
 "aP" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/obj/effect/spawner/structure/window/reinforced/indestructable,/obj/structure/sign/poster/official/foam_force_ad,/turf/open/floor/plating,/area/quartermaster/office)
 "aQ" = (/obj/effect/turf_decal/delivery,/turf/open/indestructible,/area/quartermaster/sorting)
@@ -61,9 +61,9 @@
 "bi" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment,/obj/structure/cable/yellow{icon_state = "1-2"},/obj/structure/cable/yellow{icon_state = "2-4"},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "bj" = (/obj/effect/turf_decal/caution/stand_clear{pixel_y = 8},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/turf/open/indestructible,/area/quartermaster/office)
 "bk" = (/obj/machinery/autolathe{name = "public autolathe"},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
-"bl" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/structure/cable/yellow{icon_state = "0-8"},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
-"bm" = (/obj/structure/closet/secure_closet/quartermaster,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/shoes/winterboots,/obj/machinery/airalarm{dir = 1; pixel_y = -22},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/item/stamp/qm,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
-"bn" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
+"bl" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/structure/cable/yellow{icon_state = "0-8"},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/item/radio,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
+"bm" = (/obj/structure/closet/secure_closet/quartermaster,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/shoes/winterboots,/obj/machinery/airalarm{dir = 1; pixel_y = -22},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/item/stamp/qm,/obj/item/radio,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
+"bn" = (/obj/structure/closet/wardrobe/cargotech,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/under/color/brown,/obj/item/clothing/shoes/winterboots,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/item/radio,/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "bo" = (/obj/effect/turf_decal/tile/brown{dir = 1},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "bp" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/airlock/mining,/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "bq" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/obj/structure/table/wood/fancy/green,/obj/item/stamp,/obj/item/stamp/denied{pixel_x = 6; pixel_y = 6},/turf/open/indestructible,/area/quartermaster/office)
@@ -74,11 +74,11 @@
 "bv" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/structure/chair,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/obj/structure/sign/poster/official/foam_force_ad{pixel_y = 32},/turf/open/indestructible,/area/quartermaster/office)
 "bw" = (/obj/effect/turf_decal/bot,/obj/machinery/autolathe,/turf/open/indestructible,/area/quartermaster/office)
 "bx" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/structure/chair,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/light{dir = 1; light_color = "#d1dfff"},/turf/open/indestructible,/area/quartermaster/office)
-"by" = (/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/dark,/area/quartermaster/sorting)
+"by" = (/obj/effect/turf_decal/delivery,/turf/open/indestructible{icon_state = "darkfull"},/area/quartermaster/sorting)
 "bz" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/office)
 "bA" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/office{name = "Post Office Lobby"})
-"bB" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel/dark,/area/quartermaster/sorting)
-"bC" = (/turf/open/floor/plasteel/dark,/area/quartermaster/sorting)
+"bB" = (/obj/effect/turf_decal/stripes/line,/turf/open/indestructible{icon_state = "darkfull"},/area/quartermaster/sorting)
+"bC" = (/turf/open/indestructible{icon_state = "darkfull"},/area/quartermaster/sorting)
 "bD" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/open/indestructible,/area/quartermaster/office)
 "bE" = (/obj/structure/table/wood/fancy/green,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/machinery/light{dir = 1; light_color = "#d1dfff"},/turf/open/indestructible,/area/quartermaster/office)
 "bF" = (/obj/machinery/computer/cargo,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/structure/noticeboard/qm{pixel_y = 32},/turf/open/indestructible,/area/quartermaster/office)
@@ -95,7 +95,7 @@
 "bQ" = (/obj/structure/table/wood/fancy/green,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 1},/turf/open/indestructible,/area/quartermaster/office)
 "bR" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/airlock/mining,/obj/structure/disposalpipe/segment,/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/indestructible,/area/crew_quarters/locker{name = "Cargo Locker Room"})
 "bS" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment,/obj/structure/cable/yellow{icon_state = "1-2"},/obj/structure/cable/yellow{icon_state = "2-4"},/turf/open/indestructible,/area/quartermaster/office)
-"bT" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/mining/glass{name = "Cargo Office"; req_access_txt = "50"},/turf/open/indestructible,/area/quartermaster{name = "Cargo Break Room"})
+"bT" = (/obj/effect/turf_decal/caution/stand_clear{dir = 1; icon_state = "stand_clear"; pixel_y = 0},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible{icon_state = "darkfull"},/area/quartermaster/sorting)
 "bU" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/disposalpipe/segment,/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/indestructible,/area/quartermaster/storage)
 "bV" = (/obj/effect/turf_decal/bot,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/indestructible,/area/quartermaster/office)
 "bW" = (/obj/effect/turf_decal/caution/stand_clear{dir = 1; icon_state = "stand_clear"; pixel_y = -8},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/indestructible,/area/quartermaster/office)
@@ -114,7 +114,7 @@
 "cj" = (/obj/effect/turf_decal/bot,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/open/indestructible,/area/quartermaster/sorting)
 "ck" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/sorting)
 "cl" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/sorting)
-"cm" = (/obj/effect/turf_decal/caution/stand_clear{dir = 1; icon_state = "stand_clear"; pixel_y = 0},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plasteel/dark,/area/quartermaster/sorting)
+"cm" = (/obj/structure/plasticflaps/opaque,/turf/open/indestructible{icon_state = "darkfull"},/area/quartermaster/sorting)
 "cn" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/obj/structure/extinguisher_cabinet{pixel_x = -24},/turf/open/indestructible/hotelwood,/area/quartermaster/qm)
 "co" = (/obj/effect/turf_decal/bot,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/sorting)
 "cp" = (/obj/effect/turf_decal/loading_area{dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/indestructible,/area/quartermaster/sorting)
@@ -123,7 +123,6 @@
 "cs" = (/obj/machinery/conveyor{dir = 8; id = "QMLoad2"},/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/plasticflaps,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plating,/area/quartermaster/sorting)
 "ct" = (/obj/machinery/conveyor{dir = 8; id = "QMLoad2"},/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating,/area/quartermaster/storage)
 "cu" = (/obj/effect/turf_decal/stripes/end{icon_state = "warn_end"; dir = 4},/obj/machinery/conveyor{dir = 8; id = "QMLoad2"},/turf/open/floor/plating,/area/quartermaster/storage)
-"cv" = (/obj/structure/plasticflaps/opaque,/turf/open/space/basic,/area/quartermaster/sorting)
 "cw" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/disposalpipe/segment,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/machinery/light{dir = 8; light_color = "#e8eaff"},/turf/open/indestructible,/area/quartermaster/storage)
 "cx" = (/obj/machinery/holopad,/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/quartermaster/office)
 "cy" = (/obj/effect/landmark/start/quartermaster,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/indestructible,/area/quartermaster/office)
@@ -157,7 +156,7 @@
 "da" = (/obj/machinery/computer/security/mining{icon_state = "computer"; dir = 1},/obj/structure/sign/mining{pixel_y = -32},/turf/open/indestructible/hotelwood,/area/quartermaster/qm)
 "db" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/airlock/mining/glass{name = "Quartermaster"; req_access_txt = "41"},/obj/structure/disposalpipe/segment{dir = 4},/turf/open/indestructible{icon_state = "sepia"},/area/quartermaster/qm)
 "dc" = (/obj/machinery/computer/card/minor/qm{icon_state = "computer"; dir = 1},/obj/machinery/newscaster{pixel_y = -32},/turf/open/indestructible/hotelwood,/area/quartermaster/qm)
-"dd" = (/obj/structure/closet/secure_closet/quartermaster,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/shoes/winterboots,/obj/item/stamp/qm,/turf/open/indestructible/hotelwood,/area/quartermaster/qm)
+"dd" = (/obj/structure/closet/secure_closet/quartermaster,/obj/item/clothing/suit/hooded/wintercoat/cargo,/obj/item/clothing/shoes/winterboots,/obj/item/stamp/qm,/obj/item/radio,/turf/open/indestructible/hotelwood,/area/quartermaster/qm)
 "de" = (/obj/structure/filingcabinet,/turf/open/indestructible/hotelwood,/area/quartermaster/qm)
 "dg" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/turf_decal/tile/brown{dir = 1},/turf/open/indestructible,/area/quartermaster/storage)
 "dh" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/effect/landmark/start/quartermaster,/turf/open/indestructible,/area/quartermaster/sorting)
@@ -198,11 +197,11 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacagagabagagabagagagaUaUaUaUaUaUadavavavavavaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacagagabagagabagagagaUaUaUaUaUaUadadadadadadaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacagaiajakalamanayagaDaEaLaEaNaUbcbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbdaRajajaSaTaVaWaxaXazaIaYaZbpbcbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbdaRajajaSaTaVaWavaXazaIaYaZbpbcbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacagbabbbeaSbfbgbhagbiblbmbnboaUbtbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeagagagagbTagagagagbRaUaUaUbuaUbcbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeagagagagaxagagagagbRaUaUaUbuaUbcbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeafahbvbxbjbkcPbEbFbSbJaUbKbLaUbMbcbcbcbcbcaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapaqapbzbAbDarasataubYbraUbNbObsbsbsbUbcbcbcaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaPawbXcdcxcyawawczbqcacgbsbsbsbscnbscwbcbcbcaaaaaaaaaaaaaaaaaaaaaa
@@ -211,8 +210,8 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaCcIbVcJbWaFaGcM
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaHaHbZaHcLaHaHaHaHcTaHbsdadcdddebHdgbcbcbcaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaHaKcbaMccbybybybycUcVbsbsbsbsbsbsdgbcbcbcaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbPaOceaJcfbBbBbBbCdhchdidjdkdldmcNcOcibcbcaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaHaQcjckdnckdoclcmdpcocpcqcrdqcrcsctcubcbcaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaHaHbPaHaHbPaHaHcvaHaHaHaHaHaHaHaHadadadadaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaHaQcjckdnckdoclbTdpcocpcqcrdqcrcsctcubcbcaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaHaHbPaHaHbPaHaHcmaHaHaHaHaHaHaHaHadadadadaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
