@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(vote)
 					to_chat(world,"<span class='boldannounce'>Dynamic extended has been voted for.</span>")
 					return message_admins("Dynamic extended has been voted for.")
 				var/mean = (choices["extended"]*-1+choices[PEACE]*-1+choices[CHAOS])/voted.len
-				GLOB.dynamic_curve_centre = mean*5
+				GLOB.dynamic_curve_centre = mean*20
 				var/magic_curve_constant = (4-(abs((choices[PEACE]+choices["extended"])-choices[CHAOS])/(voted.len)))*8 //magic as hell.
 				GLOB.dynamic_curve_width = CLAMP(4-magic_curve_constant,0.5,4)
 				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
