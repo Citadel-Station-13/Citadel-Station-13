@@ -40,6 +40,16 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
 
+/datum/config_entry/number_list/dynamic_second_rule_requirements
+
+/datum/config_entry/number_list/dynamic_third_rule_requirements
+
+/datum/config_entry/number/dynamic_second_rule_high_pop_requirement
+	config_entry_value = 50
+
+/datum/config_entry/number/dynamic_third_rule_high_pop_requirement
+	config_entry_value = 70
+
 /datum/config_entry/number_list/dynamic_hijack_requirements
 
 /datum/config_entry/number/dynamic_hijack_high_population_requirement

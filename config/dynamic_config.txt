@@ -7,6 +7,14 @@ DYNAMIC_LATEJOIN_DELAY_MAX 25
 ## How many roundstart players required for high population override to take effect.
 DYNAMIC_HIGH_POP_LIMIT 80 #80 instead of 55 because fewer robust players
 
+## Threat requirements for a second roundstart ruleset being drafted
+DYNAMIC_SECOND_RULE_REQUIREMENTS 101 101 101 101 100 90 80 70 60 50
+## Threat requirements for a *third* roundstart ruleset being drafted
+DYNAMIC_THIRD_RULE_REQUIREMENTS 101 101 101 101 101 100 90 80 70 60
+## As above, but if there's 79+ players
+DYNAMIC_SECOND_RULE_HIGH_POP_REQUIREMENT 50
+DYNAMIC_THIRD_RULE_HIGH_POP_REQUIREMENT 60
+
 ## Pop range per requirement.
 ## If the value is five the range is:
 ## 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+

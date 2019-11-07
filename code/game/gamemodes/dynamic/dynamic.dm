@@ -110,6 +110,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/New() // i have NO IDEA if this is the proper way to do this.
 	..()
 	pop_per_requirement = CONFIG_GET(number/dynamic_pop_per_requirement)
+	second_rule_req = CONFIG_GET(number_list/dynamic_second_rule_requirements)
+	third_rule_req = CONFIG_GET(number_list/dynamic_third_rule_requirements)
+	high_pop_second_rule_req = CONFIG_GET(number/dynamic_second_rule_high_pop_requirement)
+	high_pop_third_rule_req = CONFIG_GET(number/dynamic_third_rule_high_pop_requirement)
 	GLOB.dynamic_high_pop_limit = CONFIG_GET(number/dynamic_high_pop_limit)
 	GLOB.dynamic_latejoin_delay_min = CONFIG_GET(number/dynamic_latejoin_delay_min)*600
 	GLOB.dynamic_latejoin_delay_max = CONFIG_GET(number/dynamic_latejoin_delay_max)*600
