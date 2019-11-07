@@ -72,7 +72,17 @@
 
 /datum/antagonist/traitor/proc/forge_human_objectives()
 	var/is_hijacker = FALSE
-	if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
+	var/datum/game_mode/dynamic/mode
+	var/is_dynamic = FALSE
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		is_dynamic = TRUE
+		if(GLOB.joined_player_list>=GLOB.dynamic_high_pop_limit)
+			is_hijacker = prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement)
+		else
+			var/indice_pop = min(10,round(GLOB.joined_player_list/mode.pop_per_requirement)+1)
+			is_hijacker = prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop])
+	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
 		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
@@ -93,6 +103,8 @@
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
 			add_objective(hijack_objective)
+			if(is_dynamic)
+				mode.spend_threat(CONFIG_GET(number/dynamic_hijack_cost))
 			return
 
 
