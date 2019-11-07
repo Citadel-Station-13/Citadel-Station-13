@@ -118,6 +118,8 @@
 		var/datum/objective/martyr/martyr_objective = new
 		martyr_objective.owner = owner
 		add_objective(martyr_objective)
+		if(is_dynamic)
+			mode.spend_threat(CONFIG_GET(number/dynamic_glorious_death_cost))
 		return
 
 	else
