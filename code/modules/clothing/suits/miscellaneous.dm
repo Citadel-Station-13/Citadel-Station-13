@@ -649,7 +649,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Whats a wee bit of cold to a undead being?
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
-	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 0, "rad" = 0) //Hey, if we are going totally ditch our disguise, why not have decent armor, and not get cheesed by explosions?
+	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 100, "rad" = 20) //Hey, if we are going totally ditch our disguise, why not have decent armor, and not get cheesed by explosions?
 	hoodtype = /obj/item/clothing/head/hooded/vamp_hood
 
 /obj/item/clothing/suit/hooded/vamp_coat/Initialize()
@@ -662,7 +662,7 @@
 	icon_state = "chaplain_hood"
 	item_state = "chaplain_hood"
 	icon = 'icons/mob/head.dmi'
-	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 0, "rad" = 0)
+	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 100, "rad" = 20)
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

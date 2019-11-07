@@ -126,7 +126,7 @@
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
 	var/team_mode = FALSE
-	if(prob(team_mode_probability)) 
+	if(prob(team_mode_probability))
 		team_mode = TRUE
 		var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 		var/list/possible_team_objectives = list()
@@ -174,14 +174,14 @@
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
-	
+
 	var/mob/M = pick(candidates)
 	if (M)
 		candidates -= M
 		assigned += M.mind
 		M.mind.assigned_role = ROLE_WIZARD
 		M.mind.special_role = ROLE_WIZARD
-	
+
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
@@ -189,7 +189,7 @@
 		M.current.forceMove(pick(GLOB.wizardstart))
 		M.add_antag_datum(new antag_datum())
 	return TRUE
-	
+
 //////////////////////////////////////////////
 //                                          //
 //                BLOOD CULT                //
@@ -238,7 +238,7 @@
 		var/datum/antagonist/cult/new_cultist = new antag_datum()
 		new_cultist.cult_team = main_cult
 		new_cultist.give_equipment = TRUE
-		M.add_antag_datum(new_cultist)	
+		M.add_antag_datum(new_cultist)
 	main_cult.setup_objectives()
 	return TRUE
 
@@ -390,7 +390,7 @@
 	SSshuttle.registerHostileEnvironment(src)
 
 	return TRUE
-	
+
 /datum/dynamic_ruleset/roundstart/delayed/revs/rule_process()
 	if(check_rev_victory())
 		finished = 1
@@ -605,7 +605,7 @@
 	high_population_requirement = 101
 	var/devil_limit = 4 // Hard limit on devils if scaling is turned off
 
-/datum/dynamic_ruleset/roundstart/devil/pre_execute()	
+/datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
 	var/num_devils = 1
 
@@ -743,3 +743,37 @@
 	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
+
+	//////////////////////////////////////////////
+	//                                          //
+	//               VAMPIRES                   //
+	//                                          //
+	//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/vampire
+	name = "Vampires"
+	config_tag = "vampire"
+	antag_datum = /datum/antagonist/vampire
+	antag_flag = ROLE_VAMPIRE
+	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain", "Quartermaster")
+	restricted_roles = list("AI","Cyborg","Chaplain")
+	enemy_roles = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Chaplain")
+	required_enemies = list(2,2,2,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 2
+	cost = 15
+	requirements = list(80,70,60,60,30,20,10,10,10,10)
+	high_population_requirement = 30
+
+/datum/dynamic_ruleset/roundstart/vampire/execute()
+	var/num_vampires = min(round(mode.roundstart_pop_ready / 10) + 1, candidates.len)
+	for (var/i = 1 to num_vampires)
+		var/mob/M = pick(candidates)
+		assigned += M
+		candidates -= M
+		add_vampire(M)
+		if (i >= 2 && (mode.threat > cost))  //Gets more expensive the more vampires there are.
+			mode.spend_threat(cost)
+		else
+			break
+	return TRUE

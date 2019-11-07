@@ -116,7 +116,8 @@
 		return
 
 /datum/antagonist/vampire/proc/add_objective(var/datum/objective/O)
-	objectives |= O
+	objectives += O
+	owner.objectives += O
 
 /datum/antagonist/vampire/proc/forge_single_objective() //Returns how many objectives are added
 	.=1
@@ -203,6 +204,13 @@
 		vamp_burn()
 	if(isspaceturf(C.loc))
 		check_sun()
+
+/mob/living/carbon/human/handle_fire()
+	. = ..()
+	if(mind)
+		var/datum/antagonist/vampire/L = mind.has_antag_datum(/datum/antagonist/vampire)
+		if(on_fire && stat == DEAD && L && !L.get_ability(/datum/vampire_passive/full))
+			dust()
 
 
 /datum/antagonist/vampire/proc/handle_bloodsucking(mob/living/carbon/human/H)

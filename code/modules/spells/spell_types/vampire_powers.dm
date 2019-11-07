@@ -111,10 +111,10 @@
 
 /obj/effect/proc_holder/spell/targeted/hypnotise
 	name = "Hypnotize (30)"
-	desc= "A piercing stare that knocks out your victim for a good length of time, and makes them forget what recently happened."
-	action_icon_state = "hypnotize"
+	desc= "A piercing stare that knocks out your victim for a short lenght of time"
 	blood_used = 30
-	charge_max = 250  //No, you cant chain this with multiple people.
+	charge_max = 500  //No, you cant chain this with multiple people.
+	action_icon_state = "hypnotize"
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
@@ -355,14 +355,15 @@
 		user.visible_message("<span class='warning'>Shadowy matter takes the place of [user]'s missing limbs as they reform!</span>")
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
-	user.adjustStaminaLoss(100) //Dont be ready to skeddadle without atleast wasting some abilities.
+	user.adjustStaminaLoss(100) //Dont be ready to skeddadle without atleast without having to use some additional blood.
 
 /obj/effect/proc_holder/spell/self/summon_coat
 	name = "Summon Vampire Coat (100)"
 	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
+	desc = "Summons a vampiric coat with decent armor, with a hood that hides your face."
 	blood_used = 100
 	action_icon = 'icons/mob/vampire.dmi'
-	action_icon_state = "coat" //The sprite is there, the path seems right, why isnt it working?
+	action_icon_state = "coat"
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
 
