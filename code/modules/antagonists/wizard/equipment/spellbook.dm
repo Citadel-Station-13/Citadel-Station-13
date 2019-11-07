@@ -482,6 +482,10 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_guns_requirement))
+			return 0
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -490,6 +494,9 @@
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.spend_threat(CONFIG_GET(number/dynamic_summon_guns_cost))
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -499,6 +506,10 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_magic_requirement))
+			return 0
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -507,6 +518,9 @@
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.spend_threat(CONFIG_GET(number/dynamic_summon_magic_cost))
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -517,6 +531,10 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_events_requirement))
+			return 0
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -525,6 +543,9 @@
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.spend_threat(CONFIG_GET(number/dynamic_summon_events_cost))
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
