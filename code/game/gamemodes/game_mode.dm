@@ -342,16 +342,13 @@
 		if(length(curr_tickets))
 			ckey = pickweight(curr_tickets)
 			SSpersistence.antag_rep_change[ckey] = -(curr_tickets[ckey] - free_tickets)		//deduct what they spent
-		var/mind = ckey_to_mind[ckey]		//we want their mind
-		if(!mind)
-			if(allow_zero_if_insufficient)		//last chance
-				mind = pick(insufficient)
-			if(!mind)		//still none
-				var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
-				message_admins(warning)
-				log_game(warning)
-				if(fail_default_pick)
-					mind = pick(candidates)
+		var/mind = ckey_to_mind[ckey] || (allow_zero_if_insufficient? pick(insufficient) : null)		//we want their mind
+		if(!mind)		//no mind
+			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			message_admins(warning)
+			log_game(warning)
+			if(fail_default_pick)
+				mind = pick(candidates)
 		return mind
 	else			//the far more efficient and proper use of this, to get a list
 		var/list/rolled = list()
