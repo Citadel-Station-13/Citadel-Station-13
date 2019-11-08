@@ -24,6 +24,23 @@
 	config_entry_value = 25
 	min_val = 1
 
+/datum/config_entry/number/dynamic_first_midround_delay_min
+	config_entry_value = 20
+	min_val = 1
+
+/datum/config_entry/number/dynamic_first_midround_delay_max
+	config_entry_value = 40
+	min_val = 1
+
+/datum/config_entry/number/dynamic_first_latejoin_delay_min
+	config_entry_value = 10
+	min_val = 1
+
+/datum/config_entry/number/dynamic_first_latejoin_delay_max
+	config_entry_value = 30
+	min_val = 1
+
+
 /datum/config_entry/keyed_list/dynamic_cost
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM

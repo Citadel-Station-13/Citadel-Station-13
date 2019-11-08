@@ -12,10 +12,17 @@
 
 // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (15 MINUTES))
 
-GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES))
-GLOBAL_VAR_INIT(dynamic_midround_delay_max, (35 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_min, (10 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_max, (30 MINUTES))
+
+// -- Roundstart injection delays
+GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_min, (10 MINUTES))
+GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_max, (30 MINUTES))
+
+GLOBAL_VAR_INIT(dynamic_first_midround_delay_min, (20 MINUTES))
+GLOBAL_VAR_INIT(dynamic_first_midround_delay_max, (40 MINUTES))
 
 // Are HIGHLANDER_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
@@ -123,6 +130,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	GLOB.dynamic_latejoin_delay_max = CONFIG_GET(number/dynamic_latejoin_delay_max)*600
 	GLOB.dynamic_midround_delay_min = CONFIG_GET(number/dynamic_midround_delay_min)*600
 	GLOB.dynamic_midround_delay_max = CONFIG_GET(number/dynamic_midround_delay_max)*600
+	GLOB.dynamic_first_latejoin_delay_min = CONFIG_GET(number/dynamic_first_latejoin_delay_min)*600
+	GLOB.dynamic_first_latejoin_delay_max = CONFIG_GET(number/dynamic_first_latejoin_delay_max)*600
+	GLOB.dynamic_first_midround_delay_min = CONFIG_GET(number/dynamic_first_midround_delay_min)*600
+	GLOB.dynamic_first_midround_delay_max = CONFIG_GET(number/dynamic_first_midround_delay_max)*600
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -218,6 +229,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += "<b>Contested System</b></center><BR>"
 			. += "Your station's orbit passes along the edge of Nanotrasen's sphere of influence. While subversive elements remain the most likely threat against your station, hostile organizations are bolder here, where our grip is weaker. Exercise increased caution against elite Syndicate strike forces, or Executives forbid, some kind of ill-conceived unionizing attempt."
 			set_security_level(SEC_LEVEL_BLUE)
+		if(65 to 79)
 			. += "<b>Uncharted Space</b></center><BR>"
 			. += "Congratulations and thank you for participating in the NT 'Frontier' space program! Your station is actively orbiting a high value system far from the nearest support stations. Little is known about your region of space, and the opportunity to encounter the unknown invites greater glory. You are encouraged to elevate security as necessary to protect Nanotrasen assets."
 			set_security_level(SEC_LEVEL_BLUE)
@@ -305,11 +317,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		generate_threat()
 
-	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
+	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
 
-	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
+	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
+	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	return TRUE
 

@@ -1,8 +1,13 @@
 ## Injection delays: how long (in minutes) will pass before a midround or latejoin antag is injected.
-DYNAMIC_MIDROUND_DELAY_MIN 15
-DYNAMIC_MIDROUND_DELAY_MAX 35
+DYNAMIC_MIDROUND_DELAY_MIN 5
+DYNAMIC_MIDROUND_DELAY_MAX 25
 DYNAMIC_LATEJOIN_DELAY_MIN 5
 DYNAMIC_LATEJOIN_DELAY_MAX 25
+
+DYNAMIC_FIRST_MIDROUND_DELAY_MIN 20
+DYNAMIC_FIRST_MIDROUND_DELAY_MAX 40
+DYNAMIC_FIRST_LATEJOIN_DELAY_MIN 10
+DYNAMIC_FIRST_LATEJOIN_DELAY_MAX 30
 
 ## How many roundstart players required for high population override to take effect.
 DYNAMIC_HIGH_POP_LIMIT 80 #80 instead of 55 because fewer robust players
