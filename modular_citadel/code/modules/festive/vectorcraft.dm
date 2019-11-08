@@ -9,7 +9,7 @@
 	movedelay = 5
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
-	var/max_acceleration = 1
+	var/max_acceleration = 1.25
 	var/max_deceleration = 0.5
 	var/boost_power = 25
 	var/gear
