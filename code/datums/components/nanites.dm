@@ -191,7 +191,7 @@
 		var/datum/nanite_program/NP = X
 		NP.on_death(gibbed)
 
-/datum/component/nanites/proc/on_hear(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/component/nanites/proc/on_hear(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)

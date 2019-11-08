@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/the_dead = list()
 	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
 	if(!eavesdrop_range && say_test(message) == "2")	//CIT CHANGE - ditto
-		yellareas = get_areas_in_range(message_range*0.5,src)	//CIT CHANGE - ditto
+		yellareas = get_areas_in_range(message_range*0.5, source)	//CIT CHANGE - ditto
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue
-		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
+		if(get_dist(M, source) > 7 || M.z != z) //they're out of range of normal hearing
 			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 				continue
 			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off

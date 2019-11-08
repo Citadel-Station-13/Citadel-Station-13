@@ -625,7 +625,7 @@ datum/status_effect/pacify
 	to_chat(owner, "<span class='notice'><i>[speaker] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
 	triggered = TRUE
 
-/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	if(!owner.can_hear())
 		return
 	if(speaker == owner)

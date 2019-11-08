@@ -576,7 +576,7 @@
 	UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL)
 
 
-/datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/chem/enthrall/proc/owner_hear(hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	if(owner.client?.prefs.lewdchem == FALSE)
 		return
 	if (cTriggered > 0)
