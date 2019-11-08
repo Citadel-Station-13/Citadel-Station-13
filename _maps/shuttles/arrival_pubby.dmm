@@ -9,6 +9,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
@@ -139,16 +140,20 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
+"w" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
 "C" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
 a
-b
+w
 m
 m
-b
+w
 a
 "}
 (2,1,1) = {"

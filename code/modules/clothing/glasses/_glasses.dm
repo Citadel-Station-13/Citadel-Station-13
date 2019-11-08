@@ -104,7 +104,7 @@
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
+/obj/item/clothing/glasses/science/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_GLASSES)
 		return 1
 
@@ -307,7 +307,7 @@
 		M.appearance_flags |= RESET_COLOR
 		M.color = "#[H.eye_color]"
 		. += M
-	
+
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"

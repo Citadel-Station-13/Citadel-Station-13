@@ -3,12 +3,12 @@
 #define CHANNEL_ADMIN 1023
 #define CHANNEL_VOX 1022
 #define CHANNEL_JUKEBOX 1021
-#define CHANNEL_JUKEBOX_START 1020
-#define CHANNEL_JUSTICAR_ARK 1019
-#define CHANNEL_HEARTBEAT 1018 //sound channel for heartbeats
-#define CHANNEL_AMBIENCE 1017
-#define CHANNEL_BUZZ 1016
-#define CHANNEL_BICYCLE 1015
+#define CHANNEL_JUKEBOX_START 1016 //The gap between this and CHANNEL_JUKEBOX determines the amount of free jukebox channels. This currently allows 6 jukebox channels to exist.
+#define CHANNEL_JUSTICAR_ARK 1015
+#define CHANNEL_HEARTBEAT 1014 //sound channel for heartbeats
+#define CHANNEL_AMBIENCE 1013
+#define CHANNEL_BUZZ 1012
+#define CHANNEL_BICYCLE 1011
 
 //CIT CHANNELS - TRY NOT TO REGRESS
 #define CHANNEL_PRED 1010

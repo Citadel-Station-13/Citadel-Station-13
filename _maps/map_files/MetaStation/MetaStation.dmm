@@ -56605,11 +56605,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfK" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
 /obj/machinery/light_switch{
 	pixel_x = 11;
 	pixel_y = 23
@@ -56624,6 +56619,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfL" = (

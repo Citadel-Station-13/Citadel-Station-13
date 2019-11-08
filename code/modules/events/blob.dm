@@ -4,6 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 
+	earliest_start = 60 MINUTES
 	min_players = 40
 
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
@@ -15,9 +16,9 @@
 
 /datum/round_event/ghost_role/blob/announce(fake)
 	if(prob(75))
-		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak5")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 		for(var/obj/machinery/computer/communications/C in GLOB.machines)
 			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 				var/obj/item/paper/P = new(C.loc)

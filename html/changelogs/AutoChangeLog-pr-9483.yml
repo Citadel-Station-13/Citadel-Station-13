@@ -1,0 +1,5 @@
+author: "ZeroNetAlpha"
+delete-after: True
+changes: 
+  - tweak: "Cleans up autoylathe code and brings it back in line with the regular autolathe."
+  - bugfix: "Fixes autoylathe interface not updating propperly."

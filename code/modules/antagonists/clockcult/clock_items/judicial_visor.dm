@@ -27,7 +27,7 @@
 	qdel(blaster)
 	return ..()
 
-/obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
+/obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot != SLOT_GLASSES)
 		return 0
 	return ..()
@@ -190,8 +190,8 @@
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
-		if(L.anti_magic_check())
-			var/atom/I = L.anti_magic_check()
+		var/atom/I = L.anti_magic_check()
+		if(I)
 			if(isitem(I))
 				L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 				"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")

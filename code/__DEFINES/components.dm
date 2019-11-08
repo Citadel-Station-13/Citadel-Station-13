@@ -2,11 +2,8 @@
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
-//shorthand
-#define GET_COMPONENT_FROM(varname, path, target) var##path/##varname = ##target.GetComponent(##path)
-#define GET_COMPONENT(varname, path) GET_COMPONENT_FROM(varname, path, src)
-
 #define COMPONENT_INCOMPATIBLE 1
+#define COMPONENT_NOTRANSFER 2
 
 // How multiple components of the exact same type are handled in the same datum
 
@@ -129,7 +126,7 @@
 #define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize() (can_reenter_corpse)
 	#define COMPONENT_BLOCK_GHOSTING 1
 #define COMSIG_MOB_ALLOWED "mob_allowed"						//from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
-#define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (magic, holy, protection_sources)
+#define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 	#define COMPONENT_BLOCK_MAGIC 1
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"				//from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"				//from base of
@@ -159,6 +156,10 @@
 
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
+
+// /mob/living/simple_animal/hostile signals
+#define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
+	#define COMPONENT_HOSTILE_NO_ATTACK 1
 
 // /obj signals
 #define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
@@ -197,6 +198,7 @@
 	#define COMPONENT_DELETE_OLD_IMPLANT 4
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"	//called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 	//This uses all return values of COMSIG_IMPLANT_OTHER
+#define COMSIG_IMPLANT_REMOVING "implant_removing"				//from base of /obj/item/implant/proc/removed() (list/args)
 
 // /obj/item/pda signals
 #define COMSIG_PDA_CHANGE_RINGTONE "pda_change_ringtone"		//called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
@@ -208,6 +210,9 @@
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
+// /obj/item/projectile signals (sent to the firer)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+#define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/item/projectile/proc/fire(): (obj/item/projectile, atom/original_target)
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
@@ -224,14 +229,18 @@
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"						//(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
 
+//Blood color
+#define COMSIG_BLOOD_COLOR "blood_DNA_to_color"	//RGB blood stuff
 //Food
 #define COMSIG_FOOD_EATEN "food_eaten"		//from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
+
+//Gibs
+#define COMSIG_GIBS_STREAK "gibs_streak"						// from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
 
 //Mood
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
-#define COMSIG_INCREASE_SANITY "decrease_sanity" //Called when you want to increase sanity from anywhere in the code.
-#define COMSIG_DECREASE_SANITY "increase_sanity" //Same as above but to decrease sanity instead.
+#define COMSIG_MODIFY_SANITY "modify_sanity" //Called when you want to increase or decrease sanity from anywhere in the code.
 
 //NTnet
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
