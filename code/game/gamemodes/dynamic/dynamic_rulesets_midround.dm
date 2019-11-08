@@ -1,3 +1,6 @@
+#define REVENANT_SPAWN_THRESHOLD 20
+#define ABDUCTOR_MAX_TEAMS 4 // blame TG for not using the defines files
+
 //////////////////////////////////////////////
 //                                          //
 //            MIDROUND RULESETS             //
@@ -185,8 +188,7 @@
 	// E.control = src // can't be done! we just don't use events that require these, those can be from_ghost almost always
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
-	if(alertadmins)
-		deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been triggered by dynamic!</span>") //STOP ASSUMING IT'S BADMINS!
+	deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been triggered by dynamic!</span>")
 	log_game("Random Event triggering: [name] ([typepath])")
 
 	return E
@@ -530,7 +532,10 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/ready()
-	if(dead_players < REVENANT_SPAWN_THRESHOLD)
+	var/deadMobs = 0
+	for(var/mob/M in GLOB.dead_mob_list)
+		deadMobs++
+	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		message_admins("Dynamic attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 		return FALSE
 	return ..()
@@ -549,15 +554,13 @@
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
-	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location
-		spawn_locs += get_turf(selected)
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
 		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
 	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
-	selected.transfer_ckey(revvie, FALSE)
+	applicant.transfer_ckey(revvie, FALSE)
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revvie)] was spawned as a revenant by the midround ruleset.")
 	return revvie
@@ -632,11 +635,11 @@
 		if(1) // yeah this seems like a baffling anti-pattern but it's actually the best way to do this, shit you not
 			var/mob/living/carbon/human/agent = new_character
 			agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, team)
-			log_game("[key_name(scientist)] has been selected as [T.name] abductor scientist.")
+			log_game("[key_name(agent)] has been selected as [team.name] abductor agent.")
 		if(2)
 			var/mob/living/carbon/human/scientist = new_character
 			scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, team)
-			log_game("[key_name(agent)] has been selected as [T.name] abductor agent.")
+			log_game("[key_name(scientist)] has been selected as [team.name] abductor scientist.")
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja
 	name = "Space Ninja"
@@ -650,6 +653,7 @@
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
 	high_population_requirement = 30
 	var/list/spawn_locs = list()
+	var/spawn_loc
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/execute()
 	if(!spawn_loc)
@@ -764,3 +768,5 @@
 	requirements = list(101,100,90,80,70,60,50,50,50,50)
 	high_population_requirement = 50
 
+#undef ABDUCTOR_MAX_TEAMS
+#undef REVENANT_SPAWN_THRESHOLD
