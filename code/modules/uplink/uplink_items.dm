@@ -1851,14 +1851,14 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
 	cost = 8
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"

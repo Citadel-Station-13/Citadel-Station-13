@@ -96,9 +96,6 @@
 		if("Chemist")
 			O = new /datum/outfit/plasmaman/chemist
 
-		if("Geneticist")
-			O = new /datum/outfit/plasmaman/genetics
-
 		if("Roboticist")
 			O = new /datum/outfit/plasmaman/robotics
 

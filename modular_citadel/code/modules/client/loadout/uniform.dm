@@ -212,7 +212,7 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/rank/trek/medsci
 	restricted_desc = "Medical and Science"
-	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
+	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengtos
 	name = "TOS uniform, ops/sec"

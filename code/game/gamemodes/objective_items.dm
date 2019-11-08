@@ -65,7 +65,7 @@
 	name = "the Chief Medical Officer's MKII hypospray."
 	targetitem = /obj/item/hypospray/mkii/CMO //CITADEL EDIT, changing theft objective for the Hypo MK II
 	difficulty = 5
-	excludefromjob = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist", "Geneticist")
+	excludefromjob = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist")
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk."
