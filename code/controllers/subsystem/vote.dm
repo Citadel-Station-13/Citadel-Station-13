@@ -124,8 +124,7 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
-#define EXTENDED "calm"
-#define PEACE "balanced"
+#define PEACE "calm"
 #define CHAOS "chaotic"
 
 /datum/controller/subsystem/vote/proc/result()
@@ -156,13 +155,9 @@ SUBSYSTEM_DEF(vote)
 				GLOB.master_mode = "dynamic"
 				if(voted.len==0)
 					return message_admins("Nobody voted in the dynamic vote; using default dynamic settings.")
-				GLOB.dynamic_forced_extended = choices["extended"]/voted.len > 0.5
-				if(GLOB.dynamic_forced_extended)
-					to_chat(world,"<span class='boldannounce'>Dynamic extended has been voted for.</span>")
-					return message_admins("Dynamic extended has been voted for.")
-				var/mean = (choices["extended"]*-1+choices[PEACE]*-1+choices[CHAOS])/voted.len
+				var/mean = (choices[PEACE]*-1+choices[CHAOS])/voted.len
 				GLOB.dynamic_curve_centre = mean*20
-				var/magic_curve_constant = (4-(abs((choices[PEACE]+choices["extended"])-choices[CHAOS])/(voted.len)))*4 //magic as hell.
+				var/magic_curve_constant = (4-(abs((choices[PEACE])-choices[CHAOS])/(voted.len)))*4 //magic as hell.
 				GLOB.dynamic_curve_width = CLAMP(magic_curve_constant,0.5,4)
 				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
 				message_admins("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
@@ -245,7 +240,7 @@ SUBSYSTEM_DEF(vote)
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("dynamic")
-				choices.Add("extended",PEACE,CHAOS)
+				choices.Add(PEACE,CHAOS)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
