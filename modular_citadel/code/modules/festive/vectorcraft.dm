@@ -7,11 +7,13 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "zoomscoot"
 	movedelay = 5
+	allow_diagonal_dir = TRUE
+	inertia_moving = FALSE
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/max_acceleration = 2.5
 	var/max_deceleration = 0.5
-	var/boost_power = 10
+	var/boost_power = 20
 	var/gear
 	var/boost_cooldown
 	max_integrity = 100
@@ -25,9 +27,11 @@
 	return ..()
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
+	.=..()
 	if(M == driver)
 		driver = null
 		gear = null
+
 
 //////////////////////////////////////////////////////////////
 //					Main driving checks				    	//
@@ -204,16 +208,22 @@
 	switch(speed)
 		if(-INFINITY to 10)
 			movedelay = 5
+			inertia_move_delay = 5
 		if(10 to 20)
 			movedelay = 4
+			inertia_move_delay = 4
 		if(20 to 35)
 			movedelay = 3
+			inertia_move_delay = 3
 		if(35 to 60)
 			movedelay = 2
+			inertia_move_delay = 2
 		if(60 to 90)
 			movedelay = 1
+			inertia_move_delay = 1
 		if(90 to INFINITY)
 			movedelay = 0
+			inertia_move_delay = 0
 	return
 
 //Returns the angle to move towards
@@ -252,9 +262,6 @@
 				return NORTHWEST
 			if(157 to 180)
 				return WEST
-
-
-
 	else
 		switch(angle)
 			if(0 to -22)

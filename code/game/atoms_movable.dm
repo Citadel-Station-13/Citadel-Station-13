@@ -22,6 +22,7 @@
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/allow_diagonal_dir = FALSE		//Ghommie's edit!
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
@@ -257,9 +258,12 @@
 			if(moving_diagonally == SECOND_DIAG_STEP)
 				if(!.)
 					setDir(first_step_dir)
-				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
-					newtonian_move(direct)
+				else
+					if (!inertia_moving)
+						inertia_next_move = world.time + inertia_move_delay
+						newtonian_move(direct)
+					if(allow_diagonal_dir)
+						setDir(direct)
 			moving_diagonally = 0
 			return
 
