@@ -498,6 +498,13 @@
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")
 	return S
 
+//////////////////////////////////////////////
+//                                          //
+//            SENTIENT DISEASE              //
+//                                          //
+//////////////////////////////////////////////
+
+
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
 	config_tag = "sentient_disease"
@@ -517,6 +524,13 @@
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
 	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
 	return virus
+
+//////////////////////////////////////////////
+//                                          //
+//                REVENANT                  //
+//                                          //
+//////////////////////////////////////////////
+
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
@@ -564,6 +578,13 @@
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revvie)] was spawned as a revenant by the midround ruleset.")
 	return revvie
+
+//////////////////////////////////////////////
+//                                          //
+//            SLAUGHTER DEMON               //
+//                                          //
+//////////////////////////////////////////////
+
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon
 	name = "Slaughter Demon"
@@ -641,6 +662,12 @@
 			scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, team)
 			log_game("[key_name(scientist)] has been selected as [team.name] abductor scientist.")
 
+//////////////////////////////////////////////
+//                                          //
+//              SPACE NINJA                 //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_ghosts/ninja
 	name = "Space Ninja"
 	config_tag = "ninja"
@@ -693,6 +720,12 @@
 	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
 	return Ninja
 
+//////////////////////////////////////////////
+//                                          //
+//               SPIDERS                    //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/event/spiders
 	name = "Spider Infestation"
 	config_tag = "spiders"
@@ -703,6 +736,12 @@
 	cost = 10
 	requirements = list(70,60,50,50,40,40,40,30,20,15)
 	high_population_requirement = 15
+
+//////////////////////////////////////////////
+//                                          //
+//              CLOGGED VENTS               //
+//                                          //
+//////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround/event/ventclog
 	name = "Clogged Vents: Normal"
@@ -732,6 +771,12 @@
 	requirements = list(30,30,30,30,30,30,30,30,30,30)
 	high_population_requirement = 30
 
+//////////////////////////////////////////////
+//                                          //
+//               ION STORM                  //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/event/ion_storm
 	name = "Ion Storm"
 	config_tag = "ion_storm"
@@ -741,6 +786,12 @@
 	cost = 3
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
+
+//////////////////////////////////////////////
+//                                          //
+//                METEORS                   //
+//                                          //
+//////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround/event/meteor_wave
 	name = "Meteor Wave: Normal"
