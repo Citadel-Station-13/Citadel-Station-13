@@ -20,6 +20,11 @@
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 
+/datum/dynamic_ruleset/midround/event // Doesn't assume an antag
+	required_type = /mob
+	var/typepath // typepath of the event
+	var/triggering
+
 /datum/dynamic_ruleset/midround/trim_candidates()
 	// Unlike the previous two types, these rulesets are not meant for /mob/dead/new_player
 	// And since I want those rulesets to be as flexible as possible, I'm not gonna put much here,
@@ -160,6 +165,31 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/antagonist/new_role)
 	return
+
+/datum/dynamic_ruleset/midround/event/trim_list(list/L = list())
+	return L.Copy() // we're not drafting ghosts here
+
+/datum/dynamic_ruleset/midround/event/ready(forced = FALSE)
+	return TRUE
+
+// acceptable() takes the place of canSpawnEvent
+
+/datum/dynamic_ruleset/midround/event/proc/preRunEvent()
+	if(!ispath(typepath, /datum/round_event))
+		return EVENT_CANT_RUN
+	return EVENT_READY
+
+/datum/dynamic_ruleset/midround/event/proc/runEvent()
+	var/datum/round_event/E = new typepath()
+	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
+	// E.control = src // can't be done! we just don't use events that require these, those can be from_ghost almost always
+
+	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
+	if(alertadmins)
+		deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been triggered by dynamic!</span>") //STOP ASSUMING IT'S BADMINS!
+	log_game("Random Event triggering: [name] ([typepath])")
+
+	return E
 
 //////////////////////////////////////////////
 //                                          //
@@ -490,13 +520,14 @@
 	name = "Revenant"
 	config_tag = "revenant"
 	antag_flag = ROLE_REVENANT
-	enemy_roles = list("Chief Engineer","Station Engineer","Captain","Chaplain")
+	enemy_roles = list("Chief Engineer","Station Engineer","Captain","Chaplain","AI")
 	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
 	required_candidates = 1
 	weight = 4
 	cost = 5
 	requirements = list(30,30,30,30,20,15,15,15,15,15)
 	high_population_requirement = 15
+	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/ready()
 	if(dead_players < REVENANT_SPAWN_THRESHOLD)
@@ -530,4 +561,206 @@
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revvie)] was spawned as a revenant by the midround ruleset.")
 	return revvie
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon
+	name = "Slaughter Demon"
+	config_tag = "slaughter_demon"
+	antag_flag = ROLE_ALIEN
+	enemy_roles = list("Security Officer","Shaft Miner","Head of Security","Captain","Janitor","AI","Cyborg")
+	required_enemies = list(3,2,2,2,2,1,1,1,1,0)
+	required_candidates = 1
+	weight = 4
+	cost = 15
+	requirements = list(101,101,101,90,80,70,60,50,40,30)
+	high_population_requirement = 30
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/execute()
+	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+		if(isturf(L.loc))
+			spawn_locs += L.loc
+
+	if(!(spawn_locs.len))
+		message_admins("No valid spawn locations found for slaughter demon, aborting...")
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = 1
+	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter((pick(spawn_locs)))
+	var/mob/living/simple_animal/slaughter/S = new (holder)
+	S.holder = holder
+	player_mind.transfer_to(S)
+	player_mind.assigned_role = "Slaughter Demon"
+	player_mind.special_role = "Slaughter Demon"
+	player_mind.add_antag_datum(/datum/antagonist/slaughter)
+	to_chat(S, S.playstyle_string)
+	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
+	SEND_SOUND(S, 'sound/magic/demon_dies.ogg')
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a slaughter demon by dynamic.")
+	log_game("[key_name(S)] was spawned as a slaughter demon by dynamic.")
+	return S
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors
+	name = "Abductors"
+	config_tag = "abductors"
+	antag_flag = ROLE_ABDUCTOR
+	// Has two antagonist flags, in fact
+	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
+	required_enemies = list(3,3,2,2,1,1,0,0,0,0)
+	required_candidates = 2
+	weight = 8
+	cost = 10
+	requirements = list(80,80,70,50,40,30,30,20,15,15)
+	high_population_requirement = 15
+	var/datum/team/abductor_team/team
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/acceptable(population=0, threat=0)
+	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
+		return FALSE // Unavailable if nuke ops were already sent at roundstart. yes, this is intentional for abductors too.
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/execute()
+	var/datum/team/abductor_team/team = new
+	if(team.team_number > ABDUCTOR_MAX_TEAMS)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/finish_setup(mob/new_character, index)
+	switch(index)
+		if(1) // yeah this seems like a baffling anti-pattern but it's actually the best way to do this, shit you not
+			var/mob/living/carbon/human/agent = new_character
+			agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, team)
+			log_game("[key_name(scientist)] has been selected as [T.name] abductor scientist.")
+		if(2)
+			var/mob/living/carbon/human/scientist = new_character
+			scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, team)
+			log_game("[key_name(agent)] has been selected as [T.name] abductor agent.")
+
+/datum/dynamic_ruleset/midround/from_ghosts/ninja
+	name = "Space Ninja"
+	config_tag = "ninja"
+	antag_flag = ROLE_NINJA
+	enemy_roles = list("Security Officer","Head of Security","Captain","AI","Cyborg")
+	required_enemies = list(3,2,2,2,2,1,1,1,1,0)
+	required_candidates = 1
+	weight = 4
+	cost = 15
+	requirements = list(101,101,101,90,80,70,60,50,40,30)
+	high_population_requirement = 30
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/ninja/execute()
+	if(!spawn_loc)
+		var/list/spawn_locs = list()
+		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+			if(isturf(L.loc))
+				spawn_locs += L.loc
+		if(!(spawn_locs.len))
+			return FALSE
+		spawn_loc = pick(spawn_locs)
+	if(!spawn_loc)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/ninja/generate_ruleset_body(mob/applicant)
+	var/key = applicant.key
+
+	//Prepare ninja player mind
+	var/datum/mind/Mind = new /datum/mind(key)
+	Mind.assigned_role = ROLE_NINJA
+	Mind.special_role = ROLE_NINJA
+	Mind.active = 1
+
+	//spawn the ninja and assign the candidate
+	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
+	Mind.transfer_to(Ninja)
+	var/datum/antagonist/ninja/ninjadatum = new
+	ninjadatum.helping_station = pick(TRUE,FALSE)
+	if(ninjadatum.helping_station)
+		mode.refund_threat(5)
+	Mind.add_antag_datum(ninjadatum)
+
+	if(Ninja.mind != Mind)			//something has gone wrong!
+		throw EXCEPTION("Ninja created with incorrect mind")
+
+	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by dynamic.")
+	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
+	return Ninja
+
+/datum/dynamic_ruleset/midround/event/spiders
+	name = "Spider Infestation"
+	config_tag = "spiders"
+	typepath = /datum/round_event/spider_infestation
+	enemy_roles = list("AI","Security Officer","Head of Security","Captain")
+	required_enemies = list(2,2,1,1,0,0,0,0,0,0)
+	weight = 5
+	cost = 10
+	requirements = list(70,60,50,50,40,40,40,30,20,15)
+	high_population_requirement = 15
+
+/datum/dynamic_ruleset/midround/event/ventclog
+	name = "Clogged Vents: Normal"
+	config_tag = "ventclog_normal"
+	typepath = /datum/round_event/vent_clog
+	enemy_roles = list("Chemist","Medical Doctor","Chief Medical Officer")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	cost = 2
+	requirements = list(5,5,5,5,5,5,5,5,5,5) // yes, can happen on fake-extended
+	high_population_requirement = 5
+
+/datum/dynamic_ruleset/midround/event/ventclog/threatening
+	name = "Clogged Vents: Threatening"
+	config_tag = "ventclog_threatening"
+	typepath = /datum/round_event/vent_clog/threatening
+	required_enemies = list(2,2,1,1,1,1,0,0,0,0)
+	cost = 5
+	requirements = list(15,15,15,15,15,15,15,15,15,15) // doesn't really scale with pop, so
+	high_population_requirement = 15
+
+/datum/dynamic_ruleset/midround/event/ventclog/catastrophic
+	name = "Clogged Vents: Catastrophic"
+	config_tag = "ventclog_catostrophic"
+	typepath = /datum/round_event/vent_clog/catastrophic
+	required_enemies = list(3,3,3,2,2,2,1,1,1,1)
+	cost = 15
+	requirements = list(30,30,30,30,30,30,30,30,30,30)
+	high_population_requirement = 30
+
+/datum/dynamic_ruleset/midround/event/ion_storm
+	name = "Ion Storm"
+	config_tag = "ion_storm"
+	typepath = /datum/round_event/ion_storm
+	enemy_roles = list("Research Director","Captain","Chief Engineer")
+	required_enemies = list(1,1,0,0,0,0,0,0,0,0)
+	cost = 3
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+
+/datum/dynamic_ruleset/midround/event/meteor_wave
+	name = "Meteor Wave: Normal"
+	config_tag = "meteor_wave_normal"
+	typepath = /datum/round_event/meteor_wave
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Captain","Cyborg")
+	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
+	cost = 15
+	requirements = list(60,50,40,30,30,30,30,30,30,30)
+	high_population_requirement = 30
+
+/datum/dynamic_ruleset/midround/event/meteor_wave/threatening
+	name = "Meteor Wave: Threatening"
+	config_tag = "meteor_wave_threatening"
+	typepath = /datum/round_event/meteor_wave/threatening
+	cost = 25
+	requirements = list(80,70,60,50,40,40,40,40,40,40)
+	high_population_requirement = 40
+
+/datum/dynamic_ruleset/midround/event/meteor_wave/catastrophic
+	name = "Meteor Wave: Catastrophic"
+	config_tag = "meteor_wave_catastrophic"
+	typepath = /datum/round_event/meteor_wave/catastrophic
+	cost = 40
+	requirements = list(101,100,90,80,70,60,50,50,50,50)
+	high_population_requirement = 50
 
