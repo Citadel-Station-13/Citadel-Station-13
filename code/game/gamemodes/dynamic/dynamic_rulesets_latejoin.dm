@@ -139,4 +139,4 @@
 	M.mind.restricted_roles = restricted_roles
 	M.mind.special_role = ROLE_VAMPIRE
 	return TRUE
-/*
+*/
