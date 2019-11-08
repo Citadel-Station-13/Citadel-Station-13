@@ -9,9 +9,9 @@
 	movedelay = 5
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
-	var/max_acceleration = 5
-	var/max_deceleration = 5
-	var/boost_power = 2.5
+	var/max_acceleration = 1
+	var/max_deceleration = 0.5
+	var/boost_power = 25
 	var/gear
 	var/boost_cooldown
 	max_integrity = 100
@@ -32,6 +32,8 @@
 //////////////////////////////////////////////////////////////
 //					Main driving checks				    	//
 //////////////////////////////////////////////////////////////
+
+//Move the damn car
 /obj/vehicle/sealed/vectorcraft/vehicle_move(cached_direction)
 	check_gears()
 	check_boost()
@@ -40,7 +42,6 @@
 	if(!direction)
 		direction = cached_direction
 	if(!speed)
-		message_admins("No speed")
 		return FALSE
 	START_PROCESSING(SSprocessing, src)
 	calc_velocity()
@@ -53,9 +54,9 @@
 	else if(driver.in_throw_mode)
 		friction(max_deceleration*1.2)
 	else
-		friction(max_deceleration/5)
+		friction(max_deceleration/3)
 
-	//speed
+	//movespeed
 	if(lastmove + movedelay > world.time)
 		return FALSE
 	lastmove = world.time
@@ -70,14 +71,19 @@
 		after_move(direction)
 		return step(src, direction)
 
+//Passive hover drift
 /obj/vehicle/sealed/vectorcraft/proc/hover_loop()
 	check_gears()
-	friction(max_deceleration/10)
 	var/direction = calc_angle()
 	calc_speed()
 	if(!speed || !direction)
 		STOP_PROCESSING(SSprocessing, src)
 		return
+
+	var/deceleration = max_deceleration*2
+	if(driver.in_throw_mode)
+		deceleration *= 5
+	friction(deceleration)
 
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
@@ -89,6 +95,7 @@
 		after_move(direction)
 		return step(src, direction)
 
+//I got over messy process procs
 /obj/vehicle/sealed/vectorcraft/process()
 	hover_loop()
 
@@ -133,6 +140,7 @@
 //////////////////////////////////////////////////////////////
 //					Damage procs							//
 //////////////////////////////////////////////////////////////
+//Repairing
 /obj/vehicle/sealed/vectorcraft/attackby(obj/item/O, mob/user, params)
 	.=..()
 	if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
@@ -150,6 +158,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 
+//Heals/damages the car
 /obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
 	var/healthratio = ((obj_integrity/max_integrity)/2) + 0.5
@@ -158,18 +167,35 @@
 	boost_power = initial(boost_power) * healthratio
 
 	if(obj_integrity <= 0)
-		unbuckle_mob(driver)
+		mob_exit(driver)
 		var/datum/effect_system/reagents_explosion/e = new()
 		var/turf/T = get_turf(src)
 		e.set_up(1, T, 0, 0)
 		e.start()
+		qdel(src)
 	if(obj_integrity > max_integrity)
 		obj_integrity = max_integrity
+
+//
+/obj/vehicle/sealed/vectorcraft/Bump(atom/movable/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
+		C.throw_at(throw_target, 10, 14)
+		C.adjustBruteLoss(speed/10)
+		to_chat(C, "<span class='warning'><b>You are hit by the [src]!</b></span>")
+		to_chat(driver, "<span class='warning'><b>You just ran into [C] you crazy lunatic!</b></span>")
+	//playsound
+	if(istype(M, /obj/structure))
+		apply_damage(speed/10)
+		bounce()
+		calc_speed()
+	..()
 
 //////////////////////////////////////////////////////////////
 //					Calc procs						    	//
 //////////////////////////////////////////////////////////////
-
+//How fast the car is going atm
 /obj/vehicle/sealed/vectorcraft/proc/calc_velocity()
 	switch(speed)
 		if(-INFINITY to 10)
@@ -186,26 +212,30 @@
 			movedelay = 0
 	return
 
-
-/obj/vehicle/sealed/vectorcraft/Bump(atom/movable/M)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
-		C.throw_at(throw_target, 10, 14, src)
-		C.adjustBruteLoss(speed/10)
-		to_chat(C, "<span class='warning'><b>You are hit by the [src]!</b></span>")
-		to_chat(driver, "<span class='warning'><b>You just ran into [C] you crazy lunatic!</b></span>")
-	//playsound
-	apply_damage(speed/10)
-	bounce()
-	calc_speed()
-	..()
-
 //Returns the angle to move towards
 /obj/vehicle/sealed/vectorcraft/proc/calc_angle()
 	if(!speed)
 		return FALSE
-	var/angle = 1/(TAN(vector["y"]/vector["x"]))
+	var/x = round(vector["x"])
+	var/y = round(vector["y"])
+	if(y == 0)
+		if(x > 0)
+			return EAST
+		else if(x < 0)
+			return WEST
+	if(x == 0)
+		if(y > 0)
+			return NORTH
+		else if(y < 0)
+			return SOUTH
+	if(x == 0 || y == 0)
+		return FALSE
+	var/angle = SIMPLIFY_DEGREES(ATAN2(x,y))
+	//if(angle < 0)
+	//	angle += 360
+	message_admins("x:[x], y: [y], angle:[angle]")
+
+	//I WISH I HAD RADIANSSSSSSSSSS
 	switch(angle)
 		if(337 to 360)
 			return NORTH
@@ -228,8 +258,20 @@
 
 //updates the internal speed of the car
 /obj/vehicle/sealed/vectorcraft/proc/calc_speed()
-	var/magnitude = max(sqrt(vector["x"]**2), sqrt(vector["y"]**2))
-	speed = (magnitude * gear) / 4
+	var/magnitude = max(sqrt((vector["x"]**2)), sqrt((vector["y"]**2)))
+	speed = (magnitude * convert_gear()) / 4
+
+//Converts "gear" from intent to numerics
+/obj/vehicle/sealed/vectorcraft/proc/convert_gear()
+	switch(gear)
+		if("help")
+			return 1
+		if("grab")
+			return 2
+		if("disarm")
+			return 3
+		if("harm")
+			return 4
 
 //Calculates the vector (even if it says acceleration oops)
 /obj/vehicle/sealed/vectorcraft/proc/calc_acceleration(direction)
@@ -242,14 +284,14 @@
 		boost_cooldown = world.time + 25
 		//playsound
 	if(speed > 25 && gear == "help")
-		acceleration /= 2
+		acceleration /= 4
 		//playsound
 	else if((speed > 50 || speed < 25) && gear == "grab")
-		acceleration /= 2
+		acceleration /= 4
 	else if((speed > 75 || speed < 50) && gear == "disarm")
-		acceleration /= 2
+		acceleration /= 4
 	else if(speed < 75 && gear == "harm")
-		acceleration /= 2
+		acceleration /= 4
 
 	switch(direction)
 		if(NORTH)
@@ -278,7 +320,7 @@
 	calc_speed()
 	return
 
-
+//Reduces speed
 /obj/vehicle/sealed/vectorcraft/proc/friction(acceleration)
 	//decell X
 	if(vector["x"] <= -acceleration)
