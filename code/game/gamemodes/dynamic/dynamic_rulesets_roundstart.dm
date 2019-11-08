@@ -17,8 +17,8 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
-	high_population_requirement = 10
+	requirements = list(101,101,100,90,80,70,60,50,50,50)
+	high_population_requirement = 50
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
@@ -58,8 +58,8 @@
 	required_candidates = 1
 	weight = 1
 	cost = 35
-	requirements = list(101,101,80,70,60,60,50,50,40,40)
-	high_population_requirement = 35
+	requirements = list(101,101,101,101,101,100,90,80,70,60)
+	high_population_requirement = 50
 	required_type = /mob/living/silicon/ai
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
@@ -112,8 +112,8 @@
 	required_candidates = 2
 	weight = 4
 	cost = 10
-	requirements = list(40,30,30,20,20,15,15,15,10,10)
-	high_population_requirement = 15
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/team_amount = 2 // Hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
@@ -165,7 +165,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 30
-	requirements = list(80,70,60,50,40,20,20,10,10,10)
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 10
 	var/team_mode_probability = 30
 
@@ -215,8 +215,8 @@
 	required_candidates = 1
 	weight = 1
 	cost = 30
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
-	high_population_requirement = 10
+	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	high_population_requirement = 50
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
@@ -262,8 +262,8 @@
 	required_candidates = 2
 	weight = 3
 	cost = 30
-	requirements = list(100,90,80,60,40,30,10,10,10,10)
-	high_population_requirement = 10
+	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	var/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
 	var/datum/team/cult/main_cult
@@ -322,8 +322,8 @@
 	required_candidates = 5
 	weight = 3
 	cost = 40
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	high_population_requirement = 10
+	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
 	var/datum/team/nuclear/nuke_team
@@ -412,8 +412,8 @@
 	required_candidates = 3
 	weight = 2
 	cost = 35
-	requirements = list(101,101,70,40,30,20,10,10,10,10)
-	high_population_requirement = 10
+	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	high_population_requirement = 50
 	delay = 5 MINUTES
 	flags = HIGHLANDER_RULESET
 	// I give up, just there should be enough heads with 35 players...
@@ -523,9 +523,9 @@
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 4
 	weight = 3
-	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	high_population_requirement = 101
+	cost = 35
+	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	var/ark_time
 

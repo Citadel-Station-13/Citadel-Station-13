@@ -177,9 +177,9 @@
 	required_candidates = 1
 	weight = 7
 	cost = 10
-	requirements = list(50,40,30,20,10,10,10,10,10,10)
+	requirements = list(30,25,20,15,15,15,15,15,15,15)
 	repeatable = TRUE
-	high_population_requirement = 10
+	high_population_requirement = 15
 	flags = TRAITOR_RULESET
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
@@ -232,10 +232,10 @@
 	exclusive_roles = list("AI")
 	required_enemies = list(6,6,6,4,4,4,2,2,2,1)
 	required_candidates = 1
-	weight = 3
+	weight = 2
 	cost = 35
-	requirements = list(101,101,80,70,60,60,50,50,40,40)
-	high_population_requirement = 35
+	requirements = list(101,101,70,50,50,50,40,30,30,30)
+	high_population_requirement = 30
 	required_type = /mob/living/silicon/ai
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
@@ -286,8 +286,8 @@
 	required_candidates = 1
 	weight = 1
 	cost = 20
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
-	high_population_requirement = 50
+	requirements = list(90,90,70,50,50,50,50,40,30,30)
+	high_population_requirement = 30
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -319,8 +319,8 @@
 	required_candidates = 5
 	weight = 5
 	cost = 35
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	high_population_requirement = 10
+	requirements = list(90,90,90,80,70,60,50,40,40,40)
+	high_population_requirement = 40
 	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
@@ -363,7 +363,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
 
@@ -387,7 +387,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	requirements = list(101,101,101,70,50,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
 	var/list/vents = list()
@@ -435,7 +435,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	requirements = list(101,101,101,70,50,40,20,15,15,15)
 	high_population_requirement = 50
 	repeatable = TRUE
 	var/list/spawn_locs = list()

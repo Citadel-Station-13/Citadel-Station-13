@@ -60,8 +60,8 @@
 	required_candidates = 1
 	weight = 7
 	cost = 5
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
-	high_population_requirement = 10
+	requirements = list(40,30,20,15,15,15,15,15,15,15)
+	high_population_requirement = 15
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
 

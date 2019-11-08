@@ -71,13 +71,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	  * If it is seven the range is:
 	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
 	  */
-	var/pop_per_requirement = 6
+	var/pop_per_requirement = 9
 	/// The requirement used for checking if a second rule should be selected.
-	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
+	var/list/second_rule_req = list(101, 101, 101, 101, 100, 90, 80, 70, 60, 50)
 	/// The requirement used for checking if a third rule should be selected.
-	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
+	var/list/third_rule_req = list(101, 101, 101, 101, 101, 100, 90, 80, 70, 60)
 	/// Threat requirement for a second ruleset when high pop override is in effect. 
-	var/high_pop_second_rule_req = 40
+	var/high_pop_second_rule_req = 50
 	/// Threat requirement for a third ruleset when high pop override is in effect. 
 	var/high_pop_third_rule_req = 60
 	/// Number of players who were ready on roundstart.
