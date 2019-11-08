@@ -201,7 +201,7 @@
 "dS" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white,/area/awaymission/snowdin/outside)
 "dT" = (/turf/open/floor/plasteel/white,/area/awaymission/snowdin/outside)
 "dU" = (/obj/machinery/vending/coffee,/turf/open/floor/plasteel/white,/area/awaymission/snowdin/outside)
-"dV" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/vehicle/ridden/atv,/obj/item/key,/turf/open/floor/plasteel/dark,/area/awaymission/snowdin/outside)
+"dV" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/vehicle/sealed/vectorcraft,/turf/open/floor/plasteel/dark,/area/awaymission/snowdin/outside)
 "dW" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission/snowdin/outside)
 "dX" = (/turf/closed/festive/creambrick{color = "#5496ff"},/area/awaymission/snowdin/outside)
 "dY" = (/obj/structure/grille,/obj/structure/festive/greybrick/windowNSRight,/turf/open/floor/plasteel/white,/area/awaymission/snowdin/outside)

@@ -5,11 +5,11 @@
 /obj/vehicle/sealed/vectorcraft
 	name = "all-terrain hovercraft"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
-	icon_state = "atv"
+	icon_state = "zoomscoot"
 	movedelay = 5
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
-	var/max_acceleration = 1.5
+	var/max_acceleration = 2.5
 	var/max_deceleration = 0.5
 	var/boost_power = 10
 	var/gear
@@ -50,11 +50,11 @@
 		var/deceleration = max_deceleration
 		if(driver.in_throw_mode)
 			deceleration *= 1.5
-		friction(deceleration)
+		friction(deceleration, TRUE)
 	else if(driver.in_throw_mode)
-		friction(max_deceleration*1.2)
+		friction(max_deceleration*1.2, TRUE)
 	else
-		friction(max_deceleration/3)
+		friction(max_deceleration)
 
 	//movespeed
 	if(lastmove + movedelay > world.time)
@@ -80,10 +80,10 @@
 		STOP_PROCESSING(SSprocessing, src)
 		return
 
-	var/deceleration = max_deceleration*2
 	if(driver.in_throw_mode)
-		deceleration *= 5
-	friction(deceleration)
+		friction(max_deceleration*5, TRUE)
+	else
+		friction(max_deceleration*2)
 
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
@@ -109,6 +109,7 @@
 		return
 	if(boost_cooldown < world.time)
 		boost_cooldown = 0
+		playsound(src.loc,'sound/vehicles/boost.ogg', rand(10,50), 1)
 	return
 
 //Make sure the clutch is on while changing gears!!
@@ -128,7 +129,10 @@
 	if(gear != driver.a_intent && !driver.combatmode)
 		//playsound
 		to_chat(driver, "<span class='warning'><b>The gearbox gives out a horrific sound!</b></span>")
+		playsound(src.loc,'sound/vehicles/clutch_fail.ogg', rand(10,50), 1)
 		apply_damage(5)
+	else if(gear != driver.a_intent && driver.combatmode)
+		playsound(src.loc,'sound/vehicles/clutch_win.ogg', rand(10,50), 1)
 	gear = driver.a_intent
 
 //Bounce the car off a wall
@@ -230,31 +234,40 @@
 			return SOUTH
 	if(x == 0 || y == 0)
 		return FALSE
-	var/angle = SIMPLIFY_DEGREES(ATAN2(x,y))
+	var/angle = (ATAN2(x,y))
 	//if(angle < 0)
 	//	angle += 360
-	message_admins("x:[x], y: [y], angle:[angle]")
+	//message_admins("x:[x], y: [y], angle:[angle]")
 
 	//I WISH I HAD RADIANSSSSSSSSSS
-	switch(angle)
-		if(337 to 360)
-			return NORTH
-		if(0 to 22)
-			return NORTH
-		if(22 to 67)
-			return NORTHEAST
-		if(67 to 112)
-			return EAST
-		if(112 to 157)
-			return SOUTHEAST
-		if(157 to 202)
-			return SOUTH
-		if(202 to 247)
-			return SOUTHWEST
-		if(247 to 292)
-			return WEST
-		if(292 to 337)
-			return NORTHWEST
+	if(angle > 0)
+		switch(angle)
+			if(0 to 22)
+				return EAST
+			if(22 to 67)
+				return NORTHEAST
+			if(67 to 112)
+				return NORTH
+			if(112 to 157)
+				return NORTHWEST
+			if(157 to 180)
+				return WEST
+
+
+
+	else
+		switch(angle)
+			if(0 to -22)
+				return EAST
+			if(-22 to -67)
+				return SOUTHEAST
+			if(-67 to -112)
+				return SOUTH
+			if(-112 to -157)
+				return SOUTHWEST
+			if(-157 to -180)
+				return WEST
+
 
 //updates the internal speed of the car
 /obj/vehicle/sealed/vectorcraft/proc/calc_speed()
@@ -266,9 +279,9 @@
 	switch(gear)
 		if("help")
 			return 1
-		if("grab")
-			return 2
 		if("disarm")
+			return 2
+		if("grab")
 			return 3
 		if("harm")
 			return 4
@@ -281,17 +294,42 @@
 	var/acceleration = max_acceleration
 	if(driver.sprinting && !(boost_cooldown))
 		acceleration *= boost_power //You got boost power!
-		boost_cooldown = world.time + 25
+		boost_cooldown = world.time + 150
+		playsound(src.loc,'sound/vehicles/boost.ogg', rand(10,50), 1)
 		//playsound
-	if(speed > 25 && gear == "help")
-		acceleration /= 4
-		//playsound
-	else if((speed > 50 || speed < 25) && gear == "grab")
-		acceleration /= 4
-	else if((speed > 75 || speed < 50) && gear == "disarm")
-		acceleration /= 4
-	else if(speed < 75 && gear == "harm")
-		acceleration /= 4
+	if(gear == "help")
+		if(speed > 25)
+			acceleration /= 5
+			playsound(src.loc,'sound/vehicles/high_eng.ogg', rand(10,50), 1)
+		else
+			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
+
+	else if(gear == "disarm")
+		if(speed > 50)
+			acceleration /= 5
+			playsound(src.loc,'sound/vehicles/high_eng.ogg', rand(10,50), 1)
+		else if (speed < 25)
+			acceleration /= 5
+			playsound(src.loc,'sound/vehicles/low_eng.ogg', rand(10,50), 1)
+		else
+			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
+
+	else if(gear == "grab")
+		if(speed > 75)
+			acceleration /= 5
+			playsound(src.loc,'sound/vehicles/high_eng.ogg', rand(10,50), 1)
+		else if (speed < 50)
+			acceleration /= 5
+			playsound(src.loc,'sound/vehicles/low_eng.ogg', rand(10,50), 1)
+		else
+			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
+
+	else if(gear == "harm")
+		if (speed < 75)
+			acceleration /= 5
+			playsound(src.loc,'sound/vehicles/low_eng.ogg', rand(10,50), 1)
+		else
+			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
 
 	switch(direction)
 		if(NORTH)
@@ -321,7 +359,7 @@
 	return
 
 //Reduces speed
-/obj/vehicle/sealed/vectorcraft/proc/friction(acceleration)
+/obj/vehicle/sealed/vectorcraft/proc/friction(acceleration, sfx = FALSE)
 	//decell X
 	if(vector["x"] <= -acceleration)
 		vector["x"] += acceleration
@@ -336,3 +374,6 @@
 		vector["y"] -= acceleration
 	else
 		vector["y"] = 0
+
+	if(!(vector["y"] == 0) && !(vector["x"] == 0) && sfx)
+		playsound(src.loc,'sound/vehicles/skid.ogg', rand(10,50), 1)
