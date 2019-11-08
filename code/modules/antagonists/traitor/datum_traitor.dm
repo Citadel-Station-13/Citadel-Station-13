@@ -104,7 +104,9 @@
 			hijack_objective.owner = owner
 			add_objective(hijack_objective)
 			if(is_dynamic)
-				mode.spend_threat(CONFIG_GET(number/dynamic_hijack_cost))
+				var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
+				mode.spend_threat(threat_spent)
+				mode.threat_log += "[worldtime2text()]: Traitor spent [threat_spent] on hijack."
 			return
 
 
@@ -119,7 +121,9 @@
 		martyr_objective.owner = owner
 		add_objective(martyr_objective)
 		if(is_dynamic)
-			mode.spend_threat(CONFIG_GET(number/dynamic_glorious_death_cost))
+			var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
+			mode.spend_threat(threat_spent)
+			mode.threat_log += "[worldtime2text()]: Traitor spent [threat_spent] on glorious death."
 		return
 
 	else

@@ -496,7 +496,9 @@
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.spend_threat(CONFIG_GET(number/dynamic_summon_guns_cost))
+		var/threat_spent = CONFIG_GET(number/dynamic_summon_guns_cost)
+		mode.spend_threat(threat_spent)
+		mode.threat_log += "[worldtime2text()]: Wizard spent [threat_spent] on summon guns."
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -520,7 +522,9 @@
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.spend_threat(CONFIG_GET(number/dynamic_summon_magic_cost))
+		var/threat_spent = CONFIG_GET(number/dynamic_summon_magic_cost)
+		mode.spend_threat(threat_spent)
+		mode.threat_log += "[worldtime2text()]: Wizard spent [threat_spent] on summon magic."
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -545,7 +549,9 @@
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		mode.spend_threat(CONFIG_GET(number/dynamic_summon_events_cost))
+		var/threat_spent = CONFIG_GET(number/dynamic_summon_events_cost)
+		mode.spend_threat(threat_spent)
+		mode.threat_log += "[worldtime2text()]: Wizard spent [threat_spent] on summon events."
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
