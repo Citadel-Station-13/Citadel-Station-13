@@ -2,13 +2,10 @@
 //By Fermi!
 
 
-//todo:boost if(driver.sprinting)
-
-/obj/vehicle/ridden/vectorcraft
+/obj/vehicle/sealed/vectorcraft
 	name = "all-terrain hovercraft"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
-	key_type = /obj/item/key
 	movedelay = 5
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
@@ -17,30 +14,37 @@
 	var/boost_power = 2.5
 	var/gear
 	var/boost_cooldown
-	var/datum/component/riding/carstats
 	max_integrity = 100
 	var/speed
 	var/mob/living/carbon/human/driver
 
-/obj/vehicle/ridden/vectorcraft/Initialize()
-	.=..()
-	carstats = GetComponent(/datum/component/riding)
-	driver = return_drivers()
-	gear = driver.a_intent
+/obj/vehicle/sealed/vectorcraft/mob_enter(mob/living/M)
+	if(!driver)
+		driver = M
+		gear = driver.a_intent
+	return ..()
 
+/obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
+	if(M == driver)
+		driver = null
+		gear = null
 
 //////////////////////////////////////////////////////////////
 //					Main driving checks				    	//
 //////////////////////////////////////////////////////////////
-/obj/vehicle/ridden/vectorcraft/vehicle_move(direction)
+/obj/vehicle/sealed/vectorcraft/vehicle_move(cached_direction)
 	check_gears()
 	check_boost()
-	calc_acceleration(direction)
-	direction = calc_angle()
+	calc_acceleration(cached_direction)
+	var/direction = calc_angle()
+	if(!direction)
+		direction = cached_direction
 	if(!speed)
+		message_admins("No speed")
 		return FALSE
+	START_PROCESSING(SSprocessing, src)
 	calc_velocity()
-	//Hit the breaks!!
+	//Hit the brakes!!
 	if(driver.m_intent == MOVE_INTENT_WALK)
 		var/deceleration = max_deceleration
 		if(driver.in_throw_mode)
@@ -49,7 +53,7 @@
 	else if(driver.in_throw_mode)
 		friction(max_deceleration*1.2)
 	else
-		friction(max_deceleration/4)
+		friction(max_deceleration/5)
 
 	//speed
 	if(lastmove + movedelay > world.time)
@@ -66,12 +70,34 @@
 		after_move(direction)
 		return step(src, direction)
 
+/obj/vehicle/sealed/vectorcraft/proc/hover_loop()
+	check_gears()
+	friction(max_deceleration/10)
+	var/direction = calc_angle()
+	calc_speed()
+	if(!speed || !direction)
+		STOP_PROCESSING(SSprocessing, src)
+		return
+
+	if(trailer)
+		var/dir_to_move = get_dir(trailer.loc, loc)
+		var/did_move = step(src, direction)
+		if(did_move)
+			step(trailer, dir_to_move)
+		return did_move
+	else
+		after_move(direction)
+		return step(src, direction)
+
+/obj/vehicle/sealed/vectorcraft/process()
+	hover_loop()
+
 //////////////////////////////////////////////////////////////
 //					Check procs						    	//
 //////////////////////////////////////////////////////////////
 
 //check the cooldown on the boost
-/obj/vehicle/ridden/vectorcraft/proc/check_boost()
+/obj/vehicle/sealed/vectorcraft/proc/check_boost()
 	if(!boost_cooldown)
 		return
 	if(boost_cooldown < world.time)
@@ -79,7 +105,16 @@
 	return
 
 //Make sure the clutch is on while changing gears!!
-/obj/vehicle/ridden/vectorcraft/proc/check_gears()
+/obj/vehicle/sealed/vectorcraft/proc/check_gears()
+	if(!driver)
+		for(var/i in contents)
+			if(iscarbon(i))
+				var/mob/living/carbon/C = i
+				driver = C
+				to_chat(driver, "<span class='notice'><b>You shuffle across to the driver's seat of the [src]</b></span>")
+				break
+		if(!driver)
+			return
 	if(!gear)
 		gear = driver.a_intent
 	//USE THE CCLUUUTCHHH
@@ -89,7 +124,8 @@
 		apply_damage(5)
 	gear = driver.a_intent
 
-/obj/vehicle/ridden/vectorcraft/proc/bounce()
+//Bounce the car off a wall
+/obj/vehicle/sealed/vectorcraft/proc/bounce()
 	vector["x"] = -vector["x"]/2
 	vector["y"] = -vector["y"]/2
 
@@ -97,7 +133,7 @@
 //////////////////////////////////////////////////////////////
 //					Damage procs							//
 //////////////////////////////////////////////////////////////
-/obj/vehicle/ridden/vectorcraft/attackby(obj/item/O, mob/user, params)
+/obj/vehicle/sealed/vectorcraft/attackby(obj/item/O, mob/user, params)
 	.=..()
 	if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
@@ -114,7 +150,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 
-/obj/vehicle/ridden/vectorcraft/proc/apply_damage(damage)
+/obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
 	var/healthratio = ((obj_integrity/max_integrity)/2) + 0.5
 	max_acceleration = initial(max_acceleration) * healthratio
@@ -122,6 +158,7 @@
 	boost_power = initial(boost_power) * healthratio
 
 	if(obj_integrity <= 0)
+		unbuckle_mob(driver)
 		var/datum/effect_system/reagents_explosion/e = new()
 		var/turf/T = get_turf(src)
 		e.set_up(1, T, 0, 0)
@@ -133,30 +170,24 @@
 //					Calc procs						    	//
 //////////////////////////////////////////////////////////////
 
-/obj/vehicle/ridden/vectorcraft/proc/calc_velocity()
+/obj/vehicle/sealed/vectorcraft/proc/calc_velocity()
 	switch(speed)
 		if(-INFINITY to 10)
-			carstats.vehicle_move_delay = 5
 			movedelay = 5
 		if(10 to 20)
-			carstats.vehicle_move_delay = 4
 			movedelay = 4
 		if(20 to 35)
-			carstats.vehicle_move_delay = 3
 			movedelay = 3
 		if(35 to 60)
-			carstats.vehicle_move_delay = 2
 			movedelay = 2
 		if(60 to 90)
-			carstats.vehicle_move_delay = 1
 			movedelay = 1
 		if(90 to INFINITY)
-			carstats.vehicle_move_delay = 0
 			movedelay = 0
 	return
 
 
-/obj/vehicle/ridden/vectorcraft/Bump(atom/movable/M)
+/obj/vehicle/sealed/vectorcraft/Bump(atom/movable/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
@@ -168,9 +199,12 @@
 	apply_damage(speed/10)
 	bounce()
 	calc_speed()
+	..()
 
-
-/obj/vehicle/ridden/vectorcraft/proc/calc_angle()
+//Returns the angle to move towards
+/obj/vehicle/sealed/vectorcraft/proc/calc_angle()
+	if(!speed)
+		return FALSE
 	var/angle = 1/(TAN(vector["y"]/vector["x"]))
 	switch(angle)
 		if(337 to 360)
@@ -192,11 +226,13 @@
 		if(292 to 337)
 			return NORTHWEST
 
-/obj/vehicle/ridden/vectorcraft/proc/calc_speed()
+//updates the internal speed of the car
+/obj/vehicle/sealed/vectorcraft/proc/calc_speed()
 	var/magnitude = max(sqrt(vector["x"]**2), sqrt(vector["y"]**2))
 	speed = (magnitude * gear) / 4
 
-/obj/vehicle/ridden/vectorcraft/proc/calc_acceleration(direction)
+//Calculates the vector (even if it says acceleration oops)
+/obj/vehicle/sealed/vectorcraft/proc/calc_acceleration(direction)
 	calc_speed()
 	if(driver.combatmode)//clutch is on
 		return FALSE
@@ -243,7 +279,7 @@
 	return
 
 
-/obj/vehicle/ridden/vectorcraft/proc/friction(acceleration)
+/obj/vehicle/sealed/vectorcraft/proc/friction(acceleration)
 	//decell X
 	if(vector["x"] <= -acceleration)
 		vector["x"] += acceleration
