@@ -3079,6 +3079,7 @@
 #include "modular_citadel\code\modules\custom_loadout\read_from_file.dm"
 #include "modular_citadel\code\modules\festive\32x64.dm"
 #include "modular_citadel\code\modules\festive\turfs.dm"
+#include "modular_citadel\code\modules\festive\vectorcraft.dm"
 #include "modular_citadel\code\modules\food_and_drinks\snacks\meat.dm"
 #include "modular_citadel\code\modules\integrated_electronics\subtypes\manipulation.dm"
 #include "modular_citadel\code\modules\keybindings\bindings_carbon.dm"
