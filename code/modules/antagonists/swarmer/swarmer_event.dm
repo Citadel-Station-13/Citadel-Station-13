@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/spawn_swarmer
 	weight = 7
 	max_occurrences = 1 //Only once okay fam
+	gamemode_blacklist = list("dynamic")
 	earliest_start = 30 MINUTES
 	min_players = 15
 

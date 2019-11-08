@@ -100,7 +100,7 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
+	candidates = pollGhostCandidates("The mode is looking for volunteers to become a [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
 		message_admins("The ruleset [name] received no applications.")
@@ -465,3 +465,69 @@
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")
 	return S
+
+/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
+	name = "Sentient Disease"
+	config_tag = "sentient_disease"
+	antag_flag = ROLE_ALIEN
+	enemy_roles = list("Virologist","Chief Medical Officer","Captain","Chemist")
+	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
+	high_population_requirement = 5
+
+/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
+	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
+	applicant.transfer_ckey(virus, FALSE)
+	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
+	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
+	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
+	return virus
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant
+	name = "Revenant"
+	config_tag = "revenant"
+	antag_flag = ROLE_REVENANT
+	enemy_roles = list("Chief Engineer","Station Engineer","Captain","Chaplain")
+	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,30,30,20,15,15,15,15,15)
+	high_population_requirement = 15
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready()
+	if(dead_players < REVENANT_SPAWN_THRESHOLD)
+		message_admins("Dynamic attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/execute()
+	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
+		var/turf/T = get_turf(L)
+		if(T && is_station_level(T.z))
+			spawn_locs += T
+	if(!spawn_locs.len || spawn_locs.len < 15) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
+		for(var/obj/structure/bodycontainer/bc in GLOB.bodycontainers)
+			var/turf/T = get_turf(bc)
+			if(T && is_station_level(T.z))
+				spawn_locs += T
+	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
+		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+			if(isturf(L.loc))
+				spawn_locs += L.loc
+	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location
+		spawn_locs += get_turf(selected)
+	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
+	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
+	selected.transfer_ckey(revvie, FALSE)
+	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by the midround ruleset.")
+	log_game("[key_name(revvie)] was spawned as a revenant by the midround ruleset.")
+	return revvie
+
