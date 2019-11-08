@@ -3125,8 +3125,17 @@
 #include "modular_citadel\code\modules\vore\eating\vorepanel_vr.dm"
 #include "modular_citadel\interface\skin.dmf"
 #include "F:\Games\GITHUBHARD\UNGA\Blinstation.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\BlinStation2.dmm"
 #include "F:\Games\GITHUBHARD\UNGA\chrimbus.dmm"
+<<<<<<< Updated upstream
+#include "F:\Games\GITHUBHARD\Firestorm.dmm"
+=======
+#include "F:\Games\GITHUBHARD\UNGA\chrimbus2.dmm"
+#include "F:\Games\GITHUBHARD\EchoStation.dmm"
+>>>>>>> Stashed changes
 #include "F:\Games\GITHUBHARD\UNGA\Infernus.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\InfernusStation.dmm"
 #include "F:\Games\GITHUBHARD\UNGA\OhmStation.dmm"
+#include "F:\Games\GITHUBHARD\UNGA\snowball.dmm"
 #include "F:\Games\GITHUBHARD\UNGA\spook2.dmm"
 // END_INCLUDE
