@@ -153,9 +153,24 @@ SUBSYSTEM_DEF(vote)
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = "dynamic"
-				if(voted.len==0)
-					return message_admins("Nobody voted in the dynamic vote; using default dynamic settings.")
-				var/mean = (choices[PEACE]*-1+choices[CHAOS])/voted.len
+				var/mean = 0
+				var/voters = 0
+				for(var/client/c in GLOB.clients)
+					var/vote = c.prefs.preferred_chaos
+					if(vote)
+						voters += 1
+						switch(vote)
+							if(CHAOS_NONE)
+								mean -= 0.1
+							if(CHAOS_LOW)
+								mean -= 0.05
+							if(CHAOS_HIGH)
+								mean += 0.05
+							if(CHAOS_MAX)
+								mean += 0.1
+				mean/=voters
+				if(voted.len != 0)
+					mean += (choices[PEACE]*-1+choices[CHAOS])/voted.len
 				GLOB.dynamic_curve_centre = mean*20
 				GLOB.dynamic_curve_width = CLAMP(4-abs(mean*3.5),0.5,4)
 				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
