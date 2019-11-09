@@ -645,6 +645,7 @@
 	requirements = list(80,80,70,50,40,30,30,20,15,15)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -758,6 +759,7 @@
 	cost = 2
 	requirements = list(5,5,5,5,5,5,5,5,5,5) // yes, can happen on fake-extended
 	high_population_requirement = 5
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/event/ventclog/threatening
 	name = "Clogged Vents: Threatening"
@@ -767,6 +769,7 @@
 	cost = 5
 	requirements = list(15,15,15,15,15,15,15,15,15,15) // doesn't really scale with pop, so
 	high_population_requirement = 15
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/event/ventclog/catastrophic
 	name = "Clogged Vents: Catastrophic"
@@ -776,6 +779,7 @@
 	cost = 15
 	requirements = list(30,30,30,30,30,30,30,30,30,30)
 	high_population_requirement = 30
+	repeatable = TRUE
 
 //////////////////////////////////////////////
 //                                          //
@@ -792,6 +796,7 @@
 	cost = 3
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
+	repeatable = TRUE
 
 //////////////////////////////////////////////
 //                                          //
@@ -808,6 +813,7 @@
 	cost = 15
 	requirements = list(60,50,40,30,30,30,30,30,30,30)
 	high_population_requirement = 30
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/event/meteor_wave/threatening
 	name = "Meteor Wave: Threatening"
@@ -816,6 +822,7 @@
 	cost = 25
 	requirements = list(80,70,60,50,40,40,40,40,40,40)
 	high_population_requirement = 40
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/event/meteor_wave/catastrophic
 	name = "Meteor Wave: Catastrophic"
@@ -824,6 +831,7 @@
 	cost = 40
 	requirements = list(101,100,90,80,70,60,50,50,50,50)
 	high_population_requirement = 50
+	repeatable = TRUE
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
