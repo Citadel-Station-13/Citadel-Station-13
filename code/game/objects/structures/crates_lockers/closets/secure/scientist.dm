@@ -30,3 +30,8 @@
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/RD(src)
+
+/obj/structure/closet/secure_closet/RD/empty
+	name = "\proper research director's locker"
+	req_access = list(ACCESS_RD)
+	icon_state = "rd"

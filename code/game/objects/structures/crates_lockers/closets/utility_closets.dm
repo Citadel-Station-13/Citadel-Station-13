@@ -124,6 +124,11 @@
 	if(prob(40))
 		new /obj/item/clothing/head/hardhat(src)
 
+/obj/structure/closet/toolcloset/empty
+	name = "tool closet"
+	desc = "It's a storage unit for tools."
+	icon_state = "eng"
+	icon_door = "eng_tool"
 
 /*
  * Radiation Closet

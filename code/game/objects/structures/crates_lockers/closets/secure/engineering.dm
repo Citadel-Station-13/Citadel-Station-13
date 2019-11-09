@@ -35,6 +35,11 @@
 	new	/obj/item/storage/lockbox/medal/engineering(src)
 	new /obj/item/construction/rcd/loaded/upgraded(src)
 
+/obj/structure/closet/secure_closet/engineering_chief/empty
+	name = "\proper chief engineer's locker"
+	req_access = list(ACCESS_CE)
+	icon_state = "ce"
+
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
@@ -54,6 +59,12 @@
 	for(var/i in 1 to 3)
 		new /obj/item/multitool(src)
 
+/obj/structure/closet/secure_closet/engineering_electrical/empty
+	name = "electrical supplies locker"
+	req_access = list(ACCESS_ENGINE_EQUIP)
+	icon_state = "eng"
+	icon_door = "eng_elec"
+
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
@@ -62,10 +73,18 @@
 
 /obj/structure/closet/secure_closet/engineering_welding/PopulateContents()
 	..()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 2)
 		new /obj/item/clothing/head/welding(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weldingtool(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/glasses/welding(src)
+	for(var/i in 1 to 4)
+		new /obj/item/weldingtool/largetank(src)
+
+/obj/structure/closet/secure_closet/engineering_welding/empty
+	name = "welding supplies locker"
+	req_access = list(ACCESS_ENGINE_EQUIP)
+	icon_state = "eng"
+	icon_door = "eng_weld"
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
@@ -82,6 +101,10 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 
+/obj/structure/closet/secure_closet/engineering_personal/empty
+	name = "engineer's locker"
+	req_access = list(ACCESS_ENGINE_EQUIP)
+	icon_state = "eng_secure"
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
@@ -101,3 +124,8 @@
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
+
+/obj/structure/closet/secure_closet/atmospherics/empty
+	name = "\proper atmospheric technician's locker"
+	req_access = list(ACCESS_ATMOSPHERICS)
+	icon_state = "atmos"

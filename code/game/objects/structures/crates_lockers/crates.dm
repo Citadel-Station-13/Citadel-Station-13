@@ -196,6 +196,24 @@
 	new /obj/item/paper/guides/jobs/engi/solars(src)
 	new /obj/item/electronics/tracker(src)
 
+/obj/structure/closet/crate/solarpanel_small/assemblies15
+	name = "budget solar panel crate"
+	icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/solarpanel_small/assemblies15/PopulateContents()
+	..()
+	for(var/i in 1 to 15)
+		new /obj/item/solar_assembly(src)
+
+/obj/structure/closet/crate/solarpanel_small/assemblies30
+	name = "budget solar panel crate"
+	icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/solarpanel_small/assemblies30/PopulateContents()
+	..()
+	for(var/i in 1 to 30)
+		new /obj/item/solar_assembly(src)
+
 /obj/structure/closet/crate/goldcrate
 	name = "gold crate"
 

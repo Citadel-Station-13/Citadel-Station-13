@@ -63,6 +63,7 @@
 /obj/structure/closet/jcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/janitor(src)
+	new /obj/item/clothing/under/rank/maid	(src)
 	new /obj/item/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
@@ -78,7 +79,6 @@
 	new /obj/item/clothing/shoes/galoshes(src)
 	new /obj/item/watertank/janitor(src)
 	new /obj/item/storage/belt/janitor(src)
-
 
 /obj/structure/closet/lawcloset
 	name = "legal closet"

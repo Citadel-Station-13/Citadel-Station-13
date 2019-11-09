@@ -280,3 +280,46 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
+
+// Empty lockers, place your own loadouts in them if you want your map to have different items in the lockers and want the ID lock and don't want to PR a new locker.
+
+/obj/structure/closet/secure_closet/captains/empty
+	name = "\proper captain's locker"
+	req_access = list(ACCESS_CAPTAIN)
+	icon_state = "cap"
+
+/obj/structure/closet/secure_closet/security/empty
+	name = "security officer's locker"
+	req_access = list(ACCESS_SECURITY)
+	icon_state = "sec"
+
+/obj/structure/closet/secure_closet/brig/empty
+	name = "Security Locker"
+	req_access = list(ACCESS_BRIG)
+
+/obj/structure/closet/secure_closet/detective/empty
+	name = "\improper detective's cabinet"
+	req_access = list(ACCESS_FORENSICS_LOCKERS)
+	icon_state = "cabinet"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70
+
+/obj/structure/closet/secure_closet/armouryempty
+	name = "Armoury Locker"
+	req_access = list(ACCESS_ARMORY)
+	icon_state = "tac"
+
+/obj/structure/closet/secure_closet/warden/empty
+	name = "\proper warden's locker"
+	req_access = list(ACCESS_ARMORY)
+	icon_state = "warden"
+
+/obj/structure/closet/secure_closet/hop/empty
+	name = "\proper head of personnel's locker"
+	req_access = list(ACCESS_HOP)
+	icon_state = "hop"
+
+/obj/structure/closet/secure_closet/hos/empty
+	name = "\proper head of security's locker"
+	req_access = list(ACCESS_HOS)
+	icon_state = "hos"

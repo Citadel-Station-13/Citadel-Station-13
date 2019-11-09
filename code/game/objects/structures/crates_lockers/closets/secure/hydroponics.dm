@@ -11,3 +11,8 @@
 	new /obj/item/cultivator(src)
 	new /obj/item/hatchet(src)
 	new /obj/item/storage/box/disks_plantgene(src)
+
+/obj/structure/closet/secure_closet/hydroponics/empty
+	name = "botanist's locker"
+	req_access = list(ACCESS_HYDROPONICS)
+	icon_state = "hydro"

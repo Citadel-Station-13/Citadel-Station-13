@@ -23,3 +23,8 @@
 	new /obj/item/circuitboard/machine/techfab/department/cargo(src)
 	new /obj/item/storage/photo_album/QM(src)
 	new /obj/item/circuitboard/machine/ore_silo(src)
+
+/obj/structure/closet/secure_closet/quartermaster/empty
+	name = "\proper quartermaster's locker"
+	req_access = list(ACCESS_QM)
+	icon_state = "qm"

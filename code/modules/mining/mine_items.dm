@@ -46,6 +46,11 @@
 /obj/structure/closet/secure_closet/miner/unlocked
 	locked = FALSE
 
+/obj/structure/closet/secure_closet/miner/empty
+	name = "miner's equipment"
+	icon_state = "mining"
+	req_access = list(ACCESS_MINING)
+
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
@@ -61,6 +66,37 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
+
+/obj/structure/closet/secure_closet/quartermaster/conscriptminer
+	name = "\proper Miner Conscription"
+	req_access = list(ACCESS_QM)
+	icon_state = "mining"
+
+/obj/structure/closet/secure_closet/quartermaster/conscriptminer/PopulateContents()
+	..()
+	new /obj/item/shovel(src)
+	new /obj/item/pickaxe/mini(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/storage/bag/plants(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/gun/energy/kinetic_accelerator(src)
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/clothing/suit/hooded/explorer/standard(src)
+	new /obj/item/survivalcapsule(src)
+	new /obj/item/encryptionkey/headset_cargo(src)
+	new /obj/item/card/mining_access_card(src)
+	new /obj/item/kitchen/knife/combat/survival(src)
+	new /obj/item/gps/mining(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/storage/backpack/duffelbag(src)
+	new /obj/item/storage/backpack/explorer(src)
+
+// Gimmick closet requiring a gimmick room. QM can take people to their office or an interview room and do paperwork, then give this closet to 'recruit' people.
+// Contains mining access card and is ID-locked to the QM.
 
 
 /**********************Shuttle Computer**************************/

@@ -82,6 +82,11 @@
 	new /obj/item/storage/photo_album/CMO(src)
 	new	/obj/item/storage/lockbox/medal/medical(src)
 
+/obj/structure/closet/secure_closet/CMO/empty
+	name = "\proper chief medical officer's locker"
+	req_access = list(ACCESS_CMO)
+	icon_state = "cmo"
+
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
 	req_access = list(ACCESS_SURGERY)
