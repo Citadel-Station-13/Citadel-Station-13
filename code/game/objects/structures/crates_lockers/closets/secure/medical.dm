@@ -47,6 +47,11 @@
 	new /obj/item/clothing/glasses/hud/health(src)
 	return
 
+/obj/structure/closet/secure_closet/medical3/empty
+	name = "medical doctor's locker"
+	req_access = list(ACCESS_SURGERY)
+	icon_state = "med_secure"
+
 /obj/structure/closet/secure_closet/CMO
 	name = "\proper chief medical officer's locker"
 	req_access = list(ACCESS_CMO)
