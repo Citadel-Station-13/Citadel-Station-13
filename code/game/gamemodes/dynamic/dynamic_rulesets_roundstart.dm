@@ -755,7 +755,7 @@
 	config_tag = "vampire"
 	antag_datum = /datum/antagonist/vampire
 	antag_flag = ROLE_VAMPIRE
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain", "Quartermaster")
+	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain", "Quartermaster", "Chief Engineer")
 	restricted_roles = list("AI","Cyborg","Chaplain")
 	enemy_roles = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Chaplain")
 	required_enemies = list(2,2,2,1,1,1,1,0,0,0)

@@ -61,6 +61,7 @@
 	owner.special_role = "vampire"
 	owner.current.faction += "vampire"
 	SSticker.mode.update_vampire_icons_added(owner)
+	vampire_greet()
 	/*var/mob/living/carbon/human/C = owner.current
 	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
@@ -68,7 +69,7 @@
 		B.decoy_override = TRUE
 		*/ //Doesnt work, undefined var for unknown reasons, not extremely important anyways.
 
-/datum/antagonist/vampire/on_removal() //Fails to remove the vampire screen hud and vampire antag status.
+/datum/antagonist/vampire/on_removal()
 	var/mob/living/carbon/human/H = owner.current
 	owner.current.faction -= "vampire"
 	SSticker.mode.vampires -= owner
@@ -90,7 +91,7 @@
 		B.decoy_override = FALSE
 		*/ //Doesnt work, undefined var for unknown reasons
 
-/datum/antagonist/vampire/greet()
+/datum/antagonist/vampire/proc/vampire_greet() //Common antag_datum greet doesnt work.
 	var/vamp_greet = "<span class='userdanger'>You are a Vampire!</span>\n"
 	vamp_greet += "<span class='danger bold'>You are a creature of the night -- holy water, the chapel, and space will cause you to burn.</span>\n"
 	vamp_greet += "<span class='notice bold'>Hit someone in the head with harm intent to start sucking their blood. However, only blood from living creatures is usable!</span>\n"

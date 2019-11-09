@@ -52,10 +52,6 @@
 /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat
 	name = "vampire bat"
 	desc = "A tougher than usual bat that sucks blood. Keep away from medical bays."
-	turns_per_move = 1
-	response_help = "brushes aside"
-	response_disarm = "flails at"
-	response_harm = "hits"
 	speak_chance = 0
 	maxHealth = 50 //Hey, dont die in one shot.
 	health = 50
@@ -80,7 +76,7 @@
 				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			else if(V.get_ability(/datum/vampire_passive/vision))
 				sight |= (SEE_MOBS)
-				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE		
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat/death()
 	if(isliving(controller))
