@@ -543,7 +543,6 @@
 	for(var/mob/M in GLOB.dead_mob_list)
 		deadMobs++
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
-		message_admins("Dynamic attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 		return FALSE
 	if(required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
@@ -599,7 +598,6 @@
 			spawn_locs += L.loc
 
 	if(!spawn_locs.len)
-		message_admins("No valid spawn locations found for slaughter demon, aborting...")
 		return FALSE
 	return ..()
 
