@@ -17,7 +17,7 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
-	requirements = list(101,101,100,90,80,70,60,50,50,50)
+	requirements = list(60,60,50,50,50,50,50,50,50,50)
 	high_population_requirement = 50
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
