@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Increased stunbatons power cell depletion rate when left on by 50%."

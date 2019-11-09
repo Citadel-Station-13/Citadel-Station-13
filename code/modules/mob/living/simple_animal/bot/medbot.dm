@@ -383,7 +383,7 @@
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
 	var/treatment_toxavoid = get_avoidchem_toxin(C)
-	if(((treatment_toxavoid && !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
+	if(((isnull(treatment_toxavoid) || !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
@@ -472,7 +472,7 @@
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
 			var/toxin_heal_avoid = get_avoidchem_toxin(C)
 			var/toxin_healchem = get_healchem_toxin(C)
-			if(!C.reagents.has_reagent(toxin_healchem) && (toxin_heal_avoid && !C.reagents.has_reagent(toxin_heal_avoid)))
+			if(!C.reagents.has_reagent(toxin_healchem) && (isnull(toxin_heal_avoid) || !C.reagents.has_reagent(toxin_heal_avoid)))
 				reagent_id = toxin_healchem
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
