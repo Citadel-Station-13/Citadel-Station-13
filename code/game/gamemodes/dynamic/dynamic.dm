@@ -14,15 +14,15 @@
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (10 MINUTES))
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
 
-GLOBAL_VAR_INIT(dynamic_midround_delay_min, (10 MINUTES))
-GLOBAL_VAR_INIT(dynamic_midround_delay_max, (30 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_min, (5 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_max, (15 MINUTES))
 
 // -- Roundstart injection delays
 GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_min, (2 MINUTES))
 GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_max, (30 MINUTES))
 
 GLOBAL_VAR_INIT(dynamic_first_midround_delay_min, (20 MINUTES))
-GLOBAL_VAR_INIT(dynamic_first_midround_delay_max, (40 MINUTES))
+GLOBAL_VAR_INIT(dynamic_first_midround_delay_max, (30 MINUTES))
 
 // Are HIGHLANDER_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
