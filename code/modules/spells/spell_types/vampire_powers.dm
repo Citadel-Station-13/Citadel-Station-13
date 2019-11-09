@@ -104,7 +104,7 @@
 		if(V.get_ability(/datum/vampire_passive/regen))
 			U.adjustBruteLoss(-2)
 			U.adjustOxyLoss(-5)
-			U.adjustToxLoss(-2, TRUE)
+			U.adjustToxLoss(-2, forced = TRUE)
 			U.adjustFireLoss(-2)
 		sleep(7.5)
 
