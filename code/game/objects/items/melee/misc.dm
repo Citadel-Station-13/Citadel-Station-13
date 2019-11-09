@@ -632,3 +632,27 @@
 		user.adjustStaminaLossBuffered(getweight())
 	else
 		return
+
+/obj/item/twohanded/required/electrostaff/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/C = W
+		if(powersupply)
+			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
+		else
+			if(C.maxcharge < hitcost)
+				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
+				return
+			if(!user.transferItemToLoc(W, src))
+				return
+			powersupply = C
+			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(powersupply)
+			powersupply.update_icon()
+			powersupply.forceMove(get_turf(src))
+			powersupply = null
+			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+			depower(user)
+	else
+		return ..()
