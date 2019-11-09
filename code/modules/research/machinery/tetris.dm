@@ -98,3 +98,7 @@
 	user << browse(dat, "window=tetris;size=435x550")
 	user.set_machine(src)
 	onclose(user, "tetris")
+	
+	
+	
+#undef TETRIS_RNDPOINT_DIVISOR
