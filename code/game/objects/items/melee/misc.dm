@@ -508,8 +508,8 @@
 
 /obj/item/twohanded/required/electrostaff
 	icon = 'icons/obj/estaff.dmi'
-	icon_state = "electrostaff_0"
-	item_state = "electrostaff_0"
+	icon_state = "electrostaff_3"
+	item_state = "electrostaff_3"
 	lefthand_file = 'icons/mob/inhands/weapons/estaff_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/estaff_righthand.dmi'
 	name = "riot suppression electrostaff"
@@ -549,18 +549,31 @@
 	if(powersupply)
 		. = powersupply.use(usedcost)
 		if(active && powersupply.charge < hitcost)
-			active = 0
-
+			depower()
+		
 
 /obj/item/twohanded/required/electrostaff/examine(mob/living/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Use the staff inhand to change between suppresive and lethal power levels. The power level is currently <b>[power]</b>.</span>")
-
+	if(active)
+		to_chat(user, "<span class='notice'><b>Alt-click</b> to change between suppresive and lethal power levels. The power level is currently <b>[power]</b>, and the cell charge is [round(powersupply.percent())]%.</span>")
+	else
+		to_chat(user, "The [src] isn't powered!")
+		
+		
 /obj/item/twohanded/required/electrostaff/attack_self(mob/user)
+	if(!active && powersupply.charge < hitcost)
+		repower(user)
+	else
+		depower(user)
+	playsound(src.loc, 'sound/weapons/Taser.ogg', 10, 1)
+	add_fingerprint(user)
+	
+/obj/item/twohanded/required/electrostaff/AltClick(mob/user)
+	if(!active)
+		return
 	lethal = !lethal
 	if(lethal)
 		empower(user)
-
 	else
 		enervate(user)
 
@@ -587,6 +600,25 @@
 	force_wielded = 1
 	throwforce = 1
 
+
+/obj/item/twohanded/required/electrostaff/proc/repower(mob/user)
+	active = TRUE
+	to_chat(user, "<span class ='notice'>You activate the [src]'s electrodes!</span>")
+	if(lethal)
+		empower(user)
+	else
+		enervate(user)
+
+/obj/item/twohanded/required/electrostaff/proc/depower(mob/user)
+	active = FALSE
+	to_chat(user, "<span class ='notice'>The [src]'s electrodes lose power!</span>")
+	icon_state = "electrostaff_3"
+	item_state = "electrostaff_3"
+	light_color = null
+	force = 0
+	force_wielded = 0
+	throwforce = 0
+	
 /obj/item/twohanded/required/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 10 //Ineffective.
@@ -594,6 +626,7 @@
 
 /obj/item/twohanded/required/electrostaff/attack(mob/living/target, mob/living/user)
 	. = ..()
+	deductcharge(hitcost)
 	if(!lethal)
 		target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
 		user.adjustStaminaLossBuffered(getweight())
