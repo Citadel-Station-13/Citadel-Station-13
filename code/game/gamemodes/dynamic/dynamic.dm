@@ -213,17 +213,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(threat_level))
 		if(0 to 30)
-			update_playercounts()
-			if(!current_players[CURRENT_LIVING_ANTAGS].len)
-				. += "<b>Peaceful Waypoint</b></center><BR>"
-				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
-			else
-				. += "<b>Core Territory</b></center><BR>"
-				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
+			. += "<b>Peaceful Waypoint</b></center><BR>"
+			. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive. However, even deep in our territory there may be subversive elements, especially for such a high-value target as your station. Keep an eye out, but don't expect much trouble."
 			set_security_level(SEC_LEVEL_GREEN)
 		if(31 to 49)
-			. += "<b>Anomalous Exogeology</b></center><BR>"
-			. += "Although your station lies within what is generally considered Nanotrasen-controlled space, the course of its orbit has caused it to cross unusually close to exogeological features with anomalous readings. Although these features offer opportunities for our research department, it is known that these little understood readings are often correlated with increased activity from competing interstellar organizations and individuals, among them the Wizard Federation and Cult of the Geometer of Blood - all known competitors for Anomaly Type B sites. Exercise elevated caution."
+			. += "<b>Core Territory</b></center><BR>"
+			. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
 			set_security_level(SEC_LEVEL_GREEN)
 		if(50 to 65)
 			. += "<b>Contested System</b></center><BR>"
@@ -249,11 +244,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			G.on_report()
 			. += G.get_report()
 
+	print_command_report(., "Central Command Status Summary", announce=FALSE)
 	if(GLOB.security_level >= SEC_LEVEL_BLUE)
-		print_command_report(., "Central Command Status Summary", announce=FALSE)
 		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", "intercept")
 	else
-		print_command_report(., "Central Command Status Summary", announce=TRUE)
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no likely threats to [station_name()]. Have a secure shift!", "Security Report", "commandreport")
 
 // Yes, this is copy pasted from game_mode
 /datum/game_mode/dynamic/check_finished(force_ending)
