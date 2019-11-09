@@ -375,3 +375,8 @@
 /obj/item/circuitboard/computer/nanite_cloud_controller
 	name = "Nanite Cloud Control (Computer Board)"
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/tetris
+	name = "T.E.T.R.I.S. (Computer Board)"
+	desc = "A circuit board for the Trigonometrically-Enhanced Testing and Research Informatic System."
+	build_path = "/obj/machinery/computer/tetris"

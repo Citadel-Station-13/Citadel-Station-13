@@ -2651,6 +2651,7 @@
 #include "code\modules\research\machinery\departmental_techfab.dm"
 #include "code\modules\research\machinery\protolathe.dm"
 #include "code\modules\research\machinery\techfab.dm"
+#include "code\modules\research\machinery\tetris.dm"
 #include "code\modules\research\nanites\nanite_chamber.dm"
 #include "code\modules\research\nanites\nanite_chamber_computer.dm"
 #include "code\modules\research\nanites\nanite_cloud_controller.dm"
