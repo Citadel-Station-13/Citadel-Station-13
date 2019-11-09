@@ -1,5 +1,9 @@
 #define SIDE_KICK_COMBO "DH"
+<<<<<<< HEAD
 #define SHOULDER_FLIP_COMBO "GHDGGHD"
+=======
+#define SHOULDER_FLIP_COMBO "GHDGG"
+>>>>>>> b9238d02905fa75ed8589cfa6c18e2b7997bcb3c
 #define REPULSE_PUNCH_COMBO "GHGH"
 #define FOOT_SMASH_COMBO "HH"
 #define DEFT_SWITCH_COMBO "GDD"
@@ -7,12 +11,20 @@
 /datum/martial_art/the_rising_bass
 	name = "The Rising Bass"
 	id = MARTIALART_RISINGBASS
+<<<<<<< HEAD
 	dodge_chance = 100
+=======
+	var/dodge_chance = 100
+>>>>>>> b9238d02905fa75ed8589cfa6c18e2b7997bcb3c
 	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/rising_bass_help
 
+<<<<<<< HEAD
 /datum/martial_art/the_rising_bass/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+=======
+/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+>>>>>>> b9238d02905fa75ed8589cfa6c18e2b7997bcb3c
 	if(findtext(streak,SIDE_KICK_COMBO))
 		streak = ""
 		sideKick(A,D)
@@ -35,6 +47,7 @@
 		return 1
 	return 0
 
+<<<<<<< HEAD
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.IsKnockdown())
 		var/turf/H
@@ -47,10 +60,15 @@
 				H = get_step(get_step(A,SOUTH),pick(EAST,WEST))
 			if(WEST)
 				H = get_step(get_step(A,WEST),pick(SOUTH,NORTH))
+=======
+/datum/martial_art/the_sleeping_carp/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!D.IsKnockdown())
+>>>>>>> b9238d02905fa75ed8589cfa6c18e2b7997bcb3c
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the side, sliding them over!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+<<<<<<< HEAD
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 		D.Knockdown(60)
 		var/turf/L = H
@@ -167,3 +185,30 @@
 	to_chat(usr, "<span class='notice'>Repulse Punch</span>: Grab Harm Grab Harm. Slams the opponent far away from you.")
 	to_chat(usr, "<span class='notice'>Foot Smash</span>: Harm Harm. Stuns opponent, minor damage.")
 	to_chat(usr, "<span class='notice'>Deft Switch</span>: Grab Disarm Disarm. Switches the opponent's held item for your own. Most useful with nothing in your hand.")
+=======
+		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
+		D.Knockdown(60)
+		return 1
+	log_combat(A, D, "side kicked (Rising Bass)")
+	return basic_hit(A,D)
+
+/datum/martial_art/the_sleeping_carp/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!D.IsKnockdown())
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		D.visible_message("<span class='warning'>[A] flips [D] over their shoulder, slamming them into the ground!</span>", \
+						  "<span class='userdanger'>[A] flips you over their shoulder, slamming you into the ground!</span>")
+		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		D.emote("scream")
+		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+		D.Knockdown(300)
+		return 1
+	log_combat(A, D, "shoulder flipped (Rising Bass)")
+	return basic_hit(A,D)
+
+
+
+
+
+
+>>>>>>> b9238d02905fa75ed8589cfa6c18e2b7997bcb3c
