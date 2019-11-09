@@ -62,6 +62,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/threat_level = 0 
 	/// Set at the beginning of the round. Spent by the mode to "purchase" rules.
 	var/threat = 0 
+	/// Starting threat level, for things that increase it but can bring it back down.
+	var/initial_threat_level = 0
+	/// Things that cause a rolling threat adjustment to be displayed at roundend.
+	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list() 
 	/// As above, but with info such as refunds.
@@ -281,7 +285,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/out = list("<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
+	var/list/out = list("<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [initial_threat_level]<BR>")
 
 	for(var/entry in threat_log_verbose)
 		if(istext(entry))
@@ -328,6 +332,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
 	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
+	initial_threat_level = threat_level
 	return TRUE
 
 /datum/game_mode/dynamic/pre_setup()

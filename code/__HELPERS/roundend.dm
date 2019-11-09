@@ -315,6 +315,8 @@
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/str in mode.threat_log)
 			parts += "[FOURSPACES][FOURSPACES][str]"
+		for(var/entry in mode.threat_tallies)
+			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
