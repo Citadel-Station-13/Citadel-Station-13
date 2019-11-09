@@ -723,6 +723,22 @@
 	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
 	return Ninja
 
+/datum/dynamic_ruleset/midround/event/pirates
+	name = "Pirates"
+	config_tag = "pirates"
+	typepath = /datum/round_event/pirates
+	enemy_roles = list("AI","Security Officer","Head of Security","Captain")
+	required_enemies = list(2,2,1,1,0,0,0,0,0,0)
+	weight = 5
+	cost = 10
+	requirements = list(70,60,50,50,40,40,40,30,20,15)
+	high_population_requirement = 15
+
+/datum/dynamic_ruleset/midround/event/pirates/ready(forced = FALSE)
+	if (!SSmapping.empty_space)
+		return FALSE
+	return ..()
+
 //////////////////////////////////////////////
 //                                          //
 //               SPIDERS                    //
@@ -828,6 +844,163 @@
 	requirements = list(101,100,90,80,70,60,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//               ANOMALIES                  //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/event/anomaly_bluespace
+	name = "Anomaly: Bluespace"
+	config_tag = "anomaly_bluespace"
+	typepath = /datum/round_event/anomaly/anomaly_bluespace
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	cost = 3
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/anomaly_flux
+	name = "Anomaly: Hyper-Energetic Flux"
+	config_tag = "anomaly_flux"
+	typepath = /datum/round_event/anomaly/anomaly_flux
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	cost = 5
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/anomaly_gravitational
+	name = "Anomaly: Gravitational"
+	config_tag = "anomaly_gravitational"
+	typepath = /datum/round_event/anomaly/anomaly_grav
+	cost = 3
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/anomaly_pyroclastic
+	name = "Anomaly: Pyroclastic"
+	config_tag = "anomaly_pyroclastic"
+	typepath = /datum/round_event/anomaly/anomaly_pyro
+	cost = 5
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
+	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/anomaly_vortex
+	name = "Anomaly: Vortex"
+	config_tag = "anomaly_vortex"
+	typepath = /datum/round_event/anomaly/anomaly_vortex
+	cost = 5
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
+	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/brand_intelligence
+	name = "Brand Intelligence"
+	config_tag = "brand_intelligence"
+	typepath = /datum/round_event/anomaly/anomaly_vortex
+	cost = 5
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
+	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/carp_migration
+	name = "Carp Migration"
+	config_tag = "carp_migration"
+	typepath = /datum/round_event/carp_migration
+	cost = 5
+	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
+	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/communications_blackout
+	name = "Communications Blackout"
+	config_tag = "communications_blackout"
+	typepath = /datum/round_event/communications_blackout
+	cost = 5
+	enemy_roles = list("Chief Engineer","Station Engineer")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/processor_overload
+	name = "Processer Overload"
+	config_tag = "processor_overload"
+	typepath = /datum/round_event/processor_overload
+	cost = 5
+	enemy_roles = list("Chief Engineer","Station Engineer")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/space_dust
+	name = "Minor Space Dust"
+	config_tag = "space_dust"
+	typepath = /datum/round_event/space_dust
+	cost = 3
+	enemy_roles = list("Chief Engineer","Station Engineer")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/major_dust
+	name = "Major Space Dust"
+	config_tag = "major_dust"
+	typepath = /datum/round_event/meteor_wave/major_dust
+	cost = 10
+	enemy_roles = list("Chief Engineer","Station Engineer")
+	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/electrical_storm
+	name = "Electrical Storm"
+	config_tag = "electrical_storm"
+	typepath = /datum/round_event/electrical_storm
+	cost = 1
+	enemy_roles = list("Chief Engineer","Station Engineer")
+	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/heart_attack
+	name = "Random Heart Attack"
+	config_tag = "heart_attack"
+	typepath = /datum/round_event/heart_attack
+	cost = 1
+	enemy_roles = list("Medical Doctor","Chief Medical Officer")
+	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
+	requirements = list(101,101,101,5,5,5,5,5,5,5)
+	high_population_requirement = 5
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/event/radiation_storm
+	name = "Radiation Storm"
+	config_tag = "heart_attack"
+	typepath = /datum/round_event/radiation_storm
+	cost = 3
+	enemy_roles = list("Chemist","Chief Medical Officer","Geneticist","Medical Doctor","AI","Captain")
+	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement = 5
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
