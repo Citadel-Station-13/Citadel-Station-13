@@ -626,6 +626,12 @@
 	log_game("[key_name(S)] was spawned as a slaughter demon by dynamic.")
 	return S
 
+//////////////////////////////////////////////
+//                                          //
+//               ABDUCTORS                  //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
 	config_tag = "abductors"
