@@ -175,14 +175,7 @@
 /datum/dynamic_ruleset/midround/event/ready(forced = FALSE)
 	return TRUE
 
-// acceptable() takes the place of canSpawnEvent
-
-/datum/dynamic_ruleset/midround/event/proc/preRunEvent()
-	if(!ispath(typepath, /datum/round_event))
-		return EVENT_CANT_RUN
-	return EVENT_READY
-
-/datum/dynamic_ruleset/midround/event/proc/runEvent()
+/datum/dynamic_ruleset/midround/event/execute()
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// E.control = src // can't be done! we just don't use events that require these, those can be from_ghost almost always
