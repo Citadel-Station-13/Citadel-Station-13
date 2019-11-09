@@ -64,6 +64,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/threat = 0 
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list() 
+	/// As above, but with info such as refunds.
+	var/list/threat_log_verbose = list()
 	/// List of roundstart rules used for selecting the rules.
 	var/list/roundstart_rules = list()
 	/// List of latejoin rules used for selecting the rules.
@@ -266,6 +268,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.flags & HIGHLANDER_RULESET)
 			return rule.check_finished()
 
+/datum/game_mode/dynamic/proc/log_threat(var/log_str,var/verbose = FALSE)
+	threat_log_verbose += ("[worldtime2text()]: "+log_str)
+	if(!verbose)
+		threat_log += log_str
+
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
 		alert("The round hasn't started yet!")
@@ -276,7 +283,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	var/list/out = list("<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
 
-	for(var/entry in threat_log)
+	for(var/entry in threat_log_verbose)
 		if(istext(entry))
 			out += "[entry]<BR>"
 
@@ -461,7 +468,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	starting_rule.trim_candidates()
 	if (starting_rule.pre_execute())
 		spend_threat(starting_rule.cost)
-		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
+		log_threat("Roundstart [starting_rule.name] spent [starting_rule.cost]")
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -526,7 +533,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		spend_threat(rule.cost)
-		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]")
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
@@ -575,7 +582,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
 			spend_threat(new_rule.cost)
-			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
+			log_threat("Rule [new_rule.name] spent [new_rule.cost]")
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGHLANDER_RULESET)
 					highlander_executed = TRUE

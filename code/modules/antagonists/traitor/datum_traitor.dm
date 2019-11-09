@@ -106,7 +106,7 @@
 			if(is_dynamic)
 				var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
 				mode.spend_threat(threat_spent)
-				mode.threat_log += "[worldtime2text()]: Traitor spent [threat_spent] on hijack."
+				mode.log_threat("[owner.name] spent [threat_spent] on hijack.")
 			return
 
 
@@ -123,7 +123,7 @@
 		if(is_dynamic)
 			var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
 			mode.spend_threat(threat_spent)
-			mode.threat_log += "[worldtime2text()]: Traitor spent [threat_spent] on glorious death."
+			mode.log_threat("[owner.name] spent [threat_spent] on glorious death.")
 		return
 
 	else

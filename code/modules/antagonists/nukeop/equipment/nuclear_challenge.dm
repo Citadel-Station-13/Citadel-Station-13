@@ -78,7 +78,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		var/threat_spent = CONFIG_GET(number/dynamic_warops_cost)
 		mode.spend_threat(threat_spent)
-		mode.threat_log += "[worldtime2text()]: Nuke ops spent [threat_spent] on war ops."
+		mode.log_threat("Nuke ops spent [threat_spent] on war ops.")
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
 	qdel(src)

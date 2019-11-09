@@ -313,8 +313,8 @@
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
 		parts += "[FOURSPACES]Threat left: [mode.threat]"
 		parts += "[FOURSPACES]Executed rules:"
-		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
-			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost] threat"
+		for(var/str in mode.threat_log)
+			parts += "[FOURSPACES][FOURSPACES][str]"
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

@@ -498,7 +498,7 @@
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		var/threat_spent = CONFIG_GET(number/dynamic_summon_guns_cost)
 		mode.spend_threat(threat_spent)
-		mode.threat_log += "[worldtime2text()]: Wizard spent [threat_spent] on summon guns."
+		mode.log_threat("Wizard spent [threat_spent] on summon guns.")
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -524,7 +524,7 @@
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		var/threat_spent = CONFIG_GET(number/dynamic_summon_magic_cost)
 		mode.spend_threat(threat_spent)
-		mode.threat_log += "[worldtime2text()]: Wizard spent [threat_spent] on summon magic."
+		mode.log_threat("Wizard spent [threat_spent] on summon magic.")
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -551,7 +551,7 @@
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		var/threat_spent = CONFIG_GET(number/dynamic_summon_events_cost)
 		mode.spend_threat(threat_spent)
-		mode.threat_log += "[worldtime2text()]: Wizard spent [threat_spent] on summon events."
+		mode.log_threat("Wizard spent [threat_spent] on summon events.")
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
