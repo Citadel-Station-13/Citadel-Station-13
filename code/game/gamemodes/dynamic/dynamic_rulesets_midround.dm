@@ -538,16 +538,15 @@
 	high_population_requirement = 15
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready()
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready(forced = FALSE)
 	var/deadMobs = 0
 	for(var/mob/M in GLOB.dead_mob_list)
 		deadMobs++
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		message_admins("Dynamic attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/execute()
+	if(required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
 		var/turf/T = get_turf(L)
 		if(T && is_station_level(T.z))
@@ -592,12 +591,14 @@
 	high_population_requirement = 30
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/ready(forced = FALSE)
+	if(required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			spawn_locs += L.loc
 
-	if(!(spawn_locs.len))
+	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found for slaughter demon, aborting...")
 		return FALSE
 	return ..()
@@ -645,8 +646,10 @@
 		return FALSE // Unavailable if nuke ops were already sent at roundstart. yes, this is intentional for abductors too.
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/abductors/execute()
-	var/datum/team/abductor_team/team = new
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
+	if(required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
+	team = new /datum/team/abductor_team
 	if(team.team_number > ABDUCTOR_MAX_TEAMS)
 		return FALSE
 	return ..()
@@ -682,13 +685,15 @@
 	var/list/spawn_locs = list()
 	var/spawn_loc
 
-/datum/dynamic_ruleset/midround/from_ghosts/ninja/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/ninja/ready(forced = FALSE)
+	if(required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
-		if(!(spawn_locs.len))
+		if(!spawn_locs.len)
 			return FALSE
 		spawn_loc = pick(spawn_locs)
 	if(!spawn_loc)
