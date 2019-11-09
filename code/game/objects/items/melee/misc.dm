@@ -537,6 +537,20 @@
 	var/hardstun_ds = 1
 	var/softstun_ds = 2
 	var/stam_dmg = 45
+	var/obj/item/stock_parts/cell/powersupply
+	var/hitcost = 1000
+
+
+
+/obj/item/twohanded/required/electrostaff/get_cell()
+	return powersupply
+	
+/obj/item/melee/baton/proc/deductcharge(usedcost)
+	if(powersupply)
+		. = powersupply.use(usedcost)
+		if(active && powersupply.charge < hitcost)
+			active = 0
+
 
 /obj/item/twohanded/required/electrostaff/examine(mob/living/user)
 	. = ..()
@@ -546,18 +560,9 @@
 	lethal = !lethal
 	if(lethal)
 		empower(user)
-		power = "lethal"
-		light_color = LIGHT_COLOR_CYAN
-		force = 20
-		force_wielded = 20
-		throwforce = 20
+
 	else
 		enervate(user)
-		power = "suppressive"
-		light_color = LIGHT_COLOR_YELLOW
-		force = 1
-		force_wielded = 1
-		throwforce = 1
 
 	playsound(src.loc, 'sound/weapons/Taser.ogg', 10, 1)
 	add_fingerprint(user)
@@ -566,11 +571,21 @@
 	to_chat(user, "<span class ='notice'>You twist the handle of [src], and agitated </span><span style = 'color:yellow'><b>yellow</b></span><span class ='notice'> electric bolts spit out from the ends of the staff.</span>")
 	icon_state = "electrostaff_0"
 	item_state = "electrostaff_0"
+	power = "lethal"
+	light_color = LIGHT_COLOR_YELLOW
+	force = 20
+	force_wielded = 20
+	throwforce = 20
 
 /obj/item/twohanded/required/electrostaff/proc/enervate(user)
 	to_chat(user, "<span class ='notice'>You twist the handle of [src], and angry <b>blue</b> electric bolts spit out from the ends of the staff.</span>")
 	icon_state = "electrostaff_1"
 	item_state = "electrostaff_1"
+	power = "suppressive"
+	light_color = LIGHT_COLOR_CYAN
+	force = 1
+	force_wielded = 1
+	throwforce = 1
 
 /obj/item/twohanded/required/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
