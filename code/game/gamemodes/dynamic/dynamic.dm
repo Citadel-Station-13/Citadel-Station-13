@@ -11,14 +11,14 @@
 #define RULESET_STOP_PROCESSING 1
 
 // -- Injection delays
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (15 MINUTES))
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (10 MINUTES))
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
 
 GLOBAL_VAR_INIT(dynamic_midround_delay_min, (10 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_max, (30 MINUTES))
 
 // -- Roundstart injection delays
-GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_min, (10 MINUTES))
+GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_min, (2 MINUTES))
 GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_max, (30 MINUTES))
 
 GLOBAL_VAR_INIT(dynamic_first_midround_delay_min, (20 MINUTES))
@@ -632,6 +632,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
 				picking_midround_latejoin_rule(drafted_rules)
+		else
+			midround_injection_cooldown = (midround_injection_cooldown + world.time)/2
 	
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
