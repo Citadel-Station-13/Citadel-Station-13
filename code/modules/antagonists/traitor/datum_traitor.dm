@@ -159,7 +159,18 @@
 
 /datum/antagonist/traitor/proc/forge_single_human_objective() //Returns how many objectives are added
 	.=1
-	if(prob(50))
+	var/assassin_prob = 50
+	var/is_dynamic = FALSE
+	var/datum/game_mode/dynamic/mode
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		is_dynamic = TRUE
+		assassin_prob = mode.threat_level*(2/3)
+	if(prob(assassin_prob))
+		if(is_dynamic)
+			var/threat_spent = CONFIG_GET(number/dynamic_assassinate_cost)
+			spend_threat(threat_spent)
+			mode.log_threat("[owner.name] spent [threat_spent] on an assassination target.")
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new

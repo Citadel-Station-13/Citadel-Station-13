@@ -276,6 +276,8 @@ DYNAMIC_HIJACK_COST 10
 
 DYNAMIC_GLORIOUS_DEATH_COST 5
 
+DYNAMIC_ASSASSINATE_COST 2
+
 ## Dynamic wizard stuff
 
 ## How much threat level is required to buy summon guns. Setting to 0 makes it always available.
