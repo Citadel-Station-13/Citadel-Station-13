@@ -58,7 +58,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 35
-	requirements = list(101,101,101,101,101,100,90,80,70,60)
+	requirements = list(101,101,101,100,90,80,70,60,50,50)
 	high_population_requirement = 50
 	required_type = /mob/living/silicon/ai
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
@@ -215,7 +215,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 30
-	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	requirements = list(101,101,101,60,50,50,50,50,50,50)
 	high_population_requirement = 50
 	var/list/roundstart_wizards = list()
 
@@ -322,7 +322,7 @@
 	required_candidates = 5
 	weight = 3
 	cost = 40
-	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	requirements = list(100,90,80,70,60,50,50,50,50,50)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
@@ -412,7 +412,7 @@
 	required_candidates = 3
 	weight = 2
 	cost = 35
-	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	requirements = list(101,101,101,80,70,60,50,50,50,50)
 	high_population_requirement = 50
 	delay = 5 MINUTES
 	flags = HIGHLANDER_RULESET
