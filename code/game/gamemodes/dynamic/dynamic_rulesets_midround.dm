@@ -869,7 +869,7 @@
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	cost = 5
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 10
 	repeatable = TRUE
 
@@ -904,13 +904,19 @@
 	high_population_requirement = 10
 	repeatable = TRUE
 
+//////////////////////////////////////////////
+//                                          //
+//        WOW THAT'S A LOT OF EVENTS        //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/event/brand_intelligence
 	name = "Brand Intelligence"
 	config_tag = "brand_intelligence"
-	typepath = /datum/round_event/anomaly/anomaly_vortex
-	cost = 5
+	typepath = /datum/round_event/brand_intelligence
+	cost = 2
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
-	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	required_enemies = list(1,1,1,1,0,0,0,0,0,0)
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
@@ -919,9 +925,7 @@
 	name = "Carp Migration"
 	config_tag = "carp_migration"
 	typepath = /datum/round_event/carp_migration
-	cost = 5
-	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
-	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
+	cost = 4
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
@@ -930,7 +934,7 @@
 	name = "Communications Blackout"
 	config_tag = "communications_blackout"
 	typepath = /datum/round_event/communications_blackout
-	cost = 5
+	cost = 4
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -941,7 +945,7 @@
 	name = "Processer Overload"
 	config_tag = "processor_overload"
 	typepath = /datum/round_event/processor_overload
-	cost = 5
+	cost = 4
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -985,7 +989,7 @@
 	name = "Random Heart Attack"
 	config_tag = "heart_attack"
 	typepath = /datum/round_event/heart_attack
-	cost = 1
+	cost = 3
 	enemy_roles = list("Medical Doctor","Chief Medical Officer")
 	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
 	requirements = list(101,101,101,5,5,5,5,5,5,5)
@@ -994,7 +998,7 @@
 
 /datum/dynamic_ruleset/midround/event/radiation_storm
 	name = "Radiation Storm"
-	config_tag = "heart_attack"
+	config_tag = "radiation_storm"
 	typepath = /datum/round_event/radiation_storm
 	cost = 3
 	enemy_roles = list("Chemist","Chief Medical Officer","Geneticist","Medical Doctor","AI","Captain")
