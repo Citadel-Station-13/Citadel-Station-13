@@ -46,6 +46,12 @@
 			return spec_return
 
 	if(mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance)
+			if(!lying && dna && !dna.check_mutation(HULK))
+				if(mind.martial_art.dodge_chance >= rand(0,100))
+					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
+					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
+					return -1
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
@@ -141,6 +147,21 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
+		if (mind)
+			if (mind.martial_art && mind.martial_art.dodge_chance == 100) //autocatch for rising bass
+				if (get_active_held_item())
+					visible_message("<span class='warning'>[I] falls to the ground as [src] chops it out of the air!</span>")
+					return 1
+				else
+					if(!in_throw_mode)
+						throw_mode_on()
+					if(istype(AM, /obj/item))
+						if(isturf(I.loc))
+							I.attack_hand(src)
+							if(get_active_held_item() == I)
+								visible_message("<span class='warning'>[src] catches [I]!</span>")
+								throw_mode_off()
+								return 1
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
