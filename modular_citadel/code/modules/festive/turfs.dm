@@ -1091,3 +1091,259 @@
 
 
 
+//train platform stuff
+//I know, this is stupid of me to do, but it's all I could get working with my brain
+
+/obj/structure/festive/trainplatform/edge_north
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "edge_north"
+	anchored = TRUE
+	density = TRUE
+	layer = ABOVE_OBJ_LAYER //Just above doors
+	flags_1 = ON_BORDER_1
+	var/reinf = FALSE
+	var/ini_dir = null
+	var/fulltile = FALSE
+	CanAtmosPass = ATMOS_PASS_PROC
+
+/obj/structure/festive/trainplatform/edge_north/Initialize(mapload, direct)
+	. = ..()
+	if(direct)
+		setDir(direct)
+
+	ini_dir = dir
+	air_update_turf(1)
+
+/obj/structure/festive/trainplatform/edge_north/setDir(direct)
+	if(!fulltile)
+		..()
+	else
+		..(FULLTILE_WINDOW_DIR)
+
+/obj/structure/festive/trainplatform/edge_north/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
+		return 1
+	if(dir == FULLTILE_WINDOW_DIR)
+		return 0
+	if(get_dir(loc, target) == dir)
+		return !density
+	if(istype(mover, /obj/structure/festive/trainplatform/edge_north))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/festive/trainplatform/edge_north/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
+	return 1
+
+/obj/structure/festive/trainplatform/edge_north/CheckExit(atom/movable/O, turf/target)
+	if(istype(O) && (O.pass_flags & PASSGLASS))
+		return 1
+	if(get_dir(O.loc, target) == dir)
+		return 0
+	return 1
+
+/obj/structure/festive/trainplatform/edge_north
+	dir = SOUTH
+
+
+
+/obj/structure/festive/trainplatform/edge_south
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "edge_south"
+	anchored = TRUE
+	density = TRUE
+	layer = ABOVE_OBJ_LAYER //Just above doors
+	flags_1 = ON_BORDER_1
+	var/reinf = FALSE
+	var/ini_dir = null
+	var/fulltile = FALSE
+	CanAtmosPass = ATMOS_PASS_PROC
+
+/obj/structure/festive/trainplatform/edge_south/Initialize(mapload, direct)
+	. = ..()
+	if(direct)
+		setDir(direct)
+
+	ini_dir = dir
+	air_update_turf(1)
+
+/obj/structure/festive/trainplatform/edge_south/setDir(direct)
+	if(!fulltile)
+		..()
+	else
+		..(FULLTILE_WINDOW_DIR)
+
+/obj/structure/festive/trainplatform/edge_south/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
+		return 1
+	if(dir == FULLTILE_WINDOW_DIR)
+		return 0
+	if(get_dir(loc, target) == dir)
+		return !density
+	if(istype(mover, /obj/structure/festive/trainplatform/edge_south))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/festive/trainplatform/edge_south/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
+	return 1
+
+/obj/structure/festive/trainplatform/edge_north/CheckExit(atom/movable/O, turf/target)
+	if(istype(O) && (O.pass_flags & PASSGLASS))
+		return 1
+	if(get_dir(O.loc, target) == dir)
+		return 0
+	return 1
+
+/obj/structure/festive/trainplatform/edge_south
+	dir = NORTH
+
+
+
+/obj/structure/festive/trainplatform/edge_east
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "edge_east"
+	anchored = TRUE
+	density = TRUE
+	layer = ABOVE_OBJ_LAYER //Just above doors
+	flags_1 = ON_BORDER_1
+	var/reinf = FALSE
+	var/ini_dir = null
+	var/fulltile = FALSE
+	CanAtmosPass = ATMOS_PASS_PROC
+
+/obj/structure/festive/trainplatform/edge_east/Initialize(mapload, direct)
+	. = ..()
+	if(direct)
+		setDir(direct)
+
+	ini_dir = dir
+	air_update_turf(1)
+
+/obj/structure/festive/trainplatform/edge_east/setDir(direct)
+	if(!fulltile)
+		..()
+	else
+		..(FULLTILE_WINDOW_DIR)
+
+/obj/structure/festive/trainplatform/edge_east/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
+		return 1
+	if(dir == FULLTILE_WINDOW_DIR)
+		return 0
+	if(get_dir(loc, target) == dir)
+		return !density
+	if(istype(mover, /obj/structure/festive/trainplatform/edge_east))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/festive/trainplatform/edge_east/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
+	return 1
+
+/obj/structure/festive/trainplatform/edge_east/CheckExit(atom/movable/O, turf/target)
+	if(istype(O) && (O.pass_flags & PASSGLASS))
+		return 1
+	if(get_dir(O.loc, target) == dir)
+		return 0
+	return 1
+
+/obj/structure/festive/trainplatform/edge_east
+	dir = WEST
+
+
+
+/obj/structure/festive/trainplatform/edge_west
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "edge_west"
+	anchored = TRUE
+	density = TRUE
+	layer = ABOVE_OBJ_LAYER //Just above doors
+	flags_1 = ON_BORDER_1
+	var/reinf = FALSE
+	var/ini_dir = null
+	var/fulltile = FALSE
+	CanAtmosPass = ATMOS_PASS_PROC
+
+/obj/structure/festive/trainplatform/edge_west/Initialize(mapload, direct)
+	. = ..()
+	if(direct)
+		setDir(direct)
+
+	ini_dir = dir
+	air_update_turf(1)
+
+/obj/structure/festive/trainplatform/edge_west/setDir(direct)
+	if(!fulltile)
+		..()
+	else
+		..(FULLTILE_WINDOW_DIR)
+
+/obj/structure/festive/trainplatform/edge_west/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
+		return 1
+	if(dir == FULLTILE_WINDOW_DIR)
+		return 0
+	if(get_dir(loc, target) == dir)
+		return !density
+	if(istype(mover, /obj/structure/festive/trainplatform/edge_west))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/festive/trainplatform/edge_west/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
+	return 1
+
+/obj/structure/festive/trainplatform/edge_west/CheckExit(atom/movable/O, turf/target)
+	if(istype(O) && (O.pass_flags & PASSGLASS))
+		return 1
+	if(get_dir(O.loc, target) == dir)
+		return 0
+	return 1
+
+/obj/structure/festive/trainplatform/edge_west
+	dir = EAST
+
+/obj/structure/festive/trainplatform/necorner
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "ne_corner"
+	anchored = TRUE
+
+/obj/structure/festive/trainplatform/nwcorner
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "nw_corner"
+	anchored = TRUE
+
+/obj/structure/festive/trainplatform/secorner
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "se_corner"
+	anchored = TRUE
+
+/obj/structure/festive/trainplatform/swcorner
+	name = "train platform"
+	icon = 'modular_citadel/code/modules/festive/trainplatformedges.dmi'
+	icon_state = "sw_corner"
+	anchored = TRUE
