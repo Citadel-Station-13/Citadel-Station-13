@@ -749,31 +749,27 @@
 	//               VAMPIRES                   //
 	//                                          //
 	//////////////////////////////////////////////
-
+	/*
 /datum/dynamic_ruleset/roundstart/vampire
-	name = "Vampires"
+	name = "vampire"
 	config_tag = "vampire"
-	antag_datum = /datum/antagonist/vampire
 	antag_flag = ROLE_VAMPIRE
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain", "Quartermaster", "Chief Engineer")
-	restricted_roles = list("AI","Cyborg","Chaplain")
-	enemy_roles = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Chaplain")
-	required_enemies = list(2,2,2,1,1,1,1,0,0,0)
+	antag_datum = ANTAG_DATUM_VAMPIRE
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Quartermaster", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list("AI", "Cyborg", "Chaplain")
 	required_candidates = 1
-	weight = 2
-	cost = 15
-	requirements = list(80,70,60,60,30,20,10,10,10,10)
-	high_population_requirement = 30
+	weight = 3
+	cost = 30
+	requirements = list(101,101,100,90,80,70,60,50,50,50)
+	high_population_requirement = 50
 
-/datum/dynamic_ruleset/roundstart/vampire/execute()
-	var/num_vampires = min(round(mode.roundstart_pop_ready / 10) + 1, candidates.len)
+/datum/dynamic_ruleset/roundstart/vampire/pre_execute()
+	var/num_vampires = min(round(mode.candidates.len / 10) + 1, candidates.len)
 	for (var/i = 1 to num_vampires)
 		var/mob/M = pick(candidates)
-		assigned += M
 		candidates -= M
-		add_vampire(M)
-		if (i >= 2 && (mode.threat > cost))  //Gets more expensive the more vampires there are.
-			mode.spend_threat(cost)
-		else
-			break
+		assigned += M.mind
+		M.mind.restricted_roles = restricted_roles
+		M.mind.special_role = ROLE_VAMPIRE
 	return TRUE
+*/ 
