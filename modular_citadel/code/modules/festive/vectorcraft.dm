@@ -11,19 +11,23 @@
 	inertia_moving = FALSE
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
-	var/max_acceleration = 2.5
+	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
+	var/max_acceleration = 5
+	var/accel_step = 0.25
+	var/acceleration = 0
 	var/max_deceleration = 0.5
 	var/boost_power = 20
 	var/gear
 	var/boost_cooldown
 	max_integrity = 100
-	var/speed
+	var/speed // maybe remove
 	var/mob/living/carbon/human/driver
 
 /obj/vehicle/sealed/vectorcraft/mob_enter(mob/living/M)
 	if(!driver)
 		driver = M
 		gear = driver.a_intent
+	start_engine()
 	return ..()
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
@@ -31,24 +35,35 @@
 	if(M == driver)
 		driver = null
 		gear = null
+	stop_engine()
 
 
 //////////////////////////////////////////////////////////////
 //					Main driving checks				    	//
 //////////////////////////////////////////////////////////////
 
+/obj/vehicle/sealed/vectorcraft/proc/start_engine()
+	START_PROCESSING(SSvectorcraft, src)
+	check_gears()
+	if(!driver)
+		stop_engine()
+
+/obj/vehicle/sealed/vectorcraft/proc/stop_engine()
+	STOP_PROCESSING(SSvectorcraft, src)
+	vector = list("x" = 0, "y" = 0)
+	acceleration = 0
+
+
 //Move the damn car
 /obj/vehicle/sealed/vectorcraft/vehicle_move(cached_direction)
+	dir = cached_direction
 	check_gears()
 	check_boost()
-	calc_acceleration(cached_direction)
+	calc_acceleration()
+	calc_vector(cached_direction)
 	var/direction = calc_angle()
 	if(!direction)
 		direction = cached_direction
-	if(!speed)
-		return FALSE
-	START_PROCESSING(SSprocessing, src)
-	calc_velocity()
 	//Hit the brakes!!
 	if(driver.m_intent == MOVE_INTENT_WALK)
 		var/deceleration = max_deceleration
@@ -58,8 +73,10 @@
 	else if(driver.in_throw_mode)
 		friction(max_deceleration*1.2, TRUE)
 	else
-		friction(max_deceleration)
+		friction(max_deceleration/2)
+	return
 
+	/* depreciated
 	//movespeed
 	if(lastmove + movedelay > world.time)
 		return FALSE
@@ -74,34 +91,76 @@
 	else
 		after_move(direction)
 		return step(src, direction)
+	*/
 
 //Passive hover drift
 /obj/vehicle/sealed/vectorcraft/proc/hover_loop()
-	check_gears()
-	var/direction = calc_angle()
-	calc_speed()
-	if(!speed || !direction)
-		STOP_PROCESSING(SSprocessing, src)
-		return
-
-	if(driver.in_throw_mode)
-		friction(max_deceleration*5, TRUE)
-	else
-		friction(max_deceleration*2)
-
+	check_boost()
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
-		var/did_move = step(src, direction)
+		var/did_move = move_car()
 		if(did_move)
 			step(trailer, dir_to_move)
+			trailer.pixel_x = tile_loc["x"]
+			trailer.pixel_y = tile_loc["y"]
+		after_move(did_move)
 		return did_move
 	else
+		var/direction = move_car()
 		after_move(direction)
-		return step(src, direction)
+		return direction
 
 //I got over messy process procs
 /obj/vehicle/sealed/vectorcraft/process()
 	hover_loop()
+
+//////////////////////////////////////////////////////////////
+//					Movement procs						   	//
+//////////////////////////////////////////////////////////////
+
+/obj/vehicle/sealed/vectorcraft/proc/move_car()
+
+	tile_loc["x"] += vector["x"]
+	tile_loc["y"] += vector["y"]
+	if(GLOB.Debug2)
+		message_admins("Tile_loc: [tile_loc["x"]], [tile_loc["y"]]")
+
+	//range = -16 to 16
+	var/x_move = 0
+	if(tile_loc["x"] > 16)
+		x_move = round((tile_loc["x"]+16) / 32)
+		tile_loc["x"] = tile_loc["x"] % 32
+		pixel_x = tile_loc["x"]
+	else if(tile_loc < -16)
+		x_move = round((tile_loc["x"]-16) / -32)
+		tile_loc["x"] = (tile_loc["x"] % -32)
+		pixel_x = tile_loc["x"]
+
+	var/y_move = 0
+	if(tile_loc["y"] > 16)
+		y_move = round((tile_loc["y"]+16) / 32)
+		tile_loc["y"] = tile_loc["y"] % 32
+		pixel_y = tile_loc["y"]
+	else if(tile_loc < -16)
+		y_move = round((tile_loc["y"]-16) / -32)
+		tile_loc["y"] = tile_loc["y"] % -32
+		pixel_y = tile_loc["y"]
+
+	if(GLOB.Debug2)
+		message_admins("Movement: [x_move],[y_move] pix: [pixel_x],[pixel_y]")
+	//no tile movement
+	if(x_move == 0 && y_move == 0)
+		return FALSE
+
+	var/direction = calc_step_angle(x_move, y_move)
+	if(!direction) //If the movement is greater than 2
+		x = x_move
+		y = y_move
+		return TRUE
+
+	step(src, direction)
+	after_move(direction)
+	return TRUE
 
 //////////////////////////////////////////////////////////////
 //					Check procs						    	//
@@ -113,7 +172,7 @@
 		return
 	if(boost_cooldown < world.time)
 		boost_cooldown = 0
-		playsound(src.loc,'sound/vehicles/boost.ogg', rand(10,50), 1)
+		playsound(src.loc,'sound/vehicles/boost.ogg', 50, 0)
 	return
 
 //Make sure the clutch is on while changing gears!!
@@ -124,6 +183,7 @@
 				var/mob/living/carbon/C = i
 				driver = C
 				to_chat(driver, "<span class='notice'><b>You shuffle across to the driver's seat of the [src]</b></span>")
+				start_engine()
 				break
 		if(!driver)
 			return
@@ -133,10 +193,11 @@
 	if(gear != driver.a_intent && !driver.combatmode)
 		//playsound
 		to_chat(driver, "<span class='warning'><b>The gearbox gives out a horrific sound!</b></span>")
-		playsound(src.loc,'sound/vehicles/clutch_fail.ogg', rand(10,50), 1)
+		playsound(src.loc,'sound/vehicles/clutch_fail.ogg', 50, 0)
 		apply_damage(5)
+		acceleration = acceleration/2
 	else if(gear != driver.a_intent && driver.combatmode)
-		playsound(src.loc,'sound/vehicles/clutch_win.ogg', rand(10,50), 1)
+		playsound(src.loc,'sound/vehicles/clutch_win.ogg', 50, 0)
 	gear = driver.a_intent
 
 //Bounce the car off a wall
@@ -178,7 +239,7 @@
 		mob_exit(driver)
 		var/datum/effect_system/reagents_explosion/e = new()
 		var/turf/T = get_turf(src)
-		e.set_up(1, T, 0, 0)
+		e.set_up(1, T, 1, 3)
 		e.start()
 		qdel(src)
 	if(obj_integrity > max_integrity)
@@ -198,13 +259,28 @@
 		apply_damage(speed/10)
 		bounce()
 		calc_speed()
+	if(istype(M, /obj/vehicle/sealed/vectorcraft))
+		var/obj/vehicle/sealed/vectorcraft/Vc = M
+		Vc.apply_damage(speed/5)
+		Vc.vector["x"] += vector["x"]/2
+		Vc.vector["y"] += vector["y"]/2
+		apply_damage(speed/10)
+		bounce()
+		calc_speed()
 	..()
 
 //////////////////////////////////////////////////////////////
 //					Calc procs						    	//
 //////////////////////////////////////////////////////////////
+/*Calc_step_angle calculates angle based off pixel x,y movement (x,y in)
+Calc angle calcus angle based off vectors
+calc_speed() returns the highest var of x or y relative
+calc accel calculates the acceleration to be added to vector
+calc vector updates the internal vector
+friction reduces the vector by an ammount to both axis*/
+
 //How fast the car is going atm
-/obj/vehicle/sealed/vectorcraft/proc/calc_velocity()
+/obj/vehicle/sealed/vectorcraft/proc/calc_velocity() //Depreciated.
 	switch(speed)
 		if(-INFINITY to 10)
 			movedelay = 5
@@ -225,6 +301,46 @@
 			movedelay = 0
 			inertia_move_delay = 0
 	return
+
+/*
+if(driver.sprinting && !(boost_cooldown))
+	acceleration += boost_power //You got boost power!
+	boost_cooldown = world.time + 150
+	playsound(src.loc,'sound/vehicles/boost.ogg', 50, 0)
+	//playsound
+*/
+
+/obj/vehicle/sealed/vectorcraft/proc/calc_step_angle(x, y)
+	if((sqrt(x**2))>1 || (sqrt(y**2))>1) //Too large a movement for a step
+		return FALSE
+	if(x == 1)
+		if (y == 1)
+			return NORTHEAST
+		else if (y == -1)
+			return SOUTHEAST
+		else if (y == 0)
+			return EAST
+		else
+			message_admins("something went wrong; y = [y]")
+	else if (x == -1)
+		if (y == 1)
+			return NORTHWEST
+		else if (y == -1)
+			return SOUTHWEST
+		else if (y == 0)
+			return WEST
+		else
+			message_admins("something went wrong; y = [y]")
+	else if (x != 0)
+		message_admins("something went wrong; x = [x]")
+
+	if (y == 1)
+		return NORTH
+	else if (y == -1)
+		return SOUTH
+	else if (x != 0)
+		message_admins("something went wrong; y = [y]")
+	return FALSE
 
 //Returns the angle to move towards
 /obj/vehicle/sealed/vectorcraft/proc/calc_angle()
@@ -276,7 +392,7 @@
 				return WEST
 
 
-//updates the internal speed of the car
+//updates the internal speed of the car (used for crashing)
 /obj/vehicle/sealed/vectorcraft/proc/calc_speed()
 	var/magnitude = max(sqrt((vector["x"]**2)), sqrt((vector["y"]**2)))
 	speed = (magnitude * convert_gear()) / 4
@@ -294,93 +410,93 @@
 			return 4
 
 //Calculates the vector (even if it says acceleration oops)
-/obj/vehicle/sealed/vectorcraft/proc/calc_acceleration(direction)
-	calc_speed()
+/obj/vehicle/sealed/vectorcraft/proc/calc_acceleration() //Make speed 0 - 100 regardless of gear here
 	if(driver.combatmode)//clutch is on
 		return FALSE
-	var/acceleration = max_acceleration
+	var/gear_val = convert_gear()
+	var/min_accel = max_acceleration*((gear_val-1) * 20) //0 - 3
+	var/max_accel = max_acceleration*(gear_val * 25) //1.25 - 5
+
+	if(acceleration < min_accel)
+		acceleration += accel_step/5
+		playsound(src.loc,'sound/vehicles/low_eng.ogg', 25, 0, channel = 10)
+	else if (acceleration > max_accel)
+		acceleration -= accel_step
+		playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0, channel = 10)
+	else
+		acceleration += accel_step
+		playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0, channel = 10)
+
+	//acceleration = CLAMP(acceleration, 0, max_acceleration) - not sure if needed
+
+//calulate the vector change
+/obj/vehicle/sealed/vectorcraft/proc/calc_vector(direction)
+	var/cached_acceleration = acceleration
+	var/boost_active = FALSE
 	if(driver.sprinting && !(boost_cooldown))
-		acceleration *= boost_power //You got boost power!
+		cached_acceleration += boost_power //You got boost power!
 		boost_cooldown = world.time + 150
-		playsound(src.loc,'sound/vehicles/boost.ogg', rand(10,50), 1)
+		playsound(src.loc,'sound/vehicles/boost.ogg', 50, 0)
+		boost_active = TRUE
 		//playsound
-	if(gear == "help")
-		if(speed > 25)
-			acceleration /= 5
-			playsound(src.loc,'sound/vehicles/high_eng.ogg', rand(10,50), 1)
-		else
-			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
 
-	else if(gear == "disarm")
-		if(speed > 50)
-			acceleration /= 5
-			playsound(src.loc,'sound/vehicles/high_eng.ogg', rand(10,50), 1)
-		else if (speed < 25)
-			acceleration /= 5
-			playsound(src.loc,'sound/vehicles/low_eng.ogg', rand(10,50), 1)
-		else
-			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
-
-	else if(gear == "grab")
-		if(speed > 75)
-			acceleration /= 5
-			playsound(src.loc,'sound/vehicles/high_eng.ogg', rand(10,50), 1)
-		else if (speed < 50)
-			acceleration /= 5
-			playsound(src.loc,'sound/vehicles/low_eng.ogg', rand(10,50), 1)
-		else
-			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
-
-	else if(gear == "harm")
-		if (speed < 75)
-			acceleration /= 5
-			playsound(src.loc,'sound/vehicles/low_eng.ogg', rand(10,50), 1)
-		else
-			playsound(src.loc,'sound/vehicles/norm_eng.ogg', rand(10,50), 1)
-
+	var/result_vector = list("x" = 0, "y" = 0)
 	switch(direction)
 		if(NORTH)
-			vector["y"] += acceleration
+			result_vector["y"] += cached_acceleration
 		if(NORTHEAST)
-			vector["x"] += acceleration/2
-			vector["y"] += acceleration/2
+			result_vector["x"] += cached_acceleration/2
+			result_vector["y"] += cached_acceleration/2
 		if(EAST)
-			vector["x"] += acceleration
+			result_vector["x"] += cached_acceleration
 		if(SOUTHEAST)
-			vector["x"] += acceleration/2
-			vector["y"] -= acceleration/2
+			result_vector["x"] += cached_acceleration/2
+			result_vector["y"] -= cached_acceleration/2
 		if(SOUTH)
-			vector["y"] -= acceleration
+			result_vector["y"] -= cached_acceleration
 		if(SOUTHWEST)
-			vector["x"] -= acceleration/2
-			vector["y"] -= acceleration/2
+			result_vector["x"] -= cached_acceleration/2
+			result_vector["y"] -= cached_acceleration/2
 		if(WEST)
-			vector["x"] -= acceleration
+			result_vector["x"] -= cached_acceleration
 		if(NORTHWEST)
-			vector["y"] += acceleration/2
-			vector["x"] -= acceleration/2
+			result_vector["y"] += cached_acceleration/2
+			result_vector["x"] -= cached_acceleration/2
 
-	vector["x"] = CLAMP(vector["x"], -100, 100)
-	vector["y"] = CLAMP(vector["y"], -100, 100)
+	if(boost_active)
+		vector["x"] = result_vector["x"]
+		vector["y"] = result_vector["y"]
+	else
+		vector["x"] = CLAMP(result_vector["x"], -100, 100)
+		vector["y"] = CLAMP(result_vector["y"], -100, 100)
+
+	if(vector["x"] > 100 || vector["x"] < -100)
+		vector["x"] = vector["x"] - (vector["x"]/5)
+		vector["x"] = CLAMP(vector["x"], -250, 250)
+	if(vector["y"] > 100 || vector["y"] < -100)
+		vector["y"] = vector["y"] - (vector["y"]/5)
+		vector["y"] = CLAMP(vector["y"], -250, 250)
+
+	acceleration = 0
 	calc_speed()
 	return
 
 //Reduces speed
-/obj/vehicle/sealed/vectorcraft/proc/friction(acceleration, sfx = FALSE)
+/obj/vehicle/sealed/vectorcraft/proc/friction(change, sfx = FALSE)
 	//decell X
-	if(vector["x"] <= -acceleration)
-		vector["x"] += acceleration
-	else if(vector["x"] >= acceleration)
-		vector["x"] -= acceleration
+	if(vector["x"] <= -change)
+		vector["x"] += change
+	else if(vector["x"] >= change)
+		vector["x"] -= change
 	else
 		vector["x"] = 0
 	//decell Y
-	if(vector["y"] <= -acceleration)
-		vector["y"] += acceleration
-	else if(vector["y"] >= acceleration)
-		vector["y"] -= acceleration
+	if(vector["y"] <= -change)
+		vector["y"] += change
+	else if(vector["y"] >= change)
+		vector["y"] -= change
 	else
 		vector["y"] = 0
 
 	if(!(vector["y"] == 0) && !(vector["x"] == 0) && sfx)
-		playsound(src.loc,'sound/vehicles/skid.ogg', rand(10,50), 1)
+		playsound(src.loc,'sound/vehicles/skid.ogg', 50, 0)
