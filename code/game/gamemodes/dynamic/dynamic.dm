@@ -403,7 +403,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
 				drafted_rules[rule] = rule.weight
-
+	if(!drafted_rules.len)
+		message_admins("Not enough threat level for roundstart antags!")
+		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
 	var/extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
