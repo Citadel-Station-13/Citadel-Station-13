@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "The medihound sleeper now has a non-vore variant. This will be used by default. The old voracious variant will only appear if both the person being sleeper'd and the medihound have the voracious hound sleepers pref enabled. Sprites by Toriate"
-  - tweak: "\"Allow medihound sleeper\" is now labelled \"Voracious medihound sleepers\", and is now off by default"

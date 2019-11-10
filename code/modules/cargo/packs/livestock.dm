@@ -112,13 +112,6 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goose)
 	crate_name = "goose crate"
 
-/datum/supply_pack/critter/monkey
-	name = "Monkey Cube Crate"
-	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
-	cost = 2000
-	contains = list (/obj/item/storage/box/monkeycubes)
-	crate_name = "monkey cube crate"
-
 /datum/supply_pack/critter/pug
 	name = "Pug Crate"
 	desc = "Like a normal dog, but... squished. Comes with a nice collar!"

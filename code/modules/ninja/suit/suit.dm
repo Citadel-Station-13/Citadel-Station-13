@@ -49,6 +49,7 @@ Contents:
 
 		//Support function variables.
 	var/stealth = FALSE//Stealth off.
+	var/stealth_cooldown = 0
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.

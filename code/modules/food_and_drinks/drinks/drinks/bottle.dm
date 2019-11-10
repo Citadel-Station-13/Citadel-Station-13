@@ -455,7 +455,7 @@
 	..()
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot() && !active)
+	if(I.get_temperature() && !active)
 		active = 1
 		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_VERBOSEJMP(user)]."
 		GLOB.bombers += message
