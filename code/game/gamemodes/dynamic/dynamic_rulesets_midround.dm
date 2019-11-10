@@ -724,9 +724,10 @@
 	return Ninja
 
 /datum/dynamic_ruleset/midround/event/pirates
-	name = "Pirates"
+	name = "Space Pirates"
 	config_tag = "pirates"
 	typepath = /datum/round_event/pirates
+	antag_flag = ROLE_TRAITOR
 	enemy_roles = list("AI","Security Officer","Head of Security","Captain")
 	required_enemies = list(2,2,1,1,0,0,0,0,0,0)
 	weight = 5

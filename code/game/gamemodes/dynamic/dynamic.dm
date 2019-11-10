@@ -632,8 +632,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		if (prob(get_injection_chance()))
 			var/list/drafted_rules = list()
+			var/antag_num = current_players[CURRENT_LIVING_ANTAGS].len
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
+				var/antag_acceptable = (antag_num || !isnull(rule.antag_flag))
+				// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
+				if (antag_acceptable && rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
