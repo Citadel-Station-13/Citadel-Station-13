@@ -676,7 +676,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
-		chance += 50 // No antags at all? let's boost those odds!
+		chance += 80 // No antags at all? let's boost those odds!
 	else
 		var/current_pop_per_antag = current_players[CURRENT_LIVING_PLAYERS].len / current_players[CURRENT_LIVING_ANTAGS].len
 		if (current_pop_per_antag > max_pop_per_antag)
