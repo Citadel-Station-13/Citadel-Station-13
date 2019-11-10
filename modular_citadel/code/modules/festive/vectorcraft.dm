@@ -1,3 +1,4 @@
+#define SPEED_MOD 2
 //Cars that drfit
 //By Fermi!
 
@@ -13,9 +14,9 @@
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
 	var/max_acceleration = 5
-	var/accel_step = 1.25
+	var/accel_step = 0.1
 	var/acceleration = 0
-	var/max_deceleration = 0.5
+	var/max_deceleration = 0.05
 	var/boost_power = 20
 	var/gear
 	var/boost_cooldown
@@ -113,6 +114,7 @@
 //I got over messy process procs
 /obj/vehicle/sealed/vectorcraft/process()
 	hover_loop()
+	friction(max_deceleration/4)
 
 //////////////////////////////////////////////////////////////
 //					Movement procs						   	//
@@ -120,45 +122,52 @@
 
 /obj/vehicle/sealed/vectorcraft/proc/move_car()
 
-	tile_loc["x"] += vector["x"]
-	tile_loc["y"] += vector["y"]
+	tile_loc["x"] += vector["x"]/SPEED_MOD
+	tile_loc["y"] += vector["y"]/SPEED_MOD
 	if(GLOB.Debug2)
-		message_admins("Tile_loc: [tile_loc["x"]], [tile_loc["y"]]")
+		message_admins("Pre_ Tile_loc: [tile_loc["x"]], [tile_loc["y"]] Vector: [vector["x"]],[vector["y"]]")
 
 	//range = -16 to 16
 	var/x_move = 0
 	if(tile_loc["x"] > 16)
 		x_move = round((tile_loc["x"]+16) / 32)
-		tile_loc["x"] = tile_loc["x"] % 32
-		pixel_x = tile_loc["x"]
+		tile_loc["x"] = ((tile_loc["x"]+16) % 32)-16
+		pixel_x = round(tile_loc["x"])
 	else if(tile_loc["x"] < -16)
 		x_move = round((tile_loc["x"]-16) / -32)
-		tile_loc["x"] = (tile_loc["x"] % -32)
-		pixel_x = tile_loc["x"]
+		tile_loc["x"] = ((tile_loc["x"]-16) % -32)+16
+		pixel_x = round(tile_loc["x"])
+
 
 	var/y_move = 0
 	if(tile_loc["y"] > 16)
 		y_move = round((tile_loc["y"]+16) / 32)
-		tile_loc["y"] = tile_loc["y"] % 32
-		pixel_y = tile_loc["y"]
+		tile_loc["y"] = ((tile_loc["y"]+16) % 32)-16
+		pixel_y = round(tile_loc["y"])
 	else if(tile_loc["y"] < -16)
 		y_move = round((tile_loc["y"]-16) / -32)
-		tile_loc["y"] = tile_loc["y"] % -32
-		pixel_y = tile_loc["y"]
+		tile_loc["y"] = ((tile_loc["y"]-16) % -32)+16
+		pixel_y = round(tile_loc["y"])
+
 
 	if(GLOB.Debug2)
-		message_admins("Movement: [x_move],[y_move] pix: [pixel_x],[pixel_y]")
+		message_admins("Post TileLoc:[tile_loc["x"]], [tile_loc["y"]] Movement: [x_move],[y_move]")
 	//no tile movement
+
 	if(x_move == 0 && y_move == 0)
 		return FALSE
 
 	var/direction = calc_step_angle(x_move, y_move)
-	//if(!direction) //If the movement is greater than 2
-	x += x_move
-	y += y_move
+	if(direction) //If the movement is greater than 2
+		step(src, direction)
+		after_move(direction)
+	//x += x_move
+	//y += y_move
 
-	//step(src, direction)
-	after_move(direction)
+
+	message_admins("Pix:[pixel_x],[pixel_y] TileLoc:[tile_loc["x"]], [tile_loc["y"]]")
+
+
 	return TRUE
 
 //////////////////////////////////////////////////////////////
@@ -497,5 +506,5 @@ if(driver.sprinting && !(boost_cooldown))
 	else
 		vector["y"] = 0
 
-	if(!(vector["y"] == 0) && !(vector["x"] == 0) && sfx)
+	if(sfx)
 		playsound(src.loc,'sound/vehicles/skid.ogg', 50, 0)
