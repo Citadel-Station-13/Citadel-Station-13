@@ -16,10 +16,10 @@
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
 	var/max_acceleration = 5
-	var/accel_step = 0.05
-	var/acceleration = 0
+	var/accel_step = 0.2
+	var/acceleration = 0.35
 	var/max_deceleration = 2
-	var/boost_power = 10
+	var/boost_power = 15
 	var/enginesound_delay = 0
 	var/gear
 	var/boost_cooldown
@@ -57,7 +57,7 @@
 /obj/vehicle/sealed/vectorcraft/proc/stop_engine()
 	STOP_PROCESSING(SSvectorcraft, src)
 	vector = list("x" = 0, "y" = 0)
-	acceleration = 0
+	acceleration = 0.35
 
 
 //Move the damn car
@@ -131,6 +131,7 @@
 	if(GLOB.Debug2)
 		message_admins("Pre_ Tile_loc: [tile_loc["x"]], [tile_loc["y"]] Vector: [vector["x"]],[vector["y"]]")
 
+	var/cached_tile = tile_loc
 	tile_loc["x"] += vector["x"]/SPEED_MOD
 	tile_loc["y"] += vector["y"]/SPEED_MOD
 	//range = -16 to 16
@@ -151,6 +152,19 @@
 	else if(tile_loc["y"] < -PX_OFFSET)
 		y_move = round((tile_loc["y"]-PX_OFFSET) / (PX_OFFSET*2), 1)
 		tile_loc["y"] = ((tile_loc["y"]-PX_OFFSET) % -(PX_OFFSET*2))+PX_OFFSET
+
+	if(!(x_move == 0 && y_move == 0))
+		var/turf/T = get_offset_target_turf(src, x_move, y_move)
+		for(var/atom/A in T.contents)
+			Bump(A)
+			if(A.density)
+				ricochet()
+				tile_loc = cached_tile
+				return
+		if(T.density)
+			ricochet()
+			tile_loc = cached_tile
+			return
 
 	x += x_move
 	y += y_move
@@ -205,6 +219,7 @@
 				start_engine()
 				break
 		if(!driver)
+			stop_engine()
 			return
 	if(!gear)
 		gear = driver.a_intent
@@ -225,6 +240,11 @@
 	vector["y"] = -vector["y"]/2
 	acceleration /= 2
 
+/obj/vehicle/sealed/vectorcraft/proc/ricochet(x_move, y_move)
+	calc_speed()
+	apply_damage(speed/10)
+	bounce()
+	calc_speed()
 
 //////////////////////////////////////////////////////////////
 //					Damage procs							//
@@ -261,12 +281,13 @@
 		var/turf/T = get_turf(src)
 		e.set_up(1, T, 1, 3)
 		e.start()
+		visible_message("The [src] explodes from taking too much damage!")
 		qdel(src)
 	if(obj_integrity > max_integrity)
 		obj_integrity = max_integrity
 
 //
-/obj/vehicle/sealed/vectorcraft/Bump(atom/movable/M)
+/obj/vehicle/sealed/vectorcraft/Bump(atom/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
@@ -275,10 +296,6 @@
 		to_chat(C, "<span class='warning'><b>You are hit by the [src]!</b></span>")
 		to_chat(driver, "<span class='warning'><b>You just ran into [C] you crazy lunatic!</b></span>")
 	//playsound
-	if(istype(M, /obj/structure))
-		apply_damage(speed/10)
-		bounce()
-		calc_speed()
 	if(istype(M, /obj/vehicle/sealed/vectorcraft))
 		var/obj/vehicle/sealed/vectorcraft/Vc = M
 		Vc.apply_damage(speed/5)
@@ -432,13 +449,6 @@ if(driver.sprinting && !(boost_cooldown))
 	if(driver.combatmode)//clutch is on
 		return FALSE
 
-	if(acceleration > ((max_acceleration*calc_speed())/100))
-		acceleration -= accel_step
-		if(!enginesound_delay)
-			playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0)
-			enginesound_delay = world.time + 16
-		return
-
 	var/gear_val = convert_gear()
 	var/min_accel = max_acceleration*(((gear_val-1) * 20)/100) //0 - 3
 	var/max_accel = max_acceleration*((gear_val * 25)/100) //1.25 - 5
@@ -454,12 +464,22 @@ if(driver.sprinting && !(boost_cooldown))
 			playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
 	else
-		acceleration += accel_step
+		if(gear_val == 1)
+			acceleration += accel_step*2
+		else
+			acceleration += accel_step
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
 
-	acceleration = CLAMP(acceleration, 0, max_acceleration)
+	if(acceleration > ((max_acceleration*calc_speed())/80) && acceleration > max_acceleration/5)
+		acceleration -= accel_step*2
+		if(!enginesound_delay)
+			playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0)
+			enginesound_delay = world.time + 16
+		return
+
+	acceleration = CLAMP(acceleration, 0.35, max_acceleration)
 
 //calulate the vector change
 /obj/vehicle/sealed/vectorcraft/proc/calc_vector(direction)
@@ -479,23 +499,23 @@ if(driver.sprinting && !(boost_cooldown))
 		if(NORTH)
 			result_vector["y"] += cached_acceleration
 		if(NORTHEAST)
-			result_vector["x"] += cached_acceleration/2
-			result_vector["y"] += cached_acceleration/2
+			result_vector["x"] += cached_acceleration/1.4
+			result_vector["y"] += cached_acceleration/1.4
 		if(EAST)
 			result_vector["x"] += cached_acceleration
 		if(SOUTHEAST)
-			result_vector["x"] += cached_acceleration/2
-			result_vector["y"] -= cached_acceleration/2
+			result_vector["x"] += cached_acceleration/1.4
+			result_vector["y"] -= cached_acceleration/1.4
 		if(SOUTH)
 			result_vector["y"] -= cached_acceleration
 		if(SOUTHWEST)
-			result_vector["x"] -= cached_acceleration/2
-			result_vector["y"] -= cached_acceleration/2
+			result_vector["x"] -= cached_acceleration/1.4
+			result_vector["y"] -= cached_acceleration/1.4
 		if(WEST)
 			result_vector["x"] -= cached_acceleration
 		if(NORTHWEST)
-			result_vector["y"] += cached_acceleration/2
-			result_vector["x"] -= cached_acceleration/2
+			result_vector["y"] += cached_acceleration/1.4
+			result_vector["x"] -= cached_acceleration/1.4
 
 	if(boost_active)
 		vector["x"] = result_vector["x"]
@@ -517,7 +537,7 @@ if(driver.sprinting && !(boost_cooldown))
 //Reduces speed
 /obj/vehicle/sealed/vectorcraft/proc/friction(change, sfx = FALSE)
 	//decell X
-	if(vector["x"] == 0 || vector["y"] == 0)
+	if(vector["x"] == 0 && vector["y"] == 0)
 		return
 	if(vector["x"] <= -change)
 		vector["x"] += change
@@ -532,6 +552,6 @@ if(driver.sprinting && !(boost_cooldown))
 		vector["y"] -= change
 	else
 		vector["y"] = 0
-	acceleration -= max_acceleration/200
+
 	if(sfx)
 		playsound(src.loc,'sound/vehicles/skid.ogg', 50, 0)
