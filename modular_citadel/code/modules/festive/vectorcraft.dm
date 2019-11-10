@@ -462,7 +462,7 @@ if(driver.sprinting && !(boost_cooldown))
 		return
 
 	var/gear_val = convert_gear()
-	var/min_accel = max_acceleration*(((gear_val-1) * 20)/100) //0 - 3
+	var/min_accel = max_acceleration*( (((gear_val-1) * 20) + ((gear_val-1)*5)) /100)
 	var/max_accel = max_acceleration*((gear_val * 25)/100) //1.25 - 5
 
 	if(acceleration < min_accel)
@@ -484,7 +484,7 @@ if(driver.sprinting && !(boost_cooldown))
 			playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
 
-	if(acceleration > ((max_acceleration*calc_speed())/80) && acceleration > max_acceleration/5)
+	if(acceleration > ((max_acceleration*calc_speed())/90) && acceleration > max_acceleration/10)
 		acceleration -= accel_step*2
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0)

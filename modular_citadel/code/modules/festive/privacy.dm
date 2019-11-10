@@ -12,10 +12,10 @@
 
 /obj/machinery/button/privacy/attack_hand(mob/user)
 	.=..()
-	for(var/obj/structure/S in tint_objs)
-		if(S.opacity)
-			S.color = "#919191"
-			S.opacity = 0
+	for(var/obj/O in tint_objs)
+		if(O.opacity)
+			O.color = "#919191"
+			O.opacity = 0
 		else
-			S.opacity = 1
-			S.color = "#000000"
+			O.opacity = 1
+			O.color = "#000000"
