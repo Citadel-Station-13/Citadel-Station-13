@@ -477,14 +477,14 @@ if(driver.sprinting && !(boost_cooldown))
 			enginesound_delay = world.time + 16
 	else
 		if(gear_val == 1)
-			acceleration += accel_step*2
+			acceleration += accel_step*2.5
 		else
 			acceleration += accel_step
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
 
-	if(acceleration > ((max_acceleration*calc_speed())/90) && acceleration > max_acceleration/10)
+	if(acceleration > ((max_acceleration*calc_speed())/90) && acceleration > max_acceleration/5)
 		acceleration -= accel_step*2
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0)
