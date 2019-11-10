@@ -135,6 +135,7 @@
 	RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
 	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
+	RegisterSignal(owner, COMSIG_LIVING_FULLY_HEAL, .proc/retrieve_head)
 
 /obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/A)
 	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
@@ -144,8 +145,15 @@
 	if(!QDELETED(owner))
 		hearers += owner
 
-/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal, list/excluded_limbs)
+/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
 	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
+
+/obj/item/dullahan_relay/proc/retrieve_head(datum/source, admin_revive = FALSE)
+	if(admin_revive) //retrieving the owner's head for ahealing purposes.
+		var/obj/item/bodypart/head/H = loc
+		var/turf/T = get_turf(owner)
+		if(H && istype(H) && T && !(H in owner.GetAllContents()))
+			H.forceMove(T)
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
