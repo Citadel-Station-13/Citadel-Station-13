@@ -22,7 +22,15 @@
 	icon = 'modular_citadel/code/modules/festive/alleywaybricks.dmi'
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/festive/alleyway)
+	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
+
+/turf/open/floor/festive/white_alleyway
+	name = "alleyway bricks"
+	baseturfs = /turf/open/floor/festive/alleyway
+	icon = 'modular_citadel/code/modules/festive/white_alleywaybricks.dmi'
+	icon_state = "unsmooth"
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/open/floor/festive/alleyway, /turf/open/floor/festive/white_alleyway)
 
 /turf/open/floor/festive/trainplatform
 	name = "trainplatform"
@@ -195,7 +203,7 @@
 	icon_state = "grey_brick_window_we_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowWERightEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -204,7 +212,7 @@
 	canSmoothWith = list(/turf/closed/festive/greybrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowWEMiddle
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -212,7 +220,7 @@
 	icon_state = "grey_brick_window_we_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowWELeft
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -220,7 +228,7 @@
 	icon_state = "grey_brick_window_we_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowWELeftEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -229,7 +237,7 @@
 	canSmoothWith = list(/turf/closed/festive/greybrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowNS
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -237,7 +245,7 @@
 	icon_state = "grey_brick_window_ns"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowNSRight
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -245,7 +253,7 @@
 	icon_state = "grey_brick_window_ns_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowNSRightEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -254,7 +262,7 @@
 	canSmoothWith = list(/turf/closed/festive/greybrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowNSMiddle
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -262,7 +270,7 @@
 	icon_state = "grey_brick_window_ns_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowNSLeft
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -270,7 +278,7 @@
 	icon_state = "grey_brick_window_ns_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/greybrick/windowNSLeftEnd
 	name = "grey window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -279,7 +287,7 @@
 	canSmoothWith = list(/turf/closed/festive/greybrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 
 
 //Red Bricks
@@ -403,7 +411,7 @@
 	icon_state = "red_brick_window_we"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowWERight
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -411,7 +419,7 @@
 	icon_state = "red_brick_window_we_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowWERightEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -420,7 +428,7 @@
 	canSmoothWith = list(/turf/closed/festive/redbrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowWEMiddle
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -428,7 +436,7 @@
 	icon_state = "red_brick_window_we_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowWELeft
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -436,7 +444,7 @@
 	icon_state = "red_brick_window_we_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowWELeftEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -445,7 +453,7 @@
 	canSmoothWith = list(/turf/closed/festive/redbrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowNS
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -453,7 +461,7 @@
 	icon_state = "red_brick_window_ns"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowNSRight
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -461,7 +469,7 @@
 	icon_state = "red_brick_window_ns_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowNSRightEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -470,7 +478,7 @@
 	canSmoothWith = list(/turf/closed/festive/redbrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowNSMiddle
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -478,7 +486,7 @@
 	icon_state = "red_brick_window_ns_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowNSLeft
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -486,7 +494,7 @@
 	icon_state = "red_brick_window_ns_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/redbrick/windowNSLeftEnd
 	name = "red window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -495,7 +503,7 @@
 	canSmoothWith = list(/turf/closed/festive/redbrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 
 
 //Cream Bricks
@@ -619,7 +627,7 @@
 	icon_state = "cream_brick_window_we"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowWERight
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -627,7 +635,7 @@
 	icon_state = "cream_brick_window_we_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowWERightEnd
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -636,7 +644,7 @@
 	canSmoothWith = list(/turf/closed/festive/creambrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowWEMiddle
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -644,7 +652,7 @@
 	icon_state = "cream_brick_window_we_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowWELeft
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -652,7 +660,7 @@
 	icon_state = "cream_brick_window_we_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowWELeftEnd
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -661,7 +669,7 @@
 	canSmoothWith = list(/turf/closed/festive/creambrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowNS
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -669,7 +677,7 @@
 	icon_state = "cream_brick_window_ns"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowNSRight
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -677,7 +685,7 @@
 	icon_state = "cream_brick_window_ns_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowNSRightEnd
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -686,7 +694,7 @@
 	canSmoothWith = list(/turf/closed/festive/creambrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowNSMiddle
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -694,7 +702,7 @@
 	icon_state = "cream_brick_window_ns_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowNSLeft
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -702,7 +710,7 @@
 	icon_state = "cream_brick_window_ns_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/creambrick/windowNSLeftEnd
 	name = "cream window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -835,7 +843,7 @@
 	icon_state = "blue_brick_window_we"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowWERight
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -843,7 +851,7 @@
 	icon_state = "blue_brick_window_we_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowWERightEnd
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -852,7 +860,7 @@
 	canSmoothWith = list(/turf/closed/festive/bluebrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowWEMiddle
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -860,7 +868,7 @@
 	icon_state = "blue_brick_window_we_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowWELeft
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -868,7 +876,7 @@
 	icon_state = "blue_brick_window_we_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowWELeftEnd
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -877,7 +885,7 @@
 	canSmoothWith = list(/turf/closed/festive/bluebrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowNS
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -885,7 +893,7 @@
 	icon_state = "blue_brick_window_ns"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowNSRight
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -893,7 +901,7 @@
 	icon_state = "blue_brick_window_ns_right"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowNSRightEnd
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -902,7 +910,7 @@
 	canSmoothWith = list(/turf/closed/festive/bluebrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowNSMiddle
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -910,7 +918,7 @@
 	icon_state = "blue_brick_window_ns_middle"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowNSLeft
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -918,7 +926,7 @@
 	icon_state = "blue_brick_window_ns_left"
 	density = TRUE
 	anchored = TRUE
-	
+
 /obj/structure/festive/bluebrick/windowNSLeftEnd
 	name = "blue window"
 	desc = "A brick wall, intricately built up. Comes with a window."
@@ -927,7 +935,7 @@
 	canSmoothWith = list(/turf/closed/festive/bluebrick)
 	density = TRUE
 	anchored = TRUE
-	
+
 
 
 

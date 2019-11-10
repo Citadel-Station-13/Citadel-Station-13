@@ -12,6 +12,7 @@
 	allow_diagonal_dir = TRUE
 	inertia_moving = FALSE
 	animate_movement = 0
+	max_integrity = 100
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
@@ -19,18 +20,20 @@
 	var/accel_step = 0.2
 	var/acceleration = 0.35
 	var/max_deceleration = 2
+	var/max_velocity = 100
 	var/boost_power = 15
 	var/enginesound_delay = 0
 	var/gear
 	var/boost_cooldown
-	max_integrity = 100
-	var/speed // maybe remove
+
+
 	var/mob/living/carbon/human/driver
 
 /obj/vehicle/sealed/vectorcraft/mob_enter(mob/living/M)
 	if(!driver)
 		driver = M
-		gear = driver.a_intent
+		if(gear != "auto")
+			gear = driver.a_intent
 	start_engine()
 	return ..()
 
@@ -40,7 +43,7 @@
 	driver.client.pixel_y = 0
 	if(M == driver)
 		driver = null
-		gear = null
+		gear = initial(gear)
 	stop_engine()
 
 
@@ -160,11 +163,11 @@
 			if(A.density)
 				ricochet()
 				tile_loc = cached_tile
-				return
+				return FALSE
 		if(T.density)
 			ricochet()
 			tile_loc = cached_tile
-			return
+			return FALSE
 
 	x += x_move
 	y += y_move
@@ -205,7 +208,7 @@
 		return
 	if(boost_cooldown < world.time)
 		boost_cooldown = 0
-		playsound(src.loc,'sound/vehicles/boost_ready.ogg', 60, 0)
+		playsound(src.loc,'sound/vehicles/boost_ready.ogg', 65, 0)
 	return
 
 //Make sure the clutch is on while changing gears!!
@@ -223,15 +226,17 @@
 			return
 	if(!gear)
 		gear = driver.a_intent
+	if(gear == "auto")
+		return
 	//USE THE CCLUUUTCHHH
 	if(gear != driver.a_intent && !driver.combatmode)
 		//playsound
 		to_chat(driver, "<span class='warning'><b>The gearbox gives out a horrific sound!</b></span>")
-		playsound(src.loc,'sound/vehicles/clutch_fail.ogg', 50, 0)
+		playsound(src.loc,'sound/vehicles/clutch_fail.ogg', 70, 0)
 		apply_damage(5)
 		acceleration = acceleration/2
 	else if(gear != driver.a_intent && driver.combatmode)
-		playsound(src.loc,'sound/vehicles/clutch_win.ogg', 50, 0)
+		playsound(src.loc,'sound/vehicles/clutch_win.ogg', 100, 0)
 	gear = driver.a_intent
 
 //Bounce the car off a wall
@@ -241,10 +246,9 @@
 	acceleration /= 2
 
 /obj/vehicle/sealed/vectorcraft/proc/ricochet(x_move, y_move)
-	calc_speed()
+	var/speed = calc_speed()
 	apply_damage(speed/10)
 	bounce()
-	calc_speed()
 
 //////////////////////////////////////////////////////////////
 //					Damage procs							//
@@ -288,6 +292,7 @@
 
 //
 /obj/vehicle/sealed/vectorcraft/Bump(atom/M)
+	var/speed = calc_speed()
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
@@ -303,7 +308,6 @@
 		Vc.vector["y"] += vector["y"]/2
 		apply_damage(speed/10)
 		bounce()
-		calc_speed()
 	..()
 
 //////////////////////////////////////////////////////////////
@@ -318,6 +322,7 @@ friction reduces the vector by an ammount to both axis*/
 
 //How fast the car is going atm
 /obj/vehicle/sealed/vectorcraft/proc/calc_velocity() //Depreciated.
+	var/speed = calc_speed()
 	switch(speed)
 		if(-INFINITY to 10)
 			movedelay = 5
@@ -429,7 +434,7 @@ if(driver.sprinting && !(boost_cooldown))
 
 //updates the internal speed of the car (used for crashing)
 /obj/vehicle/sealed/vectorcraft/proc/calc_speed()
-	speed = max(sqrt((vector["x"]**2)), sqrt((vector["y"]**2)))
+	var/speed = max(sqrt((vector["x"]**2)), sqrt((vector["y"]**2)))
 	return speed
 
 //Converts "gear" from intent to numerics
@@ -448,6 +453,13 @@ if(driver.sprinting && !(boost_cooldown))
 /obj/vehicle/sealed/vectorcraft/proc/calc_acceleration() //Make speed 0 - 100 regardless of gear here
 	if(driver.combatmode)//clutch is on
 		return FALSE
+	if(gear == "auto")
+		acceleration += accel_step
+		acceleration = CLAMP(acceleration, initial(acceleration), max_acceleration)
+		if(!enginesound_delay)
+			playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0)
+			enginesound_delay = world.time + 16
+		return
 
 	var/gear_val = convert_gear()
 	var/min_accel = max_acceleration*(((gear_val-1) * 20)/100) //0 - 3
@@ -479,7 +491,7 @@ if(driver.sprinting && !(boost_cooldown))
 			enginesound_delay = world.time + 16
 		return
 
-	acceleration = CLAMP(acceleration, 0.35, max_acceleration)
+	acceleration = CLAMP(acceleration, initial(acceleration), max_acceleration)
 
 //calulate the vector change
 /obj/vehicle/sealed/vectorcraft/proc/calc_vector(direction)
@@ -490,7 +502,7 @@ if(driver.sprinting && !(boost_cooldown))
 	if(driver.sprinting && !(boost_cooldown))
 		cached_acceleration += boost_power //You got boost power!
 		boost_cooldown = world.time + 80
-		playsound(src.loc,'sound/vehicles/boost.ogg', 70, 0)
+		playsound(src.loc,'sound/vehicles/boost.ogg', 100, 0)
 		boost_active = TRUE
 		//playsound
 
@@ -521,17 +533,16 @@ if(driver.sprinting && !(boost_cooldown))
 		vector["x"] = result_vector["x"]
 		vector["y"] = result_vector["y"]
 	else
-		vector["x"] = CLAMP(result_vector["x"], -100, 100)
-		vector["y"] = CLAMP(result_vector["y"], -100, 100)
+		vector["x"] = CLAMP(result_vector["x"], -max_velocity, max_velocity)
+		vector["y"] = CLAMP(result_vector["y"], -max_velocity, max_velocity)
 
-	if(vector["x"] > 100 || vector["x"] < -100)
+	if(vector["x"] > max_velocity || vector["x"] < -max_velocity)
 		vector["x"] = vector["x"] - (vector["x"]/10)
 		vector["x"] = CLAMP(vector["x"], -250, 250)
-	if(vector["y"] > 100 || vector["y"] < -100)
+	if(vector["y"] > max_velocity || vector["y"] < -max_velocity)
 		vector["y"] = vector["y"] - (vector["y"]/10)
 		vector["y"] = CLAMP(vector["y"], -250, 250)
 
-	calc_speed()
 	return
 
 //Reduces speed
