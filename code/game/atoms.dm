@@ -266,7 +266,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		should_override = TRUE
 
-	
+
 	if(blood_DNA && !istype(src, /obj/effect/decal))
 		override[EXAMINE_POSITION_BEFORE] = " blood-stained "
 		should_override = TRUE
@@ -563,7 +563,7 @@
 
 
 //Hook for running code when a dir change occurs
-/atom/proc/setDir(newdir)
+/atom/proc/setDir(newdir, ismousemovement=FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 

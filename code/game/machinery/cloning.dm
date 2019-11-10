@@ -474,8 +474,6 @@
 
 	flesh_number = unattached_flesh.len
 
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
-
 /obj/machinery/clonepod/update_icon()
 	cut_overlays()
 
