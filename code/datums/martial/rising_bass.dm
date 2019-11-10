@@ -45,24 +45,18 @@
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 		D.Knockdown(60)
-		if (H)
-			D.Move(H, get_dir(D,H))
+		var/L = H
+		for(var/obj/i in H.contents)
+			if(!istype(i,/mob) && i.density == 1)
+				L = D.loc
+		D.forceMove(L)
 		log_combat(A, D, "side kicked (Rising Bass)")
 		return 1
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.IsKnockdown() || !D.lying)
-		var/turf/H
-		switch(A.dir)
-			if(NORTH)
-				H = get_step(A,SOUTH)
-			if(EAST)
-				H = get_step(A,WEST)
-			if(SOUTH)
-				H = get_step(A,NORTH)
-			if(WEST)
-				H = get_step(A,EAST)
+		var/turf/H = get_step(A, get_dir(D,A))
 		var/L = H
 		for(var/obj/i in H.contents)
 			if(!istype(i,/mob) && i.density == 1)//(i.anchored == 1 && i.density == 1) || istype(i,/obj/structure) || istype(i,/turf/closed)
@@ -74,7 +68,7 @@
 		D.emote("scream")
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-		D.SetSleeping(60)
+		D.Sleeping(60)
 		D.Knockdown(300)
 		D.forceMove(L)
 		log_combat(A, D, "shoulder flipped (Rising Bass)")
@@ -111,12 +105,14 @@
 	if(!D.IsKnockdown() || !D.lying)
 		if (D.get_active_held_item())
 			var/obj/item/G = D.get_active_held_item()
-			D.visible_message("<span class='warning'>[A] slaps [D]'s hands, taking [G] from them!</span>", \
-				"<span class='userdanger'>[A] slaps you, taking [G] from you!</span>")
-			D.temporarilyRemoveItemFromInventory(G, TRUE)
-			A.put_in_hands(G)
-			log_combat(A, D, "deft switched (Rising Bass)")
-			return 1
+			if (G && !(G.item_flags & (ABSTRACT|DROPDEL)) && D.temporarilyRemoveItemFromInventory(G))
+				A.put_in_hands(G)
+				D.visible_message("<span class='warning'>[A] slaps [D]'s hands, taking [G] from them!</span>", \
+					"<span class='userdanger'>[A] slaps you, taking [G] from you!</span>")
+				log_combat(A, D, "deft switched (Rising Bass)")
+				return 1
+			else
+				to_chat(A, "<i>[G] can't be taken out of [D]'s hands!<i>")
 	return 0
 
 /datum/martial_art/the_rising_bass/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)

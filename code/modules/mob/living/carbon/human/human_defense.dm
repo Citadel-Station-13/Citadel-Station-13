@@ -147,22 +147,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if (mind)
-			if (mind.martial_art && mind.martial_art.dodge_chance == 100) //autocatch for rising bass
-				if (get_active_held_item())
-					visible_message("<span class='warning'>[I] falls to the ground as [src] chops it out of the air!</span>")
-					return 1
-				else
-					if(!in_throw_mode)
-						throw_mode_on()
-					if(istype(AM, /obj/item))
-						if(isturf(I.loc))
-							I.attack_hand(src)
-							if(get_active_held_item() == I)
-								visible_message("<span class='warning'>[src] catches [I]!</span>")
-								throw_mode_off()
-								return 1
-		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && !(mind.martial_art && mind.martial_art.dodge_chance == 100))
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -175,7 +160,9 @@
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 					hitpush = FALSE
 					skipcatch = TRUE //can't catch the now embedded item
-
+	if (mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance == 100)
+			skipcatch = FALSE
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
