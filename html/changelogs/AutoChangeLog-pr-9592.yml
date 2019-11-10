@@ -1,0 +1,4 @@
+author: "Ghommie (original PRs by ninjanomnom, coiax, yoyobatty)"
+delete-after: True
+changes: 
+  - bugfix: "Fixed slaughter demons not getting a speed boost when exiting a pool of blood. Fixed slaughter demon giblets not being visible."

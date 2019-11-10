@@ -1,10 +1,6 @@
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L, /list))
-
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
-
-#define ismovableatom(A) (istype(A, /atom/movable))
 
 #define isatom(A) (isloc(A))
 
@@ -222,6 +218,10 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
+
+#define isprojectile(A) (istype(A, /obj/item/projectile))
+
+#define isgun(A) (istype(A, /obj/item/gun))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
