@@ -1,3 +1,8 @@
+//How to use:
+//Set the name of off the the objects you want controlled by 1 button to the same name
+//Set the tar_name of this to the same name
+//Press the button in game.
+
 /obj/machinery/button/privacy
 	name = "Privacy toggle"
 	var/tar_name
