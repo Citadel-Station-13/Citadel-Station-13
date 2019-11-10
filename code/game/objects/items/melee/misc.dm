@@ -514,13 +514,13 @@
 	righthand_file = 'icons/mob/inhands/weapons/estaff_righthand.dmi'
 	name = "riot suppression electrostaff"
 	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
-	force = 1
-	damtype = BURN
+	force = 10
+	damtype = BRUTE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	slot_flags = ITEM_SLOT_BACK
 	sharpness = FALSE
-	force_unwielded = 1
-	force_wielded = 1
+	force_unwielded = 0
+	force_wielded = 10
 	throwforce = 1
 	throw_speed = 1
 	light_range = 7
@@ -604,6 +604,7 @@
 /obj/item/twohanded/required/electrostaff/proc/repower(mob/user)
 	active = TRUE
 	to_chat(user, "<span class ='notice'>You activate the [src]'s electrodes!</span>")
+	damtype = BURN
 	if(lethal)
 		empower(user)
 	else
@@ -611,13 +612,14 @@
 
 /obj/item/twohanded/required/electrostaff/proc/depower(mob/user)
 	active = FALSE
+	damtype = BRUTE
 	to_chat(user, "<span class ='notice'>The [src]'s electrodes lose power!</span>")
 	icon_state = "electrostaff_3"
 	item_state = "electrostaff_3"
 	light_color = null
-	force = 0
-	force_wielded = 0
-	throwforce = 0
+	force = 10
+	force_wielded = 10
+	throwforce = 1
 	
 /obj/item/twohanded/required/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
