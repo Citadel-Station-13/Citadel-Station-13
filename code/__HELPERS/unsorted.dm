@@ -759,7 +759,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/pipe)))
 
 /proc/can_embed(obj/item/W)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		return 1
 	if(is_pointed(W))
 		return 1
