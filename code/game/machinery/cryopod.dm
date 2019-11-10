@@ -370,16 +370,14 @@
 					O.find_target()
 					O.update_explanation_text()
 					if(!(O.target))
-						O.owner.objectives -= O
 						qdel(O)
 
-	if(mob_occupant.mind && mob_occupant.mind.assigned_role)
+	if(mob_occupant.mind)
 		//Handle job slot/tater cleanup.
-		var/job = mob_occupant.mind.assigned_role
-		SSjob.FreeRole(job)
-		if(mob_occupant.mind.objectives.len)
-			mob_occupant.mind.objectives.Cut()
-			mob_occupant.mind.special_role = null
+		if(mob_occupant.mind.assigned_role)
+			var/job = mob_occupant.mind.assigned_role
+			SSjob.FreeRole(job)
+		mob_occupant.mind.special_role = null
 
 	// Delete them from datacore.
 

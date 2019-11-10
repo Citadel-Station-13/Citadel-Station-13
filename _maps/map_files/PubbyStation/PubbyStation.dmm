@@ -35,6 +35,30 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"aae" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcade";
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
+"aaf" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/arcade{
+	icon_state = "arcade";
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/heads/captain)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -1619,10 +1643,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
-"afI" = (
-/obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afJ" = (
@@ -13685,20 +13705,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
-"aGm" = (
-/obj/machinery/computer/arcade,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/heads/captain)
 "aGn" = (
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
 	layer = 3.1
@@ -24138,8 +24144,7 @@
 	dir = 8
 	},
 /obj/machinery/keycard_auth{
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -31872,14 +31877,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwG" = (
@@ -83605,7 +83607,7 @@ aeu
 aeI
 lGp
 aeU
-afI
+aae
 aeU
 dUk
 agy
@@ -90836,7 +90838,7 @@ aCC
 aDG
 aBm
 aFz
-aGm
+aaf
 awR
 aHQ
 aIO

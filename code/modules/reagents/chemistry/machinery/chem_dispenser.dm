@@ -157,8 +157,8 @@
 	if(beaker)
 		beaker.ex_act(severity, target)
 
-/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
-	..()
+/obj/machinery/chem_dispenser/Exited(atom/movable/A, atom/newloc)
+	. = ..()
 	if(A == beaker)
 		beaker = null
 		cut_overlays()
@@ -252,7 +252,7 @@
 			if(!is_operational())
 				return
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in beaker.possible_transfer_amounts))
 				beaker.reagents.remove_all(amount)
 				work_animation()
 				. = TRUE

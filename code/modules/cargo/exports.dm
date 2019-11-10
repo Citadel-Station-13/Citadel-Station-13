@@ -1,6 +1,6 @@
 /* How it works:
  The shuttle arrives at CentCom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
- 
+
  Each object in the loop is checked for applies_to() of various export datums, except the invalid ones.
 */
 
@@ -31,7 +31,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		setupExports()
 
 	var/list/contents = AM.GetAllContents()
-	
+
 	var/datum/export_report/report = external_report
 	if(!report) //If we don't have any longer transaction going on
 		report = new
@@ -58,7 +58,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
 	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
-	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
+	var/k_elasticity = 1/20			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 30 - > 20
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
@@ -125,9 +125,9 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 	if(amount <=0 || the_cost <=0)
 		return FALSE
-	
+
 	report.total_value[src] += the_cost
-	
+
 	if(istype(O, /datum/export/material))
 		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT
 	else
@@ -148,7 +148,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 	var/total_value = ex.total_value[src]
 	var/total_amount = ex.total_amount[src]
-	
+
 	var/msg = "[total_value] credits: Received [total_amount] "
 	if(total_value > 0)
 		msg = "+" + msg

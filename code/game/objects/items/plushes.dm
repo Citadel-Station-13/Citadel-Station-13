@@ -117,7 +117,7 @@
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
@@ -366,10 +366,10 @@
 /obj/item/toy/plush/random
 	name = "Illegal plushie"
 	desc = "Something fucked up"
+	var/blacklisted_plushes = list(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random)
 
 /obj/item/toy/plush/random/Initialize()
-	..()
-	var/newtype = pick(subtypesof(/obj/item/toy/plush))
+	var/newtype = pick(subtypesof(/obj/item/toy/plush) - typecacheof(blacklisted_plushes))
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 
