@@ -123,7 +123,7 @@
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
 	var/team_mode = FALSE
-	if(prob(team_mode_probability)) 
+	if(prob(team_mode_probability))
 		team_mode = TRUE
 		var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 		var/list/possible_team_objectives = list()
@@ -171,13 +171,13 @@
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
-	
+
 	var/mob/M = pick_n_take(candidates)
 	if (M)
 		assigned += M.mind
 		M.mind.assigned_role = ROLE_WIZARD
 		M.mind.special_role = ROLE_WIZARD
-	
+
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
@@ -185,7 +185,7 @@
 		M.current.forceMove(pick(GLOB.wizardstart))
 		M.add_antag_datum(new antag_datum())
 	return TRUE
-	
+
 //////////////////////////////////////////////
 //                                          //
 //                BLOOD CULT                //
@@ -207,16 +207,16 @@
 	high_population_requirement = 10
 	pop_per_requirement = 5
 	flags = HIGHLANDER_RULESET
-	var/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
+	var/list/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	var/cultists = cultist_cap[indice_pop]
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
@@ -233,7 +233,7 @@
 		var/datum/antagonist/cult/new_cultist = new antag_datum()
 		new_cultist.cult_team = main_cult
 		new_cultist.give_equipment = TRUE
-		M.add_antag_datum(new_cultist)	
+		M.add_antag_datum(new_cultist)
 	main_cult.setup_objectives()
 	return TRUE
 
@@ -267,18 +267,18 @@
 	high_population_requirement = 10
 	pop_per_requirement = 5
 	flags = HIGHLANDER_RULESET
-	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
+	var/list/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(operative_cap.len,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
 	// If ready() did its job, candidates should have 5 or more members in it
 
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(operative_cap.len, round(mode.roundstart_pop_ready/5)+1)
 	var/operatives = operative_cap[indice_pop]
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
@@ -385,7 +385,7 @@
 	revolution.update_heads()
 	SSshuttle.registerHostileEnvironment(src)
 	return TRUE
-	
+
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
 	if(check_rev_victory())
 		finished = 1
@@ -599,7 +599,7 @@
 	high_population_requirement = 101
 	var/devil_limit = 4 // Hard limit on devils if scaling is turned off
 
-/datum/dynamic_ruleset/roundstart/devil/pre_execute()	
+/datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
 	var/num_devils = 1
 

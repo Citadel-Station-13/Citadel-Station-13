@@ -2,21 +2,21 @@
 	/// For admin logging and round end screen.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
-	var/ruletype = "" 
+	var/ruletype = ""
 	/// For config purposes, similar to config_tag for secret game modes.
 	var/config_tag = null
 	/// If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every time it ticks.
-	var/persistent = FALSE 
+	var/persistent = FALSE
 	/// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
-	var/repeatable = FALSE 
+	var/repeatable = FALSE
 	/// If set higher than 0 decreases weight by itself causing the ruleset to appear less often the more it is repeated.
-	var/repeatable_weight_decrease = 2 
+	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
-	var/list/mob/candidates = list() 
+	var/list/mob/candidates = list()
 	/// List of players that were selected for this rule
-	var/list/datum/mind/assigned = list() 
+	var/list/datum/mind/assigned = list()
 	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
-	var/antag_flag = null 
+	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
 	/// The required minimum account age for this ruleset.
@@ -24,19 +24,19 @@
 	/// If set, and config flag protect_roles_from_antagonist is false, then the rule will not pick players from these roles.
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
-	var/list/restricted_roles = list() 
+	var/list/restricted_roles = list()
 	/// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/exclusive_roles = list() 
+	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/enemy_roles = list() 
+	var/list/enemy_roles = list()
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0) 
+	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
-	var/required_candidates = 0 
+	var/required_candidates = 0
 	/// 1 -> 9, probability for this rule to be picked against other rules
-	var/weight = 5 
+	var/weight = 5
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
-	var/cost = 0 
+	var/cost = 0
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
@@ -46,18 +46,18 @@
 	/// Requirements are the threat level requirements per pop range.
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
-	/// An alternative, static requirement used instead when pop is over mode's high_pop_limit. 
+	/// An alternative, static requirement used instead when pop is over mode's high_pop_limit.
 	var/high_population_requirement = 10
 	/// Reference to the mode, use this instead of SSticker.mode.
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
-	var/antag_flag_override = null 
+	var/antag_flag_override = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
-	/// The minimum amount of players required for the rule to be considered. 
+	/// The minimum amount of players required for the rule to be considered.
 	var/minimum_players = 0
 	/// The maximum amount of players required for the rule to be considered.
-	/// Anything below zero or exactly zero is ignored. 
+	/// Anything below zero or exactly zero is ignored.
 	var/maximum_players = 0
 
 
@@ -105,7 +105,7 @@
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
+		var/indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
@@ -128,8 +128,8 @@
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
-/datum/dynamic_ruleset/proc/ready(forced = 0)	
-	if (required_candidates > candidates.len)		
+/datum/dynamic_ruleset/proc/ready(forced = 0)
+	if (required_candidates > candidates.len)
 		return FALSE
 	return TRUE
 
