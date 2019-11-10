@@ -52,6 +52,20 @@
 	icon = 'modular_citadel/code/modules/festive/stairs.dmi'
 	icon_state = "stairs_west"
 
+/turf/open/floor/festive/wooden/wooden1
+	name = "tile planks"
+	baseturfs = /turf/open/floor/festive/wooden/wooden1
+	icon = 'modular_citadel/code/modules/festive/wooden.dmi'
+	icon_state = "wooden_1"
+
+/turf/open/floor/festive/wooden/wooden2
+	name = "decorative planks"
+	baseturfs = /turf/open/floor/festive/wooden/wooden2
+	icon = 'modular_citadel/code/modules/festive/wooden.dmi'
+	icon_state = "wooden_2"
+
+
+
 //Grey Bricks, this will hurt some peoples eyes.
 
 
