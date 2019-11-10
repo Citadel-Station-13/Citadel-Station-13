@@ -929,7 +929,7 @@
 
 /obj/item/toy/plush/catgirl/skylar
 	desc = "An adorable stuffed toy that resembles a degenerate."
-	icon_state = "skylar"
+	icon_state = "skylar2"
 	item_state = "skylar"
 	attack_verb = list("powergamed", "merged", "tabled")
 	squeak_override = list('sound/effects/meow1.ogg' = 1)
@@ -942,7 +942,7 @@
 	desc = "A masked stuffed toy that resembles a feline scientist."
 	icon_state = "trilby"
 	item_state = "trilby"
-	attack_verb = list("pred", "coded", "remembered")
+	attack_verb = list("PR'd", "coded", "remembered")
 
 /obj/item/toy/plush/catgirl/fermis
     name = "medcat plushie"
@@ -963,3 +963,9 @@
 	icon_state = "maya"
 	item_state = "maya"
 	attack_verb = list("nuked", "arrested", "harmbatonned")
+
+/obj/item/toy/plush/mammal/marisol
+	desc = "An adorable stuffed toy resembling a demi-wolf security officer.
+	icon_state = "marisol"
+	item_state = "marisol"
+	attack_verb = list("arrested", "harmbatonned", "lasered")
