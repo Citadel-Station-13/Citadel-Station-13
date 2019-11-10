@@ -1714,7 +1714,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
 	desc = "A technology disk holding a terabyte of highly confidential abductor technology. \
-			Simply insert into research console of choice and import the files from the disk. You might research some useful gear from this."
+			Simply insert into research console of choice and import the files from the disk. Because of its foreign nature, it may require multiple uploads to work properly."
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")

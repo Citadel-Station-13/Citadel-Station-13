@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Instead of transit turfs simply teleporting things to space, transit is now handled in a somewhat realistic manner. Transit turfs now act like normal space turfs, though exiting the transit area or being present in the transit area after the shuttle moves out of transit will teleport you to space and throw you in the direction the shuttle was moving in."
-  - tweak: "Reservation areas are now able to designate a border turf."

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "You can now right-click yourself in help intent in combat mode to instantly get up from resting. This will cost stamina equal to your entire stamina buffer. Manage your stamina well, and you'll be able to shrug off a single stray golden bolt"

@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - balance: "Ashwalkers now have lungs. They cannot breath station air without suffocation effects, but are completely fine on their homeworld."
-  - balance: "Carbon mobs now have a maximum tolerance to oxygen of 50kPa."
-  - balance: "Deluxe synthetic lungs have a very high bonus to O2 tolerance."

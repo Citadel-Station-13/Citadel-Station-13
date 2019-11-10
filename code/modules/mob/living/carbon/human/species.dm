@@ -545,7 +545,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.hidden_underwear)
 				H.underwear = "Nude"
 			else
-				H.saved_underwear = H.underwear
+				H.underwear = H.saved_underwear
 				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
 				if(B)
 					var/mutable_appearance/MA = mutable_appearance(B.icon, B.icon_state, -BODY_LAYER)
@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.hidden_undershirt)
 				H.undershirt = "Nude"
 			else
-				H.saved_undershirt = H.undershirt
+				H.undershirt = H.saved_undershirt
 				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
 				if(T)
 					var/mutable_appearance/MA
@@ -573,7 +573,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.hidden_socks)
 				H.socks = "Nude"
 			else
-				H.saved_socks = H.socks
+				H.socks = H.saved_socks
 				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
 				if(S)
 					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
@@ -1755,7 +1755,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
-				if(!I.is_sharp() && armor_block < 50)
+				if(!I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
 						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 						if(H.stat == CONSCIOUS)
@@ -1788,7 +1788,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						H.update_inv_glasses()
 
 			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && !I.is_sharp() && armor_block < 50)
+				if(H.stat == CONSCIOUS && !I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
