@@ -13,7 +13,7 @@
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
 	var/max_acceleration = 5
-	var/accel_step = 0.25
+	var/accel_step = 1.25
 	var/acceleration = 0
 	var/max_deceleration = 0.5
 	var/boost_power = 20
@@ -131,7 +131,7 @@
 		x_move = round((tile_loc["x"]+16) / 32)
 		tile_loc["x"] = tile_loc["x"] % 32
 		pixel_x = tile_loc["x"]
-	else if(tile_loc < -16)
+	else if(tile_loc["x"] < -16)
 		x_move = round((tile_loc["x"]-16) / -32)
 		tile_loc["x"] = (tile_loc["x"] % -32)
 		pixel_x = tile_loc["x"]
@@ -141,7 +141,7 @@
 		y_move = round((tile_loc["y"]+16) / 32)
 		tile_loc["y"] = tile_loc["y"] % 32
 		pixel_y = tile_loc["y"]
-	else if(tile_loc < -16)
+	else if(tile_loc["y"] < -16)
 		y_move = round((tile_loc["y"]-16) / -32)
 		tile_loc["y"] = tile_loc["y"] % -32
 		pixel_y = tile_loc["y"]
@@ -153,12 +153,11 @@
 		return FALSE
 
 	var/direction = calc_step_angle(x_move, y_move)
-	if(!direction) //If the movement is greater than 2
-		x = x_move
-		y = y_move
-		return TRUE
+	//if(!direction) //If the movement is greater than 2
+	x = x_move
+	y = y_move
 
-	step(src, direction)
+	//step(src, direction)
 	after_move(direction)
 	return TRUE
 
@@ -440,7 +439,7 @@ if(driver.sprinting && !(boost_cooldown))
 		boost_active = TRUE
 		//playsound
 
-	var/result_vector = list("x" = 0, "y" = 0)
+	var/result_vector = vector
 	switch(direction)
 		if(NORTH)
 			result_vector["y"] += cached_acceleration

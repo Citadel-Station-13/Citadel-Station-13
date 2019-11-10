@@ -29,3 +29,13 @@
 
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "wreath_post"
+
+/obj/structure/streetdecor/welcomesign
+	name = "Welcome sign"
+	desc = "A tartan trapped sign welcoming you to Nova Edina."
+	layer = 4
+	density = TRUE
+	anchored = TRUE
+
+	icon = 'modular_citadel/code/modules/festive/city_sign.dmi'
+	icon_state = "sign"
