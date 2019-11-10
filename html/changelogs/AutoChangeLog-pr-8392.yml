@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Kiara's toy sabre now actually is the correct item + icon states"
-  - bugfix: "Generic armor for taurs fixed, there isn't actually any sprites for 'em, so. Full sprites overlay over bodies, but I really can't be bothered to do all the offset fixes otherwise."
