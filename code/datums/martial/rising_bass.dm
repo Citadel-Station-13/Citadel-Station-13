@@ -1,5 +1,5 @@
 #define SIDE_KICK_COMBO "DH"
-#define SHOULDER_FLIP_COMBO "GHDGGHD"
+#define SHOULDER_FLIP_COMBO "GHDGHH"
 #define REPULSE_PUNCH_COMBO "GHGH"
 #define FOOT_SMASH_COMBO "HH"
 #define DEFT_SWITCH_COMBO "GDD"
@@ -37,34 +37,22 @@
 
 
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown())
-		var/turf/H
-		switch(A.dir)
-			if(NORTH)
-				H = get_step(get_step(A,NORTH),pick(EAST,WEST))
-			if(EAST)
-				H = get_step(get_step(A,EAST),pick(SOUTH,NORTH))
-			if(SOUTH)
-				H = get_step(get_step(A,SOUTH),pick(EAST,WEST))
-			if(WEST)
-				H = get_step(get_step(A,WEST),pick(SOUTH,NORTH))
+	if(!D.IsKnockdown() || D.lying == 0)
+		var/turf/H = get_step(D, A.dir & (NORTH | SOUTH) ? pick(EAST, WEST) : pick(NORTH, SOUTH))
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the side, sliding them over!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 		D.Knockdown(60)
-		var/turf/L = H
-		for(var/obj/i in H.contents)
-			if(!istype(i,/mob) && i.density == 1)//(i.anchored == 1 && i.density == 1) || istype(i,/obj/structure) || istype(i,/turf/closed)
-				L = D.loc
-		D.forceMove(L)
+		if (H)
+			D.Move(H, get_dir(D,H))
+		log_combat(A, D, "side kicked (Rising Bass)")
 		return 1
-	log_combat(A, D, "side kicked (Rising Bass)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown())
+	if(!D.IsKnockdown() || !D.lying)
 		var/turf/H
 		switch(A.dir)
 			if(NORTH)
@@ -89,12 +77,12 @@
 		D.SetSleeping(60)
 		D.Knockdown(300)
 		D.forceMove(L)
+		log_combat(A, D, "shoulder flipped (Rising Bass)")
 		return 1
-	log_combat(A, D, "shoulder flipped (Rising Bass)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown())
+	if(!D.IsKnockdown() || !D.lying)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
 						  "<span class='userdanger'>[A] smashes you in the chest, repelling you away!</span>")
@@ -103,33 +91,33 @@
 		D.throw_at(F, 10, 1)
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		D.Knockdown(90)
+		log_combat(A, D, "repulse punched (Rising Bass)")
 		return 1
-	log_combat(A, D, "repulse punched (Rising Bass)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/footSmash(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown())
+	if(!D.IsKnockdown() || !D.lying)
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] smashes their foot down on [D]'s foot!</span>", \
 						  "<span class='userdanger'>[A] smashes your foot!</span>")
 		playsound(get_turf(A), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		D.dropItemToGround(D.get_active_held_item())
+		log_combat(A, D, "foot smashed (Rising Bass)")
 		return 1
-	log_combat(A, D, "foot smashed (Rising Bass)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/deftSwitch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown())
+	if(!D.IsKnockdown() || !D.lying)
 		if (D.get_active_held_item())
 			var/obj/item/G = D.get_active_held_item()
 			D.visible_message("<span class='warning'>[A] slaps [D]'s hands, taking [G] from them!</span>", \
 				"<span class='userdanger'>[A] slaps you, taking [G] from you!</span>")
 			D.temporarilyRemoveItemFromInventory(G, TRUE)
 			A.put_in_hands(G)
+			log_combat(A, D, "deft switched (Rising Bass)")
 			return 1
-	log_combat(A, D, "deft switched (Rising Bass)")
-	return basic_hit(A,D)
+	return 0
 
 /datum/martial_art/the_rising_bass/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
