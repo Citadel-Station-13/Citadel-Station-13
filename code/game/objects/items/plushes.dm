@@ -562,6 +562,25 @@
 	icon_state = "garou"
 	item_state = "garou"
 
+/obj/item/toy/plush/lizardplushie/augments
+	icon_state = "augments"
+	item_state = "augments"
+	squeak_override = list('modular_citadel/sound/voice/weh.ogg' = 1) //I have no mouth and I must weh
+	attack_verb = list("hugged", "patted", "snugged", "booped")
+
+/obj/item/toy/plush/lizardplushie/xekov
+	icon_state = "xekov"
+	item_state = "xekov"
+
+/obj/item/toy/plush/lizardplushie/greg
+	icon_state = "greg"
+	item_state = "greg"
+
+/obj/item/toy/plush/lizardplush/sin
+	icon_state = "sin"
+	item_state = "sin"
+	desc = "An adorable stuffed toy that resembles a lizardperson.. It faintly smells of sulfur."
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
