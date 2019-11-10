@@ -154,8 +154,8 @@
 
 	var/direction = calc_step_angle(x_move, y_move)
 	//if(!direction) //If the movement is greater than 2
-	x = x_move
-	y = y_move
+	x += x_move
+	y += y_move
 
 	//step(src, direction)
 	after_move(direction)
