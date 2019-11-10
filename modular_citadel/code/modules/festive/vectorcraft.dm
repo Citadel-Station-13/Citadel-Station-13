@@ -205,7 +205,7 @@
 		return
 	if(boost_cooldown < world.time)
 		boost_cooldown = 0
-		playsound(src.loc,'sound/vehicles/boost_ready.ogg', 50, 0)
+		playsound(src.loc,'sound/vehicles/boost_ready.ogg', 60, 0)
 	return
 
 //Make sure the clutch is on while changing gears!!
@@ -490,7 +490,7 @@ if(driver.sprinting && !(boost_cooldown))
 	if(driver.sprinting && !(boost_cooldown))
 		cached_acceleration += boost_power //You got boost power!
 		boost_cooldown = world.time + 80
-		playsound(src.loc,'sound/vehicles/boost.ogg', 50, 0)
+		playsound(src.loc,'sound/vehicles/boost.ogg', 70, 0)
 		boost_active = TRUE
 		//playsound
 
