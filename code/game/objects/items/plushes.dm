@@ -575,6 +575,7 @@
 /obj/item/toy/plush/lizardplush/sin
 	icon_state = "sin"
 	item_state = "sin"
+	desc = "An adorable stuffed toy that resembles a lizardperson.. It faintly smells of sulfur."
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
