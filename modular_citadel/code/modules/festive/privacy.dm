@@ -5,7 +5,7 @@
 
 /obj/machinery/button/privacy/setup_device()
 	if(!device)
-		for(var/obj/structure/S in area)
+		for(var/obj/structure/S in get_area(src))
 			if(S.name == tar_name)
 				tint_objs += S
 	..()

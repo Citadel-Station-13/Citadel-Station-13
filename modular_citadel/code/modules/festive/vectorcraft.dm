@@ -60,7 +60,7 @@
 /obj/vehicle/sealed/vectorcraft/proc/stop_engine()
 	STOP_PROCESSING(SSvectorcraft, src)
 	vector = list("x" = 0, "y" = 0)
-	acceleration = 0.35
+	acceleration = initial(acceleration)
 
 
 //Move the damn car
