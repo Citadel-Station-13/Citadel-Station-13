@@ -3022,7 +3022,6 @@
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\fitness.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\secure\citadel_lockers.dm"
-#include "modular_citadel\code\game\turfs\cit_turfs.dm"
 #include "modular_citadel\code\modules\admin\admin.dm"
 #include "modular_citadel\code\modules\admin\chat_commands.dm"
 #include "modular_citadel\code\modules\admin\holder2.dm"
@@ -3136,6 +3135,5 @@
 #include "modular_citadel\code\modules\reagents\reagents\cit_reagents.dm"
 #include "modular_citadel\code\modules\recycling\disposal\bin.dm"
 #include "modular_citadel\code\modules\research\designs\autoylathe_designs.dm"
-#include "modular_citadel\code\modules\vehicles\secway.dm"
 #include "modular_citadel\interface\skin.dmf"
 // END_INCLUDE
