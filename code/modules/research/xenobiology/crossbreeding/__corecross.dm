@@ -82,6 +82,8 @@ To add a crossbreed:
 			itemcolor = "#FFB6C1"
 		if("adamantine")
 			itemcolor = "#008B8B"
+		if("blood red")
+			itemcolor = "#941900"
 	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.

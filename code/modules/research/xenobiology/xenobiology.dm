@@ -607,6 +607,27 @@
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
+/obj/item/slime_extract/bloodred
+	name = "blood red extract"
+	icon_state = "blood red slime extract"
+	effectmod = "treacherous"
+	activate_reagents = list("blood","plasma","water")
+
+/obj/item/slime_extract/bloodred/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
+	switch(activation_type)
+		if(SLIME_ACTIVATE_MINOR)
+			var/chosen = pick(subtypesof(/obj/item/ammo_box))
+			var/obj/item/O = new chosen(null)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
+			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
+			return 100
+
+		if(SLIME_ACTIVATE_MAJOR)
+			user.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "regen_jelly" = 10, "stimulants" = 10), "<span class='boldnotice'>You feel a sudden slime of energy!</span>")
+			return 300
+
 ////Slime-derived potions///
 
 /obj/item/slimepotion
