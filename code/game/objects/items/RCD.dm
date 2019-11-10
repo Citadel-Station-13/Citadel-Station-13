@@ -439,11 +439,11 @@ RLD
 
 /obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
 	var/list/rcd_results = A.rcd_vals(user, src)
+	if(!rcd_results)
+		return FALSE
 	var/turf/the_turf = get_turf(A)
 	var/turf_coords = "[COORD(the_turf)]"
 	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
-	if(!rcd_results)
-		return FALSE
 	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			var/atom/cached = A
