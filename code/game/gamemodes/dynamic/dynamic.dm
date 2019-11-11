@@ -647,6 +647,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		update_playercounts()
 		if (get_injection_chance())
+			var/cur_threat_frac = threat/threat_level
 			var/list/drafted_rules = list()
 			var/antag_num = current_players[CURRENT_LIVING_ANTAGS].len
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
@@ -658,7 +659,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						continue
 					rule.trim_candidates()
 					if (rule.ready())
-						drafted_rules[rule] = rule.get_weight()
+						if(!antag_num)
+							drafted_rules[rule] = round(rule.get_weight() + (rule.cost * cur_threat_frac))
+						else
+							drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
 				picking_midround_latejoin_rule(drafted_rules)
 		else
