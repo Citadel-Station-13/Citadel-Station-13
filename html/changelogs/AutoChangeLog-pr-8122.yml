@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Staminaloss targeted at the head now properly redirects to the chest."

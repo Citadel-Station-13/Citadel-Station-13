@@ -1,7 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - tweak: "Bras are now separate from underwear, meaning you can mix and match bras if you're into that."
-  - tweak: "Men can wear female accessory clothing, and females can wear men accessory clothing. It's not a fetish, mom, it's PROGRESSIVE."
-  - code_imp: "Reorganized accessories into their own files to prevent a massive 1000 line file."
-  - server: "i'm 10% sure that merging this PR will cause preference corruption sooooooooooo I just need to hear from @deathride58 or perhaps someone else on how much damage this could possibly do."

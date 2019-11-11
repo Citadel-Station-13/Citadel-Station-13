@@ -77,7 +77,7 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/head/hardhat/cakehat/is_hot()
+/obj/item/clothing/head/hardhat/cakehat/get_temperature()
 	return on * heat
 /*
  * Ushanka

@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - balance: "Medibots no longer kill slimes when trying to heal their toxins."
