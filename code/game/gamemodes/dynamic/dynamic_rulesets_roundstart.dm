@@ -348,7 +348,7 @@
 	weight = 2
 	delay = 7 MINUTES
 	cost = 35
-	requirements = list(101,101,101,80,70,60,50,50,50,50)
+	requirements = list(101,101,101,60,50,50,50,50,50,50)
 	high_population_requirement = 50
 	antag_cap = list(3,3,3,3,3,3,3,3,3,3)
 	flags = HIGHLANDER_RULESET
