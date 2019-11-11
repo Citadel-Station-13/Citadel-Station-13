@@ -186,7 +186,7 @@
 	name = "Export Design (Tequila)"
 	desc = "Allows for the blowing, and bottling of Tequila bottles."
 	id = "tequila_export"
-	reagents_list = list("tequila" = 80, "lemon _juice" = 20)
+	reagents_list = list("tequila" = 80, "lemon_juice" = 20)
 	build_path = /obj/item/export/bottle/tequila
 
 /datum/design/bottle/export/patron
@@ -263,7 +263,7 @@
 	name = "Export Design (Applejack)"
 	desc = "Allows for the blowing, and bottling of Applejack bottles."
 	id = "applejack_export"
-	reagents_list = list("applejack" = 50)
+	reagents_list = list("applejack" = 50, "gin" = 10)
 	build_path = /obj/item/export/bottle/applejack
 
 /datum/design/bottle/export/champagne

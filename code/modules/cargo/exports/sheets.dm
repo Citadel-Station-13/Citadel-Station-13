@@ -114,9 +114,7 @@
 	cost = 200 //The new plasma
 	unit_name = "sheets"
 	message = "of silk"
-	export_types = list(/obj/item/stack/sheet/cloth/silk)
-	exclude_types = list(/obj/item/stack/sheet/cloth) //Reduntent but just in case
-	include_subtypes = FALSE
+	export_types = list(/obj/item/stack/sheet/silk)
 
 /datum/export/stack/duracloth
 	cost = 40

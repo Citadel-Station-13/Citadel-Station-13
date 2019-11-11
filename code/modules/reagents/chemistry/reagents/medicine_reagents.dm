@@ -8,6 +8,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	value = 5
 	taste_description = "bitterness"
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)

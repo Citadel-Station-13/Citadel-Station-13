@@ -479,6 +479,7 @@
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
 	id = "enzyme"
+	value = 1
 	description = "A universal enzyme used in the preperation of certain chemicals and foods."
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_description = "sweetness"
@@ -518,6 +519,7 @@
 /datum/reagent/consumable/flour
 	name = "Flour"
 	id = "flour"
+	value = 0.5
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
@@ -547,6 +549,7 @@
 /datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
+	value = 0.5
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
 	nutriment_factor = 3 * REAGENTS_METABOLISM
@@ -556,6 +559,7 @@
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
 	id = "vanilla"
+	value = 1
 	description = "A fatty, bitter paste made from vanilla pods."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
@@ -565,6 +569,7 @@
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	id = "eggyolk"
+	value = 1
 	description = "It's full of protein."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
@@ -573,6 +578,7 @@
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
 	id = "corn_starch"
+	value = 2
 	description = "A slippery solution."
 	color = "#f7f6e4"
 	taste_description = "slime"
@@ -580,6 +586,7 @@
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	id = "corn_syrup"
+	value = 1
 	description = "Decays into sugar."
 	color = "#fff882"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
@@ -594,6 +601,7 @@
 	id = "honey"
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
+	value = 5
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"

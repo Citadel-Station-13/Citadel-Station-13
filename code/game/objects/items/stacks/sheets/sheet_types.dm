@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	pull_effort = 90
 	is_fabric = TRUE
-	loom_result = /obj/item/stack/sheet/cloth/silk
+	loom_result = /obj/item/stack/sheet/silk
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
@@ -294,13 +294,18 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/thirty
 	amount = 30
 
-/obj/item/stack/sheet/cloth/silk
+/obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
 	singular_name = "silk sheet"
 	icon_state = "sheet-silk"
 	item_state = "sheet-cloth"
-	merge_type = /obj/item/stack/sheet/cloth/silk
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/silk
+
+//obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
+//	recipes = GLOB.silk_recipes
+//	return ..()
 
 //Durathread fuck slash-asterisk comments
 	GLOBAL_LIST_INIT(durathread_recipes, list ( \
