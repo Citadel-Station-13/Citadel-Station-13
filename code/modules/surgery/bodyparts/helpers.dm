@@ -112,13 +112,13 @@
 /mob/proc/get_leg_ignore()
 	return FALSE
 
-/mob/living/carbon/alien/larva/get_leg_ignore()
-	return TRUE
-
-/mob/living/carbon/human/get_leg_ignore()
-	if((movement_type & FLYING) || floating)
+/mob/living/carbon/get_leg_ignore()
+	if(movement_type & (FLYING|FLOATING))
 		return TRUE
 	return FALSE
+
+/mob/living/carbon/alien/larva/get_leg_ignore()
+	return TRUE
 
 /mob/living/proc/get_missing_limbs()
 	return list()
