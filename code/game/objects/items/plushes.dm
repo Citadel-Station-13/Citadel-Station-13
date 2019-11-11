@@ -738,6 +738,14 @@
 	item_state = "bhijn"
 	attack_verb = list("closed", "reworked", "merged")
 
+/obj/item/toy/plush/aiplush
+	name = "AI plushie"
+	desc = "A little stuffed toy AI core... it appears to be malfunctioning."
+	icon_state = "exo"
+	item_state = "exo"
+	attack_verb = list("hacked", "detonated", "lockdowned", "overloaded")
+	squeak_override = list('sound/machines/beep.ogg' = 9, 'sound/machines/buzz-two.ogg' = 1)
+
 /obj/item/toy/plush/bird
 	name = "bird plushie"
 	desc = "An adorable stuffed plushie that resembles an avian."
