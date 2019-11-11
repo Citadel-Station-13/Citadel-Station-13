@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Fixes storage bugs regarding reaching into things you shouldn't be able to reach into."
