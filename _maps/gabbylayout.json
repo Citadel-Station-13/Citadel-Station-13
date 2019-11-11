@@ -1,0 +1,11 @@
+{
+    "map_name": "Gabby Layout",
+    "map_path": "map_files/FestiveBall",
+    "map_file": "GabbyLayout.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    }
+}
