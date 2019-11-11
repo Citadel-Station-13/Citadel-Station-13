@@ -751,7 +751,7 @@
 	desc = "A little stuffed toy AI core... it appears to be malfunctioning."
 	icon_state = "exo"
 	item_state = "exo"
-	attack_verb = list("hacked", "detonated", "lockdowned", "overloaded")
+	attack_verb = list("hacked", "detonated", "overloaded")
 	squeak_override = list('sound/machines/beep.ogg' = 9, 'sound/machines/buzz-two.ogg' = 1)
 
 /obj/item/toy/plush/bird
@@ -902,7 +902,7 @@
 	attack_verb = list("ordered", "bapped", "reprimanded")
 
 /obj/item/toy/plush/mammal/marisol
-	desc = "An adorable stuffed toy resembling a demi-wolf security officer"
+	desc = "An adorable stuffed toy resembling a demi-wolf security officer."
 	icon_state = "marisol"
 	item_state = "marisol"
 	attack_verb = list("arrested", "harmbattoned", "lasered")
