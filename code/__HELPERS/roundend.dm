@@ -317,6 +317,10 @@
 			parts += "[FOURSPACES][FOURSPACES][str]"
 		for(var/entry in mode.threat_tallies)
 			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
+		/*
+		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
+			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+		*/
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

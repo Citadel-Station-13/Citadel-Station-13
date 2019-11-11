@@ -11,7 +11,7 @@
 	ruletype = "Midround"
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
-	/// What type the ruleset is restricted to.
+	/// What mob type the ruleset is restricted to.
 	var/required_type = /mob/living/carbon/human
 	var/list/living_players = list()
 	var/list/living_antags = list()
@@ -20,6 +20,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
+	required_type = /mob/dead/observer
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 
@@ -29,22 +30,13 @@
 	var/triggering
 
 /datum/dynamic_ruleset/midround/trim_candidates()
-	// Unlike the previous two types, these rulesets are not meant for /mob/dead/new_player
-	// And since I want those rulesets to be as flexible as possible, I'm not gonna put much here,
-	//
-	// All you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
-	// Candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-	// So for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
-	// Make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
-	// We're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
-    living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
-    living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
-    dead_players = trim_list(mode.current_players[CURRENT_DEAD_PLAYERS])
-    list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
+	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
+	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
+	dead_players = trim_list(mode.current_players[CURRENT_DEAD_PLAYERS])
+	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
-	var/antag_name = initial(antag_flag)
 	for(var/mob/M in trimmed_list)
 		if (!istype(M, required_type))
 			trimmed_list.Remove(M)
@@ -55,14 +47,19 @@
 		if(!mode.check_age(M.client, minimum_required_age))
 			trimmed_list.Remove(M)
 			continue
-		if (!(antag_name in M.client.prefs.be_special) || jobban_isbanned(M.ckey, list(antag_name, ROLE_SYNDICATE)))//are they willing and not antag-banned?
-			trimmed_list.Remove(M)
-			continue
+		if(antag_flag_override)
+			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+				trimmed_list.Remove(M)
+				continue
+		else
+			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
+				trimmed_list.Remove(M)
+				continue
 		if (M.mind)
 			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
 				trimmed_list.Remove(M)
 				continue
-			if (M.mind.assigned_role in restricted_roles || HAS_TRAIT(M, TRAIT_MINDSHIELD)) // Does their job allow it or are they mindshielded?
+			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
 				trimmed_list.Remove(M)
 				continue
 			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
@@ -267,7 +264,7 @@
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	candidates = candidates[CURRENT_LIVING_PLAYERS]
+	living_players = candidates[CURRENT_LIVING_PLAYERS]
 	for(var/mob/living/player in candidates)
 		if(!isAI(player))
 			candidates -= player
@@ -281,8 +278,7 @@
 /datum/dynamic_ruleset/midround/malf/execute()
 	if(!candidates || !candidates.len)
 		return FALSE
-	var/mob/living/silicon/ai/M = pick(candidates)
-	candidates -= M
+	var/mob/living/silicon/ai/M = pick_n_take(candidates)
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
 	M.mind.special_role = antag_flag
@@ -353,7 +349,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
-	var/indice_pop = min(10,round(living_players.len/5)+1)
+	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
