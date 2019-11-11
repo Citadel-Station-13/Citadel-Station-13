@@ -107,7 +107,7 @@
 	name = "Blood Brothers"
 	config_tag = "traitorbro"
 	antag_flag = ROLE_BROTHER
-	antag_datum = /datum/antagonist/brother/
+	antag_datum = /datum/antagonist/brother
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 2
