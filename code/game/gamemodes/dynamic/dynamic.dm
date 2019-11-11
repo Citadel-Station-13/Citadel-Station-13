@@ -593,7 +593,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					current_rules += new_rule
 				return TRUE
 		else if (forced)
-			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of eligible players.")
 	return FALSE
 
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
