@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 	if (starting_rule.pre_execute())
 		spend_threat(starting_rule.cost + added_threat)
-		log_threat("[rule.ruletype] - <b>[rule.name]</b> -[rule.cost + rule.scaled_times * rule.scaling_cost] threat")
+		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> -[starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat")
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -604,7 +604,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
 			spend_threat(new_rule.cost)
-			log_threat("Rule [new_rule.name] spent [new_rule.cost]")
+			log_threat("[new_rule.ruletype] - <b>[new_rule.name]</b> -[new_rule.cost] threat")
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGHLANDER_RULESET)
 					highlander_executed = TRUE
