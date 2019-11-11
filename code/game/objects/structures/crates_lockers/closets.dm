@@ -614,6 +614,3 @@
 		user.resting = FALSE
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
-
-/obj/structure/closet/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
-	return ..() && opened
