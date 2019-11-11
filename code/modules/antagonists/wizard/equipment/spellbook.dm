@@ -112,10 +112,6 @@
 	spell_type = /obj/effect/proc_holder/spell/aimed/waterball
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/aimed/fireball
 
-/datum/spellbook_entry/dball
-	name = "testball"
-	spell_type = /obj/effect/proc_holder/spell/aimed/dball
-
 /datum/spellbook_entry/chaosball
 	name = "Chaosball"
 	spell_type = /obj/effect/proc_holder/spell/aimed/waterball
