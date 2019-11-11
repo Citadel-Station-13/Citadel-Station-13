@@ -47,7 +47,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/delayed/malf_ai
+/datum/dynamic_ruleset/roundstart/malf_ai
 	name = "Malfunctioning AI"
 	config_tag = "malf_ai"
 	antag_datum = /datum/antagonist/traitor
@@ -61,9 +61,10 @@
 	requirements = list(101,101,101,100,90,80,70,60,50,50)
 	high_population_requirement = 50
 	required_type = /mob/living/silicon/ai
+	delay = 30 SECONDS
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
-/datum/dynamic_ruleset/roundstart/delayed/malf_ai/trim_candidates()
+/datum/dynamic_ruleset/roundstart/malf_ai/trim_candidates()
 	..()
 	candidates = candidates[CURRENT_LIVING_PLAYERS]
 	for(var/mob/living/player in candidates)
@@ -76,7 +77,7 @@
 		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			candidates -= player
 
-/datum/dynamic_ruleset/roundstart/delayed/malf_ai/execute()
+/datum/dynamic_ruleset/roundstart/malf_ai/execute()
 	if(!candidates || !candidates.len)
 		return FALSE
 	var/mob/living/silicon/ai/M = pick(candidates)
@@ -87,7 +88,7 @@
 	M.mind.add_antag_datum(AI)
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/delayed/malf_ai/rule_process()
+/datum/dynamic_ruleset/roundstart/malf_ai/rule_process()
 	if (autotraitor_cooldown > 0)
 		autotraitor_cooldown--
 	else
