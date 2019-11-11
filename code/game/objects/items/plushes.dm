@@ -576,10 +576,18 @@
 	icon_state = "greg"
 	item_state = "greg"
 
-/obj/item/toy/plush/lizardplush/sin
+/obj/item/toy/plush/lizardplushie/sin
 	icon_state = "sin"
 	item_state = "sin"
 	desc = "An adorable stuffed toy that resembles a lizardperson.. It faintly smells of sulfur."
+
+/obj/items/toy/plush/lizardplushie/ends
+	icon_state = "ends"
+	item_state = "ends"
+
+/obj/items/toy/plush/lizardplushie/lyssa
+	icon_state = "lyssa"
+	item_state = "lyssa"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
