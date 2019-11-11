@@ -394,6 +394,11 @@
 	high_population_requirement = 50
 	repeatable = TRUE
 
+/datum/dynamic_ruleset/midround/from_ghosts/blob/ready(forced = FALSE)
+	if (required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
 	var/body = applicant.become_overmind()
 	return body
@@ -418,6 +423,11 @@
 	high_population_requirement = 50
 	repeatable = TRUE
 	var/list/vents = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
+	if (required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
@@ -511,6 +521,11 @@
 	cost = 5
 	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
 	high_population_requirement = 5
+
+/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
+	if (required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
