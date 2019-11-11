@@ -387,7 +387,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
-		rule.acceptable(roundstart_pop_ready, threat_level)	// Assigns some vars in the modes, running it here for consistency
+		rule.acceptable(GLOB.player_list.len, threat_level)	// Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(TRUE))
@@ -399,7 +399,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(GLOB.player_list.len, threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
@@ -407,12 +407,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(!drafted_rules.len)
 		message_admins("Not enough threat level for roundstart antags!")
 		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
-	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(10,round(GLOB.player_list.len/pop_per_requirement)+1)
 	extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
 		extra_rulesets_amount = 0
 	else
-		if (roundstart_pop_ready > GLOB.dynamic_high_pop_limit)
+		if (GLOB.player_list.len > GLOB.dynamic_high_pop_limit)
 			message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 			log_game("DYNAMIC: High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 			if (threat_level > high_pop_second_rule_req)
