@@ -3086,8 +3086,6 @@
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_defense.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_movement.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\dogborg_equipment.dm"
-#include "modular_citadel\code\modules\mob\living\silicon\robot\robot.dm"
-#include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\robot_movement.dm"
 #include "modular_citadel\code\modules\mob\living\simple_animal\banana_spider.dm"
 #include "modular_citadel\code\modules\mob\living\simple_animal\kiwi.dm"
