@@ -18,8 +18,8 @@
 	weight = 5
 	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 10
-	requirements = list(60,60,50,50,50,50,50,50,50,50)
-	high_population_requirement = 50
+	requirements = list(50,50,50,50,50,50,50,50,50,50)
+	high_population_requirement = 40
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
@@ -202,7 +202,7 @@
 	required_candidates = 2
 	weight = 3
 	cost = 30
-	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	requirements = list(101,101,101,80,70,60,50,50,50,50)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,2,2,3,3,4,4,4,4,4)
@@ -494,7 +494,7 @@
 	required_candidates = 4
 	weight = 3
 	cost = 35
-	requirements = list(101,101,101,100,90,80,70,60,50,50)
+	requirements = list(101,101,101,80,70,60,50,50,50,50)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,3,3,4,4,4,4,4,4,4)

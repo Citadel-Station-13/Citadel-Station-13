@@ -959,7 +959,7 @@
 	name = "Minor Space Dust"
 	config_tag = "space_dust"
 	typepath = /datum/round_event/space_dust
-	cost = 3
+	cost = 2
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -970,7 +970,7 @@
 	name = "Major Space Dust"
 	config_tag = "major_dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
-	cost = 10
+	cost = 4
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
