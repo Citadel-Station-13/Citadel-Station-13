@@ -48,11 +48,11 @@
 			trimmed_list.Remove(M)
 			continue
 		if(antag_flag_override)
-			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+			if(!(antag_flag_override in M.client.prefs.be_special) || jobban_isbanned(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				trimmed_list.Remove(M)
 				continue
 		else
-			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(antag_flag in M.client.prefs.be_special) || jobban_isbanned(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				trimmed_list.Remove(M)
 				continue
 		if (M.mind)
@@ -349,7 +349,13 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
-	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
+	indice_pop = min(10, round(living_players.len/5)+1)
+	/*	NOTE: The above line's magic value of "10" is a hack due to the fact that byond was
+		not recognizing operative_cap as a defined variable. It should be operative_cap.len--
+		and yes, this means that if the len is changed, this variable must be changed along with it.
+		One day, once the mystery of why this issue was occuring is figured out,
+		we may change it back, but until this day comes, we must make it simply 10.
+	*/
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
