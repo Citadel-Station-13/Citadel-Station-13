@@ -146,7 +146,8 @@
 	desc = "A potent spell that will stun and mute victims upon contact."
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
-	health_cost = 10
+	health_cost = 5
+	charges = 3
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
@@ -440,7 +441,7 @@
 		else
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
 			L.Knockdown(160)
-			L.adjustStaminaLoss(140) //Ensures hard stamcrit
+			L.adjustStaminaLoss(80) //Two hits is a hard crit.
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
