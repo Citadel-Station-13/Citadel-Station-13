@@ -105,6 +105,21 @@
 /datum/spellbook_entry/fireball
 	name = "Fireball"
 	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/aimed/waterball
+
+/datum/spellbook_entry/waterball
+	name = "Waterball"
+	spell_type = /obj/effect/proc_holder/spell/aimed/waterball
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/aimed/fireball
+
+/datum/spellbook_entry/dball
+	name = "testball"
+	spell_type = /obj/effect/proc_holder/spell/aimed/dball
+
+/datum/spellbook_entry/chaosball
+	name = "Chaosball"
+	spell_type = /obj/effect/proc_holder/spell/aimed/waterball
+	cost = 3
 
 /datum/spellbook_entry/spell_cards
 	name = "Spell Cards"
