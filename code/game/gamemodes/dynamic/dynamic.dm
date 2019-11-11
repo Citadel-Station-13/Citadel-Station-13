@@ -548,29 +548,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.type == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
-	/*
-	if (rule.execute())
-		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		spend_threat(rule.cost)
-		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]")
-		if(rule.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
-		else if(rule.flags & ONLY_RULESET)
-			only_ruleset_executed = TRUE
-		if(rule.ruletype == "Latejoin")
-			var/mob/M = pick(rule.candidates)
-			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-		executed_rules += rule
-		rule.candidates.Cut()
-		if (rule.persistent)
-			current_rules += rule
-		return TRUE
-	else
-		stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
-	return FALSE
-	*/
-
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
 	return TRUE
 
