@@ -55,7 +55,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
+/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return 1
 
@@ -132,22 +132,26 @@
 /obj/item/abductor
 	icon = 'icons/obj/abductor.dmi'
 
-/obj/item/abductor/proc/AbductorCheck(user)
-	if(isabductor(user))
+/obj/item/abductor/proc/AbductorCheck(mob/user)
+	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
+		return TRUE
+	if (istype(user) && user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
 	to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
 	return FALSE
 
-/obj/item/abductor/proc/ScientistCheck(user)
-	if(!AbductorCheck(user))
-		return FALSE
+/obj/item/abductor/proc/ScientistCheck(mob/user)
+	var/training = HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
+	var/sci_training = HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING))
 
-	var/mob/living/carbon/human/H = user
-	var/datum/species/abductor/S = H.dna.species
-	if(S.scientist)
-		return TRUE
-	to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
-	return FALSE
+	if(training && !sci_training)
+		to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
+		. = FALSE
+	else if(!training && !sci_training)
+		to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
+		. = FALSE
+	else
+		. = TRUE
 
 /obj/item/abductor/gizmo
 	name = "science tool"
@@ -341,8 +345,8 @@
 		if(QDELETED(G))
 			return
 
-		if(istype(C.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(user, "<span class='warning'>Your target seems to have some sort of protective headgear on, blocking the message from being sent!</span>")
+		if(C.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='warning'>Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!</span>")
 			return
 
 		G.mind_control(command, user)
@@ -520,10 +524,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
-		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] headgear protected [L.p_them()]!</span>", \
-								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your headgear deflects most of it!</span>")
+		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protected [L.p_them()]!</span>", \
+								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!</span>")
 			L.drowsyness += 2
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
@@ -532,10 +536,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
-		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] headgear completely protected [L.p_them()]!</span>", \
-								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your headgear deflects the effects!</span>")
+		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is completely blocking our sleep inducement methods!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil completely protected [L.p_them()]!</span>", \
+								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!</span>")
 			return
 		L.drowsyness += 1
 		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
@@ -683,7 +687,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
-	blockTracking = 1
+	blockTracking = TRUE
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers

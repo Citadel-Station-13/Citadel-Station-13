@@ -18,7 +18,7 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds, times_fired)
 	set invisibility = 0
 	if (notransform)
 		return
@@ -41,7 +41,7 @@
 
 	if(stat != DEAD)
 		//process your dick energy
-		handle_arousal()
+		handle_arousal(times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
@@ -74,7 +74,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 30) //Citadel change to make memes more often.
+	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 30) //Citadel change to make memes more often.
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 		if(prob(3))
 			if(prob(25))

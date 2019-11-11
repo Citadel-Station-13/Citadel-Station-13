@@ -429,9 +429,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				to_chat(G, "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>")
 				to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>")
 				message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(G)])")
-				G.ghostize(0)
+				G.ghostize(FALSE)
 				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
-				G.key = C.key
+				C.transfer_ckey(G)
 				G.reset = 1
 				switch(G.namedatum.theme)
 					if("tech")

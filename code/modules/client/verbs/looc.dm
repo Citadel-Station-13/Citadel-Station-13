@@ -1,3 +1,6 @@
+GLOBAL_VAR_INIT(LOOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
+GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
+
 /client/verb/looc(msg as text)
 	set name = "LOOC"
 	set desc = "Local OOC, seen only by those in view."
@@ -59,30 +62,17 @@
 			continue //Also handled later.
 
 		if(C.prefs.toggles & CHAT_OOC)
-//			var/display_name = src.key
-//			if(holder)
-//				if(holder.fakekey)
-//					if(C.holder)
-//						display_name = "[holder.fakekey]/([src.key])"
-//				else
-//					display_name = holder.fakekey
-			to_chat(C,"<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")
+			if(GLOB.LOOC_COLOR)
+				to_chat(C, "<font color='[GLOB.LOOC_COLOR]'><b><span class='prefix'>LOOC:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]</span></b></font>")
+			else
+				to_chat(C, "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]</span></span>")
 
 	for(var/client/C in GLOB.admins)
 		if(C.prefs.toggles & CHAT_OOC)
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C,"<font color='#6699CC'><span class='ooc'>[ADMIN_FLW(usr)]<span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")
-
-	/*for(var/mob/dead/observer/G in world)
-		if(!G.client)
-			continue
-		var/client/C = G.client
-		if (C in GLOB.admins)
-			continue //handled earlier.
-		if(C.prefs.toggles & CHAT_OOC)
-			var/prefix = "(G)LOOC"
-			if (C.mob in heard)
-				prefix = "LOOC"
-		to_chat(C,"<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")*/
+			if(GLOB.LOOC_COLOR)
+				to_chat(C, "<font color='[GLOB.LOOC_COLOR]'><b>[ADMIN_FLW(usr)] <span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></b></font>")
+			else
+				to_chat(C, "<span class='looc'>[ADMIN_FLW(usr)] <span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span>")

@@ -75,7 +75,7 @@
 		O.setOxyLoss(getOxyLoss(), 0)
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
-		O.setBrainLoss(getBrainLoss(), 0)
+		O.setOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN), 0)
 		O.adjustStaminaLoss(getStaminaLoss(), 0)//CIT CHANGE - makes monkey transformations inherit stamina
 		O.updatehealth()
 		O.radiation = radiation
@@ -236,7 +236,7 @@
 		O.setOxyLoss(getOxyLoss(), 0)
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
-		O.setBrainLoss(getBrainLoss(), 0)
+		O.setOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN), 0)
 		O.adjustStaminaLoss(getStaminaLoss(), 0)//CIT CHANGE - makes monkey transformations inherit stamina
 		O.updatehealth()
 		O.radiation = radiation
@@ -382,7 +382,7 @@
 			mind.active = FALSE
 		mind.transfer_to(R)
 	else if(transfer_after)
-		R.key = key
+		transfer_ckey(R)
 
 	R.apply_pref_name("cyborg")
 
@@ -401,7 +401,7 @@
 	qdel(src)
 
 //human -> alien
-/mob/living/carbon/human/proc/Alienize()
+/mob/living/carbon/human/proc/Alienize(mind_transfer = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -425,13 +425,16 @@
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
 	new_xeno.a_intent = INTENT_HARM
-	new_xeno.key = key
+	if(mind && mind_transfer)
+		mind.transfer_to(new_xeno)
+	else
+		transfer_ckey(new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
 	qdel(src)
 
-/mob/living/carbon/human/proc/slimeize(reproduce as num)
+/mob/living/carbon/human/proc/slimeize(reproduce, mind_transfer = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -457,20 +460,26 @@
 	else
 		new_slime = new /mob/living/simple_animal/slime(loc)
 	new_slime.a_intent = INTENT_HARM
-	new_slime.key = key
+	if(mind && mind_transfer)
+		mind.transfer_to(new_slime)
+	else
+		transfer_ckey(new_slime)
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(starting_points = 60)
+/mob/proc/become_overmind(starting_points = 60, mind_transfer = FALSE)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
-	B.key = key
+	if(mind && mind_transfer)
+		mind.transfer_to(B)
+	else
+		transfer_ckey(B)
 	. = B
 	qdel(src)
 
 
-/mob/living/carbon/human/proc/corgize()
+/mob/living/carbon/human/proc/corgize(mind_transfer = TRUE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -485,13 +494,16 @@
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
 	new_corgi.a_intent = INTENT_HARM
-	new_corgi.key = key
+	if(mind && mind_transfer)
+		mind.transfer_to(new_corgi)
+	else
+		transfer_ckey(new_corgi)
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
 	. = new_corgi
 	qdel(src)
 
-/mob/living/carbon/proc/gorillize()
+/mob/living/carbon/proc/gorillize(mind_transfer = TRUE)
 	if(notransform)
 		return
 
@@ -509,22 +521,22 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
 	new_gorilla.a_intent = INTENT_HARM
-	if(mind)
+	if(mind && mind_transfer)
 		mind.transfer_to(new_gorilla)
 	else
-		new_gorilla.key = key
+		transfer_ckey(new_gorilla)
 	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
 	. = new_gorilla
 	qdel(src)
 
-/mob/living/carbon/human/Animalize()
+/mob/living/carbon/human/Animalize(mind_transfer = TRUE)
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
-
-	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as null|anything in mobtypes
+	if(!mobpath)
 		return
+	if(mind)
+		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
 
 	if(notransform)
 		return
@@ -532,8 +544,8 @@
 		dropItemToGround(W)
 
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	canmove = FALSE
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 
@@ -541,8 +553,10 @@
 		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)
-
-	new_mob.key = key
+	if(mind && mind_transfer)
+		mind.transfer_to(new_mob)
+	else
+		transfer_ckey(new_mob)
 	new_mob.a_intent = INTENT_HARM
 
 
@@ -550,59 +564,23 @@
 	. = new_mob
 	qdel(src)
 
-/mob/proc/Animalize()
+/mob/proc/Animalize(mind_transfer = TRUE)
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
-
-	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as null|anything in mobtypes
+	if(!mobpath)
 		return
+	if(mind)
+		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
 
 	var/mob/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	if(mind && mind_transfer)
+		mind.transfer_to(new_mob)
+	else
+		transfer_ckey(new_mob)
 	new_mob.a_intent = INTENT_HARM
 	to_chat(new_mob, "You feel more... animalistic")
 
 	. = new_mob
 	qdel(src)
-
-/* Certain mob types have problems and should not be allowed to be controlled by players.
- *
- * This proc is here to force coders to manually place their mob in this list, hopefully tested.
- * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
- */
-/mob/proc/safe_animal(MP)
-
-//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
-	if(!MP)
-		return 0	//Sanity, this should never happen.
-
-	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
-		return 0 //Verbs do not appear for players.
-
-//Good mobs!
-	if(ispath(MP, /mob/living/simple_animal/pet/cat))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/pet/dog/corgi))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/crab))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/shade))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/mouse))
-		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
-	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
-		return 1 //Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
-	if(ispath(MP, /mob/living/simple_animal/parrot))
-		return 1 //Parrots are no longer unfinished! -Nodrak
-
-	//Not in here? Must be untested!
-	return 0

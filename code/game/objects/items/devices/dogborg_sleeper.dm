@@ -6,8 +6,7 @@
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "sleeper"
 	w_class = WEIGHT_CLASS_TINY
-	var/mob/living/carbon/patient = null
-	var/mob/living/silicon/robot/hound = null
+	var/mob/living/carbon/patient
 	var/inject_amount = 10
 	var/min_health = -100
 	var/cleaning = FALSE
@@ -61,8 +60,18 @@
 /obj/item/dogborg/sleeper/Exit(atom/movable/O)
 	return 0
 
+/obj/item/dogborg/sleeper/proc/get_host()
+	if(!loc)
+		return
+	if(iscyborg(loc))
+		return loc
+	else if(iscyborg(loc.loc))
+		return loc.loc //cursed cyborg code
+
 /obj/item/dogborg/sleeper/afterattack(mob/living/carbon/target, mob/living/silicon/user, proximity)
-	hound = loc
+	var/mob/living/silicon/robot/hound = get_host()
+	if(!hound)
+		return
 	if(!proximity)
 		return
 	if(!iscarbon(target))
@@ -82,7 +91,8 @@
 		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 			return //If they moved away, you can't eat them.
 
-		if(patient) return //If you try to eat two people at once, you can only eat one.
+		if(patient)
+			return //If you try to eat two people at once, you can only eat one.
 
 		else //If you don't have someone in you, proceed.
 			if(!isjellyperson(target) && ("toxin" in injection_chems))
@@ -94,14 +104,17 @@
 			target.forceMove(src)
 			target.reset_perspective(src)
 			target.ExtinguishMob() //The tongue already puts out fire stacks but being put into the sleeper shouldn't allow you to keep burning.
-			update_gut()
+			update_gut(hound)
 			user.visible_message("<span class='warning'>[voracious ? "[hound]'s [src.name] lights up and expands as [target] slips inside into their [src.name]." : "[hound]'s sleeper indicator lights up as [target] is scooped up into [hound.p_their()] [src]."]</span>", \
 				"<span class='notice'>Your [voracious ? "[src.name] lights up as [target] slips into" : "sleeper indicator light shines brightly as [target] is scooped inside"] your [src]. Life support functions engaged.</span>")
 			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)]")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
 /obj/item/dogborg/sleeper/container_resist(mob/living/user)
-	hound = loc
+	var/mob/living/silicon/robot/hound = get_host()
+	if(!hound)
+		go_out(user)
+		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.a_intent == INTENT_HELP)
@@ -113,55 +126,41 @@
 		"<span class='notice'>[voracious ? "You start struggling inside of [src]'s tight, flexible confines," : "You start pounding against the metallic walls of [src],"] trying to trigger the release... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a [voracious ? "couple of thumps" : "loud banging noise"] coming from within [hound].</span>")
 	if(do_after(user, breakout_time, target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
-			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [hound.name]!</span>", \
 			"<span class='notice'>You successfully break out of [hound.name]!</span>")
-		go_out()
+		go_out(user, hound)
 
-/obj/item/dogborg/sleeper/proc/go_out(var/target)
-	hound = loc
-	hound.setClickCooldown(50)
-	var/voracious = TRUE
-	if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
-		voracious = FALSE
-	else
-		for(var/mob/M in contents)
-			if(!M.client || !(M.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
-				voracious = FALSE
-	if(length(contents) > 0)
-		hound.visible_message("<span class='warning'>[voracious ? "[hound] empties out [hound.p_their()] contents via [hound.p_their()] release port." : "[hound]'s underside slides open with an audible clunk before [hound.p_their()] [src] flips over, carelessly dumping its contents onto the ground below [hound.p_them()] before closing right back up again."]</span>", \
-			"<span class='notice'>[voracious ? "You empty your contents via your release port." : "You open your sleeper hatch, quickly releasing all of the contents within before closing it again."]</span>")
-		if(target)
-			if(iscarbon(target))
-				var/mob/living/carbon/person = target
-				person.forceMove(get_turf(src))
-				person.reset_perspective()
-			else
-				var/obj/T = target
-				T.loc = hound.loc
+/obj/item/dogborg/sleeper/proc/go_out(atom/movable/target, mob/living/silicon/robot/hound)
+	var/voracious = hound ? TRUE : FALSE
+	var/list/targets = target && hound ? list(target) : contents
+	if(hound)
+		hound.setClickCooldown(50)
+		if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+			voracious = FALSE
 		else
-			for(var/C in contents)
-				if(iscarbon(C))
-					var/mob/living/carbon/person = C
-					person.forceMove(get_turf(src))
-					person.reset_perspective()
-				else
-					var/obj/T = C
-					T.loc = hound.loc
-		items_preserved.Cut()
-		update_gut()
-		cleaning = FALSE
+			for(var/mob/M in targets)
+				if(!M.client || !(M.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+					voracious = FALSE
+	if(length(targets))
+		if(hound)
+			hound.visible_message("<span class='warning'>[voracious ? "[hound] empties out [hound.p_their()] contents via [hound.p_their()] release port." : "[hound]'s underside slides open with an audible clunk before [hound.p_their()] [src] flips over, carelessly dumping its contents onto the ground below [hound.p_them()] before closing right back up again."]</span>", \
+				"<span class='notice'>[voracious ? "You empty your contents via your release port." : "You open your sleeper hatch, quickly releasing all of the contents within before closing it again."]</span>")
+		for(var/a in contents)
+			var/atom/movable/AM = a
+			AM.forceMove(get_turf(src))
+			if(ismob(AM))
+				var/mob/M = AM
+				M.reset_perspective()
 		playsound(loc, voracious ? 'sound/effects/splat.ogg' : 'sound/effects/bin_close.ogg', 50, 1)
-
-	else //You clicked eject with nothing in you, let's just reset stuff to be sure.
-		items_preserved.Cut()
-		cleaning = FALSE
-	update_gut()
+	items_preserved.Cut()
+	cleaning = FALSE
+	if(hound)
+		update_gut(hound)
 
 
 /obj/item/dogborg/sleeper/attack_self(mob/user)
-	if(..())
+	. = ..()
+	if(. || !iscyborg(user))
 		return
 	ui_interact(user)
 
@@ -211,7 +210,7 @@
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -219,30 +218,31 @@
 	return data
 
 /obj/item/dogborg/sleeper/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(. || !iscyborg(usr))
 		return
 
 	switch(action)
 		if("eject")
-			go_out()
+			go_out(null, usr)
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
 			if(!patient)
 				return
-			inject_chem(chem)
+			inject_chem(chem, usr)
 			. = TRUE
 		if("cleaning")
 			if(!contents)
 				to_chat(src, "Your [src] is already cleaned.")
 				return
 			if(patient)
-				to_chat(patient, "<span class='danger'>[hound.name]'s [src] fills with caustic enzymes around you!</span>")
+				to_chat(patient, "<span class='danger'>[usr.name]'s [src] fills with caustic enzymes around you!</span>")
 			to_chat(src, "<span class='danger'>Cleaning process enabled.</span>")
-			clean_cycle()
+			clean_cycle(usr)
 			. = TRUE
 
-/obj/item/dogborg/sleeper/proc/update_gut()
+/obj/item/dogborg/sleeper/proc/update_gut(mob/living/silicon/robot/hound)
 	//Well, we HAD one, what happened to them?
 	var/prociconupdate = FALSE
 	var/currentenvy = hound.sleeper_nv
@@ -291,7 +291,7 @@
 
 			//Update icon and return new patient
 			hound.update_icons()
-			return(C)
+			return
 
 	//Cleaning looks better with red on, even with nobody in it
 	if(cleaning && !patient)
@@ -307,8 +307,10 @@
 	hound.update_icons()
 
 //Gurgleborg process
-/obj/item/dogborg/sleeper/proc/clean_cycle()
+/obj/item/dogborg/sleeper/proc/clean_cycle(mob/living/silicon/robot/hound)
 	//Sanity
+	if(!hound)
+		return
 	for(var/I in items_preserved)
 		if(!(I in contents))
 			items_preserved -= I
@@ -320,13 +322,12 @@
 	if(cleaning_cycles)
 		cleaning_cycles--
 		cleaning = TRUE
-		for(var/mob/living/carbon/human/T in (touchable_items))
-			if((T.status_flags & GODMODE) || !T.digestable)
-				items_preserved += T
+		for(var/mob/living/carbon/C in (touchable_items))
+			if((C.status_flags & GODMODE) || !C.digestable)
+				items_preserved += C
 			else
-				T.adjustBruteLoss(2)
-				T.adjustFireLoss(3)
-				update_gut()
+				C.adjustBruteLoss(2)
+				C.adjustFireLoss(3)
 		if(contents)
 			var/atom/target = pick(touchable_items)
 			if(iscarbon(target)) //Handle the target being a mob
@@ -359,7 +360,6 @@
 						if(!T.dropItemToGround(W))
 							qdel(W)
 					qdel(T)
-					update_gut()
 		//Handle the target being anything but a mob
 			else if(isobj(target))
 				var/obj/T = target
@@ -374,12 +374,10 @@
 		cleaning_cycles = initial(cleaning_cycles)
 		cleaning = FALSE
 		to_chat(hound, "<span class='notice'>Your [src] chimes it ends its self-cleaning cycle.</span>")//Belly is entirely empty
-		update_gut()
 
 	if(!length(contents))
 		to_chat(hound, "<span class='notice'>Your [src] is now clean. Ending self-cleaning cycle.</span>")
 		cleaning = FALSE
-		update_gut()
 
 //sound effects
 	if(prob(50))
@@ -397,13 +395,17 @@
 				else if(H in contents)
 					H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
+	update_gut(hound)
+
 	if(cleaning)
-		addtimer(CALLBACK(src, .proc/clean_cycle), 50)
+		addtimer(CALLBACK(src, .proc/clean_cycle, hound), 50)
 
 /obj/item/dogborg/sleeper/proc/CheckAccepted(obj/item/I)
 	return is_type_in_typecache(I, important_items)
 
-/obj/item/dogborg/sleeper/proc/inject_chem(chem)
+/obj/item/dogborg/sleeper/proc/inject_chem(chem, mob/living/silicon/robot/hound)
+	if(!hound)
+		return
 	if(hound.cell.charge <= 800) //This is so borgs don't kill themselves with it. Remember, 750 charge used every injection.
 		to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
 		return
@@ -438,40 +440,27 @@
 	else
 		. = ..()
 
-/obj/item/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
-	hound = loc
+/obj/item/dogborg/sleeper/K9/afterattack(mob/living/carbon/target, mob/living/silicon/user, proximity)
+	var/mob/living/silicon/robot/hound = get_host()
+	if(!hound || !istype(target) || !proximity || target.anchored)
+		return
+	if (!target.devourable)
+		to_chat(user, "The target registers an error code. Unable to insert into [src].")
+		return
+	if(target)
+		to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
+		return
+	if(target.buckled)
+		to_chat(user,"<span class='warning'>[target] is buckled and can not be put into your [src].</span>")
+		return
+	user.visible_message("<span class='warning'>[hound.name] is ingesting [target] into their [src].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
+	if(do_after(user, 30, target = target) && !patient && !target.buckled)
+		target.forceMove(src)
+		target.reset_perspective(src)
+		update_gut(hound)
+		user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [target] slips inside.</span>", "<span class='notice'>Your mobile brig groans lightly as [target] slips inside.</span>")
+		playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
 
-	if(!istype(target))
-		return
-	if(!proximity)
-		return
-	if(target.anchored)
-		return
-	if(isobj(target))
-		to_chat(user, "You are above putting such trash inside of yourself.")
-		return
-	if(iscarbon(target))
-		var/mob/living/carbon/brigman = target
-		if (!brigman.devourable)
-			to_chat(user, "The target registers an error code. Unable to insert into [src].")
-			return
-		if(patient)
-			to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
-			return
-		if(brigman.buckled)
-			to_chat(user,"<span class='warning'>[brigman] is buckled and can not be put into your [src].</span>")
-			return
-		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src].</span>", "<span class='notice'>You start ingesting [brigman] into your [src.name]...</span>")
-		if(do_after(user, 30, target = brigman) && !patient && !brigman.buckled)
-			if(!in_range(src, brigman)) //Proximity is probably old news by now, do a new check.
-				return //If they moved away, you can't eat them.
-			brigman.forceMove(src)
-			brigman.reset_perspective(src)
-			update_gut()
-			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your mobile brig groans lightly as [brigman] slips inside.</span>")
-			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
-		return
-	return
 
 /obj/item/dogborg/sleeper/compactor //Janihound gut.
 	name = "garbage processor"
@@ -489,31 +478,25 @@
 	else
 		. = ..()
 
-/obj/item/dogborg/sleeper/compactor/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
-	hound = loc
-	var/obj/item/target_obj = target
-	if(!istype(target))
-		return
-	if(!proximity)
-		return
-	if(target.anchored)
+/obj/item/dogborg/sleeper/compactor/afterattack(atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
+	var/mob/living/silicon/robot/hound = get_host()
+	if(!hound || !istype(target) || !proximity || target.anchored)
 		return
 	if(length(contents) > (max_item_count - 1))
 		to_chat(user,"<span class='warning'>Your [src] is full. Eject or process contents to continue.</span>")
 		return
-	if(isobj(target))
-		if(CheckAccepted(target))
-			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src]</span>")
+	if(isitem(target))
+		var/obj/item/I = target
+		if(CheckAccepted(I))
+			to_chat(user,"<span class='warning'>[I] registers an error code to your [src]</span>")
 			return
-		if(target_obj.w_class > WEIGHT_CLASS_NORMAL)
-			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src]</span>")
+		if(I.w_class > WEIGHT_CLASS_NORMAL)
+			to_chat(user,"<span class='warning'>[I] is too large to fit into your [src]</span>")
 			return
-		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
+		user.visible_message("<span class='warning'>[hound.name] is ingesting [I] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
 		if(do_after(user, 15, target = target) && length(contents) < max_item_count)
-			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
-				return //If they moved away, you can't eat them. This still applies to items, don't magically eat things I picked up already.
-			target.forceMove(src)
-			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [target.name] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [target] slips inside.</span>")
+			I.forceMove(src)
+			I.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [I] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [I] slips inside.</span>")
 			playsound(hound, 'sound/machines/disposalflush.ogg', 50, 1)
 			if(length(contents) > 11) //grow that tum after a certain junk amount
 				hound.sleeper_r = 1
@@ -523,9 +506,9 @@
 				hound.update_icons()
 		return
 
-	else if(iscarbon(target))
-		var/mob/living/carbon/trashman = target
-		if (!trashman.devourable)
+	if(iscarbon(target) || issilicon(target))
+		var/mob/living/trashman = target
+		if(!trashman.devourable)
 			to_chat(user, "<span class='warning'>[target] registers an error code to your [src]</span>")
 			return
 		if(patient)
@@ -536,12 +519,8 @@
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [trashman] into their [src].</span>", "<span class='notice'>You start ingesting [trashman] into your [src.name]...</span>")
 		if(do_after(user, 30, target = trashman) && !patient && !trashman.buckled && length(contents) < max_item_count)
-			if(!in_range(src, trashman)) //Proximity is probably old news by now, do a new check.
-				return //If they moved away, you can't eat them.
 			trashman.forceMove(src)
 			trashman.reset_perspective(src)
 			update_gut()
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
-		return
-	return

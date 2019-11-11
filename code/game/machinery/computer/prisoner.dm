@@ -1,1 +1,0 @@
-/obj/machinery/computer/prisoner

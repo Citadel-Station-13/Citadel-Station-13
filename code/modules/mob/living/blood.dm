@@ -2,6 +2,9 @@
 				BLOOD SYSTEM
 ****************************************************/
 
+#define EXOTIC_BLEED_MULTIPLIER 4 //Multiplies the actually bled amount by this number for the purposes of turf reaction calculations.
+
+
 /mob/living/carbon/human/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
 		return
@@ -29,6 +32,9 @@
 	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
+
+	if(bleed_rate <= 0)
+		bleed_rate = 0
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
@@ -80,6 +86,9 @@
 			var/obj/item/bodypart/BP = X
 			var/brutedamage = BP.brute_dam
 
+			if(BP.status == BODYPART_ROBOTIC) //for the moment, synth limbs won't bleed, but soon, my pretty.
+				continue
+
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
 			temp_bleed += 0.5*BP.embedded_objects.len
@@ -87,7 +96,7 @@
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
 
-		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
+		bleed_rate = max(bleed_rate - 0.50, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 			bleed(bleed_rate)
@@ -105,9 +114,11 @@
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
-		..()
-
-
+		.=..()
+		if(dna.species.exotic_blood && .) // Do we have exotic blood, and have we left any on the ground?
+			var/datum/reagent/R = GLOB.chemical_reagents_list[get_blood_id()]
+			if(istype(R) && isturf(loc))
+				R.reaction_turf(get_turf(src), amt * EXOTIC_BLEED_MULTIPLIER)
 
 /mob/living/proc/restore_blood()
 	blood_volume = initial(blood_volume)
@@ -123,16 +134,16 @@
 //Gets blood from mob to a container or other mob, preserving all data in it.
 /mob/living/proc/transfer_blood_to(atom/movable/AM, amount, forced)
 	if(!blood_volume || !AM.reagents)
-		return 0
+		return FALSE
 	if(blood_volume < (BLOOD_VOLUME_BAD * blood_ratio) && !forced)
-		return 0
+		return FALSE
 
 	if(blood_volume < amount)
 		amount = blood_volume
 
 	var/blood_id = get_blood_id()
 	if(!blood_id)
-		return 0
+		return FALSE
 
 	blood_volume -= amount
 
@@ -141,29 +152,27 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
-			if(blood_id == "blood") //normal blood
+			if(blood_id == "blood" || blood_id == "jellyblood") //normal blood
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
 						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
-				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-					C.reagents.add_reagent("toxin", amount * 0.5)
-					return 1
+				//This used to inject oof ouch results, but since we add the reagent, and the reagent causes oof ouch on mob life... why double dip?
 
 			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
-			return 1
+			return TRUE
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)
-	return 1
+	return TRUE
 
 
 /mob/living/proc/get_blood_data(blood_id)
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == "blood")  //actual blood reagent
+	if(blood_id == "blood" || blood_id == "jellyblood") //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -174,6 +183,7 @@
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
+		blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
 		if(disease_resistances && disease_resistances.len)
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
@@ -206,21 +216,6 @@
 			if(istype(ling))
 				blood_data["changeling_loudness"] = ling.loudfactor
 		return blood_data
-	if(blood_id == "slimejelly") //Just so MKUltra works. Takes the minimum required data. Sishen is testing if this breaks stuff.
-		var/blood_data = list()
-		if(mind)
-			blood_data["mind"] = mind
-		else if(last_mind)
-			blood_data["mind"] = last_mind
-		if(ckey)
-			blood_data["ckey"] = ckey
-		else if(last_mind)
-			blood_data["ckey"] = ckey(last_mind.key)
-		blood_data["gender"] = gender
-		blood_data["real_name"] = real_name
-		return blood_data
-
-
 
 //get the id of the substance this mob use as blood.
 /mob/proc/get_blood_id()
@@ -234,12 +229,15 @@
 	if(!(HAS_TRAIT(src, TRAIT_NOCLONE)))
 		return "blood"
 
-/mob/living/carbon/human/get_blood_id()
-	if(dna.species.exotic_blood)
+/mob/living/carbon/get_blood_id()
+	if(isjellyperson(src))
+		return "jellyblood"
+	if(dna?.species?.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (HAS_TRAIT(src, TRAIT_NOCLONE)))
 		return
-	return "blood"
+	else
+		return "blood"
 
 // This is has more potential uses, and is probably faster than the old proc.
 /proc/get_safe_blood(bloodtype)
@@ -248,16 +246,21 @@
 		return
 
 	var/static/list/bloodtypes_safe = list(
-		"A-" = list("A-", "O-"),
-		"A+" = list("A-", "A+", "O-", "O+"),
-		"B-" = list("B-", "O-"),
-		"B+" = list("B-", "B+", "O-", "O+"),
-		"AB-" = list("A-", "B-", "O-", "AB-"),
-		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
-		"O-" = list("O-"),
-		"O+" = list("O-", "O+"),
-		"L" = list("L"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
+		"A-" = list("A-", "O-", "SY"),
+		"A+" = list("A-", "A+", "O-", "O+", "SY"),
+		"B-" = list("B-", "O-", "SY"),
+		"B+" = list("B-", "B+", "O-", "O+", "SY"),
+		"AB-" = list("A-", "B-", "O-", "AB-", "SY"),
+		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "SY"),
+		"O-" = list("O-","SY"),
+		"O+" = list("O-", "O+","SY"),
+		"L" = list("L","SY"),
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY"),
+		"HF" = list("HF", "SY"),
+		"X*" = list("X*", "SY"),
+		"SY" = list("SY"),
+		"GEL" = list("GEL","SY"),
+		"BUG" = list("BUG", "SY")
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
@@ -266,7 +269,7 @@
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
-	if(get_blood_id() != "blood")
+	if(get_blood_id() == null)
 		return
 	if(!T)
 		T = get_turf(src)
@@ -280,24 +283,27 @@
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
+				drop.update_icon()
 				return
 			else
-				temp_blood_DNA = drop.return_blood_DNA() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA = list()
+				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
+			drop.update_icon()
 			return
 
 	// Find a blood decal or create a new one.
-	var/obj/effect/decal/cleanable/blood/B = locate() in T
+	var/obj/effect/decal/cleanable/blood/splats/B = locate() in T
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
-	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
+		B = new /obj/effect/decal/cleanable/blood/splats(T, get_static_viruses())
+	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
-		B.add_blood_DNA(temp_blood_DNA)
+		B.blood_DNA |= temp_blood_DNA
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
@@ -306,12 +312,50 @@
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)
 	if(!T)
 		T = get_turf(src)
-	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
+	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in T.contents
 	if(!B)
 		B = new(T)
-	B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	B.blood_DNA["UNKNOWN DNA"] = "X*"
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
+	if(!T)
+		T = get_turf(src)
+	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
+	if(!B)
+		B = new(T)
+
+/mob/living/proc/add_splash_floor(turf/T)
+	if(get_blood_id() == null)
+		return
+	if(!T)
+		T = get_turf(src)
+
+	var/list/temp_blood_DNA
+
+	// Find a blood decal or create a new one.
+	var/obj/effect/decal/cleanable/blood/B = locate() in T
+	if(!B)
+		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
+	if(B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
+		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
+	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
+	src.transfer_blood_to(B, 10) //very heavy bleeding, should logically leave larger pools
+	if(temp_blood_DNA)
+		B.blood_DNA |= temp_blood_DNA
+
+/mob/living/carbon/human/add_splash_floor(turf/T)
+	if(!(NOBLOOD in dna.species.species_traits))
+		..()
+
+/mob/living/carbon/alien/add_splash_floor(turf/T)
+	if(!T)
+		T = get_turf(src)
+	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in T.contents
+	if(!B)
+		B = new(T)
+	B.blood_DNA["UNKNOWN DNA"] = "X*"
+
+/mob/living/silicon/robot/add_splash_floor(turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents

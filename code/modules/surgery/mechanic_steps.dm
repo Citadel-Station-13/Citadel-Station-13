@@ -3,7 +3,7 @@
 	name = "unscrew shell"
 	implements = list(
 		TOOL_SCREWDRIVER		= 100,
-		/obj/item/scalpel 		= 75, // med borgs could try to unskrew shell with scalpel
+		TOOL_SCALPEL 		= 75, // med borgs could try to unskrew shell with scalpel
 		/obj/item/kitchen/knife	= 50,
 		/obj/item				= 10) // 10% success with any sharp item.
 	time = 24
@@ -14,7 +14,7 @@
 			"[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].")
 
 /datum/surgery_step/mechanic_incise/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.is_sharp())
+	if(implement_type == /obj/item && !tool.get_sharpness())
 		return FALSE
 	return TRUE
 //close shell
@@ -22,7 +22,7 @@
 	name = "screw shell"
 	implements = list(
 		TOOL_SCREWDRIVER		= 100,
-		/obj/item/scalpel 		= 75,
+		TOOL_SCALPELl 		= 75,
 		/obj/item/kitchen/knife	= 50,
 		/obj/item				= 10) // 10% success with any sharp item.
 	time = 24
@@ -33,7 +33,7 @@
 			"[user] begins to screw the shell of [target]'s [parse_zone(target_zone)].")
 
 /datum/surgery_step/mechanic_close/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.is_sharp())
+	if(implement_type == /obj/item && !tool.get_sharpness())
 		return FALSE
 	return TRUE
 //prepare electronics
@@ -41,7 +41,7 @@
 	name = "prepare electronics"
 	implements = list(
 		TOOL_MULTITOOL = 100,
-		/obj/item/hemostat = 10) // try to reboot internal controllers via short circuit with some conductor
+		TOOL_HEMOSTAT = 10) // try to reboot internal controllers via short circuit with some conductor
 	time = 24
 
 /datum/surgery_step/prepare_electronics/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -54,7 +54,7 @@
 	name = "unwrench bolts"
 	implements = list(
 		TOOL_WRENCH = 100,
-		/obj/item/retractor = 10)
+		TOOL_RETRACTOR = 10)
 	time = 24
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -67,7 +67,7 @@
 	name = "wrench bolts"
 	implements = list(
 		TOOL_WRENCH = 100,
-		/obj/item/retractor = 10)
+		TOOL_RETRACTOR = 10)
 	time = 24
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -84,4 +84,4 @@
 /datum/surgery_step/open_hatch/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to open the hatch holders in [target]'s [parse_zone(target_zone)]...</span>",
 		"[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)].",
-		"[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)].") 
+		"[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)].")

@@ -1,6 +1,6 @@
 /datum/surgery/advanced/toxichealing
 	name = "Body Rejuvenation"
-	desc = "A surgical procedure that helps deal with oxygen  deprecation, and treat toxic damaged. Works on corpses and alive alike without chemicals."
+	desc = "A surgical procedure that helps deal with oxygen  deprivation, and treats parts damaged due to toxic compounds. Works on corpses and alive alike without chemicals."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
@@ -11,13 +11,13 @@
 				/datum/surgery_step/toxichealing,
 				/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
 
 /datum/surgery_step/toxichealing
 	name = "rejuvenate body"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(TOOL_HEMOSTAT  = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	repeatable = TRUE
 	time = 25
 

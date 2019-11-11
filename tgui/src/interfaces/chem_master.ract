@@ -81,6 +81,11 @@
 			<br/>
 			<ui-button action='createVial' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Dispense Buffer to Hypo vials </ui-button>
 			<br/>
+			<br/>
+			<ui-button action='createDart' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create SmartDart (max 20µ)</ui-button>
+			<br/>
+			<ui-button action='createDart' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple SmartDarts </ui-button>
+			<br/>
 			
 	</ui-display>
 

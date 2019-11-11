@@ -89,11 +89,11 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
+/obj/machinery/dna_scannernew/close_machine(atom/movable/target)
 	if(!state_open)
 		return FALSE
 
-	..(user)
+	..(target)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
@@ -111,7 +111,7 @@
 	return TRUE
 
 /obj/machinery/dna_scannernew/open_machine()
-	if(state_open)
+	if(state_open || panel_open)
 		return FALSE
 
 	..()
@@ -126,22 +126,47 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
-
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
-		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+/obj/machinery/dna_scannernew/screwdriver_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(..())
 		return
+	if(occupant)
+		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
+		return
+	if(state_open)
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
+		return
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I)) //sent icon_state is irrelevant...
+		update_icon() //..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		return
+	return FALSE
 
+/obj/machinery/dna_scannernew/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(default_change_direction_wrench(user, I))
+		return TRUE
+
+/obj/machinery/dna_scannernew/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_pry_open(I))
-		return
-
+		return TRUE
 	if(default_deconstruction_crowbar(I))
-		return
+		return TRUE
 
-	return ..()
+/obj/machinery/dna_scannernew/default_pry_open(obj/item/I) //wew
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+	if(.)
+		I.play_tool_sound(src, 50)
+		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
+		open_machine()
 
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
+
+/obj/machinery/dna_scannernew/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+	interact(user)
 
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
