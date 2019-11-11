@@ -592,7 +592,7 @@
 			S.attach(location)
 			playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 			if(S)
-				S.set_up(pick("clf3, "n2o", "facid", "brainhurtingjuice"), 10, location, 0)
+				S.set_up(pick("clf3, "n2o", "facid", "brainhurtingjuice")), 10, location, 0)
 				S.start()
 		if(96 to 98)
 			var/turf/open/T = get_turf(target)
