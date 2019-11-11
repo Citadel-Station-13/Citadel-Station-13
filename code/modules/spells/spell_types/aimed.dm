@@ -126,6 +126,60 @@
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
 
+/obj/effect/proc_holder/spell/aimed/waterball
+	name = "Waterball"
+	desc = "This spell fires a waterball at a target and does not require wizard garb."
+	school = "evocation"
+	charge_max = 60
+	clothes_req = 0
+	invocation = "SOMA ONI"
+	invocation_type = "shout"
+	range = 20
+	cooldown_min = 20 //10 deciseconds reduction per rank
+	projectile_type = /obj/item/projectile/magic/aoe/waterball
+	base_icon_state = "waterball"
+	action_icon_state = "waterball0"
+	sound = 'sound/magic/fireball.ogg'
+	active_msg = "You prepare to cast your waterball spell!"
+	deactive_msg = "You extinguish your waterball... for now."
+	active = FALSE
+
+/obj/effect/proc_holder/spell/aimed/chaosball
+	name = "Chaosball"
+	desc = "This spell fires a chaosball at a target! Eviscrate your foes with the power of KAYOSS! Does not require wizard garb."
+	school = "evocation"
+	charge_max = 60
+	clothes_req = 0
+	invocation = "PRI'SURSE"
+	invocation_type = "shout"
+	range = 20
+	cooldown_min = 20 //10 deciseconds reduction per rank
+	projectile_type = /obj/item/projectile/magic/aoe/chaosball
+	base_icon_state = "chaosball"
+	action_icon_state = "chaosball0"
+	sound = 'sound/magic/fireball.ogg'
+	active_msg = "You prepare unleash CHAOS!"
+	deactive_msg = "You store away the chaos for a later time."
+	active = FALSE
+
+/obj/effect/proc_holder/spell/aimed/dball
+	name = "deviant ball"
+	desc = "What the fuck? Does not require wizard garb."
+	school = "evocation"
+	charge_max = 60
+	clothes_req = 0
+	invocation = "ONI-SAN"
+	invocation_type = "shout"
+	range = 20
+	cooldown_min = 20 //10 deciseconds reduction per rank
+	projectile_type = /obj/item/projectile/magic/aoe/dball
+	base_icon_state = "chaosball"
+	action_icon_state = "chaosball0"
+	sound = 'sound/magic/fireball.ogg'
+	active_msg = "You wince in disgust as you prepare your spell.!"
+	deactive_msg = "You extinguish your spell... for now."
+	active = FALSE
+
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Banish your foes with its mystical power!"
