@@ -507,3 +507,120 @@
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+		
+/obj/item/projectile/magic/aoe/waterball
+	name = "bolt of waterball"
+	icon_state = "waterball"
+	damage = 10
+	damage_type = BRUTE
+	nodamage = 0
+
+	//explosion values
+	var/exp_heavy = 0
+	var/exp_light = 2
+	var/exp_flash = 3
+
+/obj/item/projectile/magic/aoe/waterball/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes into steam on contact with [target]!</span>")
+			return
+		M.take_overall_damage(0,10)
+	create_reagents(1000, DRAINABLE | AMOUNT_VISIBLE) //if you are brave you can drain from the waterball
+	reagents.add_reagent("water", 500)
+	reagents.add_reagent("lube", 500)//slips betterer
+	chem_splash(loc, 3, list(reagents))
+	var/turf/T = get_turf(target)
+	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = 0)
+
+
+/obj/item/projectile/magic/aoe/chaosball
+	name = "BALL OF KAYOSS"
+	icon_state = "chaosball"
+	damage = 10
+	damage_type = BRUTE
+	nodamage = 0
+
+	//explosion values
+
+
+/obj/item/projectile/magic/aoe/chaosball/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return
+	switch(rand(1,100))
+		if(0 to 4) //big fireball
+			var/turf/T = get_turf(target)
+			explosion(T, -1, 0, 1, 3, 0, flame_range = 20)
+		if(5 to 14)
+			tesla_zap(target, 7, 20000, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN)
+			playsound(target, 'sound/machines/defib_zap.ogg', 50, 1)
+		if(15 to 30) //regular fireball
+			var/turf/T = get_turf(target)
+			explosion(T, -1, 0, 1, 3, 0, flame_range = 32)
+		if(31 to 45) //regular waterball
+			create_reagents(1000, DRAINABLE | AMOUNT_VISIBLE)
+			reagents.add_reagent("water", 500)
+			reagents.add_reagent("lube", 500)
+			chem_splash(loc, 5, list(reagents))
+			var/turf/T = get_turf(target)
+			explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = 0)
+		if(46 to 60) //ice ball
+			for(var/turf/T in view(4,loc))
+				if(isfloorturf(T))
+					var/turf/open/floor/F = T
+					F.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
+						for(var/mob/living/carbon/L in T)
+							L.adjust_bodytemperature(-230)
+		if(61 to 75) //radiation supreme
+			for(var/turf/T in view(4,loc))
+				if(isfloorturf(T))
+					var/turf/open/floor/F = T
+					radiation_pulse(F, 3000)
+		if(76 to 80)
+			var/turf/open/T = get_turf(target)
+			if(istype(T))
+				T.atmos_spawn_air("plasma=[400];TEMP=1000")
+		if(81 to 95)
+			var/location = get_turf(target)
+			var/datum/effect_system/smoke_spread/chem/S = new
+			S.attach(location)
+			playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+			if(S)
+				S.set_up(pick("clf3, "n2o", "facid", "brainhurtingjuice"), 10, location, 0)
+				S.start()
+		if(96 to 98)
+			var/turf/open/T = get_turf(target)
+			if(istype(T))
+				T.atmos_spawn_air("tritium=[400];TEMP=1000")
+		if(99 to INFINITY) //1% chance
+			var/turf/T = get_turf(target)
+			explosion(T, -1, 5, 10, 20, 0, flame_range = 0)
+
+
+//dapnee requested a ball of cum as a spell. I'm sorry.
+/obj/item/projectile/magic/aoe/dball
+	name = "dapnee's amazing magic bolt of power"
+	icon_state = "whiteball"
+	damage = 10
+	damage_type = BRUTE
+	nodamage = 0
+
+
+/obj/item/projectile/magic/aoe/dball/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes into steam on contact with [target]!</span>")
+			return
+		M.take_overall_damage(0,5)
+	create_reagents(1000, DRAINABLE | AMOUNT_VISIBLE)
+	reagents.add_reagent("semen", 500)
+	reagents.add_reagent("femcum", 500)
+	chem_splash(loc, 10, list(reagents))
