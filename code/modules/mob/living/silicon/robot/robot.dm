@@ -1,3 +1,4 @@
+/*
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
@@ -1272,3 +1273,4 @@
 		if("Belly up")
 			bellyup = 1
 	update_icons()
+	*/
