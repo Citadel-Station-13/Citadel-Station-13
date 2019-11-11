@@ -111,7 +111,7 @@
 		message_admins("The ruleset [name] received no applications.")
 		log_game("DYNAMIC: The ruleset [name] received no applications.")
 		mode.refund_threat(cost)
-		mode.log_threat("[worldtime2text()]: Rule [name] refunded [cost] (no applications)",verbose=TRUE)
+		mode.log_threat("Rule [name] refunded [cost] (no applications)",verbose=TRUE)
 		mode.executed_rules -= src
 		return
 
@@ -127,7 +127,7 @@
 			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
 				mode.refund_threat(cost)
-				mode.log_threat("[worldtime2text()]: Rule [name] refunded [cost] (all applications invalid)",verbose=TRUE)
+				mode.log_threat("Rule [name] refunded [cost] (all applications invalid)",verbose=TRUE)
 				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)

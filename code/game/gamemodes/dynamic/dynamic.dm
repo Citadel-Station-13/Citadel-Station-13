@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 	if (starting_rule.pre_execute())
 		spend_threat(starting_rule.cost + added_threat)
-		log_threat("Roundstart [starting_rule.name] spent [starting_rule.cost]")
+		log_threat("[rule.ruletype] - <b>[rule.name]</b> -[rule.cost + rule.scaled_times * rule.scaling_cost] threat")
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -625,7 +625,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		spend_threat(rule.cost)
-		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]")
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
