@@ -421,6 +421,7 @@
 	cost = 10
 	requirements = list(101,101,101,70,50,50,50,50,50,50)
 	high_population_requirement = 50
+	repeatable_weight_decrease = 2
 	repeatable = TRUE
 	var/list/vents = list()
 
@@ -474,6 +475,7 @@
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,15,15)
 	high_population_requirement = 50
+	repeatable_weight_decrease = 2
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -654,6 +656,7 @@
 	requirements = list(80,80,70,50,40,30,30,20,15,15)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
+	repeatable_weight_decrease = 4
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/acceptable(population=0, threat=0)
@@ -787,6 +790,8 @@
 	enemy_roles = list("Chemist","Medical Doctor","Chief Medical Officer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	cost = 2
+	weight = 4
+	repeatable_weight_decrease = 2
 	requirements = list(5,5,5,5,5,5,5,5,5,5) // yes, can happen on fake-extended
 	high_population_requirement = 5
 	repeatable = TRUE
@@ -797,6 +802,8 @@
 	typepath = /datum/round_event/vent_clog/threatening
 	required_enemies = list(2,2,1,1,1,1,0,0,0,0)
 	cost = 5
+	weight = 4
+	repeatable_weight_decrease = 2
 	requirements = list(15,15,15,15,15,15,15,15,15,15) // doesn't really scale with pop, so
 	high_population_requirement = 15
 	repeatable = TRUE
@@ -807,6 +814,8 @@
 	typepath = /datum/round_event/vent_clog/catastrophic
 	required_enemies = list(3,3,3,2,2,2,1,1,1,1)
 	cost = 15
+	weight = 4
+	repeatable_weight_decrease = 2
 	requirements = list(30,30,30,30,30,30,30,30,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE
@@ -823,6 +832,8 @@
 	typepath = /datum/round_event/ion_storm
 	enemy_roles = list("Research Director","Captain","Chief Engineer")
 	required_enemies = list(1,1,0,0,0,0,0,0,0,0)
+	weight = 4
+	// no repeatable weight decrease. too variable to be unfun multiple times in one round
 	cost = 3
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
@@ -841,6 +852,8 @@
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Captain","Cyborg")
 	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
 	cost = 15
+	weight = 3
+	repeatable_weight_decrease = 2
 	requirements = list(60,50,40,30,30,30,30,30,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE
@@ -850,6 +863,8 @@
 	config_tag = "meteor_wave_threatening"
 	typepath = /datum/round_event/meteor_wave/threatening
 	cost = 25
+	weight = 3
+	repeatable_weight_decrease = 2
 	requirements = list(80,70,60,50,40,40,40,40,40,40)
 	high_population_requirement = 40
 	repeatable = TRUE
@@ -859,6 +874,8 @@
 	config_tag = "meteor_wave_catastrophic"
 	typepath = /datum/round_event/meteor_wave/catastrophic
 	cost = 40
+	weight = 3
+	repeatable_weight_decrease = 2
 	requirements = list(101,100,90,80,70,60,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
@@ -875,6 +892,8 @@
 	typepath = /datum/round_event/anomaly/anomaly_bluespace
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	weight = 2
+	repeatable_weight_decrease = 1
 	cost = 3
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
@@ -886,6 +905,8 @@
 	typepath = /datum/round_event/anomaly/anomaly_flux
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
+	weight = 2
+	repeatable_weight_decrease = 1
 	cost = 5
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 10
@@ -895,6 +916,8 @@
 	name = "Anomaly: Gravitational"
 	config_tag = "anomaly_gravitational"
 	typepath = /datum/round_event/anomaly/anomaly_grav
+	weight = 2
+	repeatable_weight_decrease = 1
 	cost = 3
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
@@ -904,6 +927,8 @@
 	name = "Anomaly: Pyroclastic"
 	config_tag = "anomaly_pyroclastic"
 	typepath = /datum/round_event/anomaly/anomaly_pyro
+	weight = 2
+	repeatable_weight_decrease = 1
 	cost = 5
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
 	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
@@ -915,6 +940,8 @@
 	name = "Anomaly: Vortex"
 	config_tag = "anomaly_vortex"
 	typepath = /datum/round_event/anomaly/anomaly_vortex
+	weight = 2
+	repeatable_weight_decrease = 1
 	cost = 5
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
 	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
@@ -932,6 +959,8 @@
 	name = "Brand Intelligence"
 	config_tag = "brand_intelligence"
 	typepath = /datum/round_event/brand_intelligence
+	weight = 1
+	repeatable_weight_decrease = 1
 	cost = 2
 	enemy_roles = list("Chief Engineer","Station Engineer","Atmospheric Technician","Research Director","Scientist","Captain","Cyborg")
 	required_enemies = list(1,1,1,1,0,0,0,0,0,0)
@@ -943,6 +972,8 @@
 	name = "Carp Migration"
 	config_tag = "carp_migration"
 	typepath = /datum/round_event/carp_migration
+	weight = 7
+	repeatable_weight_decrease = 3
 	cost = 4
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
@@ -953,6 +984,8 @@
 	config_tag = "communications_blackout"
 	typepath = /datum/round_event/communications_blackout
 	cost = 4
+	weight = 2
+	repeatable_weight_decrease = 3
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -964,6 +997,8 @@
 	config_tag = "processor_overload"
 	typepath = /datum/round_event/processor_overload
 	cost = 4
+	weight = 2
+	repeatable_weight_decrease = 3
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -975,6 +1010,8 @@
 	config_tag = "space_dust"
 	typepath = /datum/round_event/space_dust
 	cost = 2
+	weight = 2
+	repeatable_weight_decrease = 1
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -986,6 +1023,8 @@
 	config_tag = "major_dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
 	cost = 4
+	weight = 2
+	repeatable_weight_decrease = 1
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
@@ -997,6 +1036,8 @@
 	config_tag = "electrical_storm"
 	typepath = /datum/round_event/electrical_storm
 	cost = 1
+	weight = 2
+	repeatable_weight_decrease = 1
 	enemy_roles = list("Chief Engineer","Station Engineer")
 	required_enemies = list(1,1,1,0,0,0,0,0,0,0)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
@@ -1008,6 +1049,8 @@
 	config_tag = "heart_attack"
 	typepath = /datum/round_event/heart_attack
 	cost = 3
+	weight = 2
+	repeatable_weight_decrease = 1
 	enemy_roles = list("Medical Doctor","Chief Medical Officer")
 	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
 	requirements = list(101,101,101,5,5,5,5,5,5,5)
@@ -1019,6 +1062,7 @@
 	config_tag = "radiation_storm"
 	typepath = /datum/round_event/radiation_storm
 	cost = 3
+	weight = 1
 	enemy_roles = list("Chemist","Chief Medical Officer","Geneticist","Medical Doctor","AI","Captain")
 	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
