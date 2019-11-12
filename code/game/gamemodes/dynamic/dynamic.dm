@@ -455,7 +455,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
 	else
 
-		if(threat >= 10)
+		if(threat >= 15)
 			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
 		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
 		return FALSE
