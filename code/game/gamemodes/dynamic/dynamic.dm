@@ -14,8 +14,12 @@
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (10 MINUTES))
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
 
-GLOBAL_VAR_INIT(dynamic_midround_delay_min, (5 MINUTES))
-GLOBAL_VAR_INIT(dynamic_midround_delay_max, (15 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_min, (10 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_max, (30 MINUTES))
+
+GLOBAL_VAR_INIT(dynamic_event_delay_min, (5 MINUTES))
+GLOBAL_VAR_INIT(dynamic_event_delay_max, (20 MINUTES)) // this is on top of regular events, so can't be quite as often
+
 
 // -- Roundstart injection delays
 GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_min, (2 MINUTES))
@@ -76,6 +80,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/latejoin_rules = list()
 	/// List of midround rules used for selecting the rules.
 	var/list/midround_rules = list()
+	/// List of events used for reducing threat without causing antag injection (necessarily).
+	var/list/events = list()
 	/** # Pop range per requirement.
 	  * If the value is five the range is:
 	  * 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
@@ -113,6 +119,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/latejoin_injection_cooldown = 0
 	/// When world.time is over this number the mode tries to inject a midround ruleset.
 	var/midround_injection_cooldown = 0
+	/// When wor.dtime is over this number the mode tries to do an event.
+	var/event_injection_cooldown = 0
 	/// When TRUE GetInjectionChance returns 100.
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
@@ -173,6 +181,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
 	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+	dat += "Event: [(event_injection_cooldown-world.time)>60*10 ? "[round((event_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(event_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];forceevent=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -204,6 +213,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		midround_injection_cooldown = 0
 		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.", 1)
+	else if (href_list["forceevent"])
+		event_injection_cooldown = 0
+		// events always happen anyway
+		message_admins("[key_name(usr)] forced an event.", 1)
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
@@ -348,6 +361,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if ("Midround")
 				if (ruleset.weight)
 					midround_rules += ruleset
+			if("Event")
+				if(ruleset.weight)
+					events += ruleset
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++
@@ -548,6 +564,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.type == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
+		else if(rule.type == "Event")
+			events = remove_from_list(events,rule.type)
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
 	return TRUE
 
@@ -641,7 +659,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
 			return
-
 		message_admins("DYNAMIC: Checking for midround injection.")
 		log_game("DYNAMIC: Checking for midround injection.")
 
@@ -651,9 +668,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			var/list/drafted_rules = list()
 			var/antag_num = current_players[CURRENT_LIVING_ANTAGS].len
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				var/antag_acceptable = (antag_num || !isnull(rule.antag_flag))
 				// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
-				if (antag_acceptable && rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
+				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
@@ -667,7 +683,21 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				picking_midround_latejoin_rule(drafted_rules)
 		else
 			midround_injection_cooldown = (midround_injection_cooldown + world.time)/2
-	
+
+	if(event_injection_cooldown < world.time)
+		var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
+		event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
+		message_admins("DYNAMIC: Doing event injection.")
+		log_game("DYNAMIC: Doing event injection.")
+		update_playercounts()
+		var/list/drafted_rules = list()
+		for(var/datum/dynamic_ruleset/event/rule in events)
+			if(rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
+				if(rule.ready())
+					drafted_rules[rule] = rule.get_weight()
+		if(drafted_rules.len > 0)
+			picking_midround_latejoin_rule(drafted_rules)
+
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
 	current_players[CURRENT_LIVING_PLAYERS] = list()
