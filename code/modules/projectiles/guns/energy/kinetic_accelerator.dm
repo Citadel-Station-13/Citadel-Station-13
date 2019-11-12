@@ -331,9 +331,9 @@
 			uninstall(KA)
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, forcemove = TRUE)
+	KA.modkits -= src
 	if(forcemove)
 		forceMove(get_turf(KA))
-	KA.modkits -= src
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 

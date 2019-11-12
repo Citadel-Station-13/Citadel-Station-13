@@ -17,6 +17,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/atom/movable/firer = null//Who shot it
+	var/atom/fired_from = null // the atom that the projectile was fired from (gun, turret)
 	var/suppressed = FALSE	//Attack message
 	var/candink = FALSE //Can this projectile play the dink sound when hitting the head?
 	var/yo = null
@@ -131,6 +132,8 @@
 	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
+	if(fired_from)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
@@ -232,8 +235,8 @@
 	beam_segments[beam_index] = null
 
 /obj/item/projectile/Bump(atom/A)
-	var/datum/point/pcache = trajectory.copy_to()
-	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
+	if(trajectory && check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
+		var/datum/point/pcache = trajectory.copy_to()
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
@@ -356,6 +359,8 @@
 		pixel_move(1, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
+	if(fired_from)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
