@@ -151,9 +151,9 @@
 		var/burndamage = L.getFireLoss()
 		if(brutedamage || burndamage)
 			var/efficiency = 0.75
-			var/vitality_cost = FLOOR((brutedamage + burndamage * efficienty) / 10, 1)
+			var/vitality_cost = FLOOR((brutedamage + burndamage * efficiency) / 10, 1)
 			if(GLOB.clockwork_vitality < vitality_cost)
-				efficiency = efficienty * round(GLOB.clockwork_vitality / vitality_cost, 0.1)
+				efficiency = efficiency * round(GLOB.clockwork_vitality / vitality_cost, 0.1)
 			L.adjustBruteLoss(-(brutedamage * efficiency))
 			L.adjustFireLoss(-(burndamage * efficiency))
 			GLOB.clockwork_vitality = min(GLOB.clockwork_vitality - vitality_cost, 0)
