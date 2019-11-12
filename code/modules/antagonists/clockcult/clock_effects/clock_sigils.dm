@@ -150,13 +150,8 @@
 		var/brutedamage = L.getBruteLoss()
 		var/burndamage = L.getFireLoss()
 		if(brutedamage || burndamage)
-			var/efficiency = 0.75
-			var/vitality_cost = FLOOR((brutedamage + burndamage * efficiency) / 10, 1)
-			if(GLOB.clockwork_vitality < vitality_cost)
-				efficiency = efficiency * round(GLOB.clockwork_vitality / vitality_cost, 0.1)
-			L.adjustBruteLoss(-(brutedamage * efficiency))
-			L.adjustFireLoss(-(burndamage * efficiency))
-			GLOB.clockwork_vitality = min(GLOB.clockwork_vitality - vitality_cost, 0)
+			L.adjustBruteLoss(-(brutedamage * 0.25))
+			L.adjustFireLoss(-(burndamage * 0.25))
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
