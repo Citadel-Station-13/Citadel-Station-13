@@ -120,14 +120,24 @@
 		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
 		indice_pop = 10
-		return (threat_level >= high_population_requirement)
+		if(threat_level < high_population_requirement)
+			message_admins("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[high_population_requirement]")
+			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[high_population_requirement]")
+			return FALSE
+		else
+			return TRUE
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
 		if(antag_cap.len && requirements.len != antag_cap.len)
 			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
-		return (threat_level >= requirements[indice_pop])
+		if(threat_level < requirements[indice_pop])
+			message_admins("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[requirements[indice_pop]]")
+			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[requirements[indice_pop]]")
+			return FALSE
+		else
+			return TRUE
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
