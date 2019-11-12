@@ -147,6 +147,16 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
+		var/brutedamage = L.getBruteLoss()
+		var/burndamage = L.getFireLoss()
+		if(brutedamage || burndamage)
+			var/efficiency = 0.75
+			var/vitality_cost = FLOOR((brutedamage + burndamage * efficienty) / 10, 1)
+			if(GLOB.clockwork_vitality < vitality_cost)
+				efficiency = efficienty * round(GLOB.clockwork_vitality / vitality_cost, 0.1)
+			L.adjustBruteLoss(-(brutedamage * efficiency))
+			L.adjustFireLoss(-(burndamage * efficiency))
+			GLOB.clockwork_vitality = min(GLOB.clockwork_vitality - vitality_cost, 0)
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -262,7 +272,7 @@
 	clockwork_desc = "A sigil that will drain non-Servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
 	icon_state = "sigilvitality"
 	layer = SIGIL_LAYER
-	alpha = 75
+	alpha = 125
 	color = "#123456"
 	affects_servants = TRUE
 	stat_affected = DEAD

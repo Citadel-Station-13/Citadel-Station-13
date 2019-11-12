@@ -167,6 +167,7 @@ Credit where due:
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
+	GLOB.clockwork_vitality += 60 * starter_servants //Add some starter vitality based on
 	while(starter_servants)
 		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
@@ -342,6 +343,8 @@ Credit where due:
 	or splashed onto metal sheets to make brass. This chemical can be found in minimal quantities by grinding brass sheets.\
 	<li><b>Brass Flasks:</b>Intended to store Zelus Oil in, but can also be used as fragile single use throwing weapons in a pinch! \
 	These are crafted with a single sheet of brass and fit in the Clockwork Cuirass' suit storage.\
+	<hr>\
+	<li><b>Extra Vitality Matrix:</b> You start your quest with some spare Vitality charge to help recover from any initial foul up. \
 	<b>Good luck!</b>"
 
 /obj/item/paper/servant_primer/Initialize()
