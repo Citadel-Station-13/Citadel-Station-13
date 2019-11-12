@@ -1,9 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - code_imp: "Cleaned up the absolute state of the arousal module."
-  - refactor: "refactored exhibitionism into a quirk."
-  - tweak: "arousal states won't persist after death."
-  - bugfix: "Fixes testicles size adjective thing."
-  - bugfix: "undergarments toggling now works instead of just making underwear disappear and not come back."
-  - tweak: "The \"Always visible\" genitals setting will now display them above clothes."

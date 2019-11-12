@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Bloodcult conversions are now consensual. Convertees are given a ten second timer to accept or wait out. This should drastically improve the quality of those that get converted into bloodcult."
-  - rscadd: "All sacrifices now count as a third of a cultist for the end-game narsie summon."
