@@ -400,7 +400,7 @@ There are several things that need to be remembered:
 
 	if(wear_suit)
 		var/obj/item/clothing/suit/S = wear_suit
-		var/item_level_support = FALSE // LISTEN! If you must degrade the code with further snowflake checks, at least keep the code compatible with worn non-clothing worn items!
+		var/item_level_support = FALSE // LISTEN! If you must degrade the code with further snowflake checks, at least keep it compatible with worn non-clothing items!
 		if(!istype(S))
 			item_level_support = TRUE
 		wear_suit.screen_loc = ui_oclothing
