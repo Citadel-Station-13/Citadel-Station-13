@@ -907,6 +907,12 @@
 	item_state = "marisol"
 	attack_verb = list("arrested", "harmbattoned", "lasered")
 
+/obj/item/toy/plush/mammal/minty
+	desc = "An adorable stuffed toy resembling some sort of crew member. It smells like mint.."
+	icon_state = "minty"
+	item_state = "minty"
+	attack_verb = list("freshened", "brushed")
+
 /obj/item/toy/plush/mammal/dog
 	desc = "An adorable stuffed toy that resembles a canine."
 	icon_state = "katlin"
