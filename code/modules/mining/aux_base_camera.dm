@@ -26,11 +26,11 @@
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5
 	adjacency_check = FALSE
-	upgraded = TRUE
-	var/obj/machinery/computer/camera_advanced/base_construction/master
+	upgrade = TRUE
+	var/obj/machinery/computer/camera_advanced/base_construction/console
 
 /obj/item/construction/rcd/internal/check_menu(mob/living/user)
-	if(!istype(user) || user.incapacitated() || !user.Adjacent(master))
+	if(!istype(user) || user.incapacitated() || !user.Adjacent(console))
 		return FALSE
 	return TRUE
 
@@ -60,7 +60,7 @@
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	. = ..()
 	RCD = new(src)
-	RCD.master = src
+	RCD.console = src
 	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
 		RCD.matter = RCD.max_matter
 		fans_remaining = 4
@@ -147,7 +147,7 @@
 	B = target
 	if(!B.RCD) //The console must always have an RCD.
 		B.RCD = new /obj/item/construction/rcd/internal(B) //If the RCD is lost somehow, make a new (empty) one!
-		RCD.master = B
+		B.RCD.console = B
 
 /datum/action/innate/aux_base/proc/check_spot()
 //Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.
@@ -214,7 +214,7 @@
 	if(..())
 		return
 
-	var/mode = input("Modify Type or Access?", "Airlock Settings", "Type", "Access", "None") in buildlist
+	var/mode = alert("Modify Type or Access?", "Airlock Settings", "Type", "Access", "None")
 	switch(mode)
 		if("Type")
 			B.RCD.change_airlock_setting(usr)
