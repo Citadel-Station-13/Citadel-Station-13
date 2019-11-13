@@ -121,7 +121,6 @@
 	if (population >= GLOB.dynamic_high_pop_limit)
 		indice_pop = 10
 		if(threat_level < high_population_requirement)
-			message_admins("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[high_population_requirement]")
 			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[high_population_requirement]")
 			return FALSE
 		else
@@ -133,7 +132,6 @@
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		if(threat_level < requirements[indice_pop])
-			message_admins("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[requirements[indice_pop]]")
 			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[requirements[indice_pop]]")
 			return FALSE
 		else
