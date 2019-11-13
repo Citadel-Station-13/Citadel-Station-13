@@ -757,13 +757,13 @@
 	attack_verb = list("bashes", "smacks", "whacks")
 
 /obj/item/nullrod/rosary
-	icon = 'modular_citadel/icons/obj/items_and_weapons.dmi'
 	icon_state = "rosary"
 	item_state = null
 	name = "prayer beads"
 	desc = "A set of prayer beads used by many of the more traditional religions in space"
-	force = 2
+	force = 4
 	throwforce = 0
+	attack_verb = list("whipped", "repented", "lashed", "flagellated")
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 
