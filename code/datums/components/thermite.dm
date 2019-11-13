@@ -15,7 +15,7 @@
 		/turf/closed/indestructible,
 		/turf/open/indestructible)
 		)
-	
+
 	var/static/list/resistlist = typecacheof(
 		/turf/closed/wall/r_wall
 		)
@@ -77,5 +77,5 @@
 		thermite_melt()
 
 /datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
-	if(thing.is_hot())
+	if(thing.get_temperature())
 		thermite_melt(user)
