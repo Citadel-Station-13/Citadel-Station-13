@@ -71,6 +71,11 @@
 	reinforced = TRUE
 	plunge_mod = 0.8
 
+/obj/item/sounder
+	name = "resevoir sounder"
+	desc = " It's a NT R-04 oil resevoir sounder. Use it on areas with visible leaking oil to generate a drilling plan."
+	icon_state = "reinforced_plunger"
+
 /obj/structure/geyser/oilspot
 	name = "oily residue"
 	icon_state = "spot"
@@ -85,21 +90,11 @@
 	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
 		reagents.add_reagent(reagent_id, potency)						   //processes
 
-/obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
-	if(!_reinforced)
-		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
-		return
+/obj/structure/geyser/plunger_act(/obj/item/sounder/P, mob/living/user,)
 	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already active!")
+		to_chat(user, "<span class'warning'>The [name] is already sounded!")
 		return
 
-	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!")
-	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
+	to_chat(user, "<span class='notice'>You start sounding the [src]!")
+	if(do_after(user, 50, target = src) && !activated)
 		start_chemming()
-
-/obj/structure/geyser/random
-	erupting_state = null
-	var/list/options = list(/datum/reagent/clf3 = 2, /datum/reagent/crudeoil = 1)
-/obj/structure/geyser/random/Initialize()
-	. = ..()
-	reagent_id = pickweight(options)

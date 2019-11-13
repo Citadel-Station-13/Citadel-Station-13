@@ -169,7 +169,7 @@
 	var/powered = FALSE
 	var/pump_power = 10
 	var/geyserless = FALSE
-	var/obj/structure/oilspot/resevoir
+	var/obj/structure/geyser/oilspot/resevoir
 	var/volume = 2000
 
 /obj/machinery/power/liquid_pump/oilrig/Initialize()
@@ -204,7 +204,7 @@
 	if(!anchored || panel_open)
 		return
 	if(!resevoir && !geyserless)
-		for(var/obj/structure/oilspot/G in loc.contents)
+		for(var/obj/structure/geyser/oilspot/G in loc.contents)
 			resevoir = G
 		if(!resevoir) //we didnt find one, abort
 			anchored = FALSE
