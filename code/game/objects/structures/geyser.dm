@@ -9,7 +9,7 @@
 
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
-	var/reagent_id = /datum/reagent/oil
+	var/reagent_id = "oil""
 	var/potency = 2 //how much reagents we add every process (2 seconds)
 	var/max_volume = 500
 	var/start_volume = 50
@@ -65,8 +65,41 @@
 
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
-	desc = " It's an M. 7 Reinforced Plunger© for heavy duty plunging."
+	desc = " It's an M. 7 Reinforced Plunger for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 
 	reinforced = TRUE
 	plunge_mod = 0.8
+
+/obj/structure/geyser/oilspot
+	name = "oily residue"
+	icon_state = "spot"
+	anchored = TRUE
+	var/activated = FALSE //whether we are active and generating chems
+	reagent_id = "crudeoil""
+	var/potency = 20 //how much reagents we add every process (2 seconds)
+	var/max_volume = 1500
+	var/start_volume = 50
+
+/obj/structure/geyser/process()
+	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
+		reagents.add_reagent(reagent_id, potency)						   //processes
+
+/obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
+	if(!_reinforced)
+		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
+		return
+	if(activated)
+		to_chat(user, "<span class'warning'>The [name] is already active!")
+		return
+
+	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!")
+	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
+		start_chemming()
+
+/obj/structure/geyser/random
+	erupting_state = null
+	var/list/options = list(/datum/reagent/clf3 = 2, /datum/reagent/crudeoil = 1)
+/obj/structure/geyser/random/Initialize()
+	. = ..()
+	reagent_id = pickweight(options)

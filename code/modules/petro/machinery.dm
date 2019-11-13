@@ -152,3 +152,73 @@
 				var/input_amount = CLAMP(round(input("Enter amount", "Input") as num|null), 1, 100)
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
+
+
+/obj/machinery/power/liquid_pump/oilrig
+	name = "oil drilling rig"
+	desc = "Pump up those sweet liquids from under the surface."
+	icon = 'icons/obj/machinery/oilrig.dmi'
+	icon_state = "tap"
+	anchored = TRUE
+	density = TRUE
+	circuit = /obj/item/circuitboard/machine/oilrig
+	idle_power_usage = 10
+	active_power_usage = 3000
+	pixel_x = -32
+	pixel_y = -64
+	var/powered = FALSE
+	var/pump_power = 10
+	var/geyserless = FALSE
+	var/obj/structure/oilspot/resevoir
+	var/volume = 2000
+
+/obj/machinery/power/liquid_pump/oilrig/Initialize()
+	. = ..()
+	var/list/occupied = list()
+	for(var/direct in list(EAST,WEST,SOUTHEAST,SOUTHWEST))
+		occupied += get_step(src,direct)
+	occupied += locate(x+1,y-2,z)
+	occupied += locate(x-1,y-2,z)
+	for(var/T in occupied)
+		var/obj/structure/filler/F = new(T)
+		F.parent = src
+		fillers += F
+
+/obj/machinery/power/liquid_pump/oilrig/Destroy()
+	for(var/V in fillers)
+		var/obj/structure/filler/filler = V
+		filler.parent = null
+		qdel(filler)
+	. = ..()
+
+/obj/machinery/power/liquid_pump/oilrig/attackby(obj/item/W, mob/user, params)
+	if(!powered)
+		if(anchored)
+			if(default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]",W))
+				return
+		if(default_deconstruction_crowbar(W))
+			return
+	return ..()
+
+/obj/machinery/power/liquid_pump/oilrig/process()
+	if(!anchored || panel_open)
+		return
+	if(!resevoir && !geyserless)
+		for(var/obj/structure/oilspot/G in loc.contents)
+			resevoir = G
+		if(!resevoir) //we didnt find one, abort
+			anchored = FALSE
+			geyserless = TRUE
+			visible_message("<span class='warning'>The [name] makes a sad beep!</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+			return
+
+	if(avail(active_power_usage))
+		if(!powered) //we werent powered before this tick so update our sprite
+			powered = TRUE
+			update_icon()
+		add_load(active_power_usage)
+		pump()
+	else if(powered) //we were powered, but now we arent
+		powered = FALSE
+		update_icon()
