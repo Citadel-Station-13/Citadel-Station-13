@@ -17,8 +17,8 @@ GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_min, (10 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_max, (30 MINUTES))
 
-GLOBAL_VAR_INIT(dynamic_event_delay_min, (5 MINUTES))
-GLOBAL_VAR_INIT(dynamic_event_delay_max, (20 MINUTES)) // this is on top of regular events, so can't be quite as often
+GLOBAL_VAR_INIT(dynamic_event_delay_min, (10 MINUTES))
+GLOBAL_VAR_INIT(dynamic_event_delay_max, (30 MINUTES)) // this is on top of regular events, so can't be quite as often
 
 
 // -- Roundstart injection delays
