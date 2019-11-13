@@ -23,7 +23,7 @@
 
 	immunity_type = "rad"
 	
-	var/radiation_intensity = 150
+	var/radiation_intensity = 100
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -31,7 +31,8 @@
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
-	L.rad_act(radiation_intensity / resist)
+	var/ratio = 1 - (min(resist, 100) / 100)
+	L.rad_act(radiation_intensity * percent)
 
 /datum/weather/rad_storm/end()
 	if(..())
