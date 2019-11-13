@@ -773,7 +773,7 @@
 		deity_name = GLOB.deity
 
 /obj/item/nullrod/rosary/attack(mob/living/M, mob/living/user)
-	if(user.a_intent = INTENT_HARM)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	if(!user.mind || user.mind.assigned_role != "Chaplain")
