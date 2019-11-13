@@ -1,4 +1,0 @@
-author: "Fermi"
-delete-after: True
-changes: 
-  - bugfix: "Fixes tiny runaway decimals in reagents system."

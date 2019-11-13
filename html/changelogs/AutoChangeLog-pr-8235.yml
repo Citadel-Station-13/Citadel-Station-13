@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - balance: "Defib users automatically stop pulling when they attempt to perform a defib shock"
