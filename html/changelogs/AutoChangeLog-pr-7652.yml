@@ -1,6 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - imageadd: "All regular crates are now 3/4ths ToriCrates
-iamgeadd: Unused plastic crate sprite added"
-  - rscadd: "Blood freezer crates now have unique sprites."

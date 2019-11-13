@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "The atmospherics turf subsystem now has double the wait time, which should free up server processing power for other tasks."

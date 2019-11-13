@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - tweak: "Clone pods no longer announce the name of the clone"
