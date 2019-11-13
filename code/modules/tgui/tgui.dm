@@ -289,6 +289,8 @@
 			if(params["screen"])
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
+		if("tgui:log")
+			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
 		if("tgui:fancy")
@@ -299,6 +301,8 @@
 			update_status(push = 0) // Update the window state.
 			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
 				SStgui.update_uis(src_object) // Update if the object requested it.
+
+
 
  /**
   * private
@@ -385,3 +389,6 @@
 
 /datum/tgui/proc/set_titlebar(value)
 	titlebar = value
+
+/datum/tgui/proc/log_message(message)
+	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")

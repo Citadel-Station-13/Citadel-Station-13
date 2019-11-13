@@ -148,6 +148,9 @@
 #endif
 	SEND_TEXT(world.log, text)
 
+/proc/log_tgui(text)
+	WRITE_LOG(GLOB.tgui_log, text)
+
 /* Log to the logfile only. */
 /proc/log_runtime(text)
 	WRITE_LOG(GLOB.world_runtime_log, text)
