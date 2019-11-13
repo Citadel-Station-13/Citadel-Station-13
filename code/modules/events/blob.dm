@@ -18,13 +18,7 @@
 	if(prob(75))
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak5")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
-		for(var/obj/machinery/computer/communications/C in GLOB.machines)
-			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-				var/obj/item/paper/P = new(C.loc)
-				P.name = "level 5 biohazard"
-				P.info = "Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak."
-				P.update_icon()
+		print_command_report("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "level 5 biohazard")
 
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
