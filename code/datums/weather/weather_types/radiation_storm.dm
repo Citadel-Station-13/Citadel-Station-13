@@ -31,7 +31,7 @@
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
-	L.rad_act(150 / resist)
+	L.rad_act(radiation_intensity / resist)
 
 /datum/weather/rad_storm/end()
 	if(..())
