@@ -366,6 +366,7 @@
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(3,3,2,2,2,1,1,1,1,0)
 	required_candidates = 1
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/clockcult)
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
