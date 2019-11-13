@@ -75,6 +75,18 @@
 	crate_name = "cotton crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/rawlumber
+	name = "Raw Lumber Crate"
+	desc = "Raw logs from towercaps. Contains fifty logs."
+	cost = 1000
+	contains = list(/obj/item/grown/log)
+	crate_name = "lumber crate"
+
+/datum/supply_pack/critter/animal_feed/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /obj/item/grown/log(.)
+
 /datum/supply_pack/materials/rcdammo
 	name = "Spare RDC ammo"
 	desc = "This crate contains sixteen RCD ammo packs, to help with any holes or projects people mite be working on."

@@ -42,6 +42,21 @@
 	unit_name = "cooked food base"
 	export_types = list(/obj/item/reagent_containers/food/snacks/bun)
 
+/datum/export/food/buns
+	cost = 3
+	unit_name = "cooked food base"
+	export_types = list(/obj/item/reagent_containers/food/snacks/bun)
+
+/datum/export/food/eggs
+	cost = 4
+	unit_name = "cooked food base"
+	export_types = list(/obj/item/reagent_containers/food/snacks/friedegg)
+
+/datum/export/food/eggs_food
+	cost = 20
+	unit_name = "cooked egg based food"
+	export_types = list(/obj/item/reagent_containers/food/snacks/omelette, /obj/item/reagent_containers/food/snacks/benedict, /obj/item/reagent_containers/food/snacks/salad/eggbowl)
+
 /datum/export/food/sweets
 	cost = 4
 	unit_name = "pastery base"
@@ -147,14 +162,8 @@
 	unit_name = "snowcone"
 	export_types = list(/obj/item/reagent_containers/food/snacks/snowcones)
 
-/datum/export/booze/loose
-	cost = 1.5 //PER unit
-	unit_name = "station brew"
-	export_types = list(/datum/reagent/consumable/ethanol/fruit_wine)
-	include_subtypes = TRUE //Just in case
-
 /datum/export/booze/brands
-	cost = 100
+	cost = 200
 	unit_name = "export bottle"
 	export_types = list(/obj/item/export/bottle/kahlua, /obj/item/export/bottle/whiskey, /obj/item/export/bottle/vodka, /obj/item/export/bottle/gin, \
 						/obj/item/export/bottle/rum, /obj/item/export/bottle/tequila, /obj/item/export/bottle/vermouth, /obj/item/export/bottle/wine, /obj/item/export/bottle/grappa, /obj/item/export/bottle/cognac, \

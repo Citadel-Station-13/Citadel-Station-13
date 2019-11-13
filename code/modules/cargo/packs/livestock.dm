@@ -12,9 +12,10 @@
 
 /datum/supply_pack/critter/animal_feed
 	name = "Animal Feed Crate"
-	desc = "Feed for livestock, like cows and hens. Contains fifty Wheat bundles"
-	cost = 1300
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	desc = "Feed for livestock, like cows and hens. Contains fifty Wheat bundles and fifty Oat bundles."
+	cost = 1500
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/wheat,
+					/obj/item/reagent_containers/food/snacks/grown/oat)
 	crate_name = "animal feed crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
