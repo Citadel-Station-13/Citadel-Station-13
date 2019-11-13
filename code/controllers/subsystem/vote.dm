@@ -208,9 +208,19 @@ SUBSYSTEM_DEF(vote)
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("map")
-				choices.Add(config.maplist)
-				for(var/i in choices)//this is necessary because otherwise we'll end up with a bunch of /datum/map_config's as the default vote value instead of 0 as intended
-					choices[i] = 0
+				var/players = GLOB.clients.len
+				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
+				for(var/M in config.maplist) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
+					var/datum/map_config/targetmap = config.maplist[M]
+					if(!istype(targetmap))
+						continue
+					if(!targetmap.voteweight)
+						continue
+					if((targetmap.config_min_users && players < targetmap.config_min_users) || (targetmap.config_max_users && players > targetmap.config_max_users))
+						continue
+					if(targetmap.max_round_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_round_search_span) >= targetmap.max_rounds_played)
+						continue
+					choices |= M
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("custom")

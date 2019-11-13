@@ -1,5 +1,0 @@
-author: "kappa-sama"
-delete-after: True
-changes: 
-  - rscadd: "hugbox (/s)"
-  - tweak: "ashwalker spawn text now tells them \"i\" \"c\" not to leave lavaland"

@@ -98,7 +98,7 @@
 	name = "Tar Sand Lightening"
 	id = "tarlight"
 	results = list("lightsandoil" = 1)
-	required_reagents = list("sandoil" = 2, "naptha" = 0.1)
+	required_reagents = list("sandoil" = 2, "naphtha" = 0.1)
 
 /datum/chemical_reaction/reagent_explosion/butane_explosion
 	name = "Butane explosion"

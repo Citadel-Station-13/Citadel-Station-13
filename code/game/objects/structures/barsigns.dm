@@ -1,4 +1,4 @@
-/obj/structure/sign/barsign // All Signs are 64 by 32 pixels, they take two tiles
+/obj/structure/sign/barsign // All Signs are 64 by 64 pixels, though most of them are made to fit 64 x 32 and only take the two lowermost tiles.
 	name = "Bar Sign"
 	desc = "A bar sign with no writing on it."
 	icon = 'icons/obj/barsigns.dmi'

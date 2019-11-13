@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Air alarms now actually emit the proper light color when their status is okay."
