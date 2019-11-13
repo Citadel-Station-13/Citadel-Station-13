@@ -10,6 +10,20 @@
 	group = "Livestock"
 	crate_type = /obj/structure/closet/crate/critter
 
+/datum/supply_pack/critter/animal_feed
+	name = "Animal Feed Crate"
+	desc = "Feed for livestock, like cows and hens. Contains fifty Wheat bundles"
+	cost = 1300
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	crate_name = "animal feed crate"
+	crate_type = /obj/structure/closet/crate/freezer
+
+/datum/supply_pack/critter/animal_feed/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /obj/item/reagent_containers/food/snacks/grown/wheat(.)
+
+
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference

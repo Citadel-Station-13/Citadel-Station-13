@@ -113,6 +113,71 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
+
+/datum/supply_pack/organic/fruit_1
+	name = "Fruit Basic Crate"
+	desc = "Getting scurvy on the station? Well heres your fixing! Contains three of each - bananas, watermelons, limes, lemons, oranges and even three pineapple."
+	cost = 2250
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/banana)
+	crate_name = "fruit crate"
+
+/datum/supply_pack/organic/fruit_2
+	name = "Fruit Delux Crate"
+	desc = "Getting tired of the basic fruits and want to have something a bit more decadent! This crate is for you! Contains three of each - bunches of berries, apples, pineapples, cherries, green & red grapes, eggplants, bananas lastly ten strawberry."
+	cost = 3500
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/berries,
+					/obj/item/reagent_containers/food/snacks/grown/berries,
+					/obj/item/reagent_containers/food/snacks/grown/berries,
+					/obj/item/reagent_containers/food/snacks/grown/apple,
+					/obj/item/reagent_containers/food/snacks/grown/apple,
+					/obj/item/reagent_containers/food/snacks/grown/apple,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/cherries,
+					/obj/item/reagent_containers/food/snacks/grown/cherries,
+					/obj/item/reagent_containers/food/snacks/grown/cherries,
+					/obj/item/reagent_containers/food/snacks/grown/grapes,
+					/obj/item/reagent_containers/food/snacks/grown/grapes,
+					/obj/item/reagent_containers/food/snacks/grown/grapes,
+					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
+					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
+					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry)
+	crate_name = "fruit crate"
+
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	desc = "Designed by Aussec's Advanced Warfare Research Division, these high-yield, Clown-grade cream pies are powered by a synergy of performance and efficiency. Guaranteed to provide maximum results."
