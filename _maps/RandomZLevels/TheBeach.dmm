@@ -414,7 +414,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bm" = (
@@ -426,7 +426,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bn" = (
@@ -438,7 +438,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bo" = (
@@ -678,7 +678,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bV" = (
@@ -696,7 +696,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bX" = (
@@ -897,7 +897,7 @@
 /area/awaymission/beach)
 "cD" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/rag{
 	pixel_y = 7
 	},
 /turf/open/floor/wood,
