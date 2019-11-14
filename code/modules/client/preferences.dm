@@ -2338,9 +2338,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(TRUE)
 
 	//let's be sure the character updates
-	character.update_body()
-	character.update_hair()
-	character.update_body_parts()
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()
+		character.update_body_parts()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

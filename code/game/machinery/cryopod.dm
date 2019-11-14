@@ -307,7 +307,6 @@
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
-		if(!istype(R)) return ..()
 
 		R.contents -= R.mmi
 		qdel(R.mmi)

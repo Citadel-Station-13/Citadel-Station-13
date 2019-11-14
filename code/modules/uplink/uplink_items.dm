@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver/syndie
+	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
