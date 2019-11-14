@@ -211,7 +211,8 @@
 /datum/export/weapon/revolver
 	cost = 200
 	unit_name = "large handgun"
-	export_types = list(/obj/item/gun/ballistic/revolver/syndie)
+	export_types = list(/obj/item/gun/ballistic/revolver)
+	exclude_types = list(/obj/item/gun/ballistic/revolver/russian, /obj/item/gun/ballistic/revolver/doublebarrel)
 
 /datum/export/weapon/rocketlauncher
 	cost = 1000
