@@ -903,6 +903,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				I = C
 
 	if(I?.registered_name)
+		if(!user.transferItemToLoc(I, src))
+			return FALSE
 		insert_id(I, user)
 		update_icon()
 		playsound(src, 'sound/machines/button.ogg', 50, 1)
