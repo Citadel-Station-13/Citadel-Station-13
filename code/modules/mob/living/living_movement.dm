@@ -33,3 +33,6 @@
 			add_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
 			return
 	remove_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING)
+
+/mob/living/canZMove(dir, turf/target)
+	return can_zTravel(target, dir) && (movement_type & FLYING)
