@@ -111,27 +111,27 @@
 						/obj/item/clothing/suit/ran = 2,
 						/obj/item/clothing/head/ran = 2)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
-		              /obj/item/clothing/head/powdered_wig = 1,
-		              /obj/item/gun/magic/wand = 2,
-		              /obj/item/clothing/glasses/sunglasses/garb = 2,
-		              /obj/item/clothing/glasses/sunglasses/blindfold = 1,
-		              /obj/item/clothing/mask/muzzle = 2)
+						/obj/item/clothing/head/powdered_wig = 1,
+						/obj/item/gun/magic/wand = 2,
+						/obj/item/clothing/glasses/sunglasses/garb = 2,
+						/obj/item/clothing/glasses/sunglasses/blindfold = 1,
+						/obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
-		           /obj/item/clothing/head/pirate/captain = 2,
-		           /obj/item/clothing/head/helmet/roman/fake = 1,
-		           /obj/item/clothing/head/helmet/roman/legionnaire/fake = 1,
-		           /obj/item/clothing/under/roman = 1,
-		           /obj/item/clothing/shoes/roman = 1,
-		           /obj/item/shield/riot/roman/fake = 1,
-		           /obj/item/skub = 1,
-		           /obj/item/clothing/under/lobster = 1,	 // CIT CHANGES
-		           /obj/item/clothing/head/lobsterhat = 1,
-		           /obj/item/clothing/head/drfreezehat = 1,
-		           /obj/item/clothing/suit/dracula = 1,
-		           /obj/item/clothing/suit/drfreeze_coat = 1,
-		           /obj/item/clothing/suit/gothcoat = 2,
-		           /obj/item/clothing/under/draculass = 1,
-                   /obj/item/clothing/under/drfreeze = 1)    //End of Cit Changes
+					/obj/item/clothing/head/pirate/captain = 2,
+					/obj/item/clothing/head/helmet/roman/fake = 1,
+					/obj/item/clothing/head/helmet/roman/legionnaire/fake = 1,
+					/obj/item/clothing/under/roman = 1,
+					/obj/item/clothing/shoes/roman = 1,
+					/obj/item/shield/riot/roman/fake = 1,
+					/obj/item/skub = 1,
+					/obj/item/clothing/under/lobster = 1,	 // CIT CHANGES
+					/obj/item/clothing/head/lobsterhat = 1,
+					/obj/item/clothing/head/drfreezehat = 1,
+					/obj/item/clothing/suit/dracula = 1,
+					/obj/item/clothing/suit/drfreeze_coat = 1,
+					/obj/item/clothing/suit/gothcoat = 2,
+					/obj/item/clothing/under/draculass = 1,
+					/obj/item/clothing/under/drfreeze = 1)    //End of Cit Changes
 	refill_canister = /obj/item/vending_refill/autodrobe
 
 /obj/machinery/vending/autodrobe/all_access

@@ -1293,8 +1293,8 @@
 	var/toysound = 'sound/machines/click.ogg'
 
 /obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
-    ..()
+	desc = "A \"Space Life\" brand [src]."
+	..()
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)

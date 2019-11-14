@@ -40,6 +40,16 @@
 	QDEL_LIST(diseases)
 	return ..()
 
+/mob/living/onZImpact(turf/T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
+	return ..()
+
+/mob/living/proc/ZImpactDamage(turf/T, levels)
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	adjustBruteLoss((levels * 5) ** 1.5)
+	Knockdown(levels * 50)
+
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -524,6 +534,7 @@
 			for(var/organ in C.internal_organs)
 				var/obj/item/organ/O = organ
 				O.setOrganDamage(0)
+	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEAL, admin_revive)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
