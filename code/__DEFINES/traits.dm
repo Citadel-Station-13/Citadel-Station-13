@@ -70,8 +70,6 @@
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
-#define TRAIT_GOTTAGOFAST		"fast"
-#define TRAIT_GOTTAGOREALLYFAST	"2fast"
 #define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness
 #define TRAIT_FAKEDEATH			"fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_DISFIGURED		"disfigured"
@@ -147,13 +145,14 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define	TRAIT_DRUNK_HEALING		"drunk_healing"
-#define	TRAIT_TAGGER			"tagger"
-#define	TRAIT_PHOTOGRAPHER		"photographer"
-#define	TRAIT_MUSICIAN			"musician"
-#define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
+#define TRAIT_DRUNK_HEALING		"drunk_healing"
+#define TRAIT_TAGGER			"tagger"
+#define TRAIT_PHOTOGRAPHER		"photographer"
+#define TRAIT_MUSICIAN			"musician"
+#define TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
+#define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PHARMA            "hepatic_pharmacokinesis"
 #define TRAIT_PARA              "paraplegic"

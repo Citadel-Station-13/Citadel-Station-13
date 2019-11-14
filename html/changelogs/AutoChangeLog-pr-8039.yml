@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Xenos can no longer strip items off of people to be capable of using any item in the game."
-  - bugfix: "also, items from pockets get placed into your hands properly now"

@@ -8,6 +8,8 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 
+	var/borghealth = 100
+
 	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
 	var/list/emag_modules = list() //ditto
 	var/list/ratvar_modules = list() //ditto ditto
@@ -223,6 +225,8 @@
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	if(RM.dogborg)
 		RM.dogborg_equip()
+	R.maxHealth = borghealth
+	R.health = min(borghealth, R.health)
 	qdel(src)
 	return RM
 
@@ -617,6 +621,14 @@
 			sleeper_overlay = "valesecsleeper"
 	return ..()
 
+/obj/item/robot_module/security/Initialize()
+	. = ..()
+	if(!CONFIG_GET(flag/weaken_secborg))
+		for(var/obj/item/gun/energy/disabler/cyborg/pewpew in basic_modules)
+			basic_modules -= pewpew
+			basic_modules += new /obj/item/gun/energy/e_gun/advtaser/cyborg(src)
+			qdel(pewpew)
+
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(
@@ -628,6 +640,7 @@
 		/obj/item/reagent_containers/borghypo/peace,
 		/obj/item/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
+		/obj/item/megaphone,
 		/obj/item/borg/projectile_dampen)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(

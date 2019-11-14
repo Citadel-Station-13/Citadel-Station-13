@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "The mob spawners list no longer leaves null entries behind when a spawner has a job description defined. The latejoin menu will no longer show ghost roles that are filled, and the spawners menu actually works again."

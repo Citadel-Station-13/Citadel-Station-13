@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes many possible situations of null icons for cit races' bodyparts."
-  - imagedel: "Removes duplicate slimepeople' sprites."
-  - code_imp: "Purges that draw_citadel_parts()."

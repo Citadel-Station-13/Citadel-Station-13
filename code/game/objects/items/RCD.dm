@@ -441,13 +441,16 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/turf/the_turf = get_turf(A)
+	var/turf_coords = "[COORD(the_turf)]"
+	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
-				investigate_log("[user] used [src] on [cached] (now [A]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
+				investigate_log("[user] used [src] on [cached] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
 
