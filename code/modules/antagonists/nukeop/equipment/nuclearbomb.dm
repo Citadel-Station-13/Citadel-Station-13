@@ -617,7 +617,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 				mode.threat_tallies[STATIONARY_DISK_STRING] -= 0.1
 				mode.spend_threat(0.1)
 				mode.threat_level = max(mode.threat_level-0.1,mode.initial_threat_level)
-				if(mode.threat_tallies[STATIONARY_DISK_STRING] == 0)
+				if(mode.threat_tallies[STATIONARY_DISK_STRING] <= 0)
 					mode.threat_tallies -= STATIONARY_DISK_STRING
 		else
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
