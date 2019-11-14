@@ -83,6 +83,6 @@
 				else
 					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
-				user.whisper("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
+				user.whisper("[invocation] [uppertext(chosenarea.name)]")
 
 	return

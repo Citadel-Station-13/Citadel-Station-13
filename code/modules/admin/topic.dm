@@ -1347,7 +1347,7 @@
 
 	else if(href_list["f_secret"])
 		return HandleFSecret()
-		
+
 	else if(href_list["f_dynamic_roundstart"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1593,7 +1593,7 @@
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
-		dynamic_mode_options(usr)	
+		dynamic_mode_options(usr)
 
 	else if(href_list["f_dynamic_high_pop_limit"])
 		if(!check_rights(R_ADMIN))
@@ -1612,7 +1612,7 @@
 
 		log_admin("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
 		message_admins("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
-		dynamic_mode_options(usr)		
+		dynamic_mode_options(usr)
 
 	else if(href_list["f_dynamic_forced_threat"])
 		if(!check_rights(R_ADMIN))
@@ -1631,7 +1631,7 @@
 
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
-		dynamic_mode_options(usr)	
+		dynamic_mode_options(usr)
 
 	else if(href_list["c_mode2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
@@ -2442,7 +2442,7 @@
 			return
 		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
 		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
-			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,lentext(src.admincaster_feed_channel.channel_name)+1)
+			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,length(src.admincaster_feed_channel.channel_name)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -2484,7 +2484,7 @@
 			return
 		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
-			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,lentext(src.admincaster_feed_message.returnBody(-1))+1)
+			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,length(src.admincaster_feed_message.returnBody(-1))+1)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -2545,7 +2545,7 @@
 			return
 		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
-			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,lentext(admincaster_wanted_message.criminal)+1)
+			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,length(admincaster_wanted_message.criminal)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
@@ -2553,7 +2553,7 @@
 			return
 		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		while (findtext(src.admincaster_wanted_message.body," ") == 1)
-			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,lentext(src.admincaster_wanted_message.body)+1)
+			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,length(src.admincaster_wanted_message.body)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])

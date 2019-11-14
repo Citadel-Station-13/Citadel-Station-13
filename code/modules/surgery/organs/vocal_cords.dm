@@ -140,7 +140,7 @@
 	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
-	var/mob/living/list/listeners = list()
+	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L == user && !include_speaker)
@@ -663,7 +663,7 @@
 
 	//FIND THRALLS
 	message = lowertext(message)
-	var/mob/living/list/listeners = list()
+	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L.has_status_effect(/datum/status_effect/chem/enthrall))//Check to see if they have the status

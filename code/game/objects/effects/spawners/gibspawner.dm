@@ -32,7 +32,8 @@
 	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
 	var/body_coloring = ""
 	if(source_mob)
-		dna_to_add = source_mob.get_blood_dna_list() //ez pz
+		if(!issilicon(source_mob))
+			dna_to_add = source_mob.get_blood_dna_list() //ez pz
 		if(ishuman(source_mob))
 			var/mob/living/carbon/human/H = source_mob
 			if(H.dna.species.use_skintones)
@@ -51,15 +52,11 @@
 					body_coloring = "#[skintone2hex(H.skin_tone)]"
 				else
 					body_coloring = "#[H.dna.features["mcolor"]]"
-				qdel(H)
 			else
 				dna_to_add = temp_mob.get_blood_dna_list()
-				qdel(temp_mob)
 		else if(!issilicon(temp_mob))
 			dna_to_add = temp_mob.get_blood_dna_list()
-			qdel(temp_mob)
-		else
-			qdel(temp_mob)
+		qdel(temp_mob)
 	else
 		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
 

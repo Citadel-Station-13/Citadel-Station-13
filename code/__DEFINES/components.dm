@@ -72,11 +72,16 @@
 #define COMSIG_ATOM_SCREWDRIVER_ACT "atom_screwdriver_act"		//from base of atom/screwdriver_act(): (mob/living/user, obj/item/I)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin, turf/destination)
 	#define COMPONENT_BLOCK_TELEPORT 1
+#define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"		//called when an atom with HEAR_1 is added to the hearers on /proc/get_hearers_in_view(): (list/processing_list, list/hearers)
 /////////////////
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"			//from base of atom/attack_ghost(): (mob/dead/observer/ghost)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"				//from base of atom/attack_hand(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"				//from base of atom/attack_paw(): (mob/user)
 	#define COMPONENT_NO_ATTACK_HAND 1							//works on all 3.
+//This signal return value bitflags can be found in __DEFINES/misc.dm
+#define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"	//called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
+
+
 /////////////////
 
 #define COMSIG_ENTER_AREA "enter_area" 						//from base of area/Entered(): (/area)
@@ -98,6 +103,7 @@
 // /turf signals
 #define COMSIG_TURF_CHANGE "turf_change"						//from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"				//from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
+#define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"				//from base of turf/New(): (turf/source, direction)
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
@@ -123,8 +129,10 @@
 #define  COMSIG_MIND_TRANSFER "mind_transfer"					//from base of mind/transfer_to(): (new_character, old_character)
 
 // /mob signals
+#define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/A)
+	#define COMPONENT_ALLOW_EXAMINE 1
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
-#define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize() (can_reenter_corpse)
+#define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize(): (can_reenter_corpse)
 	#define COMPONENT_BLOCK_GHOSTING 1
 #define COMSIG_MOB_ALLOWED "mob_allowed"						//from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
@@ -149,6 +157,8 @@
 	#define SPEECH_FORCED 7 */
 
 // /mob/living signals
+#define COMSIG_LIVING_FULLY_HEAL "living_fully_healed"		//from base of /mob/living/fully_heal(): (admin_revive)
+#define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"		//from base of mob/living/ExtinguishMob() (/mob/living)
