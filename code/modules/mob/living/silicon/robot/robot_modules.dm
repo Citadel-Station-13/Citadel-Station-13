@@ -134,6 +134,25 @@
 		rebuild_modules()
 	return I
 
+//Adds flavoursome dogborg items to dogborg variants without mechanical benefits
+/obj/item/robot_module/proc/dogborg_equip()
+	var/obj/item/I = new /obj/item/analyzer/nose/flavour(src)
+	add_module(I,0,0)
+	I = new /obj/item/soap/tongue/flavour(src)
+	add_module(I,0,0)
+	I = new /obj/item/dogborg/sleeper/K9/flavour(src)
+	if(name == "Engineering")
+		I.icon_state = "decompiler"
+	if(name == "Security")
+		I.icon_state = "sleeperb"
+	if(name == "Medical")
+		I.icon_state = "sleeper"
+	if(name == "Service")
+		I.icon_state = "servicer"
+		if(cyborg_base_icon == "scrubpup")
+			I.icon_state = "compactor"
+	add_module(I,0,0)
+
 /obj/item/robot_module/proc/remove_module(obj/item/I, delete_after)
 	basic_modules -= I
 	modules -= I
@@ -202,6 +221,8 @@
 	R.update_module_innate()
 	RM.rebuild_modules()
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
+	if(RM.dogborg)
+		RM.dogborg_equip()
 	qdel(src)
 	return RM
 
@@ -466,6 +487,7 @@
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
 			cyborg_pixel_offset = -16
+			sleeper_overlay = "dozersleeper"
 		if("Vale")
 			cyborg_base_icon = "valeeng"
 			can_be_pushed = FALSE
@@ -474,6 +496,7 @@
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
 			cyborg_pixel_offset = -16
+			sleeper_overlay = "valeengsleeper"
 		if("Alina")
 			cyborg_base_icon = "alina-eng"
 			special_light_key = "alina"
@@ -483,6 +506,7 @@
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
 			cyborg_pixel_offset = -16
+			sleeper_overlay = "alinasleeper"
 	return ..()
 
 /obj/item/robot_module/security
@@ -587,8 +611,10 @@
 			sleeper_overlay = "alinasleeper"
 		if("Dark")
 			cyborg_base_icon = "k9dark"
+			sleeper_overlay = "k9darksleeper"
 		if("Vale")
 			cyborg_base_icon = "valesec"
+			sleeper_overlay = "valesecsleeper"
 	return ..()
 
 /obj/item/robot_module/peacekeeper
@@ -738,6 +764,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
+	clean_on_move = TRUE
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

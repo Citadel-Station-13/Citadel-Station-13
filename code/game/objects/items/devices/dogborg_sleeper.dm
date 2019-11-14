@@ -121,7 +121,6 @@
 
 /obj/item/dogborg/sleeper/proc/go_out(var/target)
 	hound = loc
-	hound.setClickCooldown(50)
 	var/voracious = TRUE
 	if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 		voracious = FALSE
@@ -567,3 +566,7 @@
 		return
 
 	return
+
+/obj/item/dogborg/sleeper/K9/flavour
+	name = "Mobile Sleeper"
+	desc = "A mounted, underslung sleeper, intended for holding willing occupants for leisurely purposes."
