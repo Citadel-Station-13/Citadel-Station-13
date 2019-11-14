@@ -21,9 +21,9 @@
 						[js_byjax]
 						[js_dropdowns]
 						function SSticker() {
-						    setInterval(function(){
-						        window.location='byond://?src=[REF(src)]&update_content=1';
-						    }, 1000);
+							setInterval(function(){
+								window.location='byond://?src=[REF(src)]&update_content=1';
+							}, 1000);
 						}
 
 						window.onload = function() {

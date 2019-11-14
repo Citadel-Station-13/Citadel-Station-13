@@ -18,8 +18,6 @@
 	return FALSE
 
 
-
-
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
@@ -335,3 +333,19 @@
 			else
 				S.adjusted = ALT_STYLE
 			H.update_inv_wear_suit()
+
+/mob/living/carbon/proc/get_body_parts_flags()
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/L = X
+		switch(L.body_part)
+			if(CHEST)
+				. |= GROIN
+			if(LEG_LEFT)
+				. |= FOOT_LEFT
+			if(LEG_RIGHT)
+				. |= FOOT_RIGHT
+			if(ARM_LEFT)
+				. |= HAND_LEFT
+			if(ARM_RIGHT)
+				. |= HAND_RIGHT
+		. |= L.body_part
