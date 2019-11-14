@@ -337,8 +337,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Flavor Text</h2>"
 			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Examine Text</b></a><br>"
-			if(lentext(features["flavor_text"]) <= 40)
-				if(!lentext(features["flavor_text"]))
+			if(length(features["flavor_text"]) <= 40)
+				if(!length(features["flavor_text"]))
 					dat += "\[...\]"
 				else
 					dat += "[features["flavor_text"]]"

@@ -516,6 +516,7 @@
 		number_players -= 30
 		starter_servants += min(round(number_players / 10), 5)
 	mode.antags_rolled += starter_servants
+	GLOB.clockwork_vitality += 50 * starter_servants
 	for (var/i in 1 to starter_servants)
 		var/mob/servant = pick_n_take(candidates)
 		assigned += servant.mind
@@ -627,6 +628,16 @@
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	antag_cap = list(1,1,1,2,2,2,3,3,3,4)
+	var/devil_limit = 4 // Hard limit on devils if scaling is turned off
+
+/datum/dynamic_ruleset/roundstart/devil/pre_execute()
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	var/num_devils = 1
+
+	if(tsc)
+		num_devils = max(required_candidates, min(round(num_players() / (tsc * 3)) + 2, round(num_players() / (tsc * 1.5))))
+	else
+		num_devils = max(required_candidates, min(num_players(), devil_limit))
 
 /datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	var/num_devils = antag_cap[indice_pop]
