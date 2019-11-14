@@ -29,7 +29,7 @@
 	cost = 5000 //Cats are worth as much as corgis.
 	contains = list(/mob/living/simple_animal/pet/cat,
 					/obj/item/clothing/neck/petcollar,
-                    /obj/item/toy/cattoy)
+					/obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()
