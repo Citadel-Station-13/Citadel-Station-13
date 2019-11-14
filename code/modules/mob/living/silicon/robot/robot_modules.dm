@@ -138,18 +138,20 @@
 
 //Adds flavoursome dogborg items to dogborg variants without mechanical benefits
 /obj/item/robot_module/proc/dogborg_equip()
+	if(istype(src, /obj/item/robot_module/k9) || istype(src, /obj/item/robot_module/medihound))
+		return //Bandaid fix to prevent stacking until I merge these two modules into their base types
 	var/obj/item/I = new /obj/item/analyzer/nose/flavour(src)
 	add_module(I,0,0)
 	I = new /obj/item/soap/tongue/flavour(src)
 	add_module(I,0,0)
 	I = new /obj/item/dogborg/sleeper/K9/flavour(src)
-	if(name == "Engineering")
+	if(istype(src, /obj/item/robot_module/engineering))
 		I.icon_state = "decompiler"
-	if(name == "Security")
+	if(istype(src, /obj/item/robot_module/security))
 		I.icon_state = "sleeperb"
-	if(name == "Medical")
+	if(istype(src, /obj/item/robot_module/medical))
 		I.icon_state = "sleeper"
-	if(name == "Service")
+	if(istype(src, /obj/item/robot_module/butler))
 		I.icon_state = "servicer"
 		if(cyborg_base_icon == "scrubpup")
 			I.icon_state = "compactor"
