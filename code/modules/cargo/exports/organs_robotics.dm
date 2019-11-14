@@ -8,7 +8,7 @@
 	include_subtypes = FALSE
 	k_elasticity = 0 //ALWAYS worth selling upgrades
 
-/datum/export/orgains
+/datum/export/organs
 	include_subtypes = TRUE
 	k_elasticity = 0 //ALWAYS worth selling orgains
 
@@ -36,6 +36,7 @@
 
 /datum/export/implant/breathtube
 	cost = 150
+	k_elasticity = 300/20 //Large before depleating
 	unit_name = "breath implant"
 	export_types = list(/obj/item/organ/cyberimp/mouth/breathing_tube)
 
@@ -110,7 +111,18 @@
 	export_types = list(/obj/item/organ/liver)
 	exclude_types = list(/obj/item/organ/liver/cybernetic, /obj/item/organ/liver/cybernetic/upgraded)
 
-/datum/export/orgains/tail //Shhh
+/datum/export/organs/cybernetic
+	cost = 225
+	unit_name = "cybernetic organ"
+	export_types = list(/obj/item/organ/liver/cybernetic, /obj/item/organ/lungs/cybernetic, /obj/item/organ/eyes/robotic, /obj/item/organ/heart/cybernetic)
+	exclude_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
+
+/datum/export/organs/upgraded
+	cost = 275
+	unit_name = "upgraded cybernetic organ"
+	export_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
+
+/datum/export/organs/tail //Shhh
 	cost = 500
 	unit_name = "error shipment failer"
 	export_types = list(/obj/item/organ/tail)
@@ -136,6 +148,41 @@
 	export_types = list(/obj/item/bodypart/l_arm/robot/surplus_upgraded, /obj/item/bodypart/r_arm/robot/surplus_upgraded, /obj/item/bodypart/l_leg/robot/surplus_upgraded, /obj/item/bodypart/r_leg/robot/surplus_upgraded)
 
 /datum/export/robotics/surgery_gear_basic
-	cost = 5
+	cost = 10
 	unit_name = "surgery tool"
 	export_types = list(/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw, /obj/item/surgical_drapes)
+
+/datum/export/robotics/mech_weapon_laser
+	cost = 300 //Sadly just metal and glass
+	unit_name = "mech laser based weapon"
+	include_subtypes = TRUE
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam, /obj/item/mecha_parts/mecha_equipment/weapon/energy)
+
+/datum/export/robotics/mech_weapon_bullet
+	cost = 250
+	unit_name = "mech bullet based weapon"
+	include_subtypes = TRUE
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun, /obj/item/mecha_parts/mecha_equipment/weapon/honker, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic)
+
+/datum/export/robotics/mech_tools
+	cost = 150
+	unit_name = "mech based tool"
+	include_subtypes = TRUE
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp, /obj/item/mecha_parts/mecha_equipment/extinguisher, /obj/item/mecha_parts/mecha_equipment/rcd, /obj/item/mecha_parts/mecha_equipment/cable_layer, \
+						/obj/item/mecha_parts/mecha_equipment/drill, /obj/item/mecha_parts/mecha_equipment/mining_scanner, /obj/item/mecha_parts/mecha_equipment/medical/sleeper)
+
+/datum/export/robotics/mech_blue_space
+	cost = 750
+	k_elasticity = 1/10
+	unit_name = "mech bluespace tech"
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/teleporter, /obj/item/mecha_parts/mecha_equipment/wormhole_generator, /obj/item/mecha_parts/mecha_equipment/gravcatapult)
+
+/datum/export/robotics/mech_reactors
+	cost = 350
+	unit_name = "mech based reactor"
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay, /obj/item/mecha_parts/mecha_equipment/generator, /obj/item/mecha_parts/mecha_equipment/generator/nuclear)
+
+/datum/export/robotics/mech_armor
+	cost = 350
+	unit_name = "mech armor tech"
+	export_types = list(/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster, /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster, /obj/item/mecha_parts/mecha_equipment/repair_droid)
