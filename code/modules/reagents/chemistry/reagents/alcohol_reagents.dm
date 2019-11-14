@@ -2263,7 +2263,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#ffffc9"
 	boozepwr = 50
 	quality = DRINK_FANTASTIC
-	taste_description = "Tastes like...duty and responsibility?"
+	taste_description = "duty and responsibility"
 	glass_icon_state = "commander_and_chief"
 	glass_name = "Commander and Chief"
 	glass_desc = "The gems of this majestic chalice represent the departments and their Heads."

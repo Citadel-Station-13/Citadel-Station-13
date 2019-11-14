@@ -69,7 +69,7 @@
 		color = bloodtype_to_color(data["blood_type"])
 		if(data["blood_type"] == "SY")
 			name = "Synthetic Blood"
-			taste_description = "oily"
+			taste_description = "oil"
 
 		if(data["blood_type"] == "X*")
 			name = "Xenomorph Blood"
@@ -84,12 +84,12 @@
 
 		if(data["blood_type"] == "BUG")
 			name = "Insect Blood"
-			taste_description = "greasy"
+			taste_description = "grease"
 			pH = 7.25
 
 		if(data["blood_type"] == "L")
 			name = "Lizard Blood"
-			taste_description = "spicy"
+			taste_description = "something spicy"
 			pH = 6.85
 
 
