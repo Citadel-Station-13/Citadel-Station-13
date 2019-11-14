@@ -583,8 +583,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	. = ..()
 	AddComponent(/datum/component/stationloving, !fake)
 
-#define STATIONARY_DISK_STRING "Stationary Nuke Disk"
-
 /obj/item/disk/nuclear/process()
 	if(fake)
 		STOP_PROCESSING(SSobj, src)
@@ -592,42 +590,21 @@ This is here to make the tiles around the station mininuke change when it's arme
 	var/turf/newturf = get_turf(src)
 	if(newturf && lastlocation == newturf)
 		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
-			if(istype(SSticker.mode, /datum/game_mode/dynamic))
-				var/datum/game_mode/dynamic/mode = SSticker.mode
-				mode.create_threat(0.1)
-				if(round(mode.threat) == mode.threat)
-					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The dynamic threat rating has increased to [mode.threat].")
-				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased dynamic threat to [mode.threat].")
-				if(!(STATIONARY_DISK_STRING in mode.threat_tallies))
-					mode.threat_tallies[STATIONARY_DISK_STRING] = 0
-				mode.threat_tallies[STATIONARY_DISK_STRING] += 0.1
-			else
-				var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
-				if(istype(loneop))
-					loneop.weight += 1
-					if(loneop.weight % 5 == 0)
-						message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
-					log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+			if(istype(loneop))
+				loneop.weight += 1
+				if(loneop.weight % 5 == 0)
+					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
+				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 	else
 		lastlocation = newturf
 		last_disk_move = world.time
-		if(istype(SSticker.mode, /datum/game_mode/dynamic))
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			if(STATIONARY_DISK_STRING in mode.threat_tallies)
-				mode.threat_tallies[STATIONARY_DISK_STRING] -= 0.1
-				mode.spend_threat(0.1)
-				mode.threat_level = max(mode.threat_level-0.1,mode.initial_threat_level)
-				if(mode.threat_tallies[STATIONARY_DISK_STRING] <= 0)
-					mode.threat_tallies -= STATIONARY_DISK_STRING
-		else
-			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
-			if(istype(loneop) && prob(loneop.weight))
-				loneop.weight = max(loneop.weight - 1, 0)
-				if(loneop.weight % 5 == 0)
-					message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
-				log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
-
-#undef STATIONARY_DISK_STRING
+		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+		if(istype(loneop) && prob(loneop.weight))
+			loneop.weight = max(loneop.weight - 1, 0)
+			if(loneop.weight % 5 == 0)
+				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
+			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
