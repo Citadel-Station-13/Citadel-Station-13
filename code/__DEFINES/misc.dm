@@ -509,6 +509,11 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define AREASELECT_CORNERA "corner A"
 #define AREASELECT_CORNERB "corner B"
 
+#define VARSET_FROM_LIST(L, V) if(L && L[#V]) V = L[#V]
+#define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
+#define VARSET_TO_LIST(L, V) if(L) L[#V] = V
+#define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
+
 #define PREF_SAVELOAD_COOLDOWN 5
 
 #define VOMIT_TOXIC 1
