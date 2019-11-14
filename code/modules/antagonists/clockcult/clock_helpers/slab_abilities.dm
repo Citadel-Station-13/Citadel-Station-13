@@ -179,6 +179,7 @@
 	. = ..()
 
 /obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
+	var/narsiandog_punish = 8
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
@@ -193,15 +194,22 @@
 				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>")
 			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 		else
-			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
-			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-			L.Knockdown(15, TRUE, FALSE, 15)
-			L.apply_status_effect(STATUS_EFFECT_KINDLE)
-			L.flash_act(1, 1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = L
-				S.emp_act(EMP_HEAVY)
-			if(iscultist(L))
+			if(!iscultist(L))
+				L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
+				"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+				L.Knockdown(15, TRUE, FALSE, 15)
+				L.apply_status_effect(STATUS_EFFECT_KINDLE)
+				L.flash_act(1, 1)
+				if(issilicon(target))
+					var/mob/living/silicon/S = L
+					S.emp_act(EMP_HEAVY)
+			else //for Nar'sian weaklings
+				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \
+				"<span class='userdanger'>Your vision suddenly screams with a flash of burning hot light!</span>")  //Debuffs Narsian cultists hard + deals some burn instead of just hardstunning them; Only the confusion part can stack
+				L.flash_act(1,1)
+				L.stuttering = max(narsiandog_punish, L.stuttering)
+				L.drowsy = max(narsiandog_punish, L.drowsy)
+				L.confused += narsiandog_punish
 				L.adjustFireLoss(15)
 	..()
 
