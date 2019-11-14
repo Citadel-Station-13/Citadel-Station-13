@@ -370,6 +370,20 @@
 	item_path = /obj/item/antag_spawner/contract
 	category = "Assistance"
 
+/datum/spellbook_entry/item/contract/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_apprentice_cost))
+			return 0
+
+/datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_apprentice_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on apprentice contract.")
+	return ..()
+
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
 	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
@@ -389,6 +403,20 @@
 	limit = 3
 	category = "Assistance"
 
+/datum/spellbook_entry/item/bloodbottle/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"])
+			return 0
+
+/datum/spellbook_entry/item/bloodbottle/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on slaughter demon.")
+	return ..()
+
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
 	desc = "A bottle of magically infused fun, the smell of which will \
@@ -402,6 +430,20 @@
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
 	category = "Assistance"
+
+/datum/spellbook_entry/item/hugbottle/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < round(CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3))
+			return 0
+
+/datum/spellbook_entry/item/hugbottle/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on laughter demon.")
+	return ..()
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"

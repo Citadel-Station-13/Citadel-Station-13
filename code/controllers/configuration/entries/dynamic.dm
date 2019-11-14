@@ -105,6 +105,10 @@
 	config_entry_value = 10
 	min_val = 0
 
+/datum/config_entry/number/dynamic_apprentice_cost
+	config_entry_value = 10
+	min_val = 0
+
 /datum/config_entry/number/dynamic_warops_requirement
 	config_entry_value = 60
 	min_val = 0
