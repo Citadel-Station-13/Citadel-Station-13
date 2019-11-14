@@ -1,4 +1,7 @@
 /mob/living/carbon/human/key_down(_key, client/user)
+	if("Shift")
+		sprint_hotkey(TRUE)
+		return
 	if(client.keys_held["Shift"])
 		switch(_key)
 			if("E") // Put held thing in belt or take out most recent thing from belt
@@ -56,4 +59,11 @@
 					return
 				stored.attack_hand(src) // take out thing from backpack
 				return
+	return ..()
+
+/mob/living/carbon/human/key_up(_key, client/user)
+	switch(_key)
+		if("Shift")
+			sprint_hotkey(FALSE)
+			return
 	return ..()
