@@ -108,7 +108,7 @@
 	Uplink Categories:
 	Due to how the typesof() in-built byond proc works, it should be kept in mind
 	the order categories are displayed in the uplink UI is same to the order they are loaded in the code.
-	I trust no extra filter is needed as long as all they are contained within the following lines.
+	I trust no extra filter is needed as long as they are all contained within the following lines.
 	When adding new uplink categories, please keep them separate from their sub paths here and without set item.
 	Failure to comply may result in the new categories being listed at the bottom of the UI.
 */
