@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
 	var/new_icon = GLOB.pda_reskins[choice]
-	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || M.incapacitated() || !in_range(M,src))
+	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	icon = new_icon
 	update_icon(FALSE, TRUE)
@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[STATION_TIME_TIMESTAMP("hh:mm:ss")]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
-				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
+				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer]"
 
 				dat += "<br><br>"
 

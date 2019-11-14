@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "The bug where ghost role spawners leave null entries in glob.mob_spawners has actually been fixed"

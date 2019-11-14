@@ -219,6 +219,7 @@
 /obj/item/hypospray/mkii
 	name = "hypospray mk.II"
 	icon_state = "hypo2"
+	icon = 'icons/obj/syringe.dmi'
 	desc = "A new development from DeForest Medical, this hypospray takes 30-unit vials as the drug supply for easy swapping."
 	w_class = WEIGHT_CLASS_TINY
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/tiny, /obj/item/reagent_containers/glass/bottle/vial/small)

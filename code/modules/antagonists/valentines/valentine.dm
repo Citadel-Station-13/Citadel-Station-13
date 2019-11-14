@@ -12,7 +12,6 @@
 		protect_objective.human_check = FALSE
 	protect_objective.explanation_text = "Protect [date.name], your date."
 	objectives += protect_objective
-	owner.objectives += objectives
 
 /datum/antagonist/valentine/on_gain()
 	forge_objectives()
@@ -34,8 +33,8 @@
 //Squashed up a bit
 /datum/antagonist/valentine/roundend_report()
 	var/objectives_complete = TRUE
-	if(owner.objectives.len)
-		for(var/datum/objective/objective in owner.objectives)
+	if(objectives.len)
+		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
@@ -51,8 +50,8 @@
 
 /datum/antagonist/valentine/chem/roundend_report()
 	var/objectives_complete = TRUE
-	if(owner.objectives.len)
-		for(var/datum/objective/objective in owner.objectives)
+	if(objectives.len)
+		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break

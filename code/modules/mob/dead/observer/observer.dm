@@ -231,7 +231,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/r_val
 	var/b_val
 	var/g_val
-	var/color_format = lentext(input_color)
+	var/color_format = length(input_color)
 	if(color_format == 3)
 		r_val = hex2num(copytext(input_color, 1, 2))*16
 		g_val = hex2num(copytext(input_color, 2, 3))*16
@@ -285,10 +285,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // CITADEL EDIT
 	if(istype(loc, /obj/machinery/cryopod))
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
-		if(response != "Ghost")//darn copypaste
-			return
 		var/obj/machinery/cryopod/C = loc
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		if(response != "Ghost" || QDELETED(C) || QDELETED(src) || loc != C)
+			return
 		C.despawn_occupant()
 		return
 // END EDIT

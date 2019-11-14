@@ -66,6 +66,8 @@
 		place = cmaster_turf
 		for(var/i in 1 to distance)
 			place = get_step(place, dir)
+			if(!place)
+				break
 			atoms += get_rad_contents(place)
 
 	return atoms
@@ -108,7 +110,7 @@
 		if(!can_contaminate || blacklisted[thing.type])
 			continue
 		if(prob(contamination_chance)) // Only stronk rads get to have little baby rads
-			if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+			if(CHECK_BITFIELD(thing.rad_flags, RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
 				continue
 			var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
 			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
