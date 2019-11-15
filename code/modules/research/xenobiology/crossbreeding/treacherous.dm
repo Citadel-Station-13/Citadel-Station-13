@@ -7,6 +7,7 @@ Treacherous extracts:
 	desc = "Looking at it makes you want to stab your friends."
 	effect = "treacherous"
 	icon_state = "treacherous"
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/uses = 1
 
 /obj/item/slimecross/treacherous/afterattack(atom/target,mob/user,proximity)
@@ -17,20 +18,22 @@ Treacherous extracts:
 		var/mob/living/H = target
 		var/mob/living/G = user
 		if (rand(1,25) < 23)
-			H.apply_damage(5,BRUTE,pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
+			H.apply_damage(5,BRUTE,check_zone(G.zone_selected))
 			H.visible_message("<span class='warning'>[user] stabs [target] with [src]!</span>","<span class='userdanger'>[user] shanks you with the [src]!</span>")
-			playsound(H, 'sound/weapons/bladeslice.ogg', 40, 1)
 			var/delete = do_effect(G, H)
-			if (uses == 0 && delete == TRUE)
+			if (!delete)
+				delete = TRUE
+			if (uses - 1 == 0 && delete == TRUE)
 				qdel(src)
 				return
 			if (delete == TRUE)
 				uses--
 		else
-			G.apply_damage(5,BRUTE,pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
-			G.visible_message("<span class='warning'>[user] tries to stab [target] with [src], but stabs themself instead!</span>","<span class='userdanger'>A hidden blade slides out of the [src] and stabs you!</span>")
-			playsound(G, 'sound/weapons/bladeslice.ogg', 40, 1)
+			G.apply_damage(5,BRUTE,check_zone(H.zone_selected))
+			G.visible_message("<span class='warning'>[user] tries to stab [target] with [src], but stabs [user.p_them()]self instead!</span>","<span class='userdanger'>A hidden blade slides out of the [src] and stabs you!</span>")
 			var/delete = do_effect(H, G)
+			if (!delete)
+				delete = TRUE
 			if (uses - 1 == 0 && delete == TRUE)
 				qdel(src)
 				return
@@ -46,6 +49,7 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/grey
 	colour = "grey"
+	uses = 2
 
 /obj/item/slimecross/treacherous/grey/do_effect(mob/user,mob/living/target)
 	target.adjustCloneLoss(rand(30,40))
@@ -53,7 +57,7 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/orange
 	colour = "orange"
-	uses = 5
+	uses = 3
 
 /obj/item/slimecross/treacherous/orange/do_effect(mob/user,mob/living/target)
 	target.fire_stacks = 5
@@ -63,6 +67,7 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/purple
 	colour = "purple"
+	uses = 1
 
 /obj/item/slimecross/treacherous/purple/do_effect(mob/user,mob/living/target)
 	target.revive(full_heal = 1)
@@ -80,11 +85,12 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/metal
 	colour = "metal"
+	uses = 1
 
 /obj/item/slimecross/treacherous/metal/do_effect(mob/user,mob/living/target)
 	var/r = rand(1,10)
 	for (var/turf/H in orange(target,1))
-		if (get_dist(get_turf(user),H) > 0)
+		if (get_dist(get_turf(target),H) > 0)
 			if (r < 9)
 				new /turf/closed/wall(H)
 			else
@@ -93,79 +99,113 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/yellow
 	colour = "yellow"
-	uses = 7
+	uses = 2
 
 /obj/item/slimecross/treacherous/yellow/do_effect(mob/user,mob/living/target)
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, 1)
-	target.electrocute_act(rand(50,60),src)
+	target.electrocute_act(rand(30,60),src,1,1)
 	..()
 
 /obj/item/slimecross/treacherous/darkpurple
 	colour = "dark purple"
+	uses = 1
 
 /obj/item/slimecross/treacherous/darkpurple/do_effect(mob/user,mob/living/target)
 	user.visible_message("<span class='danger'>[src] dissolves into plasma before lighting on fire!</span>")
 	var/turf/T = get_turf(target)
-	T.atmos_spawn_air("plasma=200")
+	T.atmos_spawn_air("plasma=57,TEMP=295")
+	T.hotspot_expose(700,10,1)
 	..()
 
 /obj/item/slimecross/treacherous/darkblue
 	colour = "dark blue"
-	//suit environmentproof
+	uses = 2
 
 /obj/item/slimecross/treacherous/darkblue/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='danger'>[src] releases a burst of chilling smoke!</span>")
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent("frostoil", 40)
-	user.reagents.add_reagent("cryoxadone",10)
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
-	smoke.start()
+	target.bodytemperature = 0
+	target.apply_status_effect(/datum/status_effect/freon)
 	..()
 
 /obj/item/slimecross/treacherous/silver
 	colour = "silver"
+	uses = 5
 
 /obj/item/slimecross/treacherous/silver/do_effect(mob/user,mob/living/target)
-	var/amount = rand(3,6)
-	var/list/turfs = list()
-	for(var/turf/open/T in range(1,get_turf(user)))
-		turfs += T
-	for(var/i = 0, i < amount, i++)
-		var/path = get_random_food()
-		var/obj/item/O = new path(pick(turfs))
-		O.reagents.add_reagent("slimejelly",5) //Oh god it burns
-		if(prob(50))
-			O.desc += " It smells strange..."
-	user.visible_message("<span class='danger'>[src] produces a few pieces of food!</span>")
+
 	..()
 
 /obj/item/slimecross/treacherous/bluespace
 	colour = "bluespace"
+	uses = 1
+	var/list/useful_organs = list(ORGAN_SLOT_BRAIN,ORGAN_SLOT_STOMACH,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER)
 
-/obj/item/slimecross/treacherous/bluespace/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='danger'>[src] sparks, and lets off a shockwave of bluespace energy!</span>")
-	for(var/mob/living/L in range(1, get_turf(user)))
-		if(L != user)
-			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
-			new /obj/effect/particle_effect/sparks(get_turf(L))
-			playsound(get_turf(L), "sparks", 50, 1)
+/obj/item/slimecross/treacherous/bluespace/do_effect(mob/user,mob/living/targ)
+	if (istype(targ,/mob/living/carbon))
+		var/mob/living/carbon/target = targ
+		var/list/organs = list_organs_in_zone(target, zone = user.zone_selected)
+		if (organs.len > 0)
+			var/obj/item/organ_to_tele = organs[rand(1,organs.len)]
+			if (istype(organ_to_tele,/obj/item/bodypart))
+				var/obj/item/bodypart/part = organ_to_tele
+				part.drop_limb()
+				do_teleport(part, find_safe_turf(target.loc.z,extended_safety_checks = TRUE))
+			else
+				var/obj/item/organ/organ = organ_to_tele
+				teleport_organ(target,organ,(organ.slot in useful_organs) ? TRUE : FALSE)
+		to_chat(target,"<span class='warning'>You feel as if a part of you is missing!</span>")
 	..()
+
+/obj/item/slimecross/treacherous/bluespace/proc/list_organs_in_zone(mob/living/carbon/target,zone = BODY_ZONE_CHEST)
+	var/list/listorgans = list()
+	if (zone == BODY_ZONE_CHEST || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH || zone == BODY_ZONE_PRECISE_GROIN || zone == BODY_ZONE_HEAD)
+		for (var/obj/item/organ/organ in target.internal_organs)
+			if (organ.zone == zone)
+				listorgans |= organ
+	else
+		listorgans |= target.get_bodypart(check_zone(zone))
+	return listorgans
+
+/obj/item/slimecross/treacherous/bluespace/proc/teleport_organ(mob/living/carbon/target,obj/item/organ/organ,duplication)
+	if (organ)
+		if (duplication == FALSE)
+			organ.Remove(target)
+			do_teleport(organ, find_safe_turf(target.loc.z,extended_safety_checks = TRUE))
+		else
+			var/damagedone = rand(50,60)
+			var/path = organ.type
+			var/obj/item/organ/X = new path(find_safe_turf(target.loc.z,extended_safety_checks = TRUE))
+			organ.applyOrganDamage(damagedone,organ.maxHealth)
+			organ.onDamage(damagedone,X.maxHealth)
+			X.applyOrganDamage(damagedone,X.maxHealth)
 
 /obj/item/slimecross/treacherous/sepia
 	colour = "sepia"
+	uses = 3
+	var/turf/position
+	var/mob/living/victim
+	var/victdir
 
 /obj/item/slimecross/treacherous/sepia/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/camera/timefreeze(get_turf(user))
-	..()
+	victim = target
+	position = get_turf(target)
+	dir = target.dir
+	addtimer(CALLBACK(src, .proc/revert_pos), 120)
+	return FALSE
+
+/obj/item/slimecross/treacherous/sepia/proc/revert_pos()
+	if (victim && position)
+		victim.visible_message("<span class='warning'>[victim] disappears!</span>","<span class='userdanger'>You feel youself snap back in time!</span>")
+		victim.forceMove(position)
+		victim.dir = victdir
+		uses--
+		if (uses <= 0)
+			qdel(src)
 
 /obj/item/slimecross/treacherous/cerulean
 	colour = "cerulean"
 
 /obj/item/slimecross/treacherous/cerulean/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='notice'>[src] produces a potion!</span>")
-	new /obj/item/slimepotion/extract_cloner(get_turf(user))
+
 	..()
 
 /obj/item/slimecross/treacherous/pyrite
@@ -177,11 +217,7 @@ Treacherous extracts:
 	if (ishuman(target))
 		if (uses != 0)
 			if (victim && victim != target)
-				victim.eye_color = initial(victim.eye_color)
-				victim.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				REMOVE_TRAIT(victim, TRAIT_CULT_EYES, "valid_cultist")
-				victim.cut_overlays()
-				victim.regenerate_icons()
+				remove_cult_overlay()
 			victim = target
 			var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
 			var/mutable_appearance/halo = mutable_appearance('icons/effects/32x64.dmi',istate, -BODY_FRONT_LAYER)
@@ -190,6 +226,7 @@ Treacherous extracts:
 			victim.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 			ADD_TRAIT(victim,TRAIT_CULT_EYES,"valid_cultist")
 			victim.update_body()
+			addtimer(CALLBACK(src, .proc/remove_cult_overlay), 3000)
 			uses--
 		else
 			to_chat(user,"<span class='warning'>[src] has no more uses!</span>")
@@ -197,71 +234,47 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/pyrite/attack_self(mob/user)
 	if (victim)
-		victim.eye_color = initial(victim.eye_color)
-		victim.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(victim, TRAIT_CULT_EYES, "valid_cultist")
-		victim.cut_overlays()
-		victim.regenerate_icons()
+		remove_cult_overlay()
 		if (uses == 0)
 			qdel(src)
+
+/obj/item/slimecross/treacherous/pyrite/proc/remove_cult_overlay()
+	victim.eye_color = initial(victim.eye_color)
+	victim.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+	REMOVE_TRAIT(victim, TRAIT_CULT_EYES, "valid_cultist")
+	victim.cut_overlays()
+	victim.regenerate_icons()
 
 /obj/item/slimecross/treacherous/red
 	colour = "red"
 
 /obj/item/slimecross/treacherous/red/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='danger'>[src] pulses a hazy red aura for a moment, which wraps around [user]!</span>")
-	for(var/mob/living/simple_animal/slime/S in view(7, get_turf(user)))
-		if(user in S.Friends)
-			var/friendliness = S.Friends[user]
-			S.Friends = list()
-			S.Friends[user] = friendliness
-		else
-			S.Friends = list()
-		S.rabid = 1
-		S.visible_message("<span class='danger'>The [S] is driven into a dangerous frenzy!</span>")
-	..()
+	if (isliving(user))
+		var/mob/living/L = user
+		L.changeNext_move(CLICK_CD_RAPID)
+		L.adjustStaminaLoss(-2)
+	return FALSE
 
 /obj/item/slimecross/treacherous/green
 	colour = "green"
 
 /obj/item/slimecross/treacherous/green/do_effect(mob/user,mob/living/target)
-	var/which_hand = "l_hand"
-	if(!(user.active_hand_index % 2))
-		which_hand = "r_hand"
-	var/mob/living/L = user
-	if(!istype(user))
-		return
-	var/obj/item/held = L.get_active_held_item() //This should be itself, but just in case...
-	L.dropItemToGround(held)
-	var/obj/item/melee/arm_blade/slime/blade = new(user)
-	if(!L.put_in_hands(blade))
-		qdel(blade)
-		user.visible_message("<span class='warning'>[src] melts onto [user]'s arm, boiling the flesh horribly!</span>")
-	else
-		user.visible_message("<span class='danger'>[src] sublimates the flesh around [user]'s arm, transforming the bone into a gruesome blade!</span>")
-	user.emote("scream")
-	L.apply_damage(30,BURN,which_hand)
+
 	..()
 
 /obj/item/slimecross/treacherous/pink
 	colour = "pink"
+	uses = 4
 
 /obj/item/slimecross/treacherous/pink/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='notice'>[src] shrinks into a small, gel-filled pellet!</span>")
-	new /obj/item/slimecrossbeaker/pax(get_turf(user))
+	target.reagents.add_reagent("pax",10)
 	..()
 
 /obj/item/slimecross/treacherous/gold
 	colour = "gold"
 
 /obj/item/slimecross/treacherous/gold/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='danger'>[src] shudders violently, and summons an army for [user]!</span>")
-	for(var/i in 1 to 3) //Less than gold normally does, since it's safer and faster.
-		var/mob/living/simple_animal/S = create_random_mob(get_turf(user), HOSTILE_SPAWN)
-		S.faction |= "[REF(user)]"
-		if(prob(50))
-			for(var/j = 1, j <= rand(1, 3), j++)
-				step(S, pick(NORTH,SOUTH,EAST,WEST))
+
 	..()
 
 /obj/item/slimecross/treacherous/oil
@@ -279,37 +292,26 @@ Treacherous extracts:
 	colour = "black"
 
 /obj/item/slimecross/treacherous/black/do_effect(mob/user,mob/living/target)
-	var/mob/living/L = user
-	if(!istype(L))
-		return
-	user.visible_message("<span class='danger'>[src] absorbs [user], transforming [user.p_them()] into a slime!</span>")
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/S = new()
-	S.remove_on_restore = TRUE
-	user.mind.AddSpell(S)
-	S.cast(list(user),user)
+
 	..()
 
 /obj/item/slimecross/treacherous/lightpink
 	colour = "light pink"
 
 /obj/item/slimecross/treacherous/lightpink/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='danger'>[src] lets off a hypnotizing pink glow!</span>")
-	for(var/mob/living/carbon/C in view(7, get_turf(user)))
-		C.reagents.add_reagent("pax",5)
+
 	..()
 
 /obj/item/slimecross/treacherous/adamantine
 	colour = "adamantine"
 
 /obj/item/slimecross/treacherous/adamantine/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
-	new /obj/item/twohanded/required/adamantineshield(get_turf(user))
+
 	..()
 
 /obj/item/slimecross/treacherous/rainbow
 	colour = "rainbow"
 
 /obj/item/slimecross/treacherous/rainbow/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='notice'>[src] flattens into a glowing rainbow blade.</span>")
-	new /obj/item/kitchen/knife/rainbowknife(get_turf(user))
+
 	..()
