@@ -627,13 +627,13 @@ MIDROUND_ANTAG_LIFE_CHECK 0.7
 ## during which the player shouldn't be able to come back through
 ## midround playable roles or mob spawners.
 ## Set to 0 to completely disable it.
-SUICIDE_REENTER_ROUND_TIMER 18000
+SUICIDE_REENTER_ROUND_TIMER 30
 
 ## A time, in real-time deciseconds, below which the player receives
 ## a timed penalty, for purposes similar to the aforementioned one (can also stack)
 ## and equal to this config difference with world.time.
 ## Both configs are indipendent from each other, disabling one won't affect the other.
-ROUNDSTART_SUICIDE_TIME_LIMIT 18000
+ROUNDSTART_SUICIDE_TIME_LIMIT 30
 
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
