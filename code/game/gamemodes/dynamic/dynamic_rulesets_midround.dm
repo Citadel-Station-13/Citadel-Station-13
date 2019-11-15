@@ -632,16 +632,12 @@
 	required_candidates = 2
 	weight = 8
 	cost = 10
-	requirements = list(80,80,70,50,40,30,30,20,15,15)
+	requirements = list(101,101,70,50,40,30,30,20,15,15)
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
 	repeatable_weight_decrease = 4
 	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/abductors/acceptable(population=0, threat=0)
-	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
-		return FALSE // Unavailable if nuke ops were already sent at roundstart. yes, this is intentional for abductors too.
-	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))

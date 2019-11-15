@@ -44,6 +44,7 @@
 	required_enemies = list(2,2,1,1,0,0,0,0,0,0)
 	weight = 5
 	cost = 10
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	requirements = list(70,60,50,50,40,40,40,30,20,15)
 	high_population_requirement = 15
 
