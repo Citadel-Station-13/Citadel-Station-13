@@ -18,7 +18,7 @@
 
 /obj/mecha/medical/odysseus/go_out()
 	if(isliving(occupant))
-		var/mob/living/carbon/human/H = occupant
+		var/mob/living/carbon/human/L = occupant
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		hud.remove_hud_from(L)
 	..()
