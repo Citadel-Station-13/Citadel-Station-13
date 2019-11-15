@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
 	var/new_icon = GLOB.pda_reskins[choice]
-	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || M.incapacitated() || !in_range(M,src))
+	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	icon = new_icon
 	update_icon(FALSE, TRUE)
