@@ -66,6 +66,10 @@
 
 /datum/config_entry/flag/disable_human_mood
 
+/datum/config_entry/flag/disable_borg_flash_knockdown //Should borg flashes be capable of knocking humanoid entities down?
+
+/datum/config_entry/flag/weaken_secborg //Brings secborgs and k9s back in-line with the other borg modules
+
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
@@ -134,6 +138,14 @@
 	integer = FALSE
 	min_val = 0
 	max_val = 1
+
+/datum/config_entry/number/suicide_reenter_round_timer
+	config_entry_value = 30
+	min_val = 0
+
+/datum/config_entry/number/roundstart_suicide_time_limit
+	config_entry_value = 30
+	min_val = 0
 
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000
@@ -374,6 +386,22 @@
 
 /datum/config_entry/number/dynamic_pop_per_requirement
 	config_entry_value = 6
+	min_val = 1
+
+/datum/config_entry/number/dynamic_midround_delay_min
+	config_entry_value = 15
+	min_val = 1
+
+/datum/config_entry/number/dynamic_midround_delay_max
+	config_entry_value = 35
+	min_val = 1
+
+/datum/config_entry/number/dynamic_latejoin_delay_min
+	config_entry_value = 5
+	min_val = 1
+
+/datum/config_entry/number/dynamic_latejoin_delay_max
+	config_entry_value = 25
 	min_val = 1
 
 /datum/config_entry/keyed_list/dynamic_cost

@@ -492,6 +492,7 @@
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8)
+	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
 	for (var/i in 1 to starter_servants)
 		var/mob/servant = pick(candidates)
 		candidates -= servant

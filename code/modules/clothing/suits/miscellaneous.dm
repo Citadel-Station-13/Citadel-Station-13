@@ -634,6 +634,16 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
 
+/obj/item/clothing/suit/assu_suit
+	name = "DAB suit"
+	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Desperate Assistance Battle-force</i>\"."
+	icon_state = "assu_suit"
+	item_state = "assu_suit"
+	blood_overlay_type = "armor"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	flags_inv = HIDEJUMPSUIT
+	resistance_flags = NONE
+
 	/*
 		In this file:
 			various vampire interactions and items

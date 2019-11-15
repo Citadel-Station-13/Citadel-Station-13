@@ -39,7 +39,7 @@
 	projectile_type = /obj/item/projectile/beam/lasertag/wavemotion
 	select_name = "overdrive"
 	e_cost = 300
-	fire_sound = 'modular_citadel/sound/weapons/LaserSlugv3.ogg'
+	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/dispersal
 	projectile_type = /obj/item/projectile/beam/lasertag/dispersal
@@ -47,7 +47,7 @@
 	pellets = 5
 	variance = 25
 	e_cost = 200
-	fire_sound = 'modular_citadel/sound/weapons/ParticleBlaster.ogg'
+	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //TOY REVOLVER
