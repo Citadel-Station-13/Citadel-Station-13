@@ -93,7 +93,7 @@
 	if(!isitem(target))
 		return
 	var/obj/item/I = target
-	if(!I.has_temperature())
+	if(!I.get_temperature())
 		return
 	detonate() //If we're touching a hot item we go boom
 
