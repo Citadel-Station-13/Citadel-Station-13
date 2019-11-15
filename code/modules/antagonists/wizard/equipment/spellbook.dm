@@ -286,6 +286,20 @@
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
 
+/datum/spellbook_entry/item/staffchange/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_staff_of_change_requirement))
+			return 0
+
+/datum/spellbook_entry/item/staffchange/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_staff_of_change_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on staff of change.")
+	return ..()
+
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."

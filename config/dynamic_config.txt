@@ -293,6 +293,9 @@ DYNAMIC_SUMMON_MAGIC_COST 10
 DYNAMIC_SUMMON_EVENTS_REQUIREMENT 20
 DYNAMIC_SUMMON_EVENTS_COST 10
 
+DYNAMIC_STAFF_OF_CHANGE_REQUIREMENT 20
+DYNAMIC_STAFF_OF_CHANGE_COST 10
+
 ## As above, but for apprentice. Note that this is just a cost, since apprentices aren't as universally disruptive as above.
 DYNAMIC_APPRENTICE_COST 10
 

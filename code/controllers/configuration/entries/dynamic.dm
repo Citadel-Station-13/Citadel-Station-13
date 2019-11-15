@@ -105,6 +105,14 @@
 	config_entry_value = 10
 	min_val = 0
 
+/datum/config_entry/number/dynamic_staff_of_change_requirement
+	config_entry_value = 20
+	min_val = 0
+
+/datum/config_entry/number/dynamic_staff_of_change_cost
+	config_entry_value = 10
+	min_val = 0
+
 /datum/config_entry/number/dynamic_apprentice_cost
 	config_entry_value = 10
 	min_val = 0
