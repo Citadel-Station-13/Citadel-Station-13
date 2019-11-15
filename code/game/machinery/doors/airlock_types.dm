@@ -8,16 +8,19 @@
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
+	wiretypepath = /datum/wires/airlock/command
 	normal_integrity = 450
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
+	wiretypepath = /datum/wires/airlock/security
 	normal_integrity = 450
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
+	wiretypepath = /datum/wires/airlock/engineering
 
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
@@ -25,6 +28,7 @@
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
+	wiretypepath = /datum/wires/airlock/medical
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
@@ -44,11 +48,13 @@
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
+	wiretypepath = /datum/wires/airlock/cargo
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
+	wiretypepath = /datum/wires/airlock/engineering
 
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
@@ -56,6 +62,7 @@
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
+	wiretypepath = /datum/wires/airlock/science
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
@@ -65,10 +72,12 @@
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
+	wiretypepath = /datum/wires/airlock/science
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
+	wiretypepath = /datum/wires/airlock/medical
 
 //////////////////////////////////
 /*
@@ -376,6 +385,7 @@
 	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
+	wiretypepath = /datum/wires/airlock/secure
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6

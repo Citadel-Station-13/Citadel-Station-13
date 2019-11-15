@@ -25,9 +25,14 @@
 	var/makeBody = TRUE
 
 /datum/dynamic_ruleset/midround/trim_candidates()
+	//
+	// All you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
+	// Candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
+	// So for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
+	// Make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
+	// We're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
-	dead_players = trim_list(mode.current_players[CURRENT_DEAD_PLAYERS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())

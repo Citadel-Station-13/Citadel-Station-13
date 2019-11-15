@@ -2,6 +2,7 @@
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
+	value = 1
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
 	description = "Blood from some creature."
 	metabolization_rate = 5 //fast rate so it disappears fast.
@@ -68,7 +69,7 @@
 		color = bloodtype_to_color(data["blood_type"])
 		if(data["blood_type"] == "SY")
 			name = "Synthetic Blood"
-			taste_description = "oily"
+			taste_description = "oil"
 
 		if(data["blood_type"] == "X*")
 			name = "Xenomorph Blood"
@@ -83,12 +84,12 @@
 
 		if(data["blood_type"] == "BUG")
 			name = "Insect Blood"
-			taste_description = "greasy"
+			taste_description = "grease"
 			pH = 7.25
 
 		if(data["blood_type"] == "L")
 			name = "Lizard Blood"
-			taste_description = "spicy"
+			taste_description = "something spicy"
 			pH = 6.85
 
 

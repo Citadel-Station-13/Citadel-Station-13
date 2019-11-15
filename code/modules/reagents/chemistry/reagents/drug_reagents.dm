@@ -1,6 +1,7 @@
 /datum/reagent/drug
 	name = "Drug"
 	id = "drug"
+	value = 12
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?

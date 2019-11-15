@@ -4,36 +4,21 @@
 /mob/living/carbon/human/dust_animation()
 	new /obj/effect/temp_visual/dust_animation(loc, "dust-h")
 
-/mob/living/carbon/human/spawn_gibs(with_bodyparts)
-	if(isjellyperson(src))
-		if(with_bodyparts)
-			new /obj/effect/gibspawner/slime(drop_location(), dna, get_static_viruses())
+/mob/living/carbon/human/spawn_gibs(with_bodyparts, atom/loc_override)
+	var/location = loc_override ? loc_override.drop_location() : drop_location()
+	if(dna?.species?.gib_types)
+		var/datum/species/S = dna.species
+		var/length = length(S.gib_types)
+		if(length)
+			var/path = (with_bodyparts && length > 1) ? S.gib_types[2] : S.gib_types[1]
+			new path(location, src, get_static_viruses())
 		else
-			new /obj/effect/gibspawner/slime/bodypartless(drop_location(), dna, get_static_viruses())
-
-	if(isipcperson(src))
-		if(with_bodyparts)
-			new /obj/effect/gibspawner/ipc(drop_location(), dna, get_static_viruses())
-		else
-			new /obj/effect/gibspawner/ipc/bodypartless(drop_location(), dna, get_static_viruses())
-
-	if(isxenoperson(src))
-		if(with_bodyparts)
-			new /obj/effect/gibspawner/xeno/xenoperson(drop_location(), dna, get_static_viruses())
-		else
-			new /obj/effect/gibspawner/xeno/xenoperson/bodypartless(drop_location(), dna, get_static_viruses())
-
-	if(islizard(src))
-		if(with_bodyparts)
-			new /obj/effect/gibspawner/lizard(drop_location(), dna, get_static_viruses())
-		else
-			new /obj/effect/gibspawner/lizard/bodypartless(drop_location(), dna, get_static_viruses())
-
+			new S.gib_types(location, src, get_static_viruses())
 	else
 		if(with_bodyparts)
-			new /obj/effect/gibspawner/human(drop_location(), dna, get_static_viruses())
+			new /obj/effect/gibspawner/human(location, src, get_static_viruses())
 		else
-			new /obj/effect/gibspawner/human/bodypartless(drop_location(), dna, get_static_viruses())
+			new /obj/effect/gibspawner/human/bodypartless(location, src, get_static_viruses())
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
 	if(just_ash)

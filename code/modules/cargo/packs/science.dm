@@ -85,7 +85,7 @@
 /datum/supply_pack/science/monkey
 	name = "Monkey Cube Crate"
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
-	cost = 2000
+	cost = 1500
 	contains = list (/obj/item/storage/box/monkeycubes)
 	crate_name = "monkey cube crate"
 
