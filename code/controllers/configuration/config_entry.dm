@@ -211,3 +211,18 @@
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
+
+//snowflake for donator things being on one line smh
+/datum/config_entry/multi_keyed_flag
+	vv_VAS = FALSE
+	abstract_type = /datum/config_entry/multi_keyed_flag
+	config_entry_value = list()
+
+/datum/config_entry/multi_keyed_flag/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
+	str_val = trim(str_val)
+	var/list/keys = splittext(str_val, " ")
+	for(var/i in keys)
+		config_entry_value[i] = TRUE
+	return length(keys)? TRUE : FALSE
