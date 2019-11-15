@@ -615,33 +615,3 @@
 	max_energy = 30
 	recharge_rate = 1
 	name = "Marker Beacon Storage"
-
-/obj/item/robot_module/syndeka //syndicate droideka.
-	name = "Syndicate Rapid Offense"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/melee/borgclaw,
-		/obj/item/gun/energy/twinlaser/cyborg,
-		/obj/item/borgroller,
-		/obj/item/card/emag,
-		/obj/item/crowbar/cyborg,
-		/obj/item/pinpointer/syndicate_cyborg)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "synd_rollin"
-	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
-	hat_offset = 3
-
-/obj/item/robot_module/syndeka/rebuild_modules()
-	..()
-	anchored = TRUE
-	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction  -= "silicon" //ai turrets
-
-/obj/item/robot_module/syndeka/remove_module(obj/item/I, delete_after)
-	..()
-	anchored = FALSE
-	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction += "silicon" //ai is your bff now!
