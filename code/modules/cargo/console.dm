@@ -3,6 +3,7 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
+	req_access = list(ACCESS_CARGO)
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
@@ -17,6 +18,7 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
+	req_access = list()
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
@@ -29,11 +31,11 @@
 		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
-	var/cat = EXPORT_CARGO
+	. = EXPORT_CARGO
 	if(contraband)
-		cat |= EXPORT_CONTRABAND
+		. |= EXPORT_CONTRABAND
 	if(obj_flags & EMAGGED)
-		cat |= EXPORT_EMAG
+		. |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	. = ..()
@@ -113,6 +115,9 @@
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
+		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
 		return
 	if(action != "add" && requestonly)
 		return

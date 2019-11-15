@@ -199,6 +199,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null
@@ -279,7 +283,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		should_override = TRUE
 
-	
+
 	if(blood_DNA && !istype(src, /obj/effect/decal))
 		override[EXAMINE_POSITION_BEFORE] = " blood-stained "
 		should_override = TRUE
@@ -581,7 +585,7 @@
 
 
 //Hook for running code when a dir change occurs
-/atom/proc/setDir(newdir)
+/atom/proc/setDir(newdir, ismousemovement=FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -852,6 +856,9 @@ Proc for attack log creation, because really why not
 		update_filters()
 		return TRUE
 
+/atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
+
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
 
@@ -874,3 +881,4 @@ Proc for attack log creation, because really why not
 		if(!(material_flags & MATERIAL_NO_EFFECTS))
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
 		custom_materials[custom_material] += materials[x] * multiplier
+

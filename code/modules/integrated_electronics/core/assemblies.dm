@@ -65,7 +65,7 @@
 	src.max_complexity = round(max_complexity)
 
 /obj/item/electronic_assembly/GenerateTag()
-    tag = "assembly_[next_assembly_id++]"
+	tag = "assembly_[next_assembly_id++]"
 
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
@@ -616,7 +616,7 @@
 	..()
 
 /obj/item/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
-  name = "type-a electronic assembly"
+	name = "type-a electronic assembly"
 
 /obj/item/electronic_assembly/calc
 	name = "type-b electronic assembly"

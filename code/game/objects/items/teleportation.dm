@@ -79,7 +79,7 @@
 						continue
 					var/mob/living/M = W.imp_in
 					if (M.stat == DEAD)
-						if (M.timeofdeath + 6000 < world.time)
+						if (M.timeofdeath + W.lifespan_postmortem < world.time)
 							continue
 
 					var/turf/tr = get_turf(M)

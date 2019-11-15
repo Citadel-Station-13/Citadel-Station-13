@@ -46,7 +46,7 @@
 		if(!amt_knockdown && amt_dam_stam)
 			target.adjustStaminaLoss(amt_dam_stam)
 		else
-			target.Knockdown(amt_knockdown, override_hardstun = amt_hardstun, amt_dam_stam)
+			target.Knockdown(amt_knockdown, override_hardstun = amt_hardstun, override_stamdmg = amt_dam_stam)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 

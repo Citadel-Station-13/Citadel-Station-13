@@ -301,7 +301,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 		generate_rubber_toolbox_icon()
 	icon = GLOB.rubber_toolbox_icons[icon_state]
 	AddComponent(/datum/component/bouncy)
-	. = ..()
 
 /obj/item/storage/toolbox/proc/generate_rubber_toolbox_icon()
 	var/icon/new_icon = icon(icon, icon_state)

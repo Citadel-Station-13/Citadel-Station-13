@@ -26,10 +26,6 @@
 
 #define TIMER_ID_NULL -1
 
-//For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
-#define FLIGHTSUIT_PROCESSING_NONE 0
-#define FLIGHTSUIT_PROCESSING_FULL 1
-
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 2	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 1	//New should call Initialize(FALSE)
@@ -40,11 +36,11 @@
 
 //type and all subtypes should always call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
-    ..();\
-    if(!(flags_1 & INITIALIZED_1)) {\
-        args[1] = TRUE;\
-        SSatoms.InitAtom(src, args);\
-    }\
+	..();\
+	if(!(flags_1 & INITIALIZED_1)) {\
+		args[1] = TRUE;\
+		SSatoms.InitAtom(src, args);\
+	}\
 }
 
 // Subsystem init_order, from highest priority to lowest priority
@@ -113,10 +109,10 @@
 #define FIRE_PRIORITY_DEFAULT		50
 #define FIRE_PRIORITY_PARALLAX		65
 #define FIRE_PRIORITY_NPC			80
-#define FIRE_PRIORITY_FLIGHTPACKS	80
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110
 #define FIRE_PRIORITY_TICKER		200
+#define FIRE_PRIORITY_ATMOS_ADJACENCY	300
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.

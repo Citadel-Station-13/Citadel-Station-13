@@ -195,7 +195,7 @@
 			matching_designs.Cut()
 
 			for(var/v in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[v]
+				var/datum/design/D = SSresearch.techweb_design_by_id(v)
 				if(findtext(D.name,href_list["to_search"]))
 					matching_designs.Add(D)
 			updateUsrDialog()
@@ -269,7 +269,7 @@
 	dat += materials_printout()
 
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category))
 			continue
 
