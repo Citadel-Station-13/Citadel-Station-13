@@ -990,3 +990,12 @@
 	name = "Ore Silo (Machine Board)"
 	build_path = /obj/machinery/ore_silo
 	req_components = list()
+
+/obj/item/circuitboard/machine/autobottler
+	name = "Auto-Bottler (Machine Board)"
+	build_path = /obj/machinery/rnd/production/protolathe/department/autobottler //Manips make you print things cheaper, even chems
+	req_components = list(/obj/item/stock_parts/matter_bin = 5,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/reagent_containers/glass/beaker = 6) //So it can hold lots of chems

@@ -793,6 +793,7 @@ datum/export/gear/glasses //glasses are not worth selling
 //////////////////////
 /datum/export/gear/chameleon //Selling a full kit is easy money for 2 tc
 	cost = 280
+	k_elasticity = 0
 	unit_name = "chameleon item"
 	export_types = list(/obj/item/clothing/head/chameleon, /obj/item/clothing/mask/chameleon, /obj/item/clothing/under/chameleon, /obj/item/clothing/suit/chameleon, /obj/item/clothing/glasses/chameleon,\
 						/obj/item/clothing/gloves/chameleon, /obj/item/clothing/head/chameleon, /obj/item/clothing/shoes/chameleon, /obj/item/storage/backpack/chameleon, \
