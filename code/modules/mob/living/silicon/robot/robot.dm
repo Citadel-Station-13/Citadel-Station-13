@@ -920,6 +920,22 @@
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/syndicate_medical
 
+
+/mob/living/silicon/robot/modules/syndicate/syndeka
+	icon_state = "synd_rollin"
+	faction = list(ROLE_SYNDICATE)
+	bubble_icon = "syndibot"
+	req_access = list(ACCESS_SYNDICATE)
+	lawupdate = FALSE
+	scrambledcodes = TRUE // These are rogue borgs.
+	ionpulse = TRUE
+	playstyle_string = "<span class='big bold'>You are a Syndicate rapid offense cyborg!</span><br>\
+							<b>You are armed wit offensive tools and a selection of mobility aids to support you in your mission: help the operatives secure the nuclear authentication disk. \
+							You cannot move normally- you must directly roll or activate your rolling mode. Your operative pinpointer will find and locate fellow nuclear operatives. \
+							<i>Help the operatives secure the disk at all costs!</i></b>"
+	set_module = /obj/item/robot_module/syndeka
+
+
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
 		return
