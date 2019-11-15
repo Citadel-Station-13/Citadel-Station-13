@@ -354,6 +354,12 @@
 			. = TRUE
 	ui.soft_update_fields()
 
+/obj/machinery/disposal/bin/alt_attack_hand(mob/user)
+	if(can_interact(usr))
+		flush = !flush
+		update_icon()
+		return TRUE
+	return FALSE
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM)
 	if(isitem(AM) && AM.CanEnterDisposals())

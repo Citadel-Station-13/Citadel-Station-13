@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Normal blood splattering isn't offset due to tauric mode"

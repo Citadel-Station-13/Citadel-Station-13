@@ -1,6 +1,0 @@
-author: "Ghommie (original PR by cacogen)"
-delete-after: True
-changes: 
-  - rscadd: "The font size of all text in the chat window now scales"
-  - tweak: "High volume (megaphone/head of staff headset) is a slightly smaller"
-  - tweak: "Admins have slightly larger OOC text"

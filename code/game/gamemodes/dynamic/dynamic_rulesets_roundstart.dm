@@ -126,7 +126,7 @@
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
 	var/team_mode = FALSE
-	if(prob(team_mode_probability)) 
+	if(prob(team_mode_probability))
 		team_mode = TRUE
 		var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 		var/list/possible_team_objectives = list()
@@ -174,14 +174,14 @@
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
-	
+
 	var/mob/M = pick(candidates)
 	if (M)
 		candidates -= M
 		assigned += M.mind
 		M.mind.assigned_role = ROLE_WIZARD
 		M.mind.special_role = ROLE_WIZARD
-	
+
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
@@ -189,7 +189,7 @@
 		M.current.forceMove(pick(GLOB.wizardstart))
 		M.add_antag_datum(new antag_datum())
 	return TRUE
-	
+
 //////////////////////////////////////////////
 //                                          //
 //                BLOOD CULT                //
@@ -238,7 +238,7 @@
 		var/datum/antagonist/cult/new_cultist = new antag_datum()
 		new_cultist.cult_team = main_cult
 		new_cultist.give_equipment = TRUE
-		M.add_antag_datum(new_cultist)	
+		M.add_antag_datum(new_cultist)
 	main_cult.setup_objectives()
 	return TRUE
 
@@ -390,7 +390,7 @@
 	SSshuttle.registerHostileEnvironment(src)
 
 	return TRUE
-	
+
 /datum/dynamic_ruleset/roundstart/delayed/revs/rule_process()
 	if(check_rev_victory())
 		finished = 1
@@ -492,6 +492,7 @@
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8)
+	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
 	for (var/i in 1 to starter_servants)
 		var/mob/servant = pick(candidates)
 		candidates -= servant
@@ -605,7 +606,7 @@
 	high_population_requirement = 101
 	var/devil_limit = 4 // Hard limit on devils if scaling is turned off
 
-/datum/dynamic_ruleset/roundstart/devil/pre_execute()	
+/datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
 	var/num_devils = 1
 
