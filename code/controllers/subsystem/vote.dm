@@ -172,7 +172,7 @@ SUBSYSTEM_DEF(vote)
 				if(voted.len != 0)
 					mean += (choices[PEACE]*-1+choices[CHAOS])/voted.len
 				GLOB.dynamic_curve_centre = mean*20
-				GLOB.dynamic_curve_width = CLAMP(3-abs(mean*10),0.5,4)
+				GLOB.dynamic_curve_width = CLAMP(2-abs(mean*5),0.5,4)
 				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
 				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 			if("map")
