@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - imageadd: "Ported slighty better matchbox sprites from CEV-Eris, also resprited cigar boxes myself."

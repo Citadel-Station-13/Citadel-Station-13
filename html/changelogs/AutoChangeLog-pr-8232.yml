@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Vore Mobs are a thing now, not just ash drakes"
-  - rscdel: "Removed hunger sound stuff. never taking requests from Coolgat3 ever again.
-refractor: Simple Mobs use the same system regular human mobs do, itjustworks.png"

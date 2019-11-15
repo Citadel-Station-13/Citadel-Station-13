@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "Changelings no longer start off with hivemind communication as an innate ability. Hivemind communication now requires 1 dna point, on par with syndicate encryption keys, which are 2 TC."
-  - code_imp: "Hivemind link now relies on hivemind communication just like the hivemind download/upload abilities."

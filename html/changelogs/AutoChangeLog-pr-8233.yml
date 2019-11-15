@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - tweak: "Character Window settings unsnowflaked and normalized. I have no fucking clue how to make them work with taurs still tho, sorry."
-  - imageadd: "added rotating background images for better clarity and contrast than just SOLID FUCKING BLACK. Images from Virgo/Polaris/Eris"

@@ -307,8 +307,11 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
-		// shift-click catcher may issue examinate() calls for out-of-sight turfs
+	if(!client)
+		return
+
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A) & COMPONENT_ALLOW_EXAMINE) && ((client.eye != src && client.eye != loc) || (isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))))
+		//cameras & co don't allow users to examine far away things, also shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
 	if(is_blind(src))
@@ -864,7 +867,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		replace_identification_name(oldname,newname)
 
 		for(var/datum/mind/T in SSticker.minds)
-			for(var/datum/objective/obj in T.objectives)
+			for(var/datum/objective/obj in T.get_all_objectives())
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
