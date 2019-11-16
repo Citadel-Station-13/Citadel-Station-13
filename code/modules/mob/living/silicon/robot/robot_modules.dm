@@ -623,6 +623,7 @@
 		/obj/item/melee/borgclaw,
 		/obj/item/gun/energy/twinlaser/cyborg,
 		/obj/item/borgroller,
+		/obj/item/borgshield,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg)

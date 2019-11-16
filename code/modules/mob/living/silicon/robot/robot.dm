@@ -69,6 +69,8 @@
 	var/toner = 0
 	var/tonermax = 40
 
+	var/shielded = FALSE
+
 	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
 	light_color = "#FFCC66"
@@ -659,7 +661,8 @@
 		add_overlay("laser")//Is this even used??? - Yes borg/inventory.dm
 	if(disabler)
 		add_overlay("disabler")//ditto
-
+	if(shielded)
+		add_overlay("shielded")
 	if(sleeper_g && module.sleeper_overlay)
 		add_overlay("[module.sleeper_overlay]_g[sleeper_nv ? "_nv" : ""]")
 	if(sleeper_r && module.sleeper_overlay)
@@ -930,8 +933,8 @@
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
 	playstyle_string = "<span class='big bold'>You are a Syndicate rapid offense cyborg!</span><br>\
-							<b>You are armed wit offensive tools and a selection of mobility aids to support you in your mission: help the operatives secure the nuclear authentication disk. \
-							You cannot move normally- you must directly roll or activate your rolling mode. Your operative pinpointer will find and locate fellow nuclear operatives. \
+							<b>You are armed with offensive tools and a selection of mobility aids to support you in your mission: help the operatives secure the nuclear authentication disk. \
+							Your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/syndeka
 

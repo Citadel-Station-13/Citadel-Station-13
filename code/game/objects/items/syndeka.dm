@@ -30,10 +30,6 @@
 		walk(user,0)
 	return TRUE
 
-/mob/living/silicon/robot/syndeka/proc/toggle_movemode()
-	uneq_module(held_items[1])
-	uneq_module(held_items[2])
-	uneq_module(held_items[3])
 
 /obj/item/melee/borgclaw
 	name = "robot claws"
@@ -41,3 +37,55 @@
 	icon_state = "2knife"
 	flags_1 = CONDUCT_1
 	force = 25
+
+/obj/item/borgshield //the shield "flashes" when hit.
+	name = "personal shielding"
+	desc = "A powerful experimental module that turns aside or absorbs incoming attacks at the cost of charge."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "eshield1"
+	var/active = TRUE 					//If the shield is on
+	var/flash_count = 0				//Counter for how many times the shield has been flashed
+	var/overload_threshold = 3		//Number of flashes it takes to overload the shield
+	var/shield_refresh = 5 SECONDS	//Time it takes for the shield to reboot after destabilizing
+	var/overload_time = 0			//Stores the time of overload
+	var/last_flash = 0				//Stores the time of last flash
+
+/obj/item/borgshield/Initialize()
+	START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/borgshield/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/borgshield/attack_self(var/mob/living/silicon/robot/user)
+	active = !active
+	user.shielded = active
+
+/obj/item/borgshield/process()
+	if(flash_count && (last_flash + shield_refresh < world.time))
+		flash_count = 0
+		last_flash = 0
+	else if(overload_time + shield_refresh < world.time)
+		active = 1
+		flash_count = 0
+		overload_time = 0
+		var/mob/living/user = src.loc
+		user.visible_message("<span class='danger'>[user]'s shield reactivates!</span>", "<span class='danger'>Your shield reactivates!.</span>")
+		user.update_icons()
+
+/obj/item/borgshield/proc/adjust_flash_count(var/mob/living/user, amount)
+	if(active)			//Can't destabilize a shield that's not on
+		flash_count += amount
+
+		if(amount > 0)
+			last_flash = world.time
+			if(flash_count >= overload_threshold)
+				overload(user)
+
+/obj/item/borgshield/proc/overload(var/mob/living/silicon/robot/user)
+	active = 0
+	user.shielded = active
+	user.visible_message("<span class='danger'>[user]'s shield destabilizes!</span>", "<span class='danger'>Your shield destabilizes!.</span>")
+	user.update_icons()
+	overload_time = world.time

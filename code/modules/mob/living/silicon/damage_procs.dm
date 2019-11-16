@@ -3,6 +3,22 @@
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
+	if(istype(src, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = src
+		if(R.shielded && !forced)
+			var/absorb_dmg = 10 //less than 11 dmg is ignored
+			var/cost = absorb_dmg * 50 //500 charge per reduction. 25k cell can store 20 hits.
+
+			R.cell.charge -= cost
+			if(R.cell.charge <= 0)
+				R.cell.charge = 0
+				to_chat(src, "<span class='notice'>Your shield has overloaded!</span>")
+			else
+				damage -= absorb_dmg
+				to_chat(R,"<span class='notice'>Your shield absorbs some of the impact!</span>")
+			if(damage <= 0)
+				return FALSE
+
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
