@@ -705,7 +705,7 @@
 				if(is_servant_of_ratvar(L))
 					to_chat(L, "<span class='cultlarge'>\"Kneel for me, scum\"</span>")
 					L.confused += ratvarscum_confuse //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
-					L.knockdown(15)
+					L.Knockdown(15)
 					L.adjustBruteLoss(10)
 				else
 					L.Knockdown(50)

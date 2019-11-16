@@ -79,14 +79,14 @@
 			M.flash_act()
 	if(iscultist(L)) //No longer stuns cultists, instead sets them on fire and burns them
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
-		L.adjustBurnLoss(10)
+		L.adjustFireLoss(10)
 		L.Knockdown(20, FALSE)
 		L.adjust_fire_stacks(5) //Burn!
 		L.IgniteMob()
 	else
 		L.Stun(40)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
-	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] [L.iscultist ? "painfully bursts into flames!" : "holds you in place!"]</span>")
+	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] [iscultist(L) ? "painfully bursts into flames!" : "holds you in place!"]</span>")
 	L.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)

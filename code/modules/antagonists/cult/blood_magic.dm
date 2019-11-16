@@ -452,14 +452,14 @@
 					C.stuttering += 15
 					C.cultslurring += 15
 					C.Jitter(15)
-			else					// cultstun no longer hardstuns + damages hostile culsts, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
+			else					// cultstun no longer hardstuns + damages hostile cultists, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
 				if(iscarbon(target))
 					var/mob/living/carbon/C = L
 					C.stuttering = max(ratvarscum_punish, C.stuttering)
-					C.drowsy = max(ratvarscum_punish, C.drowsy)
-					C.confused += ratvarscum.punish
+					C.drowsyness = max(ratvarscum_punish, C.drowsyness)
+					C.confused += ratvarscum_punish
 				L.adjustBruteLoss(15)
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [L.iscultist ? "writhes in pain" : "falls to the ground!"]</span>")
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
 		uses--
 	..()
 

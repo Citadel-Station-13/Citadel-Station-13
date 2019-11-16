@@ -211,7 +211,7 @@
 				if(iscarbon(target))
 					var/mob/living/carbon/C = L
 					C.stuttering = max(narsiandog_punish, C.stuttering)
-					C.drowsy = max(narsiandog_punish, C.drowsy)
+					C.drowsyness = max(narsiandog_punish, C.drowsyness)
 					C.confused += narsiandog_punish
 					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
