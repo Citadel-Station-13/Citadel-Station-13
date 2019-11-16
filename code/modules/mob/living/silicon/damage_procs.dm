@@ -12,11 +12,11 @@
 				R.cell.charge = 0
 				to_chat(src, "<span class='notice'>Your shield has overloaded!</span>")
 			else
+				to_chat(R,"<span class='notice'>Your shield has taken an impact of [damage] force, and has negated [absorb_dmg] force.!</span>")
 				damage -= absorb_dmg
-				to_chat(R,"<span class='notice'>Your shield absorbs some of the impact!</span>")
+				to_chat(R,"<span class='notice'>Your shield has taken an impact of [damage] force, and has negated [absorb_dmg] force.!</span>")
 			if(damage <= 0)
 				return FALSE
-
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
