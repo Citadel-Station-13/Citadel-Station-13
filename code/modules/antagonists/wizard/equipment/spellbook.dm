@@ -600,14 +600,14 @@
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
-	times++
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		var/threat_spent = CONFIG_GET(number/dynamic_summon_events_cost)
 		mode.spend_threat(threat_spent)
 		mode.log_threat("Wizard spent [threat_spent] on summon events.")
+	times++
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
