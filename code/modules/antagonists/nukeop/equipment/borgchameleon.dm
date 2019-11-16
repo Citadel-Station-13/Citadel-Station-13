@@ -169,10 +169,10 @@
 	user.name = savedName
 	user.module.cyborg_base_icon = initial(user.module.cyborg_base_icon)
 	user.module.cyborg_icon_override = 'icons/mob/robots.dmi'
-	user.pixel_x = 0
 	user.bubble_icon = "syndibot"
 	active = FALSE
 	user.update_icons()
+	user.pixel_x = 0 //this solely exists because of dogborgs. I want anyone who ever reads this code later on to know this. Don't ask me why it's here, doesn't work above update_icons()
 	src.user = user
 
 /obj/item/borg_chameleon/proc/disrupt(mob/living/silicon/robot/user)
