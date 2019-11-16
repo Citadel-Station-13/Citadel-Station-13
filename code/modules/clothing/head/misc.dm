@@ -57,7 +57,6 @@
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	dynamic_hair_suffix = ""
-
 	dog_fashion = /datum/dog_fashion/head/nurse
 
 /obj/item/clothing/head/syndicatefake
@@ -67,14 +66,12 @@
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	mutantrace_variation = MUTANTRACE_VARIATION
-	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
 	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	item_state="cueball"
-	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -83,7 +80,6 @@
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
 	item_state = "snowman_h"
-	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -93,7 +89,6 @@
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/justice/blue
@@ -117,9 +112,7 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	dynamic_hair_suffix = ""
-
 	dog_fashion = /datum/dog_fashion/head/rabbit
-
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -165,7 +158,6 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
@@ -173,7 +165,6 @@
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -187,7 +178,6 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -309,7 +299,6 @@
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"

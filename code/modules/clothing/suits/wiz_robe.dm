@@ -7,7 +7,6 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
 	strip_delay = 50
 	equip_delay_other = 50
-	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
@@ -110,7 +109,6 @@
 	icon_state = "magusred"
 	item_state = "magusred"
 
-
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
 	desc = "Festive!"
@@ -154,10 +152,8 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
-
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
 	stickmen()
-
 
 /obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
 	set category = "Object"
