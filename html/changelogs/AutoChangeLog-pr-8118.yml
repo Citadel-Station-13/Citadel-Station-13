@@ -1,6 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "Ghost role eligibility for both event and spawner ghost roles is now affected by DNR status. If you suicide, ghost, or cryo out, you will be unable to qualify for any ghost roles"
-  - tweak: "Cryo now applies DNR status no matter how long the round has been going on"
-  - tweak: "Suicide is now properly admin logged as it is supposed to be. Ghosting while alive is now also logged."
