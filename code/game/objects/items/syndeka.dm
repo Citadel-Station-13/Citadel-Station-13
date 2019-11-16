@@ -7,9 +7,12 @@
 
 /obj/item/borgroller/afterattack(atom/target, mob/living/silicon/user, proximity_flag, click_parameters)//	deploy time
 	if(istype(user))
+	user.shielded = FALSE
+	user.update_icons()
 		if(istype(target, /obj))
 			user.visible_message("<span class='notice'>[user] whirrs and charges at [target]!</span>", "<span class='notice'>You charge at [target]!</span>")
 		walk_towards(user,target,0.1,10)
+		user.cell.charge -= 100
 		user.icon_state = "synd_hatin"
 		var/turf/T = get_turf(target)
 		var/safety = 10
