@@ -1014,3 +1014,9 @@
 	icon_state = "maya"
 	item_state = "maya"
 	attack_verb = list("nuked", "arrested", "harmbatonned")
+	
+/obj/item/toy/plush/catgirl/marisa
+	desc = "An adorable stuffed toy that resembles a crew member, or maybe a witch. Having it makes you feel you can win."
+	icon_state = "marisa"
+	item_state = "marisa"
+	attack_verb = list("blasted", "sparked", "dazzled")
