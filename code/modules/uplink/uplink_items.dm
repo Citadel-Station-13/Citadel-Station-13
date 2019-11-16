@@ -1117,6 +1117,15 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 35
 	restricted = TRUE
 
+/datum/uplink_item/support/reinforcement/assault_borg
+	name = "Syndicate Rapid Offense Cyborg"
+	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
+			Comes equipped with a claws, laser blasters, the ability to roll and an advanced energy shield, as well as an emag, pinpointer, flash and crowbar."
+	item = /obj/item/antag_spawner/nuke_ops/borg_tele/syndeka
+	refundable = TRUE
+	cost = 65
+	restricted = TRUE
+
 /datum/uplink_item/support/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \

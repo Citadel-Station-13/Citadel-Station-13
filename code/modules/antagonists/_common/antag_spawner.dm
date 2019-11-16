@@ -182,6 +182,10 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
+/obj/item/antag_spawner/nuke_ops/borg_tele/syndeka
+	name = "syndicate ROU teleporter"
+	borg_to_spawn = "syndeka"
+
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -191,9 +195,10 @@
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
-		else
+		else if("Assault")
 			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
-
+		else
+			R = new /mob/living/silicon/robot/modules/syndicate/syndeka(T) //Assault borg by default
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
 		brainfirstname = pick(GLOB.first_names_female)
