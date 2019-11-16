@@ -37,6 +37,7 @@ require only minor tweaks.
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+#define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
 // prevents certain turfs from being stripped by a singularity
 #define ZTRAIT_PLANET "Planet"
 
@@ -52,12 +53,12 @@ require only minor tweaks.
 
 // enum - how space transitions should affect this level
 #define ZTRAIT_LINKAGE "Linkage"
-    // UNAFFECTED if absent - no space transitions
-    #define UNAFFECTED null
-    // SELFLOOPING - space transitions always self-loop
-    #define SELFLOOPING "Self"
-    // CROSSLINKED - mixed in with the cross-linked space pool
-    #define CROSSLINKED "Cross"
+	// UNAFFECTED if absent - no space transitions
+	#define UNAFFECTED null
+	// SELFLOOPING - space transitions always self-loop
+	#define SELFLOOPING "Self"
+	// CROSSLINKED - mixed in with the cross-linked space pool
+	#define CROSSLINKED "Cross"
 
 // default trait definitions, used by SSmapping
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
@@ -72,7 +73,7 @@ require only minor tweaks.
 
 // must correspond to _basemap.dm for things to work correctly
 #define DEFAULT_MAP_TRAITS list(\
-    DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
+	DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
 )
 
 // Camera lock flags
@@ -89,10 +90,10 @@ require only minor tweaks.
 #define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere until giving up (really should just swap to some packing algo)
 
 #define PLACE_DEFAULT "random"
-#define PLACE_SAME_Z "same"
-#define PLACE_SPACE_RUIN "space"
-#define PLACE_LAVA_RUIN "lavaland"
-
-
+#define PLACE_SAME_Z "same" //On same z level as original ruin
+#define PLACE_SPACE_RUIN "space" //On space ruin z level(s)
+#define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
+#define PLACE_BELOW "below" //On z levl below - centered on same tile
+#define PLACE_ISOLATED "isolated" //On isolated ruin z level
 //Map type stuff.
 #define MAP_TYPE_STATION "station"

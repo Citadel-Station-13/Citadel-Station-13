@@ -1,4 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - bugfix: "QM rooms not getting Key Aunths"

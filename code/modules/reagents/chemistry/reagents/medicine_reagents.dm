@@ -8,6 +8,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	value = 2
 	taste_description = "bitterness"
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)
@@ -127,6 +128,7 @@
 	description = "Instantly restores all hearing to the patient, but does not cure deafness."
 	color = "#6600FF" // rgb: 100, 165, 255
 	pH = 2
+	value = 10
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
 	M.restoreEars()
@@ -209,6 +211,7 @@
 	overdose_threshold = 30
 	taste_description = "fish"
 	pH = 12.2
+	value = 20
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -242,6 +245,7 @@
 	color = "#ffeac9"
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 50
+	value = 3
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -280,6 +284,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	pH = 10.7
+	value = 4
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 25)
@@ -304,6 +309,7 @@
 	pH = 6.7
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 50
+	value = 3
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -346,6 +352,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 	pH = 5.5
+	value = 1
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(last_added)
@@ -426,6 +433,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.5
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 40
+	value = 6
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
@@ -458,6 +466,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "ash"
 	pH = 5
+	value = 1
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -476,6 +485,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	pH = 2
+	value = 5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-0.5*REM, 0)
@@ -629,7 +639,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases stun resistance. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -1192,19 +1202,19 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-    M.adjustBruteLoss(-1.5*REM, 0)
-    M.adjustFireLoss(-1.5*REM, 0)
-    M.adjustOxyLoss(-1.5*REM, 0)
-    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-    . = 1
-    ..()
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
+	..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-    M.adjustOxyLoss(2.6*REM, 0)
-    M.adjustBruteLoss(3.5*REM, 0)
-    M.adjustFireLoss(3.5*REM, 0)
-    ..()
-    . = 1
+	M.adjustOxyLoss(2.6*REM, 0)
+	M.adjustBruteLoss(3.5*REM, 0)
+	M.adjustFireLoss(3.5*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
