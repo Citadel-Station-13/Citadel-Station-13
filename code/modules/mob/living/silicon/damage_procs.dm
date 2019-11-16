@@ -38,7 +38,7 @@
 /mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/livi	ng/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
+/mob/living/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
 	return FALSE
 
 /mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
