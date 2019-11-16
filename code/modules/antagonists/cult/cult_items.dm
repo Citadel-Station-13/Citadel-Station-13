@@ -690,6 +690,7 @@
 	icon_state = "bloodspear[wielded]"
 
 /obj/item/twohanded/cult_spear/throw_impact(atom/target)
+	var/ratvarscum_punish = 5
 	var/turf/T = get_turf(target)
 	if(isliving(target))
 		var/mob/living/L = target
@@ -702,7 +703,10 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
-					L.Knockdown(100)
+					to_chat(L, "<span class='cultlarge'>\"Kneel for me, scum\"</span>")
+					L.confused += ratvarscum_punish //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
+					L.knockdown(15)
+					L.adjustBruteLoss(10)
 				else
 					L.Knockdown(50)
 			break_spear(T)
