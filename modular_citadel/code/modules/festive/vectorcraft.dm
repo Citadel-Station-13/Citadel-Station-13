@@ -535,20 +535,20 @@ if(driver.sprinting && !(boost_cooldown))
 			result_vector["y"] += cached_acceleration/1.4
 			result_vector["x"] -= cached_acceleration/1.4
 
-	if(boost_cooldown)
+	/*if(boost_cooldown)
 		vector["x"] = result_vector["x"]
 		vector["y"] = result_vector["y"]
 		return
-	/*else if
-		vector["x"] = CLAMP(result_vector["x"], -max_velocity, max_velocity)
-		vector["y"] = CLAMP(result_vector["y"], -max_velocity, max_velocity)*/
+	else if*/
+	vector["x"] = CLAMP(result_vector["x"], -gear_max_velocity*1.5, gear_max_velocity*1.5)
+	vector["y"] = CLAMP(result_vector["y"], -gear_max_velocity*1.5, gear_max_velocity*1.5)
 
 	if(vector["x"] > gear_max_velocity || vector["x"] < -gear_max_velocity)
-		vector["x"] = vector["x"] - (vector["x"]/10)
-		vector["x"] = CLAMP(vector["x"], -250, 250)
+		vector["x"] = vector["x"] - (vector["x"]/5)
+		//vector["x"] = CLAMP(vector["x"], -250, 250)
 	if(vector["y"] > gear_max_velocity || vector["y"] < -gear_max_velocity)
-		vector["y"] = vector["y"] - (vector["y"]/10)
-		vector["y"] = CLAMP(vector["y"], -250, 250)
+		vector["y"] = vector["y"] - (vector["y"]/5)
+		//vector["y"] = CLAMP(vector["y"], -250, 250)
 
 	return
 
