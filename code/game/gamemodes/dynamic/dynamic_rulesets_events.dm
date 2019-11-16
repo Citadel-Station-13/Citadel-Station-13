@@ -143,7 +143,6 @@
 	repeatable_weight_decrease = 2
 	requirements = list(60,50,40,30,30,30,30,30,30,30)
 	high_population_requirement = 30
-	repeatable = TRUE
 
 /datum/dynamic_ruleset/event/meteor_wave/ready()
 	if(mode.threat_level > 40 && mode.threat >= 25 && prob(20))
