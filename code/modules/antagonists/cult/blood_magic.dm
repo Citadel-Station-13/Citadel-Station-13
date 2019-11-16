@@ -453,7 +453,7 @@
 					C.cultslurring += 15
 					C.Jitter(15)
 			else					// cultstun no longer hardstuns + damages hostile culsts, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
-				if(iscarbon(target)
+				if(iscarbon(target))
 					var/mob/living/carbon/C = L
 					C.stuttering = max(ratvarscum_punish, C.stuttering)
 					C.drowsy = max(ratvarscum_punish, C.drowsy)
