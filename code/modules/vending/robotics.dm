@@ -6,9 +6,9 @@
 	icon_deny = "robotics-deny"
 	req_access = list(ACCESS_ROBOTICS)
 	products = list(/obj/item/clothing/suit/toggle/labcoat = 4,
-		            /obj/item/clothing/under/rank/roboticist = 4,
-		            /obj/item/stack/cable_coil = 4,
-		            /obj/item/assembly/flash/handheld = 4,
+					/obj/item/clothing/under/rank/roboticist = 4,
+					/obj/item/stack/cable_coil = 4,
+					/obj/item/assembly/flash/handheld = 4,
 					/obj/item/stock_parts/cell/high = 12,
 					/obj/item/assembly/prox_sensor = 3,
 					/obj/item/assembly/signaler = 3,

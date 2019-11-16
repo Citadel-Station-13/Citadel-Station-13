@@ -141,6 +141,11 @@
 /datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/mentors_mobname_only
+
+/datum/config_entry/flag/mentor_legacy_system	//Defines whether the server uses the legacy mentor system with mentors.txt or the SQL system
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn
