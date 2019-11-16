@@ -13,7 +13,9 @@
 	var/active = FALSE
 	var/activationCost = 300
 	var/activationUpkeep = 50
-	var/disguise = "engineer"
+	var/disguise = null
+	var/disguise_icon_override = null
+	var/disguise_pixel_offset = null
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
 			COMSIG_PARENT_ATTACKBY,
@@ -26,6 +28,9 @@
 			)
 	var/mob/living/silicon/robot/user // needed for process()
 	var/animation_playing = FALSE
+
+	var/list/engymodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Marina", "Can", "Spider", "Loader","Handy", "Pup Dozer", "Vale")
+
 
 /obj/item/borg_chameleon/Initialize()
 	. = ..()
@@ -61,6 +66,45 @@
 		if(animation_playing)
 			to_chat(user, "<span class='notice'>\the [src] is recharging.</span>")
 			return
+		var/borg_icon = input(user, "Select an icon!", "Robot Icon", null) as null|anything in engymodels
+		if(!borg_icon)
+			return FALSE
+		switch(borg_icon)
+			if("Default")
+				disguise = "engineer"
+				disguise_icon_override = 'icons/mob/robots.dmi'
+			if("Default - Treads")
+				disguise = "engi-tread"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Loader")
+				disguise = "loaderborg"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Handy")
+				disguise = "handyeng"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Sleek")
+				disguise = "sleekeng"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Can")
+				disguise = "caneng"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Marina")
+				disguise = "marinaeng"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Spider")
+				disguise = "spidereng"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Heavy")
+				disguise = "heavyeng"
+				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			if("Pup Dozer")
+				disguise = "pupdozer"
+				disguise_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+				disguise_pixel_offset = -16
+			if("Vale")
+				disguise = "valeeng"
+				disguise_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+				disguise_pixel_offset = -16
 		animation_playing = TRUE
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
@@ -103,6 +147,8 @@
 	savedName = user.name
 	user.name = friendlyName
 	user.module.cyborg_base_icon = disguise
+	user.module.cyborg_icon_override = disguise_icon_override
+	user.module.cyborg_pixel_offset = disguise_pixel_offset
 	user.bubble_icon = "robot"
 	active = TRUE
 	user.update_icons()
@@ -122,6 +168,8 @@
 	do_sparks(5, FALSE, user)
 	user.name = savedName
 	user.module.cyborg_base_icon = initial(user.module.cyborg_base_icon)
+	user.module.cyborg_icon_override = 'icons/mob/robots.dmi'
+	user.pixel_x = 0
 	user.bubble_icon = "syndibot"
 	active = FALSE
 	user.update_icons()
