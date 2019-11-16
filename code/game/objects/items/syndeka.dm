@@ -5,7 +5,7 @@
 	flags_1 = CONDUCT_1
 	force = 5
 
-/obj/item/borgroller/afterattack(atom/target, mob/living/silicon/user, proximity_flag, click_parameters)//	deploy time
+/obj/item/borgroller/afterattack(atom/target, mob/living/silicon/robot/user, proximity_flag, click_parameters)//	deploy time
 	if(istype(user))
 		user.shielded = FALSE
 		user.update_icons()
