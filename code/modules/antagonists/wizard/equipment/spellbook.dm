@@ -97,6 +97,10 @@
 	if(!S)
 		S = new spell_type()
 	var/spell_levels = 0
+	if(dynamic_cost > 0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.refund_threat(dynamic_cost)
+		mode.log_threat("Wizard refunded [dynamic_cost] on [name].")
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
