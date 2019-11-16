@@ -5,11 +5,9 @@
 		return 0
 	if(istype(src, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = src
-		if(R.shielded && !forced)
+		if(R.shielded)
 			var/absorb_dmg = 10 //less than 11 dmg is ignored
-			var/cost = absorb_dmg * 50 //500 charge per reduction. 25k cell can store 20 hits.
-
-			R.cell.charge -= cost
+			R.cell.charge -= 500
 			if(R.cell.charge <= 0)
 				R.cell.charge = 0
 				to_chat(src, "<span class='notice'>Your shield has overloaded!</span>")
@@ -40,7 +38,7 @@
 /mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
+/mob/livi	ng/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
 	return FALSE
 
 /mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
