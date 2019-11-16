@@ -1,0 +1,5 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "Pentetic Jelly, new chemical made through mixing 1:1 slime jelly and pentetic acid."
+  - tweak: "Anatomic panacea now gives pent jelly instead of pent acid. Medbeams now have TRUE tox healing to heal TOXINLOVER as well."

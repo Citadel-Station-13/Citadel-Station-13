@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Things in disposals will now emit sounds every single time they hit corners. This increases immersion."

@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "escape pods emergency suits storage can now be busted open by emags or excessive damage."
+  - bugfix: "Fixes alt click bypassing the escape pods' suits storage lock."

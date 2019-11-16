@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscdel: "duplicate definition of hos and sec skirts"

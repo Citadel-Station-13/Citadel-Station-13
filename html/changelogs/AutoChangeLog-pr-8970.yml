@@ -1,0 +1,6 @@
+author: "original by @randolfthemeh and @twaticus, port by sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "jumpskirts"
+  - rscadd: "more jumpskirts"
+  - rscadd: "jumpskirt/suit prefs"

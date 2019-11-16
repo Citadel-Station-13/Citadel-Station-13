@@ -1,0 +1,4 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - bugfix: "After the PR which raised the ammo capacity of said magazines, due to the code, they ended up with an invalid icon state. Fixed through changing the icon state name in the icon file."

@@ -1,0 +1,5 @@
+author: "Ghommie (Original PR by nemvar)"
+delete-after: True
+changes: 
+  - rscadd: "Botanists can now get beeplushies (or cultivator and bucket) as an heirloom."
+  - bugfix: "Clowns and mimes will now properly pick either a can of paint or their brand as heirloom now."

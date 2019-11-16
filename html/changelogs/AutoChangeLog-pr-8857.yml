@@ -1,0 +1,8 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - refactor: "refactored underwears to allow custom color preferences, instead of manually colored sprites."
+  - rscdel: "The aforementioned manually colored pieces. Some of your char preferences may have been resetted as result."
+  - rscadd: "More underwear choices, including: Bowling shirts, long johns, a tank top, fishnets, more bee socks, bee t-shirt and bee boxers (original PR for the latter three by nemvar from /tg/station)."
+  - tweak: "random bodies will now have random underwear again."
+  - bugfix: "Dressers will now properly change undergarment again."

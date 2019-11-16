@@ -1,0 +1,4 @@
+author: "MediHound"
+delete-after: True
+changes: 
+  - rscadd: "Made Cyborgs be affected by Ion Storm Law Changes like AIs"

@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "reworked ninja's stealth mode. Increased invisibility, but engaging in combat, attacking or throwing things, bumping people will temporarily lower it."
+  - rscadd: "Ninja shoes are even stealthier."
+  - code_imp: "cleaned up some 2014 tier processing code horror."

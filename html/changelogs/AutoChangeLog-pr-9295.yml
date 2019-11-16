@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Slowed down police baton and tele baton speed by 75%, should be still be faster than the legacy speed (2 seconds) by 0.6 seconds. Telescopic batons' stamina cost per swing is now on par with police batons, ergo more expensive."

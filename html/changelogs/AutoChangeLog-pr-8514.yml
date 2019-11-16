@@ -1,0 +1,6 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - rscadd: "Adds several new toy loot to the arcade machine."
+  - balance: "Rebalanced the arcade machine loot. Battlemachines now have a 0.5 second delay instead of a second delay between actions."
+  - bugfix: "Fixed a bug that would not allow the one in a million pulse rifle to spawn."

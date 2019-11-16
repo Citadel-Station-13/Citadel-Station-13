@@ -1,0 +1,5 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to alter your genitalia as a slimeperson more than addition/removal."
+  - bugfix: "fixed genitalia removal proc in alter form."

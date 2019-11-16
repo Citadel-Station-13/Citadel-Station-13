@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscdel: "Removes an obnoxious temporary overlay var."

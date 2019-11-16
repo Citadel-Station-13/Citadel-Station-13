@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - balance: "Cloning no longer gives you positive mutations, but a chance for a negative one. Cloning has a chance to \"scramble\" your visual DNA."

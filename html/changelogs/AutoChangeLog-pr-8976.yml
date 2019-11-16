@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "combat pushes will now properly stop targets from using firearms, and will disarm the firearm if performed a second time, and also slow down people by 15%, and won't push people on tables blocked by shutters or other dense object anymore."

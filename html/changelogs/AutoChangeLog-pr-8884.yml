@@ -1,0 +1,5 @@
+author: "Ghommie (original PR by duckay)"
+delete-after: True
+changes: 
+  - rscadd: "Added better names and descriptions for blueshirt officer gear."
+  - rscadd: "Added the above gear to the premium selection of the sectech"

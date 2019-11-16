@@ -1,0 +1,7 @@
+author: "Original by Citinited, port by Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "You can now use an airlock electronics on a locker to add a lock, and can screwdriver an unlocked locker to remove its lock."
+  - rscadd: "You can now remove the locks on broken or emagged lockers."
+  - tweak: "Removing the lock from a personal locker now wipes that locker's ID details."
+  - tweak: "Broken lockers have had their appearance changed."

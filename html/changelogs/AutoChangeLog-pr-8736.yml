@@ -1,0 +1,6 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "gear harness and a conflict merg"
+  - rscdel: "Nudity permits"
+  - bugfix: "nothing"

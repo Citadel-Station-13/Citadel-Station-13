@@ -1,0 +1,6 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "NT Newscasters have had repeated reports of gang activity and are now looking into it."
+  - rscadd: "NT Psykers keep mumbling about last words of someone who died. Somehow they even have a newsletter for this..."
+  - bugfix: "Gangster greeting messages are a batch message rather than 5 laggy to_chats"

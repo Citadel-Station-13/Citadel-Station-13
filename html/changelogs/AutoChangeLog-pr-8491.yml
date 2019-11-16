@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Reduces goonchat lag from being blasted by pellets and bullets repeatedly whilst wearing armor by properly removing the armor protection texts this times."
+  - spellcheck: "also reduced the size of armor protection messages in general. they clog up the chat box."

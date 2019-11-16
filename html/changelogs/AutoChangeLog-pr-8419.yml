@@ -1,0 +1,4 @@
+author: "UntoldTactics"
+delete-after: True
+changes: 
+  - tweak: "Rewords the click here prompt given when an attempted conversion is done on an offer rune (for blood cult)"

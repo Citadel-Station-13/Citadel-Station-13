@@ -1,0 +1,9 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Stamina no longer regenerates at hyper speeds."
+  - tweak: "To accommodate for upstream's stamina changes, knockdown() now applies staminaloss only to the chest."
+  - tweak: "adjuststaminaloss() now has a new argument that allows you to specify a zone to apply staminaloss to. This defaults to the chest"
+  - tweak: "apply_damage() is now capable of healing carbon mobs and human mobs."
+  - tweak: "Since the head has the same exact effects as the chest when disabled, and doesn't really make much sense to be affected by stamina, the head no longer has stamina."
+  - tweak: "The chest now has a stamina cap of 200 stamina due to the above."

@@ -1,0 +1,4 @@
+author: "Ghommie (Original PR by coiax)"
+delete-after: True
+changes: 
+  - refactor: "atom/var/container_type has been moved into datum/reagents/var/reagents_holder_flags. There should be no visible changes to effects."

@@ -1,0 +1,6 @@
+author: "Raptorizer"
+delete-after: True
+changes: 
+  - tweak: "tweaked numbers/variables"
+  - balance: "rebalanced numbers/variables"
+  - spellcheck: "removed unneeded code"

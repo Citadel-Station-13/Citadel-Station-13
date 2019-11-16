@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "hos trenchcloak now properly has a sprite on digi characters"

@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes power cells being unable to be rigged. Also prevents them from starting processing on init if they don't self recharge."
+  - bugfix: "Fixes many, little or otherwise, issues with the stunbaton status refactor."

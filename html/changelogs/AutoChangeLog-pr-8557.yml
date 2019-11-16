@@ -1,0 +1,4 @@
+author: "Ghommie (original pr by Dennok on tgstation)"
+delete-after: True
+changes: 
+  - bugfix: "Now you don't lose your pulled thing on the z level edge."
