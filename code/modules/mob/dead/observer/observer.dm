@@ -19,7 +19,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
-	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
 	var/reenter_round_timeout = 0 // used to prevent people from coming back through ghost roles/midround antags as they suicide/cryo for a duration set by CONFIG_GET(number/suicide_reenter_round_timer) and CONFIG_GET(number/roundstart_suicide_time_limit)
 	var/datum/hud/living/carbon/hud = null // hud
