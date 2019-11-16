@@ -5,6 +5,7 @@
 
 	min_players = 15
 	max_occurrences = 1
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/brand_intelligence
 	announceWhen	= 21
