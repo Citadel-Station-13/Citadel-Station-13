@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "The endgame narsie summon rune no longer requires 24 total sacrifices, and will now properly account for cultists that surround it"

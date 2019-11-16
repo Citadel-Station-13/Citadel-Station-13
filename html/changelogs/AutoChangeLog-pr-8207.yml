@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "If a living mob has vore initialized but doesnt have voreprefs initialized, then client login will force voreprefs to load."
