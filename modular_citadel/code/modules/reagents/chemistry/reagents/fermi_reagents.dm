@@ -6,6 +6,7 @@
 	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
+	value = 20
 	//SplitChem = TRUE
 	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
 	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
@@ -178,6 +179,7 @@
 	inverse_chem		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
+	value = 90
 	can_synth = FALSE
 
 /datum/reagent/fermi/nanite_b_gone/on_mob_life(mob/living/carbon/C)

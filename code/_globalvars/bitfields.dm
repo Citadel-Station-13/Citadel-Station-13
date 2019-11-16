@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 	"clear_conversion" = list(
 		"REACTION_CLEAR_IMPURE"  = REACTION_CLEAR_IMPURE,
 		"REACTION_CLEAR_INVERSE" = REACTION_CLEAR_INVERSE
-	    ),
+		),
 	"organ_flags" = list(
 		"ORGAN_SYNTHETIC" = ORGAN_SYNTHETIC,
 		"ORGAN_FROZEN" = ORGAN_FROZEN,

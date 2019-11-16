@@ -1,4 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - bugfix: "clean bot not cleaning basic cleanables"
