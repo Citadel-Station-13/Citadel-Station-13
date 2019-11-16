@@ -114,8 +114,8 @@
 	name = "Hexacrocin"
 	id = "aphro+"
 	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
-					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a\
-					 permanent increase in libido (commonly referred to as 'bimbofication')."
+					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
+					permanent increase in libido (commonly referred to as 'bimbofication')."
 	taste_description = "liquid desire"
 	color = "#FF2BFF"//dark pink
 	addiction_threshold = 20

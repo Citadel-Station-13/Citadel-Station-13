@@ -221,7 +221,7 @@
 				new_mob =new hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
-			A.copy_to(new_mob, icon_updates=0)
+			A.copy_to(new_mob, FALSE)
 
 			var/mob/living/carbon/human/H = new_mob
 			H.update_body()

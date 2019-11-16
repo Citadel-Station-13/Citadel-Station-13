@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "get_hearers_in_view() now actually caches the results of view() instead of calling view() twice"
