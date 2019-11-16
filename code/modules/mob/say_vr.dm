@@ -69,7 +69,7 @@ proc/get_top_level_mob(var/mob/S)
 		. = FALSE
 
 /datum/emote/living/subtle/run_emote(mob/user, params, type_override = null)
-	if(jobban_isbanned(user, "emote"))
+	if(is_banned_from(user.ckey, "emote"))
 		to_chat(user, "You cannot send subtle emotes (banned).")
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
@@ -140,7 +140,7 @@ proc/get_top_level_mob(var/mob/S)
 		. = FALSE
 
 /datum/emote/living/subtler/run_emote(mob/user, params, type_override = null)
-	if(jobban_isbanned(user, "emote"))
+	if(is_banned_from(user.ckey, "emote"))
 		to_chat(user, "You cannot send subtle emotes (banned).")
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)

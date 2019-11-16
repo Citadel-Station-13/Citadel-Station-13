@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
 			return
-	if(jobban_isbanned(src.mob, "OOC"))
+	if(is_banned_from(ckey, "OOC"))
 		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 		return
 	if(QDELETED(src))

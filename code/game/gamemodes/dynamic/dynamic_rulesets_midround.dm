@@ -48,11 +48,11 @@
 			trimmed_list.Remove(M)
 			continue
 		if(antag_flag_override)
-			if(!(antag_flag_override in M.client.prefs.be_special) || jobban_isbanned(M.ckey, antag_flag_override))
+			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, antag_flag_override))
 				trimmed_list.Remove(M)
 				continue
 		else
-			if(!(antag_flag in M.client.prefs.be_special) || jobban_isbanned(M.ckey, antag_flag))
+			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, antag_flag))
 				trimmed_list.Remove(M)
 				continue
 		if (M.mind)

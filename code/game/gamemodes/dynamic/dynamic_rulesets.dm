@@ -231,11 +231,11 @@
 			candidates.Remove(P)
 			continue
 		if(antag_flag_override)
-			if(!(antag_flag_override in P.client.prefs.be_special) || jobban_isbanned(P.ckey, antag_flag_override))
+			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, antag_flag_override))
 				candidates.Remove(P)
 				continue
 		else
-			if(!(antag_flag in P.client.prefs.be_special) || jobban_isbanned(P.ckey, antag_flag))
+			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, antag_flag))
 				candidates.Remove(P)
 				continue
 

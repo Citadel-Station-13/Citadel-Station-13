@@ -34,7 +34,6 @@ GLOBAL_VAR(restart_counter)
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
-	LoadBans()
 	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
