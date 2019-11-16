@@ -61,7 +61,7 @@
 					L.Knockdown(100)
 				else if(iscultist(L))
 					L.confused += narsiandog_confuse // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
-					to_chat(L, "<span class ='userdanger'>[scr] crashes into you with burning force, sending you reeling</span>")
+					to_chat(L, "<span class ='userdanger'>[scr] crashes into you with burning force, sending you reeling!</span>")
 					L.adjust_fire_stacks(2)
 					L.IgniteMob()
 				else

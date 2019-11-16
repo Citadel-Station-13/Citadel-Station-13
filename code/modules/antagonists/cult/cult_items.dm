@@ -676,6 +676,7 @@
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
+	var/ratvarscum_confuse = 5
 
 /obj/item/twohanded/cult_spear/Initialize()
 	. = ..()
@@ -690,7 +691,6 @@
 	icon_state = "bloodspear[wielded]"
 
 /obj/item/twohanded/cult_spear/throw_impact(atom/target)
-	var/ratvarscum_punish = 5
 	var/turf/T = get_turf(target)
 	if(isliving(target))
 		var/mob/living/L = target
@@ -704,7 +704,7 @@
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					to_chat(L, "<span class='cultlarge'>\"Kneel for me, scum\"</span>")
-					L.confused += ratvarscum_punish //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
+					L.confused += ratvarscum_confuse //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
 					L.knockdown(15)
 					L.adjustBruteLoss(10)
 				else

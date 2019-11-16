@@ -208,10 +208,12 @@
 				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \
 				"<span class='userdanger'>Your vision suddenly screams with a flash of burning hot light!</span>")  //Debuffs Narsian cultists hard + deals some burn instead of just hardstunning them; Only the confusion part can stack
 				L.flash_act(1,1)
-				L.stuttering = max(narsiandog_punish, L.stuttering)
-				L.drowsy = max(narsiandog_punish, L.drowsy)
-				L.confused += narsiandog_punish
-				L.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+				if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.stuttering = max(narsiandog_punish, C.stuttering)
+					C.drowsy = max(narsiandog_punish, C.drowsy)
+					C.confused += narsiandog_punish
+					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
 	..()
 
