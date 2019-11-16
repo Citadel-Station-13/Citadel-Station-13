@@ -167,7 +167,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
-				rank = H.get_assignment(hand_first = TRUE)
+				rank = H.get_assignment()
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"

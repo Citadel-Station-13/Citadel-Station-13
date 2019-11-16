@@ -199,7 +199,7 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/card/id/ID = user.get_idcard(FALSE)
+	var/obj/item/card/id/ID = user.get_idcard()
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 

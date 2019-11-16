@@ -933,6 +933,10 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/can_hold_items()
 	return FALSE
 
+/mob/proc/get_idcard()
+	return
+
+
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
