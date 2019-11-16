@@ -15,7 +15,7 @@
 		user.cell.charge -= 100
 		user.icon_state = "synd_hatin"
 		var/turf/T = get_turf(target)
-		var/safety = 10
+		var/safety = 15
 		while((get_turf(user) != T) && (safety > 0) && !(target.Adjacent(user)))
 			sleep(1)
 			safety--
