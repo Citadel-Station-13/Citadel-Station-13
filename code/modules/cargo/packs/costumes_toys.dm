@@ -84,7 +84,7 @@
 /datum/supply_pack/costumes_toys/neetcrate
 	name = "D.A.B. Outfit Crate"
 	desc = "When you want to recruit more \"troopers\" for useless activity. Enough for a whole squad of 6!"
-	cost = 1000
+	cost = 1200
 	contains = list(/obj/item/clothing/suit/assu_suit,
 					/obj/item/clothing/suit/assu_suit,
 					/obj/item/clothing/suit/assu_suit,
