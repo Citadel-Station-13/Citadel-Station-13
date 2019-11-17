@@ -134,7 +134,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(.) //To allow surgery to return properly.
+	if(.) //was the attack blocked?
 		return
 	for(var/thing in diseases)
 		var/datum/disease/D = thing

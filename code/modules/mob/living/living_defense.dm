@@ -36,7 +36,19 @@
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return
 
+/mob/living/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	var/block_chance_modifier = round(damage / -3)
+	for(var/obj/item/I in held_items)
+		if(!istype(I, /obj/item/clothing))
+			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+				return TRUE
+	return FALSE
+
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+	if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+		P.on_hit(src, 100, def_zone)
+		return 2
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
@@ -242,6 +254,17 @@
 		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>")
 		return TRUE
 
+/mob/living/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	if(user.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
+			return TRUE
+		var/hulk_verb = pick("smash","pummel")
+		if(user != src && check_shields(user, 15, "the [hulk_verb]ing"))
+			return TRUE
+		..()
+	return FALSE
+
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
 	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
@@ -295,6 +318,8 @@
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return FALSE
+		if(check_shields(M, 0, "the [M.name]"))
+			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
 			log_combat(M, src, "attacked")
@@ -331,20 +356,23 @@
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if((M != src) && M.a_intent != INTENT_HELP && check_shields(M, 0, "the [M.name]"))
+		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
+		return FALSE
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 			return FALSE
-		if ("grab")
+		if (INTENT_GRAB)
 			grabbedby(M)
 			return FALSE
-		if("harm")
+		if(INTENT_HARM)
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
 			return TRUE
-		if("disarm")
+		if(INTENT_DISARM)
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
 

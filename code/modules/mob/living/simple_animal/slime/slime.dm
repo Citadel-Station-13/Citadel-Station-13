@@ -61,7 +61,7 @@
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
-	
+
 	do_footstep = TRUE
 
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
@@ -320,9 +320,11 @@
 			attacked += 10
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent.
-		attacked += 10
-		discipline_slime(M)
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
+	attacked += 10
+	discipline_slime(M)
 
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)

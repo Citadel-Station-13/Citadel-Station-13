@@ -85,11 +85,7 @@
 
 				return -1 // complete projectile permutation
 
-		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
-			P.on_hit(src, 100, def_zone)
-			return 2
-
-	return (..(P , def_zone))
+	return ..()
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
@@ -99,15 +95,6 @@
 		if(I.IsReflect(def_zone) == 1)
 			return 1
 	return 0
-
-/mob/living/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
-	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/I in held_items)
-		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return TRUE
-	return FALSE
 
 /mob/living/carbon/human/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	. = ..()
@@ -165,12 +152,12 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
 
-/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
-		var/hulk_verb = pick("smash","pummel")
-		if(check_shields(user, 15, "the [hulk_verb]ing"))
+		. = ..(user, TRUE)
+		if(.)
 			return
-		..(user, 1)
+		var/hulk_verb = pick("smash","pummel")
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
 		var/message = "[user] has [hulk_verb]ed [src]!"
 		visible_message("<span class='danger'>[message]</span>", \
@@ -214,56 +201,50 @@
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
-			if(check_shields(M, damage, "the [M.name]"))
-				return 0
-			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 		return 1
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(check_shields(M, 0, "the M.name"))
-		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
-		return 0
+	. = ..()
+	if(!.)
+		return
+	if(M.a_intent == INTENT_HARM)
+		if (w_uniform)
+			w_uniform.add_fingerprint(M)
+		var/damage = prob(90) ? 20 : 0
+		if(!damage)
+			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
+			visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
+				"<span class='userdanger'>[M] has lunged at [src]!</span>")
+			return 0
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+		if(!affecting)
+			affecting = get_bodypart(BODY_ZONE_CHEST)
+		var/armor_block = run_armor_check(affecting, "melee", null, null,10)
 
-	if(..())
-		if(M.a_intent == INTENT_HARM)
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/damage = prob(90) ? 20 : 0
-			if(!damage)
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
-					"<span class='userdanger'>[M] has lunged at [src]!</span>")
-				return 0
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			if(!affecting)
-				affecting = get_bodypart(BODY_ZONE_CHEST)
-			var/armor_block = run_armor_check(affecting, "melee", null, null,10)
+		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+			"<span class='userdanger'>[M] has slashed at [src]!</span>")
+		log_combat(M, src, "attacked")
+		if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
+			return 1
+		apply_damage(damage, BRUTE, affecting, armor_block)
 
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			log_combat(M, src, "attacked")
-			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
-				return 1
-			apply_damage(damage, BRUTE, affecting, armor_block)
-
-		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
-			var/obj/item/I = get_active_held_item()
-			if(I && dropItemToGround(I))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-						"<span class='userdanger'>[M] disarmed [src]!</span>")
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
+		var/obj/item/I = get_active_held_item()
+		if(I && dropItemToGround(I))
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] disarmed [src]!</span>")
+		else
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			if(!lying)				//CITADEL EDIT
+				Knockdown(100, TRUE, FALSE, 30, 25)
 			else
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				if(!lying)				//CITADEL EDIT
-					Knockdown(100, TRUE, FALSE, 30, 25)
-				else
-					Knockdown(100)
-				log_combat(M, src, "tackled")
-				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-					"<span class='userdanger'>[M] has tackled down [src]!</span>")
-
+				Knockdown(100)
+			log_combat(M, src, "tackled")
+			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+				"<span class='userdanger'>[M] has tackled down [src]!</span>")
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
 

@@ -14,6 +14,9 @@
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
 	if (M.a_intent == INTENT_DISARM)
 		if(!(lying))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -30,9 +33,6 @@
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-	else
-		..()
-	return
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime shock
@@ -56,23 +56,17 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(opened && !wiresexposed && !issilicon(user))
-		if(cell)
-			cell.update_icon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
-			cell = null
-			update_icons()
-			diag_hud_set_borgcell()
+	if(opened && !wiresexposed && cell && !issilicon(user))
+		cell.update_icon()
+		cell.add_fingerprint(user)
+		user.put_in_active_hand(cell)
+		to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
+		cell = null
+		update_icons()
+		diag_hud_set_borgcell()
 
 	if(!opened)
-		if(..()) // hulk attack
-			spark_system.start()
-			spawn(0)
-				step_away(src,user,15)
-				sleep(3)
-				step_away(src,user,15)
+		return ..()
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
@@ -182,9 +176,9 @@
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	..(Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/P, def_zone)
+	..()
 	updatehealth()
-	if(prob(75) && Proj.damage > 0)
+	if(prob(75) && P.damage > 0)
 		spark_system.start()
 	return 2
