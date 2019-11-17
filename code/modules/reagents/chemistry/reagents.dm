@@ -7,6 +7,7 @@
 
 
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
+GLOBAL_LIST_INIT(name2id, build_name2id())
 
 /proc/build_name2reagent()
 	. = list()
@@ -14,7 +15,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		var/datum/reagent/R = t
 
 		if (length(initial(R.name)))
-			.[ckey(initial(R.name))] = t
+			.[ckey(initial(R.name))] = t //tg's way, for when we port the datum handling instead of ids
+
+/proc/build_name2id()
+	. = list()
+	for (var/t in subtypesof(/datum/reagent))
+		var/datum/reagent/R = t
+
+		if (length(initial(R.name)))
+			.[ckey(initial(R.name))] = ckey(initial(R.id))
+			//.[ckey(initial(R.name))] = t //tg's way, for when we port the datum handling instead of ids
 
 /datum/reagent
 	var/name = "Reagent"

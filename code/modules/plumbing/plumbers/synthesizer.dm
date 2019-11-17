@@ -69,6 +69,8 @@
 		ui = new(user, src, ui_key, "synthesizer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
+//!!!!!!!!!!!! I fiddled with this to make it work here, but you should probably edit this so it uses datum/reagents instead of id and revert my changes.
+
 /obj/machinery/plumbing/synthesizer/ui_data(mob/user)
 	var/list/data = list()
 
@@ -86,7 +88,7 @@
 	data["amount"] = amount
 	data["possible_amounts"] = possible_amounts
 
-	data["current_reagent"] = ckey(initial(reagent_id.name))
+	data["current_reagent"] = ckey(initial(reagent_id)) //used to be reagent_id.name
 	return data
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
@@ -100,10 +102,16 @@
 				amount = new_amount
 				. = TRUE
 		if("select")
+			/*tg way
 			var/new_reagent = GLOB.name2reagent[params["reagent"]]
 			if(new_reagent in dispensable_reagents)
 				reagent_id = new_reagent
+				. = TRUE*/
+
+			if(params["reagent"] in dispensable_reagents)
+				reagent_id = params["reagent"]
 				. = TRUE
+
 	update_icon()
 	reagents.clear_reagents()
 
