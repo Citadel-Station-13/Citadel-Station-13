@@ -35,6 +35,9 @@
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
 
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die (literally, we'll toss a nuke at whever your ip turns up)
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing

@@ -992,3 +992,32 @@
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/reagent_containers/glass/beaker = 6) //So it can hold lots of chems
+
+/obj/item/circuitboard/machine/pump
+	name = "Portable Liquid Pump (Machine Board)"
+	icon_state = "supply"
+	build_path = /obj/machinery/power/liquid_pump
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
+
+/obj/item/circuitboard/machine/icg
+	name = "ICG (Machine Board)"
+	build_path = /obj/machinery/power/gasgen
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		)
+
+/obj/item/circuitboard/machine/stirling
+	name = "Stirling Engine (Machine Board)"
+	build_path = /obj/machinery/power/gasgen/stirling
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		)

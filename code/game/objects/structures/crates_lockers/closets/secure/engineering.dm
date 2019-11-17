@@ -34,6 +34,7 @@
 	new /obj/item/storage/photo_album/CE(src)
 	new	/obj/item/storage/lockbox/medal/engineering(src)
 	new /obj/item/construction/rcd/loaded/upgraded(src)
+	new /obj/item/pipe_dispenser/plumbing(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -81,6 +82,7 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
+	new /obj/item/pipe_dispenser/plumbing(src)
 
 
 /obj/structure/closet/secure_closet/atmospherics
@@ -101,3 +103,4 @@
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
+	new /obj/item/pipe_dispenser/plumbing(src)
