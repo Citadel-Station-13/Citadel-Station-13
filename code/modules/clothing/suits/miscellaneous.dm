@@ -685,6 +685,16 @@
 /obj/item/clothing/head/hooded/winterhood/hydro
 	icon_state = "winterhood_hydro"
 
+/obj/item/clothing/suit/hooded/wintercoat/cosmic
+	name = "cosmic winter coat"
+	icon_state = "coatcosmic"
+	item_state = "coatcosmic"
+	allowed = list(/obj/item/flashlight)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic
+
+/obj/item/clothing/head/hooded/winterhood/cosmic
+	icon_state = "winterhood_cosmic"
+
 /obj/item/clothing/suit/hooded/wintercoat/janitor
 	name = "janitors winter coat"
 	icon_state = "coatjanitor"
