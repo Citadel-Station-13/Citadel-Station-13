@@ -9,7 +9,7 @@
 
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
-	var/reagent_id = "oil""
+	var/reagent_id = "oil"
 	var/potency = 2 //how much reagents we add every process (2 seconds)
 	var/max_volume = 500
 	var/start_volume = 50
@@ -44,7 +44,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/clf3 = 2, /datum/reagent/crudeoil = 1)
+	var/list/options = list(/datum/reagent/oil = 1, /datum/reagent/clf3 = 1) //formerly crudeoil, 2,1
 /obj/structure/geyser/random/Initialize()
 	. = ..()
 	reagent_id = pickweight(options)
@@ -80,11 +80,11 @@
 	name = "oily residue"
 	icon_state = "spot"
 	anchored = TRUE
-	var/activated = FALSE //whether we are active and generating chems
-	reagent_id = "crudeoil""
-	var/potency = 20 //how much reagents we add every process (2 seconds)
-	var/max_volume = 1500
-	var/start_volume = 50
+	activated = FALSE //whether we are active and generating chems
+	reagent_id = "crudeoil"
+	potency = 20 //how much reagents we add every process (2 seconds)
+	max_volume = 1500
+	start_volume = 50
 
 /obj/structure/geyser/process()
 	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous

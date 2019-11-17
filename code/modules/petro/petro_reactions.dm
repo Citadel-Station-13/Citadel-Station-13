@@ -105,4 +105,4 @@
 	id = "butane_explosion"
 	required_reagents = list("butane" = 1)
 	required_temp = 672
-	strengthdiv = 4 //half strength of nitro, i think
+	strengthdiv = 4 //half strength of nitro, i thinke

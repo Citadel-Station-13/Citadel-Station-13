@@ -1021,3 +1021,13 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 2,
 		)
+
+/obj/item/circuitboard/machine/oilrig
+	name = "Oil Rig (Machine Board)"
+	build_path = /obj/machinery/power/liquid_pump/oilrig
+	req_components = list(
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		)

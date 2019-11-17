@@ -157,20 +157,21 @@
 /obj/machinery/power/liquid_pump/oilrig
 	name = "oil drilling rig"
 	desc = "Pump up those sweet liquids from under the surface."
-	icon = 'icons/obj/machinery/oilrig.dmi'
+	icon = 'icons/obj/machines/oilrig.dmi'
 	icon_state = "tap"
 	anchored = TRUE
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/oilrig
+	//circuit = /obj/item/circuitboard/machine/oilrig //not implemented yet
 	idle_power_usage = 10
 	active_power_usage = 3000
 	pixel_x = -32
 	pixel_y = -64
-	var/powered = FALSE
-	var/pump_power = 10
-	var/geyserless = FALSE
+	powered = FALSE
+	pump_power = 10
+	geyserless = FALSE
 	var/obj/structure/geyser/oilspot/resevoir
-	var/volume = 2000
+	var/fillers = list()
+	volume = 2000
 
 /obj/machinery/power/liquid_pump/oilrig/Initialize()
 	. = ..()
