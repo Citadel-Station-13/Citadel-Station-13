@@ -39,5 +39,9 @@ endmap
 map runtimestation
 endmap
 
+map spookystation
+	minplayers 150
+endmap
+
 map multiz_debug
 endmap

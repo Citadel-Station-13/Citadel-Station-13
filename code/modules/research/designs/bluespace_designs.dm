@@ -19,7 +19,7 @@
 	id = "bag_holding"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000)
-	build_path = /obj/item/storage/backpack/holding
+	build_path = /obj/item/reagent_containers/food/snacks/pie/cream //Temporary fix for the ball so someone doesn't griff
 	category = list("Bluespace Designs")
 	dangerous_construction = TRUE
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -30,7 +30,7 @@
 	id = "satchel_holding"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000)
-	build_path = /obj/item/storage/backpack/holding/satchel
+	build_path = /obj/item/reagent_containers/food/snacks/pie/cream //Temporary fix for the ball so someone doesn't griff
 	category = list("Bluespace Designs")
 	dangerous_construction = TRUE
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

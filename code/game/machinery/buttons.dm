@@ -191,6 +191,7 @@
 			device = new /obj/item/assembly/control(src)
 	..()
 
+
 /obj/machinery/button/door/incinerator_vent_toxmix
 	name = "combustion chamber vent control"
 	id = INCINERATOR_TOXMIX_VENT

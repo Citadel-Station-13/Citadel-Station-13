@@ -242,7 +242,7 @@
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
+	build_path = /obj/item/reagent_containers/food/snacks/pie/cream //Temporary fix for the ball so someone doesn't griff
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -252,7 +252,7 @@
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	id = "mech_teleporter"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
+	build_path = /obj/item/reagent_containers/food/snacks/pie/cream //Temporary fix for the ball so someone doesn't griff
 	materials = list(MAT_METAL=10000,MAT_DIAMOND=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")

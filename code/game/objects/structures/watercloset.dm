@@ -629,14 +629,14 @@
 	if(!open)
 		icon_state = "closed"
 		layer = WALL_OBJ_LAYER
-		density = TRUE
 		open = FALSE
+		opacity = 1
 
 	else
 		icon_state = "open"
 		layer = SIGN_LAYER
-		density = FALSE
 		open = TRUE
+		opacity = 0
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
