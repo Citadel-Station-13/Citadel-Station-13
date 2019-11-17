@@ -125,6 +125,7 @@
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
 					/obj/item/clothing/under/rank/roboticist = 3,
 					/obj/item/clothing/under/rank/roboticist/skirt = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/robotics = 3,
 					/obj/item/clothing/suit/toggle/labcoat = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3,
 					/obj/item/clothing/gloves/fingerless = 3,

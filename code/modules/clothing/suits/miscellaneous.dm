@@ -612,6 +612,17 @@
 /obj/item/clothing/head/hooded/winterhood/science
 	icon_state = "winterhood_science"
 
+/obj/item/clothing/suit/hooded/wintercoat/robotics
+	name = "robotics winter coat"
+	icon_state = "coatrobotics"
+	item_state = "coatrobotics"
+	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/screwdriver, /obj/item/crowbar, /obj/item/wrench, /obj/item/stack/cable_coil, /obj/item/weldingtool, /obj/item/multitool)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/robotics
+
+/obj/item/clothing/head/hooded/winterhood/robotics
+	icon_state = "winterhood_robotics"
+
 /obj/item/clothing/suit/hooded/wintercoat/genetics
 	name = "genetics winter coat"
 	icon_state = "coatgenetics"
