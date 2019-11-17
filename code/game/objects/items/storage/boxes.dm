@@ -855,7 +855,7 @@
 			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
-	else if(W.is_sharp())
+	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
@@ -1144,7 +1144,7 @@
 	if(can_expire)
 		expiration_date = rand(expiration_date_min, expiration_date_max)
 		desc += "\n<span_clas='notice'>An expiry date is listed on it. It reads: [expiration_date]</span>"
-		var/spess_current_year = GLOB.year_integer + 540
+		var/spess_current_year = GLOB.year_integer
 		if(expiration_date < spess_current_year)
 			var/gross_risk = min(round(spess_current_year - expiration_date * 0.1), 1)
 			var/toxic_risk = min(round(spess_current_year - expiration_date * 0.01), 1)

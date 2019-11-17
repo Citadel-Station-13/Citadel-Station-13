@@ -57,10 +57,9 @@
 	icon_state = "magjectile-nl"
 	damage = 2
 	knockdown = 0
-	stamina = 25
-	armour_penetration = -10
+	stamina = 20
 	light_range = 2
-	speed = 0.7
+	speed = 0.6
 	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
@@ -109,9 +108,10 @@
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
-	casing_ejector = 0
+	casing_ejector = FALSE
 	fire_delay = 2
-	recoil = 0.2
+	recoil = 0.1
+	inaccuracy_modifier = 0.25
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -123,7 +123,6 @@
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 ///research memes///
-/*
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
 	spawnwithmagazine = FALSE
@@ -155,7 +154,7 @@
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-*/
+
 //////toy memes/////
 
 /obj/item/projectile/bullet/reusable/foam_dart/mag
@@ -201,9 +200,9 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
 	damage = 20
-	armour_penetration = 25
+	armour_penetration = 20
 	light_range = 3
-	speed = 0.7
+	speed = 0.6
 	range = 35
 	light_color = LIGHT_COLOR_RED
 
@@ -212,10 +211,10 @@
 	icon_state = "magjectile-large-nl"
 	damage = 2
 	knockdown = 0
-	stamina = 25
-	armour_penetration = -10
+	stamina = 20
+	armour_penetration = 10
 	light_range = 3
-	speed = 0.65
+	speed = 0.6
 	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
@@ -227,6 +226,8 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/magrifle
+	click_cooldown_override = 2.5
+	delay = 3
 
 /obj/item/ammo_casing/caseless/anlmagm
 	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
@@ -234,10 +235,12 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmagrifle
+	click_cooldown_override = 2.5
+	delay = 3
 
 ///magazines///
 
-/obj/item/ammo_box/magazine/mmag/
+/obj/item/ammo_box/magazine/mmag
 	name = "magrifle magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
@@ -261,17 +264,20 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magrifle"
 	item_state = "arg"
-	slot_flags = 0
+	slot_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
-	burst_size = 3
-	fire_delay = 2
-	spread = 5
-	recoil = 0.15
-	casing_ejector = 0
+	burst_size = 1
+	actions_types = null
+	fire_delay = 3
+	spread = 0
+	recoil = 0.1
+	casing_ejector = FALSE
+	inaccuracy_modifier = 0.5
+	weapon_weight = WEAPON_MEDIUM
+	dualwield_spread_mult = 1.4
 
-/*
 //research///
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
@@ -305,7 +311,7 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-*/
+
 ///foamagrifle///
 
 /obj/item/ammo_box/magazine/toy/foamag
@@ -327,7 +333,6 @@
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-/*
 // TECHWEBS IMPLEMENTATION
 //
 
@@ -339,7 +344,6 @@
 	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
-*/
 
 //////Hyper-Burst Rifle//////
 

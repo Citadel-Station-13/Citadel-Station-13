@@ -338,17 +338,17 @@ SLIME SCANNER
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
 			if(!max_damage)
-				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>"
+				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>\n"
 			else
-				max_damage += "</span>"
+				max_damage += "</span>\n"
 			if(!major_damage)
-				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
+				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>\n"
 			else
-				major_damage += "</span>"
+				major_damage += "</span>\n"
 			if(!minor_damage)
-				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
+				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>\n"
 			else
-				minor_damage += "</span>"
+				minor_damage += "</span>\n"
 			msg += "[minor_damage]"
 			msg += "[major_damage]"
 			msg += "[max_damage]"
@@ -382,10 +382,11 @@ SLIME SCANNER
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
 
-		msg += "<span class='info'>Species: [H.dna.custom_species ? H.dna.custom_species : S.name] Base: [S.name]</span>\n"
+		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n" 
+		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
 		if(mutant)
-			msg += "<span class='info'>Subject has mutations present.</span>"
-	msg += "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
+			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
+	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
@@ -650,7 +651,7 @@ SLIME SCANNER
 
 /proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
