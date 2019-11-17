@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "Shuttle transit borders are now 10 tiles wide instead of 8 tiles, hopefully repairing the immersions that get shattered by the ability to see normal space where the transit areas end."

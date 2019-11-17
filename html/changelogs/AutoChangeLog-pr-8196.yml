@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "In an attempt to improve the performance of /mob/Stat(), various time-related procs now use defines instead of being procs that call procs that call other procs that call even more procs."

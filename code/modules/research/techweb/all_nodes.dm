@@ -10,7 +10,7 @@
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
 	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-	"space_heater", "xlarge_beaker", "sec_rshot", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "sec_38lethal",
+	"space_heater", "xlarge_beaker", "sec_beanbag", "sec_rshot", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "sec_38lethal",
 	"rglass","plasteel","plastitanium","plasmaglass","plasmareinforcedglass","titaniumglass","plastitaniumglass")
 
 /datum/techweb_node/mmi
@@ -43,7 +43,6 @@
 	description = "Various tools fit for basic mech units"
 	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer")
 
-
 /datum/techweb_node/surplus_lims
 	id = "surplus_lims"
 	display_name = "Basic Prosthetics"
@@ -51,8 +50,20 @@
 	starting_node = TRUE
 	prereq_ids = list("biotech")
 	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
-	export_price = 5000
 
+/datum/techweb_node/blueprinted_bottles
+	id = "blueprinted_bottles"
+	display_name = "License Bottling"
+	description = "Some Branded bottles to print and export."
+	starting_node = TRUE
+	design_ids = list("gin", "wine", "whiskey", "vodka", "tequila", "patron", "rum", "kahlua", "vermouth", "goldschlager", "hcider", "cognac", "absinthe", "grappa", "sake", "fernet", "applejack", "champagne", "blazaam", "trappist", "grenadine", "autobottler")
+
+/datum/techweb_node/blueprinted_exports
+	id = "blueprinted_exports"
+	display_name = "License Exports"
+	description = "Some Branded bottles to print and export."
+	starting_node = TRUE
+	design_ids = list("gin_export", "wine_export", "whiskey_export", "vodka_export", "tequila_export", "patron_export", "rum_export", "kahlua_export", "vermouth_export", "goldschlager_export", "hcider_export", "cognac_export", "absinthe_export", "grappa_export", "sake_export", "fernet_export", "applejack_export", "champagne_export", "blazaam_export", "trappist_export", "grenadine_export")
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -60,7 +71,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("medicalkit", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag")
+	design_ids = list("medicalkit", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag", "bloodbankgen")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -81,6 +92,14 @@
 	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+
+/datum/techweb_node/bottle_exports
+	id = "bottle_exports"
+	display_name = "Legal Bottling"
+	prereq_ids = list("blueprinted_bottles")
+	description = "New bottles for printing and selling."
+	design_ids = list("minikeg", "blooddrop", "slim_gold", "white_bloodmoon", "greenroad")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 250)
 
 /datum/techweb_node/advance_lims
 	id = "advance_lims"
@@ -517,7 +536,7 @@
 	display_name = "Subdermal Implants"
 	description = "Electronic implants buried beneath the skin."
 	prereq_ids = list("biotech", "datatheory")
-	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking", "locator")
+	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking", "locator", "c38_trac")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -694,12 +713,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
 	export_price = 5000
 
-/datum/techweb_node/tech_shell
-	id = "tech_shell"
-	display_name = "Technological Shells"
-	description = "They're more technological than regular shot."
+/datum/techweb_node/exotic_ammo
+	id = "exotic_ammo"
+	display_name = "Exotic Ammunition"
+	description = "They won't know what hit em."
 	prereq_ids = list("weaponry", "ballistic_weapons")
-	design_ids = list("techshotshell")
+	design_ids = list("techshotshell", "c38_hotshot", "c38_iceblox")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	export_price = 5000
 
@@ -1027,26 +1046,19 @@
 	id = "alien_bio"
 	display_name = "Alien Biological Tools"
 	description = "Advanced biological tools."
-	prereq_ids = list("alientech", "adv_biotech")
+	prereq_ids = list("alientech", "advance_surgerytools")
 	design_ids = list("alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery")
-	boost_item_paths = list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien, /obj/item/retractor/alien, /obj/item/circular_saw/alien,
-	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
-	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 20000
-	hidden = TRUE
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 10000
 
 /datum/techweb_node/alien_engi
 	id = "alien_engi"
 	display_name = "Alien Engineering"
 	description = "Alien engineering tools"
-	prereq_ids = list("alientech", "adv_engi")
+	prereq_ids = list("alientech", "exp_tools")
 	design_ids = list("alien_wrench", "alien_wirecutters", "alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool")
-	boost_item_paths = list(/obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
-	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 20000
-	hidden = TRUE
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 10000
 
 /datum/techweb_node/syndicate_basic
 	id = "syndicate_basic"

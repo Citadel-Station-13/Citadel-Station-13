@@ -1,4 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - refactor: "Reworked the Vent Clog event to spray smoke instead of foam, also made it shoot smoke over time instead through each vent instead of all at once."

@@ -14,11 +14,10 @@
 
 /obj/item/clothing/gloves/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /obj/item/clothing/gloves/clean_blood)
 
-/obj/item/clothing/gloves/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/obj/item/clothing/gloves/clean_blood(datum/source, strength)
+	. = ..()
 	transfer_blood = 0
 
 /obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
@@ -30,8 +29,8 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-		IF_HAS_BLOOD_DNA(src)
-			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
+		if(blood_DNA)
+			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = blood_DNA_to_color())
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -41,4 +40,4 @@
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
-	return 0 // return 1 to cancel attack_hand()
+	return FALSE // return TRUE to cancel attack_hand()

@@ -17,6 +17,36 @@
 	id = "sec_38lethal"
 	build_path = /obj/item/ammo_box/c38/lethal
 
+/datum/design/c38_trac
+	name = "Speed Loader (.38 TRAC)"
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	id = "c38_trac"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 5000, MAT_GOLD = 1000)
+	build_path = /obj/item/ammo_box/c38/trac
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c38_hotshot
+	name = "Speed Loader (.38 Hot Shot)"
+	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	id = "c38_hotshot"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_PLASMA = 5000)
+	build_path = /obj/item/ammo_box/c38/hotshot
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c38_iceblox
+	name = "Speed Loader (.38 Iceblox)"
+	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	id = "c38_iceblox"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_PLASMA = 5000)
+	build_path = /obj/item/ammo_box/c38/iceblox
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 //////////////
 //WT550 Mags//
 //////////////
@@ -67,6 +97,12 @@
 //Ammo Shells/
 //////////////
 
+/datum/design/beanbag_slug/sec
+	id = "sec_beanbag"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE
@@ -105,7 +141,7 @@
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/techshell
 	name = "Unloaded Technological Shotshell"
@@ -139,7 +175,7 @@
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/firing_pin/test_range
 	category = list("Firing Pins")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/pin_mindshield
 	name = "Mindshield Firing Pin"
@@ -235,7 +271,7 @@
 	reagents_list = list("radium" = 20)
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/xray
 	name = "X-ray Laser Gun"
@@ -309,7 +345,7 @@
 	materials = list(MAT_METAL = 2000, MAT_PLASMA = 500)
 	build_path = /obj/item/grenade/chem_grenade/pyro
 	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/cryo_grenade
 	name = "Cryo Grenade"
@@ -319,7 +355,7 @@
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
 	build_path = /obj/item/grenade/chem_grenade/cryo
 	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/adv_grenade
 	name = "Advanced Release Grenade"
@@ -329,7 +365,7 @@
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 500)
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 //////////
 //MISC////
