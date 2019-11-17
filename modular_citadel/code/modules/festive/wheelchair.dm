@@ -15,14 +15,14 @@
 	.=..()
 	driver.pixel_x = pixel_x
 	driver.pixel_y = pixel_y
-	driver.forceMove(src)
+	driver.forceMove(src.loc)
 	driver.dir = dir
 
 /obj/vehicle/sealed/vectorcraft/rideable/mob_enter(mob/living/M)
 	if(!istype(M))
 		return FALSE
 	M.visible_message("<span class='notice'>[M] climbs into \the [src]!</span>")
-	M.forceMove(src)
+	M.forceMove(src.loc)
 	add_occupant(M)
 	return TRUE
 	if(!driver)

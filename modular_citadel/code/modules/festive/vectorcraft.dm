@@ -84,7 +84,6 @@
 	if(lastmove + movedelay > world.time)
 		return FALSE
 	lastmove = world.time
-
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
 		var/did_move = step(src, direction)
@@ -477,7 +476,7 @@ if(driver.sprinting && !(boost_cooldown))
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/low_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
-	else if (acceleration > max_accel && !boost_cooldown)
+	else if (acceleration > max_accel)
 		acceleration -= accel_step
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/high_eng.ogg', 25, 0)
@@ -505,11 +504,12 @@ if(driver.sprinting && !(boost_cooldown))
 	if(driver.combatmode)//clutch is on
 		return FALSE
 	var/cached_acceleration = acceleration
-	var/gear_max_velocity = (convert_gear()/4)*max_velocity
+	var/boost_active = FALSE
 	if(driver.sprinting && !(boost_cooldown))
 		cached_acceleration += boost_power //You got boost power!
 		boost_cooldown = world.time + 80
 		playsound(src.loc,'sound/vehicles/boost.ogg', 100, 0)
+		boost_active = TRUE
 		//playsound
 
 	var/result_vector = vector
@@ -535,20 +535,19 @@ if(driver.sprinting && !(boost_cooldown))
 			result_vector["y"] += cached_acceleration/1.4
 			result_vector["x"] -= cached_acceleration/1.4
 
-	/*if(boost_cooldown)
+	if(boost_active)
 		vector["x"] = result_vector["x"]
 		vector["y"] = result_vector["y"]
-		return
-	else if*/
-	vector["x"] = CLAMP(result_vector["x"], -gear_max_velocity*1.5, gear_max_velocity*1.5)
-	vector["y"] = CLAMP(result_vector["y"], -gear_max_velocity*1.5, gear_max_velocity*1.5)
+	else
+		vector["x"] = CLAMP(result_vector["x"], -max_velocity, max_velocity)
+		vector["y"] = CLAMP(result_vector["y"], -max_velocity, max_velocity)
 
-	if(vector["x"] > gear_max_velocity || vector["x"] < -gear_max_velocity)
-		vector["x"] = vector["x"] - (vector["x"]/5)
-		//vector["x"] = CLAMP(vector["x"], -250, 250)
-	if(vector["y"] > gear_max_velocity || vector["y"] < -gear_max_velocity)
-		vector["y"] = vector["y"] - (vector["y"]/5)
-		//vector["y"] = CLAMP(vector["y"], -250, 250)
+	if(vector["x"] > max_velocity || vector["x"] < -max_velocity)
+		vector["x"] = vector["x"] - (vector["x"]/10)
+		vector["x"] = CLAMP(vector["x"], -250, 250)
+	if(vector["y"] > max_velocity || vector["y"] < -max_velocity)
+		vector["y"] = vector["y"] - (vector["y"]/10)
+		vector["y"] = CLAMP(vector["y"], -250, 250)
 
 	return
 
