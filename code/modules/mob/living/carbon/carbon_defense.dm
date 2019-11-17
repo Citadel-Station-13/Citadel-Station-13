@@ -48,31 +48,48 @@
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
-/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
-	. = FALSE
+/mob/living/carbon/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
+	. = ..()
 	if(!skip_throw_mode_check && !in_throw_mode)
 		return
 	if(get_active_held_item())
 		return
 	if(restrained())
 		return
-	return TRUE
+	I.attack_hand(src)
+	if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+		visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+		throw_mode_off()
+		return TRUE
 
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
-	if(!skipcatch)	//ugly, but easy
-		if(can_catch_item())
-			if(istype(AM, /obj/item))
-				var/obj/item/I = AM
-				if(isturf(I.loc))
-					I.attack_hand(src)
-					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-						visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-						throw_mode_off()
-						return 1
-	..()
+/mob/living/carbon/can_embed(obj/item/I)
+	if(I.get_sharpness() || is_pointed(I) || is_type_in_typecache(I, GLOB.can_embed_types))
+		return TRUE
 
+/mob/living/carbon/embed_item(obj/item/I)
+	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+	var/obj/item/bodypart/L = pick(bodyparts)
+	L.embedded_objects |= I
+	I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
+	I.forceMove(src)
+	L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
+	visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
+	//CIT CHANGES START HERE - combatmode and resting checks
+	var/totitemdamage = I.force
+	if(iscarbon(user))
+		var/mob/living/carbon/tempcarb = user
+		if(!tempcarb.combatmode)
+			totitemdamage *= 0.5
+	if(user.resting)
+		totitemdamage *= 0.5
+	if(!combatmode)
+		totitemdamage *= 1.5
+	//CIT CHANGES END HERE
+	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+		return FALSE
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
@@ -83,17 +100,6 @@
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-		//CIT CHANGES START HERE - combatmode and resting checks
-		var/totitemdamage = I.force
-		if(iscarbon(user))
-			var/mob/living/carbon/tempcarb = user
-			if(!tempcarb.combatmode)
-				totitemdamage *= 0.5
-		if(user.resting)
-			totitemdamage *= 0.5
-		if(!combatmode)
-			totitemdamage *= 1.5
-	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			var/basebloodychance = affecting.brute_dam + totitemdamage
@@ -127,7 +133,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
-
+	. = ..()
+	if(.) //To allow surgery to return properly.
+		return
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
@@ -142,8 +150,7 @@
 		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user, user.a_intent))
-					return 1
-	return 0
+					return TRUE
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)

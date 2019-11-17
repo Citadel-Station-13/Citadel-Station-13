@@ -1,8 +1,26 @@
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+/mob/living/silicon/ai/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(.) //the attack was blocked
+		return
+	switch(M.a_intent)
+		if ("help")
+			M.visible_message("[M] pets [src].", \
+							"<span class='notice'>You pet [src].</span>")
+		if("grab")
+			grabbedby(M)
+		else
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
+				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/silicon/ai/attacked_by(obj/item/I, mob/living/user, def_zone)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	return ..()
 
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)

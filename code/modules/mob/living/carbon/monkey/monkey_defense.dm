@@ -28,9 +28,9 @@
 			apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
-	if(..())	//To allow surgery to return properly.
+	. = ..()
+	if(.) //To allow surgery to return properly.
 		return
-
 	switch(M.a_intent)
 		if("help")
 			help_shake_act(M)

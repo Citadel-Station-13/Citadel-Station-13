@@ -27,6 +27,9 @@
 			Knockdown(200)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
+		return
 	switch(user.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")

@@ -55,9 +55,32 @@
 		else
 				return 0
 
+/mob/living/proc/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
+	return FALSE
+
+/mob/living/proc/embed_item(obj/item/I)
+	return
+
+/mob/living/proc/can_embed(obj/item/I)
+	return FALSE
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
+	var/obj/item/I
+	var/throwpower = 30
+	if(isitem(AM))
+		I = AM
+		throwpower = I.throwforce
+	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
+		hitpush = FALSE
+		skipcatch = TRUE
+		blocked = TRUE
+	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
+		embed_item(I)
+		hitpush = FALSE
+		skipcatch = TRUE //can't catch the now embedded item
+	if(I)
+		if(!skipcatch && isturf(I.loc) && catch_item(I))
+			return TRUE
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
@@ -211,6 +234,13 @@
 					Move(user.loc)
 		return 1
 
+/mob/living/attack_hand(mob/user)
+	..() //Ignoring parent return value here.
+	SEND_SIGNAL(user, COMSIG_MOB_ATTACK_HAND, user, src)
+	if((user != src) && user.a_intent != INTENT_HELP && check_shields(user, 0, user.name, attack_type = UNARMED_ATTACK))
+		log_combat(user, src, "attempted to touch")
+		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>")
+		return TRUE
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
 	if(!SSticker.HasRoundStarted())

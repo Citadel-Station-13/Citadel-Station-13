@@ -1,7 +1,9 @@
 
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
-	..()
+	. = ..()
+	if(.) //the attack was blocked
+		return
 	switch(M.a_intent)
 		if("help")
 			if (health > 0)

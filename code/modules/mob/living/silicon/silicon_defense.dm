@@ -63,21 +63,6 @@
 		return 1
 	return 0
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/attack_hand(mob/living/carbon/human/M)
-	switch(M.a_intent)
-		if ("help")
-			M.visible_message("[M] pets [src].", \
-							"<span class='notice'>You pet [src].</span>")
-		if("grab")
-			grabbedby(M)
-		else
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
-
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
 		return
