@@ -81,6 +81,24 @@
 					/obj/item/gun/ballistic/shotgun/toy)
 	crate_name = "foam force crate"
 
+/datum/supply_pack/costumes_toys/neetcrate
+	name = "D.A.B. Outfit Crate"
+	desc = "When you want to recruit more \"troopers\" for useless activity. Enough for a whole squad of 6!"
+	cost = 1000
+	contains = list(/obj/item/clothing/suit/assu_suit,
+					/obj/item/clothing/suit/assu_suit,
+					/obj/item/clothing/suit/assu_suit,
+					/obj/item/clothing/suit/assu_suit,
+					/obj/item/clothing/suit/assu_suit,
+					/obj/item/clothing/suit/assu_suit,
+					/obj/item/clothing/head/assu_helmet,
+					/obj/item/clothing/head/assu_helmet,
+					/obj/item/clothing/head/assu_helmet,
+					/obj/item/clothing/head/assu_helmet,
+					/obj/item/clothing/head/assu_helmet,
+					/obj/item/clothing/head/assu_helmet)
+	crate_name = "dab outfit crate"
+
 /datum/supply_pack/costumes_toys/foamforce/bonus
 	name = "Foam Force Pistols Crate"
 	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"

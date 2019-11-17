@@ -636,7 +636,7 @@
 
 /obj/item/clothing/suit/assu_suit
 	name = "DAB suit"
-	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Desperate Assistance Battle-force</i>\"."
+	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Desperate Assistance Battleforce</i>\"."
 	icon_state = "assu_suit"
 	item_state = "assu_suit"
 	blood_overlay_type = "armor"
