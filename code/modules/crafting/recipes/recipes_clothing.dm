@@ -181,7 +181,8 @@
 				/obj/item/clothing/suit/hooded/wintercoat/janitor = 1,
 				/obj/item/clothing/suit/hooded/wintercoat/security = 1,
 				/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/hydro = 1)
+				/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
+				/obj/item/clothing/suit/hooded/wintercoat/miner = 1)
 	time = 60
 	always_availible = TRUE
 	category = CAT_CLOTHING
