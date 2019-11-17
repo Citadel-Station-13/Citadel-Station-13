@@ -16,6 +16,8 @@
 		msg += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face.\n"
 	if (wear_neck)
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
+	if(can_be_held)
+		msg += "[t_He] looks small enough to be picked up with <b>Alt+Click</b>!\n"
 
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))

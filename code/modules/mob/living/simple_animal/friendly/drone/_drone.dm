@@ -274,3 +274,7 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
+
+/mob/living/simple_animal/drone/generate_mob_holder()
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
+	return holder
