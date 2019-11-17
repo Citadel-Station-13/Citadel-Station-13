@@ -9,10 +9,6 @@
 	fire_delay = 0
 	actions_types = list()
 
-/obj/item/gun/ballistic/automatic/pistol/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
-	user.changeNext_move(3.5) //deciseconds delay after click, default is 4
-	. = ..()
-
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 
