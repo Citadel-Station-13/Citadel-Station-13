@@ -154,7 +154,7 @@
 	armour_penetration = 100
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
 	attack_verb = list("slashed", "cut", "pierces", "pokes")
 	total_mass = 3.4
