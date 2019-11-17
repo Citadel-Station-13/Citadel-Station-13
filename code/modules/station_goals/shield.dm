@@ -132,7 +132,7 @@
 	desc = "A meteor point-defense satellite."
 	mode = "M-SHIELD"
 	speed_process = TRUE
-	var/kill_range = 14
+	var/kill_range = 11
 
 /obj/machinery/satellite/meteor_shield/sci
 	name = "\improper Meteor Shield Satellite"
@@ -146,7 +146,7 @@
 /obj/machinery/satellite/meteor_shield/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/disk/meteor))
 		to_chat(user, "<span class='notice'>The disk uploads better tracking and rang modification software.</span>")
-		kill_range = 17
+		kill_range = 14
 	else
 		return ..()
 
