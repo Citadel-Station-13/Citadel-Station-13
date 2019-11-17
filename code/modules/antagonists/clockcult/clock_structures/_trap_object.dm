@@ -71,6 +71,7 @@
 	return TRUE
 
 /obj/structure/destructible/clockwork/trap/proc/activate()
+	return
 
 //These objects send signals to normal traps to activate
 /obj/structure/destructible/clockwork/trap/trigger
@@ -78,6 +79,14 @@
 	max_integrity = 5
 	break_message = "<span class='warning'>The trigger breaks apart!</span>"
 	density = FALSE
+
+/obj/structure/destructible/clockwork/trap/trigger/Initialize()
+	. = ..()
+	for(var/obj/structure/destructible/clockwork/trap/T in get_turf(src))
+		if(!istype(T, /obj/structure/destructible/clockwork/trap/trigger))
+			wired_to += T
+			T.wired_to += src
+			to_chat(usr, "<span class='alloy'>[src] automatically links with [T] beneath it.</span>")
 
 /obj/structure/destructible/clockwork/trap/trigger/activate()
 	for(var/obj/structure/destructible/clockwork/trap/T in wired_to)

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Nerfed concatenators by limiting the amount of characters they're able to output"

@@ -1,7 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new security level between Blue and Red (Amber). The shuttle call time at this level is 8 minutes."
-  - tweak: "Blue security level now has a shuttle call time of 12 minutes."
-  - tweak: "The security level increase/decrease texts have been modified to accommodate the change."
-  - imageadd: "Adds a code Amber sprite for the fire alarms"
