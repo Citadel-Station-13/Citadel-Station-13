@@ -17783,13 +17783,13 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aNu" = (
-/obj/machinery/power/apc{
-	areastring = "area/crew_quarters/abandoned_gambling_den";
-	name = "Maintenance Storage APC";
-	pixel_y = -24
-	},
 /obj/structure/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/abandoned_gambling_den";
+	name = "Abandoned Gambling Den APC";
+	pixel_y = -24
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
