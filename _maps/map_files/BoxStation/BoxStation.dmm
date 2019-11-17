@@ -345,9 +345,15 @@
 /turf/open/space,
 /area/space/nearstation)
 "aaU" = (
-/obj/machinery/computer/arcade,
-/turf/open/floor/plasteel,
-/area/security/prison)
+/obj/machinery/camera{
+	c_tag = "Bar West";
+	dir = 4
+	},
+/obj/structure/sign/poster/official/foam_force_ad{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "aaV" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -13799,14 +13805,6 @@
 /obj/machinery/vending/cola/red,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
-"aEt" = (
-/obj/machinery/computer/arcade/minesweeper,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-"aEu" = (
-/obj/machinery/computer/arcade/battle,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "aEv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/closet/wardrobe/pjs,
@@ -45106,17 +45104,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"bXu" = (
-/obj/machinery/camera{
-	c_tag = "Bar West";
-	dir = 4
-	},
-/obj/machinery/computer/arcade/orion_trail,
-/obj/structure/sign/poster/official/foam_force_ad{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "bXv" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -84541,7 +84528,7 @@ aaf
 aai
 aai
 aai
-aaU
+aat
 abf
 abx
 acd
@@ -93585,7 +93572,7 @@ bRe
 bty
 aFj
 ccS
-bXu
+aaU
 aKR
 aFd
 aDM
@@ -93842,7 +93829,7 @@ aKR
 buJ
 aDU
 aDX
-aEt
+aKR
 aKR
 aFf
 aDN
@@ -94099,7 +94086,7 @@ aKR
 aDO
 aFC
 cdM
-aEu
+aKR
 aKR
 aFg
 aDO
