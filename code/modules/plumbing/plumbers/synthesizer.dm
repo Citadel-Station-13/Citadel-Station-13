@@ -21,32 +21,32 @@
 	var/image/r_overlay
 	///straight up copied from chem dispenser. Being a subtype would be extremely tedious and making it global would restrict potential subtypes using different dispensable_reagents
 	var/list/dispensable_reagents = list(
-		/datum/reagent/aluminium,
-		/datum/reagent/bromine,
-		/datum/reagent/carbon,
-		/datum/reagent/chlorine,
-		/datum/reagent/copper,
-		/datum/reagent/consumable/ethanol,
-		/datum/reagent/fluorine,
-		/datum/reagent/hydrogen,
-		/datum/reagent/iodine,
-		/datum/reagent/iron,
-		/datum/reagent/lithium,
-		/datum/reagent/mercury,
-		/datum/reagent/nitrogen,
-		/datum/reagent/oxygen,
-		/datum/reagent/phosphorus,
-		/datum/reagent/potassium,
-		/datum/reagent/radium,
-		/datum/reagent/silicon,
-		/datum/reagent/silver,
-		/datum/reagent/sodium,
-		/datum/reagent/stable_plasma,
-		/datum/reagent/consumable/sugar,
-		/datum/reagent/sulfur,
-		/datum/reagent/toxin/acid,
-		/datum/reagent/water,
-		/datum/reagent/fuel
+		"aluminium",
+		"bromine",
+		"carbon",
+		"chlorine",
+		"copper",
+		"ethanol",
+		"fluorine",
+		"hydrogen",
+		"iodine",
+		"iron",
+		"lithium",
+		"mercury",
+		"nitrogen",
+		"oxygen",
+		"phosphorus",
+		"potassium",
+		"radium",
+		"silicon",
+		"silver",
+		"sodium",
+		"stable_plasma",
+		"sugar",
+		"sulfur",
+		"sacid",
+		"water",
+		"oil"
 	)
 
 
@@ -81,7 +81,7 @@
 			var/chemname = R.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(R.name))))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(R.id))))
 	data["chemicals"] = chemicals
 	data["amount"] = amount
 	data["possible_amounts"] = possible_amounts

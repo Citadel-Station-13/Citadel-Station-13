@@ -44,7 +44,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/oil = 1, /datum/reagent/clf3 = 1) //formerly crudeoil, 2,1
+	var/list/options = list("oil" = 2, "clf3" = 1) //formerly crudeoil, 2,1
 /obj/structure/geyser/random/Initialize()
 	. = ..()
 	reagent_id = pickweight(options)
@@ -81,7 +81,7 @@
 	icon_state = "spot"
 	anchored = TRUE
 	activated = FALSE //whether we are active and generating chems
-	reagent_id = "crudeoil"
+	reagent_id = "crudeoil" //formerly crudeoil
 	potency = 20 //how much reagents we add every process (2 seconds)
 	max_volume = 1500
 	start_volume = 50
@@ -90,7 +90,7 @@
 	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
 		reagents.add_reagent(reagent_id, potency)						   //processes
 
-/obj/structure/geyser/plunger_act(/obj/item/sounder/P, mob/living/user,)
+/obj/structure/geyser/plunger_act(/obj/item/sounder/P, mob/living/user)
 	if(activated)
 		to_chat(user, "<span class'warning'>The [name] is already sounded!")
 		return

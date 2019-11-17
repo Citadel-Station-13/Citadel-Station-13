@@ -161,7 +161,7 @@
 	icon_state = "tap"
 	anchored = TRUE
 	density = TRUE
-	//circuit = /obj/item/circuitboard/machine/oilrig //not implemented yet
+	circuit = /obj/item/circuitboard/machine/oilrig //not implemented yet
 	idle_power_usage = 10
 	active_power_usage = 3000
 	pixel_x = -32
