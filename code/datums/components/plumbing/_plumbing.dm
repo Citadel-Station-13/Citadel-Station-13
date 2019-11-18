@@ -77,7 +77,7 @@
 	if(reagent) //only asked for one type of reagent
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A
-			if(R.id)
+			if(R.id == reagent)
 				return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE

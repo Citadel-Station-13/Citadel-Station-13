@@ -128,14 +128,16 @@
 
 /obj/item/fermichem/pHmeter/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(!istype(A, /obj/item/reagent_containers))
+	if(!istype(A, /obj/))
 		return
-	var/obj/item/reagent_containers/cont = A
+	var/obj/cont = A
+	if(!cont.reagents)
+		return
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
 		return
 	var/out_message
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
-	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.1)]\n"
+	out_message += "<span class='notice'><b>Total volume: [round(cont.reagents.total_volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.1)]\n"
 	if(cont.reagents.fermiIsReacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
@@ -144,4 +146,4 @@
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message]</span>")
-	desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays [round(cont.reagents.pH, 0.1)]."
+	desc = "An electrode attached to a small circuit box that will analyse any chemical mix. It can be toggled to give a reduced or extended report. The screen currently displays [round(cont.reagents.pH, 0.1)]."
