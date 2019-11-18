@@ -17,21 +17,25 @@
 	var/obj/machinery/plumbing/reaction_chamber/RC = parent
 	if(RC.emptying || !LAZYLEN(RC.required_reagents))
 		return
-	for(var/RT in RC.required_reagents)
+	for(var/RTid in RC.required_reagents)
+		var/datum/reagent/RT = GLOB.chemical_reagents_list[RTid]
 		var/has_reagent = FALSE
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/RD = A
-			if(RT == RD.type)
+			if(RT.id == RD.id)
 				has_reagent = TRUE
-				if(RD.volume < RC.required_reagents[RT])
-					process_request(min(RC.required_reagents[RT] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT, dir)
+				if(RD.volume < RC.required_reagents[RTid])
+					process_request(min(RC.required_reagents[RTid] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT.id, dir)
 					return
 		if(!has_reagent)
-			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT, dir)
+			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT.id, dir)
 			return
 
 	RC.reagent_flags &= ~NO_REACT
 	reagents.handle_reactions()
+	/*Add when everything works:
+	if(reagents.fermiIsReacting)
+		return*/
 	RC.emptying = TRUE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
@@ -39,7 +43,3 @@
 	var/obj/machinery/plumbing/reaction_chamber/RC = parent
 	if(!. || !RC.emptying)
 		return FALSE
-
-
-
-

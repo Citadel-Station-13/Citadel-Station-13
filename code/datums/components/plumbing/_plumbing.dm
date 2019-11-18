@@ -77,7 +77,7 @@
 	if(reagent) //only asked for one type of reagent
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A
-			if(R.type == reagent)
+			if(R.id == reagent)
 				return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
@@ -88,7 +88,7 @@
 	if(reagent)
 		reagents.trans_id_to(target.parent, reagent, amount)
 	else
-		reagents.trans_to(target.parent, amount)//WE DO NOT HAVE ROUND ROBIN. If you get floating point errors, ping fermi!
+		reagents.trans_to(target.parent, amount)
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays()
 	var/atom/movable/AM = parent
