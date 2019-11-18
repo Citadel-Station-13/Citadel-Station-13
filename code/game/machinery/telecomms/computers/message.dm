@@ -421,7 +421,7 @@
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
-							"emoji_message" = emoji_parse(custommessage),
+							"emojis" = TRUE,
 							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
 						))
 						// this will log the signal and transmit it to the target
