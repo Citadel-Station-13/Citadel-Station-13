@@ -88,7 +88,7 @@
 	if(reagent)
 		reagents.trans_id_to(target.parent, reagent, amount)
 	else
-		reagents.trans_to(target.parent, amount)
+		reagents.trans_to(target.parent, amount)//WE DO NOT HAVE ROUND ROBIN. If you get floating point errors, ping fermi!
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays()
 	var/atom/movable/AM = parent
@@ -156,7 +156,7 @@
 				if(istype(A, /obj/machinery/duct))
 					var/obj/machinery/duct/duct = A
 					duct.attempt_connect()
-				else 
+				else
 					var/datum/component/plumbing/P = A.GetComponent(/datum/component/plumbing)
 					if(P)
 						direct_connect(P, D)
