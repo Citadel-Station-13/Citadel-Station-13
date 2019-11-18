@@ -286,6 +286,20 @@
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
 
+/datum/spellbook_entry/item/staffchange/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_staff_of_change_requirement))
+			return 0
+
+/datum/spellbook_entry/item/staffchange/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_staff_of_change_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on staff of change.")
+	return ..()
+
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
@@ -370,6 +384,20 @@
 	item_path = /obj/item/antag_spawner/contract
 	category = "Assistance"
 
+/datum/spellbook_entry/item/contract/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_apprentice_cost))
+			return 0
+
+/datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_apprentice_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on apprentice contract.")
+	return ..()
+
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
 	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
@@ -389,6 +417,20 @@
 	limit = 3
 	category = "Assistance"
 
+/datum/spellbook_entry/item/bloodbottle/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"])
+			return 0
+
+/datum/spellbook_entry/item/bloodbottle/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on slaughter demon.")
+	return ..()
+
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
 	desc = "A bottle of magically infused fun, the smell of which will \
@@ -402,6 +444,20 @@
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
 	category = "Assistance"
+
+/datum/spellbook_entry/item/hugbottle/IsAvailible()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < round(CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3))
+			return 0
+
+/datum/spellbook_entry/item/hugbottle/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on laughter demon.")
+	return ..()
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
@@ -482,6 +538,10 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_guns_requirement))
+			return 0
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -490,6 +550,11 @@
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_summon_guns_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon guns.")
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -499,6 +564,10 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_magic_requirement))
+			return 0
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -507,6 +576,11 @@
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_summon_magic_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon magic.")
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -517,6 +591,10 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < CONFIG_GET(number/dynamic_summon_events_requirement))
+			return 0
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -525,6 +603,11 @@
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_summon_events_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon events.")
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
@@ -626,16 +709,16 @@
 	dat += {"
 	<head>
 		<style type="text/css">
-      		body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
-      		ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
-      		ul#tabs li { display: inline; }
-      		ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
-      		ul#tabs li a:hover { background-color: #f1f0ee; }
-      		ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
-      		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
-      		div.tabContent.hide { display: none; }
-    	</style>
-  	</head>
+			body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+			ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+			ul#tabs li { display: inline; }
+			ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+			ul#tabs li a:hover { background-color: #f1f0ee; }
+			ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+			div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+			div.tabContent.hide { display: none; }
+		</style>
+	</head>
 	"}
 	dat += {"[content]</body></html>"}
 	return dat

@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "fixed flavor text appearing when your face is hidden but you're not an Unknown"

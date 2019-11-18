@@ -1,9 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "The thing you're currently grabbing is now taken into account when left-click disarming. Things you have grabbed now roughly have a 45% chance to be disarmed."
-  - balance: "Disarm push rolls are now determined by the target's staminaloss rather than a flat number."
-  - balance: "When you're in combat mode, pushing someone who isn't in combat mode is a guaranteed knockdown. Hard counter to stam regen squeezing in melee combat."
-  - balance: "Failed disarm push attempts now deals light staminaloss to the target so long as both the attacker and target are standing. The total stamloss dealt to the target is random, clocking in at a very inefficient 1-5 stamloss per unsuccessful push attempt."
-  - tweak: "Disarm pushes now play the thudswoosh sound regardless if they're successful or not. Had it not been for copyright, I would've used L4D's melee sound."
-  - tweak: "Disarm push attempts are now logged"
