@@ -9,7 +9,7 @@
 
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
-	var/reagent_id = "oil""
+	var/reagent_id = "oil"	
 	var/potency = 2 //how much reagents we add every process (2 seconds)
 	var/max_volume = 500
 	var/start_volume = 50
@@ -86,11 +86,7 @@
 	var/max_volume = 1500
 	var/start_volume = 50
 
-/obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
-		reagents.add_reagent(reagent_id, potency)						   //processes
-
-/obj/structure/geyser/plunger_act(/obj/item/sounder/P, mob/living/user,)
+/obj/structure/geyser/oilspot/plunger_act(/obj/item/sounder/P, mob/living/user,)
 	if(activated)
 		to_chat(user, "<span class'warning'>The [name] is already sounded!")
 		return
