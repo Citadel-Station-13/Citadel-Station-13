@@ -83,6 +83,7 @@
 	anchored = TRUE
 	reagent_id = "crudeoil"
 
+
 /obj/structure/geyser/oilspot/plunger_act(/obj/item/sounder/P, mob/living/user,)
 	if(activated)
 		to_chat(user, "<span class'warning'>The [name] is already sounded!")
