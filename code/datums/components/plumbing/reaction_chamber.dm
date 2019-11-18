@@ -18,7 +18,6 @@
 	if(RC.emptying || !LAZYLEN(RC.required_reagents))
 		return
 	for(var/RTid in RC.required_reagents)
-		var/datum/reagent/RT = GLOB.chemical_reagents_list[RTid]
 		var/has_reagent = FALSE
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/RD = A
