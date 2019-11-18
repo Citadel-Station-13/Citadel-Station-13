@@ -92,7 +92,7 @@
 
 /datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/M)
 	.=..()
-	if(chem.di == "cocoa" || chem.id == "hot_coco" || chem.id == "chocolate_milk" || chem.id == "chocolatepudding")
+	if(chem.id == "cocoa" || chem.id == "hot_coco" || chem.id == "chocolate_milk" || chem.id == "chocolatepudding")
 		if(prob(20))
 			M.adjust_disgust(20)
 		if(prob(5))
