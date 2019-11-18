@@ -125,7 +125,7 @@
 			icon_state = "cutout_cultist"
 		if("Brass Cultist")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-			desc = "A cardboard cutout of a servant of Ratvar."
+			desc = "A cardboard cutout of a \"servant\" of Ratvar."
 			icon_state = "cutout_servant"
 		if("Clockwork Cultist")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
@@ -184,7 +184,7 @@
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
 		if("Securitron")
-			name = "[pick("Officer", "Oftiser", "Sergeant", "General"][pick(" Genesky, " Pingsky", " Beepsky", " Pipsqueak", "-at-Armsky"]"
+			name = "[pick("Officer", "Oftiser", "Sergeant", "General")][pick(" Genesky, " Pingsky", " Beepsky", " Pipsqueak", "-at-Armsky")]"
 			desc = "A cardboard cutout of a securitron."
 			icon_state = "cutout_law"
 		if("Gondola")
