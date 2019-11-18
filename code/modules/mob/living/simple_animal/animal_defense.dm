@@ -41,7 +41,8 @@
 		return TRUE
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
-	if(..()) //successful monkey bite.
+	. = ..()
+	if(.) //successful larva bite
 		var/damage = rand(1, 3)
 		attack_threshold_check(damage)
 		return 1
@@ -49,7 +50,6 @@
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 	. = ..()
@@ -83,7 +83,8 @@
 		return attack_threshold_check(damage, M.melee_damage_type)
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
+	. = ..()
+	if(.) //successful slime shock
 		var/damage = rand(15, 25)
 		if(M.is_adult)
 			damage = rand(20, 35)

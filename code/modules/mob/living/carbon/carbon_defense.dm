@@ -62,10 +62,6 @@
 		throw_mode_off()
 		return TRUE
 
-/mob/living/carbon/can_embed(obj/item/I)
-	if(I.get_sharpness() || is_pointed(I) || is_type_in_typecache(I, GLOB.can_embed_types))
-		return TRUE
-
 /mob/living/carbon/embed_item(obj/item/I)
 	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 	var/obj/item/bodypart/L = pick(bodyparts)
@@ -170,7 +166,8 @@
 		help_shake_act(M)
 		return 0
 
-	if(..()) //successful monkey bite.
+	. = ..()
+	if(.) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
@@ -178,26 +175,27 @@
 
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
+	. = ..()
+	if(!.)
+		return
+	if(M.powerlevel > 0)
+		var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+		if(prob(stunprob))
+			M.powerlevel -= 3
+			if(M.powerlevel < 0)
+				M.powerlevel = 0
 
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+			visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
+			"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
 
-				do_sparks(5, TRUE, src)
-				var/power = M.powerlevel + rand(0,3)
-				Knockdown(power*20)
-				if(stuttering < power)
-					stuttering = power
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-					updatehealth()
-		return 1
+			do_sparks(5, TRUE, src)
+			var/power = M.powerlevel + rand(0,3)
+			Knockdown(power*20)
+			if(stuttering < power)
+				stuttering = power
+			if (prob(stunprob) && M.powerlevel >= 8)
+				adjustFireLoss(M.powerlevel * rand(6,10))
+				updatehealth()
 
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)

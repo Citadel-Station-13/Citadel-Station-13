@@ -17,8 +17,9 @@ In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
 	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
 	switch(M.a_intent)
-
 		if (INTENT_HELP)
 			if(!recoveringstam)
 				resting = 0
@@ -27,10 +28,7 @@ In all, this is a lot like the monkey code. /N
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
-
 		if(INTENT_DISARM, INTENT_HARM)
-			if(!.) // the attack was blocked or was help/grab intent
-				return
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -69,7 +67,8 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
-	if(..())
+	. = ..()
+	if(.) //successful monkey bite.
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 		apply_damage(rand(1, 3), BRUTE, affecting)
 
@@ -93,13 +92,15 @@ In all, this is a lot like the monkey code. /N
 				adjustStaminaLoss(damage)
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
-		if(M.is_adult)
-			damage = rand(10, 40)
-		adjustBruteLoss(damage)
-		log_combat(M, src, "attacked")
-		updatehealth()
+	. = ..()
+	if(!.) //unsuccessful slime attack
+		return
+	var/damage = rand(5, 35)
+	if(M.is_adult)
+		damage = rand(10, 40)
+	adjustBruteLoss(damage)
+	log_combat(M, src, "attacked")
+	updatehealth()
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

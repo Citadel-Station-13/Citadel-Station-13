@@ -42,7 +42,7 @@
 				log_combat(M, src, "attacked")
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='userdanger'>[M] has attempted to punch [src]!</span>", \
+				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>", \
 					"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 		if (INTENT_DISARM)
@@ -61,7 +61,7 @@
 						"<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 					else
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-						visible_message("<span class='userdanger'>[M] has attempted to disarm [src]!</span>",\
+						visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>",\
 							"<span class='userdanger'>[M] has attempted to disarm [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/alien/humanoid/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)

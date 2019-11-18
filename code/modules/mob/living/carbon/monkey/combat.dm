@@ -372,20 +372,15 @@
 		retaliate(M)
 	return ..()
 
+/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(user)
+	return ..()
+
 /mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
-	if(user.a_intent == INTENT_HARM)
-		if(prob(MONKEY_RETALIATE_HARM_PROB))
-			retaliate(user)
-		. = ..(user, TRUE)
-		if(.)
-			return
-		var/hulk_verb = pick("smash","pummel")
-		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/message = "[user] has [hulk_verb]ed [src]!"
-		visible_message("<span class='danger'>[message]</span>", \
-								"<span class='userdanger'>[message]</span>")
-		adjustBruteLoss(15)
-		return 1
+	if(user.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(user)
+	return ..()
 
 /mob/living/carbon/monkey/attack_paw(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))

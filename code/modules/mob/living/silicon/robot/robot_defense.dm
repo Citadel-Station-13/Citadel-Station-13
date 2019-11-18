@@ -13,6 +13,15 @@
 		spark_system.start()
 	return ..()
 
+/mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	. = ..()
+	if(.)
+		spark_system.start()
+		spawn(0)
+			step_away(src,user,15)
+			sleep(3)
+			step_away(src,user,15)
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	. = ..()
 	if(!.) // the attack was blocked or was help/grab intent
@@ -35,19 +44,17 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime shock
-		flash_act()
-		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
-			adjustBruteLoss(M.powerlevel * rand(6,10))
-
-	var/damage = rand(1, 3)
-
+	. = ..()
+	if(!.) //unsuccessful slime shock
+		return
+	var/stunprob = M.powerlevel * 7 + 10
+	var/damage = M.powerlevel * rand(6,10)
+	if(prob(stunprob) && M.powerlevel >= 8)
+		flash_act(affect_silicon = TRUE) //my borg eyes!
 	if(M.is_adult)
-		damage = rand(20, 40)
+		damage += rand(10, 20)
 	else
-		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs receive half damage
+		damage += rand(2, 17)
 	adjustBruteLoss(damage)
 	updatehealth()
 

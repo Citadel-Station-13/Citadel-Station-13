@@ -45,10 +45,41 @@
 				return TRUE
 	return FALSE
 
+/mob/living/proc/check_reflect(def_zone) //Reflection checks for anything in your hands, based on the reflection chance of the object(s)
+	for(var/obj/item/I in held_items)
+		if(I.IsReflect(def_zone))
+			return TRUE
+	return FALSE
+
+/mob/living/proc/reflect_bullet_check(obj/item/projectile/P, def_zone)
+	if(P.is_reflectable && check_reflect(def_zone)) // Checks if you've passed a reflection% check
+		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+						"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+		// Find a turf near or on the original location to bounce to
+		if(P.starting)
+			var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+			var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+			var/turf/curloc = get_turf(src)
+			// redirect the projectile
+			P.original = locate(new_x, new_y, P.z)
+			P.starting = curloc
+			P.firer = src
+			P.yo = new_y - curloc.y
+			P.xo = new_x - curloc.x
+			var/new_angle_s = P.Angle + rand(120,240)
+			while(new_angle_s > 180)	// Translate to regular projectile degrees
+				new_angle_s -= 360
+			P.setAngle(new_angle_s)
+		return TRUE
+	return FALSE
+
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
-		P.on_hit(src, 100, def_zone)
-		return 2
+	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
+		if(reflect_bullet_check(P, def_zone))
+			return -1 // complete projectile permutation
+		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
@@ -279,6 +310,12 @@
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
 
+	var/damage = rand(5, 35)
+	if(M.is_adult)
+		damage = rand(20, 40)
+	if(check_shields(M, damage, "the [M.name]"))
+		return FALSE
+
 	if (stat != DEAD)
 		log_combat(M, src, "attacked")
 		M.do_attack_animation(src)
@@ -295,7 +332,8 @@
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
+		if(check_shields(M, rand(M.melee_damage_lower, M.melee_damage_upper), "the [M.name]", MELEE_ATTACK, M.armour_penetration))
+			return FALSE
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -306,10 +344,6 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
-
 	if (M.a_intent == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
@@ -334,15 +368,16 @@
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 			return FALSE
 
 		else
 			if(HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
-				return
-
+				return FALSE
+			if(L != src && check_shields(L, rand(1, 3), "the [L.name]"))
+				return FALSE
 			L.do_attack_animation(src)
 			if(prob(90))
 				log_combat(L, src, "attacked")
@@ -353,7 +388,6 @@
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if((M != src) && M.a_intent != INTENT_HELP && check_shields(M, 0, "the [M.name]"))
@@ -361,7 +395,8 @@
 		return FALSE
 	switch(M.a_intent)
 		if (INTENT_HELP)
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			if(!isalien(src)) //I know it's ugly, but the alien vs alien attack_alien behaviour is a bit different.
+				visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 			return FALSE
 		if (INTENT_GRAB)
 			grabbedby(M)
@@ -370,10 +405,12 @@
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
-			M.do_attack_animation(src)
+			if(!isalien(src))
+				M.do_attack_animation(src)
 			return TRUE
 		if(INTENT_DISARM)
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+			if(!isalien(src))
+				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
 
 /mob/living/ex_act(severity, target, origin)

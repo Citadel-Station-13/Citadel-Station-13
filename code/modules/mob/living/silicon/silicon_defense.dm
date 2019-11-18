@@ -52,10 +52,6 @@
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == INTENT_HELP)
-		visible_message("[L.name] rubs its head against [src].")
-
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
 		. = ..(user, TRUE)
@@ -65,8 +61,8 @@
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 				"<span class='userdanger'>[user] has punched [src]!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	. = ..()
@@ -115,9 +111,12 @@
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
-	if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
-		P.on_hit(src, 100, def_zone)
-		return 2
+	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
+		if(reflect_bullet_check(P, def_zone))
+			return -1 // complete projectile permutation
+		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
 		adjustBruteLoss(P.damage)
 		if(prob(P.damage*1.5))
