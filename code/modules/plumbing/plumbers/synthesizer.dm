@@ -97,8 +97,8 @@
 	. = TRUE
 	switch(action)
 		if("amount")
-			var/new_amount = text2num(params["target"])
-			if(new_amount in possible_amounts)
+			var/new_amount = CLAMP(round(input("Enter amount (0.01 - 5)", "Input") as num|null, 0.01), 0.01, 5)
+			if(new_amount)
 				amount = new_amount
 				. = TRUE
 		if("select")
