@@ -21,7 +21,7 @@
 		var/has_reagent = FALSE
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/RD = A
-			if(RT == RD.type)
+			if(RT == RD.id)
 				has_reagent = TRUE
 				if(RD.volume < RC.required_reagents[RT])
 					process_request(min(RC.required_reagents[RT] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT, dir)
