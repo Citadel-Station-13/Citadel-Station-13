@@ -74,23 +74,20 @@
 /obj/item/sounder
 	name = "resevoir sounder"
 	desc = " It's a NT R-04 oil resevoir sounder. Use it on areas with visible leaking oil to generate a drilling plan."
-	icon_state = "reinforced_plunger"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "reinforced_plunger" //wip sprites
 
 /obj/structure/geyser/oilspot
 	name = "oily residue"
 	icon_state = "spot"
 	anchored = TRUE
-	activated = FALSE //whether we are active and generating chems
-	reagent_id = "crudeoil" //formerly crudeoil
-	potency = 20 //how much reagents we add every process (2 seconds)
-	max_volume = 1500
-	start_volume = 50
+	var/activated = FALSE //whether we are active and generating chems
+	reagent_id = "crudeoil"
+	var/potency = 20 //how much reagents we add every process (2 seconds)
+	var/max_volume = 1500
+	var/start_volume = 50
 
-/obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
-		reagents.add_reagent(reagent_id, potency)						   //processes
-
-/obj/structure/geyser/plunger_act(/obj/item/sounder/P, mob/living/user)
+/obj/structure/geyser/oilspot/plunger_act(/obj/item/sounder/P, mob/living/user,)
 	if(activated)
 		to_chat(user, "<span class'warning'>The [name] is already sounded!")
 		return
