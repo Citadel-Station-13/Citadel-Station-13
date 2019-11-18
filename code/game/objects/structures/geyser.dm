@@ -81,11 +81,8 @@
 	name = "oily residue"
 	icon_state = "spot"
 	anchored = TRUE
-	var/activated = FALSE //whether we are active and generating chems
 	reagent_id = "crudeoil"
-	var/potency = 20 //how much reagents we add every process (2 seconds)
-	var/max_volume = 1500
-	var/start_volume = 50
+
 
 /obj/structure/geyser/oilspot/plunger_act(/obj/item/sounder/P, mob/living/user,)
 	if(activated)
