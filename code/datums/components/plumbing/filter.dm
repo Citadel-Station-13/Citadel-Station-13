@@ -35,12 +35,12 @@
 	else
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A
-			if(!can_give_in_direction(direction, R.type))
+			if(!can_give_in_direction(direction, R.id))
 				continue
 			var/new_amount
 			if(R.volume < amount)
 				new_amount = amount - R.volume
-			reagents.trans_id_to(target.parent, R.type, amount)
+			reagents.trans_id_to(target.parent, R.id, amount)
 			amount = new_amount
 			if(amount <= 0)
 				break
