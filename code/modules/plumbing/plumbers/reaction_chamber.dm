@@ -39,8 +39,8 @@
 	var/list/data = list()
 	var/list/text_reagents = list()
 	for(var/A in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
-		var/datum/reagent/R = A
-		text_reagents[initial(R.name)] = required_reagents[R]
+		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
+		text_reagents[initial(R.name)] = R.id
 
 	data["reagents"] = text_reagents
 	data["emptying"] = emptying
