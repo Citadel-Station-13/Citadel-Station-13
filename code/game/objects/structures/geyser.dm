@@ -82,7 +82,7 @@
 	icon_state = "spot"
 	anchored = TRUE
 	var/activated = FALSE //whether we are active and generating chems
-	reagent_id = "crudeoil""
+	reagent_id = "crudeoil"
 	var/potency = 20 //how much reagents we add every process (2 seconds)
 	var/max_volume = 1500
 	var/start_volume = 50
