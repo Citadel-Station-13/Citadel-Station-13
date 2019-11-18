@@ -74,7 +74,8 @@
 /obj/item/sounder
 	name = "resevoir sounder"
 	desc = " It's a NT R-04 oil resevoir sounder. Use it on areas with visible leaking oil to generate a drilling plan."
-	icon_state = "reinforced_plunger"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "reinforced_plunger" //wip sprites
 
 /obj/structure/geyser/oilspot
 	name = "oily residue"
