@@ -374,7 +374,7 @@
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
-		retaliate(user)
+		retaliate(L)
 	return ..()
 
 /mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
