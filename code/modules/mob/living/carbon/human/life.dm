@@ -3,7 +3,7 @@
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
-// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
+// Used with human/proc/get_thermal_protection()
 // The values here should add up to 1.
 // Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
 #define THERMAL_PROTECTION_HEAD			0.3
@@ -53,16 +53,17 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+	var/headless = !get_bodypart(BODY_ZONE_HEAD) //should the mob be perennially headless (see dullahans), we only take the suit into account, so they can into space.
+	if (wear_suit && istype(wear_suit, /obj/item/clothing) && (headless || (head && istype(head, /obj/item/clothing))))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+		if (CS.clothing_flags & STOPSPRESSUREDAMAGE && (headless || (CH.clothing_flags & STOPSPRESSUREDAMAGE)))
 			return ONE_ATMOSPHERE
 	if(isbelly(loc)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/item/dogborg/sleeper))
 		return ONE_ATMOSPHERE //END OF CIT CHANGES
-	return pressure
+	return ..()
 
 
 /mob/living/carbon/human/handle_traits()
@@ -136,7 +137,7 @@
 	if(dna)
 		dna.species.handle_fire(src)
 
-/mob/living/carbon/human/proc/get_thermal_protection()
+/mob/living/carbon/human/proc/easy_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	//CITADEL EDIT Vore code required overrides
 	if(istype(loc, /obj/item/dogborg/sleeper))
@@ -168,7 +169,6 @@
 		..()
 //END FIRE CODE
 
-
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
@@ -193,37 +193,6 @@
 			thermal_protection_flags |= wear_mask.heat_protection
 
 	return thermal_protection_flags
-
-/mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
-	var/thermal_protection_flags = get_heat_protection_flags(temperature)
-
-	var/thermal_protection = 0
-	if(thermal_protection_flags)
-		if(thermal_protection_flags & HEAD)
-			thermal_protection += THERMAL_PROTECTION_HEAD
-		if(thermal_protection_flags & CHEST)
-			thermal_protection += THERMAL_PROTECTION_CHEST
-		if(thermal_protection_flags & GROIN)
-			thermal_protection += THERMAL_PROTECTION_GROIN
-		if(thermal_protection_flags & LEG_LEFT)
-			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
-		if(thermal_protection_flags & LEG_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
-		if(thermal_protection_flags & ARM_LEFT)
-			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
-		if(thermal_protection_flags & ARM_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
-
-
-	return min(1,thermal_protection)
 
 //See proc/get_heat_protection_flags(temperature) for the description of this proc.
 /mob/living/carbon/human/proc/get_cold_protection_flags(temperature)
@@ -251,17 +220,42 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_cold_protection(temperature)
-//CITADEL EDIT Mandatory for vore code.
-	if(istype(loc, /obj/item/dogborg/sleeper))
-		return TRUE //freezing to death in sleepers ruins fun.
-	if(isbelly(loc))
-		return TRUE
-	if(ismob(loc))
-		return TRUE //because lazy and being inside somemone insulates you from space
-//END EDIT
-	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
-	var/thermal_protection_flags = get_cold_protection_flags(temperature)
+/mob/living/carbon/human/proc/get_thermal_protection(temperature, cold = FALSE)
+	if(cold)
+		//CITADEL EDIT Mandatory for vore code.
+		if(istype(loc, /obj/item/dogborg/sleeper) || isbelly(loc) || ismob(loc))
+			return 1 //freezing to death in sleepers ruins fun.
+		//END EDIT
+		temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+	var/thermal_protection_flags = cold ? get_cold_protection_flags(temperature) : get_heat_protection_flags(temperature)
+	var/missing_body_parts_flags = ~get_body_parts_flags()
+	var/max_protection = 1
+	if(missing_body_parts_flags) //I don't like copypasta as much as proc overhead. Do you want me to make these into a macro?
+		DISABLE_BITFIELD(thermal_protection_flags, missing_body_parts_flags)
+		if(missing_body_parts_flags & HEAD)
+			max_protection -= THERMAL_PROTECTION_HEAD
+		if(missing_body_parts_flags & CHEST)
+			max_protection -= THERMAL_PROTECTION_CHEST
+		if(missing_body_parts_flags & GROIN)
+			max_protection -= THERMAL_PROTECTION_GROIN
+		if(missing_body_parts_flags & LEG_LEFT)
+			max_protection -= THERMAL_PROTECTION_LEG_LEFT
+		if(missing_body_parts_flags & LEG_RIGHT)
+			max_protection -= THERMAL_PROTECTION_LEG_RIGHT
+		if(missing_body_parts_flags & FOOT_LEFT)
+			max_protection -= THERMAL_PROTECTION_FOOT_LEFT
+		if(missing_body_parts_flags & FOOT_RIGHT)
+			max_protection -= THERMAL_PROTECTION_FOOT_RIGHT
+		if(missing_body_parts_flags & ARM_LEFT)
+			max_protection -= THERMAL_PROTECTION_ARM_LEFT
+		if(missing_body_parts_flags & ARM_RIGHT)
+			max_protection -= THERMAL_PROTECTION_ARM_RIGHT
+		if(missing_body_parts_flags & HAND_LEFT)
+			max_protection -= THERMAL_PROTECTION_HAND_LEFT
+		if(missing_body_parts_flags & HAND_RIGHT)
+			max_protection -= THERMAL_PROTECTION_HAND_RIGHT
+		if(max_protection == 0) //Is it even a man if it doesn't have a body at all? Early return to avoid division by zero.
+			return 1
 
 	var/thermal_protection = 0
 	if(thermal_protection_flags)
@@ -288,7 +282,7 @@
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
-	return min(1,thermal_protection)
+	return round(thermal_protection/max_protection, 0.001)
 
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high

@@ -1,1 +1,0 @@
-// Citadel-specific Negative Traits

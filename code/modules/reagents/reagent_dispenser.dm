@@ -259,11 +259,13 @@
 	desc = "A keg of aphrodisiac."
 	icon_state = "pinkkeg"
 	reagent_id = "aphro"
+	tank_volume = 150
 
 /obj/structure/reagent_dispensers/keg/aphro/strong
 	name = "keg of strong aphrodisiac"
 	desc = "A keg of strong and addictive aphrodisiac."
 	reagent_id = "aphro+"
+	tank_volume = 120
 
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
@@ -282,3 +284,4 @@
 	desc = "A keg of... wow that's a long name."
 	icon_state = "bluekeg"
 	reagent_id = "gargleblaster"
+	tank_volume = 100
