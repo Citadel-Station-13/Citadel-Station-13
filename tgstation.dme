@@ -3099,8 +3099,6 @@
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_defense.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_movement.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\dogborg_equipment.dm"
-#include "modular_citadel\code\modules\mob\living\silicon\robot\robot.dm"
-#include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\robot_movement.dm"
 #include "modular_citadel\code\modules\projectiles\gun.dm"
 #include "modular_citadel\code\modules\projectiles\ammunition\caseless.dm"
