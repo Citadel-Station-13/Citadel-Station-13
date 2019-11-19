@@ -12,6 +12,7 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
+	var/emagged = FALSE
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -98,7 +99,7 @@
 		open_machine()
 
 /obj/machinery/reagent_sleeper/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/reagent_containers/sleeper_buffer))
+	if(istype(I, /obj/item/reagent_containers/sleeper_buffer))
 		var/obj/item/reagent_containers/sleeper_buffer/SB = I
 		if((SB.reagents.total_volume + reagents.total_volume) < reagents.maximum_volume)
 			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
@@ -109,6 +110,16 @@
 			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
 			visible_message("[user] adds as much as they can to the [src] from the [SB].")
 			return
+	if(istype(I, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RC = I
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
+			if(!istype(R, /datum/reagent/medicine) && !emagged)
+				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
+				return
+		RC.reagents.trans_to(reagents, 1000)
+		visible_message("[user] adds as much as they can to the [src] from the [I].")
+		return
+
 
 /obj/machinery/reagent_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -181,9 +192,9 @@
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
-		var/datum/reagent/R = reagents.has_reagent(chem.id)
+		var/datum/reagent/R = reagents.has_reagent(chem)
 		if(R)
-			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R2.volume, "allowed" = chem_allowed(chem)))
+			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
 		else
 			R = GLOB.chemical_reagents_list[chem]
 			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = 0, "allowed" = chem_allowed(chem)))
@@ -265,19 +276,20 @@
 			var/chem = params["chem"]
 			if(!is_operational())
 				return
-			reagents.add_reagent(chem, 10) //other_purity = 0.8 for when the mechanics are in
+			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 
 
 /obj/machinery/reagent_sleeper/emag_act(mob/user)
 	. = ..()
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
+	emagged = TRUE
 	return TRUE
 
 //trans to
 /obj/machinery/reagent_sleeper/proc/inject_chem(chem, mob/user, volume)
 	if(chem_allowed(chem))
-		reagents.trans_id_to(occupant, chem_buttons[chem], volume)//emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+		reagents.trans_id_to(occupant, chem, volume)//emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
 			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
