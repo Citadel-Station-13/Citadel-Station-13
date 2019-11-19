@@ -196,7 +196,7 @@
 						blood_type = R.name
 					else
 						blood_type = blood_id
-				data["occupant"]["blood"]["maxBloodVolume"] = BLOOD_VOLUME_NORMAL
+				data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
 				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
 				data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
 				data["occupant"]["blood"]["bloodType"] = blood_type

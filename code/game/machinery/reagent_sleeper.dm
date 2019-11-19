@@ -32,11 +32,12 @@
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
 	reset_chem_buttons()
+	RefreshParts()
 	//add_inital_chems()
 
 /obj/machinery/reagent_sleeper/Destroy()
-	var/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
-	buffer.reagents = reagents
+	var/obj/item/reagent_containers/sleeper_buffer/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
+	reagents.trans_to(buffer.reagents, reagents.total_volume)
 	..()
 
 /obj/machinery/reagent_sleeper/RefreshParts()
@@ -55,7 +56,8 @@
 	reset_chem_buttons()
 
 	//Total container size 300 - 1200u
-	reagents.maximum_volume = (300*E)
+	if(reagents)
+		reagents.maximum_volume = (300*E)
 
 /obj/machinery/reagent_sleeper/update_icon()
 	icon_state = initial(icon_state)
@@ -98,7 +100,7 @@
 /obj/machinery/reagent_sleeper/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/reagent_containers/sleeper_buffer))
 		var/obj/item/reagent_containers/sleeper_buffer/SB = I
-		if((SB.reagents.total_volume + reagents.total_volume) < reagents.max_volume)
+		if((SB.reagents.total_volume + reagents.total_volume) < reagents.maximum_volume)
 			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
 			visible_message("[user] places the [SB] into the [src].")
 			qdel(SB)
@@ -166,7 +168,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "reagent_sleeper", name, 375, 650, master_ui, state)
+		ui = new(user, src, ui_key, "reagent_sleeper", name, 400, 650, master_ui, state)
 		ui.open()
 
 /obj/machinery/reagent_sleeper/ui_data()
@@ -178,12 +180,15 @@
 	data["tot_capacity"] = reagents.maximum_volume
 
 	data["chems"] = list()
-	for(var/chem in reagents.reagent_list)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		if(R.id in available_chems)
-			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
+	for(var/chem in available_chems)
+		var/datum/reagent/R = reagents.has_reagent(chem.id)
+		if(R)
+			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R2.volume, "allowed" = chem_allowed(chem)))
 		else
-			data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
+			R = GLOB.chemical_reagents_list[chem]
+			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = 0, "allowed" = chem_allowed(chem)))
+	for(var/datum/reagent/R in reagents.reagent_list)
+		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(R.id)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -247,12 +252,12 @@
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
-			var/amount = param["volume"]
+			var/amount = text2num(params["volume"])
 			if(!is_operational() || !mob_occupant)
 				return
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
-			if(inject_chem(chem, usr, volume))
+			if(inject_chem(chem, usr, amount))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
@@ -271,7 +276,7 @@
 
 //trans to
 /obj/machinery/reagent_sleeper/proc/inject_chem(chem, mob/user, volume)
-	if((chem in available_chems) && chem_allowed(chem))
+	if(chem_allowed(chem))
 		reagents.trans_id_to(occupant, chem_buttons[chem], volume)//emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
 			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")

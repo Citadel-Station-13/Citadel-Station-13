@@ -46,7 +46,7 @@
 	</ui-section>
   <ui-section label='Inject'>
     {{#each data.synthchems}}
-      <span>{{name}}: {{vol}} </span>
+      <span>{{name}}: {{vol}}u</span>
       {{#if data.efficiency >= 3}}
 	    <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
 	  {{/if}}
@@ -57,7 +57,7 @@
       <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='synth' params='{"chem": "{{id}}"}'>Synthesize</ui-button><br/>
     {{/each}}
     {{#each data.chems}}
-	  <span>{{name}}: {{vol}} </span>
+	  <span>{{name}}: {{vol}}u</span>
 	  {{#if data.efficiency >= 3}}
 	    <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
 	  {{/if}}

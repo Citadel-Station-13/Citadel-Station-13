@@ -2,6 +2,7 @@
 /obj/item/reagent_containers/sleeper_buffer
 	name = "Sleeper buffer container"
 	desc = "A closed container for insertion in the Medical Sleepers."
+	icon_state = "sleeper_buffer"
 	volume = 1200
 	reagent_flags = NO_REACT
 	spillable = TRUE
