@@ -80,9 +80,9 @@
 				user.regenerate_icons()
 
 /obj/item/clothing/examine(mob/user)
-	..()
+	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
-		to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")	// so people don't "OOC how do you use polychromic clothes????"
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/clothing/Initialize()
 	..()

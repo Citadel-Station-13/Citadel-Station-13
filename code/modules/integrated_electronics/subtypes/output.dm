@@ -23,7 +23,7 @@
 	if(displayed_name && displayed_name != name)
 		shown_label = " labeled '[displayed_name]'"
 
-	to_chat(user, "There is \a [src][shown_label], which displays [!isnull(stuff_to_display) ? "'[stuff_to_display]'" : "nothing"].")
+	return "There is \a [src][shown_label], which displays [!isnull(stuff_to_display) ? "'[stuff_to_display]'" : "nothing"]."
 
 /obj/item/integrated_circuit/output/screen/do_work()
 	var/datum/integrated_io/I = inputs[1]
@@ -345,14 +345,13 @@
 	set_pin_data(IC_INPUT, 1, FALSE)
 
 /obj/item/integrated_circuit/output/led/external_examine(mob/user)
-	var/text_output = "There is "
+	. = "There is "
 
 	if(name == displayed_name)
-		text_output += "\an [name]"
+		. += "\an [name]"
 	else
-		text_output += "\an ["\improper[name]"] labeled '[displayed_name]'"
-	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
-	to_chat(user, text_output)
+		. += "\an ["\improper[name]"] labeled '[displayed_name]'"
+	. += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
 
 /obj/item/integrated_circuit/output/diagnostic_hud
 	name = "AR interface"
