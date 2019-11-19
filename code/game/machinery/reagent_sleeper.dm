@@ -179,7 +179,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "reagent_sleeper", name, 400, 650, master_ui, state)
+		ui = new(user, src, ui_key, "reagent_sleeper", name, 500, 700, master_ui, state)
 		ui.open()
 
 /obj/machinery/reagent_sleeper/ui_data()
