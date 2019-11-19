@@ -141,9 +141,9 @@
 	if(istype(src, /obj/item/robot_module/k9) || istype(src, /obj/item/robot_module/medihound))
 		return //Bandaid fix to prevent stacking until I merge these two modules into their base types
 	var/obj/item/I = new /obj/item/analyzer/nose/flavour(src)
-	add_module(I,0,0)
+	basic_modules += I
 	I = new /obj/item/soap/tongue/flavour(src)
-	add_module(I,0,0)
+	basic_modules += I
 	I = new /obj/item/dogborg/sleeper/K9/flavour(src)
 	if(istype(src, /obj/item/robot_module/engineering))
 		I.icon_state = "decompiler"
@@ -155,7 +155,8 @@
 		I.icon_state = "servicer"
 		if(cyborg_base_icon == "scrubpup")
 			I.icon_state = "compactor"
-	add_module(I,0,0)
+	basic_modules += I
+	rebuild_modules()
 
 /obj/item/robot_module/proc/remove_module(obj/item/I, delete_after)
 	basic_modules -= I
