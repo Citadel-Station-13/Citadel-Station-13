@@ -381,3 +381,19 @@
 	new /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
+
+
+/obj/item/storage/box/strange_seeds_10pack
+
+/obj/item/storage/box/strange_seeds_10pack/PopulateContents()
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	new /obj/item/seeds/random(src)
+	
