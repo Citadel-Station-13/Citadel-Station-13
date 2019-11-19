@@ -107,7 +107,6 @@
 	return data["targets"][1]
 
 /datum/signal/subspace/pda/proc/format_message(emojify = FALSE)
-	var/message = emojify ? data["emoji_message"] : data["message"]
 	if (logged && data["photo"])
 		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
 	return "\"[data["message"]]\""
