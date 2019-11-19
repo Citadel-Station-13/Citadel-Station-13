@@ -265,7 +265,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/cryopod{
+/obj/machinery/cryopod/perma{
+	icon_state = "cryopod-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
