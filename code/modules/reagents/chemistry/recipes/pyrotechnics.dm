@@ -99,7 +99,7 @@
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
-	if(!QDELETED(holder.my_atom)
+	if(!QDELETED(holder.my_atom))
 		var/turf/T = get_turf(holder.my_atom)
 		..(holder, created_volume, T)
 
