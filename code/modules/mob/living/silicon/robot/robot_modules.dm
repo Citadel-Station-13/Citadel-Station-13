@@ -778,7 +778,6 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/service,
 		/obj/item/borg/sight/xray/truesight_lens)
 	moduleselect_icon = "service"
-	special_light_key = "service"
 	hat_offset = 0
 	clean_on_move = TRUE
 
@@ -807,10 +806,13 @@
 	switch(borg_icon)
 		if("(Service) Waitress")
 			cyborg_base_icon = "service_f"
+			special_light_key = "service"
 		if("(Service) Butler")
 			cyborg_base_icon = "service_m"
+			special_light_key = "service"
 		if("(Service) Bro")
 			cyborg_base_icon = "brobot"
+			special_light_key = "service"
 		if("(Service) Can")
 			cyborg_base_icon = "kent"
 			special_light_key = "medical"
@@ -821,15 +823,12 @@
 			hat_offset = INFINITY //He is already wearing a hat
 		if("(Service) Sleek")
 			cyborg_base_icon = "sleekserv"
-			special_light_key = "sleekserv"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("(Service) Heavy")
 			cyborg_base_icon = "heavyserv"
-			special_light_key = "heavyserv"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("(Service) DarkK9")
 			cyborg_base_icon = "k50"
-			special_light_key = "k50"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
@@ -837,7 +836,6 @@
 			sleeper_overlay = "ksleeper"
 		if("(Service) Vale")
 			cyborg_base_icon = "valeserv"
-			special_light_key = "valeserv"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
@@ -845,7 +843,6 @@
 			sleeper_overlay = "valeservsleeper"
 		if("(Service) ValeDark")
 			cyborg_base_icon = "valeservdark"
-			special_light_key = "valeservdark"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
