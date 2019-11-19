@@ -29,7 +29,8 @@
 /obj/structure/geyser/process()
 	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
 		reagents.add_reagent(reagent_id, potency)						   //processes
-		potency =- decay //decaying!
+		if(potency > 0)
+			potency =- decay //decaying!
 
 /obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
 	if(!_reinforced)
