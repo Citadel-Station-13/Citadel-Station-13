@@ -112,6 +112,8 @@
 	var/bellyup = 0
 	var/dogborg = FALSE
 
+	var/cansprint = 1
+
 /mob/living/silicon/robot/get_cell()
 	return cell
 
