@@ -98,9 +98,12 @@
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+	var/C = holder.my_atom.color
+	holder.my_atom.color =  "#FF4500"
 	sleep(rand(50,100))
 	if(!QDELETED(holder.my_atom))
 		var/turf/T = get_turf(holder.my_atom)
+		holder.my_atom.color = C
 		..(holder, created_volume, T)
 
 /datum/chemical_reaction/thermite
