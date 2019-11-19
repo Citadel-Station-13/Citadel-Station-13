@@ -362,7 +362,7 @@
 			curr_tickets -= ckey			//don't roll them again
 		var/missing = return_list - length(rolled)
 		var/list/add
-		if((mising > 0) && allow_zero_if_insufficient)		//need more..
+		if((missing > 0) && allow_zero_if_insufficient)		//need more..
 			for(var/i in 1 to missing)
 				if(!length(insufficient))
 					break			//still not enough
