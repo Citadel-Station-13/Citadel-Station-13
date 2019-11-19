@@ -28,11 +28,11 @@
 
 /obj/machinery/reagent_sleeper/Initialize()
 	. = ..()
-	create_reagents(300)
+	create_reagents(300, NO_REACT)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
 	reset_chem_buttons()
-	add_inital_chems()
+	//add_inital_chems()
 
 /obj/machinery/reagent_sleeper/Destroy()
 	var/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
@@ -106,7 +106,7 @@
 		else
 			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
 			visible_message("[user] adds as much as they can to the [src] from the [SB].")
-			return	
+			return
 
 /obj/machinery/reagent_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())

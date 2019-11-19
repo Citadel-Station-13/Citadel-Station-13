@@ -3,7 +3,7 @@
 	name = "Sleeper buffer container"
 	desc = "A closed container for insertion in the Medical Sleepers."
 	volume = 1200
-	reagent_flags = OPENCONTAINER
+	reagent_flags = NO_REACT
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	amount_per_transfer_from_this = 0
