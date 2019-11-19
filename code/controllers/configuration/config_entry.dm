@@ -233,5 +233,5 @@
 		config_entry_value[process_key(i)] = TRUE
 	return length(keys)? TRUE : FALSE
 
-/datum/config_entry/multi_keyed_flag/process_key(key)
+/datum/config_entry/multi_keyed_flag/proc/process_key(key)
 	return trim(key)
