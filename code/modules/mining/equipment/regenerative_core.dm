@@ -86,6 +86,18 @@
 			H.revive(full_heal = 1)
 			qdel(src)
 
+/obj/item/organ/regenerative_core/attack_self(mob/user) //Knouli's first hack! Allows for the use of the core in hand rather than needing to click on the target, yourself, to selfheal. Its a rip of the proc just above - but skips on distance check and only uses 'user' rather than 'target'
+	if(ishuman(user)) //Check if user is human, no need for distance check as it's self heal
+		var/mob/living/carbon/human/H = user //Set H to user rather than target
+		if(inert) //Inert cores are useless
+			to_chat(user, "<span class='notice'>[src] has decayed and can no longer be used to heal.</span>")
+			return
+		else //Skip on check if the target to be healed is dead as, if you are dead, you're not going to be able to use it on yourself!
+			to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
+			SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
+		H.revive(full_heal = 1)
+		qdel(src)
+
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()
 	if(!preserved && !inert)
