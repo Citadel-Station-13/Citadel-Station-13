@@ -4,7 +4,7 @@
 	icon_state = "console"
 	density = FALSE
 
-/obj/machinery/sleeper
+/obj/machinery/reagent_sleeper
 	name = "sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients."
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -26,7 +26,7 @@
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
-/obj/machinery/sleeper/Initialize()
+/obj/machinery/reagent_sleeper/Initialize()
 	. = ..()
 	create_reagents(300)
 	occupant_typecache = GLOB.typecache_living
@@ -34,7 +34,12 @@
 	reset_chem_buttons()
 	add_inital_chems()
 
-/obj/machinery/sleeper/RefreshParts()
+/obj/machinery/reagent_sleeper/Destroy()
+	var/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
+	buffer.reagents = reagents
+	..()
+
+/obj/machinery/reagent_sleeper/RefreshParts()
 	var/E
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
@@ -52,36 +57,36 @@
 	//Total container size 300 - 1200u
 	reagents.maximum_volume = (300*E)
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/reagent_sleeper/update_icon()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"
 
-/obj/machinery/sleeper/container_resist(mob/living/user)
+/obj/machinery/reagent_sleeper/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
-/obj/machinery/sleeper/Exited(atom/movable/user)
+/obj/machinery/reagent_sleeper/Exited(atom/movable/user)
 	if (!state_open && user == occupant)
 		container_resist(user)
 
-/obj/machinery/sleeper/relaymove(mob/user)
+/obj/machinery/reagent_sleeper/relaymove(mob/user)
 	if (!state_open)
 		container_resist(user)
 
-/obj/machinery/sleeper/open_machine()
+/obj/machinery/reagent_sleeper/open_machine()
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/sleeper/close_machine(mob/user)
+/obj/machinery/reagent_sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "[enter_message]")
 
-/obj/machinery/sleeper/emp_act(severity)
+/obj/machinery/reagent_sleeper/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
@@ -90,13 +95,25 @@
 		inject_chem(R.id, occupant)
 		open_machine()
 
+/obj/machinery/reagent_sleeper/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/reagent_containers/sleeper_buffer))
+		var/obj/item/reagent_containers/sleeper_buffer/SB = I
+		if((SB.reagents.total_volume + reagents.total_volume) < reagents.max_volume)
+			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
+			visible_message("[user] places the [SB] into the [src].")
+			qdel(SB)
+			return
+		else
+			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
+			visible_message("[user] adds as much as they can to the [src] from the [SB].")
+			return	
 
-/obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/reagent_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
-/obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
+/obj/machinery/reagent_sleeper/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(..())
 		return
@@ -110,26 +127,26 @@
 		return
 	return FALSE
 
-/obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/reagent_sleeper/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(default_change_direction_wrench(user, I))
 		return TRUE
 
-/obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
+/obj/machinery/reagent_sleeper/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(default_pry_open(I))
 		return TRUE
 	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-/obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
+/obj/machinery/reagent_sleeper/default_pry_open(obj/item/I) //wew
 	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
 		open_machine()
 
-/obj/machinery/sleeper/AltClick(mob/user)
+/obj/machinery/reagent_sleeper/AltClick(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(state_open)
@@ -137,11 +154,11 @@
 	else
 		open_machine()
 
-/obj/machinery/sleeper/examine(mob/user)
+/obj/machinery/reagent_sleeper/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>")
 
-/obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/machinery/reagent_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
 	if(controls_inside && state == GLOB.notcontained_state)
@@ -149,18 +166,24 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "fersi", name, 375, 650, master_ui, state)
+		ui = new(user, src, ui_key, "reagent_sleeper", name, 375, 650, master_ui, state)
 		ui.open()
 
-/obj/machinery/sleeper/ui_data()
+/obj/machinery/reagent_sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
+	data["efficiency"] = efficiency
+	data["current_vol"] = reagents.total_volume
+	data["tot_capacity"] = reagents.maximum_volume
 
 	data["chems"] = list()
 	for(var/chem in reagents.reagent_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+		if(R.id in available_chems)
+			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
+		else
+			data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -210,7 +233,7 @@
 				data["occupant"]["blood"]["bloodType"] = blood_type
 	return data
 
-/obj/machinery/sleeper/ui_act(action, params)
+/obj/machinery/reagent_sleeper/ui_act(action, params)
 	if(..())
 		return
 	var/mob/living/mob_occupant = occupant
@@ -224,30 +247,37 @@
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
+			var/amount = param["volume"]
 			if(!is_operational() || !mob_occupant)
 				return
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
-			if(inject_chem(chem, usr))
+			if(inject_chem(chem, usr, volume))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
+		if("synth")
+			var/chem = params["chem"]
+			if(!is_operational())
+				return
+			reagents.add_reagent(chem, 10) //other_purity = 0.8 for when the mechanics are in
 
-/obj/machinery/sleeper/emag_act(mob/user)
+
+/obj/machinery/reagent_sleeper/emag_act(mob/user)
 	. = ..()
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 	return TRUE
 
 //trans to
-/obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
+/obj/machinery/reagent_sleeper/proc/inject_chem(chem, mob/user, volume)
 	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+		reagents.trans_id_to(occupant, chem_buttons[chem], volume)//emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
 			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
 
-/obj/machinery/sleeper/proc/chem_allowed(chem)
+/obj/machinery/reagent_sleeper/proc/chem_allowed(chem)
 	var/mob/living/mob_occupant = occupant
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
@@ -255,13 +285,13 @@
 	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
 	return amount && occ_health
 
-/obj/machinery/sleeper/proc/reset_chem_buttons()
+/obj/machinery/reagent_sleeper/proc/reset_chem_buttons()
 	scrambled_chems = FALSE
 	LAZYINITLIST(chem_buttons)
 	for(var/chem in available_chems)
 		chem_buttons[chem] = chem
 
-/obj/machinery/sleeper/proc/scramble_chem_buttons()
+/obj/machinery/reagent_sleeper/proc/scramble_chem_buttons()
 	scrambled_chems = TRUE
 	var/list/av_chem = available_chems.Copy()
 	for(var/chem in av_chem)

@@ -45,13 +45,25 @@
     <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
 	</ui-section>
   <ui-section label='Inject'>
-    {{#each data.chems}}
-	  <span>{{name}} </span>
-	  {{if adata.partRating > 3}}
+    {{#each data.synthchems}}
+      <span>{{name}} </span>
+      {{if data.efficiency >= 3}}
 	    <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
-	  {{if adata.partRating > 2}}
+	  {{if adata.efficiency >= 2}}
+	    <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
+	  <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button>
+      <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='synth' params='{"chem": "{{id}}"}'>Synthesize</ui-button><br/>
+    {{/each}}
+    {{#each data.chems}}
+	  <span>{{name}}: {{}} </span>
+	  {{if data.efficiency >= 3}}
+	    <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
+	  {{if adata.efficiency >= 2}}
 	    <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
 	  <ui-button icon='transfer' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button><br/>
     {{/each}}
   </ui-section>
+  <ui-section label='Capacity'>
+  <ui-bar min=0 max='{{data.tot_capacity}}' value='{{data.current_vol}}'
+    state='{{data.current_vol}}'>{{data.current_vol}}</ui-bar>
 </ui-display>
