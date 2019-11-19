@@ -6,7 +6,7 @@
 	icon = 'icons/obj/lavaland/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE
-
+	var/decay = 0 //reagents/tick removed
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
 	var/reagent_id = "oil"
@@ -29,6 +29,7 @@
 /obj/structure/geyser/process()
 	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
 		reagents.add_reagent(reagent_id, potency)						   //processes
+		potency =- decay //decaying!
 
 /obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
 	if(!_reinforced)
@@ -82,7 +83,14 @@
 	icon_state = "spot"
 	anchored = TRUE
 	reagent_id = "crudeoil"
+	decay = 0.01 //reagents/tick removed
+	potency = 20
+	max_volume = 1000
+	start_volume = 50
 
+/obj/structure/geyser/oilspot/Initialize(mapload)
+	. = ..()
+	potency = rand(10,50)
 
 /obj/structure/geyser/oilspot/plunger_act(/obj/item/sounder/P, mob/living/user,)
 	if(activated)
