@@ -995,5 +995,5 @@
 			update_light()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"

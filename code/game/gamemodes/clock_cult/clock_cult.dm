@@ -353,7 +353,7 @@ Credit where due:
 		changelog_contents += "<li>[entry]</li>"
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
-/obj/item/paper/servant_primer/examine(mob/user)
-	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
-	..()
+/obj/item/paper/servant_primer/oui_getcontent(mob/target)
+	if(!is_servant_of_ratvar(target) && !isobserver(target))
+		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+	return ..()
