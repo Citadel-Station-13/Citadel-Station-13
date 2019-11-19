@@ -36,8 +36,7 @@
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()
 
-	. += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
-	msg = ""
+	. += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]"
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
 		var/msg = "The blade is raised, ready to fall, and"
 

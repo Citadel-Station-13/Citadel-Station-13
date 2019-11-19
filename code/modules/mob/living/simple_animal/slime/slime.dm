@@ -416,9 +416,9 @@
 			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
 		if (getBruteLoss())
 			if (getBruteLoss() < 40)
-				msg += "<span class='warning'>It has some punctures in its flesh!"
+				. += "<span class='warning'>It has some punctures in its flesh!"
 			else
-				msg += "<span class='danger'>It has severe punctures and tears in its flesh!</span>"
+				. += "<span class='danger'>It has severe punctures and tears in its flesh!</span>"
 
 		switch(powerlevel)
 			if(2 to 3)

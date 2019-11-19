@@ -13,7 +13,7 @@
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
 			obscure_name = TRUE
 
-	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!)"
+	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -133,10 +133,8 @@
 			. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
 		if(hellbound)
 			. += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>"
-		. += ""
-		if(getorgan(/obj/item/organ/brain) && !key && !get_ghost(FALSE, TRUE)))
+		if(getorgan(/obj/item/organ/brain) && !key && !get_ghost(FALSE, TRUE))
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
-				if(!foundghost)
 		else
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
 

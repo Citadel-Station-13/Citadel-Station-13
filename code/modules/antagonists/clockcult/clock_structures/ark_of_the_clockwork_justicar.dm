@@ -232,7 +232,7 @@
 			if(grace_period)
 				. += "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_time())]</span>"
 			else
-				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>"
+				. += "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>"
 				switch(progress_in_seconds)
 					if(-INFINITY to GATEWAY_REEBE_FOUND)
 						. += "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>"
@@ -242,7 +242,7 @@
 						. += "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>"
 	else
 		if(!active)
-			. += "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>")
+			. += "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>"
 		else
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)

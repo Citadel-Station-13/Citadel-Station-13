@@ -283,7 +283,7 @@
 	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	. = list(user, "[get_examine_string(user, TRUE)].")
+	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
 		. += desc
@@ -294,7 +294,7 @@
 			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						. += user, "[R.volume] units of [R.name]"
+						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)

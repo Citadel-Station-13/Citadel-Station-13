@@ -114,11 +114,11 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if (message1 || message2)
-		. += list("The display says:"
+		. += "The display says:"
 		if (message1)
-			. += "<br>\t<tt>[html_encode(message1)]</tt>"
+			. += "\t<tt>[html_encode(message1)]</tt>"
 		if (message2)
-			. += "<br>\t<tt>[html_encode(message2)]</tt>"
+			. += "\t<tt>[html_encode(message2)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)

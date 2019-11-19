@@ -110,6 +110,7 @@
 
 	var/sitting = 0
 	var/bellyup = 0
+	var/dogborg = FALSE
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -232,15 +233,14 @@
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
+	"Medihound" = /obj/item/robot_module/medihound, \
 	"Miner" = /obj/item/robot_module/miner, \
-	"Janitor" = /obj/item/robot_module/janitor, \
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
-
-	modulelist += get_cit_modules() //Citadel change - adds Citadel's borg modules.
+		modulelist["Security K-9"] = /obj/item/robot_module/k9
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
@@ -879,9 +879,6 @@
 /mob/living/silicon/robot/modules/miner
 	set_module = /obj/item/robot_module/miner
 
-/mob/living/silicon/robot/modules/janitor
-	set_module = /obj/item/robot_module/janitor
-
 /mob/living/silicon/robot/modules/syndicate
 	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
@@ -1256,6 +1253,20 @@
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
 
+/mob/living/silicon/robot/lay_down()
+	..()
+	update_canmove()
+
+/mob/living/silicon/robot/update_canmove()
+	..()
+	if(client && stat != DEAD && dogborg == FALSE)
+		if(resting)
+			cut_overlays()
+			icon_state = "[module.cyborg_base_icon]-rest"
+		else
+			icon_state = "[module.cyborg_base_icon]"
+	update_icons()
+
 /mob/living/silicon/robot/proc/rest_style()
 	set name = "Switch Rest Style"
 	set category = "Robot Commands"
@@ -1272,3 +1283,7 @@
 		if("Belly up")
 			bellyup = 1
 	update_icons()
+
+/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_stamina = 1)
+	if(istype(cell))
+		cell.charge -= amount*5

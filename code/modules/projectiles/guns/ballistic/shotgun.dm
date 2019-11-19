@@ -144,7 +144,7 @@
 
 /obj/item/gun/ballistic/shotgun/boltaction/examine(mob/user)
 	. = ..()
-	. += "The bolt is [bolt_open ? "open" : "closed"].")
+	. += "The bolt is [bolt_open ? "open" : "closed"]."
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -264,7 +264,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to pump it.</span>")
+	. += "<span class='notice'>Alt-click to pump it.</span>"
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
 	. = ..()

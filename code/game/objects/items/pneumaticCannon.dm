@@ -56,12 +56,12 @@
 
 /obj/item/pneumatic_cannon/examine(mob/user)
 	. = ..()
-	var/list/out = list()
 	if(!in_range(user, src))
 		. += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
 		. += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
+		CHECK_TICK
 	if(tank)
 		. += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 

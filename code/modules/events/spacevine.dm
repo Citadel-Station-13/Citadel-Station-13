@@ -301,7 +301,7 @@
 	else
 		text += " normal"
 	text += " vine."
-	. += text)
+	. += text
 
 /obj/structure/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)

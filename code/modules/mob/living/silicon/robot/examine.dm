@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>, a [src.module.name]!")
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>, a [src.module.name] unit!")
 	if(desc)
 		. += "[desc]"
 
