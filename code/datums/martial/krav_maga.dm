@@ -19,8 +19,8 @@
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
 		H.mind.martial_art.streak = ""
 	else
-		if(HAS_TRAIT(A, TRAIT_PACIFISM))
-			to_chat(A, "<span class='warning'>You don't want to harm other people!</span>")
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
 			return
 		owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
 		H.mind.martial_art.streak = "neck_chop"
@@ -39,8 +39,8 @@
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
 		H.mind.martial_art.streak = ""
 	else
-		if(HAS_TRAIT(A, TRAIT_PACIFISM))
-			to_chat(A, "<span class='warning'>You don't want to harm other people!</span>")
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
 			return
 		owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
 		H.mind.martial_art.streak = "leg_sweep"
@@ -59,8 +59,8 @@
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
 		H.mind.martial_art.streak = ""
 	else
-		if(HAS_TRAIT(A, TRAIT_PACIFISM))
-			to_chat(A, "<span class='warning'>You don't want to harm other people!</span>")
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
 			return
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
