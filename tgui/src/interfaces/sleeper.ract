@@ -62,7 +62,7 @@
 	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
 	  {{/if}}
 	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button>
-	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='purge' params='{"chem": "{{id}}"}'>Purge</ui-button><br/>
+	  <ui-button action='purge' params='{"chem": "{{id}}"}'>Purge</ui-button><br/>
     {{/each}}
     </ui-section>
   <ui-section label='Capacity'>
