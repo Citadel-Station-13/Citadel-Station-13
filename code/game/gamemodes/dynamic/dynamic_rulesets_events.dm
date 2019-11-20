@@ -270,7 +270,7 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/event/processor_overload
-	name = "Processer Overload"
+	name = "Processor Overload"
 	config_tag = "processor_overload"
 	typepath = /datum/round_event/processor_overload
 	cost = 4
