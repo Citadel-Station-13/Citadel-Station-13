@@ -11,12 +11,18 @@
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+	var/dynamic_cost = 0 // How much threat the spell costs to purchase for dynamic.
+	var/dynamic_requirement = 0 // How high the threat level needs to be for purchasing in dynamic.
 
 /datum/spellbook_entry/New()
 	..()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(dynamic_requirement > 0 && mode.threat_level < dynamic_requirement)
+			return 0
 	return 1
 
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book) // Specific circumstances
@@ -24,6 +30,10 @@
 		return 0
 	for(var/spell in user.mind.spell_list)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return 0
+	if(dynamic_cost>0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < dynamic_cost)
 			return 0
 	return 1
 
@@ -60,6 +70,10 @@
 				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
 				return 1
 	//No same spell found - just learn it
+	if(dynamic_cost > 0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.spend_threat(dynamic_cost)
+		mode.log_threat("Wizard spent [dynamic_cost] on [name].")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
@@ -83,6 +97,10 @@
 	if(!S)
 		S = new spell_type()
 	var/spell_levels = 0
+	if(dynamic_cost > 0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.refund_threat(dynamic_cost)
+		mode.log_threat("Wizard refunded [dynamic_cost] on [name].")
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
@@ -285,20 +303,8 @@
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
-
-/datum/spellbook_entry/item/staffchange/IsAvailible()
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/dynamic_staff_of_change_requirement))
-			return 0
-
-/datum/spellbook_entry/item/staffchange/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(number/dynamic_staff_of_change_cost)
-		mode.spend_threat(threat_spent)
-		mode.log_threat("Wizard spent [threat_spent] on staff of change.")
-	return ..()
+	dynamic_requirement = 60
+	dynamic_cost = 20
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -383,20 +389,8 @@
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
 	item_path = /obj/item/antag_spawner/contract
 	category = "Assistance"
-
-/datum/spellbook_entry/item/contract/IsAvailible()
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/dynamic_apprentice_cost))
-			return 0
-
-/datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(number/dynamic_apprentice_cost)
-		mode.spend_threat(threat_spent)
-		mode.log_threat("Wizard spent [threat_spent] on apprentice contract.")
-	return ..()
+	dynamic_requirement = 50
+	dynamic_cost = 10
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
@@ -416,20 +410,11 @@
 	item_path = /obj/item/antag_spawner/slaughter_demon
 	limit = 3
 	category = "Assistance"
+	dynamic_requirement = 60
 
-/datum/spellbook_entry/item/bloodbottle/IsAvailible()
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"])
-			return 0
-
-/datum/spellbook_entry/item/bloodbottle/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]
-		mode.spend_threat(threat_spent)
-		mode.log_threat("Wizard spent [threat_spent] on slaughter demon.")
-	return ..()
+/datum/spellbook_entry/item/bloodbottle/New()
+	..()
+	dynamic_cost = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]
 
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
@@ -444,20 +429,11 @@
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
 	category = "Assistance"
+	dynamic_requirement = 40
 
-/datum/spellbook_entry/item/hugbottle/IsAvailible()
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < round(CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3))
-			return 0
-
-/datum/spellbook_entry/item/hugbottle/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3
-		mode.spend_threat(threat_spent)
-		mode.log_threat("Wizard spent [threat_spent] on laughter demon.")
-	return ..()
+/datum/spellbook_entry/item/hugbottle/New()
+	..()
+	dynamic_cost = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
@@ -521,7 +497,7 @@
 	if(!SSticker.mode)
 		return FALSE
 	else
-		return TRUE
+		return ..()
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -534,15 +510,13 @@
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
+	dynamic_cost = 10
+	dynamic_requirement = 60
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/dynamic_summon_guns_requirement))
-			return 0
-	return !CONFIG_GET(flag/no_summon_guns)
+	return (!CONFIG_GET(flag/no_summon_guns) && ..())
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -552,7 +526,7 @@
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(number/dynamic_summon_guns_cost)
+		var/threat_spent = dynamic_cost
 		mode.spend_threat(threat_spent)
 		mode.log_threat("Wizard spent [threat_spent] on summon guns.")
 	return 1
@@ -560,15 +534,13 @@
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
+	dynamic_cost = 10
+	dynamic_requirement = 60
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/dynamic_summon_magic_requirement))
-			return 0
-	return !CONFIG_GET(flag/no_summon_magic)
+	return (!CONFIG_GET(flag/no_summon_guns) && ..())
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -578,7 +550,7 @@
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(number/dynamic_summon_magic_cost)
+		var/threat_spent = dynamic_cost
 		mode.spend_threat(threat_spent)
 		mode.log_threat("Wizard spent [threat_spent] on summon magic.")
 	return 1
@@ -586,28 +558,26 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
+	dynamic_cost = 20
+	dynamic_requirement = 60
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat < CONFIG_GET(number/dynamic_summon_events_requirement))
-			return 0
-	return !CONFIG_GET(flag/no_summon_events)
+	return (!CONFIG_GET(flag/no_summon_events) && ..())
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = dynamic_cost
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon events.")
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
-	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		var/threat_spent = CONFIG_GET(number/dynamic_summon_events_cost)
-		mode.spend_threat(threat_spent)
-		mode.log_threat("Wizard spent [threat_spent] on summon events.")
 	return 1
 
 /datum/spellbook_entry/summon/events/GetInfo()
