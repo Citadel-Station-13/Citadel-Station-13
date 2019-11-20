@@ -46,7 +46,6 @@
 		"sulfur",
 		"sacid",
 		"water",
-		"oil"
 		"welding_fuel"
 	)
 
