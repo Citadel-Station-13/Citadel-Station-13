@@ -55,14 +55,16 @@
 	  {{#if data.efficiency >= 4}}
 	  	<span>Purity: {{purity}}</span>
 	  {{/if}}
-	  {{#if data.efficiency >= 3}}
-	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
-	  {{/if}}
-	  {{#if adata.efficiency >= 2}}
-	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
-	  {{/if}}
-	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button>
-	  <ui-button action='purge' params='{"chem": "{{id}}"}'>Purge</ui-button><br/>
+	  <section class="buttons" align='right'>
+	    {{#if data.efficiency >= 3}}
+	      <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
+	    {{/if}}
+	    {{#if adata.efficiency >= 2}}
+	      <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
+	    {{/if}}
+	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button>
+	    <ui-button action='purge' params='{"chem": "{{id}}"}'>Purge</ui-button><br/>
+	  </section>
     {{/each}}
     </ui-section>
   <ui-section label='Capacity'>
