@@ -295,7 +295,7 @@
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 		if("purge")
-			if((allowed(usr) && scan_id)
+			if((allowed(usr) && scan_id))
 				var/chem = params["chem"]
 				if(!is_operational())
 					return
