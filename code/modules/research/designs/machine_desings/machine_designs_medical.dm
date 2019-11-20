@@ -26,14 +26,6 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
 	category = list ("Medical Machinery")
 
-/datum/design/board/reagent_sleeper
-	name = "Machine Design (Reagent Sleeper Board)"
-	desc = "The circuit board for a reagent sleeper."
-	id = "reagent_sleeper"
-	build_path = /obj/item/circuitboard/machine/reagent_sleeper
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
-	category = list ("Medical Machinery")
-
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."

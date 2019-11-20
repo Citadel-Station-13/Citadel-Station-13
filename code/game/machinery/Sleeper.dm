@@ -12,6 +12,7 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
+	req_access = list(ACCESS_CMO) //Used for reagent deletion and addition of non medicines
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -28,9 +29,27 @@
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
+	create_reagents(500, NO_REACT)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
 	reset_chem_buttons()
+	RefreshParts()
+	add_inital_chems()
+
+/obj/machinery/sleeper/Destroy()
+	var/obj/item/reagent_containers/sleeper_buffer/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
+	buffer.volume = reagents.maximum_volume
+	reagents.trans_to(buffer.reagents, reagents.total_volume)
+	..()
+
+/obj/machinery/sleeper/proc/add_inital_chems()
+	for(var/i in available_chems)
+		var/datum/reagent/R = reagents.has_reagent(i)
+		if(!R)
+			reagents.add_reagent(i, (20))
+			return
+		if(R.volume < 20)
+			reagents.add_reagent(i, (20 - R.volume))
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -46,6 +65,11 @@
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
 	reset_chem_buttons()
+
+	//Total container size 500 - 2000u
+	if(reagents)
+		reagents.maximum_volume = (500*E)
+
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = initial(icon_state)
@@ -81,7 +105,38 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(is_operational() && occupant)
+		var/datum/reagent/R = pick(reagents.reagent_list)
+		inject_chem(R.id, occupant)
 		open_machine()
+	//Is this too much?
+	if(severity == EMP_HEAVY)
+		var/chem = pick(available_chems)
+		available_chems -= chem
+		available_chems += get_random_reagent_id()
+		reset_chem_buttons()
+
+/obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/sleeper_buffer))
+		var/obj/item/reagent_containers/sleeper_buffer/SB = I
+		if((SB.reagents.total_volume + reagents.total_volume) < reagents.maximum_volume)
+			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
+			visible_message("[user] places the [SB] into the [src].")
+			qdel(SB)
+			return
+		else
+			SB.reagents.trans_to(reagents, SB.reagents.total_volume)
+			visible_message("[user] adds as much as they can to the [src] from the [SB].")
+			return
+	if(istype(I, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RC = I
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
+			if((!istype(R, /datum/reagent/medicine) && !(obj_flags & EMAGGED)) || ((allowed(usr) && scan_id)))
+				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
+				return
+		RC.reagents.trans_to(reagents, 1000)
+		visible_message("[user] adds as much as they can to the [src] from the [I].")
+		return
+
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -141,18 +196,27 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, ui_key, "sleeper", name, 550, 700, master_ui, state)
 		ui.open()
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
+	data["efficiency"] = efficiency
+	data["current_vol"] = reagents.total_volume
+	data["tot_capacity"] = reagents.maximum_volume
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+		var/datum/reagent/R = reagents.has_reagent(chem)
+		if(R)
+			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
+		else
+			R = GLOB.chemical_reagents_list[chem]
+			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = 0, "allowed" = chem_allowed(chem)))
+	for(var/datum/reagent/R in reagents.reagent_list)
+		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.id)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -216,14 +280,30 @@
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
+			var/amount = text2num(params["volume"])
 			if(!is_operational() || !mob_occupant)
 				return
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
-			if(inject_chem(chem, usr))
+			if(inject_chem(chem, usr, amount))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
+		if("synth")
+			var/chem = params["chem"]
+			if(!is_operational())
+				return
+			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
+		if("purge")
+			if((allowed(usr) && scan_id)
+				var/chem = params["chem"]
+				if(!is_operational())
+					return
+				reagents.remove_reagent(chem, 10)
+			else
+				visible_message("<span class='warning'>Access Denied.</span>")
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	. = ..()
@@ -231,9 +311,10 @@
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 	return TRUE
 
-/obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
-	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+//trans to
+/obj/machinery/sleeper/proc/inject_chem(chem, mob/user, volume = 10)
+	if(chem_allowed(chem))
+		reagents.trans_id_to(occupant, chem, volume)//emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
 			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
