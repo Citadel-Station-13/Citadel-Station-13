@@ -53466,7 +53466,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dUk" = (
 /obj/machinery/cryopod/perma{
-	icon_state = "cryopod-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,

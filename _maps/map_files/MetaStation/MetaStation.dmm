@@ -903,7 +903,6 @@
 	pixel_x = 24
 	},
 /obj/machinery/cryopod/perma{
-	icon_state = "cryopod-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
