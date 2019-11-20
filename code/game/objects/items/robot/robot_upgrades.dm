@@ -606,7 +606,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "borg_BS_RPED"
 	require_module = TRUE
-	module_type = list(/obj/item/robot_module/engineering)
+	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
