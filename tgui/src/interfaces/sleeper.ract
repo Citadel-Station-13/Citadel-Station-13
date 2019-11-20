@@ -54,7 +54,7 @@
 
   <ui-section label='Synthesize'>
     {{#each data.synthchems}}
-      <ui-button grid action='synth' params='{"chem": "{{id}}"}'>{{name}}</ui-button>
+      <ui-button grid state='{{synth_allowed ? null : "disabled"}}' action='synth' params='{"chem": "{{id}}"}'>{{name}}</ui-button>
     {{/each}}
   </ui-section>
 

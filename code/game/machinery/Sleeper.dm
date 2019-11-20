@@ -130,6 +130,8 @@
 			return
 	if(istype(I, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = I
+		if(RC.reagents.total_volume == 0)
+			to_chat(user, "<span class='notice'>The [I] is empty!</span>")
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
 			if((obj_flags & EMAGGED) || (allowed(usr)))
 				break
@@ -213,11 +215,8 @@
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = reagents.has_reagent(chem)
-		if(R)
-			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(chem)))
-		else
-			R = GLOB.chemical_reagents_list[chem]
-			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = 0, "allowed" = chem_allowed(chem)))
+		R = GLOB.chemical_reagents_list[chem]
+		data["synthchems"] += list(list("name" = R.name, "id" = R.id, "synth_allowed" = synth_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
 		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.id)))
 
@@ -344,6 +343,14 @@
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
 	return amount && occ_health
+
+/obj/machinery/sleeper/proc/synth_allowed(chem)
+	var/datum/reagent/R = reagents.has_reagent(chem)
+	if(!R)
+		return TRUE
+	if(R.volume < 50)
+		return TRUE
+	return FALSE
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
 	scrambled_chems = FALSE
