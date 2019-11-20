@@ -44,9 +44,29 @@
 	<ui-section label='Door'>
     <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
 	</ui-section>
+  <ui-section label='Synthesize'>
+    {{#each data.synthchems}}
+      <ui-button grid action='synth' params='{"chem": "{{id}}"}'>{{name}}</ui-button>
+    {{/each}}
+  </ui-section>
   <ui-section label='Inject'>
     {{#each data.chems}}
-      <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
+	  <span><b>{{name}}</b>: {{vol}}u</span>
+	  {{#if data.efficiency >= 4}}
+	  	<span>Purity: {{purity}}</span>
+	  {{/if}}
+	  {{#if data.efficiency >= 3}}
+	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
+	  {{/if}}
+	  {{#if adata.efficiency >= 2}}
+	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
+	  {{/if}}
+	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button>
+	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='purge' params='{"chem": "{{id}}"}'>Purge</ui-button><br/>
     {{/each}}
+    </ui-section>
+  <ui-section label='Capacity'>
+    <ui-bar min=0 max='{{data.tot_capacity}}' value='{{data.current_vol}}'
+    state='{{data.current_vol}}'>{{data.current_vol}}</ui-bar>
   </ui-section>
 </ui-display>

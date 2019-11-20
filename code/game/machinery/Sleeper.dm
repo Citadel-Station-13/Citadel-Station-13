@@ -130,7 +130,7 @@
 	if(istype(I, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = I
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
-			if((!istype(R, /datum/reagent/medicine) && !(obj_flags & EMAGGED)) || ((allowed(usr) && scan_id)))
+			if((!istype(R, /datum/reagent/medicine) && !(obj_flags & EMAGGED)) || (allowed(usr)))
 				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
 				return
 		RC.reagents.trans_to(reagents, 1000)
@@ -295,7 +295,7 @@
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 		if("purge")
-			if((allowed(usr) && scan_id))
+			if(allowed(usr))
 				var/chem = params["chem"]
 				if(!is_operational())
 					return
