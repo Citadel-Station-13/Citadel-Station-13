@@ -46,19 +46,23 @@
 	</ui-section>
   <ui-section label='Synthesize'>
     {{#each data.synthchems}}
-      <ui-button action='synth' params='{"chem": "{{id}}"}'>{{name}}</ui-button>
+      <ui-button grid action='synth' params='{"chem": "{{id}}"}'>{{name}}</ui-button>
     {{/each}}
   </ui-section>
   <ui-section label='Inject'>
     {{#each data.chems}}
-	  <span>{{name}}: {{vol}}u</span>
+	  <span><b>{{name}}</b>: {{vol}}u</span>
+	  {{#if data.efficiency >= 4}}
+	  	<span>Purity: {{purity}}</span>
+	  {{/if}}
 	  {{#if data.efficiency >= 3}}
 	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 1}'>1</ui-button>
 	  {{/if}}
 	  {{#if adata.efficiency >= 2}}
 	    <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 5}'>5</ui-button>
 	  {{/if}}
-	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button><br/>
+	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}", "volume": 10}'>10</ui-button>
+	  <ui-button state='{{data.occupied && allowed ? null : "disabled"}}' action='purge' params='{"chem": "{{id}}"}'>Purge</ui-button><br/>
     {{/each}}
     </ui-section>
   <ui-section label='Capacity'>

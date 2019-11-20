@@ -7,6 +7,15 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/reagent_sleeper
+	name = "Reagent Sleeper (Machine Board)"
+	build_path = /obj/machinery/reagent_sleeper
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 2)
+
 /obj/item/circuitboard/machine/vr_sleeper
 	name = "VR Sleeper (Machine Board)"
 	build_path = /obj/machinery/vr_sleeper

@@ -11,7 +11,8 @@
 	icon_state = "sleeper"
 	density = FALSE
 	state_open = TRUE
-	circuit = /obj/item/circuitboard/machine/sleeper
+	circuit = /obj/item/circuitboard/machine/reagent_sleeper
+	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
 	var/emagged = FALSE
 	var/efficiency = 1
 	var/min_health = -25
@@ -29,17 +30,26 @@
 
 /obj/machinery/reagent_sleeper/Initialize()
 	. = ..()
-	create_reagents(300, NO_REACT)
+	create_reagents(500, NO_REACT)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
 	reset_chem_buttons()
 	RefreshParts()
-	//add_inital_chems()
+	add_inital_chems()
 
 /obj/machinery/reagent_sleeper/Destroy()
 	var/obj/item/reagent_containers/sleeper_buffer/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
+	buffer.volume = reagents.maximum_volume
 	reagents.trans_to(buffer.reagents, reagents.total_volume)
 	..()
+
+/obj/machinery/reagent_sleeper/proc/add_inital_chems()
+	for(var/i in available_chems)
+		var/datum/reagent/R = reagents.has_reagent(i)
+		if(!R)
+			return
+		if(R.volume < 50)
+			reagents.add_reagent(i, (50 - R.volume))
 
 /obj/machinery/reagent_sleeper/RefreshParts()
 	var/E
@@ -56,9 +66,10 @@
 		available_chems |= possible_chems[i]
 	reset_chem_buttons()
 
-	//Total container size 300 - 1200u
+	//Total container size 500 - 2000u
 	if(reagents)
-		reagents.maximum_volume = (300*E)
+		reagents.maximum_volume = (500*E)
+
 
 /obj/machinery/reagent_sleeper/update_icon()
 	icon_state = initial(icon_state)
@@ -97,6 +108,12 @@
 		var/datum/reagent/R = pick(reagents.reagent_list)
 		inject_chem(R.id, occupant)
 		open_machine()
+	//Is this too much?
+	if(severity == EMP_HEAVY)
+		var/chem = pick(available_chems)
+		available_chems -= chem
+		available_chems += get_random_reagent_id()
+		reset_chem_buttons()
 
 /obj/machinery/reagent_sleeper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/sleeper_buffer))
@@ -179,7 +196,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "reagent_sleeper", name, 500, 700, master_ui, state)
+		ui = new(user, src, ui_key, "reagent_sleeper", name, 550, 700, master_ui, state)
 		ui.open()
 
 /obj/machinery/reagent_sleeper/ui_data()
@@ -199,7 +216,7 @@
 			R = GLOB.chemical_reagents_list[chem]
 			data["synthchems"] += list(list("name" = R.name, "id" = R.id, "vol" = 0, "allowed" = chem_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "allowed" = chem_allowed(R.id)))
+		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.id)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -277,6 +294,16 @@
 			if(!is_operational())
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
+		if("purge")
+			var/obj/item/card/id/C = usr.get_active_held_item()
+			if(src.check_access(C))
+				var/chem = params["chem"]
+				if(!is_operational())
+					return
+				reagents.remove_reagent(chem, 10)
+			else
+				visible_message("<span class='warning'>Access Denied.</span>")
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 
 /obj/machinery/reagent_sleeper/emag_act(mob/user)
@@ -287,7 +314,7 @@
 	return TRUE
 
 //trans to
-/obj/machinery/reagent_sleeper/proc/inject_chem(chem, mob/user, volume)
+/obj/machinery/reagent_sleeper/proc/inject_chem(chem, mob/user, volume = 10)
 	if(chem_allowed(chem))
 		reagents.trans_id_to(occupant, chem, volume)//emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
