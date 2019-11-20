@@ -13,7 +13,6 @@
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/reagent_sleeper
 	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
-	var/emagged = FALSE
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -130,7 +129,7 @@
 	if(istype(I, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = I
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
-			if(!istype(R, /datum/reagent/medicine) && !emagged)
+			if(!istype(R, /datum/reagent/medicine) && !(obj_flags & EMAGGED))
 				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
 				return
 		RC.reagents.trans_to(reagents, 1000)
@@ -295,8 +294,7 @@
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 		if("purge")
-			var/obj/item/card/id/C = usr.get_active_held_item()
-			if(src.check_access(C))
+			if((!allowed(usr)) && scan_id)
 				var/chem = params["chem"]
 				if(!is_operational())
 					return
@@ -310,7 +308,6 @@
 	. = ..()
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
-	emagged = TRUE
 	return TRUE
 
 //trans to
