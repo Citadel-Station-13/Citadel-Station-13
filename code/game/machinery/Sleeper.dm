@@ -251,8 +251,15 @@
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+		data["occupant"]["failing_organs"] = list()
+		var/mob/living/carbon/C = mob_occupant
+		if(C)
+			for(var/obj/item/organ/Or in C.getFailingOrgans())
+				if(istype(Or, /obj/item/organ/brain))
+					continue
+				data["occupant"]["failing_organs"] += list(list("name" = Or.name))
+
 		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-			var/mob/living/carbon/C = mob_occupant
 			var/blood_id = C.get_blood_id()
 			if(blood_id)
 				data["occupant"]["blood"] = list() // We can start populating this list.
