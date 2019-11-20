@@ -52,14 +52,14 @@
 	. = TRUE
 	switch(action)
 		if("remove")
-				var/LL = required_reagents.len
-				LL =-1
-				if(LL > 1)
-					required_reagents.Cut(LL,0)
-				else if(LL = 0)
-					required_reagents.Cut(1,0)
-				else
-					return
+			var/LL = required_reagents.len
+			LL =-1
+			if(LL > 1)
+				required_reagents.Cut(LL,0)
+			else if(LL = 0)
+				required_reagents.Cut(1,0)
+			else
+				return
 		if("add")
 			var/input_reagent = replacetext(lowertext(input("Enter the name of the reagent", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the nam
 			input_reagent = find_reagent(input_reagent)
