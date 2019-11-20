@@ -52,3 +52,10 @@
 	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
 	reward = 1000
 	wanted_types = list(/obj/item/relic)
+
+/datum/bounty/item/silly/toy_swords
+	name = "Toy Swords"
+	description = "Nanotrasen has partaken in a reenactment of a famous movie, but we only have lethal energy based swords. Send us some toys so we stop killing are actors."
+	reward = 1200
+	required_count = 3
+	wanted_types = list(/obj/item/toy/sword, /obj/item/toy/sword/cx)

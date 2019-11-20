@@ -46,18 +46,6 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
-/datum/supply_pack/medical/bloodpackssynth
-	name = "Synthetics Blood Pack Crate"
-	desc = "Contains five synthetics blood packs for reintroducing blood to patients."
-	cost = 3000
-	contains = list(/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics)
-	crate_name = "blood freezer"
-	crate_type = /obj/structure/closet/crate/freezer
-
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
 	desc = "Contains two defibrillators for bringing the recently deceased back to life."
@@ -82,17 +70,6 @@
 	cost = 800
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
-
-/datum/supply_pack/science/adv_surgery_tools
-	name = "Med-Co Advanced surgery tools"
-	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
-	cost = 5500
-	access = ACCESS_SURGERY
-	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/sterilizine)
-	crate_name = "medco newest surgery tools"
-	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
@@ -193,6 +170,18 @@
 					/obj/item/reagent_containers/medspray/sterilizine,
 					/obj/item/roller)
 	crate_name = "surgical supplies crate"
+
+/datum/supply_pack/medical/bloodpackssynth
+	name = "Synthetics Blood Pack Crate"
+	desc = "Contains five synthetics blood packs for reintroducing blood to patients."
+	cost = 3000
+	contains = list(/obj/item/reagent_containers/blood/synthetics,
+					/obj/item/reagent_containers/blood/synthetics,
+					/obj/item/reagent_containers/blood/synthetics,
+					/obj/item/reagent_containers/blood/synthetics,
+					/obj/item/reagent_containers/blood/synthetics)
+	crate_name = "blood freezer"
+	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/firstaidtoxins
 	name = "Toxin Treatment Kit Crate"

@@ -29,15 +29,6 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/misc/captain_pen
-	name = "Captain Pen"
-	desc = "A spare Captain fountain pen."
-	access = ACCESS_CAPTAIN
-	cost = 10000
-	contains = list(/obj/item/pen/fountain/captain)
-	crate_name = "captain pen"
-	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
-
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -97,6 +88,15 @@
 					/obj/item/stamp/denied,
 					/obj/item/storage/briefcase)
 	crate_name = "bureaucracy crate"
+
+/datum/supply_pack/misc/captain_pen
+	name = "Captain Pen"
+	desc = "A spare Captain fountain pen."
+	access = ACCESS_CAPTAIN
+	cost = 5000
+	contains = list(/obj/item/pen/fountain/captain)
+	crate_name = "captain pen"
+	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
 
 /datum/supply_pack/misc/fountainpens
 	name = "Calligraphy Crate"

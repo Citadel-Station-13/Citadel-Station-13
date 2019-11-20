@@ -36,7 +36,7 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/candy/randomised
+/datum/supply_pack/organic/randomised/candy
 	name = "Candy Crate"
 	desc = "For people that have a insatiable sweet tooth! Has ten candies to be eaten up.."
 	cost = 2500
@@ -68,6 +68,12 @@
 					/obj/item/storage/fancy/heart_box,
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
+
+/datum/supply_pack/organic/randomised/candy/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"

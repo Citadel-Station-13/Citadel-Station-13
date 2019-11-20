@@ -8,6 +8,14 @@
 	resistance_flags = ACID_PROOF
 	container_HP = 2
 
+/obj/item/reagent_containers/glass/slug
+	name = "glass slug"
+	desc = "Seemingly useless wasted sand and fuel mixed in one... Or maybe it can be refined into something more usefull?"
+	icon_state = "glassslug"
+	amount_per_transfer_from_this = 0
+	possible_transfer_amounts = list(0)
+	volume = 0
+	resistance_flags = ACID_PROOF
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
@@ -157,8 +165,37 @@
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
 	desc = "A jar for honey. It can hold up to 50 units of sweet delight. Unable to withstand reagents of an extreme pH."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "vapour"
+	icon_state = "honey"
+
+/obj/item/reagent_containers/glass/beaker/glass_dish
+	name = "glass dish"
+	desc = "A tiny glass dish. It can hold up to 3 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=500)
+	icon_state = "glass_disk"
+	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
+	volume = 3
+
+/obj/item/reagent_containers/glass/beaker/flask_large
+	name = "large flask"
+	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=2500)
+	icon_state = "flasklarge"
+	volume = 80
+
+/obj/item/reagent_containers/glass/beaker/flask_small
+	name = "small flask"
+	desc = "A small flask. It can hold up to 40 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=1000)
+	icon_state = "flasksmall"
+	volume = 40
+
+/obj/item/reagent_containers/glass/beaker/flaskspouty
+	name = "flask with spout"
+	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=2500)
+	icon_state = "flaskspouty"
+	possible_transfer_amounts = list(1,2,3,4,5,10,15,20,25,30,50,100,120)
+	volume = 120
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"

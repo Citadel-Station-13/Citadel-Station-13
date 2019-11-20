@@ -307,7 +307,7 @@
 	desc = "Allows for the blowing, and bottling of Blooddrop bottles."
 	id = "blooddrop"
 	category = list("Wines")
-	reagents_list = list("champagne" = 30, "co2" = 30, "wine" = 10, "grape_juice" = 30)
+	reagents_list = list("champagne" = 30, "co2" = 30, "wine" = 10, "grapejuice" = 30)
 	build_path = /obj/item/export/bottle/blooddrop
 
 /datum/design/bottle/export/slim_gold
@@ -323,7 +323,7 @@
 	desc = "Allows for the blowing, and bottling of White Bloodmoon bottles."
 	id = "white_bloodmoon"
 	category = list("Wines")
-	reagents_list = list("synthflesh" = 50, "blood" = 50, "gib" = 10)
+	reagents_list = list("synthflesh" = 50, "blood" = 50, "liquidgibs" = 10)
 	build_path = /obj/item/export/bottle/white_bloodmoon
 
 /datum/design/bottle/export/greenroad

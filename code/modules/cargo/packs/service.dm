@@ -33,6 +33,16 @@
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
+/datum/supply_pack/service/janitor/janpimp
+	name = "Custodial Cruiser"
+	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/vehicle/ridden/janicart,
+					/obj/item/key/janitor)
+	crate_name = "janitor ride crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/service/carpet_exotic
 	name = "Exotic Carpet Crate"
 	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
@@ -135,16 +145,6 @@
 					/obj/item/reagent_containers/glass/bottle/ammonia,
 					/obj/item/reagent_containers/spray/drying_agent)
 	crate_name = "janitor backpack crate"
-
-/datum/supply_pack/service/janitor/janpimp
-	name = "Custodial Cruiser"
-	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
-	cost = 3000
-	access = ACCESS_JANITOR
-	contains = list(/obj/vehicle/ridden/janicart,
-					/obj/item/key/janitor)
-	crate_name = "janitor ride crate"
-	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"

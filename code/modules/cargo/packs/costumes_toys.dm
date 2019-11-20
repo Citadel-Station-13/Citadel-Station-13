@@ -9,6 +9,12 @@
 /datum/supply_pack/costumes_toys
 	group = "Costumes & Toys"
 
+/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"
 	desc = "Flaunt your status with three unique, highly-collectable hats!"
@@ -288,12 +294,6 @@
 					/obj/item/clothing/head/wizard/fake)
 	crate_name = "wizard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
 
 /datum/supply_pack/costumes_toys/wardrobes/autodrobe
 	name = "Autodrobe Supply Crate"
