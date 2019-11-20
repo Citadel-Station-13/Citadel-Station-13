@@ -17,7 +17,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(8, 13)
+	var/damage = rand(10, 13)
 	var/extra_damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
 	if(extra_damage == A.dna.species.punchdamagelow)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
