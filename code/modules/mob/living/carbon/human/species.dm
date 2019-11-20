@@ -1476,7 +1476,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if((!attacker_style || attacker_style.pacifism_check) && HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
