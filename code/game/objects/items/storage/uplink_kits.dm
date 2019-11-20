@@ -389,5 +389,5 @@
 	for(var/i in 1 to 10)
 		new /obj/item/seeds/random(src)
 
-	if prob(50)
+	if(prob(50))
 		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box
