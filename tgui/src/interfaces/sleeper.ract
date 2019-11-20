@@ -34,7 +34,7 @@
 	{{#if data.occupant.failing_organs}}
 		<ui-section label='Failing Organs'>
 			{{#each data.occupant.failing_organs}}
-				<span class='bad'>{{name}} </span>
+				<span class='bad'> {{name}} </span>
 			{{/each}}
 		</ui-section>
 	{{/if}}
