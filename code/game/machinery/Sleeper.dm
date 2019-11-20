@@ -47,7 +47,7 @@
 		var/datum/reagent/R = reagents.has_reagent(i)
 		if(!R)
 			reagents.add_reagent(i, (20))
-			return
+			continue
 		if(R.volume < 20)
 			reagents.add_reagent(i, (20 - R.volume))
 
