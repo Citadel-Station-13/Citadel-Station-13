@@ -1800,6 +1800,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/seeds/random
 	cost = 2
 	restricted_roles = list("Botanist")
+	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/strange_seeds_10pack
 	name = "Pack of strange seeds x10"
