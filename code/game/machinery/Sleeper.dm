@@ -298,10 +298,17 @@
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 		if("purge")
+			var/chem = params["chem"]
 			if(allowed(usr))
-				var/chem = params["chem"]
 				if(!is_operational())
 					return
+				reagents.remove_reagent(chem, 10)
+				return
+			if(chem in available_chems)
+				if(!is_operational())
+					return
+				/*var/datum/reagent/R = reagents.has_reagent(chem) //For when purity effects are in
+				if(R.purity < 0.8)*/
 				reagents.remove_reagent(chem, 10)
 			else
 				visible_message("<span class='warning'>Access Denied.</span>")
