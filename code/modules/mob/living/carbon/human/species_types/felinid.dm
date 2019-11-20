@@ -94,7 +94,7 @@
 	.=..()
 	if(chem.id == "cocoa" || chem.id == "hot_coco" || chem.id == "chocolate_milk" || chem.id == "chocolatepudding")
 		if(prob(20))
-			M.adjust_disgust(20)
+			M.adjust_disgust(5)
 		if(prob(5))
 			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 		if(prob(10))
@@ -102,7 +102,7 @@
 			to_chat(M, "<span class='notice'>[sick_message]</span>")
 		if(prob(35))
 			var/obj/item/organ/guts = pick(M.internal_organs)
-			guts.applyOrganDamage(15)
+			guts.applyOrganDamage(5)
 		return FALSE
 
 /proc/mass_purrbation()
