@@ -73,31 +73,3 @@
 	reinforced = TRUE
 	plunge_mod = 0.8
 
-/obj/item/sounder
-	name = "resevoir sounder"
-	desc = " It's a NT R-04 oil resevoir sounder. Use it on areas with visible leaking oil to generate a drilling plan."
-	icon = 'icons/obj/watercloset.dmi'
-	icon_state = "reinforced_plunger" //wip sprites
-
-/obj/structure/geyser/oilspot
-	name = "oily residue"
-	icon_state = "spot"
-	anchored = TRUE
-	reagent_id = "crudeoil"
-	decay = 0.01 //reagents/tick removed
-	potency = 20
-	max_volume = 1000
-	start_volume = 50
-
-/obj/structure/geyser/oilspot/Initialize(mapload)
-	. = ..()
-	potency = rand(10,50)
-
-/obj/structure/geyser/oilspot/plunger_act(/obj/item/sounder/P, mob/living/user,)
-	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already sounded!")
-		return
-
-	to_chat(user, "<span class='notice'>You start sounding the [src]!")
-	if(do_after(user, 50, target = src) && !activated)
-		start_chemming()
