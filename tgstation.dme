@@ -3008,7 +3008,6 @@
 #include "modular_citadel\code\game\machinery\wishgranter.dm"
 #include "modular_citadel\code\game\objects\cit_screenshake.dm"
 #include "modular_citadel\code\game\objects\items.dm"
-#include "modular_citadel\code\game\objects\tools.dm"
 #include "modular_citadel\code\game\objects\effects\spawner\spawners.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\souldeath.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\projectiles\impact.dm"
