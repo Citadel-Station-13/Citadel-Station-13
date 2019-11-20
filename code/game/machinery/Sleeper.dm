@@ -130,7 +130,9 @@
 	if(istype(I, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = I
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
-			if(!istype(R, /datum/reagent/medicine) && (!(obj_flags & EMAGGED) || (!(allowed(usr)))))
+			if((obj_flags & EMAGGED) || (allowed(usr)))
+				break
+			if(!istype(R, /datum/reagent/medicine))
 				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
 				return
 		RC.reagents.trans_to(reagents, 1000)
@@ -307,6 +309,7 @@
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	. = ..()
+	obj_flags |= EMAGGED
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 	return TRUE
