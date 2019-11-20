@@ -19,7 +19,7 @@
 
 	var/damage = rand(8, 13)
 	var/extra_damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
-	if(extra_damage = A.dna.species.punchdamagelow)
+	if(extra_damage == A.dna.species.punchdamagelow)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)

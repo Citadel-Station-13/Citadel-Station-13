@@ -49,8 +49,8 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(A, TRAIT_PACIFISM))
-		to_chat(A, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -64,8 +64,8 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(A, TRAIT_PACIFISM))
-		to_chat(A, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -79,8 +79,8 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(A, TRAIT_PACIFISM))
-		to_chat(A, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to KICK!</span>", "<b><i>Your next attack will be a KICK.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -94,8 +94,8 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(A, TRAIT_PACIFISM))
-		to_chat(A, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to STRIKE!</span>", "<b><i>Your next attack will be a STRIKE.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -109,8 +109,8 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(A, TRAIT_PACIFISM))
-		to_chat(A, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
