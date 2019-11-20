@@ -28,6 +28,9 @@
 	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 
+/obj/machinery/plumbing/proc/can_be_rotated(mob/user,rotation_type)
+	return TRUE
+	
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.</span>"
