@@ -283,6 +283,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	config_tag = "midround_wizard"
+	persistent = TRUE
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
@@ -293,6 +294,7 @@
 	requirements = list(90,90,70,50,50,50,50,40,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE
+	var/datum/mind/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
@@ -306,6 +308,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
+	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+		return FALSE
+
+	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
+		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
+			return FALSE
+
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
+
+	return RULESET_STOP_PROCESSING
 
 //////////////////////////////////////////////
 //                                          //
