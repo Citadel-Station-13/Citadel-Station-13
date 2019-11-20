@@ -103,5 +103,4 @@
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/medsprays(src)
 	new /obj/item/storage/box/medsprays(src)
-	new /obj/item/pipe_dispenser/plumbing(src)
-	new /obj/item/pipe_dispenser/plumbing(src)
+
