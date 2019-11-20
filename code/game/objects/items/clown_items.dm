@@ -114,9 +114,9 @@
 	var/moodlet = "honk" //used to define which kind of moodlet is added to the honked target
 	var/honksound = 'sound/items/bikehorn.ogg'
 
-/obj/item/bikehorn/Initialize()
+/obj/item/bikehorn/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list(honksound=1), 50)
+	AddComponent(/datum/component/squeak, list("[honksound]" = 1), 50) //Because list() is using named argument syntax here, we need to wrap the honksound between double quotes to pass it down correctly.
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, moodlet, /datum/mood_event/honk)
@@ -124,7 +124,7 @@
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, honksound, 50, 1)
 	return (BRUTELOSS)
 
 //air horn
