@@ -448,7 +448,7 @@
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	if(A == D) // don't stun grab yoursel
+	if(A.pulling == D || A == D) // don't stun grab yoursel
 		return FALSE
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
