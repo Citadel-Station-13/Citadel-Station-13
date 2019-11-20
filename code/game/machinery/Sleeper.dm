@@ -130,7 +130,7 @@
 	if(istype(I, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = I
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
-			if((!istype(R, /datum/reagent/medicine) && !(obj_flags & EMAGGED)) || (allowed(usr)))
+			if(!istype(R, /datum/reagent/medicine) && (!(obj_flags & EMAGGED) || (!(allowed(usr)))))
 				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
 				return
 		RC.reagents.trans_to(reagents, 1000)
