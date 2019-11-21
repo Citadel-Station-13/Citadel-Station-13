@@ -20,7 +20,7 @@
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	playsound(src, 'sound/machines/defib_zap.ogg', 75, 1, -1)
 	playsound(src, "bodyfall", 50, 1)
-	if(H.stat == DEAD)
+	if(H.stat != DEAD)
 		display_results(user, target, "<span class='warning'>You can't use this procedure on the living! [H]'s body flops madly like a wild fish on the table from the current, and your crazed surgical methods.</span>",
 			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
 			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
