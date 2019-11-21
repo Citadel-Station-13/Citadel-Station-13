@@ -1131,7 +1131,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/syndeka
 	refundable = TRUE
 	cost = 60
-  restricted = TRUE
+	restricted = TRUE
 
 /datum/uplink_item/support/reinforcement/saboteur_borg
 	name = "Syndicate Saboteur Cyborg"
