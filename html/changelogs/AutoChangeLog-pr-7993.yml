@@ -1,8 +1,0 @@
-author: "Improving and Balancing Cyborgs"
-delete-after: True
-changes: 
-  - rscadd: "Added Crew Pinpointer to Security Borg"
-  - rscadd: "Added Crew Monitor to Medical Borg"
-  - rscadd: "Added Crew Pinpointer to MediHound Borg"
-  - tweak: "Made the Disabler_Cooler compatible with both Security Borg and K9 Borg"
-  - tweak: "Changed the Warning Text upon selecting Security or K9 module"

@@ -1,7 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - refactor: "improved vore sound responsiveness to preference choices."
-  - balance: "removed morphine from Medihound sleeper chemical list"
-  - bugfix: "fixed preference setting being broken"
-  - refactor: "Medihound sleepers are Initialized properly, and icons update correctly now on eject"

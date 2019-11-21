@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver/syndie
+	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -739,7 +739,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
-            Great for blasting airlocks off their frames and knocking down enemies."
+			Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -768,9 +768,15 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 4
+	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
+
+/datum/uplink_item/ammo/revolver/ap
+	name = ".357 Armor Piercing Speed Loader"
+	desc = "A speed loader that contains seven additional .357 AP Magnum rounds; usable with the Syndicate revolver. \
+			Cuts through like a hot knife through butter."
+	item = /obj/item/ammo_box/a357/ap
 
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade"
@@ -1117,13 +1123,24 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 35
 	restricted = TRUE
 
+
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Rapid Offense Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
 			Comes equipped with a claws, laser blasters, the ability to roll and an advanced energy shield, as well as an emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/syndeka
 	refundable = TRUE
-	cost = 65
+	cost = 60
+  restricted = TRUE
+
+/datum/uplink_item/support/reinforcement/saboteur_borg
+	name = "Syndicate Saboteur Cyborg"
+	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
+			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
+			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
+	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
+	refundable = TRUE
+	cost = 35
 	restricted = TRUE
 
 /datum/uplink_item/support/gygax
@@ -1723,7 +1740,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
 	desc = "A technology disk holding a terabyte of highly confidential abductor technology. \
-			Simply insert into research console of choice and import the files from the disk. You might research some useful gear from this."
+			Simply insert into research console of choice and import the files from the disk. Because of its foreign nature, it may require multiple uploads to work properly."
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")

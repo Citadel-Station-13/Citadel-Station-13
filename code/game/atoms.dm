@@ -186,6 +186,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null
@@ -266,7 +270,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		should_override = TRUE
 
-	
+
 	if(blood_DNA && !istype(src, /obj/effect/decal))
 		override[EXAMINE_POSITION_BEFORE] = " blood-stained "
 		should_override = TRUE
@@ -563,7 +567,7 @@
 
 
 //Hook for running code when a dir change occurs
-/atom/proc/setDir(newdir)
+/atom/proc/setDir(newdir, ismousemovement=FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -829,7 +833,10 @@ Proc for attack log creation, because really why not
 		return filters[filter_data.Find(name)]
 
 /atom/movable/proc/remove_filter(name)
-	if(filter_data[name])
+	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
 		return TRUE
+
+/atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)

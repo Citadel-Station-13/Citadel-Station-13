@@ -13,6 +13,7 @@
 	breach_time = 100 //ten seconds till all goes to shit
 	recharge_rate = 100
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
+	spawn_tracked = FALSE
 
 /obj/mecha/combat/neovgre/GrantActions(mob/living/user, human_occupant = 0) //No Eject action for you sonny jim, your life for Ratvar!
 	internals_action.Grant(user, src)
