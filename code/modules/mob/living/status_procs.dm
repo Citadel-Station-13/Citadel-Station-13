@@ -53,57 +53,18 @@
 
 ///////////////////////////////// KNOCKDOWN /////////////////////////////////////
 
-/mob/living/IsKnockdown() //If we're knocked down
-	return has_status_effect(STATUS_EFFECT_KNOCKDOWN)
-
-/mob/living/proc/AmountKnockdown() //How many deciseconds remain in our knockdown
-	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-	if(K)
-		return K.duration - world.time
-	return 0
-
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg) //Can't go below remaining duration
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(isnull(override_hardstun)? amount : override_hardstun, ignore_canknockdown))
 			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(K)
-			var/duration = max(world.time + (isnull(override_hardstun)? amount : override_hardstun), K.duration)
-			remove_status_effect(STATUS_EFFECT_KNOCKDOWN)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, duration, updating,override_hardstun, override_stamdmg)
-		else if((amount || override_hardstun) > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating, override_hardstun, override_stamdmg)
-		return K
-
-/mob/living/proc/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Sets remaining duration
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(amount <= 0)
-			if(K)
-				qdel(K)
-		else
-			if(absorb_stun(amount, ignore_canknockdown))
-				return
-			if(K)
-				var/duration = world.time + amount
-				remove_status_effect(STATUS_EFFECT_KNOCKDOWN)
-				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, duration, updating)
-			else
-				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
-		return K
-
-/mob/living/proc/AdjustKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Adds to remaining duration
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
-		if(absorb_stun(amount, ignore_canknockdown))
-			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(K)
-			var/duration = K.duration + amount
-			remove_status_effect(STATUS_EFFECT_KNOCKDOWN)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, duration, updating)
-		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
-		return K
+		if(istype(buckled, /obj/vehicle/ridden))
+			var/obj/buckl = buckled
+			buckl.unbuckle_mob(src)
+		resting = TRUE
+		adjustStaminaLoss(isnull(override_stamdmg)? amount*0.25 : override_stamdmg)
+		if(updating)
+			update_canmove()
+		return TRUE
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 

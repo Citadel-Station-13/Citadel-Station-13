@@ -244,7 +244,6 @@
 	if(isjellyperson(M))
 		shock_timer = 0 //immune to shocks
 		M.AdjustStun(-40, 0)
-		M.AdjustKnockdown(-40, 0)
 		M.AdjustUnconscious(-40, 0)
 		M.adjustStaminaLoss(-2, 0)
 		if(isluminescent(M))

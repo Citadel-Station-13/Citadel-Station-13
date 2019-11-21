@@ -26,7 +26,6 @@
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
 			user.SetStun(0, FALSE)
-			user.SetKnockdown(0, FALSE)
 			user.setStaminaLoss(0, 0)
 			var/obj/effect/dummy/phased_mob/shadow/S2 = new(get_turf(user.loc))
 			user.forceMove(S2)

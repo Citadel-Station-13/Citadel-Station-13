@@ -227,16 +227,6 @@
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
 /mob/living/simple_animal/drone/cogscarab/update_canmove()
 	. = ..()
 	if(.)

@@ -495,7 +495,6 @@
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
 	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
 	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
@@ -1211,7 +1210,7 @@
 	. = ..()
 	switch(var_name)
 		if("knockdown")
-			SetKnockdown(var_value)
+			Knockdown(var_value)
 		if("stun")
 			SetStun(var_value)
 		if("unconscious")
@@ -1250,8 +1249,6 @@
 		SetUnconscious(clamp_unconscious_to)
 	if(AmountStun() > clamp_immobility_to)
 		SetStun(clamp_immobility_to)
-	if(AmountKnockdown() > clamp_immobility_to)
-		SetKnockdown(clamp_immobility_to)
 	adjustStaminaLoss(min(0, -stamina_boost))
 	adjustStaminaLossBuffered(min(0, -stamina_buffer_boost))
 	if(scale_stamina_loss_recovery)

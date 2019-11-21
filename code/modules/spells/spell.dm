@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("stun")
 			target.AdjustStun(amount)
 		if("knockdown")
-			target.AdjustKnockdown(amount)
+			target.Knockdown(amount)
 		if("unconscious")
 			target.AdjustUnconscious(amount)
 		else

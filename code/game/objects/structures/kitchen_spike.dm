@@ -136,7 +136,7 @@
 	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
-	M.AdjustKnockdown(20)
+	M.Knockdown(20)
 
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())
