@@ -150,11 +150,10 @@ SLIME SCANNER
 		msg += "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>\n"
 		if(advanced)
 			msg += "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>\n"
-	if (!M.getorgan(/obj/item/organ/brain))
-		to_chat(user, "\t<span class='alert'>Subject lacks a brain.</span>") //Unsure how this won't proc for 50% of the cit playerbase (This is a joke everyone on cit a cute.)
 
 
-
+	to_chat(user, msg)
+	msg = ""
 
 	// Body part damage report
 	var/list/dmgreport = list()
@@ -180,7 +179,7 @@ SLIME SCANNER
 								<td><font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font></td>\
 								<td><font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font></td></tr>"
 			dmgreport += "</table>\n"
-			msg += dmgreport
+			to_chat(user, dmgreport.Join())
 
 
 	//Organ damages report
@@ -190,6 +189,7 @@ SLIME SCANNER
 
 		for(var/organ in C.internal_organs)
 			var/temp_message
+			var/damage_message
 			var/obj/item/organ/O = organ
 
 			//EYES
@@ -197,15 +197,15 @@ SLIME SCANNER
 				var/obj/item/organ/eyes/eyes = O
 				if(advanced)
 					if(HAS_TRAIT(C, TRAIT_BLIND))
-						temp_message += "\t<span class='alert'>Subject is blind.</span>"
+						temp_message += " <span class='alert'>Subject is blind.</span>"
 					if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
-						temp_message += "\t<span class='alert'>Subject is nearsighted.</span>"
+						temp_message += " <span class='alert'>Subject is nearsighted.</span>"
 					if(eyes.damage > 30)
-						temp_message += "\t<span class='alert'>Subject has severe eye damage.</span>"
+						damage_message += " <span class='alert'>Subject has severe eye damage.</span>"
 					else if(eyes.damage > 20)
-						temp_message += "\t<span class='alert'>Subject has significant eye damage.</span>"
+						damage_message += " <span class='alert'>Subject has significant eye damage.</span>"
 					else if(eyes.damage)
-						temp_message += "\t<span class='alert'>Subject has minor eye damage.</span>"
+						damage_message += " <span class='alert'>Subject has minor eye damage.</span>"
 
 
 			//EARS
@@ -213,28 +213,28 @@ SLIME SCANNER
 				var/obj/item/organ/ears/ears = O
 				if(advanced)
 					if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
-						temp_message += "\t<span class='alert'>Subject is genetically deaf.</span>"
+						temp_message += " <span class='alert'>Subject is genetically deaf.</span>"
 					else if(HAS_TRAIT(C, TRAIT_DEAF))
-						temp_message += "\t<span class='alert'>Subject is deaf.</span>"
+						temp_message += " <span class='alert'>Subject is deaf.</span>"
 					else
 						if(ears.damage)
-							temp_message += "\t<span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>"
+							damage_message += " <span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>"
 						if(ears.deaf)
-							temp_message += "\t<span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>"
+							damage_message += " <span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>"
 
 
 			//BRAIN
 			if(istype(O, /obj/item/organ/brain))
 				if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 200)
-					temp_message += "\t<span class='alert'>Subject's brain function is non-existent. Neurine injection recomended.</span>"
+					damage_message += " <span class='alert'>Subject's brain function is non-existent. Neurine injection recomended.</span>"
 				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 120)
-					temp_message += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>"
+					damage_message += " <span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>"
 				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 45)
-					temp_message += "\t<span class='alert'>Brain damage detected.</span>"
-				else
-					temp_message += "\t<span class='alert'>Functional Brain detected.</span>"
+					damage_message += " <span class='alert'>Brain damage detected.</span>"
+				else if(!advanced)
+					damage_message += " <span class='info'>Functional Brain detected.</span>"
 				if(advanced)
-					temp_message += "\t<span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>"
+					temp_message += " <span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>"
 
 				//TRAUMAS
 				if(LAZYLEN(C.get_traumas()))
@@ -250,40 +250,42 @@ SLIME SCANNER
 								trauma_desc += "permanent "
 						trauma_desc += B.scan_desc
 						trauma_text += trauma_desc
-					temp_message += "\t<span class='alert'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>"
+					temp_message += " <span class='alert'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>"
 				if(C.roundstart_quirks.len)
-					temp_message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>"
+					temp_message += " <span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>"
 
 				if(ishuman(C) && advanced)
 					var/mob/living/carbon/human/H = M
 					//MON PETIT CHAUFFEUR
 					if(H.hallucinating())
-						temp_message += "\t<span class='info'>Subject is hallucinating.</span>"
+						temp_message += " <span class='info'>Subject is hallucinating.</span>"
 
 					//MKUltra
 					if(H.has_status_effect(/datum/status_effect/chem/enthrall))
-						temp_message += "\t<span class='info'>Subject has abnormal brain fuctions.</span>"
+						temp_message += " <span class='info'>Subject has abnormal brain fuctions.</span>"
 
 					//Astrogen shenanigans
 					if(H.reagents.has_reagent("astral"))
 						if(H.mind)
-							temp_message += "\t<span class='danger'>Warning: subject may be possesed.</span>"
+							temp_message += " <span class='danger'>Warning: subject may be possesed.</span>"
 						else
-							temp_message += "\t<span class='notice'>Subject appears to be astrally projecting.</span>"
+							temp_message += " <span class='notice'>Subject appears to be astrally projecting.</span>"
 
 
 			//LIVER
 			if(istype(O, /obj/item/organ/liver))
 				var/obj/item/organ/liver/L = O
+				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
+					msg += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 				if(L.swelling > 20)
-					msg += "\t<span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
+					msg += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
 
 			//HEART
 			if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
 				var/obj/item/organ/heart/He = O
 				var/mob/living/carbon/human/H = M
 				if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-					msg += "\t<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock <b>immediately!</b></span>"
+					msg += " <span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock <b>immediately!</b></span>"
 				if(He.organ_flags & ORGAN_FAILING)
 					heart_ded = TRUE
 
@@ -291,30 +293,32 @@ SLIME SCANNER
 			if(istype(O, /obj/item/organ/tongue))
 				var/obj/item/organ/tongue/T = O
 				if(T.name == "fluffy tongue")
-					msg += "\t<span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
+					msg += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
 
 			//HECK
 			if(istype(O, /obj/item/organ/genital/penis))
 				var/obj/item/organ/genital/penis/P = O
 				if(P.length>20)
-					msg += "\t<span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
+					msg += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
 
 			if(istype(O, /obj/item/organ/genital/breasts))
 				var/obj/item/organ/genital/breasts/Br = O
 				if(Br.cached_size>5)
-					msg += "\t<span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
+					msg += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
+
+
 
 			//GENERAL HANDLER
-			var/damage_message
-			if(O.organ_flags & ORGAN_FAILING)
-				damage_message += "\t<span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
-			else if(O.damage > O.high_threshold)
-				damage_message += "\t<span class='alert'><b>Chronic [O.name] failure detected.</b></span>"
-			else if(O.damage > O.low_threshold && advanced)
-				damage_message += "\t<font color='red'><b>Acute [O.name] failure detected.</b></span>"
+			if(!damage_message)
+				if(O.organ_flags & ORGAN_FAILING)
+					damage_message += " <span class='alert'><b>End Stage [uppertext(O.name)] failure detected.</b></span>"
+				else if(O.damage > O.high_threshold)
+					damage_message += " <span class='alert'><b>Chronic [uppertext(O.name)] failure detected.</b></span>"
+				else if(O.damage > O.low_threshold && advanced)
+					damage_message += " <font color='red'><b>Acute [uppertext(O.name)] failure detected.</b></span>"
 
 			if(temp_message || damage_message)
-				msg += "[O.name]: [damage_message] [temp_message]\n"
+				msg += "<b>[uppertext(O.name)]</b>: [damage_message] [temp_message]\n"
 
 
 
@@ -418,7 +422,7 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			msg += "<span class='notice'>Detected cybernetic modifications:</span>\n"
 			msg += "<span class='notice'>[cyberimp_detect]</span>\n"
-	msg += "*---------*</span>"
+	msg += "<span class='notice'>*---------*</span>"
 	to_chat(user, msg)
 	SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
 

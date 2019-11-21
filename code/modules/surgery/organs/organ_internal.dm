@@ -235,6 +235,7 @@
 	if(delta > 0)
 		if(damage >= maxHealth)
 			organ_flags |= ORGAN_FAILING
+			owner.med_hud_set_status()
 			return now_failing
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			return high_threshold_passed
@@ -242,6 +243,7 @@
 			return low_threshold_passed
 	else
 		organ_flags &= ~ORGAN_FAILING
+		owner.med_hud_set_status()
 		if(!owner)//Processing is stopped when the organ is dead and outside of someone. This hopefully should restart it if a removed organ is repaired outside of a body.
 			START_PROCESSING(SSobj, src)
 		if(prev_damage > low_threshold && damage <= low_threshold)
@@ -368,12 +370,11 @@
 
 /obj/item/organ/random
 	name = "Illegal organ"
-	desc = "Something fucked up"
+	desc = "Something hecked up"
 
 /obj/item/organ/random/Initialize()
 	..()
-	var/list = subtypesof(/obj/item/organ)
-	list -= /obj/item/organ/random
+	var/list = (/obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tail, /obj/item/organ/stomach)
 	var/newtype = pick(list)
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL

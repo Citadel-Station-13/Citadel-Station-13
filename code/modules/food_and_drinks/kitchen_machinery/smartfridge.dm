@@ -426,7 +426,7 @@
 	if(istype(AM))
 		AM.organ_flags &= ~ORGAN_FROZEN
 
-/obj/machinery/smartfridge/chemistry/preloaded
+/obj/machinery/smartfridge/organ/preloaded
 	initial_contents = list(
 		/obj/item/organ/random = 1,
 		/obj/item/reagent_containers/medspray/synthtissue = 1,

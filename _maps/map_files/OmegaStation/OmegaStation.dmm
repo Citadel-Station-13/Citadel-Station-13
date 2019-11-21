@@ -42881,7 +42881,9 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "uvp" = (
-/obj/machinery/smartfridge/organ,
+/obj/machinery/smartfridge/organ/preloaded{
+	pixel_y = 2
+	},
 /turf/closed/wall,
 /area/medical/medbay/zone3)
 "uxJ" = (

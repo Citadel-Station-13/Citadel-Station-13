@@ -83998,7 +83998,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "qnB" = (
-/obj/machinery/smartfridge/organ,
+/obj/machinery/smartfridge/organ/preloaded,
 /turf/closed/wall,
 /area/medical/surgery)
 "qqg" = (

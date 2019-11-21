@@ -103794,10 +103794,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dsI" = (
-/obj/machinery/smartfridge/organ,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/smartfridge/organ/preloaded,
 /turf/closed/wall,
 /area/medical/surgery)
 "dsJ" = (
