@@ -944,7 +944,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	if(!(method == INJECT))
 		return
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B || (B.organ_flags & ORGAN_FAILING))
+	if(!B || (!(B.organ_flags & ORGAN_FAILING)))
 		return
 	B.applyOrganDamage(-20)
 	if(prob(80))
@@ -953,7 +953,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		B.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 	else
 		B.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
-	message_admins("Trauma'd")
+
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))
