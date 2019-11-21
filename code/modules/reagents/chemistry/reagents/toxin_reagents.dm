@@ -970,6 +970,7 @@
 
 /datum/reagent/toxin/bungotoxin
 	name = "Bungotoxin"
+	id = "bungotoxin"
 	description = "A horrible cardiotoxin that protects the humble bungo pit."
 	//silent_toxin = TRUE //I guess we don't really have the entire tox system ported.
 	color = "#EBFF8E"
