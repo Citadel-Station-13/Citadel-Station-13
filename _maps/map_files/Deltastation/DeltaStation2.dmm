@@ -103795,6 +103795,9 @@
 /area/medical/medbay/central)
 "dsI" = (
 /obj/machinery/smartfridge/organ,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/closed/wall,
 /area/medical/surgery)
 "dsJ" = (
