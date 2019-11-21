@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "Using help intent on someone that's in hard stamcrit will now make them heal 15 stamloss."

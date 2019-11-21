@@ -68,7 +68,10 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "k" = (
-/obj/machinery/computer/arcade/battle,
+/obj/machinery/computer/arcade/battle{
+	icon_state = "arcade";
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "l" = (
@@ -103,6 +106,13 @@
 /area/ruin/powered/golem_ship)
 "r" = (
 /obj/machinery/computer/shuttle,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"s" = (
+/obj/machinery/computer/arcade/orion_trail{
+	icon_state = "arcade";
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "t" = (
@@ -140,10 +150,6 @@
 "x" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"y" = (
-/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
@@ -332,7 +338,7 @@ l
 l
 j
 l
-y
+s
 b
 a
 a

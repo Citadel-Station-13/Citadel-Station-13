@@ -1,7 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - rscadd: "New engineering hivebot. Has a bit more health but otherwise aesthetic."
-  - tweak: "Oldstation no longer has an excessive amounts of hivebots within it, however the bots that remain are individually a larger threat."
-  - balance: "Hivebots are now more robust, with a higher melee damage output and health."
-  - server: "Remove this ruin from the blacklist or this PR is pointless."

@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
-	var/was_roundtype_vote = mode == "roundtype"
+	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
 		if(question)
 			text += "<b>[question]</b>"
@@ -124,6 +124,9 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
+#define PEACE "calm"
+#define CHAOS "chaotic"
+
 /datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
@@ -146,6 +149,32 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("dynamic")
+				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
+					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
+				GLOB.master_mode = "dynamic"
+				var/mean = 0
+				var/voters = 0
+				for(var/client/c in GLOB.clients)
+					var/vote = c.prefs.preferred_chaos
+					if(vote)
+						voters += 1
+						switch(vote)
+							if(CHAOS_NONE)
+								mean -= 0.1
+							if(CHAOS_LOW)
+								mean -= 0.05
+							if(CHAOS_HIGH)
+								mean += 0.05
+							if(CHAOS_MAX)
+								mean += 0.1
+				mean/=voters
+				if(voted.len != 0)
+					mean += (choices[PEACE]*-1+choices[CHAOS])/voted.len
+				GLOB.dynamic_curve_centre = mean*20
+				GLOB.dynamic_curve_width = CLAMP(2-abs(mean*5),0.5,4)
+				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
+				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -208,11 +237,23 @@ SUBSYSTEM_DEF(vote)
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("map")
-				choices.Add(config.maplist)
-				for(var/i in choices)//this is necessary because otherwise we'll end up with a bunch of /datum/map_config's as the default vote value instead of 0 as intended
-					choices[i] = 0
+				var/players = GLOB.clients.len
+				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
+				for(var/M in config.maplist) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
+					var/datum/map_config/targetmap = config.maplist[M]
+					if(!istype(targetmap))
+						continue
+					if(!targetmap.voteweight)
+						continue
+					if((targetmap.config_min_users && players < targetmap.config_min_users) || (targetmap.config_max_users && players > targetmap.config_max_users))
+						continue
+					if(targetmap.max_round_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_round_search_span) >= targetmap.max_rounds_played)
+						continue
+					choices |= M
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
+			if("dynamic")
+				choices.Add(PEACE,CHAOS)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -370,3 +411,6 @@ SUBSYSTEM_DEF(vote)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]
 		if(P)
 			P.player_actions -= src
+
+#undef PEACE
+#undef CHAOS

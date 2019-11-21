@@ -80,12 +80,12 @@
 	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n"
 	mood_change = 4
 
- /datum/mood_event/chemical_laughter
+/datum/mood_event/chemical_laughter
 	description = "<span class='nicegreen'>Laughter really is the best medicine! Or is it?</span>\n"
 	mood_change = 4
 	timeout = 3 MINUTES
 
- /datum/mood_event/chemical_superlaughter
+/datum/mood_event/chemical_superlaughter
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
 	timeout = 3 MINUTES

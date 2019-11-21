@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	23
+#define SAVEFILE_VERSION_MAX	24
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -109,6 +109,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 
+	if(current_version < 24 && S["feature_exhibitionist"])
+		var/datum/quirk/exhibitionism/E
+		var/quirk_name = initial(E.name)
+		neutral_quirks += quirk_name
+		all_quirks += quirk_name
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -177,6 +183,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
 	S["lewdchem"]			>> lewdchem
+	S["preferred_chaos"]	>> preferred_chaos
+
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -272,6 +280,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
 	WRITE_FILE(S["lewdchem"], lewdchem)
+	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 
 	return 1
 

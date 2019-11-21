@@ -23,8 +23,12 @@
 /mob/living/proc/gib_animation()
 	return
 
-/mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(drop_location(), null, get_static_viruses())
+/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override)
+	var/location = loc_override ? loc_override.drop_location() : drop_location()
+	if(MOB_ROBOTIC in mob_biotypes)
+		new /obj/effect/gibspawner/robot(location, src, get_static_viruses())
+	else
+		new /obj/effect/gibspawner/generic(location, src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
