@@ -120,6 +120,9 @@
 				if(data["grown_volume"] > 135 && ((C.health + C.oxyloss)>=80))
 					if(M.revive())
 						M.emote("gasp")
+						borrowed_health *= 2
+						if(borrowed_health < 100)
+							borrowed_health = 100
 						log_combat(M, M, "revived", src)
 			else
 				M.adjustBruteLoss(-healing_factor)
