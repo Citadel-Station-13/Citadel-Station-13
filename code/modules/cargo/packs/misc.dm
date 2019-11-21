@@ -29,6 +29,35 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/randombedsheets
+	name = "Bedsheet Crate (R)"
+	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with five random bedsheets for your slumbering pleasure!"
+	cost = 2000
+	contains = list(/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random,
+					/obj/item/bedsheet/random) //I'm lazy, and I copy paste stuff.
+	crate_name = "random bedsheet crate"
+
+/datum/supply_pack/misc/coloredsheets
+	name = "Bedsheet Crate (C)"
+	desc = "Contains a total of nine colored bedsheets."
+	cost = 1250
+	contains = list(/obj/item/bedsheet/blue,
+					/obj/item/bedsheet/green,
+					/obj/item/bedsheet/orange,
+					/obj/item/bedsheet/purple,
+					/obj/item/bedsheet/red,
+					/obj/item/bedsheet/yellow,
+					/obj/item/bedsheet/brown, 
+					/obj/item/bedsheet/black,
+					/obj/item/bedsheet/rainbow)
+	crate_name = "colored bedsheet crate"
+
 /datum/supply_pack/misc/captain_pen
 	name = "Captain Pen"
 	desc = "A spare Captain fountain pen."
@@ -106,6 +135,35 @@
 					/obj/item/paper_bin)
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
+
+/datum/supply_pack/misc/cbtpack
+	name = "CBT Equipment"
+	desc = "(*!&@#CBT is a special term coined by high ranking syndicate operatives for a special form of information extraction. While the training required to use this shipment is highly classified, the distribution of it's contents are not. In addition to this crates unusual contents, we have added a bar of soap.#@*$"
+	hidden = TRUE
+	cost = 2400
+	contains = list(/mob/living/simple_animal/chicken,
+					/obj/item/toy/beach_ball/holoball,
+					/obj/item/melee/baton/cattleprod,
+					/obj/item/soap/syndie)
+	crate_name = "cbt crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/exoticfootwear
+	name = "Exotic Footwear Crate"
+	desc = "Popularised by lizards and exotic dancers, the footwear included in this shipment is sure to give your feet the breathing room they deserve. Sweet Kicks Inc. is not responsible for any damage, distress, or @r0u$a1 caused by this shipment."
+	cost = 2200
+	contraband = TRUE
+	contains = list(/obj/item/clothing/shoes/wraps,
+					/obj/item/clothing/shoes/wraps,
+					/obj/item/clothing/shoes/wraps/silver,
+					/obj/item/clothing/shoes/wraps/silver,
+					/obj/item/clothing/shoes/wraps/red,
+					/obj/item/clothing/shoes/wraps/red,
+					/obj/item/clothing/shoes/wraps/blue,
+					/obj/item/clothing/shoes/wraps/blue,
+					/obj/item/clothing/shoes/clown_shoes,
+					/obj/item/clothing/shoes/kindleKicks)
+	crate_name = "footie crate"
 
 /datum/supply_pack/misc/wrapping_paper
 	name = "Festive Wrapping Paper Crate"
@@ -216,6 +274,21 @@
 					/obj/item/autosurgeon/breasts,
 					/obj/item/autosurgeon/womb)
 	crate_name = "promiscuous organs"
+
+/datum/supply_pack/misc/shower
+	name = "Shower Supplies"
+	desc = "Everyone needs a bit of R&R. Make sure you get can get yours by ordering this crate filled with towels, rubber duckies, and some soap!"
+	cost = 1000
+	contains = list(/obj/item/reagent_containers/rag/towel,
+					/obj/item/reagent_containers/rag/towel,
+					/obj/item/reagent_containers/rag/towel,
+					/obj/item/reagent_containers/rag/towel,
+					/obj/item/reagent_containers/rag/towel,
+					/obj/item/reagent_containers/rag/towel,
+					/obj/item/bikehorn/rubberducky,
+					/obj/item/bikehorn/rubberducky,
+					/obj/item/soap/nanotrasen)
+	crate_name = "shower crate"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"

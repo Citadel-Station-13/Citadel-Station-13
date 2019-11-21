@@ -10,6 +10,16 @@
 	group = "Medical"
 	crate_type = /obj/structure/closet/crate/medical
 
+/datum/supply_pack/medical/bodybags
+	name = "Bodybags"
+	desc = "For when the bodies hit the floor."
+	cost = 1200
+	contains = list(/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,)
+	crate_name = "bodybag crate"
+
 /datum/supply_pack/medical/firstaidbruises
 	name = "Bruise Treatment Kit Crate"
 	desc = "Contains three first aid kits focused on healing bruises and broken bones."

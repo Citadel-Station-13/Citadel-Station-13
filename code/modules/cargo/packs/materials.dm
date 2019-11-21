@@ -68,7 +68,7 @@
 /datum/supply_pack/organic/rawcotton
 	name = "Raw Cotton Crate"
 	desc = "Plushies have been on the down in the market, and now due to a flood of raw cotton the price of it is so cheap, its a steal! Contains 40 raw cotton sheets."
-	cost = 800 // 100 net cost, 20 x 20 = 400. 300 proffit if turned into cloth sheets or more if turned to silk then 10 x 200 = 2000
+	cost = 800 // 100 net cost, 20 x 20 = 400. 300 profit if turned into cloth sheets or more if turned to silk then 10 x 200 = 2000
 	contains = list(/obj/item/stack/sheet/cotton/thirty,
 					/obj/item/stack/sheet/cotton/ten
 					)

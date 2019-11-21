@@ -113,6 +113,24 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
+/datum/supply_pack/organic/fiestatortilla
+	name = "Fiesta Crate"
+	desc = "Spice up the kitchen with this fiesta themed food order! Contains 8 tortilla based food items, as well as a sombrero, moustache, and cloak!"
+	cost = 2750
+	contains = list(/obj/item/clothing/head/sombrero,
+					/obj/item/clothing/suit/hooded/cloak/david,
+					/obj/item/clothing/mask/fakemoustache,
+					/obj/item/reagent_containers/food/snacks/taco,
+					/obj/item/reagent_containers/food/snacks/taco,
+					/obj/item/reagent_containers/food/snacks/taco/plain,
+					/obj/item/reagent_containers/food/snacks/taco/plain,
+					/obj/item/reagent_containers/food/snacks/enchiladas,
+					/obj/item/reagent_containers/food/snacks/enchiladas,
+					/obj/item/reagent_containers/food/snacks/carneburrito,
+					/obj/item/reagent_containers/food/snacks/cheesyburrito,
+					/obj/item/reagent_containers/glass/bottle/capsaicin,
+					/obj/item/reagent_containers/glass/bottle/capsaicin)
+	crate_name = "fiesta crate"
 
 /datum/supply_pack/organic/fruit_1
 	name = "Fruit Basic Crate"
@@ -188,8 +206,19 @@
 	access = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/organic/monkeydripmeat
+	name = "Meat Crate"
+	desc = "Need some meat? With this do-it-yourself kit you'll be swimming in it! Contains a monkey cube, an IV drip, and some cryoxadone!"
+	cost = 2150
+	contains = list(/obj/item/reagent_containers/food/snacks/monkeycube,
+					/obj/item/restraints/handcuffs/cable,
+					/obj/machinery/iv_drip,
+					/obj/item/reagent_containers/glass/beaker/cryoxadone,
+					/obj/item/reagent_containers/glass/beaker/cryoxadone)
+	crate_name = "monkey iv crate"
+
 /datum/supply_pack/organic/hunting
-	name = "Huntting gear"
+	name = "Hunting Gear"
 	desc = "Even in space, we can fine prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a huntting shotgun. "
 	cost = 3500
 	contraband = TRUE
@@ -234,7 +263,7 @@
 	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
 	cost = 10000
 	contraband = TRUE
-	contains = list(/obj/item/sharpener,
+	contains = list(/obj/item/sharpener, //Deluxe for a reason
 					/obj/item/kitchen/fork,
 					/obj/item/kitchen/fork,
 					/obj/item/kitchen/knife,
@@ -243,7 +272,7 @@
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, //Deluxe for a reason
+					/obj/item/kitchen/rollingpin, 
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
@@ -254,18 +283,6 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
-
-/datum/supply_pack/organic/mre
-	name = "MRE supply kit (emergency rations)"
-	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
-	cost = 2000
-	contains = list(/obj/item/storage/box/mre/menu1/safe,
-					/obj/item/storage/box/mre/menu1/safe,
-					/obj/item/storage/box/mre/menu2/safe,
-					/obj/item/storage/box/mre/menu2/safe,
-					/obj/item/storage/box/mre/menu3,
-					/obj/item/storage/box/mre/menu4/safe)
-	crate_name = "MRE crate (emergency rations)"
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"

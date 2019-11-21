@@ -203,8 +203,8 @@
 /datum/bounty/item/assistant/metalshields
 	name = "Metal Shields"
 	description = "NT is testing the effects of electricity on clowns wielding metal shields. We have clowns, and we have electricity. Send us the shields."
-	reward = 1400
-	required_count = 4
+	reward = 1950 // Requires Cables, Metal, Cloth, Leather, and Tools
+	required_count = 3
 	wanted_types = list(/obj/item/shield/makeshift)
 
 /datum/bounty/item/assistant/toolbelts
