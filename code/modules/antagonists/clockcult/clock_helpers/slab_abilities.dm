@@ -179,7 +179,6 @@
 	. = ..()
 
 /obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
-	var/narsiandog_punish = 8
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
@@ -210,9 +209,9 @@
 				L.flash_act(1,1)
 				if(iscarbon(target))
 					var/mob/living/carbon/C = L
-					C.stuttering = max(narsiandog_punish, C.stuttering)
-					C.drowsyness = max(narsiandog_punish, C.drowsyness)
-					C.confused += narsiandog_punish
+					C.stuttering = max(8, C.stuttering)
+					C.drowsyness = max(8, C.drowsyness)
+					C.confused += CLAMP(16 - C.confused, 0, 8)
 					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
 	..()

@@ -13,7 +13,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	var/bonus_burn = 5
-	var/narsiandog_confuse = 5
 
 /obj/item/clockwork/weapon/ratvarian_spear/ratvar_act()
 	if(GLOB.ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
@@ -60,9 +59,10 @@
 				if(issilicon(L))
 					L.Knockdown(100)
 				else if(iscultist(L))
-					L.confused += narsiandog_confuse // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
+					L.confused += CLAMP(10 - L.confused, 0, 5) // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
 					to_chat(L, "<span class ='userdanger'>[src] crashes into you with burning force, sending you reeling!</span>")
 					L.adjust_fire_stacks(2)
+					L.Knockdown(1)
 					L.IgniteMob()
 				else
 					L.Knockdown(40)

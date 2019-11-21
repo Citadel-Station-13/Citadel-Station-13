@@ -409,7 +409,6 @@
 	name = "Stunning Aura"
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin."
-	var/ratvarscum_punish = 10
 
 /obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
@@ -448,16 +447,16 @@
 					S.emp_act(EMP_HEAVY)
 				else if(iscarbon(target))
 					var/mob/living/carbon/C = L
-					C.silent += 6
-					C.stuttering += 15
-					C.cultslurring += 15
+					C.silent += CLAMP(12 - C.silent, 0, 6)
+					C.stuttering += CLAMP(30 - C.stuttering, 0, 15)
+					C.cultslurring += CLAMP(30 - C.cultslurring, 0, 15)
 					C.Jitter(15)
 			else					// cultstun no longer hardstuns + damages hostile cultists, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
 				if(iscarbon(target))
 					var/mob/living/carbon/C = L
-					C.stuttering = max(ratvarscum_punish, C.stuttering)
-					C.drowsyness = max(ratvarscum_punish, C.drowsyness)
-					C.confused += ratvarscum_punish
+					C.stuttering = max(10, C.stuttering)
+					C.drowsyness = max(10, C.drowsyness)
+					C.confused += CLAMP(20 - C.confused, 0, 10)
 				L.adjustBruteLoss(15)
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
 		uses--
