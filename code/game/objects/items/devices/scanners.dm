@@ -209,7 +209,7 @@ SLIME SCANNER
 
 
 			//EARS
-			if(istype(O, /obj/item/organ/ears))
+			else if(istype(O, /obj/item/organ/ears))
 				var/obj/item/organ/ears/ears = O
 				if(advanced)
 					if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
