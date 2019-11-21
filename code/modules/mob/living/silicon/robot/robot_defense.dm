@@ -183,8 +183,18 @@
 				adjustBruteLoss(30)
 
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+	if(shielded)
+		Proj.damage -= 10
+		src.cell.charge -= 500
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
 	return 2
+
+/mob/living/silicon/robot/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
+	if(shielded)
+		src.cell.charge -=250
+		return FALSE
+	if(affect_silicon)
+		return ..()
