@@ -172,18 +172,18 @@
 	update_name()
 	..()
 
-/datum/reagent/synthtissue/proc/update_name()
+/datum/reagent/synthtissue/proc/update_name() //They are but babes on creation and have to grow unto godhood
 	switch(data["grown_volume"])
 		if(-INFINITY to 50)
-			name = "Young Synthtissue Colony"
+			name = "Induced Synthtissue Colony"
 		if(50 to 80)
-			name = "Adolescent Synthtissue Colony"
+			name = "Oligopotent Synthtissue Colony"
 		if(80 to 135)
-			name = "Adult Synthtissue Colony"
+			name = "Pluripotent Synthtissue Colony"
 		if(135 to 175)
-			name = "Master Synthtissue Colony"
+			name = "SuperSomatic Synthtissue Colony"
 		if(175 to INFINITY)
-			name = "Apex Synthtissue Colony"
+			name = "Omnipotent Synthtissue Colony"
 
 /datum/reagent/synthtissue/on_mob_delete(mob/living/M)
 	if(!iscarbon(M))

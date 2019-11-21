@@ -941,10 +941,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#EEFF8F"
 
 /datum/reagent/neurine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	var/mob/living/carbon/C = M
-	if(!C)
+	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
 		return
-	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 	if(method == INJECT)
 		if(B.organ_flags & ORGAN_FAILING)
 			B.applyOrganDamage(-20)

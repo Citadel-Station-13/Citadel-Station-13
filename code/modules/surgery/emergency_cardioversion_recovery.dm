@@ -18,6 +18,7 @@
 	playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
 
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	var/mob/living/carbon/human/H = target
 	playsound(src, 'sound/machines/defib_zap.ogg', 75, 1, -1)
 	playsound(src, "bodyfall", 50, 1)
 	if(H.stat != DEAD)
@@ -29,32 +30,29 @@
 		H.emote("flip")
 		H.Jitter(100)
 		return FALSE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (!(NOBLOOD in H.dna.species.species_traits))
-			display_results(user, target, "<span class='notice'>induces a stable rythum in [H]'s heart.</span>",
-				"[H]'s heart is shocked, attemping to bring them back to a stable rythum!.",
-				"")
-			H.bleed_rate += 10
-			H.adjustBruteLoss(10)
-			H.adjustOrganLoss(ORGAN_SLOT_HEART, -10)
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
-			H.electrocute_act(0, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
-			if(!do_they_live(H))
-				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
+	display_results(user, target, "<span class='notice'>induces a stable rythum in [H]'s heart.</span>",
+		"[H]'s heart is shocked, attemping to bring them back to a stable rythum!.",
+		"")
+	if (!(NOBLOOD in H.dna.species.species_traits))
+		H.bleed_rate += 10
+	H.adjustBruteLoss(10)
+	H.adjustOrganLoss(ORGAN_SLOT_HEART, -10)
+	H.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
+	H.electrocute_act(0, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
+	if(!do_they_live(H))
+		playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 	return TRUE
 
 /datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	playsound(src, 'sound/machines/defib_zap.ogg', 75, 1, -1)
 	playsound(src, "bodyfall", 50, 1)
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		display_results(user, target, "<span class='warning'>You screw up, sending current racing though their body!</span>",
-			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
-			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
-		H.electrocute_act(25, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
-		H.emote("flip")
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
+	var/mob/living/carbon/human/H = target
+	display_results(user, target, "<span class='warning'>You screw up, sending current racing though their body!</span>",
+		"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
+		"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
+	H.electrocute_act(25, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
+	H.emote("flip")
+	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
 
 /datum/surgery_step/incise_heart/do_they_live(mob/living/carbon/human/H)
 

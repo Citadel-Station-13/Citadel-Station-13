@@ -407,7 +407,8 @@
 	if(!.)	//if the item loads, clear can_decompose
 		return
 	var/obj/item/organ/organ = O
-	organ.organ_flags |= ORGAN_FROZEN
+	if(organ)
+		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -428,9 +429,14 @@
 
 /obj/machinery/smartfridge/organ/preloaded
 	initial_contents = list(
-		/obj/item/organ/random = 1,
 		/obj/item/reagent_containers/medspray/synthtissue = 1,
 		/obj/item/reagent_containers/medspray/sterilizine = 1)
+
+/obj/machinery/smartfridge/organ/preloaded/Initialize()
+	..()
+	var/list = list(/obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tail, /obj/item/organ/stomach)
+	var/newtype = pick(list)
+	load(new newtype)
 
 // -----------------------------
 // Chemistry Medical Smartfridge
