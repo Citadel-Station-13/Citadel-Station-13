@@ -102,6 +102,10 @@
 					/obj/item/clothing/under/rank/bartender/purple = 4,
 					/obj/item/clothing/accessory/attrocious_pokadots = 8,
 					/obj/item/clothing/accessory/black_white_pokadots = 8)
+		            /obj/item/clothing/head/beret = 3,
+		            /obj/item/clothing/head/beret/black = 3,
+		            /obj/item/clothing/head/beret/purple = 3,
+		            /obj/item/clothing/head/beret/blue = 3,
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
