@@ -354,7 +354,7 @@
 		if("legs" in S.default_features)
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
 				if(DIGITIGRADE in S.species_traits)
-					digitigrade_type = lowertext(H.dna.features.["legs"])
+					digitigrade_type = lowertext(H.dna.features["legs"])
 			else
 				digitigrade_type = null
 
@@ -363,9 +363,9 @@
 			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			if(Smark)
 				body_markings_icon = Smark.icon
-			if(H.dna.features.["mam_body_markings"] != "None")
-				body_markings = lowertext(H.dna.features.["mam_body_markings"])
-				aux_marking = lowertext(H.dna.features.["mam_body_markings"])
+			if(H.dna.features["mam_body_markings"] != "None")
+				body_markings = lowertext(H.dna.features["mam_body_markings"])
+				aux_marking = lowertext(H.dna.features["mam_body_markings"])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"

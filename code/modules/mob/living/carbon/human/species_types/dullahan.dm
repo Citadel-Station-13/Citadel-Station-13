@@ -18,6 +18,8 @@
 	var/obj/item/dullahan_relay/myhead
 
 /datum/species/dullahan/pumpkin
+	name = "Pumpkin Head Dullahan"
+	id = "pumpkindullahan"
 	pumpkin = TRUE
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -27,7 +29,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	H.flags_1 &= ~HEAR_1
+	DISABLE_BITFIELD(H.flags_1, HEAR_1)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		if(pumpkin)//Pumpkinhead!
@@ -36,16 +38,16 @@
 			head.icon_state = "hardhat1_pumpkin_j"
 			head.custom_head = TRUE
 		head.drop_limb()
-		head.flags_1 = HEAR_1
-		head.throwforce = 25
-		myhead = new /obj/item/dullahan_relay (head, H)
-		H.put_in_hands(head)
-		var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-		for(var/datum/action/item_action/organ_action/OA in E.actions)
-			OA.Trigger()
+		if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
+			head.throwforce = 25
+			myhead = new /obj/item/dullahan_relay (head, H)
+			H.put_in_hands(head)
+			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
+			for(var/datum/action/item_action/organ_action/OA in E.actions)
+				OA.Trigger()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
-	H.flags_1 |= ~HEAR_1
+	ENABLE_BITFIELD(H.flags_1, HEAR_1)
 	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
@@ -84,7 +86,7 @@
 /obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.dna.species.id == "dullahan")
+		if(isdullahan(H))
 			var/datum/species/dullahan/D = H.dna.species
 			if(isobj(D.myhead.loc))
 				var/obj/O = D.myhead.loc
@@ -99,6 +101,7 @@
 	desc = "An abstraction."
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
 	zone = "abstract"
+	tint = INFINITY // used to switch the vision perspective to the head on species_gain().
 
 /datum/action/item_action/organ_action/dullahan
 	name = "Toggle Perspective"
@@ -114,37 +117,53 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.dna.species.id == "dullahan")
+		if(isdullahan(H))
 			var/datum/species/dullahan/D = H.dna.species
 			D.update_vision_perspective(H)
 
 /obj/item/dullahan_relay
+	name = "dullahan relay"
 	var/mob/living/owner
 	flags_1 = HEAR_1
 
-/obj/item/dullahan_relay/Initialize(mapload,new_owner)
+/obj/item/dullahan_relay/Initialize(mapload, mob/living/carbon/human/new_owner)
 	. = ..()
+	if(!new_owner)
+		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
+	RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
+	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
+	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
+	RegisterSignal(owner, COMSIG_LIVING_FULLY_HEAL, .proc/retrieve_head)
+
+/obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/A)
+	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
+		return COMPONENT_ALLOW_EXAMINE
+
+/obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
+	if(!QDELETED(owner))
+		hearers += owner
+
+/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
+	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
+
+/obj/item/dullahan_relay/proc/retrieve_head(datum/source, admin_revive = FALSE)
+	if(admin_revive) //retrieving the owner's head for ahealing purposes.
+		var/obj/item/bodypart/head/H = loc
+		var/turf/T = get_turf(owner)
+		if(H && istype(H) && T && !(H in owner.GetAllContents()))
+			H.forceMove(T)
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
 		. = PROCESS_KILL
 		qdel(src)
 
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	. = ..()
-	if(!QDELETED(owner))
-		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-		to_chat(owner,message)
-	else
-		qdel(src)
-
-
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.dna.species.id == "dullahan")
+		if(isdullahan(H))
 			var/datum/species/dullahan/D = H.dna.species
 			D.myhead = null
 			owner.gib()

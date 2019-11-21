@@ -370,3 +370,10 @@
 		if(prob(3))
 			message += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
 	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/head/assu_helmet
+	name = "DAB helmet"
+	icon_state = "assu_helmet"
+	item_state = "assu_helmet"
+	desc = "A cheap replica of old riot helmet without visor. It has \"D.A.B.\" written on the front."
+	flags_inv = HIDEHAIR
