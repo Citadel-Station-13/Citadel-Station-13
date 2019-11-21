@@ -2825,6 +2825,7 @@
 #include "code\modules\surgery\coronary_bypass.dm"
 #include "code\modules\surgery\dental_implant.dm"
 #include "code\modules\surgery\embalming.dm"
+#include "code\modules\surgery\emergency_cardioversion_recovery.dm"
 #include "code\modules\surgery\experimental_dissection.dm"
 #include "code\modules\surgery\eye_surgery.dm"
 #include "code\modules\surgery\graft_synthtissue.dm"

@@ -238,7 +238,8 @@
 	if(delta > 0)
 		if(damage >= maxHealth)
 			organ_flags |= ORGAN_FAILING
-			owner.med_hud_set_status()
+			if(owner)
+				owner.med_hud_set_status()
 			return now_failing
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			return high_threshold_passed
@@ -246,7 +247,8 @@
 			return low_threshold_passed
 	else
 		organ_flags &= ~ORGAN_FAILING
-		owner.med_hud_set_status()
+		if(owner)
+			owner.med_hud_set_status()
 		if(!owner)//Processing is stopped when the organ is dead and outside of someone. This hopefully should restart it if a removed organ is repaired outside of a body.
 			START_PROCESSING(SSobj, src)
 		if(prev_damage > low_threshold && damage <= low_threshold)

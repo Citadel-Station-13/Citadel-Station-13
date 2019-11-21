@@ -406,8 +406,8 @@
 	. = ..()
 	if(!.)	//if the item loads, clear can_decompose
 		return
-	var/obj/item/organ/organ = O
-	if(organ)
+	if(istype(O, /obj/item/organ))
+		var/obj/item/organ/organ = O
 		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
@@ -436,7 +436,7 @@
 	..()
 	var/list = list(/obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tail, /obj/item/organ/stomach)
 	var/newtype = pick(list)
-	load(new newtype)
+	load(new newtype(src.loc))
 
 // -----------------------------
 // Chemistry Medical Smartfridge
