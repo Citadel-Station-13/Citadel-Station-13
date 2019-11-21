@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "fixed vore prefs saving inconsistently, new characters might have a previous slot's prefs tacked on."
+  - bugfix: "fixed mammals not having the option for digilegs. Sprites are fucky until body-part related sprites are done."

@@ -24,15 +24,10 @@
 	export_types = list(/obj/structure/ore_box)
 
 /datum/export/large/crate/wood
-	cost = 140 //
+	cost = 140
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
-
-/datum/export/large/barrel
-	cost = 500 //150 to make meaning proffit of 350
-	unit_name = "wooden barrel"
-	export_types = list(/obj/structure/fermenting_barrel)
 
 /datum/export/large/crate/coffin
 	cost = 150
@@ -183,7 +178,7 @@
 	worth += gases[/datum/gas/bz]*4
 	worth += gases[/datum/gas/stimulum]*25
 	worth += gases[/datum/gas/hypernoblium]*1000
-	worth += gases[/datum/gas/miasma]*4
+	worth += gases[/datum/gas/miasma]*15
 	worth += gases[/datum/gas/tritium]*7
 	worth += gases[/datum/gas/pluoxium]*6
 	worth += gases[/datum/gas/nitryl]*30
@@ -287,17 +282,17 @@
 	include_subtypes = FALSE
 
 /datum/export/large/mech/odysseus
-	cost = 7500
+	cost = 5500
 	unit_name = "working odysseus"
 	export_types = list(/obj/mecha/medical/odysseus)
 
 /datum/export/large/mech/ripley
-	cost = 12000
+	cost = 6500
 	unit_name = "working ripley"
 	export_types = list(/obj/mecha/working/ripley)
 
 /datum/export/large/mech/firefighter
-	cost = 14000
+	cost = 9000
 	unit_name = "working firefighter"
 	export_types = list(/obj/mecha/working/ripley/firefighter)
 
@@ -307,12 +302,12 @@
 	export_types = list(/obj/mecha/combat/gygax)
 
 /datum/export/large/mech/durand
-	cost = 16000
+	cost = 10000
 	unit_name = "working durand"
 	export_types = list(/obj/mecha/combat/durand)
 
 /datum/export/large/mech/phazon
-	cost = 35000 //Little over half do to needing a core
+	cost = 25000 //Little over half do to needing a core
 	unit_name = "working phazon"
 	export_types = list(/obj/mecha/combat/phazon)
 
@@ -322,7 +317,7 @@
 	export_types = list(/obj/mecha/combat/marauder)
 
 /datum/export/large/mech/deathripley
-	cost = 18500 //Still a "Combat class" mech - Illegal tech as well! 165% "normal" boundy price.
+	cost = 8500 //Still a "Combat class" mech - Illegal tech as well! 165% "normal" boundy price.
 	unit_name = "working illegally modified"
 	export_types = list(/obj/mecha/working/ripley/deathripley)
 
@@ -337,12 +332,12 @@
 	export_types = list(/obj/mecha/working/ripley/mining)
 
 /datum/export/large/mech/honk
-	cost = 16000 //Still a "Combat class" mech - Comats bordem honk!
+	cost = 12000 //Still a "Combat class" mech - Comats bordem honk!
 	unit_name = "working honker"
 	export_types = list(/obj/mecha/combat/honker)
 
 /datum/export/large/mech/reticence
-	cost = 16000 //Still a "Combat class" mech - Has cloking and lethal weaponds.
+	cost = 12000 //Still a "Combat class" mech - Has cloking and lethal weaponds.
 	unit_name = "working reticence"
 	export_types = list(/obj/mecha/combat/reticence)
 
@@ -352,6 +347,6 @@
 	export_types = list(/obj/mecha/combat/marauder/seraph)
 
 /datum/export/large/mech/mauler
-	cost = 25000 //Still a Combat class mech - CC lethal weaponds.
+	cost = 12000 //Still a Combat class mech - CC lethal weaponds.
 	unit_name = "working legally modified marauder"
 	export_types = list(/obj/mecha/combat/marauder/mauler)

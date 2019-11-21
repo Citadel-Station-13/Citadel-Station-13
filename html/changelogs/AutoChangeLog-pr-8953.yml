@@ -1,0 +1,5 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "RPD now has inhands"
+  - imageadd: "New sprites for RCDs and RPDs, inhands included"

@@ -1,0 +1,9 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "The syndicate base's bathroom is now fitted with a shower, and a special towel."
+  - bugfix: "Fixed many issues with towels."
+  - tweak: "The dry people off with rags/towels action can only be done if the object is NOT moist with reagents now. Also cleans banana creaming."
+  - rscadd: "Towels deal more damage while soaked with reagents."
+  - rscadd: "You can now squeeze rags/towels with Alt-Click."
+  - rscdel: "deleted an old and crappier towel sprite that got in the way."

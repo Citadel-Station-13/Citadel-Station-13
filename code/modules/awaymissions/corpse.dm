@@ -17,7 +17,6 @@
 	var/faction = null
 	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
-	var/antagonist_type
 	var/objectives = null
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
@@ -44,8 +43,9 @@
 		return
 	if(isobserver(user))
 		var/mob/dead/observer/O = user
-		if(!O.can_reenter_round())
-			return FALSE
+		if(!O.can_reenter_round)
+			to_chat(user, "<span class='warning'>You are unable to reenter the round.</span>")
+			return
 	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
@@ -111,16 +111,9 @@
 		if(show_flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
-		var/datum/antagonist/A
-		if(antagonist_type)
-			A = MM.add_antag_datum(antagonist_type)
 		if(objectives)
-			if(!A)
-				A = MM.add_antag_datum(/datum/antagonist/custom)
 			for(var/objective in objectives)
-				var/datum/objective/O = new/datum/objective(objective)
-				O.owner = MM
-				A.objectives += O
+				MM.objectives += new/datum/objective(objective)
 		if(assignedrole)
 			M.mind.assigned_role = assignedrole
 		special(M, name)
@@ -256,7 +249,7 @@
 
 //Non-human spawners
 
-/obj/effect/mob_spawn/AICorpse/create(ckey, name) //Creates a corrupted AI
+/obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
@@ -276,7 +269,7 @@
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
 
-/obj/effect/mob_spawn/human/facehugger/create(ckey, name) //Creates a squashed facehugger
+/obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc

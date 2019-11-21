@@ -45,11 +45,11 @@
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
-	if(W.get_temperature()) //todo: make heating a reagent holder proc
+	if(W.is_hot()) //todo: make heating a reagent holder proc
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			return
 		else
-			var/hotness = W.get_temperature()
+			var/hotness = W.is_hot()
 			reagents.expose_temperature(hotness)
 			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
 	else

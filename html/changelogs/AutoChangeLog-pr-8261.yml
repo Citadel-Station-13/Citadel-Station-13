@@ -1,0 +1,7 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "new economics"
+  - tweak: "cargo and robotics relationships"
+  - balance: "unbalanced something"
+  - bugfix: "fixed a maybe oversight"

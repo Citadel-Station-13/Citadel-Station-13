@@ -34,7 +34,7 @@
 	if(_directory)
 		directory = _directory
 	if(entries)
-		CRASH("/datum/controller/configuration/Load() called more than once!")
+		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
 	InitEntries()
 	LoadModes()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)

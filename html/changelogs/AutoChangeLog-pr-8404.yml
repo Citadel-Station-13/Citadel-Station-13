@@ -1,0 +1,5 @@
+author: "WhiteHusky"
+delete-after: True
+changes: 
+  - bugfix: "Flavor text with special characters will not get partially unescaped."
+  - bugfix: "Canceling when setting flavor text does not clear it anymore."

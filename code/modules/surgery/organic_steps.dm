@@ -11,7 +11,7 @@
 		"[user] begins to make an incision in [target]'s [parse_zone(target_zone)].")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.get_sharpness())
+	if(implement_type == /obj/item && !tool.is_sharp())
 		return FALSE
 	return TRUE
 /datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -79,7 +79,7 @@
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
-		return tool.get_temperature()
+		return tool.is_hot()
 	return TRUE
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)

@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "You can now use CTRL and ALT click on pumps and filters to toggle them on and off and max their output respectively"

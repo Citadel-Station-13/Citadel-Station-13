@@ -202,7 +202,7 @@
 
 /obj/item/stock_parts/cell/lascarbine
 	name = "laser carbine power supply"
-	maxcharge = 1500			//20 laser shots.
+	maxcharge = 2500
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"

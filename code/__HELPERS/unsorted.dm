@@ -451,6 +451,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
+/proc/arctan(x)
+	var/y=arcsin(x/sqrt(1+x*x))
+	return y
+
 /*
 	Gets all contents of contents and returns them all in a list.
 */
@@ -759,7 +763,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/pipe)))
 
 /proc/can_embed(obj/item/W)
-	if(W.get_sharpness())
+	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1

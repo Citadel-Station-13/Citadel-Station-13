@@ -18,7 +18,7 @@
 // Jack the Ripper starring plush
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(I.get_sharpness())
+	if(I.is_sharp())
 		if(!grenade)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushjack", /datum/mood_event/plushjack)
 

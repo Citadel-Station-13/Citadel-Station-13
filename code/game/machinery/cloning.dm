@@ -354,8 +354,7 @@
 				O.organ_flags &= ~ORGAN_FROZEN
 		unattached_flesh.Cut()
 		mess = FALSE
-		if(mob_occupant)
-			mob_occupant.spawn_gibs()
+		new /obj/effect/gibspawner/generic(get_turf(src))
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		update_icon()
 		return
@@ -474,6 +473,8 @@
 		unattached_flesh += organ
 
 	flesh_number = unattached_flesh.len
+
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
 
 /obj/machinery/clonepod/update_icon()
 	cut_overlays()

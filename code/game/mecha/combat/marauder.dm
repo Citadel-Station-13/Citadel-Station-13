@@ -16,7 +16,6 @@
 	force = 45
 	max_equip = 4
 	bumpsmash = 1
-	spawn_tracked = FALSE
 
 /obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
 	..()

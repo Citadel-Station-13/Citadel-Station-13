@@ -89,36 +89,32 @@
 		R.speed = initial(R.speed)
 
 /obj/item/borg/upgrade/disablercooler
-	name = "cyborg rapid energy blaster cooling module"
-	desc = "Used to cool a mounted energy-based firearm, increasing the potential current in it and thus its recharge rate."
+	name = "cyborg rapid disabler cooling module"
+	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/successflag
-		for(var/obj/item/gun/energy/T in R.module.modules)
-			if(T.charge_delay <= 2)
-				successflag = successflag || 2
-				continue
-			T.charge_delay = max(2, T.charge_delay - 4)
-			successflag = 1
-		if(!successflag)
-			to_chat(user, "<span class='notice'>There's no energy-based firearm in this unit!</span>")
+		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
+		if(!T)
+			to_chat(user, "<span class='notice'>There's no disabler in this unit!</span>")
 			return FALSE
-		if(successflag == 2)
+		if(T.charge_delay <= 2)
 			to_chat(R, "<span class='notice'>A cooling unit is already installed!</span>")
 			to_chat(user, "<span class='notice'>There's no room for another cooling unit!</span>")
 			return FALSE
 
+		T.charge_delay = max(2 , T.charge_delay - 4)
+
 /obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/gun/energy/T in R.module.modules)
-			T.charge_delay = initial(T.charge_delay)
-			return .
-		return FALSE
+		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
+		if(!T)
+			return FALSE
+		T.charge_delay = initial(T.charge_delay)
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
@@ -203,7 +199,7 @@
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/butler)
+	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
 
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -230,7 +226,7 @@
 	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/butler)
+	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
 
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -522,7 +518,8 @@
 	module_type = list(
 		/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/medihound,
+		/obj/item/robot_module/borgi)
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -601,32 +598,25 @@
 		R.update_transform()
 
 /obj/item/borg/upgrade/rped
-	name = "engineering cyborg BSRPED"
+	name = "engineering cyborg RPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "borg_BS_RPED"
+	icon_state = "borgrped"
 	require_module = TRUE
-	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
+	module_type = list(/obj/item/robot_module/engineering)
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 
-		var/obj/item/storage/part_replacer/bluespace/cyborg/BSRPED = locate() in R
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
-		if(!RPED)
-			RPED = locate() in R.module
-		if(!BSRPED)
-			BSRPED = locate() in R.module //There's gotta be a smarter way to do this.
-		if(BSRPED)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a BSRPED module.</span>")
+		if(RPED)
+			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED module.</span>")
 			return FALSE
 
-		BSRPED = new(R.module)
-		SEND_SIGNAL(RPED, COMSIG_TRY_STORAGE_QUICK_EMPTY)
-		qdel(RPED)
-		R.module.basic_modules += BSRPED
-		R.module.add_module(BSRPED, FALSE, TRUE)
+		RPED = new(R.module)
+		R.module.basic_modules += RPED
+		R.module.add_module(RPED, FALSE, TRUE)
 
 /obj/item/borg/upgrade/rped/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()

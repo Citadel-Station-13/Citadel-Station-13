@@ -372,10 +372,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "aaU" = (
-/obj/machinery/computer/arcade{
-	icon_state = "arcade";
-	dir = 4
-	},
+/obj/machinery/computer/arcade,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaV" = (
@@ -615,9 +612,6 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
-	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-24"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -6025,18 +6019,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
-"amd" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/computer/arcade{
-	icon_state = "arcade";
-	dir = 4
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/exit)
 "ame" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -6243,17 +6225,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
-"amB" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/computer/arcade{
-	icon_state = "arcade";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "amC" = (
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -19966,6 +19937,15 @@
 	dir = 1
 	},
 /area/chapel/main)
+"aUL" = (
+/obj/machinery/computer/arcade,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/exit)
 "aUM" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Bay 2";
@@ -22282,6 +22262,14 @@
 /area/hallway/primary/central)
 "aZZ" = (
 /obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"baa" = (
+/obj/machinery/computer/arcade,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -57139,7 +57127,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "hwu" = (
-/obj/machinery/vr_sleeper,
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-24"
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "hEm" = (
@@ -57159,13 +57149,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"ihn" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/vr_sleeper,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "iiW" = (
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -85243,7 +85226,7 @@ aav
 aaL
 aaQ
 aaY
-ihn
+aav
 abE
 acg
 acJ
@@ -91978,7 +91961,7 @@ aUf
 aQc
 aXi
 aQc
-amB
+baa
 aJC
 bcq
 bcq
@@ -106366,7 +106349,7 @@ aCR
 aCR
 aCR
 aTl
-amd
+aUL
 aVW
 aXD
 aZj

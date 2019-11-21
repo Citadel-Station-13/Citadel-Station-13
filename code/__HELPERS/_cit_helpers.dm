@@ -56,7 +56,6 @@ GLOBAL_LIST_EMPTY(ipc_screens_list)
 GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
-GLOBAL_LIST_EMPTY(genitals_list)
 GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
 GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
 GLOBAL_LIST_EMPTY(gentlemans_organ_names)
@@ -132,53 +131,53 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /mob/living/carbon/proc/has_penis()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
-	if(G && istype(G, /obj/item/organ/genital/penis))
-		return TRUE
+	if(getorganslot("penis"))//slot shared with ovipositor
+		if(istype(getorganslot("penis"), /obj/item/organ/genital/penis))
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_balls()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(G && istype(G, /obj/item/organ/genital/testicles))
-		return TRUE
+	if(getorganslot("balls"))
+		if(istype(getorganslot("balls"), /obj/item/organ/genital/testicles))
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_vagina()
-	if(getorganslot(ORGAN_SLOT_VAGINA))
+	if(getorganslot("vagina"))
 		return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_breasts()
-	if(getorganslot(ORGAN_SLOT_BREASTS))
+	if(getorganslot("breasts"))
 		return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_ovipositor()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
-	if(G && istype(G, /obj/item/organ/genital/ovipositor))
-		return TRUE
+	if(getorganslot("penis"))//shared slot
+		if(istype(getorganslot("penis"), /obj/item/organ/genital/ovipositor))
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/has_eggsack()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(G && istype(G, /obj/item/organ/genital/eggsack))
-		return TRUE
+	if(getorganslot("balls"))
+		if(istype(getorganslot("balls"), /obj/item/organ/genital/eggsack))
+			return TRUE
 	return FALSE
 
-/mob/living/carbon/proc/is_groin_exposed(list/L)
+/mob/living/carbon/human/proc/is_bodypart_exposed(bodypart)
+
+/mob/living/carbon/proc/is_groin_exposed(var/list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/A in L)
-		var/obj/item/I = A
+	for(var/obj/item/I in L)
 		if(I.body_parts_covered & GROIN)
 			return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/is_chest_exposed(list/L)
+/mob/living/carbon/proc/is_chest_exposed(var/list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/A in L)
-		var/obj/item/I = A
+	for(var/obj/item/I in L)
 		if(I.body_parts_covered & CHEST)
 			return FALSE
 	return TRUE
@@ -196,9 +195,9 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	message_admins("[src] gave everyone genitals.")
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.gender == MALE)
-			H.give_genital(/obj/item/organ/genital/penis)
-			H.give_genital(/obj/item/organ/genital/testicles)
+			H.give_penis()
+			H.give_balls()
 		else
-			H.give_genital(/obj/item/organ/genital/vagina)
-			H.give_genital(/obj/item/organ/genital/womb)
-			H.give_genital(/obj/item/organ/genital/breasts)
+			H.give_vagina()
+			H.give_womb()
+			H.give_breasts()

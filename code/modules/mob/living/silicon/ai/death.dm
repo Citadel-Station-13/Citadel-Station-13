@@ -18,7 +18,6 @@
 	update_canmove()
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
-		set_eyeobj_visible(FALSE)
 
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
@@ -37,8 +36,6 @@
 
 	if(istype(loc, /obj/item/aicard/aitater))
 		loc.icon_state = "aitater-404"
-	else if(istype(loc, /obj/item/aicard/aispook))
-		loc.icon_state = "aispook-404"
 	else if(istype(loc, /obj/item/aicard))
 		loc.icon_state = "aicard-404"
 

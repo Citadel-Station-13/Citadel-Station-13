@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Merges the end-of-shift and its shuttle autocall announcements into one."
+  - bugfix: "Prevents the end-of-shift shuttle from being recalled (even if to no avail)."

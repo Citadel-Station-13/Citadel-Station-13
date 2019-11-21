@@ -83,11 +83,6 @@
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
-/datum/export/stack/log
-	cost = 10
-	unit_name = "raw wood"
-	export_types = list(/obj/item/grown/log)
-
 /datum/export/stack/cardboard
 	cost = 2
 	message = "of cardboard"
@@ -105,16 +100,10 @@
 	export_types = list(/obj/item/stack/cable_coil)
 
 /datum/export/stack/cloth
-	cost = 20
+	cost = 10
 	unit_name = "sheets"
 	message = "of cloth"
 	export_types = list(/obj/item/stack/sheet/cloth)
-
-/datum/export/stack/silk
-	cost = 200 //The new plasma
-	unit_name = "sheets"
-	message = "of silk"
-	export_types = list(/obj/item/stack/sheet/silk)
 
 /datum/export/stack/duracloth
 	cost = 40

@@ -1,0 +1,4 @@
+author: "Ghommie (original PR by ShizCalev)"
+delete-after: True
+changes: 
+  - bugfix: "As a non-human mob, hovering your cursor over an inventory slot while holding an object in your active hand shouldn't runtime now."

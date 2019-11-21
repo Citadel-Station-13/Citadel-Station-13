@@ -20,7 +20,7 @@
 
 /datum/round_event/meteor_wave/setup()
 	announceWhen = 1
-	startWhen = rand(180, 360) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
+	startWhen = rand(300, 600) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
 	if(GLOB.singularity_counter)
 		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
 	endWhen = startWhen + 60
@@ -58,7 +58,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce("Meteors have been detected on collision course with the station. Estimated time until impact: [round(startWhen/60)] minutes.[GLOB.singularity_counter ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]", "Meteor Alert", "meteors")
+	priority_announce("Meteors have been detected on collision course with the station. Estimated time until impact: [round(startWhen/60)] minutes.[GLOB.singularity_counter ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]", "Meteor Alert", 'sound/ai/meteors.ogg')
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))

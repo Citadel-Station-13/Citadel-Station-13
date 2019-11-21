@@ -49,8 +49,6 @@
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
 	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
-	STR.limited_random_access = TRUE
-	STR.limited_random_access_stack_position = 3
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
@@ -90,7 +88,6 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
-	STR.limited_random_access_stack_position = 5
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE

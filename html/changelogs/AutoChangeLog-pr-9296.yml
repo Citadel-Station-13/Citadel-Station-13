@@ -1,0 +1,9 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Increases the number of plots to 9 (from 5)"
+  - rscadd: "Additional lighting placed directly outside the garden"
+  - tweak: "Cleans up the area to reflect use. Moves the seed extractor to a more central location"
+  - tweak: "Relocates the seed packs on botany's counter to the garden
+removal: Removes wooden barricades outside the garden"
+  - config: "Renames \"Abandoned Garden\" area designation to \"Maintenance Garden\", but does not replace the icon in Dream Maker"

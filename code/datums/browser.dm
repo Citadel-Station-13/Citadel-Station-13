@@ -194,7 +194,7 @@
 	.=..()
 	opentime = 0
 
-/datum/browser/modal/open(use_onclose = 1)
+/datum/browser/modal/open()
 	set waitfor = 0
 	opentime = world.time
 

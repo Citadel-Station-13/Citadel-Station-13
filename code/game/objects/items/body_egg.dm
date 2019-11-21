@@ -14,7 +14,7 @@
 		src.Insert(loc)
 	return ..()
 
-/obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
 	ADD_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
 	owner.med_hud_set_status()

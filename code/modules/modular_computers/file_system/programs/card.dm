@@ -117,7 +117,7 @@
 	else
 		if(ishuman(user))
 			var/mob/living/carbon/human/h = user
-			user_id_card = h.get_idcard(TRUE)
+			user_id_card = h.get_idcard()
 
 	switch(action)
 		if("PRG_switchm")

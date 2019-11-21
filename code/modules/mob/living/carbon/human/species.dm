@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
-	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
 	var/skinned_type
 	var/liked_food = NONE
 	var/disliked_food = GROSS
@@ -82,7 +81,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
-	var/list/mob/living/ignored_by = list()	// list of mobs that will ignore this species
+	var/mob/living/list/ignored_by = list()	// list of mobs that will ignore this species
 	//Breathing!
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
@@ -333,8 +332,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if("meat_type" in default_features) //I can't believe it's come to the meat
 			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
 
-	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
-
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 
@@ -350,8 +347,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-
-	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
 	if("meat_type" in default_features)
 		C.type_of_meat = GLOB.meat_types[C.dna.features["meat_type"]]
@@ -546,7 +541,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.hidden_underwear)
 				H.underwear = "Nude"
 			else
-				H.underwear = H.saved_underwear
+				H.saved_underwear = H.underwear
 				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
 				if(B)
 					var/mutable_appearance/MA = mutable_appearance(B.icon, B.icon_state, -BODY_LAYER)
@@ -558,7 +553,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.hidden_undershirt)
 				H.undershirt = "Nude"
 			else
-				H.undershirt = H.saved_undershirt
+				H.saved_undershirt = H.undershirt
 				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
 				if(T)
 					var/mutable_appearance/MA
@@ -574,7 +569,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.hidden_socks)
 				H.socks = "Nude"
 			else
-				H.socks = H.saved_socks
+				H.saved_socks = H.socks
 				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
 				if(S)
 					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
@@ -1394,16 +1389,39 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
 	var/flight = 0	//Check for flight and flying items
+	var/ignoreslow = 0
 	var/gravity = 0
 	if(H.movement_type & FLYING)
 		flight = 1
 
 	gravity = H.has_gravity()
 
+	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
+		if(HAS_TRAIT(H, TRAIT_GOTTAGOFAST))
+			. -= 1
+		if(HAS_TRAIT(H, TRAIT_GOTTAGOREALLYFAST))
+			. -= 2
+		. += speedmod
+		. += H.physiology.speed_mod
+
 	if (H.m_intent == MOVE_INTENT_WALK && HAS_TRAIT(H, TRAIT_SPEEDY_STEP))
 		. -= 1.5
 
-	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity)
+	if(HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN))
+		ignoreslow = 1
+
+	if(!gravity)
+		var/obj/item/tank/jetpack/J = H.back
+		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
+		if(!istype(J) && istype(C))
+			J = C.jetpack
+		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
+			. -= 0.4
+		else if(istype(T) && T.allow_thrust(0.01, H))
+			. -= 0.4
+
+	if(!ignoreslow && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)
@@ -1429,6 +1447,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(gravity > STANDARD_GRAVITY)
 			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
 			. += 1 + grav_force
+
+		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
+		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
+			switch(mood.sanity)
+				if(SANITY_INSANE to SANITY_CRAZY)
+					. += 1.5
+				if(SANITY_CRAZY to SANITY_UNSTABLE)
+					. += 1
+				if(SANITY_UNSTABLE to SANITY_DISTURBED)
+					. += 0.5
 
 		if(HAS_TRAIT(H, TRAIT_FAT))
 			. += (1.5 - flight)
@@ -1756,7 +1784,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
-				if(!I.get_sharpness() && armor_block < 50)
+				if(!I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
 						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 						if(H.stat == CONSCIOUS)
@@ -1789,7 +1817,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						H.update_inv_glasses()
 
 			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && !I.get_sharpness() && armor_block < 50)
+				if(H.stat == CONSCIOUS && !I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
@@ -1912,8 +1940,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/knocked_item = FALSE
 			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 				target_held_item = null
-			if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+			if(!target.has_movespeed_modifier(SHOVE_SLOWDOWN_ID))
+				target.add_movespeed_modifier(SHOVE_SLOWDOWN_ID, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
 				if(target_held_item)
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -2035,13 +2063,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			natural = H.natural_bodytemperature_stabilization()
 		var/thermal_protection = 1
 		if(loc_temp < H.bodytemperature) //Place is colder than we are
-			thermal_protection -= H.get_thermal_protection(loc_temp, TRUE) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			thermal_protection -= H.get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
 				H.adjust_bodytemperature((thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
 			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
 				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
 		else //Place is hotter than we are
-			thermal_protection -= H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			thermal_protection -= H.get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
 				H.adjust_bodytemperature((thermal_protection+1)*natural + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
 			else //we're sweating, insulation hinders out ability to reduce heat - but will reduce the amount of heat we get from the environment
@@ -2180,7 +2208,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!(I.resistance_flags & FIRE_PROOF))
 				I.take_damage(H.fire_stacks, BURN, "fire", 0)
 
-		var/thermal_protection = H.easy_thermal_protection()
+		var/thermal_protection = H.get_thermal_protection()
 
 		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 			return

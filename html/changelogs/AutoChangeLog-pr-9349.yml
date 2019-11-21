@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed advanced medical scanners borg upgrades."
+  - bugfix: "Fixes certain borg upgrades being unapplicable on dogborg counterparts of the target cyborg type."

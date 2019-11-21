@@ -15,7 +15,4 @@
 		if("4")
 			a_intent_change("harm")
 			return
-		if("C")
-			toggle_combat_mode()
-			return
 	return ..()

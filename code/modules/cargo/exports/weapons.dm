@@ -125,7 +125,7 @@
 /datum/export/weapon/temp_gun
 	cost = 175 //Its just smaller
 	unit_name = "small temperature gun"
-	k_elasticity = 1/30 //Its just a smaller temperature gun, easy to mass make
+	k_elasticity = 1/5 //Its just a smaller temperature gun, easy to mass make
 	export_types = list(/obj/item/gun/energy/temperature)
 
 /datum/export/weapon/flowergun
@@ -140,7 +140,7 @@
 
 /datum/export/weapon/ioncarbine
 	cost = 200
-	k_elasticity = 1/30 //Its just a smaller temperature gun, easy to mass make
+	k_elasticity = 1/5 //Its just a smaller temperature gun, easy to mass make
 	unit_name = "ion carbine"
 	export_types = list(/obj/item/gun/energy/ionrifle/carbine)
 
@@ -174,12 +174,12 @@
 /////////////////
 
 /datum/export/weapon/wtammo
-	cost = 15
+	cost = 10
 	unit_name = "WT-550 automatic rifle ammo"
 	export_types = list(/obj/item/ammo_box/magazine/wt550m9, /obj/item/ammo_box/magazine/wt550m9/wtrubber)
 
 /datum/export/weapon/wtammo/advanced
-	cost = 45
+	cost = 30
 	unit_name = "advanced WT-550 automatic rifle ammo"
 	export_types = list( /obj/item/ammo_box/magazine/wt550m9/wtap,  /obj/item/ammo_box/magazine/wt550m9/wttx, /obj/item/ammo_box/magazine/wt550m9/wtic)
 
@@ -194,7 +194,7 @@
 	export_types = list(/obj/item/firing_pin/test_range)
 
 /datum/export/weapon/techslug
-	cost = 25
+	cost = 15
 	k_elasticity = 0
 	unit_name = "advanced shotgun shell"
 	export_types = list(/obj/item/ammo_casing/shotgun/dragonsbreath, /obj/item/ammo_casing/shotgun/meteorslug, /obj/item/ammo_casing/shotgun/pulseslug, /obj/item/ammo_casing/shotgun/frag12, /obj/item/ammo_casing/shotgun/ion, /obj/item/ammo_casing/shotgun/laserslug)
@@ -211,8 +211,7 @@
 /datum/export/weapon/revolver
 	cost = 200
 	unit_name = "large handgun"
-	export_types = list(/obj/item/gun/ballistic/revolver)
-	exclude_types = list(/obj/item/gun/ballistic/revolver/russian, /obj/item/gun/ballistic/revolver/doublebarrel)
+	export_types = list(/obj/item/gun/ballistic/revolver/syndie)
 
 /datum/export/weapon/rocketlauncher
 	cost = 1000
@@ -345,13 +344,13 @@
 	export_types = list(/obj/item/storage/toolbox/gold_real)
 
 /datum/export/weapon/melee
-	cost = 50
+	cost = 30
 	unit_name = "unlisted weapon"
 	export_types = list(/obj/item/melee)
 	include_subtypes = TRUE
 
 /datum/export/weapon/gun
-	cost = 50
+	cost = 30
 	unit_name = "unlisted weapon"
 	export_types = list(/obj/item/gun)
 	include_subtypes = TRUE

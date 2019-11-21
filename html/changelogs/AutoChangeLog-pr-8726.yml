@@ -1,0 +1,4 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - balance: "Changed bible heal proc, halving the healed damage and increasing brain damage 5x in exchange for a much wider array of items to protect you from it."

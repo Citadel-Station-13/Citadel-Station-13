@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "The taser's electrode has been reworked. Instead of being a strong knockdown that deals a heavy amount of stamloss, it now causes a weak knockdown, applies a debilitating status effect for 5 seconds, and deals 35 stamloss on hit up to a maximum 50 total stamloss."
+  - balance: "Roundstart turrets now have a nonlethal projectile that gets used when they're set to stun and the target is resting"
+  - tweak: "Hybrid tasers now have disablers set as their default mode."

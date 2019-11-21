@@ -1,0 +1,4 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - bugfix: "Removed the human check for cult conversion of captain/chaplain minds."

@@ -138,7 +138,7 @@
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
-/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	if(active)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/C = thrower
@@ -267,7 +267,6 @@
 	operation_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
-	spawn_tracked = FALSE
 
 /obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()

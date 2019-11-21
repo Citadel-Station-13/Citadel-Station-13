@@ -44,7 +44,7 @@
 	update_icon()
 	PopulateContents()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
+		take_contents()
 	if(secure)
 		lockerelectronics = new(src)
 		lockerelectronics.accesses = req_access

@@ -17,7 +17,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/atom/movable/firer = null//Who shot it
-	var/atom/fired_from = null // the atom that the projectile was fired from (gun, turret)
 	var/suppressed = FALSE	//Attack message
 	var/candink = FALSE //Can this projectile play the dink sound when hitting the head?
 	var/yo = null
@@ -132,8 +131,6 @@
 	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
-	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
@@ -167,7 +164,7 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
 			var/obj/item/bodypart/B = L.get_bodypart(def_zone)
-			if(B && B.status == BODYPART_ROBOTIC) // So if you hit a robotic, it sparks instead of bloodspatters
+			if(B.status == BODYPART_ROBOTIC) // So if you hit a robotic, it sparks instead of bloodspatters
 				do_sparks(2, FALSE, target.loc)
 				if(prob(25))
 					new /obj/effect/decal/cleanable/oil(target_loca)
@@ -235,8 +232,8 @@
 	beam_segments[beam_index] = null
 
 /obj/item/projectile/Bump(atom/A)
-	if(trajectory && check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
-		var/datum/point/pcache = trajectory.copy_to()
+	var/datum/point/pcache = trajectory.copy_to()
+	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
@@ -359,8 +356,6 @@
 		pixel_move(1, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
-	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")

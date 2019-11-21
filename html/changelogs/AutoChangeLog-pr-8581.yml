@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "Reskinnable PDAs. A related game preference."
+  - refactor: "Refactoring the pda, pda painter, obj reskinning and chameleon pda a bit to support this feature."
+  - imageadd: "more PDA sprites and ported reskins."

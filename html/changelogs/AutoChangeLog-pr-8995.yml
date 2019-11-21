@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "When you're jogging, you will only slip on water if you have more than 20% staminaloss, for real this time."

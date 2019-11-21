@@ -468,7 +468,7 @@
 							var/len = length(viable_occupant.dna.uni_identity)
 							num = WRAP(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
-																														//Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
+                                                                                                                         //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "UI #[block]-[subblock]; "

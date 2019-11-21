@@ -135,11 +135,11 @@
 	bonus_desc = "Not to be confused with eggplants."
 	multiplier = 2
 
-// /datum/bounty/item/botany/kudzu
-// 	name = "Kudzu Pods"
-// 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/kudzupod)
-// 	bonus_desc = "Store in a dry, dark place."
-// 	multiplier = 4
+/datum/bounty/item/botany/kudzu
+	name = "Kudzu Pods"
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/kudzupod)
+	bonus_desc = "Store in a dry, dark place."
+	multiplier = 4
 
 /datum/bounty/item/botany/watermelon
 	name = "Watermelons"

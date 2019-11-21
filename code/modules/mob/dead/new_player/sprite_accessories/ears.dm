@@ -130,10 +130,10 @@
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+    name = "Rabbit"
+    icon_state = "rabbit"
+    color_src = MATRIXED
+    icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/sergal
 	name = "Sergal"
@@ -287,8 +287,8 @@
 	icon_state = "pede"
 
 /datum/sprite_accessory/mam_ears/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
+    name = "Rabbit"
+    icon_state = "rabbit"
 
 /datum/sprite_accessory/mam_ears/sergal
 	name = "Sergal"

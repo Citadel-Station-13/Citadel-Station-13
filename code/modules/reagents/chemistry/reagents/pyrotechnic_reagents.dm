@@ -19,7 +19,6 @@
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
-	value = 5
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "oil"
@@ -30,7 +29,6 @@
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
 	color = "#FFFF00"
-	value = 3
 	taste_description = "metal"
 
 /datum/reagent/clf3
@@ -91,7 +89,6 @@
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
 	color = "#210021"
-	value = 10
 	taste_description = "compressed bitterness"
 
 /datum/reagent/blackpowder
@@ -100,7 +97,6 @@
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
 	color = "#000000"
-	value = 5
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
@@ -168,7 +164,6 @@
 	description = "Very flammable."
 	reagent_state = LIQUID
 	color = "#FA00AF"
-	value = 1
 	taste_description = "burning"
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M)

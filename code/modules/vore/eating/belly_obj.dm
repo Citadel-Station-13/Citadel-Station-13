@@ -158,7 +158,7 @@
 
 /obj/belly/Destroy()
 	SSbellies.belly_list -= src
-	if(owner?.vore_organs)
+	if(owner)
 		owner.vore_organs -= src
 		owner = null
 	. = ..()

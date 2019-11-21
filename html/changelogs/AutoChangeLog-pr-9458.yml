@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Nerfs cyborg disabler and its internal power cell to hold 25 disabler beam shots rather than 43/44, just like a normal disabler."

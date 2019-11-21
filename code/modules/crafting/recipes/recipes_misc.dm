@@ -4,7 +4,7 @@
 
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
-	reqs = 	list(/obj/item/stack/sheet/cloth = 2,
+	reqs = 	list(/obj/item/stack/sheet/cloth = 2, 
 				 /obj/item/stack/sheet/plastic = 2,
 				 /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain
@@ -195,6 +195,14 @@
 	reqs = list(/obj/item/stack/ore/bluespace_crystal = 1,
 				/obj/item/toy/crayon/blue = 1,
 				/obj/item/bikehorn = 1)
+	category = CAT_MISC
+
+/datum/crafting_recipe/aitater
+	name = "intelliTater"
+	result = /obj/item/aicard/aitater
+	time = 30
+	reqs = list(/obj/item/aicard = 1,
+					/obj/item/reagent_containers/food/snacks/grown/potato = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/mousetrap

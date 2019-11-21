@@ -163,8 +163,6 @@ RLD
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
-	var/adjacency_check = TRUE //Wheter it checks if the tool has to be in our hands or not. Wsed for the aux base construction drone's internal RCD
-
 
 /obj/item/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
@@ -275,7 +273,7 @@ RLD
 /obj/item/construction/rcd/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || (adjacency_check && !user.Adjacent(src)))
+	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -288,7 +286,7 @@ RLD
 		"SOUTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "csouth"),
 		"WEST" = image(icon = 'icons/mob/radial.dmi', icon_state = "cwest")
 		)
-	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check, tooltips = TRUE)
+	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(computerdirs)
@@ -347,13 +345,13 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check)
+	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 	if(!check_menu(user))
 		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check)
+				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -398,7 +396,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check)
+				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -443,16 +441,13 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
-	var/turf/the_turf = get_turf(A)
-	var/turf_coords = "[COORD(the_turf)]"
-	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
-				investigate_log("[user] used [src] on [cached] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
+				investigate_log("[user] used [src] on [cached] (now [A]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
 
@@ -557,7 +552,6 @@ RLD
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
 	upgrade = TRUE
-	var/energyfactor = 72
 
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
@@ -568,7 +562,7 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
+	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
@@ -581,15 +575,10 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.charge >= (amount * energyfactor)
+	. = borgy.cell.charge >= (amount * 72)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
-
-/obj/item/construction/rcd/borg/syndicate
-	icon_state = "ircd"
-	item_state = "ircd"
-	energyfactor = 66
 
 /obj/item/construction/rcd/loaded
 	matter = 160

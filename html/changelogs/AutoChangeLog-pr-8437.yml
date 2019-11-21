@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "more box options"
+  - bugfix: "a lack of replaceable boxes"

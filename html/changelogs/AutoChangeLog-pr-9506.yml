@@ -1,0 +1,4 @@
+author: "izzyinbox"
+delete-after: True
+changes: 
+  - rscadd: "*bark emote"

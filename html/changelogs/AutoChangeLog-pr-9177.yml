@@ -1,0 +1,5 @@
+author: "JTGSZ"
+delete-after: True
+changes: 
+  - tweak: "Added one more gang boss slot bringing total to 4 from 3"
+  - bugfix: "Fixed Gang Boss being able to be deconverted"

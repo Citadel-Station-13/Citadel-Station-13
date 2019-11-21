@@ -1,0 +1,6 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "blood halberd not going back to 17 force after unwielding"
+  - spellcheck: "unnecessary 's at the end of blood rites healing"
+  - rscadd: "QoL to blood rites, examine the ritual aura to view how many blood charges are left"

@@ -284,6 +284,9 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "be" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/structure/chair/sofa/right,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -359,20 +362,6 @@
 "bu" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"fV" = (
-/turf/closed/wall/r_wall,
-/area/shuttle/escape)
-"IR" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"Pi" = (
-/obj/structure/chair/sofa,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -463,11 +452,11 @@ aP
 av
 av
 ax
-av
-fV
-fV
+ab
+ad
+ab
 bk
-fV
+ab
 bs
 bu
 "}
@@ -487,8 +476,8 @@ aT
 aT
 aT
 aT
-aT
-IR
+ac
+ac
 be
 aN
 bl
@@ -512,7 +501,7 @@ ab
 ad
 ab
 ad
-fV
+ad
 bf
 bl
 bq
@@ -533,11 +522,11 @@ aM
 aP
 aU
 aC
-aC
 aX
 aD
-fV
-Pi
+ad
+ad
+bg
 bm
 bn
 bs
@@ -557,10 +546,10 @@ ad
 ab
 ab
 aC
-aC
 aY
 aX
-fV
+ad
+ad
 bh
 aP
 bq
@@ -581,10 +570,10 @@ aC
 aD
 aC
 ax
-aC
 aZ
 ax
-IR
+ac
+ac
 bg
 bl
 br
@@ -605,14 +594,14 @@ aC
 aQ
 aV
 aC
-aC
 aX
 aD
-fV
+ad
+ab
 bi
 bn
 bl
-fV
+ab
 ab
 "}
 (11,1,1) = {"
@@ -632,10 +621,10 @@ ab
 ad
 ad
 ab
-fV
-fV
-fV
-fV
-fV
+ad
+ab
+ab
+ad
+ad
 aa
 "}

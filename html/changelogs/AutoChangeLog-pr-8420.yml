@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Shield blobs no longer become completely invulnerable to all forms of damage after reaching a \"\"\"weakened\"\"\" state"
+  - tweak: "Taken care of what appeared to have been an oversight where shield blobs don't recover their armor after becoming weakened."

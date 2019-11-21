@@ -125,7 +125,7 @@
 	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.get_temperature()
+	var/hotness = I.is_hot()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
@@ -222,15 +222,6 @@
 
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
-
-///Subtype used for the lavaland clown ruin.
-/obj/item/reagent_containers/spray/waterflower/superlube
-	name = "clown flower"
-	desc = "A delightly devilish flower... you got a feeling where this is going."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "clownflower"
-	volume = 30
-	list_reagents = list(/datum/reagent/lube/superlube = 30)
 
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE

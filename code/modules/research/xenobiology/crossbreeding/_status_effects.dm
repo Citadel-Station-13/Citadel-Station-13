@@ -372,11 +372,15 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod += 0.5
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod -= 0.5
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -563,7 +567,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	name = "burning fingertips"
 	desc = "You shouldn't see this."
 
-/obj/item/hothands/get_temperature()
+/obj/item/hothands/is_hot()
 	return 290 //Below what's required to ignite plasma.
 
 /datum/status_effect/stabilized/darkpurple
@@ -688,15 +692,20 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.physiology.speed_mod--
 	else if(mod < 1)
 		mod++
-		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.physiology.speed_mod++
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod += -mod //Reset the changes.
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -904,7 +913,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(owner, TRAIT_GOTTAGOFAST,"slimestatus")
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -915,7 +924,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS)
+	REMOVE_TRAIT(owner, TRAIT_GOTTAGOFAST,"slimestatus")
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

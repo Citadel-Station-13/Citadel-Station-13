@@ -236,10 +236,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		xeno = new(pump.loc,target)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(target,7,1, null, FALSE, TRUE)
+		xeno.throw_at(target,7,1, xeno, FALSE, TRUE)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(pump,7,1, null, FALSE, TRUE)
+		xeno.throw_at(pump,7,1, xeno, FALSE, TRUE)
 		sleep(10)
 		var/xeno_name = xeno.name
 		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
@@ -672,7 +672,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		"AI [pick("rogue", "is dead")]!!")
 
 	var/list/mob/living/carbon/people = list()
-	var/mob/living/carbon/person = null
+	var/list/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
 	for(var/mob/living/carbon/H in view(target))
 		if(H == target)
@@ -878,7 +878,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("blob alert")
 			to_chat(target, "<h1 class='alert'>Biohazard Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
-			SEND_SOUND(target, get_announcer_sound("outbreak5"))
+			SEND_SOUND(target, 'sound/ai/outbreak5.ogg')
 		if("ratvar")
 			target.playsound_local(target, 'sound/machines/clockcult/ark_deathrattle.ogg', 50, FALSE, pressure_affected = FALSE)
 			target.playsound_local(target, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, FALSE, pressure_affected = FALSE)
@@ -887,15 +887,15 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("shuttle dock")
 			to_chat(target, "<h1 class='alert'>Priority Announcement</h1>")
 			to_chat(target, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
-			SEND_SOUND(target, get_announcer_sound("shuttledock"))
+			SEND_SOUND(target, 'sound/ai/shuttledock.ogg')
 		if("malf ai") //AI is doomsdaying!
 			to_chat(target, "<h1 class='alert'>Anomaly Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>")
-			SEND_SOUND(target, get_announcer_sound("aimalf"))
+			SEND_SOUND(target, 'sound/ai/aimalf.ogg')
 		if("meteors") //Meteors inbound!
 			to_chat(target, "<h1 class='alert'>Meteor Alert</h1>")
-			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station. Estimated time until impact: [round(rand(180,360)/60)] minutes.</span><br><br>")
-			SEND_SOUND(target, get_announcer_sound("meteors"))
+			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station.</span><br><br>")
+			SEND_SOUND(target, 'sound/ai/meteors.ogg')
 		if("supermatter")
 			SEND_SOUND(target, 'sound/magic/charge.ogg')
 			to_chat(target, "<span class='boldannounce'>You feel reality distort for a moment...</span>")

@@ -57,10 +57,6 @@
 	var/screen_start_x = 4								//These two are where the storage starts being rendered, screen_loc wise.
 	var/screen_start_y = 2
 	//End
-	
-	var/limited_random_access = FALSE					//Quick if statement in accessible_items to determine if we care at all about what people can access at once.
-	var/limited_random_access_stack_position = 0					//If >0, can only access top <x> items
-	var/limited_random_access_stack_bottom_up = FALSE				//If TRUE, above becomes bottom <x> items
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
@@ -149,19 +145,6 @@
 /datum/component/storage/proc/real_location()
 	var/datum/component/storage/concrete/master = master()
 	return master? master.real_location() : null
-
-//What players can access
-//this proc can probably eat a refactor at some point.
-/datum/component/storage/proc/accessible_items(random_access = TRUE)
-	var/list/contents = contents()
-	if(contents)
-		if(limited_random_access && random_access)
-			if(limited_random_access_stack_position && (length(contents) > limited_random_access_stack_position))
-				if(limited_random_access_stack_bottom_up)
-					contents.Cut(1, limited_random_access_stack_position + 1)
-				else
-					contents.Cut(1, length(contents) - limited_random_access_stack_position + 1)
-	return contents
 
 /datum/component/storage/proc/canreach_react(datum/source, list/next)
 	var/datum/component/storage/concrete/master = master()
@@ -301,7 +284,8 @@
 
 /datum/component/storage/proc/_process_numerical_display()
 	. = list()
-	for(var/obj/item/I in accessible_items())
+	var/atom/real_location = real_location()
+	for(var/obj/item/I in real_location.contents)
 		if(QDELETED(I))
 			continue
 		if(!.[I.type])
@@ -312,8 +296,8 @@
 
 //This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /datum/component/storage/proc/orient2hud(mob/user, maxcolumns)
-	var/list/accessible_contents = accessible_items()
-	var/adjusted_contents = length(accessible_contents)
+	var/atom/real_location = real_location()
+	var/adjusted_contents = real_location.contents.len
 
 	//Numbered contents display
 	var/list/datum/numbered_display/numbered_contents
@@ -345,7 +329,8 @@
 				if(cy - screen_start_y >= rows)
 					break
 	else
-		for(var/obj/O in accessible_items())
+		var/atom/real_location = real_location()
+		for(var/obj/O in real_location)
 			if(QDELETED(O))
 				continue
 			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
@@ -366,8 +351,9 @@
 		return FALSE
 	var/list/cview = getviewsize(M.client.view)
 	var/maxallowedscreensize = cview[1]-8
+	var/atom/real_location = real_location()
 	if(M.active_storage != src && (M.stat == CONSCIOUS))
-		for(var/obj/item/I in accessible_items())
+		for(var/obj/item/I in real_location)
 			if(I.on_found(M))
 				return FALSE
 	if(M.active_storage)
@@ -375,7 +361,7 @@
 	orient2hud(M, (isliving(M) ? maxallowedscreensize : 7))
 	M.client.screen |= boxes
 	M.client.screen |= closer
-	M.client.screen |= accessible_items()
+	M.client.screen |= real_location.contents
 	M.active_storage = src
 	LAZYOR(is_using, M)
 	return TRUE

@@ -1,0 +1,4 @@
+author: "JTGSZ"
+delete-after: True
+changes: 
+  - rscadd: "Adds more control over species based offsets."

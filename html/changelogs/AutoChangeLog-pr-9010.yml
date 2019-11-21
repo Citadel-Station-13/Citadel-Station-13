@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - balance: "Activating the nuclear device during war-ops informs the crew of the nuke's position."

@@ -1,0 +1,4 @@
+author: "Sishen1542, original by @Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "alt clicking the emitter now rotates it instead of only flipping"

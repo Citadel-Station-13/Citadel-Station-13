@@ -1,0 +1,12 @@
+author: "Ghommie (original PRs by XDTM, optimumtact, Nichlas0010 and monster860)"
+delete-after: True
+changes: 
+  - rscadd: "Added Quantum Keycards, devices that can link to a quantum pad, and can be used on any other quantum pad to teleport to its linked pad.
+spellchecking: Renamed \"Bluespace Teleportation Tech\" tech node to \"Bluespace Travel\"."
+  - tweak: "Moved roasting sticks from the \"Bluespace Travel\" to \"Practical Bluespace\"."
+  - rscadd: "Spraying holy water on tiles will now prevent cult-based teleportation from using them as a destination point."
+  - tweak: "Quantum, wormhole and magic teleportation is no longer disrupted by bags of holding."
+  - bugfix: "You are now also blocked from teleporting IN to no-teleport areas, not just out of them."
+  - tweak: "Quantum teleportation now makes pretty rainbow sparks instead of the normal ones."
+  - bugfix: "Non-bluespace teleportation (spells etc.) no longer makes sparks."
+  - bugfix: "Fixed teleportation deleting mob spawners like golem shells and ashwalker eggs."

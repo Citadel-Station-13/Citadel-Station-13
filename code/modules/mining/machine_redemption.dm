@@ -209,7 +209,7 @@
 
 		data["alloys"] = list()
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = SSresearch.techweb_design_by_id(v)
+			var/datum/design/D = stored_research.researched_designs[v]
 			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
 
 	if (!mat_container)
@@ -304,9 +304,7 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if((check_access(I) || allowed(usr)) && alloy)
+			if((check_access(inserted_scan_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])

@@ -79,7 +79,7 @@
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
 
-	M.adjustToxLoss(-(4 * heal_amt), forced = TRUE) //most effective on toxins
+	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 
@@ -368,7 +368,7 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
-	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate and heals toxin lovers.<br>\
+	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
@@ -410,7 +410,7 @@
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 
-	M.adjustToxLoss(-heal_amt, forced = (temp_rate == 4))
+	M.adjustToxLoss(-heal_amt)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 	if(!parts.len)
@@ -435,7 +435,7 @@
 	symptom_delay_max = 1
 	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
 	var/cellular_damage = FALSE
-	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage and toxin lovers.<br>\
+	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage.<br>\
 					  <b>Resistance 7:</b> Increases healing speed."
 
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
@@ -468,7 +468,7 @@
 	if(cellular_damage)
 		M.adjustCloneLoss(-heal_amt * 0.5)
 
-	M.adjustToxLoss(-(2 * heal_amt), forced = cellular_damage)
+	M.adjustToxLoss(-(2 * heal_amt))
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 

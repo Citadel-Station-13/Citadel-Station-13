@@ -2,7 +2,6 @@
 	name = "Spawn Nightmare"
 	typepath = /datum/round_event/ghost_role/nightmare
 	max_occurrences = 1
-	gamemode_blacklist = list("dynamic")
 	min_players = 20
 
 /datum/round_event/ghost_role/nightmare

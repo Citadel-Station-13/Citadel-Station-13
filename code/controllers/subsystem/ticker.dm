@@ -303,7 +303,7 @@ SUBSYSTEM_DEF(ticker)
 	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
-	SEND_SOUND(world, sound(get_announcer_sound("welcome")))
+	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -479,8 +479,7 @@ SUBSYSTEM_DEF(ticker)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		var/dynamic = CONFIG_GET(flag/dynamic_voting)
-		SSvote.initiate_vote(dynamic ? "dynamic" : "roundtype","server",TRUE)
+		SSvote.initiate_vote("roundtype","server",TRUE)
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

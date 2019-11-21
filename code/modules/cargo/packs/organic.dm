@@ -69,24 +69,31 @@
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
 
-/datum/supply_pack/organic/exoticseeds
-	name = "Exotic Seeds Crate"
-	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
-	cost = 1500
-	contains = list(/obj/item/seeds/nettle,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/plump,
-					/obj/item/seeds/liberty,
-					/obj/item/seeds/amanita,
-					/obj/item/seeds/reishi,
-					/obj/item/seeds/banana,
-					/obj/item/seeds/eggplant/eggy,
-					/obj/item/seeds/random,
-					/obj/item/seeds/random)
-	crate_name = "exotic seeds crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
+/datum/supply_pack/organic/cutlery
+	name = "Kitchen Cutlery Deluxe Set"
+	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	cost = 10000
+	contraband = TRUE
+	contains = list(/obj/item/sharpener,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/rollingpin, //Deluxe for a reason
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+	crate_name = "kitchen cutlery deluxe set"
 
 /datum/supply_pack/organic/food
 	name = "Food Crate"
@@ -112,71 +119,6 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana,
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
-
-
-/datum/supply_pack/organic/fruit_1
-	name = "Fruit Basic Crate"
-	desc = "Getting scurvy on the station? Well heres your fixing! Contains three of each - bananas, watermelons, limes, lemons, oranges and even three pineapple."
-	cost = 2250
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana)
-	crate_name = "fruit crate"
-
-/datum/supply_pack/organic/fruit_2
-	name = "Fruit Delux Crate"
-	desc = "Getting tired of the basic fruits and want to have something a bit more decadent! This crate is for you! Contains three of each - bunches of berries, apples, pineapples, cherries, green & red grapes, eggplants, bananas lastly ten strawberry."
-	cost = 3500
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry)
-	crate_name = "fruit crate"
 
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
@@ -228,32 +170,6 @@
 	contains = list(/obj/item/watertank)
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/organic/cutlery
-	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
-	cost = 10000
-	contraband = TRUE
-	contains = list(/obj/item/sharpener,
-					/obj/item/kitchen/fork,
-					/obj/item/kitchen/fork,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, //Deluxe for a reason
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
-	crate_name = "kitchen cutlery deluxe set"
 
 /datum/supply_pack/organic/mre
 	name = "MRE supply kit (emergency rations)"
@@ -353,3 +269,22 @@
 					/obj/item/valentine)
 	crate_name = "valentine crate"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/exoticseeds
+	name = "Exotic Seeds Crate"
+	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
+	cost = 1500
+	contains = list(/obj/item/seeds/nettle,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/plump,
+					/obj/item/seeds/liberty,
+					/obj/item/seeds/amanita,
+					/obj/item/seeds/reishi,
+					/obj/item/seeds/banana,
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
+	crate_name = "exotic seeds crate"
+	crate_type = /obj/structure/closet/crate/hydroponics

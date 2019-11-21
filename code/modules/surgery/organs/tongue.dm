@@ -62,7 +62,7 @@
 		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
 
 
-/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
@@ -233,6 +233,7 @@
 	name = "plasma bone \"tongue\""
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
+	maxHealth = "alien"
 	modifies_speech = FALSE
 
 /obj/item/organ/tongue/robot

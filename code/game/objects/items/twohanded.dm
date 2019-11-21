@@ -506,7 +506,7 @@
 
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
 
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
 	return FALSE

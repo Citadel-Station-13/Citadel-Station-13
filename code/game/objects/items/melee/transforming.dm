@@ -23,7 +23,7 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
-	if(get_sharpness())
+	if(is_sharp())
 		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound, !active)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
@@ -65,7 +65,7 @@
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
 		total_mass = initial(total_mass)
-	if(get_sharpness())
+	if(is_sharp())
 		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
 		BT.butchering_enabled = TRUE
 	else
