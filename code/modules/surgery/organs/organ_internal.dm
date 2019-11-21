@@ -365,3 +365,15 @@
 			tail.Insert(src)
 			if(only_one)
 				return TRUE
+
+/obj/item/organ/random
+	name = "Illegal organ"
+	desc = "Something fucked up"
+
+/obj/item/organ/random/Initialize()
+	..()
+	var/list = subtypesof(/obj/item/organ)
+	list -= /obj/item/organ/random
+	var/newtype = pick(list)
+	new newtype(loc)
+	return INITIALIZE_HINT_QDEL

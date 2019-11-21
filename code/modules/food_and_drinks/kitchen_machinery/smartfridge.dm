@@ -144,7 +144,7 @@
 		else
 			O.forceMove(src)
 			return TRUE
-		
+
 ///Really simple proc, just moves the object "O" into the hands of mob "M" if able, done so I could modify the proc a little for the organ fridge
 /obj/machinery/smartfridge/proc/dispense(obj/item/O, var/mob/M)
 	if(!M.put_in_hands(O))
@@ -388,11 +388,17 @@
 /obj/machinery/smartfridge/organ
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
-	max_n_of_items = 20	//vastly lower to prevent processing too long
+	max_n_of_items = 25	//vastly lower to prevent processing too long
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	if(istype(O, /obj/item/organ))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/syringe))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/glass/bottle))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/medspray))
 		return TRUE
 	return FALSE
 
@@ -419,6 +425,12 @@
 	. = ..()
 	if(istype(AM))
 		AM.organ_flags &= ~ORGAN_FROZEN
+
+/obj/machinery/smartfridge/chemistry/preloaded
+	initial_contents = list(
+		/obj/item/organ/random = 1,
+		/obj/item/reagent_containers/medspray/synthtissue = 1,
+		/obj/item/reagent_containers/medspray/sterilizine = 1)
 
 // -----------------------------
 // Chemistry Medical Smartfridge

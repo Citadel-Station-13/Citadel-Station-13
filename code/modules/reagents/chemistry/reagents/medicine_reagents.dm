@@ -940,6 +940,21 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
 
+/datum/reagent/neurine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	var/mob/living/carbon/C = M
+	if(!C)
+		return
+	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+	if(method == INJECT)
+		if(B.organ_flags & ORGAN_FAILING)
+			B.applyOrganDamage(-20)
+			if(prob(80))
+				B.gain_trauma_type(BRAIN_TRAUMA_MILD)
+			else if(prob(50))
+				B.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+			else
+				B.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))
 		holder.remove_reagent("neurotoxin", 5)
