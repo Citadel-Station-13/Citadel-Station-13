@@ -176,3 +176,8 @@
 
 /datum/mood_event/revenant_blight/add_effects()
 	description = "<span class='umbra'>Just give up, [pick("no one will miss you", "there is nothing you can do to help", "even a clown would be more useful than you", "does it even matter in the end?")]...</span>\n"
+
+/datum/mood_event/super_depressed
+	description = "<span class='boldwarning'>I'm so depressed...</span>"
+	mood_change = -30 //super fucking depressed
+	timeout = 2 MINUTES

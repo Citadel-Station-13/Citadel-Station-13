@@ -1,6 +1,7 @@
 /*
 Treacherous extracts:
-	Have a unique effect when you stab someone with it, 8% chance of it stabbing you instead.
+	Have a unique effect when you stab someone with it,
+	8% chance of it stabbing you instead.
 */
 /obj/item/slimecross/treacherous
 	name = "treacherous extract"
@@ -18,27 +19,23 @@ Treacherous extracts:
 		var/mob/living/H = target
 		var/mob/living/G = user
 		if (rand(1,25) < 23)
-			H.apply_damage(5,BRUTE,check_zone(G.zone_selected))
+			H.apply_damage(rand(5,7),BRUTE,check_zone(G.zone_selected))
 			H.visible_message("<span class='warning'>[user] stabs [target] with [src]!</span>","<span class='userdanger'>[user] shanks you with the [src]!</span>")
 			var/delete = do_effect(G, H)
-			if (!delete)
-				delete = TRUE
-			if (uses - 1 == 0 && delete == TRUE)
+			if (delete != FALSE)
+				uses--
+			if (uses == 0)
 				qdel(src)
 				return
-			if (delete == TRUE)
-				uses--
 		else
-			G.apply_damage(5,BRUTE,check_zone(H.zone_selected))
+			G.apply_damage(rand(5,7),BRUTE,check_zone(H.zone_selected))
 			G.visible_message("<span class='warning'>[user] tries to stab [target] with [src], but stabs [user.p_them()]self instead!</span>","<span class='userdanger'>A hidden blade slides out of the [src] and stabs you!</span>")
 			var/delete = do_effect(H, G)
-			if (!delete)
-				delete = TRUE
-			if (uses - 1 == 0 && delete == TRUE)
+			if (delete != FALSE)
+				uses--
+			if (uses == 0)
 				qdel(src)
 				return
-			if (delete == TRUE)
-				uses--
 
 /obj/item/slimecross/treacherous/proc/do_effect(mob/user,mob/living/target)
 	return TRUE
@@ -103,7 +100,7 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/yellow/do_effect(mob/user,mob/living/target)
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, 1)
-	target.electrocute_act(rand(30,60),src,1,1)
+	target.electrocute_act(rand(30,49),src,1,1)
 	..()
 
 /obj/item/slimecross/treacherous/darkpurple
@@ -128,10 +125,10 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/silver
 	colour = "silver"
-	uses = 5
+	uses = 3
 
 /obj/item/slimecross/treacherous/silver/do_effect(mob/user,mob/living/target)
-
+	target.nutrition += 450
 	..()
 
 /obj/item/slimecross/treacherous/bluespace
@@ -203,10 +200,26 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/cerulean
 	colour = "cerulean"
+	var/mob/living/victim
+	var/stabsleft = 0
+	var/zonestabbed = BODY_ZONE_CHEST
+	uses = -1
 
 /obj/item/slimecross/treacherous/cerulean/do_effect(mob/user,mob/living/target)
+	victim = target
+	stabsleft = 7
+	zonestabbed = check_zone(user.zone_selected)
+	addtimer(CALLBACK(src, .proc/stab), rand(50,300))
+	return FALSE
 
-	..()
+/obj/item/slimecross/treacherous/cerulean/proc/stab()
+	if (stabsleft >= 0 && victim)
+		victim.visible_message("<span class='warning'>A knife appears out of thin air and stabs [victim]!</span>","<span class='userdanger'>A knife appears out of nowhere and stabs you!</span>")
+		playsound(get_turf(victim), 'sound/weapons/bladeslice.ogg', 50, 1)
+		victim.apply_damage(rand(5,10),BRUTE,zonestabbed)
+		stabsleft -= 1
+		if (stabsleft >= 0)
+			addtimer(CALLBACK(src, .proc/stab), rand(50,300))
 
 /obj/item/slimecross/treacherous/pyrite
 	uses = 5
@@ -226,7 +239,7 @@ Treacherous extracts:
 			victim.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 			ADD_TRAIT(victim,TRAIT_CULT_EYES,"valid_cultist")
 			victim.update_body()
-			addtimer(CALLBACK(src, .proc/remove_cult_overlay), 3000)
+			addtimer(CALLBACK(src, .proc/remove_cult_overlay), rand(2000,3000))
 			uses--
 		else
 			to_chat(user,"<span class='warning'>[src] has no more uses!</span>")
@@ -247,6 +260,7 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/red
 	colour = "red"
+	uses = -1
 
 /obj/item/slimecross/treacherous/red/do_effect(mob/user,mob/living/target)
 	if (isliving(user))
@@ -264,54 +278,124 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/pink
 	colour = "pink"
-	uses = 4
+	uses = 3
 
 /obj/item/slimecross/treacherous/pink/do_effect(mob/user,mob/living/target)
-	target.reagents.add_reagent("pax",10)
+	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "super_depressed", /datum/mood_event/super_depressed)
 	..()
 
 /obj/item/slimecross/treacherous/gold
 	colour = "gold"
+	//spawn a shitty AI controlled simplemob with appearance of the player
 
 /obj/item/slimecross/treacherous/gold/do_effect(mob/user,mob/living/target)
-
+	var/mob/living/simple_animal/hostile/illusion/E = new(target.loc)
+	E.Copy_Parent(target, 300, 100, 5, 3)
+	E.GiveTarget(target)
+	E.Goto(target, target.movement_delay(), E.minimum_distance)
 	..()
 
 /obj/item/slimecross/treacherous/oil
 	colour = "oil"
+	//change this one?
 
 /obj/item/slimecross/treacherous/oil/do_effect(mob/user,mob/living/target)
-	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	target.transferItemToLoc(src, target, TRUE) //not embedded, can't pull it out
+	target.visible_message("<span class='danger'>The [src] lodges in [target] before dissolving and spreading over their body, pulsing ominously!</span>","<span class='userdanger'>The [src] lodges in you and starts pulsating ominously!</span>")
+	addtimer(CALLBACK(src, .proc/boom), rand(100,300))
+	return FALSE
 
 /obj/item/slimecross/treacherous/oil/proc/boom()
-	explosion(get_turf(src), 2, 4, 4) //Same area as normal oils, but increased high-impact values by one each, then decreased light by 2.
-	qdel(src)
+	explosion(get_turf(src),0,0,3)
 
 /obj/item/slimecross/treacherous/black
 	colour = "black"
+	uses = 13
 
-/obj/item/slimecross/treacherous/black/do_effect(mob/user,mob/living/target)
-
+/obj/item/slimecross/treacherous/black/do_effect(mob/living/user,mob/living/target)
+	var/healiesyay = rand(10,15)
+	target.adjustBruteLoss(healiesyay)
+	user.adjustBruteLoss(-(healiesyay))
 	..()
 
 /obj/item/slimecross/treacherous/lightpink
 	colour = "light pink"
+	uses = 4
 
 /obj/item/slimecross/treacherous/lightpink/do_effect(mob/user,mob/living/target)
-
+	target.reagents.add_reagent("pax",10)
 	..()
 
 /obj/item/slimecross/treacherous/adamantine
 	colour = "adamantine"
+	uses = 2
+	var/armorset = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/slimecross/treacherous/adamantine/proc/no_armor(obj/item/J)
+	var/list/armor = J.armor
+	if (armor["melee"] == 0 && armor["bullet"] == 0 && armor["laser"] == 0 && armor["energy"] == 0 && armor["bomb"] == 0 && armor["bio"] == 0 && armor["rad"] == 0 && armor["fire"] == 0)
+		return TRUE
+	return FALSE
 
 /obj/item/slimecross/treacherous/adamantine/do_effect(mob/user,mob/living/target)
-
+	if (ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if (!no_armor(H.head))
+			H.head.armor = armorset
+			to_chat(H,"<span class='warning'>[H.head.name] suddenly decays!</span>")
+			H.head.name = "decayed [H.head.name]"
+		if (!no_armor(H.wear_suit))
+			H.wear_suit.armor = armorset
+			to_chat(H,"<span class='warning'>[H.wear_suit.name] suddenly decays!</span>")
+			H.wear_suit.name = "decayed [H.wear_suit.name]"
+		if (!no_armor(H.w_uniform))
+			H.w_uniform.armor = armorset
+			to_chat(H,"<span class='warning'>[H.w_uniform.name] suddenly decays!</span>")
+			H.w_uniform.name = "decayed [H.w_uniform.name]"
 	..()
 
 /obj/item/slimecross/treacherous/rainbow
 	colour = "rainbow"
+	uses = 1
+	var/rtype = "damage"
+	var/rtypes = list("treacherous" = 1,"damage" = 10, "mulligan" = 1)
+
+/obj/item/slimecross/treacherous/rainbow/Initialize()
+	..()
+	rtype = pick(rtypes)
+	uses = rtypes[rtype]
+	switch(rtype)
+		if ("damage")
+			desc = "[desc]\nIt looks <b>spiky</b>."
+		if ("mulligan")
+			desc = "[desc]\nIt keeps changing color."
+		if ("treacherous")
+			desc = "[desc]\nIt's pulsating wildly."
+
 
 /obj/item/slimecross/treacherous/rainbow/do_effect(mob/user,mob/living/target)
-
+	switch(rtype)
+		if ("treacherous")
+			var/slimetype = pick(subtypesof(/obj/item/slimecross/treacherous))
+			var/obj/item/slimecross/treacherous/M = new slimetype
+			M.do_effect(user,target)
+			qdel(M)
+		if ("damage")
+			var/damagetype = pick("brute","burn","toxin","clone","brain","rad")
+			switch(damagetype)
+				if ("clone")
+					target.adjustCloneLoss(rand(5,10))
+				if ("rad")
+					target.rad_act(rand(200,500))
+				if ("toxin")
+					target.adjustToxLoss(rand(5,10))
+				if ("burn")
+					target.apply_damage(rand(5,10),BURN,check_zone(user.zone_selected))
+				if ("brute")
+					target.apply_damage(rand(5,10),BRUTE,check_zone(user.zone_selected))
+				if ("brain")
+					target.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(10,20))
+		if ("mulligan")
+			randomize_human(target)
+			to_chat(target,"<span class='warning'>You feel different...</span>")
 	..()

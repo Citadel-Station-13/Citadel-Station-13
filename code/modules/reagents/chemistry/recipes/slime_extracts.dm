@@ -676,3 +676,26 @@
 /datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
 	new /obj/item/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
+//Blood Red
+/datum/chemical_reaction/slime/bloodslime
+	name = "Blood Red Slime"
+	id = "bloodslime"
+	required_reagents = list("blood" = 5)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/bloodred
+
+/datum/chemical_reaction/slime/bloodslime/on_reaction(datum/reagents/holder)
+	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "bloodred")
+	S.visible_message("<span class='danger'>Infused with blood, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
+
+/datum/chemical_reaction/slime/lucktc
+	name = "Telecrystal Lottery"
+	id = "lucktc"
+	required_reagents = list("plasma" = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/bloodred
+
+/datum/chemical_reaction/slime/lucktc/on_reaction(datum/reagents/holder)
+	if (rand(0,150) == 134)
+		/obj/item/stack/telecrystal/tc = new /obj/item/stack/telecrystal(get_turf(holder.my_atom))
+		tc.amount = rand(1,5)

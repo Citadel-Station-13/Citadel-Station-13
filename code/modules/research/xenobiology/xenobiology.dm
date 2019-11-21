@@ -616,12 +616,7 @@
 /obj/item/slime_extract/bloodred/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/chosen = pick(subtypesof(/obj/item/ammo_box))
-			var/obj/item/O = new chosen(null)
-			if(!user.put_in_active_hand(O))
-				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
-			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
+			//hmmm
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -1040,3 +1035,4 @@
 		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 	A.xenobiology_compatible = TRUE
 	qdel(src)
+
