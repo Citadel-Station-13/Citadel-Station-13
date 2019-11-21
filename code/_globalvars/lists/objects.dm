@@ -32,6 +32,8 @@ GLOBAL_LIST_EMPTY(active_jammers)             // List of active radio jammers
 GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(trophy_cases)
 
+GLOBAL_LIST_INIT(freezing_objects, list(/obj/structure/closet/crate/freezer, /obj/structure/closet/secure_closet/freezer, /obj/structure/bodycontainer, /obj/item/autosurgeon, /obj/machinery/smartfridge/organ))			//list of all cold objects, that freeze organs when inside
+
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)
 

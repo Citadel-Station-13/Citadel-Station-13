@@ -319,18 +319,30 @@ SLIME SCANNER
 
 
 		//END; LOOK FOR MISSING ORGANS?
-		if(!M.getorgan(/obj/item/organ/eyes))
+		var/breathes = TRUE
+		var/blooded = TRUE
+		if(C.dna && C.dna.species)
+			if(HAS_TRAIT_FROM(C, TRAIT_NOBREATH, SPECIES_TRAIT))
+				breathes = FALSE
+			if(NOBLOOD in C.dna.species.species_traits)
+				blooded = FALSE
+		var/has_liver = (!(NOLIVER in C.dna.species.species_traits))
+		var/has_stomach = (!(NOSTOMACH in C.dna.species.species_traits))
+		if(!M.getorganslot(ORGAN_SLOT_EYES))
 			msg += "\t<span class='alert'>Subject does not have eyes.</span>\n"
-		if(!M.getorgan(/obj/item/organ/ears))
+		if(!M.getorganslot(ORGAN_SLOT_EARS))
 			msg += "\t<span class='alert'>Subject does not have ears.</span>\n"
-		if(!M.getorgan(/obj/item/organ/brain))
-			msg += "\t<span class='alert'>Subject's brain function is non-existent.</span>\n"
-		if(!M.getorgan(/obj/item/organ/liver))
-			msg += "\t<span class='alert'>Subject's liver is missing.</span>\n"
-		if(!M.getorgan(/obj/item/organ/lungs))
-			msg += "\t<span class='alert'>Subject's lungs have collapsed from trauma!</span>\n"
-		if(!M.getorgan(/obj/item/organ/heart))
+		if(!M.getorganslot(ORGAN_SLOT_BRAIN))
+			msg += "\t<span class='alert'>Subject's brain function is non-existent!</span>\n"
+		if(has_liver && !M.getorganslot(ORGAN_SLOT_LIVER))
+			msg += "\t<span class='alert'>Subject's liver is missing!/span>\n"
+		if(blooded && !M.getorganslot(ORGAN_SLOT_HEART))
 			msg += "\t<span class='alert'>Subject's heart is missing!</span>\n"
+		if(breathes && !M.getorganslot(ORGAN_SLOT_LUNGS))
+			msg += "\t<span class='alert'>Subject's lungs have collapsed from trauma!</span>\n"
+		if(has_stomach && !M.getorganslot(ORGAN_SLOT_STOMACH))
+			msg += "\t<span class='alert'>Subject's stomach is missing!</span>\n"
+
 
 		if(M.radiation)
 			msg += "\t<span class='alert'>Subject is irradiated.</span>\n"

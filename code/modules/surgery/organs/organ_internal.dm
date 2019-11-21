@@ -98,16 +98,12 @@
 
 //Checks to see if the organ is frozen from temperature
 /obj/item/organ/proc/is_cold()
-	var/freezing_objects = list(/obj/structure/closet/crate/freezer, /obj/structure/closet/secure_closet/freezer, /obj/structure/bodycontainer, /obj/item/autosurgeon, /obj/machinery/smartfridge/organ)
 	if(istype(loc, /obj/))//Freezer of some kind, I hope.
-		if(is_type_in_list(loc, freezing_objects))
+		if(is_type_in_list(loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
-		var/external_check = FALSE
-		if(organ_flags & ORGAN_FROZEN)
-			external_check = TRUE
-		return external_check
+		return (organ_flags & ORGAN_FROZEN) //Incase something else toggles it
 
 	var/local_temp
 	if(istype(loc, /turf/))//Only concern is adding an organ to a freezer when the area around it is cold.
@@ -117,7 +113,7 @@
 
 	else if(istype(loc, /mob/) && !owner)
 		var/mob/M = loc
-		if(is_type_in_list(M.loc, freezing_objects))
+		if(is_type_in_list(M.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
@@ -127,7 +123,7 @@
 
 	if(owner)
 		//Don't interfere with bodies frozen by structures.
-		if(is_type_in_list(owner.loc, freezing_objects))
+		if(is_type_in_list(owner.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
