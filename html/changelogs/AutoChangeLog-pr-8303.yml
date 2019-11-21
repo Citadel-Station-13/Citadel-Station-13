@@ -1,5 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - rscadd: "Added the following reagents to the common list of vent clog reagents: ~~Cooking Oil~~, ~~Frost Oil~~, Sodium Chloride, Corn Oil, Uranium, Carpet, Firefighting Foam, semen, femcum, tear juice, strange reagent, ~~spraytan~~."
-  - balance: "Vent Clog smoke emits the same transparent smoke as a smoke machine, including how much it transfers. Vent Clogs also do not trigger in areas deemed \"Safe\" in code, such as in the dorms or trusted areas where dangerous things shouldn't occur."

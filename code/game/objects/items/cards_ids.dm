@@ -203,6 +203,9 @@
 /obj/item/card/id/GetID()
 	return src
 
+/obj/item/card/id/RemoveID()
+	return src
+
 /*
 Usage:
 update_label()
