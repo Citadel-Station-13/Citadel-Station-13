@@ -226,7 +226,7 @@ SLIME SCANNER
 			//BRAIN
 			else if(istype(O, /obj/item/organ/brain))
 				if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 200)
-					damage_message += " <span class='alert'>Subject's brain function is non-existent. Neurine injection recomended.</span>"
+					damage_message += " <span class='alert'>Subject's brain non-functional. Neurine injection recomended.</span>"
 				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 120)
 					damage_message += " <span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>"
 				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 45)
@@ -314,7 +314,7 @@ SLIME SCANNER
 					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
-				msg += "<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
+				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
 
 
 
@@ -329,19 +329,19 @@ SLIME SCANNER
 		var/has_liver = (!(NOLIVER in C.dna.species.species_traits))
 		var/has_stomach = (!(NOSTOMACH in C.dna.species.species_traits))
 		if(!M.getorganslot(ORGAN_SLOT_EYES))
-			msg += "\t<span class='alert'>Subject does not have eyes.</span>\n"
+			msg += "\t<span class='alert'><b>Subject does not have eyes.</b></span>\n"
 		if(!M.getorganslot(ORGAN_SLOT_EARS))
-			msg += "\t<span class='alert'>Subject does not have ears.</span>\n"
+			msg += "\t<span class='alert'><b>Subject does not have ears.</b></span>\n"
 		if(!M.getorganslot(ORGAN_SLOT_BRAIN))
-			msg += "\t<span class='alert'>Subject's brain function is non-existent!</span>\n"
+			msg += "\t<span class='alert'><b>Subject's brain function is non-existent!</b></span>\n"
 		if(has_liver && !M.getorganslot(ORGAN_SLOT_LIVER))
-			msg += "\t<span class='alert'>Subject's liver is missing!/span>\n"
+			msg += "\t<span class='alert'><b>Subject's liver is missing!</b></span>\n"
 		if(blooded && !M.getorganslot(ORGAN_SLOT_HEART))
-			msg += "\t<span class='alert'>Subject's heart is missing!</span>\n"
+			msg += "\t<span class='alert'><b>Subject's heart is missing!</b></span>\n"
 		if(breathes && !M.getorganslot(ORGAN_SLOT_LUNGS))
-			msg += "\t<span class='alert'>Subject's lungs have collapsed from trauma!</span>\n"
+			msg += "\t<span class='alert'><b>Subject's lungs have collapsed from trauma!</b></span>\n"
 		if(has_stomach && !M.getorganslot(ORGAN_SLOT_STOMACH))
-			msg += "\t<span class='alert'>Subject's stomach is missing!</span>\n"
+			msg += "\t<span class='alert'><b>Subject's stomach is missing!</span>\n"
 
 
 		if(M.radiation)

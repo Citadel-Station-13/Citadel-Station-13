@@ -103,6 +103,7 @@
 	metabolization_rate = 0.05 //Give them time to graft
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 	var/borrowed_health
+	color = "#FFDADA"
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
