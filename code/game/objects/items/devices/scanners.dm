@@ -184,9 +184,9 @@ SLIME SCANNER
 
 	//Organ damages report
 	var/heart_ded = FALSE
-	if(ishuman(M))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-
+		var/mob/living/carbon/human/H = M
 		for(var/organ in C.internal_organs)
 			var/temp_message
 			var/damage_message
@@ -231,8 +231,6 @@ SLIME SCANNER
 					damage_message += " <span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>"
 				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 45)
 					damage_message += " <span class='alert'>Brain damage detected.</span>"
-				else if(!advanced)
-					damage_message += " <span class='info'>Functional Brain detected.</span>"
 				if(advanced)
 					temp_message += " <span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>"
 
@@ -255,7 +253,6 @@ SLIME SCANNER
 					temp_message += " <span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>"
 
 				if(ishuman(C) && advanced)
-					var/mob/living/carbon/human/H = M
 					//MON PETIT CHAUFFEUR
 					if(H.hallucinating())
 						temp_message += " <span class='info'>Subject is hallucinating.</span>"
@@ -283,7 +280,6 @@ SLIME SCANNER
 			//HEART
 			if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
 				var/obj/item/organ/heart/He = O
-				var/mob/living/carbon/human/H = M
 				if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 					temp_message += " <span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock <b>immediately!</b></span>"
 				if(He.organ_flags & ORGAN_FAILING)
@@ -311,14 +307,14 @@ SLIME SCANNER
 			//GENERAL HANDLER
 			if(!damage_message)
 				if(O.organ_flags & ORGAN_FAILING)
-					damage_message += " <span class='alert'><b>End Stage [uppertext(O.name)] failure detected.</b></span>"
+					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
 				else if(O.damage > O.high_threshold)
-					damage_message += " <span class='alert'><b>Chronic [uppertext(O.name)] failure detected.</b></span>"
+					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
 				else if(O.damage > O.low_threshold && advanced)
-					damage_message += " <font color='red'><b>Acute [uppertext(O.name)] failure detected.</b></span>"
+					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
-				msg += "<b>[uppertext(O.name)]</b>: [damage_message] [temp_message]\n"
+				msg += "<b><span class='info'>[uppertext(O.name)]</b></span>: [damage_message] [temp_message]\n"
 
 
 
