@@ -85,7 +85,9 @@
 			if(absorb_stun(amount, ignore_canknockdown))
 				return
 			if(K)
-				K.duration = world.time + amount
+				var/duration = world.time + amount
+				remove_status_effect(STATUS_EFFECT_KNOCKDOWN)
+				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, duration, updating)
 			else
 				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
 		return K
@@ -96,7 +98,9 @@
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(K)
-			K.duration += amount
+			var/duration = K.duration + amount
+			remove_status_effect(STATUS_EFFECT_KNOCKDOWN)
+			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, duration, updating)
 		else if(amount > 0)
 			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
 		return K
