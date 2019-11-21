@@ -239,8 +239,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
-	item_state = "gold"
-	icon_state = "toolbox_gold"
+	icon_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 16 // Less then a spear
 	throwforce = 14
