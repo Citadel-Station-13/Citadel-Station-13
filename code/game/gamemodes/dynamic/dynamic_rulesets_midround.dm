@@ -107,11 +107,11 @@
 
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become a [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 
-	if(!candidates || candidates.len <= 0)
-		message_admins("The ruleset [name] received no applications.")
-		log_game("DYNAMIC: The ruleset [name] received no applications.")
+	if(!candidates || candidates.len <= required_candidates)
+		message_admins("The ruleset [name] did not receive enough applications.")
+		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
 		mode.refund_threat(cost)
-		mode.log_threat("Rule [name] refunded [cost] (no applications)",verbose=TRUE)
+		mode.log_threat("Rule [name] refunded [cost] (not receive enough applications)",verbose=TRUE)
 		mode.executed_rules -= src
 		return
 
