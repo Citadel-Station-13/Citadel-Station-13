@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(traumas)
 						"cats" = strings(PHOBIA_FILE, "cats"),
 						"syndicate"= strings(PHOBIA_FILE, "syndicate"),
 						"eye" = strings(PHOBIA_FILE, "eye")
-            )
+						)
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209)),
@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(traumas)
 
 					"syndicate" = typecacheof(list(/obj/item/stack/tile/mineral/plastitanium, /obj/machinery/computer/shuttle/syndicate, /obj/machinery/computer/shuttle/syndicate/recall, /obj/machinery/computer/shuttle/syndicate/drop_pod, /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate, /obj/machinery/recharge_station,
 						/obj/machinery/porta_turret/syndicate, /obj/structure/closet/syndicate, /obj/machinery/suit_storage_unit/syndicate, /obj/item/clothing/under/syndicate, /obj/item/folder/syndicate, /obj/item/documents/syndicate, /obj/item/clothing/glasses/phantomthief/syndicate, /obj/item/antag_spawner/nuke_ops, /obj/item/storage/box/syndicate,
-						/obj/structure/fluff/empty_sleeper/syndicate, /obj/item/implant/radio/syndicate, /obj/item/clothing/head/helmet/space/syndicate, /obj/machinery/nuclearbomb/syndicate, /obj/item/grenade/syndieminibomb, /obj/item/storage/backpack/duffelbag/syndie, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver/syndie,
+						/obj/structure/fluff/empty_sleeper/syndicate, /obj/item/implant/radio/syndicate, /obj/item/clothing/head/helmet/space/syndicate, /obj/machinery/nuclearbomb/syndicate, /obj/item/grenade/syndieminibomb, /obj/item/storage/backpack/duffelbag/syndie, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver,
 						/obj/item/gun/ballistic/automatic/shotgun/bulldog, /obj/item/gun/ballistic/automatic/c20r, /obj/item/gun/ballistic/automatic/m90, /obj/item/gun/ballistic/automatic/l6_saw, /obj/item/storage/belt/grenade/full, /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate, /obj/item/gun/energy/kinetic_accelerator/crossbow,
 						/obj/item/melee/transforming/energy/sword/saber, /obj/item/twohanded/dualsaber, /obj/item/melee/powerfist, /obj/item/storage/box/syndie_kit, /obj/item/grenade/spawnergrenade/manhacks, /obj/item/grenade/chem_grenade/bioterrorfoam, /obj/item/reagent_containers/spray/chemsprayer/bioterror, /obj/item/ammo_box/magazine/m10mm,
 						/obj/item/ammo_box/magazine/pistolm9mm, /obj/item/ammo_box/a357, /obj/item/ammo_box/magazine/m12g, /obj/item/ammo_box/magazine/mm195x129, /obj/item/antag_spawner/nuke_ops, /obj/mecha/combat/gygax/dark, /obj/mecha/combat/marauder/mauler, /obj/item/soap/syndie, /obj/item/gun/syringe/syndicate, /obj/item/cartridge/virus/syndicate,
