@@ -68,7 +68,9 @@
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(K)
-			K.duration = max(world.time + (isnull(override_hardstun)? amount : override_hardstun), K.duration)
+			var/duration = max(world.time + (isnull(override_hardstun)? amount : override_hardstun), K.duration)
+			remove_status_effect(STATUS_EFFECT_KNOCKDOWN)
+			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, duration, updating,override_hardstun, override_stamdmg)
 		else if((amount || override_hardstun) > 0)
 			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating, override_hardstun, override_stamdmg)
 		return K
