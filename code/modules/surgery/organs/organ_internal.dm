@@ -283,6 +283,12 @@
 		var/has_liver = (!(NOLIVER in dna.species.species_traits))
 		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
 
+		for(var/obj/item/organ/O in internal_organs)
+			if(O.organ_flags & ORGAN_FAILING)
+				O.setOrganDamage(0)
+				if(only_one)
+					return TRUE
+
 		if(has_liver && !getorganslot(ORGAN_SLOT_LIVER))
 			var/obj/item/organ/liver/LI
 
@@ -372,6 +378,7 @@
 			tail.Insert(src)
 			if(only_one)
 				return TRUE
+
 
 /obj/item/organ/random
 	name = "Illegal organ"

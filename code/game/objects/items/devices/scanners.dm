@@ -314,7 +314,7 @@ SLIME SCANNER
 					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
-				msg += "<b><span class='info'>[uppertext(O.name)]</b></span>: [damage_message] [temp_message]\n"
+				msg += "<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
 
 
 
