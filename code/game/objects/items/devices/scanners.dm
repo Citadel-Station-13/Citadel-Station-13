@@ -276,16 +276,16 @@ SLIME SCANNER
 			if(istype(O, /obj/item/organ/liver))
 				var/obj/item/organ/liver/L = O
 				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
-					msg += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
+					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 				if(L.swelling > 20)
-					msg += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
+					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
 
 			//HEART
 			if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
 				var/obj/item/organ/heart/He = O
 				var/mob/living/carbon/human/H = M
 				if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-					msg += " <span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock <b>immediately!</b></span>"
+					temp_message += " <span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock <b>immediately!</b></span>"
 				if(He.organ_flags & ORGAN_FAILING)
 					heart_ded = TRUE
 
@@ -293,18 +293,18 @@ SLIME SCANNER
 			if(istype(O, /obj/item/organ/tongue))
 				var/obj/item/organ/tongue/T = O
 				if(T.name == "fluffy tongue")
-					msg += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
+					temp_message += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
 
 			//HECK
 			if(istype(O, /obj/item/organ/genital/penis))
 				var/obj/item/organ/genital/penis/P = O
 				if(P.length>20)
-					msg += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
+					temp_message += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
 
 			if(istype(O, /obj/item/organ/genital/breasts))
 				var/obj/item/organ/genital/breasts/Br = O
 				if(Br.cached_size>5)
-					msg += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
+					temp_message += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
 
 
 
