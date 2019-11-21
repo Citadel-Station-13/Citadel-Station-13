@@ -11,7 +11,6 @@
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
-	radio_channel = "Service" //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
@@ -128,10 +127,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, 1, -1) // evil laughter

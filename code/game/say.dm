@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return
 	if(message == "" || !message)
 		return
-	spans |= get_spans()
+	spans |= speech_span
 	if(!language)
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
@@ -39,10 +39,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	for(var/_AM in get_hearers_in_view(range, source))
 		var/atom/movable/AM = _AM
 		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
-
-//To get robot span classes, stuff like that.
-/atom/movable/proc/get_spans()
-	return list()
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
@@ -87,7 +83,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	else
 		return verb_say
 
-/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
+/atom/movable/proc/say_quote(input, list/spans=list(speech_span), message_mode)
 	if(!input)
 		input = "..."
 
@@ -97,7 +93,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 	// Citadel edit [spanned ? ", \"[spanned]\"" : ""]"
-	
+
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()

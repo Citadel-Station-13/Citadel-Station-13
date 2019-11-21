@@ -40,6 +40,16 @@
 	QDEL_LIST(diseases)
 	return ..()
 
+/mob/living/onZImpact(turf/T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
+	return ..()
+
+/mob/living/proc/ZImpactDamage(turf/T, levels)
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	adjustBruteLoss((levels * 5) ** 1.5)
+	Knockdown(levels * 50)
+
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -263,7 +273,7 @@
 		var/mob/M = AM
 
 		log_combat(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
+		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")		//Cit change - And they thought ERP was bad.
 		if(!iscarbon(src))
 			M.LAssailant = null
@@ -282,6 +292,13 @@
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
 
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
+					C.grippedby(src)
+
+			update_pull_movespeed()
+
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
@@ -295,6 +312,7 @@
 
 /mob/living/stop_pulling()
 	..()
+	update_pull_movespeed()
 	update_pull_hud_icon()
 
 /mob/living/verb/stop_pulling1()
@@ -313,20 +331,35 @@
 	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb()
 	set name = "Succumb"
 	set category = "IC"
+	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
+		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
+		if(E.phase < 3)
+			if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+				to_chat(src, "<span class='notice'>Your mindshield prevents your mind from giving in!</span>")
+			else if(src.mind.assigned_role in GLOB.command_positions)
+				to_chat(src, "<span class='notice'>Your dedication to your department prevents you from giving in!</span>")
+			else
+				E.enthrallTally += 20
+				to_chat(src, "<span class='notice'>You give into [E.master]'s influence.</span>")
 	if (InCritical())
-		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
+		log_message("Has succumbed to death while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
-		if(!whispered)
-			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
+
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return TRUE
+
+/mob/living/canUseStorage()
+	if (get_num_arms() <= 0)
+		return FALSE
+	return TRUE
 
 /mob/living/proc/InCritical()
 	return (health <= crit_threshold && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
@@ -458,7 +491,6 @@
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
-	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
@@ -480,11 +512,19 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
-	GET_COMPONENT(mood, /datum/component/mood)
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
 		mood.sanity = SANITY_GREAT
 		mood.update_mood()
+	//Heal all organs
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.internal_organs)
+			for(var/organ in C.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
+	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEAL, admin_revive)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -505,6 +545,10 @@
 
 	var/old_direction = dir
 	var/turf/T = loc
+
+	if(pulling)
+		update_pull_movespeed()
+
 	. = ..()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
@@ -527,7 +571,7 @@
 		var/trail_type = getTrail()
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+			if(blood_volume && blood_volume > max((BLOOD_VOLUME_NORMAL*blood_ratio)*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
@@ -621,14 +665,15 @@
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-		else if(resting) //cit change - allows resisting out of resting
+			return
+		if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
-		else if(iscarbon(src)) //Citadel Change for embedded removal memes
-			var/mob/living/carbon/C = src
-			if(!C.handcuffed && !C.legcuffed)
-				return TRUE
-		else if(last_special <= world.time)
+			return
+		if(resist_embedded()) //Citadel Change for embedded removal memes
+			return
+		if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
+			return
 
 
 /mob/proc/resist_grab(moving_resist)
@@ -682,19 +727,19 @@
 	var/fixed = 0
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
-	if(on && !floating && !fixed)
+	if(on && !(movement_type & FLOATING) && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		floating = TRUE
-	else if(((!on || fixed) && floating))
+		setMovetype(movement_type | FLOATING)
+	else if(((!on || fixed) && (movement_type & FLOATING)))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
-		floating = FALSE
+		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.item_flags & NODROP)
+	if(HAS_TRAIT(what, TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -719,7 +764,7 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.item_flags & NODROP))
+	if(what && HAS_TRAIT(what, TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
@@ -761,7 +806,7 @@
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
+	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C
@@ -808,7 +853,7 @@
 	return 1
 
 //used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection()
+/mob/living/proc/get_permeability_protection(list/target_zones)
 	return 0
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
@@ -878,7 +923,7 @@
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
-		new_mob.key = key
+		transfer_ckey(new_mob)
 
 	for(var/para in hasparasites())
 		var/mob/living/simple_animal/hostile/guardian/G = para
@@ -901,7 +946,7 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, chargecost = 1, self = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -1007,6 +1052,9 @@
 			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
+		if (pulledby)
+			var/mob/living/L = pulledby
+			L.update_pull_movespeed()
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)

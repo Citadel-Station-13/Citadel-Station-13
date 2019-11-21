@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Blood tests have been added. If a changeling has a sufficient number of loud abilities, you will be able to test their blood by heating up a sample of it. However, if the changeling has a large amount of loud abilities, attempts to test their blood will have explosive results."
-  - rscadd: "Changelings now make a very obvious noise when readapting. This is to prevent the cheese strat of simply readapting when you get caught to avoid detection."

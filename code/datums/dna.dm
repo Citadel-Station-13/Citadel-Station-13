@@ -42,8 +42,8 @@
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
-	destination.set_species(species.type, icon_update=0)
 	destination.dna.features = features.Copy()
+	destination.set_species(species.type, icon_update=0)
 	destination.dna.real_name = real_name
 	destination.dna.nameless = nameless
 	destination.dna.custom_species = custom_species
@@ -184,25 +184,6 @@
 			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
 		if(DNA_TAUR_BLOCK)
 			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
-
-/datum/dna/proc/mutations_say_mods(message)
-	if(message)
-		for(var/datum/mutation/human/M in mutations)
-			message = M.say_mod(message)
-		return message
-
-/datum/dna/proc/mutations_get_spans()
-	var/list/spans = list()
-	for(var/datum/mutation/human/M in mutations)
-		spans |= M.get_spans()
-	return spans
-
-/datum/dna/proc/species_get_spans()
-	var/list/spans = list()
-	if(species)
-		spans |= species.get_spans()
-	return spans
-
 
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name && nameless == D.nameless && custom_species == D.custom_species)

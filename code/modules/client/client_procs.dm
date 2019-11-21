@@ -410,7 +410,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		for (var/child in entries)
 			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
-				var/atom/verb/verbpath = child
+				var/procpath/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
 					new child(src)
 
@@ -815,6 +815,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
 			var/file = GLOB.vox_sounds[name]
+			Export("##action=load_rsc", file)
+			stoplag()
+		for (var/name in GLOB.vox_sounds_male)
+			var/file = GLOB.vox_sounds_male[name]
 			Export("##action=load_rsc", file)
 			stoplag()
 		#endif

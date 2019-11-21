@@ -6,7 +6,7 @@
 	var/siphoning = FALSE
 	var/next_warning = 0
 	var/obj/item/radio/radio
-	var/radio_channel = "Common"
+	var/radio_channel = RADIO_CHANNEL_COMMON
 	var/minimum_time_between_warnings = 400
 
 /obj/machinery/computer/bank_machine/Initialize()
@@ -49,11 +49,8 @@
 			if(next_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
 				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
-				radio.talk_into(src, message, radio_channel, get_spans())
+				radio.talk_into(src, message, radio_channel)
 				next_warning = world.time + minimum_time_between_warnings
-
-/obj/machinery/computer/bank_machine/get_spans()
-	. = ..() | SPAN_ROBOT
 
 /obj/machinery/computer/bank_machine/ui_interact(mob/user)
 	. = ..()

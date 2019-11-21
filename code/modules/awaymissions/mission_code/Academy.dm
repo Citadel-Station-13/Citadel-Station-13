@@ -133,7 +133,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
-		current_wizard.key = C.key
+		C.transfer_ckey(current_wizard, FALSE)
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
@@ -210,8 +210,6 @@
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)
-				if (istype(I, /obj/item/implant))
-					continue
 				qdel(I)
 		if(5)
 			//Monkeying
@@ -266,15 +264,16 @@
 			var/mob/living/carbon/human/H = new(drop_location())
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/objective/O = new("Serve [user.real_name].")
-			servant_mind.objectives += O
+			var/datum/antagonist/magic_servant/A = new
+			servant_mind.add_antag_datum(A)
+			A.setup_master(user)
 			servant_mind.transfer_to(H)
 
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
-				H.key = C.key
+				C.transfer_ckey(H, FALSE)
 
 			var/obj/effect/proc_holder/spell/targeted/summonmob/S = new
 			S.target_mob = H

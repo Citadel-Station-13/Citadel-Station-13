@@ -26,7 +26,7 @@
 
 /obj/effect/particle_effect/sparks/Initialize()
 	. = ..()
-	flick("sparks", src) // replay the animation
+	flick(icon_state, src) // replay the animation
 	playsound(src, "sparks", 100, TRUE)
 	var/turf/T = loc
 	if(isturf(T))
@@ -48,12 +48,18 @@
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
 
+/datum/effect_system/spark_spread/quantum
+	effect_type = /obj/effect/particle_effect/sparks/quantum
 
 //electricity
 
 /obj/effect/particle_effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
+
+/obj/effect/particle_effect/sparks/quantum
+	name = "quantum sparks"
+	icon_state = "quantum_sparks"
 
 /datum/effect_system/lightning_spread
 	effect_type = /obj/effect/particle_effect/sparks/electricity

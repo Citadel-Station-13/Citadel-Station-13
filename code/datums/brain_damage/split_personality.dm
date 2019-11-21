@@ -26,7 +26,7 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		C.transfer_ckey(stranger_backseat, FALSE)
 		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
 		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 	else
@@ -184,7 +184,7 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s brainwashed mind?", null, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		C.transfer_ckey(stranger_backseat, FALSE)
 	else
 		qdel(src)
 
@@ -199,10 +199,9 @@
 		addtimer(CALLBACK(src, /datum/brain_trauma/severe/split_personality.proc/switch_personalities), 10)
 	return message
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_say(message)
-	if(findtext(message, codeword))
-		return "" //oh hey did you want to tell people about the secret word to bring you back?
-	return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_speech(datum/source, list/speech_args)
+	if(findtext(speech_args[SPEECH_MESSAGE], codeword))
+		speech_args[SPEECH_MESSAGE] = "" //oh hey did you want to tell people about the secret word to bring you back?
 
 /mob/living/split_personality/traitor
 	name = "split personality"

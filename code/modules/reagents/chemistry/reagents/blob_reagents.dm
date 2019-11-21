@@ -187,7 +187,7 @@
 	description = "will do toxin damage and cause targets to believe they are fully healed."
 	analyzerdescdamage = "Does toxin damage and injects a toxin that causes the target to believe they are fully healed."
 	taste_description = "heaven"
-	color = "#C8A5DC"
+	color = "#5e7842"
 	complementary_color = "#CD7794"
 	message_living = ", and you feel <i>alive</i>"
 

@@ -88,17 +88,50 @@
 		return
 	close_machine(target)
 
-/obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
-	if(!state_open && !occupant)
-		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-			return
+/obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(..())
+		return
+	if(occupant)
+		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
+		return
+	if(state_open)
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
+		return
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+		return
+	return FALSE
+
+/obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_change_direction_wrench(user, I))
-		return
+		return TRUE
+
+/obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_pry_open(I))
-		return
+		return TRUE
 	if(default_deconstruction_crowbar(I))
+		return TRUE
+
+/obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+	if(.)
+		I.play_tool_sound(src, 50)
+		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
+		open_machine()
+
+/obj/machinery/sleeper/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
-	return ..()
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
+
+/obj/machinery/sleeper/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>")
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
@@ -146,7 +179,7 @@
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -190,11 +223,13 @@
 			if(inject_chem(chem, usr))
 				. = TRUE
 				if(scrambled_chems && prob(5))
-					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
+					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
+	. = ..()
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
+	return TRUE
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))

@@ -40,14 +40,14 @@
 		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.a_intent == INTENT_HARM && stat == DEAD && (butcher_results || guaranteed_butcher_results)) //can we butcher it?
-		GET_COMPONENT_FROM(butchering, /datum/component/butchering, I)
+		var/datum/component/butchering/butchering = I.GetComponent(/datum/component/butchering)
 		if(butchering && butchering.butchering_enabled)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
 			if(do_mob(user, src, butchering.speed) && Adjacent(I))
 				butchering.Butcher(user, src)
 			return 1
-		else if(I.is_sharp() && !butchering) //give sharp objects butchering functionality, for consistency
+		else if(I.get_sharpness() && !butchering) //give sharp objects butchering functionality, for consistency
 			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
 			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
 			return
@@ -64,7 +64,7 @@
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
-	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(force && damtype != STAMINA && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
@@ -82,7 +82,7 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLossBuffered(getweight()*0.8)//CIT CHANGE - makes attacking things cause stamina loss
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
@@ -171,3 +171,7 @@
 		if(prob(2))
 			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 	return 1
+
+/obj/item/proc/getweight()
+	return total_mass || w_class * 1.25
+

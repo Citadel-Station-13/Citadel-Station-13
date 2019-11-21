@@ -87,7 +87,7 @@
 
 /obj/item/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-eye"
 	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
@@ -100,23 +100,25 @@
 
 /obj/item/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-law"
 	access = CART_SECURITY
 	spam_enabled = 1
 
 /obj/item/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-lib"
 	access = CART_NEWSCASTER
 
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
+	icon_state = "cart-robo"
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	access = CART_DRONEPHONE
 
 /obj/item/cartridge/signal
 	name = "generic signaler cartridge"
+	icon_state = "cart-sig"
 	desc = "A data cartridge with an integrated radio signaler module."
 
 /obj/item/cartridge/signal/toxins
@@ -496,6 +498,23 @@ Code:
 				else
 					menu += "[ldat]"
 
+				menu += "<h4>Pimpin' Ride:</h4>"
+
+				ldat = null
+				for (var/obj/vehicle/ridden/janicart/M in world)
+					var/turf/ml = get_turf(M)
+
+					if(ml)
+						if (ml.z != cl.z)
+							continue
+						var/direction = get_dir(src, M)
+						ldat += "Ride - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b><br>"
+
+				if (!ldat)
+					menu += "None"
+				else
+					menu += "[ldat]"
+
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
@@ -678,7 +697,7 @@ Code:
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
 
-		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
+		active_bot.bot_control(href_list["mule"], usr, TRUE)
 
 	if(!host_pda)
 		return
@@ -753,4 +772,4 @@ Code:
 	return ""
 
 //This is called for special abilities of cartridges
-/obj/item/cartridge/proc/special(mov/living/user, list/params)
+/obj/item/cartridge/proc/special(mob/living/user, list/params)

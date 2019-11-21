@@ -41,6 +41,9 @@
 	QDEL_NULL(internal)
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
+	return TRUE
+
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return
@@ -124,7 +127,7 @@
 		var/client/C = L.client
 		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
 		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
 			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
 		SSmedals.SetScore(BOSS_SCORE, C, 1)
 		SSmedals.SetScore(score_type, C, 1)

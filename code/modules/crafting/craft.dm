@@ -32,7 +32,7 @@
 							CAT_SANDWICH,
 							CAT_SOUP,
 							CAT_SPAGHETTI),
-                        CAT_CLOTHING) //Clothing subcategories
+						CAT_NONE) //Clothing subcategories
 
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
@@ -317,6 +317,8 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
+		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+			continue
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
@@ -431,3 +433,10 @@
 	data["tool_text"] = tool_text
 
 	return data
+
+//Mind helpers
+
+/datum/mind/proc/teach_crafting_recipe(R)
+	if(!learned_recipes)
+		learned_recipes = list()
+	learned_recipes |= R

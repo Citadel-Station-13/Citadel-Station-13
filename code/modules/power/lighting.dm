@@ -89,7 +89,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.item_flags & NODROP)
+		if(HAS_TRAIT(W, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		user.dropItemToGround(W)
@@ -177,8 +177,6 @@
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
-
-
 // the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
@@ -197,8 +195,8 @@
 	var/on_gs = FALSE
 	var/static_power_used = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
-	var/bulb_power = 1			// basically the alpha of the emitted light source
-	var/bulb_colour = "#FFFFFF"	// befault colour of the light.
+	var/bulb_power = 0.75			// basically the alpha of the emitted light source
+	var/bulb_colour = "#FFEEDD"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = FALSE
 	var/light_type = /obj/item/light/tube		// the type of light item
@@ -235,6 +233,7 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness = 4
+	bulb_colour = "#FFDDBB"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 
@@ -323,6 +322,8 @@
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
+		if(color)
+			CO = color
 		var/area/A = get_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
@@ -360,6 +361,9 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+/obj/machinery/light/update_atom_colour()
+	. = ..()
+	update()
 
 /obj/machinery/light/process()
 	if (!cell)

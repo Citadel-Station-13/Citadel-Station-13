@@ -95,7 +95,7 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.is_hot()
+	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
@@ -203,6 +203,14 @@
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
+
+//Used by MREs
+/obj/item/reagent_containers/food/drinks/coffee/type2
+	name = "\improper Coffee, instant (type 2)"
+	desc = "Coffee that's been blow dried into a granulated powder. This packet includes self heating water for your nutritional pleasure."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "condi_cornoil"
+
 
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
@@ -505,6 +513,13 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
+	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
+	name = "Grey Bull"
+	desc = "Grey Bull, it gives you gloves!"
+	icon_state = "energy_drink"
+	list_reagents = list("grey_bull" = 20)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air

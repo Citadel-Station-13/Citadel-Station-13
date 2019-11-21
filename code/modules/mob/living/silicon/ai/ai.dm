@@ -288,8 +288,17 @@
 
 /mob/living/silicon/ai/can_interact_with(atom/A)
 	. = ..()
+	var/turf/ai = get_turf(src)
+	var/turf/target = get_turf(A)
 	if (.)
 		return
+
+	if(!target)
+		return
+
+	if ((ai.z != target.z) && !is_station_level(ai.z))
+		return FALSE
+
 	if (istype(loc, /obj/item/aicard))
 		var/turf/T0 = get_turf(src)
 		var/turf/T1 = get_turf(A)
@@ -774,7 +783,7 @@
 /mob/living/silicon/ai/can_buckle()
 	return 0
 
-/mob/living/silicon/ai/incapacitated()
+/mob/living/silicon/ai/incapacitated(ignore_restraints, ignore_grab)
 	if(aiRestorePowerRoutine)
 		return TRUE
 	return ..()
@@ -873,6 +882,7 @@
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
 	. = ..()
 	if(.) //successfully ressuscitated from death
+		set_eyeobj_visible(TRUE)
 		set_core_display_icon(display_icon_override)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)

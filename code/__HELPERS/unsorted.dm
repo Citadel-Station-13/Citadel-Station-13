@@ -451,10 +451,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
-
 /*
 	Gets all contents of contents and returns them all in a list.
 */
@@ -756,7 +752,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
 GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
@@ -764,7 +759,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/pipe)))
 
 /proc/can_embed(obj/item/W)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		return 1
 	if(is_pointed(W))
 		return 1
@@ -1239,19 +1234,21 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
-/atom/proc/do_jiggle(targetangle = 45)
+/atom/proc/do_jiggle(targetangle = 45, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
+	var/halftime = timer * 0.5
 	M.Turn(pick(-targetangle, targetangle))
-	animate(src, transform = M, time = 10, easing = ELASTIC_EASING)
-	animate(src, transform = OM, time = 10, easing = ELASTIC_EASING)
+	animate(src, transform = M, time = halftime, easing = ELASTIC_EASING)
+	animate(src, transform = OM, time = halftime, easing = ELASTIC_EASING)
 
-/atom/proc/do_squish(squishx = 1.2, squishy = 0.6)
+/atom/proc/do_squish(squishx = 1.2, squishy = 0.6, timer = 20)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
+	var/halftime = timer * 0.5
 	M.Scale(squishx, squishy)
-	animate(src, transform = M, time = 10, easing = BOUNCE_EASING)
-	animate(src, transform = OM, time = 10, easing = BOUNCE_EASING)
+	animate(src, transform = M, time = halftime, easing = BOUNCE_EASING)
+	animate(src, transform = OM, time = halftime, easing = BOUNCE_EASING)
 
 /proc/weightclass2text(var/w_class)
 	switch(w_class)
@@ -1483,7 +1480,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
 		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
-		/obj/item/reagent_containers/food/snacks/deepfryholder
+		/obj/item/reagent_containers/food/snacks/deepfryholder,
+		/obj/item/reagent_containers/food/snacks/grown/shell,
+		/obj/item/reagent_containers/food/snacks/clothing,
+		/obj/item/reagent_containers/food/snacks/store/bread
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
@@ -1545,3 +1545,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
+
+/proc/CallAsync(datum/source, proctype, list/arguments)
+	set waitfor = FALSE
+	return call(source, proctype)(arglist(arguments))

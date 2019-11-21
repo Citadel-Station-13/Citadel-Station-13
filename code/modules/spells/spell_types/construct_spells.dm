@@ -146,7 +146,7 @@
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
-	proj_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser"
 	proj_lifespan = 10
 	max_targets = 6
 	action_icon_state = "magicm"

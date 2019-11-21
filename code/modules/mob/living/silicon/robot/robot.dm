@@ -108,6 +108,10 @@
 	buckle_lying = FALSE
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
+	var/sitting = 0
+	var/bellyup = 0
+	var/dogborg = FALSE
+
 /mob/living/silicon/robot/get_cell()
 	return cell
 
@@ -173,6 +177,7 @@
 	diag_hud_set_borgcell()
 
 	verbs += /mob/living/proc/lay_down //CITADEL EDIT gimmie rest verb kthx
+	verbs += /mob/living/silicon/robot/proc/rest_style
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -222,18 +227,20 @@
 		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
+	if(!CONFIG_GET(flag/disable_secborg) && GLOB.security_level < CONFIG_GET(number/minimum_secborg_alert))
+		to_chat(src, "<span class='notice'>NOTICE: Due to local station regulations, the security cyborg module and its variants are only available during [num2seclevel(CONFIG_GET(number/minimum_secborg_alert))] alert and greater.</span>")
+
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
+	"Medihound" = /obj/item/robot_module/medihound, \
 	"Miner" = /obj/item/robot_module/miner, \
-	"Janitor" = /obj/item/robot_module/janitor, \
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-	if(!CONFIG_GET(flag/disable_secborg))
+	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
-
-	modulelist += get_cit_modules() //Citadel change - adds Citadel's borg modules.
+		modulelist["Security K-9"] = /obj/item/robot_module/k9
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
@@ -580,6 +587,19 @@
 	else
 		return ..()
 
+/mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/I) //TODO: make fucking everything up there in that attackby() proc use the proper tool_act() procs. But honestly, who has time for that? 'cause I know for sure that you, the person reading this, sure as hell doesn't.
+	var/validbreakout = FALSE
+	for(var/obj/item/dogborg/sleeper/S in held_items)
+		if(!LAZYLEN(S.contents))
+			continue
+		if(!validbreakout)
+			visible_message("<span class='notice'>[user] wedges [I] into the crevice separating [S] from [src]'s chassis, and begins to pry...</span>", "<span class='notice'>You wedge [I] into the crevice separating [S] from [src]'s chassis, and begin to pry...</span>")
+		validbreakout = TRUE
+		S.go_out()
+	if(validbreakout)
+		return TRUE
+	return ..()
+
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
@@ -644,13 +664,6 @@
 		add_overlay("[module.sleeper_overlay]_g[sleeper_nv ? "_nv" : ""]")
 	if(sleeper_r && module.sleeper_overlay)
 		add_overlay("[module.sleeper_overlay]_r[sleeper_nv ? "_nv" : ""]")
-	if(module.dogborg == TRUE)
-		if(resting)
-			cut_overlays()
-			icon_state = "[module.cyborg_base_icon]-rest"
-		else
-			icon_state = "[module.cyborg_base_icon]"
-
 	if(stat == DEAD && module.has_snowflake_deadsprite)
 		icon_state = "[module.cyborg_base_icon]-wreck"
 
@@ -683,6 +696,18 @@
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
+
+	if(client && stat != DEAD && module.dogborg == TRUE)
+		if(resting)
+			if(sitting)
+				icon_state = "[module.cyborg_base_icon]-sit"
+			if(bellyup)
+				icon_state = "[module.cyborg_base_icon]-bellyup"
+			else if(!sitting && !bellyup)
+				icon_state = "[module.cyborg_base_icon]-rest"
+			cut_overlays()
+		else
+			icon_state = "[module.cyborg_base_icon]"
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
@@ -854,9 +879,6 @@
 /mob/living/silicon/robot/modules/miner
 	set_module = /obj/item/robot_module/miner
 
-/mob/living/silicon/robot/modules/janitor
-	set_module = /obj/item/robot_module/janitor
-
 /mob/living/silicon/robot/modules/syndicate
 	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
@@ -894,6 +916,17 @@
 						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/syndicate_medical
+
+/mob/living/silicon/robot/modules/syndicate/saboteur
+	icon_state = "synd_engi"
+	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
+						<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
+						Your destination tagger will allow you to stealthily traverse the disposal network across the station \
+						Your welder will allow you to repair the operatives' exosuits, but also yourself and your fellow cyborgs \
+						Your cyborg chameleon projector allows you to assume the appearance and registered name of a Nanotrasen engineering borg, and undertake covert actions on the station \
+						Be aware that almost any physical contact or incidental damage will break your camouflage \
+						<i>Help the operatives secure the disk at all costs!</i></b>"
+	set_module = /obj/item/robot_module/saboteur
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
@@ -1194,20 +1227,21 @@
 		return
 	if(incapacitated())
 		return
-	if(M.incapacitated())
-		return
 	if(module)
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
+		if(M.get_num_arms() <= 0)
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
+		else
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
-		GET_COMPONENT(riding_datum, /datum/component/riding)
+		var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 		if(istype(riding_datum))
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
@@ -1229,3 +1263,38 @@
 			connected_ai.aicamera.stored[i] = TRUE
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
+
+/mob/living/silicon/robot/lay_down()
+	..()
+	update_canmove()
+
+/mob/living/silicon/robot/update_canmove()
+	..()
+	if(client && stat != DEAD && dogborg == FALSE)
+		if(resting)
+			cut_overlays()
+			icon_state = "[module.cyborg_base_icon]-rest"
+		else
+			icon_state = "[module.cyborg_base_icon]"
+	update_icons()
+
+/mob/living/silicon/robot/proc/rest_style()
+	set name = "Switch Rest Style"
+	set category = "Robot Commands"
+	set desc = "Select your resting pose."
+	sitting = 0
+	bellyup = 0
+	var/choice = alert(src, "Select resting pose", "", "Resting", "Sitting", "Belly up")
+	switch(choice)
+		if("Resting")
+			update_icons()
+			return 0
+		if("Sitting")
+			sitting = 1
+		if("Belly up")
+			bellyup = 1
+	update_icons()
+
+/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_stamina = 1)
+	if(istype(cell))
+		cell.charge -= amount*5

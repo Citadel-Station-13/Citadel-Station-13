@@ -25,7 +25,6 @@
 	pressure_resistance = 2
 	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
-	var/traitor_unlock_degrees = 0
 	var/degrees = 0
 	var/font = PEN_FONT
 
@@ -159,13 +158,14 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 
 
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
+	reagents.add_reagent("chloralhydrate", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 
@@ -201,7 +201,7 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 	update_icon()
 

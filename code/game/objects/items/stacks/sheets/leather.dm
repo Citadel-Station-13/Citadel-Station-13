@@ -36,6 +36,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1), \
 	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/gondola, 2), \
+	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1), \
 	))
 
 /obj/item/stack/sheet/animalhide/gondola
@@ -218,7 +219,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
 		if(do_after(user, 50, target = src))

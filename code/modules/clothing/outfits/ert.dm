@@ -10,7 +10,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)
+	var/obj/item/implant/mindshield/L = new
 	L.implant(H, null, 1)
 
 	var/obj/item/radio/R = H.ears
@@ -45,15 +45,22 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/commander/alert
-	name = "ERT Commander - High Alert"
+	name = "ERT Commander - Amber Alert"
 	
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/gun/energy/pulse/pistol/loyalpin=1)
+		/obj/item/gun/energy/e_gun=1)
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
+
+/datum/outfit/ert/commander/alert/red
+	name = "ERT Commander - Red Alert"
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer/swat=1,\
+		/obj/item/gun/energy/pulse/pistol/loyalpin=1)
 
 /datum/outfit/ert/security
 	name = "ERT Security"
@@ -80,15 +87,22 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/security/alert
-	name = "ERT Security - High Alert"
+	name = "ERT Security - Amber Alert"
 	
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/sec
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
+		/obj/item/gun/energy/e_gun/stun=1)
 
+/datum/outfit/ert/security/alert/red
+	name = "ERT Security - Red Alert"
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/storage/box/handcuffs=1,\
+		/obj/item/clothing/mask/gas/sechailer/swat=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
 
 /datum/outfit/ert/medic
 	name = "ERT Medic"
@@ -117,9 +131,18 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/medic/alert
-	name = "ERT Medic - High Alert"
+	name = "ERT Medic - Amber Alert"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/med
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer/swat=1,\
+		/obj/item/gun/energy/e_gun=1,\
+		/obj/item/reagent_containers/hypospray/combat/nanites=1,\
+		/obj/item/gun/medbeam=1)
+
+/datum/outfit/ert/medic/alert/red
+	name = "ERT Medic - Red Alert"
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
@@ -154,15 +177,51 @@
 	R.recalculateChannels()
 
 /datum/outfit/ert/engineer/alert
-	name = "ERT Engineer - High Alert"
+	name = "ERT Engineer - Amber Alert"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/engi
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer/swat=1,\
+		/obj/item/gun/energy/e_gun=1,\
+		/obj/item/construction/rcd/combat=1)
+
+/datum/outfit/ert/engineer/alert/red
+	name = "ERT Engineer - Red Alert"
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/construction/rcd/combat=1)
 
+/datum/outfit/ert/greybois
+	name = "Emergency Assistant"
+
+	uniform = /obj/item/clothing/under/color/grey/glorf
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	gloves = /obj/item/clothing/gloves/color/fyellow
+	ears = /obj/item/radio/headset
+	head = /obj/item/clothing/head/soft/grey
+	belt = /obj/item/storage/belt/utility/full
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/gas
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	l_hand = /obj/item/storage/toolbox/emergency/old
+	id = /obj/item/card/id
+
+/datum/outfit/ert/greybois/greygod
+	suit = /obj/item/clothing/suit/hazardvest
+	l_hand = /obj/item/storage/toolbox/plastitanium
+	gloves = /obj/item/clothing/gloves/color/yellow
+
+/datum/outfit/ert/greybois/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.registered_name = H.real_name
+	W.assignment = "Assistant"
+	W.access = list(ACCESS_MAINT_TUNNELS,ACCESS_CENT_GENERAL)
+	W.update_label(W.registered_name, W.assignment)
 
 /datum/outfit/centcom_official
 	name = "CentCom Official"

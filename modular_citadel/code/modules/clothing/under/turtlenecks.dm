@@ -43,8 +43,8 @@
 	icon_state = "bb_turtle"
 	item_state = "w_suit"
 	item_color = "bb_turtle"
-	body_parts_covered = CHEST|ARMS
-	can_adjust = 1
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = TRUE
 	icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION

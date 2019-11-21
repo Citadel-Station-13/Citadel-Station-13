@@ -53,7 +53,7 @@
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
-		reagents.trans_to(H,15) //Transfers the cream pies total volume of reagents to target on it
+		reagents.trans_to(H,15) //Cream pie combat
 		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
@@ -61,6 +61,7 @@
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	list_reagents = list("laughter" = 15)
 	stunning = FALSE
 
 /obj/item/reagent_containers/food/snacks/pie/cream/body
@@ -170,8 +171,6 @@
 	tastes = list("pie" = 1, "apple" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-
-
 /obj/item/reagent_containers/food/snacks/pie/cherrypie
 	name = "cherry pie"
 	desc = "Taste so good, make a grown man cry."
@@ -219,6 +218,33 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 4)
 	tastes = list("pie" = 1, "grape" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/pie/mimetart
+	name = "mime tart"
+	desc = "..."
+	icon_state = "mimetart"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4, "nothing" = 10)
+	list_reagents = list("nutriment" = 5, "vitamin" = 5)
+	tastes = list("pie" = 1, "nothing" = 1)
+	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/pie/berrytart
+	name = "berry tart"
+	desc = "A tasty dessert of many different small barries on a thin pie crust."
+	icon_state = "berrytart"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	list_reagents = list("nutriment" = 3, "vitamin" = 5)
+	tastes = list("pie" = 1, "berries" = 2)
+	foodtype = GRAIN | FRUIT
+
+/obj/item/reagent_containers/food/snacks/pie/cocolavatart
+	name = "chocolate lava tart"
+	desc = "A tasty dessert made of chocaloate, with a liquid core."
+	icon_state = "cocolavatart"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	list_reagents = list("nutriment" = 4, "vitamin" = 4)
+	tastes = list("pie" = 1, "grape" = 1)
+	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/pie/blumpkinpie
 	name = "blumpkin pie"
@@ -287,6 +313,22 @@
 	icon_state = "baklavaslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#1E90FF"
-	list_reagents = list("nutriment" = 2, "vitamins" = 4)
+	list_reagents = list("nutriment" = 2, "vitamin" = 4)
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/pie/strawberrypie
+	name = "strawberry pie"
+	desc = "A strawberry pie."
+	icon_state = "strawberrypie"
+	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
+	tastes = list("strawberry" = 1, "pie" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/pie/peachpie
+	name = "peach pie"
+	desc = "A pie with peach filling."
+	icon_state = "strawberrypie"
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "peachjuice" = 15)
+	tastes = list("peach" = 1, "pie" = 1)
+	foodtype = GRAIN | FRUIT

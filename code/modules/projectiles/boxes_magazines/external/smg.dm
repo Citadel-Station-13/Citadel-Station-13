@@ -3,11 +3,11 @@
 	icon_state = "46x30mmt-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mm
 	caliber = "4.6x30mm"
-	max_ammo = 20
+	max_ammo = 32
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon()
 	..()
-	icon_state = "46x30mmt-[round(ammo_count(),4)]"
+	icon_state = "46x30mmt-[round(20*(ammo_count()/max_ammo),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtap
 	name = "wt550 magazine (Armour Piercing 4.6x30mm)"
@@ -16,7 +16,7 @@
 
 /obj/item/ammo_box/magazine/wt550m9/wtap/update_icon()
 	..()
-	icon_state = "46x30mmtA-[round(ammo_count(),4)]"
+	icon_state = "46x30mmtA-[round(20*(ammo_count()/max_ammo),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtic
 	name = "wt550 magazine (Incendiary 4.6x30mm)"
@@ -25,7 +25,7 @@
 
 /obj/item/ammo_box/magazine/wt550m9/wtic/update_icon()
 	..()
-	icon_state = "46x30mmtI-[round(ammo_count(),4)]"
+	icon_state = "46x30mmtI-[round(20*(ammo_count()/max_ammo),4)]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"

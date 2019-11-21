@@ -1,7 +1,5 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
-	melee_damage_lower = 15
-	melee_damage_upper = 15
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -12,7 +10,7 @@
 
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
-	var/stealthcooldown = 160
+	var/stealthcooldown = 100
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 

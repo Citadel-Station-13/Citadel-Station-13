@@ -2,6 +2,7 @@
 /obj
 	var/crit_fail = FALSE
 	animate_movement = 2
+	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
@@ -18,8 +19,9 @@
 	var/acid_level = 0 //how much acid is on that obj
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/current_skin //Has the item been reskinned?
+	var/current_skin //the item reskin
 	var/list/unique_reskin //List of options to reskin.
+	var/always_reskinnable = FALSE
 
 	// Access levels, used in modules\jobs\access.dm
 	var/list/req_access
@@ -203,9 +205,6 @@
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
-/obj/get_spans()
-	return ..() | SPAN_ROBOT
-
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
@@ -228,26 +227,26 @@
 	..()
 	if(obj_flags & UNIQUE_RENAME)
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
-	if(unique_reskin && !current_skin)
+	if(unique_reskin && (!current_skin || always_reskinnable))
 		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && (!current_skin || always_reskinnable) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
 
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	to_chat(M, "<b>Reskin options for [name]:</b>")
+	var/dat = "<b>Reskin options for [name]:</b>\n"
 	for(var/V in unique_reskin)
 		var/output = icon2html(src, M, unique_reskin[V])
-		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
+		dat += "[V]: <span class='reallybig'>[output]</span>\n"
+	to_chat(M, dat)
 
-	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
-		if(!unique_reskin[choice])
-			return
-		current_skin = choice
-		icon_state = unique_reskin[choice]
-		to_chat(M, "[src] is now skinned as '[choice].'")
+	var/choice = input(M, always_reskinnable ? "Choose the a reskin for [src]" : "Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
+	if(QDELETED(src) || !choice || (current_skin && !always_reskinnable) || M.incapacitated() || !in_range(M,src) || !unique_reskin[choice] || unique_reskin[choice] == current_skin)
+		return
+	current_skin = choice
+	icon_state = unique_reskin[choice]
+	to_chat(M, "[src] is now skinned as '[choice]'.")

@@ -89,7 +89,7 @@
 
 	holder = item
 
-	holder.item_flags |= NODROP
+	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.materials = null
@@ -121,7 +121,7 @@
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
-	if(crit_fail || (!holder && !contents.len))
+	if(crit_fail || (organ_flags & ORGAN_FAILING) || (!holder && !contents.len))
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return
 
@@ -132,7 +132,7 @@
 		else
 			var/list/choice_list = list()
 			for(var/obj/item/I in items_list)
-				choice_list[I] = getFlatIcon(I)
+				choice_list[I] = image(I)
 			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
 			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
 				// This monster sanity check is a nice example of how bad input is.
@@ -145,7 +145,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(prob(30/severity) && owner && !crit_fail)
+	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!</span>")
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
@@ -154,6 +154,7 @@
 		owner.IgniteMob()
 		owner.adjustFireLoss(25)
 		crit_fail = 1
+		organ_flags |= ORGAN_FAILING
 
 
 /obj/item/organ/cyberimp/arm/gun/laser
@@ -185,11 +186,12 @@
 	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act()
-	if(!(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list))
-		to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
-		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
-		return 1
-	return 0
+	. = ..()
+	if(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list)
+		return
+	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
+	return TRUE
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"

@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Transit turfs on the centcom z-level now function properly again at keeping mobs within the areas defined by their boundaries."
-  - bugfix: "The title screen is also positioned correctly again."

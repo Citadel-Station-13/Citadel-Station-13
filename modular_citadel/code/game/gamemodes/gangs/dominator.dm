@@ -1,6 +1,7 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 //32 instead of 40 for safety reasons. How many turfs aren't walls around dominator for it to work
-#define DOM_REQUIRED_TURFS 32
+//Update ppl somehow fuckup at 32, now we are down to 25. I hope to god they don't try harder to wall it.
+#define DOM_REQUIRED_TURFS 25
 #define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
@@ -52,19 +53,17 @@
 
 /obj/machinery/dominator/update_icon()
 	cut_overlays()
-	if(!(stat & BROKEN))
-		icon_state = "dominator-active"
-		if(operating)
-			var/mutable_appearance/dominator_overlay = mutable_appearance('icons/obj/machines/dominator.dmi', "dominator-overlay")
-			if(gang)
-				dominator_overlay.color = gang.color
-			add_overlay(dominator_overlay)
-		else
-			icon_state = "dominator"
-		if(obj_integrity/max_integrity < 0.66)
-			add_overlay("damage")
-	else
+	if(stat & BROKEN)
 		icon_state = "dominator-broken"
+		return
+	icon_state = "dominator"
+	if(operating)
+		var/mutable_appearance/dominator_overlay = mutable_appearance('icons/obj/machines/dominator.dmi', "dominator-overlay")
+		if(gang)
+			dominator_overlay.color = gang.color
+		add_overlay(dominator_overlay)
+	if(obj_integrity/max_integrity < 0.66)
+		add_overlay("damage")
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -85,6 +84,9 @@
 	if(gang && gang.domination_time != NOT_DOMINATING)
 		var/time_remaining = gang.domination_time_remaining()
 		if(time_remaining > 0)
+			if(!is_station_level(z))
+				explosion(src, 5, 10, 20, 30) //you now get a nice explosion if this moves off station.
+				qdel(src) //to make sure it doesn't continue to exist.
 			if(excessive_walls_check())
 				gang.domination_time += 20
 				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
@@ -108,6 +110,7 @@
 		else
 			Cinematic(CINEMATIC_MALF,world) //Here is the gang victory trigger on the dominator ending.
 			gang.winner = TRUE
+			SSticker.news_report = GANG_VICTORY
 			SSticker.force_ending = TRUE
 
 	if(!.)

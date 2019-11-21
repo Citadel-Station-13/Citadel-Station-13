@@ -475,6 +475,8 @@
 	dir = 4
 	},
 /obj/item/storage/bag/plants/portaseeder,
+/obj/item/seeds/cotton,
+/obj/item/seeds/cotton,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bk" = (
@@ -508,7 +510,9 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/item/construction/rcd/loaded,
+/obj/item/construction/rcd/loaded/upgraded{
+	
+	},
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bn" = (

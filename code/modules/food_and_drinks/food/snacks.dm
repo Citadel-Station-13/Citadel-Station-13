@@ -181,7 +181,7 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	var/sharp = W.is_sharp()
+	var/sharp = W.get_sharpness()
 	if(sharp)
 		if(slice(sharp, W, user))
 			return 1
@@ -291,18 +291,22 @@ All foods are distributed among various categories. Use common sense.
 				S.reagents.add_reagent(r_id, amount)
 
 /obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
+	var/turf/T = get_turf(src)
+	var/obj/item/result
 	if(cooked_type)
-		var/obj/item/reagent_containers/food/snacks/S = new cooked_type(get_turf(src))
-		if(M)
-			initialize_cooked_food(S, M.efficiency)
+		result = new cooked_type(T)
+		if(istype(M))
+			initialize_cooked_food(result, M.efficiency)
 		else
-			initialize_cooked_food(S, 1)
-		SSblackbox.record_feedback("tally", "food_made", 1, type)
+			initialize_cooked_food(result, 1)
+		SSblackbox.record_feedback("tally", "food_made", 1, result.type)
 	else
-		new /obj/item/reagent_containers/food/snacks/badrecipe(src)
-		if(M && M.dirty < 100)
+		result = new /obj/item/reagent_containers/food/snacks/badrecipe(T)
+		if(istype(M) && M.dirty < 100)
 			M.dirty++
 	qdel(src)
+
+	return result
 
 /obj/item/reagent_containers/food/snacks/Destroy()
 	if(contents)
@@ -333,7 +337,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.is_sharp())
+		if(W.get_sharpness())
 			return 0
 		if(stored_item)
 			return 0

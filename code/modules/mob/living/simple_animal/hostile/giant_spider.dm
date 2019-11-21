@@ -83,15 +83,19 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
-		return 0
+		return FALSE
+	if(isobserver(user))
+		var/mob/dead/observer/O = user
+		if(!O.can_reenter_round())
+			return FALSE
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
-		return 1
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
-		return 1
-	key = user.key
-	return 1
+		return TRUE
+	user.transfer_ckey(src, FALSE)
+	return TRUE
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -175,14 +179,17 @@
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
+	var/slowed_by_webs = FALSE
 
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/movement_delay()
-	var/turf/T = get_turf(src)
-	if(locate(/obj/structure/spider/stickyweb) in T)
-		speed = 2
-	else
-		speed = 7
+/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()
+	if(slowed_by_webs)
+		if(!(locate(/obj/structure/spider/stickyweb) in loc))
+			remove_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB)
+			slowed_by_webs = FALSE
+	else if(locate(/obj/structure/spider/stickyweb) in loc)
+		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, priority=100, multiplicative_slowdown=3)
+		slowed_by_webs = TRUE
 
 //midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife

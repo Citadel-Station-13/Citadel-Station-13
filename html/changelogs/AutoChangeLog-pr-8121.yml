@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "Conversion runes will now mute the victim temporarily while they're deciding whether to convert or be sacrificed."
-  - bugfix: "Conversion runes no longer require a third cultist to sacrifice if the victim refuses conversion"

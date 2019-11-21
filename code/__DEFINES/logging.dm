@@ -16,6 +16,8 @@
 #define INVESTIGATE_EXONET			"exonet"
 #define INVESTIGATE_NANITES			"nanites"
 #define INVESTIGATE_CIRCUIT			"circuit"
+#define INVESTIGATE_FERMICHEM       "fermichem"
+#define INVESTIGATE_RCD				"rcd"
 
 // Logging types for log_message()
 #define LOG_ATTACK		(1 << 0)
@@ -33,6 +35,7 @@
 #define LOG_GAME		(1 << 12)
 #define LOG_ADMIN_PRIVATE (1 << 13)
 #define LOG_ASAY		(1 << 14)
+#define LOG_VIRUS			(1 << 15)
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

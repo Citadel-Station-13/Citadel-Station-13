@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "You can now make nameless characters. Nameless characters will spawn in with their name set as their job title followed by a unique five digit number. The \"Name\" option in the character setup menu will be replaced with a \"Default designation\" option for nameless characters, and the default designation will be used in place of a job title for assistants and other jobs that don't require dress codes."

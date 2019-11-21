@@ -75,15 +75,14 @@
 
 				temp += "<B>Implant Signals:</B><BR>"
 				for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-					if (!W.imp_in || !isliving(W.loc))
+					if (!isliving(W.imp_in))
 						continue
-					else
-						var/mob/living/M = W.loc
-						if (M.stat == DEAD)
-							if (M.timeofdeath + 6000 < world.time)
-								continue
+					var/mob/living/M = W.imp_in
+					if (M.stat == DEAD)
+						if (M.timeofdeath + W.lifespan_postmortem < world.time)
+							continue
 
-					var/turf/tr = get_turf(W)
+					var/turf/tr = get_turf(M)
 					if (tr.z == sr.z && tr)
 						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 						if (direct < 20)
@@ -188,8 +187,13 @@
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/atom/T = L[t1]
+	var/implantcheckmate = FALSE
+	if(isliving(T))
+		var/mob/living/M = T
+		if(!locate(/obj/item/implant/tracking) in M.implants) //The user was too slow and let the target mob's tracking implant expire or get removed.
+			implantcheckmate = TRUE
 	var/area/A = get_area(T)
-	if(A.noteleport)
+	if(A.noteleport || implantcheckmate)
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	current_location = get_turf(user)	//Recheck.

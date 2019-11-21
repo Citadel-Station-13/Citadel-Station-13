@@ -6,6 +6,7 @@
  *		Spears
  *		CHAINSAWS
  *		Bone Axe and Spear
+ *		And more
  */
 
 /*##################################################################
@@ -28,12 +29,14 @@
 	var/force_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
+	var/slowdown_wielded = 0
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
 	wielded = 0
-	if(force_unwielded)
+	if(!isnull(force_unwielded))
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
@@ -55,7 +58,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	return
+	slowdown -= slowdown_wielded
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -85,7 +88,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	return
+	slowdown += slowdown_wielded
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
@@ -279,6 +282,7 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
+	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
 	item_color = "green"
 	light_color = "#00ff00"//green
@@ -290,8 +294,10 @@
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
-	total_mass = 0.375 //Survival flashlights typically weigh around 5 ounces.
-	var/total_mass_on = 3.4 //The typical medieval sword, on the other hand, weighs roughly 3 pounds. //Values copied from the regular e-sword
+	var/list/rainbow_colors = list(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+	var/spinnable = TRUE
+	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
+	var/total_mass_on = 3.4
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -299,7 +305,7 @@
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE//this cant possibly be a good idea
+		B.organ_flags &= ~ORGAN_VITAL	//this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
 			if(user.is_holding(src))
@@ -341,7 +347,8 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+
+	clean_blood()
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -353,7 +360,7 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
-	if((wielded) && prob(50))
+	if(spinnable && (wielded) && prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
@@ -406,10 +413,13 @@
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+			rainbow_process()
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/twohanded/dualsaber/proc/rainbow_process()
+	light_color = pick(rainbow_colors)
 
 /obj/item/twohanded/dualsaber/IsReflect()
 	if(wielded)
@@ -428,7 +438,8 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	INVOKE_ASYNC(src, .proc/jedi_spin, user)
+	if(spinnable)
+		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/green
 	possible_colors = list("green")
@@ -454,6 +465,116 @@
 	else
 		return ..()
 
+/////////////////////////////////////////////////////
+//	HYPEREUTACTIC Blades	/////////////////////////
+/////////////////////////////////////////////////////
+
+/obj/item/twohanded/dualsaber/hypereutactic
+	icon = 'icons/obj/1x2.dmi'
+	icon_state = "hypereutactic"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	item_state = "hypereutactic"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	name = "hypereutactic blade"
+	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
+	force = 7
+	force_unwielded = 7
+	force_wielded = 40
+	wieldsound = 'sound/weapons/nebon.ogg'
+	unwieldsound = 'sound/weapons/neboff.ogg'
+	hitsound_on = 'sound/weapons/nebhit.ogg'
+	slowdown_wielded = 1
+	armour_penetration = 60
+	light_color = "#37FFF7"
+	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
+	spinnable = FALSE
+	total_mass_on = 4
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "\improper divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/update_icon()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "hypereutactic_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "hypereutactic_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(gem_overlay)
+
+	if(wielded)
+		add_overlay(blade_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+	clean_blood()
+
+/obj/item/twohanded/dualsaber/hypereutactic/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(!energy_color_input || !user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+			return
+		light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
+		gem_inhand.color = light_color
+		. += gem_inhand
+		if(wielded)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "hypereutactic_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/twohanded/dualsaber/hypereutactic/examine(mob/user)
+	..()
+	if(!hacked)
+		to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+
+/obj/item/twohanded/dualsaber/hypereutactic/rainbow_process()
+	. = ..()
+	update_icon()
+	update_light()
+
 //spears
 /obj/item/twohanded/spear
 	icon_state = "spearglass0"
@@ -478,6 +599,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+	var/icon_prefix = "spearglass"
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
@@ -520,7 +642,7 @@
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
-		icon_state = "spearglass[wielded]"
+		icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
@@ -547,6 +669,13 @@
 				src.war_cry = input
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/shard/tip = locate() in parts_list
+	if (istype(tip, /obj/item/shard/plasma))
+		force_wielded = 19
+		force_unwielded = 11
+		throwforce = 21
+		icon_prefix = "spearplasma"
+	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
 	if(S)
 		if(S.explosive)
@@ -582,6 +711,8 @@
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 
 /obj/item/twohanded/required/chainsaw/Initialize()
 	. = ..()
@@ -605,7 +736,7 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
 	if(on)
@@ -828,18 +959,20 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/datum/component/mobhook
+	var/mob/listeningTo
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/Destroy()
+	listeningTo = null
+	return ..()
 
 /obj/item/twohanded/binoculars/wield(mob/user)
 	. = ..()
 	if(!wielded)
 		return
-	if(QDELETED(mobhook))
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
-	else
-		user.TakeComponent(mobhook)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
+	listeningTo = user
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
@@ -863,7 +996,8 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	. = ..()
-	mobhook.RemoveComponent()
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()

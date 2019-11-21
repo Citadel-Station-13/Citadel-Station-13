@@ -33,6 +33,7 @@
 	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //exploits ahoy
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
@@ -397,7 +398,7 @@
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
 /obj/item/storage/box/donkpockets/PopulateContents()
@@ -412,7 +413,7 @@
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
@@ -567,7 +568,7 @@
 
 /obj/item/storage/box/snappops/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.can_hold = typecacheof(list(/obj/item/toy/snappop))
 	STR.max_items = 8
 
@@ -585,7 +586,7 @@
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.can_hold = typecacheof(list(/obj/item/match))
 
@@ -608,7 +609,7 @@
 
 /obj/item/storage/box/lights/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 21
 	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21
@@ -854,7 +855,7 @@
 			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
-	else if(W.is_sharp())
+	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
@@ -1126,3 +1127,109 @@
 /obj/item/storage/box/pink
 	icon_state = "box_pink"
 	illustration = null
+
+/obj/item/storage/box/mre //base MRE type.
+	name = "Nanotrasen MRE Ration Kit Menu 0"
+	desc = "A package containing food suspended in an outdated bluespace pocket which lasts for centuries. If you're lucky you may even be able to enjoy the meal without getting food poisoning."
+	icon_state = "mre"
+	illustration = null
+	var/can_expire = TRUE
+	var/spawner_chance = 2
+	var/expiration_date
+	var/expiration_date_min = 2300
+	var/expiration_date_max = 2700
+
+/obj/item/storage/box/mre/Initialize()
+	. = ..()
+	if(can_expire)
+		expiration_date = rand(expiration_date_min, expiration_date_max)
+		desc += "\n<span_clas='notice'>An expiry date is listed on it. It reads: [expiration_date]</span>"
+		var/spess_current_year = GLOB.year_integer
+		if(expiration_date < spess_current_year)
+			var/gross_risk = min(round(spess_current_year - expiration_date * 0.1), 1)
+			var/toxic_risk = min(round(spess_current_year - expiration_date * 0.01), 1)
+			for(var/obj/item/reagent_containers/food/snacks/S in contents)
+				if(prob(gross_risk))
+					ENABLE_BITFIELD(S.foodtype, GROSS)
+				if(prob(toxic_risk))
+					ENABLE_BITFIELD(S.foodtype, TOXIC)
+
+/obj/item/storage/box/mre/menu1
+	name = "\improper Nanotrasen MRE Ration Kit Menu 1"
+
+/obj/item/storage/box/mre/menu1/safe
+	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
+	spawner_chance = 0
+	can_expire = FALSE
+
+/obj/item/storage/box/mre/menu1/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
+	new /obj/item/reagent_containers/food/snacks/breadslice/creamcheese(src)
+	new /obj/item/reagent_containers/food/condiment/pack/ketchup(src)
+	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+
+/obj/item/storage/box/mre/menu2
+	name = "\improper Nanotrasen MRE Ration Kit Menu 2"
+
+/obj/item/storage/box/mre/menu2/safe
+	spawner_chance = 0
+	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
+	can_expire = FALSE
+
+/obj/item/storage/box/mre/menu2/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/omelette(src)
+	new /obj/item/reagent_containers/food/snacks/meat/cutlet/plain(src)
+	new /obj/item/reagent_containers/food/snacks/fries(src)
+	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+
+/obj/item/storage/box/mre/menu3
+	name = "\improper Nanotrasen MRE Ration Kit Menu 3"
+	desc = "The holy grail of MREs. This item contains the fabled MRE pizza, spicy nachos and a sample of coffee instant type 2. Any NT employee lucky enough to get their hands on one of these is truly blessed."
+	icon_state = "menu3"
+	can_expire = FALSE //always fresh, never expired.
+	spawner_chance = 1
+
+/obj/item/storage/box/mre/menu3/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni(src)
+	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
+	new /obj/item/reagent_containers/food/snacks/cubannachos(src)
+	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+
+/obj/item/storage/box/mre/menu4
+	name = "\improper Nanotrasen MRE Ration Kit Menu 4"
+
+/obj/item/storage/box/mre/menu4/safe
+	spawner_chance = 0
+	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
+	can_expire = FALSE
+
+/obj/item/storage/box/mre/menu4/PopulateContents()
+	if(prob(66))
+		new /obj/item/reagent_containers/food/snacks/salad/boiledrice(src)
+	else
+		new /obj/item/reagent_containers/food/snacks/salad/ricebowl(src)
+	new /obj/item/reagent_containers/food/snacks/burger/tofu(src)
+	new /obj/item/reagent_containers/food/snacks/salad/fruit(src)
+	new /obj/item/reagent_containers/food/snacks/cracker(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+
+//Where do I put this?
+/obj/item/secbat
+	name = "Secbat box"
+	desc = "Contained inside is a secbat for use with law enforcement."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "box"
+	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
+/obj/item/secbat/attack_self(mob/user)
+	new /mob/living/simple_animal/hostile/retaliate/bat/secbat(user.loc)
+	to_chat(user, "<span class='notice'>You open the box, releasing the secbat!</span>")
+	var/obj/item/stack/sheet/cardboard/I = new(user.drop_location())
+	qdel(src)
+	user.put_in_hands(I)

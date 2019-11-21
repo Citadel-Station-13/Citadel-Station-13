@@ -147,6 +147,11 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
+		var/brutedamage = L.getBruteLoss()
+		var/burndamage = L.getFireLoss()
+		if(brutedamage || burndamage)
+			L.adjustBruteLoss(-(brutedamage * 0.25))
+			L.adjustFireLoss(-(burndamage * 0.25))
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -262,7 +267,7 @@
 	clockwork_desc = "A sigil that will drain non-Servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
 	icon_state = "sigilvitality"
 	layer = SIGIL_LAYER
-	alpha = 75
+	alpha = 125
 	color = "#123456"
 	affects_servants = TRUE
 	stat_affected = DEAD
@@ -349,7 +354,7 @@
 					to_chat(L, "<span class='userdanger'>Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!</span>")
 					message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(L)]) to replace an inactive clock cultist.")
 					L.ghostize(0)
-					L.key = C.key
+					C.transfer_ckey(L, FALSE)
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
@@ -366,6 +371,8 @@
 				break
 
 			if(!GLOB.ratvar_awakens)
+				if(GLOB.clockwork_vitality <= 0)
+					break
 				GLOB.clockwork_vitality -= vitality_used
 
 		sleep(2)

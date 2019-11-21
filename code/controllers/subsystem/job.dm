@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(job)
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
-	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
+	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/initial_players_to_assign = 0 	//used for checking against population caps
@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(job)
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
 	var/overflow_role = "Assistant"
+
+	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.HACK_LoadMapConfig()
@@ -110,13 +112,16 @@ SUBSYSTEM_DEF(job)
 		if(job.required_playtime_remaining(player.client))
 			JobDebug("FOC player not enough xp, Player: [player]")
 			continue
+		if(!player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+			JobDebug("FOC non-human failed, Player: [player]")
+			continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
 		if(player.mind && job.title in player.mind.restricted_roles)
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+		if(player.client.prefs.job_preferences[job.title] == level)
 			JobDebug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
 	return candidates
@@ -143,6 +148,10 @@ SUBSYSTEM_DEF(job)
 
 		if(!job.player_old_enough(player.client))
 			JobDebug("GRJ player not old enough, Player: [player]")
+			continue
+
+		if(!player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+			JobDebug("GRJ non-human failed, Player: [player]")
 			continue
 
 		if(job.required_playtime_remaining(player.client))
@@ -174,7 +183,7 @@ SUBSYSTEM_DEF(job)
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/subsystem/job/proc/FillHeadPosition()
-	for(var/level = 1 to 3)
+	for(var/level in level_order)
 		for(var/command_position in GLOB.command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
@@ -182,7 +191,7 @@ SUBSYSTEM_DEF(job)
 			if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 				continue
 			var/list/candidates = FindOccupationCandidates(job, level)
-			if(!candidates.len)
+			if(!candidates?.len)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
@@ -200,7 +209,7 @@ SUBSYSTEM_DEF(job)
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 			continue
 		var/list/candidates = FindOccupationCandidates(job, level)
-		if(!candidates.len)
+		if(!candidates?.len)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
@@ -211,7 +220,7 @@ SUBSYSTEM_DEF(job)
 	if(!job)
 		return 0
 	for(var/i = job.total_positions, i > 0, i--)
-		for(var/level = 1 to 3)
+		for(var/level in level_order)
 			var/list/candidates = list()
 			candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
@@ -228,7 +237,7 @@ SUBSYSTEM_DEF(job)
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations()
+/datum/controller/subsystem/job/proc/DivideOccupations(list/required_jobs)
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO")
 
@@ -241,14 +250,14 @@ SUBSYSTEM_DEF(job)
 
 	//Get the players who are ready
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences() && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
 	initial_players_to_assign = unassigned.len
 
-	JobDebug("DO, Len: [unassigned.len]")
+	JobDebug("DO, Len: [unassigned?.len]")
 	if(unassigned.len == 0)
-		return 0
+		return validate_required_jobs(required_jobs)
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -269,8 +278,8 @@ SUBSYSTEM_DEF(job)
 	//People who wants to be the overflow role, sure, go on.
 	JobDebug("DO, Running Overflow Check 1")
 	var/datum/job/overflow = GetJob(SSjob.overflow_role)
-	var/list/overflow_candidates = FindOccupationCandidates(overflow, 3)
-	JobDebug("AC1, Candidates: [overflow_candidates.len]")
+	var/list/overflow_candidates = FindOccupationCandidates(overflow, JP_LOW)
+	JobDebug("AC1, Candidates: [overflow_candidates?.len]")
 	for(var/mob/dead/new_player/player in overflow_candidates)
 		JobDebug("AC1 pass, Player: [player]")
 		AssignRole(player, SSjob.overflow_role)
@@ -297,7 +306,7 @@ SUBSYSTEM_DEF(job)
 
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)
-	for(var/level = 1 to 3)
+	for(var/level in level_order)
 		//Check the head jobs first each level
 		CheckHeadPositions(level)
 
@@ -327,12 +336,16 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
 					continue
 
+				if(!player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+					JobDebug("DO non-human failed, Player: [player], Job:[job.title]")
+					continue
+
 				if(player.mind && job.title in player.mind.restricted_roles)
 					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
-				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+				if(player.client.prefs.job_preferences[job.title] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
@@ -351,9 +364,28 @@ SUBSYSTEM_DEF(job)
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
-			AssignRole(player, SSjob.overflow_role) //If everything is already filled, make them an assistant
+			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
+				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 
-	return 1
+	return validate_required_jobs(required_jobs)
+
+/datum/controller/subsystem/job/proc/validate_required_jobs(list/required_jobs)
+	if(!required_jobs.len)
+		return TRUE
+	for(var/required_group in required_jobs)
+		var/group_ok = TRUE
+		for(var/rank in required_group)
+			var/datum/job/J = GetJob(rank)
+			if(!J)
+				SSticker.mode.setup_error = "Invalid job [rank] in gamemode required jobs."
+				return FALSE
+			if(J.current_positions < required_group[rank])
+				group_ok = FALSE
+				break
+		if(group_ok)
+			return TRUE
+	SSticker.mode.setup_error = "Required jobs not present."
+	return FALSE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
@@ -406,7 +438,7 @@ SUBSYSTEM_DEF(job)
 		if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
 		if(S)
-			SendToAtom(H, S, buckle = FALSE)
+			S.JoinPlayerHere(H, FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
 			SendToLateJoin(H)
@@ -418,7 +450,7 @@ SUBSYSTEM_DEF(job)
 	if(job)
 		if(!job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
-		var/new_mob = job.equip(H, null, null, joined_late)
+		var/new_mob = job.equip(H, null, null, joined_late , null, M.client)
 		if(ismob(new_mob))
 			H = new_mob
 			if(!joined_late)
@@ -428,17 +460,22 @@ SUBSYSTEM_DEF(job)
 
 		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
+/*		if(M.client.holder)
+			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
+				M.client.holder.auto_deadmin()
+			else
+				handle_auto_deadmin_roles(M.client, rank) */
+
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
-		to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
+		job.radio_help_message(M)
 		if(job.req_admin_notify)
-			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect immediately, please notify the admins via adminhelp. Otherwise put your locker gear back into the locker and cryo out.</b>")
 		if(job.custom_spawn_text)
 			to_chat(M, "<b>[job.custom_spawn_text]</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
-
+			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 	if(job && H)
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
@@ -446,12 +483,24 @@ SUBSYSTEM_DEF(job)
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
 	return H
-
+/*
+/datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
+	if(!C?.holder)
+		return TRUE
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return
+	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
+		return C.holder.auto_deadmin()
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && (CONFIG_GET(flag/auto_deadmin_security) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
+		return C.holder.auto_deadmin()
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && (CONFIG_GET(flag/auto_deadmin_silicons) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
+		return C.holder.auto_deadmin()*/
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")
 	if(!J)
-		throw EXCEPTION("setup_officer_positions(): Security officer job is missing")
+		CRASH("setup_officer_positions(): Security officer job is missing")
 
 	var/ssc = CONFIG_GET(number/security_scaling_coeff)
 	if(ssc > 0)
@@ -502,13 +551,15 @@ SUBSYSTEM_DEF(job)
 			if(job.required_playtime_remaining(player.client))
 				young++
 				continue
-			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-				high++
-			else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-				medium++
-			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-				low++
-			else never++ //not selected
+			switch(player.client.prefs.job_preferences[job.title])
+				if(JP_HIGH)
+					high++
+				if(JP_MEDIUM)
+					medium++
+				if(JP_LOW)
+					low++
+				else
+					never++
 		SSblackbox.record_feedback("nested tally", "job_preferences", high, list("[job.title]", "high"))
 		SSblackbox.record_feedback("nested tally", "job_preferences", medium, list("[job.title]", "medium"))
 		SSblackbox.record_feedback("nested tally", "job_preferences", low, list("[job.title]", "low"))
@@ -551,52 +602,102 @@ SUBSYSTEM_DEF(job)
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
 
-/datum/controller/subsystem/job/proc/SendToAtom(mob/M, atom/A, buckle)
-	if(buckle && isliving(M) && istype(A, /obj/structure/chair))
-		var/obj/structure/chair/C = A
-		if(C.buckle_mob(M, FALSE, FALSE))
-			return
-	M.forceMove(get_turf(A))
+/atom/proc/JoinPlayerHere(mob/M, buckle)
+	// By default, just place the mob on the same turf as the marker or whatever.
+	M.forceMove(get_turf(src))
+
+/obj/structure/chair/JoinPlayerHere(mob/M, buckle)
+	// Placing a mob in a chair will attempt to buckle it, or else fall back to default.
+	if (buckle && isliving(M) && buckle_mob(M, FALSE, FALSE))
+		return
+	..()
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
+	var/atom/destination
 	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
-		SendToAtom(M,pick(GLOB.jobspawn_overrides[M.mind.assigned_role]),FALSE)
+		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
+		destination.JoinPlayerHere(M, FALSE)
 		return
 
 	if(latejoin_trackers.len)
-		SendToAtom(M, pick(latejoin_trackers), buckle)
-	else
-		//bad mojo
-		var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
-		if(A)
-			//first check if we can find a chair
-			var/obj/structure/chair/C = locate() in A
-			if(C)
-				SendToAtom(M, C, buckle)
+		destination = pick(latejoin_trackers)
+		destination.JoinPlayerHere(M, buckle)
+		return
+
+	//bad mojo
+	var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
+	if(A)
+		//first check if we can find a chair
+		var/obj/structure/chair/C = locate() in A
+		if(C)
+			C.JoinPlayerHere(M, buckle)
+			return
+
+		//last hurrah
+		var/list/avail = list()
+		for(var/turf/T in A)
+			if(!is_blocked_turf(T, TRUE))
+				avail += T
+		if(avail.len)
+			destination = pick(avail)
+			destination.JoinPlayerHere(M, FALSE)
+			return
+
+	//pick an open spot on arrivals and dump em
+	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
+	if(arrivals_turfs.len)
+		for(var/turf/T in arrivals_turfs)
+			if(!is_blocked_turf(T, TRUE))
+				T.JoinPlayerHere(M, FALSE)
 				return
-			else	//last hurrah
-				var/list/avail = list()
-				for(var/turf/T in A)
-					if(!is_blocked_turf(T, TRUE))
-						avail += T
-				if(avail.len)
-					SendToAtom(M, pick(avail), FALSE)
-					return
+		//last chance, pick ANY spot on arrivals and dump em
+		destination = arrivals_turfs[1]
+		destination.JoinPlayerHere(M, FALSE)
+	else
+		var/msg = "Unable to send mob [M] to late join!"
+		message_admins(msg)
+		CRASH(msg)
 
-		//pick an open spot on arrivals and dump em
-		var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
-		if(arrivals_turfs.len)
-			for(var/turf/T in arrivals_turfs)
-				if(!is_blocked_turf(T, TRUE))
-					SendToAtom(M, T, FALSE)
-					return
-			//last chance, pick ANY spot on arrivals and dump em
-			SendToAtom(M, arrivals_turfs[1], FALSE)
-		else
-			var/msg = "Unable to send mob [M] to late join!"
-			message_admins(msg)
-			CRASH(msg)
+/datum/controller/subsystem/job/proc/equip_loadout(mob/dead/new_player/N, mob/living/M, equipbackpackstuff)
+	var/mob/the_mob = N
+	if(!the_mob)
+		the_mob = M // cause this doesn't get assigned if player is a latejoiner
+	if(the_mob.client && the_mob.client.prefs && (the_mob.client.prefs.chosen_gear && the_mob.client.prefs.chosen_gear.len))
+		if(!ishuman(M))//no silicons allowed
+			return
+		for(var/i in the_mob.client.prefs.chosen_gear)
+			var/datum/gear/G = i
+			G = GLOB.loadout_items[slot_to_string(initial(G.category))][initial(G.name)]
+			if(!G)
+				continue
+			var/permitted = TRUE
+			if(G.restricted_roles && G.restricted_roles.len && !(M.mind.assigned_role in G.restricted_roles))
+				permitted = FALSE
+			if(G.donoritem && !G.donator_ckey_check(the_mob.client.ckey))
+				permitted = FALSE
+			if(!equipbackpackstuff && G.category == SLOT_IN_BACKPACK)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
+				permitted = FALSE
+			if(equipbackpackstuff && G.category != SLOT_IN_BACKPACK)//ditto
+				permitted = FALSE
+			if(!permitted)
+				continue
+			var/obj/item/I = new G.path
+			if(!M.equip_to_slot_if_possible(I, G.category, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					var/obj/item/storage/backpack/B = C.back
+					if(!B || !SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, I, null, TRUE, TRUE)) // Otherwise, try to put it in the backpack, for carbons.
+						I.forceMove(get_turf(C))
+				else if(!M.equip_to_slot_if_possible(I, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // Otherwise, try to put it in the backpack
+					I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
 
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
 
 ///////////////////////////////////
 //Keeps track of all living heads//

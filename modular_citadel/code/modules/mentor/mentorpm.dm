@@ -3,7 +3,7 @@
 	set category = "Mentor"
 	set name = "Mentor PM"
 	if(!is_mentor())
-		to_chat(src, "<font color='red'>Error: Mentor-PM-Panel: Only Mentors and Admins may use this command.</font>")
+		to_chat(src, "<span class='danger'>Error: Mentor-PM-Panel: Only Mentors and Admins may use this command.</span>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -27,24 +27,24 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(is_mentor())	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
+		if(is_mentor())	to_chat(src, "<span class='danger'>Error: Mentor-PM: Client not found.</span>")
 		else		mentorhelp(msg)	//Mentor we are replying to left. Mentorhelp instead(check below)
 		return
 
 	if(is_mentor(whom))
-		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has started replying to [whom]'s mhelp.</font color>")
+		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has started replying to [whom]'s mhelp.</font>")
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message") as text|null
-		
+
 		if(!msg && is_mentor(whom))
-			to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has stopped their reply to [whom]'s mhelp.</font color>")
+			to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
 			return
 
 		if(!C)
 			if(is_mentor())
-				to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
+				to_chat(src, "<span class='danger'>Error: Mentor-PM: Client not found.</span>")
 			else
 				mentorhelp(msg)	//Mentor we are replying to has vanished, Mentorhelp instead (how the fuck does this work?let's hope it works,shrug)
 				return
@@ -54,8 +54,8 @@
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg && is_mentor(whom))	
-		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has stopped their reply to [whom]'s mhelp.</font color>")
+	if(!msg && is_mentor(whom))
+		to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
 		return
 
 	log_mentor("Mentor PM: [key_name(src)]->[key_name(C)]: [msg]")
@@ -65,21 +65,21 @@
 	var/show_char = CONFIG_GET(flag/mentors_mobname_only)
 	if(C.is_mentor())
 		if(is_mentor())//both are mentors
-			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
-			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
+			to_chat(C, "<span class='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</span>")
+			to_chat(src, "<span class='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
 
-		else		//recipient is an mentor but sender is not
-			to_chat(C, "<font color='purple'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</font>")
-			to_chat(src, "<font color='brown'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
+		else		//recipient is a mentor but sender is not
+			to_chat(C, "<span class='purple'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</span>")
+			to_chat(src, "<span class='pink'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</span>")
 
 	else
-		if(is_mentor())	//sender is an mentor but recipient is not.
-			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
-			to_chat(src, "<font color='brown'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, show_char)]</b>: [msg]</font>")
+		if(is_mentor())	//sender is a mentor but recipient is not.
+			to_chat(C, "<span class='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</span>")
+			to_chat(src, "<span class='pink'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, show_char)]</b>: [msg]</span>")
 
 	//we don't use message_Mentors here because the sender/receiver might get it too
 	var/show_char_sender = !is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
 	var/show_char_recip = !C.is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
 	for(var/client/X in GLOB.mentors | GLOB.admins)
 		if(X.key!=key && X.key!=C.key)	//check client/X is an Mentor and isn't the sender or recipient
-			to_chat(X, "<B><font color='brown'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</B> <font color ='blue'> [msg]</font>") //inform X
+			to_chat(X, "<B><span class='pink'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</span></B> <span class='blue'>[msg]</span>") //inform X

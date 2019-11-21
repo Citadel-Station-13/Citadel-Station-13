@@ -158,7 +158,7 @@
 		if(!M.radiation)
 			to_chat(user, "<span class='notice'>[icon2html(src, user)] Radiation levels within normal boundaries.</span>")
 		else
-			to_chat(user, "<span class='boldannounce'>[icon2html(src, user)] Subject is irradiated. Radiation levels: [M.radiation].</span>")
+			to_chat(user, "<span class='boldannounce'>[icon2html(src, user)] Subject is irradiated. Radiation levels: [M.radiation] rad.</span>")
 
 	if(rad_strength)
 		to_chat(user, "<span class='boldannounce'>[icon2html(src, user)] Target contains radioactive contamination. Radioactive strength: [rad_strength]</span>")
@@ -192,30 +192,36 @@
 	update_icon()
 
 /obj/item/geiger_counter/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	if(scanning)
 		to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
-		return 0
+		return
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/geiger_counter/cyborg
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/geiger_counter/cyborg/equipped(mob/user)
 	. = ..()
-	if (mobhook && mobhook.parent != user)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT = CALLBACK(src, .proc/redirect_rad_act)))
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
+	RegisterSignal(user, COMSIG_ATOM_RAD_ACT, .proc/redirect_rad_act)
+	listeningTo = user
 
 /obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
 	rad_act(amount)
 
 /obj/item/geiger_counter/cyborg/dropped()
 	. = ..()
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
+	listeningTo = null
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE

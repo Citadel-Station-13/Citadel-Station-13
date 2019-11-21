@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Medical belts now have overlays! Now you can see if a belt is useful or just flatout empty."
-  - bugfix: "fixed hypo MK IIs not being able to be put on medical belts"

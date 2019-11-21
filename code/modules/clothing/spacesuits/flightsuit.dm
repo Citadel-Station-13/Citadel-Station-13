@@ -547,7 +547,7 @@
 	changeWearer()
 	..()
 
-/obj/item/flightpack/item_action_slot_check(slot)
+/obj/item/flightpack/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_BACK)
 		return TRUE
 
@@ -574,7 +574,7 @@
 		momentum_speed_y = 0
 	momentum_speed = max(momentum_speed_x, momentum_speed_y)
 
-/obj/item/flightpack/item_action_slot_check(slot)
+/obj/item/flightpack/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_BACK
 
 /obj/item/flightpack/proc/enable_stabilizers()
@@ -730,7 +730,7 @@
 		if(!active)
 			clothing_flags &= ~NOSLIP
 
-/obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
+/obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_SHOES
 
 /obj/item/clothing/shoes/flightshoes/proc/delink_suit()
@@ -897,7 +897,7 @@
 			usermessage("You're already wearing something on your back!", "boldwarning")
 			return FALSE
 		user.equip_to_slot_if_possible(pack,SLOT_BACK,0,0,1)
-		pack.item_flags |= NODROP
+		ADD_TRAIT(pack, TRAIT_NODROP, FLIGHTSUIT_TRAIT)
 		resync()
 		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [name] and clamps to [user.p_their()] back!</span>")
 		user.update_inv_wear_suit()
@@ -911,7 +911,7 @@
 			return FALSE
 		if(pack.flight && forced)
 			pack.disable_flight(1)
-		pack.item_flags &= ~NODROP
+		REMOVE_TRAIT_FROM(pack, TRAIT_NODROP, FLIGHTSUIT_TRAIT)
 		resync()
 		if(user)
 			user.transferItemToLoc(pack, src, TRUE)
@@ -935,14 +935,14 @@
 			usermessage("You're already wearing something on your feet!", "boldwarning")
 			return FALSE
 		user.equip_to_slot_if_possible(shoes,SLOT_SHOES,0,0,1)
-		shoes.item_flags |= NODROP
+		ADD_TRAIT(shoes, TRAIT_NODROP, FLIGHTSUIT_TRAIT)
 		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over [user.p_their()] feet!</span>")
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = FALSE)
-	shoes.item_flags &= ~NODROP
+	REMOVE_TRAIT_FROM(shoes, TRAIT_NODROP, FLIGHTSUIT_TRAIT)
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)

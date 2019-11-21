@@ -81,9 +81,17 @@
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "screwdriver_brass"
+	icon_state = "screwdriver_clock"
 	item_state = "screwdriver_brass"
 	toolspeed = 0.5
+	random_color = FALSE
+
+/obj/item/screwdriver/bronze
+	name = "bronze screwdriver"
+	desc = "A screwdriver plated with bronze."
+	icon_state = "screwdriver_brass"
+	item_state = "screwdriver_brass"
+	toolspeed = 0.95
 	random_color = FALSE
 
 /obj/item/screwdriver/abductor
@@ -130,7 +138,21 @@
 	user.put_in_active_hand(b_drill)
 
 /obj/item/screwdriver/cyborg
-	name = "powered screwdriver"
+	name = "automated screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "screwdriver_cyborg"
+	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
+	random_color = FALSE
+
+/obj/item/screwdriver/advanced
+	name = "advanced screwdriver"
+	desc = "A classy silver screwdriver with an alien alloy tip, it works almost as well as the real thing."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "screwdriver_a"
+	item_state = "screwdriver_nuke"
+	usesound = 'sound/items/pshoom.ogg'
+	toolspeed = 0.2
+	random_color = FALSE

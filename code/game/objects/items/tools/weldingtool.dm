@@ -223,7 +223,7 @@
 	..()
 	to_chat(user, "It contains [get_fuel()] unit\s of fuel out of [max_fuel].")
 
-/obj/item/weldingtool/is_hot()
+/obj/item/weldingtool/get_temperature()
 	return welding * heat
 
 //Returns whether or not the welding tool is currently on.
@@ -302,6 +302,8 @@
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
@@ -360,14 +362,35 @@
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "brasswelder"
+	icon_state = "clockwelder"
 	item_state = "brasswelder"
 
+/obj/item/weldingtool/bronze
+	name = "bronze plated welding tool"
+	desc = "A bronze plated welder."
+	max_fuel = 21
+	toolspeed = 0.95
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
 
 /obj/item/weldingtool/experimental/process()
 	..()
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
 		reagents.add_reagent("welding_fuel", 1)
+
+/obj/item/weldingtool/advanced
+	name = "advanced welding tool"
+	desc = "A modern welding tool combined with an alien welding tool, it never runs out of fuel and works almost as fast."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "welder"
+	toolspeed = 0.2
+	light_intensity = 0
+	change_icons = 0
+
+/obj/item/weldingtool/advanced/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent("welding_fuel", 1)
+	..()
 
 #undef WELDER_FUEL_BURN_INTERVAL

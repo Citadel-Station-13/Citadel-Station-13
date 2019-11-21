@@ -119,7 +119,7 @@ Consuming extracts:
 	M.adjustToxLoss(-5, forced=1) //To heal slimepeople.
 	M.adjustOxyLoss(-5)
 	M.adjustCloneLoss(-5)
-	M.adjustBrainLoss(-5)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
 
 /obj/item/slimecross/consuming/blue
 	colour = "blue"
@@ -232,7 +232,7 @@ Consuming extracts:
 			L.Cut(I,I+1)
 
 	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/effect/particle_effect/sparks(get_turf(M))
 		playsound(get_turf(M), "sparks", 50, 1)
 

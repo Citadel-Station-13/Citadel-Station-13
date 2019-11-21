@@ -3,6 +3,7 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
+	req_access = list(ACCESS_CARGO)
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
@@ -17,6 +18,7 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
+	req_access = list()
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
@@ -29,13 +31,14 @@
 		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
-	var/cat = EXPORT_CARGO
+	. = EXPORT_CARGO
 	if(contraband)
-		cat |= EXPORT_CONTRABAND
+		. |= EXPORT_CONTRABAND
 	if(obj_flags & EMAGGED)
-		cat |= EXPORT_EMAG
+		. |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
@@ -48,6 +51,8 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
+	req_access = list()
+	return TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -111,6 +116,9 @@
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
+		return
 	if(action != "add" && requestonly)
 		return
 	switch(action)
@@ -159,7 +167,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
-				rank = H.get_assignment()
+				rank = H.get_assignment(hand_first = TRUE)
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
