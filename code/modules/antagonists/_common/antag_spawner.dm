@@ -185,7 +185,7 @@
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/syndeka
 	name = "syndicate ROU teleporter"
-	borg_to_spawn = "syndeka"
+	borg_to_spawn = "Syndeka"
 
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
@@ -202,13 +202,12 @@
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
-
-		else if("Assault")
-       R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
-		else if("Saboteur")
+		if("Assault")
+			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
+		if("Saboteur")
 			R = new /mob/living/silicon/robot/modules/syndicate/saboteur(T)
-		else
-			R = new /mob/living/silicon/robot/modules/syndicate/syndeka(T) 
+		if("Syndeka")
+			R = new /mob/living/silicon/robot/modules/syndicate/syndeka(T)
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
 		brainfirstname = pick(GLOB.first_names_female)
