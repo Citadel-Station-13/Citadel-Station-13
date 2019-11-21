@@ -322,7 +322,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/soap/tongue/flavour/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	var/mob/living/silicon/robot.R = user
+	var/mob/living/silicon/robot/R = user
 	if(ishuman(target))
 		var/mob/living/L = target
 		if(status == 0 && check_zone(R.zone_selected) == "head")
