@@ -62,6 +62,8 @@
 			buckl.unbuckle_mob(src)
 		resting = TRUE
 		adjustStaminaLoss(isnull(override_stamdmg)? amount*0.25 : override_stamdmg)
+		if(!isnull(override_hardstun))
+			Stun(override_hardstun,FALSE,FALSE)
 		if(updating)
 			update_canmove()
 		return TRUE
