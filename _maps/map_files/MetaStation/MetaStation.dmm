@@ -62776,6 +62776,9 @@
 "cro" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "crq" = (
@@ -63295,9 +63298,6 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
-	},
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -28
 	},
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue,
@@ -83997,6 +83997,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"qnB" = (
+/obj/machinery/smartfridge/organ,
+/turf/closed/wall,
+/area/medical/surgery)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -104229,7 +104233,7 @@ cia
 cia
 cpX
 cia
-cia
+qnB
 cia
 ceu
 dyg
