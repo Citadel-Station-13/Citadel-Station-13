@@ -307,7 +307,6 @@
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
-		if(!istype(R)) return ..()
 
 		R.contents -= R.mmi
 		qdel(R.mmi)
@@ -409,7 +408,7 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(0) // Players who cryo out may not re-enter the round
+		mob_occupant.ghostize(FALSE, penalize = TRUE)
 
 	QDEL_NULL(occupant)
 	open_machine()

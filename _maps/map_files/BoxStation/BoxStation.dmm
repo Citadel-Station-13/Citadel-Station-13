@@ -616,6 +616,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-24"
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "abB" = (
@@ -57136,9 +57139,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "hwu" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-24"
-	},
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "hEm" = (
@@ -57158,6 +57159,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ihn" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "iiW" = (
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -85235,7 +85243,7 @@ aav
 aaL
 aaQ
 aaY
-aav
+ihn
 abE
 acg
 acJ
