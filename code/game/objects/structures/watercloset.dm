@@ -206,6 +206,10 @@
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
 
+#define WATER_TEMP_COLD 100
+#define WATER_TEMP_NORMAL 300
+#define WATER_TEMP_HOT 500
+
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
@@ -216,12 +220,15 @@
 	var/on = FALSE
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
-	var/watertemp = "normal"	//freezing, normal, or boiling
+	var/temp = WATER_TEMP_NORMAL
 	var/datum/looping_sound/showering/soundloop
+	var/pipe = 10 //water in the pipe
+	var/reagent_flags
 
 /obj/machinery/shower/Initialize()
 	. = ..()
 	soundloop = new(list(src), FALSE)
+	create_reagents(pipe, reagent_flags)
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -254,26 +261,26 @@
 		soundloop.stop()
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
+
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/analyzer)
-		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
+		to_chat(user, "<span class='notice'>The water temperature seems to be [temp]K.</span>")
 	else
 		return ..()
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 	if(I.use_tool(src, user, 50))
-		switch(watertemp)
-			if("normal")
-				watertemp = "freezing"
-			if("freezing")
-				watertemp = "boiling"
-			if("boiling")
-				watertemp = "normal"
-		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
-		log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
+		switch(temp)
+			if(WATER_TEMP_NORMAL)
+				watertemp = WATER_TEMP_COLD
+			if(WATER_TEMP_COLD)
+				watertemp = WATER_TEMP_HOT
+			if(WATER_TEMP_HOT)
+				watertemp = WATER_TEMP_NORMAL
+		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [temp]K.</span>")
+		log_game("[key_name(user)] has wrenched a shower to [temp]K at ([x],[y],[z])")
 		add_hiddenprint(user)
 	return TRUE
 
@@ -285,7 +292,7 @@
 
 	if(on)
 		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
-		if(watertemp == "freezing")
+		if(watertemp == WATER_TEMP_COLD)
 			return
 		if(!ismist)
 			spawn(50)
@@ -307,13 +314,15 @@
 /obj/machinery/shower/Crossed(atom/movable/AM)
 	..()
 	if(on)
-		if(isliving(AM))
+		if(reagents)
+			if(isliving(AM))
 			var/mob/living/L = AM
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
-				C.slip(80,null,NO_SLIP_WHEN_WALKING)
 		else if(isobj(AM))
 			wash_obj(AM)
+			var/turf/T = get_turf(src)
+			chem_splash(T,1,reagents,0,0,0)
 
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
@@ -322,8 +331,8 @@
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
-		I.acid_level = 0
-		I.extinguish()
+
+
 
 
 /obj/machinery/shower/proc/wash_turf()
@@ -341,7 +350,6 @@
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.ExtinguishMob()
-	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
@@ -419,13 +427,21 @@
 
 /obj/machinery/shower/process()
 	if(on)
-		wash_turf()
-		for(var/atom/movable/AM in loc)
-			if(isliving(AM))
-				wash_mob(AM)
-			else if(isobj(AM))
-				wash_obj(AM)
-			contamination_cleanse(AM)
+		src.add_reagent("water", 10, reagtemp = 300, other_purity = 1, other_pH, no_react = 0, ignore_pH = FALSE)
+		if(reagents)
+			if(temp == WATER_TEMP_COLD)
+				adjust_thermal_energy(10000, WATER_TEMP_COLD, WATER_TEMP_COLD)
+			if(temp == WATER_TEMP_HOT)
+				adjust_thermal_energy(10000, WATER_TEMP_HOT, WATER_TEMP_HOT)
+			wash_turf()
+			for(var/atom/movable/AM in loc)
+				if(isliving(AM))
+					wash_mob(AM)
+				else if(isobj(AM))
+					wash_obj(AM)
+				contamination_cleanse(AM)
+			var/turf/T = get_turf(src)
+			chem_splash(T,1,reagents,0,0,0)
 	else
 		return PROCESS_KILL
 
@@ -433,17 +449,9 @@
 	new /obj/item/stack/sheet/metal (loc, 3)
 	qdel(src)
 
-/obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
-	if(watertemp == "freezing")
-		C.adjust_bodytemperature(-80, 80)
-		to_chat(C, "<span class='warning'>The water is freezing!</span>")
-	else if(watertemp == "boiling")
-		C.adjust_bodytemperature(35, 0, 500)
-		C.adjustFireLoss(5)
-		to_chat(C, "<span class='danger'>The water is searing!</span>")
-
-
-
+#undef WATER_TEMP_NORMAL
+#undef WATER_TEMP_HOT
+#undef WATER_TEMP_COLD
 
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"

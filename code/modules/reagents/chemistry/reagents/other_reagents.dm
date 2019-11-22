@@ -321,6 +321,8 @@
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
+	if(isslimeperson(M))
+		M.adjust_bodytemperature(-60,5)
 	..()
 
 /datum/reagent/water/holywater
