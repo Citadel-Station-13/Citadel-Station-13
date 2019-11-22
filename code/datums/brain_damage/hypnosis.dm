@@ -12,13 +12,29 @@
 /datum/brain_trauma/hypnosis/New(phrase)
 	if(!phrase)
 		qdel(src)
-	hypnotic_phrase = phrase
+	if(quirk == TRUE)
+		hypnotic_phrase = phrase
+	else
+		friendliify(phrase)
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='danger'>Hypnosis New() skipped due to try/catch incompatibility with admin proccalling.</span>")
+		qdel(src)
 	try
 		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
 	catch(var/exception/e)
 		stack_trace("[e] on [e.file]:[e.line]")
 		qdel(src)
 	..()
+
+/datum/brain_trauma/hypnosis/proc/friendliify(phrase)
+	phrase = replacetext(lowertext(phrase), "kill", "hug")
+	phrase = replacetext(lowertext(phrase), "murder", "cuddle")
+	phrase = replacetext(lowertext(phrase), "harm", "snuggle")
+	phrase = replacetext(lowertext(phrase), "decapitate", "headpat")
+	phrase = replacetext(lowertext(phrase), "strangle", "meow at")
+	phrase = replacetext(lowertext(phrase), "suicide", "self-love")
+	phrase = replacetext(lowertext(phrase), "lynch", "kiss")
+	hypnotic_phrase = phrase
 
 /datum/brain_trauma/hypnosis/on_gain()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
