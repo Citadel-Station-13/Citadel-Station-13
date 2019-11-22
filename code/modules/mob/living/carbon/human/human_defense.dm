@@ -392,7 +392,7 @@
 		if (1)
 			if(prob(bomb_armor))
 				b_loss = 500
-				//var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				//var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src))) //Throwing mobs is now somewhere in /proc/explosion
 				//throw_at(throw_target, 200, 4)
 				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 			else
