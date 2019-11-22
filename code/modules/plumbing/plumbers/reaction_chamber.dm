@@ -56,7 +56,7 @@
 			LL =-1
 			if(LL > 1)
 				required_reagents.Cut(LL,0)
-			else if(LL = 0)
+			else if(LL == 0)
 				required_reagents.Cut(1,0)
 			else
 				return
