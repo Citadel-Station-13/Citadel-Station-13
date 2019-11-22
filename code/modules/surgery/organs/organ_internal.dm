@@ -99,7 +99,7 @@
 //Checks to see if the organ is frozen from temperature
 /obj/item/organ/proc/is_cold()
 	if(istype(loc, /obj/))//Freezer of some kind, I hope.
-		if(is_type_in_list(loc, GLOB.freezing_objects))
+		if(is_type_in_typecache(loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))//Incase someone puts them in when cold, but they warm up inside of the thing. (i.e. they have the flag, the thing turns it off, this rights it.)
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
@@ -113,7 +113,7 @@
 
 	else if(istype(loc, /mob/) && !owner)
 		var/mob/M = loc
-		if(is_type_in_list(M.loc, GLOB.freezing_objects))
+		if(is_type_in_typecache(M.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
@@ -123,7 +123,7 @@
 
 	if(owner)
 		//Don't interfere with bodies frozen by structures.
-		if(is_type_in_list(owner.loc, GLOB.freezing_objects))
+		if(is_type_in_typecache(owner.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
 				organ_flags |= ORGAN_FROZEN
 			return TRUE
