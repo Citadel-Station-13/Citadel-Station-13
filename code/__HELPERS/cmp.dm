@@ -85,8 +85,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_job_display_asc(datum/job/A, datum/job/B)
 	return A.display_order - B.display_order
 
-/proc/cmp_uplink_items_asc(datum/uplink_item/A, datum/uplink_item/B)
-	return sorttext(initial(A.name), initial(B.name))
+/proc/cmp_uplink_items_dsc(datum/uplink_item/A, datum/uplink_item/B)
+	return sorttext(initial(B.name), initial(A.name))
 
 /proc/cmp_numbered_displays_name_asc(datum/numbered_display/A, datum/numbered_display/B)
 	return sorttext(A.sample_object.name, B.sample_object.name)
