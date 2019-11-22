@@ -224,6 +224,15 @@ GLOBAL_LIST_EMPTY(explosions)
 				I.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
 
+		for(var/mob/M in T)
+			if(!M.anchored)
+				var/throw_range = rand(throw_dist, max_range)
+				var/turf/throw_at = get_ranged_target_turf(M, throw_dir, throw_range)
+				M.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
+				M.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
+			
+		
+
 		//wait for the lists to repop
 		var/break_condition
 		if(reactionary)
