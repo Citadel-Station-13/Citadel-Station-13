@@ -46,6 +46,11 @@
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
+/mob/living/silicon/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+	if(isnull(override_hardstun))
+		Stun(amount,updating,FALSE)
+	return ..()
+
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
 

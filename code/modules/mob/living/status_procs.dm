@@ -53,6 +53,10 @@
 
 ///////////////////////////////// KNOCKDOWN /////////////////////////////////////
 
+/mob/living/IsKnockdown() //If we're knocked down
+	var/health_deficiency = max((maxHealth - (health - getStaminaLoss()))*0.5, 0)
+	return IsStun() || (health_deficiency > 35 && resting)
+
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg) //Can't go below remaining duration
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(isnull(override_hardstun)? amount : override_hardstun, ignore_canknockdown))
