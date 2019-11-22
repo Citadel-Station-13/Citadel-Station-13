@@ -273,7 +273,9 @@
 					/obj/item/storage/bag/trash = 1,
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
-					/obj/item/storage/belt/janitor = 2)
+					/obj/item/storage/belt/janitor = 2,
+					/obj/item/screwdriver = 2,
+					/obj/item/stack/cable_coil/random = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe

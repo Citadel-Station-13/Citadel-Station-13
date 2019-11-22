@@ -575,7 +575,9 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
-		/obj/item/assembly/mousetrap
+		/obj/item/assembly/mousetrap,
+		/obj/item/screwdriver,
+		/obj/item/stack/cable_coil
 		))
 
 /obj/item/storage/belt/bandolier

@@ -201,10 +201,10 @@
 	wanted_types = list(/obj/item/restraints/legcuffs/bola)
 
 /datum/bounty/item/assistant/metalshields
-	name = "Metal Shields"
+	name = "Metal Shields" //I didnt realise how much work it was to make these, you need 6 Cloth, 9 Leather, Tools, 30 Metal, and 3 Cable Coil Stacks for this.
 	description = "NT is testing the effects of electricity on clowns wielding metal shields. We have clowns, and we have electricity. Send us the shields."
-	reward = 1400
-	required_count = 4
+	reward = 2300
+	required_count = 3
 	wanted_types = list(/obj/item/shield/makeshift)
 
 /datum/bounty/item/assistant/toolbelts
