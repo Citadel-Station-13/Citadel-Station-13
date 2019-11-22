@@ -48,6 +48,7 @@
 	name = "Emergency Medical Supplies"
 	desc = "Emergency supplies for a front-line medic. Contains two boxes of body bags, a medical HUD, a defib unit, medical belt, toxin bottles, epipens, and several types of medical kits."
 	cost = 3000
+	DropPodOnly = TRUE
 	contains = list(/obj/item/storage/box/bodybags,
 					/obj/item/storage/box/bodybags,
 					/obj/item/clothing/glasses/hud/health,
@@ -62,7 +63,6 @@
 					/obj/item/reagent_containers/glass/bottle/toxin,
 					/obj/item/storage/box/medipens)
 	crate_name = "medical emergency crate"
-	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/emergency/radiatione_emergency
 	name = "Emergency Radiation Protection Crate"
