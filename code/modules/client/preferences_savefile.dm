@@ -183,6 +183,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
 	S["lewdchem"]			>> lewdchem
+	S["preferred_chaos"]	>> preferred_chaos
+
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -278,6 +280,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
 	WRITE_FILE(S["lewdchem"], lewdchem)
+	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 
 	return 1
 

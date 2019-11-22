@@ -306,6 +306,8 @@
 	amount -= used
 	if(check)
 		zero_amount()
+	for(var/i in custom_materials)
+		custom_materials[i] = amount * mats_per_stack
 	update_icon()
 	update_weight()
 	return TRUE

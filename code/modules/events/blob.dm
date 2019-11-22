@@ -7,7 +7,7 @@
 	earliest_start = 40 MINUTES
 	min_players = 35
 
-	gamemode_blacklist = list("blob") //Just in case a blob survives that long
+	gamemode_blacklist = list("blob","dynamic") //Just in case a blob survives that long
 
 /datum/round_event/ghost_role/blob
 	announceWhen	= -1

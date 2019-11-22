@@ -63,6 +63,8 @@
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "crowbar_cyborg"
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5

@@ -250,8 +250,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
-	item_state = "gold"
 	icon_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 16 // Less then a spear
 	throwforce = 14
@@ -278,7 +278,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "golden toolbox"
 	desc = "A gold plated toolbox, fancy and harmless due to the gold plating being on cardboard!"
 	icon_state = "gold"
-	item_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 0
 	throwforce = 0

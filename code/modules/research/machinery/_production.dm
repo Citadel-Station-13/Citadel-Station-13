@@ -29,6 +29,14 @@
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
 	RefreshParts()
 
+/obj/machinery/rnd/production/Destroy()
+	materials = null
+	cached_designs = null
+	matching_designs = null
+	QDEL_NULL(stored_research)
+	host_research = null
+	return ..()
+
 /obj/machinery/rnd/production/proc/update_research()
 	host_research.copy_research_to(stored_research, TRUE)
 	update_designs()
@@ -50,10 +58,6 @@
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
 	popup.set_content(generate_ui())
 	popup.open()
-
-/obj/machinery/rnd/production/Destroy()
-	QDEL_NULL(stored_research)
-	return ..()
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
@@ -84,8 +88,9 @@
 		investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
-		var/obj/item/I = new path(get_turf(src))
-		if(efficient_with(I.type))
+		var/obj/O = new path(get_turf(src))
+		if(efficient_with(O.type) && isitem(O))
+			var/obj/item/I = O
 			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
 			I.set_custom_materials(matlist.Copy())
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))

@@ -31,6 +31,7 @@
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
+	materials = null
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
