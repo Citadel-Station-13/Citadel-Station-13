@@ -125,6 +125,7 @@
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
 					/obj/item/clothing/under/rank/roboticist = 3,
 					/obj/item/clothing/under/rank/roboticist/skirt = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/robotics = 3,
 					/obj/item/clothing/suit/toggle/labcoat = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3,
 					/obj/item/clothing/gloves/fingerless = 3,
@@ -258,6 +259,7 @@
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(/obj/item/clothing/under/rank/janitor = 2,
 					/obj/item/clothing/under/rank/janitor/skirt = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/janitor = 3,
 					/obj/item/cartridge/janitor = 3,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
@@ -340,6 +342,7 @@
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(/obj/item/clothing/under/rank/chemist = 3,
 					/obj/item/clothing/under/rank/chemist/skirt = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/chemistry = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 3,
 					/obj/item/storage/backpack/chemistry = 3,
@@ -359,6 +362,7 @@
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(/obj/item/clothing/under/rank/geneticist = 3,
 					/obj/item/clothing/under/rank/geneticist/skirt = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/genetics = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 3,
 					/obj/item/storage/backpack/genetics = 3,
@@ -376,6 +380,7 @@
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(/obj/item/clothing/under/rank/virologist = 3,
 					/obj/item/clothing/under/rank/virologist/skirt = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/viro = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/clothing/suit/toggle/labcoat/virologist = 3,
 					/obj/item/clothing/mask/surgical = 3,
