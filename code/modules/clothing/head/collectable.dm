@@ -29,7 +29,6 @@
 	icon_state = "chef"
 	item_state = "chef"
 	dynamic_hair_suffix = ""
-
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/collectable/paper
