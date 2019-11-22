@@ -176,11 +176,11 @@
 	desc = "That's not red paint. That's real corgi blood."
 
 /datum/dog_fashion/head/colour
-	name = "Styled REAL_NAME"
+	name = "Stylish REAL_NAME"
 	desc = "From the tips of their paws to the top of their head, they look like a made bed."
 	emote_see = list("tries to tap dances.","looks sadly at others outfits...","barks at bad fashion!")
 
 /datum/dog_fashion/head/telegram
-	name = "Messager REAL_NAME"
-	desc = "Dont shoot the messager..."
-	emote_see = list("licks an evolope.","looks ready to set off to send a letter...","works on barking!")
+	name = "Messanger REAL_NAME"
+	desc = "Dont shoot the messanger..."
+	emote_see = list("licks an envelope.","looks ready to set off to send a letter...","works on barking!")
