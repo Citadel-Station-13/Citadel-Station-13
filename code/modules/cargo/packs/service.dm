@@ -9,6 +9,10 @@
 /datum/supply_pack/service
 	group = "Service"
 
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Cargo ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
 	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping."
@@ -43,6 +47,12 @@
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////// Chef, Botanist, Bartender ////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+//This stuff will need to get cleaned up later, because both Organic and Service have things for Botany, even though Botany is a Service//
 
 /datum/supply_pack/service/food_cart
 	name = "Food Cart Crate"
@@ -85,6 +95,10 @@
 	crate_name = "maint garden crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Janitor //////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 /datum/supply_pack/service/advlighting
 	name = "Advanced Lighting crate"
 	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
@@ -98,7 +112,7 @@
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/service/lightbulbs
-	name = "Replacement Lights"
+	name = "Replacement Lights" //Subgrouping this with Advanced Lighting Crate, they're both lighting related.
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs as well as a light replacer."
 	cost = 1200
 	contains = list(/obj/item/storage/box/lights/mixed,
@@ -184,25 +198,9 @@
 	crate_name = "janitor ride crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/service/carpet
-	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty)
-	crate_name = "premium carpet crate"
-
-/datum/supply_pack/service/carpet2
-	name = "Premium Carpet Crate #2"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate #2"
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Misc + Decor ////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/service/carpet_exotic
 	name = "Exotic Carpet Crate"
@@ -230,13 +228,25 @@
 					/obj/item/stack/tile/carpet/monochrome/fifty)
 	crate_name = "exotic carpet crate"
 
-/datum/supply_pack/service/noslipfloor
-	name = "High-traction Floor Tiles"
-	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
-	cost = 2000
-	contains = list(/obj/item/stack/tile/noslip/thirty,
-					/obj/item/stack/tile/noslip/thirty)
-	crate_name = "high-traction floor tiles crate"
+/datum/supply_pack/service/carpet
+	name = "Premium Carpet Crate"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/black/fifty,
+					/obj/item/stack/tile/carpet/black/fifty)
+	crate_name = "premium carpet crate"
+
+/datum/supply_pack/service/carpet2
+	name = "Premium Carpet Crate #2"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "premium carpet crate #2"
 
 /datum/supply_pack/service/party
 	name = "Party Equipment"
@@ -260,6 +270,18 @@
 					/obj/item/flashlight/glowstick/yellow,
 					/obj/item/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
+
+/datum/supply_pack/service/noslipfloor
+	name = "High-traction Floor Tiles"
+	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
+	cost = 2000
+	contains = list(/obj/item/stack/tile/noslip/thirty,
+					/obj/item/stack/tile/noslip/thirty)
+	crate_name = "high-traction floor tiles crate"
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Vendor Refills //////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 	
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"

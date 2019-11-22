@@ -12,7 +12,7 @@
 
 /datum/supply_pack/medical/bodybags
 	name = "Bodybags"
-	desc = "For when the bodies hit the floor."
+	desc = "For when the bodies hit the floor. Contains 4 boxes of bodybags."
 	cost = 1200
 	contains = list(/obj/item/storage/box/bodybags,
 					/obj/item/storage/box/bodybags,

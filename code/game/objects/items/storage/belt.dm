@@ -575,11 +575,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
-		/obj/item/assembly/mousetrap,
-		/obj/item/screwdriver,
-		/obj/item/stack/cable_coil,
-		/obj/item/restraints/handcuffs/cable
-		))
+		/obj/item/assembly/mousetrap))
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"

@@ -31,7 +31,7 @@
 
 /datum/supply_pack/misc/randombedsheets
 	name = "Bedsheet Crate (R)"
-	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with five random bedsheets for your slumbering pleasure!"
+	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
 	cost = 2000
 	contains = list(/obj/item/bedsheet/random,
 					/obj/item/bedsheet/random,
@@ -45,7 +45,7 @@
 
 /datum/supply_pack/misc/coloredsheets
 	name = "Bedsheet Crate (C)"
-	desc = "Contains a total of nine colored bedsheets."
+	desc = "Give your night life a splash of color with this crate filled with bedsheets! Contains a total of nine different-colored sheets."
 	cost = 1250
 	contains = list(/obj/item/bedsheet/blue,
 					/obj/item/bedsheet/green,
