@@ -1,4 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - bugfix: "the `!tgs poly` command now actually works"

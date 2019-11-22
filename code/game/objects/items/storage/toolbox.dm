@@ -35,6 +35,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
+	if(blood_DNA && blood_DNA.len)
+		add_blood_overlay()
 	if(has_latches)
 		var/icon/I = icon('icons/obj/storage.dmi', latches)
 		add_overlay(I)
@@ -122,7 +124,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.silent = TRUE
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
@@ -163,7 +165,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 28
 	STR.max_items = 28
@@ -218,7 +220,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 20
 	STR.max_items = 10
 
@@ -237,8 +239,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
-	item_state = "gold"
 	icon_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 16 // Less then a spear
 	throwforce = 14
@@ -256,7 +258,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/gold_real/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 40
 	STR.max_items = 12
 
@@ -264,7 +266,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "golden toolbox"
 	desc = "A gold plated toolbox, fancy and harmless due to the gold plating being on cardboard!"
 	icon_state = "gold"
-	item_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 0
 	throwforce = 0
@@ -286,7 +288,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 		generate_rubber_toolbox_icon()
 	icon = GLOB.rubber_toolbox_icons[icon_state]
 	AddComponent(/datum/component/bouncy)
-	. = ..()
 
 /obj/item/storage/toolbox/proc/generate_rubber_toolbox_icon()
 	var/icon/new_icon = icon(icon, icon_state)

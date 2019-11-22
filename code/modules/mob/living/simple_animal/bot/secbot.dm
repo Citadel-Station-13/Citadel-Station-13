@@ -131,7 +131,8 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
 		return 1
-
+	if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+		return TRUE
 	switch(href_list["operation"])
 		if("idcheck")
 			idcheck = !idcheck
@@ -158,16 +159,16 @@ Auto Patrol: []"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
-    var/final = FALSE
-    if(idcheck)
-        final = final|JUDGE_IDCHECK
-    if(check_records)
-        final = final|JUDGE_RECORDCHECK
-    if(weaponscheck)
-        final = final|JUDGE_WEAPONCHECK
-    if(emagged == 2)
-        final = final|JUDGE_EMAGGED
-    return final
+	var/final = FALSE
+	if(idcheck)
+		final = final|JUDGE_IDCHECK
+	if(check_records)
+		final = final|JUDGE_RECORDCHECK
+	if(weaponscheck)
+		final = final|JUDGE_WEAPONCHECK
+	if(emagged == 2)
+		final = final|JUDGE_EMAGGED
+	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
 	return

@@ -8,7 +8,9 @@
 	var/repeatable = FALSE				//can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
-/datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+	var/silicons_obey_prob = FALSE
+
+/datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
 	if(accept_hand)
 		if(!tool)
@@ -46,7 +48,8 @@
 			else
 				surgery.status--
 	return FALSE
-/datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+
+/datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
 	var/advance = FALSE
@@ -60,7 +63,8 @@
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
-		if((prob(prob_chance) || iscyborg(user)) && chem_check(target) && !try_to_fail)
+
+		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
 		else
@@ -73,19 +77,18 @@
 	surgery.step_in_progress = FALSE
 	return advance
 
-
-/datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
 		"[user] begins to perform surgery on [target].",
 		"[user] begins to perform surgery on [target].")
 
-/datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed.</span>",
 		"[user] succeeds!",
 		"[user] finishes.")
 	return TRUE
 
-/datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screw up!</span>",
 		"<span class='warning'>[user] screws up!</span>",
 		"[user] finishes.", TRUE) //By default the patient will notice if the wrong thing has been cut
@@ -93,7 +96,8 @@
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return TRUE
-/datum/surgery_step/proc/chem_check(mob/living/carbon/target)
+
+/datum/surgery_step/proc/chem_check(mob/living/target)
 	if(!LAZYLEN(chems_needed))
 		return TRUE
 	if(require_all_chems)

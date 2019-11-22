@@ -1,7 +1,8 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define PLAYER_SCALING 1.5
 #define CHALLENGE_TIME_LIMIT 3000
-#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_PLAYERS_TARGET 50 //target players population. anything below is a malus to the challenge tc bonus.
+#define TELECRYSTALS_MALUS_SCALING 1 //the higher the value, the bigger the malus.
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
@@ -62,14 +63,22 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
-    
-  GLOB.war_declared = TRUE
+
+	GLOB.war_declared = TRUE
 	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
 	var/actual_players = GLOB.joined_player_list.len - nukeops.len
+	var/tc_malus = 0
+	if(actual_players < CHALLENGE_PLAYERS_TARGET)
+		tc_malus = FLOOR(((CHALLENGE_TELECRYSTALS / CHALLENGE_PLAYERS_TARGET) * (CHALLENGE_PLAYERS_TARGET - actual_players)) * TELECRYSTALS_MALUS_SCALING, 1)
 
-	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS + CEILING(PLAYER_SCALING * actual_players, 1))
+	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS - tc_malus + CEILING(PLAYER_SCALING * actual_players, 1))
 
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = CONFIG_GET(number/dynamic_warops_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Nuke ops spent [threat_spent] on war ops.")
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
 	qdel(src)
@@ -79,11 +88,6 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
 
-	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
-	var/actual_players = GLOB.joined_player_list.len - nukeops.len
-	if(actual_players < CHALLENGE_MIN_PLAYERS)
-		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
-		return FALSE
 	if(!user.onSyndieBase())
 		to_chat(user, "You have to be at your base to use this.")
 		return FALSE
@@ -95,6 +99,14 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		if(board.moved)
 			to_chat(user, "The shuttle has already been moved! You have forfeit the right to declare war.")
 			return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat_level < CONFIG_GET(number/dynamic_warops_requirement))
+			to_chat(user, "Due to the dynamic space in which the station resides, you are too deep into Nanotrasen territory to reasonably go loud.")
+			return FALSE
+		else if(mode.threat < CONFIG_GET(number/dynamic_warops_cost))
+			to_chat(user, "Due to recent threats on the station, Nanotrasen is looking too closely for a war declaration to be wise.")
+			return FALSE
 	return TRUE
 
 /obj/item/nuclear_challenge/clownops
@@ -102,5 +114,6 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
-#undef CHALLENGE_MIN_PLAYERS
+#undef CHALLENGE_PLAYERS_TARGET
+#undef TELECRYSTALS_MALUS_SCALING
 #undef CHALLENGE_SHUTTLE_DELAY

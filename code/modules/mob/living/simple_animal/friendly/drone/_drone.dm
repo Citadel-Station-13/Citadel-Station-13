@@ -160,7 +160,7 @@
 	if(mind)
 		mind.transfer_to(R, 1)
 	else
-		R.key = key
+		transfer_ckey(R)
 	qdel(src)
 
 

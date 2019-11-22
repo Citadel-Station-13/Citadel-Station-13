@@ -20,12 +20,14 @@
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 2
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The one contains a limiter to prevent the cyborg's power cell from overheating."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "taser"
 	can_flashlight = FALSE
 	can_charge = FALSE
 	selfcharge = EGUN_SELFCHARGE_BORG
@@ -48,7 +50,10 @@
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This one contains a limiter to prevent the cyborg's power cell from overheating."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "taser"
 	can_charge = FALSE
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/secborg)
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 5

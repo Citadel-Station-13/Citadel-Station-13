@@ -60,7 +60,7 @@
 		else
 			if(isliving(target))
 				var/mob/living/L = target
-				if(!L.anti_magic_check())
+				if(!L.anti_magic_check(chargecost = 0))
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						if(R.revealed)
@@ -110,9 +110,7 @@
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue
-		if(is_servant_of_ratvar(L) || (HAS_TRAIT(L, TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE))
-			continue
-		if(L.stat || L.lying)
+		if(is_servant_of_ratvar(L) || (HAS_TRAIT(L, TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE) || L.incapacitated(TRUE))
 			continue
 		if (iscarbon(L))
 			var/mob/living/carbon/c = L

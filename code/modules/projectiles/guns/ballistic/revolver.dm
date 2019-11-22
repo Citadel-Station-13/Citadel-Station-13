@@ -167,6 +167,7 @@
 /obj/item/gun/ballistic/revolver/russian
 	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
+	icon_state = "russianrevolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
@@ -277,12 +278,12 @@
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
+	if(A.tool_behaviour == TOOL_SAW || istype(A, /obj/item/gun/energy/plasmacutter))
+		sawoff(user)
 	if(istype(A, /obj/item/melee/transforming/energy))
 		var/obj/item/melee/transforming/energy/W = A
 		if(W.active)
 			sawoff(user)
-	if(istype(A, /obj/item/circular_saw) || istype(A, /obj/item/gun/energy/plasmacutter))
-		sawoff(user)
 
 /obj/item/gun/ballistic/revolver/doublebarrel/attack_self(mob/living/user)
 	var/num_unloaded = 0

@@ -1,9 +1,0 @@
-author: "Hippie Circuit Port"
-delete-after: True
-changes: 
-  - rscadd: "Added all Atmospheric Circuits"
-  - rscadd: "Added the ability to color data disks"
-  - rscadd: "Added Selection and Storage Examiner Circuits"
-  - rscadd: "Added Smoke, Extinguisher, and Beaker Connector Circuits"
-  - rscadd: "Added Inserter, Renamer, Redescriber, and Repaint Circuits"
-  - rscadd: "Added MMI Tank and pAI Connector Circuits (The possibilities are endless!)"

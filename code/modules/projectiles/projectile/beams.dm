@@ -39,14 +39,6 @@
 /obj/item/projectile/beam/weak
 	damage = 15
 
-/obj/item/projectile/beam/weak/minigun
-	damage = 12.5
-	armour_penetration = 40
-
-/obj/item/projectile/beam/weak/minigun/Initialize()
-	.=..()
-	speed = pick(0.7,0.75,0.8,0.85,0.9,0.95,1,1.05,1.1,1.15)
-
 /obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
@@ -77,12 +69,12 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 24 // Citadel change for balance from 36
+	damage = 28 // Citadel change for balance from 36
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
-	speed = 0.7
+	speed = 0.6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler

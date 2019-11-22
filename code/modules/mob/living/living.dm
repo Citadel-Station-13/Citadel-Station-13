@@ -40,6 +40,16 @@
 	QDEL_LIST(diseases)
 	return ..()
 
+/mob/living/onZImpact(turf/T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
+	return ..()
+
+/mob/living/proc/ZImpactDamage(turf/T, levels)
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	adjustBruteLoss((levels * 5) ** 1.5)
+	Knockdown(levels * 50)
+
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -346,6 +356,11 @@
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return TRUE
 
+/mob/living/canUseStorage()
+	if (get_num_arms() <= 0)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/InCritical()
 	return (health <= crit_threshold && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
@@ -476,7 +491,6 @@
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
-	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
@@ -498,11 +512,19 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
-	GET_COMPONENT(mood, /datum/component/mood)
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
 		mood.sanity = SANITY_GREAT
 		mood.update_mood()
+	//Heal all organs
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.internal_organs)
+			for(var/organ in C.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
+	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEAL, admin_revive)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -705,14 +727,14 @@
 	var/fixed = 0
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
-	if(on && !floating && !fixed)
+	if(on && !(movement_type & FLOATING) && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		floating = TRUE
-	else if(((!on || fixed) && floating))
+		setMovetype(movement_type | FLOATING)
+	else if(((!on || fixed) && (movement_type & FLOATING)))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
-		floating = FALSE
+		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -784,7 +806,7 @@
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
+	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C
@@ -901,7 +923,7 @@
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
-		new_mob.key = key
+		transfer_ckey(new_mob)
 
 	for(var/para in hasparasites())
 		var/mob/living/simple_animal/hostile/guardian/G = para
@@ -924,7 +946,7 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, chargecost = 1, self = FALSE)
 	. = ..()
 	if(.)
 		return

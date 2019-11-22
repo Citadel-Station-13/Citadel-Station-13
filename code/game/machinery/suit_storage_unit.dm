@@ -245,6 +245,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
+				mob_occupant.radiation = 0
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
@@ -264,6 +265,8 @@
 				things_to_clear += occupant.GetAllContents()
 			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
+				AM.clean_blood()
+				AM.fingerprints = list()
 				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
 				if(contamination)
 					qdel(contamination)

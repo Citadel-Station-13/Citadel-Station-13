@@ -39,6 +39,8 @@
 
 /datum/config_entry/flag/log_game	// log game events
 
+/datum/config_entry/flag/log_virus	// log virology data
+
 /datum/config_entry/flag/log_vote	// log voting
 
 /datum/config_entry/flag/log_whisper	// log client whisper
@@ -139,6 +141,11 @@
 /datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/mentors_mobname_only
+
+/datum/config_entry/flag/mentor_legacy_system	//Defines whether the server uses the legacy mentor system with mentors.txt or the SQL system
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn
@@ -173,6 +180,9 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
+	config_entry_value = "https://katlin.dog/citadel-wiki"
+
+/datum/config_entry/string/wikiurltg
 	config_entry_value = "http://www.tgstation13.org/wiki"
 
 /datum/config_entry/string/forumurl

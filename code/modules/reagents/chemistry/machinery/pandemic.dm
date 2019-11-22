@@ -125,12 +125,6 @@
 	else
 		cut_overlays()
 
-/obj/machinery/computer/pandemic/proc/eject_beaker()
-	if(beaker)
-		beaker.forceMove(drop_location())
-		beaker = null
-		update_icon()
-
 /obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -165,7 +159,7 @@
 		return
 	switch(action)
 		if("eject_beaker")
-			eject_beaker()
+			replace_beaker(usr)
 			. = TRUE
 		if("empty_beaker")
 			if(beaker)
@@ -174,7 +168,7 @@
 		if("empty_eject_beaker")
 			if(beaker)
 				beaker.reagents.clear_reagents()
-				eject_beaker()
+				replace_beaker(usr)
 			. = TRUE
 		if("rename_disease")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
@@ -194,13 +188,15 @@
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
 			A = A.Copy()
-			var/list/data = list("viruses" = list(A))
+			var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY", "viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood", 20, data)
 			wait = TRUE
 			update_icon()
+			var/turf/source_turf = get_turf(src)
+			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
@@ -232,18 +228,32 @@
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+		var/obj/item/reagent_containers/B = I
+		if(!user.transferItemToLoc(B, src))
 			return
-		if(!user.transferItemToLoc(I, src))
-			return
-
-		beaker = I
+		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		update_icon()
 	else
 		return ..()
 
+/obj/machinery/computer/pandemic/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+
+/obj/machinery/computer/pandemic/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			if(!user.put_in_hands(beaker))
+				beaker.forceMove(drop_location())
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/computer/pandemic/on_deconstruction()
-	eject_beaker()
+	replace_beaker(usr)
 	. = ..()

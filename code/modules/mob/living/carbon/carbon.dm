@@ -170,6 +170,7 @@
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+					return
 				adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
@@ -256,7 +257,7 @@
 
 
 /mob/living/carbon/fall(forced)
-    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+	loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -585,7 +586,7 @@
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
 
-	if(client.eye != src)
+	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
@@ -819,7 +820,7 @@
 		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
-		B.damaged_brain = FALSE
+		B.brain_death = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
@@ -905,7 +906,7 @@
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src) //Currently, only carbons or higher use mood, move this once that changes.
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
 	if(mood)
 		switch(mood.sanity) //Alters do_after delay based on how sane you are
 			if(SANITY_INSANE to SANITY_DISTURBED)
@@ -947,7 +948,7 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE

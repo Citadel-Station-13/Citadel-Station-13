@@ -220,7 +220,7 @@
 
 /obj/item/storage/box/syndie_kit/space/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
@@ -244,7 +244,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
@@ -381,3 +381,13 @@
 	new /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
+
+
+/obj/item/storage/box/strange_seeds_10pack
+
+/obj/item/storage/box/strange_seeds_10pack/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/seeds/random(src)
+
+	if(prob(50))
+		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box

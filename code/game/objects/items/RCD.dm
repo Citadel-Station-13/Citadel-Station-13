@@ -225,11 +225,10 @@ RLD
 
 	t1 += "<p><a href='?src=[REF(src)];close=1'>Close</a></p>\n"
 
-	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500)
+	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500, src)
 	popup.set_content(t1)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	onclose(user, "rcd_access")
 
 /obj/item/construction/rcd/Topic(href, href_list)
 	..()
@@ -441,13 +440,16 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/turf/the_turf = get_turf(A)
+	var/turf_coords = "[COORD(the_turf)]"
+	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
-				investigate_log("[user] used [src] on [cached] (now [A]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
+				investigate_log("[user] used [src] on [cached] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
 
@@ -552,6 +554,7 @@ RLD
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
 	upgrade = TRUE
+	var/energyfactor = 72
 
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
@@ -562,7 +565,7 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
@@ -575,10 +578,15 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.charge >= (amount * 72)
+	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
+
+/obj/item/construction/rcd/borg/syndicate
+	icon_state = "ircd"
+	item_state = "ircd"
+	energyfactor = 66
 
 /obj/item/construction/rcd/loaded
 	matter = 160

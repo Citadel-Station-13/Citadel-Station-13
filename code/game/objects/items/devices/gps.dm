@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 /obj/item/gps/examine(mob/user)
 	..()
+	var/turf/curr = get_turf(src)
+	to_chat(user, "The screen says: [get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])")
 	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
 
 /obj/item/gps/Initialize()
@@ -167,8 +169,19 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
+	var/obj/item/implant/gps/implant
 
-/obj/item/gps/mining/internal
+/obj/item/gps/internal/Initialize(mapload, obj/item/implant/gps/_implant)
+	. = ..()
+	implant = _implant
+
+/obj/item/gps/internal/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
+	else
+		return ..()
+
+/obj/item/gps/internal/mining
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."

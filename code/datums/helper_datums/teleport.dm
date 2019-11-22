@@ -79,6 +79,7 @@
 		tele_play_specials(teleatom, destturf, effectout, asoundout)
 		if(ismegafauna(teleatom))
 			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_VERBOSEJMP(curturf)] to [ADMIN_VERBOSEJMP(destturf)].")
+		SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, channel, curturf, destturf)
 
 	if(ismob(teleatom))
 		var/mob/M = teleatom
