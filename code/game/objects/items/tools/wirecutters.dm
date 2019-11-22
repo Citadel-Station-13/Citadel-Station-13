@@ -87,7 +87,10 @@
 /obj/item/wirecutters/cyborg
 	name = "wirecutters"
 	desc = "This cuts wires."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "wirecutters_cyborg"
 	toolspeed = 0.5
+	random_color = FALSE
 
 /obj/item/wirecutters/power
 	name = "jaws of life"

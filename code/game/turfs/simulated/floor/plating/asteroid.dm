@@ -103,7 +103,7 @@
 
 /turf/open/floor/plating/asteroid/basalt/airless
 	baseturfs = /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
@@ -131,7 +131,7 @@
 
 
 /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 
@@ -307,7 +307,7 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	environment_type = "snow"
 	flags_1 = NONE
@@ -344,11 +344,11 @@
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = FALSE
