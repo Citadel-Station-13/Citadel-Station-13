@@ -44,8 +44,28 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/medemergency
+	name = "Emergency Medical Supplies"
+	desc = "Emergency supplies for a front-line medic. Contains two boxes of body bags, a medical HUD, a defib unit, medical belt, toxin bottles, epipens, and several types of medical kits."
+	cost = 3000
+	contains = list(/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,
+					/obj/item/clothing/glasses/hud/health,
+					/obj/item/defibrillator/loaded,
+					/obj/item/storage/belt/medical,
+					/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/o2,
+					/obj/item/storage/firstaid/brute,
+					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/reagent_containers/glass/bottle/toxin,
+					/obj/item/reagent_containers/glass/bottle/toxin,
+					/obj/item/storage/box/medipens)
+	crate_name = "medical emergency crate"
+	crate_type = /obj/structure/closet/crate/medical
+
 /datum/supply_pack/emergency/radiatione_emergency
-	name = "Emergenc Radiation Protection Crate"
+	name = "Emergency Radiation Protection Crate"
 	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a few pill bottles that are able to handles radiation and the affects of the poisoning."
 	cost = 2500
 	contains = list(/obj/item/clothing/head/radiation,
@@ -136,6 +156,18 @@
 	contains = list(/obj/item/storage/box/metalfoam,
 					/obj/item/storage/box/metalfoam)
 	crate_name = "metal foam grenade crate"
+
+/datum/supply_pack/emergency/mre
+	name = "MRE supply kit (emergency rations)"
+	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
+	cost = 2000
+	contains = list(/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu3,
+					/obj/item/storage/box/mre/menu4/safe)
+	crate_name = "MRE crate (emergency rations)"
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
