@@ -16,7 +16,7 @@
 	implants = list(/obj/item/implant/explosive)
 
 
-/datum/outfit/ninja/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ninja/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(istype(H.wear_suit, suit))
 		var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
 		if(istype(H.belt, belt))
