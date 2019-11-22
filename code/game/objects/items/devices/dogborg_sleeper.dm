@@ -134,6 +134,7 @@
 	var/voracious = hound ? TRUE : FALSE
 	var/list/targets = target && hound ? list(target) : contents
 	if(hound)
+		hound.setClickCooldown(50)
 		if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 			voracious = FALSE
 		else
@@ -446,7 +447,7 @@
 	if (!target.devourable)
 		to_chat(user, "The target registers an error code. Unable to insert into [src].")
 		return
-	if(patient)
+	if(target)
 		to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
 		return
 	if(target.buckled)
@@ -523,7 +524,3 @@
 			update_gut()
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
-
-/obj/item/dogborg/sleeper/K9/flavour
-	name = "Mobile Sleeper"
-	desc = "A mounted, underslung sleeper, intended for holding willing occupants for leisurely purposes."

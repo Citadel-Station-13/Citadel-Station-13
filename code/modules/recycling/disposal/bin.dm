@@ -132,12 +132,7 @@
 
 /obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
 	if(!pushing && !iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		if (iscyborg(user))
-			var/mob/living/silicon/robot/borg = user
-			if (!borg.module || !borg.module.canDispose)
-				return
-		else
-			return FALSE
+		return FALSE
 	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return FALSE
 	if(target.buckled || target.has_buckled_mobs())

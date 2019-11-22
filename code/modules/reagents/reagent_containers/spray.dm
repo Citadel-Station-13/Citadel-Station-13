@@ -230,7 +230,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "clownflower"
 	volume = 30
-	list_reagents = list("superlube" = 30)
+	list_reagents = list(/datum/reagent/lube/superlube = 30)
 
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE

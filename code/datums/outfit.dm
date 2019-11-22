@@ -28,16 +28,16 @@
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
 
-/datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for customization depending on client prefs,species etc
 	return
 
-/datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
-/datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	pre_equip(H, visualsOnly, preference_source)
+/datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	pre_equip(H, visualsOnly)
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
@@ -103,7 +103,7 @@
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
 		HS.ToggleHelmet()
 
-	post_equip(H, visualsOnly, preference_source)
+	post_equip(H, visualsOnly)
 
 	if(!visualsOnly)
 		apply_fingerprints(H)

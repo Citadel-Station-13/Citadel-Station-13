@@ -247,8 +247,6 @@
 /obj/item/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
 
 /obj/item/multitool/abductor

@@ -212,6 +212,7 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
+	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 	ramount = 0
 

@@ -26,8 +26,6 @@
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The one contains a limiter to prevent the cyborg's power cell from overheating."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "taser"
 	can_flashlight = FALSE
 	can_charge = FALSE
 	selfcharge = EGUN_SELFCHARGE_BORG
@@ -50,8 +48,6 @@
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This one contains a limiter to prevent the cyborg's power cell from overheating."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "taser"
 	can_charge = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/secborg)
 	selfcharge = EGUN_SELFCHARGE_BORG

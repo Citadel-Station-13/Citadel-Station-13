@@ -1,6 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Summon events now properly costs threat."
-  - bugfix: "Refunded spells refund threat, too."
-  - refactor: "Made wizard spells inherently have a requirement and cost."

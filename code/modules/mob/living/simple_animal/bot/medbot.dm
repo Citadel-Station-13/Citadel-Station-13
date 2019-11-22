@@ -440,7 +440,7 @@
 	var/reagent_id = null
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
-		reagent_id = HAS_TRAIT(C, TRAIT_TOXINLOVER)? "charcoal" : "toxin"
+		reagent_id = "toxin"
 
 	else
 		if(treat_virus)

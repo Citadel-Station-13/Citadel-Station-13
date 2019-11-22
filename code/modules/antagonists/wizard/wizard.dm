@@ -165,7 +165,7 @@
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
 		if(APPRENTICE_BLUESPACE)
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
 		if(APPRENTICE_HEALING)

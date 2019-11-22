@@ -25,6 +25,7 @@
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5
+	adjacency_check = FALSE
 	upgrade = TRUE
 	var/obj/machinery/computer/camera_advanced/base_construction/console
 
@@ -206,14 +207,19 @@
 		to_chat(owner, "Build mode is now [buildmode].")
 
 /datum/action/innate/aux_base/airlock_type
-	name = "Select Airlock Type"
+	name = "Change Airlock Settings"
 	button_icon_state = "airlock_select"
 
 /datum/action/innate/aux_base/airlock_type/Activate()
 	if(..())
 		return
 
-	B.RCD.change_airlock_access(usr)
+	var/mode = alert("Modify Type or Access?", "Airlock Settings", "Type", "Access", "None")
+	switch(mode)
+		if("Type")
+			B.RCD.change_airlock_setting(usr)
+		if("Access")
+			B.RCD.change_airlock_access(usr)
 
 
 /datum/action/innate/aux_base/window_type

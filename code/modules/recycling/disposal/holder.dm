@@ -52,10 +52,6 @@
 		if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 			var/obj/item/smallDelivery/T = AM
 			src.destinationTag = T.sortTag
-		else if(istype(AM, /mob/living/silicon/robot))
-			var/obj/item/destTagger/borg/tagger = locate() in AM
-			if (tagger)
-				src.destinationTag = tagger.currTag
 
 
 // start the movement process

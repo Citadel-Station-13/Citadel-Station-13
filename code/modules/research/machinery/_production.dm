@@ -84,9 +84,8 @@
 		investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
-		var/obj/O = new path(get_turf(src))
-		if(efficient_with(O.type) && isitem(O))
-			var/obj/item/I = O
+		var/obj/item/I = new path(get_turf(src))
+		if(efficient_with(I.type))
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 

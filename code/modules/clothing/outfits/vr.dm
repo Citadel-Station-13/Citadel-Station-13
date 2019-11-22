@@ -5,10 +5,10 @@
 	ears = /obj/item/radio/headset
 	id = /obj/item/card/id
 
-/datum/outfit/vr/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/vr/pre_equip(mob/living/carbon/human/H)
 	H.dna.species.before_equip_job(null, H)
 
-/datum/outfit/vr/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/vr/post_equip(mob/living/carbon/human/H)
 	var/obj/item/card/id/id = H.wear_id
 	if (istype(id))
 		id.access |= get_all_accesses()
@@ -25,10 +25,9 @@
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival)
 
-/datum/outfit/vr/syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/vr/syndicate/post_equip(mob/living/carbon/human/H)
 	. = ..()
-	var/key = H.key ? H.key : preference_source ? preference_source.key : null
-	var/obj/item/uplink/U = new /obj/item/uplink/nuclear_restricted(H, key, 80)
+	var/obj/item/uplink/U = new /obj/item/uplink/nuclear_restricted(H, H.key, 80)
 	H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 	var/obj/item/implant/weapons_auth/W = new
 	W.implant(H)

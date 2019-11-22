@@ -43,7 +43,7 @@
 				adjustStaminaLoss(damage_amount, forced = forced)
 		//citadel code
 		if(AROUSAL)
-			adjustArousalLoss(damage_amount)
+			adjustArousalLoss(damage_amount, forced = forced)
 	return TRUE
 
 
