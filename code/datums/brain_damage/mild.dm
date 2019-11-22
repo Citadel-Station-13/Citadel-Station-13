@@ -176,7 +176,7 @@
 	if(prob(12) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
 			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
-			owner.stun(20)
+			owner.Stun(20)
 			owner.emote("cough")
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)

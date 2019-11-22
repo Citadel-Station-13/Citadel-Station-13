@@ -9,7 +9,7 @@
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
-/datum/brain_trauma/hypnosis/New(phrase)
+/datum/brain_trauma/hypnosis/New(phrase, quirk = FALSE)
 	if(!phrase)
 		qdel(src)
 	if(quirk == TRUE)
