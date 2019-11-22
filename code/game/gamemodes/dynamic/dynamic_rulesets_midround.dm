@@ -41,6 +41,9 @@
 		if (!istype(M, required_type))
 			trimmed_list.Remove(M)
 			continue
+		if (M.GetComponent(/datum/component/virtual_reality))
+			trimmed_list.Remove(M)
+			continue
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
