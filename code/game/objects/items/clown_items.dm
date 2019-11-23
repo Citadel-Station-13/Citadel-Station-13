@@ -116,7 +116,7 @@
 
 /obj/item/bikehorn/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list("[honksound]" = 1), 50) //Because list() is using named argument syntax here, we need to wrap the honksound between double quotes to pass it down correctly.
+	AddComponent(/datum/component/squeak, list(honksound), 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, moodlet, /datum/mood_event/honk)
