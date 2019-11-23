@@ -141,3 +141,7 @@ Self-sustaining extracts:
 /obj/item/slimecross/selfsustaining/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
 	colour = "rainbow"
+
+/obj/item/slimecross/selfsustaining/bloodred
+	extract_type = /obj/item/slime_extract/bloodred
+	colour = "blood red"

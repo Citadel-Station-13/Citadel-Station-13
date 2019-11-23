@@ -309,3 +309,16 @@ Chilling extracts:
 	for(var/obj/machinery/door/airlock/door in area)
 		new /obj/effect/forcefield/slimewall/rainbow(door.loc)
 	return ..()
+
+/obj/item/slimecross/chilling/bloodred
+	colour = "blood red"
+	var/mob/living/hiddenmob
+
+/obj/item/slimecross/chilling/bloodred/do_effect(mob/user)
+	hiddenmob = user
+	hiddenmob.alpha = 25 //just a teeeeensy bit visible
+	addtimer(CALLBACK(src, .proc/appear), rand(300,500)) //lots of time to get away
+
+/obj/item/slimecross/chilling/bloodred/proc/appear()
+	if (hiddenmob)
+		hiddenmob.alpha = 255

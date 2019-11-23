@@ -181,3 +181,12 @@ Industrial extracts:
 /obj/item/slimecross/industrial/rainbow/process()
 	itempath = pick(subtypesof(/obj/item/slime_extract))
 	..()
+
+/obj/item/slimecross/industrial/bloodred
+	colour = "blood red"
+	plasmarequired = 10
+
+/obj/item/slimecross/industrial/rainbow/process()
+	itempath = /obj/item/stack/telecrystal
+	if (rand(0,150) == 123)
+		..()

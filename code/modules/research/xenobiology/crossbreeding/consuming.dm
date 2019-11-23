@@ -433,3 +433,19 @@ Consuming extracts:
 	S.desc = "A beautiful rainbow cookie, constantly shifting colors in the light."
 	S.icon_state = "rainbow"
 	return S
+
+/obj/item/slimecross/consuming/bloodred
+	colour = "blood red"
+	cookietype = /obj/item/slime_cookie/bloodred
+	cookies = 4
+
+/obj/item/slime_cookie/bloodred
+	name = "bloody cookie"
+	desc = "A cookie that seems to be smeared with blood. It's actually jam."
+	icon_state = "bloodred"
+	taste = "strawberries and iron"
+
+/obj/item/slime_cookie/bloodred/do_effect(mob/living/M, mob/user)
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.do_adrenaline(60,TRUE,0,0,TRUE,list("improvaline" = 3, "synaptizine" = 10, "regen_jelly" = 10, "stimulants" = 10),"<span class='notice'>You feel a sudden surge of energy!</span>")

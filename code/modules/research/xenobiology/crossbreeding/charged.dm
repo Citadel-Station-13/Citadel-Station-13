@@ -253,6 +253,13 @@ Charged extracts:
 		S.random_colour()
 	..()
 
+/obj/item/slimecross/charged/bloodred
+	colour = "blood red"
+
+/obj/item/slimecross/charged/bloodred/do_effect(mob/user)
+	new /obj/item/sharpener/slime(get_turf(user))
+	..()
+
 ////////////Unique things.
 
 /obj/item/slimepotion/slime_reviver
@@ -431,3 +438,11 @@ Charged extracts:
 		var/mob/living/carbon/C = M
 		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
 	qdel(src)
+
+/obj/item/sharpener/slime
+	name = "slimy whetstone"
+	icon_state = "slimy_sharpener"
+	increment = 7
+	max = 60
+	//YEEHAWWW
+	prefix = "slimy"

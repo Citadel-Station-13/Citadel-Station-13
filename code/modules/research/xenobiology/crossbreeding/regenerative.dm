@@ -253,3 +253,15 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/rainbow/core_effect(mob/living/target, mob/user)
 	target.apply_status_effect(STATUS_EFFECT_RAINBOWPROTECTION)
+
+/obj/item/slimecross/regenerative/bloodred
+	colour = "bloodred"
+
+/obj/item/slimecross/regenerative/bloodred/core_effect(mob/living/target, mob/user)
+	if (ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.adjustToxLoss(H.getToxLoss() * 1.5)
+		H.adjustToxLoss(H.getBruteLoss())
+		H.adjustBruteLoss(-(H.getBruteLoss()))
+		H.adjustToxLoss(H.getFireLoss())
+		H.adjustFireLoss(-(H.getFireLoss()))

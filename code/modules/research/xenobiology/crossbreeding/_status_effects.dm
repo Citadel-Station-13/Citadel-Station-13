@@ -922,6 +922,17 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "adamantine"
 	examine_text = "<span class='warning'>SUBJECTPRONOUN has a strange metallic coating on their skin.</span>"
 
+/datum/status_effect/stabilized/adamantine/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.damage_resistance += 5
+	return ..()
+
+/datum/status_effect/stabilized/adamantine/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.damage_resistance -= 5
+
 /datum/status_effect/stabilized/gold
 	id = "stabilizedgold"
 	colour = "gold"
@@ -946,16 +957,6 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(familiar)
 		qdel(familiar)
 
-/datum/status_effect/stabilized/adamantine/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance += 5
-	return ..()
-
-/datum/status_effect/stabilized/adamantine/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance -= 5
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
@@ -972,3 +973,23 @@ datum/status_effect/stabilized/blue/on_remove()
 				qdel(src)
 				qdel(linked_extract)
 	return ..()
+
+/datum/status_effect/stabilized/bloodred
+	id = "stabilizedbloodred"
+	colour = "bloodred"
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is very jittery.</span>"
+
+/datum/status_effect/stabilized/bloodred/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.stun_mod -= 0.5
+		H.physiology.bleed_mod -= 0.5
+		H.physiology.stamina_mod -= 0.5
+	return ..()
+
+/datum/status_effect/stabilized/bloodred/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.stun_mod += 0.5
+		H.physiology.bleed_mod += 0.5
+		H.physiology.stamina_mod += 0.5

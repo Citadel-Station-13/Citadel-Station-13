@@ -164,3 +164,6 @@ Stabilized extracts:
 		regen.forceMove(src)
 		return
 	return ..()
+
+/obj/item/slimecross/stabilized/bloodred
+	colour = "blood red"

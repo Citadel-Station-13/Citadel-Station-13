@@ -271,10 +271,23 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/green
 	colour = "green"
+	uses = 1
+	var/obj/item/clothing/shoes/slimeslow/shoes
+	//slathers onto target, slowing them down
 
 /obj/item/slimecross/treacherous/green/do_effect(mob/user,mob/living/target)
+	var/obj/item/I = target.get_item_by_slot(SLOT_SHOES)
+	target.dropItemToGround(I)
+	target.transferItemToLoc(src, target, TRUE) //yeet
+	shoes = new /obj/item/clothing/shoes/slimeslow(get_turf(src))
+	target.equip_to_slot_or_del(shoes, SLOT_SHOES)
+	addtimer(CALLBACK(src, .proc/relieve), 400)
+	target.visible_message("<span class='danger'>The [src] melts and slides down [target]'s legs, forming shoes on their feet!</span>","<span class='danger'>The [src] melts on you and slides down your legs, forming sticky shoes!</span>")
+	return FALSE
 
-	..()
+/obj/item/slimecross/treacherous/green/proc/relieve()
+	qdel(shoes)
+	qdel(src)
 
 /obj/item/slimecross/treacherous/pink
 	colour = "pink"
@@ -286,6 +299,7 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/gold
 	colour = "gold"
+	uses = 3
 	//spawn a shitty AI controlled simplemob with appearance of the player
 
 /obj/item/slimecross/treacherous/gold/do_effect(mob/user,mob/living/target)
@@ -310,10 +324,10 @@ Treacherous extracts:
 
 /obj/item/slimecross/treacherous/black
 	colour = "black"
-	uses = 13
+	uses = -1
 
 /obj/item/slimecross/treacherous/black/do_effect(mob/living/user,mob/living/target)
-	var/healiesyay = rand(10,15)
+	var/healiesyay = rand(5,7)
 	target.adjustBruteLoss(healiesyay)
 	user.adjustBruteLoss(-(healiesyay))
 	..()
@@ -398,4 +412,23 @@ Treacherous extracts:
 		if ("mulligan")
 			randomize_human(target)
 			to_chat(target,"<span class='warning'>You feel different...</span>")
+	..()
+
+/obj/item/slimecross/treacherous/bloodred
+	colour = "blood red"
+	uses = 4
+
+/obj/item/slimecross/treacherous/bloodred/do_effect(mob/user,mob/living/target)
+	if (target.mind && user.mind)
+		var/tatornot = FALSE
+		for (var/a in user.mind.antag_datums)
+			var/datum/antagonist/A = a
+			if (A.job_rank == ROLE_TRAITOR)
+				tatornot = TRUE
+		if (tatornot == TRUE)
+			for (var/aw in target.mind.antag_datums)
+				var/datum/antagonist/Aw = aw
+				if (Aw.job_rank == ROLE_TRAITOR)
+					to_chat(user,"<span class='boldnotice'>You get the feeling [target] is working for the syndicate...</span>")
+					to_chat(target,"<span class='boldnotice'>You get the feeling [user] is working for the syndicate...</span>")
 	..()

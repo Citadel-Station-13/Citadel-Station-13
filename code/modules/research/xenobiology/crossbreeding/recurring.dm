@@ -136,3 +136,8 @@ Recurring extracts:
 	extract_type = /obj/item/slime_extract/rainbow
 	colour = "rainbow"
 	max_cooldown = 20 //It's pretty powerful.
+
+/obj/item/slimecross/recurring/bloodred
+	extract_type = /obj/item/slime_extract/bloodred
+	colour = "blood red"
+	max_cooldown = 30

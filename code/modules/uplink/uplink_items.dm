@@ -1898,6 +1898,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/gun/energy/emitter
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
+/datum/uplink_item/role_restricted/bloodred_extract
+	name = "Blood Red Slime Extract"
+	desc = "A blood red slime extract, specially developed by The Syndicate. Inject with blood to create a blood red slime."
+	cost = 2 //slimes can die
+	item = /obj/item/slime_extract/bloodred
+	restricted_roles = list("Research Director", "Scientist")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

@@ -685,8 +685,9 @@
 	required_container = /obj/item/slime_extract/bloodred
 
 /datum/chemical_reaction/slime/bloodslime/on_reaction(datum/reagents/holder)
-	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "bloodred")
+	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "blood red")
 	S.visible_message("<span class='danger'>Infused with blood, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
+	qdel(holder.my_atom) //deleto train
 
 /datum/chemical_reaction/slime/lucktc
 	name = "Telecrystal Lottery"
@@ -696,6 +697,18 @@
 	required_container = /obj/item/slime_extract/bloodred
 
 /datum/chemical_reaction/slime/lucktc/on_reaction(datum/reagents/holder)
-	if (rand(0,150) == 134)
-		/obj/item/stack/telecrystal/tc = new /obj/item/stack/telecrystal(get_turf(holder.my_atom))
+	if (rand(0,140) == 134)
+		var/obj/item/stack/telecrystal/tc = new /obj/item/stack/telecrystal(get_turf(holder.my_atom))
 		tc.amount = rand(1,5)
+	qdel(holder.my_atom) //deleto yeeto
+
+/datum/chemical_reaction/slime/armor
+	name = "Slime Armor Potion"
+	id = "slimearmor"
+	required_reagents = list("water" = 5)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/bloodred
+
+/datum/chemical_reaction/slime/armor/on_reaction(datum/reagents/holder)
+	new /obj/item/slimepotion/armor(get_turf(holder.my_atom))
+	qdel(holder.my_atom) //deleto

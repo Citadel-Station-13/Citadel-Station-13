@@ -130,3 +130,7 @@ Reproductive extracts:
 /obj/item/slimecross/reproductive/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
 	colour = "rainbow"
+
+/obj/item/slimecross/reproductive/bloodred
+	extract_type = /obj/item/slime_extract/bloodred
+	colour = "blood red"

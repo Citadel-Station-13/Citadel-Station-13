@@ -121,3 +121,7 @@ Prismatic extracts:
 		return
 	paintcolor = newcolor
 	return
+
+/obj/item/slimecross/prismatic/bloodred
+	paintcolor = "#941900"
+	colour = "bloodred"

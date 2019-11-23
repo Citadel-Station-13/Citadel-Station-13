@@ -287,6 +287,14 @@ Burning extracts:
 	new /obj/item/kitchen/knife/rainbowknife(get_turf(user))
 	..()
 
+/obj/item/slimecross/burning/bloodred
+	colour = "blood red"
+
+/obj/item/slimecross/burning/bloodred/do_effect(mob/user)
+	user.visible_message("<span class='notice'>[src] expands and becomes a silky see-through cloak.</span>")
+	new /obj/item/clothing/neck/cloak/invis(get_turf(user))
+	..()
+
 //Misc. things added
 
 /obj/item/camera/timefreeze

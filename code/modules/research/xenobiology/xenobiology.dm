@@ -616,7 +616,7 @@
 /obj/item/slime_extract/bloodred/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			//hmmm
+
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)

@@ -142,3 +142,36 @@ Slimecrossing Armor
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/clothing/neck/cloak/invis
+	name = "invisibility cloak"
+	desc = "A cloak that seems to shimmer in and out of view."
+	icon_state = "invis"
+	item_state = "invis"
+	var/mob/living/carbon/human/alphachange //only humans have neck slots
+	var/isonmob = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/neck/cloak/invis/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == SLOT_NECK)
+		isonmob = TRUE
+		user.alpha = rand(5,40)
+		addtimer(CALLBACK(src, .proc/changealpha), rand(20,100))
+		alphachange = user
+
+/obj/item/clothing/neck/cloak/invis/proc/changealpha()
+	if (isonmob == TRUE)
+		alphachange.alpha = rand(5,40)
+		addtimer(CALLBACK(src, .proc/changealpha), rand(20,100))
+
+/obj/item/clothing/neck/cloak/invis/dropped(mob/living/carbon/human/user)
+	..()
+	isonmob = FALSE
+	user.alpha = 255
+
+/obj/item/clothing/shoes/slimeslow
+	desc = "A pair of extremely slimy shoes, seemingly sticking to everything they touch. They're stuck to your feet!"
+	name = "slimeboots"
+	icon_state = "slimeboots"
+	slowdown = 4

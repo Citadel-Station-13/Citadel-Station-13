@@ -131,3 +131,32 @@
 /obj/item/capturedevice/proc/release()
 	for(var/atom/movable/M in contents)
 		M.forceMove(get_turf(loc))
+
+//Armor potion
+/obj/item/slimepotion/armor
+	name = "slime strengthening potion"
+	desc = "A weak potion designed to slightly reduce damage from melee elements. Has two uses."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potblack"
+	var/uses = 2
+
+/obj/item/slimepotion/armor/afterattack(obj/item/clothing/C, mob/user, proximity)
+	. = ..()
+	if(!uses)
+		qdel(src)
+		return
+	if(!proximity)
+		return
+	if(!istype(C))
+		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
+		return
+	if(C.armor.melee >= 50)
+		to_chat(user, "<span class='warning'>The [C] is too strong already!</span>")
+		return ..()
+	to_chat(user, "<span class='notice'>You pour the metallic substance over the [C] and watch it harden.</span>")
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
+	C.armor.melee += 1
+	uses--
+	if(!uses)
+		qdel(src)
