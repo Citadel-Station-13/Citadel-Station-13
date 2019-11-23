@@ -175,7 +175,7 @@
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBotContent"] = bottle.contents.len
 		data["pillBotMaxContent"] = STRB.max_items
 
@@ -263,7 +263,7 @@
 				var/target_loc = bottle ? bottle : drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
-					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
@@ -384,6 +384,38 @@
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_part)
 			. = TRUE
+
+		if("createDart")
+			for(var/datum/reagent/R in reagents.reagent_list)
+				if(!(istype(R, /datum/reagent/medicine)))
+					visible_message("<b>The [src]</b> beeps, \"<span class='warning'>SmartDarts are insoluble with non-medicinal compounds.\"</span>")
+					return
+
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+			var/amount = 1
+			var/vol_each = min(reagents.total_volume, 20)
+			if(text2num(many))
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many darts?", amount) as num|null), 0, 10)
+				if(!amount)
+					return
+				vol_each = min(reagents.total_volume / amount, 20)
+
+			var/name = stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				return
+
+			var/obj/item/reagent_containers/syringe/dart/D
+			for(var/i = 0; i < amount; i++)
+				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				D.name = trim("[name] SmartDart")
+				adjust_item_drop_location(D)
+				reagents.trans_to(D, vol_each)
+				D.mode=!mode
+				D.update_icon()
+			. = TRUE
+
 		//END CITADEL ADDITIONS
 		if("analyzeBeak")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]

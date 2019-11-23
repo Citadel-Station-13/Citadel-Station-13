@@ -560,7 +560,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
-			priority_announce(input, null, 'sound/ai/commandreport.ogg')
+			priority_announce(input, null, "commandreport")
 			announce_command_report = FALSE
 		if("Cancel")
 			return
@@ -949,7 +949,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		<tr>
 			<th>Uniform:</th>
 			<td>
-			   [uniform_select]
+				[uniform_select]
 			</td>
 		</tr>
 		<tr>

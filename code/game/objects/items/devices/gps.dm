@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 /obj/item/gps/examine(mob/user)
 	..()
+	var/turf/curr = get_turf(src)
+	to_chat(user, "The screen says: [get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])")
 	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
 
 /obj/item/gps/Initialize()

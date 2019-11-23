@@ -147,6 +147,11 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
+		var/brutedamage = L.getBruteLoss()
+		var/burndamage = L.getFireLoss()
+		if(brutedamage || burndamage)
+			L.adjustBruteLoss(-(brutedamage * 0.25))
+			L.adjustFireLoss(-(burndamage * 0.25))
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -262,7 +267,7 @@
 	clockwork_desc = "A sigil that will drain non-Servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
 	icon_state = "sigilvitality"
 	layer = SIGIL_LAYER
-	alpha = 75
+	alpha = 125
 	color = "#123456"
 	affects_servants = TRUE
 	stat_affected = DEAD
@@ -366,6 +371,8 @@
 				break
 
 			if(!GLOB.ratvar_awakens)
+				if(GLOB.clockwork_vitality <= 0)
+					break
 				GLOB.clockwork_vitality -= vitality_used
 
 		sleep(2)

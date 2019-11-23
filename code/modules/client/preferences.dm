@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
+	var/preferred_chaos = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 	var/pda_skin = PDA_SKIN_ALT
@@ -86,6 +87,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/horn_color = "85615a"			//Horn color
+	var/wing_color = "fff"				//Wing color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
 		"tail_lizard" = "Smooth",
@@ -112,7 +114,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"xenohead" = "Standard",
 		"xenotail" = "Xenomorph Tail",
 		"taur" = "None",
-		"exhibitionist" = FALSE,
 		"genitals_use_skintone" = FALSE,
 		"has_cock" = FALSE,
 		"cock_shape" = "Human",
@@ -336,8 +337,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Flavor Text</h2>"
 			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Examine Text</b></a><br>"
-			if(lentext(features["flavor_text"]) <= 40)
-				if(!lentext(features["flavor_text"]))
+			if(length(features["flavor_text"]) <= 40)
+				if(!length(features["flavor_text"]))
 					dat += "\[...\]"
 				else
 					dat += "[features["flavor_text"]]"
@@ -591,6 +592,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Decorative wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=deco_wings;task=input'>[features["deco_wings"]]</a>"
+				dat += "<span style='border:1px solid #161616; background-color: #[wing_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
+
 			if("insect_wings" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
@@ -598,6 +601,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Insect wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=insect_wings;task=input'>[features["insect_wings"]]</a>"
+				dat += "<span style='border:1px solid #161616; background-color: #[wing_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -822,7 +826,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
@@ -832,6 +835,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+			var/p_chaos
+			if (!preferred_chaos)
+				p_chaos = "No preference"
+			else
+				p_chaos = preferred_chaos
+			dat += "<b>Preferred Chaos Amount:</b> <a href='?_src_=prefs;preference=preferred_chaos;task=input'>[p_chaos]</a><br>"
 			dat += "<br>"
 			dat += "</td>"
 			dat += "</tr></table>"
@@ -1689,13 +1698,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("horns_color")
 					var/new_horn_color = input(user, "Choose your character's horn colour:", "Character Preference","#"+horn_color) as color|null
 					if(new_horn_color)
-						horn_color = sanitize_hexcolor(new_horn_color)
+						if (new_horn_color == "#000000")
+							horn_color = "#85615A"
+						else
+							horn_color = sanitize_hexcolor(new_horn_color)
 
 				if("wings")
 					var/new_wings
 					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.r_wings_list
 					if(new_wings)
 						features["wings"] = new_wings
+
+				if("wings_color")
+					var/new_wing_color = input(user, "Choose your character's wing colour:", "Character Preference","#"+wing_color) as color|null
+					if(new_wing_color)
+						if (new_wing_color == "#000000")
+							wing_color = "#FFFFFF"
+						else
+							wing_color = sanitize_hexcolor(new_wing_color)
 
 				if("frills")
 					var/new_frills
@@ -1730,13 +1750,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_insect_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_wings_list
 					if(new_insect_wings)
 						features["insect_wings"] = new_insect_wings
-				
+
 				if("deco_wings")
 					var/new_deco_wings
 					new_deco_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.deco_wings_list
 					if(new_deco_wings)
 						features["deco_wings"] = new_deco_wings
-				
+
 				if("insect_fluffs")
 					var/new_insect_fluff
 					new_insect_fluff = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_fluffs_list
@@ -1983,6 +2003,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
+				if ("preferred_chaos")
+					var/pickedchaos = input(user, "Choose your preferred level of chaos. This will help with dynamic threat level ratings.", "Character Preference") as null|anything in list(CHAOS_NONE,CHAOS_LOW,CHAOS_MED,CHAOS_HIGH,CHAOS_MAX)
+					preferred_chaos = pickedchaos
 				if ("clientfps")
 					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
@@ -2042,8 +2065,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["has_womb"] = FALSE
 				if("has_womb")
 					features["has_womb"] = !features["has_womb"]
-				if("exhibitionist")
-					features["exhibitionist"] = !features["exhibitionist"]
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
 					user.client.change_view(CONFIG_GET(string/default_view))
@@ -2262,6 +2283,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.horn_color = horn_color
+	character.wing_color = wing_color
 
 	character.skin_tone = skin_tone
 	character.hair_style = hair_style
@@ -2316,9 +2338,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(TRUE)
 
 	//let's be sure the character updates
-	character.update_body()
-	character.update_hair()
-	character.update_body_parts()
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()
+		character.update_body_parts()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
