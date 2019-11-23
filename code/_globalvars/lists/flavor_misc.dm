@@ -102,8 +102,8 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Triumvirate-M",
 	"Wasp",
 	"Weird",
-	"Xerxes"
-	"Yes-Man",
+	"Xerxes",
+	"Yes-Man"
 	))
 
 /proc/resolve_ai_icon(input)
