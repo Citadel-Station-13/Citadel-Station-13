@@ -382,9 +382,10 @@
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
 	else
@@ -396,7 +397,6 @@
 	cell = null
 	if(beaker)
 		beaker.forceMove(drop_location())
-		beaker = null
 	return ..()
 
 /obj/machinery/chem_dispenser/proc/get_macro_resolution()

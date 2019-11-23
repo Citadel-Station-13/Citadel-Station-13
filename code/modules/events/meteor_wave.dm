@@ -10,6 +10,7 @@
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/meteor_wave
 	startWhen		= 6
