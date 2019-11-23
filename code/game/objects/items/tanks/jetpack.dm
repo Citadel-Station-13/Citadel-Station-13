@@ -187,6 +187,7 @@
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/tank/internals/tank = null
 	var/mob/living/carbon/human/cur_user
+	var/suit_type = /obj/item/clothing/suit/space/hardsuit
 
 /obj/item/tank/jetpack/suit/New()
 	..()
@@ -197,7 +198,7 @@
 	return
 
 /obj/item/tank/jetpack/suit/cycle(mob/user)
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
+	if(!istype(loc, suit_type))
 		to_chat(user, "<span class='warning'>\The [src] must be connected to a hardsuit!</span>")
 		return
 
@@ -208,7 +209,7 @@
 	..()
 
 /obj/item/tank/jetpack/suit/turn_on(mob/user)
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc) || loc.loc != user)
+	if(!istype(loc, suit_type) || !ishuman(loc.loc) || loc.loc != user)
 		return
 	var/mob/living/carbon/human/H = user
 	tank = H.s_store
@@ -225,7 +226,7 @@
 	..()
 
 /obj/item/tank/jetpack/suit/process()
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
+	if(!istype(loc, suit_type) || !ishuman(loc.loc))
 		turn_off(cur_user)
 		return
 	var/mob/living/carbon/human/H = loc.loc
@@ -248,7 +249,7 @@
 
 /mob/living/carbon/human/get_jetpack()
 	var/obj/item/tank/jetpack/J = ..()
-	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
+	if(!istype(J) && (istype(wear_suit, /obj/item/clothing/suit/space/hardsuit) || istype(wear_suit, /obj/item/clothing/suit/hooded/wintercoat/cosmic/true)))
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J

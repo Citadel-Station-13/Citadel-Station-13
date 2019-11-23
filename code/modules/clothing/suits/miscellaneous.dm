@@ -691,9 +691,19 @@
 	item_state = "coatcosmic"
 	allowed = list(/obj/item/flashlight)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic
+	light_power = 2
+	light_range = 1.4
 
 /obj/item/clothing/head/hooded/winterhood/cosmic
 	icon_state = "winterhood_cosmic"
+
+/obj/item/clothing/suit/hooded/wintercoat/cosmic/attackby(obj/item/I, mob/user, params)
+	if (istype(I,/obj/item/assembly/signaler/anomaly))
+		new /obj/item/clothing/suit/hooded/wintercoat/cosmic/true(get_turf(src))
+		user.visible_message("<span class='notice'>[src] flashes brightly, the stars on it's design flaring as [user] pushes the [I] into it!</span>")
+		qdel(I)
+		qdel(src)
+
 
 /obj/item/clothing/suit/hooded/wintercoat/janitor
 	name = "janitors winter coat"
@@ -733,6 +743,58 @@
 
 /obj/item/clothing/head/hooded/winterhood/miner
 	icon_state = "winterhood_miner"
+
+/obj/item/clothing/suit/hooded/wintercoat/cosmic/true
+	name = "true cosmic winter coat"
+	icon_state = "coatcosmic"
+	item_state = "coatcosmic"
+	desc = "A true cosmic winter coat, it protects even from the rigors of space and comes with an inbuilt invisible jetpack."
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic/true
+	var/obj/item/tank/jetpack/suit/jetpack = /obj/item/tank/jetpack/suit/cosmiccoat
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	light_power = 4
+	light_range = 3
+
+/obj/item/clothing/head/hooded/winterhood/cosmic/true
+	icon_state = "winterhood_cosmic"
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+
+/obj/item/clothing/suit/hooded/wintercoat/cosmic/true/Initialize()
+	if(jetpack && ispath(jetpack))
+		jetpack = new jetpack(src)
+	. = ..()
+
+/obj/item/clothing/suit/hooded/wintercoat/cosmic/true/equipped(mob/user, slot)
+	..()
+	if(jetpack)
+		if(slot == SLOT_WEAR_SUIT)
+			for(var/X in jetpack.actions)
+				var/datum/action/A = X
+				A.Grant(user)
+
+/obj/item/clothing/suit/hooded/wintercoat/cosmic/true/dropped(mob/user)
+	..()
+	if(jetpack)
+		for(var/X in jetpack.actions)
+			var/datum/action/A = X
+			A.Remove(user)
+
+/obj/item/tank/jetpack/suit/cosmiccoat
+	desc = "You really shouldn't see this."
+	name = "cosmic jetpack"
+	suit_type = /obj/item/clothing/suit/hooded/wintercoat/cosmic/true
+	full_speed = TRUE //MAGIC
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
