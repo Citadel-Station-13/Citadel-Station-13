@@ -2329,3 +2329,38 @@
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
 	M.adjustArousalLoss(2)
 	..()
+
+/datum/reagent/berserk
+	name = "hell powder"
+	id = "berserk"
+	description = "A drug from Hell that increases the user's muscle strength to great levels."
+	color = "#751717"
+	taste_description = "rage"
+	overdose_threshold = 50
+
+/datum/reagent/berserk/on_mob_life(mob/living/carbon/C)
+	C.adjustStaminaLoss(-5 * REM, 0)
+	..()
+
+/datum/reagent/berserk/on_mob_add(mob/living/carbon/human/H, amount)
+	H.dna.species.punchdamagelow = 15
+	H.dna.species.punchdamagehigh = 25
+	H.dna.species.punchstunthreshold = 24
+	to_chat(H, "<span class='warning'>Your fists feel incredibly strong!</span>")
+
+/datum/reagent/berserk/on_mob_delete(mob/living/carbon/human/H)
+	H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
+	H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
+	H.dna.species.punchstunthreshold = initial(H.dna.species.punchstunthreshold)
+	to_chat(H, "<span class='warning'>The adrenaline rushing through your fists fades away.</span>")
+
+/datum/reagent/berserk/overdose_start(mob/living/carbon/human/H)
+	H.dna.species.punchdamagelow = 25
+	H.dna.species.punchdamagehigh = 30
+	H.dna.species.punchstunthreshold = 30
+	to_chat(H, "<span class='userdanger'>You feel power surging through your veins!</span>")
+
+/datum/reagent/berserk/overdose_process(mob/living/L)
+	if (L.get_active_held_item() || L.get_inactive_held_item()) //is there a better way to do this
+		L.drop_all_held_items()
+		to_chat(L, "<span class='warning'>Your fists quiver with energy, unable to get a hold of anything!</span>")

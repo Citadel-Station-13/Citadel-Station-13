@@ -957,7 +957,8 @@
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/blood_contract(src)
+			//new /obj/item/blood_contract(src)
+			new /obj/item/storage/berserk_pack
 		if(3)
 			new /obj/item/gun/magic/staff/spellblade(src)
 
@@ -1027,6 +1028,24 @@
 
 	log_combat(user, L, "took out a blood contract on", src)
 	qdel(src)
+
+/obj/item/storage/berserk_pack
+	name = "demon kit"
+	desc = "Rip and tear."
+	icon_state = "doom"
+	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
+/obj/item/storage/berserk_pack/PopulateContents()
+	for (var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/berserk(src)
+
+/obj/item/reagent_containers/pill/berserk
+	name = "demonic pill"
+	desc = "You can feel hellish energy radiating from this pill."
+	icon_state = "pill4"
+	list_reagents = list("berserk" = 20)
 
 //Colossus
 /obj/structure/closet/crate/necropolis/colossus
