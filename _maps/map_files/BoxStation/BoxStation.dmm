@@ -8732,11 +8732,15 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asW" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/table/wood,
+/obj/item/storage/box/evidence,
+/obj/item/hand_labeler{
+	pixel_x = 5
 	},
-/obj/structure/rack,
-/obj/item/storage/briefcase,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/taperecorder,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "asX" = (
@@ -22519,19 +22523,17 @@
 /area/construction)
 "aYh" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 10
 	},
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/button/door{
+	id = "kanyewest";
+	name = "Privacy Shutters";
+	pixel_y = 24
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/quartermaster/warehouse)
+/obj/structure/rack,
+/obj/item/storage/briefcase,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "aYi" = (
 /obj/structure/closet/secure_closet/detective,
 /obj/structure/disposalpipe/segment{
@@ -22543,15 +22545,8 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aYj" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/machinery/button/door{
-	id = "kanyewest";
-	name = "Privacy Shutters";
-	pixel_y = 24
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -22910,16 +22905,15 @@
 /turf/open/floor/carpet,
 /area/library)
 "aYZ" = (
-/obj/structure/table/wood,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler{
-	pixel_x = 5
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/closet/crate/freezer,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
-/area/security/detectives_office)
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "aZa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -24370,13 +24364,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bcJ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/structure/closet/crate/freezer,
-/turf/open/floor/plasteel,
-/area/quartermaster/warehouse)
 "bcK" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -36081,6 +36068,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/rxglasses,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCP" = (
@@ -36114,20 +36102,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCT" = (
-/obj/structure/table,
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/clothing/neck/stethoscope,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCU" = (
@@ -37863,8 +37841,16 @@
 /area/maintenance/aft)
 "bGR" = (
 /obj/structure/table,
-/obj/item/hand_labeler,
-/obj/item/gun/syringe,
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
@@ -38501,6 +38487,9 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
+/obj/item/hand_labeler,
+/obj/item/stack/packageWrap,
+/obj/item/stack/packageWrap,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIk" = (
@@ -80743,7 +80732,7 @@ aXJ
 bgA
 aZp
 baY
-bcJ
+aYZ
 bcF
 bfg
 bgA
@@ -81767,7 +81756,7 @@ aSm
 aTJ
 aPK
 aWA
-aYh
+aWC
 baS
 aZI
 baS
@@ -82282,7 +82271,7 @@ aTK
 aPK
 aXt
 aZo
-asW
+aYj
 baW
 bLE
 bLG
@@ -83566,7 +83555,7 @@ aSa
 aSr
 aSr
 apd
-aYZ
+asW
 bLE
 aqW
 aqW
@@ -83823,7 +83812,7 @@ aTL
 aTP
 aWD
 apd
-aYj
+aYh
 aZL
 baU
 baU
