@@ -327,7 +327,8 @@
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 				else if (mood.sanity >= SANITY_DISTURBED)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-
+				for(var/datum/brain_trauma/trauma in M.get_traumas())
+					trauma.on_hug(M, src)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)

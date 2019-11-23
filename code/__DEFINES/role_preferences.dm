@@ -27,6 +27,7 @@
 #define ROLE_BROTHER				"blood brother"
 #define ROLE_BRAINWASHED			"brainwashed victim"
 #define ROLE_OVERTHROW				"syndicate mutineer"
+#define ROLE_CREEP					"Creep"
 #define ROLE_SENTIENCE          	"sentience potion spawn"
 #define ROLE_MIND_TRANSFER          "mind transfer potion"
 #define ROLE_POSIBRAIN              "posibrain"
@@ -52,6 +53,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CULTIST = /datum/game_mode/cult,
 	ROLE_BLOB,
 	ROLE_NINJA,
+	ROLE_CREEP,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR,
