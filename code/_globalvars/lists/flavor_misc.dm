@@ -96,7 +96,6 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"TechDemon",
 	"Terminal",
 	"Text",
-	"Text",
 	"Too Deep",
 	"Triumvirate",
 	"Triumvirate-M",
