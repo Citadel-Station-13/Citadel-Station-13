@@ -67,7 +67,7 @@
 		resting = TRUE
 		adjustStaminaLoss(isnull(override_stamdmg)? amount*0.25 : override_stamdmg)
 		if(!isnull(override_hardstun))
-			Stun(override_hardstun,FALSE,FALSE)
+			Stun(override_hardstun,updating,ignore_canknockdown)
 		if(updating)
 			update_canmove()
 		return TRUE
