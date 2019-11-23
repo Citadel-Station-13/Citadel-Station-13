@@ -1597,6 +1597,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
+/datum/uplink_item/device_tools/nanite_paste
+	name = "Chameleon Nanopaste"
+	desc = "Nanopaste that can cover an item and alter it's appearance, it can easily decieve or hide any item in seconds. The tube itself is the remote for the nanotube. Use it while the scanner light is off to lather/recover nanite paste, and use it while the scanner light is on to change the form of the object covered. Make sure to recover the nanites with the tube when you're done!"
+	item = /obj/item/chameleonpaste
+	cost = 7
+
 
 // Implants
 /datum/uplink_item/implants
