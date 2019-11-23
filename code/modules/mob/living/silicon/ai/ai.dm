@@ -670,10 +670,15 @@
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-				"default" = 'icons/mob/ai.dmi',
+				"female" = 'icons/mob/ai.dmi',
+				"male" = 'icons/mob/ai.dmi',
+				"girl" = 'icons/mob/ai.dmi',
+				"boy" = 'icons/mob/ai.dmi',
 				"floating face" = 'icons/mob/ai.dmi',
+				"green face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/ai.dmi'
+				"creature" = 'icons/mob/ai.dmi',
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
