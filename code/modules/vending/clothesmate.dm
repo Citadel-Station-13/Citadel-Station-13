@@ -21,6 +21,12 @@
 					/obj/item/clothing/under/kilt = 3,
 					/obj/item/clothing/under/overalls = 3,
 					/obj/item/clothing/under/sl_suit = 3,
+					/obj/item/clothing/under/bb_sweater = 3,
+					/obj/item/clothing/under/bb_sweater/black = 3,
+					/obj/item/clothing/under/bb_sweater/purple = 3,
+					/obj/item/clothing/under/bb_sweater/green = 3,
+					/obj/item/clothing/under/bb_sweater/red = 3,
+					/obj/item/clothing/under/bb_sweater/blue = 3,
 					/obj/item/clothing/under/pants/jeans = 5,
 					/obj/item/clothing/under/pants/classicjeans = 5,
 					/obj/item/clothing/under/pants/camo = 3,
@@ -117,7 +123,8 @@
 					/obj/item/clothing/under/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
 					/obj/item/clothing/under/geisha = 4,
-					/obj/item/clothing/accessory/syndi_pokadots = 4)
+					/obj/item/clothing/accessory/syndi_pokadots = 4,
+					/obj/item/clothing/under/keyholesweater = 3)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered = 4,
 					/obj/item/clothing/head/mailman = 2,
 					/obj/item/clothing/under/rank/mailman = 2,
