@@ -1,0 +1,14 @@
+body {background: #F1F1F1;}
+
+#newMessages {background: #ddd;}
+#ping {background: #ddd;}
+
+#userBar .subCell {background: #ddd;}
+
+/* POPUPS */
+.popup {background: #ddd;}
+.popup .head {color: #ddd;}
+.popup input[type=submit] {color: #ddd;}
+
+/* ADMIN CONTEXT MENU */
+.contextMenu {background-color: #ddd;}

@@ -309,7 +309,6 @@
 		else
 			var/datum/numbered_display/ND = .[I.type]
 			ND.number++
-	. = sortTim(., /proc/cmp_numbered_displays_name_asc, associative = TRUE)
 
 //This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /datum/component/storage/proc/orient2hud(mob/user, maxcolumns)

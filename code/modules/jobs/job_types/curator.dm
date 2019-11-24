@@ -34,7 +34,7 @@
 		/obj/item/barcodescanner = 1
 	)
 
-/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)

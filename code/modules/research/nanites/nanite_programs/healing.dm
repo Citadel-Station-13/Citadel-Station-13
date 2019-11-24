@@ -61,6 +61,9 @@
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/R in host_mob.reagents.reagent_list)
+		if(R.id == "nanite_b_gone")
+			host_mob.adjustToxLoss(4)
+			continue
 		host_mob.reagents.remove_reagent(R.id,1)
 
 /datum/nanite_program/brain_heal
