@@ -311,7 +311,7 @@
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		L.adjustMetabolicStress(-(0.1*efficiency))
 		C.blood_volume -= 2/efficiency
-		C.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/(100/efficiency)
+		C.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
 

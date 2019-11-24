@@ -83,7 +83,7 @@
 		if(15 to 25)
 			ignoreTox = TRUE
 			applyOrganDamage(0.1)
-		if(20 to 40)
+		if(25 to 40)
 			applyOrganDamage(0.15)
 			owner.adjustToxLoss(0.2, TRUE)
 		if(40 to 60)
