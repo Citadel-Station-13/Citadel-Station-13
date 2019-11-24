@@ -1504,7 +1504,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent("fentanyl"))
-		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
+		M.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
 		M.reagents.remove_reagent("fentanyl", 0.75 * REAGENTS_METABOLISM, FALSE)
 	else if(holder.has_reagent("neurotoxin"))
 		M.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)

@@ -36,7 +36,7 @@
 	metastress = 0.8
 
 /datum/reagent/impure/mannitol/on_mob_life(mob/living/carbon/C)
-	C.applyOrganDamage(ORGAN_SLOT_BRAIN, 1*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)
 	..()
 
 //I am incapable of making anything simple
@@ -48,7 +48,7 @@
 	pH = 10.4
 	metabolization_rate = 0.4 * REM
 	metastress = 0.4
-	var/temp_trauma
+	var/datum/brain_trauma/temp_trauma
 
 /datum/reagent/impure/neurine/on_mob_life(mob/living/carbon/C)
 	.=..()
@@ -56,9 +56,9 @@
 		return
 	if(!(prob(cached_purity)))
 		return
-	var/datum/brain_trauma/BT = pick(subtypesof(/datum/brain_trauma)
+	var/datum/brain_trauma/BT = pick(subtypesof(/datum/brain_trauma))
 	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!(B.can_gain_trauma(BT)))
+	if(!(B.can_gain_trauma(BT) ) )
 		return
 	B.brain_gain_trauma(BT, TRAUMA_RESILIENCE_MAGIC)
 	temp_trauma = BT
@@ -67,7 +67,7 @@
 	.=..()
 	if(!temp_trauma)
 		return
-	C.cure_trauma_type(BT, resilience = TRAUMA_RESILIENCE_MAGIC)
+	C.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
 
 /datum/reagent/impure/corazone
 	name = "Corazargh"
@@ -78,13 +78,28 @@
 	pH = 12.5
 	metabolization_rate = 0.075 * REM
 	metastress = 0.2
-	var/temp_myo
+	var/datum/disease/heart_failure/temp_myo
 
 /datum/reagent/impure/corazone/on_mob_add(mob/living/L)
 	var/datum/disease/D = new /datum/disease/heart_failure
-	if(M.ForceContractDisease(D))
+	if(L.ForceContractDisease(D))
 		temp_myo = D
+	..()
 
-/datum/reagent/impure/neurine/on_mob_delete(mob/living/L)
+/datum/reagent/impure/corazone/on_mob_delete(mob/living/L)
 	if(temp_myo)
 		temp_myo.cure()
+	..()
+
+/datum/reagent/impure/antihol
+	name = "Prohol"
+	id = "antihol_impure"
+	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
+	color = "#00B4C8"
+	taste_description = "raw egg"
+	pH = 8
+
+/datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
+	for(var/datum/reagent/consumable/ethanol/alch in C.reagents.reagent_list)
+		alch.boozepwr += 2
+	..()

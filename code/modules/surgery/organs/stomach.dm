@@ -20,8 +20,8 @@
 	..()
 	var/datum/reagent/consumable/nutriment/Nutri
 	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/human/H = owner
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
@@ -44,13 +44,13 @@
 
 	if(Nutri)
 		if(prob((damage/40) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+			C.vomit(damage)
+			to_chat(C, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 	else if(Nutri && damage > high_threshold)
 		if(prob((damage/10) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+			C.vomit(damage)
+			to_chat(C, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 
 

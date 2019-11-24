@@ -907,8 +907,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 				var/mob/living/carbon/H = M
 				for(var/organ in H.internal_organs)
 					var/obj/item/organ/O = organ
-					if(organ_flags & ORGAN_FAILING))
-					O.setOrganDamage(0)
+					if(O.organ_flags & ORGAN_FAILING)
+						O.setOrganDamage(60)
 				M.updatehealth()
 
 				if(M.revive())
@@ -981,17 +981,22 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#00B4C8"
 	taste_description = "raw egg"
 	pH = 4
+	impure_chem 		= "antihol_impure"
+	inverse_chem_val 	= 0.1
+	inverse_chem		= "antihol_impure"
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
+	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.slurring = 0
 	M.confused = 0
-	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, (cached_purity*REM)*3, 0, 1)
 	M.adjustToxLoss(-0.2*REM, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - 10, 0)
+	L.adjustMetabolicStress(-cached_purity/5, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
 	. = 1
 
@@ -1357,9 +1362,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/corazone/on_mob_life(mob/living/carbon/M)
-	C.cureOrganDamage(ORGAN_SLOT_HEART, ()-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
+	M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
 	if(cached_purity > 0.98)
-		C.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/5)*REM, ORGAN_TREAT_CHRONIC)
+		M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/5)*REM, ORGAN_TREAT_CHRONIC)
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)

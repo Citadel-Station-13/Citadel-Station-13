@@ -48,3 +48,8 @@
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
+
+//Explosion flags for using different explosive handlers
+#define FERMI_EXPLOSION_TYPE_MIXED TRUE
+#define FERMI_EXPLOSION_TYPE_INVERTSMOKE "invertsmoke"
+#define FERMI_EXPLOSION_TYPE_SMOKE "smoke"
