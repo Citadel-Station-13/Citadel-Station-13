@@ -1116,3 +1116,14 @@
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 	
+/datum/design/plumb_rcd
+	name = "Plumbed Autoconstruction Device"
+	desc = "A RCD for plumbing machines! Cannot make ducts."
+	id = "plumb_rcd"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000, MAT_PLASTIC = 20000, MAT_PLASMA = 6000, MAT_DIAMOND = 5000, MAT_BLUESPACE = 5000, MAT_GOLD = 5000, MAT_SILVER = 5000)
+	construction_time = 150
+	build_path = /obj/item/construction/plumbing
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	
