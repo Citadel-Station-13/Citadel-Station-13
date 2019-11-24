@@ -17,6 +17,7 @@
 	var/self_delay = 50
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
+
 	if(M.stat == DEAD && !stop_bleeding)
 		var/t_him = "it"
 		if(M.gender == MALE)
@@ -128,7 +129,7 @@
 
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters) || I.get_sharpness())
+	if(istype(I, /obj/item/wirecutters) || I.is_sharp())
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two gauzes to do this!</span>")
 			return

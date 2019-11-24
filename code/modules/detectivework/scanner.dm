@@ -14,7 +14,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	var/scanning = FALSE
+	var/scanning = 0
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
@@ -30,7 +30,7 @@
 
 /obj/item/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
-		scanning = TRUE
+		scanning = 1
 		to_chat(user, "<span class='notice'>Printing report, please wait...</span>")
 		addtimer(CALLBACK(src, .proc/PrintReport), 100)
 	else
@@ -56,7 +56,7 @@
 
 	// Clear the logs
 	log = list()
-	scanning = FALSE
+	scanning = 0
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
@@ -70,7 +70,7 @@
 		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
 			return
 
-		scanning = TRUE
+		scanning = 1
 
 		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
@@ -80,19 +80,13 @@
 
 		//Make our lists
 		var/list/fingerprints = list()
-		var/list/blood = list()
-		var/list/fibers = list()
+		var/list/blood = A.return_blood_DNA()
+		var/list/fibers = A.return_fibers()
 		var/list/reagents = list()
 
 		var/target_name = A.name
 
 		// Start gathering
-
-		if(A.blood_DNA && A.blood_DNA.len)
-			blood = A.blood_DNA.Copy()
-
-		if(A.suit_fibers && A.suit_fibers.len)
-			fibers = A.suit_fibers.Copy()
 
 		if(ishuman(A))
 
@@ -102,8 +96,7 @@
 
 		else if(!ismob(A))
 
-			if(A.fingerprints && A.fingerprints.len)
-				fingerprints = A.fingerprints.Copy()
+			fingerprints = A.return_fingerprints()
 
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)
@@ -122,40 +115,40 @@
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
-		var/found_something = FALSE
+		var/found_something = 0
 		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss")][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
 		if(length(fingerprints))
-			sleep(3 SECONDS)
+			sleep(30)
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
 				add_log("[finger]")
-			found_something = TRUE
+			found_something = 1
 
 		// Blood
 		if (length(blood))
-			sleep(3 SECONDS)
+			sleep(30)
 			add_log("<span class='info'><B>Blood:</B></span>")
-			found_something = TRUE
+			found_something = 1
 			for(var/B in blood)
 				add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
 		//Fibers
 		if(length(fibers))
-			sleep(3 SECONDS)
+			sleep(30)
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
 				add_log("[fiber]")
-			found_something = TRUE
+			found_something = 1
 
 		//Reagents
 		if(length(reagents))
-			sleep(3 SECONDS)
+			sleep(30)
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
-			found_something = TRUE
+			found_something = 1
 
 		// Get a new user
 		var/mob/holder = null
@@ -171,10 +164,10 @@
 				to_chat(holder, "<span class='notice'>You finish scanning \the [target_name].</span>")
 
 		add_log("---------------------------------------------------------", 0)
-		scanning = FALSE
+		scanning = 0
 		return
 
-/obj/item/detective_scanner/proc/add_log(msg, broadcast = TRUE)
+/obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
 	if(scanning)
 		if(broadcast && ismob(loc))
 			var/mob/M = loc

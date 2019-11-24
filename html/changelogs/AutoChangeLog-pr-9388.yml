@@ -1,0 +1,4 @@
+author: "original by Skoglol, port by sishen1542"
+delete-after: True
+changes: 
+  - admin: "Dynamic gamemode now more auto-deadmin friendly."

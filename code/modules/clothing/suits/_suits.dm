@@ -31,12 +31,12 @@
 				adjusted = NORMAL_STYLE
 
 		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
-			if(H.dna.features["taur"] in GLOB.noodle_taurs)
+			if(H.dna.features["taur"] in list("Naga", "Tentacle"))
 				taurmode = SNEK_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			else if(H.dna.features["taur"] in GLOB.paw_taurs)
+			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger","Deer"))
 				taurmode = PAW_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
@@ -54,11 +54,11 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-		if(blood_DNA)
-			if(tauric && taurmode >= SNEK_TAURIC)
-				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood", color = blood_DNA_to_color())
+		IF_HAS_BLOOD_DNA(src)
+			if(taurmode >= SNEK_TAURIC)
+				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood")
 			else
-				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood", color = blood_DNA_to_color())
+				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform

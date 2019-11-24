@@ -1,5 +1,4 @@
 #define STUNBATON_CHARGE_LENIENCY 0.3
-#define STUNBATON_DEPLETION_RATE 0.006
 
 /obj/item/melee/baton
 	name = "stunbaton"
@@ -77,7 +76,7 @@
 	update_icon()
 
 /obj/item/melee/baton/process()
-	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
+	deductcharge(hitcost * 0.004, FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -191,7 +190,7 @@
 
 
 	L.Knockdown(stunpwr)
-	L.adjustStaminaLoss(stunpwr*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -252,4 +251,3 @@
 	. = ..()
 
 #undef STUNBATON_CHARGE_LENIENCY
-#undef STUNBATON_DEPLETION_RATE

@@ -55,7 +55,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user, datum/action/A)
+/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return 1
 
@@ -132,26 +132,22 @@
 /obj/item/abductor
 	icon = 'icons/obj/abductor.dmi'
 
-/obj/item/abductor/proc/AbductorCheck(mob/user)
-	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
-		return TRUE
-	if (istype(user) && user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
+/obj/item/abductor/proc/AbductorCheck(user)
+	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
 	return FALSE
 
-/obj/item/abductor/proc/ScientistCheck(mob/user)
-	var/training = HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
-	var/sci_training = HAS_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING))
+/obj/item/abductor/proc/ScientistCheck(user)
+	if(!AbductorCheck(user))
+		return FALSE
 
-	if(training && !sci_training)
-		to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
-		. = FALSE
-	else if(!training && !sci_training)
-		to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
-		. = FALSE
-	else
-		. = TRUE
+	var/mob/living/carbon/human/H = user
+	var/datum/species/abductor/S = H.dna.species
+	if(S.scientist)
+		return TRUE
+	to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
+	return FALSE
 
 /obj/item/abductor/gizmo
 	name = "science tool"
@@ -345,8 +341,8 @@
 		if(QDELETED(G))
 			return
 
-		if(C.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, "<span class='warning'>Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!</span>")
+		if(istype(C.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
+			to_chat(user, "<span class='warning'>Your target seems to have some sort of protective headgear on, blocking the message from being sent!</span>")
 			return
 
 		G.mind_control(command, user)
@@ -393,22 +389,23 @@
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
 	info = {"<b>Dissection for Dummies</b><br>
-		<br>
-		1.Acquire fresh specimen.<br>
-		2.Put the specimen on operating table.<br>
-		3.Apply surgical drapes, preparing for experimental dissection.<br>
-		4.Apply scalpel to specimen's torso.<br>
-		5.Clamp bleeders on specimen's torso with a hemostat.<br>
-		6.Retract skin of specimen's torso with a retractor.<br>
-		7.Apply scalpel again to specimen's torso.<br>
-		8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
-		9.Insert replacement gland (Retrieve one from gland storage).<br>
-		10.Consider dressing the specimen back to not disturb the habitat. <br>
-		11.Put the specimen in the experiment machinery.<br>
-		12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
-		13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
-		<br>
-		Congratulations! You are now trained for invasive xenobiology research!"}
+
+<br>
+ 1.Acquire fresh specimen.<br>
+ 2.Put the specimen on operating table.<br>
+ 3.Apply surgical drapes, preparing for experimental dissection.<br>
+ 4.Apply scalpel to specimen's torso.<br>
+ 5.Clamp bleeders on specimen's torso with a hemostat.<br>
+ 6.Retract skin of specimen's torso with a retractor.<br>
+ 7.Apply scalpel again to specimen's torso.<br>
+ 8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
+ 9.Insert replacement gland (Retrieve one from gland storage).<br>
+ 10.Consider dressing the specimen back to not disturb the habitat. <br>
+ 11.Put the specimen in the experiment machinery.<br>
+ 12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
+ 13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
+<br>
+Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/paper/guides/antag/abductor/update_icon()
 	return
@@ -523,10 +520,10 @@
 
 /obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
-		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protected [L.p_them()]!</span>", \
-								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!</span>")
+		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
+			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] headgear protected [L.p_them()]!</span>", \
+								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your headgear deflects most of it!</span>")
 			L.drowsyness += 2
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
@@ -535,10 +532,10 @@
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
-		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is completely blocking our sleep inducement methods!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil completely protected [L.p_them()]!</span>", \
-								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!</span>")
+		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
+			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] headgear completely protected [L.p_them()]!</span>", \
+								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your headgear deflects the effects!</span>")
 			return
 		L.drowsyness += 1
 		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
@@ -686,7 +683,7 @@
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
-	blockTracking = TRUE
+	blockTracking = 1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers

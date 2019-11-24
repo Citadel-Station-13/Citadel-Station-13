@@ -3,7 +3,7 @@
 	id = "mammal"
 	default_color = "4B4B4B"
 	should_draw_citadel = TRUE
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR,WINGCOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "deco_wings", "taur", "horns", "legs")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "deco_wings" = "None",
@@ -64,9 +64,8 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
-	gib_types = list(/obj/effect/gibspawner/xeno/xenoperson, /obj/effect/gibspawner/xeno/xenoperson/bodypartless)
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
-	exotic_bloodtype = "X*"
+	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
 	liked_food = MEAT
 

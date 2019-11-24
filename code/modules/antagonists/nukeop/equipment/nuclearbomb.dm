@@ -343,10 +343,10 @@
 
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
-	if(isinspace() && !anchored)
-		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
-	else
+	if(!isinspace())
 		anchored = !anchored
+	else
+		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety

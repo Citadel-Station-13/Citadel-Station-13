@@ -11,7 +11,7 @@
 
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 4
 	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power))
 	STR.can_hold = typecacheof(list(
@@ -67,21 +67,6 @@
 
 /obj/item/storage/wallet/GetID()
 	return front_id
-
-/obj/item/storage/wallet/RemoveID()
-	if(!front_id)
-		return
-	. = front_id
-	front_id.forceMove(get_turf(src))
-
-/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
-	if(!inserting_id)
-		return FALSE
-	attackby(inserting_id)
-	if(inserting_id in contents)
-		return TRUE
-	return FALSE
 
 /obj/item/storage/wallet/GetAccess()
 	if(LAZYLEN(combined_access))

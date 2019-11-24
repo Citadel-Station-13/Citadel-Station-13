@@ -338,17 +338,17 @@ SLIME SCANNER
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
 			if(!max_damage)
-				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>\n"
+				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>"
 			else
-				max_damage += "</span>\n"
+				max_damage += "</span>"
 			if(!major_damage)
-				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>\n"
+				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
 			else
-				major_damage += "</span>\n"
+				major_damage += "</span>"
 			if(!minor_damage)
-				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>\n"
+				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 			else
-				minor_damage += "</span>\n"
+				minor_damage += "</span>"
 			msg += "[minor_damage]"
 			msg += "[major_damage]"
 			msg += "[max_damage]"
@@ -382,11 +382,10 @@ SLIME SCANNER
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
 
-		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n" 
-		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
+		msg += "<span class='info'>Species: [H.dna.custom_species ? H.dna.custom_species : S.name] Base: [S.name]</span>\n"
 		if(mutant)
-			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
-	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
+			msg += "<span class='info'>Subject has mutations present.</span>"
+	msg += "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
@@ -411,7 +410,7 @@ SLIME SCANNER
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
 			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
-			if(blood_id != ("blood" || "jellyblood"))//special blood substance
+			if(blood_id != "blood")//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				if(R)
 					blood_type = R.name
@@ -651,7 +650,7 @@ SLIME SCANNER
 
 /proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)

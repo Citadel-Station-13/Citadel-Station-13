@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "The timer for stripping an item off of a spaceman is no longer interrupted by your active held item changing. This means you no longer have to worry about filling both of your hands when you're stripping items off of someone."

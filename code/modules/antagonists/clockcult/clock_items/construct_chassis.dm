@@ -15,7 +15,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A && construct_type)
-		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_CONSTRUCT, ignore_dnr_observers = TRUE)
+		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_CONSTRUCT)
 	GLOB.poi_list += src
 	LAZYADD(GLOB.mob_spawners[name], src)
 
@@ -39,9 +39,7 @@
 	. = ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/construct_chassis/attack_ghost(mob/dead/observer/user)
-	if(!user.can_reenter_round())
-		return FALSE
+/obj/item/clockwork/construct_chassis/attack_ghost(mob/user)
 	if(!SSticker.mode)
 		to_chat(user, "<span class='danger'>You cannot use that before the game has started.</span>")
 		return

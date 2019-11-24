@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by Akrilla, Arkatos and Denton)"
+delete-after: True
+changes: 
+  - tweak: "Sprays cans have a cap on how dark you can make objects. Art is uneffected."
+  - bugfix: "Fixed a bug where you could get cyborg spraycans via pyrite extracts."
+  - rscadd: "Added an infinite spraycan for admins to spawn."

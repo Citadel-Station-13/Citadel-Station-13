@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Fixes high alert ERT suit sprites. You can see them now!"

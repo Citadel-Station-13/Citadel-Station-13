@@ -1,0 +1,6 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Bottles in PanD.E.M.I.C 2200 can now be replaced with an inhand bottle directly"
+  - tweak: "Ejecting a bottle from the PanD.E.M.I.C 2200 puts it directly into the user's hand"
+  - tweak: "Alt-clicking the PanD.E.M.I.C 2200 ejects the current bottle"

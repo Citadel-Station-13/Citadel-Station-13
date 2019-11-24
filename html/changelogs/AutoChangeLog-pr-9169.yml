@@ -1,0 +1,8 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds a mass driver to Delta Station's chapel"
+  - rscadd: "Adds a second means of entry into the chapel"
+  - tweak: "Slightly expands the chapel to make room for the driver, slight adjustment to air systems"
+  - tweak: "Clears a path in the station exterior for the mass driver to work properly"
+  - tweak: "Nearby maintenance loot has been relocated to accommodate the chapel expansion, surrounding area has been \"cleaned up\" somewhat"

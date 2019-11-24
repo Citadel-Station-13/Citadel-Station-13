@@ -1,0 +1,5 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds some potted plants around Box Station"
+  - bugfix: "The tile mentioned in #9409 should now be radiation-free."

@@ -8,8 +8,7 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/revive,
 				/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 /datum/surgery/advanced/revival/can_start(mob/user, mob/living/carbon/target)

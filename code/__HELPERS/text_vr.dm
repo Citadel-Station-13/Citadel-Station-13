@@ -9,8 +9,8 @@
 	return t
 
 proc/TextPreview(var/string,var/len=40)
-	if(length(string) <= len)
-		if(!length(string))
+	if(lentext(string) <= len)
+		if(!lentext(string))
 			return "\[...\]"
 		else
 			return string

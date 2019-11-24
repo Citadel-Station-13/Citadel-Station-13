@@ -26,8 +26,6 @@
 /obj/item/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wrench_cyborg"
 	toolspeed = 0.5
 
 /obj/item/wrench/brass

@@ -364,7 +364,7 @@
 			//for(var/mob/living/carbon/NS in rangers)
 			//	NS.resting = !NS.resting
 			//	NS.update_canmove()
-		time--
+		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)

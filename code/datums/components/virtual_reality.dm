@@ -1,5 +1,5 @@
 /datum/component/virtual_reality
-	can_transfer = TRUE
+	dupe_mode = COMPONENT_DUPE_ALLOWED //mindswap memes, shouldn't stack up otherwise.
 	var/datum/mind/mastermind // where is my mind t. pixies
 	var/datum/mind/current_mind
 	var/obj/machinery/vr_sleeper/vr_sleeper

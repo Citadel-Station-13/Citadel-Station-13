@@ -1,0 +1,5 @@
+author: "lolman360"
+delete-after: True
+changes: 
+  - rscadd: "Added durathread jumpskirt"
+  - imageadd: "Duraskirt sprites and rolled down jumpsuit sprites."

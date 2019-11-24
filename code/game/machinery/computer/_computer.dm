@@ -13,7 +13,6 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
-	var/authenticated = FALSE
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -35,9 +34,9 @@
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
 		clockwork = TRUE
-		icon_screen = "ratvar[rand(1, 3)]"
-		icon_keyboard = "ratvar_key[rand(1, 2)]"
-		icon_state = "ratvarcomputer"
+		icon_screen = "ratvar[rand(1, 4)]"
+		icon_keyboard = "ratvar_key[rand(1, 6)]"
+		icon_state = "ratvarcomputer[rand(1, 4)]"
 		update_icon()
 
 /obj/machinery/computer/narsie_act()

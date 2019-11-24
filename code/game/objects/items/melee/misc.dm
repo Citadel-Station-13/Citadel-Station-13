@@ -265,7 +265,7 @@
 		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		H.spawn_gibs()
+		new /obj/effect/gibspawner/generic(get_turf(H), H.dna)
 		return (BRUTELOSS)
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)

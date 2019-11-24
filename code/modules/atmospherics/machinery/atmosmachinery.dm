@@ -28,8 +28,8 @@ Pipelines + Other Objects -> Pipe network
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/pipe_flags = NONE
 
-	var/static/list/iconsetids = list()
-	var/static/list/pipeimages = list()
+	var/global/list/iconsetids = list()
+	var/global/list/pipeimages = list()
 
 	var/image/pipe_vision_img = null
 

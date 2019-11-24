@@ -12,7 +12,7 @@
 
 /obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
 	if(!special)
-		QDEL_NULL(pocket)
+		qdel(pocket)
 	else
 		pocket?.moveToNullspace()
 	return ..()
@@ -21,7 +21,7 @@
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
-			var/datum/component/storage/STR = imp_e.pocket.GetComponent(/datum/component/storage)
+			GET_COMPONENT_FROM(STR, /datum/component/storage, imp_e.pocket)
 			if(!STR || (STR && STR.max_items < max_slot_stacking))
 				imp_e.pocket.AddComponent(/datum/component/storage/concrete/implant)
 				qdel(src)
@@ -29,7 +29,7 @@
 			return FALSE
 	. = ..()
 	if(.)
-		if(!QDELETED(pocket))
+		if(pocket)
 			pocket.forceMove(target)
 		else
 			pocket = new(target)
@@ -41,6 +41,7 @@
 	desc = "A tiny yet spacious pocket, usually found implanted inside sneaky syndicate agents and nowhere else."
 	component_type = /datum/component/storage/concrete/implant
 	resistance_flags = INDESTRUCTIBLE //A bomb!
+	item_flags = DROPDEL
 
 /obj/item/implanter/storage
 	name = "implanter (storage)"

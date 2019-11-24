@@ -1,0 +1,6 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "females now have female defined sprites"
+  - bugfix: "Slime legs have had their excess pixels adjusted"
+  - bugfix: "Mammal normal legs are more in line with human legs now"

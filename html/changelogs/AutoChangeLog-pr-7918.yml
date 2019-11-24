@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Attack animations will now rotate your character slightly, similar to Goon."

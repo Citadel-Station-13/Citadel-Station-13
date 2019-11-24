@@ -40,7 +40,7 @@
 	throw_range = 7
 
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
-	if(W.get_sharpness())
+	if(W.is_sharp())
 		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)

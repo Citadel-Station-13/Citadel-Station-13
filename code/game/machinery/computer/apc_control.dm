@@ -92,7 +92,9 @@
 	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
+		var/obj/item/card/id/ID = usr.get_active_held_item()
+		if(!istype(ID))
+			ID = usr.get_idcard()
 		if(ID && istype(ID))
 			if(check_access(ID))
 				authenticated = TRUE

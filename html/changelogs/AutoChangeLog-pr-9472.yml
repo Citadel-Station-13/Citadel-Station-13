@@ -1,0 +1,5 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "fixes food reactions and explosion runtimes,"
+  - bugfix: "fixes the too much yes problem"

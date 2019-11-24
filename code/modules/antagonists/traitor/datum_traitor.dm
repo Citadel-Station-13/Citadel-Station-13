@@ -55,10 +55,12 @@
 	owner.special_role = null
 	..()
 
-/datum/antagonist/traitor/proc/add_objective(datum/objective/O)
+/datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)
+	owner.objectives += O
 	objectives += O
 
-/datum/antagonist/traitor/proc/remove_objective(datum/objective/O)
+/datum/antagonist/traitor/proc/remove_objective(var/datum/objective/O)
+	owner.objectives -= O
 	objectives -= O
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
@@ -70,17 +72,7 @@
 
 /datum/antagonist/traitor/proc/forge_human_objectives()
 	var/is_hijacker = FALSE
-	var/datum/game_mode/dynamic/mode
-	var/is_dynamic = FALSE
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		mode = SSticker.mode
-		is_dynamic = TRUE
-		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
-			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
-		else
-			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
-			is_hijacker = (prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
-	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
+	if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
 		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
@@ -97,19 +89,15 @@
 		forge_single_objective()
 
 	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
-		if (!(locate(/datum/objective/hijack) in objectives))
+		if (!(locate(/datum/objective/hijack) in owner.objectives))
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
 			add_objective(hijack_objective)
-			if(is_dynamic)
-				var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
-				mode.spend_threat(threat_spent)
-				mode.log_threat("[owner.name] spent [threat_spent] on hijack.")
 			return
 
 
 	var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
-	for(var/datum/objective/O in objectives)
+	for(var/datum/objective/O in owner.objectives)
 		if(!O.martyr_compatible)
 			martyr_compatibility = 0
 			break
@@ -118,14 +106,10 @@
 		var/datum/objective/martyr/martyr_objective = new
 		martyr_objective.owner = owner
 		add_objective(martyr_objective)
-		if(is_dynamic)
-			var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("[owner.name] spent [threat_spent] on glorious death.")
 		return
 
 	else
-		if(!(locate(/datum/objective/escape) in objectives))
+		if(!(locate(/datum/objective/escape) in owner.objectives))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = owner
 			add_objective(escape_objective)
@@ -157,18 +141,7 @@
 
 /datum/antagonist/traitor/proc/forge_single_human_objective() //Returns how many objectives are added
 	.=1
-	var/assassin_prob = 50
-	var/is_dynamic = FALSE
-	var/datum/game_mode/dynamic/mode
-	if(istype(SSticker.mode,/datum/game_mode/dynamic))
-		mode = SSticker.mode
-		is_dynamic = TRUE
-		assassin_prob = mode.threat_level*(2/3)
-	if(prob(assassin_prob))
-		if(is_dynamic)
-			var/threat_spent = CONFIG_GET(number/dynamic_assassinate_cost)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("[owner.name] spent [threat_spent] on an assassination target.")
+	if(prob(50))
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new
@@ -186,7 +159,7 @@
 			kill_objective.find_target()
 			add_objective(kill_objective)
 	else
-		if(prob(15) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
+		if(prob(15) && !(locate(/datum/objective/download) in owner.objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
 			var/datum/objective/download/download_objective = new
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()

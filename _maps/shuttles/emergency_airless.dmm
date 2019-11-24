@@ -28,7 +28,7 @@
 /turf/closed/wall,
 /area/shuttle/escape)
 "f" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "g" = (
 /obj/docking_port/mobile/emergency/shuttle_build{
@@ -39,45 +39,32 @@
 	preferred_direction = 2;
 	width = 30
 	},
-/obj/machinery/door/airlock,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"h" = (
-/obj/machinery/computer/emergency_shuttle{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"K" = (
-/obj/machinery/door/airlock,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 
 (1,1,1) = {"
 a
 c
 e
-e
-e
-e
-e
-e
-e
-K
-e
+f
+f
+f
+f
+f
+f
+f
+f
 g
-e
-e
-e
-e
-e
-K
-e
-K
-e
-e
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
 e
 e
 a
@@ -141,7 +128,7 @@ f
 f
 f
 f
-e
+f
 a
 a
 a
@@ -205,8 +192,8 @@ f
 f
 e
 e
-e
-e
+f
+f
 e
 e
 "}
@@ -270,7 +257,7 @@ f
 f
 f
 f
-e
+f
 "}
 (8,1,1) = {"
 c
@@ -301,7 +288,7 @@ f
 f
 f
 f
-e
+f
 "}
 (9,1,1) = {"
 b
@@ -331,8 +318,8 @@ f
 f
 f
 f
-h
-e
+f
+f
 "}
 (10,1,1) = {"
 b
@@ -363,7 +350,7 @@ f
 f
 f
 f
-e
+f
 "}
 (11,1,1) = {"
 c
@@ -394,7 +381,7 @@ f
 f
 f
 f
-e
+f
 "}
 (12,1,1) = {"
 b
@@ -425,7 +412,7 @@ f
 f
 f
 f
-e
+f
 "}
 (13,1,1) = {"
 b
@@ -484,8 +471,8 @@ f
 f
 e
 e
-e
-e
+f
+f
 e
 e
 "}
@@ -544,7 +531,7 @@ f
 f
 f
 f
-e
+f
 a
 a
 a
@@ -586,25 +573,25 @@ a
 a
 c
 e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
-e
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
 e
 e
 a

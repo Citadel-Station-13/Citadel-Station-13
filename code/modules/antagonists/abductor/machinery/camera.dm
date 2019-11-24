@@ -17,9 +17,9 @@
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
-	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/cameramob.dmi'
-	eyeobj.icon_state = "generic_camera"
+	eyeobj.visible_icon = 1
+	eyeobj.icon = 'icons/obj/abductor.dmi'
+	eyeobj.icon_state = "camera_target"
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	..()
@@ -55,7 +55,8 @@
 		actions += set_droppoint_action
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
+	var/datum/species/abductor/S = H.dna.species
+	return S.scientist
 
 /datum/action/innate/teleport_in
 	name = "Send To"

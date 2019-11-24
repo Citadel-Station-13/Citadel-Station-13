@@ -14,7 +14,7 @@
 			"[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].")
 
 /datum/surgery_step/mechanic_incise/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.get_sharpness())
+	if(implement_type == /obj/item && !tool.is_sharp())
 		return FALSE
 	return TRUE
 //close shell
@@ -33,7 +33,7 @@
 			"[user] begins to screw the shell of [target]'s [parse_zone(target_zone)].")
 
 /datum/surgery_step/mechanic_close/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.get_sharpness())
+	if(implement_type == /obj/item && !tool.is_sharp())
 		return FALSE
 	return TRUE
 //prepare electronics

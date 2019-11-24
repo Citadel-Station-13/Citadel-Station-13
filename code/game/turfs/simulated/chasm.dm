@@ -15,11 +15,11 @@
 	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
 /turf/open/chasm/proc/set_target(turf/target)
-	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
+	GET_COMPONENT(chasm_component, /datum/component/chasm)
 	chasm_component.target_turf = target
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
-	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
+	GET_COMPONENT(chasm_component, /datum/component/chasm)
 	chasm_component.drop(AM)
 
 /turf/open/chasm/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

@@ -313,14 +313,8 @@
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
 		parts += "[FOURSPACES]Threat left: [mode.threat]"
 		parts += "[FOURSPACES]Executed rules:"
-		for(var/str in mode.threat_log)
-			parts += "[FOURSPACES][FOURSPACES][str]"
-		for(var/entry in mode.threat_tallies)
-			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
-		/*
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
-			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
-		*/
+			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost] threat"
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -540,12 +534,10 @@
 	return parts.Join()
 
 
-/proc/printobjectives(list/objectives)
-	if(!objectives || !objectives.len)
-		return
+/proc/printobjectives(datum/mind/ply)
 	var/list/objective_parts = list()
 	var/count = 1
-	for(var/datum/objective/objective in objectives)
+	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else

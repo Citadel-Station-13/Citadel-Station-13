@@ -1,8 +1,8 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
-	if(!forced && hit_percent <= 0)
+	if(hit_percent <= 0)
 		return 0
 
 	var/obj/item/bodypart/BP = null
@@ -15,35 +15,38 @@
 		if(!BP)
 			BP = bodyparts[1]
 
-	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage_amount) : BP.heal_damage(abs(damage_amount), 0))
+				if(damage > 0 ? BP.receive_damage(damage * hit_percent, 0) : BP.heal_damage(abs(damage * hit_percent), 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced)
+				adjustBruteLoss(damage * hit_percent)
 		if(BURN)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, damage_amount) : BP.heal_damage(0, abs(damage_amount)))
+				if(damage > 0 ? BP.receive_damage(0, damage * hit_percent) : BP.heal_damage(0, abs(damage * hit_percent)))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage_amount, forced = forced)
+				adjustFireLoss(damage * hit_percent)
 		if(TOX)
-			adjustToxLoss(damage_amount, forced = forced)
+			adjustToxLoss(damage * hit_percent)
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
+			adjustOxyLoss(damage * hit_percent)
 		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
+			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent) : BP.heal_damage(0, 0, abs(damage * hit_percent)))
 					update_damage_overlays()
 			else
-				adjustStaminaLoss(damage_amount, forced = forced)
+				adjustStaminaLoss(damage * hit_percent)
 		//citadel code
 		if(AROUSAL)
+<<<<<<< HEAD
 			adjustArousalLoss(damage_amount)
+=======
+			adjustArousalLoss(damage * hit_percent)
+>>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 	return TRUE
 
 
@@ -86,7 +89,7 @@
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
-			blood_volume -= 3*amount // x5 is too much, x3 should be still penalizing enough.
+			blood_volume -= 5*amount
 		else
 			blood_volume -= amount
 	return ..()

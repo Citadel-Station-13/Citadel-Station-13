@@ -1,0 +1,7 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - tweak: "CentCom has noticed the lack of coffins in Delta Station's chapel and provided some, but in exchange for reducing the chapel morgue's capacity."
+  - tweak: "Fixed a maintenance door the chaplain should have been able to open."
+  - bugfix: "Fixes space areas outside the driver
+removal: CentCom Defense Analysts have ordered the maintenance hatch to the Mass Driver room be removed citing \"security concerns\"."

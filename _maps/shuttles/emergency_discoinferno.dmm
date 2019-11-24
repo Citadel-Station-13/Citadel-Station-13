@@ -83,7 +83,6 @@
 /obj/machinery/door/airlock/gold{
 	req_access_txt = "19"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "q" = (
@@ -111,7 +110,6 @@
 	heat_proof = 1;
 	resistance_flags = 2
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plasma,
 /area/shuttle/escape)
 "v" = (
@@ -120,7 +118,6 @@
 /area/shuttle/escape)
 "w" = (
 /obj/machinery/door/airlock/gold,
-/obj/structure/fans/tiny,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "x" = (
@@ -223,11 +220,6 @@
 "O" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
-"P" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/elevatorshaft,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -270,7 +262,7 @@ r
 r
 r
 q
-P
+c
 x
 C
 I
@@ -282,7 +274,7 @@ b
 b
 h
 m
-P
+c
 r
 r
 r
@@ -294,7 +286,7 @@ r
 r
 r
 r
-P
+c
 x
 D
 D
@@ -306,7 +298,7 @@ c
 d
 i
 i
-P
+c
 r
 r
 r
@@ -318,7 +310,7 @@ j
 r
 r
 r
-P
+c
 x
 x
 x
@@ -330,7 +322,7 @@ c
 e
 j
 j
-P
+c
 r
 r
 s
@@ -342,7 +334,7 @@ j
 s
 r
 r
-P
+c
 y
 E
 y
@@ -354,7 +346,7 @@ c
 f
 j
 n
-P
+c
 r
 j
 j
@@ -366,7 +358,7 @@ t
 j
 j
 r
-P
+c
 z
 F
 J
@@ -390,7 +382,7 @@ j
 s
 r
 r
-P
+c
 y
 G
 y
@@ -402,7 +394,7 @@ c
 g
 k
 k
-P
+c
 r
 r
 r
@@ -414,7 +406,7 @@ j
 r
 r
 r
-P
+c
 x
 x
 x
@@ -426,7 +418,7 @@ b
 b
 l
 o
-P
+c
 r
 r
 r
@@ -438,7 +430,7 @@ r
 r
 r
 r
-P
+c
 A
 x
 K
@@ -462,7 +454,7 @@ r
 r
 r
 q
-P
+c
 B
 H
 L

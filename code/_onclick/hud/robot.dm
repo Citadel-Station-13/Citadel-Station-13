@@ -88,26 +88,6 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
-/obj/screen/robot/sensors
-	name = "Sensor Augmentation"
-	icon_state = "cyborg_sensor"
-
-/obj/screen/robot/sensors/Click()
-	if(..())
-		return
-	var/mob/living/silicon/S = usr
-	S.toggle_sensors()
-
-/obj/screen/robot/language_menu
-	name = "silicon language selection"
-	icon_state = "talk_wheel"
-
-/obj/screen/robot/language_menu/Click()
-	if(..())
-		return
-	var/mob/living/silicon/S = usr
-	S.open_language_menu(usr)
-
 /datum/hud/robot
 	ui_style = 'icons/mob/screen_cyborg.dmi'
 
@@ -116,7 +96,7 @@
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
-	using = new/obj/screen/robot/language_menu
+	using = new/obj/screen/language_menu
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
@@ -153,7 +133,7 @@
 	static_inventory += using
 
 //Sec/Med HUDs
-	using = new /obj/screen/robot/sensors()
+	using = new /obj/screen/ai/sensors()
 	using.screen_loc = ui_borg_sensor
 	static_inventory += using
 

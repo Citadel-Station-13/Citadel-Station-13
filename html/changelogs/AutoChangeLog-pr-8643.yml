@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The sacrificial target icon will now display onto the cult objective ui alert once again."

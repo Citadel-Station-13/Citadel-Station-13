@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "Added a few jet packs to the space queens men"
+  - tweak: "volume of jet packs"

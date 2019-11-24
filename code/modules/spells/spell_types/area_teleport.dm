@@ -20,11 +20,8 @@
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
-	var/area/U = get_area(usr)
-	if(U.noteleport && !istype(U, /area/wizard_station)) // Wizard den special check for those complaining about being unable to tele on station.
-		to_chat(usr, "<span class='warning'>Unseen forces prevent you from casting this spell in this area</span>")
-		return
-	var/A
+	var/A = null
+
 	if(!randomise_selection)
 		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
 	else
@@ -56,13 +53,12 @@
 		if(target && target.buckled)
 			target.buckled.unbuckle_mob(target, force=1)
 
-		var/forcecheck = istype(get_area(target), /area/wizard_station)
 		var/list/tempL = L
 		var/attempt = null
 		var/success = 0
 		while(tempL.len)
 			attempt = pick(tempL)
-			do_teleport(target, attempt, channel = TELEPORT_CHANNEL_MAGIC, forced = forcecheck)
+			do_teleport(target, attempt, channel = TELEPORT_CHANNEL_MAGIC)
 			if(get_turf(target) == attempt)
 				success = 1
 				break
@@ -70,7 +66,7 @@
 				tempL.Remove(attempt)
 
 		if(!success)
-			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = forcecheck)
+			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 			playsound(get_turf(user), sound2, 50,1)
 
 	return
@@ -87,6 +83,6 @@
 				else
 					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
-				user.whisper("[invocation] [uppertext(chosenarea.name)]")
+				user.whisper("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
 
 	return

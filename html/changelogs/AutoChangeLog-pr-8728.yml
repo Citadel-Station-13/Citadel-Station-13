@@ -1,0 +1,6 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - tweak: "Moved around some chems from emag list into upgrades."
+  - balance: "Added some fun chems to dispensers."
+  - bugfix: "Gave dispensers old tg functionality."

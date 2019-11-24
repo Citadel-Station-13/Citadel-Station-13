@@ -1,0 +1,7 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds a gun range to Box Station"
+  - rscadd: "Provides some extra power grid connections"
+  - rscdel: "Sunglasses and Earmuffs removed from the Warden's Office - they can be found at the range instead"
+  - tweak: "Rearranges a few objects within the prison as to accommodate the new gun range"

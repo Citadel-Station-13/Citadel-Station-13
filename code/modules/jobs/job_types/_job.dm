@@ -61,9 +61,6 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
-	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
-	var/dresscodecompliant = TRUE
-
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)

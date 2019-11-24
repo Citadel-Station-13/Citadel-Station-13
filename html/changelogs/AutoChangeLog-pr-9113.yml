@@ -1,0 +1,5 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - bugfix: "fixes fermichem reactions for tiny volumes work"
+  - tweak: "makes quantisation level for chemistry finer"

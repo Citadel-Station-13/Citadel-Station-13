@@ -70,7 +70,9 @@
 		if("login")
 			var/mob/M = usr
 
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I = M.get_active_held_item()
+			if(!istype(I))
+				I = M.get_idcard()
 
 			if(I && istype(I))
 				if(check_access(I))
@@ -333,7 +335,7 @@
 				Nuke_request(input, usr)
 				to_chat(usr, "<span class='notice'>Request sent.</span>")
 				usr.log_message("has requested the nuclear codes from CentCom", LOG_SAY)
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested","commandreport")
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
 				CM.lastTimeUsed = world.time
 
 

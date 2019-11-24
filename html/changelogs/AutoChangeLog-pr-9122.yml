@@ -1,0 +1,6 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "fun"
+  - rscdel: "bad stuff"
+  - balance: "mech bad"

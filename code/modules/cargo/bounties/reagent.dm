@@ -116,11 +116,11 @@ datum/bounty/reagent/complex_drink/New()
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is offering a reward for talented mixologists. Ship a container of [name] to claim the prize."
-	reward += rand(0, 4) * 300
+	reward += rand(0, 4) * 500
 
 /datum/bounty/reagent/chemical
 	name = "Chemical"
-	reward = 2750
+	reward = 4000
 	required_volume = 30
 
 datum/bounty/reagent/chemical/New()

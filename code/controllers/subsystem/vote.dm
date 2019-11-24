@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
-	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
+	var/was_roundtype_vote = mode == "roundtype"
 	if(winners.len > 0)
 		if(question)
 			text += "<b>[question]</b>"
@@ -124,9 +124,6 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
-#define PEACE "calm"
-#define CHAOS "chaotic"
-
 /datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
@@ -149,6 +146,7 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+<<<<<<< HEAD
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
@@ -179,6 +177,8 @@ SUBSYSTEM_DEF(vote)
 				GLOB.dynamic_curve_width = CLAMP(2-abs(mean*5),0.5,4)
 				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
 				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
+=======
+>>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -241,27 +241,20 @@ SUBSYSTEM_DEF(vote)
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("map")
-				var/players = GLOB.clients.len
-				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
-				for(var/M in config.maplist) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
-					var/datum/map_config/targetmap = config.maplist[M]
-					if(!istype(targetmap))
-						continue
-					if(!targetmap.voteweight)
-						continue
-					if((targetmap.config_min_users && players < targetmap.config_min_users) || (targetmap.config_max_users && players > targetmap.config_max_users))
-						continue
-					if(targetmap.max_round_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_round_search_span) >= targetmap.max_rounds_played)
-						continue
-					choices |= M
+				choices.Add(config.maplist)
+				for(var/i in choices)//this is necessary because otherwise we'll end up with a bunch of /datum/map_config's as the default vote value instead of 0 as intended
+					choices[i] = 0
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
+<<<<<<< HEAD
 			if("dynamic")
 				var/saved_threats = SSpersistence.saved_threat_levels
 				if((saved_threats[1]+saved_threats[2]+saved_threats[3])>150)
 					choices.Add("extended",PEACE,CHAOS)
 				else
 					choices.Add(PEACE,CHAOS)
+=======
+>>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -419,6 +412,3 @@ SUBSYSTEM_DEF(vote)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]
 		if(P)
 			P.player_actions -= src
-
-#undef PEACE
-#undef CHAOS

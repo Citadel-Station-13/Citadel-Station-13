@@ -10,7 +10,7 @@
 	var/maxlength = 8
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
-	var/turf/listeningTo
+	var/datum/component/redirect/listener
 	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize()
@@ -33,7 +33,7 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	listeningTo = null
+	QDEL_NULL(listener)
 	QDEL_LIST(beams)
 	. = ..()
 
@@ -138,7 +138,7 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/assembly/infra/throw_at()
 	. = ..()
 	olddir = dir
 
@@ -163,12 +163,8 @@
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
-	if(listeningTo == newloc)
-		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
-	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
-	listeningTo = newloc
+	QDEL_NULL(listener)
+	listener = newloc.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_EXITED = CALLBACK(src, .proc/check_exit)))
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
 	if(QDELETED(src))

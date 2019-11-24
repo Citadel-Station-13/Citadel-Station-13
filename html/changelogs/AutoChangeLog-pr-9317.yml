@@ -1,0 +1,7 @@
+author: "Ghommie (original PR by CrazyClown12)"
+delete-after: True
+changes: 
+  - tweak: "The chloral hydrate inside of the sleepy pen is no longer slower acting than chloral hydrate made in chemistry."
+  - tweak: "The chloral hydrate inside of cookies synthesised by emagged borgs is no longer slower acting than chloral hydrate made in chemistry."
+  - balance: "Slight tirizene buff."
+  - rscdel: "Delayed chloral hydrate"

@@ -113,21 +113,6 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"v" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dir = 8;
-	dwidth = 8;
-	height = 9;
-	name = "Mini emergency shuttle";
-	width = 21
-	},
-/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "x" = (
@@ -157,6 +142,19 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"B" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 8;
+	dwidth = 8;
+	height = 9;
+	name = "Mini emergency shuttle";
+	width = 21
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -455,7 +453,7 @@ b
 n
 b
 b
-v
+B
 b
 b
 b

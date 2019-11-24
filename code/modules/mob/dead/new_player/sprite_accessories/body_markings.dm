@@ -54,10 +54,6 @@
 	name = "Redpanda"
 	icon_state = "redpanda"
 
-/datum/sprite_accessory/mam_body_markings/bat
-	name = "Bat"
-	icon_state = "bat"
-
 /datum/sprite_accessory/mam_body_markings/bee
 	name = "Bee"
 	icon_state = "bee"

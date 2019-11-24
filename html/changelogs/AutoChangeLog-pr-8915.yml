@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Added in an alert pop up to the cult convertees, on top of the older \"click here to become a blood cultist\" chat message."
+  - tweak: "The convertee's screen will now flash red to fit in the aforementioned message's fluff."
+  - spellcheck: "Made said message less verbose."

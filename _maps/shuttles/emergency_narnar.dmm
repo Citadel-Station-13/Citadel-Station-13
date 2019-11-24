@@ -6,8 +6,7 @@
 /turf/closed/wall/mineral/cult,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/door/airlock/cult/friendly,
-/obj/structure/fans/tiny,
+/obj/effect/forcefield/cult,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
@@ -126,10 +125,6 @@
 /area/shuttle/escape)
 "x" = (
 /obj/machinery/door/airlock/cult/friendly,
-/obj/docking_port/mobile/emergency{
-	name = "shuttle 667"
-	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "y" = (
@@ -160,6 +155,13 @@
 /obj/effect/rune/convert,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/cult,
+/area/shuttle/escape)
+"E" = (
+/obj/machinery/door/airlock/cult/friendly,
+/obj/docking_port/mobile/emergency{
+	name = "shuttle 667"
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "F" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -260,10 +262,6 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"W" = (
-/obj/effect/spawner/structure/window/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -273,17 +271,17 @@ a
 b
 b
 b
+x
+b
+E
+b
+c
+c
 c
 b
 x
 b
-W
-W
-W
-b
-c
-b
-c
+x
 b
 b
 b
@@ -338,7 +336,7 @@ U
 V
 "}
 (4,1,1) = {"
-W
+c
 d
 i
 n
@@ -362,7 +360,7 @@ U
 V
 "}
 (5,1,1) = {"
-W
+c
 e
 j
 o
@@ -386,7 +384,7 @@ U
 V
 "}
 (6,1,1) = {"
-W
+c
 f
 j
 j
@@ -410,7 +408,7 @@ U
 V
 "}
 (7,1,1) = {"
-W
+c
 e
 j
 j
@@ -426,7 +424,7 @@ j
 j
 K
 L
-W
+c
 t
 j
 t
@@ -434,7 +432,7 @@ U
 V
 "}
 (8,1,1) = {"
-W
+c
 g
 k
 k
@@ -474,7 +472,7 @@ A
 j
 j
 j
-W
+c
 j
 j
 j
@@ -498,7 +496,7 @@ j
 j
 j
 M
-W
+c
 P
 Q
 P
@@ -511,21 +509,21 @@ a
 a
 a
 b
-W
+c
 b
-W
-b
-b
-b
-W
-W
-W
+c
 b
 b
 b
-W
+c
+c
+c
 b
-W
+b
+b
+c
+b
+c
 b
 a
 "}

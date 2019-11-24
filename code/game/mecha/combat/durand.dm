@@ -19,3 +19,7 @@
 /obj/mecha/combat/durand/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	defense_action.Remove(user)
+
+/obj/mecha/combat/Initialize()
+	. = ..()
+	trackers += new /obj/item/mecha_parts/mecha_tracking(src)

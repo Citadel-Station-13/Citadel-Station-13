@@ -1,0 +1,4 @@
+author: "PersianXerxes"
+delete-after: True
+changes: 
+  - code_imp: "Adds the clockwork_warp_allowed flag to the Captain's Office area, set to FALSE the same way it is for the chapel and armory."

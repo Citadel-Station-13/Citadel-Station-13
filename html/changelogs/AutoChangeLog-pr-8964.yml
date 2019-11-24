@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - balance: "rebalanced steal goals restrictions"
+  - spellcheck: "fixed a few misleading goals"

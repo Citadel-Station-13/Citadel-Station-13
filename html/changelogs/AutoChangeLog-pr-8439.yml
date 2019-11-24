@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "EMPs now flick off stunbatons, they can be turned back on immediately by the user anyway."
+  - balance: "Stunbatons now very slowly consume charge whilst kept on, at a rate of 4/1000th of a standard batoning charge cost per tick."
+  - balance: "Softened up the charge cost checks to stop the above update from practically reducing the maximum uses of a stun baton by one. Now, should the remaining charge be lower than the hit cost, the resulting stun will be be proportional to the remaining charge divided by the hitcost, within a limit under which the stun batoning just won't happen."

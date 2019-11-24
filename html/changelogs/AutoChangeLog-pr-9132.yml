@@ -1,0 +1,4 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - imageadd: "Updated the sprites of all the regular crates"

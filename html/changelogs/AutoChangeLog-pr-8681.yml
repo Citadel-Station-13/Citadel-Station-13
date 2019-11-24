@@ -1,0 +1,6 @@
+author: "Ghommie (Original PRs by Tortellini Tony and BuffEngineering)"
+delete-after: True
+changes: 
+  - bugfix: "E-cigs will continue to display their setting after being emagged."
+  - bugfix: "Vapes now come out of the mouth.
+fix Fixes an E-cig initialize() runtime."

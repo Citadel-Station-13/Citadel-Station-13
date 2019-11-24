@@ -11,7 +11,7 @@
 		"[user] begins to make an incision in [target]'s [parse_zone(target_zone)].")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.get_sharpness())
+	if(implement_type == /obj/item && !tool.is_sharp())
 		return FALSE
 	return TRUE
 /datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -22,16 +22,6 @@
 				"Blood pools around the incision in [H]'s [parse_zone(target_zone)].",
 				"")
 			H.bleed_rate += 3
-	return TRUE
-
-/datum/surgery_step/incise/nobleed //silly friendly!
-
-/datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]...</span>",
-		"[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].",
-		"[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].")
-
-/datum/surgery_step/incise/nobleed/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	return TRUE
 
 //clamp bleeders
@@ -79,7 +69,7 @@
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
-		return tool.get_temperature()
+		return tool.is_hot()
 	return TRUE
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)

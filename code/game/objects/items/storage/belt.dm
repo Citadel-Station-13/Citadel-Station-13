@@ -44,7 +44,7 @@
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	var/static/list/can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -127,7 +127,7 @@
 
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.can_hold = typecacheof(list(
 		/obj/item/healthanalyzer,
@@ -199,7 +199,7 @@
 
 /obj/item/storage/belt/security/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 5
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(
@@ -238,7 +238,7 @@
 
 /obj/item/storage/belt/mining/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.max_combined_w_class = 20
@@ -297,7 +297,7 @@
 
 /obj/item/storage/belt/mining/primitive/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 5
 
 /obj/item/storage/belt/soulstone
@@ -308,7 +308,7 @@
 
 /obj/item/storage/belt/soulstone/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
 		/obj/item/soulstone
@@ -331,7 +331,7 @@
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 1
 	STR.can_hold = list(
 		/obj/item/clothing/mask/luchador
@@ -346,7 +346,7 @@
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/military/snack
@@ -359,7 +359,7 @@
 
 /obj/item/storage/belt/military/snack/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.can_hold = typecacheof(list(
@@ -427,7 +427,7 @@
 
 /obj/item/storage/belt/military/assault/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 
 /obj/item/storage/belt/durathread
@@ -480,7 +480,7 @@
 
 /obj/item/storage/belt/grenade/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 30
 	STR.display_numerical_stacking = TRUE
 	STR.max_combined_w_class = 60
@@ -533,7 +533,7 @@
 
 /obj/item/storage/belt/wands/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
 		/obj/item/gun/magic/wand
@@ -559,7 +559,7 @@
 
 /obj/item/storage/belt/janitor/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
 	STR.can_hold = typecacheof(list(
@@ -586,7 +586,7 @@
 
 /obj/item/storage/belt/bandolier/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 18
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
@@ -602,7 +602,7 @@
 
 /obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 32
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
@@ -617,12 +617,9 @@
 
 /obj/item/storage/belt/medolier/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 15
 	STR.display_numerical_stacking = FALSE
-	STR.allow_quick_gather = TRUE
-	STR.allow_quick_empty = TRUE
-	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/syringe/dart
 		))
@@ -630,25 +627,6 @@
 /obj/item/storage/belt/medolier/full/PopulateContents()
 	for(var/i in 1 to 16)
 		new /obj/item/reagent_containers/syringe/dart/(src)
-
-/obj/item/storage/belt/medolier/afterattack(obj/target, mob/user , proximity)
-	if(!(istype(target, /obj/item/reagent_containers/glass/beaker)))
-		return
-	if(!proximity)
-		return
-	if(!target.reagents)
-		return
-
-	for(var/obj/item/reagent_containers/syringe/dart/D in contents)
-		if(round(target.reagents.total_volume, 1) <= 0)
-			to_chat(user, "<span class='notice'>You soak as many of the darts as you can with the contents from [target].</span>")
-			return
-		if(D.mode == SYRINGE_INJECT)
-			continue
-
-		D.afterattack(target, user, proximity)
-
-	..()
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
@@ -659,7 +637,7 @@
 
 /obj/item/storage/belt/holster/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(
@@ -683,7 +661,7 @@
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
@@ -750,7 +728,7 @@
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY

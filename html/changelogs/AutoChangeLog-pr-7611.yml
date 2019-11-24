@@ -1,0 +1,8 @@
+author: "nicc"
+delete-after: True
+changes: 
+  - rscadd: "Exo-suit"
+  - rscadd: "SEVA suit"
+  - rscadd: "Flags for Goliath resistance and weakness"
+  - rscadd: "suit voucher"
+  - rscadd: "temp suit sprites"
