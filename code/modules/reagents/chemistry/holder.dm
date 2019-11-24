@@ -133,9 +133,10 @@
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			remove_reagent(R.id, R.volume * part, ignore_pH = TRUE)
-		pH = REAGENT_NORMAL_PH
 		update_total()
 		handle_reactions()
+		if(total_volume == 0)
+			pH = REAGENT_NORMAL_PH
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
@@ -232,7 +233,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.id, copy_amount * multiplier, trans_data)
+		R.add_reagent(T.id, copy_amount * multiplier, trans_data, other_purity = T.purity)
 
 	src.update_total()
 	R.update_total()
@@ -277,9 +278,9 @@
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/delayprocess = FALSE
-		if(istype(C, /datum/reagent/toxin) && toxresist)
-			delayprocess = TRUE
 		var/datum/reagent/R = reagent
+		if(istype(R, /datum/reagent/toxin) && toxresist)
+			delayprocess = TRUE
 		if(QDELETED(R.holder))
 			continue
 		if(liverless && !R.self_consuming) //need to be metabolized
@@ -833,7 +834,7 @@
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0, ignore_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity, other_pH, no_react = 0, ignore_pH = FALSE)
 
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -842,6 +843,8 @@
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
+	if(!other_purity)
+		other_purity = initial(D.purity)
 	if(!D)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE

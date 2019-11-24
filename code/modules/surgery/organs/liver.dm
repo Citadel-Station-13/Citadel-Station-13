@@ -26,6 +26,8 @@
 	var/minStressMod = 1 //modifies the minimum it can go to in case of trauma.
 
 /obj/item/organ/liver/on_life()
+	if(is_cold())
+		return
 	var/mob/living/carbon/C = owner
 
 	if(istype(C))
@@ -91,7 +93,6 @@
 		if(0 to 15)
 			ignoreTox = TRUE
 		if(15 to 25)
-			ignoreTox = TRUE
 			applyOrganDamage(0.1)
 		if(25 to 40)
 			applyOrganDamage(0.15)
@@ -104,12 +105,12 @@
 			applyOrganDamage(0.25)
 			owner.adjustToxLoss(0.25, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.25)
-			owner.adjustStaminaLoss(0.25)
+			owner.adjustStaminaLoss(1)
 		if(85 to INFINITY)
 			applyOrganDamage(0.3)
 			owner.adjustToxLoss(0.3, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3)
-			owner.adjustStaminaLoss(0.3)
+			owner.adjustStaminaLoss(2)
 			swelling += 0.1
 
 
@@ -123,16 +124,15 @@
 				var/stress = 0.5
 				if(T.toxpwr > stress)
 					stress = T.toxpwr
-				stress *= 1+round(T.volume/10)
-				if(metabolic_stress <= 15)
+				if(ignoreTox)
+					stress += T.current_cycle/LAZYLEN(owner.reagents.reagent_list)
+					message_admins("[stress]")
 					if(T.volume <= toxTolerance)
 						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
-						adjustMetabolicStress(stress)
+						adjustMetabolicStress(stress*1.5)
 						continue
-
-				adjustMetabolicStress(stress)
-				if(ignoreTox)
 					C.reagents.remove_reagent(initial(pickedreagent.id), pickedreagent.metabolization_rate)
+					adjustMetabolicStress(stress)
 					continue
 
 	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreTox)

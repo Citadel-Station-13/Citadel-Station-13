@@ -24,23 +24,23 @@
 	var/obj/item/organ/tongue/T = getorganslot("tongue")
 	var/taste_sensitivity = get_taste_sensitivity()
 	var/text_output = from.generate_taste_message(taste_sensitivity)
-	if (T)
+	if(T)
 		if(istype(T, /obj/item/organ/tongue/cybernetic))
 			to_chat(src, "<span class='notice'>Your tongue moves on it's own in response to the substance in your mouth.</span>")
 			say("The pH is appropriately [round(from.pH, 1)].")
 		else if ((from.pH > 12.5) || (from.pH < 1.5))
-			text_output += "<span class='warning'> It burns!!</span>"
+			text_output += "<span class='warning'> and it burns!!</span>"
 			T.applyOrganDamage(5)
 		else if (!HAS_TRAIT(src, TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
 			switch(from.pH)
 				if(11.5 to INFINITY)
-					text_output += "<span class='warning'> It has a strong alkaline note to it!</span>"
+					text_output += "<span class='warning'> and a strong alkaline note to it</span>"
 				if(8.5 to 11.5)
-					text_output += "<span class='notice'> It has soapy tone to it.</span>"
+					text_output += "<span class='notice'> and a soapy tone to it</span>"
 				if(2.5 to 5.5)
-					text_output += "<span class='notice'> It has an acid tone to it.</span>"
+					text_output += "<span class='notice'> and an acid tone to it</span>"
 				if(-INFINITY to 2.5)
-					text_output += "<span class='warning'> It has a strong acidic note to it!</span>"
+					text_output += "<span class='warning'> and has a strong acidic note to it</span>"
 
 	if(last_taste_time + 50 < world.time)
 		// We dont want to spam the same message over and over again at the

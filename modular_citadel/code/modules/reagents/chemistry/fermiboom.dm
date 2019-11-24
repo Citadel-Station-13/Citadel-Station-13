@@ -97,6 +97,7 @@
 			R0.remove_reagent(reagent.id, reagent.volume)
 			continue
 		R0.trans_id_to(R, reagent.id, reagent.volume)
+		R0.remove_reagent(reagent.id, reagent.volume)
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
@@ -111,6 +112,7 @@
 	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		if((reagent.id in required_reagents) || (reagent.id in results))
 			R0.trans_id_to(R, reagent.id, reagent.volume)
+			R0.remove_reagent(reagent.id, reagent.volume)
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()

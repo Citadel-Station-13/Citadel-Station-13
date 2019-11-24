@@ -932,11 +932,11 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	impure_chem 		= "mannitol_impure"
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "mannitol_impure"
-	chemical_flags 		= REAGENT_DONOTSPLIT
+	chemical_flags 		= REAGENT_SPLITRETAINVOL
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_ACUTE)
-	if(cached_purity > 0.98)
+	if(cached_purity > 0.95)
 		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
@@ -949,7 +949,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	impure_chem 		= "neurine_impure"
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "neurine_impure"
-	chemical_flags 		= REAGENT_DONOTSPLIT
+	chemical_flags 		= REAGENT_SPLITRETAINVOL
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))

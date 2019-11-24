@@ -29,16 +29,36 @@
 	//stomach acid stuff
 	if(C.reagents.pH > 7.25)
 		C.reagents.pH -= 0.2-(damage/500)
-		if(C.reagents.pH > 10)
-			applyOrganDamage((C.reagents.pH-9)/4)
 	else if (C.reagents.pH < 6.75)
 		C.reagents.pH += 0.2-(damage/500)
-		if(C.reagents.pH < 4)
-			applyOrganDamage((4-C.reagents.pH)/4)
+
+	var/deltapH = C.reagents.pH
+	if(deltapH>7)
+		deltapH = 14-deltapH
+	switch(C.reagents.pH)
+		if(-INFINITY to 2)
+			applyOrganDamage(0.25)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2) //heartburn!
+			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 2)
+			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 1)
+			C.apply_damage(1, BURN, C.get_bodypart(BODY_ZONE_CHEST))
+			if(prob(10))
+				to_chat("You feel a burning sensation in your chest!")
+		if(2 to 4)
+			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1)
+			applyOrganDamage(0.15)
+		if(5)
+			applyOrganDamage(0.1)
+
+	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
+	if(!SA)
+		owner.reagents.add_reagent("stomach_acid", 1)
+		applyOrganDamage(5)
+	else if(SA.volume < 50)
+		SA.volume = CLAMP(volume + 1, 0, 50)
 
 	if(damage < low_threshold)
 		return
-
 
 	Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
 
@@ -51,6 +71,7 @@
 		if(prob((damage/10) * Nutri.volume * Nutri.volume))
 			C.vomit(damage)
 			to_chat(C, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
 
 
 
@@ -90,11 +111,16 @@
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
+/obj/item/organ/stomach/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	owner.reagents.add_reagent("stomach_acid", 50)
+	..()
+
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+	owner.reagents.remove_reagent("stomach_acid", 50)
 	..()
 
 /obj/item/organ/stomach/fly

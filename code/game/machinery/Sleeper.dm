@@ -313,6 +313,8 @@
 		C.blood_volume -= 2/efficiency
 		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
 		for(var/datum/reagent/R in C.reagents.reagent_list)
+			if(istype(R, /datum/reagent/metabolic))
+				continue
 			C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
 
 

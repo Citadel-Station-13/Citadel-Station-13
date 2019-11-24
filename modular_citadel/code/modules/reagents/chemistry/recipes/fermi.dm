@@ -10,6 +10,8 @@
 	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = my_atom.reagents.has_reagent("[id]")
+			if(!R) //If we exploded
+				continue
 			if(R.purity == 1)
 				continue
 
