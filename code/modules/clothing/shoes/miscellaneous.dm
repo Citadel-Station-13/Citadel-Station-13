@@ -103,6 +103,19 @@
 	if(user.mind && user.mind.assigned_role == "Clown")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
+/obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
+	if(!isliving(user))
+		return
+	if(user.get_active_held_item() != src)
+		to_chat(user, "<span class='warning'>You must hold the [src] in your hand to do this!</span>")
+		return
+	if (!enabled_waddle)
+		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
+		enabled_waddle = TRUE
+	else
+		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
+		enabled_waddle = FALSE
+
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
