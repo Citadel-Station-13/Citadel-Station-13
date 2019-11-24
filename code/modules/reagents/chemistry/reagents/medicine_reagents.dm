@@ -1504,14 +1504,14 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 4.5/medibonus : 3)//Our lungs are 300hp instead of 100.
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
-		L.adjustMetabolicStress(0.5/medibonus)
+		L.adjustMetabolicStress(1/medibonus)
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 0.1
 		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
-			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
+			amount2purge *= (2.5*medibonus) //very good antitox and antidrink, though halved from tg since we have dialysis
 		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.id, amount2purge)

@@ -158,7 +158,6 @@
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
-	var/mob/living/carbon/C = mob_occupant
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
@@ -195,20 +194,21 @@
 				if(-INFINITY to -10)
 					data["occupant"]["metabolicColour"] = "normal"
 					data["occupant"]["metabolicStress"] = "Chronic liver treatment"
-				if(-10 to 0)
+				if(-10 to -0.5)
 					data["occupant"]["metabolicColour"] = "highlight"
 					data["occupant"]["metabolicStress"] = "Acute liver treatment"
-				if(0 to 15)
+				if(-0.5 to 15)
 					data["occupant"]["metabolicColour"] = "good"
-					data["occupant"]["metabolicStress"] = L.metabolic_stress
+					data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
 				if(15 to 25)
 					data["occupant"]["metabolicColour"] = "average"
-					data["occupant"]["metabolicStress"] = L.metabolic_stress
+					data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
 				if(25 to INFINITY)
 					data["occupant"]["metabolicColour"] = "bad"
-					data["occupant"]["metabolicStress"] = L.metabolic_stress
+					data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
 
 		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+			var/mob/living/carbon/C = mob_occupant
 			var/blood_id = C.get_blood_id()
 			if(blood_id)
 				data["occupant"]["blood"] = list() // We can start populating this list.
@@ -291,8 +291,8 @@
 			return
 		var/mob/living/carbon/C = occupant
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		L.adjustMetabolicStress(-(0.1*efficiency), (-20/efficiency))
-		C.blood_volume -= 2/efficiency
+		L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.15 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
+		C.blood_volume -= 4/efficiency
 		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			if(istype(R, /datum/reagent/metabolic))

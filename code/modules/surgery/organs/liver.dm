@@ -92,7 +92,7 @@
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.1, TRUE)
 		if(0 to 15)
-			passive_regen(1/(reagentCount+1))
+			passive_regen(1/(reagentCount+1)) //pesky zeroes!
 			ignoreTox = TRUE
 		if(15 to 25)
 			applyOrganDamage(0.05)
