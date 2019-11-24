@@ -1502,7 +1502,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 			medibonus += 1
 	M.adjustToxLoss(-0.2 * medibonus)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 4.5/medibonus : 3)//Our lungs are 300hp instead of 100.
-	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.adjustMetabolicStress(0.5/medibonus)
 	for(var/r2 in M.reagents.reagent_list)
