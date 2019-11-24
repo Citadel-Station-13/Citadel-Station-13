@@ -69,6 +69,7 @@
 			L.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
+
 	C.adjustOxyLoss(-3)
 	..()
 

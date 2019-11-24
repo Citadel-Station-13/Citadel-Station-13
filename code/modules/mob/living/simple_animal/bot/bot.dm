@@ -37,7 +37,6 @@
 	var/obj/item/paicard/paicard // Inserted pai card.
 	var/allow_pai = 1 // Are we even allowed to insert a pai card.
 	var/bot_name
-	var/oil_spill_type = /obj/effect/decal/cleanable/oil
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
 	var/emagged = FALSE
@@ -217,9 +216,9 @@
 		to_chat(user, "[src] is in pristine condition.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(amount>0 && prob(10))
+		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()
-	if(. && prob(10))
-		new oil_spill_type(loc)
 
 /mob/living/simple_animal/bot/updatehealth()
 	..()
