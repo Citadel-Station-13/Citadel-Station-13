@@ -12,7 +12,7 @@
 	belt = /obj/item/tank/internals/emergency_oxygen/double
 	id = /obj/item/card/id/gold
 
-/datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 	H.fully_replace_character_name(H.real_name, "Santa Claus")

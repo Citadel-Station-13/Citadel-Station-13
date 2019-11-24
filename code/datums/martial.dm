@@ -11,7 +11,6 @@
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb
 	var/no_guns = FALSE
-	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)

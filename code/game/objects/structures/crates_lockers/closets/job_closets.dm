@@ -352,7 +352,6 @@
 	icon_door = "black"
 
 /obj/structure/closet/wardrobe/curator/PopulateContents()
-	new /obj/item/clothing/accessory/pocketprotector/full(src)
 	new /obj/item/clothing/head/fedora/curator(src)
 	new /obj/item/clothing/suit/curator(src)
 	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)

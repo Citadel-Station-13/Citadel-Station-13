@@ -35,7 +35,7 @@
 	chameleon_extras = /obj/item/stamp/law
 
 
-/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
