@@ -2355,12 +2355,12 @@
 	to_chat(H, "<span class='warning'>The adrenaline rushing through your fists fades away.</span>")
 
 /datum/reagent/berserk/overdose_start(mob/living/carbon/human/H)
+	metabolization_rate = 5 * REAGENTS_METABOLISM
 	H.dna.species.punchdamagelow = 25
 	H.dna.species.punchdamagehigh = 30
 	H.dna.species.punchstunthreshold = 30
 	to_chat(H, "<span class='userdanger'>You feel power surging through your veins!</span>")
 
 /datum/reagent/berserk/overdose_process(mob/living/L)
-	if (L.get_active_held_item() || L.get_inactive_held_item()) //is there a better way to do this
-		L.drop_all_held_items()
+	if (L.drop_all_held_items())
 		to_chat(L, "<span class='warning'>Your fists quiver with energy, unable to get a hold of anything!</span>")
