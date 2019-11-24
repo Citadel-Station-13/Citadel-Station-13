@@ -269,13 +269,16 @@
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE, toxresist = FALSE)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
 		expose_temperature(C.bodytemperature, 0.25)
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
+		var/delayprocess = FALSE
+		if(istype(C, /datum/reagent/toxin) && toxresist)
+			delayprocess = TRUE
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
 			continue
@@ -283,7 +286,7 @@
 			continue
 		if(!C)
 			C = R.holder.my_atom
-		if(!R.metabolizing)
+		if(!R.metabolizing && !delayprocess)
 			R.metabolizing = TRUE
 			R.on_mob_metabolize(C)
 		if(C && R)
@@ -304,7 +307,8 @@
 							var/datum/reagent/A = addiction
 							if(istype(R, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
-				need_mob_update += R.on_mob_life(C)
+				if(!delayprocess)
+					need_mob_update += R.on_mob_life(C)
 
 	if(can_overdose)
 		if(addiction_tick == 6)

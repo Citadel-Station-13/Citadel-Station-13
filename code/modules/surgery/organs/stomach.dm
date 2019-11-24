@@ -27,11 +27,11 @@
 		handle_disgust(H)
 
 	//stomach acid stuff
-	if(C.reagents.pH > 7)
+	if(C.reagents.pH > 7.25)
 		C.reagents.pH -= 0.2-(damage/500)
 		if(C.reagents.pH > 10)
 			applyOrganDamage((C.reagents.pH-9)/4)
-	else if (C.reagents.pH < 7)
+	else if (C.reagents.pH < 6.75)
 		C.reagents.pH += 0.2-(damage/500)
 		if(C.reagents.pH < 4)
 			applyOrganDamage((4-C.reagents.pH)/4)

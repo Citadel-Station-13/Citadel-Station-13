@@ -19,6 +19,7 @@
 	color = "FFFFFF"
 	can_synth = FALSE
 	var/potency = 1 //potency multiplies the volume when added.
+	pH = 2
 
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
@@ -32,7 +33,7 @@
 	id = "mannitol_impure"
 	description = "Inefficiently causes brain damage."
 	color = "#DCDCFF"
-	pH = 10.4
+	pH = 2.4
 	metastress = 0.8
 
 /datum/reagent/impure/mannitol/on_mob_life(mob/living/carbon/C)
@@ -45,7 +46,7 @@
 	id = "neurine_impure"
 	description = "Causes the patient a temporary trauma."
 	color = "#DCDCFF"
-	pH = 10.4
+	pH = 5.4
 	metabolization_rate = 0.4 * REM
 	metastress = 0.4
 	var/datum/brain_trauma/temp_trauma
@@ -75,7 +76,7 @@
 	description = "Induces a Myocardial Infarction while in the patient."
 	color = "#F5F5F5"
 	self_consuming = TRUE
-	pH = 12.5
+	pH = 2.5
 	metabolization_rate = 0.075 * REM
 	metastress = 0.2
 	var/datum/disease/heart_failure/temp_myo

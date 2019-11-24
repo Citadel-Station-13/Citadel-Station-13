@@ -82,11 +82,11 @@
 	switch(metabolic_stress)
 		if(-INFINITY to -10)
 			ignoreTox = TRUE
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, -0.2, ORGAN_TREAT_CHRONIC)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.2, ORGAN_TREAT_CHRONIC)
 			owner.adjustToxLoss(-0.2, TRUE)
 		if(-10 to 0)
 			ignoreTox = TRUE
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, -0.1, ORGAN_TREAT_ACUTE)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.1, TRUE)
 		if(0 to 15)
 			ignoreTox = TRUE
@@ -123,6 +123,7 @@
 				var/stress = 0.5
 				if(T.toxpwr > stress)
 					stress = T.toxpwr
+				stress *= 1+round(T.volume/10)
 				if(metabolic_stress <= 15)
 					if(T.volume <= toxTolerance)
 						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
@@ -133,13 +134,14 @@
 				if(ignoreTox)
 					C.reagents.remove_reagent(initial(pickedreagent.id), pickedreagent.metabolization_rate)
 					continue
-				//damage += (stress*toxLethality)
 
-			C.reagents.metabolize(C, can_overdose=TRUE)
-
+	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreTox)
 
 	var/metabolic_replenish = (4-(((damage*100)/maxHealth)/25))/10
-	adjustMetabolicStress(-metabolic_replenish)
+	if(metabolic_stress > 0)
+		adjustMetabolicStress(-metabolic_replenish)
+	else
+		adjustMetabolicStress(metabolic_replenish)
 
 /obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum)
 	if(!amount)
@@ -147,7 +149,7 @@
 	if(!maximum)
 		maximum = INFINITY
 	if(!minimum)
-		minimum = 0
+		minimum = min(0, metabolic_stress)
 	if(metabolic_stress>=maximum)
 		return FALSE
 	metabolic_stress = CLAMP(metabolic_stress + amount, minimum*minStressMod, maximum)
