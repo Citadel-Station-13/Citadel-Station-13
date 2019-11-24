@@ -429,7 +429,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 
 /datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
-	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity >= 0.85)
+	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity >= 0.95)
 		var/mob/living/simple_animal/pet/cat/custom_cat/catto = L
 		if(catto.origin)
 			var/mob/living/carbon/human/H = catto.origin
