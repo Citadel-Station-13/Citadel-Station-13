@@ -149,6 +149,7 @@
 	var/list/data = list()
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
+	data["dialysis"] = dialysis
 
 	data["chems"] = list()
 	for(var/chem in available_chems)

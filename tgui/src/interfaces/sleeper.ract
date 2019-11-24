@@ -43,6 +43,7 @@
 <ui-display title='Controls'>
 	<ui-section label='Door'>
     <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
+	<ui-button icon='{{data.dialysis ? "power-off" : "close"}}' style='{{data.dialysis ? "selected" : null}}' action='dialysis'>dialysis</ui-button>
 	</ui-section>
   <ui-section label='Inject'>
     {{#each data.chems}}

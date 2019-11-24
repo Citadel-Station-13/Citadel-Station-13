@@ -4,6 +4,7 @@
 	name = "Metabolic liquid"
 	id = "metabolic"
 
+//Base effects are inert to reduce comps
 /datum/reagent/metabolic/on_mob_life(mob/living/carbon/M)
 	return
 

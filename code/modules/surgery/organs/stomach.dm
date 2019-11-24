@@ -8,7 +8,7 @@
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1
 
-	healing_factor = STANDARD_ORGAN_HEALING*3
+	healing_factor = 0
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
@@ -17,7 +17,8 @@
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
 /obj/item/organ/stomach/on_life()
-	..()
+	if(is_cold())
+		return
 	var/datum/reagent/consumable/nutriment/Nutri
 	var/mob/living/carbon/C = owner
 	var/mob/living/carbon/human/H = owner
@@ -25,12 +26,6 @@
 		if(!(organ_flags & ORGAN_FAILING))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
-
-	//stomach acid stuff
-	if(C.reagents.pH > 7.25)
-		C.reagents.pH -= 0.2-(damage/500)
-	else if (C.reagents.pH < 6.75)
-		C.reagents.pH += 0.2-(damage/500)
 
 	var/deltapH = C.reagents.pH
 	if(deltapH>7)
@@ -47,15 +42,25 @@
 		if(2 to 4)
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1)
 			applyOrganDamage(0.15)
-		if(5)
+		if(4 to 5)
 			applyOrganDamage(0.1)
+		if(5 to INFINITY)
+			passive_regen()
+
+	if(organ_flags & ORGAN_FAILING)
+		return
+	//stomach acid stuff
+	if(C.reagents.pH > 7.25)
+		C.reagents.pH -= 0.2-(damage/500)
+	else if (C.reagents.pH < 6.75)
+		C.reagents.pH += 0.2-(damage/500)
 
 	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
 	if(!SA)
 		owner.reagents.add_reagent("stomach_acid", 1)
 		applyOrganDamage(5)
 	else if(SA.volume < 50)
-		SA.volume = CLAMP(volume + 1, 0, 50)
+		SA.volume = CLAMP(SA.volume + 1, 0, 50)
 
 	if(damage < low_threshold)
 		return

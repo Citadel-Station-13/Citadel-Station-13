@@ -143,11 +143,14 @@
 		return
 	if(is_cold())
 		return
+	passive_regen()
+
+/obj/item/organ/proc/passive_regen(modifier = 1)
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount) //to FERMI_TWEAK
+	applyOrganDamage(healing_amount*modifier) //to FERMI_TWEAK
 	//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)

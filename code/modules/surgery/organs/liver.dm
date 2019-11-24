@@ -81,6 +81,7 @@
 /obj/item/organ/liver/proc/metabolic_stress_calc()
 	var/mob/living/carbon/C = owner
 	var/ignoreTox = FALSE
+	var/reagentCount = LAZYLEN(owner.reagents.reagent_list)
 	switch(metabolic_stress)
 		if(-INFINITY to -10)
 			ignoreTox = TRUE
@@ -91,25 +92,26 @@
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.1, TRUE)
 		if(0 to 15)
+			passive_regen(1/reagentCount)
 			ignoreTox = TRUE
 		if(15 to 25)
-			applyOrganDamage(0.1)
+			applyOrganDamage(0.05)
 		if(25 to 40)
-			applyOrganDamage(0.15)
-			owner.adjustToxLoss(0.1, TRUE)
+			applyOrganDamage(0.1)
+			owner.adjustToxLoss(0.05, TRUE)
 		if(40 to 60)
+			applyOrganDamage(0.15)
+			owner.adjustToxLoss(0.15, TRUE)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+		if(60 to 90)
 			applyOrganDamage(0.2)
 			owner.adjustToxLoss(0.2, TRUE)
-			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2)
-		if(60 to 85)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.15)
+			owner.adjustStaminaLoss(1)
+		if(90 to INFINITY)
 			applyOrganDamage(0.25)
 			owner.adjustToxLoss(0.25, TRUE)
-			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.25)
-			owner.adjustStaminaLoss(1)
-		if(85 to INFINITY)
-			applyOrganDamage(0.3)
-			owner.adjustToxLoss(0.3, TRUE)
-			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2)
 			owner.adjustStaminaLoss(2)
 			swelling += 0.1
 
@@ -125,7 +127,7 @@
 				if(T.toxpwr > stress)
 					stress = T.toxpwr
 				if(ignoreTox)
-					stress += T.current_cycle/LAZYLEN(owner.reagents.reagent_list)
+					stress += T.current_cycle/reagentCount
 					message_admins("[stress]")
 					if(T.volume <= toxTolerance)
 						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
@@ -137,7 +139,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreTox)
 
-	var/metabolic_replenish = (4-(((damage*100)/maxHealth)/25))/10
+	var/metabolic_replenish = (2-(((damage*100)/maxHealth)/100))/10
 	if(metabolic_stress > 0)
 		adjustMetabolicStress(-metabolic_replenish)
 	else
