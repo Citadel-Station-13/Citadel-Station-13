@@ -1,63 +1,63 @@
 /datum/design/autoylathe
-	build_type = AUTOYLATHE
+  build_type = AUTOYLATHE
 
 /datum/design/autoylathe/mech
-	category = list("initial", "Figurines")
+  category = list("initial", "Figurines")
 
 /datum/design/autoylathe/mech/contraband
-	category = list("hacked", "Figurines")
+  category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/figure
-	category = list("initial", "Figurines")
+  category = list("initial", "Figurines")
 
 /datum/design/autoylathe/balloon
-	name = "Empty Water balloon"
-	id = "waterballoon"
-	materials = list(MAT_PLASTIC = 50)
-	build_path = /obj/item/toy/balloon
-	category = list("initial", "Toys")
+  name = "Empty Water balloon"
+  id = "waterballoon"
+  materials = list(MAT_PLASTIC = 50)
+  build_path = /obj/item/toy/balloon
+  category = list("initial", "Toys")
 
 /datum/design/autoylathe/spinningtoy
-	name = "Toy Singularity"
-	id = "singuloutoy"
-	materials = list(MAT_PLASTIC = 500)
-	build_path = /obj/item/toy/spinningtoy
-	category = list("initial", "Toys")
+  name = "Toy Singularity"
+  id = "singuloutoy"
+  materials = list(MAT_PLASTIC = 500)
+  build_path = /obj/item/toy/spinningtoy
+  category = list("initial", "Toys")
 
 /datum/design/autoylathe/capgun
-	name = "Cap Gun"
-	id = "capgun"
-	materials = list(MAT_PLASTIC = 500)
-	build_path = /obj/item/toy/gun
-	category = list("initial", "Pistols")
+  name = "Cap Gun"
+  id = "capgun"
+  materials = list(MAT_PLASTIC = 500)
+  build_path = /obj/item/toy/gun
+  category = list("initial", "Pistols")
 
 /datum/design/autoylathe/capgunammo
-	name = "Capgun Ammo"
-	id = "capgunammo"
-	materials = list(MAT_PLASTIC = 50)
-	build_path = /obj/item/toy/ammo/gun
-	category = list("initial", "misc")
+  name = "Capgun Ammo"
+  id = "capgunammo"
+  materials = list(MAT_PLASTIC = 50)
+  build_path = /obj/item/toy/ammo/gun
+  category = list("initial", "misc")
 
 /datum/design/autoylathe/toysword
-	name = "Toy Sword"
-	id = "toysword"
-	materials = list(MAT_PLASTIC = 500)
-	build_path = /obj/item/toy/sword
-	category = list("initial", "Melee")
+  name = "Toy Sword"
+  id = "toysword"
+  materials = list(MAT_PLASTIC = 500)
+  build_path = /obj/item/toy/sword
+  category = list("initial", "Melee")
 
 /datum/design/autoylathe/foamblade
-	name = "Foam Armblade"
-	id = "foamblade"
-	materials = list(MAT_PLASTIC = 500)
-	build_path = /obj/item/toy/foamblade
-	category = list("initial", "Melee")
+  name = "Foam Armblade"
+  id = "foamblade"
+  materials = list(MAT_PLASTIC = 500)
+  build_path = /obj/item/toy/foamblade
+  category = list("initial", "Melee")
 
 /datum/design/autoylathe/windupbox
-	name = "Wind Up Toolbox"
-	id = "windupbox"
-	materials = list(MAT_PLASTIC = 500)
-	build_path = /obj/item/toy/windupToolbox
-	category = list("initial", "Toys")
+  name = "Wind Up Toolbox"
+  id = "windupbox"
+  materials = list(MAT_PLASTIC = 500)
+  build_path = /obj/item/toy/windupToolbox
+  category = list("initial", "Toys")
 
 /datum/design/autoylathe/toydualsword
 	name = "Double-Bladed Toy Sword"
@@ -456,11 +456,11 @@
 	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/figure/wizard
-	name = "Wizard"
-	id = "wizfigure"
-	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
-	build_path = /obj/item/toy/figure/wizard
-	category = list("hacked", "Figurines")
+  name = "Wizard"
+  id = "wizfigure"
+  materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+  build_path = /obj/item/toy/figure/wizard
+  category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/dildo
 	name = "Customizable Dildo"
@@ -521,25 +521,23 @@
 //because why not make a boxed kit with all of the lastag shit?
 /obj/item/storage/box/blueteam
 	name = "Blue Team Kit"
-
 /obj/item/storage/box/blueteam/PopulateContents()
-	new /obj/item/clothing/head/helmet/bluetaghelm(src)
-	new /obj/item/clothing/suit/bluetag(src)
-	new /obj/item/gun/energy/laser/bluetag(src)
-	new /obj/item/clothing/gloves/color/blue(src)
-	new /obj/item/clothing/shoes/sneakers/blue(src)
-	new /obj/item/clothing/under/color/blue(src)
+  new /obj/item/clothing/head/helmet/bluetaghelm(src)
+  new /obj/item/clothing/suit/bluetag(src)
+  new /obj/item/gun/energy/laser/bluetag(src)
+  new /obj/item/clothing/gloves/color/blue(src)
+  new /obj/item/clothing/shoes/sneakers/blue(src)
+  new /obj/item/clothing/under/color/blue(src)
 
 /obj/item/storage/box/redteam
 	name = "Red Team Kit"
-
 /obj/item/storage/box/redteam/PopulateContents()
-	new /obj/item/clothing/head/helmet/redtaghelm(src)
-	new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/gun/energy/laser/redtag(src)
-	new /obj/item/clothing/gloves/color/red(src)
-	new /obj/item/clothing/shoes/sneakers/red(src)
-	new /obj/item/clothing/under/color/red(src)
+  new /obj/item/clothing/head/helmet/redtaghelm(src)
+  new /obj/item/clothing/suit/redtag(src)
+  new /obj/item/gun/energy/laser/redtag(src)
+  new /obj/item/clothing/gloves/color/red(src)
+  new /obj/item/clothing/shoes/sneakers/red(src)
+  new /obj/item/clothing/under/color/red(src)
 
 /datum/design/autoylathe/lastag/blue
 	name = "Blue Lasertag Kit"

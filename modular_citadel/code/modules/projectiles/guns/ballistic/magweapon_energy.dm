@@ -143,7 +143,6 @@
 // TECHWEBS IMPLEMENTATION
 */
 
-/*
 /datum/techweb_node/magnetic_weapons
 	id = "magnetic_weapons"
 	display_name = "Magnetic Weapons"
@@ -152,7 +151,6 @@
 	design_ids = list("magrifle_e", "magpistol_e", "mag_magrifle_e", "mag_magrifle_e_nl", "mag_magpistol_e", "mag_magpistol_e_nl")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
-*/
 
 ///magrifle///
 

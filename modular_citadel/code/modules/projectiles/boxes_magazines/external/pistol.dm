@@ -29,27 +29,27 @@
 	build_path = /obj/item/ammo_box/magazine/m10mm/hp
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/m10mm/ap
-	name = "pistol magazine (10mm AP)"
-	desc = "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
-	id = "10mmap"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 40000, MAT_TITANIUM = 60000)
-	build_path = /obj/item/ammo_box/magazine/m10mm/ap
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
+ 
+ /datum/design/m10mm/ap
+ 	name = "pistol magazine (10mm AP)"
+ 	desc = "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
+ 	id = "10mmap"
+ 	build_type = PROTOLATHE
+ 	materials = list(MAT_METAL = 40000, MAT_TITANIUM = 60000)
+ 	build_path = /obj/item/ammo_box/magazine/m10mm/ap
+ 	category = list("Ammo")
+ 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	
 /datum/design/bolt_clip
-	name = "Surplus Rifle Clip"
-	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
-	id = "bolt_clip"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000)
-	build_path = /obj/item/ammo_box/a762
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
+ 	name = "Surplus Rifle Clip"
+ 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
+ 	id = "bolt_clip"
+ 	build_type = PROTOLATHE
+ 	materials = list(MAT_METAL = 8000)
+ 	build_path = /obj/item/ammo_box/a762
+ 	category = list("Ammo")
+ 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+ 
 /datum/design/m45 //Kinda NT in throey
 	name = "handgun magazine (.45)"
 	id = "m45"
