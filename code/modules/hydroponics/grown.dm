@@ -131,7 +131,7 @@
 	..()
 
 /obj/item/reagent_containers/food/snacks/grown/generate_trash(atom/location)
-	if(trash && ispath(trash, /obj/item/grown))
+	if(trash && (ispath(trash, /obj/item/grown) || ispath(trash, /obj/item/reagent_containers/food/snacks/grown)))
 		. = new trash(location, seed)
 		trash = null
 		return
