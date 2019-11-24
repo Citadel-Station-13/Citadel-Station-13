@@ -137,6 +137,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+
+/datum/techweb_node/advplumbing
+	id = "advplumbing"
+	display_name = "Advanced Plumbing Technology"
+	description = "Plumbing RCD."	
+	prereq_ids = list("plumbing", "adv_engi", "adv_biotech")
+	design_ids = list("plumb_rcd")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	export_price = 5000
+
 /////////////////////////Advanced Surgery/////////////////////////
 /datum/techweb_node/imp_wt_surgery
 	id = "imp_wt_surgery"
@@ -173,6 +183,7 @@
 	design_ids = list("surgery_brainwashing","surgery_zombie", "surgery_ext_dissection", "surgery_heal_combo_upgrade_femto")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
+
 
 /////////////////////////data theory tech/////////////////////////
 /datum/techweb_node/datatheory //Computer science
