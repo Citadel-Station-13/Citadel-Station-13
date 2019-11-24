@@ -106,8 +106,8 @@
 	return
 
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
-	fluid_max_volume += modifier*5
-	fluid_rate += modifier
+	fluid_max_volume += modifer*5
+	fluid_rate += modifer
 	if(reagents)
 		reagents.maximum_volume = fluid_max_volume
 	return
