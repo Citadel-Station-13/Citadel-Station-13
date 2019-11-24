@@ -749,19 +749,19 @@
 		to_chat(world, "[user]'s power is [power_multiplier].")
 
 	//Mixables
-	var/static/regex/enthral_words = regex("relax|obey|love|serve|so easy|ara ara")
-	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job|splendid|jolly good|bloody brilliant")
+	var/static/regex/enthral_words = regex("relax|obey|love|serve|so easy|ara ara|old boy|pip pip|whatho|how about we discuss this|spot of tea")
+	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job|splendid|jolly good|jolly good show|bloody brilliant")
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention") 
+	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention") //works
 	//phase1
 	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/speak_words = regex("talk to me|speak")
 	var/static/regex/antiresist_words = regex("unable to resist|give in|stop being difficult")//useful if you think your target is resisting a lot
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
-	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
+	var/static/regex/forget_words = regex("forget|muddled|awake and forget|sneaky bollocks|gaslight")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
 	//phase 2
 	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //wah, lewd
@@ -1089,7 +1089,7 @@
 					if(C.client?.prefs.lewdchem)
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master], nor their political affiliations.</b></span>"), 5)
 					to_chat(user, "<span class='notice'><i>You put [C] into a sleeper state, ready to turn them back at the snap of your fingers.</i></span>")
 
 	//ATTRACT
