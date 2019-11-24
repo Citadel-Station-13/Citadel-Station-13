@@ -244,7 +244,7 @@
 	..()
 
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
+	var/wikiurl = CONFIG_GET(string/wikiurltg)
 	if(wikiurl)
 		dat = {"
 
@@ -260,7 +260,7 @@
 				function pageloaded(myframe) {
 					document.getElementById("loading").style.display = "none";
 					myframe.style.display = "inline";
-    			}
+				}
 			</script>
 			<p id='loading'>You start skimming through the manual...</p>
 			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
@@ -270,12 +270,66 @@
 
 			"}
 
-/obj/item/book/manual/wiki/chemistry
+/obj/item/book/manual/wiki/cit
+	name = "Citadel infobook"
+	icon_state ="book8"
+	author = "Nanotrasen"
+	title = "Citadel infobook"
+	page_link = ""
+	window_size = "1500x800" //Too squashed otherwise
+
+/obj/item/book/manual/wiki/cit/initialize_wikibook()
+	var/wikiurl = CONFIG_GET(string/wikiurl)
+	if(wikiurl)
+		dat = {"
+
+			<html><head>
+			<style>
+				iframe {
+					display: none;
+				}
+			</style>
+			</head>
+			<body>
+			<script type="text/javascript">
+				function pageloaded(myframe) {
+					document.getElementById("loading").style.display = "none";
+					myframe.style.display = "block";
+				}
+			</script>
+			<p id='loading'>You start skimming through the manual...</p>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
+			</body>
+
+			</html>
+
+			"}
+
+/obj/item/book/manual/wiki/cit/chemistry
 	name = "Chemistry Textbook"
 	icon_state ="chemistrybook"
 	author = "Nanotrasen"
 	title = "Chemistry Textbook"
+	page_link = "main/guides/guide_chemistry"
+
+/obj/item/book/manual/wiki/cit/chem_recipies
+	name = "Chemistry Recipies"
+	icon_state ="chemrecibook"
+	author = "Chemcat"
+	title = "Chemistry Recipies"
+	page_link = "main/guides/chem_recipies"
+
+/obj/item/book/manual/wiki/chemistry
+	name = "Outdated Chemistry Textbook"
+	icon_state ="chemistrybook_old"
+	author = "Nanotrasen"
+	title = "Outdated Chemistry Textbook"
 	page_link = "Guide_to_chemistry"
+
+/obj/item/book/manual/wiki/chemistry/Initialize()
+	..()
+	new /obj/item/book/manual/wiki/cit/chemistry(loc)
+	new /obj/item/book/manual/wiki/cit/chem_recipies(loc)
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"

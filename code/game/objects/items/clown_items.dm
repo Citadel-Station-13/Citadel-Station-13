@@ -111,22 +111,15 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-<<<<<<< HEAD
 	var/moodlet = "honk" //used to define which kind of moodlet is added to the honked target
 	var/list/honksounds = list('sound/items/bikehorn.ogg' = 1)
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 
 /obj/item/bikehorn/ComponentInitialize()
 	. = ..()
-<<<<<<< HEAD
 	AddComponent(/datum/component/squeak, honksounds, 50)
-=======
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, moodlet, /datum/mood_event/honk)
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
@@ -139,14 +132,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-<<<<<<< HEAD
 	honksounds = list('sound/items/airhorn2.ogg' = 1)
-=======
-
-/obj/item/bikehorn/airhorn/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 
 //golden bikehorn
 /obj/item/bikehorn/golden
@@ -175,6 +161,19 @@
 				continue
 		M.emote("flip")
 	flip_cooldown = world.time + 7
+
+/obj/item/bikehorn/silver
+	name = "silver bike horn"
+	desc = "A shiny bike horn handcrafted in the artisan workshops of Mars, with superior kevlar-reinforced rubber bulb attached to a polished plasteel reed horn."
+	attack_verb = list("elegantly HONKED")
+	icon_state = "silverhorn"
+
+/obj/item/bikehorn/bluespacehonker
+	name = "bluespace bike horn"
+	desc = "A normal bike horn colored blue and has bluespace dust held in to reed horn allowing for silly honks through space and time, into your in childhood."
+	attack_verb = list("HONKED in bluespace", "HONKED", "quantumly HONKED")
+	icon_state = "bluespacehonker"
+	moodlet = "bshonk"
 
 //canned laughter
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter

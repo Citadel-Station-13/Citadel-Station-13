@@ -6,7 +6,7 @@
 #define ACCESS_MORGUE 6
 #define ACCESS_TOX 7 //R&D department, R&D console, burn chamber on some maps
 #define ACCESS_TOX_STORAGE 8 //Toxins storage, burn chamber on some maps
-#define ACCESS_GENETICS 9 
+#define ACCESS_GENETICS 9
 #define ACCESS_ENGINE 10 //Engineering area, power monitor, power flow control console
 #define ACCESS_ENGINE_EQUIP 11 //APCs, EngiVend/YouTool, engineering equipment lockers
 #define ACCESS_MAINT_TUNNELS 12
@@ -64,6 +64,8 @@
 #define ACCESS_WEAPONS 66 //Weapon authorization for secbots
 #define ACCESS_NETWORK 67 //NTnet diagnostics/monitoring software
 #define ACCESS_CLONING 68 //Cloning room and clone pod ejection
+#define ACCESS_ENTER_GENPOP 69
+#define ACCESS_LEAVE_GENPOP 70
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

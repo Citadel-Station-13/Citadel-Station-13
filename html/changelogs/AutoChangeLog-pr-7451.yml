@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - admin: "When a gamemode fails pre_setup, it will now send a message in admin IRC and in ingame admin chat, instead of only being viewable in the logs."

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "The temperature notification will now take into consideration both the ambient temperature and your body temperature, increasing the responsiveness of the temperature notification and making it much more realistic."

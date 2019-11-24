@@ -1,6 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - rscadd: "Adds the bonermeter; a device that measures arousal based statistics."
-  - refactor: "Added a new input to the  electrostimulator that controls the strength of the shock. It accepts negative inputs which reduce arousal. Added a new output to the electrostimulator that displays the amount of arousal gained."
-  - balance: "Rebalanced the electro-stimulator to be less spammy by giving it a 2.5 second enforced cooldown per circuit contraption. Increased the complexity of electro stimulator from 10 to 15."

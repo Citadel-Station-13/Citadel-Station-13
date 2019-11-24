@@ -117,7 +117,6 @@
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
 #define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_DISSECTION "dissected"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -202,6 +201,8 @@
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
 #define SLIDE_ICE				(1<<3)
+#define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
+#define SLIP_WHEN_JOGGING		(1<<5) //slips prevented by walking are also dodged if the mob is not sprinting or fatigued... unless this flag is on.
 
 #define MAX_CHICKENS 50
 

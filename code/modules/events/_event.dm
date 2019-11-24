@@ -34,6 +34,7 @@
 
 /datum/round_event_control/wizard
 	wizardevent = 1
+	var/can_be_midround_wizard = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
@@ -54,7 +55,6 @@
 		return FALSE
 	return TRUE
 
-<<<<<<< HEAD
 /datum/round_event_control/wizard/canSpawnEvent(var/players_amt, var/gamemode)
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
@@ -62,8 +62,6 @@
 			return can_be_midround_wizard && ..()
 	return ..()
 
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
