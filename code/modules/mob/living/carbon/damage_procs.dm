@@ -1,4 +1,6 @@
-
+#define ORGAN_TREAT_ACUTE "acute"
+#define ORGAN_TREAT_CHRONIC "chronic"
+#define ORGAN_TREAT_END_STAGE "end_stage"
 
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
 	var/hit_percent = (100-blocked)/100
@@ -125,6 +127,25 @@
 			maximum = O.maxHealth
 		O.applyOrganDamage(amount, maximum)
 		O.onDamage(amount, maximum)
+
+/** cureOrganDamage
+	used for treating certain thresholds of damage.*/
+	//Lets you limit cures to threshold levels
+/mob/living/carbon/proc/cureOrganDamage(slot, amount, threshold = ORGAN_TREAT_END_STAGE)//defaults to healing acute.
+	var/obj/item/organ/O = getorganslot(slot)
+	if(!O)
+		return
+	if(!d) //Micro-optimization.
+		return
+	if(threshold == ORGAN_TREAT_ACUTE && damage>high_threshold) //0-45%
+		return
+	if(threshold == ORGAN_TREAT_CHRONIC && damage>maxHealth)//45-100%
+		return
+	if(d > 0) //make negative
+		d = -d
+	var/maximum = O.maxHealth
+	O.applyOrganDamage(amount, maximum)
+	O.onDamage(amount, maximum)
 
 /** setOrganLoss
   * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)

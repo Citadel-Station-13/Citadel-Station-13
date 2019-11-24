@@ -35,15 +35,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 91-100: Dangerously toxic - swift death
 */
 
+/datum/reagent/consumable/ethanol/on_mob_add(mob/living/L)
+		var/mob/living/carbon/C = L
+
+	..()
+
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
+	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if (istype(L))
 			C.applyLiverDamage((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150)
+	L.adjustMetabolicStress(boozepwr/100)
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -1502,14 +1508,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 3
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
-	if(holder.has_reagent("neurotoxin"))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
-		M.reagents.remove_reagent("neurotoxin", 1.5 * REAGENTS_METABOLISM, FALSE)
 	if(holder.has_reagent("fentanyl"))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
 		M.reagents.remove_reagent("fentanyl", 0.75 * REAGENTS_METABOLISM, FALSE)
+	else if(holder.has_reagent("neurotoxin"))
+		M.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
+		M.reagents.remove_reagent("neurotoxin", 1.5 * REAGENTS_METABOLISM, FALSE)
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REM, 150)
+		M.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
 		M.dizziness +=2
 	..()
 

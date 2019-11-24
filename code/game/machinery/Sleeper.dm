@@ -19,12 +19,13 @@
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
 		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
+		list("antitoxin", "mutadone", "mannitol", "potass_iodide"),
 		list("omnizine")
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	var/dialysis = FALSE //Is the patient currently undergoing dialysis?
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -225,6 +226,9 @@
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 
+		if("dialysis")
+			dialysis = TRUE
+
 /obj/machinery/sleeper/emag_act(mob/user)
 	. = ..()
 	scramble_chem_buttons()
@@ -300,6 +304,17 @@
 			L.adjustBruteLoss(-1)
 			L.adjustFireLoss(-1)
 			L.adjustOxyLoss(-5)
+	if(dialysis)
+		if(!occupant && !isliving(occupant))
+			dialysis = FALSE
+		var/mob/living/carbon/C = occupant
+		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		L.adjustMetabolicStress(-(0.1*efficiency))
+		C.blood_volume -= 2/efficiency
+		C.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/(100/efficiency)
+		for(var/datum/reagent/R in C.reagents.reagent_list)
+			C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
+
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"

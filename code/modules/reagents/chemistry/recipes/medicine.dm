@@ -209,6 +209,22 @@
 	results = list("mannitol" = 3)
 	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
 	mix_message = "The solution slightly bubbles, becoming thicker."
+	//FermiChem vars:
+	OptimalTempMin 		= 50		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax 		= 300 		// Upper end for above
+	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
+	OptimalpHMin 		= 5			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax 		= 9 		// Higest value for above
+	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 1 		// How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= -5 		// Temperature change per 1u produced
+	HIonRelease 		= 0 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 30 		// Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
+	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	PurityMin 			= 0.4
 
 /datum/chemical_reaction/mutadone
 	name = "Mutadone"
@@ -221,6 +237,22 @@
 	id = "neurine"
 	results = list("neurine" = 3)
 	required_reagents = list("mannitol" = 1, "acetone" = 1, "oxygen" = 1)
+	//FermiChem vars:
+	OptimalTempMin 		= 100		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax 		= 500 		// Upper end for above
+	ExplodeTemp 		= 700 		// Temperature at which reaction explodes
+	OptimalpHMin 		= 7.5		// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax 		= 9 		// Higest value for above
+	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= 2.5 		// Temperature change per 1u produced
+	HIonRelease 		= -0.025 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 50 		// Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
+	FermiExplode		= FERMI_EXPLOSION_TYPE_INVERTSMOKE
+	PurityMin 			= 0.4
 
 /datum/chemical_reaction/antihol
 	name = "antihol"
@@ -289,11 +321,28 @@
 	results = list("slimejelly" = 1)
 	required_reagents = list("toxin" = 1, "jellyblood" = 1)
 
-/datum/chemical_reaction/corazone
+/datum/chemical_reaction/corazone //7.433 -> 12.5 (should go slightly above 12.5)
 	name = "Corazone"
 	id = "corazone"
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
+	mix_message = "The solution gurgles as it's viscosity increases."
+	//FermiChem vars:
+	OptimalTempMin 		= 250		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax 		= 300 		// Upper end for above
+	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
+	OptimalpHMin 		= 7			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax 		= 12.5 		// Higest value for above
+	ReactpHLim 			= 3		// How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 0.1 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 0.8 		// How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= -2.5 		// Temperature change per 1u produced
+	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 35 		// Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
+	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	PurityMin 			= 0.4
 
 /datum/chemical_reaction/morphine
 	name = "Morphine"

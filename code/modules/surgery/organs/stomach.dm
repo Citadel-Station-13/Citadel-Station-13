@@ -8,7 +8,7 @@
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1
 
-	healing_factor = STANDARD_ORGAN_HEALING
+	healing_factor = STANDARD_ORGAN_HEALING*3
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
@@ -19,30 +19,40 @@
 /obj/item/organ/stomach/on_life()
 	..()
 	var/datum/reagent/consumable/nutriment/Nutri
+	var/mob/living/carbon/C = owner
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
-		Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
 
-		if(Nutri)
-			if(prob((damage/40) * Nutri.volume * Nutri.volume))
-				H.vomit(damage)
-				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-		else if(Nutri && damage > high_threshold)
-			if(prob((damage/10) * Nutri.volume * Nutri.volume))
-				H.vomit(damage)
-				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-
-	else if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
+	//stomach acid stuff
+	if(C.reagents.pH > 7)
+		C.reagents.pH -= 0.2-(damage/500)
+		if(C.reagents.pH > 10)
+			applyOrganDamage((C.reagents.pH-9)/4)
+	else if (C.reagents.pH < 7)
+		C.reagents.pH += 0.2-(damage/500)
+		if(C.reagents.pH < 4)
+			applyOrganDamage((4-C.reagents.pH)/4)
 
 	if(damage < low_threshold)
 		return
+
+
+	Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
+
+	if(Nutri)
+		if(prob((damage/40) * Nutri.volume * Nutri.volume))
+			H.vomit(damage)
+			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+	else if(Nutri && damage > high_threshold)
+		if(prob((damage/10) * Nutri.volume * Nutri.volume))
+			H.vomit(damage)
+			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+
 
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)

@@ -1,6 +1,6 @@
 #define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
-#define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_LETHALITY 0.01 //lower values lower how harmful toxins are to the liver
+#define LIVER_DEFAULT_TOX_TOLERANCE 2 //amount of toxins the liver can filter out
+#define LIVER_DEFAULT_TOX_LETHALITY 0.1 //lower values lower how harmful toxins are to the liver
 #define LIVER_SWELLING_MOVE_MODIFY "pharma"
 
 /obj/item/organ/liver
@@ -22,37 +22,27 @@
 	var/filterToxins = TRUE //whether to filter toxins
 	var/swelling = 0
 	var/cachedmoveCalc = 1
+	var/metabolic_stress = 0
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
 
 	if(istype(C))
 		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
-			//slowly heal liver damage
-			damage = max(0, damage - 0.1)
-
-			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-				//handle liver toxin filtration
-				for(var/I in C.reagents.reagent_list)
-					var/datum/reagent/pickedreagent = I
-					if(istype(pickedreagent, /datum/reagent/toxin))
-						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
-						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
-						else
-							damage += (thisamount*toxLethality)
-
 			//metabolize reagents
-			C.reagents.metabolize(C, can_overdose=TRUE)
-
+			metabolic_stress_calc()
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
+				to_chat(C, "<span class='warning'>You feel a dull throb in your abdomen.</span>")
+		else
+			C.liver_failure()
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
 
 	if(swelling >= 10)
 		pharmacokinesis()
+
+
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
@@ -85,6 +75,66 @@
 	H.next_move_modifier *= value
 	cachedmoveCalc = value
 
+/obj/item/organ/liver/proc/metabolic_stress_calc()
+	var/ignoreTox = FALSE
+	 switch(metabolic_stress)
+	 	if(-INFINITY to 15)
+			ignoreTox = TRUE
+		if(15 to 25)
+			ignoreTox = TRUE
+			applyOrganDamage(0.1)
+		if(20 to 40)
+			applyOrganDamage(0.15)
+			owner.adjustToxLoss(0.2, TRUE)
+		if(40 to 60)
+			applyOrganDamage(0.2)
+			owner.adjustToxLoss(0.2, TRUE)
+			owner.applyOrganDamage(ORGAN_SLOT_HEART, 0.2)
+		if(60 to 85)
+			applyOrganDamage(0.25)
+			owner.adjustToxLoss(0.25, TRUE)
+			owner.applyOrganDamage(ORGAN_SLOT_HEART, 0.25)
+			adjustStaminaLoss(0.25)
+		if(85 to INFINITY)
+			applyOrganDamage(0.3)
+			owner.adjustToxLoss(0.3, TRUE)
+			owner.applyOrganDamage(ORGAN_SLOT_HEART, 0.3)
+			adjustStaminaLoss(0.3)
+			swelling += 0.1
+
+
+
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		//handle liver toxin filtration
+		for(var/I in C.reagents.reagent_list)
+			var/datum/reagent/pickedreagent = I
+			if(istype(pickedreagent, /datum/reagent/toxin))
+				var/datum/reagent/toxin/T = pickedreagent
+				var/stress = 0.5 + round(T.volume/10)
+				if(T.toxpwr > stress)
+					stress = T.toxpwr
+				if(metabolic_stress <= 15)
+					if(T.volume <= toxTolerance && thisamount)
+						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
+						metabolic_stress += stress
+						continue
+
+				metabolic_stress += stress
+				if(ignoreTox)
+					C.reagents.remove_reagent(initial(pickedreagent.id), pickedreagent.metabolization_rate)
+					continue
+				damage += (stress*toxLethality)
+
+			C.reagents.metabolize(C, can_overdose=TRUE)
+
+
+	var/metabolic_replenish = (4-(((damage*100)/maxHealth)/25))/10
+	adjustMetabolicStress(-metabolic_replenish)
+
+/obj/item/organ/liver/proc/adjustMetabolicStress(amount, maximum)
+	if(metabolic_stress>=maximum)
+		return
+
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
@@ -109,8 +159,8 @@
 	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	toxTolerance = 15 //can shrug off up to 15u of toxins
-	toxLethality = 0.008 //20% less damage than a normal liver
+	toxTolerance = 5 //can shrug off up to 15u of toxins
+	toxLethality = 0.08 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
 	. = ..()

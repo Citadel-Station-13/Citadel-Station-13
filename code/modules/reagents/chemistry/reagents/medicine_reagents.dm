@@ -907,6 +907,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 				var/mob/living/carbon/H = M
 				for(var/organ in H.internal_organs)
 					var/obj/item/organ/O = organ
+					if(organ_flags & ORGAN_FAILING))
 					O.setOrganDamage(0)
 				M.updatehealth()
 
@@ -927,11 +928,16 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	description = "Efficiently restores brain damage."
 	color = "#DCDCFF"
 	pH = 10.4
+	purity = 0.8
+	impure_chem 		= "mannitol_impure"
+	inverse_chem_val 	= 0.5
+	inverse_chem		= "mannitol_impure"
+	chemical_flags 		= REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
-	if(prob(10))
-		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_ACUTE)
+	if(cached_purity > 0.98)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/neurine
@@ -939,12 +945,18 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	id = "neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
+	purity = 0.8
+	impure_chem 		= "neurine_impure"
+	inverse_chem_val 	= 0.5
+	inverse_chem		= "neurine_impure"
+	chemical_flags 		= REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))
 		holder.remove_reagent("neurotoxin", 5)
-	if(prob(15))
+	if(prob(cached_purity))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1343,6 +1355,11 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
+
+/datum/reagent/medicine/corazone/on_mob_life(mob/living/carbon/M)
+	C.cureOrganDamage(ORGAN_SLOT_HEART, ()-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
+	if(cached_purity > 0.98)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/5)*REM, ORGAN_TREAT_CHRONIC)
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
