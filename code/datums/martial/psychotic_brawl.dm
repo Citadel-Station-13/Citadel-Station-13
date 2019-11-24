@@ -1,6 +1,7 @@
 /datum/martial_art/psychotic_brawling
 	name = "Psychotic Brawling"
 	id = MARTIALART_PSYCHOBRAWL
+	pacifism_check = FALSE //Quite uncontrollable and unpredictable, people will still end up harming others with it.
 
 /datum/martial_art/psychotic_brawling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return psycho_attack(A,D)

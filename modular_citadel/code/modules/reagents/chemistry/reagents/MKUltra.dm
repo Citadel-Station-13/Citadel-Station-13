@@ -163,9 +163,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	creator = get_mob_by_key(creatorID)
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
-	creatorID = data.["creatorID"]
-	creatorGender = data.["creatorGender"]
-	creatorName = data.["creatorName"]
+	creatorID = data["creatorID"]
+	creatorGender = data["creatorGender"]
+	creatorName = data["creatorName"]
 	creator = get_mob_by_key(creatorID)
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)

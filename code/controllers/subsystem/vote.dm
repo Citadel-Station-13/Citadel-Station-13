@@ -153,6 +153,10 @@ SUBSYSTEM_DEF(vote)
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = "dynamic"
+				if("extended" in choices)
+					if(. == "extended")
+						GLOB.dynamic_forced_extended = TRUE // we still do the rest of the stuff
+					choices[PEACE] += choices["extended"]
 				var/mean = 0
 				var/voters = 0
 				for(var/client/c in GLOB.clients)
@@ -253,7 +257,11 @@ SUBSYSTEM_DEF(vote)
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("dynamic")
-				choices.Add(PEACE,CHAOS)
+				var/saved_threats = SSpersistence.saved_threat_levels
+				if((saved_threats[1]+saved_threats[2]+saved_threats[3])>150)
+					choices.Add("extended",PEACE,CHAOS)
+				else
+					choices.Add(PEACE,CHAOS)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
