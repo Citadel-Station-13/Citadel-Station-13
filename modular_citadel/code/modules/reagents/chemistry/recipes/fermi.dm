@@ -1,6 +1,3 @@
-#define FERMI_EXPLOSION_TYPE_MIXED TRUE
-#define FERMI_EXPLOSION_TYPE_INVERTSMOKE "smoke"
-
 /datum/chemical_reaction/fermi
 	mix_sound = 'sound/effects/bubbles.ogg'
 
