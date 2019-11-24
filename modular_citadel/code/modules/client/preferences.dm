@@ -15,7 +15,7 @@
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
-	var/lewdchem = FALSE
+	var/lewdchem = TRUE
 
 	//vore prefs
 	var/toggleeatingnoise = TRUE

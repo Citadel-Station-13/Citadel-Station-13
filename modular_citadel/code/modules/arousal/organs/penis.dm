@@ -23,7 +23,6 @@
 	prev_length = length
 	length = CLAMP(length + modifier, min, max)
 	update()
-	..()
 
 /obj/item/organ/genital/penis/update_size(modified = FALSE)
 	if(length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
