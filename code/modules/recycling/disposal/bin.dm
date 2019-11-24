@@ -132,7 +132,12 @@
 
 /obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
 	if(!pushing && !iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		return FALSE
+		if (iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if (!borg.module || !borg.module.canDispose)
+				return
+		else
+			return FALSE
 	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return FALSE
 	if(target.buckled || target.has_buckled_mobs())
@@ -283,7 +288,7 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		GET_COMPONENT_FROM(STR, /datum/component/storage, T)
+		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			STR.remove_from_storage(O,src)
@@ -354,6 +359,12 @@
 			. = TRUE
 	ui.soft_update_fields()
 
+/obj/machinery/disposal/bin/alt_attack_hand(mob/user)
+	if(can_interact(usr))
+		flush = !flush
+		update_icon()
+		return TRUE
+	return FALSE
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM)
 	if(isitem(AM) && AM.CanEnterDisposals())

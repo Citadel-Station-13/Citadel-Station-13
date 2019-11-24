@@ -34,12 +34,12 @@
 								)
 
 /obj/machinery/mecha_part_fabricator/Initialize()
-    var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-        TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-    materials.precise_insertion = TRUE
-    stored_research = new
-    return ..()
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
+		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+		TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	materials.precise_insertion = TRUE
+	stored_research = new
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -47,7 +47,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = (200000 + (T*50000))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
@@ -85,7 +85,7 @@
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -109,7 +109,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
@@ -130,7 +130,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return FALSE
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return TRUE
 	return FALSE
@@ -140,7 +140,7 @@
 	desc = "It's building \a [initial(D.name)]."
 	var/list/res_coef = get_resources_w_coeff(D)
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.use_amount(res_coef)
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
@@ -166,7 +166,7 @@
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -324,7 +324,7 @@
 	if(href_list["part"])
 		var/T = afilter.getStr("part")
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -335,7 +335,7 @@
 	if(href_list["add_to_queue"])
 		var/T = afilter.getStr("add_to_queue")
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -373,7 +373,7 @@
 	if(href_list["part_desc"])
 		var/T = afilter.getStr("part_desc")
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path
@@ -384,14 +384,14 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
-		GET_COMPONENT(materials, /datum/component/material_container)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/mecha_part_fabricator/on_deconstruction()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 	..()
 

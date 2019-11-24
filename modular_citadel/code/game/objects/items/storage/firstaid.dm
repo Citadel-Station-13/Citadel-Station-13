@@ -28,8 +28,8 @@
 	icon_state = "rad"
 
 /obj/item/storage/firstaid/radbgone/Initialize(mapload)
-    . = ..()
-    icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
+	. = ..()
+	icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
 
 /obj/item/storage/firstaid/tactical
 	icon_state = "tactical"
@@ -49,7 +49,7 @@
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
 	STR.can_hold = typecacheof(list(
 	/obj/item/hypospray/mkii,
@@ -151,7 +151,7 @@
 
 /obj/item/storage/hypospraykit/cmo/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
 	/obj/item/hypospray/mkii,

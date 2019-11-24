@@ -223,7 +223,7 @@
 	..()
 	to_chat(user, "It contains [get_fuel()] unit\s of fuel out of [max_fuel].")
 
-/obj/item/weldingtool/is_hot()
+/obj/item/weldingtool/get_temperature()
 	return welding * heat
 
 //Returns whether or not the welding tool is currently on.
@@ -302,6 +302,8 @@
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()

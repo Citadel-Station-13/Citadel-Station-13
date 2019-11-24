@@ -175,11 +175,12 @@
 
 	//Get the clone body ready
 	maim_clone(H)
-	ADD_TRAIT(H, TRAIT_STABLEHEART, "cloning")
-	ADD_TRAIT(H, TRAIT_EMOTEMUTE, "cloning")
-	ADD_TRAIT(H, TRAIT_MUTE, "cloning")
-	ADD_TRAIT(H, TRAIT_NOBREATH, "cloning")
-	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, "cloning")
+	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_MUTE, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOBREATH, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
@@ -353,7 +354,8 @@
 				O.organ_flags &= ~ORGAN_FROZEN
 		unattached_flesh.Cut()
 		mess = FALSE
-		new /obj/effect/gibspawner/generic(get_turf(src))
+		if(mob_occupant)
+			mob_occupant.spawn_gibs()
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		update_icon()
 		return
@@ -361,11 +363,12 @@
 	if(!mob_occupant)
 		return
 
-	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, "cloning")
-	REMOVE_TRAIT(mob_occupant, TRAIT_NOBREATH, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_NOBREATH, CLONING_POD_TRAIT)
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
@@ -471,8 +474,6 @@
 		unattached_flesh += organ
 
 	flesh_number = unattached_flesh.len
-
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
 
 /obj/machinery/clonepod/update_icon()
 	cut_overlays()

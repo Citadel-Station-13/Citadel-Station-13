@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "You can now quickly use unequipped items on objects by simply click-dragging the item onto the object with an empty active hand. Doing so will place the item in your hand, and then use that item on the object."

@@ -34,6 +34,7 @@
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
 	var/spread = 0						//Spread induced by the gun itself.
+	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 	var/inaccuracy_modifier = 1
 
@@ -62,16 +63,18 @@
 	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/zoom_out_amt = 0
-	var/datum/action/toggle_scope_zoom/azoom
+	var/datum/action/item_action/toggle_scope_zoom/azoom
+
+	var/dualwield_spread_mult = 1		//dualwield spread multiplier
 
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
 		pin = new pin(src)
 	if(gun_light)
-		alight = new /datum/action/item_action/toggle_gunlight(src)
-	build_zooming()
-
+		alight = new (src)
+	if(zoomable)
+		azoom = new (src)
 
 /obj/item/gun/CheckParts(list/parts_list)
 	..()
@@ -185,7 +188,7 @@
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(G.can_trigger_gun(user))
-				bonus_spread += 24 * G.weapon_weight
+				bonus_spread += 24 * G.weapon_weight * G.dualwield_spread_mult
 				loop_counter++
 				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
@@ -226,11 +229,11 @@
 				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
 		if(randomspread)
-			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread), 1)
 		else //Smart spread
-			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
+			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread), 1)
 
-		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
 			shoot_with_empty_chamber(user)
 			firing_burst = FALSE
 			return FALSE
@@ -259,7 +262,9 @@
 	var/randomized_gun_spread = 0
 	var/rand_spr = rand()
 	if(spread)
-		randomized_gun_spread =	rand(0,spread)
+		randomized_gun_spread =	rand(0, spread)
+	else if(burst_size > 1 && burst_spread)
+		randomized_gun_spread = rand(0, burst_spread)
 	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
 		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
@@ -275,7 +280,7 @@
 					to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -293,6 +298,7 @@
 
 	if(user)
 		user.update_inv_hands()
+		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
 
@@ -372,6 +378,12 @@
 	else
 		return ..()
 
+/obj/item/gun/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
+		zoom(user)
+	else if(istype(action, alight))
+		toggle_gunlight()
+
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
 		return
@@ -407,21 +419,10 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/gun/pickup(mob/user)
-	..()
-	if(azoom)
-		azoom.Grant(user)
-	if(alight)
-		alight.Grant(user)
-
-/obj/item/gun/dropped(mob/user)
-	..()
-	if(zoomed)
-		zoom(user,FALSE)
-	if(azoom)
-		azoom.Remove(user)
-	if(alight)
-		alight.Remove(user)
+/obj/item/gun/item_action_slot_check(slot, mob/user, datum/action/A)
+	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != SLOT_HANDS)
+		return FALSE
+	return ..()
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
@@ -468,41 +469,32 @@
 // ZOOMING //
 /////////////
 
-/datum/action/toggle_scope_zoom
+/datum/action/item_action/toggle_scope_zoom
 	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
-	var/obj/item/gun/gun = null
 
-/datum/action/toggle_scope_zoom/Trigger()
-	gun.zoom(owner)
-
-/datum/action/toggle_scope_zoom/IsAvailable()
+/datum/action/item_action/toggle_scope_zoom/IsAvailable()
 	. = ..()
-	if(!gun)
-		return FALSE
 	if(!.)
-		gun.zoom(owner, FALSE)
-	if(!owner.get_held_index_of_item(gun))
-		return FALSE
+		var/obj/item/gun/G = target
+		G.zoom(owner, FALSE)
 
-/datum/action/toggle_scope_zoom/Remove(mob/living/L)
-	gun.zoom(L, FALSE)
-	..()
-
+/datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
+	var/obj/item/gun/G = target
+	G.zoom(L, FALSE)
+	return ..()
 
 /obj/item/gun/proc/zoom(mob/living/user, forced_zoom)
-	if(!user || !user.client)
+	if(!(user?.client))
 		return
 
-	switch(forced_zoom)
-		if(FALSE)
-			zoomed = FALSE
-		if(TRUE)
-			zoomed = TRUE
-		else
-			zoomed = !zoomed
+	if(!isnull(forced_zoom))
+		if(zoomed == forced_zoom)
+			return
+		zoomed = forced_zoom
+	else
+		zoomed = !zoomed
 
 	if(zoomed)
 		var/_x = 0
@@ -524,16 +516,6 @@
 		user.client.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
-	return zoomed
-
-//Proc, so that gun accessories/scopes/etc. can easily add zooming.
-/obj/item/gun/proc/build_zooming()
-	if(azoom)
-		return
-
-	if(zoomable)
-		azoom = new()
-		azoom.gun = src
 
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)

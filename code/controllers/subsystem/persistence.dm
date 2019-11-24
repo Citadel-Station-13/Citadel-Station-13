@@ -1,4 +1,5 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
+#define MAX_RECENT_MAP_RECORD 10
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -11,11 +12,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
-<<<<<<< HEAD
 	var/list/saved_threat_levels = list(1,1,1)
 	var/list/saved_maps
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
@@ -30,11 +28,8 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
-<<<<<<< HEAD
 	LoadRecentThreats()
 	LoadRecentMaps()
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
@@ -173,7 +168,6 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
-<<<<<<< HEAD
 /datum/controller/subsystem/persistence/proc/LoadRecentThreats()
 	var/json_file = file("data/RecentThreatLevels.json")
 	if(!fexists(json_file))
@@ -192,8 +186,6 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_maps = json["maps"]
 
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
@@ -235,11 +227,8 @@ SUBSYSTEM_DEF(persistence)
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
-<<<<<<< HEAD
 	CollectThreatLevel()
 	RecordMaps()
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
@@ -395,7 +384,6 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-<<<<<<< HEAD
 /datum/controller/subsystem/persistence/proc/CollectThreatLevel()
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
@@ -417,8 +405,6 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 
-=======
->>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
 

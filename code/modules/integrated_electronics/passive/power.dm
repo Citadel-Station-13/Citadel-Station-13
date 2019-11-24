@@ -76,7 +76,7 @@
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industrial size!"
 	w_class = WEIGHT_CLASS_BULKY
 	extended_desc = "The siphon drains 2 kW of power from an APC in the same room as it as long as it has charge remaining. It will always drain \
- 	from the 'equipment' power channel."
+	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 15
 	spawn_flags = IC_SPAWN_RESEARCH

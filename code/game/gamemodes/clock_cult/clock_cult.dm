@@ -167,6 +167,7 @@ Credit where due:
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
+	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
 	while(starter_servants)
 		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
