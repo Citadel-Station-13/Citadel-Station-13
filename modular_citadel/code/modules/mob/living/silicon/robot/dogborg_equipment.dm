@@ -253,7 +253,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			if(!do_after(R, 50, target = target))
 				return //If they moved away, you can't eat them.
 			to_chat(R, "<span class='notice'>You finish off \the [target.name].</span>")
-			var/obj/item/stock_parts/cell.C = target
+			var/obj/item/stock_parts/cell/C = target
 			R.cell.charge = R.cell.charge + (C.charge / 3) //Instant full cell upgrades op idgaf
 			qdel(target)
 			return
@@ -322,7 +322,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/soap/tongue/flavour/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	var/mob/living/silicon/robot.R = user
+	var/mob/living/silicon/robot/R = user
 	if(ishuman(target))
 		var/mob/living/L = target
 		if(status == 0 && check_zone(R.zone_selected) == "head")
