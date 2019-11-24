@@ -16,6 +16,7 @@
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
 	window_name = "Honkomatic Bike Horn Unit v1.0.7"
+	oil_spill_type = /obj/effect/decal/cleanable/oil/slippery //slip and slide fun for the whole family
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 	path_image_color = "#FF69B4"
 
