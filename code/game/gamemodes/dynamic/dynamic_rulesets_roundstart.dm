@@ -149,6 +149,7 @@
 /datum/dynamic_ruleset/roundstart/wizard
 	name = "Wizard"
 	config_tag = "wizard"
+	persistent = TRUE
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
 	minimum_required_age = 14
@@ -183,7 +184,24 @@
 	for(var/datum/mind/M in assigned)
 		M.current.forceMove(pick(GLOB.wizardstart))
 		M.add_antag_datum(new antag_datum())
+		roundstart_wizards += M
 	return TRUE
+
+/datum/dynamic_ruleset/roundstart/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
+	for(var/datum/mind/wizard in roundstart_wizards)
+		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+			return FALSE
+
+	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
+		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
+			return FALSE
+
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
+
+	return RULESET_STOP_PROCESSING
+
 
 //////////////////////////////////////////////
 //                                          //
@@ -263,7 +281,7 @@
 	requirements = list(100,90,80,70,60,50,50,50,50,50)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
-	antag_cap = list(2,2,2,3,3,3,4,4,5,5)
+	antag_cap = list(1,1,2,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)

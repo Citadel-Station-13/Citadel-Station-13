@@ -339,10 +339,6 @@ Credit where due:
 	CLOCKCULTCHANGELOG\
 	</ul>\
 	<hr>\
-	<li><b>Zelus oil:</b> A new reagent. It can be used to heal the faithful to Ratvar, or kill heretics and moreso stun blood cultists,\
-	or splashed onto metal sheets to make brass. This chemical can be found in minimal quantities by grinding brass sheets.\
-	<li><b>Brass Flasks:</b>Intended to store Zelus Oil in, but can also be used as fragile single use throwing weapons in a pinch! \
-	These are crafted with a single sheet of brass and fit in the Clockwork Cuirass' suit storage.\
 	<b>Good luck!</b>"
 
 /obj/item/paper/servant_primer/Initialize()
