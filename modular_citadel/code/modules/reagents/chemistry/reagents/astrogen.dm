@@ -38,16 +38,17 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/datum/mind/originalmind
 
 /datum/action/chem/astral/Trigger()
-	if(origin.mind)
-		to_chat(origin, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
+	if(origin.mind && origin.mind != originalmind)
+		to_chat(originalmind.current, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
 		return ..()
 	if(origin.reagents.has_reagent("astral") )
 		var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in origin.reagents.reagent_list
 		if(As.current_cycle < 10)
-			to_chat(origin, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
+			to_chat(originalmind.current, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
 			return ..()
 	originalmind.transfer_to(origin)
-	qdel(src)
+	if(origin.mind == originalmind)
+		qdel(src)
 
 
 /datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
@@ -120,7 +121,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	log_game("FERMICHEM: [M] has astrally returned to their body!")
 	if(M.mind && M.mind == originalmind)
 		M.remove_status_effect(/datum/status_effect/chem/astral_insurance)
-	AS.Remove(M)
+	//AS.Remove(M)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.

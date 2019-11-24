@@ -281,11 +281,11 @@
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
 	if(reagents.has_reagent("astral"))
-		msg += "[t_He] have wild, spacey eyes"
+		msg += "[t_He] has wild, spacey eyes"
 		if(mind)
-			msg += " and have a strange, abnormal look to them.\n"
+			msg += " and they have a strange, abnormal look to them.\n"
 		else
-			msg += " and don't look like they're all there.\n"
+			msg += " and they don't look like they're all there.\n"
 
 	if(isliving(user))
 		var/mob/living/L = user
