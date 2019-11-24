@@ -380,3 +380,13 @@
 	id = "psicodine"
 	results = list("psicodine" = 5)
 	required_reagents = list( "mannitol" = 2, "water" = 2, "impedrezene" = 1)
+
+/*Do we want this?
+/datum/chemical_reaction/multiver
+	name = "Multiver"
+	id = "multiver"
+	results = list("multiver" = 2)
+	required_reagents = list("ash" = 1, "sodiumchloride" = 1)
+	mix_message = "The mixture yields a fine black powder."
+	required_temp = 380
+*/

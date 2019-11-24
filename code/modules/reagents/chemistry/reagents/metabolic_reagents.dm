@@ -3,6 +3,8 @@
 /datum/reagent/metabolic
 	name = "Metabolic liquid"
 	id = "metabolic"
+	chemical_flags = REAGENT_INVISIBLE //So they don't appear on scanners/sleepers
+
 
 //Base effects are inert to reduce comps
 /datum/reagent/metabolic/on_mob_life(mob/living/carbon/M)

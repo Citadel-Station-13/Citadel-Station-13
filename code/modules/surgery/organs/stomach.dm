@@ -8,7 +8,7 @@
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1
 
-	healing_factor = 0
+	healing_factor = STANDARD_ORGAN_HEALING*3
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
@@ -27,6 +27,8 @@
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
 
+	if(!C.reagents)
+		return
 	var/deltapH = C.reagents.pH
 	if(deltapH>7)
 		deltapH = 14-deltapH
@@ -42,18 +44,18 @@
 		if(2 to 4)
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1)
 			applyOrganDamage(0.15)
-		if(4 to 5)
+		if(4 to 5.5)
 			applyOrganDamage(0.1)
-		if(5 to INFINITY)
+		if(5.5 to INFINITY)
 			passive_regen()
 
 	if(organ_flags & ORGAN_FAILING)
 		return
 	//stomach acid stuff
 	if(C.reagents.pH > 7.25)
-		C.reagents.pH -= 0.2-(damage/500)
+		C.reagents.pH -= 0.1-(damage/1000)
 	else if (C.reagents.pH < 6.75)
-		C.reagents.pH += 0.2-(damage/500)
+		C.reagents.pH += 0.1-(damage/1000)
 
 	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
 	if(!SA)
@@ -117,15 +119,17 @@
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/stomach/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
-	owner.reagents.add_reagent("stomach_acid", 50)
-	..()
+	.=..()
+	if(owner.reagents)
+		owner.reagents.add_reagent("stomach_acid", 50)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
-	owner.reagents.remove_reagent("stomach_acid", 50)
+	if(owner.reagents)
+		owner.reagents.remove_reagent("stomach_acid", 50)
 	..()
 
 /obj/item/organ/stomach/fly

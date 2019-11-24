@@ -1486,3 +1486,33 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+//EDITED cobbychem borrows
+/datum/reagent/medicine/multiver //enhanced with MULTIple medicines
+	name = "Multiver"
+	id = "multiver"
+	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by Yamerol medicines)."
+
+//Wait so... this works by what? You want at least 5 medicines?
+/datum/reagent/medicine/multiver/on_mob_life(mob/living/carbon/human/M)
+	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
+	for(var/r in M.reagents.reagent_list)
+		var/datum/reagent/the_reagent = r
+		if(istype(the_reagent, /datum/reagent/medicine))
+			medibonus += 1
+	M.adjustToxLoss(-0.2 * medibonus)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 4.5/medibonus : 3)//Our lungs are 300hp instead of 100.
+	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+	if(L)
+		L.adjustMetabolicStress(0.5/medibonus)
+	for(var/r2 in M.reagents.reagent_list)
+		var/datum/reagent/the_reagent2 = r2
+		if(the_reagent2 == src)
+			continue
+		var/amount2purge = 0.1
+		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
+			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
+		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
+			continue
+		M.reagents.remove_reagent(the_reagent2.id, amount2purge)
+	..()

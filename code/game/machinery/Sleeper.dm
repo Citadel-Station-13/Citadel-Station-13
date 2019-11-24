@@ -19,7 +19,7 @@
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
 		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "potass_iodide"),
+		list("antitoxin", "mutadone", "mannitol", "multiver"),
 		list("omnizine")
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
@@ -185,7 +185,28 @@
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
+				if(R.chemical_flags & REAGENT_INVISIBLE)
+					continue
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			switch(L.metabolic_stress)
+				if(-INFINITY to -10)
+					data["occupant"]["metabolicColour"] = "normal"
+					data["occupant"]["metabolicStress"] = "Chronic liver treatment"
+				if(-10 to 0)
+					data["occupant"]["metabolicColour"] = "highlight"
+					data["occupant"]["metabolicStress"] = "Acute liver treatment"
+				if(0 to 15)
+					data["occupant"]["metabolicColour"] = "good"
+					data["occupant"]["metabolicStress"] = L.metabolic_stress
+				if(15 to 25)
+					data["occupant"]["metabolicColour"] = "average"
+					data["occupant"]["metabolicStress"] = L.metabolic_stress
+				if(25 to INFINITY)
+					data["occupant"]["metabolicColour"] = "bad"
+					data["occupant"]["metabolicStress"] = L.metabolic_stress
+
 		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
 			var/mob/living/carbon/C = mob_occupant
 			var/blood_id = C.get_blood_id()
@@ -228,7 +249,7 @@
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 
 		if("dialysis")
-			dialysis = TRUE
+			dialysis = !(dialysis)
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	. = ..()
@@ -262,6 +283,21 @@
 	var/list/av_chem = available_chems.Copy()
 	for(var/chem in av_chem)
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
+
+/obj/machinery/sleeper/process()
+	if(dialysis)
+		if(!occupant && !isliving(occupant))
+			dialysis = FALSE
+			return
+		var/mob/living/carbon/C = occupant
+		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		L.adjustMetabolicStress(-(0.1*efficiency), (-20/efficiency))
+		C.blood_volume -= 2/efficiency
+		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
+		for(var/datum/reagent/R in C.reagents.reagent_list)
+			if(istype(R, /datum/reagent/metabolic))
+				continue
+			C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
 
 
 /obj/machinery/sleeper/syndie
@@ -305,18 +341,7 @@
 			L.adjustBruteLoss(-1)
 			L.adjustFireLoss(-1)
 			L.adjustOxyLoss(-5)
-	if(dialysis)
-		if(!occupant && !isliving(occupant))
-			dialysis = FALSE
-		var/mob/living/carbon/C = occupant
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		L.adjustMetabolicStress(-(0.1*efficiency))
-		C.blood_volume -= 2/efficiency
-		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
-		for(var/datum/reagent/R in C.reagents.reagent_list)
-			if(istype(R, /datum/reagent/metabolic))
-				continue
-			C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
+	..()
 
 
 /obj/machinery/sleeper/old
