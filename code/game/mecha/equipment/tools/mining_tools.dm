@@ -100,12 +100,12 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/mecha/M)
 	..()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
 	butchering.butchering_enabled = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
 	..()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
 	butchering.butchering_enabled = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user)
@@ -115,7 +115,7 @@
 	if(target.stat == DEAD && target.getBruteLoss() >= 200)
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
-			var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+			GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
 			butchering.Butcher(chassis, target)
 		else
 			target.gib()

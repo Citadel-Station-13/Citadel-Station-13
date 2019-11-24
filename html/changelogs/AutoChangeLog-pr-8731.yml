@@ -1,0 +1,9 @@
+author: "Ghommie (original PRs by nicbn and coiax)"
+delete-after: True
+changes: 
+  - rscadd: "Microwave UI uses a radial menu now. You can see the contents by examining."
+  - rscadd: "Microwaves have a single wire accessible when open, the activation wire.
+When cut, the microwave will no longer function, when pulsed, the microwave
+will turn on."
+  - rscadd: "Stabilized dark purple extracts now cook items in your hands, rather than dropping
+the cooked item on the floor."

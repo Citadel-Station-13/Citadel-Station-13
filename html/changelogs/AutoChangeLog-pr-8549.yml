@@ -1,0 +1,6 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - tweak: "selling/time to craft"
+  - bugfix: "crafting problems, and red stamp exsplote"
+  - rscadd: "gives paper work sprites that are nicer"

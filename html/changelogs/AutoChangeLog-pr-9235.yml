@@ -1,0 +1,5 @@
+author: "Yakumo Chen"
+delete-after: True
+changes: 
+  - rscdel: "Removes autoscan"
+  - balance: "Scanning people now requires someone to operate the cloning computer regardless of part level."

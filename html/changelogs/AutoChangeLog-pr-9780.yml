@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - tweak: "The Big Red Button now sets bomb timers to 2 seconds, instead of 5."

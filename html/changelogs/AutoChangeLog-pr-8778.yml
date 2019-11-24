@@ -1,0 +1,16 @@
+author: "Ghommie (original PRs by carshalash, GranpaWalton, BebeYoshi & Hexmaniacosanna, Fire Chance, Ordonis, Krysonism and OnlineGirlfriend)"
+delete-after: True
+changes: 
+  - tweak: "Reduced booze power of Mead, Red Mead, and Irish Cream."
+  - tweak: "Increased booze power of Grappa."
+  - rscadd: "Added a new premium drink to the soda machine called \"Grey Bull\" which gives temporary shock resistance"
+  - rscadd: "A new drink called Blank Paper was added to the bar menu, it was made by a mime and it represents a new start."
+  - rscadd: "Adds a variety of fine alcoholic beverages for discerning patrons of the bar: Wizz Fizz, Bug Spray, Champagne, Applejack, Jack Rose, Turbo, Old Timer, Rubberneck, Duplex, Trappist Beer, Blazaam and Planet Cracker!"
+  - rscadd: "Also more nonalcoholic drinks: Cream Soda, Lemonade and Red Queen."
+  - rscadd: "Packs of a novel artificial sweetener have been added to the kitchen vendor."
+  - rscadd: "Bottles of trappist beer and champagne are now available in the premium seection of the booze-o-mat."
+  - rscadd: "Juicing parsnips now yields parsnip juice."
+  - rscadd: "Maintenance peaches."
+  - bugfix: "Grape soda now cools you down like other sodas."
+  - tweak: "tweaked the Arnold Palmer recipe, it now uses lemonade."
+  - imageadd: "Added new drink, bottle, vomit and peach can sprites."

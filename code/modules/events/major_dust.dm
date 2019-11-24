@@ -20,4 +20,10 @@
 	if(prob(50))
 		priority_announce(pick(reason), "Collision Alert")
 	else
-		print_command_report("[pick(reason)]", "Collision Alert")
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		for(var/obj/machinery/computer/communications/C in GLOB.machines)
+			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+				var/obj/item/paper/P = new(C.loc)
+				P.name = "Collision Alert"
+				P.info = "[pick(reason)]"
+				P.update_icon()

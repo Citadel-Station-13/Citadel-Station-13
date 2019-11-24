@@ -21,7 +21,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, ignore_dnr_observers = TRUE)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE)
 	GLOB.poi_list |= src
 	if(isnull(possible_seasonal_hats))
 		build_seasonal_hats()
@@ -40,7 +40,7 @@
 	. = ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/item/drone_shell/attack_ghost(mob/dead/observer/user)
+/obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone") || QDELETED(src) || QDELETED(user))
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
@@ -49,8 +49,6 @@
 		if(user.client.player_age < DRONE_MINIMUM_AGE)
 			to_chat(user, "<span class='danger'>You're too new to play as a drone! Please try again in [DRONE_MINIMUM_AGE - user.client.player_age] days.</span>")
 			return
-	if(!user.can_reenter_round())
-		return FALSE
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return

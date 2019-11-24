@@ -8,7 +8,6 @@
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	LAZYINITLIST(blood_DNA) //Kinda needed
 	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
 	create_reagents(300)
@@ -28,7 +27,7 @@
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
-		qdel(C)
+		return TRUE
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
@@ -45,11 +44,11 @@
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
-	if(W.get_temperature()) //todo: make heating a reagent holder proc
+	if(W.is_hot()) //todo: make heating a reagent holder proc
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			return
 		else
-			var/hotness = W.get_temperature()
+			var/hotness = W.is_hot()
 			reagents.expose_temperature(hotness)
 			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
 	else
@@ -82,9 +81,7 @@
 				add_blood = bloodiness
 			bloodiness -= add_blood
 			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
-			if(blood_DNA && blood_DNA.len)
-				S.add_blood_DNA(blood_DNA)
-				S.add_blood_overlay()
+			S.add_blood_DNA(return_blood_DNA())
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
@@ -93,4 +90,4 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return bloodiness
 	else
-		return FALSE
+		return 0

@@ -140,7 +140,7 @@
 	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
-	var/list/mob/living/listeners = list()
+	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L == user && !include_speaker)
@@ -663,7 +663,7 @@
 
 	//FIND THRALLS
 	message = lowertext(message)
-	var/list/mob/living/listeners = list()
+	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L.has_status_effect(/datum/status_effect/chem/enthrall))//Check to see if they have the status
@@ -917,7 +917,7 @@
 					speaktrigger += "[(H.client?.prefs.lewdchem?"You are my whole world and all of my being belongs to you, ":"I cannot think of anything else but aiding your cause, ")] "//Redflags!!
 
 			//mood
-			var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
+			GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 			switch(mood.sanity)
 				if(SANITY_GREAT to INFINITY)
 					speaktrigger += "I'm beyond elated!! " //did you mean byond elated? hohoho

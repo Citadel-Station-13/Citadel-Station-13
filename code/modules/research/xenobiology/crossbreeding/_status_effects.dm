@@ -64,9 +64,10 @@
 	var/interrupted = FALSE
 	var/mob/target
 	var/icon/bluespace
+	var/datum/weakref/redirect_component
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/resistField))))
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -76,9 +77,9 @@
 /datum/status_effect/slimerecall/proc/resistField()
 	interrupted = TRUE
 	owner.remove_status_effect(src)
-
 /datum/status_effect/slimerecall/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	qdel(redirect_component.resolve())
+	redirect_component = null
 	owner.cut_overlay(bluespace)
 	if(interrupted || !ismob(target))
 		to_chat(owner, "<span class='warning'>The bluespace tug fades away, and you feel that the force has passed you by.</span>")
@@ -97,9 +98,10 @@
 	duration = -1 //Will remove self when block breaks.
 	alert_type = /obj/screen/alert/status_effect/freon/stasis
 	var/obj/structure/ice_stasis/cube
+	var/datum/weakref/redirect_component
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/breakCube))))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -116,7 +118,8 @@
 	if(cube)
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	qdel(redirect_component.resolve())
+	redirect_component = null
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"
@@ -372,11 +375,15 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod += 0.5
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod -= 0.5
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -563,7 +570,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	name = "burning fingertips"
 	desc = "You shouldn't see this."
 
-/obj/item/hothands/get_temperature()
+/obj/item/hothands/is_hot()
 	return 290 //Below what's required to ignite plasma.
 
 /datum/status_effect/stabilized/darkpurple
@@ -688,15 +695,20 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.physiology.speed_mod--
 	else if(mod < 1)
 		mod++
-		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.physiology.speed_mod++
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod += -mod //Reset the changes.
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -904,7 +916,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(owner, TRAIT_GOTTAGOFAST,"slimestatus")
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -915,7 +927,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS)
+	REMOVE_TRAIT(owner, TRAIT_GOTTAGOFAST,"slimestatus")
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

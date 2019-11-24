@@ -34,7 +34,7 @@
 	update_icon()
 	..()
 
-/obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(inflamed)
 		M.ForceContractDisease(new /datum/disease/appendicitis(), FALSE, TRUE)

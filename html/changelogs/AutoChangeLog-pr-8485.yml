@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "More plushies"
+  - tweak: "attack verbs and descs"

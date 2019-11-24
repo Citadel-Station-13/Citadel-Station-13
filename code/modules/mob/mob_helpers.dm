@@ -67,8 +67,8 @@
 /proc/slur(n,var/strength=50)
 	strength = min(strength,50)
 	var/phrase = html_decode(n)
-	var/leng = length(phrase)
-	var/counter=length(phrase)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -88,7 +88,7 @@
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
-				newletter=" BURP!"
+				newletter=" *BURP*."
 		if(rand(1,100) <= strength*0.5)
 			if(rand(1,5) == 1)
 				newletter+="'"
@@ -102,8 +102,8 @@
 
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = html_decode(n)
-	var/leng = length(phrase)
-	var/counter=length(phrase)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -352,12 +352,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, ignore_dnr_observers = FALSE) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			if ((ignore_key && (O.ckey in GLOB.poll_ignore[ignore_key])) || (ignore_dnr_observers && !O.can_reenter_round(TRUE)))
+			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
 				continue
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
 			if(ghost_sound)
@@ -486,6 +486,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/can_hear()
 	. = TRUE
+<<<<<<< HEAD
 
 /proc/bloodtype_to_color(var/type)
 	. = BLOOD_COLOR_HUMAN
@@ -532,3 +533,5 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!held_item)
 		return
 	return held_item.GetID()
+=======
+>>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks

@@ -1,0 +1,7 @@
+author: "Ghommie (original PRs by subject217, AarontheIdiot, pireamaineach, Gousaid67 and SouDescolado)"
+delete-after: True
+changes: 
+  - balance: "Removed plasmamen species speedmod in favor of a slowdown for envirosuits."
+  - rscadd: "Nanotrasen has began deploying departementalized enviro plasmasuits to the station! plasmamens can now benefit from some of the bonuses aswell as the color pattern of their job, while allowing others to easily determine their profession!"
+  - bugfix: "Benevolent Nanotrasen makes gulag available for everyone! (Plasmamen retain their equipment and don't die.)"
+  - rscdel: "Removes code that theoretically limits plasmamen from being clowns and mimes, but actually doesn't."

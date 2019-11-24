@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "having one of your hands used up if you fireman carry but the person being carried dismounts any way other than you dropping them"

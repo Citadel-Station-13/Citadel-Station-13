@@ -3,7 +3,6 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
-	req_access = list(ACCESS_CARGO)
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
@@ -18,7 +17,6 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
-	req_access = list()
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
@@ -31,11 +29,11 @@
 		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
-	. = EXPORT_CARGO
+	var/cat = EXPORT_CARGO
 	if(contraband)
-		. |= EXPORT_CONTRABAND
+		cat |= EXPORT_CONTRABAND
 	if(obj_flags & EMAGGED)
-		. |= EXPORT_EMAG
+		cat |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	. = ..()
@@ -116,9 +114,6 @@
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
-	if(!allowed(usr))
-		to_chat(usr, "<span class='notice'>Access denied.</span>")
-		return
 	if(action != "add" && requestonly)
 		return
 	switch(action)
@@ -167,7 +162,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
-				rank = H.get_assignment(hand_first = TRUE)
+				rank = H.get_assignment()
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"

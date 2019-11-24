@@ -31,7 +31,12 @@
 
 /datum/antagonist/pirate/on_gain()
 	if(crew)
-		objectives |= crew.objectives
+		owner.objectives |= crew.objectives
+	. = ..()
+
+/datum/antagonist/pirate/on_removal()
+	if(crew)
+		owner.objectives -= crew.objectives
 	. = ..()
 
 /datum/team/pirate
@@ -48,9 +53,7 @@
 	getbooty.update_explanation_text()
 	objectives += getbooty
 	for(var/datum/mind/M in members)
-		var/datum/antagonist/pirate/P = M.has_antag_datum(/datum/antagonist/pirate)
-		if(P)
-			P.objectives |= objectives
+		M.objectives |= objectives
 
 
 /datum/objective/loot

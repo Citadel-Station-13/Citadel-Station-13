@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - rscadd: "Poly now has a 0.01% chance per squawk to speak through the TGS relay."

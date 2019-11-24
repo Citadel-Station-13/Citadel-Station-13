@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes stunbatons icon not properly updating on cell removal and insertion."
+  - tweak: "Allows lower charge cells to be used with stun batons, and thus single use crapshots batons."

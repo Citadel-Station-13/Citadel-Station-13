@@ -3830,7 +3830,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "kY" = (
-/obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "kZ" = (

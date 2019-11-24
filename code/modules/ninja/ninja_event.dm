@@ -14,7 +14,6 @@ Contents:
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 40 MINUTES
-	gamemode_blacklist = list("dynamic")
 	min_players = 15
 
 /datum/round_event/ghost_role/ninja

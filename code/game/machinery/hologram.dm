@@ -24,8 +24,6 @@ Possible to do for anyone motivated enough:
  * Holopad
  */
 
-GLOBAL_LIST_EMPTY(network_holopads)
-
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
 
@@ -57,6 +55,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 	var/record_user			//user that inititiated the recording
 	var/obj/effect/overlay/holo_pad_hologram/replay_holo	//replay hologram
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
+	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
 	var/ringing = FALSE
 	var/offset = FALSE
@@ -97,7 +96,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 /obj/machinery/holopad/Initialize()
 	. = ..()
 	if(on_network)
-		GLOB.network_holopads += src
+		holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -117,7 +116,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 
 	QDEL_NULL(disk)
 
-	GLOB.network_holopads -= src
+	holopads -= src
 	return ..()
 
 /obj/machinery/holopad/power_change()
@@ -261,7 +260,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 		if(usr.loc == loc)
 			var/list/callnames = list()
-			for(var/I in GLOB.network_holopads)
+			for(var/I in holopads)
 				var/area/A = get_area(I)
 				if(A)
 					LAZYADD(callnames[A], I)
@@ -475,7 +474,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
 	if(!h || h.HC) //Holocalls can't change source.
 		return FALSE
-	for(var/pad in GLOB.network_holopads)
+	for(var/pad in holopads)
 		var/obj/machinery/holopad/another = pad
 		if(another == src)
 			continue

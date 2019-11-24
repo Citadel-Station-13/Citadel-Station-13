@@ -1,0 +1,6 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - rscadd: "It's now possible to forcefully eject the occupants of a dogborg's sleeper by using a crowbar on them. This action is instant."
+  - tweak: "Resist values for dogborg sleepers have been adjusted. The baseline has been decreased from 30 seconds to 15 seconds. Medihound sleepers have a resist timer of 3 seconds. Sechound sleepers retain a resist timer of 30 seconds."
+  - tweak: "It now takes 10 full seconds to insert people into your sleeper. This should hopefully give people some more room to breathe and react to a dogborg attempting to sleeper someone either for no reason or in a way that violates law 2."

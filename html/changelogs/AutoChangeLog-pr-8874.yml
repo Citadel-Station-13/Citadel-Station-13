@@ -1,0 +1,5 @@
+author: "Ghommie (original PRs by Floyd/Qustinnus, optimumtact, Denton and coiax)"
+delete-after: True
+changes: 
+  - rscadd: "You can now select what your pills will look like when making pills from the Chem Master"
+  - rscadd: "Red pills can make you think."

@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Digitigrade legs are now able to wear shoes and look fancy, Uniforms to come."
+  - tweak: "Xenos are only digitigrade now, mammals and aquatics have the option."

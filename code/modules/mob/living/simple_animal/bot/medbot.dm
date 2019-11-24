@@ -51,7 +51,6 @@
 	var/treatment_fire = "kelotane"
 	var/treatment_tox_avoid = "tricordrazine"
 	var/treatment_tox = "charcoal"
-	var/treatment_tox_toxlover = "toxin"
 	var/treatment_virus_avoid = null
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
@@ -382,8 +381,8 @@
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
-	var/treatment_toxavoid = get_avoidchem_toxin(C)
-	if(((isnull(treatment_toxavoid) || !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
+
+	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
@@ -396,12 +395,6 @@
 				return TRUE //STOP DISEASE FOREVER
 
 	return FALSE
-
-/mob/living/simple_animal/bot/medbot/proc/get_avoidchem_toxin(mob/M)
-	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? null : treatment_tox_avoid
-
-/mob/living/simple_animal/bot/medbot/proc/get_healchem_toxin(mob/M)
-	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? treatment_tox_toxlover : treatment_tox
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
 	if(iscarbon(A))
@@ -470,10 +463,8 @@
 				reagent_id = treatment_fire
 
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
-			var/toxin_heal_avoid = get_avoidchem_toxin(C)
-			var/toxin_healchem = get_healchem_toxin(C)
-			if(!C.reagents.has_reagent(toxin_healchem) && (isnull(toxin_heal_avoid) || !C.reagents.has_reagent(toxin_heal_avoid)))
-				reagent_id = toxin_healchem
+			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
+				reagent_id = treatment_tox
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)

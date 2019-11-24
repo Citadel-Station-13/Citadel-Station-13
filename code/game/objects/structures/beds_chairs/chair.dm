@@ -495,25 +495,7 @@
 	icon_state = "sofamiddle"
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
-	var/mutable_appearance/armrest
-
-/obj/structure/chair/sofa/Initialize()
-	armrest = mutable_appearance(icon, "[icon_state]_armrest")
-	return ..()
-
-/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
-	. = ..()
-	update_armrest()
-
-/obj/structure/chair/sofa/proc/update_armrest()
-	if(has_buckled_mobs())
-		add_overlay(armrest)
-	else
-		cut_overlay(armrest)
-
-/obj/structure/chair/sofa/post_unbuckle_mob()
-	. = ..()
-	update_armrest()
+	item_chair = null
 
 /obj/structure/chair/sofa/left
 	icon_state = "sofaend_left"
@@ -523,6 +505,3 @@
 
 /obj/structure/chair/sofa/corner
 	icon_state = "sofacorner"
-
-/obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
-	return

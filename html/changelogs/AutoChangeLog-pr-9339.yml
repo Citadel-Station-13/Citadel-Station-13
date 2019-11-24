@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Removes revenant blight's shabby toxin damage in favor of mood maluses, and a dangerous necropolis curse if not cured in time. Remember"

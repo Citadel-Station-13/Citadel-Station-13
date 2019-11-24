@@ -1,9 +1,8 @@
-/mob/living/carbon/alien/spawn_gibs(with_bodyparts, atom/loc_override)
-	var/location = loc_override ? loc_override.drop_location() : drop_location()
+/mob/living/carbon/alien/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
-		new /obj/effect/gibspawner/xeno(location, src)
+		new /obj/effect/gibspawner/xeno(drop_location())
 	else
-		new /obj/effect/gibspawner/xeno/bodypartless(location, src)
+		new /obj/effect/gibspawner/xenobodypartless(drop_location())
 
 /mob/living/carbon/alien/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-a")

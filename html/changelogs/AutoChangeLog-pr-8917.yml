@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - bugfix: "Warp whistles no longer grant permanent invulnerability and invisibility"

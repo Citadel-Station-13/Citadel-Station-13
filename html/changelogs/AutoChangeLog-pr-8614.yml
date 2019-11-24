@@ -1,0 +1,4 @@
+author: "Ghommie (original PR by SpaceManiac)"
+delete-after: True
+changes: 
+  - bugfix: "Disassembling a chem dispenser for the first time will no longer always yield a fully-charged cell."

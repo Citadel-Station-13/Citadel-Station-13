@@ -1,0 +1,8 @@
+author: "CameronWoof"
+delete-after: True
+changes: 
+  - tweak: "Fluid-producing sexual organs no longer start full"
+  - tweak: "Sexual organ fluid capacity decreased from 50 to 15"
+  - tweak: "Sexual organ production rate decreased from 5u to 0.035u per two seconds."
+  - tweak: "Sexual fluid decals no longer contain reagents"
+  - tweak: "Sexual fluids cannot by synthesized (e.g., by the Odysseus)"

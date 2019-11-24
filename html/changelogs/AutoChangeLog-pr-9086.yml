@@ -1,0 +1,4 @@
+author: "original by TheChosenEvilOne, port by sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "Ported dynamic mode from /vg/, originally made by @DeityLink, @Kurfursten and @ShiftyRail"

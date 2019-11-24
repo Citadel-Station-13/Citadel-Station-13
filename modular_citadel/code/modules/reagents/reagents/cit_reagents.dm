@@ -2,7 +2,7 @@
 /datum/reagent/consumable/semen
 	name = "Semen"
 	id = "semen"
-	description = "Sperm from some animal. I bet you'll drink this out of a bucket someday."
+	description = "Sperm from some animal. Useless for anything but insemination, really."
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
@@ -39,9 +39,7 @@
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-	if(S.blood_DNA)
-		blood_DNA |= S.blood_DNA.Copy()
-	..()
+	S.add_blood_DNA(return_blood_DNA())
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
@@ -73,8 +71,7 @@
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	if(F.blood_DNA)
-		blood_DNA |= F.blood_DNA.Copy()
+	F.add_blood_DNA(return_blood_DNA())
 	..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
@@ -114,8 +111,8 @@
 	name = "Hexacrocin"
 	id = "aphro+"
 	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
-					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
-					permanent increase in libido (commonly referred to as 'bimbofication')."
+					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a\
+					 permanent increase in libido (commonly referred to as 'bimbofication')."
 	taste_description = "liquid desire"
 	color = "#FF2BFF"//dark pink
 	addiction_threshold = 20

@@ -2,7 +2,11 @@
 	name = "Anthromorphic Insect"
 	id = "insect"
 	default_color = "00FF00"
+<<<<<<< HEAD
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR)
+=======
+	species_traits = list(LIPS,NOEYES,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR)
+>>>>>>> parent of b404e18b15... Merge branch 'master' into FERMICHEMCurTweaks
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
 	mutant_bodyparts = list("mam_ears", "mam_snout", "mam_tail", "taur", "insect_wings", "mam_snouts", "insect_fluff","horns")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None",

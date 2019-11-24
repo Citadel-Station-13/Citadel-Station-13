@@ -893,7 +893,7 @@
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
-		var/datum/component/storage/STR = A.GetComponent(/datum/component/storage)
+		GET_COMPONENT_FROM(STR, /datum/component/storage, A)
 		if(STR)
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
@@ -1104,7 +1104,7 @@
 /obj/item/integrated_circuit/input/matscan/do_work()
 	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/turf/T = get_turf(src)
-	var/datum/component/material_container/mt = H.GetComponent(/datum/component/material_container)
+	GET_COMPONENT_FROM(mt, /datum/component/material_container, H)
 	if(!mt) //Invalid input
 		return
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.

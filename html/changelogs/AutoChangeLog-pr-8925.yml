@@ -1,0 +1,4 @@
+author: "BurgerLUA"
+delete-after: True
+changes: 
+  - bugfix: "Fixed autolathe wires not correctly shocking you when pulsed."

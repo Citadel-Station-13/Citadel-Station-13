@@ -66,7 +66,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/obj/item/coin/coin
 	var/obj/item/stack/spacecash/bill
 
-	var/static/vending_cache = list() //used for storing the icons of items being vended
+	var/global/vending_cache = list() //used for storing the icons of items being vended
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 

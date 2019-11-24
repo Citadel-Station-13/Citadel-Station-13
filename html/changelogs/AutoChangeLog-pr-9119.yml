@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "mining shuttle console can now be printed after computer consoles have been researched"

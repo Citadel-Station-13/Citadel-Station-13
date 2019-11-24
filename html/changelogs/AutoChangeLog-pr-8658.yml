@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Moving some tablecrafting recipes to the appropriate categories: Kitty ears and lizard cloche hats to \"clothing\"; Hot dogs to \"Sandwichs\"; Cuban carb, fish and chips and fish fingers to \"Fish\"."
+  - bugfix: "Fixes the not-a-sandwich recipe being M.I.A."

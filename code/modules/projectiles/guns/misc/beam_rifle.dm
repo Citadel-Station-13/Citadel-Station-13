@@ -45,7 +45,7 @@
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
-
+	
 	var/structure_piercing = 1
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
@@ -76,7 +76,7 @@
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
-	var/mob/listeningTo
+	var/datum/component/mobhook
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -111,9 +111,7 @@
 				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
 			if(ZOOM_LOCK_OFF)
 				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
-		reset_zooming()
-	else
-		return ..()
+	reset_zooming()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
@@ -174,7 +172,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
-	listeningTo = null
+	QDEL_NULL(mobhook)
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
@@ -261,17 +259,14 @@
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
+	QDEL_NULL(mobhook)
 	if(istype(current_user))
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
 		current_user = null
 	if(istype(user))
 		current_user = user
 		LAZYOR(current_user.mousemove_intercept_objects, src)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
-		listeningTo = user
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)

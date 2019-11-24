@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - balance: "Clockwork Cult walls can no longer be deconstructed by RCDs when heated."

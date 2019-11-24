@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - rscadd: "The alert level is displayed at the job selection screen."

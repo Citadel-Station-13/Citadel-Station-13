@@ -11,7 +11,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace, /obj/item/seeds/banana/exotic_banana)
+	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
 	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/banana
@@ -119,41 +119,6 @@
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
-
-//Banana Spider.
-/obj/item/seeds/banana/exotic_banana
-	name = "pack of exotic banana seeds"
-	desc = "They're seeds that grow into banana trees. However, those bananas might be alive."
-	icon_state = "seed_exoticbanana"
-	species = "exoticbanana"
-	icon_grow = "banana-grow"
-	plantname = "Exotic Banana Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
-	mutatelist = list()
-	genes = list(/datum/plant_gene/trait/slip)
-
-/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
-	seed = /obj/item/seeds/banana/exotic_banana
-	name = "banana spider"
-	desc = "You do not know what it is, but you can bet the clown would love it."
-	icon_state = "exoticbanana"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
-	foodtype = GROSS | MEAT | RAW | FRUIT
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
-	var/awakening = 0
-
-/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable/attack_self(mob/user)
-	if(awakening || isspaceturf(user.loc))
-		return
-	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
-	awakening = 1
-
-	spawn(30)
-		if(!QDELETED(src))
-			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
-			S.speed += round(10 / seed.potency)
-			S.visible_message("<span class='notice'>The banana spider chitters as it stretches its legs.</span>")
-			qdel(src)
 
 // Other
 /obj/item/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes

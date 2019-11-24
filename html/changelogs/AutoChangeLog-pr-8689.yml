@@ -1,0 +1,4 @@
+author: "Fermis"
+delete-after: True
+changes: 
+  - rscadd: "Added a panda simplemob"

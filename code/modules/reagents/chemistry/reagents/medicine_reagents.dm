@@ -8,7 +8,6 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
-	value = 2
 	taste_description = "bitterness"
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)
@@ -128,7 +127,6 @@
 	description = "Instantly restores all hearing to the patient, but does not cure deafness."
 	color = "#6600FF" // rgb: 100, 165, 255
 	pH = 2
-	value = 10
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
 	M.restoreEars()
@@ -211,7 +209,6 @@
 	overdose_threshold = 30
 	taste_description = "fish"
 	pH = 12.2
-	value = 20
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -239,13 +236,10 @@
 /datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
-	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. It is mildly poisonous taken orally or by injection. If overdosed, deals brute and minor liver damage."
+	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	pH = 7.2
 	color = "#ffeac9"
-	metabolization_rate = 5 * REAGENTS_METABOLISM
-	overdose_threshold = 50
-	value = 3
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -266,15 +260,6 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/silver_sulfadiazine/overdose_start(mob/living/M)
-	metabolization_rate = 15 * REAGENTS_METABOLISM
-	M.adjustBruteLoss(2*REM, 0)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.applyLiverDamage(1)
-	..()
-	. = 1
-
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
@@ -284,10 +269,9 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	pH = 10.7
-	value = 4
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
-	if(M.getFireLoss() > 25)
+	if(M.getFireLoss() > 50)
 		M.adjustFireLoss(-4*REM, 0) //Twice as effective as silver sulfadiazine for severe burns
 	else
 		M.adjustFireLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
@@ -303,13 +287,10 @@
 /datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
-	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. It is poisonous if taken orally or by injection. If overdosed, deals brute and minor liver damage."
+	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#FF9696"
 	pH = 6.7
-	metabolization_rate = 5 * REAGENTS_METABOLISM
-	overdose_threshold = 50
-	value = 3
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -331,15 +312,6 @@
 	..()
 	. = 1
 
-datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
-	metabolization_rate = 15 * REAGENTS_METABOLISM
-	M.adjustBruteLoss(2*REM, 0)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.applyLiverDamage(1)
-	..()
-	. = 1
-
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
@@ -352,7 +324,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 	pH = 5.5
-	value = 1
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(last_added)
@@ -427,35 +398,22 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/synthflesh
 	name = "Synthflesh"
 	id = "synthflesh"
-	description = "Has a 100% chance of healing large amounts of brute and burn damage very quickly. One unit of the chemical will heal one point of damage. Touch application only."
+	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 	pH = 11.5
-	metabolization_rate = 5 * REAGENTS_METABOLISM
-	overdose_threshold = 40
-	value = 6
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		if (M.stat == DEAD)
 			show_message = 0
-		if(method in list(INGEST, VAPOR))
-			var/mob/living/carbon/C = M
-			C.losebreath++
-			C.emote("cough")
-			to_chat(M, "<span class='danger'>You feel your throat closing up!</span>")
-		else if(method == INJECT)
-			return
-		else if(method in list(PATCH, TOUCH))
-			M.adjustBruteLoss(-1 * reac_volume)
-			M.adjustFireLoss(-1 * reac_volume)
+		if(method in list(PATCH, TOUCH))
+			M.adjustBruteLoss(-1.25 * reac_volume)
+			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
-
-/datum/reagent/medicine/synthflesh/overdose_start(mob/living/M)
-	metabolization_rate = 15 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/charcoal
 	name = "Charcoal"
@@ -466,7 +424,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "ash"
 	pH = 5
-	value = 1
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -485,7 +442,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	pH = 2
-	value = 5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-0.5*REM, 0)
@@ -589,7 +545,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
-	if(M.getBruteLoss() > 25)
+	if(M.getBruteLoss() > 50)
 		M.adjustBruteLoss(-4*REM, 0) //Twice as effective as styptic powder for severe bruising
 	else
 		M.adjustBruteLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
@@ -639,7 +595,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Increases stun resistance. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -994,10 +950,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(id)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
@@ -1202,19 +1158,19 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0)
-	M.adjustFireLoss(-1.5*REM, 0)
-	M.adjustOxyLoss(-1.5*REM, 0)
-	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-	. = 1
-	..()
+    M.adjustBruteLoss(-1.5*REM, 0)
+    M.adjustFireLoss(-1.5*REM, 0)
+    M.adjustOxyLoss(-1.5*REM, 0)
+    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+    . = 1
+    ..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2.6*REM, 0)
-	M.adjustBruteLoss(3.5*REM, 0)
-	M.adjustFireLoss(3.5*REM, 0)
-	..()
-	. = 1
+    M.adjustOxyLoss(2.6*REM, 0)
+    M.adjustBruteLoss(3.5*REM, 0)
+    M.adjustFireLoss(3.5*REM, 0)
+    ..()
+    . = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
@@ -1318,10 +1274,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(L, TRAIT_GOTTAGOREALLYFAST, id)
 
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(id)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
@@ -1341,12 +1297,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
 	..()
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
+	ADD_TRAIT(M, TRAIT_STABLEHEART, id)
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, id)
 	..()
 
 /datum/reagent/medicine/muscle_stimulant
@@ -1453,7 +1407,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.dizziness = max(0, M.dizziness-6)
 	M.confused = max(0, M.confused-6)
 	M.disgust = max(0, M.disgust-6)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
 	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		mood.setSanity(min(mood.sanity+5, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
 	..()

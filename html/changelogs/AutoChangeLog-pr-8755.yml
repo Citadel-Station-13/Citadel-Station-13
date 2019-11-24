@@ -1,0 +1,6 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - tweak: "tweaked the Genital character creation layout to look better"
+  - bugfix: "fixed having balls/womb when you don't have the linked organ at character creation"
+  - bugfix: "fixed being able to squeeze semen directly from your balls. Probably."

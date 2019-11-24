@@ -120,7 +120,7 @@
 /obj/structure/bonfire/prelit/Initialize()
 	. = ..()
 	StartBurning()
-
+	
 /obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
@@ -148,7 +148,7 @@
 				add_overlay("bonfire_grill")
 			else
 				return ..()
-	if(W.get_temperature())
+	if(W.is_hot())
 		StartBurning()
 	if(grill)
 		if(user.a_intent != INTENT_HARM && !(W.item_flags & ABSTRACT))

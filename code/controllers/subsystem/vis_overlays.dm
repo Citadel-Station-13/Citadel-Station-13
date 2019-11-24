@@ -6,9 +6,11 @@ SUBSYSTEM_DEF(vis_overlays)
 
 	var/list/vis_overlay_cache
 	var/list/currentrun
+	var/datum/callback/rotate_cb
 
 /datum/controller/subsystem/vis_overlays/Initialize()
 	vis_overlay_cache = list()
+	rotate_cb = CALLBACK(src, .proc/rotate_vis_overlay)
 	return ..()
 
 /datum/controller/subsystem/vis_overlays/fire(resumed = FALSE)
@@ -51,7 +53,7 @@ SUBSYSTEM_DEF(vis_overlays)
 
 	if(!thing.managed_vis_overlays)
 		thing.managed_vis_overlays = list(overlay)
-		RegisterSignal(thing, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_vis_overlay)
+		RegisterSignal(thing, COMSIG_ATOM_DIR_CHANGE, rotate_cb)
 	else
 		thing.managed_vis_overlays += overlay
 

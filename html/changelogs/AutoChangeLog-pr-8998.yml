@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "High luminosity eyes can now be properly deactivated and won't illuminate your surroundings again until turned back on."

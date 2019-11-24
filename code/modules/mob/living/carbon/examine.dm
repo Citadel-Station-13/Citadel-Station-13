@@ -91,9 +91,8 @@
 
 	if(combatmode)
 		msg += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]\n"
-	msg += common_trait_examine()
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)

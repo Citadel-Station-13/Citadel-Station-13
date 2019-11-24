@@ -1,0 +1,4 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Pacifists can eat people for heal belly or noisy. Digestive modes are auto-swapped to noisy"

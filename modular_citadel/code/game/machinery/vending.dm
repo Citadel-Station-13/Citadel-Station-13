@@ -72,7 +72,32 @@
 				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10
 				)
 	refill_canister = /obj/item/vending_refill/kink
+/*
+/obj/machinery/vending/nazivend
+	name = "Nazivend"
+	desc = "A vending machine containing Nazi German supplies. A label reads: \"Remember the gorrilions lost.\""
+	icon = 'icons/obj/citvending.dmi'
+	icon_state = "nazi"
+	vend_reply = "SIEG HEIL!"
+	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
+	products = list(
+		/obj/item/clothing/head/stalhelm = 20,
+		/obj/item/clothing/head/panzer = 20,
+		/obj/item/clothing/suit/soldiercoat = 20,
+	//	/obj/item/clothing/under/soldieruniform = 20,
+		/obj/item/clothing/shoes/jackboots = 20
+		)
+	contraband = list(
+		/obj/item/clothing/head/naziofficer = 10,
+	//	/obj/item/clothing/suit/officercoat = 10,
+	//	/obj/item/clothing/under/officeruniform = 10,
+		/obj/item/clothing/suit/space/hardsuit/nazi = 3,
+		/obj/item/gun/energy/plasma/MP40k = 4
+		)
+	premium = list()
 
+	refill_canister = /obj/item/vending_refill/nazi
+*/
 /obj/machinery/vending/sovietvend
 	name = "KomradeVendtink"
 	desc = "Rodina-mat' zovyot!"
@@ -111,6 +136,10 @@
 	machine_name 	= "KinkMate"
 	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
+
+/obj/item/vending_refill/nazi
+	machine_name 	= "nazivend"
+	icon_state 		= "refill_nazi"
 
 /obj/item/vending_refill/soviet
 	machine_name 	= "sovietvend"

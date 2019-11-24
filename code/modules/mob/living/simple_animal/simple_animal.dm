@@ -363,7 +363,7 @@
 		density = initial(density)
 		lying = 0
 		. = 1
-		setMovetype(initial(movement_type))
+		movement_type = initial(movement_type)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -462,8 +462,8 @@
 			return
 	sync_lighting_plane_alpha()
 
-/mob/living/simple_animal/get_idcard(hand_first = TRUE)
-	return ..() || access_card
+/mob/living/simple_animal/get_idcard()
+	return access_card
 
 /mob/living/simple_animal/OpenCraftingMenu()
 	if(dextrous)
@@ -536,7 +536,7 @@
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
+	GET_COMPONENT(riding_datum, /datum/component/riding)
 	if(riding_datum)
 		if(user.incapacitated())
 			return
@@ -547,7 +547,7 @@
 		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
+	GET_COMPONENT(riding_datum, /datum/component/riding)
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 

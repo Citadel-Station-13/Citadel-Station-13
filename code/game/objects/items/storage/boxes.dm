@@ -398,7 +398,7 @@
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
 /obj/item/storage/box/donkpockets/PopulateContents()
@@ -413,7 +413,7 @@
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 7
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
@@ -568,7 +568,7 @@
 
 /obj/item/storage/box/snappops/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.can_hold = typecacheof(list(/obj/item/toy/snappop))
 	STR.max_items = 8
 
@@ -586,7 +586,7 @@
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 10
 	STR.can_hold = typecacheof(list(/obj/item/match))
 
@@ -609,7 +609,7 @@
 
 /obj/item/storage/box/lights/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 21
 	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21
@@ -855,7 +855,7 @@
 			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
-	else if(W.get_sharpness())
+	else if(W.is_sharp())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
@@ -1144,7 +1144,7 @@
 	if(can_expire)
 		expiration_date = rand(expiration_date_min, expiration_date_max)
 		desc += "\n<span_clas='notice'>An expiry date is listed on it. It reads: [expiration_date]</span>"
-		var/spess_current_year = GLOB.year_integer
+		var/spess_current_year = GLOB.year_integer + 540
 		if(expiration_date < spess_current_year)
 			var/gross_risk = min(round(spess_current_year - expiration_date * 0.1), 1)
 			var/toxic_risk = min(round(spess_current_year - expiration_date * 0.01), 1)

@@ -140,7 +140,7 @@
 			radio.attack_self(src)
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What" , "Exclamation" ,"Question", "Sunglasses")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What" , "Exclamation" ,"Question") // CITADEL EDIT
 			var/pID = 1
 
 			switch(newImage)
@@ -164,12 +164,10 @@
 					pID = 9
 				if("Null")
 					pID = 10
-				if("Exclamation")
+				if("Exclamation") // CITADEL EDIT
 					pID = 11
-				if("Question")
+				if("Question") // CITADEL EDIT
 					pID = 12
-				if("Sunglasses")
-					pID = 13
 			card.setEmotion(pID)
 
 		if("signaller")

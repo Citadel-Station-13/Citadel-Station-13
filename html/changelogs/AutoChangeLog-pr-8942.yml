@@ -1,0 +1,4 @@
+author: "Chayse"
+delete-after: True
+changes: 
+  - tweak: "Changed the Warden's compact combat shotgun to instead be a regular combat shotgun with a foldable stock and penalties for being folded."

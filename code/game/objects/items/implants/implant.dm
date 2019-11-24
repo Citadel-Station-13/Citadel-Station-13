@@ -89,12 +89,11 @@
 	return TRUE
 
 /obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
-	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVING, args)
 	imp_in = null
 	source.implants -= src
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.Remove(source)
+		A.Grant(source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()

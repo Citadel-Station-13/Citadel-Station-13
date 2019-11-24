@@ -11,7 +11,6 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
@@ -65,7 +64,6 @@
 	name = "Secure Transport Vessel 5";
 	width = 14
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
@@ -99,7 +97,6 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "r" = (
