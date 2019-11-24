@@ -32,7 +32,7 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		togglesprint()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /mob/living/carbon/human/clean_blood)
 
 
 /mob/living/carbon/human/ComponentInitialize()

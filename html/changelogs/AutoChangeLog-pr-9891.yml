@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - tweak: "Roundstart rulesets now scale on population ready rather than total population."

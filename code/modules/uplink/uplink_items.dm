@@ -1804,21 +1804,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 4
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
-/datum/uplink_item/role_restricted/strange_seeds
-	name = "Pack of strange seeds"
-	desc = "Mysterious seeds as strange as their name implies. Spooky."
-	item = /obj/item/seeds/random
-	cost = 2
-	restricted_roles = list("Botanist")
-	illegal_tech = FALSE
-
-/datum/uplink_item/role_restricted/strange_seeds_10pack
-	name = "Pack of strange seeds x10"
-	desc = "Mysterious seeds as strange as their name implies. Spooky. These come in bulk"
-	item = /obj/item/storage/box/strange_seeds_10pack
-	cost = 20
-	restricted_roles = list("Botanist")
-
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \

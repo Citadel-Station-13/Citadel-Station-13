@@ -522,10 +522,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 //gets ID card object from special clothes slot or null.
 /mob/proc/get_idcard(hand_first = TRUE)
 	var/obj/item/held_item = get_active_held_item()
-	. = held_item ? held_item.GetID() : null
+	. = held_item?.GetID()
 	if(!.) //If so, then check the inactive hand
 		held_item = get_inactive_held_item()
-		. = held_item ? held_item.GetID() : null
+		. = held_item?.GetID()
 
 /mob/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()

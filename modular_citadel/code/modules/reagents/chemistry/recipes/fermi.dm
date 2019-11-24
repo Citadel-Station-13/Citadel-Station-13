@@ -131,7 +131,7 @@
 	var/turf/open/location = get_turf(my_atom)
 	if(location)
 		E.location_created = location
-		E.data["location_created"] = location
+		E.data.["location_created"] = location
 
 
 //serum
@@ -312,16 +312,16 @@
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 			E.purity = 0
-	if (B.data["gender"] == "female")
-		E.data["creatorGender"] = "Mistress"
+	if (B.data.["gender"] == "female")
+		E.data.["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
 	else
-		E.data["creatorGender"] = "Master"
+		E.data.["creatorGender"] = "Master"
 		E.creatorGender = "Master"
-	E.data["creatorName"] = B.data["real_name"]
-	E.creatorName = B.data["real_name"]
-	E.data["creatorID"] = B.data["ckey"]
-	E.creatorID = B.data["ckey"]
+	E.data["creatorName"] = B.data.["real_name"]
+	E.creatorName = B.data.["real_name"]
+	E.data.["creatorID"] = B.data.["ckey"]
+	E.creatorID = B.data.["ckey"]
 
 //So slimes can play too.
 /datum/chemical_reaction/fermi/enthrall/slime
@@ -335,16 +335,16 @@
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
 			E.purity = 0
-	if (B.data["gender"] == "female")
-		E.data["creatorGender"] = "Mistress"
+	if (B.data.["gender"] == "female")
+		E.data.["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
 	else
-		E.data["creatorGender"] = "Master"
+		E.data.["creatorGender"] = "Master"
 		E.creatorGender = "Master"
-	E.data["creatorName"] = B.data["real_name"]
-	E.creatorName = B.data["real_name"]
-	E.data["creatorID"] = B.data["ckey"]
-	E.creatorID = B.data["ckey"]
+	E.data["creatorName"] = B.data.["real_name"]
+	E.creatorName = B.data.["real_name"]
+	E.data.["creatorID"] = B.data.["ckey"]
+	E.creatorID = B.data.["ckey"]
 
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/turf/T = get_turf(my_atom)
