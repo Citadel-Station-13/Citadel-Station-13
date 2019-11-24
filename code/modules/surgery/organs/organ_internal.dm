@@ -1,6 +1,3 @@
-#define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.001
-
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
@@ -188,7 +185,7 @@
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
-		Remove(owner, special=TRUE)
+		Remove(owner, TRUE)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)

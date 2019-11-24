@@ -114,7 +114,6 @@
 	recharge_counter++
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
-	..()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -7
@@ -157,8 +156,8 @@
 	if(beaker)
 		beaker.ex_act(severity, target)
 
-/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
-	..()
+/obj/machinery/chem_dispenser/Exited(atom/movable/A, atom/newloc)
+	. = ..()
 	if(A == beaker)
 		beaker = null
 		cut_overlays()
@@ -252,7 +251,7 @@
 			if(!is_operational())
 				return
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in beaker.possible_transfer_amounts))
 				beaker.reagents.remove_all(amount)
 				work_animation()
 				. = TRUE
@@ -383,9 +382,10 @@
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
 	else
@@ -397,7 +397,6 @@
 	cell = null
 	if(beaker)
 		beaker.forceMove(drop_location())
-		beaker = null
 	return ..()
 
 /obj/machinery/chem_dispenser/proc/get_macro_resolution()
