@@ -277,12 +277,6 @@ RLD
 	return MA
 
 
-/obj/item/construction/rcd/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
-		return FALSE
-	return TRUE
 
 /obj/item/construction/rcd/proc/change_computer_dir(mob/user)
 	if(!user)
