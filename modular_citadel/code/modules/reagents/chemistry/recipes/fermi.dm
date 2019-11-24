@@ -282,9 +282,7 @@
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 5)
-	//required_reagents = list("iron" = 1, "iodine" = 1) Test vars
-	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
-	required_reagents = list("cocoa" = 1, "bluespace" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1) //TEMPORARY UNTIL HEADMINS GIVE THE OKAY FOR MK USE.
+	required_reagents = list("cocoa" = 1, "neurine" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
 	required_catalysts = list("blood" = 1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
