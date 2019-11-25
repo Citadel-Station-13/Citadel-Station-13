@@ -20,7 +20,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/dogborg/jaws/examine(mob/user)
 	. = ..()
 	if(!CONFIG_GET(flag/weaken_secborg))
-		to_chat(user, "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>")
+		. += "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>"
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
@@ -253,7 +253,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			if(!do_after(R, 50, target = target))
 				return //If they moved away, you can't eat them.
 			to_chat(R, "<span class='notice'>You finish off \the [target.name].</span>")
-			var/obj/item/stock_parts/cell.C = target
+			var/obj/item/stock_parts/cell/C = target
 			R.cell.charge = R.cell.charge + (C.charge / 3) //Instant full cell upgrades op idgaf
 			qdel(target)
 			return
@@ -322,7 +322,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/soap/tongue/flavour/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	var/mob/living/silicon/robot.R = user
+	var/mob/living/silicon/robot/R = user
 	if(ishuman(target))
 		var/mob/living/L = target
 		if(status == 0 && check_zone(R.zone_selected) == "head")

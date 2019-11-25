@@ -264,6 +264,7 @@ Works together with spawning an observer, noted above.
 */
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+	penalize = suiciding || penalize // suicide squad.
 	if(!key || cmptext(copytext(key,1,2),"@") || (!special && SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse) & COMPONENT_BLOCK_GHOSTING))
 		return //mob has no key, is an aghost or some component hijacked.
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
@@ -861,9 +862,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
-	..()
+	. = ..()
 	if(!invisibility)
-		to_chat(user, "It seems extremely obvious.")
+		. += "It seems extremely obvious."
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

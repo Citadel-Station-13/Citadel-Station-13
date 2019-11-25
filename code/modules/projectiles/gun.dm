@@ -86,11 +86,11 @@
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)
-	..()
+	. = ..()
 	if(pin)
-		to_chat(user, "It has \a [pin] installed.")
+		. += "It has \a [pin] installed."
 	else
-		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
+		. += "It doesn't have a firing pin installed, and won't fire."
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()

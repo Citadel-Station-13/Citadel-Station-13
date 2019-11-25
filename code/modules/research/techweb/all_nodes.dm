@@ -322,6 +322,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/unregulated_bluespace
+	id = "unregulated_bluespace"
+	display_name = "Unregulated Bluespace Research"
+	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
+	prereq_ids = list("bluespace_warping", "syndicate_basic")
+	design_ids = list("desynchronizer")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
+
 /////////////////////////plasma tech/////////////////////////
 /datum/techweb_node/basic_plasma
 	id = "basic_plasma"
@@ -616,7 +625,7 @@
 /datum/techweb_node/botany
 	id = "botany"
 	display_name = "Botanical Engineering"
-	description = "Botanical tools"
+	description = "Botanical tools."
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
@@ -1047,14 +1056,14 @@
 	display_name = "Alien Biological Tools"
 	description = "Advanced biological tools."
 	prereq_ids = list("alientech", "advance_surgerytools")
-	design_ids = list("alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery")
+	design_ids = list("alien_scalpel", "alien_hemostat", "alien_retractor", "alien_saw", "alien_drill", "alien_cautery", "ayyplantgenes")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 10000
 
 /datum/techweb_node/alien_engi
 	id = "alien_engi"
 	display_name = "Alien Engineering"
-	description = "Alien engineering tools"
+	description = "Alien engineering tools."
 	prereq_ids = list("alientech", "exp_tools")
 	design_ids = list("alien_wrench", "alien_wirecutters", "alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)

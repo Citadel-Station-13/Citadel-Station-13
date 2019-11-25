@@ -37,7 +37,7 @@
 	species = "lily"
 	plantname = "Lily Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/poppy/lily
-	mutatelist = list(/obj/item/seeds/bee_balm)
+	mutatelist = list(/obj/item/seeds/bee_balm, /obj/item/seeds/poppy/lily/trumpet)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy/lily
 	seed = /obj/item/seeds/poppy/lily
@@ -46,6 +46,43 @@
 	icon_state = "lily"
 	tastes = list("pelts " = 1)
 	filling_color = "#FFA500"
+
+/obj/item/seeds/poppy/lily/trumpet
+	name = "pack of spaceman's trumpet seeds"
+	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
+	icon_state = "seed-trumpet"
+	species = "spacemanstrumpet"
+	plantname = "Spaceman's Trumpet Plant"
+	product = /obj/item/reagent_containers/food/snacks/grown/trumpet
+	lifespan = 80
+	production = 5
+	endurance = 10
+	maturation = 12
+	yield = 4
+	potency = 20
+	growthstages = 4
+	weed_rate = 2
+	weed_chance = 10
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "spacemanstrumpet-grow"
+	icon_dead = "spacemanstrumpet-dead"
+	mutatelist = list()
+	genes = list(/datum/plant_gene/reagent/polypyr)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
+	rarity = 30
+
+/obj/item/seeds/poppy/lily/trumpet/Initialize()
+	..()
+	unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
+
+/obj/item/reagent_containers/food/snacks/grown/trumpet
+	seed = /obj/item/seeds/poppy/lily/trumpet
+	name = "spaceman's trumpet"
+	desc = "A vivid flower that smells faintly of freshly cut grass. Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon."
+	icon_state = "spacemanstrumpet"
+	filling_color = "#FF6347"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
 
 // Geranium
 /obj/item/seeds/poppy/geranium
@@ -145,6 +182,7 @@
 	icon_grow = "moonflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
+	genes = list(/datum/plant_gene/trait/glow/purple)
 	mutatelist = list()
 	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
 	rarity = 15

@@ -281,7 +281,7 @@
 	requirements = list(100,90,80,70,60,50,50,50,50,50)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
-	antag_cap = list(2,2,2,3,3,3,4,4,5,5)
+	antag_cap = list(1,1,2,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
