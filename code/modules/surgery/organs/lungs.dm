@@ -459,12 +459,14 @@
 //I have absolutely no idea how lungs do damage when failing.
 /obj/item/organ/lungs/on_life()
 	..()
-	if(organ_flags & ORGAN_LUNGS_DEFLATED | ORGAN_FAILING)
-		owner.adjustStaminaLoss(3.5)
+	if(organ_flags & ORGAN_LUNGS_DEFLATED)
+		owner.adjustStaminaLoss(1.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)//From the extra stress of a low oxygen situation
-		M.losebreath += 3
+		if(prob(20))
+			M.losebreath += 2
 	if(organ_flags & ORGAN_FAILING)
-		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
+		owner.adjustStaminaLoss(3.5)
+		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5)//From the extra stress of a low oxygen situation
 		if(!failed)
 			if(owner.stat == CONSCIOUS)
 				owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
