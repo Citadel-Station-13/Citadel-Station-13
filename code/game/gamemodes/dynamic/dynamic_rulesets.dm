@@ -98,7 +98,7 @@
 	if(config_tag in weights)
 		var/weight_mult = 1
 		if(!always_max_weight && SSpersistence.saved_dynamic_rules.len == 3 && repeated_mode_adjust.len == 3)
-			var/saved_dynamic_rules = SSpersistence.saved_dynamic_rules.len
+			var/saved_dynamic_rules = SSpersistence.saved_dynamic_rules
 			for(var/i in 1 to 3)
 				if(config_tag in saved_dynamic_rules[i])
 					weight_mult -= (repeated_mode_adjust[i]/100)
