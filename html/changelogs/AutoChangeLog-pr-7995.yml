@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Combat mode is now displayed in examine text"
-  - rscadd: "Combat mode now makes a visible message when enabled if you haven't touched your combat mode button in the last ten seconds. It's done this way to avoid chat spam from those who know how to pull off stam regen squeezing."

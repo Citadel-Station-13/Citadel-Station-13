@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Jogging is no longer treated exactly the same as sprinting for water slips. When you're jogging, you will only slip on water if you have more than 20% staminaloss."

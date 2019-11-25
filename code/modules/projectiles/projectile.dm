@@ -235,8 +235,8 @@
 	beam_segments[beam_index] = null
 
 /obj/item/projectile/Bump(atom/A)
-	var/datum/point/pcache = trajectory.copy_to()
-	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
+	if(trajectory && check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
+		var/datum/point/pcache = trajectory.copy_to()
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)

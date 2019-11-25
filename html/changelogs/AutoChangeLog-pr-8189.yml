@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Action buttons are now able to fill the entire screen in widescreen and other weird view sizes."

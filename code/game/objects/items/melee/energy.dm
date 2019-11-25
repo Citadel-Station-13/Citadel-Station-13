@@ -28,7 +28,7 @@
 /obj/item/melee/transforming/energy/add_blood_DNA(list/blood_dna)
 	return FALSE
 
-/obj/item/melee/transforming/energy/is_sharp()
+/obj/item/melee/transforming/energy/get_sharpness()
 	return active * sharpness
 
 /obj/item/melee/transforming/energy/process()
@@ -46,7 +46,7 @@
 			STOP_PROCESSING(SSobj, src)
 			set_light(0)
 
-/obj/item/melee/transforming/energy/is_hot()
+/obj/item/melee/transforming/energy/get_temperature()
 	return active * heat
 
 /obj/item/melee/transforming/energy/ignition_effect(atom/A, mob/user)
@@ -334,8 +334,8 @@
 		update_light()
 
 /obj/item/melee/transforming/energy/sword/cx/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file)
 	. = ..()

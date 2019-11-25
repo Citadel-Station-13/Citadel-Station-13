@@ -49,6 +49,7 @@ Contents:
 
 		//Support function variables.
 	var/stealth = FALSE//Stealth off.
+	var/stealth_cooldown = 0
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
@@ -148,12 +149,12 @@ Contents:
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
-	..()
+	. = ..()
 	if(s_initialized && user == affecting)
-		to_chat(user, "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n\
+		. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n\
 						The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.\n\
 						There are <B>[s_bombs]</B> smoke bomb\s remaining.\n\
-						There are <B>[a_boost]</B> adrenaline booster\s remaining.")
+						There are <B>[a_boost]</B> adrenaline booster\s remaining."
 
 /obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/initialize_ninja_suit))
