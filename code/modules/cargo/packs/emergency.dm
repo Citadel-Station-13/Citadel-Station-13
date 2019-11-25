@@ -44,11 +44,10 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
-/datum/supply_pack/emergency/medemergency
+/datum/supply_pack/emergency/medicalemergency
 	name = "Emergency Medical Supplies"
 	desc = "Emergency supplies for a front-line medic. Contains two boxes of body bags, a medical HUD, a defib unit, medical belt, toxin bottles, epipens, and several types of medical kits."
-	cost = 3000
-	DropPodOnly = TRUE
+	cost = 6600
 	contains = list(/obj/item/storage/box/bodybags,
 					/obj/item/storage/box/bodybags,
 					/obj/item/clothing/glasses/hud/health,
@@ -58,11 +57,29 @@
 					/obj/item/storage/firstaid/o2,
 					/obj/item/storage/firstaid/brute,
 					/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/regular,
 					/obj/item/reagent_containers/glass/bottle/toxin,
 					/obj/item/reagent_containers/glass/bottle/toxin,
 					/obj/item/storage/box/medipens)
 	crate_name = "medical emergency crate"
+	crate_type = /obj/structure/closet/crate/medical
+
+/datum/supply_pack/emergency/medemergencylite
+	name = "Emergency Medical Supplies (Lite)"
+	desc = "A less than optimal, but still effective, set of tools for emergency care. Contains a box of bodybags, a medical HUD, healing sprays, charcoal, some gauze, and some spare medipens."
+	cost = 2800
+	contains = list(/obj/item/storage/box/bodybags,
+					/obj/item/stack/medical/gauze,
+					/obj/item/clothing/glasses/hud/health,
+					/obj/item/reagent_containers/medspray/styptic,
+					/obj/item/reagent_containers/medspray/silver_sulf,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/glass/bottle/charcoal,
+					/obj/item/reagent_containers/glass/bottle/charcoal,
+					/obj/item/reagent_containers/hypospray/medipen,
+					/obj/item/reagent_containers/hypospray/medipen,
+					/obj/item/reagent_containers/hypospray/medipen)
+	crate_name = "medical emergency crate (lite)"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/emergency/radiatione_emergency
 	name = "Emergency Radiation Protection Crate"

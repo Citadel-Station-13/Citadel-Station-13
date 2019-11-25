@@ -165,6 +165,20 @@
 	access = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/organic/fakemeat
+	name = "Meat Crate"
+	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 4 slabs of meat product, and two slabs of *carp*."
+	cost = 1700
+	hidden = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
+					/obj/item/reagent_containers/food/snacks/carpmeat/imitation)
+	crate_name = "meaty crate"
+	crate_type = /obj/structure/closet/crate/freezer
+
 /datum/supply_pack/organic/monkeydripmeat
 	name = "*Meat* Crate"
 	desc = "Need some meat? With this do-it-yourself kit you'll be swimming in it! Contains a monkey cube, an IV drip, and some cryoxadone!"
@@ -175,7 +189,18 @@
 					/obj/machinery/iv_drip,
 					/obj/item/reagent_containers/glass/beaker/cryoxadone,
 					/obj/item/reagent_containers/glass/beaker/cryoxadone)
-	crate_name = "monkey iv crate"
+	crate_name = "monkey meat crate"
+
+/datum/supply_pack/organic/mixedboxes
+	name = "Mixed Ingredient Boxes"
+	desc = "Get overwhelmed with inspiration by ordering these boxes of surprise ingredients! Get four boxes filled with an assortment of products!"
+	cost = 2300
+	contains = list(/obj/item/storage/box/ingredients/wildcard,
+					/obj/item/storage/box/ingredients/wildcard,
+					/obj/item/storage/box/ingredients/wildcard,
+					/obj/item/storage/box/ingredients/wildcard)
+	crate_name = "wildcard food crate"
+	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"

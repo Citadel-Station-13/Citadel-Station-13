@@ -70,10 +70,40 @@
 	crate_name = "ice cream vat crate"
 	crate_type = /obj/structure/closet/crate
 
+/datum/supply_pack/service/buildabar
+	name = "Build a Bar Crate"
+	desc = "Looking to set up your own little safe haven? Maintenance bar too much of a bummer to work on? Maybe you just want to set up shop right in front of the bartender. Whatever your reasons, get a jump-start on this with this handy kit. Contains circuitboards for bar equipment, some parts, and some basic bartending supplies. (Batteries not Included)"
+	cost = 3750
+	contains = list(/obj/item/storage/box/drinkingglasses,
+					/obj/item/storage/box/drinkingglasses,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stock_parts/capacitor,
+					/obj/item/stock_parts/capacitor,
+					/obj/item/stack/sheet/metal/ten,
+					/obj/item/stack/sheet/metal/five,
+					/obj/item/stack/sheet/glass/five,
+					/obj/item/stack/cable_coil/random,
+					/obj/item/reagent_containers/rag,
+					/obj/item/book/manual/wiki/barman_recipes,
+					/obj/item/book/granter/action/drink_fling,
+					/obj/item/reagent_containers/food/drinks/shaker,
+					/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
+					/obj/item/circuitboard/machine/chem_dispenser/drinks,
+					/obj/item/circuitboard/machine/dish_drive)
+	crate_name = "build a bar crate"
+
 /datum/supply_pack/service/maintgarden
 	name = "Maintenance Garden Crate"
 	desc = "Set up your own tiny paradise with do-it-yourself botany kit. Contains sandstone for dirt plots, pest spray, ammonia, a portable seed generator, basic botanical tools, and some seeds to start off with."
-	cost = 1950
+	cost = 2350
 	contains = list(/obj/item/storage/bag/plants/portaseeder,
 					/obj/item/reagent_containers/spray/pestspray,
 					/obj/item/stack/sheet/mineral/sandstone/twelve,
@@ -124,7 +154,7 @@
 /datum/supply_pack/service/janitor/advanced
 	name = "Advanced Sanitation Crate"
 	desc = "Contains all the essentials for an advanced spacefaring cleanup crew. This kit includes a trashbag of holding, an advanced mop, a bottle of space cleaner, a floor buffer, and a holosign projector."
-	cost = 7500
+	cost = 5000
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/storage/bag/trash/bluespace,
 					/obj/item/reagent_containers/spray/cleaner,
@@ -158,7 +188,7 @@
 /datum/supply_pack/service/janitor/janpremium
 	name = "Janitor Premium Supplies"
 	desc = "The custodial union is in a tizzy, so we've gathered up some better supplies for you. In this crate you can get a brand new chem, Drying Agent. This stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, several cleaning grenades, some spare bottles of ammonia, and an MCE (or Massive Cleaning Explosive)."
-	cost = 2500
+	cost = 2700
 	contains = list(/obj/item/grenade/clusterbuster/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner,

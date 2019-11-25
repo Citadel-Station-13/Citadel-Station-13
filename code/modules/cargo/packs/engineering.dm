@@ -74,7 +74,7 @@
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
-	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
+	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Does not contain spare ammo for the industrial RCD or any other RCD models."
 	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
@@ -121,6 +121,17 @@
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/datum/supply_pack/engineering/powertools
+	name = "Power Tools Crate"
+	desc = "Setting up the aux base? Working out in space? Maybe you just hate doing things by hand. Grab some power tools and slash your workload in half! Contains a hardhat, hazard vest, Hand Drill, and Jaws of Life"
+	cost = 6500
+	access = ACCESS_ENGINE
+	contains = list(/obj/item/clothing/head/hardhat,
+					/obj/item/clothing/suit/hazardvest,
+					/obj/item/screwdriver/power,
+					/obj/item/crowbar/power)
+	crate_name = "power tools crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/siezedpower
 	name = "Siezed Power Cell Crate"

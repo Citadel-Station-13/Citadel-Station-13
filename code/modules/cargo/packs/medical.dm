@@ -95,7 +95,7 @@
 
 /datum/supply_pack/science/adv_surgery_tools
 	name = "Med-Co Advanced surgery tools"
-	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
+	desc = "A full set of Med-Co advanced surgery tools, this crate both a can of synthflesh and a can of sterilizine. Requires Surgery access to open."
 	cost = 5500
 	access = ACCESS_SURGERY
 	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
