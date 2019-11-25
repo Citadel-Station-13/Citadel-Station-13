@@ -958,12 +958,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	..()
 
 /datum/reagent/medicine/mannitol/overdose_process(mob/living/M)
-	if(prob(75))
+	if(prob(65))
 		return
 	var/list/tips
 	if(prob(50))
 		tips = world.file2list("strings/tips.txt")
-	else if(prob(35))
+	else if(prob(50))
 		tips = world.file2list("strings/sillytips.txt")
 	else
 		tips = world.file2list("strings/fermitips.txt")
