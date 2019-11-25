@@ -67,7 +67,7 @@
 		if(updating)
 			if(amount>=80)
 				drop_all_held_items()
-				interrupt_timers_prior_to = world.time
+				interrupt_actions_prior_to = world.time
 			update_canmove()
 		return TRUE
 

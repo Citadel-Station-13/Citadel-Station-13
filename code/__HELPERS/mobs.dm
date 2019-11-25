@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || starttime < user.interrupt_timers_prior_to || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || starttime < user.interrupt_actions_prior_to || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
