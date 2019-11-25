@@ -69,6 +69,7 @@
 	high_population_requirement = 15
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
+	always_max_weight = TRUE
 
 //////////////////////////////////////////////
 //                                          //
