@@ -12,9 +12,9 @@
 	var/mode = 0
 
 /obj/item/compressionkit/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It has [charges] charges left. Recharge with bluespace crystals.</span>")
-	to_chat(user, "<span class='notice'>Use in-hand to swap toggle compress/expand mode (expand mode not yet implemented).</span>")
+	. = ..()
+	. += "<span class='notice'>It has [charges] charges left. Recharge with bluespace crystals.</span>"
+	. += "<span class='notice'>Use in-hand to swap toggle compress/expand mode (expand mode not yet implemented).</span>"
 
 /obj/item/compressionkit/attack_self(mob/user)
 	if(mode == 0)

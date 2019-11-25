@@ -1,6 +1,7 @@
 /datum/martial_art/boxing
 	name = "Boxing"
 	id = MARTIALART_BOXING
+	pacifism_check = FALSE //Let's pretend pacifists can boxe the heck out of other people, it only deals stamina damage right now.
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
@@ -16,14 +17,15 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(5, 8) + A.dna.species.punchdamagelow
-	if(!damage)
+	var/damage = rand(10, 13)
+	var/extra_damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
+	if(extra_damage == A.dna.species.punchdamagelow)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(A, D, "attempted to hit", atk_verb)
-		return 0
-
+		return TRUE
+	damage += extra_damage
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")

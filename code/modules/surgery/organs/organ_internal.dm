@@ -1,6 +1,3 @@
-#define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.001
-
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'

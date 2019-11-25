@@ -90,12 +90,12 @@
 
 
 /obj/item/paper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to fold it.</span>"
 	if(oui_canview(user))
 		ui.render(user)
 	else
-		to_chat(user, "<span class='warning'>You're too far away to read it!</span>")
+		. += "<span class='warning'>You're too far away to read it!</span>"
 
 /obj/item/paper/proc/show_content(mob/user)
 	user.examinate(src)
