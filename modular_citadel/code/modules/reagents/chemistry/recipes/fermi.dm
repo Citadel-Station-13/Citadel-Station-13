@@ -529,12 +529,12 @@
 	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
 
 /datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, added_volume, added_purity)
-	var/datum/chemical_reaction/antacidpregen/A = holder.has_reagent("antacidpregen")
+	var/datum/reagent/antacidpregen/A = holder.has_reagent("antacidpregen")
 	if(!A)
 		return
 	if(holder.pH < 7)
 		holder.add_reagent("antbase", added_volume, other_purity = 1-A.purity)
-		var/datum/chemical_reaction/antbase/B = holder.has_reagent("antbase")
+		var/datum/reagent/antacidpregen/antbase/B = holder.has_reagent("antbase")
 		B.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)
 	else

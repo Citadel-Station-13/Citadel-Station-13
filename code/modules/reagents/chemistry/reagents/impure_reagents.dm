@@ -15,13 +15,13 @@
 
 /datum/reagent/impure/on_mob_add(mob/living/L)
 	var/mob/living/carbon/C = L
-	if(C)
+	if(C && (!(L)))
 		L = C.getorganslot(ORGAN_SLOT_LIVER) //reduce calls
 	..()
 
 /datum/reagent/impure/on_mob_life(mob/living/carbon/C)
 	if(!L)//Though, lets be safe
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		L = C.getorganslot(ORGAN_SLOT_LIVER)
 	L.adjustMetabolicStress(metastress)
 	..()
 
@@ -80,7 +80,7 @@
 	.=..()
 	if(!temp_trauma)
 		return
-	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend)//Good friends stay by you, no matter what
+	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend))//Good friends stay by you, no matter what
 		return
 	C.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
 
@@ -123,7 +123,7 @@
 
 /datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
 	if(!L)//Since this is run before the parent proc.
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+		L = C.getorganslot(ORGAN_SLOT_LIVER)
 	L.adjustMetabolicStress(-cached_purity/5, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
 
@@ -157,7 +157,7 @@
 	..()
 
 /datum/reagent/impure/oculine/on_mob_delete(mob/living/L)
-	C.cure_blind("oculine_impure")
+	L.cure_blind("oculine_impure")
 	..()
 
 /datum/reagent/impure/inacusiate

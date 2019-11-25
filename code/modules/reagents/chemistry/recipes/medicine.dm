@@ -108,7 +108,7 @@
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 
 /datum/chemical_reaction/synthtissue/FermiCreate(datum/reagents/holder, added_volume, added_purity)
-	var/datum/reagent/synthtissue/St = holder.has_reagent("synthtissue")
+	var/datum/reagent/medicine/synthtissue/St = holder.has_reagent("synthtissue")
 	var/datum/reagent/N = holder.has_reagent("nutriment")
 	if(!St)
 		return

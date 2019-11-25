@@ -23,6 +23,7 @@
 	description = "The acid from a stomach."
 	color = "#DCDCFF"
 	metabolization_rate = 0
+	pH = 1.5
 
 //TODO: White blood cells
 //Biomarkers

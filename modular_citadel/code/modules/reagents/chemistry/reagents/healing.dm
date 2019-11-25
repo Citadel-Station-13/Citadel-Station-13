@@ -39,8 +39,8 @@
 			nT.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 			holder.remove_reagent(src.id, "10")
-	if(M.losebreath >= 6)
-		M.losebreath -= 3
+	if(C.losebreath >= 6)
+		C.losebreath -= 3
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
@@ -175,9 +175,9 @@
 /datum/reagent/antacidpregen/on_mob_life(mob/living/carbon/C)
 	var/stomach_heal = -((cached_purity-0.5)*3)
 	if(stomach_heal<0)
-		M.cureOrganDamage(ORGAN_SLOT_TONGUE, stomach_heal, ORGAN_TREAT_ACUTE)
+		C.cureOrganDamage(ORGAN_SLOT_TONGUE, stomach_heal, ORGAN_TREAT_ACUTE)
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH, stomach_heal)
+		C.adjustOrganLoss(ORGAN_SLOT_STOMACH, stomach_heal)
 	..()
 
 /datum/reagent/antacidpregen/antacid

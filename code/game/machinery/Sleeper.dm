@@ -158,6 +158,7 @@
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
+	var/mob/living/carbon/C = mob_occupant
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
@@ -208,7 +209,6 @@
 					data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
 
 		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-			var/mob/living/carbon/C = mob_occupant
 			var/blood_id = C.get_blood_id()
 			if(blood_id)
 				data["occupant"]["blood"] = list() // We can start populating this list.

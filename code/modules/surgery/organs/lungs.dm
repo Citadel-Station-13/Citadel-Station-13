@@ -81,7 +81,7 @@
 		return
 	if (maxHealth == INFINITY)
 		return
-	if(delta < 0) if healing
+	if(delta < 0) //if healing
 		return
 
 	if ((cached_damage/ maxHealth) > 1)
@@ -101,7 +101,7 @@
 		owner.emote("cough")
 		owner.Dizzy(1)
 
-	if(organ_flags & ORGAN_FAILING)
+	if(organ_flags & ORGAN_FAILING)//collapses a lung instead.
 		if(!(organ_flags & ORGAN_LUNGS_DEFLATED))
 			organ_flags &= ~ORGAN_FAILING
 			organ_flags |=  ORGAN_LUNGS_DEFLATED
@@ -463,7 +463,7 @@
 		owner.adjustStaminaLoss(1.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)//From the extra stress of a low oxygen situation
 		if(prob(20))
-			M.losebreath += 2
+			owner.losebreath += 2
 	if(organ_flags & ORGAN_FAILING)
 		owner.adjustStaminaLoss(3.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5)//From the extra stress of a low oxygen situation

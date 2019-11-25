@@ -806,8 +806,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/cached_light
 
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/L)
-	cached_light = M.lighting_alpha
-	M.lighting_alpha -= cached_purity*10
+	cached_light = L.lighting_alpha
+	L.lighting_alpha -= cached_purity*10
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
@@ -836,7 +836,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/L)
-	M.lighting_alpha = cached_light
+	L.lighting_alpha = cached_light
 	..()
 
 /datum/reagent/medicine/atropine
@@ -957,11 +957,11 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#DCDCFF"
 	pH = 10.4
 	purity = 0.8
-	overdose = 25
+	overdose_threshold = 15
 	impure_chem 		= "mannitol_impure"
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "mannitol_impure"
-	chemical_flags 		= REAGENT_SPLITRETAINVOL
+	chemical_flags		= REAGENT_SPLITRETAINVOL
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_ACUTE)
@@ -979,8 +979,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		tips = world.file2list("strings/sillytips.txt")
 	else
 		tips = world.file2list("strings/fermitips.txt")
-	var/m = pick(randomtips)
-	to_chat(M, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>"))
+	var/m = pick(tips)
+	to_chat(M, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>")
 	..()
 
 /datum/reagent/medicine/neurine
@@ -1028,10 +1028,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	impure_chem 		= "antihol_impure" //
 	inverse_chem_val 	= 0.3
 	inverse_chem		= "antihol_inverse"
-	chemical_flag 		= REAGENT_DONOTSPLIT
+	chemical_flags		= REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.slurring = 0
