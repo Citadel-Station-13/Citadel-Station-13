@@ -80,8 +80,8 @@
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
 	var/delay = 0
-	/// Whether or not previous-round weight values are taken into account for this ruleset.
-	/// Uses the same values as secret's rulesets.
+	/// Whether or not recent-round weight values are taken into account for this ruleset.
+	/// Weight reduction uses the same values as secret's recent-round mode weight reduction.
 	var/always_max_weight = FALSE
 
 /datum/dynamic_ruleset/New()
