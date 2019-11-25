@@ -94,14 +94,14 @@
 	var/costs = CONFIG_GET(keyed_list/dynamic_cost)
 	var/requirementses = CONFIG_GET(keyed_list/dynamic_requirements) // can't damn well use requirements
 	var/high_population_requirements = CONFIG_GET(keyed_list/dynamic_high_population_requirement)
-	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/list/repeated_mode_adjust = CONFIG_GET(number_list/repeated_mode_adjust)
 	if(config_tag in weights)
 		var/weight_mult = 1
 		if(!always_max_weight && SSpersistence.saved_dynamic_rules.len == 3 && repeated_mode_adjust.len == 3)
 			var/saved_dynamic_rules = SSpersistence.saved_dynamic_rules.len
 			for(var/i in 1 to 3)
 				if(config_tag in saved_dynamic_rules[i])
-					weight_mult -= (adjustment/100)
+					weight_mult -= (repeated_mode_adjust[i]/100)
 		weight = weights[config_tag] * weight_mult
 	if(config_tag in costs)
 		cost = costs[config_tag]
