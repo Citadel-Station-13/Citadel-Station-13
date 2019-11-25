@@ -839,8 +839,7 @@ RLD
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
-	icon_state = "plumberer2"
-	icon = 'icons/obj/tools.dmi'
+
 
 	matter = 200
 	max_matter = 200

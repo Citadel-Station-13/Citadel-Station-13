@@ -1,7 +1,7 @@
 /obj/machinery/plumbing/grinder_chemical
 	name = "inudstrial grinder"
 	desc = "An automatic industrial grinder."
-	icon_state = "grinder"
+	icon_state = "pill_press"
 	layer = ABOVE_ALL_MOB_LAYER
 	reagent_flags = TRANSPARENT | DRAINABLE
 	rcd_cost = 30
