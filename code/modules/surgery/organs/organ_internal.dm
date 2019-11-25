@@ -217,10 +217,13 @@
 	prev_damage = damage
 	if(mess && owner)
 		to_chat(owner, mess)
+	onDamage(d, maximum)
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
 	applyOrganDamage(d - damage)
+	onDamage(d, maximum)
+
 
 /** check_damage_thresholds
   * input: M (a mob, the owner of the organ we call the proc on)

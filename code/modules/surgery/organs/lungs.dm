@@ -1,4 +1,5 @@
-#define LUNGS_MAX_HEALTH 300
+#define LUNGS_MAX_HEALTH 250
+
 
 /obj/item/organ/lungs
 	name = "lungs"
@@ -74,32 +75,42 @@
 
 
 //TODO: lung health affects lung function
-/obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
+/obj/item/organ/lungs/onDamage(delta) //damage might be too low atm.
 	var/cached_damage = damage
+	if(organ_flags & ORGAN_FAILING | ORGAN_LUNGS_DEFLATED)
+		return
 	if (maxHealth == INFINITY)
 		return
-	if(cached_damage+damage_mod < 0)
-		cached_damage = 0
+	if(delta < 0) if healing
 		return
 
-	cached_damage += damage_mod
 	if ((cached_damage/ maxHealth) > 1)
-		to_chat(owner, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
+		to_chat(owner, "<span class='userdanger'>You suddenly feel like your lungs are lopsided, and find it harder to breathe!</span>")
 		owner.emote("gasp")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Lungs lost")
-		//qdel(src) - Handled elsewhere for now.
 	else if ((cached_damage / maxHealth) > 0.75)
 		to_chat(owner, "<span class='warning'>It's getting really hard to breathe!!</span>")
 		owner.emote("gasp")
 		owner.Dizzy(3)
 	else if ((cached_damage / maxHealth) > 0.5)
 		owner.Dizzy(2)
-		to_chat(owner, "<span class='notice'>Your chest is really starting to hurt.</span>")
+		to_chat(owner, "<span class='notice'>You feel like you can't quite catch your breath.</span>")
 		owner.emote("cough")
 	else if ((cached_damage / maxHealth) > 0.2)
 		to_chat(owner, "<span class='notice'>You feel an ache within your chest.</span>")
 		owner.emote("cough")
 		owner.Dizzy(1)
+
+	if(organ_flags & ORGAN_FAILING)
+		if(!(organ_flags & ORGAN_LUNGS_DEFLATED))
+			organ_flags &= ~ORGAN_FAILING
+			organ_flags |=  ORGAN_LUNGS_DEFLATED
+			setOrganDamage(LUNGS_MAX_HEALTH*0.5)//Just before chronic
+			failed = FALSE
+			return
+		to_chat(owner, "<span class='userdanger'>You feel your lung collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
+		qdel(src)
+		//TODO: add an inert organ to replace permaded organs
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 //TODO: add lung damage = less oxygen gains
@@ -446,8 +457,13 @@
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
 
+//I have absolutely no idea how lungs do damage when failing.
 /obj/item/organ/lungs/on_life()
 	..()
+	if(organ_flags & ORGAN_LUNGS_DEFLATED | ORGAN_FAILING)
+		owner.adjustStaminaLoss(3.5)
+		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)//From the extra stress of a low oxygen situation
+		M.losebreath += 3
 	if((!failed) && ((organ_flags & ORGAN_FAILING)))
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
@@ -536,11 +552,11 @@
 		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/lungs/yamerol
-	name = "Yamerol lungs"
+	name = "Yamerol airogel maxtrix"
 	desc = "A temporary pair of lungs made from self assembling yamerol molecules."
-	maxHealth = 200
+	maxHealth = 150
 	color = "#68e83a"
 
 /obj/item/organ/lungs/yamerol/on_life()
 	..()
-	damage += 2 //Yamerol lungs are temporary
+	applyOrganDamage(2) //Yamerol lungs are temporary

@@ -1,6 +1,7 @@
 //Reagents produced by metabolising/reacting fermichems inoptimally, i.e. inverse_chems or impure_chems
 //Inverse = Splitting
 //Invert = Whole conversion
+//Generally, make their pHes more acidic if acidic, or more basic if basic, so that you push them towards heartburn
 
 //Causes metabolic stress, and that's it.
 /datum/reagent/impure
@@ -10,6 +11,7 @@
 	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME //by default, it will stay hidden on splitting, but take the name of the source on inverting
 	var/metastress = 1
 	var/obj/item/organ/liver/L
+	pH = 3
 
 /datum/reagent/impure/on_mob_add(mob/living/L)
 	var/mob/living/carbon/C = L
@@ -31,7 +33,6 @@
 	var/potency = 1 //potency multiplies the volume when added.
 	pH = 2
 
-
 //I'm concerned this is too weak, but I also don't want deathmixes.
 //TODO: liver damage, 100+ heart
 /datum/reagent/impure/fermiTox/on_mob_life(mob/living/carbon/C, method)
@@ -43,7 +44,7 @@
 	id = "mannitol_impure"
 	description = "Inefficiently causes brain damage."
 	color = "#DCDCFF"
-	pH = 2.4
+	pH = 12.4
 
 /datum/reagent/impure/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, cached_purity*REM)
@@ -55,7 +56,7 @@
 	id = "neurine_impure"
 	description = "Causes the patient a temporary trauma."
 	color = "#DCDCFF"
-	pH = 5.4
+	pH = 13.4
 	metabolization_rate = 0.4 * REM
 	metastress = 0.5
 	var/datum/brain_trauma/temp_trauma
@@ -86,15 +87,21 @@
 /datum/reagent/impure/corazone
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free.
 	id = "corazone_inverse"
-	description = "Induces a Myocardial Infarction while in the patient."
+	description = "Can induces a Myocardial Infarction while in the patient if their heart is damaged."
 	color = "#F5F5F5"
 	self_consuming = TRUE
-	pH = 2.5
+	pH = 13.5
 	metabolization_rate = 0.075 * REM
 	metastress = 0.2
 	var/datum/disease/heart_failure/temp_myo
 
 /datum/reagent/impure/corazone/on_mob_add(mob/living/L)
+	var/mob/living/carbon/C = L
+	if(!C)
+		return
+	var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
+	if(!(prob(H.damage)))
+		return
 	var/datum/disease/D = new /datum/disease/heart_failure
 	if(L.ForceContractDisease(D))
 		temp_myo = D
@@ -106,16 +113,29 @@
 	..()
 
 /datum/reagent/impure/antihol
+	name = "Soothehol"
+	id = "antihol_impure"
+	description = "Soothes a patient's liver"
+	taste_description = "scambled egg"
+	color = "#00B4C8"
+	pH = 2.5
+	metastress = -0.1
+
+/datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
+	if(!L)//Since this is run before the parent proc.
+		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+	L.adjustMetabolicStress(-cached_purity/5, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
+	..()
+
+/datum/reagent/impure/antihol/inverse
 	name = "Prohol"
 	id = "antihol_inverse"
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
-	color = "#00B4C8"
-	taste_description = "cooked egg"
-	pH = 8
+	taste_description = "eggs over easy"
 	chemical_flags = REAGENT_INVISIBLE
 	metastress = 0.35
 
-/datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/antihol/inverse/on_mob_life(mob/living/carbon/C)
 	for(var/datum/reagent/consumable/ethanol/alch in C.reagents.reagent_list)
 		alch.boozepwr += 2
 	..()
@@ -139,3 +159,29 @@
 /datum/reagent/impure/oculine/on_mob_delete(mob/living/L)
 	C.cure_blind("oculine_impure")
 	..()
+
+/datum/reagent/impure/inacusiate
+	name = "Tinyacusiate"
+	id = "inacusiate_impure"
+	description = "Makes the patient hard of hearing, and slowly causes ear damage."
+	reagent_state = LIQUID
+	color = "#FFFFFF"
+	metastress = 0.75
+	taste_description = "the heat evaporating from your mouth."
+	pH = 1
+
+/datum/reagent/impure/inacusiate/on_mob_add(mob/living/L)
+	RegisterSignal(L, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	..()
+
+/datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
+	C.adjustOrganLoss(ORGAN_SLOT_EARS, (1-cached_purity))
+	..()
+
+/datum/reagent/impure/inacusiate/on_mob_delete(mob/living/L)
+	UnregisterSignal(L, COMSIG_MOVABLE_HEAR)
+	..()
+
+/datum/reagent/impure/inacusiate/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	spans += "small"
+	message_admins("<span class='small'>[message]</span>")

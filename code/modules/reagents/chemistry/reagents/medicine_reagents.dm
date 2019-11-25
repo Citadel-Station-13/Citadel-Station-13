@@ -129,8 +129,18 @@
 	color = "#6600FF" // rgb: 100, 165, 255
 	pH = 2
 	value = 10
+	impure_chem 		= "inacusiate_impure"
+	inverse_chem_val 	= 0
+	inverse_chem		= "generic_impure"
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
+	var/obj/item/organ/ears/E = M.getorganslot(ORGAN_SLOT_EARS)
+	if(E.damage > 0)
+		if(cached_purity > 0.9)
+			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_END_STAGE)
+		else
+			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_CHRONIC)
+		return
 	M.restoreEars()
 	..()
 
@@ -615,6 +625,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustOxyLoss(-3*REM, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
+	M.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity)*REM, ORGAN_TREAT_ACUTE)
 	..()
 	. = 1
 
@@ -633,6 +644,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
+	M.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity)*REM, ORGAN_TREAT_ACUTE)
 	..()
 	return TRUE
 
@@ -795,7 +807,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/L)
 	cached_light = M.lighting_alpha
-	M.lighting_alpha = round((255 - cached_purity*10), 1)
+	M.lighting_alpha -= cached_purity*10
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
@@ -818,9 +830,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		M.set_blurriness(0)
 	else if(eyes.eye_damage > 0)
 		if(cached_purity > 0.9)
-			M.cureOrganDamage(ORGAN_SLOT_EYES, -cached_purity*REM, ORGAN_TREAT_END_STAGE)
+			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*1.2), ORGAN_TREAT_END_STAGE)
 		else
-			M.cureOrganDamage(ORGAN_SLOT_EYES, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
+			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*1.2), ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/L)
@@ -977,6 +989,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
 	purity = 0.8
+	pH = 11.4
 	impure_chem 		= "neurine_impure" //if people get grumpy, change this to generic_impure
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "neurine_impure"
@@ -1012,10 +1025,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#00B4C8"
 	taste_description = "raw egg"
 	pH = 4
-	impure_chem 		= "generic_impure" //
+	impure_chem 		= "antihol_impure" //
 	inverse_chem_val 	= 0.3
 	inverse_chem		= "antihol_inverse"
-	chemical_flag = REAGENT_DONOTSPLIT
+	chemical_flag 		= REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
@@ -1028,7 +1041,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - 10, 0)
-	L.adjustMetabolicStress(-cached_purity/5, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
 	. = 1
 
@@ -1596,5 +1608,4 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
-	. = 1 
-
+	. = 1

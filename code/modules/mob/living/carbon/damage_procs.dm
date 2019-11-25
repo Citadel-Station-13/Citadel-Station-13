@@ -126,7 +126,6 @@
 		if(!maximum)
 			maximum = O.maxHealth
 		O.applyOrganDamage(amount, maximum)
-		O.onDamage(amount, maximum)
 
 /** cureOrganDamage
 	used for treating certain thresholds of damage.*/
@@ -145,7 +144,6 @@
 		amount = -amount
 	var/maximum = O.maxHealth
 	O.applyOrganDamage(amount, maximum)
-	O.onDamage(amount, maximum)
 
 /** setOrganLoss
   * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)

@@ -15,11 +15,13 @@
 			if(R.purity == 1)
 				continue
 
-			var/cached_volume = R.volume
+			var/cached_volume = reactVol
 			if(clear_conversion == REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
 					my_atom.reagents.remove_reagent(R.id, cached_volume, FALSE)
 					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
+					var/datum/reagent/R2 = my_atom.reagents.has_reagent("[R.inverse_chem]")
+					R2.cached_purity = R.purity
 
 			else if (clear_conversion == REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
@@ -27,6 +29,8 @@
 				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
 				R.cached_purity = R.purity
 				R.purity = 1
+				var/datum/reagent/R2 = my_atom.reagents.has_reagent("[R.impure_chem]")
+				R2.cached_purity = R.purity
 	return
 
 /datum/chemical_reaction/fermi/eigenstate
@@ -483,7 +487,7 @@
 	catto.color = "#770000"
 	my_atom.reagents.remove_all(5)
 
-/datum/chemical_reaction/fermi/yamerol//done test
+/datum/chemical_reaction/fermi/yamerol
 	name = "Yamerol"
 	id = "yamerol"
 	results = list("yamerol" = 3)
@@ -491,7 +495,7 @@
 	//FermiChem vars:
 	OptimalTempMin 	= 300
 	OptimalTempMax 	= 500
-	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	ExplodeTemp 	= 800
 	OptimalpHMin 	= 6.8
 	OptimalpHMax 	= 7.2
 	ReactpHLim 		= 4
@@ -502,3 +506,39 @@
 	HIonRelease 	= 0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
+
+/datum/chemical_reaction/antacidpregen
+	name = "Antacid pregenitor"
+	id = "antacidpregen"
+	results = list("antacidpregen" = 6)
+	required_reagents = list("lye" = 3, "carbon" = 1, "oxygen" = 1, "hydrogen" = 1)
+	//FermiChem vars:
+	OptimalTempMin 	= 250
+	OptimalTempMax 	= 500
+	ExplodeTemp 	= 1000
+	OptimalpHMin 	= 6.8
+	OptimalpHMax 	= 7.2
+	ReactpHLim 		= 7
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 0.5
+	CurveSharppH 	= 2
+	ThermicConstant = 0
+	HIonRelease 	= 0.1
+	RateUpLim 		= 2
+	FermiChem 		= TRUE
+	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
+
+/datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, added_volume, added_purity)
+	var/datum/chemical_reaction/antacidpregen/A = holder.has_reagent("antacidpregen")
+	if(!A)
+		return
+	if(holder.pH < 7)
+		holder.add_reagent("antbase", added_volume, other_purity = 1-A.purity)
+		var/datum/chemical_reaction/antbase/B = holder.has_reagent("antbase")
+		B.cached_purity = 1-A.purity
+		holder.remove_reagent(id, added_volume)
+	else
+		holder.add_reagent("antacid", added_volume, other_purity = 1-A.purity)
+		var/datum/reagent/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
+		A2.cached_purity = 1-A.purity
+		holder.remove_reagent(id, added_volume)
