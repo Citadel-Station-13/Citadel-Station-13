@@ -184,6 +184,22 @@
 	results = list("oculine" = 3)
 	required_reagents = list("charcoal" = 1, "carbon" = 1, "hydrogen" = 1)
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
+	//FermiChem vars:
+	OptimalTempMin 		= 250		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax 		= 300 		// Upper end for above
+	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
+	OptimalpHMin 		= 7			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax 		= 12.5 		// Higest value for above
+	ReactpHLim 			= 3			// How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 0.1 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 0.8 		// How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= -2.5 		// Temperature change per 1u produced
+	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 35 		// Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
+	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	PurityMin 			= 0.35
 
 /datum/chemical_reaction/atropine
 	name = "Atropine"
@@ -214,7 +230,7 @@
 	OptimalTempMax 		= 300 		// Upper end for above
 	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
 	OptimalpHMin 		= 5			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	OptimalpHMax 		= 8 		// Higest value for above
+	OptimalpHMax 		= 7.5 		// Higest value for above
 	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
@@ -252,7 +268,7 @@
 	RateUpLim 			= 15 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_INVERTSMOKE
-	PurityMin 			= 0.4
+	PurityMin 			= 0.35
 
 /datum/chemical_reaction/antihol
 	name = "antihol"
@@ -276,6 +292,7 @@
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 	PurityMin 			= 0
+	clear_conversion	= REACTION_CLEAR_INVERSE
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
@@ -350,7 +367,7 @@
 	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
 	OptimalpHMin 		= 7			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	OptimalpHMax 		= 12.5 		// Higest value for above
-	ReactpHLim 			= 3		// How far out pH wil react, giving impurity place (Exponential phase)
+	ReactpHLim 			= 3			// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 0.1 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 0.8 		// How sharp the pH exponential curve is (to the power of value)
@@ -359,7 +376,7 @@
 	RateUpLim 			= 35 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
-	PurityMin 			= 0.4
+	PurityMin 			= 0.35
 
 /datum/chemical_reaction/morphine
 	name = "Morphine"

@@ -788,13 +788,22 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
 	pH = 10
+	impure_chem 		= "generic_impure"
+	inverse_chem_val 	= 0.5
+	inverse_chem		= "oculine_impure"
+	var/cached_light
+
+/datum/reagent/medicine/oculine/on_mob_add(mob/living/L)
+	cached_light = M.lighting_alpha
+	M.lighting_alpha = round((255 - cached_purity*10), 1)
+	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
-		if(prob(20))
+		if(prob(2*cached_purity))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
@@ -808,7 +817,14 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		M.set_blindness(0)
 		M.set_blurriness(0)
 	else if(eyes.eye_damage > 0)
-		M.adjust_eye_damage(-1)
+		if(cached_purity > 0.9)
+			M.cureOrganDamage(ORGAN_SLOT_EYES, -cached_purity*REM, ORGAN_TREAT_END_STAGE)
+		else
+			M.cureOrganDamage(ORGAN_SLOT_EYES, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
+	..()
+
+/datum/reagent/medicine/oculine/on_mob_delete(mob/living/L)
+	M.lighting_alpha = cached_light
 	..()
 
 /datum/reagent/medicine/atropine
@@ -929,6 +945,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#DCDCFF"
 	pH = 10.4
 	purity = 0.8
+	overdose = 25
 	impure_chem 		= "mannitol_impure"
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "mannitol_impure"
@@ -940,13 +957,27 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
+/datum/reagent/medicine/mannitol/overdose_process(mob/living/M)
+	if(prob(75))
+		return
+	var/list/tips
+	if(prob(50))
+		tips = world.file2list("strings/tips.txt")
+	else if(prob(35))
+		tips = world.file2list("strings/sillytips.txt")
+	else
+		tips = world.file2list("strings/fermitips.txt")
+	var/m = pick(randomtips)
+	to_chat(M, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>"))
+	..()
+
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	id = "neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
 	purity = 0.8
-	impure_chem 		= "neurine_impure"
+	impure_chem 		= "neurine_impure" //if people get grumpy, change this to generic_impure
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "neurine_impure"
 	chemical_flags 		= REAGENT_SPLITRETAINVOL
@@ -981,9 +1012,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#00B4C8"
 	taste_description = "raw egg"
 	pH = 4
-	impure_chem 		= "antihol_impure"
-	inverse_chem_val 	= 0.1
-	inverse_chem		= "antihol_impure"
+	impure_chem 		= "generic_impure" //
+	inverse_chem_val 	= 0.3
+	inverse_chem		= "antihol_inverse"
+	chemical_flag = REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
@@ -992,7 +1024,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, (cached_purity*REM)*3, 0, 1)
-	M.adjustToxLoss(-0.2*REM, 0)
+	M.adjustToxLoss((cached_purity/2)*REM, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - 10, 0)
@@ -1355,6 +1387,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#F5F5F5"
 	self_consuming = TRUE
 	pH = 12.5
+	impure_chem 		= "generic_impure" //
+	inverse_chem_val 	= 0.5
+	inverse_chem		= "corazone_inverse"
 
 /datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
 	..()
@@ -1363,7 +1398,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/corazone/on_mob_life(mob/living/carbon/M)
 	M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
-	if(cached_purity > 0.98)
+	if(cached_purity > 0.95)
 		M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/5)*REM, ORGAN_TREAT_CHRONIC)
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
