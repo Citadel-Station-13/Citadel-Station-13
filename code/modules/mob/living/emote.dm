@@ -151,12 +151,6 @@
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 
-/datum/emote/living/gekker//Planning on adding audio and a race check for felinids at a later date but for now this'll do
-	key = "gekker"
-	key_third_person = "gekkers"
-	message = "gekkers happily!"
-	emote_type = EMOTE_AUDIBLE
-
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"

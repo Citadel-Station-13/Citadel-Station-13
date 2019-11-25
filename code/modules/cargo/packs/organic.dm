@@ -335,7 +335,7 @@
 
 /datum/supply_pack/organic/vday
 	name = "Surplus Valentine Crate"
-	desc = "Turns out we got warehouses of this love-y dove-y crap. We're sending out small bargin buddles of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
+	desc = "Turns out we got warehouses of this love-y dove-y crap. We're sending out small bargain buddles of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
 	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/item/storage/fancy/heart_box,

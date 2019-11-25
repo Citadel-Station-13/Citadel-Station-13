@@ -123,7 +123,7 @@
 
 /datum/supply_pack/service/janitor/janpremium
 	name = "Janitor Premium Supplies"
-	desc = "Due to the Janitorial Union for Greater Supplies, we have decided to make a deal for you, In this crate you can get a brand new chem, Drying Angent! This stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
+	desc = "Due to the Janitorial Union for Greater Supplies, we have decided to make a deal for you, In this crate you can get a brand new chem, Drying Agent! This stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Agent magic, three wet floor signs, and some spare bottles of ammonia."
 	cost = 1750
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/caution,

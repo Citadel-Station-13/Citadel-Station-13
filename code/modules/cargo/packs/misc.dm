@@ -162,7 +162,7 @@
 
 /datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
-	desc = "Pssst, want to have a good time with your sluts? Well I got what you want; maid clothing, dildos, collars and more!"
+	desc = "Pssst, want to have a good time with your sluts? Well I got what you want: maid clothing, dildos, collars and more!"
 	cost = 5250
 	contraband = TRUE
 	contains = list(/obj/item/dildo/custom,
