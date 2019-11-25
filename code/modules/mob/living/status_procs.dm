@@ -54,7 +54,9 @@
 ///////////////////////////////// KNOCKDOWN /////////////////////////////////////
 
 /mob/living/IsKnockdown() //If we're knocked down
-	return getStaminaLoss() >= STAMINA_SOFTCRIT && resting
+	if(!(resting && getStaminaLoss() >= 20))
+		hard_knockdown = FALSE
+	return hard_knockdown
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg) //Can't go below remaining duration
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
@@ -64,10 +66,12 @@
 			var/obj/buckl = buckled
 			buckl.unbuckle_mob(src)
 		resting = TRUE
-		adjustStaminaLoss(isnull(override_stamdmg)? amount*0.25 : override_stamdmg)
+		adjustStaminaLoss(isnull(override_stamdmg)? amount*0.25 : override_stamdmg)			
 		if(!isnull(override_hardstun))
 			Stun(override_hardstun,updating,ignore_canknockdown)
 		if(updating)
+			if(amount>=80)
+				hard_knockdown = TRUE
 			update_canmove()
 		return TRUE
 
