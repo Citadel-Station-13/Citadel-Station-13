@@ -61,7 +61,7 @@
 
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
-	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
+	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of RCDs to be able to easily fix up any problem you may have!"
 	cost = 1500
 	contains = list(/obj/item/construction/rcd,
 					/obj/item/construction/rcd)
@@ -70,7 +70,7 @@
 
 /datum/supply_pack/emergency/soft_suit
 	name = "Emergency Space Suit "
-	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
+	desc = "Is there bombs going off left and right? Are there meteors shooting around the station? Well we have two fragile space suit for emergencies as well as air and masks."
 	cost = 1200
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
@@ -256,7 +256,7 @@
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
-	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
+	desc = "Viro let out a death plague Mk II again? Someone didnt wash their hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it breaks out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
 	cost = 3000
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,

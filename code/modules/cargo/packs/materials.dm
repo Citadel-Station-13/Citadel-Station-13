@@ -89,7 +89,7 @@
 
 /datum/supply_pack/materials/rcdammo
 	name = "Spare RDC ammo"
-	desc = "This crate contains sixteen RCD ammo packs, to help with any holes or projects people mite be working on."
+	desc = "This crate contains sixteen RCD compressed matter packs, to help with any holes or projects people might be working on."
 	cost = 3750
 	contains = list(/obj/item/rcd_ammo,
 					/obj/item/rcd_ammo,

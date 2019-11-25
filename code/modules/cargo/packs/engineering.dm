@@ -74,7 +74,7 @@
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
-	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
+	desc = "An industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD models."
 	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
@@ -142,9 +142,9 @@
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
-/datum/supply_pack/engineering/siezedproduction 
+/datum/supply_pack/engineering/siezedproduction
 	name = "The Means of Production"
-	desc = "We will win for we have took over the production! S five metal sheets, five wire, three matter bins, one manipulater and one sheet of glass."
+	desc = "We will win for we have taken over the production! Contains a high-voltage plus power cell, an autolathe machine board, five metal sheets, five wire, three matter bins, one manipulater and one sheet of glass."
 	cost = 1500
 	contraband = TRUE
 	contains = list(/obj/item/stock_parts/cell/high/plus,
@@ -184,7 +184,7 @@
 
 /datum/supply_pack/engineering/dna_vault
 	name = "DNA Vault Parts"
-	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
+	desc = "Secure the longevity of the current state of civilization within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes." //C'mon now, it's nae just humans on the station these days
 	cost = 12000
 	special = TRUE
 	contains = list(
