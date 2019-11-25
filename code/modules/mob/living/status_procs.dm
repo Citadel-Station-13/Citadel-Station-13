@@ -53,11 +53,6 @@
 
 ///////////////////////////////// KNOCKDOWN /////////////////////////////////////
 
-/mob/living/IsKnockdown() //If we're knocked down
-	if(!(resting && getStaminaLoss() >= 20))
-		hard_knockdown = FALSE
-	return hard_knockdown
-
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg) //Can't go below remaining duration
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(isnull(override_hardstun)? amount : override_hardstun, ignore_canknockdown))
@@ -71,7 +66,8 @@
 			Stun(override_hardstun,updating,ignore_canknockdown)
 		if(updating)
 			if(amount>=80)
-				hard_knockdown = TRUE
+				drop_all_held_items()
+				interrupt_timers_prior_to = world.time
 			update_canmove()
 		return TRUE
 

@@ -18,8 +18,8 @@
 	var/mob/living/LM = parent
 	var/v = volume
 	var/e = e_range
-	if(!T.footstep || LM.buckled || LM.lying || !LM.canmove || LM.resting || LM.buckled || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
-		if (LM.lying && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
+	if(!T.footstep || LM.buckled || LM.resting || !LM.canmove || LM.resting || LM.buckled || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
+		if (LM.resting && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
 			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
 		return
 

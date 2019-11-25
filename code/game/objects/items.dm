@@ -430,7 +430,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr) || usr.resting)
 		return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota

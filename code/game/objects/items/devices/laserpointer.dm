@@ -133,7 +133,7 @@
 	for(var/mob/living/carbon/human/H in view(1,targloc))
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
 			continue
-		if(!H.lying)
+		if(!H.resting)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")

@@ -178,9 +178,9 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			if(M.buckled && !M.lying)
+			if(M.buckled && !M.resting)
 				dat += " (Sitting)"
-			if(M.lying)
+			if(M.resting)
 				dat += " (Laying down)"
 			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
 		if(length(dat) == 0)

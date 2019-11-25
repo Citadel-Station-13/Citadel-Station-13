@@ -86,7 +86,7 @@
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.stat != DEAD && C.lying)
+		if(C.stat != DEAD && C.resting)
 			return C
 	else if(is_type_in_typecache(A, target_types))
 		return A

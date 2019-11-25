@@ -297,7 +297,7 @@
 	var/list/mob/mobs = list()
 	for(var/i in possible_mobs)
 		var/mob/M = i
-		if(M.lying)
+		if(M.resting)
 			continue
 		mobs += M
 	var/mob/M = safepick(mobs)

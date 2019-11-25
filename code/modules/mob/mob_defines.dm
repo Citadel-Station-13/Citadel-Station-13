@@ -113,3 +113,5 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/interrupt_actions_prior_to = 0 // Interrupts all do_afters started before this time

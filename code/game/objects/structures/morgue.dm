@@ -347,7 +347,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		var/mob/M = O
 		if(M.buckled)
 			return
-	if(!ismob(user) || user.lying || user.incapacitated())
+	if(!ismob(user) || user.resting || user.incapacitated())
 		return
 	O.forceMove(src.loc)
 	if (user != O)

@@ -406,7 +406,7 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(!istype(user) || user.incapacitated() || user.lying)
+	if(!istype(user) || user.incapacitated() || user.resting)
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -456,7 +456,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.lying && get_dist(src, user) > 0)
+	if(user.resting && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))

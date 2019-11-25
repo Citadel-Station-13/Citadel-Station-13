@@ -109,24 +109,6 @@
 				playsound(src, "bodyfall", 20, 1)
 			return FALSE
 
-/mob/living/carbon/update_stamina()
-	var/total_health = getStaminaLoss()
-	if(total_health)
-		if(!recoveringstam && total_health >= STAMINA_CRIT && !stat)
-			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			resting = TRUE
-			if(combatmode)
-				toggle_combat_mode(TRUE)
-			recoveringstam = TRUE
-			filters += CIT_FILTER_STAMINACRIT
-			update_canmove()
-	if(recoveringstam && total_health <= STAMINA_SOFTCRIT)
-		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-		recoveringstam = FALSE
-		filters -= CIT_FILTER_STAMINACRIT
-		update_canmove()
-	update_health_hud()
-
 /mob/living/proc/update_hud_sprint_bar()
 	if(hud_used && hud_used.sprint_buffer)
 		hud_used.sprint_buffer.update_to_mob(src)

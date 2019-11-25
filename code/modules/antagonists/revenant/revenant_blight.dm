@@ -26,7 +26,7 @@
 
 /datum/disease/revblight/stage_act()
 	if(!finalstage)
-		if(affected_mob.lying && prob(stage*4))
+		if(affected_mob.resting && prob(stage*4))
 			to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 			cure()
 			return

@@ -95,7 +95,7 @@
 
 	if(M.a_intent == INTENT_HELP)
 		if(target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)) //Can't hug people who are dying/dead
-			if(target.on_fire || target.lying) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
+			if(target.on_fire || target.resting) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
 				return
 			else
 				M.changeNext_move(CLICK_CD_RAPID)

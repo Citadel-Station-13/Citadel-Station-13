@@ -60,7 +60,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/paper_bin/attack_hand(mob/user)
-	if(user.lying)
+	if(user.resting)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)

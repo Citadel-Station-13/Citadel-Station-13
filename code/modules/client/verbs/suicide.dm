@@ -221,7 +221,7 @@
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
-	if(IsStun() || IsKnockdown())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+	if(IsStun())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide while stunned! ((You can type Ghost instead however.))")
 		return
 	if(restrained())

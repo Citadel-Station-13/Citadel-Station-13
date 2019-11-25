@@ -555,14 +555,22 @@
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
 
 /mob/living/carbon/update_stamina()
-	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION)
-		var/total_health = (health - stam)
-		if(total_health <= crit_threshold && !stat)
-			if(!IsKnockdown())
-				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(100)
-			update_health_hud()
+	var/total_health = getStaminaLoss()
+	if(total_health)
+		if(!recoveringstam && total_health >= STAMINA_CRIT && !stat)
+			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+			resting = TRUE
+			if(combatmode)
+				toggle_combat_mode(TRUE)
+			recoveringstam = TRUE
+			filters += CIT_FILTER_STAMINACRIT
+			update_canmove()
+	if(recoveringstam && total_health <= STAMINA_SOFTCRIT)
+		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
+		recoveringstam = FALSE
+		filters -= CIT_FILTER_STAMINACRIT
+		update_canmove()
+	update_health_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)

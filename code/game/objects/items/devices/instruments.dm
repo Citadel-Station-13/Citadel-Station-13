@@ -45,7 +45,7 @@
 	if(!user)
 		return
 
-	if(!isliving(user) || user.stat || user.restrained() || user.lying)
+	if(!isliving(user) || user.stat || user.restrained() || user.resting)
 		return
 
 	user.set_machine(src)

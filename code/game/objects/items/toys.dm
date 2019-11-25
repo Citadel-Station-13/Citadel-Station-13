@@ -798,7 +798,7 @@
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
-	if(user.lying)
+	if(user.resting)
 		return
 	var/choice = null
 	if(cards.len == 0)
@@ -866,7 +866,7 @@
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/living/M = usr
-	if(!istype(M) || usr.incapacitated() || usr.lying)
+	if(!istype(M) || usr.incapacitated() || usr.resting)
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)

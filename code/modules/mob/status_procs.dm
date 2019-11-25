@@ -8,11 +8,6 @@
 /mob/proc/IsStun() //non-living mobs shouldn't be stunned
 	return FALSE
 
-/////////////////////////////////// KNOCKDOWN ////////////////////////////////////
-
-/mob/proc/IsKnockdown() //non-living mobs shouldn't be knocked down
-	return FALSE
-
 /////////////////////////////////// UNCONSCIOUS ////////////////////////////////////
 
 /mob/proc/IsUnconscious() //non-living mobs shouldn't be unconscious

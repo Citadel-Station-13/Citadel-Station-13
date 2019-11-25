@@ -254,7 +254,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(!(lube&SLIP_WHEN_CRAWLING) && (C.lying || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(lube&SLIP_WHEN_CRAWLING) && (C.resting || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(lube & NO_SLIP_WHEN_WALKING)
 				if(C.m_intent == MOVE_INTENT_WALK)

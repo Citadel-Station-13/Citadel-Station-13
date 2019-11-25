@@ -1035,7 +1035,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /* TODO: Snowflake trail marks
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)
-	if(H.lying)
+	if(H.resting)
 		return /obj/effect/decal/cleanable/blood/footprints/tracks/body
 	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
 		var/obj/item/clothing/shoes/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
@@ -1360,7 +1360,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 
 	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-		if(!H.IsKnockdown())
+		if(!H.resting)
 			H.emote("collapse")
 		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
@@ -1490,7 +1490,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
-		if(target.lying)
+		if(target.resting)
 			atk_verb = "kick"
 
 		switch(atk_verb)
@@ -1544,7 +1544,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 							"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(80, EFFECT_KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
-		else if(target.lying)
+		else if(target.resting)
 			target.forcesay(GLOB.hit_appends)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1577,7 +1577,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		user.adjustStaminaLossBuffered(3)
 		return FALSE
-	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+	else if(aim_for_groin && (target == user || target.resting || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
 		user.adjustStaminaLossBuffered(3)
 		if(HAS_TRAIT(target, TRAIT_ASSBLASTUSA))

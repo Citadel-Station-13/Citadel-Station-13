@@ -134,7 +134,7 @@
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
-	if(prob(fall_chance) && !owner.lying && !owner.buckled)
+	if(prob(fall_chance) && !owner.resting && !owner.buckled)
 		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
 		owner.Knockdown(35)
 

@@ -100,10 +100,10 @@
 		if(owner.restrained())
 			return 0
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.IsKnockdown() || owner.IsStun())
+		if(owner.IsStun())
 			return 0
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
+		if(owner.resting)
 			return 0
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)

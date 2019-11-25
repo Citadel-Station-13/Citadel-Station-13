@@ -223,7 +223,7 @@ Auto Patrol[]"},
 	var/list/targets = list()
 	for(var/mob/living/carbon/C in view(7,src)) //Let's find us a target
 		var/threatlevel = 0
-		if((C.stat) || (C.lying))
+		if((C.stat) || (C.resting))
 			continue
 		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 		//speak(C.real_name + text(": threat: []", threatlevel))
@@ -237,7 +237,7 @@ Auto Patrol[]"},
 		targets += C
 	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
-		if((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
+		if((t.stat!=2) && (!t.resting) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)
 	switch(mode)
 
