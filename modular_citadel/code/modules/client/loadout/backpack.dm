@@ -100,3 +100,8 @@
 	name = "Spare cassette tape"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/tape/random
+
+/datum/gear/newspaper
+	name = "Newspaper"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/newspaper
