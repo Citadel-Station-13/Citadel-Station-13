@@ -109,7 +109,6 @@
 			failed = FALSE
 			return
 		to_chat(owner, "<span class='userdanger'>You feel your lung collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
-		qdel(src)
 		//TODO: add an inert organ to replace permaded organs
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
@@ -464,12 +463,14 @@
 		owner.adjustStaminaLoss(3.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)//From the extra stress of a low oxygen situation
 		M.losebreath += 3
-	if((!failed) && ((organ_flags & ORGAN_FAILING)))
-		if(owner.stat == CONSCIOUS)
-			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
-								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
-		failed = TRUE
-	else if(!(organ_flags & ORGAN_FAILING))
+	if(organ_flags & ORGAN_FAILING)
+		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
+		if(!failed)
+			if(owner.stat == CONSCIOUS)
+				owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
+									"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
+			failed = TRUE
+	else
 		failed = FALSE
 	return
 

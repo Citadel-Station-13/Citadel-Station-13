@@ -10,6 +10,7 @@
 	inverse_chem_val 		= 0.4
 	inverse_chem		= "yamerol_tox"
 	can_synth = TRUE
+	var/templungs = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
@@ -43,10 +44,10 @@
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
-	var/obj/item/organ/tongue/oT = C.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 	if(current_cycle == 1)
 		to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and lungs.</span>")
-	if(current_cycle > 10)
+	if(current_cycle > 5)
 		if(!C.getorganslot(ORGAN_SLOT_TONGUE))
 			var/obj/item/organ/tongue/T
 			if(C.dna && C.dna.species && C.dna.species.mutanttongue)
@@ -57,13 +58,28 @@
 			to_chat(C, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
 			holder.remove_reagent(src.id, "10")
 
-		if(!C.getorganslot(ORGAN_SLOT_LUNGS))
-			var/obj/item/organ/lungs/yamerol/L = new()
-			L.Insert(C)
-			to_chat(C, "<span class='notice'>You feel the yamerol merge together in your chest, forming an airogel maxtrix.</span>")
+		//If we've a failed lung, replace it. If a lobe has collapsed,
+		if(L.organ_flags & ORGAN_FAILING)
+			var/obj/item/organ/lungs/yamerol/L2 = new()
+			L2.Insert(C)
+			to_chat(C, "<span class='notice'>You feel the yamerol merge together in your chest, forming a temporary airogel maxtrix.</span>")
 			holder.remove_reagent(src.id, "10")
+			qdel(L)
+
+		else if (L.organ_flags & ORGAN_LUNGS_DEFLATED )
+			L.organ_flags &= ~ORGAN_LUNGS_DEFLATED
+			to_chat(C, "<span class='notice'>You feel the yamerol merge together in the side of your chest, aiding your breathing.</span>")
+			holder.remove_reagent(src.id, "5")
+			templungs = TRUE
 
 	C.adjustOxyLoss(-3)
+	..()
+
+/datum/reagent/fermi/yamerol/on_mob_delete(mob/living/carbon/C)
+	if(templungs)
+		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+		L.organ_flags |= ORGAN_LUNGS_DEFLATED
+		to_chat(C, "<span class='notice'>Your chest tightens up again as you feel the medicine dissolve away from inside of you.</span>")
 	..()
 
 /datum/reagent/impure/yamerol_tox
@@ -151,6 +167,7 @@
 	id = "antacidpregen"
 	description = "A chem that turns into an antacid or antbase depending on it's reaction conditions. At the end of a reaction it'll turn into either an antacid for treating acidic stomachs, or an antbase for alkaline. Upon conversion the purity is inverted, the more extreme the pH is on reaction, the more effective it is."
 	pH = 7
+	chemical_flags 		= REAGENT_DONOTSPLIT
 	//TODO: using it with kidney stones makes it worse
 	//OD gives kidney stones
 	//Reduces Peptic ulcer disease severity too.
