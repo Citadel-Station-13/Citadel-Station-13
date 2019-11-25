@@ -243,7 +243,7 @@
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
-					/obj/item/sharpener, //For some reason had a rollingpin instead of a whetstone despite description saying otherwise. Reason for it's price
+					/obj/item/kitchen/rollingpin, //Pricy for a reason
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
