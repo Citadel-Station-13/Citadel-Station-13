@@ -83373,8 +83373,6 @@
 /area/maintenance/aft)
 "gRS" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
-/obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "gXY" = (
@@ -83609,11 +83607,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"llb" = (
-/obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
 "lsv" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
@@ -83830,13 +83823,6 @@
 /obj/item/storage/crayons,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"ohj" = (
-/obj/item/integrated_electronics/analyzer,
-/obj/item/integrated_electronics/debugger,
-/obj/item/integrated_electronics/wirer,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
 "omz" = (
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
@@ -83865,7 +83851,6 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "oRL" = (
@@ -84447,11 +84432,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
-"xkG" = (
-/obj/item/integrated_electronics/wirer,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
 "xse" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -122223,7 +122203,7 @@ cuZ
 lMz
 krD
 ocT
-xkG
+gRS
 uTS
 cxO
 ykE
@@ -122480,7 +122460,7 @@ dvY
 mjJ
 krD
 eqq
-llb
+gRS
 uTS
 cxO
 cxO
@@ -122994,7 +122974,7 @@ dvY
 vLD
 krD
 jyv
-ohj
+gRS
 nnK
 cxO
 cxO

@@ -40826,7 +40826,6 @@
 /area/science/misc_lab)
 "bQY" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer,
 /obj/machinery/computer/security/telescreen/circuitry{
 	pixel_y = 30
 	},
@@ -45013,9 +45012,6 @@
 /area/science/misc_lab)
 "cbe" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
-/obj/item/integrated_electronics/debugger,
-/obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "cbf" = (
@@ -45434,7 +45430,6 @@
 /area/science/circuit)
 "cbZ" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer,
 /obj/machinery/computer/security/telescreen/circuitry{
 	dir = 1;
 	pixel_y = -30

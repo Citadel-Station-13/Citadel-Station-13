@@ -26925,8 +26925,6 @@
 /area/science/explab)
 "blT" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer,
-/obj/item/integrated_electronics/wirer,
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
@@ -26947,7 +26945,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/integrated_electronics/debugger,
 /obj/machinery/computer/security/telescreen/circuitry{
 	pixel_y = 30
 	},
@@ -26968,27 +26965,6 @@
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /obj/item/stack/sheet/metal/ten,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/science/explab)
-"blW" = (
-/obj/structure/table/reinforced,
-/obj/item/integrated_electronics/wirer,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/computer/security/telescreen/circuitry{
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -27390,7 +27366,6 @@
 /area/science/explab)
 "bmZ" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/machinery/magnetic_controller{
 	autolink = 1;
 	pixel_x = -28;
@@ -58999,25 +58974,6 @@
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"qDJ" = (
-/obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer,
-/obj/item/integrated_electronics/debugger,
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/science/explab)
 "qEN" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/structure/window/reinforced{
@@ -60917,7 +60873,6 @@
 /area/maintenance/department/crew_quarters/dorms)
 "vmG" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -103766,7 +103721,7 @@ bbI
 aGP
 bjx
 bjw
-blW
+blU
 bna
 pbI
 bqs
@@ -104023,7 +103978,7 @@ aEj
 pKd
 bjx
 bjw
-qDJ
+blT
 vmG
 bnZ
 pDP
