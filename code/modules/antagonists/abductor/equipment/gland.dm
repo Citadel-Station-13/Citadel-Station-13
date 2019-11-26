@@ -5,6 +5,7 @@
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
 	beating = TRUE
+	organ_flags = ORGAN_NO_SPOIL
 	var/true_name = "baseline placebo referencer"
 	var/cooldown_low = 300
 	var/cooldown_high = 300
