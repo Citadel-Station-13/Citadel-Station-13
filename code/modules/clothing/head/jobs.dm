@@ -55,9 +55,6 @@
 	name = "captain's white beret"
 	desc = "A white beret fit for a leader."
 	icon_state = "beret_captain_white"
-	dynamic_hair_suffix = ""
-
-	dog_fashion = null
 
 //Head of Personnel
 /obj/item/clothing/head/hopcap
@@ -79,9 +76,6 @@
 	name = "head of personnel's white beret"
 	desc = "The symbol of true bureaucratic micromanagement, although in a fancy form."
 	icon_state = "beret_white_hop"
-	dynamic_hair_suffix = ""
-
-	dog_fashion = null
 
 //Chaplain
 /obj/item/clothing/head/nun_hood
@@ -273,15 +267,11 @@
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "wardenberet"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/corporatewarden
 	name = "warden's corporate beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "beret_corporate_warden"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
