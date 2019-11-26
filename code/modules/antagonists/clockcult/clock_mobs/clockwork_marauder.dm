@@ -1,6 +1,7 @@
 #define MARAUDER_SLOWDOWN_PERCENTAGE 0.40 //Below this percentage of health, marauders will become slower
 #define MARAUDER_SHIELD_REGEN_TIME 200 //In deciseconds, how long it takes for shields to regenerate after breaking
-#define MARAUDER_SPACE_DAMAGE 4			//amount of damage taking per Life() tick from space.
+#define MARAUDER_SPACE_DIRECT_DAMAGE 6		//amount of damage per life tick while inside space
+#define MARAUDER_SPACE_NEAR_DAMAGE 4			//amount of damage taking per Life() tick from being next to space.
 
 //Clockwork marauder: A well-rounded frontline construct. Only one can exist for every two human servants.
 /mob/living/simple_animal/hostile/clockwork/marauder
@@ -39,10 +40,17 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
-	var/turf/open/space/S = locate() in view(1)
+	var/turf/T = get_turf(src)
+	var/turf/open/space/S = isspaceturf(T)? T : null
+	var/less_space_damage
+	if(!istype(S))
+		var/turf/open/space/nearS = locate() in oview(1)
+		if(nearS)
+			S = nearS
+			less_space_damage = TRUE
 	if(S)
 		to_chat(src, "<span class='userdanger'>The void of space drains Ratvar's Light from you! You feel yourself rapidly decaying. It would be wise to get back inside!</span>")
-		adjustBruteLoss(MARAUDER_SPACE_DAMAGE)
+		adjustBruteLoss(less_space_damage? MARAUDER_SPACE_NEAR_DAMAGE : MARAUDER_SPACE_FULL_DAMAGE)
 	if(!GLOB.ratvar_awakens && health / maxHealth <= MARAUDER_SLOWDOWN_PERCENTAGE)
 		speed = default_speed + 1 //Yes, this slows them down
 	else
