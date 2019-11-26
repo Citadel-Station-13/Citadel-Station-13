@@ -351,8 +351,8 @@ SLIME SCANNER
 
 
 	// Species and body temperature
+	var/mob/living/carbon/human/H = M
 	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
 		var/datum/species/S = H.dna.species
 		var/mutant = FALSE
 		if (H.dna.check_mutation(HULK))
