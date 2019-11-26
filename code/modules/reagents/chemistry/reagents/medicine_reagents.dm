@@ -966,9 +966,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	chemical_flags		= REAGENT_SPLITRETAINVOL
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_ACUTE)
+	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -(cached_purity*2.2)*REM, ORGAN_TREAT_ACUTE)
 	if(cached_purity > 0.95)
-		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2)*REM, ORGAN_TREAT_CHRONIC)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2.2)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/mannitol/overdose_process(mob/living/M)
