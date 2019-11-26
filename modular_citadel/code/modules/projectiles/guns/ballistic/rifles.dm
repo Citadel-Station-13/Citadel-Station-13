@@ -218,8 +218,8 @@
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 /obj/item/gun/ballistic/automatic/AM4B/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/ammo_box/magazine/toy/AM4C
 	name = "foam force AM4-C magazine"

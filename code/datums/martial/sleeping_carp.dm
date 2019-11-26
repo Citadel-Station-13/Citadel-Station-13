@@ -105,6 +105,8 @@
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
+	if(A == D) //no self grab stun
+		return FALSE
 	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
