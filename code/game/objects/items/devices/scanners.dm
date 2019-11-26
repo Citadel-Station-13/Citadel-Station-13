@@ -395,7 +395,7 @@ SLIME SCANNER
 				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>"
 			if(advanced)
 				if(H.get_ghost() || H.key || H.client)//Since it can last a while.
-					msg += "<span class='danger'>Intervention recommended.</span>\n"
+					msg += "<span class='danger'> Intervention recommended.</span>\n"
 				else
 					msg += "\n"
 
