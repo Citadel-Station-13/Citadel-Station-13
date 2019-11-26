@@ -34607,6 +34607,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCm" = (

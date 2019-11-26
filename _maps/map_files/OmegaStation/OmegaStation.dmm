@@ -38756,6 +38756,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"mdh" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/MRS,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone3)
 "meo" = (
 /turf/closed/wall/r_wall/rust,
 /area/science/mixing)
@@ -83391,7 +83396,7 @@ aXX
 aYQ
 aZM
 baD
-bbr
+mdh
 aWK
 bda
 bdX

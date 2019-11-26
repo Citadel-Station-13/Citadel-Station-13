@@ -36032,6 +36032,7 @@
 /area/crew_quarters/heads/cmo)
 "bFF" = (
 /obj/machinery/light,
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bFG" = (
