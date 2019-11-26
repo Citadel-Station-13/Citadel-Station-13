@@ -2625,6 +2625,7 @@
 #include "code\modules\reagents\reagent_containers\patch.dm"
 #include "code\modules\reagents\reagent_containers\pill.dm"
 #include "code\modules\reagents\reagent_containers\rags.dm"
+#include "code\modules\reagents\reagent_containers\sleeper_buffer.dm"
 #include "code\modules\reagents\reagent_containers\spray.dm"
 #include "code\modules\reagents\reagent_containers\syringes.dm"
 #include "code\modules\recycling\conveyor2.dm"

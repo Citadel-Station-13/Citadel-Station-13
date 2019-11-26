@@ -155,12 +155,12 @@
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
-	reagent_id = /datum/reagent/medicine/polypyr
+	reagent_id = "polypyr"
 	rate = 0.15
 
 /datum/plant_gene/reagent/liquidelectricity
 	name = "Liquid Electricity"
-	reagent_id = /datum/reagent/consumable/liquidelectricity
+	reagent_id = "liquidelectricity"
 	rate = 0.1
 
 // Various traits affecting the product. Each must be somehow useful.
