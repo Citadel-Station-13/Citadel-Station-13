@@ -46,13 +46,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/unitCheck = FALSE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "a weird chemical fleshy flavour"
-	//var/datum/status_effect/chem/SDGF/candidates/candies
 	var/list/candies = list()
-	//var/polling = FALSE
-	var/list/result = list()
-	var/list/group = null
 	var/pollStarted = FALSE
-	var/location_created
 	var/startHunger
 	impure_chem 			= "SDGFtox"
 	inverse_chem_val 		= 0.5
@@ -81,7 +76,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
 
-
+				//Process the willing ghosts, and make sure they're actually in the body when they're moved into it!
 				candies = shuffle(candies)//Shake those ghosts up!
 				for(var/mob/dead/observer/C2 in candies)
 					if(C2.key && C2)
@@ -131,7 +126,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.reagents.remove_reagent(id, volume)
 				log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Sentient clones made")
-				return
+				return ..()
 
 			else if(playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
 				unitCheck = TRUE
@@ -283,7 +278,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	name = "synthetic-derived healing factor"
 	id = "SDGFheal"
 	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
-	metabolization_rate = 1
+	metabolization_rate = 0.8
 	can_synth = FALSE
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
@@ -314,9 +309,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. Emulates normal synthetic-derived growth factor, but produces a hostile zombie at the end of it."
 	color = "#a502e0" // rgb: 96, 0, 255
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	var/startHunger
 	can_synth = TRUE
+	taste_description = "a weird chemical fleshy flavour"
 	chemical_flags = REAGENT_SNEAKYNAME
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
@@ -373,5 +369,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Zombie clones made!")
 
 		if(87 to INFINITY)
-			M.adjustToxLoss(1, 0)
+			M.adjustToxLoss(2, 0)
+			M.reagents.remove_reagent(id, 1)
 	..()
