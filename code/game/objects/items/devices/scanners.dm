@@ -390,9 +390,14 @@ SLIME SCANNER
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			if(heart_ded)
-				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, heart requires surgical intervention for defibrillation.</span>\n"
+				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, heart requires surgical intervention for defibrillation.</span>"
 			else
-				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>\n"
+				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>"
+			if(advanced)
+				if(H.get_ghost() || H.key || H.client)//Since it can last a while.
+					msg += "<span class='danger'>Intervention recommended.</span>\n"
+				else
+					msg += "\n"
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
