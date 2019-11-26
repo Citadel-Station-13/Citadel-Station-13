@@ -80,6 +80,36 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+//TASER
+/datum/status_effect/electrode
+	id = "tased"
+	blocks_combatmode = TRUE
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+
+/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
+		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
+
+/datum/status_effect/electrode/on_remove()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
+	. = ..()
+
+/datum/status_effect/electrode/tick()
+	if(owner)
+		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+
+/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
+	return 2
+
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -125,7 +155,7 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs(FALSE)
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(chargecost = 0) && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Knockdown(20)
@@ -218,7 +248,7 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.anti_magic_check() && owner.stat != DEAD && severity)
+	else if(!owner.anti_magic_check(chargecost = 0) && owner.stat != DEAD && severity)
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -259,9 +289,9 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
+	var/obj/item/twohanded/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -358,19 +388,20 @@
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/mob/living/proc/apply_necropolis_curse(set_curse)
+/mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
 		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
-		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse, duration)
+
 	else
 		C.apply_curse(set_curse)
-		C.duration += 3000 //additional curses add 5 minutes
+		C.duration += duration * 0.5 //additional curses add half their duration
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 6000 //you're cursed for 10 minutes have fun
+	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
@@ -378,7 +409,9 @@
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
 
-/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
+/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse, _duration)
+	if(_duration)
+		duration = _duration
 	. = ..()
 	if(.)
 		apply_curse(set_curse)
@@ -507,3 +540,130 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+datum/status_effect/pacify
+	id = "pacify"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 1
+	duration = 100
+	alert_type = null
+
+/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/pacify/on_apply()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+
+/datum/status_effect/trance
+	id = "trance"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 300
+	tick_interval = 10
+	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
+	var/stun = TRUE
+	alert_type = /obj/screen/alert/status_effect/trance
+
+/obj/screen/alert/status_effect/trance
+	name = "Trance"
+	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
+	icon_state = "high"
+
+/datum/status_effect/trance/tick()
+	if(stun)
+		owner.Stun(60, TRUE, TRUE)
+	owner.dizziness = 20
+
+/datum/status_effect/trance/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+	owner.add_client_colour(/datum/client_colour/monochrome/trance)
+	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
+	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+	return TRUE
+
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
+	duration = _duration
+	stun = _stun
+	return ..()
+
+/datum/status_effect/trance/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+	owner.dizziness = 0
+	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
+	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
+
+/datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
+	if(!owner.can_hear())
+		return
+	if(hearing_args[HEARING_SPEAKER] == owner)
+		return
+	var/mob/living/carbon/C = owner
+	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
+	qdel(src)
+
+/datum/status_effect/spasms
+	id = "spasms"
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+
+/datum/status_effect/spasms/tick()
+	if(prob(15))
+		switch(rand(1,5))
+			if(1)
+				if((!owner.lying && !owner.buckled) && isturf(owner.loc))
+					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
+					step(owner, pick(GLOB.cardinals))
+			if(2)
+				if(owner.incapacitated())
+					return
+				var/obj/item/I = owner.get_active_held_item()
+				if(I)
+					to_chat(owner, "<span class='warning'>Your fingers spasm!</span>")
+					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
+					I.attack_self(owner)
+			if(3)
+				var/prev_intent = owner.a_intent
+				owner.a_intent = INTENT_HARM
+
+				var/range = 1
+				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
+					range = 7
+
+				var/list/mob/living/targets = list()
+				for(var/mob/M in oview(owner, range))
+					if(isliving(M))
+						targets += M
+				if(LAZYLEN(targets))
+					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
+					owner.ClickOn(pick(targets))
+				owner.a_intent = prev_intent
+			if(4)
+				var/prev_intent = owner.a_intent
+				owner.a_intent = INTENT_HARM
+				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
+				owner.ClickOn(owner)
+				owner.a_intent = prev_intent
+			if(5)
+				if(owner.incapacitated())
+					return
+				var/obj/item/I = owner.get_active_held_item()
+				var/list/turf/targets = list()
+				for(var/turf/T in oview(owner, 3))
+					targets += T
+				if(LAZYLEN(targets) && I)
+					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
+					owner.throw_item(pick(targets))

@@ -19,4 +19,3 @@
 /obj/mecha/combat/durand/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	defense_action.Remove(user)
-

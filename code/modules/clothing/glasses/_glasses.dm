@@ -23,9 +23,9 @@
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/examine(mob/user)
-	..()
+	. = ..()
 	if(glass_colour_type && ishuman(user))
-		to_chat(user, "<span class='notice'>Alt-click to toggle its colors.</span>")
+		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
@@ -104,7 +104,7 @@
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
+/obj/item/clothing/glasses/science/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_GLASSES)
 		return 1
 
@@ -281,6 +281,33 @@
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
 
+/obj/item/clothing/glasses/sunglasses/blindfold/white
+	name = "blind personnel blindfold"
+	desc = "Indicates that the wearer suffers from blindness."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+	var/colored_before = FALSE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == SLOT_GLASSES)
+		update_icon(user)
+		user.update_inv_glasses() //Color might have been changed by update_icon.
+	..()
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
+	if(ishuman(user) && !colored_before)
+		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		colored_before = TRUE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
+	. = list()
+	if(!isinhands && ishuman(loc) && !colored_before)
+		var/mob/living/carbon/human/H = loc
+		var/mutable_appearance/M = mutable_appearance('icons/mob/eyes.dmi', "blindfoldwhite")
+		M.appearance_flags |= RESET_COLOR
+		M.color = "#[H.eye_color]"
+		. += M
+
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"
@@ -335,7 +362,7 @@
 		desc = replacetext(desc, "person", "man")
 	else if(user.gender == FEMALE)
 		desc = replacetext(desc, "person", "woman")
-	..()
+	. = ..()
 	desc = desk
 
 /obj/item/clothing/glasses/thermal/eyepatch
@@ -378,9 +405,12 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = TRUE
-	item_flags = NODROP
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+
+/obj/item/clothing/glasses/godeye/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

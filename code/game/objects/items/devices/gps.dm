@@ -14,8 +14,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
 /obj/item/gps/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
+	. = ..()
+	var/turf/curr = get_turf(src)
+	. += "The screen says: [get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
+	. += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
 
 /obj/item/gps/Initialize()
 	. = ..()
@@ -156,7 +158,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	item_flags = NODROP
+
+/obj/item/gps/cyborg/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/gps/internal
 	icon_state = null
@@ -164,8 +169,19 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
+	var/obj/item/implant/gps/implant
 
-/obj/item/gps/mining/internal
+/obj/item/gps/internal/Initialize(mapload, obj/item/implant/gps/_implant)
+	. = ..()
+	implant = _implant
+
+/obj/item/gps/internal/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
+	else
+		return ..()
+
+/obj/item/gps/internal/mining
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."

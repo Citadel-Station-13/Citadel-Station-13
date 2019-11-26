@@ -498,6 +498,23 @@ Code:
 				else
 					menu += "[ldat]"
 
+				menu += "<h4>Pimpin' Ride:</h4>"
+
+				ldat = null
+				for (var/obj/vehicle/ridden/janicart/M in world)
+					var/turf/ml = get_turf(M)
+
+					if(ml)
+						if (ml.z != cl.z)
+							continue
+						var/direction = get_dir(src, M)
+						ldat += "Ride - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b><br>"
+
+				if (!ldat)
+					menu += "None"
+				else
+					menu += "[ldat]"
+
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
@@ -680,7 +697,7 @@ Code:
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
 
-		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
+		active_bot.bot_control(href_list["mule"], usr, TRUE)
 
 	if(!host_pda)
 		return
@@ -755,4 +772,4 @@ Code:
 	return ""
 
 //This is called for special abilities of cartridges
-/obj/item/cartridge/proc/special(mov/living/user, list/params)
+/obj/item/cartridge/proc/special(mob/living/user, list/params)

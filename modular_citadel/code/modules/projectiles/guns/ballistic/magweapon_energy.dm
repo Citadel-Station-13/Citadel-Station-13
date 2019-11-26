@@ -56,7 +56,7 @@
 /obj/item/ammo_box/magazine/mmag_e/small
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "nlmagmag"
+	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/anlmags
 	caliber = "mag_e"
 	max_ammo = 16
@@ -143,6 +143,7 @@
 // TECHWEBS IMPLEMENTATION
 */
 
+/*
 /datum/techweb_node/magnetic_weapons
 	id = "magnetic_weapons"
 	display_name = "Magnetic Weapons"
@@ -151,6 +152,7 @@
 	design_ids = list("magrifle_e", "magpistol_e", "mag_magrifle_e", "mag_magrifle_e_nl", "mag_magpistol_e", "mag_magpistol_e_nl")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+*/
 
 ///magrifle///
 
@@ -176,9 +178,9 @@
 /obj/item/gun/ballistic/automatic/magrifle_e/examine(mob/user)
 	. = ..()
 	if(cell)
-		to_chat(user, "<span class='notice'>[src]'s cell is [round(cell.charge / cell.maxcharge, 0.1) * 100]% full.</span>")
+		. += "<span class='notice'>[src]'s cell is [round(cell.charge / cell.maxcharge, 0.1) * 100]% full.</span>"
 	else
-		to_chat(user, "<span class='notice'>[src] doesn't seem to have a cell!</span>")
+		. += "<span class='notice'>[src] doesn't seem to have a cell!</span>"
 
 /obj/item/gun/ballistic/automatic/magrifle_e/can_shoot()
 	if(QDELETED(cell))
@@ -239,9 +241,9 @@
 /obj/item/gun/ballistic/automatic/pistol/mag_e/examine(mob/user)
 	. = ..()
 	if(cell)
-		to_chat(user, "<span class='notice'>[src]'s cell is [round(cell.charge / cell.maxcharge, 0.1) * 100]% full.</span>")
+		. += "<span class='notice'>[src]'s cell is [round(cell.charge / cell.maxcharge, 0.1) * 100]% full.</span>"
 	else
-		to_chat(user, "<span class='notice'>[src] doesn't seem to have a cell!</span>")
+		. += "<span class='notice'>[src] doesn't seem to have a cell!</span>"
 
 /obj/item/gun/ballistic/automatic/pistol/mag_e/can_shoot()
 	if(QDELETED(cell))

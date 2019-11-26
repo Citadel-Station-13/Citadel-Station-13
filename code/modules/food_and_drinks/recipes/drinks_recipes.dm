@@ -381,6 +381,36 @@
 	id = "neurotoxin"
 	results = list("neurotoxin" = 2)
 	required_reagents = list("gargleblaster" = 1, "morphine" = 1)
+	//FermiChem vars: Easy to make, but hard to make potent
+	OptimalTempMin 		= 200 // Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax		= 950 // Upper end for above
+	ExplodeTemp			= 999 //Temperature at which reaction explodes
+	OptimalpHMin		= 4.6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax		= 5.2 // Higest value for above
+	ReactpHLim			= 5 // How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 2 // How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 4 // How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= 10 //Temperature change per 1u produced
+	HIonRelease 		= 0.02 //pH change per 1u reaction
+	RateUpLim 			= 5 //Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
+	FermiExplode 		= FALSE //If the chemical explodes in a special way
+	PurityMin			= 0 //The minimum purity something has to be above, otherwise it explodes.
+	clear_conversion	= REACTION_CLEAR_INVERSE
+
+/*
+/datum/chemical_reaction/neurotoxin/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+	var/datum/reagent/consumable/ethanol/neurotoxin/Nt = locate(/datum/reagent/consumable/ethanol/neurotoxin) in my_atom.reagents.reagent_list
+	var/cached_volume = Nt.volume
+	if(Nt.purity < 0.5)
+		holder.remove_reagent(src.id, cached_volume)
+		holder.add_reagent("neuroweak", cached_volume)
+*/
+
+/datum/chemical_reaction/neurotoxin/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//reduced size
+	volume = volume/10
+	..()
 
 /datum/chemical_reaction/snowwhite
 	name = "Snow White"
@@ -453,18 +483,6 @@
 	id = "vanillapudding"
 	results = list("vanillapudding" = 20)
 	required_reagents = list("vanilla" = 5, "milk" = 5, "eggyolk" = 5)
-
-/datum/chemical_reaction/cherryshake
-	name = "Cherry Shake"
-	id = "cherryshake"
-	results = list("cherryshake" = 3)
-	required_reagents = list("cherryjelly" = 1, "ice" = 1, "cream" = 1)
-
-/datum/chemical_reaction/bluecherryshake
-	name = "Blue Cherry Shake"
-	id = "bluecherryshake"
-	results = list("bluecherryshake" = 3)
-	required_reagents = list("bluecherryjelly" = 1, "ice" = 1, "cream" = 1)
 
 /datum/chemical_reaction/drunkenblumpkin
 	name = "Drunken Blumpkin"
@@ -795,3 +813,16 @@
 	id = "red_queen"
 	results = list("red_queen" = 10)
 	required_reagents = list("tea" = 6, "mercury" = 2, "blackpepper" = 1, "growthserum" = 1)
+
+/datum/chemical_reaction/catnip_tea
+	name = "Catnip Tea"
+	id = "catnip_tea"
+	results = list("catnip_tea" = 3)
+	required_reagents = list("tea" = 5, "catnip" = 2)
+
+/datum/chemical_reaction/commander_and_chief
+	name = "Commander and Chief"
+	id = "commander_and_chief"
+	results = list("commander_and_chief" = 50)
+	required_reagents = list("alliescocktail" = 50, "champagne" = 20, "doctorsdelight" = 10, "quintuple_sec" = 10, "screwdrivercocktail" = 10)
+	mix_message = "When your powers combine, I am Captain Pl-..."

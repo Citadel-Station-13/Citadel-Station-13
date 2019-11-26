@@ -6,6 +6,7 @@
 
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
+	id = MARTIALART_SLEEPINGCARP
 	deflection_chance = 100
 	reroute_deflection = TRUE
 	no_guns = TRUE
@@ -104,6 +105,8 @@
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
+	if(A == D) //no self grab stun
+		return FALSE
 	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
@@ -223,7 +226,7 @@
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!</span>", \
 									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
 				H.SetSleeping(600)
-				H.adjustBrainLoss(15, 150)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		return ..()
 

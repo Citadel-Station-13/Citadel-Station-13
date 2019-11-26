@@ -34,7 +34,7 @@
 		for(var/obj/item/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
-			if((item.item_flags & ABSTRACT) || (item.item_flags & NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
+			if((item.item_flags & ABSTRACT) || HAS_TRAIT(item, TRAIT_NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
 				continue
 			marked_item = item
 			to_chat(M, "<span class='warning'>You begin to focus your very being into [item]...</span>")
@@ -57,7 +57,7 @@
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
-		M.set_species(/datum/species/skeleton)
+		M.set_species(/datum/species/skeleton/space)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.dropItemToGround(H.w_uniform)
@@ -132,7 +132,7 @@
 	lich.real_name = mind.name
 	mind.transfer_to(lich)
 	mind.grab_ghost(force=TRUE)
-	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton)
+	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton/space)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
 	lich.Knockdown(200 + 200*resurrections)

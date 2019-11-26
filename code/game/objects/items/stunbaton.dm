@@ -1,4 +1,5 @@
 #define STUNBATON_CHARGE_LENIENCY 0.3
+#define STUNBATON_DEPLETION_RATE 0.006
 
 /obj/item/melee/baton
 	name = "stunbaton"
@@ -76,7 +77,7 @@
 	update_icon()
 
 /obj/item/melee/baton/process()
-	deductcharge(hitcost * 0.004, FALSE, FALSE)
+	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -90,9 +91,9 @@
 	. = ..()
 	var/obj/item/stock_parts/cell/copper_top = get_cell()
 	if(copper_top)
-		to_chat(user, "<span class='notice'>\The [src] is [round(copper_top.percent())]% charged.</span>")
+		. += "<span class='notice'>\The [src] is [round(copper_top.percent())]% charged.</span>"
 	else
-		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
+		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
@@ -190,7 +191,7 @@
 
 
 	L.Knockdown(stunpwr)
-	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.adjustStaminaLoss(stunpwr*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -251,3 +252,4 @@
 	. = ..()
 
 #undef STUNBATON_CHARGE_LENIENCY
+#undef STUNBATON_DEPLETION_RATE

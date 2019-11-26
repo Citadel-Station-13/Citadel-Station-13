@@ -318,6 +318,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	state = AHELP_CLOSED
 	GLOB.ahelp_tickets.ListInsert(src)
+	to_chat(initiator, "<span class='adminhelp'>Ticket closed by [usr?.client?.holder?.fakekey? usr.client.holder.fakekey : "an administrator"].</span>")
 	AddInteraction("<font color='red'>Closed by [key_name].</font>")
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
@@ -336,7 +337,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
-	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
+	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by [usr?.client?.holder?.fakekey? usr.client.holder.fakekey : "an administrator"]. The Adminhelp verb will be returned to you shortly.</span>")
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
@@ -353,7 +354,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
 
-		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
+		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected by [usr?.client?.holder?.fakekey? usr.client.holder.fakekey : "an administrator"]! -</b></font>")
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
 		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
 
@@ -369,7 +370,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
+	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue by [usr?.client?.holder?.fakekey? usr.client.holder.fakekey : "an administrator"]! -</b></font><br>"
 	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
 	msg += "<font color='red'>It is also possible that your ahelp is unable to be answered properly, due to events occurring in the round.</font>"
 	if(initiator)
@@ -413,9 +414,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
+	dat += "</b>[FOURSPACES][TicketHref("Refresh", ref_src)][FOURSPACES][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
-		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
+		dat += "[FOURSPACES][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [GAMETIMESTAMP("hh:mm:ss", closed_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 	if(closed_at)
 		dat += "<br>Closed at: [GAMETIMESTAMP("hh:mm:ss", closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
@@ -423,7 +424,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks(ref_src)]<br>"
+		dat += "<b>DISCONNECTED</b>[FOURSPACES][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in _interactions)
 		dat += "[I]<br>"

@@ -1,5 +1,7 @@
 /datum/martial_art/psychotic_brawling
 	name = "Psychotic Brawling"
+	id = MARTIALART_PSYCHOBRAWL
+	pacifism_check = FALSE //Quite uncontrollable and unpredictable, people will still end up harming others with it.
 
 /datum/martial_art/psychotic_brawling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return psycho_attack(A,D)
@@ -45,7 +47,7 @@
 			D.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
 			A.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
-				D.adjustBrainLoss(5)
+				D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			A.Stun(rand(10,45))
 			D.Knockdown(rand(5,30))//CIT CHANGE - makes stuns from martial arts always use Knockdown instead of Stun for the sake of consistency
 		if(5,6)

@@ -1,3 +1,4 @@
+
 /* First aid storage
  * Contains:
  *		First Aid Kits
@@ -169,7 +170,7 @@
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
@@ -199,7 +200,7 @@
 
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
@@ -297,6 +298,22 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/aranesp(src)
 
+/obj/item/storage/pill_bottle/psicodine
+	name = "bottle of psicodine pills"
+	desc = "Contains pills used to treat mental distress and traumas."
+
+/obj/item/storage/pill_bottle/psicodine/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/psicodine(src)
+
+/obj/item/storage/pill_bottle/happiness
+	name = "happiness pill bottle"
+	desc = "The label is long gone, in its place an 'H' written with a marker."
+
+/obj/item/storage/pill_bottle/happiness/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happiness(src)
+
 /obj/item/storage/pill_bottle/antirad_plus
 	name = "anti radiation deluxe pill bottle"
 	desc = "The label says 'Med-Co branded pills'."
@@ -321,6 +338,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/penis_enlargement(src)
 
+/obj/item/storage/pill_bottle/breast_enlargement
+	name = "breast enlargement pills"
+	desc = "Made by Fermichem - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
+
+/obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/breast_enlargement(src)
+
 /////////////
 //Organ Box//
 /////////////
@@ -338,7 +363,7 @@
 
 /obj/item/storage/belt/organbox/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 16
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.max_combined_w_class = 20
@@ -363,3 +388,4 @@
 	/obj/item/stack/sheet/mineral/silver,
 	/obj/item/organ_storage
 	))
+

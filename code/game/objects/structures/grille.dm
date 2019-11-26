@@ -37,11 +37,11 @@
 	icon_state = "grille50_[rand(0,3)]"
 
 /obj/structure/grille/examine(mob/user)
-	..()
+	. = ..()
 	if(anchored)
-		to_chat(user, "<span class='notice'>It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.</span>")
-	if(!anchored)
-		to_chat(user, "<span class='notice'>The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.</span>")
+		. += "<span class='notice'>It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.</span>"
+	else
+		. += "<span class='notice'>The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.</span>"
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -262,7 +262,7 @@
 	if(isobj(AM))
 		if(prob(50) && anchored && !broken)
 			var/obj/O = AM
-			if(O.throwforce != 0)//don't want to let people spam tesla bolts, this way it will break after time
+			if(O.throwforce != 0 && O.damtype != STAMINA)//don't want to let people spam tesla bolts, this way it will break after time
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)

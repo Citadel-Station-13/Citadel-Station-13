@@ -69,12 +69,12 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 24 // Citadel change for balance from 36
+	damage = 28 // Citadel change for balance from 36
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
-	speed = 0.7
+	speed = 0.6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
@@ -150,6 +150,11 @@
 
 /obj/item/projectile/beam/lasertag/redtag/hitscan
 	hitscan = TRUE
+
+/obj/item/projectile/beam/lasertag/redtag/hitscan/holy
+	name = "lasrifle beam"
+	damage = 0.1
+	damage_type = BURN
 
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"

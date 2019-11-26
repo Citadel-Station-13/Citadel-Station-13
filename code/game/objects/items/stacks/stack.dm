@@ -22,6 +22,7 @@
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
+	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -75,23 +76,23 @@
 	. = ..()
 
 /obj/item/stack/examine(mob/user)
-	..()
+	. = ..()
 	if (is_cyborg)
 		if(singular_name)
-			to_chat(user, "There is enough energy for [get_amount()] [singular_name]\s.")
+			. += "There is enough energy for [get_amount()] [singular_name]\s."
 		else
-			to_chat(user, "There is enough energy for [get_amount()].")
+			. += "There is enough energy for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)
-			to_chat(user, "There are [get_amount()] [singular_name]\s in the stack.")
+			. += "There are [get_amount()] [singular_name]\s in the stack."
 		else
-			to_chat(user, "There is [get_amount()] [singular_name] in the stack.")
+			. += "There is [get_amount()] [singular_name] in the stack."
 	else if(get_amount()>1)
-		to_chat(user, "There are [get_amount()] in the stack.")
+		. += "There are [get_amount()] in the stack."
 	else
-		to_chat(user, "There is [get_amount()] in the stack.")
-	to_chat(user, "<span class='notice'>Alt-click to take a custom amount.</span>")
+		. += "There is [get_amount()] in the stack."
+	. += "<span class='notice'>Alt-click to take a custom amount.</span>"
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -389,9 +390,9 @@
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
-	add_blood_DNA(from.return_blood_DNA())
-	add_fingerprint_list(from.return_fingerprints())
-	add_hiddenprint_list(from.return_hiddenprints())
+	blood_DNA = from.blood_DNA
+	fingerprints  = from.fingerprints
+	fingerprintshidden  = from.fingerprintshidden
 	fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 

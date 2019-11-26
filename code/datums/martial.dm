@@ -2,6 +2,7 @@
 	var/name = "Martial Art"
 	var/streak = ""
 	var/max_streak_length = 6
+	var/id = "" //ID, used by mind/has_martialartcode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proc
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
 	var/deflection_chance = 0 //Chance to deflect projectiles
@@ -10,6 +11,7 @@
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb
 	var/no_guns = FALSE
+	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)

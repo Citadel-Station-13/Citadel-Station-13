@@ -1,6 +1,7 @@
 /obj/item/organ/alien
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
+	organ_flags = ORGAN_NO_SPOIL
 
 /obj/item/organ/alien/Initialize()
 	. = ..()
@@ -13,7 +14,7 @@
 	QDEL_LIST(alien_powers)
 	return ..()
 
-/obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.AddAbility(P)
@@ -88,10 +89,12 @@
 			owner.adjustFireLoss(-heal_amt)
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
+			if(owner.blood_volume && (owner.blood_volume < BLOOD_VOLUME_NORMAL))
+				owner.blood_volume += 5
 	else
 		owner.adjustPlasma(plasma_rate * 0.1)
 
-/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(isalien(M))
 		var/mob/living/carbon/alien/A = M
@@ -114,7 +117,7 @@
 	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
-/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	M.faction |= ROLE_ALIEN
 

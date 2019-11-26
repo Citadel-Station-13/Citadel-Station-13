@@ -52,7 +52,7 @@ Credit where due:
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		if(M.mind.assigned_role in list("Captain", "Chaplain"))
 			return FALSE
 		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 			return FALSE
@@ -135,7 +135,7 @@ Credit where due:
 	required_enemies = 3
 	recommended_enemies = 5
 	enemy_minimum_age = 7
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
+	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
 	announce_span = "brass"
 	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
@@ -167,6 +167,7 @@ Credit where due:
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
+	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
 	while(starter_servants)
 		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
@@ -275,7 +276,7 @@ Credit where due:
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
+	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1, /obj/item/reagent_containers/food/drinks/bottle/holyoil = 1)
 	id = /obj/item/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
@@ -348,7 +349,7 @@ Credit where due:
 		changelog_contents += "<li>[entry]</li>"
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
-/obj/item/paper/servant_primer/examine(mob/user)
-	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
-	..()
+/obj/item/paper/servant_primer/oui_getcontent(mob/target)
+	if(!is_servant_of_ratvar(target) && !isobserver(target))
+		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+	return ..()

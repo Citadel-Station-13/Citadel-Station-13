@@ -343,11 +343,12 @@
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
 /datum/team/gang/proc/greet_gangster(datum/mind/gangster) //The text a person receives when recruited.
-	to_chat(gangster, "<FONT size=3 color=red><B>You are now a member of the <font color='[color]'>[name]</font> Gang!</B></FONT>")
-	to_chat(gangster, "<font color='red'>Help your bosses take over the station by claiming territory with <b>spraycans</b>. Simply spray on any unclaimed area of the station.</font>")
-	to_chat(gangster, "<font color='red'>You can also use recruitment pens to recruit more to your cause, If your boss provides you one.</font>")
-	to_chat(gangster, "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>")
-	to_chat(gangster, "<font color='red'>You can identify your mates by their <b>large, <font color='[color]'> \[G\]</font> icon</b>.</font>")
+	var/message = "<FONT size=3 color=red><B>You are now a member of the <font color='[color]'>[name]</font> Gang!</B></FONT>"
+	message += "<font color='red'>Help your bosses take over the station by claiming territory with <b>spraycans</b>. Simply spray on any unclaimed area of the station.</font>"
+	message += "<font color='red'>You can also use recruitment pens to recruit more to your cause, If your boss provides you one.</font>"
+	message += "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
+	message += "<font color='red'>You can identify your mates by their <b>large, <font color='[color]'> \[G\]</font> icon</b>.</font>"
+	to_chat(gangster, message)
 	gangster.store_memory("You are a member of the [name] Gang!")
 
 /datum/team/gang/proc/handle_territories()

@@ -18,8 +18,8 @@ It is possible to destroy the net by the occupant or someone else.
 	can_buckle = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	var/mob/living/carbon/affecting//Who it is currently affecting, if anyone.
-	var/mob/living/carbon/master//Who shot web. Will let this person know if the net was successful or failed.
+	var/mob/living/carbon/affecting //Who it is currently affecting, if anyone.
+	var/mob/living/carbon/master //Who shot web. Will let this person know if the net was successful or failed.
 	var/check = 15//30 seconds before teleportation. Could be extended I guess.
 	var/success = FALSE
 

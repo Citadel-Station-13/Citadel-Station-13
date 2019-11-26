@@ -97,6 +97,7 @@
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
@@ -104,6 +105,7 @@
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, 1)
+	return TRUE
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)

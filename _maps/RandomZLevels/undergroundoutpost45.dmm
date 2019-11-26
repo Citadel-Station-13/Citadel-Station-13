@@ -3601,7 +3601,7 @@
 "hn" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

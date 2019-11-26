@@ -57,13 +57,14 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
+		if(!(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
 
 		brainmob.reset_perspective()
 		brain = newbrain
+		brain.organ_flags |= ORGAN_FROZEN
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
@@ -100,6 +101,7 @@
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
 		brain.forceMove(get_turf(src))
+	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 
 
@@ -186,17 +188,17 @@
 	qdel(src)
 
 /obj/item/mmi/examine(mob/user)
-	..()
+	. = ..()
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
 
 		else if(!B.client)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
 
 		else
-			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
+			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move

@@ -138,18 +138,21 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	item_flags = NODROP | ABSTRACT
+	item_flags = ABSTRACT
+
+/obj/item/bloodcrawl/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	//Makes the mob have the color of the blood pool it came out of
-	var/newcolor = rgb(149, 10, 10)
-	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
-		newcolor = rgb(43, 186, 0)
+	var/newcolor = BLOOD_COLOR_HUMAN
+	if(istype(B, /obj/effect/decal/cleanable/blood/xeno))
+		newcolor = BLOOD_COLOR_XENO
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
-	spawn(30)
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)

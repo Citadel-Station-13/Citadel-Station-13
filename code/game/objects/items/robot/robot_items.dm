@@ -282,11 +282,13 @@
 	var/cooldown = 0
 
 /obj/item/harmalarm/emag_act(mob/user)
+	. = ..()
 	obj_flags ^= EMAGGED
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<font color='red'>You short out the safeties on [src]!</font>")
 	else
 		to_chat(user, "<font color='red'>You reset the safeties on [src]!</font>")
+	return TRUE
 
 /obj/item/harmalarm/attack_self(mob/user)
 	var/safety = !(obj_flags & EMAGGED)
@@ -311,7 +313,7 @@
 			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/effects/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[key_name(user)] used a Cyborg Harm Alarm in [AREACOORD(user)]")
 		if(iscyborg(user))
@@ -428,7 +430,7 @@
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	A.fire_casing(target, user, params, 0, 0, null, 0)
+	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
 
@@ -444,7 +446,7 @@
 	A.BB.speed = 0.5
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
-	A.fire_casing(target, user, params, 0, 0, null, 0)
+	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
 
@@ -744,3 +746,73 @@
 	..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
 	return
+
+
+/**********************************************************************
+						Grippers oh god oh fuck
+***********************************************************************/
+
+/obj/item/weapon/gripper
+	name = "circuit gripper"
+	desc = "A simple grasping tool for inserting circuitboards into machinary."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	item_flags = NOBLUDGEON
+
+	//Has a list of items that it can hold.
+	var/list/can_hold = list(
+		/obj/item/circuitboard
+		)
+
+	var/obj/item/wrapped = null // Item currently being held.
+
+/obj/item/weapon/gripper/attack_self()
+	if(wrapped)
+		wrapped.forceMove(get_turf(wrapped))
+		wrapped = null
+	return ..()
+
+/obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
+
+	if(!proximity)
+		return
+
+	if(!wrapped)
+		for(var/obj/item/thing in src.contents)
+			wrapped = thing
+			break
+
+	if(wrapped) //Already have an item.
+		//Temporary put wrapped into user so target's attackby() checks pass.
+		wrapped.loc = user
+
+		//Pass the attack on to the target. This might delete/relocate wrapped.
+		var/resolved = target.attackby(wrapped,user)
+		if(!resolved && wrapped && target)
+			wrapped.afterattack(target,user,1)
+		//If wrapped was neither deleted nor put into target, put it back into the gripper.
+		if(wrapped && user && (wrapped.loc == user))
+			wrapped.loc = src
+		else
+			wrapped = null
+			return
+
+	else if(istype(target,/obj/item))
+
+		var/obj/item/I = target
+
+		var/grab = 0
+		for(var/typepath in can_hold)
+			if(istype(I,typepath))
+				grab = 1
+				break
+
+		//We can grab the item, finally.
+		if(grab)
+			to_chat(user, "You collect \the [I].")
+			I.loc = src
+			wrapped = I
+			return
+		else
+			to_chat(user, "<span class='danger'>Your gripper cannot hold \the [target].</span>")

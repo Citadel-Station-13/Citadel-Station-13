@@ -373,8 +373,8 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()
@@ -388,7 +388,7 @@ Difficulty: Very Hard
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
+	if(I.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
@@ -575,17 +575,19 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, ignore_dnr_observers = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
 		return
 	if(ready_to_deploy)
+		if(!user.can_reenter_round())
+			return FALSE
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+			user.transfer_ckey(W, FALSE)
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
@@ -649,7 +651,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize()
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE)
 	. = ..()
 	if(.)
 		death()
@@ -728,7 +730,7 @@ Difficulty: Very Hard
 		holder_animal.mind.AddSpell(P)
 		holder_animal.verbs -= /mob/living/verb/pulled
 
-/obj/structure/closet/stasis/dump_contents(var/kill = 1)
+/obj/structure/closet/stasis/dump_contents(override = TRUE, kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
@@ -745,6 +747,12 @@ Difficulty: Very Hard
 	return
 
 /obj/structure/closet/stasis/ex_act()
+	return
+
+/obj/structure/closet/stasis/handle_lock_addition()
+	return
+
+/obj/structure/closet/stasis/handle_lock_removal()
 	return
 
 /obj/effect/proc_holder/spell/targeted/exit_possession
@@ -768,7 +776,7 @@ Difficulty: Very Hard
 	for(var/i in user)
 		if(istype(i, /obj/structure/closet/stasis))
 			var/obj/structure/closet/stasis/S = i
-			S.dump_contents(0)
+			S.dump_contents(kill=0)
 			qdel(S)
 			break
 	user.gib()

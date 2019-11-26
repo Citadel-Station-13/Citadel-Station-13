@@ -194,39 +194,39 @@
 	ckeywhitelist = list("technicalmagi")
 
 /datum/gear/gladiator
-    name = "Gladiator Armor"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/under/gladiator
-    ckeywhitelist = list("aroche")
+	name = "Gladiator Armor"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/gladiator
+	ckeywhitelist = list("aroche")
 
 /datum/gear/bloodredtie
-    name = "Blood Red Tie"
-    category = SLOT_NECK
-    path = /obj/item/clothing/neck/tie/bloodred
-    ckeywhitelist = list("kyutness")
+	name = "Blood Red Tie"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/tie/bloodred
+	ckeywhitelist = list("kyutness")
 
 /datum/gear/puffydress
-    name = "Puffy Dress"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/suit/puffydress
-    ckeywhitelist = list("stallingratt")
+	name = "Puffy Dress"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/puffydress
+	ckeywhitelist = list("stallingratt")
 
 /datum/gear/labredblack
-    name = "Black and Red Coat"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/suit/toggle/labcoat/labredblack
-    ckeywhitelist = list("blakeryan", "durandalphor")
+	name = "Black and Red Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/toggle/labcoat/labredblack
+	ckeywhitelist = list("blakeryan", "durandalphor")
 
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/twohanded/hypereutactic/toy/rainbow
+	path = /obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/darksabre
 	name = "Dark Sabre"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/sword/darksabre
+	path = /obj/item/toy/darksabre
 	ckeywhitelist = list("inferno707")
 
 datum/gear/darksabresheath
@@ -407,8 +407,8 @@ datum/gear/darksabresheath
 
 /datum/gear/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/mw2_russian_para
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mw2_russian_para
 	ckeywhitelist = list("investigator77")
 
 /datum/gear/longblackgloves
@@ -435,3 +435,26 @@ datum/gear/darksabresheath
 	path = /obj/item/bedsheet/captain
 	ckeywhitelist = list("tikibomb")
 
+/datum/gear/borgplush
+	name = "Robot Plush"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/borgplushie
+	ckeywhitelist = list("nicholaiavenicci")
+
+/datum/gear/donorberet
+	name = "Atmos Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/blueberet
+	ckeywhitelist = list("foxystalin")
+
+/datum/gear/donorgoggles
+	name = "Flight Goggles"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/flight
+	ckeywhitelist = list("maxlynchy")
+
+/datum/gear/onionneck
+	name = "Onion Necklace"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/necklace/onion
+	ckeywhitelist = list("cdrcross")

@@ -250,11 +250,11 @@
 						itemname = "a syndicate bomb beacon"
 						new /obj/item/sbeacondrop/bomb(loc)
 					if(2)
-						itemname = "a grenade launcher"
-						new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(loc)
-						new /obj/item/ammo_casing/a40mm(loc)
-						new /obj/item/ammo_casing/a40mm(loc)
-						new /obj/item/ammo_casing/a40mm(loc)
+						itemname = "a rocket launcher"
+						new /obj/item/gun/ballistic/rocketlauncher/unrestricted(loc)
+						new /obj/item/ammo_casing/caseless/rocket(loc)
+						new /obj/item/ammo_casing/caseless/rocket(loc)
+						new /obj/item/ammo_casing/caseless/rocket(loc)
 					if(3)
 						itemname = "two bags of c4"
 						new /obj/item/storage/backpack/duffelbag/syndie/c4(loc)
@@ -284,6 +284,7 @@
 	return
 
 /obj/machinery/computer/arcade/minesweeper/emag_act(mob/user)
+	. = ..()
 	if(CHECK_BITFIELD(obj_flags, EMAGGED))
 		return
 	desc = "An arcade machine that generates grids. It's clunking and sparking everywhere, almost as if threatening to explode at any moment!"
@@ -298,6 +299,7 @@
 		to_chat(user, "<span class='warning'>The machine buzzes and sparks... the game has been reset!</span>")
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 100, 0, extrarange = 3, falloff = 10)	//Loud buzz
 		game_status = MINESWEEPER_GAME_MAIN_MENU
+	return TRUE
 
 /obj/machinery/computer/arcade/minesweeper/proc/custom_generation(mob/user)
 	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)	//Entered into the menu so ping sound

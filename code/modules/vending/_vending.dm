@@ -65,8 +65,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/scan_id = 1
 	var/obj/item/coin/coin
 	var/obj/item/stack/spacecash/bill
-	
-	var/global/vending_cache = list() //used for storing the icons of items being vended
+
+	var/static/vending_cache = list() //used for storing the icons of items being vended
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -306,10 +306,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	. = ..()
 
 /obj/machinery/vending/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
+	return TRUE
 
 /obj/machinery/vending/_try_interact(mob/user)
 	if(seconds_electrified && !(stat & NOPOWER))

@@ -52,7 +52,7 @@
 	name = "Omni"
 	color = "#008080"
 	inner_outfits = list(/obj/item/clothing/under/color/teal)
-	outer_outfits = list(/obj/item/clothing/suit/studentuni)
+	outer_outfits = list(/obj/item/clothing/suit/chaplain/studentuni)
 
 /datum/team/gang/newton
 	name = "Newton"
@@ -64,7 +64,7 @@
 	name = "Cyber"
 	color = "#00f904" //Cyber and waffle shared colors, I made these guys green and made weed darker green.
 	inner_outfits = list(/obj/item/clothing/under/color/lightbrown)
-	outer_outfits = list(/obj/item/clothing/suit/nemes)
+	outer_outfits = list(/obj/item/clothing/suit/chaplain/pharaoh)
 
 /datum/team/gang/donk
 	name = "Donk"

@@ -1,9 +1,9 @@
 //supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
 #define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
+	block( \
+		locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+	)
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
@@ -159,6 +159,44 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
+/** recursive_organ_check
+  * inputs: O (object to start with)
+  * outputs:
+  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+  */
+/proc/recursive_organ_check(atom/O)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/index = 1
+	var/obj/item/organ/found_organ
+
+	while(index <= length(processing_list))
+
+		var/atom/A = processing_list[index]
+
+		if(istype(A, /obj/item/organ))
+			found_organ = A
+			found_organ.organ_flags ^= ORGAN_FROZEN
+
+		else if(istype(A, /mob/living/carbon))
+			var/mob/living/carbon/Q = A
+			for(var/organ in Q.internal_organs)
+				found_organ = organ
+				found_organ.organ_flags ^= ORGAN_FROZEN
+
+		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
+			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
+				processing_list+= B
+
+		index++
+		processed_list[A] = A
+
+	return
+
+
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
@@ -226,6 +264,7 @@
 		var/atom/A = processing_list[1]
 		if(A.flags_1 & HEAR_1)
 			. += A
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
@@ -408,7 +447,7 @@
 	var/list/candidates = list()
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
-		if(G.can_reenter_round)
+		if(G.reenter_round_timeout < world.realtime)
 			candidates += G
 
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
@@ -473,7 +512,7 @@
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = G_found.key
+	G_found.transfer_ckey(new_character, FALSE)
 
 	return new_character
 

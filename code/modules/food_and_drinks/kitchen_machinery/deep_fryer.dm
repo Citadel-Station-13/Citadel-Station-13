@@ -67,9 +67,9 @@ God bless America.
 	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine()
-	..()
+	. = ..()
 	if(frying)
-		to_chat(usr, "You can make out \a [frying] in the oil.")
+		. += "You can make out \a [frying] in the oil."
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -94,7 +94,7 @@ God bless America.
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || (I.item_flags & (ABSTRACT | NODROP | DROPDEL)))
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")

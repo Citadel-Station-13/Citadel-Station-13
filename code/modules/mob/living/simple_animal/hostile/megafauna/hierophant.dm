@@ -158,6 +158,8 @@ Difficulty: Normal
 				else
 					burst_range = 3
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
+				if(L.stat == CONSCIOUS && L.health >= 30)
+					OpenFire()
 			else
 				devour(L)
 		else
@@ -426,6 +428,7 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed = 0.5) //release a wave of blasts
 	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
 	var/last_dist = 0
+	var/list/hit_mobs = list()		//don't hit people multiple times.
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
 		if(!T)
@@ -434,7 +437,7 @@ Difficulty: Normal
 		if(dist > last_dist)
 			last_dist = dist
 			sleep(1 + min(burst_range - last_dist, 12) * spread_speed) //gets faster as it gets further out
-		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE, hit_mobs)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
@@ -591,8 +594,10 @@ Difficulty: Normal
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire)
+/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once)
 	. = ..()
+	if(only_hit_once)
+		hit_things = only_hit_once
 	friendly_fire_check = friendly_fire
 	if(new_caster)
 		hit_things += new_caster

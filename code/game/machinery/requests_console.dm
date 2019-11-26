@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_icon()
 				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 						screen = 6
 
 				if(radio_freq)
-					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq,get_spans(),get_default_language())
+					Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
 				switch(priority)
 					if(2)

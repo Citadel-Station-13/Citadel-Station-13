@@ -11,6 +11,8 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 	var/voteweight = 1
+	var/max_round_search_span = 0 //If this is nonzero, then if the map has been played more than max_rounds_played within the search span (max determined by define in persistence.dm), this map won't be available.
+	var/max_rounds_played = 0
 
 	// Config actually from the JSON - should default to Box
 	var/map_name = "Box Station"
@@ -18,10 +20,14 @@
 	var/map_file = "BoxStation.dmm"
 
 	var/traits = null
-	var/space_ruin_levels = 1 //Citadel edit - reduces the default space ruin z-level count to 1
+	var/space_ruin_levels = 2
 	var/space_empty_levels = 1
 
 	var/minetype = "lavaland"
+
+	var/maptype = MAP_TYPE_STATION //This should be used to adjust ingame behavior depending on the specific type of map being played. For instance, if an overmap were added, it'd be appropriate for it to only generate with a MAP_TYPE_SHIP
+
+	var/announcertype = "standard" //Determines the announcer the map uses. standard uses the default announcer, classic, but has a random chance to use other similarly-themed announcers, like medibot
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
@@ -29,6 +35,8 @@
 		"ferry" = "ferry_fancy",
 		"whiteship" = "whiteship_box",
 		"emergency" = "emergency_box")
+
+	var/year_offset = 540 //The offset of ingame year from the actual IRL year. You know you want to make a map that takes place in the 90's. Don't lie.
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
@@ -122,8 +130,21 @@
 		log_world("map_config space_empty_levels is not a number!")
 		return
 
+	temp = json["year_offset"]
+	if (isnum(temp))
+		year_offset = temp
+	else if (!isnull(temp))
+		log_world("map_config year_offset is not a number!")
+		return
+
 	if ("minetype" in json)
 		minetype = json["minetype"]
+	
+	if ("maptype" in json)
+		maptype = json["maptype"]
+
+	if ("announcertype" in json)
+		announcertype = json["announcertype"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 

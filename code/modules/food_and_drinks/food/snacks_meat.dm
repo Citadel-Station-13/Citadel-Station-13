@@ -322,6 +322,14 @@
 	filling_color = "#800000"
 	tastes = list("meat" = 1, "butter" = 1)
 
+/obj/item/reagent_containers/food/snacks/corndog
+	name = "corndog plate"
+	desc = "A plate with two small corn dogs, with two dimples of ketchup and mustard to dip them in."
+	icon_state = "dorndog"
+	trash = /obj/item/trash/plate/alt
+	tastes = list("hotdog" = 2, "mustard and ketchup" = 1, "fryed bread" = 1)
+	bonus_reagents = list("nutriment" = 6, "vitamin" = 2, "mustard" = 5, "ketchup" = 5)
+
 /obj/item/reagent_containers/food/snacks/kebab/rat
 	name = "rat-kebab"
 	desc = "Not so delicious rat meat, on a stick."

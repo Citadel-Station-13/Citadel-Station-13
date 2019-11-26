@@ -1,5 +1,3 @@
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
-
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -27,7 +25,7 @@
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/running_anim = FALSE
 
@@ -167,10 +165,11 @@
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
+		var/msg = "Patient fully restored."
 		if(autoeject) // Eject if configured.
-			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
+			msg += " Auto ejecting patient now."
 			open_machine()
+		radio.talk_into(src, msg, radio_channel)
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -210,7 +209,7 @@
 
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
-			cold_protection = H.get_cold_protection(air1.temperature)
+			cold_protection = H.get_thermal_protection(air1.temperature, TRUE)
 
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
@@ -263,14 +262,14 @@
 		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
-	..()
+	. = ..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			. += "Someone's inside [src]!"
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			. += "You can barely make out a form floating in [src]."
 	else
-		to_chat(user, "[src] seems empty.")
+		. += "[src] seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -392,6 +391,21 @@
 				beaker = null
 				. = TRUE
 	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !state_open)
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.

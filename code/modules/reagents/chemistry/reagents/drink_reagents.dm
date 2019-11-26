@@ -13,6 +13,7 @@
 	glass_icon_state = "glass_orange"
 	glass_name = "glass of orange juice"
 	glass_desc = "Vitamins! Yay!"
+	pH = 3.3
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getOxyLoss() && prob(30))
@@ -45,6 +46,7 @@
 	glass_icon_state = "glass_green"
 	glass_name = "glass of lime juice"
 	glass_desc = "A glass of sweet-sour lime juice."
+	pH = 2.2
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M)
 	if(M.getToxLoss() && prob(20))
@@ -90,6 +92,7 @@
 	description = "The sweet juice of an apple, fit for all ages."
 	color = "#ECFF56" // rgb: 236, 255, 86
 	taste_description = "apples"
+	pH = 3.2 // ~ 2.7 -> 3.7
 
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
@@ -125,6 +128,7 @@
 	glass_icon_state  = "lemonglass"
 	glass_name = "glass of lemon juice"
 	glass_desc = "Sour..."
+	pH = 2
 
 /datum/reagent/consumable/banana
 	name = "Banana Juice"
@@ -168,6 +172,7 @@
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
 	M.emote("laugh")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
 /datum/reagent/consumable/superlaughter
@@ -182,6 +187,7 @@
 	if(prob(30))
 		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
 		M.Stun(5)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
 
 /datum/reagent/consumable/potato_juice
@@ -402,10 +408,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
@@ -741,7 +747,7 @@
 	name = "Triple Citrus"
 	id = "triple_citrus"
 	description = "A solution."
-	color = "#C8A5DC"
+	color = "#fff12b"
 	quality = DRINK_NICE
 	taste_description = "extreme bitterness"
 	glass_icon_state = "triplecitrus" //needs own sprite mine are trash
@@ -779,6 +785,10 @@
 	glass_icon_state = "glass_green"
 	glass_name = "glass of menthol"
 	glass_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+
+/datum/reagent/consumable/menthol/on_mob_life(mob/living/L)
+	L.apply_status_effect(/datum/status_effect/throat_soothed)
+	..()
 
 /datum/reagent/consumable/grenadine
 	name = "Grenadine"
@@ -881,3 +891,23 @@
 		to_chat(M, "<span class = 'notice'>[pick("Diamond skies where white deer fly.","Sipping strawberry tea.","Silver raindrops drift through timeless, Neverending June.","Crystal ... pearls free, with love!","Beaming love into me.")]</span>")
 	..()
 	. = 1
+
+/datum/reagent/consumable/catnip_tea
+	name = "Catnip Tea"
+	id = "catnip_tea"
+	description = "A sleepy and tasty catnip tea!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "sugar and catnip"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of catnip tea"
+	glass_desc = "A purrfect drink for a cat."
+
+/datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(min(50 - M.getStaminaLoss(), 3))
+	if(prob(20))
+		M.emote("nya")
+	if(prob(20))
+		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
+	M.adjustArousalLoss(5)
+	..()

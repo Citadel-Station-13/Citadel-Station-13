@@ -23,7 +23,7 @@
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
 
-/obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
+/obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_WEAR_SUIT || slot == SLOT_NECK)
 		return 1
 
@@ -120,8 +120,8 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
-	..()
-	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
+	. = ..()
+	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()

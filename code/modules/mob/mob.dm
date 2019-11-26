@@ -116,19 +116,23 @@
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, list/ignored_mobs, no_ghosts = FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
-		if(M == ignored_mob)
+		if(M in ignored_mobs)
 			continue
 		var/msg = message
+		if(isobserver(M) && no_ghosts)
+			continue
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
@@ -155,7 +159,7 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -163,6 +167,8 @@
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( msg, 2, deaf_message, 1)
 
 // Show a message to all mobs in earshot of this atom
@@ -171,11 +177,13 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
+/atom/proc/audible_message(message, deaf_message, hearing_distance, no_ghosts = FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
+		if(no_ghosts && isobserver(M))
+			continue
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/Life()
@@ -299,8 +307,11 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
-		// shift-click catcher may issue examinate() calls for out-of-sight turfs
+	if(!client)
+		return
+
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A) & COMPONENT_ALLOW_EXAMINE) && ((client.eye != src && client.eye != loc) || (isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))))
+		//cameras & co don't allow users to examine far away things, also shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
 	if(is_blind(src))
@@ -308,7 +319,8 @@
 		return
 
 	face_atom(A)
-	A.examine(src)
+	var/list/result = A.examine(src)
+	to_chat(src, result.Join("\n"))
 
 //same as above
 //note: ghosts can point, this is intended
@@ -436,7 +448,13 @@
 //	M.Login()	//wat
 	return
 
-
+/mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
+	if(!ckey)
+		return FALSE
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
+	new_mob.ckey = ckey
+	return TRUE
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -444,18 +462,28 @@
 	reset_perspective(null)
 	unset_machine()
 
+GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
+
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .click macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".dblclick"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .dblclick macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -516,7 +544,12 @@
 		return
 	if(isAI(M))
 		return
-	show_inv(usr)
+
+/mob/MouseDrop_T(atom/dropping, atom/user)
+	. = ..()
+	if(ismob(dropping) && dropping != user)
+		var/mob/M = dropping
+		M.show_inv(user)
 
 /mob/proc/is_muzzled()
 	return 0
@@ -708,15 +741,17 @@
 			mob_spell_list -= S
 			qdel(S)
 
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
-	if(!magic && !holy)
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
+	if(!magic && !holy && !tinfoil)
 		return
 	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, tinfoil, chargecost, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
 			return pick(protection_sources)
 		else
 			return src
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
+		return src
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -787,6 +822,9 @@
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
 
+/mob/proc/canUseStorage()
+	return FALSE
+
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
@@ -830,7 +868,7 @@
 		replace_identification_name(oldname,newname)
 
 		for(var/datum/mind/T in SSticker.minds)
-			for(var/datum/objective/obj in T.objectives)
+			for(var/datum/objective/obj in T.get_all_objectives())
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
@@ -896,10 +934,6 @@
 /mob/proc/can_hold_items()
 	return FALSE
 
-/mob/proc/get_idcard()
-	return
-
-
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
@@ -927,3 +961,7 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/setMovetype(newval)
+	. = ..()
+	update_movespeed(FALSE)

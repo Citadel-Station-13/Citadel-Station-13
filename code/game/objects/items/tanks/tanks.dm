@@ -23,7 +23,7 @@
 	toggle_internals(user)
 
 /obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/H = user
 	if(!istype(H))
 		return
 
@@ -33,13 +33,19 @@
 		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(!H.wear_mask)
-				to_chat(H, "<span class='warning'>You need a mask!</span>")
-				return
-			if(H.wear_mask.mask_adjusted)
-				H.wear_mask.adjustmask(H)
-			if(!(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
+			var/obj/item/clothing/check
+			var/internals = FALSE
+
+			for(check in GET_INTERNAL_SLOTS(H))
+				if(istype(check, /obj/item/clothing/mask))
+					var/obj/item/clothing/mask/M = check
+					if(M.mask_adjusted)
+						M.adjustmask(H)
+				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+					internals = TRUE
+
+			if(!internals)
+				to_chat(H, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return
 
 		if(H.internal)
@@ -68,15 +74,15 @@
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
-	..()
+	. = ..()
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
 		if (icon == src)
-			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
-	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
+	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -94,7 +100,7 @@
 	else
 		descriptive = "furiously hot"
 
-	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
+	. += "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)

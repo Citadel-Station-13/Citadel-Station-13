@@ -1,8 +1,7 @@
 #define ARCADE_WEIGHT_TRICK 4
 #define ARCADE_WEIGHT_USELESS 2
 #define ARCADE_WEIGHT_RARE 1
-#define ARCADE_WEIGHT_PLUSH 65
-
+#define ARCADE_RATIO_PLUSH 0.20 // average 1 out of 6 wins is a plush.
 
 /obj/machinery/computer/arcade
 	name = "random arcade"
@@ -27,7 +26,6 @@
 		/obj/item/toy/katana = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/minimeteor = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/nuke = ARCADE_WEIGHT_TRICK,
-		/obj/item/toy/plush/random = ARCADE_WEIGHT_PLUSH,
 		/obj/item/toy/redbutton = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/spinningtoy = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/sword = ARCADE_WEIGHT_TRICK,
@@ -45,8 +43,8 @@
 		/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = ARCADE_WEIGHT_TRICK,
 		/obj/item/hot_potato/harmless/toy = ARCADE_WEIGHT_RARE,
 		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/hypereutactic/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
+		/obj/item/twohanded/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
 
 		/obj/item/storage/box/snappops = ARCADE_WEIGHT_TRICK,
 		/obj/item/clothing/under/syndicate/tacticool = ARCADE_WEIGHT_TRICK,
@@ -57,6 +55,7 @@
 		/obj/item/stack/tile/fakespace/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/stack/tile/fakepit/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/restraints/handcuffs/fake = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/gloves/rapid/hug = ARCADE_WEIGHT_TRICK,
 
 		/obj/item/grenade/chem_grenade/glitter/pink = ARCADE_WEIGHT_TRICK,
 		/obj/item/grenade/chem_grenade/glitter/blue = ARCADE_WEIGHT_TRICK,
@@ -87,8 +86,12 @@
 								/obj/item/circuitboard/computer/arcade/amputation = 2)
 		var/thegame = pickweight(gameodds)
 		var/obj/item/circuitboard/CB = new thegame()
-		new CB.build_path(loc, CB)
+		var/obj/machinery/computer/arcade/A = new CB.build_path(loc, CB)
+		A.setDir(dir)
 		return INITIALIZE_HINT_QDEL
+	//The below object acts as a spawner with a wide array of possible picks, most being uninspired references to past/current player characters.
+	//Nevertheless, this keeps its ratio constant with the sum of all the others prizes.
+	prizes[/obj/item/toy/plush/random] = counterlist_sum(prizes) * ARCADE_RATIO_PLUSH
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, list/rarity_classes)

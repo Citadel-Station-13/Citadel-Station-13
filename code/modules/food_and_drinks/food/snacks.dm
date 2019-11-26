@@ -151,15 +151,15 @@ All foods are distributed among various categories. Use common sense.
 	return 0
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
-	..()
+	. = ..()
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
-		to_chat(user, "[src] was bitten by someone!")
+		. += "[src] was bitten by someone!"
 	else if(bitecount <= 3)
-		to_chat(user, "[src] was bitten [bitecount] times!")
+		. += "[src] was bitten [bitecount] times!"
 	else
-		to_chat(user, "[src] was bitten multiple times!")
+		. += "[src] was bitten multiple times!"
 
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
@@ -181,7 +181,7 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	var/sharp = W.is_sharp()
+	var/sharp = W.get_sharpness()
 	if(sharp)
 		if(slice(sharp, W, user))
 			return 1
@@ -337,7 +337,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.is_sharp())
+		if(W.get_sharpness())
 			return 0
 		if(stored_item)
 			return 0

@@ -131,12 +131,10 @@
 		if(!M || !M.current)
 			continue
 		if(isliving(M.current) && M.current.stat != DEAD)
-			if(isAI(M.current))
-				M.current.forceMove(get_step(get_step(src, NORTH),NORTH)) // AI too fat, must make sure it always ends up a 2 tiles north instead of on the ark.
-			else
-				M.current.forceMove(get_turf(src))
-		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
-		M.current.clear_fullscreen("flash", 5)
+			var/turf/t_turf = isAI(M.current) ? get_step(get_step(src, NORTH),NORTH) : get_turf(src) // AI too fat, must make sure it always ends up a 2 tiles north instead of on the ark.
+			do_teleport(M.current, t_turf, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
+			M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			M.current.clear_fullscreen("flash", 5)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, FALSE)
 	recalls_remaining--
 	recalling = FALSE
@@ -225,34 +223,34 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
-	..()
+	. = ..()
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(!active)
-			to_chat(user, "<span class='big'><b>Time until the Ark's activation:</b> [DisplayTimeText(get_arrival_time())]</span>")
+			. += "<span class='big'><b>Time until the Ark's activation:</b> [DisplayTimeText(get_arrival_time())]</span>"
 		else
 			if(grace_period)
-				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_time())]</span>")
+				. += "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_time())]</span>"
 			else
-				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>")
+				. += "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>"
 				switch(progress_in_seconds)
 					if(-INFINITY to GATEWAY_REEBE_FOUND)
-						to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
+						. += "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>"
 					if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-						to_chat(user, "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>")
+						. += "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>"
 					if(GATEWAY_RATVAR_COMING to INFINITY)
-						to_chat(user, "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>")
+						. += "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>"
 	else
 		if(!active)
-			to_chat(user, "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>")
+			. += "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>"
 		else
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
-					to_chat(user, "<span class='warning'>You see a swirling bluespace anomaly steadily growing in intensity.</span>")
+					. += "<span class='warning'>You see a swirling bluespace anomaly steadily growing in intensity.</span>"
 				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-					to_chat(user, "<span class='warning'>The anomaly is stable, and you can see flashes of something from it.</span>")
+					. += "<span class='warning'>The anomaly is stable, and you can see flashes of something from it.</span>"
 				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='boldwarning'>The anomaly is stable! Something is coming through!</span>")
+					. += "<span class='boldwarning'>The anomaly is stable! Something is coming through!</span>"
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(seconds_until_activation == -1) //we never do anything

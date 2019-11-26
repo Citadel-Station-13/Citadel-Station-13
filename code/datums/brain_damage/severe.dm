@@ -119,7 +119,7 @@
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/paraplegic
-	//can_gain = FALSE maybe breaks.
+	random_gain = FALSE
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
@@ -149,7 +149,7 @@
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
-	scan_desc = "severe monophobia"
+	scan_desc = "monophobia"
 	gain_text = ""
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
 	var/stress = 0
@@ -168,7 +168,7 @@
 		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
-		stress -= 4
+		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(HAS_TRAIT(owner, TRAIT_BLIND))
@@ -254,3 +254,20 @@
 /datum/brain_trauma/severe/pacifism/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
+
+//ported from TG
+/datum/brain_trauma/severe/hypnotic_stupor
+	name = "Hypnotic Stupor"
+	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."
+	scan_desc = "oneiric feedback loop"
+	gain_text = "<span class='warning'>You feel somewhat dazed.</span>"
+	lose_text = "<span class='notice'>You feel like a fog was lifted from your mind.</span>"
+
+/datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
+	..()
+	owner.remove_status_effect(/datum/status_effect/trance)
+
+/datum/brain_trauma/severe/hypnotic_stupor/on_life()
+	..()
+	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
+		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)

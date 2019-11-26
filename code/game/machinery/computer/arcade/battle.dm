@@ -186,6 +186,7 @@
 
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
@@ -202,5 +203,5 @@
 	enemy_name = "Cuban Pete"
 	name = "Outbomb Cuban Pete"
 
-
 	updateUsrDialog()
+	return TRUE

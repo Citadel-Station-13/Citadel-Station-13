@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
-	radio_channel = "Supply"
+	radio_channel = RADIO_CHANNEL_SUPPLY
 
 	bot_type = MULE_BOT
 	model = "MULE"
@@ -115,6 +115,7 @@
 	return
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 	if(emagged < 1)
 		emagged = TRUE
 	if(!open)
@@ -122,6 +123,7 @@
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, 0)
+	return TRUE
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)
@@ -216,7 +218,7 @@
 			bot_control(action, usr) // Kill this later.
 			. = TRUE
 
-/mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0)
+/mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0, turf/user_turf, list/user_access = list())
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
 		return
 
@@ -474,7 +476,8 @@
 				if(isturf(next))
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.add_blood_DNA(return_blood_DNA())
+						if(blood_DNA && blood_DNA.len)
+							B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -486,7 +489,6 @@
 								newdir = 4
 							B.setDir(newdir)
 						bloodiness--
-
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move

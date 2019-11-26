@@ -38,6 +38,8 @@
 	var/secondary_color = "#FFFFFF"
 	var/tertiary_color = "#808080"
 
+	var/force_alternate_icon = FALSE
+
 /obj/item/clothing/update_icon()	// picks the colored overlays from the ICON file
 	..()
 	if(hasprimary)	//Checks if the overlay is enabled
@@ -78,9 +80,9 @@
 				user.regenerate_icons()
 
 /obj/item/clothing/examine(mob/user)
-	..()
+	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
-		to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")	// so people don't "OOC how do you use polychromic clothes????"
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/clothing/Initialize()
 	..()

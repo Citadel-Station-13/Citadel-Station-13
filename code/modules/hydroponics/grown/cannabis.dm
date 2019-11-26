@@ -61,6 +61,7 @@
 	species = "ocannabis"
 	plantname = "Omega Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
 	mutatelist = list()
 	reagents_add = list("space_drugs" = 0.3,
 						"mindbreaker" = 0.3,

@@ -11,7 +11,7 @@
 
 /obj/item/storage/book/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
+			H.dna.add_mutation(SMILE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
 		GLOB.bible_icon_state = B.icon_state
@@ -138,8 +139,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!istype(C.head, /obj/item/clothing/head))	
-				C.adjustBrainLoss(10, 80)
+			if(!istype(C.head, /obj/item/clothing/head))
+				C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 80)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)

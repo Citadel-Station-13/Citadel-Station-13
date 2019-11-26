@@ -28,8 +28,8 @@
 	icon_state = "rad"
 
 /obj/item/storage/firstaid/radbgone/Initialize(mapload)
-    . = ..()
-    icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
+	. = ..()
+	icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
 
 /obj/item/storage/firstaid/tactical
 	icon_state = "tactical"
@@ -49,7 +49,7 @@
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
 	STR.can_hold = typecacheof(list(
 	/obj/item/hypospray/mkii,
@@ -103,6 +103,22 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
 
+/obj/item/storage/hypospraykit/enlarge
+	name = "organomegaly trauma hypospray kit"
+	icon_state = "enlarge-mini"
+	item_state = "firstaid-brute"
+
+/obj/item/storage/hypospraykit/enlarge/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/enlarge(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+
 /obj/item/storage/hypospraykit/brute
 	name = "brute trauma hypospray kit"
 	icon_state = "brute-mini"
@@ -135,7 +151,7 @@
 
 /obj/item/storage/hypospraykit/cmo/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
 	/obj/item/hypospray/mkii,

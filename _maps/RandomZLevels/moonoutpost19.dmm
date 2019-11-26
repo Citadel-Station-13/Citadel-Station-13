@@ -16,6 +16,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
+"ae" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcade";
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/moonoutpost19/arrivals)
 "ag" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
@@ -5383,7 +5390,7 @@
 "kn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/rag{
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -5597,8 +5604,8 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kK" = (
-/obj/effect/decal/cleanable/xenoblood,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -5608,7 +5615,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kL" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/decal/remains/xeno{
 	desc = "They look like the remains of something... alien. The front of skull appears to have been completely obliterated."
 	},
@@ -6407,10 +6414,6 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
-/area/awaymission/moonoutpost19/arrivals)
-"mB" = (
-/obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
@@ -43385,7 +43388,7 @@ la
 lq
 jk
 mj
-mB
+ae
 hJ
 ba
 ba
@@ -43642,7 +43645,7 @@ jN
 lr
 jj
 mj
-mB
+ae
 hI
 ba
 ba

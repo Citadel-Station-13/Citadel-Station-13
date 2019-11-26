@@ -15,6 +15,7 @@
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
+	var/lewdchem = TRUE
 
 	//vore prefs
 	var/toggleeatingnoise = TRUE
@@ -53,5 +54,6 @@ datum/preferences/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	character.give_genitals(TRUE)
 	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
 	character.canbearoused = arousable
+	character.client?.prefs.lewdchem = lewdchem
 	if(icon_updates)
 		character.update_genitals()

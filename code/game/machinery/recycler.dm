@@ -32,18 +32,18 @@
 	mat_mod *= 50000
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		amt_made = 12.5 * M.rating //% of materials salvaged
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
-	GET_COMPONENT(butchering, /datum/component/butchering)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
-	..()
-	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
-	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
+	. = ..()
+	. += "The power light is [(stat & NOPOWER) ? "off" : "on"]."
+	. += "The safety-mode light is [safety_mode ? "on" : "off"]."
+	. += "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -65,6 +65,7 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
@@ -73,6 +74,7 @@
 		update_icon()
 	playsound(src, "sparks", 75, 1, -1)
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
+	return TRUE
 
 /obj/machinery/recycler/update_icon()
 	..()
@@ -97,7 +99,7 @@
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
 	var/list/to_eat
 	if(isitem(AM0))
-		to_eat = AM0.GetAllContents()
+		to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
 	else
 		to_eat = list(AM0)
 
@@ -107,7 +109,7 @@
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM)
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay)
 		if(brain_holder)
 			emergency_stop(AM)
 		else if(isliving(AM))
@@ -142,7 +144,7 @@
 		qdel(L)
 		return
 	else
-		GET_COMPONENT(materials, /datum/component/material_container)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/material_amount = materials.get_item_material_amount(I)
 		if(!material_amount)
 			qdel(I)
@@ -193,7 +195,7 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		GET_COMPONENT(butchering, /datum/component/butchering)
+		var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap

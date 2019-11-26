@@ -90,7 +90,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		return mask_item
 
-/obj/item/match/is_hot()
+/obj/item/match/get_temperature()
 	return lit * heat
 
 //////////////////
@@ -255,7 +255,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
 
-/obj/item/clothing/mask/cigarette/is_hot()
+/obj/item/clothing/mask/cigarette/get_temperature()
 	return lit * heat
 
 // Cigarette brands.
@@ -530,7 +530,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(lighter_overlay)
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='rose'>With a single flick of [user.p_their()] wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/lighter/proc/set_lit(new_lit)
@@ -605,7 +605,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/process()
 	open_flame()
 
-/obj/item/lighter/is_hot()
+/obj/item/lighter/get_temperature()
 	return lit * heat
 
 
@@ -654,7 +654,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(lighter_overlay)
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 
@@ -764,20 +764,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			..()
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
-	if(screw)
-		if(!(obj_flags & EMAGGED))
-			cut_overlays()
-			obj_flags |= EMAGGED
-			super = FALSE
-			to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
-			add_overlay("vapeopen_high")
-			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
-			sp.set_up(5, 1, src)
-			sp.start()
-		else
-			to_chat(user, "<span class='warning'>[src] is already emagged!</span>")
-	else
+	. = ..()
+	if(!screw)
 		to_chat(user, "<span class='notice'>You need to open the cap to do that.</span>")
+		return
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>[src] is already emagged!</span>")
+		return
+	cut_overlays()
+	obj_flags |= EMAGGED
+	super = FALSE
+	to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
+	add_overlay("vapeopen_high")
+	var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
+	sp.set_up(5, 1, src)
+	sp.start()
+	return TRUE
 
 /obj/item/clothing/mask/vape/attack_self(mob/user)
 	if(reagents.total_volume > 0)

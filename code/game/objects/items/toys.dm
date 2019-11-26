@@ -30,6 +30,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
+	total_mass = TOTAL_MASS_TINY_ITEM
 
 
 /*
@@ -78,7 +79,7 @@
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
 				I.reagents.trans_to(src, 10)
 				update_icon()
-	else if(I.is_sharp())
+	else if(I.get_sharpness())
 		balloon_burst()
 	else
 		return ..()
@@ -112,10 +113,6 @@
 /obj/item/toy/syndicateballoon
 	name = "syndicate balloon"
 	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-	force = 0
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
@@ -151,8 +148,8 @@
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
+	. = ..()
+	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -207,8 +204,8 @@
 	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+	. = ..()
+	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy swords
@@ -225,6 +222,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = FALSE
+	total_mass = 0.4
+	var/total_mass_on = TOTAL_MASS_TOY_SWORD
 
 /obj/item/toy/sword/attack_self(mob/user)
 	active = !( active )
@@ -249,8 +248,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if((W.item_flags & NODROP) || (item_flags & NODROP))
-			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
+		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP)  ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -274,6 +273,109 @@
 	else
 		return ..()
 
+/obj/item/toy/sword/getweight()
+	return (active ? total_mass_on : total_mass) || w_class *1.25
+
+/obj/item/toy/sword/cx
+	name = "\improper DX Non-Euplastic LightSword"
+	desc = "A deluxe toy replica of an energy sword. Realistic visuals and sounds! Ages 8 and up."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "cxsword_hilt"
+	item_state = "cxsword"
+	active = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("poked", "jabbed", "hit")
+	light_color = "#37FFF7"
+	var/light_brightness = 3
+	actions_types = list()
+
+/obj/item/toy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/toy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
+/obj/item/toy/sword/cx/attack_self(mob/user)
+	active = !( active )
+
+	if (active)
+		to_chat(user, "<span class='notice'>You activate the holographic blade with a press of a button.</span>")
+		playsound(user, 'sound/weapons/nebon.ogg', 50, 1)
+		w_class = WEIGHT_CLASS_BULKY
+		attack_verb = list("slashed", "stabbed", "ravaged")
+		set_light(light_brightness)
+		update_icon()
+
+	else
+		to_chat(user, "<span class='notice'>You deactivate the holographic blade with a press of a button.</span>")
+		playsound(user, 'sound/weapons/neboff.ogg', 50, 1)
+		w_class = WEIGHT_CLASS_SMALL
+		attack_verb = list("poked", "jabbed", "hit")
+		set_light(0)
+		update_icon()
+
+	add_fingerprint(user)
+
+/obj/item/toy/sword/cx/update_icon()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "cxsword_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "cxsword_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(gem_overlay)
+
+	if(active)
+		add_overlay(blade_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+/obj/item/toy/sword/cx/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(energy_color_input)
+			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(active)
+		if(isinhands)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/toy/sword/cx))
+		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
+			new /obj/item/twohanded/dualsaber/hypereutactic/toy(user.loc)
+			qdel(W)
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/toy/sword/cx/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
+
 /*
  * Foam armblade
  */
@@ -294,7 +396,7 @@
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
-	item_state = "artistic_toolbox"
+	item_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	var/active = FALSE
@@ -327,12 +429,37 @@
 	force_unwielded = 0
 	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
+	total_mass_on = TOTAL_MASS_TOY_SWORD
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+	return FALSE
 
 /obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy
+	name = "\improper DX Hyper-Euplastic LightSword"
+	desc = "A supermassive toy envisioned to cleave the very fabric of space and time itself in twain. Realistic visuals and sounds! Ages 8 and up."
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 5
+	force_unwielded = 0
+	force_wielded = 0
+	attack_verb = list("attacked", "struck", "hit")
+	total_mass_on = TOTAL_MASS_TOY_SWORD
+	slowdown_wielded = 0
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/IsReflect()//Stops it from reflecting energy projectiles
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
+	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
+	desc = "A custom-built toy with fancy rainbow lights built-in."
+	hacked = TRUE
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -346,6 +473,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 5
 	throwforce = 5
+	total_mass = null
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -866,8 +994,7 @@
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
-
+			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 /obj/item/toy/cards/singlecard/verb/Flip()
 	set name = "Flip Card"
@@ -1093,8 +1220,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+	. = ..()
+	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]"
 
 /*
  * Toy Dagger
@@ -1165,8 +1292,8 @@
 	var/toysound = 'sound/machines/click.ogg'
 
 /obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
-    ..()
+	desc = "A \"Space Life\" brand [src]."
+	..()
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
@@ -1389,3 +1516,18 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+
+/obj/item/toy/seashell
+	name = "seashell"
+	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "shell1"
+	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
+
+/obj/item/toy/seashell/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+	icon_state = "shell[rand(1,3)]"
+	color = pickweight(possible_colors)
+	setDir(pick(GLOB.cardinals))

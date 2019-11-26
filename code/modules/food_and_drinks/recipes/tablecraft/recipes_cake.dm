@@ -69,7 +69,9 @@
 /datum/crafting_recipe/food/birthdaycake
 	name = "Birthday cake"
 	reqs = list(
-		/obj/item/clothing/head/hardhat/cakehat = 1,
+		/datum/reagent/consumable/sugar = 10,
+		/obj/item/candle = 1,
+		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2,
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday
@@ -146,6 +148,36 @@
 		/obj/item/reagent_containers/food/snacks/grown/berries = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/bsvc
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/clowncake
+	name = "clown cake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/sundae = 2,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/clown_cake
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/vanillacake
+	name = "vanilla cake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/peachcake
+	name = "Peach cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/peach = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/peach_cake
 	subcategory = CAT_CAKE
 
 /datum/crafting_recipe/food/cak

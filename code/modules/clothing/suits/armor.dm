@@ -1,6 +1,5 @@
 /obj/item/clothing/suit/armor
 	allowed = null
-	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
@@ -37,6 +36,8 @@
 	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
+	name = "large armor vest"
+	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 
@@ -59,7 +60,7 @@
 	flags_inv = 0
 	strip_delay = 80
 	unique_reskin = list("Coat" = "hostrench", "Cloak" = "trenchcloak")
-	
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
@@ -236,3 +237,14 @@
 /obj/item/clothing/suit/armor/riot/knight/red
 	icon_state = "knight_red"
 	item_state = "knight_red"
+
+/obj/item/clothing/suit/armor/vest/durathread
+	name = "makeshift vest"
+	desc = "A vest made of durathread with strips of leather acting as trauma plates."
+	icon_state = "durathread"
+	item_state = "durathread"
+	strip_delay = 60
+	equip_delay_other = 40
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)

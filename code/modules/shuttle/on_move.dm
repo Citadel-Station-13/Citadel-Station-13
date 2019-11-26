@@ -179,7 +179,7 @@ All ShuttleMove procs go here
 	for(var/obj/machinery/door/airlock/A in range(1, src))  // includes src
 		A.shuttledocked = FALSE
 		A.air_tight = TRUE
-		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
+		addtimer(CALLBACK(A, /obj/machinery/door/.proc/close), 0)
 
 /obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
@@ -290,7 +290,7 @@ All ShuttleMove procs go here
 	// ignores the movement of the shuttle from the staging area on CentCom to
 	// the station as it is loaded in.
 	if (oldT && !is_centcom_level(oldT.z))
-		GET_COMPONENT(STR, /datum/component/storage/concrete/emergency)
+		var/datum/component/storage/concrete/emergency/STR = GetComponent(/datum/component/storage/concrete/emergency)
 		STR?.unlock_me()
 
 /************************************Mob move procs************************************/

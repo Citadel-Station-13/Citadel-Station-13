@@ -17,16 +17,19 @@ Contents:
 	item_state = "s-ninja_mask"
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	modifies_speech = TRUE
 
-/obj/item/clothing/mask/gas/space_ninja/speechModification(message)
-	if(copytext(message, 1, 2) != "*")
+/obj/item/clothing/mask/gas/space_ninja/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
 		var/list/temp_message = text2list(message, " ")
 		var/list/pick_list = list()
-		for(var/i = 1, i <= temp_message.len, i++)
+		for(var/i in 1 to temp_message.len)
 			pick_list += i
-		for(var/i=1, i <= abs(temp_message.len/3), i++)
+		for(var/i in 1 to abs(temp_message.len/3))
 			var/H = pick(pick_list)
-			if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+			if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":"))
+				continue
 			temp_message[H] = ninjaspeak(temp_message[H])
 			pick_list -= H
 		message = list2text(temp_message, " ")
@@ -56,5 +59,4 @@ Contents:
 		message = replacetext(message, "than", "sen")
 		message = replacetext(message, ".", "")
 		message = lowertext(message)
-
-	return message
+		speech_args[SPEECH_MESSAGE] = message

@@ -7,6 +7,8 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
+#define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
+
 ///////////
 // BUFFS //
 ///////////
@@ -44,6 +46,10 @@
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
+#define STATUS_EFFECT_TASED /datum/status_effect/electrode //the affected has been tased, preventing fine muscle control
+
+#define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
+
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
 #define STATUS_EFFECT_GEISTRACKER /datum/status_effect/geis_tracker //if you're using geis, this tracks that and keeps you from using scripture
@@ -70,6 +76,11 @@
 
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
+#define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
+
+#define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
+
+#define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
 /////////////
 // NEUTRAL //
 /////////////

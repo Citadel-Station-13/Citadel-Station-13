@@ -1,5 +1,6 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
+	id = MARTIALART_KRAVMAGA
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
 	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
@@ -18,6 +19,9 @@
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
 		H.mind.martial_art.streak = ""
 	else
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
+			return
 		owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
 		H.mind.martial_art.streak = "neck_chop"
 
@@ -35,6 +39,9 @@
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
 		H.mind.martial_art.streak = ""
 	else
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
+			return
 		owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
 		H.mind.martial_art.streak = "leg_sweep"
 
@@ -52,6 +59,9 @@
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
 		H.mind.martial_art.streak = ""
 	else
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
+			return
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
@@ -85,14 +95,14 @@
 			return 1
 	return 0
 
-/datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/proc/leg_sweep(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(D.lying || D.IsKnockdown())
 		return 0
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Knockdown(40, override_hardstun = 0.01, 25)
+	D.Knockdown(40, override_hardstun = 0.01, override_stamdmg = 25)
 	log_combat(A, D, "leg sweeped")
 	return 1
 
@@ -144,8 +154,6 @@
 	return 1
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(check_streak(A,D))
-		return 1
 	var/obj/item/I = null
 	if(prob(60))
 		I = D.get_active_held_item()
@@ -196,7 +204,7 @@
 	name = "combat gloves plus"
 	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
 	icon_state = "combat"
-	item_state = "blackglovesplus"
+	item_state = "blackgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	strip_delay = 80

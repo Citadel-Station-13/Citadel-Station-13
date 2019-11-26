@@ -67,8 +67,8 @@
 /proc/slur(n,var/strength=50)
 	strength = min(strength,50)
 	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
+	var/leng = length(phrase)
+	var/counter=length(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -88,7 +88,7 @@
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
-				newletter=" *BURP*."
+				newletter=" BURP!"
 		if(rand(1,100) <= strength*0.5)
 			if(rand(1,5) == 1)
 				newletter+="'"
@@ -102,8 +102,8 @@
 
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
+	var/leng = length(phrase)
+	var/counter=length(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -352,12 +352,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, ignore_dnr_observers = FALSE) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
+			if ((ignore_key && (O.ckey in GLOB.poll_ignore[ignore_key])) || (ignore_dnr_observers && !O.can_reenter_round(TRUE)))
 				continue
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
 			if(ghost_sound)
@@ -429,8 +429,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
-		M.ghostize(0)
-		M.key = C.key
+		M.ghostize(FALSE, TRUE)
+		C.transfer_ckey(M, FALSE)
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
@@ -486,3 +486,49 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/can_hear()
 	. = TRUE
+
+/proc/bloodtype_to_color(var/type)
+	. = BLOOD_COLOR_HUMAN
+	switch(type)
+		if("U")//Universal blood; a bit orange
+			. = BLOOD_COLOR_UNIVERSAL
+		if("SY")//Synthetics blood; blue
+			. = BLOOD_COLOR_SYNTHETIC
+		if("L")//lizard, a bit pink/purple
+			. = BLOOD_COLOR_LIZARD
+		if("X*")//xeno blood; greenish yellow
+			. = BLOOD_COLOR_XENO
+		if("HF")// Oil/Hydraulic blood. something something why not. reee
+			. = BLOOD_COLOR_OIL
+		if("GEL")// slimepeople blood, rgb 0, 255, 144
+			. = BLOOD_COLOR_SLIME
+		if("BUG")// yellowish, like, y'know bug guts I guess.
+			. = BLOOD_COLOR_BUG
+		//add more stuff to the switch if you have more blood colors for different types
+		// the defines are in _DEFINES/misc.dm
+
+//Examine text for traits shared by multiple types. I wish examine was less copypasted.
+/mob/proc/common_trait_examine()
+	if(HAS_TRAIT(src, TRAIT_DISSECTED))
+		var/dissectionmsg = ""
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
+			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
+			dissectionmsg = " via Experimental Dissection"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
+			dissectionmsg = " via Thorough Dissection"
+		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+
+//gets ID card object from special clothes slot or null.
+/mob/proc/get_idcard(hand_first = TRUE)
+	var/obj/item/held_item = get_active_held_item()
+	. = held_item ? held_item.GetID() : null
+	if(!.) //If so, then check the inactive hand
+		held_item = get_inactive_held_item()
+		. = held_item ? held_item.GetID() : null
+
+/mob/proc/get_id_in_hand()
+	var/obj/item/held_item = get_active_held_item()
+	if(!held_item)
+		return
+	return held_item.GetID()

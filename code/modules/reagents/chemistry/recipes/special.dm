@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
 	if(isobserver(user))
-		return
+		return list()
 	. = ..()
 
 /obj/item/paper/secretrecipe/Initialize()

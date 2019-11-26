@@ -25,7 +25,7 @@
 	if(flavor_text && flavor_text != "")
 		// We are decoding and then encoding to not only get correct amount of characters, but also to prevent partial escaping characters being shown.
 		var/msg = html_decode(replacetext(flavor_text, "\n", " "))
-		if(lentext(msg) <= 40)
+		if(length(msg) <= 40)
 			return "<span class='notice'>[html_encode(msg)]</span>"
 		else
 			return "<span class='notice'>[html_encode(copytext(msg, 1, 37))]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
@@ -172,15 +172,11 @@ proc/get_top_level_mob(var/mob/S)
 	user.log_message(message, INDIVIDUAL_EMOTE_LOG)
 	message = "<b>[user]</b> " + "<i>[message]</i>"
 
-	for(var/mob/M)
-		if(M in list(/mob/living))
-			M.show_message(message)
-
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(message=message,hearing_distance=1)
+		user.audible_message(message=message,hearing_distance=1, no_ghosts = TRUE)
 	else
-		user.visible_message(message=message,self_message=message,vision_distance=1)
-	log_emote("[key_name(user)] : [message]")
+		user.visible_message(message=message,self_message=message,vision_distance=1, no_ghosts = TRUE)
+	log_emote("[key_name(user)] : (SUBTLER) [message]")
 
 	message = null
 

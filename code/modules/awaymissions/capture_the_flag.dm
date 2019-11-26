@@ -24,7 +24,6 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE
@@ -488,7 +487,7 @@
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
 
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
@@ -497,14 +496,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already NODROP
+	// The shielded hardsuit is already TRAIT_NODROP
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
 	no_drops += H.get_item_by_slot(SLOT_SHOES)
 	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.item_flags |= NODROP
+		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill
@@ -530,7 +529,7 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
@@ -538,7 +537,7 @@
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)

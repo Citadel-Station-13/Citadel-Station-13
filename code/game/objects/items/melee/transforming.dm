@@ -13,6 +13,7 @@
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/clumsy_check = TRUE
+	var/total_mass_on //Total mass in ounces when transformed. Primarily for balance purposes. Don't think about it too hard.
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -22,7 +23,7 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
-	if(is_sharp())
+	if(get_sharpness())
 		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound, !active)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
@@ -46,6 +47,7 @@
 	active = !active
 	if(active)
 		force = force_on
+		total_mass = total_mass_on
 		throwforce = throwforce_on
 		hitsound = hitsound_on
 		throw_speed = 4
@@ -62,11 +64,12 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
-	if(is_sharp())
+		total_mass = initial(total_mass)
+	if(get_sharpness())
 		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
 		BT.butchering_enabled = TRUE
 	else
-		GET_COMPONENT(BT, /datum/component/butchering)
+		var/datum/component/butchering/BT = GetComponent(/datum/component/butchering)
 		if(BT)
 			BT.butchering_enabled = FALSE
 	transform_messages(user, supress_message_text)

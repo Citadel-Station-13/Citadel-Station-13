@@ -19,11 +19,11 @@
 			return
 		if(istype(target, /obj/item))
 			var/obj/item/I = target
-			if(I.item_flags & NODROP)
+			if(HAS_TRAIT_FROM(I, TRAIT_NODROP, GLUED_ITEM_TRAIT))
 				to_chat(user, "<span class='warning'>[I] is already sticky!</span>")
 				return
 			uses -= 1
-			I.item_flags |= NODROP
+			ADD_TRAIT(I, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 			I.desc += " It looks sticky."
 			to_chat(user, "<span class='notice'>You smear the [I] with glue, making it incredibly sticky!</span>")
 			if(uses == 0)

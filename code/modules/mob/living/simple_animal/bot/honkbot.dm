@@ -11,12 +11,12 @@
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
-	radio_channel = "Service" //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
 	window_name = "Honkomatic Bike Horn Unit v1.0.7"
+	oil_spill_type = /obj/effect/decal/cleanable/oil/slippery //slip and slide fun for the whole family
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 	path_image_color = "#FF69B4"
 
@@ -128,10 +128,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, 1, -1) // evil laughter

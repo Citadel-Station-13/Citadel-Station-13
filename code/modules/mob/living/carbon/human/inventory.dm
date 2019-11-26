@@ -79,7 +79,8 @@
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
-	if(!..()) //a check failed or the item has already found its slot
+	. = ..()
+	if(!.) //a check failed or the item has already found its slot
 		return
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
@@ -136,6 +137,7 @@
 			update_inv_s_store()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
+			not_handled = TRUE
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
@@ -167,9 +169,9 @@
 				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
 			if(l_store)
 				dropItemToGround(l_store, TRUE)
-			if(wear_id)
+			if(wear_id && !CHECK_BITFIELD(wear_id.item_flags, NO_UNIFORM_REQUIRED))
 				dropItemToGround(wear_id)
-			if(belt)
+			if(belt && !CHECK_BITFIELD(belt.item_flags, NO_UNIFORM_REQUIRED))
 				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
@@ -249,7 +251,7 @@
 	sec_hud_set_security_status()
 	..()
 
-/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE, client/preference_source)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -261,7 +263,7 @@
 	if(!O)
 		return 0
 
-	return O.equip(src, visualsOnly)
+	return O.equip(src, visualsOnly, preference_source)
 
 
 //delete all equipment without dropping anything

@@ -79,7 +79,7 @@
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
+	M.adjustToxLoss(-(4 * heal_amt), forced = TRUE) //most effective on toxins
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 
@@ -219,8 +219,10 @@
 	level = 8
 	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
 	var/deathgasp = FALSE
+	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
 	threshold_desc = "<b>Stealth 2:</b> Host appears to die when falling into a coma.<br>\
+					<b>Resistance 4:</b> The virus also stabilizes the host while they are in critical condition.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
@@ -228,8 +230,24 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 1.5
+	if(A.properties["resistance"] >= 4)
+		stabilize = TRUE
 	if(A.properties["stealth"] >= 2)
 		deathgasp = TRUE
+
+/datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
+	if(!..())
+		return FALSE
+	if(A.stage >= 4 && stabilize)
+		ADD_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	else
+		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/heal/coma/End(datum/disease/advance/A)
+	if(!..())
+		return
+	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -350,7 +368,7 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
-	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate.<br>\
+	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate and heals toxin lovers.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
@@ -392,7 +410,7 @@
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 
-	M.adjustToxLoss(-heal_amt)
+	M.adjustToxLoss(-heal_amt, forced = (temp_rate == 4))
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 	if(!parts.len)
@@ -417,7 +435,7 @@
 	symptom_delay_max = 1
 	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
 	var/cellular_damage = FALSE
-	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage.<br>\
+	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage and toxin lovers.<br>\
 					  <b>Resistance 7:</b> Increases healing speed."
 
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
@@ -450,7 +468,7 @@
 	if(cellular_damage)
 		M.adjustCloneLoss(-heal_amt * 0.5)
 
-	M.adjustToxLoss(-(2 * heal_amt))
+	M.adjustToxLoss(-(2 * heal_amt), forced = cellular_damage)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 

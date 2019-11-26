@@ -143,7 +143,7 @@
 
 //Rod of Asclepius
 /obj/item/rod_of_asclepius
-	name = "Rod of Asclepius"
+	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
@@ -189,7 +189,8 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -204,7 +205,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
 
-/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
+/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
@@ -452,7 +453,7 @@
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -640,12 +641,14 @@
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
+	total_mass = 2.75
+	total_mass_on = 5
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
+	. = ..()
+	. += "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
 	Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.<br>\
-	Transforming it immediately after an attack causes the next attack to come out faster.</span>")
+	Transforming it immediately after an attack causes the next attack to come out faster.</span>"
 
 /obj/item/melee/transforming/cleaving_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -784,29 +787,29 @@
 /obj/item/melee/ghost_sword/process()
 	ghost_check()
 
-/obj/item/melee/ghost_sword/proc/ghost_check()
-	var/ghost_counter = 0
-	var/turf/T = get_turf(src)
-	var/list/contents = T.GetAllContents()
-	var/mob/dead/observer/current_spirits = list()
-	for(var/thing in contents)
-		var/atom/A = thing
-		A.transfer_observers_to(src)
-
-	for(var/i in orbiters?.orbiters)
-		if(!isobserver(i))
+/obj/item/melee/ghost_sword/proc/recursive_orbit_collect(atom/A, list/L)
+	for(var/i in A.orbiters?.orbiters)
+		if(!isobserver(i) || (i in L))
 			continue
-		var/mob/dead/observer/G = i
-		ghost_counter++
-		G.invisibility = 0
-		current_spirits |= G
+		L |= i
+		recursive_orbit_collect(i, L)
 
-	for(var/mob/dead/observer/G in spirits - current_spirits)
+/obj/item/melee/ghost_sword/proc/ghost_check()
+	var/list/mob/dead/observer/current_spirits = list()
+
+	recursive_orbit_collect(src, current_spirits)
+	recursive_orbit_collect(loc, current_spirits)		//anything holding us
+
+	for(var/i in spirits - current_spirits)
+		var/mob/dead/observer/G = i
 		G.invisibility = GLOB.observer_default_invisibility
 
-	spirits = current_spirits
+	for(var/i in current_spirits)
+		var/mob/dead/observer/G = i
+		G.invisibility = 0
 
-	return ghost_counter
+	spirits = current_spirits
+	return length(spirits)
 
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
 	force = 0
@@ -1019,21 +1022,10 @@
 
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
-	var/datum/objective/survive/survive = new
-	survive.owner = L.mind
-	L.mind.objectives += survive
+	var/datum/antagonist/blood_contract/A = new
+	L.mind.add_antag_datum(A)
+
 	log_combat(user, L, "took out a blood contract on", src)
-	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
-	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-	var/obj/effect/mine/pickup/bloodbath/B = new(L)
-	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
-
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H == L)
-			continue
-		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_theyve(TRUE)] been marked red! Whoever [L.p_they()] [L.p_were()], friend or foe, go kill [L.p_them()]!</span>")
-		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
-
 	qdel(src)
 
 //Colossus
@@ -1081,8 +1073,8 @@
 	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/hierophant_club/examine(mob/user)
-	..()
-	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
+	. = ..()
+	. += "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>"
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")

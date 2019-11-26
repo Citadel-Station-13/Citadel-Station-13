@@ -62,15 +62,15 @@
 		return K.duration - world.time
 	return 0
 
-/mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Can't go below remaining duration
+/mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg) //Can't go below remaining duration
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
-		if(absorb_stun(amount, ignore_canknockdown))
+		if(absorb_stun(isnull(override_hardstun)? amount : override_hardstun, ignore_canknockdown))
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(K)
-			K.duration = max(world.time + amount, K.duration)
-		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
+			K.duration = max(world.time + (isnull(override_hardstun)? amount : override_hardstun), K.duration)
+		else if((amount || override_hardstun) > 0)
+			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating, override_hardstun, override_stamdmg)
 		return K
 
 /mob/living/proc/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Sets remaining duration

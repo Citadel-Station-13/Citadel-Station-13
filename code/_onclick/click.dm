@@ -67,7 +67,7 @@
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
-	next_click = world.time + 1
+	next_click = world.time + world.tick_lag
 
 	if(check_click_intercept(params,A))
 		return
@@ -200,7 +200,7 @@
 			if (!target.loc)
 				continue
 
-			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH))
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH) && target.loc.canReachInto(src, ultimate_target, next, view_only, tool))
 				next += target.loc
 
 		checking = next
@@ -214,6 +214,10 @@
 
 /mob/living/DirectAccess(atom/target)
 	return ..() + GetAllContents()
+
+//This is called reach into but it's called on the deepest things first so uh, make sure to account for that!
+/atom/proc/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return TRUE
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -317,8 +321,7 @@
 	return
 /atom/proc/ShiftClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	if(user.client && user.client.eye == user || user.client.eye == user.loc)
-		user.examinate(src)
+	user.examinate(src)
 	return
 
 /*

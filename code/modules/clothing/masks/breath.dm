@@ -4,8 +4,8 @@
 	icon_state = "breath"
 	item_state = "m_mask"
 	body_parts_covered = 0
-	clothing_flags = MASKINTERNALS
-	visor_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
+	visor_flags = ALLOWINTERNALS
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.1
 	permeability_coefficient = 0.5
@@ -30,8 +30,8 @@
 		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to adjust it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to adjust it.</span>"
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."

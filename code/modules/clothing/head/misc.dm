@@ -67,12 +67,14 @@
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	mutantrace_variation = MUTANTRACE_VARIATION
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
 	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	item_state="cueball"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -81,6 +83,7 @@
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
 	item_state = "snowman_h"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -90,6 +93,7 @@
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/justice/blue
@@ -161,6 +165,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
@@ -168,6 +173,7 @@
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -181,6 +187,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -221,8 +228,11 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	item_flags = NODROP
 	dog_fashion = null
+
+/obj/item/clothing/head/sombrero/shamebrero/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -299,6 +309,7 @@
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"
@@ -309,8 +320,8 @@
 /obj/item/clothing/head/pharaoh
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
-	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
+	icon_state = "pharaoh_hat"
+	icon_state = "pharaoh_hat"
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
@@ -330,9 +341,21 @@
 	icon_state = "beretblack"
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/head/frenchberet/speechModification(M)
-	if(copytext(M, 1, 2) != "*")
-		M = " [M]"
+/obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
+	. = ..()
+	if (slot == SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/frenchberet/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/frenchberet/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
 		var/list/french_words = strings("french_replacement.json", "french")
 
 		for(var/key in french_words)
@@ -340,10 +363,17 @@
 			if(islist(value))
 				value = pick(value)
 
-			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
-			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
-			M = replacetextEx(M, " [key]", " [value]")
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
 
 		if(prob(3))
-			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
-	return trim(M)
+			message += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/head/assu_helmet
+	name = "DAB helmet"
+	icon_state = "assu_helmet"
+	item_state = "assu_helmet"
+	desc = "A cheap replica of old riot helmet without visor. It has \"D.A.B.\" written on the front."
+	flags_inv = HIDEHAIR

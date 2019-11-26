@@ -58,9 +58,9 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
-	if(user.reagents && (user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty")))
+	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
 		return FALSE
 
 /datum/emote/living/dance
@@ -255,7 +255,7 @@
 				H.Knockdown(20)
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
-				H.adjustBrainLoss(5)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	..()
 
 /datum/emote/living/pout

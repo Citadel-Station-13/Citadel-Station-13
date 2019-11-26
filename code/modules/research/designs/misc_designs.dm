@@ -1,4 +1,3 @@
-
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
@@ -291,6 +290,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/light_replacer
+	name = "Light Replacer"
+	desc = "A device to automatically replace lights. Refill with working light bulbs."
+	id = "light_replacer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
+	build_path = /obj/item/lightreplacer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
@@ -369,6 +378,16 @@
 ///////////////////////////////
 ////////////Tools//////////////
 ///////////////////////////////
+
+/datum/design/rcd_upgrade
+	name = "Advanced RCD designs upgrade"
+	desc = "Adds the computer frame and machine frame to the RCD."
+	id = "rcd_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
+	build_path = /obj/item/rcd_upgrade
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
@@ -460,6 +479,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/quantum_keycard
+	name = "Quantum Keycard"
+	desc = "Allows for the construction of a quantum keycard."
+	id = "quantum_keycard"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_SILVER = 500, MAT_BLUESPACE = 1000)
+	build_path = /obj/item/quantum_keycard
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
@@ -469,6 +498,16 @@
 	build_path = /obj/item/anomaly_neutralizer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/pHmeter
+	name = "Chemical Analyser"
+	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution."
+	id   = "pHmeter"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_SILVER = 100, MAT_DIAMOND = 100)
+	build_path = /obj/item/fermichem/pHmeter
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 ////////////Armour///////////////////////
