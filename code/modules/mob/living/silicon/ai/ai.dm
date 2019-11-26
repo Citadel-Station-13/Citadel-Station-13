@@ -672,8 +672,6 @@
 			var/list/icon_list = list(
 				"female" = 'icons/mob/ai.dmi',
 				"male" = 'icons/mob/ai.dmi',
-				"girl" = 'icons/mob/ai.dmi',
-				"boy" = 'icons/mob/ai.dmi',
 				"floating face" = 'icons/mob/ai.dmi',
 				"green face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
