@@ -114,8 +114,8 @@
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-temp_purity)
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
-		var/datum/reagent/R = M.reagents.has_reagent("[inverse_chem]")
-			R.cached_purity = temp_purity
+		var/datum/reagent/R2 = M.reagents.has_reagent("[inverse_chem]")
+			R2.cached_purity = temp_purity
 	return
 
 // Called when this reagent is removed while inside a mob
@@ -150,7 +150,6 @@
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
 
-	var/temp_purity = purity
 	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
 		M.reagents.remove_reagent(id, amount, FALSE)
 		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)

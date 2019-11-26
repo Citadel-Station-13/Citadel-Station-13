@@ -136,6 +136,8 @@
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/ears/E = M.getorganslot(ORGAN_SLOT_EARS)
+	if(!E)
+		return
 	if(E.damage > 0)
 		if(cached_purity > 0.9)
 			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_END_STAGE)

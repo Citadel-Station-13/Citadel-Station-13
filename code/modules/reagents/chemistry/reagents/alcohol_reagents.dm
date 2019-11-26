@@ -44,7 +44,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		if (istype(L))
 			C.applyLiverDamage((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150)
-	L.adjustMetabolicStress(boozepwr/100)
+	L.adjustMetabolicStress(boozepwr/500)//Shouldn't bother a healthy liver, but will damage a damaged one. Long term effects for hard drinking
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)

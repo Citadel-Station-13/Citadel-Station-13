@@ -15,11 +15,12 @@
 			if(R.purity == 1)
 				continue
 
+			var/temp_purity = R.purity
 			var/cached_volume = reactVol
 			if(clear_conversion & REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
 					if(GLOB.Debug2)
-						message_admins("Inverting [cached_volume] [R.id] into [R.inverse_chem]")
+						message_admins("Inverting [cached_volume] [R.id] [R.purity] into [R.inverse_chem]")
 					holder.remove_reagent(R.id, cached_volume, TRUE)
 					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
 					var/datum/reagent/R2 = holder.has_reagent("[R.inverse_chem]")
@@ -31,12 +32,13 @@
 			if(clear_conversion & REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
 				if(GLOB.Debug2)
-					message_admins("Impure [cached_volume] of [R.id] into [impureVol] of [R.impure_chem]")
+					message_admins("Impure [cached_volume] of [R.id] at [R.purity] into [impureVol] of [R.impure_chem] with [clear_conversion & REACTION_CLEAR_RETAIN ? "Clear conversion" : "Purification"] mechanics")
 				holder.remove_reagent(id, (impureVol), TRUE)
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
 				var/datum/reagent/R2 = holder.has_reagent("[R.impure_chem]")
 				if(clear_conversion & REACTION_CLEAR_RETAIN)
-					R2.cached_purity = 1-R.purity
+					message_admins("[R.purity], [temp_purity], [1-R.purity], [1-temp_purity]")
+					R2.cached_purity = 1-temp_purity
 					R2.purity = R2.cached_purity
 					R.chemical_flags |= REAGENT_DONOTSPLIT //Splitting is done here
 				R.cached_purity = R.purity

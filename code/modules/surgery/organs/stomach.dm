@@ -32,18 +32,26 @@
 	var/deltapH = C.reagents.pH
 	if(deltapH>7)
 		deltapH = 14-deltapH
-	switch(C.reagents.pH)
-		if(-INFINITY to 2)
-			applyOrganDamage(0.25)
-			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2) //heartburn!
+	switch(deltapH)
+		if(-INFINITY to 1)
+			applyOrganDamage(0.5)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 1) //heartburn!
+			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 5)
+			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 3)
+			C.apply_damage(1, BURN, C.get_bodypart(BODY_ZONE_CHEST))
+			if(prob(10))
+				to_chat("Your chest feels like it's on fire!")
+		if(1 to 2.5)
+			applyOrganDamage(0.3)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.25) //heartburn!
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 3)
 			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 1)
 			C.apply_damage(1, BURN, C.get_bodypart(BODY_ZONE_CHEST))
 			if(prob(10))
 				to_chat("You feel a burning sensation in your chest!")
-		if(2 to 4)
+		if(2.5 to 4)
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1.5)
-			applyOrganDamage(0.15)
+			applyOrganDamage(0.2)
 		if(4 to 5.5)
 			applyOrganDamage(0.1)
 		if(5.5 to INFINITY)

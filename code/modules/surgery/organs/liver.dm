@@ -126,14 +126,15 @@
 				var/stress = 0.5
 				if((T.toxpwr/reagentCount) > stress)
 					stress = (T.toxpwr/reagentCount)
+				if(GLOB.Debug2)
+					message_admins("Stress:[stress], [ignoreTox ? (stress + (T.current_cycle/reagentCount)) : T.toxpwr/reagentCount]), cycle:[T.current_cycle] no.reagents:[reagentCount]")
+				if(T.volume <= toxTolerance*(1-(damage/100)))
+					C.reagents.remove_reagent(initial(pickedreagent.id), toxTolerance)
+					adjustMetabolicStress(stress)
+					continue
 				if(ignoreTox)
 					stress = stress + (T.current_cycle/reagentCount)
 					T.current_cycle++
-					message_admins("[stress], T.current_cycle/reagentCount, [T.current_cycle] [reagentCount]")
-					if(T.volume <= toxTolerance)
-						C.reagents.remove_reagent(initial(pickedreagent.id), toxTolerance)
-						adjustMetabolicStress(stress)
-						continue
 					C.reagents.remove_reagent(initial(pickedreagent.id), pickedreagent.metabolization_rate)
 					adjustMetabolicStress(stress)
 					continue
@@ -141,7 +142,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreTox)
 
-	var/metabolic_replenish = (2-(((damage*100)/maxHealth)/100))/10
+	var/metabolic_replenish = (2-(((damage*100)/maxHealth)/100))/10 //0.1 - 0.2
 	if(metabolic_stress > 0)
 		adjustMetabolicStress(-metabolic_replenish)
 	else if (metabolic_stress < 0)

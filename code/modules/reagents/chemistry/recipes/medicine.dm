@@ -290,7 +290,7 @@
 /datum/chemical_reaction/antihol
 	name = "antihol"
 	id = "antihol"
-	results = list("antihol" = 6)
+	results = list("antihol" = 4.5)
 	required_reagents = list("ethanol" = 1, "charcoal" = 1, "copper" = 1) //5.943
 	mix_message = "The solution gives off a thick sweet smelling mist."
 	//FermiChem vars:
@@ -317,7 +317,7 @@
 	if(!Ah)
 		return
 	//Normalises 0.3 - 1 for impure to 1 to 0. (i.e. normalsise and inverts)
-	Ah.cached_purity = 1-((Ah.purity/1)/(1-0.3))
+	Ah.cached_purity = ((Ah.purity/1)/(1-0.3))
 	Ah.purity = Ah.cached_purity
 
 /datum/chemical_reaction/cryoxadone

@@ -1,0 +1,71 @@
+{{#if data.occupant}}
+	<ui-display title='Occupant'>
+	  <ui-section label='Health'>
+		 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span> <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
+		 <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
+		 state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.occupant.health)}}</ui-bar>
+	  </ui-section>
+	</ui-display>
+{{/if}}
+
+<ui-display title='Controls'>
+	<ui-section label='Control'>
+    <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
+	<ui-button icon='{{data.scanning ? "power-off" : "close"}}' state='{{data.occupant ? null : "disabled"}}' style='{{data.scanning ? "selected" : null}}' action='scan'>{{data.scanning ? "Scanning.." : "Scan"}}</ui-button>
+	{{#if data.scanning}}
+		<br/>
+		<ui-bar min='0' max='{{data.scantime}}' value='{{data.scancount}}'>Scanning...</ui-bar>
+	{{/if}}
+	</ui-section>
+</ui-display>
+
+{{#if data.scanmob}}
+	<ui-display title='Organ Status'>
+		{{#each data.occupant.organs}}
+			<ui-section label={{name}}>
+				<ui-bar min='0' max='{{max_damage}}' value='{{damage}}' state='{{color}}'>{{state}}</ui-bar>
+
+				{{#if name == "BRAIN"}}
+					{{#if data.occupant.traumalist}}
+						<ui-section label=Traumas>
+						{{#each data.occupant.traumalist}}
+							<span class='{{colourB}}'>{{resist}}{{Bname}}</span>
+							<br/>
+						{{/each}}
+						</ui-section>
+					{{/if}}
+				{{/if}}
+
+				{{#if name == "LIVER"}}
+					<ui-section label=Stress>
+					<ui-bar min=0 max=100 value='{{isText(data.occupant.metabolicStress) ? 100 : data.occupant.metabolicStress}}'
+					  state='{{data.occupant.metabolicColour}}'>{{data.occupant.metabolicStress}}</ui-bar>
+					  </ui-section>
+				{{/if}}
+
+				{{#if name == "STOMACH"}}
+					{{#if data.occupant.pH}}
+						<ui-section label=pH>
+						<ui-bar min=0 max=14 value='{{data.occupant.pH}}'
+						  state='{{data.occupant.pHcolor}}'>{{data.occupant.pHState}}</ui-bar>
+						</ui-section>
+					{{/if}}
+				{{/if}}
+
+				{{#if name == "LUNGS"}}
+					{{#if data.occupant.lungcollapse}}
+						<br/>
+						<span class='average'>{{data.occupant.lungcollapse}}</span>
+					{{/if}}
+				{{/if}}
+
+				<br/>
+			</ui-section>
+		{{/each}}
+		{{#each data.occupant.missing_organs}}
+			<ui-section label={{name}}>
+				<span class='bad'>MISSING</span>
+			</ui-section>
+		{{/each}}
+	</ui-display>
+{{/if}}
