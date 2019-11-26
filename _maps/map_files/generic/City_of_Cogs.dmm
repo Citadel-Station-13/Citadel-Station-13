@@ -379,15 +379,6 @@
 /obj/item/camera,
 /turf/open/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
-"Nz" = (
-/obj/structure/table/bronze,
-/obj/item/implantcase,
-/obj/item/implantcase,
-/obj/item/implantcase,
-/obj/item/implanter,
-/obj/item/storage/backpack/duffelbag/sec/surgery,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 "NH" = (
 /obj/structure/table/bronze,
 /obj/item/taperecorder,
@@ -409,10 +400,6 @@
 "WT" = (
 /turf/closed/wall/clockwork,
 /area/reebe)
-"Yy" = (
-/obj/structure/table/optable,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 
 (1,1,1) = {"
 zb
@@ -33918,7 +33905,7 @@ ab
 ai
 bE
 aj
-Yy
+aj
 aj
 aj
 aA
@@ -34175,7 +34162,7 @@ ab
 ah
 al
 aj
-Nz
+aj
 aj
 aC
 ah
