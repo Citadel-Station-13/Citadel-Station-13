@@ -179,7 +179,7 @@
 	display_name = "Advanced Data Theory"
 	description = "Better insight into programming and data."
 	prereq_ids = list("datatheory")
-	design_ids = list("icprinter", "icupgadv", "icupgclo")
+	design_ids = list("icprinter", "icupgadv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
@@ -1047,6 +1047,7 @@
 	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
 	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	design_ids = list("icupgclo")
 	export_price = 20000
 	hidden = TRUE
 	design_ids = list("alienalloy")
