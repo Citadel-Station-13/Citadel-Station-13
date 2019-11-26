@@ -125,7 +125,7 @@
 				var/datum/reagent/toxin/T = I
 				var/stress = 0.5
 				if((T.toxpwr/reagentCount) > stress)
-					stress = stress + (T.current_cycle/reagentCount)
+					stress = (T.toxpwr/reagentCount)
 				if(ignoreTox)
 					stress = stress + (T.current_cycle/reagentCount)
 					T.current_cycle++
