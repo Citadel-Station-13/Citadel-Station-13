@@ -130,8 +130,8 @@
 		open_machine()
 
 /obj/machinery/sleeper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>"
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
