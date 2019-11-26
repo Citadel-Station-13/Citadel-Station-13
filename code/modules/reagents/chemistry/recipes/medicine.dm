@@ -305,7 +305,7 @@
 	CurveSharppH 		= 2 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -1 		// Temperature change per 1u produced
 	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 10 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 	PurityMin 			= 0
