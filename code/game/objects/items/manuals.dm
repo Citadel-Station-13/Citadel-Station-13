@@ -319,6 +319,13 @@
 	title = "Chemistry Recipies"
 	page_link = "main/guides/chem_recipies"
 
+/obj/item/book/manual/wiki/cit/organ_guide
+	name = "Indepth Organ Textbook"
+	icon_state ="organbook"
+	author = "Chemcat"
+	title = "Organ Textbook"
+	page_link = "main/guides/guide_organs"
+
 /obj/item/book/manual/wiki/chemistry
 	name = "Outdated Chemistry Textbook"
 	icon_state ="chemistrybook_old"

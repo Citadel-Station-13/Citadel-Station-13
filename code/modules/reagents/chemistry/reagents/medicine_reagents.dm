@@ -129,6 +129,7 @@
 	color = "#6600FF" // rgb: 100, 165, 255
 	pH = 2
 	value = 10
+	purity = 0.8
 	impure_chem 		= "inacusiate_impure"
 	inverse_chem_val 	= 0
 	inverse_chem		= "generic_impure"
@@ -800,6 +801,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
 	pH = 10
+	purity = 0.8
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	impure_chem 		= "generic_impure"
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "oculine_impure"
@@ -814,13 +817,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
+	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE) && eyes.damage < 30)
 		if(prob(2*cached_purity))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
-
 	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
@@ -1025,6 +1027,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#00B4C8"
 	taste_description = "raw egg"
 	pH = 4
+	purity = 0.8
 	impure_chem 		= "antihol_impure" //
 	inverse_chem_val 	= 0.3
 	inverse_chem		= "antihol_inverse"
@@ -1398,6 +1401,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#F5F5F5"
 	self_consuming = TRUE
 	pH = 12.5
+	purity = 0.8
 	impure_chem 		= "generic_impure" //
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "corazone_inverse"

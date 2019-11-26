@@ -26836,6 +26836,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "aVZ" = (
@@ -30971,8 +30972,6 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "bcX" = (
-/obj/item/scalpel,
-/obj/item/cautery,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -30991,6 +30990,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
+/obj/item/cautery,
+/obj/item/scalpel,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone3)
 "bcY" = (
@@ -31684,7 +31686,7 @@
 	},
 /obj/item/radio/intercom{
 	name = "Station Intercom";
-	pixel_y = -26
+	pixel_y = -56
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -37851,6 +37853,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"hgi" = (
+/obj/structure/bookcase/manuals/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone3)
 "hhM" = (
 /turf/closed/mineral/random/labormineral,
 /area/science/test_area)
@@ -40962,11 +40968,6 @@
 	},
 /turf/closed/wall/r_wall/rust,
 /area/science/robotics/lab)
-"sKW" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port)
 "sKZ" = (
 /turf/closed/wall/r_wall/rust,
 /area/science/xenobiology)
@@ -83652,7 +83653,7 @@ bcj
 bdb
 bdY
 aSh
-sKW
+bfd
 bfF
 aZo
 bgP
@@ -83908,8 +83909,8 @@ bbu
 bck
 bdc
 bdZ
-aSh
-bfd
+hgi
+baj
 bfG
 bgd
 bgP

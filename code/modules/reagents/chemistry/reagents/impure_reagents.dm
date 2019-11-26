@@ -116,7 +116,7 @@
 	name = "Soothehol"
 	id = "antihol_impure"
 	description = "Soothes a patient's liver"
-	taste_description = "scambled egg"
+	taste_description = "coooked egg"
 	color = "#00B4C8"
 	pH = 2.5
 	metastress = -0.1
@@ -124,14 +124,15 @@
 /datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
 	if(!L)//Since this is run before the parent proc.
 		L = C.getorganslot(ORGAN_SLOT_LIVER)
-	L.adjustMetabolicStress(-cached_purity/5, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
+	var/treat_amount = 0.2 + (cached_purity/5) //0.2-0.4
+	L.adjustMetabolicStress(-treat_amount, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
 
 /datum/reagent/impure/antihol/inverse
 	name = "Prohol"
 	id = "antihol_inverse"
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
-	taste_description = "eggs over easy"
+	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
 	metastress = 0.35
 
@@ -152,7 +153,7 @@
 	pH = 13
 
 /datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
-	if(prob(100*cached_purity))
+	if(prob(100*(1-cached_purity)))
 		C.become_blind("oculine_impure")
 	..()
 

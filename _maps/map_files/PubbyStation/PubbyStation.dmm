@@ -26446,6 +26446,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
 "bkY" = (
@@ -34560,7 +34561,6 @@
 /area/medical/virology)
 "bCi" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
@@ -34574,6 +34574,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
+/obj/item/stack/medical/gauze,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCj" = (
@@ -39337,11 +39339,12 @@
 /area/medical/surgery)
 "bLQ" = (
 /obj/structure/table,
-/obj/item/surgical_drapes,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLR" = (

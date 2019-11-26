@@ -95890,7 +95890,6 @@
 "des" = (
 /obj/structure/table/glass,
 /obj/item/clipboard,
-/obj/item/toy/figure/md,
 /obj/machinery/light/small,
 /obj/structure/sign/poster/official/ian{
 	pixel_y = -32
@@ -95898,6 +95897,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
+/obj/item/toy/figure/md,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "det" = (
@@ -107191,6 +107192,7 @@
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/sunglasses/blindfold,
@@ -127262,6 +127264,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 26
 	},
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "lEl" = (

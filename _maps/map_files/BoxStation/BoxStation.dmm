@@ -33440,6 +33440,7 @@
 /area/quartermaster/qm)
 "bzS" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /obj/item/cautery{
 	pixel_x = 4
 	},
@@ -33671,6 +33672,7 @@
 /area/medical/sleeper)
 "bAt" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /obj/item/wrench/medical,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -57035,6 +57037,10 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"fWz" = (
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "gbq" = (
@@ -96882,7 +96888,7 @@ bua
 bua
 bua
 bua
-bhh
+bBJ
 bhh
 btV
 bof
@@ -97139,7 +97145,7 @@ bwL
 bxX
 bsL
 bua
-bBJ
+bzd
 bhh
 bBn
 bof
@@ -97396,7 +97402,7 @@ bsL
 bvo
 bzl
 bua
-bzd
+fWz
 bhh
 btT
 bCU
