@@ -188,8 +188,8 @@
 				data["occupant"]["pHState"] = "Too basic"
 				data["occupant"]["pHcolor"] = "highlight"
 			if(10 to INFINITY)
-				data["occupant"]["pHState"] = "Extermely basic"
-				data["occupant"]["pHcolor"] = "basic"
+				data["occupant"]["pHState"] = "Extremely basic"
+				data["occupant"]["pHcolor"] = "purple"
 		data["occupant"]["pH"] = C.reagents.pH
 
 		//Organ scan
@@ -215,9 +215,9 @@
 
 
 				if(efficiency > 3 && (Or.damage > 0 && Or.damage < Or.maxHealth))
-					state += ": [Or.damage]"
+					state += ": [round(Or.damage, 0.1)]"
 
-				data["occupant"]["organs"] += list(list("name" = uppertext(Or.name), "damage" = round(Or.damage, 0.1), "max_damage" = Or.maxHealth, "state" = state, "color" = textcolor))
+				data["occupant"]["organs"] += list(list("name" = uppertext(Or.name), "damage" = Or.damage, "max_damage" = Or.maxHealth, "state" = state, "color" = textcolor))
 
 				//Brain
 				if(istype(Or, /obj/item/organ/brain))
@@ -277,19 +277,19 @@
 			var/has_liver = (!(NOLIVER in C.dna.species.species_traits))
 			var/has_stomach = (!(NOSTOMACH in C.dna.species.species_traits))
 			if(!C.getorganslot(ORGAN_SLOT_EYES))
-				data["occupant"]["missing_organs"] += list(list("name" = "Eyes"))
+				data["occupant"]["missing_organs"] += list(list("name" = "EYES"))
 			if(!C.getorganslot(ORGAN_SLOT_EARS))
-				data["occupant"]["missing_organs"] += list(list("name" = "Ears"))
+				data["occupant"]["missing_organs"] += list(list("name" = "EARS"))
 			if(!C.getorganslot(ORGAN_SLOT_BRAIN))
-				data["occupant"]["missing_organs"] += list(list("name" = "Brain"))
+				data["occupant"]["missing_organs"] += list(list("name" = "BRAIN"))
 			if(has_liver && !C.getorganslot(ORGAN_SLOT_LIVER))
-				data["occupant"]["missing_organs"] += list(list("name" = "Liver"))
+				data["occupant"]["missing_organs"] += list(list("name" = "LIVER"))
 			if(blooded && !C.getorganslot(ORGAN_SLOT_HEART))
-				data["occupant"]["missing_organs"] += list(list("name" = "Heart"))
+				data["occupant"]["missing_organs"] += list(list("name" = "HEART"))
 			if(breathes && !C.getorganslot(ORGAN_SLOT_LUNGS))
-				data["occupant"]["missing_organs"] += list(list("name" = "Lungs"))
+				data["occupant"]["missing_organs"] += list(list("name" = "LUNGS"))
 			if(has_stomach && !C.getorganslot(ORGAN_SLOT_STOMACH))
-				data["occupant"]["missing_organs"] += list(list("name" = "Stomach"))
+				data["occupant"]["missing_organs"] += list(list("name" = "STOMACH"))
 	return data
 
 /obj/machinery/MRS/ui_act(action, params)
