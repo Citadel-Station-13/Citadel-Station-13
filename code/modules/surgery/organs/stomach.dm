@@ -122,6 +122,7 @@
 	.=..()
 	if(owner.reagents)
 		owner.reagents.add_reagent("stomach_acid", 50)
+		owner.reagents.pH = 7
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner

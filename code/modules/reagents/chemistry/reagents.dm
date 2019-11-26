@@ -150,6 +150,7 @@
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
 
+	var/temp_purity = purity
 	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
 		M.reagents.remove_reagent(id, amount, FALSE)
 		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)

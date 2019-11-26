@@ -584,8 +584,6 @@
 	var/datum/chemical_reaction/C = fermiReactID
 	STOP_PROCESSING(SSprocessing, src)
 	fermiIsReacting = FALSE
-	reactedVol = 0
-	targetVol = 0
 	//Cap off values
 	for(var/datum/reagent/R in reagent_list)
 		R.volume = round(R.volume, CHEMICAL_QUANTISATION_LEVEL)//To prevent runaways.

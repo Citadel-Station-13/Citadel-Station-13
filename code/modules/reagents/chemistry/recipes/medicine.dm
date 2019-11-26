@@ -299,17 +299,17 @@
 	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
 	OptimalpHMin 		= 5			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	OptimalpHMax 		= 5 		// Higest value for above
-	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
+	ReactpHLim 			= 5 		// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 2.5 		// How sharp the temperature exponential curve is (to the power of value)
-	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
+	CurveSharppH 		= 2 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -1 		// Temperature change per 1u produced
-	HIonRelease 		= 0.1 		// pH change per 1u reaction (inverse for some reason)
+	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 10 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 	PurityMin 			= 0
-	clear_conversion	= REACTION_CLEAR_INVERSE | REACTION_CLEAR_IMPURE
+	clear_conversion	= REACTION_CLEAR_INVERSE | REACTION_CLEAR_IMPURE | REACTION_CLEAR_RETAIN
 
 /datum/chemical_reaction/antihol/FermiFinish(datum/reagents/holder, added_volume, added_purity)
 	..()

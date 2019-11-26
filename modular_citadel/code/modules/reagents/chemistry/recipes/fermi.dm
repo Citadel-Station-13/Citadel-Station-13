@@ -7,30 +7,41 @@
 
 //Called when reaction STOP_PROCESSING
 /datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder, var/atom/my_atom, reactVol)
-	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+	if(clear_conversion & REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
-			var/datum/reagent/R = my_atom.reagents.has_reagent("[id]")
+			var/datum/reagent/R = holder.has_reagent("[id]")
 			if(!R) //If we exploded
 				continue
 			if(R.purity == 1)
 				continue
 
 			var/cached_volume = reactVol
-			if(clear_conversion == REACTION_CLEAR_INVERSE && R.inverse_chem)
+			if(clear_conversion & REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
-					my_atom.reagents.remove_reagent(R.id, cached_volume, FALSE)
-					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
-					var/datum/reagent/R2 = my_atom.reagents.has_reagent("[R.inverse_chem]")
-					R2.cached_purity = R.purity
+					if(GLOB.Debug2)
+						message_admins("Inverting [cached_volume] [R.id] into [R.inverse_chem]")
+					holder.remove_reagent(R.id, cached_volume, TRUE)
+					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
+					var/datum/reagent/R2 = holder.has_reagent("[R.inverse_chem]")
+					if(clear_conversion & REACTION_CLEAR_RETAIN)
+						R2.cached_purity = 1-R.purity
+						R2.purity = R2.cached_purity
+					return
 
-			else if (clear_conversion == REACTION_CLEAR_IMPURE && R.impure_chem)
+			if(clear_conversion & REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
-				my_atom.reagents.remove_reagent(R.id, (impureVol), FALSE)
-				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
+				if(GLOB.Debug2)
+					message_admins("Impure [cached_volume] of [R.id] into [impureVol] of [R.impure_chem]")
+				holder.remove_reagent(id, (impureVol), TRUE)
+				holder.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
+				var/datum/reagent/R2 = holder.has_reagent("[R.impure_chem]")
+				if(clear_conversion & REACTION_CLEAR_RETAIN)
+					R2.cached_purity = 1-R.purity
+					R2.purity = R2.cached_purity
+					R.chemical_flags |= REAGENT_DONOTSPLIT //Splitting is done here
 				R.cached_purity = R.purity
 				R.purity = 1
-				var/datum/reagent/R2 = my_atom.reagents.has_reagent("[R.impure_chem]")
-				R2.cached_purity = R.purity
+
 	return
 
 /datum/chemical_reaction/fermi/eigenstate
@@ -528,7 +539,7 @@
 	FermiChem 		= TRUE
 	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
 
-/datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, added_volume, added_purity)
+/datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, var/atom/my_atom, added_volume)
 	var/datum/reagent/antacidpregen/A = holder.has_reagent("antacidpregen")
 	if(!A)
 		return

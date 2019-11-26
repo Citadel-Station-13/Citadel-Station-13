@@ -124,15 +124,15 @@
 			if(istype(pickedreagent, /datum/reagent/toxin))
 				var/datum/reagent/toxin/T = I
 				var/stress = 0.5
-				if(T.toxpwr > stress)
-					stress = T.toxpwr
+				if((T.toxpwr/reagentCount) > stress)
+					stress = stress + (T.current_cycle/reagentCount)
 				if(ignoreTox)
 					stress = stress + (T.current_cycle/reagentCount)
 					T.current_cycle++
 					message_admins("[stress], T.current_cycle/reagentCount, [T.current_cycle] [reagentCount]")
 					if(T.volume <= toxTolerance)
 						C.reagents.remove_reagent(initial(pickedreagent.id), toxTolerance)
-						adjustMetabolicStress(stress*2)
+						adjustMetabolicStress(stress)
 						continue
 					C.reagents.remove_reagent(initial(pickedreagent.id), pickedreagent.metabolization_rate)
 					adjustMetabolicStress(stress)

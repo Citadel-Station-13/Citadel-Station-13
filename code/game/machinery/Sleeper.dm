@@ -292,12 +292,16 @@
 		var/mob/living/carbon/C = occupant
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.15 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
-		C.blood_volume -= 4/efficiency
+		C.blood_volume -= 2/efficiency
 		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
+		C.adjustToxLoss(-1)
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			if(istype(R, /datum/reagent/metabolic))
 				continue
-			C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
+			if(R.volume < 0.5)
+				C.reagents.remove_reagent(R.id,R.volume)
+			else
+				C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
 
 
 /obj/machinery/sleeper/syndie

@@ -123,7 +123,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Damage the clone
 				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
-				SM.setOrganLoss(ORGAN_SLOT_BRAIN, 40)
+				SM.setOrganLoss(ORGAN_SLOT_BRAIN, 30)
 				SM.nutrition = startHunger/2
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
@@ -292,6 +292,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	M.adjustCloneLoss(-2, 0)
 	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	M.nutrition += 10
+	M.adjustOxyLoss(-2.5)
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure

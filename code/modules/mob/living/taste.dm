@@ -34,13 +34,13 @@
 		else if (!HAS_TRAIT(src, TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
 			switch(from.pH)
 				if(11.5 to INFINITY)
-					text_output += "<span class='warning'> and a strong alkaline note to it</span>"
+					text_output += "<span class='warning'> with a strong alkaline note to it</span>"
 				if(8.5 to 11.5)
-					text_output += "<span class='notice'> and a soapy tone to it</span>"
+					text_output += "<span class='notice'> with a soapy tone to it</span>"
 				if(2.5 to 5.5)
-					text_output += "<span class='notice'> and an acid tone to it</span>"
+					text_output += "<span class='notice'> with an acid tone to it</span>"
 				if(-INFINITY to 2.5)
-					text_output += "<span class='warning'> and has a strong acidic note to it</span>"
+					text_output += "<span class='warning'> with a strong acidic note to it</span>"
 
 	if(last_taste_time + 50 < world.time)
 		// We dont want to spam the same message over and over again at the
