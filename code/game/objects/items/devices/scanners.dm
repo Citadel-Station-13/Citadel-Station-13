@@ -351,7 +351,7 @@ SLIME SCANNER
 
 
 	// Species and body temperature
-	var/mob/living/carbon/human/H = M
+	var/mob/living/carbon/human/H = M //Start to use human only stuff here
 	if(ishuman(M))
 		var/datum/species/S = H.dna.species
 		var/mutant = FALSE
@@ -410,7 +410,6 @@ SLIME SCANNER
 		var/blood_id = C.get_blood_id()
 		if(blood_id)
 			if(ishuman(C))
-				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
 			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
