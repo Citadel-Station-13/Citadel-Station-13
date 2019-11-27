@@ -23,7 +23,7 @@
 /obj/item/reagent_containers/rag/examine(mob/user)
 	. = ..()
 	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>Alt-Click to squeeze the liquids out of it.</span>")
+		. += "<span class='notice'>Alt-Click to squeeze the liquids out of it.</span>"
 
 /obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
 	. = ..()

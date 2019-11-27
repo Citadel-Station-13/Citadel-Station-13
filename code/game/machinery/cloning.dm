@@ -93,20 +93,20 @@
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/disk/data/examine(mob/user)
-	..()
-	to_chat(user, "The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
+	. = ..()
+	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
 
 
 //Clonepod
 
 /obj/machinery/clonepod/examine(mob/user)
-	..()
+	. = ..()
 	var/mob/living/mob_occupant = occupant
 	if(mess)
-		to_chat(user, "It's filled with blood and viscera. You swear you can see it moving...")
+		. += "It's filled with blood and viscera. You swear you can see it moving..."
 	if(is_operational() && mob_occupant)
 		if(mob_occupant.stat != DEAD)
-			to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
+			. += "Current clone cycle is [round(get_completion())]% complete."
 
 /obj/machinery/clonepod/return_air()
 	// We want to simulate the clone not being in contact with

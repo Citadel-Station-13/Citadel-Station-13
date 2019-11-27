@@ -203,7 +203,7 @@
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
+	module_type = list(/obj/item/robot_module/butler)
 
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -230,7 +230,7 @@
 	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
+	module_type = list(/obj/item/robot_module/butler)
 
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -522,8 +522,7 @@
 	module_type = list(
 		/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound,
-		/obj/item/robot_module/borgi)
+		/obj/item/robot_module/medihound)
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -607,7 +606,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "borg_BS_RPED"
 	require_module = TRUE
-	module_type = list(/obj/item/robot_module/engineering)
+	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()

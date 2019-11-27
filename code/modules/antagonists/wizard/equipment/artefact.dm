@@ -383,7 +383,9 @@
 	if(!istype(user) || on_cooldown)
 		return
 	var/turf/T = get_turf(user)
-	if(!T)
+	var/area/A = get_area(user)
+	if(!T || !A || A.noteleport)
+		to_chat(user, "<span class='warning'>You play \the [src], yet no sound comes out of it... Looks like it won't work here.</span>")
 		return
 	on_cooldown = TRUE
 	last_user = user
