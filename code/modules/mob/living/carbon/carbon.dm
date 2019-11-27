@@ -956,3 +956,8 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
+
+/mob/living/carbon/transfer_ckey(mob/new_mob, send_signal = TRUE)
+	if(combatmode)
+		toggle_combat_mode(TRUE, TRUE)
+	return ..()
