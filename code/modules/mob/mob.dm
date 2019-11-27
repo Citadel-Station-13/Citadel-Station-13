@@ -319,7 +319,8 @@
 		return
 
 	face_atom(A)
-	A.examine(src)
+	var/list/result = A.examine(src)
+	to_chat(src, result.Join("\n"))
 
 //same as above
 //note: ghosts can point, this is intended
@@ -932,10 +933,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 /mob/proc/can_hold_items()
 	return FALSE
-
-/mob/proc/get_idcard()
-	return
-
 
 /mob/vv_get_dropdown()
 	. = ..()

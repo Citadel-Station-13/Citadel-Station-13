@@ -32,7 +32,7 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		togglesprint()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /mob/living/carbon/human/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 
 
 /mob/living/carbon/human/ComponentInitialize()
@@ -574,7 +574,7 @@
 		return threatcount
 
 	//Check for ID
-	var/obj/item/card/id/idcard = get_idcard()
+	var/obj/item/card/id/idcard = get_idcard(FALSE)
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
 		threatcount += 4
 

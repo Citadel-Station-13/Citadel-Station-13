@@ -36,7 +36,7 @@
 	var/can_be_carded = TRUE
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
-	var/icon/holo_icon//Default is assigned when AI is created.
+	var/icon/holo_icon//Female is assigned when AI is created.
 	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
@@ -130,7 +130,7 @@
 
 	set_core_display_icon()
 
-	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
+	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"female"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -670,10 +670,13 @@
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-				"default" = 'icons/mob/ai.dmi',
+				"female" = 'icons/mob/ai.dmi',
+				"male" = 'icons/mob/ai.dmi',
 				"floating face" = 'icons/mob/ai.dmi',
+				"green face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
-				"horror" = 'icons/mob/ai.dmi'
+				"horror" = 'icons/mob/ai.dmi',
+				"creature" = 'icons/mob/ai.dmi'
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
@@ -882,6 +885,7 @@
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
 	. = ..()
 	if(.) //successfully ressuscitated from death
+		set_eyeobj_visible(TRUE)
 		set_core_display_icon(display_icon_override)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)

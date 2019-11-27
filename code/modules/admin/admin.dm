@@ -686,6 +686,20 @@
 			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggledynamicvote()
+	set category = "Server"
+	set desc="Switches between secret/extended and dynamic voting"
+	set name="Toggle Dynamic Vote"
+	var/prev_dynamic_voting = CONFIG_GET(flag/dynamic_voting)
+	CONFIG_SET(flag/dynamic_voting,!prev_dynamic_voting)
+	if (!prev_dynamic_voting)
+		to_chat(world, "<B>Vote is now between extended and dynamic chaos.</B>")
+	else
+		to_chat(world, "<B>Vote is now between extended and secret.</B>")
+	log_admin("[key_name(usr)] [prev_dynamic_voting ? "disabled" : "enabled"] dynamic voting.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled dynamic voting.</span>")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dynamic Voting", "[prev_dynamic_voting ? "Disabled" : "Enabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Unprison"

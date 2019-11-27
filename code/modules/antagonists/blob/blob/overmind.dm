@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
 	desc = "The overmind. It controls the blob."
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
@@ -170,9 +170,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	add_points(0)
 
 /mob/camera/blob/examine(mob/user)
-	..()
+	. = ..()
 	if(blob_reagent_datum)
-		to_chat(user, "Its chemical is <font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>.")
+		. += "Its chemical is <font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>."
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)

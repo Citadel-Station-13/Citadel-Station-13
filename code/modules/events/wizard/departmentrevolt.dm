@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	can_be_midround_wizard = FALSE // not removing it completely yet
 
 /datum/round_event/wizard/deprevolt/start()
 

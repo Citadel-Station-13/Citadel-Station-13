@@ -70,11 +70,11 @@
 	var/heavy_burn_msg = "peeling away"
 
 /obj/item/bodypart/examine(mob/user)
-	..()
+	. = ..()
 	if(brute_dam > DAMAGE_PRECISION)
-		to_chat(user, "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>")
+		. += "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>"
 	if(burn_dam > DAMAGE_PRECISION)
-		to_chat(user, "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>")
+		. += "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
 /obj/item/bodypart/blob_act()
 	take_damage(max_damage)
@@ -354,7 +354,7 @@
 		if("legs" in S.default_features)
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
 				if(DIGITIGRADE in S.species_traits)
-					digitigrade_type = lowertext(H.dna.features.["legs"])
+					digitigrade_type = lowertext(H.dna.features["legs"])
 			else
 				digitigrade_type = null
 
@@ -363,9 +363,9 @@
 			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			if(Smark)
 				body_markings_icon = Smark.icon
-			if(H.dna.features.["mam_body_markings"] != "None")
-				body_markings = lowertext(H.dna.features.["mam_body_markings"])
-				aux_marking = lowertext(H.dna.features.["mam_body_markings"])
+			if(H.dna.features["mam_body_markings"] != "None")
+				body_markings = lowertext(H.dna.features["mam_body_markings"])
+				aux_marking = lowertext(H.dna.features["mam_body_markings"])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"

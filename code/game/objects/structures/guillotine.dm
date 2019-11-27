@@ -34,29 +34,22 @@
 	. = ..()
 
 /obj/structure/guillotine/examine(mob/user)
-	..()
+	. = ..()
 
-	var/msg = ""
-
-	msg += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
-
+	. += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]"
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		msg += "The blade is raised, ready to fall, and"
+		var/msg = "The blade is raised, ready to fall, and"
 
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP)
 			msg += " looks sharp enough to decapitate without any resistance."
 		else
 			msg += " doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it."
+		. += msg
 	else
-		msg += "The blade is hidden inside the stocks."
+		. += "The blade is hidden inside the stocks."
 
 	if (LAZYLEN(buckled_mobs))
-		msg += "<br/>"
-		msg += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
-
-	to_chat(user, msg)
-
-	return msg
+		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
 
 /obj/structure/guillotine/attack_hand(mob/user)
 	add_fingerprint(user)

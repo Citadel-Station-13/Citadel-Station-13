@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/anomaly/anomaly_bluespace
 	max_occurrences = 1
 	weight = 5
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/anomaly/anomaly_bluespace
 	startWhen = 3
