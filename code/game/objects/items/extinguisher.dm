@@ -106,11 +106,11 @@
 		return ..()
 
 /obj/item/extinguisher/examine(mob/user)
-	..()
-	to_chat(user, "The safety is [safety ? "on" : "off"].")
+	. = ..()
+	. += "The safety is [safety ? "on" : "off"]."
 
 	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>You can loose its <b>screws</b> to empty it.</span>")
+		. += "<span class='notice'>You can loose its <b>screws</b> to empty it.</span>"
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, tanktype) && target.Adjacent(user))
