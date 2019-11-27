@@ -220,7 +220,7 @@
 		R = GLOB.chemical_reagents_list[chem]
 		data["synthchems"] += list(list("name" = R.name, "id" = R.id, "synth_allowed" = synth_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.id)))
+		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = round(R.volume, 0.1), "purity" = round(R.purity, 0.01), "allowed" = chem_allowed(R.id)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -278,7 +278,7 @@
 			for(var/obj/item/organ/Or in C.getFailingOrgans())
 				if(istype(Or, /obj/item/organ/brain))
 					continue
-				data["occupant"]["failing_organs"] += list(list("name" = Or.name))
+				data["occupant"]["failing_organs"] += list(list("name" = "[uppertext(Or.name)] "))
 
 		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
 			var/blood_id = C.get_blood_id()

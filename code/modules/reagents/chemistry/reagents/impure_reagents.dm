@@ -22,11 +22,15 @@
 /datum/reagent/impure/on_mob_life(mob/living/carbon/C)
 	if(!L)//Though, lets be safe
 		L = C.getorganslot(ORGAN_SLOT_LIVER)
+		C.adjustToxLoss(5, TRUE)//Incase of no liver!
+		return
 	L.adjustMetabolicStress(metastress)
 	..()
 
 /datum/reagent/impure/fermiTox
+	name = "Trans Chemical Isomers"
 	id = "fermiTox"
+	description = "Toxic chemical isomers that will deal direct toxin damage instead of metabolic damage."
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE

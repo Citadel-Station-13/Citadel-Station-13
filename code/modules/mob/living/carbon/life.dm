@@ -28,10 +28,10 @@
 	if(stat != DEAD)
 		handle_brain_damage()
 
-	/* BUG_PROBABLE_CAUSE
+	// BUG_PROBABLE_CAUSE
 	if(stat != DEAD)
 		handle_liver()
-	*/
+
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -678,15 +678,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
-		if(liver.damage < liver.maxHealth)
-			liver.organ_flags |= ORGAN_FAILING
+		if(liver.organ_flags & ORGAN_FAILING)
 			liver_failure()
 	else
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && liver.failing)
+	if(liver && liver.organ_flags & ORGAN_FAILING)
 		return TRUE
 
 /mob/living/carbon/proc/return_liver_damage()
@@ -695,9 +694,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return liver.damage
 
 /mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		L.damage += d
+	if(d<0)
+		C.cureOrganDamage(ORGAN_SLOT_LIVER, d)
+	else
+		C.adjustOrganLoss(ORGAN_SLOT_LIVER, d)
 
 /mob/living/carbon/proc/liver_failure()
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs

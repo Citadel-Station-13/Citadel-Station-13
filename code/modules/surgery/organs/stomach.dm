@@ -38,9 +38,10 @@
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 1) //heartburn!
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 5)
 			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 3)
-			C.apply_damage(1, BURN, C.get_bodypart(BODY_ZONE_CHEST))
+			C.apply_damage(1.5, BURN, C.get_bodypart(BODY_ZONE_CHEST))
 			if(prob(10))
 				to_chat("Your chest feels like it's on fire!")
+				owner.adjustStaminaLoss(10)
 		if(1 to 2.5)
 			applyOrganDamage(0.3)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.25) //heartburn!

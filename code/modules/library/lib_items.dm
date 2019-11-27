@@ -151,7 +151,7 @@
 	. = ..()
 	new /obj/item/book/manual/wiki/medical_cloning(src)
 	new /obj/item/book/manual/wiki/chemistry(src)
-	new /obj/item/book/manual/wiki/cit/organ_guide
+	new /obj/item/book/manual/wiki/cit/organ_guide(src)
 	update_icon()
 
 

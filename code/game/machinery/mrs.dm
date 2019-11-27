@@ -175,7 +175,7 @@
 
 		//Stomach pH
 		switch(C.reagents.pH)
-			if(-INFINITY to 5.5)
+			if(-INFINITY to 4)
 				data["occupant"]["pHState"] = "Extremely acidic"
 				data["occupant"]["pHcolor"] = "bad"
 			if(4 to 5.5)

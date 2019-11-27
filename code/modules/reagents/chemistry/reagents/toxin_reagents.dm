@@ -957,7 +957,7 @@
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
 	toxpwr = 0
 	taste_description = "brain hurting"
-	metabolization_rate = 5
+	metabolization_rate = 2.5
 
 /datum/reagent/toxin/brainhurtingjuice/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
@@ -986,4 +986,3 @@
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
 	. = 1
 	..()
-
