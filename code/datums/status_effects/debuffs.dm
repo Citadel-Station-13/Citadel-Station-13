@@ -38,6 +38,7 @@
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+	blocks_combatmode = TRUE
 
 /datum/status_effect/incapacitating/unconscious/tick()
 	if(owner.getStaminaLoss())
@@ -48,6 +49,7 @@
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
+	blocks_combatmode = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
