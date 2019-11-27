@@ -32,7 +32,9 @@
 		"cocoa" = 6,
 		"vanilla" = 6,
 		"berryjuice" = 6,
-		"singulo" = 6)
+		"singulo" = 6,
+		"peachjuice" = 6,
+		"grapejuice" = 6)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -42,6 +44,10 @@
 			return list("milk", "ice", "berryjuice")
 		if(ICECREAM_CUSTOM)
 			return list("milk", "ice")
+		if(ICECREAM_PEACH)
+			return list("milk", "ice", "peachjuice")
+		if(ICECREAM_GRAPE)
+			return list("milk", "ice", "grapejuice")
 		if(ICECREAM_BLUE)
 			return list("milk", "ice", "singulo")
 		if(CONE_WAFFLE)
@@ -76,7 +82,7 @@
 
 /obj/machinery/icecream_vat/Initialize()
 	. = ..()
-	while(product_types.len < 7)
+	while(product_types.len < 9)
 		product_types.Add(5)
 	create_reagents(100, OPENCONTAINER | NO_REACT)
 	for(var/reagent in icecream_vat_reagents)
