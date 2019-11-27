@@ -1,6 +1,6 @@
 #define MARAUDER_SLOWDOWN_PERCENTAGE 0.40 //Below this percentage of health, marauders will become slower
 #define MARAUDER_SHIELD_REGEN_TIME 200 //In deciseconds, how long it takes for shields to regenerate after breaking
-#define MARAUDER_SPACE_DIRECT_DAMAGE 6		//amount of damage per life tick while inside space
+#define MARAUDER_SPACE_FULL_DAMAGE 6		//amount of damage per life tick while inside space
 #define MARAUDER_SPACE_NEAR_DAMAGE 4			//amount of damage taking per Life() tick from being next to space.
 
 //Clockwork marauder: A well-rounded frontline construct. Only one can exist for every two human servants.
