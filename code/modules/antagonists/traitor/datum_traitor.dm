@@ -61,7 +61,6 @@
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
-	..()
 
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
