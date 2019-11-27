@@ -67,9 +67,9 @@ God bless America.
 	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine()
-	..()
+	. = ..()
 	if(frying)
-		to_chat(usr, "You can make out \a [frying] in the oil.")
+		. += "You can make out \a [frying] in the oil."
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
