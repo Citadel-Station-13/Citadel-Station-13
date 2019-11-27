@@ -19,10 +19,11 @@
 	return .
 
 /mob/living/carbon/proc/toggle_combat_mode(forced, silent)
-	if(recoveringstam)
-		return TRUE
 	if(!forced)
-		for(var/datum/status_effect/S in status_effects)
+		if(recoveringstam || stat != CONSCIOUS)
+			return TRUE
+		for(var/i in status_effects)
+			var/datum/status_effect/S = i
 			if(S.blocks_combatmode)
 				return TRUE
 	combatmode = !combatmode

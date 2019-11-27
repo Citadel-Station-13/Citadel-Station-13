@@ -794,6 +794,8 @@
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
+				if(combatmode)
+					toggle_combat_mode(TRUE, TRUE)
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
