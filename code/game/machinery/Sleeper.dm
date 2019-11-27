@@ -274,7 +274,6 @@
 					data["occupant"]["metabolicColour"] = "bad"
 					data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
 		data["occupant"]["failing_organs"] = list()
-		var/mob/living/carbon/C = mob_occupant
 		if(C)
 			for(var/obj/item/organ/Or in C.getFailingOrgans())
 				if(istype(Or, /obj/item/organ/brain))
