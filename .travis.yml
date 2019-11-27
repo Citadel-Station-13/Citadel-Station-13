@@ -68,6 +68,6 @@ before_script:
 script:
   - tools/travis/check_filedirs.sh tgstation.dme
   - tools/travis/build_tools.sh || travis_terminate 1
+  - tools/travis/build_tgui || travis_terminate 1
   - tools/travis/build_dependencies.sh || travis_terminate 1
   - tools/travis/build_byond.sh
-
