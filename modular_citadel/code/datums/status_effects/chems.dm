@@ -608,13 +608,13 @@
 	UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL)
 
 
-/datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/chem/enthrall/proc/owner_hear(datum/source, list/hearing_args)
 	if(owner.client?.prefs.lewdchem == FALSE)
 		return
 	if (cTriggered > 0)
 		return
 	var/mob/living/carbon/C = owner
-	raw_message = lowertext(raw_message)
+	var/raw_message = lowertext(hearing_args[HEARING_RAW_MESSAGE])
 	for (var/trigger in customTriggers)
 		var/cached_trigger = lowertext(trigger)
 		if (findtext(raw_message, cached_trigger))//if trigger1 is the message
