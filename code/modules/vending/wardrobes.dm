@@ -34,6 +34,7 @@
 	product_ads = "Make those blood stains look fashionable!!"
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
+					/obj/item/clothing/head/beret/med = 3,
 					/obj/item/storage/backpack/duffelbag/med = 3,
 					/obj/item/storage/backpack/medic = 3,
 					/obj/item/storage/backpack/satchel/med = 3,
@@ -63,6 +64,7 @@
 	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
 	vend_reply = "Thank you for using the EngiDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
+					/obj/item/clothing/head/beret/eng = 3,
 					/obj/item/storage/backpack/duffelbag/engineering = 3,
 					/obj/item/storage/backpack/industrial = 3,
 					/obj/item/storage/backpack/satchel/eng = 3,
@@ -85,6 +87,7 @@
 	product_ads = "Get your inflammable clothing right here!!!"
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
+					/obj/item/clothing/head/beret/atmos = 3,
 					/obj/item/storage/backpack/duffelbag/engineering = 3,
 					/obj/item/storage/backpack/satchel/eng = 3,
 					/obj/item/storage/backpack/industrial = 3,
@@ -123,6 +126,7 @@
 	product_ads = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
+					/obj/item/clothing/head/beret/robo = 3,
 					/obj/item/clothing/under/rank/roboticist = 3,
 					/obj/item/clothing/under/rank/roboticist/skirt = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/robotics = 3,
@@ -145,6 +149,7 @@
 	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
+					/obj/item/clothing/head/beret/sci = 3,
 					/obj/item/storage/backpack/science = 3,
 					/obj/item/storage/backpack/satchel/tox = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
@@ -341,6 +346,7 @@
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(/obj/item/clothing/under/rank/chemist = 3,
+					/obj/item/clothing/head/beret/chem = 3,
 					/obj/item/clothing/under/rank/chemist/skirt = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/chemistry = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
@@ -378,7 +384,8 @@
 	icon_state = "virodrobe"
 	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
-	products = list(/obj/item/clothing/under/rank/virologist = 3,
+	products = list(/obj/item/clothing/head/beret/viro = 3,
+					/obj/item/clothing/under/rank/virologist = 3,
 					/obj/item/clothing/under/rank/virologist/skirt = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/viro = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
