@@ -473,12 +473,12 @@
 	if(operated)
 		owner.adjustStaminaLoss(0.5)
 		if(prob(10))
-			owner.losebreath += 1
+			owner.adjustOxyLoss(2)
 	if(organ_flags & ORGAN_LUNGS_DEFLATED)
 		owner.adjustStaminaLoss(1.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)//From the extra stress of a low oxygen situation
 		if(prob(20))
-			owner.losebreath += 2
+			owner.losebreath += 1
 	return
 
 /obj/item/organ/lungs/prepare_eat()

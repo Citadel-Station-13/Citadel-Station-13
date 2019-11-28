@@ -106,7 +106,7 @@
 	var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
 	if(!H)
 		return
-	if(!(prob(min(H.damage*2, 100)))
+	if(!(prob(min(H.damage*2, 100))))
 		return
 	var/datum/disease/D = new /datum/disease/heart_failure
 	if(C.ForceContractDisease(D))
