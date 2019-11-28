@@ -395,7 +395,6 @@
 	HIonRelease 		= 0.02 //pH change per 1u reaction
 	RateUpLim 			= 5 //Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
-	FermiExplode 		= FALSE //If the chemical explodes in a special way
 	PurityMin			= 0 //The minimum purity something has to be above, otherwise it explodes.
 	clear_conversion	= REACTION_CLEAR_INVERSE
 

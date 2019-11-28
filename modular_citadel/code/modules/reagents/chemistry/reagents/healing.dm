@@ -10,7 +10,7 @@
 	inverse_chem_val 		= 0.4
 	inverse_chem		= "yamerol_tox"
 	can_synth = TRUE
-	var/templungs = TRUE
+	var/templungs = FALSE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
@@ -19,7 +19,7 @@
 	if(T)
 		C.cureOrganDamage(ORGAN_SLOT_TONGUE, (-cached_purity*5)*REM, ORGAN_TREAT_CHRONIC)
 	if(L)
-		if(cached_purity > 0.95)
+		if(cached_purity > 0.90)
 			C.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity*5)*REM, ORGAN_TREAT_CHRONIC)
 		else
 			C.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity*5)*REM, ORGAN_TREAT_ACUTE)
@@ -45,10 +45,11 @@
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/tongue/T1 = C.getorganslot(ORGAN_SLOT_TONGUE)
 	if(current_cycle == 1)
 		to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and lungs.</span>")
 	if(current_cycle > 5)
-		if(!C.getorganslot(ORGAN_SLOT_TONGUE))
+		if(!(T1) || T1.organ_flags & ORGAN_FAILING)
 			var/obj/item/organ/tongue/T
 			if(C.dna && C.dna.species && C.dna.species.mutanttongue)
 				T = new C.dna.species.mutanttongue()
@@ -56,17 +57,18 @@
 				T = new()
 			T.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
+			qdel(T1)
 			holder.remove_reagent(src.id, "10")
 
 		//If we've a failed lung, replace it. If a lobe has collapsed,
-		if(L.organ_flags & ORGAN_FAILING)
+		if(!L || L.organ_flags & ORGAN_FAILING)
 			var/obj/item/organ/lungs/yamerol/L2 = new()
 			L2.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge together in your chest, forming a temporary airogel maxtrix.</span>")
 			holder.remove_reagent(src.id, "10")
 			qdel(L)
 
-		else if (L.organ_flags & ORGAN_LUNGS_DEFLATED )
+		else if (L.organ_flags & ORGAN_LUNGS_DEFLATED)
 			L.organ_flags &= ~ORGAN_LUNGS_DEFLATED
 			to_chat(C, "<span class='notice'>You feel the yamerol merge together in the side of your chest, aiding your breathing.</span>")
 			holder.remove_reagent(src.id, "5")
@@ -78,6 +80,7 @@
 /datum/reagent/fermi/yamerol/on_mob_delete(mob/living/carbon/C)
 	if(templungs)
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+		if(L)
 		L.organ_flags |= ORGAN_LUNGS_DEFLATED
 		to_chat(C, "<span class='notice'>Your chest tightens up again as you feel the medicine dissolve away from inside of you.</span>")
 	..()
@@ -114,7 +117,7 @@
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.05 //Give them time to graft
-	color = "#FFEADAD"
+	color = "#FEADAD"
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/medicine/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)

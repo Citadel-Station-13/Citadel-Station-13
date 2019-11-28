@@ -31,8 +31,8 @@
 	var/HIonRelease 			= 0.1       // pH change per 1u reaction
 	var/RateUpLim 				= 10        // Optimal/max rate possible if all conditions are perfect
 	var/FermiChem				= FALSE 	// If the chemical uses the Fermichem reaction mechanics//If the chemical uses the Fermichem reaction mechanics
-	var/FermiExplode 			= FALSE 	// If the chemical explodes in a special way
-	var/clear_conversion						//bitflags for clear conversions; REACTION_CLEAR_IMPURE or REACTION_CLEAR_INVERSE
+	var/FermiExplode 					 	// If the chemical explodes in a special way
+	var/clear_conversion					//bitflags for clear conversions; REACTION_CLEAR_IMPURE or REACTION_CLEAR_INVERSE
 	var/PurityMin 				= 0.15 		//If purity is below 0.15, it explodes too. Set to 0 to disable this.
 
 

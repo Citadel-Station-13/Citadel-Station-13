@@ -66,7 +66,6 @@
 	HIonRelease 		= -0.02 //pH change per 1u reaction
 	RateUpLim 			= 3 //Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
-	FermiExplode 		= FALSE //If the chemical explodes in a special way
 	PurityMin			= 0.4 //The minimum purity something has to be above, otherwise it explodes.
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
@@ -101,7 +100,6 @@
 	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 1 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode 		= TRUE		// If the chemical explodes in a special way
 	PurityMin 			= 0.2
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!
@@ -141,7 +139,6 @@
 	HIonRelease 			= -0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
-	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
 /datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
@@ -181,7 +178,6 @@
 	HIonRelease 			= 0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
-	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
 /datum/chemical_reaction/fermi/penis_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
@@ -219,7 +215,6 @@
 	HIonRelease 			= 0.02
 	RateUpLim 				= 15
 	FermiChem				= TRUE
-	FermiExplode 			= TRUE
 	PurityMin 				= 0.25
 
 
@@ -244,7 +239,6 @@
 	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE
-	FermiExplode 			= TRUE
 	PurityMin 				= 0.2
 
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
@@ -320,7 +314,6 @@
 	HIonRelease 	= -0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
-	FermiExplode 	= TRUE
 	PurityMin		= 0.5
 
 /datum/chemical_reaction/fermi/hatmium/FermiExplode(src, var/atom/my_atom, volume, temp, pH)
@@ -464,7 +457,6 @@
 	HIonRelease 		= 0
 	RateUpLim 			= 0.1
 	FermiChem 			= TRUE
-	FermiExplode 		= FALSE
 	PurityMin 			= 0.2
 
 /datum/chemical_reaction/fermi/secretcatchem/New()

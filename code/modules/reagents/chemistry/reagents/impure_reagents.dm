@@ -104,10 +104,12 @@
 	if(!C)
 		return
 	var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
-	if(!(prob(H.damage)))
+	if(!H)
+		return
+	if(!(prob(min(H.damage*2, 100)))
 		return
 	var/datum/disease/D = new /datum/disease/heart_failure
-	if(L.ForceContractDisease(D))
+	if(C.ForceContractDisease(D))
 		temp_myo = D
 	..()
 
@@ -122,6 +124,7 @@
 	description = "Soothes a patient's liver"
 	taste_description = "coooked egg"
 	color = "#0004C8"
+	chemical_flags = null
 	pH = 2.5
 	metastress = -0.1
 
@@ -153,14 +156,13 @@
 	reagent_state = LIQUID
 	color = "#DDDDDD"
 	metabolization_rate = 2
-	metastress = 1.2
+	metastress = 0.75
 	taste_description = "funky toxin"
 	pH = 13
 
 /datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
 	if(prob(100*(1-cached_purity)))
 		C.become_blind("oculine_impure")
-		message_admins("blinding")
 	..()
 
 /datum/reagent/impure/oculine/on_mob_delete(mob/living/L)

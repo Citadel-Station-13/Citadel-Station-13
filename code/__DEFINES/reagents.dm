@@ -51,6 +51,6 @@
 #define REACTION_CLEAR_RETAIN		(1<<2)	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
 
 //Explosion flags for using different explosive handlers
-#define FERMI_EXPLOSION_TYPE_MIXED TRUE
+#define FERMI_EXPLOSION_TYPE_MIXED "mixed"
 #define FERMI_EXPLOSION_TYPE_INVERTSMOKE "invertsmoke"
 #define FERMI_EXPLOSION_TYPE_SMOKE "smoke"

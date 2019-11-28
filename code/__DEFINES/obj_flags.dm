@@ -53,4 +53,4 @@
 #define ORGAN_NO_SPOIL			(1<<5)	//Do not spoil under any circumstances
 
 //Organ specifics
-#define ORGAN_LUNGS_DEFLATED	(1<<5)	//If a lung has collapsed
+#define ORGAN_LUNGS_DEFLATED	(1<<6)	//If a lung has collapsed

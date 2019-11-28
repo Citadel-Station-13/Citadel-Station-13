@@ -1432,6 +1432,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
 	if(cached_purity > 0.95)
 		M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/5)*REM, ORGAN_TREAT_CHRONIC)
+	..()
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)

@@ -476,10 +476,7 @@
 					return 0
 
 				//This is just to calc the on_reaction multiplier, and is a candidate for removal.
-				for(var/B in cached_required_reagents)
-					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.0001))
-				for(var/P in selected_reaction.results)
-					targetVol = cached_results[P]*multiplier
+
 
 				if(!((chem_temp <= C.ExplodeTemp) && (chem_temp >= C.OptimalTempMin)))
 					return 0 //Not hot enough
@@ -487,12 +484,23 @@
 					return 0
 				if (fermiIsReacting)
 					return 0
+
+				if(!targetVol)//Somehow the code gets here with a targetvol
+					for(var/B in cached_required_reagents)
+						multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.0001))
+					for(var/P in selected_reaction.results)
+						targetVol = cached_results[P]*multiplier
+					if(GLOB.Debug2)
+						message_admins("TARGET VOLUME: [targetVol]")
 				else
-					START_PROCESSING(SSprocessing, src)
-					selected_reaction.on_reaction(src, my_atom, multiplier)
-					fermiIsReacting = TRUE
-					fermiReactID = selected_reaction
-					reaction_occurred = 1
+					if(GLOB.Debug2)
+						message_admins("ATTEMPTED TO RECALCULATE VOLUME! HOW RUDE!")//This procs, but I have no idea. It's not from FermiEnd, and it's not from FermiExplode
+
+				START_PROCESSING(SSprocessing, src)
+				selected_reaction.on_reaction(src, my_atom, multiplier)
+				fermiIsReacting = TRUE
+				fermiReactID = selected_reaction
+				reaction_occurred = 1
 
 		//Standard reaction mechanics:
 			else
@@ -578,14 +586,14 @@
 		fermiEnd()
 		return
 
-	//Removed for now - reactions will continue out of range, with purity = 0
-	/*if (!( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )) //if pH is too far out, (could possibly allow reactions at this point, after the reaction has started, but make purity = 0)
+
+	if (!( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )) //if pH is too far out, (could possibly allow reactions at this point, after the reaction has started, but make purity = 0)
 		if(GLOB.Debug2)
 			message_admins("Fermiend due to pH")
 		fermiEnd()
-		return*/
+		return
 
-	reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
+	fermiReact(fermiReactID, chem_temp, pH, cached_required_reagents, cached_results, multiplier)
 	if(round(reactedVol, CHEMICAL_QUANTISATION_LEVEL) == round(targetVol, CHEMICAL_QUANTISATION_LEVEL))
 		if(GLOB.Debug2)
 			message_admins("fermiEnd due to volumes: React:[round(reactedVol, CHEMICAL_QUANTISATION_LEVEL)] vs Target:[round(targetVol, CHEMICAL_QUANTISATION_LEVEL)]")
@@ -621,7 +629,7 @@
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
-/datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
+/datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -637,14 +645,14 @@
 	if (cached_pH < C.OptimalpHMin)
 		if (cached_pH < (C.OptimalpHMin - C.ReactpHLim))
 			deltapH = 0
-			return//If outside pH range, no reaction
+			//If outside pH range, 0
 		else
 			deltapH = (((cached_pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH)))
 	//Upper range
 	else if (cached_pH > C.OptimalpHMax)
 		if (cached_pH > (C.OptimalpHMax + C.ReactpHLim))
 			deltapH = 0
-			return //If outside pH range, no reaction
+			//If outside pH range, 0
 		else
 			deltapH = (((- cached_pH + (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))//Reverse - to + to prevent math operation failures.
 	//Within mid range
@@ -685,7 +693,7 @@
 		addChemAmmount = round(addChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
 		removeChemAmmount = round(removeChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
 		if(GLOB.Debug2)
-			message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
+			message_admins("Reaction vars: PreReacted: <span class='danger'>[reactedVol] of [targetVol].</span> deltaT [deltaT], <span class='velvet'>multiplier [multiplier]</span>, Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
 
 	//remove reactants
 	for(var/B in cached_required_reagents)
@@ -730,7 +738,7 @@
 	pH = CLAMP(pH, 0, 14)
 
 	//return said amount to compare for next step.
-	return (reactedVol)
+	return
 
 //Currently calculates it irrespective of required reagents at the start
 /datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/C, holder)

@@ -3,9 +3,10 @@
 	if (Exploding == TRUE)
 		return
 
+	if(!FermiExplode)
+		FermiExplodeMixed(R0, my_atom, volume, temp, pH, Exploding)
+
 	switch(FermiExplode)
-		if(FERMI_EXPLOSION_TYPE_MIXED)
-			FermiExplodeMixed(R0, my_atom, volume, temp, pH, Exploding)
 		if(FERMI_EXPLOSION_TYPE_SMOKE)
 			FermiExplodeSmoke(R0, my_atom, volume, temp, pH, Exploding)
 		if(FERMI_EXPLOSION_TYPE_INVERTSMOKE)
