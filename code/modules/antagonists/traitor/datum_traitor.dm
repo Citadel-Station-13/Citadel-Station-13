@@ -76,23 +76,18 @@
 	var/is_hijacker = FALSE
 	var/datum/game_mode/dynamic/mode
 	var/is_dynamic = FALSE
-	var/martyr_prob
 	var/objective_count = 0
-	var/hijack_cost = CONFIG_GET(number/dynamic_hijack_cost)
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		if(mode.threat > )
-		var/hijack_prob = CLAMP(mode.threat_level-60,0,20)
+		var/hijack_prob = mode.threat >= CONFIG_GET(number/dynamic_hijack_cost) ? CLAMP(mode.threat_level-60,0,20) : 0
 		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
 			is_hijacker = (prob(hijack_prob) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
 		else
 			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
 			is_hijacker = (prob(hijack_prob) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
-		if (locate(/datum/dynamic_ruleset/midround/traitor) in mode.executed_rules
-	else  // Less murderboning on lowpop thanks
-		if (GLOB.joined_player_list.len >= 30)
-			is_hijacker = prob(10)
+	else if (GLOB.joined_player_list.len >= 30)
+		is_hijacker = prob(10) // Less murderboning on lowpop thanks
 	var/martyr_chance = prob(20)
 	objective_count += is_hijacker				//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
@@ -190,8 +185,8 @@
 			assassin_prob = 0
 	if(prob(assassin_prob))
 		if(is_dynamic)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("[owner.name] spent [threat_spent] on an assassination target.")
+			mode.spend_threat(assassinate_cost)
+			mode.log_threat("[owner.name] spent [assassinate_cost] on an assassination target.")
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new
@@ -215,11 +210,11 @@
 			download_objective.gen_amount_goal()
 			add_objective(download_objective)
 		else if(midround && prob(30))
-			var/datum/objective/breakout/breakout_objective = new()
+			var/datum/objective/breakout/breakout_objective = new
 			breakout_objective.owner = owner
 			breakout_objective.find_target_by_role(role = ROLE_TRAITOR, role_type = 1)
 			var/datum/antagonist/traitor/T = breakout_objective.target.has_antag_datum(/datum/antagonist/traitor)
-			if(!T || locate(/datum/objective/martyr) in T.objectives))
+			if(!T || locate(/datum/objective/martyr) in T.objectives)
 				//they WANT to die, so we just make this a steal instead
 				qdel(breakout_objective)
 				var/datum/objective/steal/steal_objective = new

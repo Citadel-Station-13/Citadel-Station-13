@@ -39,7 +39,7 @@
 	if(count==10 || sink_found) // doesn't need to fire that often unless a sink exists
 		var/sink_found_this_time = FALSE
 		for(var/datum/powernet/PN in GLOB.powernets)
-			for(var/obj/powersink/sink in PN.nodes)
+			for(var/obj/item/powersink/sink in PN.nodes)
 				sink_found_this_time = TRUE
 				if(sink.power_drained>1e9)
 					return TRUE
@@ -61,8 +61,8 @@
 /datum/sabotage_objective/processing/supermatter
 	name = "Sabotage the supermatter so that it goes under 50% integrity."
 	sabotage_type = "supermatter"
-	special_equipement = list(/obj/item/paper/guides/antag/supermatter_sabotage)
-	var/supermatters = list()
+	special_equipment = list(/obj/item/paper/guides/antag/supermatter_sabotage)
+	var/list/supermatters = list()
 	excludefromjob = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
 /datum/sabotage_objective/processing/supermatter/check_condition_processing()
@@ -73,11 +73,8 @@
 			if (!isturf(S.loc) || !(is_station_level(S.z) || is_mining_level(S.z)))
 				continue
 			supermatters.Add(S)
-
-		if(!(active in supermatters))
-			active = null
 	for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
-		if(S.integrity < 50)
+		if(S.get_integrity() < 50)
 			return TRUE
 	return FALSE
 

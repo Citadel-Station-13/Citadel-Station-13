@@ -1048,7 +1048,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/list/datum/mind/owners = get_owners()
 	var/approved_targets = list()
 	check_sabotages:
-		for(var/datum/sabotage_objective/possible_sabotage in GLOB.possible_sabotage)
+		for(var/datum/sabotage_objective/possible_sabotage in GLOB.possible_sabotages)
 			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions())
 				continue
 			for(var/datum/mind/M in owners)
@@ -1058,7 +1058,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	return set_target(safepick(approved_targets))
 
 /datum/objective/sabotage/proc/set_target(datum/sabotage_objective/sabo)
-	if(item)
+	if(sabo)
 		targetinfo = sabo
 		explanation_text = "[targetinfo.name]"
 		give_special_equipment(targetinfo.special_equipment)
