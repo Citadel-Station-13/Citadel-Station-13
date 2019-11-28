@@ -44,7 +44,7 @@
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_start(mob/living/M)
-	to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and throat as it begins to expand into damaged areas in your chest...</span>")
+	to_chat(M, "<span class='notice'>You feel the Yamerol sooth your tongue and throat as it begins to expand into damaged areas in your chest...</span>")
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
