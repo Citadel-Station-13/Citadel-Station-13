@@ -40,10 +40,10 @@
 	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
-	..()
-	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
-	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
+	. = ..()
+	. += "The power light is [(stat & NOPOWER) ? "off" : "on"]."
+	. += "The safety-mode light is [safety_mode ? "on" : "off"]."
+	. += "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()
