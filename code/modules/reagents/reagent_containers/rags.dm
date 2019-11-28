@@ -5,7 +5,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
+	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
@@ -23,7 +23,7 @@
 /obj/item/reagent_containers/rag/examine(mob/user)
 	. = ..()
 	if(reagents.total_volume)
-		. += "<span class='notice'>Alt-Click to squeeze the liquids out of it.</span>"
+		. += "<span class='notice'>It's soaked. Alt-Click to squeeze it dry.</span>"
 
 /obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
 	. = ..()
@@ -89,8 +89,6 @@
 		if(do_after(user, action_speed, TRUE, src))
 			to_chat(user, "<span class='notice'>You squeeze \the [src] dry.</span>")
 			var/atom/react_loc = get_turf(src)
-			if(ismob(react_loc))
-				react_loc = react_loc.loc
 			if(react_loc)
 				reagents.reaction(react_loc, TOUCH)
 			reagents.clear_reagents()
