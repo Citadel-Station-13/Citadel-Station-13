@@ -43,11 +43,12 @@
 		C.losebreath -= 3
 	..()
 
+/datum/reagent/fermi/yamerol/overdose_start(mob/living/M)
+	to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and throat as it begins to expand into damaged areas in your chest...</span>")
+
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 	var/obj/item/organ/tongue/T1 = C.getorganslot(ORGAN_SLOT_TONGUE)
-	if(current_cycle == 1)
-		to_chat(C, "<span class='notice'>You feel the Yamerol sooth your tongue and lungs.</span>")
 	if(current_cycle > 5)
 		if(!(T1) || T1.organ_flags & ORGAN_FAILING)
 			var/obj/item/organ/tongue/T
@@ -66,6 +67,7 @@
 			L2.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge together in your chest, forming a temporary airogel maxtrix.</span>")
 			holder.remove_reagent(src.id, "10")
+			//Potentially save the lungs on L2, and swap them back when L fails.
 			qdel(L)
 
 		else if (L.organ_flags & ORGAN_LUNGS_DEFLATED)

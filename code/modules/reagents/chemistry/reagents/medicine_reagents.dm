@@ -977,6 +977,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2.2)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
+/datum/reagent/medicine/mannitol/overdose_start(mob/living/M)
+	to_chat(M, "<span class='notice'>You suddenly feel </span><span class='purple'>E N L I G H T E N M E N T!</span>")
+
 /datum/reagent/medicine/mannitol/overdose_process(mob/living/M)
 	if(prob(65))
 		return
