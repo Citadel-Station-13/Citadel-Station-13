@@ -14,8 +14,8 @@
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
-	high_threshold = 0.6 * maxHealth	//threshold at 180
-	low_threshold = 0.3 * maxHealth	//threshold at 90
+	high_threshold = 0.6 * STANDARD_ORGAN_THRESHOLD * 3	//threshold at 180
+	low_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD * 3	//threshold at 90
 
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
 	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
@@ -102,7 +102,7 @@
 		if(!(organ_flags & ORGAN_LUNGS_DEFLATED))
 			organ_flags &= ~ORGAN_FAILING
 			organ_flags |=  ORGAN_LUNGS_DEFLATED
-			setOrganDamage(LUNGS_MAX_HEALTH*0.5)//Just before chronic
+			setOrganDamage(maxHealth*0.5)//Just before chronic
 			failed = FALSE
 			return
 		to_chat(owner, "<span class='userdanger'>You feel your lung collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
@@ -559,6 +559,8 @@
 	name = "Yamerol airogel maxtrix"
 	desc = "A temporary pair of lungs made from self assembling yamerol molecules."
 	maxHealth = 150
+	high_threshold = 0.6 * STANDARD_ORGAN_THRESHOLD * 1.5	//threshold at 90
+	low_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD * 1.5	//threshold at 45
 	color = "#68e83a"
 
 /obj/item/organ/lungs/yamerol/on_life()
