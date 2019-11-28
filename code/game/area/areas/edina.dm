@@ -34,6 +34,9 @@ area/edina/street
 	icon_state = "edina_street"
 	ambientsounds = null //TODO:add ?
 
+area/edina/street/street2 //Just so laying areas is easier
+	icon_state = "edina_street2"
+
 /area/edina/protected //Prevents ice storms
 	name = "Sheltered Nova Edina"
 
