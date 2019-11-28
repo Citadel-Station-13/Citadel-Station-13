@@ -140,10 +140,17 @@
 			return
 		percent = CLAMP(round(new_percent, 1), -99, 100)
 	if(setting == "Direction")
-		if(direction == "Above")
-			direction = "Below"
-		else
-			direction = "Above"
+		switch(direction)
+			if("Above")
+				direction = "Below"
+			if ("Below")
+				direction = "Equal to"
+			if ("Equal to")
+				direction = "Above or equal to"
+			if ("Above or equal to")
+				direction = "Below or equal to"
+			if ("Below or equal to")
+				direction = "Above"
 
 /datum/nanite_program/sensor/health/get_extra_setting(setting)
 	if(setting == "Sent Code")
@@ -161,12 +168,22 @@
 /datum/nanite_program/sensor/health/check_event()
 	var/health_percent = host_mob.health / host_mob.maxHealth * 100
 	var/detected = FALSE
-	if(direction == "Above")
-		if(health_percent >= percent)
-			detected = TRUE
-	else
-		if(health_percent < percent)
-			detected = TRUE
+	switch(direction)
+		if("Above")
+			if(health_percent > percent)
+				detected = TRUE
+		if ("Below")
+			if(health_percent < percent)
+				detected = TRUE
+		if ("Equal to")
+			if(health_percent == percent)
+				detected = TRUE
+		if ("Above or equal to")
+			if(health_percent >= percent)
+				detected = TRUE
+		if ("Below or equal to")
+			if(health_percent <= percent)
+				detected = TRUE
 
 	if(detected)
 		if(!spent)
@@ -220,10 +237,17 @@
 			return
 		percent = CLAMP(round(new_percent, 1), 1, 100)
 	if(setting == "Direction")
-		if(direction == "Above")
-			direction = "Below"
-		else
-			direction = "Above"
+		switch(direction)
+			if("Above")
+				direction = "Below"
+			if ("Below")
+				direction = "Equal to"
+			if ("Equal to")
+				direction = "Above or equal to"
+			if ("Above or equal to")
+				direction = "Below or equal to"
+			if ("Below or equal to")
+				direction = "Above"
 
 /datum/nanite_program/sensor/nanite_volume/get_extra_setting(setting)
 	if(setting == "Sent Code")
@@ -242,12 +266,22 @@
 	var/nanite_percent = (nanites.nanite_volume - nanites.safety_threshold)/(nanites.max_nanites - nanites.safety_threshold)*100
 	var/detected = FALSE
 
-	if(direction == "Above")
-		if(nanite_percent >= percent)
-			detected = TRUE
-	else
-		if(nanite_percent < percent)
-			detected = TRUE
+	switch(direction)
+		if("Above")
+			if(nanite_percent > percent)
+				detected = TRUE
+		if ("Below")
+			if(nanite_percent < percent)
+				detected = TRUE
+		if ("Equal to")
+			if(nanite_percent == percent)
+				detected = TRUE
+		if ("Above or equal to")
+			if(nanite_percent >= percent)
+				detected = TRUE
+		if ("Below or equal to")
+			if(nanite_percent <= percent)
+				detected = TRUE
 
 	if(detected)
 		if(!spent)
@@ -285,10 +319,17 @@
 			return
 		damage_type = new_damage_type
 	if(setting == "Direction")
-		if(direction == "Above")
-			direction = "Below"
-		else
-			direction = "Above"
+		switch(direction)
+			if("Above")
+				direction = "Below"
+			if ("Below")
+				direction = "Equal to"
+			if ("Equal to")
+				direction = "Above or equal to"
+			if ("Above or equal to")
+				direction = "Below or equal to"
+			if ("Below or equal to")
+				direction = "Above"
 
 /datum/nanite_program/sensor/damage/get_extra_setting(setting)
 	if(setting == "Sent Code")
@@ -308,7 +349,6 @@
 
 /datum/nanite_program/sensor/damage/check_event()
 	var/reached_threshold = FALSE
-	var/check_above = (direction == "Above")
 	var/damage_amt = 0
 	switch(damage_type)
 		if("Brute")
@@ -322,11 +362,22 @@
 		if("Cellular")
 			damage_amt = host_mob.getCloneLoss()
 
-	if(damage_amt >= damage)
-		if(check_above)
-			reached_threshold = TRUE
-	else if(!check_above)
-		reached_threshold = TRUE
+	switch(direction)
+		if("Above")
+			if(damage_amt > damage)
+				reached_threshold = TRUE
+		if ("Below")
+			if(damage_amt < damage)
+				reached_threshold = TRUE
+		if ("Equal to")
+			if(damage_amt == damage)
+				reached_threshold = TRUE
+		if ("Above or equal to")
+			if(damage_amt >= damage)
+				reached_threshold = TRUE
+		if ("Below or equal to")
+			if(damage_amt <= damage)
+				reached_threshold = TRUE
 
 	if(reached_threshold)
 		if(!spent)
