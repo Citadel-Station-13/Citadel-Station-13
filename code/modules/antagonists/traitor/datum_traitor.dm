@@ -13,7 +13,11 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	var/midround = FALSE
 	can_hijack = HIJACK_HIJACKER
+
+/datum/antagonist/traitor/midround
+	midround = FALSE
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
@@ -72,18 +76,27 @@
 	var/is_hijacker = FALSE
 	var/datum/game_mode/dynamic/mode
 	var/is_dynamic = FALSE
+	var/martyr_prob
+	var/objective_count = 0
+	var/hijack_cost = CONFIG_GET(number/dynamic_hijack_cost)
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
+		if(mode.threat > )
+		var/hijack_prob = CLAMP(mode.threat_level-60,0,20)
+		martyr_prob = (mode.threat > hijack_cost) ? CLAMP(mode.threat_level-50,0,20) : 0
 		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
-			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
+			is_hijacker = (prob(hijack_prob) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
 		else
 			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
-			is_hijacker = (prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
-	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
-		is_hijacker = prob(10)
-	var/martyr_chance = prob(20)
-	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
+			is_hijacker = (prob(hijack_prob) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
+		if (locate(/datum/dynamic_ruleset/midround/traitor) in mode.executed_rules
+	else  // Less murderboning on lowpop thanks
+		if (GLOB.joined_player_list.len >= 30)
+			is_hijacker = prob(10)
+		martyr_prob = 20
+	var/martyr_chance = prob(martyr_prob)
+	objective_count += is_hijacker				//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 		if(!SSticker.mode.exchange_red)
 			SSticker.mode.exchange_red = owner
@@ -160,13 +173,16 @@
 	var/assassin_prob = 50
 	var/is_dynamic = FALSE
 	var/datum/game_mode/dynamic/mode
+	var/assassinate_cost = CONFIG_GET(number/dynamic_assassinate_cost)
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		assassin_prob = mode.threat_level*(2/3)
+		if(mode.threat > assassinate_cost)
+			assassin_prob = max(0,mode.threat_level-20)
+		else
+			assassin_prob = 0
 	if(prob(assassin_prob))
 		if(is_dynamic)
-			var/threat_spent = CONFIG_GET(number/dynamic_assassinate_cost)
 			mode.spend_threat(threat_spent)
 			mode.log_threat("[owner.name] spent [threat_spent] on an assassination target.")
 		var/list/active_ais = active_ais()
@@ -175,7 +191,7 @@
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
 			add_objective(destroy_objective)
-		else if(prob(30))
+		else if(prob(80-assassin_prob))
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
@@ -191,6 +207,20 @@
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()
 			add_objective(download_objective)
+		else if(midround && prob(30))
+			var/datum/objective/breakout/breakout_objective = new()
+			breakout_objective.owner = owner
+			breakout_objective.find_target_by_role(role = ROLE_TRAITOR, role_type = 1)
+			var/datum/antagonist/traitor/T = breakout_objective.target.has_antag_datum(/datum/antagonist/traitor)
+			if(!T || locate(/datum/objective/martyr) in T.objectives))
+				//they WANT to die, so we just make this a steal instead
+				qdel(breakout_objective)
+				var/datum/objective/steal/steal_objective = new
+				steal_objective.owner = owner
+				steal_objective.find_target()
+				add_objective(steal_objective)
+			else
+				add_objective(breakout_objective)
 		else
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner

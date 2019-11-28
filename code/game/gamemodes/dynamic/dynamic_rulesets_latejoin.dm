@@ -58,7 +58,7 @@
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
 	config_tag = "latejoin_traitor"
-	antag_datum = /datum/antagonist/traitor
+	antag_datum = /datum/antagonist/traitor/midround
 	antag_flag = ROLE_TRAITOR
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
@@ -66,6 +66,28 @@
 	weight = 7
 	cost = 5
 	requirements = list(40,30,20,15,15,15,15,15,15,15)
+	high_population_requirement = 15
+	repeatable = TRUE
+	flags = TRAITOR_RULESET
+
+//////////////////////////////////////////////
+//                                          //
+//           SYNDICATE SABOTEUR             //
+//                                          //
+//////////////////////////////////////////////
+
+//A traitor, but with more station-integrity-based goals, giving people stuff to do like look for power sinks.
+/datum/dynamic_ruleset/latejoin/infiltrator
+	name = "Syndicate Saboteur"
+	config_tag = "latejoin_saboteur"
+	antag_datum = /datum/antagonist/traitor/midround/saboteur
+	antag_flag = ROLE_TRAITOR
+	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,20,15,15,15,15,15,15,15)
 	high_population_requirement = 15
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
