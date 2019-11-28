@@ -20,7 +20,7 @@
 	var/boarding_dir //from which direction you can board the tube
 
 	var/const/OPEN_DURATION = 6
-	var/const/CLOSE_DURATION = 6
+	var/const/CLOSE_DURATION = 
 
 /obj/structure/transit_tube/station/New()
 	..()
@@ -41,7 +41,6 @@
 				pod.update_icon()
 				return
 
-
 //pod insertion
 /obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
 	if(!user.canmove || user.stat || user.restrained())
@@ -56,7 +55,6 @@
 	TP.setDir(turn(src.dir, -90))
 	user.visible_message("[user] inserts [R].", "<span class='notice'>You insert [R].</span>")
 	qdel(R)
-
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
 	. = ..()
@@ -126,6 +124,7 @@
 /obj/structure/transit_tube/station/proc/launch_pod()
 	if(launch_cooldown >= world.time)
 		return
+	density = FALSE
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving)
 			pod_moving = 1
@@ -148,6 +147,7 @@
 			pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 		launch_cooldown = world.time + cooldown_delay
 		open_animation()
+		density = TRUE
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
 		if(!QDELETED(pod))
