@@ -2,6 +2,7 @@
 	var/name = "Free Objective"
 	var/sabotage_type = "nothing"
 	var/special_equipment = list()
+	var/list/excludefromjob = list()
 
 /datum/sabotage_objective/New()
 	..()
@@ -49,11 +50,11 @@
 /obj/item/paper/guides/antag/supermatter_sabotage
 	info = "Ways to sabotage a supermatter:<br>\
 	<ul>\
-	<li>Set the air alarm's operating mode to anything that isn't 'draught' (yes, anything, though 'off' works best)</li>\
+	<li>Set the air alarm's operating mode to anything that isn't 'draught' (yes, anything, though 'off' works best). Or just smash the air alarm, that works too.</li>\
 	<li>Wrench a pipe (the junction to the cold loop is most effective, but some setups will robust through this no issue; best to try for multiple)</li>\
 	<li>Pump in as much carbon dioxide, oxygen, plasma or tritium as you can find (this will likely also cause a singularity or tesla delamination, so watch out!)</li>\
 	<li>Unset the filters on the cooling loop, or, perhaps more insidious, set them to oxygen/plasma.</li>\
-	<li>Deactivate the digital valve that sends the exhaust gases to space (note: only works on box station; other you must unwrench).</li>\
+	<li>Deactivate the digital valve that sends the exhaust gases to space (note: only works on box station; others you must unwrench).</li>\
 	<li>There are many other ways; be creative!</li>\
 	</ul>"
 
@@ -62,6 +63,7 @@
 	sabotage_type = "supermatter"
 	special_equipement = list(/obj/item/paper/guides/antag/supermatter_sabotage)
 	var/supermatters = list()
+	excludefromjob = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
 /datum/sabotage_objective/processing/supermatter/check_condition_processing()
 	if(!supermatters.len)
@@ -94,9 +96,10 @@
 	return !(locate(/obj/machinery/clonepod) in GLOB.machines)
 
 /datum/sabotage_objective/ai_law
-	name = "Upload a syndicate-helping law to the AI."
+	name = "Upload a hacked law to the AI."
 	sabotage_type = "ailaw"
 	special_equipment = list(/obj/item/aiModule/syndicate)
+	excludefromjob = list("Chief Engineer","Research Director","Head of Personnel","Captain","Chief Medical Officer","Head Of Security")
 
 /datum/sabotage_objective/ai_law/check_conditions()
 	for (var/i in GLOB.ai_list)

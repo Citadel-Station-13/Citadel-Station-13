@@ -86,7 +86,7 @@
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 1
 	weight = 4
-	cost = 5
+	cost = 3
 	requirements = list(30,30,20,15,15,15,15,15,15,15)
 	high_population_requirement = 15
 	repeatable = TRUE
