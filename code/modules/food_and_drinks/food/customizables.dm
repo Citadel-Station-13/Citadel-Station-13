@@ -33,7 +33,7 @@
 		size = "big"
 	if(ingredients.len>8)
 		size = "huge"
-	if(ingrenients.len>16)
+	if(ingredients.len>16)
 		size = "monster"
 	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
