@@ -4,7 +4,7 @@
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
 	desc = "A transit tube for moving things around."
-	density = TRUE
+	density = FALSE
 	layer = LOW_ITEM_LAYER
 	anchored = TRUE
 	climbable = 1
@@ -16,7 +16,7 @@
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	return !density
 
 /obj/structure/transit_tube/New(loc, newdirection)
@@ -189,7 +189,6 @@
 	dir = WEST
 
 /obj/structure/transit_tube/diagonal/crossing
-	density = FALSE
 	icon_state = "diagonal_crossing"
 	tube_construction = /obj/structure/c_transit_tube/diagonal/crossing
 
@@ -263,7 +262,6 @@
 /obj/structure/transit_tube/crossing
 	icon_state = "crossing"
 	tube_construction = /obj/structure/c_transit_tube/crossing
-	density = FALSE
 
 //mostly for mapping use
 /obj/structure/transit_tube/crossing/horizontal
