@@ -20,7 +20,7 @@
 	var/boarding_dir //from which direction you can board the tube
 
 	var/const/OPEN_DURATION = 6
-	var/const/CLOSE_DURATION = 
+	var/const/CLOSE_DURATION = 6
 
 /obj/structure/transit_tube/station/New()
 	..()
