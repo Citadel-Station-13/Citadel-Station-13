@@ -19,6 +19,8 @@
 /obj/item/organ/stomach/on_life()
 	if(is_cold())
 		return
+	if(!owner)
+		return
 	var/datum/reagent/consumable/nutriment/Nutri
 	var/mob/living/carbon/C = owner
 	var/mob/living/carbon/human/H = owner

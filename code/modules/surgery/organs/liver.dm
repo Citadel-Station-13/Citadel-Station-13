@@ -39,12 +39,11 @@
 		else
 			C.liver_failure()
 
+		if(swelling >= 10)
+			pharmacokinesis()
+
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
-
-	if(swelling >= 10)
-		pharmacokinesis()
-
 
 
 /obj/item/organ/liver/prepare_eat()

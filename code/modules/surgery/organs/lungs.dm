@@ -455,6 +455,8 @@
 
 //I have absolutely no idea how lungs do damage when failing.
 /obj/item/organ/lungs/on_life()
+	if(!owner)
+		return ..()
 	if(organ_flags & ORGAN_FAILING)
 		owner.adjustStaminaLoss(3.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5)//From the extra stress of a low oxygen situation

@@ -62,6 +62,8 @@
 /obj/item/organ/eyes/on_life()
 	..()
 	var/mob/living/carbon/C = owner
+	if(!C)
+		return
 	//since we can repair fully damaged eyes, check if healing has occurred
 	if((organ_flags & ORGAN_FAILING) && (damage < maxHealth))
 		organ_flags &= ~ORGAN_FAILING
