@@ -94,6 +94,7 @@
 			if(react_loc)
 				reagents.reaction(react_loc, TOUCH)
 			reagents.clear_reagents()
+		return TRUE
 
 /obj/item/reagent_containers/rag/towel
 	name = "towel"

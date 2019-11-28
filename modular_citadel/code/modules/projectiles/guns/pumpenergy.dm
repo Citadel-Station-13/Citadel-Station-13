@@ -83,15 +83,17 @@
 	return 1
 
 /obj/item/gun/energy/pumpaction/AltClick(mob/living/user)	//for changing firing modes since attackself is already used for pumping
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
-		return
-	if(user.incapacitated() || !istype(user))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	if(ammo_type.len > 1)
-		select_fire(user)
-		update_icon()
+		if(user.incapacitated() || !istype(user))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		else
+			select_fire(user)
+			update_icon()
+		return TRUE
 
 /obj/item/gun/energy/pumpaction/examine(mob/user)	//so people don't ask HOW TO CHANGE FIRING MODE
 	. = ..()

@@ -964,13 +964,12 @@
 		. += energy_overlay
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/AltClick(mob/living/user)
-	if(user.incapacitated() || !istype(user))
+	. = ..()
+	if(!in_range(src, user) || !istype(user))
+		return
+	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	if(user.incapacitated() || !istype(user) || !in_range(src, user))
-		return
+		return TRUE
 
 	if(alert("Are you sure you want to recolor your armor stripes?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",energy_color) as color|null
@@ -986,6 +985,7 @@
 			user.update_inv_wear_suit()
 			light_color = energy_color
 			update_light()
+	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)
 	. = ..()

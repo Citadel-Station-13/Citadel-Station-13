@@ -427,19 +427,17 @@
 	..()
 
 /obj/item/clothing/glasses/AltClick(mob/user)
+	. = ..()
 	if(glass_colour_type && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, "You will now see glasses colors.")
-					else
-						to_chat(H, "You will no longer see glasses colors.")
-					H.update_glasses_color(src, 1)
-	else
-		return ..()
+		if(H.client?.prefs && src == H.glasses)
+			H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
+			if(H.client.prefs.uses_glasses_colour)
+				to_chat(H, "You will now see glasses colors.")
+			else
+				to_chat(H, "You will no longer see glasses colors.")
+			H.update_glasses_color(src, 1)
+		return TRUE
 
 /obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
 	var/old_colour_type = glass_colour_type

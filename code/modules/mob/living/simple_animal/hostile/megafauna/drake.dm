@@ -267,6 +267,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
+		altclick_listed_turf(A)
 		return
 	if(swoop_cooldown >= world.time)
 		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")

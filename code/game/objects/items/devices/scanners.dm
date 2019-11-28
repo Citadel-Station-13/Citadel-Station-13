@@ -587,10 +587,10 @@ SLIME SCANNER
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)</span>")
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	..()
+	. = ..()
 
 	if(user.canUseTopic(src))
-
+		. = TRUE
 		if(cooldown)
 			to_chat(user, "<span class='warning'>[src]'s barometer function is preparing itself.</span>")
 			return

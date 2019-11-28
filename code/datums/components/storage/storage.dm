@@ -57,7 +57,7 @@
 	var/screen_start_x = 4								//These two are where the storage starts being rendered, screen_loc wise.
 	var/screen_start_y = 2
 	//End
-	
+
 	var/limited_random_access = FALSE					//Quick if statement in accessible_items to determine if we care at all about what people can access at once.
 	var/limited_random_access_stack_position = 0					//If >0, can only access top <x> items
 	var/limited_random_access_stack_bottom_up = FALSE				//If TRUE, above becomes bottom <x> items
@@ -762,7 +762,7 @@
 	if(!isliving(user) || !user.CanReach(parent))
 		return
 	if(check_locked(source, user, TRUE))
-		return
+		return TRUE
 
 	var/atom/A = parent
 	if(!quickdraw)
@@ -770,19 +770,20 @@
 		user_show_to_mob(user)
 		if(rustle_sound)
 			playsound(A, "rustle", 50, 1, -5)
-		return
+		return TRUE
 
-	if(!user.incapacitated())
+	if(user.can_hold_items() && !user.incapacitated())
 		var/obj/item/I = locate() in real_location()
 		if(!I)
 			return
 		A.add_fingerprint(user)
 		remove_from_storage(I, get_turf(user))
 		if(!user.put_in_hands(I))
-			to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
-			return
+			user.visible_message("<span class='warning'>[user] fumbles with the [parent], letting [I] fall on the floor.</span>", \
+								"<span class='notice'>You fumble with [parent], letting [I] fall on the floor.</span>")
+			return TRUE
 		user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
-		return
+		return TRUE
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
 	gather_mode_switch(source.owner)
