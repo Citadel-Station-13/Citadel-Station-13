@@ -98,15 +98,7 @@
 		owner.emote("cough")
 		owner.Dizzy(1)
 
-	if(organ_flags & ORGAN_FAILING)//collapses a lung instead.
-		if(!(organ_flags & ORGAN_LUNGS_DEFLATED))
-			organ_flags &= ~ORGAN_FAILING
-			organ_flags |=  ORGAN_LUNGS_DEFLATED
-			setOrganDamage(maxHealth*0.5)//Just before chronic
-			failed = FALSE
-			return
-		to_chat(owner, "<span class='userdanger'>You feel your lung collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
-		//TODO: add an inert organ to replace permaded organs
+	check_lobes()
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 //TODO: add lung damage = less oxygen gains
@@ -453,11 +445,23 @@
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
 
+/obj/item/organ/lungs/check_lobes()
+	if(organ_flags & ORGAN_LUNGS_DEFLATED)
+		return
+	if(organ_flags & ORGAN_FAILING)//collapses a lung instead.
+		organ_flags &= ~ORGAN_FAILING
+		organ_flags |=  ORGAN_LUNGS_DEFLATED
+		setOrganDamage(maxHealth*0.5)//Just before chronic
+		failed = TRUE
+		to_chat(owner, "<span class='userdanger'>You feel your lung collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
+
+
 //I have absolutely no idea how lungs do damage when failing.
 /obj/item/organ/lungs/on_life()
 	if(!owner)
 		return ..()
 	if(organ_flags & ORGAN_FAILING)
+		check_lobes()
 		owner.adjustStaminaLoss(3.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5)//From the extra stress of a low oxygen situation
 		if(!failed)
