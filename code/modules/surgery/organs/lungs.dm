@@ -445,7 +445,7 @@
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
 
-/obj/item/organ/lungs/check_lobes()
+/obj/item/organ/lungs/proc/check_lobes()
 	if(organ_flags & ORGAN_LUNGS_DEFLATED)
 		return
 	if(organ_flags & ORGAN_FAILING)//collapses a lung instead.
