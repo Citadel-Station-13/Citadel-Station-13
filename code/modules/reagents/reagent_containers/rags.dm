@@ -91,6 +91,8 @@
 			var/obj/item/target
 			if(Adjacent(user)) //Allows the user to drain the reagents into a beaker if adjacent (no telepathy).
 				for(var/obj/item/I in user.held_items)
+					if(I == src)
+						continue
 					if(I.is_open_container() && !I.reagents.holder_full())
 						target = I
 						break
