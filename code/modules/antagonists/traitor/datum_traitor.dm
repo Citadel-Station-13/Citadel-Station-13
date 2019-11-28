@@ -84,7 +84,6 @@
 		is_dynamic = TRUE
 		if(mode.threat > )
 		var/hijack_prob = CLAMP(mode.threat_level-60,0,20)
-		martyr_prob = (mode.threat > hijack_cost) ? CLAMP(mode.threat_level-50,0,20) : 0
 		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
 			is_hijacker = (prob(hijack_prob) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
 		else
@@ -94,8 +93,7 @@
 	else  // Less murderboning on lowpop thanks
 		if (GLOB.joined_player_list.len >= 30)
 			is_hijacker = prob(10)
-		martyr_prob = 20
-	var/martyr_chance = prob(martyr_prob)
+	var/martyr_chance = prob(20)
 	objective_count += is_hijacker				//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 		if(!SSticker.mode.exchange_red)
@@ -128,13 +126,22 @@
 			break
 
 	if(martyr_compatibility && martyr_chance)
-		var/datum/objective/martyr/martyr_objective = new
-		martyr_objective.owner = owner
-		add_objective(martyr_objective)
+		var/can_martyr = TRUE
 		if(is_dynamic)
-			var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("[owner.name] spent [threat_spent] on glorious death.")
+			if(mode.threat > CONFIG_GET(number/dynamic_hijack_cost))
+				can_martyr = FALSE
+			else
+				var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
+				mode.spend_threat(threat_spent)
+				mode.log_threat("[owner.name] spent [threat_spent] on glorious death.")
+		if(can_martyr && prob(90))
+			var/datum/objective/martyr/martyr_objective = new
+			martyr_objective.owner = owner
+			add_objective(martyr_objective)
+		else
+			var/datum/objective/captured/capture_objective = new
+			capture_objective.owner = owner
+			add_objective(capture_objective)
 		return
 
 	else

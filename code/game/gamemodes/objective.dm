@@ -461,6 +461,19 @@ GLOBAL_LIST_EMPTY(objectives)
 			return FALSE
 	return TRUE
 
+/datum/objective/captured
+	name = "captured"
+	explanation_text = "Escape on the shuttle while being in custody."
+
+/datum/objective/captured/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(considered_alive(M))
+			return FALSE
+		if(M.current?.suiciding) //killing yourself ISN'T glorious.
+			return FALSE
+	return TRUE
+
 /datum/objective/nuclear
 	name = "nuclear"
 	explanation_text = "Destroy the station with a nuclear device."
