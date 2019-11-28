@@ -37,3 +37,33 @@ area/edina/street
 
 /area/edina/protected //Prevents ice storms
 	name = "Sheltered Nova Edina"
+
+
+/turf/open/floor/grass/snow/edina//But for now, we just handle what is outside, for light control etc.
+	name = "Scottish snow"
+	desc = "Looks super chilly!"
+
+	light_range = 3 //MIDNIGHT BLUE
+	light_power = 0.15 //NOT PITCH BLACK, JUST REALLY DARK
+	light_color = "#00111a" //The light can technically cycle on a timer worldwide, but no daynight cycle.
+	baseturfs = /turf/open/floor/grass/snow/edina //If we explode or die somehow, we just make more! Ahahaha!!!
+	tiled_dirt = 0 //NO TILESMOOTHING DIRT/DIRT SPAWNS OR SOME SHIT
+
+//lets people build
+/turf/open/floor/grass/snow/edina/attackby(obj/item/C, mob/user, params)
+	.=..()
+	if(istype(C, /obj/item/stack/tile))
+		for(var/obj/O in src)
+			if(O.level == 1) //ex. pipes laid underneath a tile
+				for(var/M in O.buckled_mobs)
+					to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
+					return
+		var/obj/item/stack/tile/W = C
+		if(!W.use(1))
+			return
+		var/turf/open/floor/T = PlaceOnTop(W.turf_type)
+		if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+			var/obj/item/stack/tile/light/L = W
+			var/turf/open/floor/light/F = T
+			F.state = L.state
+		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)

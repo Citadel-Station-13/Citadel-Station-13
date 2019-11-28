@@ -27,7 +27,9 @@
 
 /datum/weather/ice_storm/update_areas()
 	.=..()
-	//var/area/N
-	for(var/turf/T in N)
-		var/datum/gas_mixture/turf/G = T.air
-		G.temperature -= 50
+	//could be done better but would need a rewrite of weather which is beyond scope.
+	for(var/V in impacted_areas)
+		var/area/N = V
+		for(var/turf/open/T in N)
+			var/datum/gas_mixture/turf/G = T.air
+			G.temperature -= 50
