@@ -117,17 +117,6 @@
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-
-/datum/supply_pack/engineering/power
-	name = "Power Cell Crate"
-	desc = "We took the means of power! Contains three high-voltage plus power cells."
-	cost = 1300
-	contains = list(/obj/item/stock_parts/cell/high/plus,
-					/obj/item/stock_parts/cell/high/plus,
-					/obj/item/stock_parts/cell/high/plus)
-	crate_name = "siezed crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
-
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire shuttle engine into one tiny little crate. Requires CE access to open."
