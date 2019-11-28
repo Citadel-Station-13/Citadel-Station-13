@@ -390,11 +390,12 @@
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
 
 /obj/machinery/sleeper/process()
+	var/mob/living/carbon/C = occupant
 	if(dialysis)
 		if(!occupant && !isliving(occupant))
 			dialysis = FALSE
 			return
-		var/mob/living/carbon/C = occupant
+
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
 			L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.15 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
@@ -411,6 +412,11 @@
 				C.reagents.remove_reagent(R.id,R.volume)
 			else
 				C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
+	//It is a sleeper after all.
+	C.AdjustUnconscious(-5, 0)
+	C.AdjustStun(-5, 0)
+	C.AdjustKnockdown(-5, 0)
+
 
 
 /obj/machinery/sleeper/syndie
