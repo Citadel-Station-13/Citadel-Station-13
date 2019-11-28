@@ -413,9 +413,10 @@
 			else
 				C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
 	//It is a sleeper after all.
-	C.AdjustUnconscious(-5, 0)
-	C.AdjustStun(-5, 0)
-	C.AdjustKnockdown(-5, 0)
+	if(C)
+		C.AdjustUnconscious(-5, 0)
+		C.AdjustStun(-5, 0)
+		C.AdjustKnockdown(-5, 0)
 
 
 

@@ -32,3 +32,4 @@ The Dartgun can be crafted, and a repeater dartgun can be crafted too!
 Purging too much from your system will also purge your stomach acid, causing damage to it.
 Heartburn is caused by a extreme pH in your stomach.
 The longer synthtissue has been growing, the more stuff it can do!
+Upgrading the MRS to tier 3 parts will give you the actual health values of the organ. At least it's something.
