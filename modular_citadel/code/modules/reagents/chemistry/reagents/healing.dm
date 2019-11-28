@@ -81,8 +81,8 @@
 	if(templungs)
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 		if(L)
-		L.organ_flags |= ORGAN_LUNGS_DEFLATED
-		to_chat(C, "<span class='notice'>Your chest tightens up again as you feel the medicine dissolve away from inside of you.</span>")
+			L.organ_flags |= ORGAN_LUNGS_DEFLATED
+			to_chat(C, "<span class='notice'>Your chest tightens up again as you feel the medicine dissolve away from inside of you.</span>")
 	..()
 
 /datum/reagent/impure/yamerol_tox

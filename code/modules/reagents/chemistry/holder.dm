@@ -494,7 +494,7 @@
 						message_admins("TARGET VOLUME: [targetVol]")
 				else
 					if(GLOB.Debug2)
-						message_admins("ATTEMPTED TO RECALCULATE VOLUME! HOW RUDE!")//This procs, but I have no idea. It's not from FermiEnd, and it's not from FermiExplode
+						message_admins("ATTEMPTED TO RECALCULATE VOLUME! HOW RUDE!")//Should be fixed. Left in if not.
 
 				START_PROCESSING(SSprocessing, src)
 				selected_reaction.on_reaction(src, my_atom, multiplier)
@@ -554,7 +554,7 @@
 
 /datum/reagents/process()
 	if (!fermiIsReacting)
-		message_admins("Fermi has refused to stop reacting even though we asked her nicely.")
+		message_admins("Fermi has refused to stop reacting even though we asked her nicely.(please tell me)")
 		fermiEnd()
 	var/datum/chemical_reaction/C = fermiReactID
 

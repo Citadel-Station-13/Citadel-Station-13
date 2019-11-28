@@ -1,6 +1,3 @@
-#define LUNGS_MAX_HEALTH 250
-
-
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -17,8 +14,8 @@
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
-	high_threshold = 0.6 * LUNGS_MAX_HEALTH	//threshold at 180
-	low_threshold = 0.3 * LUNGS_MAX_HEALTH	//threshold at 90
+	high_threshold = 0.6 * maxHealth	//threshold at 180
+	low_threshold = 0.3 * maxHealth	//threshold at 90
 
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
 	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
@@ -458,7 +455,6 @@
 
 //I have absolutely no idea how lungs do damage when failing.
 /obj/item/organ/lungs/on_life()
-	..()
 	if(organ_flags & ORGAN_FAILING)
 		owner.adjustStaminaLoss(3.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5)//From the extra stress of a low oxygen situation
@@ -467,19 +463,19 @@
 				owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
 									"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
 			failed = TRUE
-		return
+		return ..()
 	else
 		failed = FALSE
 	if(operated)
 		owner.adjustStaminaLoss(0.5)
-		if(prob(10))
-			owner.adjustOxyLoss(2)
+		if(prob(10) && owner.oxyloss <= 50)
+			owner.losebreath += 1
 	if(organ_flags & ORGAN_LUNGS_DEFLATED)
 		owner.adjustStaminaLoss(1.5)
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)//From the extra stress of a low oxygen situation
-		if(prob(20))
+		if(prob(25) && owner.oxyloss <= 50)
 			owner.losebreath += 1
-	return
+	..()
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
@@ -567,4 +563,4 @@
 
 /obj/item/organ/lungs/yamerol/on_life()
 	..()
-	applyOrganDamage(2) //Yamerol lungs are temporary
+	applyOrganDamage(1.5) //Yamerol lungs are temporary

@@ -37,7 +37,6 @@
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
 				var/datum/reagent/R2 = holder.has_reagent("[R.impure_chem]")
 				if(clear_conversion & REACTION_CLEAR_RETAIN)
-					message_admins("[R.purity], [temp_purity], [1-R.purity], [1-temp_purity]")
 					R2.cached_purity = 1-temp_purity
 					R2.purity = R2.cached_purity
 					R.chemical_flags |= REAGENT_DONOTSPLIT //Splitting is done here
