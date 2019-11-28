@@ -18,6 +18,20 @@
 					/obj/machinery/shieldgen)
 	crate_name = "anti-breach shield projector crate"
 
+/datum/supply_pack/engineering/conveyor
+	name = "Conveyor Assembly Crate"
+	desc = "Keep production moving along with six conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
+	cost = 750
+	contains = list(/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_switch_construct,
+					/obj/item/paper/guides/conveyor)
+	crate_name = "conveyor assembly crate"
+
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
 	desc = "Gear up with three toolbelts, high-visibility vests, welding helmets, hardhats, and two pairs of meson goggles!"
