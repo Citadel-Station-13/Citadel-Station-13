@@ -98,9 +98,9 @@
 	remove_verbs()
 	. = ..()
 
-/datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user)
+/datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	if(rotation_flags & ROTATION_ALTCLICK)
-		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+		examine_list += "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
@@ -145,7 +145,7 @@
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_CLOCKWISE)
+		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
 
 /atom/movable/proc/simple_rotate_counterclockwise()
 	set name = "Rotate Counter-Clockwise"
@@ -153,7 +153,7 @@
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_COUNTERCLOCKWISE)
+		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
 
 /atom/movable/proc/simple_rotate_flip()
 	set name = "Flip"
@@ -161,4 +161,4 @@
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_FLIP)
+		rotcomp.HandRot(null,usr,ROTATION_FLIP)

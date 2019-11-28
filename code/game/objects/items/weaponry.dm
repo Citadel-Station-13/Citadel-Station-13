@@ -125,10 +125,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
-	..()
-	to_chat(user, "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade.")
+	. = ..()
+	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
 	if(nuke_disk)
-		to_chat(user, "<span class='boldwarning'>It's holding the nuke disk!</span>")
+		. += "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -216,7 +216,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -427,7 +427,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	force = 24
 	throwforce = 0
 	throw_range = 0
@@ -512,7 +512,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	var/homerun_ready = 0
 	var/homerun_able = 0
 	total_mass = 2.7 //a regular wooden major league baseball bat weighs somewhere between 2 to 3.4 pounds, according to google
@@ -528,7 +528,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/chaplain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"

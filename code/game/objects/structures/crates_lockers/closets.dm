@@ -44,7 +44,7 @@
 	update_icon()
 	PopulateContents()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		take_contents()
+		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	if(secure)
 		lockerelectronics = new(src)
 		lockerelectronics.accesses = req_access
@@ -84,22 +84,22 @@
 		add_overlay("unlocked")
 
 /obj/structure/closet/examine(mob/user)
-	..()
+	. = ..()
 	if(welded)
-		to_chat(user, "<span class='notice'>It's <b>welded</b> shut.</span>")
+		. += "<span class='notice'>It's <b>welded</b> shut.</span>"
 	if(anchored)
-		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
+		. += "<span class='notice'>It is <b>bolted</b> to the ground.</span>"
 	if(opened)
-		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
+		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
 	else if(broken)
-		to_chat(user, "<span class='notice'>The lock is <b>screwed</b> in.</span>")
+		. += "<span class='notice'>The lock is <b>screwed</b> in.</span>"
 	else if(secure)
-		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
+		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
-			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
+			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
@@ -614,3 +614,6 @@
 		user.resting = FALSE
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
+
+/obj/structure/closet/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return ..() && opened

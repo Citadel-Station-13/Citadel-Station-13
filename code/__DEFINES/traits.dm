@@ -70,8 +70,6 @@
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
-#define TRAIT_GOTTAGOFAST		"fast"
-#define TRAIT_GOTTAGOREALLYFAST	"2fast"
 #define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness
 #define TRAIT_FAKEDEATH			"fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_DISFIGURED		"disfigured"
@@ -111,6 +109,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_SIXTHSENSE		"sixthsense"
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_FEARLESS			"fearless"
 #define TRAIT_UNSTABLE			"unstable"
@@ -119,6 +118,7 @@
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
+#define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
 #define	TRAIT_STRONG_GRABBER	"strong_grabber"
 #define	TRAIT_CALCIUM_HEALER	"calcium_healer"
@@ -147,13 +147,14 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define	TRAIT_DRUNK_HEALING		"drunk_healing"
-#define	TRAIT_TAGGER			"tagger"
-#define	TRAIT_PHOTOGRAPHER		"photographer"
-#define	TRAIT_MUSICIAN			"musician"
-#define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
+#define TRAIT_DRUNK_HEALING		"drunk_healing"
+#define TRAIT_TAGGER			"tagger"
+#define TRAIT_PHOTOGRAPHER		"photographer"
+#define TRAIT_MUSICIAN			"musician"
+#define TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
+#define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PHARMA            "hepatic_pharmacokinesis"
 #define TRAIT_PARA              "paraplegic"
@@ -180,6 +181,7 @@
 #define CULT_TRAIT "cult"
 #define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
+#define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines
@@ -193,7 +195,6 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
-#define CULT_TRAIT "cult"
 #define CLOWN_NUKE_TRAIT "clown-nuke"
 #define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
 #define CHAINSAW_FRENZY_TRAIT "chainsaw-frenzy"
@@ -215,3 +216,4 @@
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
+#define MADE_UNCLONEABLE "made-uncloneable"

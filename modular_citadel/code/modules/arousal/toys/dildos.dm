@@ -93,9 +93,9 @@
 	pixel_x 	= rand(-7,7)
 
 /obj/item/dildo/examine(mob/user)
-	..()
+	. = ..()
 	if(can_customize)
-		user << "<span class='notice'>Alt-Click \the [src.name] to customize it.</span>"
+		. += "<span class='notice'>Alt-Click \the [src.name] to customize it.</span>"
 
 /obj/item/dildo/random//totally random
 	name 				= "random dildo"//this name will show up in vendors and shit so you know what you're vending(or don't, i guess :^))

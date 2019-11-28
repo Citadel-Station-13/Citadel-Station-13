@@ -69,7 +69,7 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
@@ -368,11 +368,11 @@
 	scatter()
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
-	..()
+	. = ..()
 	if(inert)
-		to_chat(user, "<span class='revennotice'>It seems inert.</span>")
+		. += "<span class='revennotice'>It seems inert.</span>"
 	else if(reforming)
-		to_chat(user, "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>")
+		. += "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || QDELETED(revenant) || inert)

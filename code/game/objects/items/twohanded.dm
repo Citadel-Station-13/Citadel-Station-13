@@ -6,6 +6,7 @@
  *		Spears
  *		CHAINSAWS
  *		Bone Axe and Spear
+ *		And more
  */
 
 /*##################################################################
@@ -464,6 +465,116 @@
 	else
 		return ..()
 
+/////////////////////////////////////////////////////
+//	HYPEREUTACTIC Blades	/////////////////////////
+/////////////////////////////////////////////////////
+
+/obj/item/twohanded/dualsaber/hypereutactic
+	icon = 'icons/obj/1x2.dmi'
+	icon_state = "hypereutactic"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	item_state = "hypereutactic"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	name = "hypereutactic blade"
+	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
+	force = 7
+	force_unwielded = 7
+	force_wielded = 40
+	wieldsound = 'sound/weapons/nebon.ogg'
+	unwieldsound = 'sound/weapons/neboff.ogg'
+	hitsound_on = 'sound/weapons/nebhit.ogg'
+	slowdown_wielded = 1
+	armour_penetration = 60
+	light_color = "#37FFF7"
+	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
+	spinnable = FALSE
+	total_mass_on = 4
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "\improper divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/update_icon()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "hypereutactic_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "hypereutactic_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(gem_overlay)
+
+	if(wielded)
+		add_overlay(blade_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+	clean_blood()
+
+/obj/item/twohanded/dualsaber/hypereutactic/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(!energy_color_input || !user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+			return
+		light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
+		gem_inhand.color = light_color
+		. += gem_inhand
+		if(wielded)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "hypereutactic_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/twohanded/dualsaber/hypereutactic/examine(mob/user)
+	. = ..()
+	if(!hacked)
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
+
+/obj/item/twohanded/dualsaber/hypereutactic/rainbow_process()
+	. = ..()
+	update_icon()
+	update_light()
+
 //spears
 /obj/item/twohanded/spear
 	icon_state = "spearglass0"
@@ -523,9 +634,9 @@
 	AddComponent(/datum/component/jousting)
 
 /obj/item/twohanded/spear/examine(mob/user)
-	..()
+	. = ..()
 	if(explosive)
-		to_chat(user, "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>")
+		. += "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
 
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)

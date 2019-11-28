@@ -607,8 +607,9 @@
 	var/extinguishes_left = 5
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>")
+	. = ..()
+	. += "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
+
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
@@ -715,8 +716,9 @@
 	name = "gear harness"
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
 	icon_state = "gear_harness"
-	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
+	item_state = "gear_harness"
 	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
 
 /obj/item/clothing/under/durathread
 	name = "durathread jumpsuit"

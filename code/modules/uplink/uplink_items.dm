@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver/syndie
+	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -739,7 +739,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
-            Great for blasting airlocks off their frames and knocking down enemies."
+			Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -768,9 +768,15 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 4
+	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
+
+/datum/uplink_item/ammo/revolver/ap
+	name = ".357 Armor Piercing Speed Loader"
+	desc = "A speed loader that contains seven additional .357 AP Magnum rounds; usable with the Syndicate revolver. \
+			Cuts through like a hot knife through butter."
+	item = /obj/item/ammo_box/a357/ap
 
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade"
@@ -1113,6 +1119,16 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
 			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
+	refundable = TRUE
+	cost = 35
+	restricted = TRUE
+
+/datum/uplink_item/support/reinforcement/saboteur_borg
+	name = "Syndicate Saboteur Cyborg"
+	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
+			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
+			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
+	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refundable = TRUE
 	cost = 35
 	restricted = TRUE
@@ -1714,7 +1730,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
 	desc = "A technology disk holding a terabyte of highly confidential abductor technology. \
-			Simply insert into research console of choice and import the files from the disk. You might research some useful gear from this."
+			Simply insert into research console of choice and import the files from the disk. Because of its foreign nature, it may require multiple uploads to work properly."
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
@@ -1787,6 +1803,21 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
+
+/datum/uplink_item/role_restricted/strange_seeds
+	name = "Pack of strange seeds"
+	desc = "Mysterious seeds as strange as their name implies. Spooky."
+	item = /obj/item/seeds/random
+	cost = 2
+	restricted_roles = list("Botanist")
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/strange_seeds_10pack
+	name = "Pack of strange seeds x10"
+	desc = "Mysterious seeds as strange as their name implies. Spooky. These come in bulk"
+	item = /obj/item/storage/box/strange_seeds_10pack
+	cost = 20
+	restricted_roles = list("Botanist")
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
@@ -1919,6 +1950,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. \
 			Radio headset does not include encryption key. No gun included."
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
+
+/datum/uplink_item/badass/claymore
+	name = "Claymore"
+	cost = 8
+	player_minimum = 25
+	desc = "A claymore. We don't know why you'd do this."
+	item = /obj/item/claymore
 
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"

@@ -2,7 +2,7 @@
 //For custom items.
 
 // Unless there's a digitigrade version make sure you add mutantrace_variation = NO_MUTANTRACE_VARIATION to all clothing/under and shoes - Pooj
-// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in modular_citadel/icons/mob
+// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in icons/mob
 
 /obj/item/custom/ceb_soap
 	name = "Cebutris' Soap"
@@ -500,4 +500,12 @@
 	icon_state = "flight-g"
 	item_state = "flight-g"
 	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/neck/necklace/onion
+	name = "Onion Necklace"
+	desc = "A string of onions sequenced together to form a necklace."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "onion"
+	item_state = "onion"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'

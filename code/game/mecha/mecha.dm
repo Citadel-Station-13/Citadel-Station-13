@@ -270,23 +270,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /obj/mecha/examine(mob/user)
-	..()
+	. = ..()
 	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
-			to_chat(user, "It's fully intact.")
+			. += "It's fully intact."
 		if(65 to 85)
-			to_chat(user, "It's slightly damaged.")
+			. += "It's slightly damaged."
 		if(45 to 65)
-			to_chat(user, "It's badly damaged.")
+			. += "It's badly damaged."
 		if(25 to 45)
-			to_chat(user, "It's heavily damaged.")
+			. += "It's heavily damaged."
 		else
-			to_chat(user, "It's falling apart.")
+			. += "It's falling apart."
 	if(equipment && equipment.len)
-		to_chat(user, "It's equipped with:")
+		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "[icon2html(ME, user)] \A [ME].")
+			. += "[icon2html(ME, user)] \A [ME]."
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -1025,7 +1025,7 @@
 
 /obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
 	log.len++
-	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss")]","date","year"="[GLOB.year_integer+540]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss")]","date","year"="[GLOB.year_integer]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
 	..()
 	return log.len
 
@@ -1033,9 +1033,6 @@
 	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
-
-GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
-GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 ///////////////////////
 ///// Power stuff /////

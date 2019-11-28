@@ -26,8 +26,8 @@
 /datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)
 	log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
 	originalmind.transfer_to(fermi_Clone)
-	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
-	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
+	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. Curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
+	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. Curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
 	fermi_Clone = null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,64 +37,62 @@
 	alert_type = null
 	var/moveCalc = 1
 	var/cachedmoveCalc = 1
+	var/last_checked_size //used to prevent potential cpu waste from happening every tick.
 
-/datum/status_effect/chem/breast_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+/datum/status_effect/chem/breast_enlarger/on_apply()//Removes clothes, they're too small to contain you. You belong to space now.
 	log_game("FERMICHEM: [owner]'s breasts has reached comical sizes. ID: [owner.key]")
-	var/mob/living/carbon/human/o = owner
-	var/items = o.get_contents()
-	for(var/obj/item/W in items)
-		if(W == o.w_uniform || W == o.wear_suit)
-			o.dropItemToGround(W, TRUE)
-			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-			to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
-			o.visible_message("<span class='boldnotice'>[o]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
-		else
-			to_chat(o, "<span class='notice'>Your bountiful bosom is so rich with mass, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
-		return ..()
+	var/mob/living/carbon/human/H = owner
+	var/message = FALSE
+	if(H.w_uniform)
+		H.dropItemToGround(H.w_uniform, TRUE)
+		message = TRUE
+	if(H.wear_suit)
+		H.dropItemToGround(H.wear_suit, TRUE)
+		message = TRUE
+	if(message)
+		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		H.visible_message("<span class='boldnotice'>[H]'s chest suddenly bursts forth, ripping their clothes off!'</span>", \
+		"<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
+	else
+		to_chat(H, "<span class='notice'>Your bountiful bosom is so rich with mass, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
+	return ..()
 
-/datum/status_effect/chem/breast_enlarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
-	var/mob/living/carbon/human/o = owner
-	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
-	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
+/datum/status_effect/chem/breast_enlarger/tick()//If you try to wear clothes, you fail. Slows you down if you're comically huge
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/organ/genital/breasts/B = H.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!B)
-		o.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
-		sizeMoveMod(1)
-		owner.remove_status_effect(src)
-	var/items = o.get_contents()
-	for(var/obj/item/W in items)
-		if(W == o.w_uniform || W == o.wear_suit)
-			o.dropItemToGround(W, TRUE)
-			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
+		H.remove_status_effect(src)
+		return
+	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
+	var/message = FALSE
+	if(H.w_uniform)
+		H.dropItemToGround(H.w_uniform, TRUE)
+		message = TRUE
+	if(H.wear_suit)
+		H.dropItemToGround(H.wear_suit, TRUE)
+		message = TRUE
+	if(message)
+		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		to_chat(H, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
+
+	if(last_checked_size != B.cached_size)
+		H.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		sizeMoveMod(moveCalc)
+
 	if (B.size == "huge")
 		if(prob(1))
 			to_chat(owner, "<span class='notice'>Your back is feeling sore.</span>")
-			var/target = o.get_bodypart(BODY_ZONE_CHEST)
-			o.apply_damage(0.1, BRUTE, target)
-		if(!B.cached_size == B.breast_values[B.prev_size])
-			o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-			sizeMoveMod(moveCalc)
-		return ..()
-	else if (B.breast_values[B.size] > B.breast_values[B.prev_size])
-		o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-		sizeMoveMod(moveCalc)
-	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
-		o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-		sizeMoveMod(moveCalc)
-	if((B.cached_size) < 16)
-		switch(round(B.cached_size))
-			if(9)
-				if (B.breast_values[B.prev_size] != B.breast_values[B.size])
-					to_chat(o, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
-			if(10 to INFINITY)
-				if (B.breast_values[B.prev_size] != B.breast_values[B.size])
-					to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
+			var/target = H.get_bodypart(BODY_ZONE_CHEST)
+			H.apply_damage(0.1, BRUTE, target)
+	else
 		if(prob(1))
-			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
-		..()
+			to_chat(H, "<span class='notice'>Your back is feeling a little sore.</span>")
+	last_checked_size = B.cached_size
+	..()
 
-/datum/status_effect/chem/breast_enlarger/on_remove(mob/living/carbon/M)
+/datum/status_effect/chem/breast_enlarger/on_remove()
 	log_game("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
+	to_chat(owner, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
 	owner.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
 	sizeMoveMod(1)
 
@@ -112,66 +110,104 @@
 	alert_type = null
 	var/bloodCalc
 	var/moveCalc
+	var/last_checked_size //used to prevent potential cpu waste, just like the above.
 
-/datum/status_effect/chem/penis_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+/datum/status_effect/chem/penis_enlarger/on_apply()//Removes clothes, they're too small to contain you. You belong to space now.
 	log_game("FERMICHEM: [owner]'s dick has reached comical sizes. ID: [owner.key]")
-	var/mob/living/carbon/human/o = owner
-	var/items = o.get_contents()
-	if(o.w_uniform || o.wear_suit)
-		to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
-		owner.visible_message("<span class='boldnotice'>[o]'s schlong suddenly bursts forth, ripping their clothes off!'</span>")
+	var/mob/living/carbon/human/H = owner
+	var/message = FALSE
+	if(H.w_uniform)
+		H.dropItemToGround(H.w_uniform, TRUE)
+		message = TRUE
+	if(H.wear_suit)
+		H.dropItemToGround(H.wear_suit, TRUE)
+		message = TRUE
+	if(message)
+		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		H.visible_message("<span class='boldnotice'>[H]'s schlong suddenly bursts forth, ripping their clothes off!'</span>", \
+		"<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
 	else
-		to_chat(o, "<span class='notice'>Your emancipated trouser snake is so ripe with girth, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
-	for(var/obj/item/W in items)
-		if(W == o.w_uniform || W == o.wear_suit)
-			o.dropItemToGround(W, TRUE)
-			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		to_chat(H, "<span class='notice'>Your emancipated trouser snake is so ripe with girth, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
 	return ..()
 
 
-/datum/status_effect/chem/penis_enlarger/tick(mob/living/carbon/M)
-	var/mob/living/carbon/human/o = owner
-	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
+/datum/status_effect/chem/penis_enlarger/tick()
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
+	if(!P)
+		owner.remove_status_effect(src)
+		return
 	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
 	bloodCalc = 1+((round(P.length) - 21)/15) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
-	if(!P)
-		o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
-		o.ResetBloodVol()
-		owner.remove_status_effect(src)
-	var/items = o.get_contents()
-	for(var/obj/item/W in items)
-		if(W == o.w_uniform || W == o.wear_suit)
-			o.dropItemToGround(W, TRUE)
-			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-			to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
-	switch(round(P.cached_length))
-		if(21)
-			to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
-			o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
-			o.AdjustBloodVol(bloodCalc)
-		if(22 to INFINITY)
-			if(prob(2))
-				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
-			o.add_movespeed_modifier(DICK_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-			o.AdjustBloodVol(bloodCalc)
+
+	var/message = FALSE
+	if(H.w_uniform)
+		H.dropItemToGround(H.w_uniform, TRUE)
+		message = TRUE
+	if(H.wear_suit)
+		H.dropItemToGround(H.wear_suit, TRUE)
+		message = TRUE
+	if(message)
+		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		to_chat(H, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
+
+	if(P.length < 22 && H.has_movespeed_modifier(DICK_MOVEMENT_SPEED))
+		to_chat(owner, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
+		H.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
+	else if(P.length >= 22 && !H.has_movespeed_modifier(DICK_MOVEMENT_SPEED))
+		to_chat(H, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
+		H.add_movespeed_modifier(DICK_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+	H.AdjustBloodVol(bloodCalc)
 	..()
 
-/datum/status_effect/chem/penis_enlarger/on_remove(mob/living/carbon/human/o)
+/datum/status_effect/chem/penis_enlarger/on_remove()
 	log_game("FERMICHEM: [owner]'s dick has reduced to an acceptable size. ID: [owner.key]")
 	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 	owner.ResetBloodVol()
 
+///////////////////////////////////////////////
+//			Astral INSURANCE
+///////////////////////////////////////////////
+//Makes sure people can't get trapped in each other's bodies if lag causes a deync between proc calls.
+
+
+/datum/status_effect/chem/astral_insurance
+	id = "astral_insurance"
+	var/mob/living/original
+	var/datum/mind/originalmind
+	alert_type = null
+
+/datum/status_effect/chem/astral_insurance/tick(mob/living/carbon/M)
+	. = ..()
+	if(owner.reagents.has_reagent("astral"))
+		return
+	if(owner.mind == originalmind) //If they're home, let the chem deal with deletion.
+		return
+	if(owner.mind)
+		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
+		owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
+	originalmind.transfer_to(original)
+
+/datum/status_effect/chem/astral_insurance/on_remove(mob/living/carbon/M) //God damnit get them home!
+	if(owner.mind == originalmind) //If they're home, HOORAY
+		return
+	if(owner.mind)
+		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
+		owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
+	originalmind.transfer_to(original)
+
+
 
 /*//////////////////////////////////////////
-		Mind control functions
+		Mind control functions!
 ///////////////////////////////////////////
 */
 
 //Preamble
-/*
-/mob/living
-	var/lewd = TRUE
-*/
 
 /mob/living/verb/toggle_lewd()
 	set category = "IC"
@@ -499,7 +535,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if(status == "charge")
-			ADD_TRAIT(owner, TRAIT_GOTTAGOFAST, "MKUltra")
+			owner.add_movespeed_modifier(MOVESPEED_ID_MKULTRA, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 			status = "charged"
 			if(master.client?.prefs.lewdchem)
 				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
@@ -509,7 +545,7 @@
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
-				REMOVE_TRAIT(owner, TRAIT_GOTTAGOFAST, "MKUltra")
+				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
 				owner.Knockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
@@ -592,7 +628,6 @@
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'><i>[saytext]</i></span>"), 5)
 				addtimer(CALLBACK(C, /atom/movable/proc/say, "[customTriggers[trigger][2]]"), 5)
-				//(C.say(customTriggers[trigger][2]))//trigger3
 				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
 
 
@@ -707,7 +742,7 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent("neurine"))
 		deltaResist *= 1.5
-	if (!HAS_TRAIT(owner, TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
+	if (!HAS_TRAIT(owner, TRAIT_CROCRIN_IMMUNE) && M.canbearoused && owner.client?.prefs.lewdchem)
 		if (owner.reagents.has_reagent("anaphro"))
 			deltaResist *= 1.5
 		if (owner.reagents.has_reagent("anaphro+"))
@@ -716,7 +751,6 @@
 			deltaResist *= 0.75
 		if (owner.reagents.has_reagent("aphro+"))
 			deltaResist *= 0.5
-
 	//Antag resistance
 	//cultists are already brainwashed by their god
 	if(iscultist(owner))

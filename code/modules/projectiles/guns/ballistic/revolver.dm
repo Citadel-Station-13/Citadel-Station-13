@@ -81,8 +81,8 @@
 	return boolets
 
 /obj/item/gun/ballistic/revolver/examine(mob/user)
-	..()
-	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+	. = ..()
+	. += "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -167,6 +167,7 @@
 /obj/item/gun/ballistic/revolver/russian
 	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
+	icon_state = "russianrevolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 

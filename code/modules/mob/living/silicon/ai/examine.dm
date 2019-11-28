@@ -1,26 +1,24 @@
 /mob/living/silicon/ai/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <EM>[src]</EM>!\n"
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <EM>[src]</EM>!")
 	if (stat == DEAD)
-		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
+		. += "<span class='deadsay'>It appears to be powered-down.</span>"
 	else
-		msg += "<span class='warning'>"
+		. += "<span class='warning'>"
 		if (getBruteLoss())
 			if (getBruteLoss() < 30)
-				msg += "It looks slightly dented.\n"
+				. += "It looks slightly dented."
 			else
-				msg += "<B>It looks severely dented!</B>\n"
+				. += "<B>It looks severely dented!</B>"
 		if (getFireLoss())
 			if (getFireLoss() < 30)
-				msg += "It looks slightly charred.\n"
+				. += "It looks slightly charred."
 			else
-				msg += "<B>Its casing is melted and heat-warped!</B>\n"
-		msg += "</span>"
+				. += "<B>Its casing is melted and heat-warped!</B>"
+		. += "</span>"
 		if(deployed_shell)
-			msg += "The wireless networking light is blinking.\n"
+			. += "The wireless networking light is blinking."
 		else if (!shunted && !client)
-			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
-	msg += "*---------*</span>"
+			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
+	. += "*---------*</span>"
 
-	to_chat(user, msg)
-	..()
-	return msg
+	. += ..()

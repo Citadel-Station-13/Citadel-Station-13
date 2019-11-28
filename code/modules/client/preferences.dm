@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
+	var/preferred_chaos = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 	var/pda_skin = PDA_SKIN_ALT
@@ -113,7 +114,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"xenohead" = "Standard",
 		"xenotail" = "Xenomorph Tail",
 		"taur" = "None",
-		"exhibitionist" = FALSE,
 		"genitals_use_skintone" = FALSE,
 		"has_cock" = FALSE,
 		"cock_shape" = "Human",
@@ -337,8 +337,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Flavor Text</h2>"
 			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Examine Text</b></a><br>"
-			if(lentext(features["flavor_text"]) <= 40)
-				if(!lentext(features["flavor_text"]))
+			if(length(features["flavor_text"]) <= 40)
+				if(!length(features["flavor_text"]))
 					dat += "\[...\]"
 				else
 					dat += "[features["flavor_text"]]"
@@ -826,7 +826,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
@@ -836,6 +835,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+			var/p_chaos
+			if (!preferred_chaos)
+				p_chaos = "No preference"
+			else
+				p_chaos = preferred_chaos
+			dat += "<b>Preferred Chaos Amount:</b> <a href='?_src_=prefs;preference=preferred_chaos;task=input'>[p_chaos]</a><br>"
 			dat += "<br>"
 			dat += "</td>"
 			dat += "</tr></table>"
@@ -1998,6 +2003,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
+				if ("preferred_chaos")
+					var/pickedchaos = input(user, "Choose your preferred level of chaos. This will help with dynamic threat level ratings.", "Character Preference") as null|anything in list(CHAOS_NONE,CHAOS_LOW,CHAOS_MED,CHAOS_HIGH,CHAOS_MAX)
+					preferred_chaos = pickedchaos
 				if ("clientfps")
 					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
@@ -2057,8 +2065,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["has_womb"] = FALSE
 				if("has_womb")
 					features["has_womb"] = !features["has_womb"]
-				if("exhibitionist")
-					features["exhibitionist"] = !features["exhibitionist"]
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
 					user.client.change_view(CONFIG_GET(string/default_view))
@@ -2293,10 +2299,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.shirt_color = shirt_color
 	character.socks_color = socks_color
 
-
-	character.backbag = backbag
-	character.jumpsuit_style = jumpsuit_style
-
 	var/datum/species/chosen_species
 	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))
 		chosen_species = pref_species.type
@@ -2332,9 +2334,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(TRUE)
 
 	//let's be sure the character updates
-	character.update_body()
-	character.update_hair()
-	character.update_body_parts()
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()
+		character.update_body_parts()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

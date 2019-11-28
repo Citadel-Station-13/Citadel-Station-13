@@ -15,10 +15,10 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 	if(!has_buckled_mobs())
-		to_chat(user, "<span class='notice'>Drag your sprite to sit in it.</span>")
+		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -495,7 +495,25 @@
 	icon_state = "sofamiddle"
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
-	item_chair = null
+	var/mutable_appearance/armrest
+
+/obj/structure/chair/sofa/Initialize()
+	armrest = mutable_appearance(icon, "[icon_state]_armrest")
+	return ..()
+
+/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
+	. = ..()
+	update_armrest()
+
+/obj/structure/chair/sofa/proc/update_armrest()
+	if(has_buckled_mobs())
+		add_overlay(armrest)
+	else
+		cut_overlay(armrest)
+
+/obj/structure/chair/sofa/post_unbuckle_mob()
+	. = ..()
+	update_armrest()
 
 /obj/structure/chair/sofa/left
 	icon_state = "sofaend_left"
@@ -505,3 +523,6 @@
 
 /obj/structure/chair/sofa/corner
 	icon_state = "sofacorner"
+
+/obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
+	return

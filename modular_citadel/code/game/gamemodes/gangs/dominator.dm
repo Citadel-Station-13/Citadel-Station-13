@@ -53,33 +53,31 @@
 
 /obj/machinery/dominator/update_icon()
 	cut_overlays()
-	if(!(stat & BROKEN))
-		icon_state = "dominator-active"
-		if(operating)
-			var/mutable_appearance/dominator_overlay = mutable_appearance('icons/obj/machines/dominator.dmi', "dominator-overlay")
-			if(gang)
-				dominator_overlay.color = gang.color
-			add_overlay(dominator_overlay)
-		else
-			icon_state = "dominator"
-		if(obj_integrity/max_integrity < 0.66)
-			add_overlay("damage")
-	else
+	if(stat & BROKEN)
 		icon_state = "dominator-broken"
+		return
+	icon_state = "dominator"
+	if(operating)
+		var/mutable_appearance/dominator_overlay = mutable_appearance('icons/obj/machines/dominator.dmi', "dominator-overlay")
+		if(gang)
+			dominator_overlay.color = gang.color
+		add_overlay(dominator_overlay)
+	if(obj_integrity/max_integrity < 0.66)
+		add_overlay("damage")
 
 /obj/machinery/dominator/examine(mob/user)
-	..()
+	. = ..()
 	if(stat & BROKEN)
 		return
 
 	if(gang && gang.domination_time != NOT_DOMINATING)
 		if(gang.domination_time > world.time)
-			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [gang.domination_time_remaining()] seconds remain.</span>")
+			. += "<span class='notice'>Hostile Takeover in progress. Estimated [gang.domination_time_remaining()] seconds remain.</span>"
 		else
-			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
+			. += "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
 	else
-		to_chat(user, "<span class='notice'>System on standby.</span>")
-	to_chat(user, "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>")
+		. += "<span class='notice'>System on standby.</span>"
+	. += "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>"
 
 /obj/machinery/dominator/process()
 	..()
@@ -168,7 +166,7 @@
 		examine(user)
 		return
 
-	if(tempgang.domination_time != NOT_DOMINATING) 
+	if(tempgang.domination_time != NOT_DOMINATING)
 		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
 		return
 

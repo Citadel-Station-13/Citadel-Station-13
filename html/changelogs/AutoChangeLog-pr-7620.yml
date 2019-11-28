@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Airlock wires now work as they did prior to the hard sync"
