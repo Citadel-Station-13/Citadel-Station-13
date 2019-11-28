@@ -55,17 +55,15 @@
 	return automatic
 
 /obj/item/pneumatic_cannon/examine(mob/user)
-	..()
-	var/list/out = list()
+	. = ..()
 	if(!in_range(user, src))
-		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
+		. += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
+		. += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
-	to_chat(user, out.Join("<br>"))
+		. += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)

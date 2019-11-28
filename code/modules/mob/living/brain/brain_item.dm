@@ -157,7 +157,7 @@
 
 
 
-/obj/item/organ/brain/examine(mob/user)//BUG_PROBABLE_CAUSE to_chats changed to . +=
+/obj/item/organ/brain/examine(mob/user)
 	. = ..()
 
 	if(user.suiciding)
