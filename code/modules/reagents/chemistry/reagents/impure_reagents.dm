@@ -58,7 +58,7 @@
 /datum/reagent/impure/neurine
 	name = "Neruwhine"
 	id = "neurine_impure"
-	description = "Causes the patient a temporary trauma."
+	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
 	color = "#DCDCAA"
 	pH = 13.4
 	metabolization_rate = 0.4 * REM

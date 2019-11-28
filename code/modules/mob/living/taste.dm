@@ -27,7 +27,7 @@
 	if(T)
 		if(istype(T, /obj/item/organ/tongue/cybernetic))
 			to_chat(src, "<span class='notice'>Your tongue moves on it's own in response to the substance in your mouth.</span>")
-			say("The pH is appropriately [round(from.pH, 1)].")
+			say("The pH is approximately [round(from.pH, 1)].")
 		else if ((from.pH > 12.5) || (from.pH < 1.5))
 			text_output += "<span class='warning'> and it burns!!</span>"
 			T.applyOrganDamage(5)

@@ -386,7 +386,7 @@
 	id = "corazone"
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
-	mix_message = "The solution gurgles as it's viscosity increases."
+	mix_message = "The solution gurgles as its viscosity increases."
 	//FermiChem vars:
 	OptimalTempMin 		= 250		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 300 		// Upper end for above
