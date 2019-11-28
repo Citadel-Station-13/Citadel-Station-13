@@ -169,7 +169,6 @@
 	name = "Meat Crate"
 	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 4 slabs of meat product, and two slabs of *carp*."
 	cost = 1700
-	hidden = TRUE
 	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
@@ -183,7 +182,7 @@
 	name = "*Meat* Crate"
 	desc = "Need some meat? With this do-it-yourself kit you'll be swimming in it! Contains a monkey cube, an IV drip, and some cryoxadone!"
 	cost = 2150
-	hidden = TRUE
+	contraband = TRUE
 	contains = list(/obj/item/reagent_containers/food/snacks/monkeycube,
 					/obj/item/restraints/handcuffs/cable,
 					/obj/machinery/iv_drip,
