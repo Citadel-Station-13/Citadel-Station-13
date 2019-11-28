@@ -94,10 +94,15 @@
 	return ..()
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
-	if(!is_reebe(invoker.z) && (world.time < (last_marauder + CONFIG_GET(number/marauder_delay_non_reebe))))
-		to_chat(invoker, "<span class='brass'>The hierophant network is still strained from the last summoning of a marauder on a plane without the strong energy connection of Reebe to support it. \
-		You must wait another [DisplayTimeText((last_marauder + CONFIG_GET(number/marauder_delay_non_reebe)) - world.time, TRUE)]!</span>")
-		return FALSE
+	if(!is_reebe(invoker.z))
+		if(!CONFIG_GET(flag/allow_clockwork_marauder_on_station))
+			to_chat(invoker, "<span class='brass'>This particular station is too far from the influence of the Hierophant Network. You can not summon a marauder here</span> \
+			<span class='danger'>((OOC NOTE: Station marauders are config-disabled.))</span>")
+			return FALSE
+		if(world.time < (last_marauder + CONFIG_GET(number/marauder_delay_non_reebe)))
+			to_chat(invoker, "<span class='brass'>The hierophant network is still strained from the last summoning of a marauder on a plane without the strong energy connection of Reebe to support it. \
+			You must wait another [DisplayTimeText((last_marauder + CONFIG_GET(number/marauder_delay_non_reebe)) - world.time, TRUE)]!</span>")
+			return FALSE
 	return ..()
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/update_construct_limit()
