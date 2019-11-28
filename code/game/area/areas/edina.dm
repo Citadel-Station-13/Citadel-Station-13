@@ -4,7 +4,6 @@ area/edina
 	valid_territory = FALSE
 	has_gravity = STANDARD_GRAVITY
 	icon = 'icons/turf/areas.dmi'
-	icon_state = "unknown"
 	clockwork_warp_allowed = FALSE // Can servants warp into this area from Reebe?
 	clockwork_warp_fail = "The aurora borealis is interfering with your teleport! Try somewhere closer to the city."
 	requires_power = TRUE
