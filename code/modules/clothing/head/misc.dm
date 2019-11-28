@@ -377,3 +377,15 @@
 	item_state = "assu_helmet"
 	desc = "A cheap replica of old riot helmet without visor. It has \"D.A.B.\" written on the front."
 	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/christmashat
+	name = "red santa hat"
+	desc = "A red Christmas Hat! How festive!"
+	icon_state = "christmashat"
+	item_state = "christmashat"
+
+/obj/item/clothing/head/christmashatg
+	name = "green santa hat"
+	desc = "A green Christmas Hat! How festive!"
+	icon_state = "christmashatg"
+	item_state = "christmashatg"
