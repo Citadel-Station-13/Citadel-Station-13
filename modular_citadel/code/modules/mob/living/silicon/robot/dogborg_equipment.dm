@@ -20,7 +20,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/dogborg/jaws/examine(mob/user)
 	. = ..()
 	if(!CONFIG_GET(flag/weaken_secborg))
-		to_chat(user, "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>")
+		. += "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>"
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
