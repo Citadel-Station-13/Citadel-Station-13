@@ -26,6 +26,14 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
 	category = list ("Medical Machinery")
 
+/datum/design/board/mrs
+	name = "Machine Design (Magnetic Resonance Scanner Board)"
+	desc = "The circuit board for a Magnetic Resonance Scanner."
+	id = "mrs"
+	build_path = /obj/item/circuitboard/machine/mrs
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
+	category = list ("Medical Machinery")
+
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."

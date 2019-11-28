@@ -20,8 +20,10 @@ for `datum/chemical_reaction/` under `var/clear_conversion`
 ```
 REACTION_CLEAR_IMPURE       Convert into impure/pure on reaction completion
 REACTION_CLEAR_INVERSE      Convert into inverse on reaction completion when purity is low enough
+REACTION_CLEAR_RETAIN
 ```
-
-#define FERMI_EXPLOSION_TYPE_MIXED TRUE
-#define FERMI_EXPLOSION_TYPE_INVERTSMOKE "invertsmoke"
-#define FERMI_EXPLOSION_TYPE_SMOKE "smoke"
+```
+FERMI_EXPLOSION_TYPE_MIXED  		Use the mixed explosion type
+FERMI_EXPLOSION_TYPE_INVERTSMOKE 	Produce smoke that will be filled with the inverted form of the reactants and product, if possible
+FERMI_EXPLOSION_TYPE_SMOKE 			Produce smoke of the reagents and product
+```

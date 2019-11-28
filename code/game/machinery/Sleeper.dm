@@ -324,7 +324,7 @@
 			var/chem = params["chem"]
 			if(!is_operational())
 				return
-			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
+			reagents.add_reagent(chem_buttons[chem], 10) //added_purity = 0.75 for when the mechanics are in
 		if("purge")
 			var/chem = params["chem"]
 			if(allowed(usr))
@@ -396,10 +396,14 @@
 			return
 		var/mob/living/carbon/C = occupant
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.15 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
-		C.blood_volume -= 2/efficiency
+		if(L)
+			L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.15 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
+			C.adjustToxLoss(-(1+(efficiency/4)))
+			C.blood_volume -= 2/efficiency
+		else
+			C.adjustToxLoss(-5)//counteract missing liver
+			C.blood_volume -= 4/efficiency //but take more blood
 		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
-		C.adjustToxLoss(-(1+(efficiency/4)))
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			if(istype(R, /datum/reagent/metabolic))
 				continue

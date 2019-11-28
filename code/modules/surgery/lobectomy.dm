@@ -33,8 +33,8 @@
 		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
 			"Successfully removes a piece of [H]'s lungs.",
 			"")
-		if(!(L.organ_flags & ORGAN_LUNGS_DEFLATED))
-			L.organ_flags |= ORGAN_LUNGS_DEFLATED
+		if(L.organ_flags & ORGAN_LUNGS_DEFLATED)
+			L.organ_flags &= ~ORGAN_LUNGS_DEFLATED
 	return TRUE
 
 /datum/surgery_step/lobectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -34,20 +34,20 @@
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE
-	var/potency = 1 //potency multiplies the volume when added.
+	metastress = 2
 	pH = 2
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
 //TODO: liver damage, 100+ heart
 /datum/reagent/impure/fermiTox/on_mob_life(mob/living/carbon/C, method)
-	C.adjustToxLoss(2, TRUE)
+	C.adjustToxLoss(metastress, TRUE)
 	..()
 
 /datum/reagent/impure/mannitol
 	name = "Mannitoll"
 	id = "mannitol_impure"
 	description = "Inefficiently causes brain damage."
-	color = "#DCDCFF"
+	color = "#CDCDFF"
 	pH = 12.4
 
 /datum/reagent/impure/mannitol/on_mob_life(mob/living/carbon/C)
@@ -59,7 +59,7 @@
 	name = "Neruwhine"
 	id = "neurine_impure"
 	description = "Causes the patient a temporary trauma."
-	color = "#DCDCFF"
+	color = "#DCDCAA"
 	pH = 13.4
 	metabolization_rate = 0.4 * REM
 	metastress = 0.5
@@ -69,7 +69,7 @@
 	.=..()
 	if(temp_trauma)
 		return
-	if(!(prob(cached_purity)))
+	if(!(prob(cached_purity*10)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
@@ -91,8 +91,8 @@
 /datum/reagent/impure/corazone
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free.
 	id = "corazone_inverse"
-	description = "Can induces a Myocardial Infarction while in the patient if their heart is damaged."
-	color = "#F5F5F5"
+	description = "Can induce a Myocardial Infarction while in the patient if their heart is damaged."
+	color = "#5F5F5F"
 	self_consuming = TRUE
 	pH = 13.5
 	metabolization_rate = 0.075 * REM
@@ -121,7 +121,7 @@
 	id = "antihol_impure"
 	description = "Soothes a patient's liver"
 	taste_description = "coooked egg"
-	color = "#00B4C8"
+	color = "#0004C8"
 	pH = 2.5
 	metastress = -0.1
 
@@ -139,6 +139,7 @@
 	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
 	metastress = 0.35
+	color = "#4C8000"
 
 /datum/reagent/impure/antihol/inverse/on_mob_life(mob/living/carbon/C)
 	for(var/datum/reagent/consumable/ethanol/alch in C.reagents.reagent_list)
@@ -150,7 +151,7 @@
 	id = "oculine_impure"
 	description = "temporarily blinds the patient."
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#DDDDDD"
 	metabolization_rate = 2
 	metastress = 1.2
 	taste_description = "funky toxin"
@@ -159,6 +160,7 @@
 /datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
 	if(prob(100*(1-cached_purity)))
 		C.become_blind("oculine_impure")
+		message_admins("blinding")
 	..()
 
 /datum/reagent/impure/oculine/on_mob_delete(mob/living/L)
@@ -170,7 +172,7 @@
 	id = "inacusiate_impure"
 	description = "Makes the patient hard of hearing, and slowly causes ear damage."
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#DDDDFF"
 	metastress = 0.75
 	taste_description = "the heat evaporating from your mouth."
 	pH = 1
@@ -187,6 +189,5 @@
 	UnregisterSignal(L, COMSIG_MOVABLE_HEAR)
 	..()
 
-/datum/reagent/impure/inacusiate/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	spans += "small"
-	message_admins("<span class='small'>[message]</span>")
+/datum/reagent/impure/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+	hearing_args[HEARING_SPANS] += "small"

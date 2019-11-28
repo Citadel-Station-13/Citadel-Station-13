@@ -22,7 +22,7 @@
 					if(GLOB.Debug2)
 						message_admins("Inverting [cached_volume] [R.id] [R.purity] into [R.inverse_chem]")
 					holder.remove_reagent(R.id, cached_volume, TRUE)
-					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
+					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 					var/datum/reagent/R2 = holder.has_reagent("[R.inverse_chem]")
 					if(clear_conversion & REACTION_CLEAR_RETAIN)
 						R2.cached_purity = 1-R.purity
@@ -34,7 +34,7 @@
 				if(GLOB.Debug2)
 					message_admins("Impure [cached_volume] of [R.id] at [R.purity] into [impureVol] of [R.impure_chem] with [clear_conversion & REACTION_CLEAR_RETAIN ? "Clear conversion" : "Purification"] mechanics")
 				holder.remove_reagent(id, (impureVol), TRUE)
-				holder.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
+				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
 				var/datum/reagent/R2 = holder.has_reagent("[R.impure_chem]")
 				if(clear_conversion & REACTION_CLEAR_RETAIN)
 					message_admins("[R.purity], [temp_purity], [1-R.purity], [1-temp_purity]")
@@ -223,7 +223,7 @@
 	PurityMin 				= 0.25
 
 
-/datum/chemical_reaction/fermi/enthrall/ //check this
+/datum/chemical_reaction/fermi/enthrall //check this
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 5)
@@ -544,12 +544,12 @@
 	if(!A)
 		return
 	if(holder.pH < 7)
-		holder.add_reagent("antbase", added_volume, other_purity = 1-A.purity)
+		holder.add_reagent("antbase", added_volume, added_purity = 1-A.purity)
 		var/datum/reagent/antacidpregen/antbase/B = holder.has_reagent("antbase")
 		B.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)
 	else
-		holder.add_reagent("antacid", added_volume, other_purity = 1-A.purity)
+		holder.add_reagent("antacid", added_volume, added_purity = 1-A.purity)
 		var/datum/reagent/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
 		A2.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)

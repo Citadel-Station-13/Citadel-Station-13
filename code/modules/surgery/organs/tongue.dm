@@ -41,7 +41,6 @@
 		owner.say("The pH is appropriately [pick(errormessage)].")
 
 /obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
-
 	if(!d) //Micro-optimization.
 		return
 	if(maximum < damage)
@@ -52,14 +51,15 @@
 	if(mess && owner)
 		to_chat(owner, mess)
 
-	if ((damage / maxHealth) > 1)
-		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
-		qdel(src)
-	else if ((damage / maxHealth) > 0.85)
-		to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
-	else if ((damage / maxHealth) > 0.5)
-		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
+	if(d>0 && prob(50))
+		if ((damage / maxHealth) > 1)
+			to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
+			qdel(src)
+		else if ((damage / maxHealth) > 0.85)
+			to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
+		else if ((damage / maxHealth) > 0.5)
+			to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
 
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)

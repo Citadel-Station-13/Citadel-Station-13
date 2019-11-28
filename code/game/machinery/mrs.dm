@@ -2,10 +2,10 @@
 	name = "Magnetic resonance scanner"
 	desc = "An enclosed machine used to scan patients' organs."
 	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "oldpod"
+	icon_state = "mrs"
 	density = FALSE
-	state_open = TRUE
-	circuit = /obj/item/circuitboard/machine/sleeper
+	state_open = FALSE
+	circuit = /obj/item/circuitboard/machine/mrs
 	var/efficiency = 1
 	var/mob/living/carbon/scannedmob
 	var/scantime = 5
@@ -30,6 +30,10 @@
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"
+	else if(scannedmob || scanning)
+		icon_state += "-scan"
+	else if(occupant)
+		icon_state += "-ocu"
 
 /obj/machinery/MRS/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
@@ -49,6 +53,7 @@
 		..()
 	scannedmob = null
 	scanning = FALSE
+	update_icon()
 
 /obj/machinery/MRS/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -56,6 +61,7 @@
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "[enter_message]")
+	update_icon()
 
 /obj/machinery/MRS/proc/scan()
 	if(current_cycle >= scantime)
@@ -67,7 +73,8 @@
 		current_cycle = 0
 		return
 	current_cycle++
-	playsound(occupant, 'sound/diagnostics/mrs.ogg', 80, 0)
+	playsound(occupant, 'sound/diagnostics/MRS.ogg', 80, 0)
+	update_icon()
 
 /obj/machinery/MRS/emp_act(severity)
 	. = ..()
@@ -257,6 +264,8 @@
 						if(25 to INFINITY)
 							data["occupant"]["metabolicColour"] = "bad"
 							data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+					if(L.swelling > 10)
+						data["occupant"]["swelling"] = TRUE
 					continue
 
 				//lungs

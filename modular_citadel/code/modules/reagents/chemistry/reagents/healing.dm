@@ -114,6 +114,7 @@
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.05 //Give them time to graft
+	color = "#FFEADAD"
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 
 /datum/reagent/medicine/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
@@ -168,6 +169,9 @@
 	description = "A chem that turns into an antacid or antbase depending on it's reaction conditions. At the end of a reaction it'll turn into either an antacid for treating acidic stomachs, or an antbase for alkaline. Upon conversion the purity is inverted, the more extreme the pH is on reaction, the more effective it is."
 	pH = 7
 	chemical_flags 		= REAGENT_DONOTSPLIT
+	color = "#12aa95"
+	impure_chem 		= "generic_impure"
+	inverse_chem_val 	= 0
 	//TODO: using it with kidney stones makes it worse
 	//OD gives kidney stones
 	//Reduces Peptic ulcer disease severity too.
@@ -184,18 +188,24 @@
 	name = "Antacid"
 	id = "antacid"
 	description = "Antacids neutralise overly acidic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	color = "#f29b22"
 
 /datum/reagent/antacidpregen/antacid/on_mob_life(mob/living/carbon/C)
 	if(C.reagents.pH < 6.5)
-		C.reagents.pH += cached_purity
+		C.reagents.pH += cached_purity/2
+	else if(C.reagents.pH > 7.5)
+		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
 
 /datum/reagent/antacidpregen/antbase
 	name = "Antbase"
 	id = "antbase"
 	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	color = "#853cfa"
 
 /datum/reagent/antacidpregen/antbase/on_mob_life(mob/living/carbon/C)
 	if(C.reagents.pH > 7.5)
-		C.reagents.pH -= cached_purity
+		C.reagents.pH -= cached_purity/2
+	else if(C.reagents.pH < 6.5)
+		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()

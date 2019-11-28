@@ -809,10 +809,13 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "oculine_impure"
 	var/cached_light
+	var/cached_seerange
 
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/L)
 	cached_light = L.lighting_alpha
-	L.lighting_alpha -= cached_purity*10
+	L.lighting_alpha -= cached_purity*15
+	cached_seerange = L.see_in_dark
+	L.see_in_dark += 2
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
@@ -841,6 +844,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/L)
 	L.lighting_alpha = cached_light
+	L.see_in_dark = cached_seerange
 	..()
 
 /datum/reagent/medicine/atropine
@@ -998,13 +1002,24 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	inverse_chem_val 	= 0.5
 	inverse_chem		= "neurine_impure"
 	chemical_flags 		= REAGENT_SPLITRETAINVOL
+	var/initial_Bdamage = 200
+
+/datum/reagent/medicine/neurine/on_mob_add(mob/living/L)
+	var/mob/living/carbon/C = L
+	if(!C)
+		return
+	initial_Bdamage = C.getOrganLoss(ORGAN_SLOT_BRAIN)
+	..()
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))
 		holder.remove_reagent("neurotoxin", 5)
-	if(prob(cached_purity*2))
+	if(prob(cached_purity*10))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
+	if(initial_Bdamage < C.getOrganLoss(ORGAN_SLOT_BRAIN))
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*4)
+	else
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1578,7 +1593,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
+	M.cureOrganDamage(ORGAN_SLOT_LIVER, -2, ORGAN_TREAT_CHRONIC)//Add a chance to cure liver trauma once implemented.
 	..()
 	. = 1
 

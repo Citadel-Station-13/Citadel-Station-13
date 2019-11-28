@@ -957,7 +957,7 @@
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
 	toxpwr = 0
 	taste_description = "brain hurting"
-	metabolization_rate = 2.5
+	metabolization_rate = 0.5
 
 /datum/reagent/toxin/brainhurtingjuice/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
@@ -966,6 +966,7 @@
 		M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 	else
 		M.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+	M.reagents.remove_reagent(id, 5)
 	..()
 
 /datum/reagent/toxin/bungotoxin

@@ -695,9 +695,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 /mob/living/carbon/proc/applyLiverDamage(var/d)
 	if(d<0)
-		C.cureOrganDamage(ORGAN_SLOT_LIVER, d)
+		cureOrganDamage(ORGAN_SLOT_LIVER, d)
 	else
-		C.adjustOrganLoss(ORGAN_SLOT_LIVER, d)
+		adjustOrganLoss(ORGAN_SLOT_LIVER, d)
 
 /mob/living/carbon/proc/liver_failure()
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs

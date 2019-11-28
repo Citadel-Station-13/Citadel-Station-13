@@ -524,6 +524,7 @@
 			for(var/organ in C.internal_organs)
 				var/obj/item/organ/O = organ
 				O.setOrganDamage(0)
+		C.reagents.pH = 7
 	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEAL, admin_revive)
 
 

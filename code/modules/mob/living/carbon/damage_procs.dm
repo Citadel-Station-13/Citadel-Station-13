@@ -138,7 +138,7 @@
 		return
 	if(threshold == ORGAN_TREAT_ACUTE && O.damage>O.high_threshold) //0-45%
 		return
-	if(threshold == ORGAN_TREAT_CHRONIC && O.damage>O.maxHealth)//45-100%
+	if(threshold == ORGAN_TREAT_CHRONIC && O.damage>=O.maxHealth)//45-100%
 		return
 	if(amount > 0) //make negative
 		amount = -amount

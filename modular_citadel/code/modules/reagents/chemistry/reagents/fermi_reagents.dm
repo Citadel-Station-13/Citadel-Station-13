@@ -443,3 +443,24 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 			else //This should never happen, but just in case, so their game isn't ruined.
 				catto.icon_state = "custom_cat"
 				catto.health = 50
+
+/datum/reagent/fermi/dooplium
+	name = "Dooplium"
+	id = "dooplium"
+	description = "A strange reagent that morphs to match any and all reagents currently in the recipents bloodstream doubling their effects."
+	taste_description = "a sensation that can only be described as licking your own tongue."
+	color = "#88aa24"
+	metabolization_rate = 0
+
+/datum/reagent/fermi/dooplium/on_mob_life(var/mob/living/carbon/C)
+	for(var/I in C.reagents.reagent_list)
+		var/datum/reagent/R = I
+		if(R == src)
+			continue
+		if(istype(R, /datum/reagent/metabolic))
+			continue
+		if(R.volume < 5)
+			continue
+		R.on_mob_life(C)
+		C.reagents.remove_reagent(id, R.metabolization_rate)
+	..()

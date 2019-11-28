@@ -92,7 +92,8 @@
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.1, TRUE)
 		if(0 to 15)
-			passive_regen(1/(reagentCount+1)) //pesky zeroes!
+			if(damage != 0)
+				passive_regen(1/(reagentCount+1)) //pesky zeroes!
 			ignoreTox = TRUE
 		if(15 to 25)
 			applyOrganDamage(0.05)
@@ -108,6 +109,7 @@
 			owner.adjustToxLoss(0.2, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.15)
 			owner.adjustStaminaLoss(1)
+			swelling += 0.02
 		if(90 to INFINITY)
 			applyOrganDamage(0.25)
 			owner.adjustToxLoss(0.25, TRUE)
@@ -142,13 +144,13 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreTox)
 
-	var/metabolic_replenish = (2-(((damage*100)/maxHealth)/100))/10 //0.1 - 0.2
+	var/metabolic_replenish = ((2*(((damage*100)/maxHealth)/100))/10)+0.05 //0.05 - 0.25
 	if(metabolic_stress > 0)
 		adjustMetabolicStress(-metabolic_replenish)
 	else if (metabolic_stress < 0)
 		adjustMetabolicStress(metabolic_replenish)
 
-/obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum)
+/obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum = 105)
 	if(!amount)
 		return FALSE
 	if(!maximum)

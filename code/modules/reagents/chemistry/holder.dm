@@ -233,7 +233,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.id, copy_amount * multiplier, trans_data, other_purity = T.purity)
+		R.add_reagent(T.id, copy_amount * multiplier, trans_data, added_purity = T.purity)
 
 	src.update_total()
 	R.update_total()
@@ -545,6 +545,9 @@
 	return 0
 
 /datum/reagents/process()
+	if (!fermiIsReacting)
+		message_admins("Fermi has refused to stop reacting even though we asked her nicely.")
+		fermiEnd()
 	var/datum/chemical_reaction/C = fermiReactID
 
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
@@ -553,8 +556,13 @@
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.0001))
 	if (multiplier <= 0)//clarity
+		if(GLOB.Debug2)
+			message_admins("Fermiend due to muliplier [multiplier]")
 		fermiEnd()
 		return
+	//Remove if reactions are acting weird
+	if(multiplier < 1)
+		multiplier = 1
 
 	if(C.required_catalysts)
 		for(var/P in C.required_catalysts)
@@ -562,22 +570,30 @@
 				fermiEnd()
 				return
 
-	if (!fermiIsReacting)
-		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
+
 
 	if (!(chem_temp >= C.OptimalTempMin))//To prevent pointless reactions
+		if(GLOB.Debug2)
+			message_admins("fermiEnd due to low temperature [chem_temp]")
 		fermiEnd()
 		return
 
-	if (!( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )) //if pH is too far out, (could possibly allow reactions at this point, after the reaction has started, but make purity = 0)
+	//Removed for now - reactions will continue out of range, with purity = 0
+	/*if (!( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )) //if pH is too far out, (could possibly allow reactions at this point, after the reaction has started, but make purity = 0)
+		if(GLOB.Debug2)
+			message_admins("Fermiend due to pH")
 		fermiEnd()
-		return
+		return*/
 
 	reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	if(round(reactedVol, CHEMICAL_QUANTISATION_LEVEL) == round(targetVol, CHEMICAL_QUANTISATION_LEVEL))
+		if(GLOB.Debug2)
+			message_admins("fermiEnd due to volumes: React:[round(reactedVol, CHEMICAL_QUANTISATION_LEVEL)] vs Target:[round(targetVol, CHEMICAL_QUANTISATION_LEVEL)]")
 		fermiEnd()
 	if(!reactedVol)//Maybe unnessicary.
-		fermiEnd()
+		if(GLOB.Debug2)
+			message_admins("fermiEnd due to 0 reacted volume [reactedVol]")
+		//fermiEnd()
 	return
 
 /datum/reagents/proc/fermiEnd()
@@ -591,11 +607,14 @@
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.pH_check()
+	update_total()
+	if(GLOB.Debug2)
+		message_admins("Reaction finished reactedVol:[reactedVol], targetVol:[targetVol]")
 	C.FermiFinish(src, my_atom, reactedVol)
 	reactedVol = 0
 	targetVol = 0
 	handle_reactions()
-	update_total()
+	//update_total()
 	//Reaction sounds and words
 	var/list/seen = viewers(5, get_turf(my_atom))
 	var/iconhtml = icon2html(my_atom, seen)
@@ -665,8 +684,8 @@
 		//keep limited.
 		addChemAmmount = round(addChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
 		removeChemAmmount = round(removeChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
-		//This is kept for future bugtesters.
-		//message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
+		if(GLOB.Debug2)
+			message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
 
 	//remove reactants
 	for(var/B in cached_required_reagents)
@@ -832,7 +851,7 @@
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity, other_pH, no_react = 0, ignore_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, other_pH, no_react = 0, ignore_pH = FALSE)
 
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -841,8 +860,8 @@
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
-	if(!other_purity)
-		other_purity = initial(D.purity)
+	if(!added_purity)
+		added_purity = initial(D.purity)
 	if(!D)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
@@ -903,7 +922,7 @@
 		if (R.id == reagent) //IF MERGING
 			//Add amount and equalize purity
 			R.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
-			R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
+			R.purity = ((R.purity * R.volume) + (added_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
 
 			update_total()
 			if(my_atom)
@@ -911,7 +930,7 @@
 			if(isliving(my_atom))
 				if(R.chemical_flags & REAGENT_ONMOBMERGE)//Forces on_mob_add proc when a chem is merged
 					R.on_mob_add(my_atom, amount)
-			R.on_merge(data, amount, my_atom, other_purity)
+			R.on_merge(data, amount, my_atom, added_purity)
 			if(!no_react)
 				handle_reactions()
 
@@ -923,7 +942,7 @@
 	cached_reagents += R
 	R.holder = src
 	R.volume = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	R.purity = other_purity
+	R.purity = added_purity
 	R.loc = get_turf(my_atom)
 	if(data)
 		R.data = data

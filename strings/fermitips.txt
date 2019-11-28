@@ -4,7 +4,7 @@ The infomation depth of pH meter readouts can be reduced by using it in hand!
 Chem Masters can tell you the optimal pH of a reagent for it's reaction under the analyse function.
 Oculine slightly improves your eyesight when it's in your system, based on the purity of it, of course!
 Everyone's stomachs has a pH, I wonder what happens if you try to set off a mixed fermiexplosion after changing it?
-I wish Kev would merge my PRs
+Merge my PRs!
 Nutriment can be created in the lab by grinding up synthmeat. Cooking oil can be created this way too!
 Some of the reagents used in hatmium are easily obtained by grinding synthmeat.
 Injecting someone with a syringe of Furranium will stun them for a short time while they cough up a plushie.
@@ -21,7 +21,7 @@ Spraying Nanite bane on something will EMP it. Useful for cameras and stealth em
 You can possess other people as a astral projection, if they have astrogen in their system too. For those who don't, you can send a message to them secretly.
 Eigenstasium's wild ride can be halted by taking more.
 Spraying the floor with hatmium will create a hat. Throwing this hat will make it mad, and it'll start attacking!
-For the larger explosions, the hotter it is, the larger the fireball, as well as secondary effects.
+For the larger fermiexplosions, the hotter it is, the larger the fireball, as well as secondary effects.
 For some explosions, the more basic it is, the larger the explosion, with respect to volume.
 For some explosions, the more acidic it is, the stronger the acid power.
 Overdosing someone on Astrogen will slowly remove them from the round. 
