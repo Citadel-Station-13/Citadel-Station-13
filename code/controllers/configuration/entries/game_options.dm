@@ -384,5 +384,5 @@
 	config_entry_value = 1800
 	min_val = 0
 
-/datum/config_entry/flag/allow_clockwork_marauder
+/datum/config_entry/flag/allow_station_clockwork_marauder
 	config_entry_value = TRUE
