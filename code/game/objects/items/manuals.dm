@@ -298,7 +298,7 @@
 				}
 			</script>
 			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]?book=1" frameborder="0" id="main_frame"></iframe>
 			</body>
 
 			</html>
