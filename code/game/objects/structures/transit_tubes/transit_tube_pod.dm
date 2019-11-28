@@ -3,17 +3,15 @@
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
-	density = TRUE
+	density = FALSE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
-
 
 /obj/structure/transit_tube_pod/Initialize()
 	. = ..()
 	air_contents.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
 	air_contents.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
-
 
 /obj/structure/transit_tube_pod/Destroy()
 	empty_pod()
@@ -135,13 +133,11 @@
 		sleep(last_delay)
 		setDir(next_dir)
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
-		density = current_tube.density
-
+	
 		if(current_tube && current_tube.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 			break
 
-	density = TRUE
 	moving = 0
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
