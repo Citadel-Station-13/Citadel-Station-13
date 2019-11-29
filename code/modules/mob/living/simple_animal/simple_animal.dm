@@ -4,6 +4,7 @@
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
+	blood_volume = 550   //How much blud it has for bloodsucking
 
 	status_flags = CANPUSH
 

@@ -409,7 +409,7 @@ SLIME SCANNER
 				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
+			var/blood_percent =  round((C.scan_blood_volume() / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != ("blood" || "jellyblood"))//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
