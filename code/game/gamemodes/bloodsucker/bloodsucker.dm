@@ -17,7 +17,7 @@
 	antag_flag = ROLE_BLOODSUCKER
 	false_report_weight = 1
 	restricted_jobs = list("AI","Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Deputy")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster", "Chaplain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -291,4 +291,4 @@
 	return TRUE
 
 /datum/game_mode/proc/remove_vassal(datum/mind/vassal)
-	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)
+	vassal.remove_antag_datum(ANTAG_D
