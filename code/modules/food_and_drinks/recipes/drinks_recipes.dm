@@ -30,6 +30,12 @@
 	results = list("icecoffee" = 4)
 	required_reagents = list("ice" = 1, "coffee" = 3)
 
+/datum/chemical_reaction/nuka_cola
+	name = "Nuka Cola"
+	id = "nuka_cola"
+	results = list("nuka_cola" = 6)
+	required_reagents = list("uranium" = 1, "cola" = 6)
+
 /datum/chemical_reaction/moonshine
 	name = "Moonshine"
 	id = "moonshine"
@@ -526,7 +532,7 @@
 	name = "Fetching Fizz"
 	id = "fetching_fizz"
 	results = list("fetching_fizz" = 3)
-	required_reagents = list("pwr_game" = 1, "iron" = 1) //Manufacturable from only the mining station
+	required_reagents = list("nuka_cola" = 1, "iron" = 1) //Manufacturable from only the mining station
 	mix_message = "The mixture slightly vibrates before settling."
 
 /datum/chemical_reaction/hearty_punch
@@ -728,7 +734,7 @@
 	name = "Blank Paper"
 	id = "blank_paper"
 	results = list("blank_paper" = 3)
-	required_reagents = list("silencer" = 1, "nothing" = 1, "pwr_game" = 1)
+	required_reagents = list("silencer" = 1, "nothing" = 1, "nuka_cola" = 1)
 
 /datum/chemical_reaction/wizz_fizz
 	name = "Wizz Fizz"
