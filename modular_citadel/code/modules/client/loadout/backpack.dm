@@ -107,7 +107,7 @@
 	path = /obj/item/pen/fourcolor
 
 /datum/gear/fountainpen
-	name "A fancy pen"
+	name = "A fancy pen"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/pen/fountain
 	cost = 2
