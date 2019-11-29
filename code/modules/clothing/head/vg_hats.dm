@@ -11,6 +11,7 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
 	dog_fashion = null
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/aviatorhelmet
 	name = "Aviator Helmet"
@@ -19,6 +20,7 @@
 	item_state = "aviator_helmet"
 	icon_state = "aviator_helmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/biker
 	name = "Biker's Helmet"
@@ -26,6 +28,7 @@
 	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "biker_helmet"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/richard
 	name = "Richard"
@@ -34,6 +37,7 @@
 	icon_state = "richard"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/megahelmet
 	name = "DRN-001 Helmet"
@@ -42,6 +46,7 @@
 	item_state = "megahelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/protohelmet
 	name = "Prototype Helmet"
@@ -50,6 +55,7 @@
 	item_state = "protohelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/megaxhelmet
 	name = "Maverick Hunter Helmet"
@@ -57,6 +63,7 @@
 	icon_state = "megaxhelmet"
 	item_state = "megaxhelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/joehelmet
 	name = "Sniper Helmet"
@@ -65,6 +72,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	item_state = "joehelmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/doomguy
 	name = "Doomguy's helmet"
@@ -74,6 +82,7 @@
 	item_state = "doom"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/helmet/neorussian
 	name = "neo-Russian helmet"
@@ -81,6 +90,7 @@
 	icon_state = "nr_helmet"
 	item_state = "nr_helmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/panzer
 	name = "Panzer Cap"
@@ -88,6 +98,7 @@
 	icon_state = "panzercap"
 	item_state = "panzercap"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/russobluecamohat
 	name = "russian blue camo beret"
@@ -95,6 +106,7 @@
 	icon_state = "russobluecamohat"
 	item_state = "russobluecamohat"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/russofurhat
 	name = "russian fur hat"
@@ -102,6 +114,7 @@
 	icon_state = "russofurhat"
 	item_state = "russofurhat"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/squatter_hat
 	name = "slav squatter hat"
@@ -109,6 +122,7 @@
 	item_state = "squatter_hat"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	desc = "Cyka blyat."
+	donator_group_id =
 
 /obj/item/clothing/head/snake
 	name = "snake head"
@@ -116,6 +130,8 @@
 	icon_state = "snakehead"
 	item_state = "snakehead"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
+
 /obj/item/clothing/head/mummy_rags
 	name = "mummy rags"
 	desc = "Ancient rags taken off from some mummy."
@@ -124,6 +140,7 @@
 	item_color = "mummy"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/clownpiece
 	name = "Clownpiece's jester hat"
@@ -131,6 +148,7 @@
 	icon_state = "clownpiece"
 	item_state = "clownpiece"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/mitre
 	name = "mitre"
@@ -138,6 +156,7 @@
 	icon_state = "mitre"
 	item_state = "mitre"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/tinfoil
 	name = "tinfoil hat"
@@ -146,6 +165,7 @@
 	item_state = "paper"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 2
+	donator_group_id = DONATOR_GROUP_TIER_1
 
 /obj/item/clothing/head/celtic
 	name = "\improper Celtic crown"
@@ -153,3 +173,4 @@
 	icon_state = "celtic_crown"
 	item_state = "celtic_crown"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	donator_group_id = DONATOR_GROUP_TIER_1
