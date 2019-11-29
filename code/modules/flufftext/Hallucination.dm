@@ -21,7 +21,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/delusion = 2,
 	/datum/hallucination/shock = 1,
 	/datum/hallucination/death = 1,
-	/datum/hallucination/oh_yeah = 1
+	/datum/hallucination/oh_yeah = 1,
+	/datum/hallucination/sleeping_carp = 1
 	))
 
 
