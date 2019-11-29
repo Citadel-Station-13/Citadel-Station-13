@@ -57,7 +57,7 @@
 
 /datum/round_event_control/wizard/canSpawnEvent(var/players_amt, var/gamemode)
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/datum/game_mode/dynamic/mode = SSticker.mode
 		if (locate(/datum/dynamic_ruleset/midround/from_ghosts/wizard) in mode.executed_rules)
 			return can_be_midround_wizard && ..()
 	return ..()

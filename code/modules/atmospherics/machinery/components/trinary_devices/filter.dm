@@ -14,8 +14,8 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/examine(mob/user)
 	. = ..()
-	to_chat(user,"<span class='notice'>You can hold <b>Ctrl</b> and click on it to toggle it on and off.</span>")
-	to_chat(user,"<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its pressure.</span>")
+	. += "<span class='notice'>You can hold <b>Ctrl</b> and click on it to toggle it on and off.</span>"
+	. += "<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its pressure.</span>"
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	var/area/A = get_area(src)

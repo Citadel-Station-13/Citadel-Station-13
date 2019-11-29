@@ -49,7 +49,7 @@
 				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
-				death(FALSE, penalize = TRUE)
+				death(FALSE)
 
 				return
 

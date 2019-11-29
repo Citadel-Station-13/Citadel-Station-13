@@ -12,9 +12,9 @@
 	var/obj/machinery/computer/cargo/cargo_console = null
 
 /obj/item/export_scanner/examine(user)
-	..()
+	. = ..()
 	if(!cargo_console)
-		to_chat(user, "<span class='notice'>[src] is not currently linked to a cargo console.</span>")
+		. += "<span class='notice'>[src] is not currently linked to a cargo console.</span>"
 
 /obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
