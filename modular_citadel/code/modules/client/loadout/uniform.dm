@@ -333,13 +333,13 @@
 
 /datum/gear/pinkstripper
 	name = "Pink stripper outfit"
-	categor = SLOT_W_UNIFORM
+	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_pink
 	cost = 3
 
 /datum/gear/greenstripper
 	name = "Green stripper outfit"
-	categor = SLOT_W_UNIFORM
+	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
 	cost = 3
 	
