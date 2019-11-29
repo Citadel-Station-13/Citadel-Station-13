@@ -6,7 +6,7 @@
 	desc 				= "Floppy!"
 	icon 				= 'modular_citadel/icons/obj/genitals/dildo.dmi'
 	damtype 			= AROUSAL
-	force 				= 5
+	force 				= 50
 	hitsound			= 'sound/weapons/tap.ogg'
 	throwforce			= 0
 	icon_state 			= "dildo_knotted_2"
