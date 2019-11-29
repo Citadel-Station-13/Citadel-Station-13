@@ -50,7 +50,7 @@
 	..()
 
 
-/obj/machinery/reagentgrinder/ui_interact(mob/user) // taken from the microwave/grinder
+/obj/vehicle/sealed/vectorcraft/boot/ambulance/ui_interact(mob/user) // taken from the microwave/grinder
 	. = ..()
 
 	var/list/options = list()
@@ -65,7 +65,8 @@
 		if(Sl.occupant)
 			options["radial_heal"] = radial_heal
 		if(inserted_key)
-			options["radial_eject_key"] = radial_eject_key
+			if(!driver)
+				options["radial_eject_key"] = radial_eject_key
 		if(length(boot))
 			options["radial_eject_boot"] = radial_eject_boot
 
@@ -90,11 +91,12 @@
 			else
 				for(var/mob/m in occupants)
 					remove_occupant(m)
-		if("grind")
+		if("radial_heal")
 			grind(user)
-		if("juice")
-			juice(user)
-		if("mix")
-			mix(user)
-		if("examine")
-			examine(user)
+		if("eject_key")
+			to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
+			inserted_key.forceMove(drop_location())
+			user.put_in_hands(inserted_key)
+			inserted_key = null
+		if("eject_boot")
+			eject_boot(user)
