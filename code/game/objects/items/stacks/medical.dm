@@ -119,7 +119,7 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, heals miner's minor wounds."
+	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, heals minor wounds."
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
