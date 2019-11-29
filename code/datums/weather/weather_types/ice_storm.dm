@@ -1,4 +1,5 @@
 //Same as snow_storm basically, but cools outside turf temps. StreetStation only
+#define ICY_SNOW_TEMP 100
 /datum/weather/ice_storm
 	name = "Icestorm"
 	desc = "Harsh snowstorms roam the topside of this arctic planet, burying any area unfortunate enough to be in its path."
@@ -25,11 +26,11 @@
 /datum/weather/ice_storm/weather_act(mob/living/L)
 	L.adjust_bodytemperature(-rand(10,20))
 
-/datum/weather/ice_storm/update_areas()
+/datum/weather/ice_storm/weather_act_turf(area/N)
 	.=..()
 	//could be done better but would need a rewrite of weather which is beyond scope.
-	for(var/V in impacted_areas)
-		var/area/N = V
-		for(var/turf/open/T in N)
-			var/datum/gas_mixture/turf/G = T.air
-			G.temperature -= 50
+	for(var/turf/open/T in N)
+		var/datum/gas_mixture/turf/G = T.air
+		G.temperature = ICY_SNOW_TEMP
+
+undefine ICY_SNOW_TEMP
