@@ -16,7 +16,7 @@
 
 /datum/supply_pack/organic/candy/randomised
 	name = "Candy Crate"
-	desc = "For people that have a insatiable sweet tooth! Has ten candies to be eaten up.."
+	desc = "For people that have an insatiable sweet tooth! Has ten candies to be eaten up.."
 	cost = 2500
 	var/num_contained = 10 //number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/reagent_containers/food/snacks/candy,
@@ -49,7 +49,7 @@
 
 /datum/supply_pack/organic/food
 	name = "Food Crate"
-	desc = "Get things cooking with this crate full of useful ingredients! Contains a two dozen eggs, three bananas, and two bags of flour and rice, two cartons of milk, soymilk, as well as salt and pepper shakers, a enzyme and sugar bottle, and three slabs of monkeymeat."
+	desc = "Get things cooking with this crate full of useful ingredients! Contains a two dozen eggs, three bananas, and two bags of flour and rice, two cartons of milk, soymilk, as well as salt and pepper shakers, an enzyme and sugar bottle, and three slabs of monkeymeat."
 	cost = 1000
 	contains = list(/obj/item/reagent_containers/food/condiment/flour,
 					/obj/item/reagent_containers/food/condiment/flour,
@@ -255,7 +255,7 @@
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
 	name = "Beekeeping Starter Crate"
-	desc = "BEES BEES BEES. Contains three honey frames, a beekeeper suit and helmet, flyswatter, bee house, and, of course, a pure-bred Nanotrasen-Standardized Queen Bee!"
+	desc = "BEES BEES BEES. Contains three honey frames, a beekeeper suit & helmet, flyswatter, bee house, and, of course, a pure-bred Nanotrasen-Standardized Queen Bee!"
 	cost = 1800
 	contains = list(/obj/structure/beebox/unwrenched,
 					/obj/item/honey_frame,
@@ -338,7 +338,7 @@
 
 /datum/supply_pack/organic/hunting
 	name = "Hunting Gear"
-	desc = "Even in space, we can fine prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a huntting shotgun. "
+	desc = "Even in space, we can find prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a hunting shotgun. "
 	cost = 3500
 	contraband = TRUE
 	contains = list(/obj/item/clothing/head/flatcap,
@@ -354,7 +354,7 @@
 
 /datum/supply_pack/organic/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	desc = "Need to slice and dice away those ''Tomatoes''? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
 	cost = 10000
 	contraband = TRUE
 	contains = list(/obj/item/sharpener, //Deluxe for a reason
@@ -392,7 +392,7 @@
 
 /datum/supply_pack/organic/vday
 	name = "Surplus Valentine Crate"
-	desc = "Turns out we got warehouses of this love-y dove-y crap. Were sending out small barged buddle of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
+	desc = "Turns out we got warehouses of this love-y dove-y crap. We're sending out small bargain buddle of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
 	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/item/storage/fancy/heart_box,

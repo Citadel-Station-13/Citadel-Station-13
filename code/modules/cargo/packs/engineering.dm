@@ -74,7 +74,7 @@
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
-	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Does not contain spare ammo for the industrial RCD or any other RCD models."
+	desc = "An industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Does not contain spare ammo for the industrial RCD or any other RCD models."
 	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
@@ -123,7 +123,7 @@
 
 /datum/supply_pack/engineering/powertools
 	name = "Power Tools Crate"
-	desc = "Setting up the aux base? Working out in space? Maybe you just hate doing things by hand. Grab some power tools and slash your workload in half! Contains a hardhat, hazard vest, Hand Drill, and Jaws of Life"
+	desc = "Setting up the aux base? Working out in space? Maybe you just hate doing things by hand. Grab some power tools and slash your workload in half! Contains a hardhat, hazard vest, Hand Drill, and Jaws of Life. Requires Engineering Access to open."
 	cost = 6500
 	access = ACCESS_ENGINE
 	contains = list(/obj/item/clothing/head/hardhat,
@@ -155,7 +155,7 @@
 
 /datum/supply_pack/engineering/siezedproduction 
 	name = "The Means of Production"
-	desc = "We will win for we have took over the production! S five metal sheets, five wire, three matter bins, one manipulater and one sheet of glass."
+	desc = "We will win for we have taken over the production! Contains an autolate board and all the materials required to assemble it! (High-voltage plus power cell included!)"
 	cost = 1500
 	contraband = TRUE
 	contains = list(/obj/item/stock_parts/cell/high/plus,
@@ -195,7 +195,7 @@
 
 /datum/supply_pack/engineering/dna_vault
 	name = "DNA Vault Parts"
-	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
+	desc = "Secure the longevity of the current state of civilization within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes." //C'mon now, it's nae just humans on the station these days
 	cost = 12000
 	special = TRUE
 	contains = list(

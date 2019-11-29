@@ -64,7 +64,7 @@
 
 /datum/supply_pack/service/icecream_cart
 	name = "Ice Cream Cart Crate"
-	desc = "Plasma fire a to hot for you, want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
+	desc = "Plasma fire too hot for you? Want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
 	cost = 2750 //Comes prestocked with basic ingredients
 	contains = list(/obj/machinery/icecream_vat)
 	crate_name = "ice cream vat crate"
@@ -153,10 +153,10 @@
 
 /datum/supply_pack/service/janitor/advanced
 	name = "Advanced Sanitation Crate"
-	desc = "Contains all the essentials for an advanced spacefaring cleanup crew. This kit includes a trashbag of holding, an advanced mop, a bottle of space cleaner, a floor buffer, and a holosign projector."
-	cost = 5000
+	desc = "Contains all the essentials for an advanced spacefaring cleanup crew. This kit includes a trashbag, an advanced mop, a bottle of space cleaner, a floor buffer, and a holosign projector. Requires Janitorial Access to Open"
+	cost = 5700
 	access = ACCESS_JANITOR
-	contains = list(/obj/item/storage/bag/trash/bluespace,
+	contains = list(/obj/item/storage/bag/trash,
 					/obj/item/reagent_containers/spray/cleaner,
 					/obj/item/mop/advanced,
 					/obj/item/lightreplacer,
@@ -260,7 +260,7 @@
 
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains the classics."
 	cost = 1000
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
@@ -270,7 +270,7 @@
 
 /datum/supply_pack/service/carpet2
 	name = "Premium Carpet Crate #2"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains red, and monochrome"
 	cost = 1000
 	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
 					/obj/item/stack/tile/carpet/blackred/fifty,
@@ -280,7 +280,7 @@
 
 /datum/supply_pack/service/party
 	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, and a bottle of patron, goldschlager, and shaker!"
+	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
 	cost = 2000
 	contains = list(/obj/item/storage/box/drinkingglasses,
 					/obj/item/reagent_containers/food/drinks/shaker,

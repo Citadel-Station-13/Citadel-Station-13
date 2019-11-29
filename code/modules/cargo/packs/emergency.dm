@@ -45,9 +45,9 @@
 	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/medicalemergency
-	name = "Emergency Medical Supplies"
+	name = "Emergency Medical Supplies" //Almost all of this can be ordered seperatly for a much cheaper price, but the HUD increases it.
 	desc = "Emergency supplies for a front-line medic. Contains two boxes of body bags, a medical HUD, a defib unit, medical belt, toxin bottles, epipens, and several types of medical kits."
-	cost = 6600
+	cost = 10000
 	contains = list(/obj/item/storage/box/bodybags,
 					/obj/item/storage/box/bodybags,
 					/obj/item/clothing/glasses/hud/health,
@@ -65,16 +65,22 @@
 
 /datum/supply_pack/emergency/medemergencylite
 	name = "Emergency Medical Supplies (Lite)"
-	desc = "A less than optimal, but still effective, set of tools for emergency care. Contains a box of bodybags, a medical HUD, healing sprays, charcoal, some gauze, and some spare medipens."
+	desc = "A less than optimal, but still effective, set of tools for emergency care. Contains a box of bodybags, some normal (and advanced) health analyzers, healing sprays, a single first aid kit, charcoal, some gauze, a bottle of toxins, and some spare medipens."
 	cost = 2800
 	contains = list(/obj/item/storage/box/bodybags,
 					/obj/item/stack/medical/gauze,
-					/obj/item/clothing/glasses/hud/health,
+					/obj/item/stack/medical/gauze,
+					/obj/item/healthanalyzer,
+					/obj/item/healthanalyzer,
+					/obj/item/healthanalyzer/advanced,
+					/obj/item/storage/firstaid/regular,
 					/obj/item/reagent_containers/medspray/styptic,
 					/obj/item/reagent_containers/medspray/silver_sulf,
 					/obj/item/reagent_containers/medspray/synthflesh,
 					/obj/item/reagent_containers/glass/bottle/charcoal,
 					/obj/item/reagent_containers/glass/bottle/charcoal,
+					/obj/item/reagent_containers/glass/bottle/toxin,
+					/obj/item/reagent_containers/hypospray/medipen,
 					/obj/item/reagent_containers/hypospray/medipen,
 					/obj/item/reagent_containers/hypospray/medipen,
 					/obj/item/reagent_containers/hypospray/medipen)
@@ -98,7 +104,7 @@
 
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
-	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
+	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of RCDs to be able to easily fix up any problem you may have!"
 	cost = 1500
 	contains = list(/obj/item/construction/rcd,
 					/obj/item/construction/rcd)
@@ -107,7 +113,7 @@
 
 /datum/supply_pack/emergency/soft_suit
 	name = "Emergency Space Suit "
-	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
+	desc = "Is there bombs going off left and right? Are there meteors shooting around the station? Well we have two fragile space suit for emergencies as well as air and masks."
 	cost = 1200
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
@@ -305,7 +311,7 @@
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
-	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
+	desc = "Viro let out a death plague Mk II again? Someone didnt wash their hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it breaks out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
 	cost = 3000
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,

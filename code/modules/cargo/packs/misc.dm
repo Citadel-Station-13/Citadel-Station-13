@@ -239,7 +239,7 @@
 
 /datum/supply_pack/misc/wrapping_paper
 	name = "Festive Wrapping Paper Crate"
-	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, the Clown's severed head? You can do all that, with this crate full of wrapping paper."
+	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, or the Clown's severed head? You can do all that, with this crate full of wrapping paper."
 	cost = 1000
 	contains = list(/obj/item/stack/wrapping_paper)
 	crate_type = /obj/structure/closet/crate/wooden
@@ -308,7 +308,7 @@
 
 /datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
-	desc = "Psss want to have a good time with your sluts? Well I got what you want! Maid clothing, dildos, collars and more!"
+	desc = "Pssst, want to have a good time with your sluts? Well I got what you want! Maid clothing, dildos, collars and more!"
 	cost = 5250
 	contraband = TRUE
 	contains = list(/obj/item/dildo/custom,
@@ -339,7 +339,7 @@
 
 /datum/supply_pack/misc/randomised/promiscuous
 	name = "Promiscuous Organs"
-	desc = "Do YOU want to have more genital? Well we have just the thing for you~. This crate has two autosurgeon, that will let you have a new sex, organ to impress that hot stud and or chick."
+	desc = "Do YOU want to have more genitals? Well we have just the thing for you~. This crate has two autosurgeons, that will let you have a new sex organ to impress that hot stud and/or chick."
 	cost = 4000 //Only get 2!
 	contraband = TRUE
 	var/num_contained = 2
