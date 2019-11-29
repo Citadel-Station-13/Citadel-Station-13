@@ -43,7 +43,7 @@
 /datum/game_mode/proc/finalize_monster_hunters(monster_count = 4)
 	var/amEvil = TRUE // First hunter is always an evil boi
 	for(var/datum/mind/hunter in vamphunters)
-		var/datum/antagonist/vamphunter/A = new ANTAG_DATUM_HUNTER(hunter)
+		var/datum/antagonist/vamphunter/A = new (hunter)
 		A.bad_dude = amEvil
 		hunter.add_antag_datum(A)
 		amEvil = FALSE  // Every other hunter is just a boring greytider

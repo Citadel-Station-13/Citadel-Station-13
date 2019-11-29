@@ -17,25 +17,19 @@
 	var/target_grappled = FALSE // If you started grappled, then ending it will end your Feed.
 
 /datum/action/bloodsucker/feed/CheckCanUse(display_error)
-	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
-
+	. = ..()
+	if(!.)
+		return
 	// Wearing mask
 	var/mob/living/L = owner
 	if (L.is_mouth_covered())
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You cannot feed with your mouth covered! Remove your mask.</span>")
 		return FALSE
-
 	// Find my Target!
 	if (!FindMyTarget(display_error)) // Sets feed_target within after Validating
 		return FALSE
-
-	// Not in correct state
-	//if (owner.grab_state < GRAB_PASSIVE)//GRAB_AGGRESSIVEs)
-	//	to_chat(owner, "<span class='warning'>You aren't grabbing anyone!</span>")
-	//	return FALSE
-
+		// Not in correct state
 	// DONE!
 	return TRUE
 
@@ -80,7 +74,6 @@
 	// Default
 	feed_target = null
 	target_grappled = FALSE
-
 	// If you are pulling a mob, that's your target. If you don't like it, then release them.
 	if (owner.pulling && ismob(owner.pulling))
 		// Check grapple target Valid
@@ -89,20 +82,17 @@
 		target_grappled = TRUE
 		feed_target = owner.pulling
 		return TRUE
-
 	// Find Targets
 	var/list/mob/living/seen_targets = view(1, owner)
 	var/list/mob/living/seen_mobs = list()
 	for(var/mob/living/M in seen_targets)
 		if (isliving(M) && M != owner)
 			seen_mobs += M
-
 	// None Seen!
 	if (seen_mobs.len == 0)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You must be next to or grabbing a victim to feed from them.</span>")
 		return FALSE
-
 	// Check Valids...
 	var/list/targets_valid = list()
 	var/list/targets_dead = list()
@@ -114,7 +104,6 @@
 				targets_valid += M
 			else
 				targets_dead += M
-
 	// No Living? Try dead.
 	if (targets_valid.len == 0 && targets_dead.len > 0)
 		targets_valid = targets_dead
@@ -137,17 +126,13 @@
 		feed_target = pick(targets_valid)//targets[1]
 		return TRUE
 
-
 /datum/action/bloodsucker/feed/ActivatePower()
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up Activate(), so Deactivate() can happen after.
-
 	var/mob/living/target = feed_target // Stored during CheckCanUse(). Can be a grabbed OR adjecent character.
 	var/mob/living/user = owner
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
 	// Am I SECRET or LOUD? It stays this way the whole time! I must END IT to try it the other way.
 	var/amSilent = (!target_grappled || owner.grab_state <= GRAB_PASSIVE) //  && iscarbon(target) // Non-carbons (animals) not passive. They go straight into aggressive.
-
 	// Initial Wait
 	var/feed_time = (amSilent ? 45 : 25) - (2.5 * level_current)
 	feed_time = max(15, feed_time)
@@ -159,7 +144,6 @@
 		to_chat(user, "<span class='warning'>Your feeding was interrupted.</span>")
 		//DeactivatePower(user,target)
 		return
-
 	// Put target to Sleep (Bloodsuckers are immune to their own bite's sleep effect)
 	if (!amSilent)
 		ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
@@ -172,7 +156,6 @@
 		// Pull Target Close
 		if (!target.density) // Pull target to you if they don't take up space.
 			target.Move(user.loc)
-
 	// Broadcast Message
 	if (amSilent)
 		//if (!iscarbon(target))
@@ -198,7 +181,6 @@
 	else						 // /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mobs)
 		user.visible_message("<span class='warning'>[user] closes [user.p_their()] mouth around [target]'s neck!</span>", \
 						 "<span class='warning'>You sink your fangs into [target]'s neck.</span>")
-
 	// My mouth is full!
 	ADD_TRAIT(user, TRAIT_MUTE, "bloodsucker_feed")
 

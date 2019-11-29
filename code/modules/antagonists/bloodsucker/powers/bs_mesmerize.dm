@@ -19,8 +19,9 @@
 	bloodsucker_can_buy = TRUE
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
-	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if (!owner.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You have no eyes with which to mesmerize.</span>")

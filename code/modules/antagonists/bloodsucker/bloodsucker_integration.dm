@@ -8,11 +8,11 @@
 
 
 /mob/living/proc/HaveBloodsuckerBodyparts(var/displaymessage="") // displaymessage can be something such as "rising from death" for Torpid Sleep. givewarningto is the person receiving messages.
-	if (!getorganslot("heart"))
+	if (!getorganslot(ORGAN_SLOT_HEART))
 		if (displaymessage != "")
 			to_chat(src, "<span class='warning'>Without a heart, you are incapable of [displaymessage].</span>")
 		return FALSE
-	if (!get_bodypart("head"))
+	if (!get_bodypart(BODY_ZONE_HEAD))
 		if (displaymessage != "")
 			to_chat(src, "<span class='warning'>Without a head, you are incapable of [displaymessage].</span>")
 		return FALSE

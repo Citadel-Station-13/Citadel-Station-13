@@ -1,8 +1,6 @@
-
 // Level 1: Grapple level 2
 // Level 2: Grapple 3 from Behind
 // Level 3: Grapple 3 from Shadows
-
 /datum/action/bloodsucker/targeted/lunge
 	name = "Predatory Lunge"
 	desc = "Spring at your target and aggressively grapple them without warning. Attacks from concealment or the rear may even knock them down."
@@ -15,7 +13,6 @@
 	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
 
-
 /datum/action/bloodsucker/targeted/lunge/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
@@ -26,10 +23,8 @@
 		return FALSE
 	return TRUE
 
-
 /datum/action/bloodsucker/targeted/lunge/CheckValidTarget(atom/A)
 	return isliving(A)
-
 
 /datum/action/bloodsucker/targeted/lunge/CheckCanTarget(atom/A, display_error)
 	// Check: Self
@@ -51,18 +46,14 @@
 
 /datum/action/bloodsucker/targeted/lunge/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
-
 	var/mob/living/user = owner
 	var/mob/living/carbon/target = A
 	var/turf/T = get_turf(target)
-
 	// Clear Vars
 	owner.pulling = null
-
 	// Will we Knock them Down?
 	var/do_knockdown = !is_A_facing_B(target,owner) || owner.alpha <= 0 || istype(owner.loc, /obj/structure/closet)
 	// CAUSES: Target has their back to me, I'm invisible, or I'm in a Closet
-
 	// Step One: Heatseek toward Target's Turf
 	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 	var/safety = 10
@@ -70,7 +61,6 @@
 		if(owner.incapacitated())
 			sleep(1)
 			safety --
-
 		// Did I get knocked down?
 		if (owner && owner.incapacitated())
 			if (user.lying)
@@ -78,8 +68,6 @@
 				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
 				owner.spin(10)
 			break
-
-
 	// Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
 	if (target.Adjacent(owner))
 		// LEVEL 2: If behind target, mute or unconscious!
@@ -90,12 +78,6 @@
 		//target.Paralyze(10,1)
 		target.grabbedby(owner) 										// Taken from mutations.dm under changelings
 		target.grippedby(owner, instant = TRUE) //instant aggro grab
-
-		//	UNCONSCIOUS or MUTE!
-		//owner.start_pulling(target,GRAB_AGGRESSIVE)    // GRAB_PASSIVE, GRAB_AGGRESSIVE, GRAB_NECK, GRAB_KILL
-
-	//DeactivatePower()
-
 
 /datum/action/bloodsucker/targeted/lunge/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE

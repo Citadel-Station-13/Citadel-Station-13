@@ -16,8 +16,9 @@
 	var/upgrade_canMove = FALSE	// Can I move around with this power?
 
 /datum/action/bloodsucker/cloak/CheckCanUse(display_error)
-	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	// Must be Dark
 	var/turf/T = owner.loc
 	if(istype(T) && T.get_lumcount() > light_min)

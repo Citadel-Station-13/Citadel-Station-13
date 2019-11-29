@@ -15,8 +15,9 @@
 	// Deal STAMINA damage over time, trickle down blood, and heal wounds.
 
 /datum/action/bloodsucker/vassal/recuperate/CheckCanUse(display_error)
-	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if (owner.stat >= DEAD)
 		return FALSE
 	var/mob/living/carbon/C = owner

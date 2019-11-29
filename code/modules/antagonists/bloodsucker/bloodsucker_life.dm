@@ -103,7 +103,7 @@
 
 	// Reagents (NOT Blood!)
 	if(target.reagents && target.reagents.total_volume)
-		target.reagents.reaction(owner.current, INGEST, 1 / target.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?
+		target.reagents.reaction(owner.current, INGEST, 1) // Run Reaction: what happens when what they have mixes with what I have?
 		target.reagents.trans_to(owner.current, 1)	// Run transfer of 1 unit of reagent from them to me.
 
 	// Blood Gulp Sound
@@ -114,38 +114,47 @@
 	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
 	mood_change = 10
 	timeout = 900
+
 /datum/mood_event/drankblood_bad
 	description = "<span class='boldwarning'>I drank the blood of a lesser creature. Disgusting.</span>\n"
 	mood_change = -4
 	timeout = 900
+
 /datum/mood_event/drankblood_dead
 	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
 	mood_change = -7
 	timeout = 900
+
 /datum/mood_event/drankblood_synth
 	description = "<span class='boldwarning'>I drank synthetic blood. What is wrong with me?</span>\n"
 	mood_change = -7
 	timeout = 900
+
 /datum/mood_event/drankkilled
 	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
 	mood_change = -12
 	timeout = 6000
+
 /datum/mood_event/madevamp
 	description = "<span class='boldwarning'>A soul has been cursed to undeath by my own hand.</span>\n"
 	mood_change = -10
 	timeout = 10000
+
 /datum/mood_event/vampatefood
 	description = "<span class='boldwarning'>Mortal nourishment no longer sustains me. I feel unwell.</span>\n"
 	mood_change = -6
 	timeout = 1000
+
 /datum/mood_event/coffinsleep
 	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
 	mood_change = 8
 	timeout = 1200
+
 /datum/mood_event/daylight_1
 	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
 	mood_change = -3
 	timeout = 1000
+	
 /datum/mood_event/daylight_2
 	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
 	mood_change = -6

@@ -1,6 +1,3 @@
-
-
-
 /datum/action/bloodsucker
 	name = "Vampiric Gift"
 	desc = "A vampiric gift."
@@ -20,8 +17,6 @@
 	var/active = FALSE
 	var/cooldown = 20 		// 10 ticks, 1 second.
 	var/cooldownUntil = 0 //  From action.dm:  	next_use_time = world.time + cooldown_time
-
-
 	// Power-Related
 	var/level_current = 0		// Can increase to yield new abilities. Each power goes up in strength each Rank.
 	//var/level_max = 1			//
@@ -45,37 +40,27 @@
 		desc += "<br><br><i>Useable once per night.</i>"
 	..()
 
-
 //							NOTES
 //
 // 	click.dm <--- Where we can take over mouse clicks
 //	spells.dm  /add_ranged_ability()  <--- How we take over the mouse click to use a power on a target.
 
-
 /datum/action/bloodsucker/Trigger()
-
 	// Active? DEACTIVATE AND END!
 	if (active && CheckCanDeactivate(TRUE))
 		DeactivatePower()
 		return
-
 	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
-
 	PayCost()
-
 	if (amToggle)
 		active = !active
 		UpdateButtonIcon()
-
 	if (!amToggle || !active)
 		StartCooldown() // Must come AFTER UpdateButton(), otherwise icon will revert.
-
 	ActivatePower()  // NOTE: ActivatePower() freezes this power in place until it ends.
-
 	if (active) // Did we not manually disable? Handle it here.
 		DeactivatePower()
-
 	if (amSingleUse)
 		RemoveAfterUse()
 
@@ -110,7 +95,7 @@
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
-		if (L.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE) || L.lying && !can_be_immobilized)
+		if (L.incapacitated(TRUE, TRUE) || L.lying && !can_be_immobilized)
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 			return FALSE
@@ -122,7 +107,6 @@
 				to_chat(owner, "<span class='warning'>You don't have the blood to upkeep [src].</span>")
 			return FALSE
 	return TRUE
-
 
 /datum/action/bloodsucker/proc/StartCooldown()
 	set waitfor = FALSE
@@ -139,8 +123,6 @@
 		// Alpha In
 		button.color = rgb(255,255,255,255)
 		button.alpha = 255
-
-
 
 /datum/action/bloodsucker/proc/CheckCanDeactivate(display_error)
 	return TRUE
@@ -159,7 +141,6 @@
 /datum/action/bloodsucker/proc/ActivatePower()
 
 
-
 /datum/action/bloodsucker/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
 	active = FALSE
 	UpdateButtonIcon()
@@ -168,7 +149,6 @@
 /datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
 	return active && user && (!warn_constant_cost || user.blood_volume > 0)
 
-
 /datum/action/bloodsucker/proc/RemoveAfterUse()
 	// Un-Learn Me! (GO HOME
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
@@ -176,12 +156,10 @@
 		bloodsuckerdatum.powers -= src
 	Remove(owner)
 
-
 /datum/action/bloodsucker/proc/Upgrade()
 	level_current ++
 
 ///////////////////////////////////  PASSIVE POWERS	///////////////////////////////////
-
 
 // New Type: Passive (Always on, no button)
 /datum/action/bloodsucker/passive
@@ -218,18 +196,14 @@
 
 // Click power: Begin Aim
 /datum/action/bloodsucker/targeted/Trigger()
-
 	if (active && CheckCanDeactivate(TRUE))
 		DeactivateRangedAbility()
 		DeactivatePower()
 		return
-
 	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
-
 	active = !active
 	UpdateButtonIcon()
-
 	// Create & Link Targeting Proc
 	var/mob/living/L = owner
 	if (L.ranged_ability)
@@ -240,12 +214,12 @@
 		to_chat(owner, "<span class='announce'>[message_Trigger]</span>")
 
 /datum/action/bloodsucker/targeted/CheckCanUse(display_error)
-	if (!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if (!owner.client)	// <--- We don't allow non client usage so that using powers like mesmerize will FAIL if you try to use them as ghost. Why? because ranged_abvility in spell.dm
 		return FALSE	//		doesn't let you remove powers if you're not there. So, let's just cancel the power entirely.
 	return TRUE
-
 
 /datum/action/bloodsucker/targeted/DeactivatePower(mob/living/user = owner, mob/living/target)
 	// Don't run ..(), we don't want to engage the cooldown until we USE this power!
@@ -255,7 +229,6 @@
 /datum/action/bloodsucker/targeted/proc/DeactivateRangedAbility()
 	// Only Turned off when CLICK is disabled...aka, when you successfully clicked (or
 	bs_proc_holder.remove_ranged_ability()
-		//qdel(bs_proc_holder)
 
 // Check if target is VALID (wall, turf, or character?)
 /datum/action/bloodsucker/targeted/proc/CheckValidTarget(atom/A)
@@ -278,15 +251,12 @@
 	// Valid? (return true means DON'T cancel power!)
 	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE) || !CheckCanTarget(A, TRUE))
 		return TRUE
-
 	// Skip this part so we can return TRUE right away.
 	if (power_activates_immediately)
 		PowerActivatedSuccessfully() // Mesmerize pays only after success.
-
 	power_in_use = TRUE	 // Lock us into this ability until it successfully fires off. Otherwise, we pay the blood even if we fail.
 	FireTargetedPower(A) // We use this instead of ActivatePower(), which has no input
 	power_in_use = FALSE
-
 	return TRUE
 
 /datum/action/bloodsucker/targeted/proc/FireTargetedPower(atom/A)
@@ -294,17 +264,13 @@
 
 /datum/action/bloodsucker/targeted/proc/PowerActivatedSuccessfully()
 	// The power went off! We now pay the cost of the power.
-
 	PayCost()
 	DeactivateRangedAbility()
 	DeactivatePower()
 	StartCooldown()	// Do AFTER UpdateIcon() inside of DeactivatePower. Otherwise icon just gets wiped.
 
 /datum/action/bloodsucker/targeted/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
-	return ..() // active// && user.mind && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
-
-
+	return ..()
 // Target Proc Holder
 /obj/effect/proc_holder/bloodsucker
 	var/datum/action/bloodsucker/targeted/linked_power
@@ -312,102 +278,6 @@
 /obj/effect/proc_holder/bloodsucker/remove_ranged_ability(msg)
 	..()
 	linked_power.DeactivatePower()
-	//qdel(src)
 
 /obj/effect/proc_holder/bloodsucker/InterceptClickOn(mob/living/caller, params, atom/A)
 	return linked_power.ClickWithPower(A)
-
-
-
-//					P O W E R S
-//	* BLOOD
-//		ADDICTIVE:	A) Your blood is dangerously addictive, and causes consumers to rendew their own blood at an increased rate (as well as heal). B) Vassals on your blood get special gifts.
-//
-//	* HASTE
-//		SPRINT:	A) Hastily speed in a direction faster than the eye can see. B) Spin and dizzy people you pass. C) Chance to knock down people you pass.
-//		LUNGE:	Leap toward a location and put your target into an agressive hold.
-//
-//	* AGILITY
-//		CELERITY:	Dodge projectiles and even bullets. Perhaps avoid explosions!
-//		REFLEXES	TRAIT_NOSLIPWATER, TRAIT_NOSLIPALL
-//
-//	* STEALTH
-//		CLOAK:  	A) Vanish into the shadows when stationary. B) Moving does not break your current level of invisibility (but stops you from hiding further).
-//		DISGUISE:	A) Bear the face and voice of a new person. B) Bear a random outfit of an unknown profession.
-//
-//	* FEED
-//		A) Mute victim while Feeding (and slowly deal Stamina damage) B) Paralyze victim while feeding C) Sleep victim while Feeding
-//
-//	* MEZMERIZE
-//		LOVE:		Target falls in love with you. Being harmed directly causes them harm if they see it?
-//		STAY:		Target will do everything they can to stand in the same place.
-//		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Poly's or NPC's vocab?)
-//		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
-//
-//	* EXPEL
-//		TAINT:		Mark areas with your corrupting blood. Your coffin must remain in an area so marked to gain any benefit. Spiders, roaches, and rats will infest the area, cobwebs grow rapidly, and trespassers are overcome with fear.
-//		SERVITUDE:	Your blood binds a mortal to your will. Vassals feel your pain and can locate you anywhere. Your death causes them agony.
-//		HEIR:		Raise a moral corpse into a Bloodsucker. The change will take a while, and the body must be brought to a tainted coffin to rise.
-//
-//	* NIGHTMARE
-//		BOGEYMAN:	Terrify those who view you in your death-form, causing them to shake, pale, and drop possessions.
-//		HORROR:		Horrified characters cannot speak, shake, and slowly push away from the source.
-//
-
-
-
-
-
-
-
-
-
-/* POWERS: VERSION TWO
-
-	* FEED
-		1:	Paralyze
-		2:	Unconscious
-		3:	Sleep
-
-	* LUNGE
-		1: 	Grab: Aggressive
-		2: 	Grab from Behind: Neck
-		3: 	Grab from Darkness: Neck
-
-	* CLOAK
-		1: 	Hide
-		2: 	Move
-		3: 	Full Speed
-
-	* MESMERIZE
-		1: 	Stay
-		2: 	Mute
-		3: 	Follow + Blind
-
-	* BRAWN
-		1:	Punch Hard
-		2:	Open Doors and Lockers
-		3:
-
-	* HASTE
-		1:	Speed to location
-		2:	Dodge Bullets
-		3:
-
-	* VEIL
-		1:
-		2:
-		3:
-
-	* FORTITUDE
-		1:	Break Bonds and Grapples
-		2:
-		3:	Immune to Brute Damage
-
-	* DEMENT
-		1:	Shuffle Names
-		2:
-		3:
-
-
-*/

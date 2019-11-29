@@ -31,8 +31,9 @@
 
 
 /datum/action/bloodsucker/veil/CheckCanUse(display_error)
-	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 
 	return TRUE
 

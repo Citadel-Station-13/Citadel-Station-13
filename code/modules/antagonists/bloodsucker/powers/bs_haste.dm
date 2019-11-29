@@ -20,8 +20,9 @@
 
 
 /datum/action/bloodsucker/targeted/haste/CheckCanUse(display_error)
-	if(!..(display_error))// DEFAULT CHECKS
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	// Being Grabbed
 	if (owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		if (display_error)

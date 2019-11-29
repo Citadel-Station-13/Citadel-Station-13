@@ -161,7 +161,7 @@
 
 	// [FLEDGLING]
 	if (creator)
-		A = new ANTAG_DATUM_BLOODSUCKER(bloodsucker)
+		A = new (bloodsucker)
 		A.creator = creator
 		bloodsucker.add_antag_datum(A)
 		// Log
@@ -200,9 +200,10 @@
 	if (!am_valid)
 		H.set_species(/datum/species/human)
 		H.real_name = H.client.prefs.custom_names["human"]
-		if (H.wear_id)
-			H.wear_id.GetID().registered_name = H.real_name
-			H.wear_id.GetID().update_label()
+		var/obj/item/card/id/ID = H.wear_id?.GetID()
+		if(ID)
+			ID.registered_name = H.real_name
+			ID.update_label()
 
 
 /datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator, display_warning=TRUE)//, check_antag_or_loyal=FALSE)
@@ -253,7 +254,6 @@
 	// No List?
 	if(!islist(M.antag_datums) || M.antag_datums.len == 0)
 		return FALSE
-
 	// Am I NOT an invalid Antag?    NOTE: We already excluded non-antags above. Don't worry about the "No List?" check in AmInvalidIntag()
 	return !AmInvalidAntag(M)
 
@@ -261,34 +261,29 @@
 	// No List?
 	if(!islist(M.antag_datums) || M.antag_datums.len == 0)
 		return FALSE
-
 	// Does even ONE antag appear in this mind that isn't in the list? Then FAIL!
 	for(var/datum/antagonist/antag_datum in M.antag_datums)
 		if (!(antag_datum.type in vassal_allowed_antags))  // vassal_allowed_antags is a list stored in the game mode, above.
 			//message_admins("DEBUG VASSAL: Found Invalid: [antag_datum] // [antag_datum.type]")
 			return TRUE
-
 	//message_admins("DEBUG VASSAL: Valid Antags! (total of [M.antag_datums.len])")
 	// WHEN YOU DELETE THE ABOVE: Remove the 3 second timer on converting the vassal too.
 	return FALSE
-
 
 /datum/game_mode/proc/make_vassal(mob/living/target, datum/mind/creator)
 	if (!can_make_vassal(target,creator))
 		return FALSE
 	// Make Vassal
-	var/datum/antagonist/vassal/V = new ANTAG_DATUM_VASSAL(target.mind)
+	var/datum/antagonist/vassal/V = new (target.mind)
 	var/datum/antagonist/bloodsucker/B = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	V.master = B
 	target.mind.add_antag_datum(V, V.master.get_team())
 	// Update Bloodsucker Title (we're a daddy now)
 	B.SelectTitle(am_fledgling = FALSE) // Only works if you have no title yet.
-
 	// Log
 	message_admins("[target] has become a Vassal, and is enslaved to [creator].")
 	log_admin("[target] has become a Vassal, and is enslaved to [creator].")
-
 	return TRUE
 
 /datum/game_mode/proc/remove_vassal(datum/mind/vassal)
-	vassal.remove_antag_datum(ANTAG_D
+	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)
