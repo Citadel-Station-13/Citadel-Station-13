@@ -114,6 +114,11 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/pants/camo
 
+/datum/gear/athleticshorts
+	name = "Athletic Shorts"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/shorts
+
 /datum/gear/bjeans
 	name = "Black Jeans"
 	category = SLOT_W_UNIFORM
