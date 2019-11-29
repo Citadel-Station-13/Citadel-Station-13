@@ -605,7 +605,7 @@
 		var/obj/machinery/status_display/ai/M = each
 		M.emotion = emote_display
 		M.update()
-	if (emote == "Friend Computer")
+	if (emote_display == "Friend Computer")
 		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 		if(!frequency)
