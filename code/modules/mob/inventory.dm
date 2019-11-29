@@ -10,7 +10,7 @@
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_held_item()
 	return get_item_for_held_index(get_inactive_hand_index())
-
+put_in_active_hand
 
 //Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
