@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
 
-	var/ingMax = 12
+	var/ingMax = 32
 	var/list/ingredients = list()
 	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
@@ -32,6 +32,8 @@
 	if(ingredients.len>5)
 		size = "big"
 	if(ingredients.len>8)
+		size = "huge"
+	if(ingredients.len>16)
 		size = "monster"
 	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
