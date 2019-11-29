@@ -21,21 +21,21 @@
 	return TRUE
 
 ///Handles the weaving.
-/obj/structure/loom/proc/weave(obj/item/stack/sheet/cotton/W, mob/user)
-	if(!istype(W))
+/obj/structure/loom/proc/weave(obj/item/stack/I, mob/user)
+	if(!istype(I))
 		return FALSE
 	if(!anchored)
 		user.show_message("<span class='notice'>The loom needs to be wrenched down.</span>", 1)
 		return FALSE
-	if(W.amount < FABRIC_PER_SHEET)
+	if(I.amount < FABRIC_PER_SHEET)
 		user.show_message("<span class='notice'>You need at least [FABRIC_PER_SHEET] units of fabric before using this.</span>", 1)
 		return FALSE
-	user.show_message("<span class='notice'>You start weaving \the [W.name] through the loom..</span>", 1)
-	if(W.use_tool(src, user, W.pull_effort))
-		if(W.amount >= FABRIC_PER_SHEET)
-			new W.loom_result(drop_location())
-			W.use(FABRIC_PER_SHEET)
-			user.show_message("<span class='notice'>You weave \the [W.name] into a workable fabric.</span>", 1)
+	user.show_message("<span class='notice'>You start weaving \the [I.name] through the loom..</span>", 1)
+	if(I.use_tool(src, user, I.pull_effort))
+		if(I.amount >= FABRIC_PER_SHEET)
+			new I.loom_result(drop_location())
+			I.use(FABRIC_PER_SHEET)
+			user.show_message("<span class='notice'>You weave \the [I.name] into a workable fabric.</span>", 1)
 	return TRUE
 
 /obj/structure/loom/unanchored
