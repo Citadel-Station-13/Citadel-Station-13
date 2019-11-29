@@ -1294,3 +1294,29 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	H.preparePixelProjectile(target, start)
 	H.fire()
 	qdel(src)
+
+/datum/hallucination/sleeping_carp
+
+/datum/hallucination/sleeping_carp/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	var/list/mobsyup = list()
+	for (var/mob/living/carbon/A in orange(C,2))
+		if (get_dist(C,A) < 2 && C != A)
+			mobsyup += list(A)
+	if (mobsyup.len == 0)
+		qdel(src)
+		return
+	var/mob/living/carbon/G = pick(mobsyup)
+	if (rand(0,1))
+		C.visible_message("<span class='warning'>[C] falls to the ground screaming and clutching [G.p_their()] wrist!</span>", \
+						  "<span class='userdanger'>[G] grabs your wrist and violently wrenches it to the side!</span>")
+		C.emote("scream")
+		C.dropItemToGround(C.get_active_held_item())
+		C.Knockdown(60)
+		qdel(src)
+		return
+	else
+		to_chat(C,"<span class='userdanger'>[G] violently grabs you!</span>")
+		qdel(src)
+		return
