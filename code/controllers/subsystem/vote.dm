@@ -255,7 +255,7 @@ SUBSYSTEM_DEF(vote)
 						continue
 					choices |= M
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
-				choices.Add("secret", "extended")
+				choices.Add("secret", "shitter safari/self-antag central/etc.")
 			if("dynamic")
 				var/saved_threats = SSpersistence.saved_threat_levels
 				if((saved_threats[1]+saved_threats[2]+saved_threats[3])>150)

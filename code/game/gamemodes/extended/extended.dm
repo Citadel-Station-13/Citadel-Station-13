@@ -14,7 +14,7 @@
 	return "The transmission mostly failed to mention your sector. It is possible that there is nothing in the Syndicate that could threaten your station during this shift."
 
 /datum/game_mode/extended/announced
-	name = "extended"
+	name = "shitter safari"
 	config_tag = "extended"
 	false_report_weight = 0
 
