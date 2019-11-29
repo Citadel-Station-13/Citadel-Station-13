@@ -5,9 +5,9 @@
 	var/registered_name = null
 
 /obj/structure/closet/secure_closet/personal/examine(mob/user)
-	..()
+	. = ..()
 	if(registered_name)
-		to_chat(user, "<span class='notice'>The display reads, \"Owned by [registered_name]\".</span>")
+		. += "<span class='notice'>The display reads, \"Owned by [registered_name]\".</span>"
 
 /obj/structure/closet/secure_closet/personal/check_access(obj/item/card/id/I)
 	. = ..()
