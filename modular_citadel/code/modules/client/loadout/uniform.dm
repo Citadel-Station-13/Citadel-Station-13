@@ -337,7 +337,7 @@
 	path = /obj/item/clothing/under/stripper_pink
 	cost = 3
 
-/datum/gear/pinkstripper
+/datum/gear/greenstripper
 	name = "Green stripper outfit"
 	categor = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
