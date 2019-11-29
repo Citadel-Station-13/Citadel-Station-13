@@ -102,7 +102,7 @@
 	path = /obj/item/storage/crayons
 
 /datum/gear/multipen
-	name "A multicolored pen"
+	name = "A multicolored pen"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/pen/fourcolor
 
