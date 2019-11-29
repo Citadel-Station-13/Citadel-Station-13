@@ -396,35 +396,6 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/consumable/nuka_cola
-	name = "Nuka Cola"
-	id = "nuka_cola"
-	description = "Cola, cola never changes."
-	color = "#100800" // rgb: 16, 8, 0
-	quality = DRINK_VERYGOOD
-	taste_description = "the future"
-	glass_icon_state = "nuka_colaglass"
-	glass_name = "glass of Nuka Cola"
-	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
-
-/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
-	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
-
-/datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(id)
-	..()
-
-/datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
-	M.Jitter(20)
-	M.set_drugginess(30)
-	M.dizziness +=1.5
-	M.drowsyness = 0
-	M.AdjustSleeping(-40, FALSE)
-	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	..()
-	. = 1
-
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
 	id = "spacemountainwind"
