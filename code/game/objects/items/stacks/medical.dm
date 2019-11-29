@@ -108,8 +108,9 @@
 	icon_state = "brutepack"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_brute = 40
+	heal_brute = 25
 	self_delay = 20
+	max_amount = 12
 	grind_results = list("styptic_powder" = 10)
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
@@ -118,13 +119,14 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, but does not heal wounds."
+	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, heals miner's minor wounds."
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	stop_bleeding = 1800
-	self_delay = 20
-	max_amount = 12
+	heal_brute = 5
+	self_delay = 10
+	max_amount = 6
 
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
@@ -153,7 +155,7 @@
 /obj/item/stack/medical/gauze/cyborg
 	materials = list()
 	is_cyborg = 1
-	cost = 250
+	cost = 200
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -163,8 +165,9 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_burn = 40
+	heal_burn = 25
 	self_delay = 20
+	max_amount = 12
 	grind_results = list("silver_sulfadiazine" = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
