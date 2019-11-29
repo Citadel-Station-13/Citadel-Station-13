@@ -126,7 +126,7 @@
 	stop_bleeding = 1800
 	heal_brute = 5
 	self_delay = 10
-	max_amount = 6
+	max_amount = 12
 
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
