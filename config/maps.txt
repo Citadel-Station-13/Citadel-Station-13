@@ -39,5 +39,10 @@ endmap
 map runtimestation
 endmap
 
+
 map gabbylayout
+endmap
+
+map multiz_debug
+
 endmap

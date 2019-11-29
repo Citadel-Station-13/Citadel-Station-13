@@ -46,12 +46,12 @@
 	return ..()
 
 /obj/machinery/space_heater/examine(mob/user)
-	..()
-	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
+	. = ..()
+	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
 	if(cell)
-		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
-		to_chat(user, "There is no power cell installed.")
+		. += "There is no power cell installed."
 
 /obj/machinery/space_heater/update_icon()
 	if(on)

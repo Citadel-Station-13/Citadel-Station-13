@@ -117,7 +117,7 @@
 /datum/weather/proc/weather_act(mob/living/L) //What effect does this weather have on the hapless mob?
 	return
 
-/datum/weather/proc/weather_act(area/N) //What effect does this weather have on the area?
+/datum/weather/proc/weather_act_turf(area/N) //What effect does this weather have on the area?
 	return
 
 /datum/weather/proc/update_areas()

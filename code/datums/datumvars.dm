@@ -875,14 +875,14 @@
 					return
 				// text2num conveniently returns a null on invalid values
 				O.armor = O.armor.setRating(melee = text2num(result["values"]["melee"]),\
-			                  bullet = text2num(result["values"]["bullet"]),\
-			                  laser = text2num(result["values"]["laser"]),\
-			                  energy = text2num(result["values"]["energy"]),\
-			                  bomb = text2num(result["values"]["bomb"]),\
-			                  bio = text2num(result["values"]["bio"]),\
-			                  rad = text2num(result["values"]["rad"]),\
-			                  fire = text2num(result["values"]["fire"]),\
-			                  acid = text2num(result["values"]["acid"]))
+											bullet = text2num(result["values"]["bullet"]),\
+											laser = text2num(result["values"]["laser"]),\
+											energy = text2num(result["values"]["energy"]),\
+											bomb = text2num(result["values"]["bomb"]),\
+											bio = text2num(result["values"]["bio"]),\
+											rad = text2num(result["values"]["rad"]),\
+											fire = text2num(result["values"]["fire"]),\
+											acid = text2num(result["values"]["acid"]))
 				log_admin("[key_name(usr)] modified the armor on [O] ([O.type]) to melee: [O.armor.melee], bullet: [O.armor.bullet], laser: [O.armor.laser], energy: [O.armor.energy], bomb: [O.armor.bomb], bio: [O.armor.bio], rad: [O.armor.rad], fire: [O.armor.fire], acid: [O.armor.acid]")
 				message_admins("<span class='notice'>[key_name_admin(usr)] modified the armor on [O] ([O.type]) to melee: [O.armor.melee], bullet: [O.armor.bullet], laser: [O.armor.laser], energy: [O.armor.energy], bomb: [O.armor.bomb], bio: [O.armor.bio], rad: [O.armor.rad], fire: [O.armor.fire], acid: [O.armor.acid]</span>")
 			else

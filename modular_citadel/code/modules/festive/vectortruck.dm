@@ -53,23 +53,21 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // taken from the microwave/grinder
 	. = ..()
 
-	if(operating || !user.canUseTopic(src, !issilicon(user)))
-		return
-
 	var/list/options = list()
 
 	if(isAI(user))
 		if(stat & NOPOWER)
 			return
-		options["examine"] = radial_examine
-
-
-	// if there is no power or it's broken, the procs will fail but the buttons will still show
-	if(length(holdingitems))
-		options["grind"] = radial_grind
-		options["juice"] = radial_juice
-	else if(beaker?.reagents.total_volume)
-		options["mix"] = radial_mix
+		options["radial_eject_car"] = radial_eject_car
+	else
+		if(vector["y"] == 0 && vector["x"] == 0)
+			options["radial_eject_car"] = radial_eject_car
+		if(Sl.occupant)
+			options["radial_heal"] = radial_heal
+		if(inserted_key)
+			options["radial_eject_key"] = radial_eject_key
+		if(length(boot))
+			options["radial_eject_boot"] = radial_eject_boot
 
 	var/choice
 
@@ -86,8 +84,12 @@
 		return
 
 	switch(choice)
-		if("eject")
-			eject(user)
+		if("eject_car")
+			if(driver)
+				remove_occupant(driver)
+			else
+				for(var/mob/m in occupants)
+					remove_occupant(m)
 		if("grind")
 			grind(user)
 		if("juice")

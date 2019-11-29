@@ -65,6 +65,28 @@
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
 
+/datum/supply_pack/organic/rawcotton
+	name = "Raw Cotton Crate"
+	desc = "Plushies have been on the down in the market, and now due to a flood of raw cotton the price of it is so cheap, its a steal! Contains 40 raw cotton sheets."
+	cost = 800 // 100 net cost, 20 x 20 = 400. 300 proffit if turned into cloth sheets or more if turned to silk then 10 x 200 = 2000
+	contains = list(/obj/item/stack/sheet/cotton/thirty,
+					/obj/item/stack/sheet/cotton/ten
+					)
+	crate_name = "cotton crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
+
+/datum/supply_pack/organic/rawlumber
+	name = "Raw Lumber Crate"
+	desc = "Raw logs from towercaps. Contains fifty logs."
+	cost = 1000
+	contains = list(/obj/item/grown/log)
+	crate_name = "lumber crate"
+
+/datum/supply_pack/critter/animal_feed/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /obj/item/grown/log(.)
+
 /datum/supply_pack/materials/rcdammo
 	name = "Spare RDC ammo"
 	desc = "This crate contains sixteen RCD ammo packs, to help with any holes or projects people mite be working on."
@@ -167,4 +189,20 @@
 	cost = 1200
 	contains = list(/obj/structure/reagent_dispensers/watertank/high)
 	crate_name = "high-capacity water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/loom
+	name = "Loom"
+	desc = "A large pre-made loom."
+	cost = 1000
+	contains = list(/obj/structure/loom)
+	crate_name = "loom crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/wooden_barrel
+	name = "Wooden Barrel"
+	desc = "Wooden barrels ready for storage."
+	cost = 1500
+	contains = list(/obj/structure/fermenting_barrel)
+	crate_name = "wooden barrel crate"
 	crate_type = /obj/structure/closet/crate/large

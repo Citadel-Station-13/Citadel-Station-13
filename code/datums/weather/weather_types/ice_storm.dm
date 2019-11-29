@@ -33,4 +33,3 @@
 		var/datum/gas_mixture/turf/G = T.air
 		G.temperature = ICY_SNOW_TEMP
 
-undefine ICY_SNOW_TEMP

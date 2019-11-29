@@ -310,10 +310,10 @@
 		if(!user.put_in_hands(inhand, TRUE))
 			qdel(inhand) // it isn't going to be added to offhands anyway
 			break
-		LAZYADD(equipped, src)
+		LAZYADD(equipped, inhand)
 	var/amount_equipped = LAZYLEN(equipped)
 	if(amount_equipped)
-		LAZYADD(offhands[L], amount_equipped)
+		LAZYADD(offhands[L], equipped)
 	if(amount_equipped >= amount_required)
 		return TRUE
 	unequip_buckle_inhands(L)
