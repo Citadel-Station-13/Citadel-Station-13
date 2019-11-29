@@ -342,3 +342,4 @@
 	categor = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
 	cost = 3
+	
