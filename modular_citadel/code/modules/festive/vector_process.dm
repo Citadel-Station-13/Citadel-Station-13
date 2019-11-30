@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(vectorcraft)
 	name = "Vectorcraft Movement"
-	priority = FIRE_PRIORITY_FLIGHTPACKS
+	priority = 40
 	wait = 2
 	stat_tag = "VC"
 	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING

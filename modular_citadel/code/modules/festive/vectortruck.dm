@@ -29,7 +29,11 @@
 		to_chat(user, "<span class='notice'>You put [M] into the [src]!</span>")
 		return TRUE
 
-/obj/vehicle/sealed/vectorcraft/boot/ambulance
+/obj/vehicle/sealed/vectorcraft/boot/proc/eject_boot()
+	for(var/obj/o in boot)
+		o.forceMove(drop_location())
+
+/obj/vehicle/sealed/vectorcraft/boot/ambulance //weewoos have to go fast
 	var/obj/machinery/sleeper/ambulance/Sl
 	max_acceleration = 3
 	accel_step = 0.15
@@ -38,9 +42,14 @@
 	max_velocity = 100
 	boost_power = 25
 	enginesound_delay = 0
+	var/weewoocount = 0
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize()
 	new var/obj/machinery/sleeper/ambulance
+
+/obj/vehicle/sealed/vectorcraft/boot/ambulance/process()
+	..()
+	weewoo()
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/MouseDrop_T(mob/living/L, mob/user)
 	if(isliving(L))
@@ -49,6 +58,12 @@
 		return TRUE
 	..()
 
+/obj/vehicle/sealed/vectorcraft/boot/ambulance/proc/weewoo()
+	if(weewoocount>10)
+		weewoocount = 0
+		
+		return
+	weewoo++
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/ui_interact(mob/user) // taken from the microwave/grinder
 	. = ..()
@@ -92,7 +107,7 @@
 				for(var/mob/m in occupants)
 					remove_occupant(m)
 		if("radial_heal")
-			grind(user)
+			Sl.ui_interact(user)
 		if("eject_key")
 			to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
 			inserted_key.forceMove(drop_location())

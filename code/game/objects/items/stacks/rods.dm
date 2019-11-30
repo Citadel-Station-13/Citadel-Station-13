@@ -1,9 +1,9 @@
 GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \ //Add fence recipe
+	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
 	))
-
+//Add fence recipe
 /obj/item/stack/rods
 	name = "metal rod"
 	desc = "Some rods. Can be used for building or something."
