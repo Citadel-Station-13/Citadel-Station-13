@@ -505,6 +505,21 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
+/obj/item/clothing/suit/hooded/wintercoat/centcom
+	name = "centcom winter coat"
+	icon_state = "coatcentcom"
+	item_state = "coatcentcom"
+	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 35, "bomb" = 40, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
+
+/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
+
+/obj/item/clothing/head/hooded/winterhood/centcom
+	icon_state = "winterhood_centcom"
+	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 35, "bomb" = 40, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
+
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
@@ -722,6 +737,15 @@
 
 /obj/item/clothing/head/hooded/winterhood/qm
 	icon_state = "winterhood_qm"
+
+/obj/item/clothing/suit/hooded/wintercoat/aformal
+	name = "assistant's formal winter coat"
+	icon_state = "coataformal"
+	item_state = "coataformal"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/aformal
+
+/obj/item/clothing/head/hooded/winterhood/aformal
+	icon_state = "winterhood_aformal"
 
 /obj/item/clothing/suit/hooded/wintercoat/miner
 	name = "mining winter coat"
