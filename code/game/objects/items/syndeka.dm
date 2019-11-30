@@ -46,10 +46,12 @@
 	desc = "A powerful experimental module that turns aside or absorbs incoming attacks at the cost of charge."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "eshield1"
-	var/active = FALSE 					//If the shield is on
+
 
 /obj/item/borgshield/attack_self(var/mob/living/silicon/robot/user)
-	active = !active
-	user.shielded = active
+	if(user.shielded)
+		user.shielded = FALSE
+	else
+		user.shielded = TRUE
 	user.update_icons()
 
