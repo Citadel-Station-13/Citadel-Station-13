@@ -740,10 +740,9 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
-	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || usr.incapacitated() || usr.lying)
-		return
+		return ..()
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
 			M.put_in_hands(src)
@@ -755,7 +754,9 @@
 				to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
 	else
-		to_chat(usr, "<span class='warning'>You can't reach it from here!</span>")
+		. = ..()
+		if(!.)
+			to_chat(usr, "<span class='warning'>You can't reach it from here!</span>")
 
 
 

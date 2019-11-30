@@ -104,7 +104,7 @@
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
 	. = ..()
-	if(ismob(loc))
+	if(!. && ismob(loc) && loc == usr)
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object

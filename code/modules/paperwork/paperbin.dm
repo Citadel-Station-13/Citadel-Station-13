@@ -42,6 +42,8 @@
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
 	. = ..()
+	if(.)
+		return
 	var/mob/living/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return

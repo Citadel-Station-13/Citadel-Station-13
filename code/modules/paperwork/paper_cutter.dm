@@ -92,6 +92,8 @@
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
 	. = ..()
+	if(.)
+		return
 	var/mob/M = usr
 	if(M.incapacitated() || !Adjacent(M))
 		return
