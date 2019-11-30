@@ -386,26 +386,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_found(mob/finder)
 	return
 
-/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params) //Copypaste of /atom/MouseDrop() since this requires code in a very specific spot
-	if(!usr || !over)
-		return
-	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is receiving will verify themselves for adjacency.
-		return
-	if(over == src)
-		return usr.client.Click(src, src_location, src_control, params)
-	var/list/directaccess = usr.DirectAccess()
-	if((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess)))
-		if(!usr.get_active_held_item())
-			usr.UnarmedAttack(src, TRUE)
-			if(usr.get_active_held_item() == src)
-				melee_attack_chain(usr, over)
-			return
-	if(!Adjacent(usr) || !over.Adjacent(usr))
-		return // should stop you from dragging through windows
-
-	over.MouseDrop_T(src,usr)
-	return
-
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
