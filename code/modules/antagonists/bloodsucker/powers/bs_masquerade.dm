@@ -30,7 +30,6 @@
 
 // NOTE: Firing off vulgar powers disables your Masquerade!
 
-
 /*/datum/action/bloodsucker/masquerade/CheckCanUse(display_error)
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE

@@ -24,8 +24,11 @@
 	var/prev_hair_color
 	var/prev_facial_hair_color
 	var/prev_underwear
+	var/prev_undie_color
 	var/prev_undershirt
+	var/prev_shirt_color
 	var/prev_socks
+	var/prev_socks_color
 	var/prev_disfigured
 	var/list/prev_features	// For lizards and such
 
@@ -72,13 +75,16 @@
 	prev_hair_color = H.hair_color
 	prev_facial_hair_color = H.facial_hair_color
 	prev_underwear = H.underwear
+	prev_undie_color = H.undie_color
 	prev_undershirt = H.undershirt
+	prev_shirt_color = H.shirt_color
 	prev_socks = H.socks
+	prev_socks_color = H.socks_color
 	//prev_eye_color
 	prev_disfigured = HAS_TRAIT(H, TRAIT_DISFIGURED) // I was disfigured! //prev_disabilities = H.disabilities
 	prev_features = H.dna.features
 
-	// Change Appearance
+	// Change Appearance, not randomizing clothes colour, itll just be janky
 	H.gender = pick(MALE, FEMALE)
 	H.skin_tone = random_skin_tone()
 	H.hair_style = random_hair_style(H.gender)
@@ -127,8 +133,11 @@
 		H.hair_color = prev_hair_color
 		H.facial_hair_color = prev_facial_hair_color
 		H.underwear = prev_underwear
+		H.undie_color = prev_undie_color
 		H.undershirt = prev_undershirt
+		H.shirt_color = prev_shirt_color
 		H.socks = prev_socks
+		H.socks_color = prev_socks_color
 
 		//H.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.
 		if (prev_disfigured)

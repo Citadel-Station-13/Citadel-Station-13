@@ -17,7 +17,6 @@
 	must_be_capacitated = TRUE
 	can_be_immobilized = TRUE
 
-
 /datum/action/bloodsucker/gohome/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
@@ -28,52 +27,32 @@
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your coffin has been destroyed!</span>")
 		return FALSE
-
 	return TRUE
 
-
-
 /datum/action/bloodsucker/gohome/ActivatePower()
-
 	var/mob/living/carbon/user = owner
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
-
 			// IMPORTANT: Check for lair at every step! It might get destroyed.
-
 	to_chat(user, "<span class='notice'>You focus on separating your consciousness from your physical form...</span>")
-
-
 	// STEP ONE: Flicker Lights
-
-	// From statue.dm
 	for(var/obj/machinery/light/L in view(3, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 		L.flicker(5)
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 20, 1)
-
 	sleep(50)
-
 	for(var/obj/machinery/light/L in view(3, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 		L.flicker(5)
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
-
 	sleep(50)
-
 	for(var/obj/machinery/light/L in view(6, get_turf(owner)))		// /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 		L.flicker(5)
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 60, 1)
-
-
 	// ( STEP TWO: Lights OFF? )
-
 	// CHECK: Still have Coffin?
 	if (!istype(bloodsuckerdatum) || !bloodsuckerdatum.coffin)
 		to_chat(user, "<span class='warning'>Your coffin has been destroyed! You no longer have a destination.</span>")
 		return FALSE
-
 	if (!owner)
 		return
-
 	// SEEN?: (effects ONLY if there are witnesses! Otherwise you just POOF)
 	//		   NOTE: Stolen directly from statue.dm, thanks guys!
 	var/am_seen = FALSE		// Do Effects (seen by anyone)
@@ -89,7 +68,6 @@
 					if (!M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 						drop_item = TRUE
 						break
-
 	// LOSE CUFFS
 	if(user.handcuffed)
 		var/obj/O = user.handcuffed
@@ -97,7 +75,6 @@
 	if(user.legcuffed)
 		var/obj/O = user.legcuffed
 		user.dropItemToGround(O)
-
 	// SEEN!
 	if (drop_item)
 		// DROP:	Clothes, held items, and cuffs etc
@@ -116,7 +93,6 @@
 		puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
 		puff.set_up(3, 0, get_turf(owner))
 		puff.start()
-
 	// TELEPORT: Move to Coffin & Close it!
 	do_teleport(owner, bloodsuckerdatum.coffin, no_effects=TRUE) // in teleport.dm?
 	// SLEEP
@@ -134,8 +110,6 @@
 		bloodsuckerdatum.coffin.update_icon()
 		// Lock Coffin
 		bloodsuckerdatum.coffin.LockMe(owner)
-
-
 	// ( STEP FIVE: Create animal at prev location? )
 	//var/mob/living/simple_animal/SA = /mob/living/simple_animal/hostile/retaliate/bat // pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
 	//new SA (owner.loc)

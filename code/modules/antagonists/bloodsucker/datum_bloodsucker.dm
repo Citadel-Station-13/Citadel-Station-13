@@ -262,7 +262,6 @@ datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE
 	if (!owner || !owner.current)
 		return
-
 	vamplevel_unspent ++
 	// Spend Rank Immediately?
 	if (istype(owner.current.loc, /obj/structure/closet/crate/coffin))
@@ -272,7 +271,6 @@ datum/antagonist/bloodsucker/proc/RankUp()
 		if (vamplevel_unspent >= 2)
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
 
-
 datum/antagonist/bloodsucker/proc/LevelUpPowers()
 	for(var/datum/action/bloodsucker/power in powers)
 		power.level_current ++
@@ -281,10 +279,9 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	set waitfor = FALSE
 	if (vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client)
 		return
-
 	/////////
 	// Powers
-
+	//TODO: Make this into a radial
 		// Purchase Power Prompt
 	var/list/options = list() // Taken from gasmask.dm, for Clown Masks.
 	for(var/pickedpower in typesof(/datum/action/bloodsucker))
@@ -293,7 +290,6 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		if (!(locate(power) in powers) && initial(power.bloodsucker_can_buy))
 			options[initial(power.name)] = power // TESTING: After working with TGUI, it seems you can use initial() to view the variables inside a path?
 	options["\[ Not Now \]"] = null
-
 	// Abort?
 	if (options.len > 1)
 		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
@@ -312,12 +308,10 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		to_chat(owner.current, "<span class='notice'>You have learned [initial(P.name)]!</span>")
 	else
 		to_chat(owner.current, "<span class='notice'>You grow more ancient by the night!</span>")
-
 	/////////
 	// Advance Powers (including new)
 	LevelUpPowers()
-
-	/////////
+	////////
 	// Advance Stats
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -332,33 +326,20 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	regenRate += 0.05			// Points of brute healed (starts at 0.3)
 	feedAmount += 2				// Increase how quickly I munch down vics (15)
 	maxBloodVolume += 50		// Increase my max blood (600)
-
-
 	/////////
-
 	vamplevel ++
 	vamplevel_unspent --
 
 	// Assign True Reputation
 	if (vamplevel == 4)
 		SelectReputation(am_fledgling=FALSE, forced=TRUE)
-
 	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	to_chat(owner.current, "<span class='warning'>However, your weakness to fire and sunlight have also increased!</span>")
-
 	update_hud(TRUE)
-
 	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)

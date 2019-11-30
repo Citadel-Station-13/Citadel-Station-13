@@ -14,10 +14,6 @@
 	message_Trigger = ""//"Whom will you subvert to your will?"
 	bloodsucker_can_buy = TRUE
 	must_be_capacitated = TRUE
-	//var/datum/martial_art/vamphaste/haste_cqc	// Assign this when
-
-
-
 
 /datum/action/bloodsucker/targeted/haste/CheckCanUse(display_error)
 	. = ..()
@@ -30,10 +26,8 @@
 		return FALSE
 	return TRUE
 
-
 /datum/action/bloodsucker/targeted/haste/CheckValidTarget(atom/A)
 	return isturf(A) || A.loc != owner.loc // Anything will do, if it's not me or my square
-
 
 /datum/action/bloodsucker/targeted/haste/CheckCanTarget(atom/A, display_error)
 	// DEFAULT CHECKS (Distance)
@@ -43,8 +37,6 @@
 	//if (!(A in view(target_range, get_turf(owner))))
 	//	return FALSE
 	return TRUE
-
-
 
 /datum/action/bloodsucker/targeted/haste/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
@@ -59,7 +51,6 @@
 	while(get_turf(owner) != T && safety > 0 && !(isliving(target) && target.Adjacent(owner)))
 		user.canmove = FALSE //Dont move while doing the thing, or itll break
 		safety --
-
 		// Did I get knocked down?
 		if (owner && owner.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE))// owner.incapacitated())
 			// We're gonna cancel. But am I on the ground? Spin me!
@@ -68,7 +59,6 @@
 				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
 				owner.spin(10)
 			break
-
 		// Spin/Stun people we pass.
 		//var/mob/living/newtarget = locate(/mob/living) in oview(1, owner)
 		var/list/mob/living/foundtargets = list()
@@ -86,7 +76,6 @@
 		sleep(1)
 	if (user)
 		user.update_canmove() //Let the poor guy move again
-
 
 /datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
