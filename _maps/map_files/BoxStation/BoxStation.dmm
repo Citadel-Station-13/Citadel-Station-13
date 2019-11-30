@@ -8001,7 +8001,7 @@
 "arj" = (
 /obj/machinery/door/airlock{
 	id_tag = "Room Two";
-	name = "Room Seven"
+	name = "Room Seven - Luxury Suite"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -9256,7 +9256,7 @@
 "aut" = (
 /obj/machinery/door/airlock{
 	id_tag = "Room One";
-	name = "Room Six"
+	name = "Room Six - Luxury Suite"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
@@ -10739,28 +10739,16 @@
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "axL" = (
-/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/wardrobe/grey,
+/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/assistantformal,
 /obj/machinery/camera{
-	c_tag = "Fitness Room"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/neutral{
+	c_tag = "Dorms East - Holodeck";
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
+/area/crew_quarters/fitness)
 "axM" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -11834,16 +11822,20 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/closet/wardrobe/grey,
-/obj/item/clothing/under/assistantformal,
-/obj/item/clothing/under/assistantformal,
 /obj/machinery/camera{
-	c_tag = "Holodeck Costumes";
+	c_tag = "Dorms West"
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/dorms)
 "aAe" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -13548,8 +13540,12 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aDW" = (
+/obj/machinery/holopad,
 /obj/machinery/camera{
-	c_tag = "Dormitory North"
+	c_tag = "Dorms Central"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -13557,8 +13553,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -17011,7 +17011,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Dormitory South";
+	c_tag = "Dorms South";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -21359,19 +21359,14 @@
 /turf/open/floor/wood,
 /area/library)
 "aVT" = (
-/obj/item/paper_bin/bundlenatural{
-	pixel_x = 6;
-	pixel_y = 4
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_x = 3
 	},
-/obj/item/paper_bin{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/pen/fountain,
-/obj/structure/table,
-/obj/item/pen/fourcolor,
-/turf/open/floor/plasteel,
-/area/crew_quarters/heads/hop)
+/obj/item/lighter,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/carpet,
+/area/security/detectives_office)
 "aVU" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -23999,13 +23994,20 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bbQ" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	pixel_x = 3
+/obj/item/paper_bin/bundlenatural{
+	pixel_x = 6;
+	pixel_y = 4
 	},
-/obj/item/lighter,
-/turf/open/floor/carpet,
-/area/security/detectives_office)
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/pen/fountain,
+/obj/structure/table,
+/obj/item/pen/fourcolor,
+/obj/item/stamp/hop,
+/turf/open/floor/plasteel,
+/area/crew_quarters/heads/hop)
 "bbR" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -51683,6 +51685,24 @@
 /obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/plating,
 /area/space)
+"cmJ" = (
+/obj/machinery/door/airlock/external{
+	name = "External Access";
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"cmK" = (
+/obj/machinery/door/airlock/external{
+	name = "External Access";
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "cmL" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -52856,13 +52876,6 @@
 /obj/machinery/door/poddoor/incinerator_atmos_main,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
-"cqu" = (
-/obj/machinery/door/airlock/external{
-	name = "External Access";
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cqv" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
@@ -82548,7 +82561,7 @@ apd
 aYi
 aqW
 aqW
-bbQ
+aVT
 bSO
 apd
 aZH
@@ -86416,7 +86429,7 @@ bnR
 bpe
 bqB
 bqq
-aVT
+bbQ
 buO
 bwk
 bmr
@@ -91776,7 +91789,7 @@ auu
 atm
 atm
 arf
-aDW
+aAd
 auW
 awr
 aXH
@@ -94089,7 +94102,7 @@ arf
 arf
 arf
 arf
-axL
+aDW
 avl
 avm
 avg
@@ -95627,7 +95640,7 @@ apu
 acN
 amP
 atz
-aAd
+axL
 atQ
 awu
 aEv
@@ -105734,10 +105747,10 @@ clq
 cmq
 ciI
 bae
-cqu
+cmJ
 cOe
 cOe
-cqu
+cmK
 aag
 gXs
 apv
