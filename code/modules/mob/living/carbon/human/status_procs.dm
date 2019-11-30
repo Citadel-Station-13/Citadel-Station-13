@@ -5,6 +5,7 @@
 
 /mob/living/carbon/human/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	amount = dna.species.spec_stun(src,amount)
+	resting = TRUE
 	return ..()
 
 /mob/living/carbon/human/Unconscious(amount, updating = 1, ignore_canunconscious = 0)

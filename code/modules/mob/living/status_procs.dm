@@ -60,7 +60,6 @@
 		if(istype(buckled, /obj/vehicle/ridden))
 			var/obj/buckl = buckled
 			buckl.unbuckle_mob(src)
-		resting = TRUE
 		adjustStaminaLoss(isnull(override_stamdmg)? amount*0.25 : override_stamdmg)			
 		if(!isnull(override_hardstun))
 			Stun(override_hardstun,updating,ignore_canknockdown)
