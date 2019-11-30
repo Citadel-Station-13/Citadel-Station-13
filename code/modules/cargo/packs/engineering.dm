@@ -121,18 +121,6 @@
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-/datum/supply_pack/engineering/powertools
-	name = "Power Tools Crate"
-	desc = "Setting up the aux base? Working out in space? Maybe you just hate doing things by hand. Grab some power tools and slash your workload in half! Contains a hardhat, hazard vest, Hand Drill, and Jaws of Life. Requires Engineering Access to open."
-	cost = 6500
-	access = ACCESS_ENGINE
-	contains = list(/obj/item/clothing/head/hardhat,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/screwdriver/power,
-					/obj/item/crowbar/power)
-	crate_name = "power tools crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
-
 /datum/supply_pack/engineering/siezedpower
 	name = "Siezed Power Cell Crate"
 	desc = "We took the means of power! Contains three high-voltage plus power cells."
