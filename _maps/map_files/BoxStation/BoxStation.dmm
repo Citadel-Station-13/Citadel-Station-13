@@ -226,9 +226,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"aaK" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "aaL" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
@@ -51679,12 +51676,12 @@
 /obj/item/electropack/shockcollar,
 /obj/item/assembly/signaler,
 /turf/open/floor/plating,
-/area/space)
+/area/security/prison)
 "cmI" = (
 /obj/structure/bed,
 /obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/plating,
-/area/space)
+/area/security/prison)
 "cmJ" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -83274,9 +83271,9 @@ aaa
 aaa
 aaa
 aaa
-aQd
-aQd
-sQX
+gXs
+gXs
+brT
 abc
 abu
 abu
@@ -83530,10 +83527,10 @@ aaa
 aaa
 aaa
 aaa
-aQd
-aaK
-aaK
-aaK
+gXs
+aai
+aai
+aai
 abb
 abt
 aca
@@ -83788,9 +83785,9 @@ aaa
 aaa
 aaa
 aaa
-aaK
+aai
 cmH
-sQX
+aay
 abe
 abw
 acc
@@ -84044,10 +84041,10 @@ aaa
 aaa
 aaa
 aaa
-aQd
-aaK
+gXs
+aai
 cmI
-sQX
+aay
 abd
 abv
 acb
