@@ -1309,7 +1309,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	var/mob/living/carbon/G = pick(mobsyup)
-	if (rand(0,1))
+	if (prob(50))
 		C.visible_message("<span class='warning'>[C] falls to the ground screaming and clutching [C.p_their()] wrist!</span>", \
 						  "<span class='userdanger'>[G] grabs your wrist and violently wrenches it to the side!</span>")
 		C.emote("scream")
