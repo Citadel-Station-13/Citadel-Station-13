@@ -42886,6 +42886,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"uvp" = (
+/obj/machinery/smartfridge/organ/preloaded{
+	pixel_y = 2
+	},
+/turf/closed/wall,
+/area/medical/medbay/zone3)
 "uxJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -81601,7 +81607,7 @@ aSh
 bcf
 bcW
 blt
-aSh
+uvp
 aOL
 bfA
 bfX

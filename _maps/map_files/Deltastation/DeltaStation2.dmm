@@ -103795,10 +103795,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dsI" = (
-/obj/structure/sign/warning/nosmoking,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/smartfridge/organ/preloaded,
 /turf/closed/wall,
 /area/medical/surgery)
 "dsJ" = (
@@ -127445,6 +127445,10 @@
 /obj/item/assembly/signaler,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+"mMC" = (
+/obj/structure/sign/warning/nosmoking,
+/turf/closed/wall,
+/area/medical/surgery)
 "mQE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -174936,7 +174940,7 @@ dkv
 dma
 dma
 dma
-dma
+mMC
 dsI
 dro
 dvz
