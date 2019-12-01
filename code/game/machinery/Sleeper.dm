@@ -411,7 +411,7 @@
 	icon_state = "oldpod"
 
 /obj/machinery/sleeper/ambulance
-	var/list/possible_chems = list(
+	list/possible_chems = list(
 		list("epinephrine"),
 		list("oculine","inacusiate"),
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
