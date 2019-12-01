@@ -192,7 +192,7 @@
 	update_name()
 	..()
 
-/datum/reagent/synthtissue/proc/update_name() //They are but babes on creation and have to grow unto godhood
+/datum/reagent/medicine/synthtissue/proc/update_name() //They are but babes on creation and have to grow unto godhood
 	switch(data["grown_volume"])
 		if(-INFINITY to 50)
 			name = "Induced Synthtissue Colony"
@@ -205,7 +205,7 @@
 		if(175 to INFINITY)
 			name = "Omnipotent Synthtissue Colony"
 
-/datum/reagent/synthtissue/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/synthtissue/on_mob_delete(mob/living/M)
 	if(!iscarbon(M))
 		return
 	var/mob/living/carbon/C = M
