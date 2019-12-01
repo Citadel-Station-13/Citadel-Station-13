@@ -94,8 +94,8 @@
 		update_icon()
 
 /obj/item/gun/energy/pumpaction/examine(mob/user)	//so people don't ask HOW TO CHANGE FIRING MODE
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to change firing modes.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to change firing modes.</span>"
 
 /obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file)	//ammo counter for inhands
 	. = ..()

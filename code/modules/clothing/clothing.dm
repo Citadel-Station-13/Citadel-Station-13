@@ -62,7 +62,7 @@
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
-	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
+	if(!. && !M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
@@ -120,9 +120,9 @@
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
 /obj/item/clothing/examine(mob/user)
-	..()
+	. = ..()
 	if(damaged_clothes)
-		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
+		. += "<span class='warning'>It looks damaged!</span>"
 	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
@@ -137,7 +137,7 @@
 		if(pockets.silent)
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
-		to_chat(user, how_cool_are_your_threads.Join())
+		. += how_cool_are_your_threads.Join()
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)

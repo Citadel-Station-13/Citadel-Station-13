@@ -936,6 +936,21 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
 
+/datum/reagent/medicine/neurine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!(method == INJECT))
+		return
+	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B || (!(B.organ_flags & ORGAN_FAILING)))
+		return
+	B.applyOrganDamage(-20)
+	if(prob(80))
+		B.gain_trauma_type(BRAIN_TRAUMA_MILD)
+	else if(prob(50))
+		B.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+	else
+		B.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+
+
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))
 		holder.remove_reagent("neurotoxin", 5)
@@ -1457,3 +1472,50 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/silibinin
+	name = "Silibinin"
+	id = "silibinin"
+	description = "A thistle derrived hepatoprotective flavolignan mixture that help reverse damage to the liver."
+	reagent_state = SOLID
+	color = "#FFFFD0"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
+	..()
+	. = 1
+
+/datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
+	name = "Polypyrylium Oligomers"
+	id = "polypyr"
+	description = "A�purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
+	reagent_state = SOLID
+	color = "#9423FF"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 50
+	taste_description = "numbing bitterness"
+
+/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I w�nted a collection of small positive effects, this is as hard to obtain as coniine after all.
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25)
+	M.adjustBruteLoss(-0.35, 0)
+	if(prob(50))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.bleed_rate = max(H.bleed_rate - 1, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/polypyr/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M) && reac_volume >= 0.5)
+			var/mob/living/carbon/human/H = M
+			H.hair_color = "92f"
+			H.facial_hair_color = "92f"
+			H.update_hair()
+
+/datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
+	..()
+	. = 1 
+

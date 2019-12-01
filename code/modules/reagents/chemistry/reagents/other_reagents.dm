@@ -513,6 +513,7 @@
 ///Stronger kind of lube. Applies TURF_WET_SUPERLUBE.
 /datum/reagent/lube/superlube
 	name = "Super Duper Lube"
+	id = "superlube"
 	description = "This \[REDACTED\] has been outlawed after the incident on \[DATA EXPUNGED\]."
 	lube_kind = TURF_WET_SUPERLUBE
 

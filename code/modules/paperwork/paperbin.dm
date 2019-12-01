@@ -41,7 +41,6 @@
 	..()
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
-	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -52,6 +51,9 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+		
+	else
+		. = ..()
 
 	add_fingerprint(M)
 
@@ -116,11 +118,11 @@
 		return ..()
 
 /obj/item/paper_bin/examine(mob/user)
-	..()
+	. = ..()
 	if(total_paper)
-		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
+		. += "It contains [total_paper > 1 ? "[total_paper] papers" : " one paper"]."
 	else
-		to_chat(user, "It doesn't contain anything.")
+		. += "It doesn't contain anything."
 
 
 /obj/item/paper_bin/update_icon()

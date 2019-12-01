@@ -319,7 +319,8 @@
 		return
 
 	face_atom(A)
-	A.examine(src)
+	var/list/result = A.examine(src)
+	to_chat(src, result.Join("\n"))
 
 //same as above
 //note: ghosts can point, this is intended
@@ -448,8 +449,8 @@
 	return
 
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	if(!ckey)
-		return FALSE
+	if(!ckey || !new_mob)
+		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
 	new_mob.ckey = ckey
