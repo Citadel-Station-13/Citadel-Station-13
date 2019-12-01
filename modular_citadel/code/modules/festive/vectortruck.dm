@@ -42,6 +42,7 @@
 	max_velocity = 100
 	boost_power = 25
 	enginesound_delay = 0
+	var/weewoo = FALSE
 	var/weewoocount = 0
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize()
@@ -49,7 +50,8 @@
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/process()
 	..()
-	weewoo()
+	if(weewoo)
+		weewoo()
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/MouseDrop_T(mob/living/L, mob/user)
 	if(isliving(L))
@@ -61,7 +63,7 @@
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/proc/weewoo()
 	if(weewoocount>10)
 		weewoocount = 0
-		
+
 		return
 	weewoo++
 
@@ -115,3 +117,30 @@
 			inserted_key = null
 		if("eject_boot")
 			eject_boot(user)
+
+
+/obj/vehicle/sealed/vectorcraft/boot/ambulance/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/sleeper_buffer))
+		var/obj/item/reagent_containers/sleeper_buffer/SB = I
+		if((SB.reagents.total_volume + Sl.reagents.total_volume) < Sl.reagents.maximum_volume)
+			SB.reagents.trans_to(Sl.reagents, SB.reagents.total_volume)
+			visible_message("[user] places the [SB] into the [src].")
+			qdel(SB)
+			return
+		else
+			SB.reagents.trans_to(Sl.reagents, SB.reagents.total_volume)
+			visible_message("[user] adds as much as they can to the [src] from the [SB].")
+			return
+	if(istype(I, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RC = I
+		if(RC.reagents.total_volume == 0)
+			to_chat(user, "<span class='notice'>The [I] is empty!</span>")
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
+			if((obj_flags & EMAGGED) || (allowed(usr)))
+				break
+			if(!istype(R, /datum/reagent/medicine))
+				visible_message("The [src] gives out a hearty boop and rejects the [I]. The Sleeper's screen flashes with a pompous \"Medicines only, please.\"")
+				return
+		RC.reagents.trans_to(Sl.reagents, 1000)
+		visible_message("[user] adds as much as they can to the [src] from the [I].")
+		return

@@ -409,3 +409,13 @@
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"
+
+/obj/machinery/sleeper/ambulance
+	var/list/possible_chems = list(
+		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
+		list("oculine","inacusiate"),
+		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
+		list("omnizine")
+	)
+	name = "Ambulance sleeper"
+	desc = "An enclosed machine used to stabilize and heal patients contained within an ambulance."

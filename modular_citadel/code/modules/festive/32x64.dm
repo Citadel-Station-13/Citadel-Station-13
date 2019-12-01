@@ -16,6 +16,9 @@
 	layer = 4
 	density = TRUE
 	anchored = TRUE
+	light_power = 0.8
+	light_range = 10
+	light_color = "#ffbb4d"
 
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post_festive"
