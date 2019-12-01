@@ -35129,9 +35129,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bDD" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -28
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/tile/blue{
@@ -36070,6 +36067,9 @@
 "bFJ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bFK" = (
@@ -57530,6 +57530,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nWU" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/sleeper)
 "oce" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -93288,7 +93292,7 @@ bvj
 bvj
 bvd
 bFu
-bvj
+nWU
 bvj
 bvd
 bKH
