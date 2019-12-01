@@ -156,7 +156,7 @@
 	desc = "Contains all the essentials for an advanced spacefaring cleanup crew. This kit includes a trashbag, an advanced mop, a bottle of space cleaner, a floor buffer, and a holosign projector. Requires Janitorial Access to Open"
 	cost = 5700
 	access = ACCESS_JANITOR
-	contains = list(/obj/item/storage/bag/trash,
+	contains = list(/obj/item/storage/bag/trash/bluespace,
 					/obj/item/reagent_containers/spray/cleaner,
 					/obj/item/mop/advanced,
 					/obj/item/lightreplacer,
@@ -165,7 +165,17 @@
 	crate_name = "advanced santation crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/service/janitor
+/datum/supply_pack/service/janitor/janpimp
+	name = "Custodial Cruiser"
+	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/vehicle/ridden/janicart,
+					/obj/item/key/janitor)
+	crate_name = "janitor ride crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/service/janitor/starter
 	name = "Janitorial Starter Crate"
 	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, NT soap and a trash bag."
 	cost = 1300
@@ -217,16 +227,6 @@
 	contains = list(/obj/item/watertank/janitor)
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/service/janitor/janpimp
-	name = "Custodial Cruiser"
-	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
-	cost = 3000
-	access = ACCESS_JANITOR
-	contains = list(/obj/vehicle/ridden/janicart,
-					/obj/item/key/janitor)
-	crate_name = "janitor ride crate"
-	crate_type = /obj/structure/closet/crate/large
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Misc + Decor ////////////////////////////////////
