@@ -412,10 +412,19 @@
 
 /obj/machinery/sleeper/ambulance
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
+		list("epinephrine"),
 		list("oculine","inacusiate"),
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
 	name = "Ambulance sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients contained within an ambulance."
+
+/obj/machinery/sleeper/ambulance/open_machine()
+	if(!state_open && !panel_open)
+		var/mob/living/cached_ocu = occupant
+		if(!cached_ocu)
+			return ..()
+		.=..()
+		var/obj/sleep = cached_ocu.loc
+		cached_ocu.forceMove(sleep.loc)
