@@ -79,7 +79,7 @@
 	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/lightpost/light
-	desc = "That which most enchants the Edinians is the lighting by gas of the boulevards... These humble rows of lamps, shining with a clarity white and pure, have a marvelous effect upon the streets on Nova Edina. Adorned with festive garb, in tune with the spirits of the city."
+	desc = "That which most enchants the Edinians is the lighting by gas of the boulevards... These humble rows of lamps, shining with a clarity white and pure, have a marvelous effect upon the streets on Nova Edina. Adorned with a cheery garb, in tune with the festive spirits of the city."
 	light_power = 0.8
 	light_range = 10
 	light_color = "#ffbb4d"
