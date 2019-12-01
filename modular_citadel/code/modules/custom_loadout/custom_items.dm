@@ -493,6 +493,7 @@
 	item_state = "blueberet"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/flight
 	name = "flight goggles"
