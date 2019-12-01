@@ -41,7 +41,6 @@
 	build_path = /obj/item/clothing/glasses/hud/security
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/security_hud_prescription
 	name = "Prescription Security HUD"
@@ -52,7 +51,6 @@
 	build_path = /obj/item/clothing/glasses/hud/security/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
@@ -63,7 +61,6 @@
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/diagnostic_hud
 	name = "Diagnostic HUD"
@@ -174,7 +171,6 @@
 	build_path = /obj/item/clothing/glasses/meson/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
-	dangerous_construction = TRUE
 
 /datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
@@ -185,7 +181,6 @@
 	build_path = /obj/item/clothing/glasses/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/night_vision_goggles_glasses
 	name = "Prescription Night Vision Goggles"
@@ -196,7 +191,6 @@
 	build_path = /obj/item/clothing/glasses/night/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /////////////////////////////////////////
 //////////////////Misc///////////////////
@@ -394,7 +388,6 @@
 	build_path = /obj/item/rcd_upgrade
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
@@ -405,7 +398,6 @@
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/handdrill
 	name = "Hand Drill"
@@ -416,7 +408,6 @@
 	build_path = /obj/item/screwdriver/power
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/jawsoflife
 	name = "Jaws of Life"
@@ -427,7 +418,6 @@
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/alienwrench
 	name = "Alien Wrench"
@@ -438,7 +428,6 @@
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/alienwirecutters
 	name = "Alien Wirecutters"
@@ -449,7 +438,6 @@
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/alienscrewdriver
 	name = "Alien Screwdriver"
@@ -460,7 +448,6 @@
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/aliencrowbar
 	name = "Alien Crowbar"
@@ -471,7 +458,6 @@
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/alienwelder
 	name = "Alien Welding Tool"
@@ -482,7 +468,6 @@
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/alienmultitool
 	name = "Alien Multitool"
@@ -493,7 +478,6 @@
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/quantum_keycard
 	name = "Quantum Keycard"
@@ -504,7 +488,6 @@
 	build_path = /obj/item/quantum_keycard
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
@@ -515,7 +498,6 @@
 	build_path = /obj/item/anomaly_neutralizer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /datum/design/pHmeter
 	name = "Chemical Analyser"
@@ -540,7 +522,6 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-	dangerous_construction = TRUE
 
 /////////////////////////////////////////
 ////////////Meteor///////////////////////

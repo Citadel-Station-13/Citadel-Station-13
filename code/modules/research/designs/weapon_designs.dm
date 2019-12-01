@@ -11,13 +11,11 @@
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/c38/sec/lethal
 	name = "Speed Loader (.38)"
 	id = "sec_38lethal"
 	build_path = /obj/item/ammo_box/c38/lethal
-	dangerous_construction = TRUE
 
 /datum/design/c38_trac
 	name = "Speed Loader (.38 TRAC)"
@@ -28,7 +26,6 @@
 	build_path = /obj/item/ammo_box/c38/trac
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/c38_hotshot
 	name = "Speed Loader (.38 Hot Shot)"
@@ -39,7 +36,6 @@
 	build_path = /obj/item/ammo_box/c38/hotshot
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/c38_iceblox
 	name = "Speed Loader (.38 Iceblox)"
@@ -50,7 +46,6 @@
 	build_path = /obj/item/ammo_box/c38/iceblox
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 //////////////
 //WT550 Mags//
@@ -65,7 +60,6 @@
 	build_path = /obj/item/ammo_box/magazine/wt550m9
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/mag_oldsmg/ap_mag
 	name = "WT-550 Semi-Auto SMG Armour Piercing Magazine (4.6x30mm AP)"
@@ -74,7 +68,6 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/mag_oldsmg/ic_mag
 	name = "WT-550 Semi-Auto SMG Incendiary Magazine (4.6x30mm IC)"
@@ -83,7 +76,6 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/mag_oldsmg/tx_mag
 	name = "WT-550 Semi-Auto SMG Uranium Magazine (4.6x30mm TX)"
@@ -92,7 +84,6 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/mag_oldsmg/rubber_mag
 	name = "WT-550 Semi-Auto SMG rubberbullets Magazine (4.6x30mm rubber)"
@@ -101,7 +92,6 @@
 	materials = list(MAT_METAL = 6000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrubber
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 //////////////
 //Ammo Shells/
@@ -112,42 +102,36 @@
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/shotgun_slug/sec
 	id = "sec_slug"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/buckshot_shell/sec
 	id = "sec_bshot"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/shotgun_dart/sec
 	id = "sec_dart"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/incendiary_slug/sec
 	id = "sec_Islug"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/stunshell
 	name = "Stun Shell"
@@ -158,7 +142,6 @@
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/techshell
 	name = "Unloaded Technological Shotshell"
@@ -169,7 +152,6 @@
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/cryostatis_shotgun_dart
 	name = "Cryostasis Shotgun Dart"
@@ -180,7 +162,6 @@
 	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	dangerous_construction = TRUE
 
 //////////////
 //Firing Pins/
@@ -195,7 +176,6 @@
 	build_path = /obj/item/firing_pin/test_range
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/pin_mindshield
 	name = "Mindshield Firing Pin"
@@ -206,7 +186,6 @@
 	build_path = /obj/item/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 //////////////
 //Guns////////
@@ -221,7 +200,6 @@
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/stunrevolver
 	name = "Tesla Revolver"
@@ -232,7 +210,6 @@
 	build_path = /obj/item/gun/energy/tesla_revolver
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
@@ -243,7 +220,6 @@
 	build_path = /obj/item/gun/energy/e_gun/nuclear
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/beamrifle
 	name = "Beam Marksman Rifle"
@@ -254,7 +230,6 @@
 	build_path = /obj/item/gun/energy/beam_rifle
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/decloner
 	name = "Decloner"
@@ -266,7 +241,6 @@
 	build_path = /obj/item/gun/energy/decloner
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
@@ -277,7 +251,6 @@
 	build_path = /obj/item/gun/syringe/rapidsyringe
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	dangerous_construction = TRUE
 
 /datum/design/temp_gun
 	name = "Temperature Gun"
@@ -288,7 +261,6 @@
 	build_path = /obj/item/gun/energy/temperature
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -300,7 +272,6 @@
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/xray
 	name = "X-ray Laser Gun"
@@ -311,7 +282,6 @@
 	build_path = /obj/item/gun/energy/xray
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/ioncarbine
 	name = "Ion Carbine"
@@ -322,7 +292,6 @@
 	build_path = /obj/item/gun/energy/ionrifle/carbine
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
@@ -333,7 +302,6 @@
 	build_path = /obj/item/gun/energy/wormhole_projector
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/gravitygun
 	name = "One-point Bluespace-gravitational Manipulator"
@@ -344,7 +312,6 @@
 	build_path = /obj/item/gun/energy/gravity_gun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/largecrossbow
 	name = "Energy Crossbow"
@@ -355,7 +322,6 @@
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 ///////////
 //Grenades/
@@ -370,7 +336,6 @@
 	build_path = /obj/item/grenade/chem_grenade/large
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/pyro_grenade
 	name = "Pyro Grenade"
@@ -381,7 +346,6 @@
 	build_path = /obj/item/grenade/chem_grenade/pyro
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/cryo_grenade
 	name = "Cryo Grenade"
@@ -392,7 +356,6 @@
 	build_path = /obj/item/grenade/chem_grenade/cryo
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 /datum/design/adv_grenade
 	name = "Advanced Release Grenade"
@@ -403,7 +366,6 @@
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	dangerous_construction = TRUE
 
 //////////
 //MISC////
@@ -418,7 +380,6 @@
 	build_path = /obj/item/shield/riot/tele
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
 
 /datum/design/suppressor
 	name = "Suppressor"
@@ -429,4 +390,3 @@
 	build_path = /obj/item/suppressor
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	dangerous_construction = TRUE
