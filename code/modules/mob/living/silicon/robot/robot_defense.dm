@@ -186,6 +186,7 @@
 	if(shielded)
 		Proj.damage -= 10
 		src.cell.charge -= 500
+		to_chat(src,"<span class='notice'>Your shield has taken an impact of [Prog.damage] force, and has negated 10 force.</span>")
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
@@ -195,6 +196,7 @@
 /mob/living/silicon/robot/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(shielded)
 		src.cell.charge -=250
+		to_chat(src,"<span class='notice'>Your shield has blocked a flash.</span>")
 		return FALSE
 	if(affect_silicon)
 		return ..()
