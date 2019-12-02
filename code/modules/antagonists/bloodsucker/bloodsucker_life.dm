@@ -23,8 +23,8 @@
 	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 
 		// Deduct Blood
-		if (owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA) && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
-			AddBloodVolume(-0.08) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
+		if (owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
+			AddBloodVolume(-0.09) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
 
 		// Heal
 		if (HandleHealing(1))
@@ -154,7 +154,7 @@
 	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
 	mood_change = -3
 	timeout = 1000
-	
+
 /datum/mood_event/daylight_2
 	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
 	mood_change = -6
@@ -175,12 +175,9 @@
 	if (poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
 
-	owner.current.adjustStaminaLoss(-5 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustStaminaLoss(-2 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
-
-	owner.current.setOxyLoss(0)
-	owner.current.setToxLoss(0)
 
 	// No Bleeding
 	if (ishuman(owner.current))
@@ -364,10 +361,9 @@
 /datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin=FALSE)
 	owner.current.stat = UNCONSCIOUS
 	owner.current.fakedeath("bloodsucker") // Come after UNCONSCIOUS or else it fails
-	//owner.current.update_stat()
-	ADD_TRAIT(owner.current, TRAIT_NODEATH,"bloodsucker")	// Without this, you'll just keep dying while you recover.
-	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
-	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE,"bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	ADD_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")	// Without this, you'll just keep dying while you recover.
+	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	// Visuals
 	owner.current.update_sight()
 	owner.current.reload_fullscreen()
@@ -380,14 +376,10 @@
 /datum/antagonist/bloodsucker/proc/Torpor_End()
 	owner.current.stat = SOFT_CRIT
 	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
-	//owner.current.update_stat()
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
-
-
-
 
 
 /datum/antagonist/proc/AmFinalDeath()

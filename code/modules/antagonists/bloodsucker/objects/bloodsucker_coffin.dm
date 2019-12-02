@@ -36,7 +36,7 @@
 	// DONE
 	to_chat(owner, "<span class='userdanger'>You have claimed the [claimed] as your place of immortal rest! Your lair is now [lair].</span>")
 	to_chat(owner, "<span class='danger'>You have learned new construction recipes to improve your lair.</span>")
-	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find new lair recipes in the Structures tab of the <i>Crafting Menu</i> at the bottom of the screen, including the <i>Persuasion Rack</i> for converting crew into Vassals.</span><br><br>")
+	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find new lair recipes in the misc tab of the <i>Crafting Menu</i> at the bottom of the screen, including the <i>Persuasion Rack</i> for converting crew into Vassals.</span><br><br>")
 
 	RunLair() // Start
 	return TRUE
@@ -229,7 +229,7 @@
 				///obj/item/stack/packageWrap = 8,
 				///obj/item/pipe = 2)
 	time = 150
-	category = CAT_STRUCTURE
+	category = CAT_MISC
 	always_availible = TRUE
 
 /datum/crafting_recipe/bloodsucker/meatcoffin
@@ -240,7 +240,7 @@
 	reqs = list(/obj/item/reagent_containers/food/snacks/meat/slab = 5,
 				/obj/item/restraints/handcuffs/cable = 1)
 	time = 150
-	category = CAT_STRUCTURE
+	category = CAT_MISC
 	always_availible = TRUE
 
 /datum/crafting_recipe/bloodsucker/metalcoffin
@@ -250,5 +250,5 @@
 				 /obj/item/screwdriver)
 	reqs = list(/obj/item/stack/sheet/metal = 5)
 	time = 100
-	category = CAT_STRUCTURE
+	category = CAT_MISC
 	always_availible = TRUE

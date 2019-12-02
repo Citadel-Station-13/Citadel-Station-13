@@ -53,7 +53,7 @@
 			to_chat(owner, "<span class='warning'>Your victim is not [(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))?"alive":"conscious"].</span>")
 		return FALSE
 	// Check: Target has eyes?
-	if (!target.getorganslot("heart"))
+	if (!target.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>They have no eyes!</span>")
 		return FALSE
@@ -77,7 +77,7 @@
 			to_chat(owner, "<span class='warning'>You must be facing your victim.</span>")
 		return FALSE
 	// Check: Target facing me?
-	if (!target.lying && !is_A_facing_B(target,owner))
+	if (!target.resting && !is_A_facing_B(target,owner))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE
@@ -91,11 +91,13 @@
 	var/mob/living/carbon/target = A
 	var/mob/living/user = owner
 
-	if (istype(target))
-		ADD_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
+	if(istype(target))
+		target.Stun(40) //Utterly useless without this, its okay since there are so many checks to go through
+		target.silent += 40 //Shhhh little lamb
 
-	if (do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
+	if(do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
+		ADD_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
 		var/power_time = 90 + level_current * 15
 		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 		target.Stun(power_time)
@@ -103,12 +105,12 @@
 		target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
 		target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 		spawn(power_time)
-			if (istype(target))
+			if(istype(target))
 				target.notransform = FALSE
-				REMOVE_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
 				// They Woke Up! (Notice if within view)
-				if (istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
+				if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
 					to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
+					REMOVE_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
 
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)

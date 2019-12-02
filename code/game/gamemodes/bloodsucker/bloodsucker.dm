@@ -29,7 +29,8 @@
 	<span class='danger'>Bloodsuckers</span>: The crew are cattle, while you are both shepherd and slaughterhouse.\n\
 	<span class='notice'>Crew</span>: Put an end to the undead infestation before the station is overcome!"
 
-
+/datum/game_mode/traitor/bros/generate_report()
+	return "Reports indicate that some of your crew may have toppled statues in the past week, angering the gods and becoming cursed with undeath and a desire for blood. Watch out for crewmembers that seem to shun the light or are found pale and delirious."
 
 // Seems to be run by game ONCE, and finds all potential players to be antag.
 /datum/game_mode/bloodsucker/pre_setup()

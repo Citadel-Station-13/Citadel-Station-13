@@ -4,8 +4,8 @@
 	name = "Brawn"//"Cellular Emporium"
 	desc = "Snap restraints with ease, or deal terrible damage with your bare hands."
 	button_icon_state = "power_strength"
-	bloodcost = 8
-	cooldown = 100
+	bloodcost = 10
+	cooldown = 600
 	target_range = 1
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
@@ -75,7 +75,7 @@
 							  "<span class='userdanger'>[user] has knocked you down!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.Knockdown( min(5, rand(10, 10 * powerlevel)) )
 			// Chance of KO
-			if (rand(5 + powerlevel) >= 5  && target.stat <= UNCONSCIOUS)
+			if (rand(3 + powerlevel) >= 5  && target.stat <= UNCONSCIOUS)
 				target.Unconscious(40)
 		// Attack!
 		playsound(get_turf(target), 'sound/weapons/punch4.ogg', 60, 1, -1)

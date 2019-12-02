@@ -92,10 +92,11 @@
 	if(!can_be_staked && owner.AmStaked())
 		if(display_error)
 			to_chat(owner, "<span class='warning'>You have a stake in your chest! Your powers are useless.</span>")
+		return FALSE
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
-		if (L.incapacitated(TRUE, TRUE) || L.lying && !can_be_immobilized)
+		if (L.incapacitated(TRUE, TRUE) || L.resting && !can_be_immobilized)
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 			return FALSE

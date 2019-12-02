@@ -46,7 +46,6 @@
 
 /datum/action/bloodsucker/targeted/lunge/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
-	var/mob/living/user = owner
 	var/mob/living/carbon/target = A
 	var/turf/T = get_turf(target)
 	// Clear Vars
@@ -55,26 +54,20 @@
 	var/do_knockdown = !is_A_facing_B(target,owner) || owner.alpha <= 0 || istype(owner.loc, /obj/structure/closet)
 	// CAUSES: Target has their back to me, I'm invisible, or I'm in a Closet
 	// Step One: Heatseek toward Target's Turf
+
 	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
-	var/safety = 10
-	while(get_turf(owner) != T && safety > 0 && !(isliving(target) && target.Adjacent(owner)))
-		if(owner.incapacitated())
-			sleep(1)
-			safety --
-		// Did I get knocked down?
-		if (owner && owner.incapacitated())
-			if (user.lying)
-				var/send_dir = get_dir(owner, T)
-				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
-				owner.spin(10)
-			break
-	// Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
-	if (target.Adjacent(owner))
+	if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && owner.resting)
+		var/send_dir = get_dir(owner, T)
+		new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
+		owner.spin(10)
+		 // Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
+	sleep(1)
+	if(target.Adjacent(owner))
 		// LEVEL 2: If behind target, mute or unconscious!
 		if (do_knockdown) // && level_current >= 1)
 			target.Knockdown(15 + 10 * level_current,1)
 		// Cancel Walk (we were close enough to contact them)
-		walk(owner,0)
+		walk(owner, 0)
 		//target.Paralyze(10,1)
 		target.grabbedby(owner) 										// Taken from mutations.dm under changelings
 		target.grippedby(owner, instant = TRUE) //instant aggro grab

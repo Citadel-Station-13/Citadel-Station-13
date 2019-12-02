@@ -79,6 +79,7 @@
 	vamp_greet += "<span class='boldannounce'><i>* Use \",b\" to speak your ancient Bloodsucker language.</span><br>"
 	vamp_greet += "<span class='announce'>Bloodsucker Tip: Rest in a <i>Coffin</i> to claim it, and that area, as your lair.</span><br>"
 	vamp_greet += "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br>"
+	vamp_greet += "<span class='announce'>Bloodsucker Tip: You wont loose blood if you are unconcious or sleeping. Use this to your advantage to conserve blood.</span><br>"
 	to_chat(owner, vamp_greet)
 
 	owner.current.playsound_local(null, 'sound/bloodsucker/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -201,7 +202,7 @@
 		S.brutemod *= 0.5
 		S.burnmod += 0.2 													//  <--------------------  Start small, but burn mod increases based on rank!
 		S.coldmod = 0
-		S.stunmod *= 0.5
+		S.stunmod *= 0.25
 		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
@@ -209,7 +210,6 @@
 		S.punchdamagehigh += 1      //highest possible punch damage	 9
 		// Clown
 		if(istype(H) && owner.assigned_role == "Clown")
-			//to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 			to_chat(H, "As a vampiric clown, you are no longer a danger to yourself. Your nature is subdued.")
 	// Physiology
@@ -217,7 +217,7 @@
 	// Language
 	owner.current.grant_language(/datum/language/vampiric)
 	// Soul
-	owner.current.hellbound = TRUE
+	//owner.current.hellbound = TRUE Causes wierd stuff
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
 	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 	// Disabilities
@@ -256,7 +256,7 @@
 	// Soul
 	if (owner.soulOwner == owner) // Return soul, if *I* own it.
 		owner.hasSoul = TRUE
-	owner.current.hellbound = FALSE
+//owner.current.hellbound = FALSE
 
 datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE

@@ -36,8 +36,8 @@
 
 	while (!AmFinalDeath() && coffin && lair)
 
-		// WAit 10 Sec and Repeat
-		sleep(100)
+		// WAit 1 min and Repeat
+		sleep(60)
 
 		// Coffin Moved SOMEHOW?
 		if (lair != get_area(coffin))

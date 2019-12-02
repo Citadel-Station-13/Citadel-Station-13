@@ -76,7 +76,7 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	// FULPSTATION 5/8/19 - Vamps don't heal naturally.
+	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
