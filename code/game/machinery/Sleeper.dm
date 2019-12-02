@@ -36,13 +36,11 @@
 	RefreshParts()
 	add_inital_chems()
 
-/obj/machinery/sleeper/deconstruct(disassembled = TRUE)
-	if(!CHECK_BITFIELD(flags_1, NODECONSTRUCT_1 | HOLOGRAM_1))
-		var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
-		buffer.volume = reagents.maximum_volume
-		buffer.reagents.maximum_volume = reagents.maximum_volume
-		reagents.trans_to(buffer.reagents, reagents.total_volume)
-	return ..()
+/obj/machinery/sleeper/on_deconstruction(disassembled = TRUE)
+	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
+	buffer.volume = reagents.maximum_volume
+	buffer.reagents.maximum_volume = reagents.maximum_volume
+	reagents.trans_to(buffer.reagents, reagents.total_volume)
 
 /obj/machinery/sleeper/proc/add_inital_chems()
 	for(var/i in available_chems)
