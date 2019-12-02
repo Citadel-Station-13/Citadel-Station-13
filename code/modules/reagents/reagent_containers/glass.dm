@@ -10,7 +10,7 @@
 
 /obj/item/reagent_containers/glass/slug
 	name = "glass slug"
-	desc = "Seemingly useless wasted sand and fuel mixed in one... Or maybe it can be refined into something more usefull?"
+	desc = "A small slug of solid glass, produced from a kiln."
 	icon_state = "glassslug"
 	amount_per_transfer_from_this = 0
 	possible_transfer_amounts = list(0)

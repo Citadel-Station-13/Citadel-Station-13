@@ -55,7 +55,7 @@
 
 /datum/bounty/item/silly/toy_swords
 	name = "Toy Swords"
-	description = "Nanotrasen has partaken in a reenactment of a famous movie, but we only have lethal energy based swords. Send us some toys so we stop killing are actors."
+	description = "Nanotrasen has secured a contract in a reenactment of a famous movie, but we only have lethal energy based swords. Send us some convincing replicas so we save on stuntmen casualty re-hiring."
 	reward = 1200
 	required_count = 3
 	wanted_types = list(/obj/item/toy/sword, /obj/item/toy/sword/cx)
