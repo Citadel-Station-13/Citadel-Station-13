@@ -19,9 +19,9 @@
 	. = ..()
 	if(user.get_item_by_slot(SLOT_GLASSES) == src)
 		if(world.time >= nextadrenalinepop)
-			to_chat(user, "<span class='notice'>The built-in adrenaline injector is ready for use.</span>")
+			. += "<span class='notice'>The built-in adrenaline injector is ready for use.</span>"
 		else
-			to_chat(user, "<span class='notice'>[DisplayTimeText(nextadrenalinepop - world.time)] left before the adrenaline injector can be used again.")
+			. += "<span class='notice'>[DisplayTimeText(nextadrenalinepop - world.time)] left before the adrenaline injector can be used again."
 
 /obj/item/clothing/glasses/phantomthief/syndicate/proc/injectadrenaline(mob/user, combatmodestate)
 	if(istype(user) && combatmodestate && world.time >= nextadrenalinepop)
