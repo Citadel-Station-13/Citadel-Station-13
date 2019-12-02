@@ -167,12 +167,22 @@
 
 /datum/supply_pack/organic/fakemeat
 	name = "Meat Crate"
-	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 4 slabs of meat product, and two slabs of *carp*."
-	cost = 1700
+	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 12 slabs of meat product, and 4 slabs of *carp*."
+	cost = 1200 // Buying 3 food crates nets you 9 meat for 900 points, plus like, 6 bags of rice, flour, and egg boxes. This is 12 for 500, but you -only- get meat and carp.
 	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
+					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
 					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
 					/obj/item/reagent_containers/food/snacks/carpmeat/imitation)
 	crate_name = "meaty crate"
