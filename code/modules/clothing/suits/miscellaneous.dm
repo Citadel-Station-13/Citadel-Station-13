@@ -758,6 +758,24 @@
 /obj/item/clothing/head/hooded/winterhood/miner
 	icon_state = "winterhood_miner"
 
+/obj/item/clothing/suit/hooded/wintercoat/ratvar
+	name = "ratvarian winter coat"
+	icon_state = "coatratvar"
+	item_state = "coatratvar"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/ratvar
+
+/obj/item/clothing/head/hooded/winterhood/ratvar
+	icon_state = "winterhood_ratvar"
+
+/obj/item/clothing/suit/hooded/wintercoat/narsie
+	name = "narsian winter coat"
+	icon_state = "coatnarsie"
+	item_state = "coatnarsie"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/narsie
+
+/obj/item/clothing/head/hooded/winterhood/narsie
+	icon_state = "winterhood_narsie"
+
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
 	desc = "This is obviously just a bedsheet, but maybe try it on?"
