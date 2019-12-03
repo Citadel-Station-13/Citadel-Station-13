@@ -269,7 +269,7 @@
 	. = ..()
 	update_traitor_icons_removed()
 	var/mob/M = mob_override || owner.current
-	if(iaAI(M) && traitor_kind == TRAITOR_AI)
+	if(isAI(M) && traitor_kind == TRAITOR_AI)
 		var/mob/living/silicon/ai/A = M
 		A.hack_software = FALSE
 	UnregisterSignal(M, COMSIG_MOVABLE_HEAR)
