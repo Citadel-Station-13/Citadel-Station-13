@@ -53,7 +53,6 @@
 		return
 
 	var/turf/open/T = get_turf(parent)
-	var/
 	if(abs(ONE_ATMOSPHERE - T.return_air().return_pressure()) > (potency/10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
 		return
 
