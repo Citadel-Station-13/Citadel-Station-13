@@ -778,3 +778,44 @@
 	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
+
+//////////////////////////////////////////////
+//                                          //
+//              BLOODSUCKERS                //
+//                                          //
+//////////////////////////////////////////////
+/* Doesnt work just yet
+/datum/dynamic_ruleset/roundstart/bloodsucker
+	name = "bloodsucker"
+	config_tag = "bloodsucker"
+	antag_flag = ROLE_BLOODSUCKER
+	antag_datum = /datum/antagonist/bloodsucker/
+  protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster", "Chaplain")
+  restricted_roles = list("AI", "Cyborg")
+  required_candidates = 1
+  weight = 3
+  cost = 15
+  scaling_cost = 10
+  requirements = list(80,70,60,50,50,50,50,50,50,50)
+  //antag_cap = list(1,1,1,1,1,2,2,2,2,2) There will be just as many vamp hunters as vampires, right?
+  high_population_requirement = 50
+	var/datum/antagonist/bloodsucker/V
+
+/datum/dynamic_ruleset/roundstart/bloodsucker/pre_execute()
+  var/num_bloodsuckers = antag_cap[indice_pop] * (scaled_times + 1)
+  for (var/i = 1 to num_bloodsuckers)
+    var/mob/M = pick_n_take(candidates)
+    assigned += M.mind
+    V += M.mind
+    M.mind.special_role = ROLE_TRAITOR
+    M.mind.restricted_roles = restricted_roles
+  mode.assign_monster_hunters(num_bloodsuckers,TRUE, assigned)
+  return TRUE
+
+/datum/dynamic_ruleset/roundstart/bloodsucker/execute()
+  //check_start_sunlight() The procs that make a vampire SHOULD enable sunlight by itself
+  for(var/datum/mind/M in assigned)
+    if(!mode.make_bloodsucker(M))
+  		V -= M.mind
+  return TRUE
+*/

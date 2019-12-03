@@ -5,7 +5,7 @@
 	desc = "Snap restraints with ease, or deal terrible damage with your bare hands."
 	button_icon_state = "power_strength"
 	bloodcost = 10
-	cooldown = 600
+	cooldown = 130
 	target_range = 1
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
@@ -41,22 +41,22 @@
 
 /datum/action/bloodsucker/targeted/brawn/CheckCanTarget(atom/A, display_error)
 	// DEFAULT CHECKS (Distance)
-	if (!..()) // Disable range notice for Brawn.
+	if(!..()) // Disable range notice for Brawn.
 		return FALSE
 	// Must outside Closet to target anyone!
-	if (!isturf(owner.loc))
+	if(!isturf(owner.loc))
 		return FALSE
 	// Check: Self
-	if (A == owner)
+	if(A == owner)
 		return FALSE
 	// Target Type: Living
-	if (isliving(A))
+	if(isliving(A))
 		return TRUE
 	// Target Type: Door
-	else if (upgrade_canDoor && istype(A, /obj/machinery/door))
+	else if(upgrade_canDoor && istype(A, /obj/machinery/door))
 		return TRUE
 	// Target Type: Closet
-	else if (upgrade_canLocker && istype(A, /obj/structure/closet))
+	else if(upgrade_canLocker && istype(A, /obj/structure/closet))
 		return TRUE
 	return ..() // yes, FALSE! You failed if you got here! BAD TARGET
 
@@ -65,17 +65,17 @@
 	var/mob/living/carbon/target = A
 	var/mob/living/user = owner
 	// Target Type: Mob
-	if (isliving(target))
+	if(isliving(target))
 		var/mob/living/carbon/user_C = user
-		var/hitStrength = user_C.dna.species.punchdamagehigh * 1.25 + 2
+		var/hitStrength = user_C.dna.species.punchdamagehigh * 1.3 + 5
 		// Knockdown!
-		var/powerlevel = min(7, 1 + level_current)
-		if (rand(10 + powerlevel) >= 5)
-			target.visible_message("<span class='danger'>[user] has knocked [target] down!</span>", \
-							  "<span class='userdanger'>[user] has knocked you down!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.Knockdown( min(5, rand(10, 10 * powerlevel)) )
+		var/powerlevel = min(5, 1 + level_current)
+		if(rand(5 + powerlevel) >= 5)
+			target.visible_message("<span class='danger'>[user] lands a vicious punch, sending [target] away!</span>", \
+							  "<span class='userdanger'>[user] has landed a horrifying punch on you, sending you flying!!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.Knockdown(min(5, rand(10, 10 * powerlevel)) )
 			// Chance of KO
-			if (rand(3 + powerlevel) >= 5  && target.stat <= UNCONSCIOUS)
+			if(rand(6 + powerlevel) >= 6  && target.stat <= UNCONSCIOUS)
 				target.Unconscious(40)
 		// Attack!
 		playsound(get_turf(target), 'sound/weapons/punch4.ogg', 60, 1, -1)

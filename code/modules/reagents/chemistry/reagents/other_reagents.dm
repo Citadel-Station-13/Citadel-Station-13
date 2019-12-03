@@ -38,6 +38,8 @@
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return //We dont want vampires getting toxed from blood
 	var/blood_id = C.get_blood_id()
 	if((blood_id == "blood" || blood_id == "jellyblood"))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
@@ -1116,6 +1118,8 @@
 	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
 		C.blood_volume += 0.01 //we'll have synthetics from medbay.
 	..()
