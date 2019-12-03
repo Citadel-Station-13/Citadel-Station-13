@@ -249,7 +249,7 @@
 		idc.access = Pl
 
 // - pAI connector circuit - //
-/obj/item/integrated_circuit/input/pAI_connector
+/* /obj/item/integrated_circuit/input/pAI_connector
 	name = "pAI connector circuit"
 	desc = "This circuit lets you fit in a personal artificial intelligence to give it some form of control over the bot."
 	extended_desc = "You can wire various functions to it."
@@ -371,3 +371,4 @@
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return	check_bot_self
+	*/
