@@ -7,13 +7,15 @@
 
 	if(!gibbed)
 		emote("deathgasp")
+	if(combatmode)
+		toggle_combat_mode(TRUE, TRUE)
 
 	. = ..()
-	
+
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_death()
-	
+
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
@@ -63,3 +65,8 @@
 		var/obj/item/bodypart/BP = X
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+
+/mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+	if(combatmode)
+		toggle_combat_mode(TRUE, TRUE)
+	return ..()

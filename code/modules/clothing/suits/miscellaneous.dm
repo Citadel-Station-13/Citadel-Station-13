@@ -763,6 +763,17 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
 
+/obj/item/clothing/suit/flakjack
+	name = "flak jacket"
+	desc = "A dilapidated jacket made of a supposedly bullet-proof material (Hint: It isn't.). Smells faintly of napalm."
+	icon_state = "flakjack"
+	item_state = "redtag"
+	blood_overlay_type = "armor"
+	body_parts_covered = CHEST
+	resistance_flags = NONE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
+
 /obj/item/clothing/suit/assu_suit
 	name = "DAB suit"
 	desc = "A cheap replica of old SWAT armor. On its back, it is written: \"<i>Desperate Assistance Battleforce</i>\"."
