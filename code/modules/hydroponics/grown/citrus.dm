@@ -89,7 +89,7 @@
 	icon_state = "seed-orange"
 	species = "orange"
 	plantname = "Extradimensional Orange Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/citrus/orange
+	product = /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d
 	lifespan = 60
 	endurance = 50
 	yield = 5
@@ -98,10 +98,10 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05, "haloperidol" = 0.15)
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d
-	seed = /obj/item/seeds/orange
+	seed = /obj/item/seeds/orange_3d
 	name = "extradminesional orange"
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"

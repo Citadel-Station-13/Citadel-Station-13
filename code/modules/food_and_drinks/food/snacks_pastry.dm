@@ -386,7 +386,7 @@
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtype = GRAIN
 
-#define PANCAKE_MAX_STACK 10
+#define PANCAKE_MAX_STACK 30
 
 /obj/item/reagent_containers/food/snacks/pancakes
 	name = "pancake"
