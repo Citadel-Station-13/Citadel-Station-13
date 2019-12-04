@@ -649,6 +649,7 @@ RLD
 	icon_state = "arcd"
 	item_state = "oldrcd"
 	has_ammobar = FALSE
+	upgrade = TRUE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	. = ..()
