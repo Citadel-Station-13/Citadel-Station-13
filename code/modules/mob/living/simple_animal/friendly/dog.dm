@@ -16,6 +16,10 @@
 
 	do_footstep = TRUE
 
+/mob/living/simple_animal/pet/dog/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/wuv, "yaps_happily!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "growls!", EMOTE_AUDIBLE)
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi
@@ -634,22 +638,3 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
 					sleep(1)
-
-/mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "yaps happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
-		else
-			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", 1, "growls!")

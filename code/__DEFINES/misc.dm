@@ -519,6 +519,10 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
 
+//whether the emote is visible or audible.
+#define EMOTE_VISIBLE 1
+#define EMOTE_AUDIBLE 2
+
 // possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
 #define FALL_INTERCEPTED		(1<<0) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE			(1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
