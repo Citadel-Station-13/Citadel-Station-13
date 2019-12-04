@@ -1861,7 +1861,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
 
-	if(!(target.mobility_flags & MOBILITY_STAND) && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_DISARM && !target.shoes)
+	if(target.lying && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_DISARM && !target.shoes)
 		user.visible_message("<span class='warning'>[user] starts licking [target]'s feet!</span>",
 							"<span class='danger'>You start licking [target]'s feet...</span>", null, null, target)
 		to_chat(target, "<span class='userdanger'>[user] starts licking your feet!</span>")
