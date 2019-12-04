@@ -282,7 +282,7 @@
 
 /mob/living/attack_hand(mob/user)
 	..() //Ignoring parent return value here.
-	SEND_SIGNAL(user, COMSIG_MOB_ATTACK_HAND, user, src)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
 	if((user != src) && user.a_intent != INTENT_HELP && check_shields(user, 0, user.name, attack_type = UNARMED_ATTACK))
 		log_combat(user, src, "attempted to touch")
 		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>")
