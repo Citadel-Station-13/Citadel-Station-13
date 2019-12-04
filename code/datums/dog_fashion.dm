@@ -181,6 +181,6 @@
 	emote_see = list("tries to tap dances.","looks sadly at others outfits...","barks at bad fashion!")
 
 /datum/dog_fashion/head/telegram
-	name = "Messanger REAL_NAME"
-	desc = "Dont shoot the messanger..."
+	name = "Messenger REAL_NAME"
+	desc = "Dont shoot the messenger..."
 	emote_see = list("licks an envelope.","looks ready to set off to send a letter...","works on barking!")
