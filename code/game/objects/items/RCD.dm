@@ -611,6 +611,7 @@ RLD
 	matter = 500
 	delay_mod = 0.6
 	sheetmultiplier	= 8
+	upgrade = TRUE
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
@@ -649,7 +650,6 @@ RLD
 	icon_state = "arcd"
 	item_state = "oldrcd"
 	has_ammobar = FALSE
-	upgrade = TRUE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	. = ..()
