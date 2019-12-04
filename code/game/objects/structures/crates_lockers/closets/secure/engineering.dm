@@ -33,7 +33,7 @@
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/storage/photo_album/CE(src)
 	new	/obj/item/storage/lockbox/medal/engineering(src)
-	new /obj/item/construction/rcd/arcd(src)
+	new /obj/item/construction/rcd/industrial(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/ce(src)
 	new /obj/item/clothing/head/beret/ce/white(src)
 
