@@ -43,7 +43,7 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
+	. += "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>"
 
 /obj/item/camera/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -81,8 +81,8 @@
 	..()
 
 /obj/item/camera/examine(mob/user)
-	..()
-	to_chat(user, "It has [pictures_left] photos left.")
+	. = ..()
+	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)

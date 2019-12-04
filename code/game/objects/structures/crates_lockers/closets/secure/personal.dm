@@ -5,16 +5,23 @@
 	var/registered_name = null
 
 /obj/structure/closet/secure_closet/personal/examine(mob/user)
-	..()
+	. = ..()
 	if(registered_name)
-		to_chat(user, "<span class='notice'>The display reads, \"Owned by [registered_name]\".</span>")
+		. += "<span class='notice'>The display reads, \"Owned by [registered_name]\".</span>"
 
-/obj/structure/closet/secure_closet/personal/check_access(obj/item/card/id/I)
+/obj/structure/closet/secure_closet/personal/check_access(obj/item/I)
 	. = ..()
 	if(!I || !istype(I))
 		return
-	if(registered_name == I.registered_name)
+	if(istype(I,/obj/item/modular_computer/tablet))
+		var/obj/item/modular_computer/tablet/ourTablet = I
+		var/obj/item/computer_hardware/card_slot/card_slot = ourTablet.all_components[MC_CARD]
+		if(card_slot)
+			return registered_name == card_slot.stored_card.registered_name || registered_name == card_slot.stored_card2.registered_name
+	var/obj/item/card/id/ID = I.GetID()
+	if(ID && registered_name == ID.registered_name)
 		return TRUE
+	return FALSE
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()

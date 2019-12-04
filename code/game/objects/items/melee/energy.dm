@@ -334,8 +334,8 @@
 		update_light()
 
 /obj/item/melee/transforming/energy/sword/cx/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file)
 	. = ..()

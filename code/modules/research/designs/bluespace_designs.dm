@@ -65,6 +65,16 @@
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/desynchronizer
+	name = "Desynchronizer"
+	desc = "A device that can desynchronize the user from spacetime."
+	id = "desynchronizer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 1500, MAT_BLUESPACE = 1000)
+	build_path = /obj/item/desynchronizer
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
