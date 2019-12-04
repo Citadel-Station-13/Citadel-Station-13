@@ -24,7 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //So the cartridges dont annoyingly get irradiated, and the signallers inside being radded as well
+	rad_flags = RAD_PROTECT_CONTENTS //So the cartridges dont annoyingly get irradiated, and the signallers inside being radded as well
 
 	var/obj/item/integrated_signaler/radio = null
 
