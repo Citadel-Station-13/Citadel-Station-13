@@ -162,6 +162,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_FREESPRINT		"free_sprinting"
 
 
 // common trait sources
