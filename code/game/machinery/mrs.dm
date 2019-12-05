@@ -11,7 +11,6 @@
 	var/scantime = 5
 	var/current_cycle = 0
 	var/scanning
-	var/enter_message = "<span class='notice'><b>You as you enter the machine you feel a strange sensation of increased gravity.</b></span>"
 	var/controls_inside = FALSE
 
 /obj/machinery/MRS/Initialize()
@@ -37,11 +36,11 @@
 
 /obj/machinery/MRS/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
-		"<span class='notice'>You climb out of [src]!</span>")
+	"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/MRS/Exited(atom/movable/user)
-	if (!state_open && user == occupant)
+	if(!state_open && user == occupant)
 		container_resist(user)
 
 /obj/machinery/MRS/relaymove(mob/user)
@@ -58,9 +57,7 @@
 /obj/machinery/MRS/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
-		var/mob/living/mob_occupant = occupant
-		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "[enter_message]")
+		occupant.visible_message("<span class='boldnotice'>As you enter the machine you feel a strange sensation of increased gravity.</span>", "[occupant] enters into the [src], the glass screen decending with a hiss as the machines whirr up. A scan button glows brightly green on the nearby monitor.")
 	update_icon()
 
 /obj/machinery/MRS/proc/scan()
@@ -85,7 +82,7 @@
 	scantime += rand(0,0.5)
 
 /obj/machinery/MRS/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
@@ -318,9 +315,7 @@
 		/*if("print")
 			new paper*/
 
-/obj/machinery/MRS/emag_act(mob/user)
-	. = ..()
-	return FALSE
+//TODO: emag_act() - scamble results somewhat, increase radiation, damage cyberorgans.
 
 /obj/machinery/MRS/process()
 	if(scanning)

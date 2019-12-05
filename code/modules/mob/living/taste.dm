@@ -21,7 +21,7 @@
 //TRAIT_AGEUSIA players can't taste, unless it's burning them.
 //taking sips of a strongly acidic/alkaline substance will burn your tongue.
 /mob/living/proc/taste(datum/reagents/from)
-	var/obj/item/organ/tongue/T = getorganslot("tongue")
+	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	var/taste_sensitivity = get_taste_sensitivity()
 	var/text_output = from.generate_taste_message(taste_sensitivity)
 	if(T)

@@ -38,7 +38,7 @@
 	add_inital_chems()
 
 /obj/machinery/sleeper/on_deconstruction()
-  var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
+	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
 	buffer.volume = reagents.maximum_volume
 	buffer.reagents.maximum_volume = reagents.maximum_volume
 	reagents.trans_to(buffer.reagents, reagents.total_volume)
