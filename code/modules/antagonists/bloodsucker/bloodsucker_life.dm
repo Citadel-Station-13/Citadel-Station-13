@@ -10,53 +10,27 @@
 //
 // Show as dead when...
 
-
-
-
-
-
-
-/datum/antagonist/bloodsucker/proc/LifeTick() // Should probably run from life.dm, same as handle_changeling
+/datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
 	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
-
 	var/notice_healing = FALSE
-	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
-
-		// Deduct Blood
-		if (owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
+	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
+		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA)) // Deduct Blood
 			AddBloodVolume(-0.09) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
-
-		// Heal
-		if (HandleHealing(1))
-			if (notice_healing == FALSE && owner.current.blood_volume > 0)
+		if(HandleHealing(1)) 		// Heal
+			if(notice_healing == FALSE && owner.current.blood_volume > 0)
 				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
 				notice_healing = TRUE
-		else if (notice_healing == TRUE)
-			notice_healing = FALSE
-
-		// Apply Low Blood Effects
-		HandleStarving()
-
-		// Death
-		HandleDeath()
-
-		// Standard Update
-		update_hud()
-
-		// Daytime Sleep in Coffin
+		else if(notice_healing == TRUE)
+			notice_healing = FALSE 	// Apply Low Blood Effects
+		HandleStarving()  // Death
+		HandleDeath() // Standard Update
+		update_hud()// Daytime Sleep in Coffin
 		if (SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 				Torpor_Begin()
-
-		// Wait before next pass
-		sleep(10)//sleep(30)
-
-	// Free my Vassals! (if I haven't yet)
-	FreeAllVassals()
-
-
-
-
+					// Wait before next pass
+		sleep(10)
+	FreeAllVassals() 	// Free my Vassals! (if I haven't yet)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,18 +38,14 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
 	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, maxBloodVolume)
 	update_hud()
 
-
 /datum/antagonist/bloodsucker/proc/HandleFeeding(mob/living/carbon/target, mult=1)
 	// mult: SILENT feed is 1/3 the amount
-
 	var/blood_taken = min(feedAmount, target.blood_volume) * mult	// Starts at 15 (now 8 since we doubled the Feed time)
 	target.blood_volume -= blood_taken
-
 	// Simple Animals lose a LOT of blood, and take damage. This is to keep cats, cows, and so forth from giving you insane amounts of blood.
 	if (!ishuman(target))
 		target.blood_volume -= (blood_taken / max(target.mob_size, 0.1)) * 3.5 // max() to prevent divide-by-zero
@@ -83,32 +53,25 @@
 		if (target.blood_volume <= 0)
 			target.blood_volume = 0
 			target.death(0)
-
 	///////////
 	// Shift Body Temp (toward Target's temp, by volume taken)
 	owner.current.bodytemperature = ((owner.current.blood_volume * owner.current.bodytemperature) + (blood_taken * target.bodytemperature)) / (owner.current.blood_volume + blood_taken)
 	// our volume * temp, + their volume * temp, / total volume
 	///////////
-
 	// Reduce Value Quantity
 	if (target.stat == DEAD)	// Penalty for Dead Blood
 		blood_taken /= 3
 	if (!ishuman(target))		// Penalty for Non-Human Blood
 		blood_taken /= 2
 	//if (!iscarbon(target))	// Penalty for Animals (they're junk food)
-
-
 	// Apply to Volume
 	AddBloodVolume(blood_taken)
-
 	// Reagents (NOT Blood!)
 	if(target.reagents && target.reagents.total_volume)
 		target.reagents.reaction(owner.current, INGEST, 1) // Run Reaction: what happens when what they have mixes with what I have?
 		target.reagents.trans_to(owner.current, 1)	// Run transfer of 1 unit of reagent from them to me.
-
 	// Blood Gulp Sound
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-
 
 /datum/mood_event/drankblood
 	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
@@ -166,86 +129,60 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
-
 	// NOTE: Mult of 0 is just a TEST to see if we are injured and need to go into Torpor!
-	//		 It is called from your coffin on close (by you only)
-
-	if (poweron_masquerade == TRUE || owner.current.AmStaked())
+	//It is called from your coffin on close (by you only)
+	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-
-	owner.current.adjustStaminaLoss(-2 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustStaminaLoss(-3 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
-
 	// No Bleeding
-	if (ishuman(owner.current))
+	if (ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
 		H.bleed_rate = 0
-
-	// Damage Heal: Do I have damage to ANY bodypart?
-	if (iscarbon(owner.current))
+	if (iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
-
-		// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
-		var/fireheal = 0
+		var/fireheal = 0 	// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
 			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
 			fireheal = min(C.getFireLoss_nonProsthetic(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
-			// Extinguish Fire
-			C.ExtinguishMob()
+			C.ExtinguishMob() 	// Extinguish Fire
 		else
-			// No Blood? Lower Mult
-			if (owner.current.blood_volume <= 0)
+			if (owner.current.blood_volume <= 0) // No Blood? Lower Mult
 				mult = 0.25
 			// Crit from burn? Lower damage to maximum allowed.
 			//if (C.getFireLoss() > owner.current.getMaxHealth())
 			//	fireheal = regenRate / 2
 		// BRUTE: Always Heal
 		var/bruteheal = min(C.getBruteLoss_nonProsthetic(), regenRate)
-
+		var/toxinheal = min(C.getToxLoss(), regenRate)
 		// Heal if Damaged
-		if (bruteheal + fireheal > 0)
-			// Just a check? Don't heal/spend, and return.
+		if (bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
 			if (mult == 0)
 				return TRUE
 			// We have damage. Let's heal (one time)
 			C.adjustBruteLoss(-bruteheal * mult, forced=TRUE)// Heal BRUTE / BURN in random portions throughout the body.
 			C.adjustFireLoss(-fireheal * mult, forced=TRUE)
+			C.adjustToxLoss(-toxinheal * mult * 2, forced=TRUE) //Toxin healing because vamps arent immune
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
-
-			// Pay Cost
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
-
-			// Healed! Done for this tick.
-			return TRUE
-
-		// Limbs? (And I have no other healing)
-		if (amInCoffinWhileTorpor)
-
-			// Heal Missing
-			var/list/missing = owner.current.get_missing_limbs()
-			if (missing.len)
-				// Cycle through ALL limbs and regen them!
-				for (var/targetLimbZone in missing)
-					// 1) Find ONE Limb and regenerate it.
-					//var/targetLimbZone = pick(missing)
+			return TRUE // Healed! Done for this tick.
+		if (amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
+			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
+			if (missing.len) 	// Cycle through ALL limbs and regen them!
+				for (var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
 					owner.current.regenerate_limb(targetLimbZone, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
-					// 2) Limb returns Damaged
-					var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimbZone )
+					var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimbZone ) // 2) Limb returns Damaged
 					AddBloodVolume(20 * costMult)	// Costs blood to heal
 					L.brute_dam = 60
 					to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
 					playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
-
-
 				// DONE! After regenerating ANY number of limbs, we stop here.
 				return TRUE
-
 			/*else // REMOVED: For now, let's just leave prosthetics on. Maybe you WANT to be a robovamp.
 				// Remove Prosthetic/False Limb
 				for(var/obj/item/bodypart/BP in C.bodyparts)
@@ -256,38 +193,26 @@
 						return TRUE
 						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.
 			*/
-
-			// Cure Final Disabilities
-			CureDisabilities()
-
-			// Remove Embedded!
-			C.remove_all_embedded_objects()
-			// Heal Organs (will respawn original eyes etc. but we replace right away, next)
-			owner.current.regenerate_organs()
-			// Eyes/Heart
+			CureDisabilities() 	// Cure Final Disabilities
+			C.remove_all_embedded_objects() // Remove Embedded!
+			owner.current.regenerate_organs() // Heal Organs (will respawn original eyes etc. but we replace right away, next)
 			CheckVampOrgans() // Heart, Eyes
-
 	return FALSE
-
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
 	var/mob/living/carbon/C = owner.current
-
 	C.cure_blind(list(EYE_DAMAGE))//()
 	C.cure_nearsighted(EYE_DAMAGE)
 	C.set_blindness(0) 	// Added 9/2/19
 	C.set_blurriness(0) // Added 9/2/19
 	C.update_tint() 	// Added 9/2/19
 	C.update_sight() 	// Added 9/2/19
-
 	for(var/O in C.internal_organs) //owner.current.adjust_eye_damage(-100)  // This was removed by TG
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
-
 	owner.current.cure_husk()
 
-
-// I am hungry!
+// I am thirsty for blud!
 /datum/antagonist/bloodsucker/proc/HandleStarving()
 
 	// High: 	Faster Healing
@@ -311,7 +236,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/antagonist/bloodsucker/proc/HandleDeath()
-		// 	FINAL DEATH
+	// 	FINAL DEATH
 	// Fire Damage? (above double health)
 	if (owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 2)
 		FinalDeath()
@@ -328,16 +253,15 @@
 	if (!owner.current.HaveBloodsuckerBodyparts())
 		FinalDeath()
 		return
-
 				// Disable Powers: Masquerade	* NOTE * This should happen as a FLAW!
 				//if (stat >= UNCONSCIOUS)
 				//	for (var/datum/action/bloodsucker/masquerade/P in powers)
 				//		P.Deactivate()
-
 		//	TEMP DEATH
 	var/total_brute = owner.current.getBruteLoss_nonProsthetic()
 	var/total_burn = owner.current.getFireLoss_nonProsthetic()
-	var/total_damage = total_brute + total_burn
+	var/total_toxloss = owner.current.getToxLoss() //This is neater than just putting it in total_damage
+	var/total_damage = total_brute + total_burn + total_toxloss
 	// Died? Convert to Torpor (fake death)
 	if (owner.current.stat >= DEAD)
 		Torpor_Begin()
@@ -345,8 +269,8 @@
 		if (poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
 	// End Torpor:
-	else	// No damage, OR brute healed and NOT in coffin (since you cannot heal burn)
-		if (total_damage <= 0 || total_brute <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+	else	// No damage, OR toxin healed AND brute healed and NOT in coffin (since you cannot heal burn)
+		if (total_damage <= 0 || total_toxloss <= 0 && total_brute <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			// Not Daytime, Not in Torpor
 			if (!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 				Torpor_End()
@@ -377,8 +301,8 @@
 	owner.current.stat = SOFT_CRIT
 	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
-	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
-	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")
+	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")
 	to_chat(owner, "<span class='warning'>You have recovered from Torpor.</span>")
 
 
@@ -395,20 +319,18 @@
  	return !current || QDELETED(current) || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
-
+	if(!iscarbon(owner.current)) //Check for non carbons.
+		owner.current.gib()
+		return
 	playsound(get_turf(owner.current), 'sound/effects/tendril_destroyed.ogg', 60, 1)
 	owner.current.drop_all_held_items()
 	owner.current.unequip_everything()
 	var/mob/living/carbon/C = owner.current
 	C.remove_all_embedded_objects()
-
 	// Make me UN-CLONEABLE
 	owner.current.hellbound = TRUE // This was done during creation, but let's do it again one more time...to make SURE this guy stays dead.
-
-
 	// Free my Vassals!
 	FreeAllVassals()
-
 	// Elders get Dusted
 	if (vamplevel >= 4) // (vamptitle)
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \

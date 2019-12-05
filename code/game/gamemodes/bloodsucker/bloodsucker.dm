@@ -2,7 +2,7 @@
 /datum/game_mode
 	var/list/datum/mind/bloodsuckers = list() 		// List of minds belonging to this game mode.
 	var/list/datum/mind/vassals = list() 			// List of minds that have been turned into Vassals.
-	var/list/datum/mind/vamphunters = list() 		// List of minds hunting vampires.
+	//var/list/datum/mind/vamphunters = list() 		// List of minds hunting vampires. Disabled at the moment
 	var/obj/effect/sunlight/bloodsucker_sunlight	// Sunlight Timer. Created on first Bloodsucker assign. Destroyed on last removed Bloodsucker.
 
 	// LISTS //
@@ -18,8 +18,8 @@
 	false_report_weight = 1
 	restricted_jobs = list("AI","Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-	required_players = 0
-	required_enemies = 1
+	required_players = 10
+	required_enemies = 2
 	recommended_enemies = 4
 	reroll_friendly = 1
 	enemy_minimum_age = 7
@@ -57,8 +57,8 @@
 		log_game("[bloodsucker.key] (ckey) has been selected as a Bloodsucker.")
 		antag_candidates.Remove(bloodsucker) // Apparently you can also write antag_candidates -= bloodsucker
 
-	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
-	assign_monster_hunters(bloodsuckers.len, TRUE, bloodsuckers)	// FULP
+	//  Assign Hunters (as many as monsters, plus one)
+	//assign_monster_hunters(bloodsuckers.len, TRUE, bloodsuckers)	// Disabled for now
 
 	// Do we have enough vamps to continue?
 	return bloodsuckers.len >= required_enemies

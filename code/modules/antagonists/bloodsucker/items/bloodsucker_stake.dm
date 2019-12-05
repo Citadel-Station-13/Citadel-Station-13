@@ -33,7 +33,6 @@
 	attack_verb = list("staked")
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 6
 	throwforce = 10
@@ -43,19 +42,14 @@
 	obj_integrity = 30
 	max_integrity = 30
 	//embedded_fall_pain_multiplier
-
 	var/staketime = 120		// Time it takes to embed the stake into someone's chest.
-
-
-
 
 /obj/item/stake/basic
 	name = "wooden stake"
 	// This exists so Hardened/Silver Stake can't have a welding torch used on them.
 
-
 /obj/item/stake/basic/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weldingtool))
+	if(istype(W, /obj/item/weldingtool))
 		//if (amWelded)
 		//	to_chat(user, "<span class='warning'>This stake has already been treated with fire.</span>")
 		//	return
@@ -67,27 +61,24 @@
 						 "<span class='notice'>You scorch the pointy end of [src] with the welding tool.</span>", \
 						 "<span class='italics'>You hear welding.</span>")
 		// 8 Second Timer
-		if (!do_mob(user, src, 80))
+		if(!do_mob(user, src, 80))
 			return
-
 		// Create the Stake
 		qdel(src)
 		var/obj/item/stake/hardened/new_item = new(usr.loc)
 		user.put_in_hands(new_item)
-
 	else
 		return ..()
-
-
 
 /obj/item/stake/afterattack(atom/target, mob/user, proximity)
 	//to_chat(world, "<span class='notice'>DEBUG: Staking </span>")
 	// Invalid Target, or not targetting chest with HARM intent?
-	if (!iscarbon(target) || check_zone(user.zone_selected) != "chest" || user.a_intent != INTENT_HARM)
+	if(!iscarbon(target) || check_zone(user.zone_selected) != "chest" || user.a_intent != INTENT_HARM)
 		return
 	var/mob/living/carbon/C = target
 	// Needs to be Down/Slipped in some way to Stake.
-	if (!C.can_be_staked())
+	if(!C.can_be_staked() || target == user)
+		to_chat(user, "<span class='danger'>You cant stake [target] when they are moving moving about! They have to be laying down!</span>")
 		return
 			// Oops! Can't.
 	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
@@ -96,67 +87,34 @@
 	// Make Attempt...
 	to_chat(user, "<span class='notice'>You put all your weight into embedding the stake into [target]'s chest...</span>")
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
-	if (!do_mob(user, C, staketime, 0, 1, extra_checks=CALLBACK(C, /mob/living/carbon/proc/can_be_staked))) // user / target / time / uninterruptable / show progress bar / extra checks
+	if(!do_mob(user, C, staketime, 0, 1, extra_checks=CALLBACK(C, /mob/living/carbon/proc/can_be_staked))) // user / target / time / uninterruptable / show progress bar / extra checks
 		return
-
 	// Drop & Embed Stake
 	user.visible_message("<span class='danger'>[user.name] drives the [src] into [target]'s chest!</span>", \
 			 "<span class='danger'>You drive the [src] into [target]'s chest!</span>")
 	playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
-
 	user.dropItemToGround(src, TRUE) //user.drop_item() // "drop item" doesn't seem to exist anymore. New proc is user.dropItemToGround() but it doesn't seem like it's needed now?
-
 	var/obj/item/bodypart/B = C.get_bodypart("chest")  // This was all taken from hitby() in human_defense.dm
 	B.embedded_objects |= src
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
 	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)
-
-	if (C.mind)
+	if(C.mind)
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if (bloodsucker)
+		if(bloodsucker)
 			// If DEAD or TORPID...kill vamp!
-			if (C.StakeCanKillMe()) // NOTE: This is the ONLY time a staked Torpid vamp dies.
+			if(C.StakeCanKillMe()) // NOTE: This is the ONLY time a staked Torpid vamp dies.
 				bloodsucker.FinalDeath()
 				return
 			else
 				to_chat(target, "<span class='userdanger'>You have been staked! Your powers are useless, your death forever, while it remains in place.</span>")
 				to_chat(user, "<span class='warning'>You missed [C.p_their(TRUE)]'s heart! It would be easier if [C.p_they(TRUE)] weren't struggling so much.</span>")
 
-
-
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
 	//return resting || IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
-	return !(src.canmove)
+	return (src.resting)
 	// ABOVE:  Taken from update_mobility() in living.dm
-
-
-
-
-
-/obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
-	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
-	if (W.get_sharpness())
-		user.visible_message("[user] begins whittling [src] into a pointy object.", \
-				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
-				 "<span class='italics'>You hear wood carving.</span>")
-		// 8 Second Timer
-		if (!do_mob(user, src, 80))
-			return
-		// Make Stake
-		var/obj/item/stake/basic/new_item = new(usr.loc)
-		user.visible_message("[user] finishes carving a stake out of [src].", \
-				 "<span class='notice'>You finish carving a stake out of [src].</span>")
-		// Prepare to Put in Hands (if holding wood)
-		var/obj/item/stack/sheet/mineral/wood/thisStack = src
-		var/replace = (user.get_inactive_held_item()==thisStack)
-		// Use Wood
-		thisStack.use(1)
-		// If stack depleted, put item in that hand (if it had one)
-		if (!thisStack && replace)
-			user.put_in_hands(new_item)
-
 
 /obj/item/stake/hardened
 	// Created by welding and acid-treating a simple stake.

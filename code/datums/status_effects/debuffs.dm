@@ -80,7 +80,31 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-//TASER
+/datum/status_effect/no_combat_mode/
+	id = "no_combat_mode"
+	blocks_combatmode = TRUE
+	alert_type = null
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
+
+/datum/status_effect/no_combat_mode/mesmerize
+	id = "Mesmerize"
+	alert_type = /obj/screen/alert/status_effect/mesmerized
+
+/obj/screen/alert/status_effect/mesmerized
+	name = "Mesmerized"
+	desc = "You cant tear your sight from who is in front of you...Their gaze is simply too enthralling.."
+	icon = 'icons/mob/actions/bloodsucker.dmi'
+	icon_state = "power_mez"
+
 /datum/status_effect/electrode
 	id = "tased"
 	blocks_combatmode = TRUE

@@ -5,14 +5,13 @@
 //		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Poly's or NPC's vocab?)
 //		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
 
-
 /datum/action/bloodsucker/targeted/mesmerize
 	name = "Mesmerize"
 	desc = "Dominate the mind of a mortal who can see your eyes."
 	button_icon_state = "power_mez"
 	bloodcost = 30
 	cooldown = 200
-	target_range = 5
+	target_range = 3
 	power_activates_immediately = FALSE
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
@@ -81,24 +80,23 @@
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE
-
 	return TRUE
-
 
 /datum/action/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
-
 	var/mob/living/carbon/target = A
 	var/mob/living/user = owner
 
 	if(istype(target))
 		target.Stun(40) //Utterly useless without this, its okay since there are so many checks to go through
-		target.silent += 40 //Shhhh little lamb
+		target.silent += 45 //Shhhh little lamb
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 45) //So you cant rotate with combat mode, plus fancy status alert
 
 	if(do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
-		ADD_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
+		target.silent += 100 + level_current * 15
 		var/power_time = 90 + level_current * 15
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 100 + level_current * 15)
 		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 		target.Stun(power_time)
 		//target.silent += power_time / 10 // Silent isn't based on ticks.
@@ -110,7 +108,6 @@
 				// They Woke Up! (Notice if within view)
 				if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
 					to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
-					REMOVE_TRAIT(target, TRAIT_MUTE, "bloodsucker_mesmerize")
 
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)

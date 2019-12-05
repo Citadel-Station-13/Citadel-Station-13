@@ -200,7 +200,7 @@
 		var/datum/species/S = H.dna.species
 		// Make Changes
 		S.brutemod *= 0.5
-		S.burnmod += 0.2 													//  <--------------------  Start small, but burn mod increases based on rank!
+		S.burnmod += 0.1 													//  <--------------------  Start small, but burn mod increases based on rank!
 		S.coldmod = 0
 		S.stunmod *= 0.25
 		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1

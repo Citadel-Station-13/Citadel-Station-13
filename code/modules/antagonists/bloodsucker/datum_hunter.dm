@@ -1,3 +1,4 @@
+/*
 #define HUNTER_SCAN_MIN_DISTANCE 8
 #define HUNTER_SCAN_MAX_DISTANCE 35
 #define HUNTER_SCAN_PING_TIME 20 //5s update time.
@@ -103,7 +104,7 @@
 
 // TAKEN FROM:  /datum/action/changeling/pheromone_receptors    // pheromone_receptors.dm      for a version of tracking that Changelings have!
 
-/*
+
 /datum/status_effect/agent_pinpointer/hunter_edition
 	alert_type = /obj/screen/alert/status_effect/agent_pinpointer/hunter_edition
 	minimum_range = HUNTER_SCAN_MIN_DISTANCE
@@ -159,7 +160,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 
 
 /datum/action/bloodsucker/trackvamp/
@@ -169,34 +170,24 @@
 	background_icon_state = "vamp_power_off"		//And this is the state for the background icon
 	icon_icon = 'icons/mob/actions/bloodsucker.dmi'		//This is the file for the ACTION icon
 	button_icon_state = "power_hunter" 				//And this is the state for the action icon
-
-	// Action-Related
-	amToggle = FALSE
-	cooldown = 200 // 10 ticks, 1 second.
+	amToggle = FALSE  // Action-Related
+	cooldown = 300 // 10 ticks, 1 second.
 	bloodcost = 0
-
-
 
 /datum/action/bloodsucker/trackvamp/ActivatePower()
 
 	var/mob/living/user = owner
-
 	to_chat(user, "<span class='notice'>You look around, scanning your environment and discerning signs of any filthy, wretched affronts to the natural order.</span>")
 
 	if (!do_mob(user,owner,80))
 		return
-
 	// Add Power
 	// REMOVED //user.apply_status_effect(/datum/status_effect/agent_pinpointer/hunter_edition)
 	// We don't track direction anymore!
-
 	// Return text indicating direction
 	display_proximity()
-
 	// NOTE: DON'T DEACTIVATE!
 	//DeactivatePower()
-
-
 
 /datum/action/bloodsucker/trackvamp/proc/display_proximity()
 	// Pick target
@@ -209,7 +200,7 @@
 	var/list/datum/mind/monsters = list()
 	monsters += SSticker.mode.bloodsuckers
 	monsters += SSticker.mode.devils
-	monsters += SSticker.mode.cult
+	//monsters += SSticker.mode.cult
 	monsters += SSticker.mode.wizards
 	monsters += SSticker.mode.apprentices
 	monsters += SSticker.mode.servants_of_ratvar
@@ -300,4 +291,5 @@
 /datum/martial_art/hunter/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
+*/
 */
