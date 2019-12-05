@@ -75,3 +75,16 @@
 	desc = "A pair of woodland camouflage pants. Probably not the best choice for a space station."
 	icon_state = "camopants"
 	item_color = "camopants"
+
+/obj/item/clothing/under/pants/rippedjeans
+	name = "ripped jeans"
+	desc = "If you're wearing this you're either a rebel or poor"
+	icon_state = "jean_ripped"
+	item_color = "jean_ripped"
+
+/obj/item/clothing/under/pants/chaps
+	name = "black chaps"
+	body_parts_covered = LEGS
+	desc = "Yeeehaw"
+	icon_state = "chaps"
+	item_color = "chaps"
