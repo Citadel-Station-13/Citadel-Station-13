@@ -766,6 +766,9 @@
 
 /obj/item/clothing/head/hooded/winterhood/ratvar
 	icon_state = "winterhood_ratvar"
+	light_range = 3
+	light_power = 1
+	light_color = "#B18B25" //clockwork slab background top color
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie
 	name = "narsian winter coat"
