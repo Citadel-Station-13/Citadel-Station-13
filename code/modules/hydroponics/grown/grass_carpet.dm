@@ -68,22 +68,23 @@
 		break
 	
 	stacktype = initial(stacktype)
-
-	switch(G.type)
-		if(/datum/plant_gene/trait/glow/white)
-			stacktype = /obj/item/stack/tile/fairygrass/white
-		if(/datum/plant_gene/trait/glow/red)
-			stacktype = /obj/item/stack/tile/fairygrass/red
-		if(/datum/plant_gene/trait/glow/yellow)
-			stacktype = /obj/item/stack/tile/fairygrass/yellow
-		if(/datum/plant_gene/trait/glow/green)
-			stacktype = /obj/item/stack/tile/fairygrass/green
-		if(/datum/plant_gene/trait/glow/blue)
-			stacktype = /obj/item/stack/tile/fairygrass/blue
-		if(/datum/plant_gene/trait/glow/purple)
-			stacktype = /obj/item/stack/tile/fairygrass/purple
-		if(/datum/plant_gene/trait/glow/pink)
-			stacktype = /obj/item/stack/tile/fairygrass/pink
+	
+	if(G)
+		switch(G.type)
+			if(/datum/plant_gene/trait/glow/white)
+				stacktype = /obj/item/stack/tile/fairygrass/white
+			if(/datum/plant_gene/trait/glow/red)
+				stacktype = /obj/item/stack/tile/fairygrass/red
+			if(/datum/plant_gene/trait/glow/yellow)
+				stacktype = /obj/item/stack/tile/fairygrass/yellow
+			if(/datum/plant_gene/trait/glow/green)
+				stacktype = /obj/item/stack/tile/fairygrass/green
+			if(/datum/plant_gene/trait/glow/blue)
+				stacktype = /obj/item/stack/tile/fairygrass/blue
+			if(/datum/plant_gene/trait/glow/purple)
+				stacktype = /obj/item/stack/tile/fairygrass/purple
+			if(/datum/plant_gene/trait/glow/pink)
+				stacktype = /obj/item/stack/tile/fairygrass/pink
 	
 	. = ..()
 
