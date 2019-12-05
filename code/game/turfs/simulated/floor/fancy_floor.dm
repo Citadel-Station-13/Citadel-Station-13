@@ -146,17 +146,6 @@
 	color = "#FFB3DA"
 	floor_tile = /obj/item/stack/tile/fairygrass/pink
 
-
-
-/datum/plant_gene/trait/glow
-/datum/plant_gene/trait/glow/white
-/datum/plant_gene/trait/glow/red
-/datum/plant_gene/trait/glow/yellow
-/datum/plant_gene/trait/glow/green
-/datum/plant_gene/trait/glow/blue
-/datum/plant_gene/trait/glow/purple
-/datum/plant_gene/trait/glow/pink
-
 /turf/open/floor/grass/snow
 	gender = PLURAL
 	name = "snow"
