@@ -87,7 +87,7 @@
 /obj/item/stack/tile/fairygrass/white
 	name = "white fairygrass tile"
 	singular_name = "white fairygrass floor tile"
-	desc = "A patch of odd, glowing blue grass."
+	desc = "A patch of odd, glowing white grass."
 	turf_type = /turf/open/floor/grass/fairy/white
 	color = "#FFFFFF"
 

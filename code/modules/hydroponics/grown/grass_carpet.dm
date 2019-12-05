@@ -56,7 +56,7 @@
 /obj/item/reagent_containers/food/snacks/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
 	name = "fairygrass"
-	desc = "Blue, glowing, and smells fainly of mushrooms."
+	desc = "Glowing, and smells fainly of mushrooms."
 	icon_state = "fairygrassclump"
 	filling_color = "#3399ff"
 	stacktype = /obj/item/stack/tile/fairygrass
