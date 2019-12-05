@@ -130,18 +130,11 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
-	if(!(A in range(custom_range, get_turf(user))))
+	if(!(A in range(custom_range, get_turf(user))) || !((A in view(user.client.view, user)) || (user in viewers(user.client.view, A))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
 	else
 		return TRUE
-
-/obj/item/construction/proc/prox_check(proximity)
-	if(proximity)
-		return TRUE
-	else
-		return FALSE
-
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -523,7 +516,12 @@ RLD
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(!prox_check(proximity))
+	if(!proximity)
+		if(!ranged || !range_check(A,user)) //early return not-in-range sanity.
+			return
+		if(target_check(A,user))
+			user.Beam(A,icon_state="rped_upgrade",time=30)
+		rcd_create(A,user)
 		return
 	rcd_create(A, user)
 
@@ -635,6 +633,7 @@ RLD
 	max_matter = INFINITY
 	matter = INFINITY
 	upgrade = TRUE
+	ranged = TRUE
 
 // Ranged RCD
 
@@ -650,18 +649,8 @@ RLD
 	item_state = "oldrcd"
 	has_ammobar = FALSE
 
-/obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	. = ..()
-	if(!range_check(A,user))
-		return
-	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
-	rcd_create(A,user)
-
-
 
 // RAPID LIGHTING DEVICE
-
 
 
 /obj/item/construction/rld
