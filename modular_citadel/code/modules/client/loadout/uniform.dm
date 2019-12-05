@@ -116,7 +116,7 @@
 /datum/gear/athleticshorts
 	name = "Athletic Shorts"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/shorts
+	path = /obj/item/clothing/under/shorts/red
 
 /datum/gear/bjeans
 	name = "Black Jeans"
@@ -341,4 +341,4 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
 	cost = 3
-	
+
