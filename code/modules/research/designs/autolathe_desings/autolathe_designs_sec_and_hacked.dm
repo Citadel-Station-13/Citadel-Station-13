@@ -138,10 +138,10 @@
 	category = list("hacked", "Security")
 
 /datum/design/a762
-	name = "Stripper Clip (7.62mm)
+	name = "Rifle Bullet (7.62mm)"
 	id = "a762"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 20000) //more expensive with autolathe
+	materials = list(MAT_METAL = 5000) //need seclathe for clips
 	category = list("hacked", "Security")
 /datum/design/c10mm
 	name = "Ammo Box (10mm)"
