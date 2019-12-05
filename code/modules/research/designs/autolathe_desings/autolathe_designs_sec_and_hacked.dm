@@ -142,7 +142,9 @@
 	id = "a762"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 5000) //need seclathe for clips
+	build_path = /obj/item/ammo_casing/a762
 	category = list("hacked", "Security")
+
 /datum/design/c10mm
 	name = "Ammo Box (10mm)"
 	id = "c10mm"
