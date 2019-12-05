@@ -1,0 +1,13 @@
+author: "Weblure"
+delete-after: True
+changes: 
+  - rscadd: "Button added to slime console that prints out the hotkey commands to the user. [Includes DMI update]"
+  - rscadd: "Shift-click a slime to pick it up, or the floor to drop all held slimes. (Requires Basic Slime Console upgrade)"
+  - rscadd: "Ctrl-click a slime to scan it."
+  - rscadd: "Alt-click a slime to feed it a potion. (Requires Advanced Slime Console upgrade)"
+  - rscadd: "Ctrl-click on a dead monkey to recycle it, or the floor to place a new monkey. (Requires Monkey Console upgrade)"
+  - rscadd: "If the console does not have the required upgrade, an error message will print to the user."
+  - rscadd: "You can now pick up a single slime from a pile, instead of all of them at once."
+  - tweak: "When recycling monkeys, the console will now report how many monkeys it has (will not report decimal increases)."
+  - tweak: "Console now alerts you when you're out of monkeys and reports your current decimal amount."
+  - tweak: "Console messages are now styled consistently."
