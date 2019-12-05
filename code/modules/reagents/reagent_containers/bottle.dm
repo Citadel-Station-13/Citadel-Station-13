@@ -77,6 +77,11 @@
 	desc = "A small bottle of charcoal, which removes toxins and other chemicals from the bloodstream."
 	list_reagents = list("charcoal" = 30)
 
+/obj/item/reagent_containers/glass/bottle/cryoxadone
+	name = "cryoxadone bottle"
+	desc = "A small bottle of cryoxadone, heals most types of damage when used in extremely cold enviornments."
+	list_reagents = list("cryoxadone" = 30)
+
 /obj/item/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
 	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."
