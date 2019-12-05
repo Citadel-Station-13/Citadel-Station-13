@@ -40,8 +40,8 @@
 /obj/item/wallframe/picture/examine(mob/user)
 	if(user.is_holding(src) && displayed)
 		displayed.show(user)
-	else
-		..()
+		return list()
+	return ..()
 
 /obj/item/wallframe/picture/update_icon()
 	cut_overlays()
@@ -109,8 +109,8 @@
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
 		framed.show(user)
-	else
-		..()
+		return list()
+	return ..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(can_decon && (istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench)))

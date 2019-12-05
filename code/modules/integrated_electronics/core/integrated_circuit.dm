@@ -35,8 +35,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/examine(mob/user)
 	interact(user)
-	external_examine(user)
 	. = ..()
+	. += external_examine(user)
 
 // Can be called via electronic_assembly/attackby()
 /obj/item/integrated_circuit/proc/additem(var/obj/item/I, var/mob/living/user)
@@ -62,7 +62,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 // This should be used when someone is examining from an 'outside' perspective, e.g. reading a screen or LED.
 /obj/item/integrated_circuit/proc/external_examine(mob/user)
-	any_examine(user)
+	return any_examine(user)
 
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return

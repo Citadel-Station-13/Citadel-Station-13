@@ -73,8 +73,8 @@
 	..()
 
 /obj/item/lightreplacer/examine(mob/user)
-	..()
-	to_chat(user, status_string())
+	. = ..()
+	. += status_string()
 
 /obj/item/lightreplacer/attackby(obj/item/W, mob/user, params)
 

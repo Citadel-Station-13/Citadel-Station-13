@@ -566,9 +566,9 @@
 			. += blade_inhand
 
 /obj/item/twohanded/dualsaber/hypereutactic/examine(mob/user)
-	..()
+	. = ..()
 	if(!hacked)
-		to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/twohanded/dualsaber/hypereutactic/rainbow_process()
 	. = ..()
@@ -634,9 +634,9 @@
 	AddComponent(/datum/component/jousting)
 
 /obj/item/twohanded/spear/examine(mob/user)
-	..()
+	. = ..()
 	if(explosive)
-		to_chat(user, "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>")
+		. += "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
 
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)

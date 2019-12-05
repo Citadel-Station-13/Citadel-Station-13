@@ -360,8 +360,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 
 /obj/item/coin/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
+	. = ..()
+	. += "<span class='info'>It's worth [value] credit\s.</span>"
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))

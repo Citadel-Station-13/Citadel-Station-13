@@ -504,7 +504,7 @@
 	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution."
 	id   = "pHmeter"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1000, /datum/material/silver = 100, /datum/material/diamond = 100)
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 100, /datum/material/plastic = 100)
 	build_path = /obj/item/fermichem/pHmeter
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE

@@ -85,7 +85,6 @@
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins, mob/user)
 	if(notify_admins)
-		investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
 		var/obj/O = new path(get_turf(src))
@@ -94,6 +93,7 @@
 			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
 			I.set_custom_materials(matlist.Copy())
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
+	investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo

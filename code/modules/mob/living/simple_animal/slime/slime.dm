@@ -61,7 +61,7 @@
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
-	
+
 	do_footstep = TRUE
 
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
@@ -408,37 +408,32 @@
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
-
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if (src.stat == DEAD)
-		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
+		. += "<span class='deadsay'>It is limp and unresponsive.</span>"
 	else
 		if (stat == UNCONSCIOUS) // Slime stasis
-			msg += "<span class='deadsay'>It appears to be alive but unresponsive.</span>\n"
-		if (src.getBruteLoss())
-			msg += "<span class='warning'>"
-			if (src.getBruteLoss() < 40)
-				msg += "It has some punctures in its flesh!"
+			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
+		if (getBruteLoss())
+			if (getBruteLoss() < 40)
+				. += "<span class='warning'>It has some punctures in its flesh!"
 			else
-				msg += "<B>It has severe punctures and tears in its flesh!</B>"
-			msg += "</span>\n"
+				. += "<span class='danger'>It has severe punctures and tears in its flesh!</span>"
 
 		switch(powerlevel)
 			if(2 to 3)
-				msg += "It is flickering gently with a little electrical activity.\n"
+				. += "It is flickering gently with a little electrical activity."
 
 			if(4 to 5)
-				msg += "It is glowing gently with moderate levels of electrical activity.\n"
+				. += "It is glowing gently with moderate levels of electrical activity."
 
 			if(6 to 9)
-				msg += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>\n"
+				. += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>"
 
 			if(10)
-				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
+				. += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>"
 
-	msg += "*---------*</span>"
-	to_chat(user, msg)
-	return
+	. += "*---------*</span>"
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
 	if(stat)

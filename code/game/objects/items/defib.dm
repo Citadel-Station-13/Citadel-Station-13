@@ -104,7 +104,7 @@
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
 	. = ..()
-	if(ismob(loc))
+	if(!. && ismob(loc) && loc == usr)
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
@@ -762,5 +762,3 @@
 	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	icon_state = "fast_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/gold = 26000, /datum/material/silver = 26000)
-
-#undef HALFWAYCRITDEATH
