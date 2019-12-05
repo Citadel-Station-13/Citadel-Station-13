@@ -130,13 +130,19 @@
 	category = list("hacked", "Security")
 
 /datum/design/a357
-	name = "Speed Loader (.357)"
+	name = ".357 Bullet"
 	id = "a357"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/a357
+	materials = list(MAT_METAL = 5000)
+	build_path = /obj/item/ammo_casing/a357
 	category = list("hacked", "Security")
 
+/datum/design/a762
+	name = "Stripper Clip (7.62mm)
+	id = "a762"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 20000) //more expensive with autolathe
+	category = list("hacked", "Security")
 /datum/design/c10mm
 	name = "Ammo Box (10mm)"
 	id = "c10mm"
