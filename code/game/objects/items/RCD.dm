@@ -130,11 +130,16 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
-	if(!(A in range(custom_range, get_turf(user))) || !((A in view(user.client.view, user)) || (user in viewers(user.client.view, A))))
+	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
-	else
-		return TRUE
+	var/view_range = user.client ? user.client.view : world.view
+	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
+	//jarring, but it should stop people from targetting atoms they can't see...
+	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
+	if(!((user in view(view_range, A)) || (user in viewers(view_range, A))))
+		return FALSE
+	return TRUE
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
