@@ -133,7 +133,7 @@
 	name = ".357 Bullet"
 	id = "a357"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000)
+	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_casing/a357
 	category = list("hacked", "Security")
 
