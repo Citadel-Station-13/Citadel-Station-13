@@ -31,17 +31,20 @@
 	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
-	..()
+	. = ..()
+	if(!.)
+		return
 	if(damage == initial(damage))
 		clear_eye_trauma()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/HMN = owner
-		old_eye_color = HMN.eye_color
+		var/mob/living/carbon/human/H = owner
+		old_eye_color = H.eye_color
 		if(eye_color)
-			HMN.eye_color = eye_color
-			HMN.regenerate_icons()
+			H.eye_color = eye_color
 		else
-			eye_color = HMN.eye_color
+			eye_color = H.eye_color
+		if(!special)
+			H.dna.species.handle_body() //regenerate eyeballs overlays.
 		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 			see_in_dark = 8
@@ -51,13 +54,15 @@
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	clear_eye_trauma()
-	..()
+	. = ..()
 	if(ishuman(M) && eye_color)
-		var/mob/living/carbon/human/HMN = M
-		HMN.eye_color = old_eye_color
-		HMN.regenerate_icons()
-	M.update_tint()
-	M.update_sight()
+		var/mob/living/carbon/human/H = M
+		H.eye_color = old_eye_color
+		if(!special)
+			H.dna.species.handle_body()
+	if(!special)
+		M.update_tint()
+		M.update_sight()
 
 /obj/item/organ/eyes/on_life()
 	..()
