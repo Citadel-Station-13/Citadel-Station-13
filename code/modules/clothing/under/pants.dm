@@ -90,7 +90,7 @@
 	item_color = "chaps"
 
 /obj/item/clothing/under/pants/yogapants
-	name = "yoga pants
+	name = "yoga pants"
 	desc = "comfy!"
 	icon_state = "yoga_pants"
 	item_color = "yoga_pants"
