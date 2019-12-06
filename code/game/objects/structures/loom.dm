@@ -25,17 +25,17 @@
 	if(!istype(S) || !S.is_fabric)
 		return FALSE
 	if(!anchored)
-		user.show_message("<span class='notice'>The loom needs to be wrenched down.</span>", 1)
+		user.show_message("<span class='notice'>The loom needs to be wrenched down.</span>", MSG_VISUAL)
 		return FALSE
 	if(S.amount < FABRIC_PER_SHEET)
 		user.show_message("<span class='notice'>You need at least [FABRIC_PER_SHEET] units of fabric before using this.</span>", 1)
 		return FALSE
-	user.show_message("<span class='notice'>You start weaving \the [S.name] through the loom..</span>", 1)
+	user.show_message("<span class='notice'>You start weaving \the [S.name] through the loom..</span>", MSG_VISUAL)
 	if(S.use_tool(src, user, S.pull_effort))
 		if(S.amount >= FABRIC_PER_SHEET)
 			new S.loom_result(drop_location())
 			S.use(FABRIC_PER_SHEET)
-			user.show_message("<span class='notice'>You weave \the [S.name] into a workable fabric.</span>", 1)
+			user.show_message("<span class='notice'>You weave \the [S.name] into a workable fabric.</span>", MSG_VISUAL)
 	return TRUE
 
 /obj/structure/loom/unanchored
