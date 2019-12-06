@@ -106,6 +106,10 @@
 	return
 
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
+	fluid_max_volume += modifier*2.5
+	fluid_rate += modifier/10
+	if(reagents)
+		reagents.maximum_volume = fluid_max_volume
 	return
 
 /obj/item/organ/genital/proc/update_size()
@@ -336,4 +340,3 @@
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
-

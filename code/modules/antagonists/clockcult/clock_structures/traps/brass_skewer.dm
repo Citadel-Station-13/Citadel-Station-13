@@ -113,7 +113,7 @@
 		"<span class='danger'>You start tenderly lifting [skewee] off of [src]...</span>")
 		if(!do_after(user, 60, target = skewee))
 			skewee.visible_message("<span class='warning'>[skewee] painfully slides back down [src].</span>")
-			skewee.emote("moan")
+			skewee.say("Oof, ouch owwie!!", forced = "fail brass skewer removal")
 			return
 	skewee.visible_message("<span class='danger'>[skewee] comes free of [src] with a squelching pop!</span>", \
 	"<span class='boldannounce'>You come free of [src]!</span>")

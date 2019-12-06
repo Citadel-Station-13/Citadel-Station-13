@@ -73,6 +73,7 @@
 	prev_size = cached_size
 	cached_size = new_value
 	update()
+	..()
 
 /obj/item/organ/genital/breasts/update_size()//wah
 	var/rounded_cached = round(cached_size)
