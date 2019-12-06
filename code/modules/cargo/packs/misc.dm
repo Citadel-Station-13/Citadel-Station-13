@@ -184,20 +184,6 @@
 	crate_name = "cbt crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/misc/coincrate
-	name = "Coin Crate"
-	desc = "Psssst, hey, you. Yes, you. I've heard that coins can do some special things on your station, give you access to some pretty cool stuff. Here's the deal, you give me some credits, and I give so some coins. Sound like a deal? I'll give you 10 for 10000 creds."
-	contraband = TRUE
-	cost = 10000
-	contains = list(/obj/item/coin/iron)
-	crate_name = "coin crate"
-	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/misc/coincrate/generate()
-	. = ..()
-	for(var/i in 1 to 9)
-		new /obj/item/coin/iron(.)
-
 /datum/supply_pack/misc/casinocrate
 	name = "Casino Crate"
 	desc = "Start up your own grand casino with this crate filled with slot machine and arcade boards!"
@@ -215,6 +201,20 @@
 					/obj/item/circuitboard/computer/slot_machine,
 					/obj/item/circuitboard/computer/slot_machine)
 	crate_name = "casino crate"
+
+/datum/supply_pack/misc/coincrate
+	name = "Coin Crate"
+	desc = "Psssst, hey, you. Yes, you. I've heard that coins can do some special things on your station, give you access to some pretty cool stuff. Here's the deal, you give me some credits, and I give so some coins. Sound like a deal? I'll give you 10 for 10000 creds."
+	contraband = TRUE
+	cost = 10000
+	contains = list(/obj/item/coin/silver)
+	crate_name = "coin crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/coincrate/generate()
+	. = ..()
+	for(var/i in 1 to 9)
+		new /obj/item/coin/silver(.)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Misc Supplies ///////////////////////////////
@@ -244,22 +244,23 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "festive wrapping paper crate"
 
-/datum/supply_pack/misc/funeral
-	name = "Funeral Supply crate"
-	desc = "At the end of the day, someone's gonna want someone dead. Give them a proper send-off with these funeral supplies! Contains a coffin with burial garmets and flowers."
-	cost = 800
-	contains = list(/obj/item/clothing/under/burial,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium
-					)
-	crate_name = "coffin"
-	crate_type = /obj/structure/closet/crate/coffin
-
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"
 	cost = 10000
 	contains = list(/obj/machinery/jukebox)
 	crate_name = "Jukebox"
+
+/datum/supply_pack/misc/potted_plants
+	name = "Potted Plants Crate"
+	desc = "Spruce up the station with these lovely plants! Contains a random assortment of five potted plants from Nanotrasen's potted plant research division. Warranty void if thrown."
+	cost = 730
+	contains = list(/obj/item/twohanded/required/kirbyplants/random,
+					/obj/item/twohanded/required/kirbyplants/random,
+					/obj/item/twohanded/required/kirbyplants/random,
+					/obj/item/twohanded/required/kirbyplants/random,
+					/obj/item/twohanded/required/kirbyplants/random)
+	crate_name = "potted plants crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
@@ -273,6 +274,25 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
 	crate_name = "religious supplies crate"
+
+/datum/supply_pack/misc/funeral
+	name = "Funeral Supplies"
+	desc = "Mourn your dead properly buy sending them off with love filled notes, clean clothes, and a proper ceremony. Contains two candle packs, funeral garb, flowers, a paperbin , and crayons to help aid in religious rituals. Coffin included."
+	cost = 1200
+	contains = list(/obj/item/clothing/under/burial,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/storage/crayons,
+					/obj/item/paper_bin
+					)
+	crate_name = "coffin"
+	crate_type = /obj/structure/closet/crate/coffin
 
 /datum/supply_pack/misc/shower
 	name = "Shower Supplies"
@@ -288,18 +308,6 @@
 					/obj/item/bikehorn/rubberducky,
 					/obj/item/soap/nanotrasen)
 	crate_name = "shower crate"
-
-/datum/supply_pack/misc/toner
-	name = "Toner Crate"
-	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, you'll be printing butts 'till the cows come home!'"
-	cost = 1000
-	contains = list(/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner)
-	crate_name = "toner crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Lewd Supplies ///////////////////////////////

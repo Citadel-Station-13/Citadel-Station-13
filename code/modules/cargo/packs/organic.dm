@@ -117,7 +117,7 @@
 
 /datum/supply_pack/organic/fruit_2
 	name = "Fruit Delux Crate"
-	desc = "Getting tired of the basic fruits and want to have something a bit more decadent! This crate is for you! Contains three of each - bunches of berries, apples, pineapples, cherries, green & red grapes, eggplants, bananas lastly ten strawberry."
+	desc = "Getting tired of the basic fruits and want to have something a bit more decadent! This crate is for you! Contains three of each - bunches of berries, apples, pineapples, cherries, green & red grapes, eggplants, bananas, peaches, and lastly seven strawberry. Includes one serving tray."
 	cost = 3500
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/berries,
 					/obj/item/reagent_containers/food/snacks/grown/berries,
@@ -143,6 +143,9 @@
 					/obj/item/reagent_containers/food/snacks/grown/eggplant,
 					/obj/item/reagent_containers/food/snacks/grown/eggplant,
 					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/peach,
+					/obj/item/reagent_containers/food/snacks/grown/peach,
+					/obj/item/reagent_containers/food/snacks/grown/peach,
 					/obj/item/reagent_containers/food/snacks/grown/strawberry,
 					/obj/item/reagent_containers/food/snacks/grown/strawberry,
 					/obj/item/reagent_containers/food/snacks/grown/strawberry,
@@ -150,9 +153,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/strawberry,
 					/obj/item/reagent_containers/food/snacks/grown/strawberry,
 					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry)
+					/obj/item/storage/bag/tray)
 	crate_name = "fruit crate"
 
 /datum/supply_pack/organic/cream_piee
@@ -322,6 +323,31 @@
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/hydroponics/maintgarden
+	name = "Maintenance Garden Crate"
+	desc = "Set up your own tiny paradise with do-it-yourself botany kit. Contains sandstone for dirt plots, pest spray, ammonia, a portable seed generator, basic botanical tools, and some seeds to start off with."
+	cost = 2350
+	contains = list(/obj/item/storage/bag/plants/portaseeder,
+					/obj/item/reagent_containers/spray/pestspray,
+					/obj/item/stack/sheet/mineral/sandstone/twelve,
+					/obj/item/reagent_containers/glass/bucket,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/hatchet,
+					/obj/item/cultivator,
+					/obj/item/plant_analyzer,
+					/obj/item/flashlight,
+					/obj/item/seeds/carrot,
+					/obj/item/seeds/carrot,
+					/obj/item/seeds/tower,
+					/obj/item/seeds/tower,
+					/obj/item/seeds/watermelon,
+					/obj/item/seeds/watermelon,
+					/obj/item/seeds/grass,
+					/obj/item/seeds/grass)
+	crate_name = "maint garden crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
+
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
 	desc = "Big things have small beginnings. Contains thirteen different seeds."
@@ -361,44 +387,6 @@
 	access = ACCESS_ARMORY
 	crate_name = "sporting crate"
 	crate_type = /obj/structure/closet/crate/secure // Would have liked a wooden crate but access >:(
-
-/datum/supply_pack/organic/cutlery
-	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those ''Tomatoes''? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
-	cost = 10000
-	contraband = TRUE
-	contains = list(/obj/item/sharpener, //Deluxe for a reason
-					/obj/item/kitchen/fork,
-					/obj/item/kitchen/fork,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, 
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
-	crate_name = "kitchen cutlery deluxe set"
-
-/datum/supply_pack/organic/potted_plants
-	name = "Potted Plants Crate"
-	desc = "Spruce up the station with these lovely plants! Contains a random assortment of five potted plants from Nanotrasen's potted plant research division. Warranty void if thrown."
-	cost = 730
-	contains = list(/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random)
-	crate_name = "potted plants crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/vday
 	name = "Surplus Valentine Crate"

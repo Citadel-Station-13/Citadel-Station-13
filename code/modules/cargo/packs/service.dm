@@ -15,13 +15,16 @@
 
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
-	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping."
+	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping. Now with extra toner cartidges!"
 	cost = 1000
 	contains = list(/obj/item/stamp,
 					/obj/item/stamp/denied,
 					/obj/item/export_scanner,
 					/obj/item/destTagger,
 					/obj/item/hand_labeler,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/stack/packageWrap,
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
@@ -53,6 +56,32 @@
 //////////////////////////////////////////////////////////////////////////////
 
 //This stuff will need to get cleaned up later, because both Organic and Service have things for Botany, even though Botany is a Service//
+
+/datum/supply_pack/service/cutlery
+	name = "Kitchen Cutlery Deluxe Set"
+	desc = "Need to slice and dice away those ''Tomatoes''? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	cost = 10000
+	contraband = TRUE
+	contains = list(/obj/item/sharpener, //Deluxe for a reason
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/rollingpin, 
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+	crate_name = "kitchen cutlery deluxe set"
 
 /datum/supply_pack/service/food_cart
 	name = "Food Cart Crate"
@@ -99,31 +128,6 @@
 					/obj/item/circuitboard/machine/chem_dispenser/drinks,
 					/obj/item/circuitboard/machine/dish_drive)
 	crate_name = "build a bar crate"
-
-/datum/supply_pack/service/maintgarden
-	name = "Maintenance Garden Crate"
-	desc = "Set up your own tiny paradise with do-it-yourself botany kit. Contains sandstone for dirt plots, pest spray, ammonia, a portable seed generator, basic botanical tools, and some seeds to start off with."
-	cost = 2350
-	contains = list(/obj/item/storage/bag/plants/portaseeder,
-					/obj/item/reagent_containers/spray/pestspray,
-					/obj/item/stack/sheet/mineral/sandstone/twelve,
-					/obj/item/reagent_containers/glass/bucket,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/hatchet,
-					/obj/item/cultivator,
-					/obj/item/plant_analyzer,
-					/obj/item/flashlight,
-					/obj/item/seeds/carrot,
-					/obj/item/seeds/carrot,
-					/obj/item/seeds/tower,
-					/obj/item/seeds/tower,
-					/obj/item/seeds/watermelon,
-					/obj/item/seeds/watermelon,
-					/obj/item/seeds/grass,
-					/obj/item/seeds/grass)
-	crate_name = "maint garden crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Janitor //////////////////////////////////////
@@ -175,8 +179,32 @@
 	crate_name = "janitor ride crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/service/janitor/janitank
+	name = "Janitor Backpack Crate"
+	desc = "Call forth divine judgement upon dirt and grime with this high capacity janitor backpack. Contains 500 units of station-cleansing cleaner. Requires janitor access to open."
+	cost = 1000
+	access = ACCESS_JANITOR
+	contains = list(/obj/item/watertank/janitor)
+	crate_name = "janitor backpack crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/janitor/janpremium
+	name = "Janitor Supplies (Premium)"
+	desc = "The custodial union is in a tizzy, so we've gathered up some better supplies for you. In this crate you can get a brand new chem, Drying Agent. This stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, several cleaning grenades, some spare bottles of ammonia, and an MCE (or Massive Cleaning Explosive)."
+	cost = 2700
+	contains = list(/obj/item/grenade/clusterbuster/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/reagent_containers/rag,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/spray/drying_agent)
+	crate_name = "premium janitorial crate"
+
 /datum/supply_pack/service/janitor/starter
-	name = "Janitorial Starter Crate"
+	name = "Janitorial Supplies (Standard)"
 	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, NT soap and a trash bag."
 	cost = 1300
 	contains = list(/obj/item/reagent_containers/glass/bucket,
@@ -193,22 +221,7 @@
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/soap/nanotrasen)
-	crate_name = "janitorial starter crate"
-
-/datum/supply_pack/service/janitor/janpremium
-	name = "Janitor Premium Supplies"
-	desc = "The custodial union is in a tizzy, so we've gathered up some better supplies for you. In this crate you can get a brand new chem, Drying Agent. This stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, several cleaning grenades, some spare bottles of ammonia, and an MCE (or Massive Cleaning Explosive)."
-	cost = 2700
-	contains = list(/obj/item/grenade/clusterbuster/cleaner,
-					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/reagent_containers/rag,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/spray/drying_agent)
-	crate_name = "janitor premium crate"
+	crate_name = "standard janitorial crate"
 
 /datum/supply_pack/service/janitor/janicart
 	name = "Janicart and Galoshes Crate"
@@ -218,15 +231,6 @@
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/service/janitor/janitank
-	name = "Janitor Backpack Crate"
-	desc = "Call forth divine judgement upon dirt and grime with this high capacity janitor backpack. Contains 500 units of station-cleansing cleaner. Requires janitor access to open."
-	cost = 1000
-	access = ACCESS_JANITOR
-	contains = list(/obj/item/watertank/janitor)
-	crate_name = "janitor backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Misc + Decor ////////////////////////////////////
@@ -260,23 +264,17 @@
 
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains the classics."
-	cost = 1000
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains some classic carpet, along with black, red, and monochrome varients."
+	cost = 1350
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty)
-	crate_name = "premium carpet crate"
-
-/datum/supply_pack/service/carpet2
-	name = "Premium Carpet Crate #2"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains red, and monochrome"
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/black/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
 					/obj/item/stack/tile/carpet/blackred/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate #2"
+	crate_name = "premium carpet crate"
 
 /datum/supply_pack/service/party
 	name = "Party Equipment"
