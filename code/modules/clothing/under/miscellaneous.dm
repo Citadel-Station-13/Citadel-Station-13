@@ -580,6 +580,7 @@
 	item_state = "dress_green"
 	item_color = "dress_green"
 	fitted = FEMALE_UNIFORM_TOP
+	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
 
 /obj/item/clothing/under/pinkdress
@@ -588,6 +589,7 @@
 	icon_state = "dress_pink"
 	item_state = "dress_pink"
 	item_color = "dress_pink"
+	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -862,6 +864,7 @@
 	icon_state = "croptop"
 	item_state = "croptop"
 	body_parts_covered = CHEST|GROIN|LEGS
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/corset
@@ -870,6 +873,7 @@
 	icon_state = "corset"
 	item_state = "corset"
 	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/durathread
