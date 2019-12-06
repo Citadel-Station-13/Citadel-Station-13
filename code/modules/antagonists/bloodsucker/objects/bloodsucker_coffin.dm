@@ -172,7 +172,7 @@
 			if(istype(W, cutting_tool))
 				to_chat(user, "<span class='notice'>This is a much more complex mechanical structure than you thought. You don't know where to begin cutting [src].</span>")
 				return
-		else if (anchored && istype(W, /obj/item/wrench)) // Can't unanchor unless owner.
+		else if(anchored && istype(W, /obj/item/wrench)) // Can't unanchor unless owner.
 			to_chat(user, "<span class='danger'>The coffin won't come unanchored from the floor.</span>")
 			return
 

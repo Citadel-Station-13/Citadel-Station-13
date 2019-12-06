@@ -66,9 +66,10 @@
 		// LEVEL 2: If behind target, mute or unconscious!
 		if (do_knockdown) // && level_current >= 1)
 			target.Knockdown(15 + 10 * level_current,1)
+			target.adjustStaminaLoss(40 + 10 * level_current)
 		// Cancel Walk (we were close enough to contact them)
 		walk(owner, 0)
-		//target.Paralyze(10,1)
+		target.Stun(10,1) //Without this the victim can just walk away
 		target.grabbedby(owner) 										// Taken from mutations.dm under changelings
 		target.grippedby(owner, instant = TRUE) //instant aggro grab
 

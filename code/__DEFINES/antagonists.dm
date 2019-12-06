@@ -45,7 +45,7 @@
 // Bloodsucker related antag datums
 #define ANTAG_DATUM_BLOODSUCKER			/datum/antagonist/bloodsucker
 #define ANTAG_DATUM_VASSAL				/datum/antagonist/vassal
-#define ANTAG_DATUM_HUNTER				/datum/antagonist/vamphunter
+//#define ANTAG_DATUM_HUNTER				/datum/antagonist/vamphunter   Disabled for now
 
 // BLOODSUCKER
 #define BLOODSUCKER_LEVEL_TO_EMBRACE	3

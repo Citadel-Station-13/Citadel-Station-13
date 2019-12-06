@@ -5,7 +5,7 @@
 
 /datum/action/bloodsucker/targeted/haste
 	name = "Immortal Haste"
-	desc = "Sprint anywhere in the blink of an eye, slipping past open doors. Those nearby may be knocked away, stunned, or left empty-handed."
+	desc = "Dash somewhere with supernatural speed. Those nearby may be knocked away, stunned, or left empty-handed."
 	button_icon_state = "power_speed"
 	bloodcost = 6
 	cooldown = 30
@@ -67,14 +67,16 @@
 				if (rand(0, 5) < level_current)
 					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 					newtarget.Knockdown(10 + level_current * 5)
+					newtarget.adjustStaminaLoss(10 + 5 * level_current)
 				newtarget.Stun(5 + level_current * 2)
+				newtarget.adjustStaminaLoss(5 + 3 * level_current)
 				if(newtarget.IsStun())
 					newtarget.spin(10,1)
 					if (rand(0,4))
 						newtarget.drop_all_held_items()
 				foundtargets += newtarget
 		sleep(1)
-	if (user)
+	if(user)
 		user.update_canmove() //Let the poor guy move again
 
 /datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)

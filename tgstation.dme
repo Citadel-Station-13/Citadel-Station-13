@@ -1226,7 +1226,6 @@
 #include "code\modules\antagonists\bloodsucker\datum_bloodsucker.dm"
 #include "code\modules\antagonists\bloodsucker\datum_hunter.dm"
 #include "code\modules\antagonists\bloodsucker\datum_vassal.dm"
-#include "code\modules\antagonists\bloodsucker\items\bloodsucker_items.dm"
 #include "code\modules\antagonists\bloodsucker\items\bloodsucker_organs.dm"
 #include "code\modules\antagonists\bloodsucker\items\bloodsucker_stake.dm"
 #include "code\modules\antagonists\bloodsucker\objects\bloodsucker_coffin.dm"

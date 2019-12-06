@@ -36,7 +36,7 @@
 #define ROLE_INTERNAL_AFFAIRS		"internal affairs agent"
 #define ROLE_GANG					"gangster"
 #define ROLE_BLOODSUCKER			"bloodsucker"
-#define ROLE_MONSTERHUNTER			"monster hunter"
+//#define ROLE_MONSTERHUNTER			"monster hunter" Disabled for now
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -63,8 +63,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE,
 	ROLE_GANG = /datum/game_mode/gang,
-	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker,
-	ROLE_MONSTERHUNTER
+	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker
+	//ROLE_MONSTERHUNTER Disabled for now
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

@@ -233,13 +233,10 @@
 	//. = ..()	// Taken from sacrificial altar in divine.dm
 	//if(.)
 	//	return
-
 	// Go away. Torturing.
 	if (useLock)
 		return
-
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
 	// CHECK ONE: Am I claiming this? Is it in the right place?
 	if (istype(bloodsuckerdatum) && !owner)
 		if (!bloodsuckerdatum.lair)
@@ -253,18 +250,15 @@
 				density = FALSE
 				anchored = TRUE
 				return //No, you cant move this ever again
-
 	// No One Home
 	if (!has_buckled_mobs())
 		return
-
 	// CHECK TWO: Am I a non-bloodsucker?
 	var/mob/living/carbon/C = pick(buckled_mobs)
 	if (!istype(bloodsuckerdatum))
 		// Try to release this guy
 		user_unbuckle_mob(C, user)
 		return
-
 	// Bloodsucker Owner! Let the boy go.
 	if (C.mind)
 		var/datum/antagonist/vassal/vassaldatum = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -272,26 +266,19 @@
 			unbuckle_mob(C)
 			useLock = FALSE // Failsafe
 			return
-
 	// Just torture the boy
 	torture_victim(user, C)
 
-
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
-
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
 	if (user.blood_volume < convert_cost + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		return
-
 	// Prep...
 	useLock = TRUE
-
-
 	// Step One:	Tick Down Conversion from 3 to 0
 	// Step Two:	Break mindshielding/antag (on approve)
 	// Step Three:	Blood Ritual
-
 	// Conversion Process
 	if (convert_progress > 0)
 		to_chat(user, "<span class='notice'>You prepare to initiate [target] into your service.</span>")
@@ -314,10 +301,8 @@
 			// Still Need More Persuasion...
 			else
 				to_chat(user, "<span class='notice'>[target] could use [convert_progress == 1?"a little":"some"] more <i>persuasion</i>.</span>")
-
 		useLock = FALSE
 		return
-
 	// Check: Mindshield & Antag
 	if (!disloyalty_confirm && RequireDisloyalty(target))
 		if (!do_disloyalty(user,target))
@@ -328,7 +313,6 @@
 			to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
 		useLock = FALSE
 		return
-
 	// Check: Blood
 	if (user.blood_volume < convert_cost)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
@@ -343,11 +327,9 @@
 		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		useLock = FALSE
 		return
-
 	// Convert to Vassal!
 	if (bloodsuckerdatum && bloodsuckerdatum.attempt_turn_vassal(target))
 		remove_loyalties(target) // In case of Mindshield, or appropriate Antag (Traitor, Internal, etc)
-
 		//if (!target.buckled)
 		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		//	useLock = FALSE
@@ -358,16 +340,12 @@
 		target.Jitter(25)
 		target.emote("laugh")
 		//remove_victim(target) // Remove on CLICK ONLY!
-
 	useLock = FALSE
 
-
 /obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult=1)
-
 	var/torture_time = 15 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
 	var/torture_dmg_brute = 2
 	var/torture_dmg_burn = 0
-
 	// Get Bodypart
 	var/target_string = ""
 	var/obj/item/bodypart/BP = null
@@ -376,7 +354,6 @@
 		BP = pick(C.bodyparts)
 		if (BP)
 			target_string += BP.name
-
 	// Get Weapon
 	var/obj/item/I = user.get_active_held_item()
 	if (!istype(I))
@@ -384,7 +361,6 @@
 	// Create Strings
 	var/method_string =  I?.attack_verb?.len ? pick(I.attack_verb) : pick("harmed","tortured","wrenched","twisted","scoured","beaten","lashed","scathed")
 	var/weapon_string = I ? I.name : pick("bare hands","hands","fingers","fists")
-
 	// Weapon Bonus + SFX
 	if (I)
 		torture_time -= I.force / 4
@@ -399,32 +375,22 @@
 			welder.welding = TRUE
 			torture_time -= 5
 			torture_dmg_burn += 5
-
 		I.play_tool_sound(target)
 	torture_time = max(50, torture_time * 10) // Minimum 5 seconds.
-
 	// Now run process.
 	if (!do_mob(user, target, torture_time * mult))
 		return FALSE
-
 	// SUCCESS
 	if (I)
 		playsound(loc, I.hitsound, 30, 1, -1)
 		I.play_tool_sound(target)
-
 	target.visible_message("<span class='danger'>[user] has [method_string] [target]'s [target_string] with [user.p_their()] [weapon_string]!</span>", \
 						   "<span class='userdanger'>[user] has [method_string] your [target_string] with [user.p_their()] [weapon_string]!</span>")
 	if (!target.is_muzzled())
 		target.emote("scream")
 	target.Jitter(5)
 	target.apply_damages(brute = torture_dmg_brute, burn = torture_dmg_burn, def_zone = (BP ? BP.body_zone : null)) // take_overall_damage(6,0)
-
 	return TRUE
-
-
-
-
-
 
 /obj/structure/bloodsucker/vassalrack/proc/do_disloyalty(mob/living/user, mob/living/target)
 
@@ -492,38 +458,47 @@
 	light_power = 3
 	light_range = 0 // to 2
 	density = FALSE
-	anchored = TRUE
+	anchored = FALSE
 	var/lit = FALSE
-
 ///obj/structure/bloodsucker/candelabrum/is_hot() // candle.dm
 	//return FALSE
+
+/datum/component/nanites/Destroy()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bloodsucker/candelabrum/update_icon()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"
 
 /obj/structure/bloodsucker/candelabrum/attack_hand(mob/user)
-	// Unlight (only a Vamp can light it)
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (istype(bloodsuckerdatum))
-		lit = !lit
-		if (lit)
-			set_light(2,3,"#66FFFF")
-			to_chat(user, "You wave your hand over the candelabrum. It springs to life.")
-		else
-			set_light(0)
-		update_icon()
+	var/datum/antagonist/bloodsucker/V = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) //I wish there was a better way to do this
+	var/datum/antagonist/vassal/T = user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+	if(istype(V) || istype(T))
+		toggle()
 
 /obj/structure/bloodsucker/candelabrum/AltClick(mob/user)
+	var/datum/antagonist/bloodsucker/V = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Bloodsuckers can turn their candles on from a distance. SPOOOOKY.
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (istype(bloodsuckerdatum))
-		attack_hand(user)
+	if(istype(V))
+		toggle()
 
+/obj/structure/bloodsucker/candelabrum/proc/toggle(mob/user)
+	lit = !lit
+	if(lit)
+		set_light(2, 3, "#66FFFF")
+		START_PROCESSING(SSobj, src)
+	else
+		set_light(0)
+		STOP_PROCESSING(SSobj, src)
+	update_icon()
 
-
+/obj/structure/bloodsucker/candelabrum/process()
+	if(lit)
+		for(var/mob/living/carbon/human/H in viewers(7, src))
+			var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+			var/datum/antagonist/bloodsucker/V = H.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+			if(V || T) //We dont want vassals or vampires affected by this
+				return
+			H.hallucination = 5
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 //   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood

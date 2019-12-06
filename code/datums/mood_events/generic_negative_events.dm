@@ -176,3 +176,8 @@
 
 /datum/mood_event/revenant_blight/add_effects()
 	description = "<span class='umbra'>Just give up, [pick("no one will miss you", "there is nothing you can do to help", "even a clown would be more useful than you", "does it even matter in the end?")]...</span>\n"
+
+/datum/mood_event/vampcandle
+	description = "<span class='umbra'>Something is making your mind feel... loose...</span>\n"
+	mood_change = -20 
+	timeout = 1 MINUTES
