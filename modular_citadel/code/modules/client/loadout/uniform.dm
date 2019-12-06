@@ -152,6 +152,10 @@
 	name = "Athletic Shorts"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/shorts/red
+/datum/gear/yoga
+	name = "Yoga Pants"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/yogapants
 
 /datum/gear/bjeans
 	name = "Black Jeans"
