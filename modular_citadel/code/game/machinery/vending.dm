@@ -65,13 +65,15 @@
 				/obj/item/clothing/under/keyholesweater = 2,
 				/obj/item/clothing/under/mankini = 2,
 				/obj/item/clothing/under/jabroni = 2,
+				/obj/item/clothing/under/corset = 3,
 				/obj/item/dildo/flared/huge = 3,
 				/obj/item/reagent_containers/glass/bottle/crocin = 5,
 				/obj/item/reagent_containers/glass/bottle/camphor = 5
 				)
 	premium = list(
 				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
-				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10
+				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10,
+				/obj/item/clothing/under/pants/chaps = 3
 				)
 	refill_canister = /obj/item/vending_refill/kink
 
