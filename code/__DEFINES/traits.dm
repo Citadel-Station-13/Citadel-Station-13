@@ -120,8 +120,9 @@
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
-#define	TRAIT_STRONG_GRABBER	"strong_grabber"
-#define	TRAIT_CALCIUM_HEALER	"calcium_healer"
+#define TRAIT_STRONG_GRABBER	"strong_grabber"
+#define TRAIT_CALCIUM_HEALER	"calcium_healer"
+#define TRAIT_MAGIC_CHOKE		"magic_choke"
 #define TRAIT_CAPTAIN_METABOLISM "captain-metabolism"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
@@ -162,6 +163,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_FREESPRINT		"free_sprinting"
 
 
 // common trait sources

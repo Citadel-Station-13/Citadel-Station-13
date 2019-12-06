@@ -91,15 +91,11 @@
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-/obj/item/stock_parts/cell/inducer_supply
-	maxcharge = 5000
-	charge = 5000
-
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard cell-based equipment anytime, anywhere. Contains two Inducers."
 	cost = 2300
-	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}, /obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/inducer/sci/supply, /obj/item/inducer/sci/supply)
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -121,18 +117,6 @@
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-
-/datum/supply_pack/engineering/siezedpower
-	name = "Siezed Power Cell Crate"
-	desc = "We took the means of power! Contains three high-voltage plus power cells."
-	cost = 1300
-	contraband = TRUE
-	contains = list(/obj/item/stock_parts/cell/high/plus,
-					/obj/item/stock_parts/cell/high/plus,
-					/obj/item/stock_parts/cell/high/plus)
-	crate_name = "siezed crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
-
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire shuttle engine into one tiny little crate. Requires CE access to open."
@@ -141,22 +125,6 @@
 	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-
-/datum/supply_pack/engineering/siezedproduction 
-	name = "The Means of Production"
-	desc = "We will win for we have took over the production! S five metal sheets, five wire, three matter bins, one manipulater and one sheet of glass."
-	cost = 1500
-	contraband = TRUE
-	contains = list(/obj/item/stock_parts/cell/high/plus,
-					/obj/item/circuitboard/machine/autolathe,
-					/obj/item/stack/cable_coil/random/five,
-					/obj/item/stack/sheet/metal/five,
-					/obj/item/stock_parts/matter_bin,
-					/obj/item/stock_parts/matter_bin,
-					/obj/item/stock_parts/matter_bin,
-					/obj/item/stock_parts/manipulator,
-					/obj/item/stack/sheet/glass,)
-	crate_name = "siezed crate"
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"

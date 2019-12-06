@@ -151,12 +151,13 @@
 		add_overlay("[locked ? "" : "un"]locked")
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	. = ..()
 	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
+	else
+		return ..()
 
 /obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
 	if(pet_carrier_full(src))

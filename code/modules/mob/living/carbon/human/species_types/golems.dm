@@ -944,6 +944,21 @@
 	grab_sound = 'sound/weapons/whipgrab.ogg'
 	attack_sound = 'sound/weapons/whip.ogg'
 
+/datum/species/golem/durathread
+	name = "Durathread Golem"
+	id = "durathread golem"
+	prefix = "Durathread"
+	limbs_id = "d_golem"
+	special_names = list("Boll","Weave")
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
+
+/datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	target.apply_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+
 /datum/species/golem/bone
 	name = "Bone Golem"
 	id = "bone golem"
