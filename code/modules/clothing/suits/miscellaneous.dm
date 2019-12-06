@@ -329,10 +329,10 @@
 	desc = "A costume that looks like a certain shikigami, is super fluffy."
 	icon_state = "ran_suit"
 	item_state = "ran_suit"
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
-	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
-//2061
+	heat_protection = CHEST|GROIN|LEGS|ARMS //fluffy tails!
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/ran
 	name = "Shikigami hat"
@@ -340,6 +340,9 @@
 	icon_state = "ran_hat"
 	item_state = "ran_hat"
 	flags_inv = HIDEEARS
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /*
  * Misc
