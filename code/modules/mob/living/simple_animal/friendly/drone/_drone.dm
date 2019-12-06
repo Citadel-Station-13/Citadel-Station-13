@@ -85,7 +85,6 @@
 	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	ADD_TRAIT(src,TRAIT_PACIFISM,"tinyhands")
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
