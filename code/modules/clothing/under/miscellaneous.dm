@@ -472,6 +472,7 @@
 	icon_state = "sundress_white"
 	item_state = "sundress_white"
 	item_color = "sundress_white"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 
 
@@ -525,6 +526,7 @@
 	item_color = "flamenco"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/westernbustle
 	name = "western bustle"
@@ -534,6 +536,7 @@
 	item_color = "western_bustle"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/under/stripeddress
@@ -553,6 +556,7 @@
 	item_state = "flower_dress"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/sailordress
 	name = "sailor dress"
@@ -582,6 +586,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/pinkdress
 	name = "pink dress"
@@ -592,6 +597,7 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/maid
 	name = "maid costume"
@@ -875,6 +881,7 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/durathread
 	name = "durathread jumpsuit"
