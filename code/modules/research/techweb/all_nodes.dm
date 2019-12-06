@@ -1050,7 +1050,7 @@
 
 /datum/techweb_node/alientech/New()
 	. = ..()
-	boost_items_paths = typecacheof(list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
+	boost_item_paths = typecacheof(list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
 										 /obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/cautery/alien,
 										 /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor,
 										 /obj/item/crowbar/abductor, /obj/item/multitool/abductor,
