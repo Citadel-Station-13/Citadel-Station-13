@@ -159,7 +159,6 @@
 		return
 	//END OF CIT CHANGES
 
-	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_held_item()
 
 
