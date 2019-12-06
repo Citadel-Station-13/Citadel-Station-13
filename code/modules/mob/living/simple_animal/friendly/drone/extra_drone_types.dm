@@ -35,6 +35,7 @@
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
+	REMOVE_TRAIT(src,TRAIT_PACIFISM,"tinyhands")
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
@@ -91,6 +92,7 @@
 
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
+	REMOVE_TRAIT(src,TRAIT_PACIFISM,"tinyhands")
 
 /obj/item/drone_shell/dusty
 	name = "derelict drone shell"
