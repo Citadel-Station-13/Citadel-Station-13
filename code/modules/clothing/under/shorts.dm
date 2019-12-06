@@ -46,8 +46,8 @@
 /obj/item/clothing/under/shorts/denimskirt
 	name = "short denim skirt"
 	desc = "Who likes short skirts? we like short skirts!"
-	icon_state = "denim_skirt
-	item_color = "denim_skirt
+	icon_state = "denim_skirt"
+	item_color = "denim_skirt"
 
 /obj/item/clothing/under/shorts/skirtswept
 	name = "swept skirt"
