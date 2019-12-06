@@ -251,8 +251,6 @@
 //////////////////////////// Hydroponics /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-//This stuff will need to get cleaned up later, because both Organic and Service have things for Botany, even though Botany is a Service//
-
 /datum/supply_pack/organic/hydroponics/beekeeping_suits
 	name = "Beekeeper Suit Crate"
 	desc = "Bee business booming? Better be benevolent and boost botany by bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear."
@@ -298,6 +296,7 @@
 	crate_name = "exotic seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/* Maintenance Garden Crate basically does this and more.
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
 	desc = "Supplies for growing a great garden! Contains two bottles of ammonia, two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, as well as a pair of leather gloves and a botanist's apron."
@@ -313,7 +312,7 @@
 					/obj/item/clothing/suit/apron)
 	crate_name = "hydroponics crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
-
+*/
 /datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
 	desc = "Bring on the flood with this high-capacity backpack crate. Contains 500 units of life-giving H2O. Requires hydroponics access to open."
@@ -323,10 +322,10 @@
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/hydroponics/maintgarden
+/datum/supply_pack/organic/hydroponics/maintgarden
 	name = "Maintenance Garden Crate"
 	desc = "Set up your own tiny paradise with do-it-yourself botany kit. Contains sandstone for dirt plots, pest spray, ammonia, a portable seed generator, basic botanical tools, and some seeds to start off with."
-	cost = 2350
+	cost = 2700
 	contains = list(/obj/item/storage/bag/plants/portaseeder,
 					/obj/item/reagent_containers/spray/pestspray,
 					/obj/item/stack/sheet/mineral/sandstone/twelve,

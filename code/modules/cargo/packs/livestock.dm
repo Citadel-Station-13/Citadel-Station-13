@@ -135,7 +135,7 @@
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
-/datum/supply_pack/organic/critter/kiwi
+/datum/supply_pack/critter/kiwi
 	name = "Space kiwi Crate"
 	cost = 2000
 	contains = list( /mob/living/simple_animal/kiwi)

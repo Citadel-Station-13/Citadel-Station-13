@@ -55,50 +55,6 @@
 /////////////////////// Chef, Botanist, Bartender ////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-//This stuff will need to get cleaned up later, because both Organic and Service have things for Botany, even though Botany is a Service//
-
-/datum/supply_pack/service/cutlery
-	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those ''Tomatoes''? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
-	cost = 10000
-	contraband = TRUE
-	contains = list(/obj/item/sharpener, //Deluxe for a reason
-					/obj/item/kitchen/fork,
-					/obj/item/kitchen/fork,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, 
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
-	crate_name = "kitchen cutlery deluxe set"
-
-/datum/supply_pack/service/food_cart
-	name = "Food Cart Crate"
-	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
-	cost = 1000
-	contains = list(/obj/machinery/food_cart)
-	crate_name = "food cart crate"
-	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/service/icecream_cart
-	name = "Ice Cream Cart Crate"
-	desc = "Plasma fire too hot for you? Want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
-	cost = 2750 //Comes prestocked with basic ingredients
-	contains = list(/obj/machinery/icecream_vat)
-	crate_name = "ice cream vat crate"
-	crate_type = /obj/structure/closet/crate
-
 /datum/supply_pack/service/buildabar
 	name = "Build a Bar Crate"
 	desc = "Looking to set up your own little safe haven? Maintenance bar too much of a bummer to work on? Maybe you just want to set up shop right in front of the bartender. Whatever your reasons, get a jump-start on this with this handy kit. Contains circuitboards for bar equipment, some parts, and some basic bartending supplies. (Batteries not Included)"
@@ -128,6 +84,48 @@
 					/obj/item/circuitboard/machine/chem_dispenser/drinks,
 					/obj/item/circuitboard/machine/dish_drive)
 	crate_name = "build a bar crate"
+
+/datum/supply_pack/service/food_cart
+	name = "Food Cart Crate"
+	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
+	cost = 1000
+	contains = list(/obj/machinery/food_cart)
+	crate_name = "food cart crate"
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/service/icecream_cart
+	name = "Ice Cream Cart Crate"
+	desc = "Plasma fire too hot for you? Want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
+	cost = 2750 //Comes prestocked with basic ingredients
+	contains = list(/obj/machinery/icecream_vat)
+	crate_name = "ice cream vat crate"
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/service/cutlery
+	name = "Kitchen Cutlery Deluxe Set"
+	desc = "Need to slice and dice away those ''Tomatoes''? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	cost = 10000
+	contraband = TRUE
+	contains = list(/obj/item/sharpener, //Deluxe for a reason
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/rollingpin, 
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+	crate_name = "kitchen cutlery deluxe set"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Janitor //////////////////////////////////////
@@ -231,81 +229,6 @@
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
-
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////// Misc + Decor ////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-/datum/supply_pack/service/carpet_exotic
-	name = "Exotic Carpet Crate"
-	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 7000
-	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "exotic carpet crate"
-
-/datum/supply_pack/service/carpet
-	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains some classic carpet, along with black, red, and monochrome varients."
-	cost = 1350
-	contains = list(/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate"
-
-/datum/supply_pack/service/party
-	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
-	cost = 2000
-	contains = list(/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker,
-					/obj/item/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/flashlight/glowstick,
-					/obj/item/flashlight/glowstick/red,
-					/obj/item/flashlight/glowstick/blue,
-					/obj/item/flashlight/glowstick/cyan,
-					/obj/item/flashlight/glowstick/orange,
-					/obj/item/flashlight/glowstick/yellow,
-					/obj/item/flashlight/glowstick/pink)
-	crate_name = "party equipment crate"
-
-/datum/supply_pack/service/noslipfloor
-	name = "High-traction Floor Tiles"
-	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
-	cost = 2000
-	contains = list(/obj/item/stack/tile/noslip/thirty,
-					/obj/item/stack/tile/noslip/thirty)
-	crate_name = "high-traction floor tiles crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vendor Refills //////////////////////////////////

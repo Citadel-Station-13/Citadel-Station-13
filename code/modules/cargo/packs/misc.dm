@@ -13,6 +13,17 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/* I did it Kevin
+/datum/supply_pack/misc/abandonedcrate
+	name = "Abandoned Crate"
+	desc = "Someone keeps finding these locked crates out in the boonies. How about you take a crack at it, we've had our fill. WARNING: EXPLOSIVE"
+	contraband = TRUE
+	cost = 12800
+	contains = list(/obj/structure/closet/crate/secure/loot)
+	crate_name = "abandoned crate"
+	crate_type = /obj/structure/closet/crate/large
+	dangerous = TRUE
+*/
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -310,6 +321,81 @@
 	crate_name = "shower crate"
 
 //////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Misc + Decor ////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/misc/carpet_exotic
+	name = "Exotic Carpet Crate"
+	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
+	cost = 7000
+	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "exotic carpet crate"
+
+/datum/supply_pack/misc/carpet
+	name = "Premium Carpet Crate"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains some classic carpet, along with black, red, and monochrome varients."
+	cost = 1350
+	contains = list(/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/black/fifty,
+					/obj/item/stack/tile/carpet/black/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "premium carpet crate"
+
+/datum/supply_pack/misc/party
+	name = "Party Equipment"
+	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
+	cost = 2000
+	contains = list(/obj/item/storage/box/drinkingglasses,
+					/obj/item/reagent_containers/food/drinks/shaker,
+					/obj/item/reagent_containers/food/drinks/bottle/patron,
+					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
+					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/flashlight/glowstick,
+					/obj/item/flashlight/glowstick/red,
+					/obj/item/flashlight/glowstick/blue,
+					/obj/item/flashlight/glowstick/cyan,
+					/obj/item/flashlight/glowstick/orange,
+					/obj/item/flashlight/glowstick/yellow,
+					/obj/item/flashlight/glowstick/pink)
+	crate_name = "party equipment crate"
+
+/datum/supply_pack/misc/noslipfloor
+	name = "High-traction Floor Tiles"
+	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
+	cost = 2000
+	contains = list(/obj/item/stack/tile/noslip/thirty,
+					/obj/item/stack/tile/noslip/thirty)
+	crate_name = "high-traction floor tiles crate"
+
+//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Lewd Supplies ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
@@ -344,27 +430,4 @@
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
 
-/datum/supply_pack/misc/religious_supplies
-	name = "Religious Supplies Crate"
-	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
-	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/storage/book/bible/booze,
-					/obj/item/storage/book/bible/booze,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie
-					)
-	crate_name = "religious supplies crate"
 
-/datum/supply_pack/misc/toner
-	name = "Toner Crate"
-	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, you'll be printing butts 'till the cows come home!'"
-	cost = 1000
-	contains = list(/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner,
-					/obj/item/toner)
-	crate_name = "toner crate"
