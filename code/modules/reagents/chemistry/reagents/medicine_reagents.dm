@@ -881,39 +881,48 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 100 brute and burn damage (independent of one another), and causes slight damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Only functions when applied by patch or spray, if the target has less than 100 brute and burn damage (independent of one another) and hasn't been husked. Causes slight damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 	pH = 0
 
-/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
-			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+		if(M.suiciding || M.hellbound) //they are never coming back
+			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
 			return
-		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(HAS_TRAIT(M, TRAIT_NOCLONE)) && !M.hellbound)
-			if(!M)
-				return
-			if(M.notify_ghost_cloning(source = M))
-				spawn (100) //so the ghost has time to re-enter
-					return
+		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || HAS_TRAIT(M, TRAIT_HUSK)) //body is too damaged to be revived
+			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+			M.do_jitter_animation(10)
+			return
+		else
+			M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
+			M.notify_ghost_cloning(source = M)
+			M.do_jitter_animation(10)
+			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
+			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
 
-			else
+			spawn(100) //so the ghost has time to re-enter
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
+						C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL*C.blood_ratio) //so you don't instantly re-die from a lack of blood
+					for(var/organ in C.internal_organs)
+						var/obj/item/organ/O = organ
+						if(O.damage > O.maxHealth/2)
+							O.setOrganDamage(O.maxHealth/2) //so you don't instantly die from organ damage when being revived
+
 				M.adjustOxyLoss(-20, 0)
 				M.adjustToxLoss(-20, 0)
-				var/mob/living/carbon/H = M
-				for(var/organ in H.internal_organs)
-					var/obj/item/organ/O = organ
-					O.setOrganDamage(0)
 				M.updatehealth()
-
 				if(M.revive())
+					M.grab_ghost()
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
 	..()
+
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(0.5*REM, 0)
@@ -1524,5 +1533,5 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
-	. = 1 
+	. = 1
 

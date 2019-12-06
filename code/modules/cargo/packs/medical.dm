@@ -40,9 +40,10 @@
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
-	desc = "Contains ten different blood packs for reintroducing blood to patients."
+	desc = "Contains nine different blood packs for reintroducing blood to patients, plus two universal synthetic blood packs."
 	cost = 3000
-	contains = list(/obj/item/reagent_containers/blood/random,
+	contains = list(/obj/item/reagent_containers/blood/synthetics,
+					/obj/item/reagent_containers/blood/synthetics,
 					/obj/item/reagent_containers/blood/random,
 					/obj/item/reagent_containers/blood/APlus,
 					/obj/item/reagent_containers/blood/AMinus,
@@ -53,18 +54,6 @@
 					/obj/item/reagent_containers/blood/lizard,
 					/obj/item/reagent_containers/blood/jellyblood,
 					/obj/item/reagent_containers/blood/insect)
-	crate_name = "blood freezer"
-	crate_type = /obj/structure/closet/crate/freezer
-
-/datum/supply_pack/medical/bloodpackssynth
-	name = "Synthetics Blood Pack Crate"
-	desc = "Contains five synthetics blood packs for reintroducing blood to patients."
-	cost = 3000
-	contains = list(/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
