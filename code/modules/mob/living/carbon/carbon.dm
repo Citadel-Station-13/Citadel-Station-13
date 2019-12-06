@@ -189,7 +189,7 @@
 
 	if(!I)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			var/mob/living/throwable_mob = pulling
+			throwable_mob = pulling
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
 				stop_pulling()
