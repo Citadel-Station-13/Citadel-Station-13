@@ -44,8 +44,8 @@
 		else
 			eye_color = H.eye_color
 		if(!special)
-			H.dna.species.handle_body() //regenerate eyeballs overlays.
-		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
+			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
+		if(HAS_TRAIT(H, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 			see_in_dark = 8
 	M.update_tint()
