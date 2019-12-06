@@ -22,11 +22,11 @@
 	throwforce = 15 //still deadly when thrown
 	throw_speed = 3
 
-/obj/item/ammo_casing/caseless/spinfusor/throw_impact(atom/target) //disks detonate when thrown
+/obj/item/ammo_casing/caseless/spinfusor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) //disks detonate when thrown
 	if(!..()) // not caught in mid-air
 		visible_message("<span class='notice'>[src] detonates!</span>")
-		playsound(src.loc, "sparks", 50, 1)
-		explosion(target, -1, -1, 1, 1, -1)
+		playsound(loc, "sparks", 50, 1)
+		explosion(hit_atom, -1, -1, 1, 1, -1)
 		qdel(src)
 		return 1
 
