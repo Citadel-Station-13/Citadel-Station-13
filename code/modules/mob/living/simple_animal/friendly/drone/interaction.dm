@@ -131,7 +131,6 @@
 			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
-		REMOVE_TRAIT(src,TRAIT_PACIFISM,"tinyhands")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
@@ -148,7 +147,6 @@
 		to_chat(src, laws)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
-		ADD_TRAIT(src,TRAIT_PACIFISM,"tinyhands")
 		mind.special_role = null
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
