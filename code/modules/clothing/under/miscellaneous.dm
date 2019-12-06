@@ -467,6 +467,14 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/sundress/white
+	name = "white sundress"
+	icon_state = "sundress_white"
+	item_state = "sundress_white"
+	item_color = "sundress_white"
+
+
+
 /obj/item/clothing/under/captainparade
 	name = "captain's parade uniform"
 	desc = "A captain's luxury-wear, for special occasions."
@@ -509,6 +517,25 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/flamenco
+	name = "flamenco dress"
+	desc = "Filled with Latin flame"
+	icon_state = "flamenco"
+	item_state = "wcoat"
+	item_color = "flamenco"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/westernbustle
+	name = "western bustle"
+	desc = "Filled with Western fire"
+	icon_state = "western_bustle"
+	item_state = "wcoat"
+	item_color = "western_bustle"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+
 /obj/item/clothing/under/stripeddress
 	name = "striped dress"
 	desc = "Fashion in space."
@@ -517,6 +544,14 @@
 	item_color = "striped_dress"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_FULL
+	can_adjust = FALSE
+
+/obj/item/clothing/under/flowerdress
+	name = "flower dress"
+	desc = "A nice orange and black flower dress"
+	icon_state = "flower_dress"
+	item_state = "flower_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = FALSE
 
 /obj/item/clothing/under/sailordress
@@ -535,6 +570,24 @@
 	icon_state = "red_evening_gown"
 	item_state = "redeveninggown"
 	item_color = "red_evening_gown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/greendress
+	name = "green dress"
+	desc = "A tight green dress"
+	icon_state = "dress_green"
+	item_state = "dress_green"
+	item_color = "dress_green"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/pinkdress
+	name = "pink dress"
+	desc = "A tight green pink"
+	icon_state = "dress_pink"
+	item_state = "dress_pink"
+	item_color = "dress_pink"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -800,6 +853,22 @@
 	desc = "Bright and red, hard to miss. Mostly warn by hotel staff or singing telegram."
 	icon_state = "telegram"
 	item_state = "telegram"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+
+/obj/item/clothing/under/croptop
+	name = "croptop"
+	desc = "Save nanotrasen money by wearing half a shirt!"
+	icon_state = "croptop"
+	item_state = "croptop"
+	body_parts_covered = CHEST|GROIN|LEGS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/corset
+	name = "corset"
+	desc = "Manufactured by partner company CBT"
+	icon_state = "corset"
+	item_state = "corset"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
 
