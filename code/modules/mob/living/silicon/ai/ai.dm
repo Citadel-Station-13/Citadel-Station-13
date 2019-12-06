@@ -827,7 +827,7 @@
 
 	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
 
-	show_message(rendered, 2)
+	show_message(rendered, MSG_AUDIBLE)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
 	..()

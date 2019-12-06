@@ -334,9 +334,6 @@
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
 
-/atom/proc/prevent_content_explosion()
-	return FALSE
-
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
 

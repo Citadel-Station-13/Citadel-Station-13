@@ -92,6 +92,16 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	//Uplink Items
+	for(var/path in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/I = path
+		if(!initial(I.item)) //We add categories to a separate list.
+			GLOB.uplink_categories |= initial(I.category)
+			continue
+		GLOB.uplink_items += path
+	//(sub)typesof entries are listed by the order they are loaded in the code, so we'll have to rearrange them here.
+	GLOB.uplink_items = sortList(GLOB.uplink_items, /proc/cmp_uplink_items_dsc)
+
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.

@@ -521,7 +521,7 @@
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/sofa/Initialize()
-	armrest = mutable_appearance(icon, "[icon_state]_armrest")
+	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
 	return ..()
 
 /obj/structure/chair/sofa/post_buckle_mob(mob/living/M)

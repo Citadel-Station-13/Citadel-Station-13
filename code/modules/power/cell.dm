@@ -360,3 +360,7 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+//found inside the inducers ordered from cargo.
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000
