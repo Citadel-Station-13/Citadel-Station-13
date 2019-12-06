@@ -11,19 +11,19 @@
 /obj/item/clothing/gloves/mittens/random
 
 /obj/item/clothing/gloves/mittens/random/New()
-	var/colours = ("black", "yellow", "lightbrown", "brown", "orange", "red", "purple", "green", "blue", "kitten")
+	var/colours = list("black", "yellow", "lightbrown", "brown", "orange", "red", "purple", "green", "blue", "kitten")
 	var/picked_c = pick(colours)
-	if(picked == "kitten")
+	if(picked_c == "kitten")
 		new /obj/item/clothing/gloves/mittens/kitten(loc)
 		qdel(src)
 		return
 	item_state = "[picked_c]gloves"
 	item_color = "[picked_c]"
-	colour = picked_c
+	color = picked_c
 
 /obj/item/clothing/gloves/mittens/kitten
 	name = "Kitten mittens"
-	desc = "These gloves will keep your hands warm, and feature cure kittens"
+	desc = "These gloves will keep your hands warm, and feature cute kittens"
 	icon_state = "kittenmittens"
 	item_state = "blackgloves"
 	item_color = "black"
