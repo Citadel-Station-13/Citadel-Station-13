@@ -85,24 +85,24 @@
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & 1 && eye_blind )//Vision related
+		if(type & MSG_VISUAL && eye_blind )//Vision related
 			if(!alt_msg)
 				return
 			else
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && !can_hear())//Hearing related
+		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
 				msg = alt_msg
 				type = alt_type
-				if(type & 1 && eye_blind)
+				if(type & MSG_VISUAL && eye_blind)
 					return
 	// voice muffling
 	if(stat == UNCONSCIOUS)
-		if(type & 2) //audio
+		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 	else
 		to_chat(src, msg)
@@ -150,7 +150,7 @@
 					else
 						continue
 
-		M.show_message(msg,1,blind_message,2)
+		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -169,7 +169,7 @@
 			msg = self_message
 		if(no_ghosts && isobserver(M))
 			continue
-		M.show_message( msg, 2, deaf_message, 1)
+		M.show_message( msg, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -184,7 +184,7 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(no_ghosts && isobserver(M))
 			continue
-		M.show_message( message, 2, deaf_message, 1)
+		M.show_message( message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 /mob/proc/Life()
 	set waitfor = FALSE
