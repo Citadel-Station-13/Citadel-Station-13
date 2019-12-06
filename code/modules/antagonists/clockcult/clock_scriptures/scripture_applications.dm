@@ -146,6 +146,6 @@
 
 /datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()
 	if(GLOB.neovgre_exists)
-		to_chat(invoker, "<span class='brass'>\"Only one of my weapons may exist in this temporal stream!\"</span>")
+		to_chat(invoker, "<span class='nezbere'>\"Only one of my weapons may exist in this temporal stream!\"</span>")
 		return FALSE
 	return ..()
