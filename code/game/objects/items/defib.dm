@@ -734,9 +734,8 @@
 /obj/item/disk/medical
 	name = "Defibrillator Upgrade Disk"
 	desc = "A blank upgrade disk, made for a defibrillator"
-	icon = 'modular_citadel/icons/obj/defib_disks.dmi'
-	icon_state = "upgrade_disk"
-	item_state = "heal_disk"
+	icon_state = "heal_disk"
+	item_state = "defib_disk"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/disk/medical/defib_heal
