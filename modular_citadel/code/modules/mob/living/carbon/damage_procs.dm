@@ -1,4 +1,4 @@
-/mob/living/carbon/adjustStaminaLossBuffered(amount, updating_stamina = 1)
+/mob/living/carbon/adjustStaminaLossBuffered(amount, updating_health = 1)
 	if(status_flags & GODMODE)
 		return 0
 	if(CONFIG_GET(flag/disable_stambuffer))
@@ -8,7 +8,7 @@
 		adjustStaminaLoss(directstamloss)
 	bufferedstam = CLAMP(bufferedstam + amount, 0, stambuffer)
 	stambufferregentime = world.time + 10
-	if(updating_stamina)
+	if(updating_health)
 		update_health_hud()
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE, affected_zone = BODY_ZONE_CHEST)

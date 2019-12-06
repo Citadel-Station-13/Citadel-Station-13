@@ -113,9 +113,7 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	dynamic_hair_suffix = ""
-
 	dog_fashion = /datum/dog_fashion/head/rabbit
-
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -205,7 +203,6 @@
 	item_state = "sombrero"
 	desc = "You can practically taste the fiesta."
 	flags_inv = HIDEHAIR
-
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
 /obj/item/clothing/head/sombrero/green
@@ -369,3 +366,17 @@
 	item_state = "assu_helmet"
 	desc = "A cheap replica of old riot helmet without visor. It has \"D.A.B.\" written on the front."
 	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/hotel
+	name = "Telegram cap"
+	desc = "A bright red cap warn by hotel staff. Or people who want to be a singing telegram"
+	icon_state = "telegramhat"
+	item_color = "telegramhat"
+	dog_fashion = null
+
+/obj/item/clothing/head/colour
+	name = "Singer cap"
+	desc = "A light white hat that has bands of color. Just makes you want to sing and dance!"
+	icon_state = "colour"
+	item_color = "colour"
+	dog_fashion = /datum/dog_fashion/head/colour
