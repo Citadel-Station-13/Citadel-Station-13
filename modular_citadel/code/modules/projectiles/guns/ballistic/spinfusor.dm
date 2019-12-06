@@ -65,7 +65,7 @@
 	icon_state = "spinfusorbox"
 	ammo_type = /obj/item/ammo_casing/caseless/spinfusor
 	w_class = WEIGHT_CLASS_NORMAL
-	max_ammo = 3
+	max_ammo = 4
 
 /datum/supply_pack/security/armory/spinfusor
 	name = "Stormhammer Spinfusor Crate"
