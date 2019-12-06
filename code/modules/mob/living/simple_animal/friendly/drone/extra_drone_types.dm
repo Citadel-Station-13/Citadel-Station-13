@@ -21,6 +21,7 @@
 	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
+	pacifist = FALSE
 	heavy_emp_damage = 10
 	laws = \
 	"1. Interfere.\n"+\
@@ -82,6 +83,7 @@
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
 	liberate()
+	pacifist = FALSE
 	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
 	if(visualAppearence == MAINTDRONE)
 		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
