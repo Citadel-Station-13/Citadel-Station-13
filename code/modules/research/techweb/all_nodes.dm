@@ -1050,13 +1050,13 @@
 
 /datum/techweb_node/alientech/New()
 	. = ..()
-	boost_item_paths = typecacheof(list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
-										 /obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/cautery/alien,
-										 /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor,
-										 /obj/item/crowbar/abductor, /obj/item/multitool/abductor,
-										 /obj/item/stock_parts/cell/infinite/abductor, /obj/item/weldingtool/abductor,
-										 /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor,
-										 /obj/item/abductor_baton, /obj/item/abductor, /obj/item/stack/sheet/mineral/abductor))
+	boost_item_paths = typesof(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
+							/obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/cautery/alien,
+							/obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor,
+							/obj/item/crowbar/abductor, /obj/item/multitool/abductor,
+							/obj/item/stock_parts/cell/infinite/abductor, /obj/item/weldingtool/abductor,
+							/obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor,
+							/obj/item/abductor_baton, /obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"
