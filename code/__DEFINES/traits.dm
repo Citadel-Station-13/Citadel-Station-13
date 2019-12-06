@@ -219,3 +219,4 @@
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define TIMESTOP_TRAIT "timestop"
