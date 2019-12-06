@@ -28,16 +28,3 @@
 	desc = "conceal your face in shame with this nanotrasen brand hood"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
-
-/obj/item/clothing/suit/flakjack
-	name = "flak jacket"
-	desc = "A dilapidated jacket made of a supposedly bullet-proof material (Hint: It isn't.). Smells faintly of napalm."
-	icon = 'modular_citadel/icons/obj/clothing/space_nam.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/space_nam.dmi'
-	icon_state = "flakjack"
-	item_state = "redtag"
-	blood_overlay_type = "armor"
-	body_parts_covered = CHEST
-	resistance_flags = NONE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid

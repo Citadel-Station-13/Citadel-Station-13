@@ -51,15 +51,45 @@
 	icon_grow = "fairygrass-grow"
 	icon_dead = "fairygrass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
+	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05, "space_drugs" = 0.15)
 
 /obj/item/reagent_containers/food/snacks/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
 	name = "fairygrass"
-	desc = "Blue, glowing, and smells fainly of mushrooms."
+	desc = "Glowing, and smells fainly of mushrooms."
 	icon_state = "fairygrassclump"
 	filling_color = "#3399ff"
 	stacktype = /obj/item/stack/tile/fairygrass
+
+/obj/item/reagent_containers/food/snacks/grown/grass/fairy/attack_self(mob/user)
+	var/datum/plant_gene/trait/glow/G = null
+	for(var/datum/plant_gene/trait/glow/gene in seed.genes)
+		G = gene
+		break
+	
+	stacktype = initial(stacktype)
+	
+	if(G)
+		switch(G.type)
+			if(/datum/plant_gene/trait/glow/white)
+				stacktype = /obj/item/stack/tile/fairygrass/white
+			if(/datum/plant_gene/trait/glow/red)
+				stacktype = /obj/item/stack/tile/fairygrass/red
+			if(/datum/plant_gene/trait/glow/yellow)
+				stacktype = /obj/item/stack/tile/fairygrass/yellow
+			if(/datum/plant_gene/trait/glow/green)
+				stacktype = /obj/item/stack/tile/fairygrass/green
+			if(/datum/plant_gene/trait/glow/blue)
+				stacktype = /obj/item/stack/tile/fairygrass/blue
+			if(/datum/plant_gene/trait/glow/purple)
+				stacktype = /obj/item/stack/tile/fairygrass/purple
+			if(/datum/plant_gene/trait/glow/pink)
+				stacktype = /obj/item/stack/tile/fairygrass/pink
+	
+	. = ..()
+
+		
+
 
 // Carpet
 /obj/item/seeds/grass/carpet
