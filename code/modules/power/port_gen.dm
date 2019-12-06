@@ -56,8 +56,8 @@
 		soundloop.stop()
 
 /obj/machinery/power/port_gen/examine(mob/user)
-	..()
-	to_chat(user, "It is[!active?"n't":""] running.")
+	. = ..()
+	. += "It is[!active?"n't":""] running."
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
@@ -99,10 +99,10 @@
 	consumption = consumption_coeff
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
+	. = ..()
+	. += "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
 	if(crit_fail)
-		to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
+		. += "<span class='danger'>The generator seems to have broken down.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)

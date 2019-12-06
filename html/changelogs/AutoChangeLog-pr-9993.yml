@@ -1,0 +1,8 @@
+author: "nemvar, ShizCalev, Qustinnus/Floyd, Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "You can now unfasten the loom."
+  - tweak: "it now takes 4 strands to make one piece of durathread cloth"
+  - bugfix: "Looms can now be attacked."
+  - rscadd: "Durathread golem weaves his magic"
+  - tweak: "Supply ordered looms are unanchored. Bring a wrench."

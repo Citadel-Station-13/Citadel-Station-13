@@ -85,7 +85,8 @@
 		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
 		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
 		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
-		/obj/item/stack/sheet/bone					= /datum/species/golem/bone)
+		/obj/item/stack/sheet/bone					= /datum/species/golem/bone,
+		/obj/item/stack/sheet/cotton/durathread		= /datum/species/golem/durathread)
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/O = I
@@ -135,7 +136,7 @@
 	id = /obj/item/card/id/syndicate/anyone
 	implants = list(/obj/item/implant/weapons_auth)
 
-/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H)
+/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms

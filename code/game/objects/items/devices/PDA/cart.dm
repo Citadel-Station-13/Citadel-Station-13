@@ -24,6 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	rad_flags = RAD_PROTECT_CONTENTS //So the cartridges dont annoyingly get irradiated, and the signallers inside being radded as well
 
 	var/obj/item/integrated_signaler/radio = null
 
@@ -689,15 +690,16 @@ Code:
 				active_bot = null
 
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
+				active_bot.bot_control("summon", usr, host_pda.GetAccess())
 
 			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(command= href_list["op"], user= usr)
+				active_bot.bot_control(href_list["op"], usr)
 		playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
-
-		active_bot.bot_control(href_list["mule"], usr, TRUE)
+		var/mob/living/simple_animal/bot/mulebot/mule = active_bot
+		if (istype(mule))
+			active_bot.bot_control(href_list["mule"], usr, TRUE)
 
 	if(!host_pda)
 		return

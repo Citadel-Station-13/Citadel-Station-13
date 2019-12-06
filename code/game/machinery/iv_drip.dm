@@ -221,7 +221,6 @@
 		. += "\t<span class='notice'>No chemicals are attached.</span>\n"
 
 	. += "\t<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
-	to_chat(user,.)
 
 #undef IV_TAKING
 #undef IV_INJECTING

@@ -24,11 +24,8 @@ Self-sustaining extracts:
 		A.icon = icon
 		A.icon_state = icon_state
 		A.color = color
+		A.name = "self-sustaining " + colour + " extract"
 	return INITIALIZE_HINT_QDEL
-
-/obj/item/autoslime/Initialize()
-	name = "self-sustaining " + extract.name
-	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
 	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in extract.activate_reagents

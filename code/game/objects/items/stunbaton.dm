@@ -91,9 +91,9 @@
 	. = ..()
 	var/obj/item/stock_parts/cell/copper_top = get_cell()
 	if(copper_top)
-		to_chat(user, "<span class='notice'>\The [src] is [round(copper_top.percent())]% charged.</span>")
+		. += "<span class='notice'>\The [src] is [round(copper_top.percent())]% charged.</span>"
 	else
-		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
+		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))

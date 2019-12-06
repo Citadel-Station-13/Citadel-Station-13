@@ -195,7 +195,7 @@
 	name = "Loom"
 	desc = "A large pre-made loom."
 	cost = 1000
-	contains = list(/obj/structure/loom)
+	contains = list(/obj/structure/loom/unanchored)
 	crate_name = "loom crate"
 	crate_type = /obj/structure/closet/crate/large
 
