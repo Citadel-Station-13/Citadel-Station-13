@@ -79,7 +79,7 @@
 	path = /obj/item/clothing/under/plaid_skirt
 
 /datum/gear/sweptskirt
-	name = "Swept skirt
+	name = "Swept skirt"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/shorts/skirtswept
 
@@ -395,4 +395,3 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
 	cost = 3
-
