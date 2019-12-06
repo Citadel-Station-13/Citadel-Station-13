@@ -765,12 +765,11 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
-	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
+	desc = "A speed loader that contains seven additional .357 Magnum rounds, and can be further reloaded with individual bullets; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/revolver/ap
 	name = ".357 Armor Piercing Speed Loader"
