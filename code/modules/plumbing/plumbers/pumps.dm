@@ -6,7 +6,6 @@
 	icon_state = "pump"
 	anchored = FALSE
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/pump
 	idle_power_usage = 10
 	active_power_usage = 1000
 	///Are we powered?
