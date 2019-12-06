@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed traitor codewords highlight and some other hear signal hooks spans highlight (phobias, split personality, hypnosis) or modifiers (mind echo)"
+  - bugfix: "Fixed traitor codewords highlight not passing down with the mind datum and stickying to the first mob."
