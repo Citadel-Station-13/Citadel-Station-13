@@ -304,4 +304,4 @@
 /obj/item/reagent_containers/food/condiment/pack/bbqsauce
 	name = "bbq sauce pack"
 	originalname = "bbq sauce"
-	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)
+	list_reagents = list("bbqsauce" = 10)
