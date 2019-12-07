@@ -801,6 +801,7 @@
 
 /datum/reagent/consumable/caramel
 	name = "Caramel"
+	id = "caramel"
 	description = "Who would have guessed that heated sugar could be so delicious?"
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#D98736"
@@ -822,6 +823,7 @@
 
 /datum/reagent/consumable/char
 	name = "Char"
+	id = "char"
 	description = "Essence of the grill. Has strange properties when overdosed."
 	reagent_state = LIQUID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
