@@ -29,6 +29,17 @@
 		return stored_card2
 	return ..()
 
+/obj/item/computer_hardware/card_slot/RemoveID()
+	if(stored_card)
+		. = stored_card
+		if(!try_eject(1))
+			return null
+		return
+	if(stored_card2)
+		. = stored_card2
+		if(!try_eject(2))
+			return null
+
 /obj/item/computer_hardware/card_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
 
@@ -106,6 +117,6 @@
 		return
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
-	..()
+	. = ..()
 	if(stored_card || stored_card2)
-		to_chat(user, "There appears to be something loaded in the card slots.")
+		. += "There appears to be something loaded in the card slots."

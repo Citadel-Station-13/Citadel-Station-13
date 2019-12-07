@@ -33,8 +33,8 @@
 			icon_state = "light0"
 
 /obj/machinery/light_switch/examine(mob/user)
-	..()
-	to_chat(user, "It is [on? "on" : "off"].")
+	. = ..()
+	. += "It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()

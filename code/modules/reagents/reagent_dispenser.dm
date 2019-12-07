@@ -71,13 +71,13 @@
 	var/paper_cups = 25 //Paper cups left from the cooler
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
-	..()
+	. = ..()
 	if (paper_cups > 1)
-		to_chat(user, "There are [paper_cups] paper cups left.")
+		. += "There are [paper_cups] paper cups left."
 	else if (paper_cups == 1)
-		to_chat(user, "There is one paper cup left.")
+		. += "There is one paper cup left."
 	else
-		to_chat(user, "There are no paper cups left.")
+		. += "There are no paper cups left."
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
 	. = ..()
@@ -226,11 +226,13 @@
 	desc = "A keg of aphrodisiac."
 	icon_state = "pinkkeg"
 	reagent_id = "aphro"
+	tank_volume = 150
 
 /obj/structure/reagent_dispensers/keg/aphro/strong
 	name = "keg of strong aphrodisiac"
 	desc = "A keg of strong and addictive aphrodisiac."
 	reagent_id = "aphro+"
+	tank_volume = 120
 
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
@@ -249,3 +251,4 @@
 	desc = "A keg of... wow that's a long name."
 	icon_state = "bluekeg"
 	reagent_id = "gargleblaster"
+	tank_volume = 100

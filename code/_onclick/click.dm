@@ -321,8 +321,7 @@
 	return
 /atom/proc/ShiftClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	if(user.client && user.client.eye == user || user.client.eye == user.loc)
-		user.examinate(src)
+	user.examinate(src)
 	return
 
 /*

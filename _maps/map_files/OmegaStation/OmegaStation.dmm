@@ -1279,6 +1279,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"abQ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/arcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "abR" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -37164,20 +37180,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"dEa" = (
-/obj/machinery/computer/arcade,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/maintenance/port)
 "dFV" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -42878,6 +42880,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"uvp" = (
+/obj/machinery/smartfridge/organ/preloaded{
+	pixel_y = 2
+	},
+/turf/closed/wall,
+/area/medical/medbay/zone3)
 "uxJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -76194,7 +76202,7 @@ aZp
 bak
 bbc
 bbQ
-dEa
+abQ
 bdD
 beu
 sKE
@@ -81593,7 +81601,7 @@ aSh
 bcf
 bcW
 blt
-aSh
+uvp
 aOL
 bfA
 bfX

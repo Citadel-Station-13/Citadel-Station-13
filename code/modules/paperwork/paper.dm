@@ -90,12 +90,12 @@
 
 
 /obj/item/paper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to fold it.</span>"
 	if(oui_canview(user))
 		ui.render(user)
 	else
-		to_chat(user, "<span class='warning'>You're too far away to read it!</span>")
+		. += "<span class='warning'>You're too far away to read it!</span>"
 
 /obj/item/paper/proc/show_content(mob/user)
 	user.examinate(src)
@@ -323,7 +323,7 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 		ui.render_all()
 
-	if(P.is_hot())
+	if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")

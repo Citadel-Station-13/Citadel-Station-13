@@ -131,232 +131,228 @@ SLIME SCANNER
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
-		if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated BUG_PROBABLE_CAUSE
-			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
-
-	var/msg = "<span class='info'>*---------*\nAnalyzing results for [M]:\n\tOverall status: [mob_status]\n"
+	var/msg = "<span class='info'>*---------*\nAnalyzing results for [M]:\n\tOverall status: [mob_status]"
 
 	// Damage descriptions
 	if(brute_loss > 10)
-		msg += "\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>\n"
+		msg += "\n\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>"
 	if(fire_loss > 10)
-		msg += "\t<span class='alert'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>\n"
+		msg += "\n\t<span class='alert'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>"
 	if(oxy_loss > 10)
-		msg += "\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>\n"
+		msg += "\n\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>"
 	if(tox_loss > 10)
-		msg += "\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of toxin damage detected.</span>\n"
+		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of toxin damage detected.</span>"
 	if(M.getStaminaLoss())
-		msg += "\t<span class='alert'>Subject appears to be suffering from fatigue.</span>\n"
+		msg += "\n\t<span class='alert'>Subject appears to be suffering from fatigue.</span>"
 		if(advanced)
-			msg += "\t<span class='info'>Fatigue Level: [M.getStaminaLoss()]%.</span>\n"
+			msg += "\n\t<span class='info'>Fatigue Level: [M.getStaminaLoss()]%.</span>"
 	if (M.getCloneLoss())
-		msg += "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>\n"
+		msg += "\n\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>"
 		if(advanced)
-			msg += "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>\n"
-	if (!M.getorgan(/obj/item/organ/brain))
-		to_chat(user, "\t<span class='alert'>Subject lacks a brain.</span>") //Unsure how this won't proc for 50% of the cit playerbase (This is a joke everyone on cit a cute.)
-	if(ishuman(M) && advanced) // Should I make this not advanced?
-		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/liver/L = H.getorganslot("liver")
-		if(L)
-			if(L.swelling > 20)
-				msg += "\t<span class='danger'>Subject is suffering from an enlarged liver.</span>\n" //i.e. shrink their liver or give them a transplant.
-		else
-			msg += "\t<span class='danger'>Subject's liver is missing.</span>\n"
-		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
-		if(T)
-			if(T.damage > 40)
-				msg += "\t<span class='danger'>Subject is suffering from severe burn tissue on their tongue.</span>\n" //i.e. their tongue is shot
-			if(T.name == "fluffy tongue")
-				msg += "\t<span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>\n"
-		else
-			msg += "\t<span class='danger'>Subject's tongue is missing.</span>\n"
-		var/obj/item/organ/lungs/Lung = H.getorganslot("lungs")
-		if(Lung)
-			if(Lung.damage > 150)
-				msg += "\t<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>\n" //i.e. Their lungs are shot
-		else
-			msg += "\t<span class='danger'>Subject's lungs have collapsed from trauma!</span>\n"
-		var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
-		if(P)
-			if(P.length>20)
-				msg += "\t<span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>\n"
-		var/obj/item/organ/genital/breasts/Br = H.getorganslot("breasts")
-		if(Br)
-			if(Br.cached_size>5)
-				msg += "\t<span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>\n"
-
-		if (M.getOrganLoss(ORGAN_SLOT_BRAIN) >= 200 || !M.getorgan(/obj/item/organ/brain))
-			msg += "\t<span class='alert'>Subject's brain function is non-existent.</span>\n"
-		else if (M.getOrganLoss(ORGAN_SLOT_BRAIN) >= 120)
-			msg += "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>\n"
-		else if (M.getOrganLoss(ORGAN_SLOT_BRAIN) >= 45)
-			msg += "\t<span class='alert'>Brain damage detected.</span>\n"
-
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(LAZYLEN(C.get_traumas()))
-			var/list/trauma_text = list()
-			for(var/datum/brain_trauma/B in C.get_traumas())
-				var/trauma_desc = ""
-				switch(B.resilience)
-					if(TRAUMA_RESILIENCE_SURGERY)
-						trauma_desc += "severe "
-					if(TRAUMA_RESILIENCE_LOBOTOMY)
-						trauma_desc += "deep-rooted "
-					if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
-						trauma_desc += "permanent "
-				trauma_desc += B.scan_desc
-				trauma_text += trauma_desc
-			msg += "\t<span class='alert'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>\n"
-		if(C.roundstart_quirks.len)
-			msg += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>\n"
-	if(advanced)
-		msg += "\t<span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
-	if(M.radiation)
-		msg += "\t<span class='alert'>Subject is irradiated.</span>\n"
-		msg += "\t<span class='info'>Radiation Level: [M.radiation] rad</span>\n"
-
-	if(advanced && M.hallucinating())
-		msg += "\t<span class='info'>Subject is hallucinating.</span>\n"
-
-	//MKUltra
-	if(advanced && M.has_status_effect(/datum/status_effect/chem/enthrall))
-		msg += "\t<span class='info'>Subject has abnormal brain fuctions.</span>\n"
-
-	//Astrogen shenanigans
-	if(advanced && M.reagents.has_reagent("astral"))
-		if(M.mind)
-			msg += "\t<span class='danger'>Warning: subject may be possesed.</span>\n"
-		else
-			msg += "\t<span class='notice'>Subject appears to be astrally projecting.</span>\n"
-
-	//Eyes and ears
-	if(advanced)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
-			msg += "\t<span class='info'><b>==EAR STATUS==</b></span>\n"
-			if(istype(ears))
-				var/healthy = TRUE
-				if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
-					healthy = FALSE
-					msg += "\t<span class='alert'>Subject is genetically deaf.</span>\n"
-				else if(HAS_TRAIT(C, TRAIT_DEAF))
-					healthy = FALSE
-					msg += "\t<span class='alert'>Subject is deaf.</span>\n"
-				else
-					if(ears.damage)
-						to_chat(user, "\t<span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>")
-						healthy = FALSE
-					if(ears.deaf)
-						to_chat(user, "\t<span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>")
-						healthy = FALSE
-				if(healthy)
-					msg += "\t<span class='info'>Healthy.</span>\n"
-			else
-				msg += "\t<span class='alert'>Subject does not have ears.</span>\n"
-			var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
-			msg += "\t<span class='info'><b>==EYE STATUS==</b></span>\n"
-			if(istype(eyes))
-				var/healthy = TRUE
-				if(HAS_TRAIT(C, TRAIT_BLIND))
-					msg += "\t<span class='alert'>Subject is blind.</span>\n"
-					healthy = FALSE
-				if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
-					msg += "\t<span class='alert'>Subject is nearsighted.</span>\n"
-					healthy = FALSE
-				if(eyes.damage > 30)
-					msg += "\t<span class='alert'>Subject has severe eye damage.</span>\n"
-					healthy = FALSE
-				else if(eyes.damage > 20)
-					msg += "\t<span class='alert'>Subject has significant eye damage.</span>\n"
-					healthy = FALSE
-				else if(eyes.damage)
-					msg += "\t<span class='alert'>Subject has minor eye damage.</span>\n"
-					healthy = FALSE
-				if(healthy)
-					msg += "\t<span class='info'>Healthy.</span>\n"
-			else
-				msg += "\t<span class='alert'>Subject does not have eyes.</span>\n"
+			msg += "\n\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>"
 
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/ldamage = H.return_liver_damage()
-		if(ldamage > 10)
-			msg += "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>\n"
+	to_chat(user, msg)
+	msg = ""
 
 	// Body part damage report
+	var/list/dmgreport = list()
 	if(iscarbon(M) && mode == 1)
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
-			msg += "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>\n"
-			for(var/obj/item/bodypart/org in damaged)
-				msg += "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]\n"
+			dmgreport += "<table style='margin-left:33px'><tr><font face='Verdana'>\
+							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
+							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
+							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
+							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
+							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
+							<tr><td><font color='#0000CC'>Overall:</font></td>\
+							<td><font color='red'>[brute_loss]</font></td>\
+							<td><font color='orange'>[fire_loss]</font></td>\
+							<td><font color='green'>[tox_loss]</font></td>\
+							<td><font color='purple'>[oxy_loss]</font></td></tr>"
+
+			for(var/o in damaged)
+				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
+				dmgreport += "<tr><td><font color='#0000CC'>[capitalize(org.name)]:</font></td>\
+								<td><font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font></td>\
+								<td><font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font></td></tr>"
+			dmgreport += "</table>"
+			to_chat(user, dmgreport.Join())
+
 
 	//Organ damages report
-	if(ishuman(M))
+	var/heart_ded = FALSE
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
 		var/mob/living/carbon/human/H = M
-		var/minor_damage
-		var/major_damage
-		var/max_damage
-		var/report_organs = FALSE
+		for(var/organ in C.internal_organs)
+			var/temp_message
+			var/damage_message
+			var/obj/item/organ/O = organ
 
-		//Piece together the lists to be reported
-		for(var/O in H.internal_organs)
-			var/obj/item/organ/organ = O
-			if(organ.organ_flags & ORGAN_FAILING)
-				report_organs = TRUE	//if we report one organ, we report all organs, even if the lists are empty, just for consistency
-				if(max_damage)
-					max_damage += ", "	//prelude the organ if we've already reported an organ
-					max_damage += organ.name	//this just slaps the organ name into the string of text
-				else
-					max_damage = "\t<span class='alert'>Non-Functional Organs: "	//our initial statement
-					max_damage += organ.name
-			else if(organ.damage > organ.high_threshold)
-				report_organs = TRUE
-				if(major_damage)
-					major_damage += ", "
-					major_damage += organ.name
-				else
-					major_damage = "\t<span class='info'>Severely Damaged Organs: "
-					major_damage += organ.name
-			else if(organ.damage > organ.low_threshold)
-				report_organs = TRUE
-				if(minor_damage)
-					minor_damage += ", "
-					minor_damage += organ.name
-				else
-					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
-					minor_damage += organ.name
+			//EYES
+			if(istype(O, /obj/item/organ/eyes))
+				var/obj/item/organ/eyes/eyes = O
+				if(advanced)
+					if(HAS_TRAIT(C, TRAIT_BLIND))
+						temp_message += " <span class='alert'>Subject is blind.</span>"
+					if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
+						temp_message += " <span class='alert'>Subject is nearsighted.</span>"
+					if(eyes.damage > 30)
+						damage_message += " <span class='alert'>Subject has severe eye damage.</span>"
+					else if(eyes.damage > 20)
+						damage_message += " <span class='alert'>Subject has significant eye damage.</span>"
+					else if(eyes.damage)
+						damage_message += " <span class='alert'>Subject has minor eye damage.</span>"
 
-		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
-			if(!max_damage)
-				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>"
-			else
-				max_damage += "</span>"
-			if(!major_damage)
-				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
-			else
-				major_damage += "</span>"
-			if(!minor_damage)
-				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
-			else
-				minor_damage += "</span>"
-			msg += "[minor_damage]"
-			msg += "[major_damage]"
-			msg += "[max_damage]"
+
+			//EARS
+			else if(istype(O, /obj/item/organ/ears))
+				var/obj/item/organ/ears/ears = O
+				if(advanced)
+					if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
+						temp_message += " <span class='alert'>Subject is genetically deaf.</span>"
+					else if(HAS_TRAIT(C, TRAIT_DEAF))
+						temp_message += " <span class='alert'>Subject is deaf.</span>"
+					else
+						if(ears.damage)
+							damage_message += " <span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>"
+						if(ears.deaf)
+							damage_message += " <span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>"
+
+
+			//BRAIN
+			else if(istype(O, /obj/item/organ/brain))
+				if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 200)
+					damage_message += " <span class='alert'>Subject's brain non-functional. Neurine injection recomended.</span>"
+				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 120)
+					damage_message += " <span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>"
+				else if (C.getOrganLoss(ORGAN_SLOT_BRAIN) >= 45)
+					damage_message += " <span class='alert'>Brain damage detected.</span>"
+				if(advanced)
+					temp_message += " <span class='info'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>"
+
+				//TRAUMAS
+				if(LAZYLEN(C.get_traumas()))
+					var/list/trauma_text = list()
+					for(var/datum/brain_trauma/B in C.get_traumas())
+						var/trauma_desc = ""
+						switch(B.resilience)
+							if(TRAUMA_RESILIENCE_SURGERY)
+								trauma_desc += "severe "
+							if(TRAUMA_RESILIENCE_LOBOTOMY)
+								trauma_desc += "deep-rooted "
+							if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+								trauma_desc += "permanent "
+						trauma_desc += B.scan_desc
+						trauma_text += trauma_desc
+					temp_message += " <span class='alert'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>"
+				if(C.roundstart_quirks.len)
+					temp_message += " <span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>"
+
+				if(ishuman(C) && advanced)
+					//MON PETIT CHAUFFEUR
+					if(H.hallucinating())
+						temp_message += " <span class='info'>Subject is hallucinating.</span>"
+
+					//MKUltra
+					if(H.has_status_effect(/datum/status_effect/chem/enthrall))
+						temp_message += " <span class='info'>Subject has abnormal brain fuctions.</span>"
+
+					//Astrogen shenanigans
+					if(H.reagents.has_reagent("astral"))
+						if(H.mind)
+							temp_message += " <span class='danger'>Warning: subject may be possesed.</span>"
+						else
+							temp_message += " <span class='notice'>Subject appears to be astrally projecting.</span>"
+
+
+			//LIVER
+			else if(istype(O, /obj/item/organ/liver))
+				var/obj/item/organ/liver/L = O
+				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
+					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
+				if(L.swelling > 20)
+					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
+
+			//HEART
+			else if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
+				var/obj/item/organ/heart/He = O
+				if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
+					temp_message += " <span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock <b>immediately!</b></span>"
+				if(He.organ_flags & ORGAN_FAILING)
+					heart_ded = TRUE
+
+			//TONGUE
+			else if(istype(O, /obj/item/organ/tongue))
+				var/obj/item/organ/tongue/T = O
+				if(T.name == "fluffy tongue")
+					temp_message += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
+
+			//HECK
+			else if(istype(O, /obj/item/organ/genital/penis))
+				var/obj/item/organ/genital/penis/P = O
+				if(P.length>20)
+					temp_message += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
+
+			else if(istype(O, /obj/item/organ/genital/breasts))
+				var/obj/item/organ/genital/breasts/Br = O
+				if(Br.cached_size>5)
+					temp_message += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
+
+
+
+			//GENERAL HANDLER
+			if(!damage_message)
+				if(O.organ_flags & ORGAN_FAILING)
+					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
+				else if(O.damage > O.high_threshold)
+					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
+				else if(O.damage > O.low_threshold && advanced)
+					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
+
+			if(temp_message || damage_message)
+				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
+
+
+
+		//END; LOOK FOR MISSING ORGANS?
+		var/breathes = TRUE
+		var/blooded = TRUE
+		if(C.dna && C.dna.species)
+			if(HAS_TRAIT_FROM(C, TRAIT_NOBREATH, SPECIES_TRAIT))
+				breathes = FALSE
+			if(NOBLOOD in C.dna.species.species_traits)
+				blooded = FALSE
+		var/has_liver = (!(NOLIVER in C.dna.species.species_traits))
+		var/has_stomach = (!(NOSTOMACH in C.dna.species.species_traits))
+		if(!M.getorganslot(ORGAN_SLOT_EYES))
+			msg += "\t<span class='alert'><b>Subject does not have eyes.</b></span>\n"
+		if(!M.getorganslot(ORGAN_SLOT_EARS))
+			msg += "\t<span class='alert'><b>Subject does not have ears.</b></span>\n"
+		if(!M.getorganslot(ORGAN_SLOT_BRAIN))
+			msg += "\t<span class='alert'><b>Subject's brain function is non-existent!</b></span>\n"
+		if(has_liver && !M.getorganslot(ORGAN_SLOT_LIVER))
+			msg += "\t<span class='alert'><b>Subject's liver is missing!</b></span>\n"
+		if(blooded && !M.getorganslot(ORGAN_SLOT_HEART))
+			msg += "\t<span class='alert'><b>Subject's heart is missing!</b></span>\n"
+		if(breathes && !M.getorganslot(ORGAN_SLOT_LUNGS))
+			msg += "\t<span class='alert'><b>Subject's lungs have collapsed from trauma!</b></span>\n"
+		if(has_stomach && !M.getorganslot(ORGAN_SLOT_STOMACH))
+			msg += "\t<span class='alert'><b>Subject's stomach is missing!</span>\n"
+
+
+		if(M.radiation)
+			msg += "\t<span class='alert'>Subject is irradiated.</span>\n"
+			msg += "\t<span class='info'>Radiation Level: [M.radiation] rad</span>\n"
+
 
 
 	// Species and body temperature
+	var/mob/living/carbon/human/H = M //Start to use human only stuff here
 	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
 		var/datum/species/S = H.dna.species
 		var/mutant = FALSE
 		if (H.dna.check_mutation(HULK))
@@ -382,17 +378,26 @@ SLIME SCANNER
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
 
-		msg += "<span class='info'>Species: [H.dna.custom_species ? H.dna.custom_species : S.name] Base: [S.name]</span>\n"
+		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n"
+		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
 		if(mutant)
-			msg += "<span class='info'>Subject has mutations present.</span>"
-	msg += "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
+			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
+	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		msg += "<span class='info'>Time of Death:</span> [M.tod]\n"
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>\n"
+			if(heart_ded)
+				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, heart requires surgical intervention for defibrillation.</span>"
+			else
+				msg += "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>"
+			if(advanced)
+				if(H.get_ghost() || H.key || H.client)//Since it can last a while.
+					msg += "<span class='danger'> Intervention recommended.</span>\n"
+				else
+					msg += "\n"
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -405,7 +410,6 @@ SLIME SCANNER
 		var/blood_id = C.get_blood_id()
 		if(blood_id)
 			if(ishuman(C))
-				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
 			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
@@ -430,7 +434,7 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			msg += "<span class='notice'>Detected cybernetic modifications:</span>\n"
 			msg += "<span class='notice'>[cyberimp_detect]</span>\n"
-	msg += "*---------*</span>"
+	msg += "<span class='notice'>*---------*</span>"
 	to_chat(user, msg)
 	SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
 
@@ -522,7 +526,7 @@ SLIME SCANNER
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to activate the barometer function.</span>")
+	. += "<span class='notice'>Alt-click [src] to activate the barometer function.</span>"
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
@@ -650,7 +654,7 @@ SLIME SCANNER
 
 /proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)

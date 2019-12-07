@@ -159,7 +159,7 @@
 		to_chat(M, "<span class='warning'>Arousal is disabled. Feature is unavailable.</span>")
 
 
-/mob/living/proc/mob_climax()//This is just so I can test this shit without being forced to add actual content to get rid of arousal. Will be a very basic proc for a while.
+/mob/living/proc/mob_climax(forced_climax = FALSE)//This is just so I can test this shit without being forced to add actual content to get rid of arousal. Will be a very basic proc for a while.
 	set name = "Masturbate"
 	set category = "IC"
 	if(canbearoused && !restrained() && !stat)

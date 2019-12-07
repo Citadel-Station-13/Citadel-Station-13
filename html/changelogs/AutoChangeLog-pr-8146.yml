@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "OOC and LOOC now use separate toggles. You can now use LOOC while OOC is globally toggled off, and admins now have the option to toggle LOOC off separately from OOC"
-  - code_imp: "also revamped and reorganized relevant looc adminverb code"

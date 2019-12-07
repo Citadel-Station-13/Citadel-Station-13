@@ -55,6 +55,9 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 /obj/item/stack/sheet/mineral/sandstone/thirty
 	amount = 30
 
+/obj/item/stack/sheet/mineral/sandstone/twelve
+	amount = 12
+
 /*
  * Sandbags
  */
@@ -178,11 +181,11 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	. = ..()
 
 /obj/item/stack/sheet/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Plasma sheets ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma sheets ignited by [key_name(user)] in [AREACOORD(T)]")
-		fire_act(W.is_hot())
+		fire_act(W.get_temperature())
 	else
 		return ..()
 

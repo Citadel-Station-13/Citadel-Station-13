@@ -139,6 +139,14 @@
 	min_val = 0
 	max_val = 1
 
+/datum/config_entry/number/suicide_reenter_round_timer
+	config_entry_value = 30
+	min_val = 0
+
+/datum/config_entry/number/roundstart_suicide_time_limit
+	config_entry_value = 30
+	min_val = 0
+
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000
 	min_val = 0
@@ -371,27 +379,3 @@
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
-
-/datum/config_entry/number/dynamic_high_pop_limit
-	config_entry_value = 55
-	min_val = 1
-
-/datum/config_entry/number/dynamic_pop_per_requirement
-	config_entry_value = 6
-	min_val = 1
-
-/datum/config_entry/keyed_list/dynamic_cost
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/dynamic_weight
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/dynamic_requirements
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM_LIST
-
-/datum/config_entry/keyed_list/dynamic_high_population_requirement
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
