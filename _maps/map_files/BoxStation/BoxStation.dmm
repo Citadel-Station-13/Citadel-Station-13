@@ -34698,6 +34698,7 @@
 /area/quartermaster/qm)
 "bzS" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /obj/item/cautery{
 	pixel_x = 4
 	},
@@ -34887,7 +34888,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bAp" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -34895,7 +34895,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/MRS,
+/turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAq" = (
 /obj/machinery/sleeper{
@@ -34927,6 +34928,7 @@
 /area/medical/sleeper)
 "bAt" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /obj/item/wrench/medical,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -37300,6 +37302,7 @@
 /area/crew_quarters/heads/cmo)
 "bFF" = (
 /obj/machinery/light,
+/obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bFG" = (
@@ -59312,6 +59315,10 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/cryopod)
+"qQo" = (
+/obj/structure/bookcase/manuals/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qQP" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-14"
@@ -98515,7 +98522,7 @@ bua
 bua
 bua
 bua
-bhh
+bBJ
 bhh
 btV
 bof
@@ -98772,7 +98779,7 @@ bpk
 bxX
 bsL
 bua
-bBJ
+bzd
 bhh
 bBn
 bof
@@ -99029,7 +99036,7 @@ bsL
 bvo
 bzl
 bua
-bzd
+bBL
 bhh
 btT
 bCU
@@ -99286,7 +99293,7 @@ bum
 bvq
 bzn
 bua
-bBL
+qQo
 bhh
 bBC
 bCV
