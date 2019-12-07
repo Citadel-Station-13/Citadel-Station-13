@@ -63,7 +63,7 @@
 		var/do_heal = world.time < convalescence_time
 		if(revive_cost >= MAX_HEAL_COOLDOWN)
 			do_heal = FALSE
-		else if(owner.stat && ownder.stat != DEAD)
+		else if(owner.stat && owner.stat != DEAD)
 			do_heal = TRUE
 		else if(!do_heal)
 			convalescence_time = world.time + DEF_CONVALESCENCE_TIME
@@ -120,7 +120,7 @@
 	if(!H || !istype(H))
 		return
 	H.set_heartattack(FALSE)
-	if(H.stat == CONSCIOUS || stat == SOFT_CRIT)
+	if(H.stat == CONSCIOUS || H.stat == SOFT_CRIT)
 		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
 
 #undef MAX_HEAL_COOLDOWN
