@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "You now get a message if your PDA explodes while you are holding it."

@@ -227,9 +227,12 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
+	addtimer(CALLBACK(src, /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate), rand(50, 100))
+
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate()
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
-
+	
 // Lavaland cactus
 
 /obj/item/seeds/lavaland/cactus

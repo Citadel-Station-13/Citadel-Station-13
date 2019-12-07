@@ -56,14 +56,14 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/centcom/get_jobs()
 	return get_all_centcom_jobs()
 
-/obj/machinery/computer/card/examine(mob/user)
-	. = ..()
-	if(inserted_scan_id || inserted_modify_id)
-		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
-
 /obj/machinery/computer/card/Initialize()
 	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
+
+/obj/machinery/computer/card/examine(mob/user)
+	. = ..()
+	if(inserted_scan_id || inserted_modify_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/card/attackby(obj/I, mob/user, params)
 	if(isidcard(I))
@@ -71,18 +71,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if(id_insert(user, I, inserted_scan_id))
 				inserted_scan_id = I
 				updateUsrDialog()
-		else if(!inserted_modify_id)
-			if(id_insert(user, I, inserted_modify_id))
-				inserted_modify_id = I
-				updateUsrDialog()
+		else if(id_insert(user, I, inserted_modify_id))
+			inserted_modify_id = I
+			updateUsrDialog()
 	else
 		return ..()
 
 /obj/machinery/computer/card/Destroy()
 	if(inserted_scan_id)
-		QDEL_NULL(inserted_scan_id)
+		qdel(inserted_scan_id)
+		inserted_scan_id = null
 	if(inserted_modify_id)
-		QDEL_NULL(inserted_modify_id)
+		qdel(inserted_modify_id)
+		inserted_modify_id = null
 	return ..()
 
 /obj/machinery/computer/card/handle_atom_del(atom/A)
@@ -105,7 +106,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
 	return (jobtitle in blacklisted)
-
 
 //Logic check for Topic() if you can open the job
 /obj/machinery/computer/card/proc/can_open_job(datum/job/job)
@@ -130,6 +130,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				return JOB_COOLDOWN
 			return JOB_MAX_POSITIONS
 	return JOB_DENIED
+
 
 /obj/machinery/computer/card/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
 	var/obj/item/card/id/card_to_insert = inserting_item
@@ -202,8 +203,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if(job.title in blacklisted)
 				continue
 			dat += {"<td>[job.title]</td>
-					<td>[job.current_positions]/[job.total_positions]</td>
-					<td>"}
+				<td>[job.current_positions]/[job.total_positions]</td>
+				<td>"}
 			switch(can_open_job(job))
 				if(JOB_ALLOWED)
 					if(authenticated == 2)
@@ -224,7 +225,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						dat += "<a href='?src=[REF(src)];choice=make_job_unavailable;job=[job.title]'>Close Position</a>"
 					else
 						dat += "Close Position"
-				if(-JOB_COOLDOWN)
+				if(JOB_COOLDOWN)
 					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 					var/mins = round(time_to_wait / 60)
 					var/seconds = time_to_wait - (60*mins)
@@ -251,6 +252,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat += "</table>"
 	else
 		var/list/header = list()
+
 		var/scan_name = inserted_scan_id ? html_encode(inserted_scan_id.name) : "--------"
 		var/target_name = inserted_modify_id ? html_encode(inserted_modify_id.name) : "--------"
 		var/target_owner = (inserted_modify_id && inserted_modify_id.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
@@ -261,7 +263,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				Target: <a href='?src=[REF(src)];choice=inserted_modify_id'>[target_name]</a><br>
 				Confirm Identity: <a href='?src=[REF(src)];choice=inserted_scan_id'>[scan_name]</a><br>"}
 		else
-			header += {"<div align='center'><br>"
+			header += {"<div align='center'><br>
 				Target: <a href='?src=[REF(src)];choice=inserted_modify_id'>Remove [target_name]</a> ||
 				Confirm Identity: <a href='?src=[REF(src)];choice=inserted_scan_id'>Remove [scan_name]</a><br>
 				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a><br>
@@ -297,7 +299,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 										allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
 									}
 								</script>"}
-				carddesc += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				carddesc += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>
 					<input type='hidden' name='src' value='[REF(src)]'>
 					<input type='hidden' name='choice' value='reg'>
 					<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>
@@ -312,7 +314,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=[REF(src)];choice=demote'>Demote</a>)</span>"
 
 			var/list/accesses = list()
-			if(istype(src, /obj/machinery/computer/card/centcom)) //REE
+			if(istype(src, /obj/machinery/computer/card/centcom)) // REE
 				accesses += "<h5>Central Command:</h5>"
 				for(var/A in get_all_centcom_access())
 					if(A in inserted_modify_id.access)
@@ -340,13 +342,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						accesses += "<br>"
 					accesses += "</td>"
 				accesses += "</tr></table>"
-			body = "[carddesc.Join()]<br>[jobs]<br><br>[accesses.Join()]<hr>" //CHECK THIS
+			body = "[carddesc.Join()]<br>[jobs.Join()]<br><br>[accesses.Join()]<hr>" //CHECK THIS
 
 		else if (!authenticated)
-			body = {"<a href='?src=[REF(src)];choice=auth'>Log In</a> <br><hr>
+			body = {"<a href='?src=[REF(src)];choice=auth'>Log In</a><br><hr>
 				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a><br><hr>"}
 			if(!target_dept)
-				body += "<br><hr><a href='?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a><hr>"
+				body += "<a href='?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a><hr>"
 
 		dat = list("<tt>", header.Join(), body, "<br></tt>")
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
@@ -366,7 +368,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
-			if (inserted_modify_id && !usr.get_active_held_item())
+			if(inserted_modify_id && !usr.get_active_held_item())
 				if(id_eject(usr, inserted_modify_id))
 					inserted_modify_id = null
 					updateUsrDialog()
@@ -378,7 +380,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					inserted_modify_id = id_to_insert
 					updateUsrDialog()
 		if ("inserted_scan_id")
-			if (inserted_scan_id && !usr.get_active_held_item())
+			if(inserted_scan_id && !usr.get_active_held_item())
 				if(id_eject(usr, inserted_scan_id))
 					inserted_scan_id = null
 					updateUsrDialog()
@@ -386,7 +388,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if(usr.get_id_in_hand())
 				var/obj/item/held_item = usr.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_modify_id))
+				if(id_insert(usr, held_item, inserted_scan_id))
 					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")
@@ -462,7 +464,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							updateUsrDialog()
 							break
 					if(!jobdatum)
-						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
+						to_chat(usr, "<span class='alert'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
 
@@ -475,7 +477,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				inserted_modify_id.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			else
-				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
+				to_chat(usr, "<span class='alert'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = inserted_modify_id
@@ -485,7 +487,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 					else
-						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
+						to_chat(usr, "<span class='alert'>Invalid name entered.</span>")
 						updateUsrDialog()
 						return
 		if ("mode")
@@ -498,7 +500,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(authenticated && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
+			if(authenticated && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -515,7 +517,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(authenticated && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
+			if(authenticated && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -533,7 +535,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if ("prioritize_job")
 			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
-			if(authenticated && (ACCESS_CHANGE_IDS in inserted_scan_id.access) && !target_dept)
+			if(authenticated && !target_dept)
 				var/priority_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
@@ -549,7 +551,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					return
 				else
 					SSjob.prioritized_jobs += j
-				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
+				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ? "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 		if ("print")

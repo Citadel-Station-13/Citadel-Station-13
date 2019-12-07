@@ -118,11 +118,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	..()
 
 
-/proc/generate_selectable_species()
+/proc/generate_selectable_species(clear = FALSE)
+	if(clear)
+		GLOB.roundstart_races = list()
+		GLOB.roundstart_race_names = list()
 	for(var/I in subtypesof(/datum/species))
 		var/datum/species/S = new I
 		if(S.check_roundstart_eligible())
-			GLOB.roundstart_races += S.id
+			GLOB.roundstart_races |= S.id
 			GLOB.roundstart_race_names["[S.name]"] = S.id
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
@@ -1476,7 +1479,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
@@ -1534,6 +1537,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
+		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
@@ -1546,6 +1550,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
+
+/datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	// CITADEL EDIT slap mouthy gits and booty
@@ -1678,6 +1685,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return
 	if(M.mind)
 		attacker_style = M.mind.martial_art
+		if(attacker_style?.pacifism_check && HAS_TRAIT(M, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
+			attacker_style = null
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")

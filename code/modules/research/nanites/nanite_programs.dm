@@ -208,9 +208,6 @@ datum/nanite_program/proc/on_mob_remove()
 /datum/nanite_program/proc/on_death()
 	return
 
-/datum/nanite_program/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
-
 /datum/nanite_program/proc/software_error(type)
 	if(!type)
 		type = rand(1,5)
@@ -241,12 +238,12 @@ datum/nanite_program/proc/on_mob_remove()
 	else if(deactivation_code && code == deactivation_code && activated)
 		deactivate()
 		host_mob.investigate_log("[host_mob]'s [name] nanite program was deactivated by [source] with code [code].", INVESTIGATE_NANITES)
-	if(can_trigger && trigger_code && code == trigger_code)
-		trigger()
-		host_mob.investigate_log("[host_mob]'s [name] nanite program was triggered by [source] with code [code].", INVESTIGATE_NANITES)
 	if(kill_code && code == kill_code)
 		host_mob.investigate_log("[host_mob]'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
+	else if(can_trigger && trigger_code && code == trigger_code)
+		trigger()
+		host_mob.investigate_log("[host_mob]'s [name] nanite program was triggered by [source] with code [code].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/proc/get_timer_type_text()
 	switch(timer_type)
