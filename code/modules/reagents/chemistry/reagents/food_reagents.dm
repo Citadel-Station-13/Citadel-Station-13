@@ -838,6 +838,7 @@
 
 /datum/reagent/consumable/bbqsauce
 	name = "BBQ Sauce"
+	id = "bbqsauce"
 	description = "Sweet, Smokey, Savory, and gets everywhere. Perfect for Grilling."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#78280A" // rgb: 120 40, 10
