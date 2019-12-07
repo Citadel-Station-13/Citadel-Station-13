@@ -57,7 +57,7 @@
 #define BALLS_SACK_SIZE_DEF	8
 #define BALLS_SACK_SIZE_MAX 40
 
-#define CUM_RATE			0.035
+#define CUM_RATE			2.5 // holy shit what a really shitty define name
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1//amount of nutrition required per life()
 
