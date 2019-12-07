@@ -179,9 +179,10 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/reagent_containers/medspray/styptic(src)
+	new /obj/item/reagent_containers/medspray/silver_sulf(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 /*
