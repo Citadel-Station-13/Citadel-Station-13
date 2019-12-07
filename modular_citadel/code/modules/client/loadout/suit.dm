@@ -64,6 +64,11 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat
 
+/datum/gear/coat/aformal
+	name = "Assistant's formal winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/aformal
+
 /* Commented out until it is "balanced"
 /datum/gear/coat/sec
 	name = "Security winter coat"
@@ -78,13 +83,11 @@
 	path = /obj/item/clothing/suit/hooded/wintercoat/medical
 	restricted_roles = list("Chief Medical Officer", "Medical Doctor") // Reserve it to Medical Doctors and their boss, the Chief Medical Officer
 
-/* Commented out until there is a Chemistry Winter Coat
-/datum/gear/coat/med/chem
-	name = "Chemistry winter coat"
+/datum/gear/coat/robotics
+	name = "Robotics winter coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
-	restricted_roles = list("Chief Medical Officer", "Chemist") // Reserve it to Chemists and their boss, the Chief Medical Officer
-*/
+	path = /obj/item/clothing/suit/hooded/wintercoat/robotics
+	restricted_roles = list("Research Director", "Roboticist")
 
 /datum/gear/coat/sci
 	name = "Science winter coat"

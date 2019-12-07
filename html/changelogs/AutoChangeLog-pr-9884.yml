@@ -1,0 +1,5 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - bugfix: "resolves the issues revolving around blackpowder exploding where the reaction happened, instead of where it actually is through making it explode instantly"
+  - tweak: "the explosion delay moved from blackpowder directly into bomb cherries, to keep them functioning as intended"

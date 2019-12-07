@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed several \"behind\" layer tail sprites skipping areas normally covered by bodyparts."
