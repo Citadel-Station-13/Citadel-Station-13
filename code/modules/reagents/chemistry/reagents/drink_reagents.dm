@@ -911,6 +911,7 @@
 
 /datum/reagent/consumable/monkey_energy
 	name = "Monkey Energy"
+	id = "monkey_energy"
 	description = "The only drink that will make you unleash the ape."
 	color = "#f39b03" // rgb: 243, 155, 3
 	taste_description = "barbecue and nostalgia"
