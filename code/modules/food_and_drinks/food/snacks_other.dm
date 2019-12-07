@@ -598,3 +598,15 @@
 	tastes = list("banana" = 5, "chocolate" = 3)
 	foodtype = FRUIT | SUGAR
 	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/cornchips
+	name = "boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
+	icon_state = "boritos"
+	trash = /obj/item/trash/boritos
+	bitesize = 2
+	list_reagents = list("nutriment" = 3, "cooking_oil" = 2, "sodiumchloride" = 3)
+	filling_color = "#ECA735"
+	tastes = list("fried corn" = 1)
+	foodtype = JUNKFOOD | FRIED
+	dunkable = TRUE

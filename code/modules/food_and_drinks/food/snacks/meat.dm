@@ -57,6 +57,33 @@
 	else if(subjectjob)
 		S.name = "[subjectjob] meatsteak"
 
+/obj/item/reagent_containers/food/snacks/meat/rawcrab
+	name = "raw crab meat"
+	desc = "A pile of raw crab meat."
+	icon_state = "crabmeatraw"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/crab
+	bitesize = 3
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3)
+	filling_color = "#EAD079"
+	tastes = list("raw crab" = 1)
+	foodtype = RAW | MEAT
+
+/obj/item/reagent_containers/food/snacks/meat/crab
+	name = "crab meat"
+	desc = "Some deliciously cooked crab meat."
+	icon_state = "crabmeat"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/cooking_oil = 2)
+	filling_color = "#DFB73A"
+	tastes = list("crab" = 1)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meat/slab/chicken
+	name = "chicken meat"
+	desc = "A slab of raw chicken. Remember to wash your hands!"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/chicken
+	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken
+	tastes = list("chicken" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
@@ -183,7 +210,6 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtype = RAW | MEAT
 
-
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	name = "xeno meat"
 	desc = "A slab of meat."
@@ -280,12 +306,20 @@
 	foodtype = MEAT
 	tastes = list("meat" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/steak/chicken
+	name = "chicken steak" //Can you have chicken steaks? Maybe this should be renamed once it gets new sprites.
+	tastes = list("chicken" = 1)
+
 /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/meat/steak/plain/human
 	tastes = list("tender meat" = 1)
 	foodtype = MEAT | GROSS
+
+/obj/item/reagent_containers/food/snacks/meat/steak/penguin
+	name = "penguin steak"
+	tastes = list("beef" = 1, "cod fish" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/killertomato
 	name = "killer tomato steak"
@@ -353,6 +387,11 @@
 	else if(subjectjob)
 		S.name = "[subjectjob] [initial(S.name)]"
 
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken
+	name = "raw chicken cutlet"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/chicken
+	tastes = list("chicken" = 1)
+
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/killertomato
 	name = "raw killer tomato cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/killertomato
@@ -418,3 +457,11 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	name = "gondola cutlet"
 	tastes = list("meat" = 1, "tranquility" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/cutlet/penguin
+	name = "penguin cutlet"
+	tastes = list("beef" = 1, "cod fish" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/cutlet/chicken
+	name = "chicken cutlet"
+	tastes = list("chicken" = 1)

@@ -72,5 +72,10 @@
 	resistance_flags = NONE
 	grind_results = list("aluminium" = 10)
 
+/obj/item/trash/boritos
+	name = "boritos bag"
+	icon_state = "boritos"
+	grind_results = list("aluminium" = 1) //from the mylar bag
+
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

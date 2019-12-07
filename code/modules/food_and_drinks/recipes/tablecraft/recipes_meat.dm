@@ -167,6 +167,18 @@
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepork
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/fiestaskewer
+	name = "Fiesta Skewer"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/kebab/fiesta
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/ribs
 	name = "BBQ Ribs"
 	reqs = list(

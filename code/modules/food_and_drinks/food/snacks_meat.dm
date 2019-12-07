@@ -345,6 +345,12 @@
 	tastes = list("rat meat" = 2, "metal" = 1)
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 2)
 
+/obj/item/reagent_containers/food/snacks/kebab/fiesta
+	name = "fiesta skewer"
+	icon_state = "fiestaskewer"
+	tastes = list("tex-mex" = 3, "cumin" = 2)
+	bonus_reagents = list("vitamin" = 5, "capsaicin" = 3)
+
 /obj/item/reagent_containers/food/snacks/bbqribs
 	name = "bbq ribs"
 	desc = "BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist."
