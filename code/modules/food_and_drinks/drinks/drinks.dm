@@ -530,5 +530,5 @@
 	name = "Monkey Energy"
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
-	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
+	list_reagents = list("monkey_energy" = 50)
 	foodtype = SUGAR | JUNKFOOD
