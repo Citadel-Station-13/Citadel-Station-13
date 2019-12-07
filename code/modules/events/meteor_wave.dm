@@ -21,7 +21,7 @@
 
 /datum/round_event/meteor_wave/setup()
 	announceWhen = 1
-	startWhen = rand(180, 360) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
+	startWhen = rand(60, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
 	if(GLOB.singularity_counter)
 		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
 	endWhen = startWhen + 60

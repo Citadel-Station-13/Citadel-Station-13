@@ -99,7 +99,6 @@
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	sleep(rand(50,100))
 	..(holder, created_volume, T)
 
 /datum/chemical_reaction/thermite
