@@ -81,7 +81,7 @@
 	id = "caramel"
 	results = list("caramel" = 1)
 	required_reagents = list("sugar" = 1)
-	required_temp = 413.15
+	required_temp = 413
 	mob_react = FALSE
 
 /datum/chemical_reaction/caramel_burned
@@ -89,7 +89,7 @@
 	id = "caramel_burned"
 	results = list("carbon" = 1)
 	required_reagents = list("caramel" = 1)
-	required_temp = 483.15
+	required_temp = 483
 	mob_react = FALSE
 
 /datum/chemical_reaction/cheesewheel
