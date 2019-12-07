@@ -144,6 +144,10 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/tank/jetpack/oxygen/harness/full
+	name = "expanded jet harness (oxygen)"
+	volume = 70
+
 /obj/item/tank/jetpack/oxygen/captain
 	name = "\improper Captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
