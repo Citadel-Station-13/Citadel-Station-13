@@ -12,7 +12,7 @@
 		return COMPONENT_INCOMPATIBLE
 	var/mob/vr_M = parent
 	mastermind = M.mind
-	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETED), .proc/game_over)
+	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
 	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/switch_player)
 	RegisterSignal(mastermind, COMSIG_MIND_TRANSFER, .proc/switch_player)
 	you_die_in_the_game_you_die_for_real = yolo
@@ -32,7 +32,7 @@
 	current_mind = M.mind
 	quit_action.Grant(M)
 	RegisterSignal(quit_action, COMSIG_ACTION_TRIGGER, .proc/revert_to_reality)
-	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETED), .proc/game_over)
+	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
 	RegisterSignal(M, COMSIG_MOB_GHOSTIZE, .proc/be_a_quitter)
 	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/pass_me_the_remote)
 	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, .proc/pass_me_the_remote)
@@ -42,7 +42,7 @@
 
 /datum/component/virtual_reality/UnregisterFromParent()
 	quit_action.Remove(parent)
-	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETED, COMSIG_MOB_KEY_CHANGE, COMSIG_MOB_GHOSTIZE))
+	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MOB_KEY_CHANGE, COMSIG_MOB_GHOSTIZE))
 	UnregisterSignal(current_mind, COMSIG_MIND_TRANSFER)
 	UnregisterSignal(quit_action, COMSIG_ACTION_TRIGGER)
 	current_mind = null

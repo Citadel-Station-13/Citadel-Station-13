@@ -1098,9 +1098,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		AddComponent(/datum/component/cleaning)
+		AddElement(/datum/element/cleaning)
 	else
-		qdel(GetComponent(/datum/component/cleaning))
+		RemoveElement(/datum/element/cleaning)
 
 	hat_offset = module.hat_offset
 
@@ -1295,6 +1295,6 @@
 			bellyup = 1
 	update_icons()
 
-/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_stamina = 1)
+/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_health = 1)
 	if(istype(cell))
 		cell.charge -= amount*5

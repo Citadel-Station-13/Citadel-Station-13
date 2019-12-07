@@ -253,7 +253,7 @@
 
 /obj/item/storage/backpack/satchel/bone
 	name = "bone satchel"
-	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
+	desc = "A grotesque satchel made of sinews and bones."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
 	slot_flags = ITEM_SLOT_BACK
