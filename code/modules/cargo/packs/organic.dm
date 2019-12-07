@@ -219,6 +219,29 @@
 	crate_name = "wildcard food crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/organic/party
+	name = "Party Equipment"
+	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
+	cost = 2000
+	contains = list(/obj/item/storage/box/drinkingglasses,
+					/obj/item/reagent_containers/food/drinks/shaker,
+					/obj/item/reagent_containers/food/drinks/bottle/patron,
+					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
+					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/flashlight/glowstick,
+					/obj/item/flashlight/glowstick/red,
+					/obj/item/flashlight/glowstick/blue,
+					/obj/item/flashlight/glowstick/cyan,
+					/obj/item/flashlight/glowstick/orange,
+					/obj/item/flashlight/glowstick/yellow,
+					/obj/item/flashlight/glowstick/pink)
+	crate_name = "party equipment crate"
+
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
 	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"

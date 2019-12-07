@@ -183,18 +183,6 @@
 					/obj/structure/piano/unanchored)
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/misc/cbtpack
-	name = "CBT Equipment"
-	desc = "(*!&@#CBT is a special term coined by high ranking syndicate operatives for a special form of information extraction. While the training required to use this shipment is highly classified, the distribution of it's contents are not. In addition to this crates unusual contents, we have added a bar of soap.#@*$"
-	hidden = TRUE
-	cost = 2400
-	contains = list(/mob/living/simple_animal/chicken,
-					/obj/item/toy/beach_ball/holoball,
-					/obj/item/melee/baton/cattleprod,
-					/obj/item/soap/syndie)
-	crate_name = "cbt crate"
-	crate_type = /obj/structure/closet/crate/large
-
 /datum/supply_pack/misc/casinocrate
 	name = "Casino Crate"
 	desc = "Start up your own grand casino with this crate filled with slot machine and arcade boards!"
@@ -212,6 +200,49 @@
 					/obj/item/circuitboard/computer/slot_machine,
 					/obj/item/circuitboard/computer/slot_machine)
 	crate_name = "casino crate"
+
+/datum/supply_pack/misc/candlelitdinner
+	name = "Candlelit Dinner Crate"
+	desc = "Need to organise a date night? Set up a fancy room for it with this luxurious crate filled with romance! Contains 40 tiles of classic, blue, black, and green carpeting, materials to build chairs, several boxes of candles, eight bottles of wine, two boxes of drinking glasses, ten metal rods, twenty wood, and twenty metal."
+	cost = 3200 // 200 for each wine bottle, 450 for metal/wood, 800 + 700 + 450 = 2750.
+	contains = list(/obj/item/storage/fancy/candle_box,
+				/obj/item/storage/fancy/candle_box,
+				/obj/item/storage/fancy/candle_box,
+				/obj/item/storage/fancy/candle_box,
+				/obj/item/stack/tile/carpet/twenty,
+				/obj/item/stack/tile/carpet/twenty,
+				/obj/item/stack/tile/carpet/blue/twenty,
+				/obj/item/stack/tile/carpet/blue/twenty,
+				/obj/item/stack/tile/carpet/royalblack/twenty,
+				/obj/item/stack/tile/carpet/royalblack/twenty,
+				/obj/item/stack/tile/carpet/green/twenty,
+				/obj/item/stack/tile/carpet/green/twenty,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/stack/rods/ten,
+				/obj/item/stack/sheet/metal/twenty,
+				/obj/item/stack/sheet/mineral/wood/twenty,
+				/obj/item/storage/box/drinkingglasses,
+				/obj/item/storage/box/drinkingglasses)
+	crate_name = "romance crate"
+
+/datum/supply_pack/misc/cbtpack
+	name = "CBT Equipment"
+	desc = "(*!&@#CBT is a special term coined by high ranking syndicate operatives for a special form of information extraction. While the training required to use this shipment is highly classified, the distribution of it's contents are not. In addition to this crates unusual contents, we have added a bar of soap.#@*$"
+	hidden = TRUE
+	cost = 2400
+	contains = list(/mob/living/simple_animal/chicken,
+					/obj/item/toy/beach_ball/holoball,
+					/obj/item/melee/baton/cattleprod,
+					/obj/item/soap/syndie)
+	crate_name = "cbt crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/coincrate
 	name = "Coin Crate"
@@ -255,6 +286,25 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "festive wrapping paper crate"
 
+/datum/supply_pack/misc/funeral
+	name = "Funeral Supplies"
+	desc = "Mourn your dead properly buy sending them off with love filled notes, clean clothes, and a proper ceremony. Contains two candle packs, funeral garb, flowers, a paperbin , and crayons to help aid in religious rituals. Coffin included."
+	cost = 1200
+	contains = list(/obj/item/clothing/under/burial,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/storage/crayons,
+					/obj/item/paper_bin
+					)
+	crate_name = "coffin"
+	crate_type = /obj/structure/closet/crate/coffin
+
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"
 	cost = 10000
@@ -285,25 +335,6 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
 	crate_name = "religious supplies crate"
-
-/datum/supply_pack/misc/funeral
-	name = "Funeral Supplies"
-	desc = "Mourn your dead properly buy sending them off with love filled notes, clean clothes, and a proper ceremony. Contains two candle packs, funeral garb, flowers, a paperbin , and crayons to help aid in religious rituals. Coffin included."
-	cost = 1200
-	contains = list(/obj/item/clothing/under/burial,
-					/obj/item/storage/fancy/candle_box,
-					/obj/item/storage/fancy/candle_box,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-					/obj/item/storage/crayons,
-					/obj/item/paper_bin
-					)
-	crate_name = "coffin"
-	crate_type = /obj/structure/closet/crate/coffin
 
 /datum/supply_pack/misc/shower
 	name = "Shower Supplies"
@@ -363,29 +394,6 @@
 					/obj/item/stack/tile/carpet/monochrome/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty)
 	crate_name = "premium carpet crate"
-
-/datum/supply_pack/misc/party
-	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
-	cost = 2000
-	contains = list(/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker,
-					/obj/item/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/flashlight/glowstick,
-					/obj/item/flashlight/glowstick/red,
-					/obj/item/flashlight/glowstick/blue,
-					/obj/item/flashlight/glowstick/cyan,
-					/obj/item/flashlight/glowstick/orange,
-					/obj/item/flashlight/glowstick/yellow,
-					/obj/item/flashlight/glowstick/pink)
-	crate_name = "party equipment crate"
 
 /datum/supply_pack/misc/noslipfloor
 	name = "High-traction Floor Tiles"

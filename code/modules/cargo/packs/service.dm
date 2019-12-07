@@ -28,32 +28,6 @@
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
-/datum/supply_pack/service/carpet_exotic
-	name = "Exotic Carpet Crate"
-	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 7000
-	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "exotic carpet crate"
-
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
 	desc = "Pink-haired Quartermaster not doing her job? Replace her with this tireless worker, today!"
@@ -279,21 +253,6 @@
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/service/janitor/janpremium
-	name = "Janitor Premium Supplies"
-	desc = "Do to the union for better supplies, we have desided to make a deal for you, In this crate you can get a brand new chem, Drying Angent this stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
-	cost = 1750
-	access = ACCESS_JANITOR
-	contains = list(/obj/item/caution,
-					/obj/item/caution,
-					/obj/item/caution,
-					/obj/item/reagent_containers/rag,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/spray/drying_agent)
-	crate_name = "janitor backpack crate"
-
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
 	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
@@ -313,6 +272,32 @@
 					/obj/item/stack/tile/carpet/monochrome/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty)
 	crate_name = "premium carpet crate #2"
+
+/datum/supply_pack/service/carpet_exotic
+	name = "Exotic Carpet Crate"
+	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
+	cost = 7000
+	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/blue/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/cyan/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/green/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/orange/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/purple/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblue/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/royalblack/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "exotic carpet crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vendor Refills //////////////////////////////////
