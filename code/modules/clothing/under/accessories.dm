@@ -373,6 +373,7 @@
 	icon_state = "padding"
 	item_color = "nothing"
 	armor = list("melee" = 15, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+	flags_inv = HIDEACCESSORY //hidden from indiscrete mob examines.
 
 /obj/item/clothing/accessory/kevlar
 	name = "kevlar sheets"
@@ -380,6 +381,7 @@
 	icon_state = "padding"
 	item_color = "nothing"
 	armor = list("melee" = 10, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	flags_inv = HIDEACCESSORY
 
 /obj/item/clothing/accessory/plastics
 	name = "underling plastic sheet"
@@ -387,6 +389,7 @@
 	icon_state = "plastics"
 	item_color = "nothing"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = -40)
+	flags_inv = HIDEACCESSORY
 
 /////////////////////
 //Pokadots On Pants//
