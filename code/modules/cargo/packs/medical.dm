@@ -10,6 +10,16 @@
 	group = "Medical"
 	crate_type = /obj/structure/closet/crate/medical
 
+/datum/supply_pack/medical/bodybags
+	name = "Bodybags"
+	desc = "For when the bodies hit the floor. Contains 4 boxes of bodybags."
+	cost = 1200
+	contains = list(/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,)
+	crate_name = "bodybag crate"
+
 /datum/supply_pack/medical/firstaidbruises
 	name = "Bruise Treatment Kit Crate"
 	desc = "Contains three first aid kits focused on healing bruises and broken bones."
@@ -30,9 +40,10 @@
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
-	desc = "Contains ten different blood packs for reintroducing blood to patients."
+	desc = "Contains nine different blood packs for reintroducing blood to patients, plus two universal synthetic blood packs."
 	cost = 3000
-	contains = list(/obj/item/reagent_containers/blood/random,
+	contains = list(/obj/item/reagent_containers/blood/synthetics,
+					/obj/item/reagent_containers/blood/synthetics,
 					/obj/item/reagent_containers/blood/random,
 					/obj/item/reagent_containers/blood/APlus,
 					/obj/item/reagent_containers/blood/AMinus,
@@ -73,8 +84,9 @@
 
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
-	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers."
+	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers. Requires medical access to open."
 	cost = 2750
+	access = ACCESS_MEDICAL
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
@@ -151,7 +163,7 @@
 
 /datum/supply_pack/medical/advrad
 	name = "Radiation Treatment Crate Deluxe"
-	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pill bottle, as well as a radiation treatment deluxe pill bottle!"
+	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pills, as well as a radiation treatment deluxe pill bottle!"
 	cost = 3500
 	contains = list(/obj/item/storage/pill_bottle/antirad_plus,
 					/obj/item/storage/pill_bottle/mutarad,
@@ -215,3 +227,23 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+
+/datum/supply_pack/medical/anitvirus
+	name = "Virus Containment Crate"
+	desc = "Viro let out a death plague Mk II again? Someone didnt wash their hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it breaks out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
+	cost = 3000
+	access = ACCESS_MEDICAL
+	contains = list(/mob/living/simple_animal/bot/medbot,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/storage/box/syringes,
+					/obj/item/storage/box/beakers)
+	crate_name = "virus containment unit crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma

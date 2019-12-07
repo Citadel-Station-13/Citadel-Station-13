@@ -148,8 +148,8 @@
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
+	. = ..()
+	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -182,7 +182,7 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", 2)
+		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
 		playsound(src, "gun_dry_fire", 30, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
@@ -204,8 +204,8 @@
 	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+	. = ..()
+	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy swords
@@ -373,8 +373,8 @@
 		return ..()
 
 /obj/item/toy/sword/cx/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /*
  * Foam armblade
@@ -864,10 +864,9 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
-	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || usr.incapacitated() || usr.lying)
-		return
+		return ..()
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
 			M.put_in_hands(src)
@@ -879,7 +878,9 @@
 				to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
 	else
-		to_chat(usr, "<span class='warning'>You can't reach it from here!</span>")
+		. = ..()
+		if(!.)
+			to_chat(usr, "<span class='warning'>You can't reach it from here!</span>")
 
 
 
@@ -994,8 +995,7 @@
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
-
+			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 /obj/item/toy/cards/singlecard/verb/Flip()
 	set name = "Flip Card"
@@ -1221,8 +1221,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+	. = ..()
+	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]"
 
 /*
  * Toy Dagger

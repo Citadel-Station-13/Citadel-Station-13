@@ -65,7 +65,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", 1)
+		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", MSG_VISUAL)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	. = ..()
@@ -958,14 +958,7 @@
 /obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/energy_overlay
-		if(taurmode == SNEK_TAURIC)
-			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
-		else if(taurmode == PAW_TAURIC)
-			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
-		else
-			energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
-
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
 		energy_overlay.plane = ABOVE_LIGHTING_LAYER
 		energy_overlay.color = energy_color
 		. += energy_overlay
@@ -995,5 +988,5 @@
 			update_light()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"

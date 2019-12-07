@@ -2299,10 +2299,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.shirt_color = shirt_color
 	character.socks_color = socks_color
 
-
-	character.backbag = backbag
-	character.jumpsuit_style = jumpsuit_style
-
 	var/datum/species/chosen_species
 	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))
 		chosen_species = pref_species.type

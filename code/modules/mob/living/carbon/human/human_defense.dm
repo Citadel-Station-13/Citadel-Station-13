@@ -339,8 +339,10 @@
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
-
 	if(M.occupant.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
+			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -659,6 +661,12 @@
 
 	if(health >= 0)
 		if(src == M)
+			if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+				to_chat(src, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+				if(do_after(src, 35, null, src))
+					to_chat(src, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+					remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+				return
 			var/to_send = ""
 			visible_message("[src] examines [p_them()]self.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
