@@ -207,7 +207,6 @@
 	tastes = list("cobwebs" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
-
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath
 	name = "goliath meat"
 	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
@@ -255,7 +254,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1, "cooking_oil" = 2)
 	filling_color = "#854817"
 	tastes = list("bacon" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/meat/slab/gondola
 	name = "gondola meat"

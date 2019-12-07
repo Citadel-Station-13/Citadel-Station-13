@@ -908,3 +908,20 @@
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
 	M.adjustArousalLoss(5)
 	..()
+
+/datum/reagent/consumable/monkey_energy
+	name = "Monkey Energy"
+	description = "The only drink that will make you unleash the ape."
+	color = "#f39b03" // rgb: 243, 155, 3
+	taste_description = "barbecue and nostalgia"
+	glass_icon_state = "monkey_energy_glass"
+	glass_name = "glass of Monkey Energy"
+	glass_desc = "You can unleash the ape, but without the pop of the can?"
+
+/datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
