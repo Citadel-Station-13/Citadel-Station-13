@@ -499,7 +499,7 @@
 		C.stuttering = max(5, C.stuttering)
 	if(!old_health)
 		old_health = owner.health
-	if(!old_oxydam)
+	if(!old_oxyloss)
 		old_oxyloss = owner.getOxyLoss()
 	var/health_difference = old_health - owner.health - CLAMP(owner.getOxyLoss() - old_oxyloss,0, owner.getOxyLoss())
 	if(!health_difference)
