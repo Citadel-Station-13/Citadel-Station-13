@@ -28,7 +28,7 @@
 
 /obj/item/clothing/mask/proc/handle_speech()
 
-/obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/mask/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)

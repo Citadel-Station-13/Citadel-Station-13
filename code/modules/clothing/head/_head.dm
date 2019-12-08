@@ -48,7 +48,7 @@
 
 
 
-/obj/item/clothing/head/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)

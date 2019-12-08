@@ -556,7 +556,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file)
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")

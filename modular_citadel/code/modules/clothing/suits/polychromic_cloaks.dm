@@ -13,7 +13,7 @@
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#808080"
 
-/obj/item/clothing/neck/cloak/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
+/obj/item/clothing/neck/cloak/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them

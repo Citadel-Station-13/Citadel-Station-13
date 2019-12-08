@@ -16,7 +16,7 @@
 	var/mutable_appearance/accessory_overlay
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/under/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
