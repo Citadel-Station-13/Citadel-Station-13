@@ -93,6 +93,7 @@
 	var/list/all_eyes = list()
 	var/max_multicams = 6
 	var/display_icon_override
+	var/emote_display = "Neutral" //text string of the current emote we set for the status displays, to prevent logins resetting it.
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -175,13 +176,13 @@
 	fire_stacks = 0
 	. = ..()
 
-/mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
+/mob/living/silicon/ai/proc/set_core_display_icon(client/C)
 	if(client && !C)
 		C = client
-	if(!input && !C?.prefs?.preferred_ai_core_display)
-		icon_state = initial(icon_state)
+	if(!(C?.prefs?.preferred_ai_core_display))
+		icon_state = display_icon_override || initial(icon_state)
 	else
-		var/preferred_icon = input ? input : C.prefs.preferred_ai_core_display
+		var/preferred_icon = display_icon_override || C.prefs.preferred_ai_core_display
 		icon_state = resolve_ai_icon(preferred_icon)
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -202,7 +203,7 @@
 	if(!ai_core_icon || incapacitated())
 		return
 	display_icon_override = ai_core_icon
-	set_core_display_icon(ai_core_icon)
+	set_core_display_icon()
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -599,12 +600,12 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	emote_display = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
-		M.emotion = emote
+		M.emotion = emote_display
 		M.update()
-	if (emote == "Friend Computer")
+	if (emote_display == "Friend Computer")
 		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 		if(!frequency)
@@ -826,7 +827,7 @@
 
 	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
 
-	show_message(rendered, 2)
+	show_message(rendered, MSG_AUDIBLE)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
 	..()
@@ -886,7 +887,7 @@
 	. = ..()
 	if(.) //successfully ressuscitated from death
 		set_eyeobj_visible(TRUE)
-		set_core_display_icon(display_icon_override)
+		set_core_display_icon()
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
