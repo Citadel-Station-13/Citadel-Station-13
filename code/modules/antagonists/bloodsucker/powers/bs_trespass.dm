@@ -101,7 +101,7 @@
 
 	// Move & Freeze
 	if (isturf(target_turf))
-		do_teleport(owner, target_turf, no_effects=TRUE) // in teleport.dm?
+		do_teleport(owner, target_turf, no_effects=TRUE, forced = TRUE) // in teleport.dm?
 	user.next_move = world.time + mist_delay / 2
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)
 

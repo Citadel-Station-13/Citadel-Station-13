@@ -20,9 +20,13 @@
 	if(!.)
 		return
 	// Being Grabbed
-	if (owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
-		if (display_error)
+	if(owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You're being grabbed!</span>")
+		return FALSE
+	if(!owner.has_gravity(owner.loc)) //We dont want people to be able to use this to fly around in space
+		if(display_error)
+			to_chat(owner, "<span class='warning'>You cant dash while floating!</span>")
 		return FALSE
 	return TRUE
 
@@ -67,9 +71,6 @@
 				if (rand(0, 5) < level_current)
 					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 					newtarget.Knockdown(10 + level_current * 5)
-					newtarget.adjustStaminaLoss(10 + 5 * level_current)
-				newtarget.Stun(5 + level_current * 2)
-				newtarget.adjustStaminaLoss(5 + 3 * level_current)
 				if(newtarget.IsStun())
 					newtarget.spin(10,1)
 					if (rand(0,4))

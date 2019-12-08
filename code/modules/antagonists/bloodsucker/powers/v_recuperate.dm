@@ -33,7 +33,7 @@
 		C.heal_overall_damage(bruteheal)
 		C.blood_volume -= 0.6
 		if (C.getStaminaLoss() < 60)
-			C.adjustStaminaLoss(25, forced = TRUE)
+			C.adjustStaminaLoss(10, forced = TRUE)
 		// Stop Bleeding
 		if (istype(H) && H.bleed_rate > 0 && rand(20) == 0)
 			H.bleed_rate --
@@ -41,7 +41,7 @@
 		C.Jitter(5)
 
 
-		sleep(20)
+		sleep(10)
 
 	// DONE!
 	//DeactivatePower(owner)

@@ -73,56 +73,6 @@
 	// Blood Gulp Sound
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
-/datum/mood_event/drankblood
-	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
-	mood_change = 10
-	timeout = 900
-
-/datum/mood_event/drankblood_bad
-	description = "<span class='boldwarning'>I drank the blood of a lesser creature. Disgusting.</span>\n"
-	mood_change = -4
-	timeout = 900
-
-/datum/mood_event/drankblood_dead
-	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
-	mood_change = -7
-	timeout = 900
-
-/datum/mood_event/drankblood_synth
-	description = "<span class='boldwarning'>I drank synthetic blood. What is wrong with me?</span>\n"
-	mood_change = -7
-	timeout = 900
-
-/datum/mood_event/drankkilled
-	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
-	mood_change = -12
-	timeout = 6000
-
-/datum/mood_event/madevamp
-	description = "<span class='boldwarning'>A soul has been cursed to undeath by my own hand.</span>\n"
-	mood_change = -10
-	timeout = 10000
-
-/datum/mood_event/vampatefood
-	description = "<span class='boldwarning'>Mortal nourishment no longer sustains me. I feel unwell.</span>\n"
-	mood_change = -6
-	timeout = 1000
-
-/datum/mood_event/coffinsleep
-	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
-	mood_change = 8
-	timeout = 1200
-
-/datum/mood_event/daylight_1
-	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
-	mood_change = -3
-	timeout = 1000
-
-/datum/mood_event/daylight_2
-	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
-	mood_change = -6
-	timeout = 1200
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //			HEALING
@@ -138,10 +88,10 @@
 	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
-	if (ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
+	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
 		H.bleed_rate = 0
-	if (iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
+	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
 		var/fireheal = 0 	// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
@@ -150,9 +100,10 @@
 			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
 			fireheal = min(C.getFireLoss_nonProsthetic(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
-			C.ExtinguishMob() 	// Extinguish Fire
+			C.ExtinguishMob()
+			CureDisabilities() 	// Extinguish Fire
 		else
-			if (owner.current.blood_volume <= 0) // No Blood? Lower Mult
+			if(owner.current.blood_volume <= 0) // No Blood? Lower Mult
 				mult = 0.25
 			// Crit from burn? Lower damage to maximum allowed.
 			//if (C.getFireLoss() > owner.current.getMaxHealth())
@@ -161,8 +112,8 @@
 		var/bruteheal = min(C.getBruteLoss_nonProsthetic(), regenRate)
 		var/toxinheal = min(C.getToxLoss(), regenRate)
 		// Heal if Damaged
-		if (bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
-			if (mult == 0)
+		if(bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
+			if(mult == 0)
 				return TRUE
 			// We have damage. Let's heal (one time)
 			C.adjustBruteLoss(-bruteheal * mult, forced=TRUE)// Heal BRUTE / BURN in random portions throughout the body.
@@ -171,7 +122,7 @@
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
-		if (amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
+		if(amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
 			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
 			if (missing.len) 	// Cycle through ALL limbs and regen them!
 				for (var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
@@ -193,7 +144,6 @@
 						return TRUE
 						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.
 			*/
-			CureDisabilities() 	// Cure Final Disabilities
 			C.remove_all_embedded_objects() // Remove Embedded!
 			owner.current.regenerate_organs() // Heal Organs (will respawn original eyes etc. but we replace right away, next)
 			CheckVampOrgans() // Heart, Eyes
@@ -328,7 +278,7 @@
 	var/mob/living/carbon/C = owner.current
 	C.remove_all_embedded_objects()
 	// Make me UN-CLONEABLE
-	owner.current.hellbound = TRUE // This was done during creation, but let's do it again one more time...to make SURE this guy stays dead.
+	owner.current.hellbound = TRUE // This was done during creation, but let's do it again one more time...to make SURE this guy stays dead, but they dont stay dead because brains can be cloned!
 	// Free my Vassals!
 	FreeAllVassals()
 	// Elders get Dusted
@@ -342,7 +292,7 @@
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
-		owner.current.gib()
+		owner.current.gib(TRUE, FALSE, FALSE)//Brain cloning is wierd and allows hellbounds. Lets destroy the brain for safety.
 	playsound(owner.current.loc, 'sound/effects/tendril_destroyed.ogg', 40, 1)
 
 

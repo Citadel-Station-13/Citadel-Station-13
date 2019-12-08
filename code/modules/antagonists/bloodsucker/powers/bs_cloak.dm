@@ -11,9 +11,6 @@
 	warn_constant_cost = TRUE
 
 	var/light_min = 0.5 	// If lum is above this, no good.
-	var/remember_start_loc	// Where this power was activated, so it can be checked from ContinueActive
-	// Level Up
-	var/upgrade_canMove = FALSE	// Can I move around with this power?
 
 /datum/action/bloodsucker/cloak/CheckCanUse(display_error)
 	. = ..()
@@ -30,19 +27,11 @@
 
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
-	remember_start_loc = user.loc
-
-	// Freeze in Place (so you don't auto-cancel)
-//user.mobility_flags &= ~MOBILITY_MOVE
 	while (bloodsuckerdatum && ContinueActive(user))
-
-		//if (!do_mob(user, user, 10, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
-		//	return
-
 		// Fade from sight
 		owner.alpha = max(0, owner.alpha - min(75, 20 + 15 * level_current))
 		bloodsuckerdatum.AddBloodVolume(-0.2)
-
+		ADD_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 		sleep(5)
 
 /datum/action/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
@@ -52,12 +41,8 @@
 	if(user.stat == !CONSCIOUS)
 		to_chat(owner, "<span class='warning'>Your cloak failed due to you falling unconcious! </span>")
 		return FALSE
-	// Must be SAME LOCATION
-	var/turf/T = owner.loc
-	if (!upgrade_canMove && T != remember_start_loc)
-		to_chat(owner, "<span class='warning'>Your cloak is not yet powerfull enough to allow you to move!</span>")
-		return FALSE
 	// Must be DARK
+	var/turf/T = owner.loc
 	if(istype(T) && T.get_lumcount() > light_min)
 		to_chat(owner, "<span class='warning'>Your cloak failed due to there being too much light!</span>")
 		return FALSE
@@ -66,4 +51,5 @@
 
 /datum/action/bloodsucker/cloak/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..()
+	REMOVE_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 	user.alpha = 255

@@ -36,7 +36,7 @@
 
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_NOCLONE)
 	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
 	// REMOVED: TRAIT_NODEATH
 	// TO ADD:
@@ -187,6 +187,8 @@
 	// Traits
 	for (var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, "bloodsucker")
+	if(HAS_TRAIT(owner.current, TRAIT_TOXINLOVER)) //No slime bonuses here, no thank you
+		REMOVE_TRAIT(owner.current, TRAIT_TOXINLOVER, "species")
 	// Traits: Species
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -233,14 +235,14 @@
 		power.Remove(owner.current)
 		// owner.RemoveSpell(power)
 	// Traits
-	for (var/T in defaultTraits)
+	for(var/T in defaultTraits)
 		REMOVE_TRAIT(owner.current, T, "bloodsucker")
 	// Traits: Species
-	if (ishuman(owner.current))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(H.dna.species.type)
 	// Stats
-	if (ishuman(owner.current))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(H.dna.species.type)
 		// Clown
@@ -260,15 +262,15 @@
 
 datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE
-	if (!owner || !owner.current)
+	if(!owner || !owner.current)
 		return
 	vamplevel_unspent ++
 	// Spend Rank Immediately?
-	if (istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+	if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 		SpendRank()
 	else
 		to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
-		if (vamplevel_unspent >= 2)
+		if(vamplevel_unspent >= 2)
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
 
 datum/antagonist/bloodsucker/proc/LevelUpPowers()
@@ -287,19 +289,19 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	for(var/pickedpower in typesof(/datum/action/bloodsucker))
 		var/datum/action/bloodsucker/power = pickedpower
 		// If I don't own it, and I'm allowed to buy it.
-		if (!(locate(power) in powers) && initial(power.bloodsucker_can_buy))
+		if(!(locate(power) in powers) && initial(power.bloodsucker_can_buy))
 			options[initial(power.name)] = power // TESTING: After working with TGUI, it seems you can use initial() to view the variables inside a path?
 	options["\[ Not Now \]"] = null
 	// Abort?
-	if (options.len > 1)
+	if(options.len > 1)
 		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
 		// Cheat-Safety: Can't keep opening/closing coffin to spam levels
-		if (vamplevel_unspent <= 0) // Already spent all your points, and tried opening/closing your coffin, pal.
+		if(vamplevel_unspent <= 0) // Already spent all your points, and tried opening/closing your coffin, pal.
 			return
-		if (!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+		if(!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			to_chat(owner.current, "<span class='warning'>Return to your coffin to advance your Rank.</span>")
 			return
-		if (!choice || !options[choice] || (locate(options[choice]) in powers)) // ADDED: Check to see if you already have this power, due to window stacking.
+		if(!choice || !options[choice] || (locate(options[choice]) in powers)) // ADDED: Check to see if you already have this power, due to window stacking.
 			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
 			return
 		// Buy New Powers
@@ -313,7 +315,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	LevelUpPowers()
 	////////
 	// Advance Stats
-	if (ishuman(owner.current))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		S.burnmod += 0.025 			// Slightly more burn damage
@@ -331,7 +333,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	vamplevel_unspent --
 
 	// Assign True Reputation
-	if (vamplevel == 4)
+	if(vamplevel == 4)
 		SelectReputation(am_fledgling=FALSE, forced=TRUE)
 	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
@@ -485,7 +487,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 //			- Warms up the body
 //			- Creates a heartbeat
 //			- Fake blood amount (550)
-//		Feign DEATH:
+//		Feign DEATH: Not yet done
 //			- When lying down or sitting, you appear "dead and lifeless"
 
 //	* Bloodsuckers REGENERATE

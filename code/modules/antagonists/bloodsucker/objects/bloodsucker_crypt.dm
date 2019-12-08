@@ -109,30 +109,10 @@
 	var/disloyalty_offered = FALSE	// Has the popup been issued? Don't spam them.
 	var/convert_cost = 10
 
-//obj/structure/kitchenspike/vassalrack/crowbar_act()
-//	// Do Nothing (Cancel crowbar deconstruct)
-//	return FALSE
-
 /obj/structure/bloodsucker/vassalrack/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal(src.loc, 4)
 	new /obj/item/stack/rods(loc, 4)
 	qdel(src)
-
-/*
-			/obj/structure/closet/CtrlShiftClick(mob/living/user)
-				if(!user.has_trait(TRAIT_SKITTISH))
-					return ..()
-				if(!user.canUseTopic(src) || !isturf(user.loc))
-					return
-				dive_into(user)
-*/
-
-
-
-//					adding a STRAP on top of an icon:   look at update_icon in closets.dm, and the use of overlays.dm cut_overlay() and add_overlay()
-
-
-
 
 /obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/O, mob/user)
 	if (!O.Adjacent(src) || O == user || !isliving(O) || !isliving(user) || useLock || has_buckled_mobs() || user.incapacitated())
@@ -140,7 +120,6 @@
 	if (!anchored && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		to_chat(user, "<span class='danger'>Until this rack is secured in place, it cannot serve its purpose.</span>")
 		return
-
 	// PULL TARGET: Remember if I was pullin this guy, so we can restore this
 	var/waspulling = (O == owner.pulling)
 	var/wasgrabstate = owner.grab_state
@@ -463,7 +442,7 @@
 ///obj/structure/bloodsucker/candelabrum/is_hot() // candle.dm
 	//return FALSE
 
-/datum/component/nanites/Destroy()
+/obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bloodsucker/candelabrum/update_icon()

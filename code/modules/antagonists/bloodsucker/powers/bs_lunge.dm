@@ -17,9 +17,13 @@
 	if(!..(display_error))// DEFAULT CHECKS
 		return FALSE
 	// Being Grabbed
-	if (owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
-		if (display_error)
+	if(owner.pulledby && owner.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You're being grabbed!</span>")
+		return FALSE
+	if(!owner.has_gravity(owner.loc))//TODO figure out how to check if theyre able to move while in nograv
+		if(display_error)
+			to_chat(owner, "<span class='warning'>You cant lunge while floating!</span>")
 		return FALSE
 	return TRUE
 
@@ -28,7 +32,7 @@
 
 /datum/action/bloodsucker/targeted/lunge/CheckCanTarget(atom/A, display_error)
 	// Check: Self
-	if (target == owner)
+	if(target == owner)
 		return FALSE
 	// Check: Range
 	//if (!(target in view(target_range, get_turf(owner))))
@@ -36,11 +40,11 @@
 	//		to_chat(owner, "<span class='warning'>Your victim is too far away.</span>")
 	//	return FALSE
 	// DEFAULT CHECKS (Distance)
-	if (!..())
+	if(!..())
 		return FALSE
 	// Check: Turf
 	var/mob/living/L = A
-	if (!isturf(L.loc))
+	if(!isturf(L.loc))
 		return FALSE
 	return TRUE
 
@@ -56,6 +60,7 @@
 	// Step One: Heatseek toward Target's Turf
 
 	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
+	addtimer(CALLBACK(owner, .proc/_walk, 0), 2 SECONDS)
 	if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && owner.resting)
 		var/send_dir = get_dir(owner, T)
 		new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
@@ -64,7 +69,7 @@
 	sleep(1)
 	if(target.Adjacent(owner))
 		// LEVEL 2: If behind target, mute or unconscious!
-		if (do_knockdown) // && level_current >= 1)
+		if(do_knockdown) // && level_current >= 1)
 			target.Knockdown(15 + 10 * level_current,1)
 			target.adjustStaminaLoss(40 + 10 * level_current)
 		// Cancel Walk (we were close enough to contact them)
