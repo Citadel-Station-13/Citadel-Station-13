@@ -59,9 +59,9 @@
 	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat and get people back in the fight."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
-	volume = 90
+	volume = 100
 	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("epinephrine" = 30, "lesser_syndicate_nanites" = 30, "leporazine" = 15, "atropine" = 15)
+	list_reagents = list("epinephrine" = 30, "lesser_syndicate_nanites" = 40, "leporazine" = 15, "atropine" = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
@@ -135,7 +135,7 @@
 	list_reagents = list("stimulants" = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
-	name = "the reason the syndicate major league team wins."
+	name = "the reason the syndicate major league team wins"
 	desc = "They say drugs never win, but look where you are now, then where they are."
 	icon_state = "baseballstim"
 	volume = 50
