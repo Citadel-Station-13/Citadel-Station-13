@@ -74,8 +74,8 @@
 			t += "<A href='?src=[REF(src)];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-right
 			t += "<BR>"
 			t += "<div class='statusDisplay'>Current offset:</div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"] <a href='?src=[REF(src)];sety=1'>\[SET\]</a></div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"] <a href='?src=[REF(src)];setx=1'>\[SET\]</a></div><BR>"
+			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"] <a href='?src=[REF(src)];sety=1;pad=[current_pad]'>\[SET\]</a></div><BR>"
+			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"] <a href='?src=[REF(src)];setx=1;pad=[current_pad]'>\[SET\]</a></div><BR>"
 
 			t += "<BR><A href='?src=[REF(src)];launch=1;pad=[current_pad]'>Launch</A>"
 			t += " <A href='?src=[REF(src)];pull=1;pad=[current_pad]'>Pull</A>"
