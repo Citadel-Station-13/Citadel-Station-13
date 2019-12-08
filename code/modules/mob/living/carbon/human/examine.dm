@@ -113,7 +113,7 @@
 				. += "[dicc.desc]"
 
 	var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
-	if(!isnull(cursed_stuff))
+	if(cursed_stuff)
 		. += cursed_stuff
 //END OF CIT CHANGES
 
@@ -169,7 +169,7 @@
 	var/r_limbs_missing = 0
 	for(var/t in missing)
 		if(t==BODY_ZONE_HEAD)
-			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
+			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
 		if(t == BODY_ZONE_L_ARM || t == BODY_ZONE_L_LEG)
 			l_limbs_missing++
@@ -272,11 +272,10 @@
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
 	if(reagents.has_reagent("astral"))
-		msg += "[t_He] has wild, spacey eyes"
 		if(mind)
-			msg += " and they have a strange, abnormal look to them.\n"
+			msg += "[t_He] has wild, spacey eyes and they have a strange, abnormal look to them.\n"
 		else
-			msg += " and they don't look like they're all there.\n"
+			msg += "[t_He] has wild, spacey eyes and they don't look like they're all there.\n"
 
 	if(isliving(user))
 		var/mob/living/L = user
@@ -287,7 +286,7 @@
 				msg += "[t_He] seem[p_s()] winded.\n"
 			if (getToxLoss() >= 10)
 				msg += "[t_He] seem[p_s()] sickly.\n"
-			var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+			var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 			if(mood.sanity <= SANITY_DISTURBED)
 				msg += "[t_He] seem[p_s()] distressed.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
@@ -298,8 +297,6 @@
 				msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 			if (HAS_TRAIT(src, TRAIT_DEAF))
 				msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
-
-	msg += "</span>"
 
 	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
@@ -360,7 +357,7 @@
 					if(R)
 						. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a>"
 					if(traitstring)
-						. += "<span class='info'>Detected physiological traits:\n[traitstring]"
+						. += "<span class='info'>Detected physiological traits:\n[traitstring]</span>"
 
 
 

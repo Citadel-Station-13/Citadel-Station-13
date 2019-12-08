@@ -36,12 +36,11 @@
 	RefreshParts()
 	add_inital_chems()
 
-/obj/machinery/sleeper/Destroy()
-	var/obj/item/reagent_containers/sleeper_buffer/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
+/obj/machinery/sleeper/on_deconstruction()
+	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
 	buffer.volume = reagents.maximum_volume
 	buffer.reagents.maximum_volume = reagents.maximum_volume
 	reagents.trans_to(buffer.reagents, reagents.total_volume)
-	..()
 
 /obj/machinery/sleeper/proc/add_inital_chems()
 	for(var/i in available_chems)
