@@ -82,12 +82,12 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, but does not heal wounds."
+	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, heals minor wounds."
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	var/stop_bleeding = 1800
-	var/heal_brute = 25
+	var/heal_brute = 5
 	self_delay = 10
 	max_amount = 12
 
