@@ -477,7 +477,8 @@
 			var/datum/antagonist/bloodsucker/V = H.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 			if(V || T) //We dont want vassals or vampires affected by this
 				return
-			H.hallucination = 5
+			H.hallucination = 20
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood
+/obj/item/restraints/legcuffs/beartrap/bloodsucker

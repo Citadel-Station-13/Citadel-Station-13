@@ -39,7 +39,7 @@
 	// NOTE: We use . = FALSE so that we can break cuffs AND throw off our attacker in one use!
 	//return TRUE
 /datum/action/bloodsucker/targeted/brawn/CheckValidTarget(atom/A)
-	return isliving(A) || istype(A, /obj/machinery/door))
+	return isliving(A) || istype(A, /obj/machinery/door)
 
 /datum/action/bloodsucker/targeted/brawn/CheckCanTarget(atom/A, display_error)
 	// DEFAULT CHECKS (Distance)
