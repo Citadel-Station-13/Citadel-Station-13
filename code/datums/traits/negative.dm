@@ -2,18 +2,35 @@
 
 /datum/quirk/blooddeficiency
 	name = "Acute Blood Deficiency"
-	desc = "Your body can't produce enough blood to sustain itself."
-	value = -2
-	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
+	desc = "Your body can't produce enough blood to sustain itself.Will eventually result in death if not treated."
+	value = -3
+	gain_text = "<span class='danger'>You feel your vigor quickly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
-	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
+	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood. Lack of treatment will result in death."
 
 /datum/quirk/blooddeficiency/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
-		quirk_holder.blood_volume -= 0.275
+		if(quirk_holder.blood_volume > 336) //60% blood volume, eventually lethal
+			quirk_holder.blood_volume -= 0.275
+
+/datum/quirk/anemia
+	name = "Anemia"
+	desc = "Your body can barely produce enough blood to sustain itself. Will result in fatigue and fainting spells if not treated."
+	value = -1
+	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
+	lose_text = "<span class='notice'>You feel vigorous again.</span>"
+	medical_record_text = "Patient requires occasional treatment for blood loss due to low production of blood."
+
+/datum/quirk/anemia/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+		return
+	else
+		if(quirk_holder.blood_volume > 420) //blaze it 75%% blood volume, not lethal just annoying
+			quirk_holder.blood_volume -= 0.275
 
 /datum/quirk/depression
 	name = "Depression"
