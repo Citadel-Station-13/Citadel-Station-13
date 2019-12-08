@@ -867,8 +867,9 @@
 			return
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
 		else if(user != target)
-			fireman_carry(target)
-			return
+			if(user.a_intent = INTENT_HELP)
+				fireman_carry(target)
+				return
 	. = ..()
 
 //src is the user that will be carrying, target is the mob to be carried
