@@ -87,6 +87,7 @@
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	var/stop_bleeding = 1800
+	var/heal_brute = 25
 	self_delay = 10
 	max_amount = 12
 
