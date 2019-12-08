@@ -709,3 +709,11 @@
 	id = "royalbluecarpet"
 	results = list("royalbluecarpet" = 2)
 	required_reagents = list("carpet" = 1, "clonexadone" = 1)
+
+/datum/chemical_reaction/ice
+	name = "Ice"
+	id = "ice"
+	results = list("ice" = 1)
+	required_reagents = list("water" = 1)
+	is_cold_recipe = TRUE
+	required_temp = 250

@@ -23,8 +23,8 @@
 	if(!L)//Though, lets be safe
 		L = C.getorganslot(ORGAN_SLOT_LIVER)
 		C.adjustToxLoss(5, TRUE)//Incase of no liver!
-		return
-	L.adjustMetabolicStress(metastress)
+		return ..()
+	L.adjustMetabolicStress(metastress, absolute = TRUE) //causes stress on slimes AND humans
 	..()
 
 /datum/reagent/impure/fermiTox
@@ -193,3 +193,32 @@
 
 /datum/reagent/impure/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
 	hearing_args[HEARING_SPANS] += "small"
+
+/datum/reagent/impure/cyrosenium
+	name = "cyrogelidia"
+	id = "cyrosenium_impure"
+	description = "Freezes the patient in an incuded cyrostasis where they won't take damage or heal. Useful for patients in critical condition so you can grab a cup of tea."
+	reagent_state = LIQUID
+	color = "#03dbfc"
+	metastress = 0
+	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
+	pH = 1
+	chem_temp = 1
+	chemical_flags = REAGENT_DEAD_PROCESS
+	metabolization_rate = 1
+
+/datum/reagent/impure/cyrosenium/on_mob_add(mob/living/carbon/M, amount)
+	M.apply_status_effect(/datum/status_effect/frozenstasis)
+	..()
+
+/datum/reagent/impure/cyrosenium/on_mob_delete(mob/living/carbon/M, amount)
+	M.remove_status_effect(/datum/status_effect/frozenstasis)
+	..()
+
+ //incase
+ /* possibly unneeded
+/datum/reagent/impure/cyrosenium/on_mob_dead(mob/living/carbon/M)
+	if(volume =< 0)
+		M.remove_status_effect(/datum/status_effect/frozenstasis)
+	..()
+*/

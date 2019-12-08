@@ -38,9 +38,10 @@
 
 				{{#if name == "LIVER"}}
 					<ui-section label=Stress>
-					<ui-bar min=0 max=100 value='{{isText(data.occupant.metabolicStress) ? 100 : data.occupant.metabolicStress}}'
+					<ui-bar min='{{data.occupant.metabolicStressMin}}' max='{{data.occupant.metabolicStressMax}}' value='{{data.occupant.metabolicStressVar}}'
 					  state='{{data.occupant.metabolicColour}}'>{{data.occupant.metabolicStress}}</ui-bar>
 					  </ui-section>
+
 					{{#if data.occupant.swelling}}
 						<span class='bad'>Hepatomegaly detected</span>
 					{{/if}}

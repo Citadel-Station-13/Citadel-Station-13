@@ -57,7 +57,7 @@
 /obj/machinery/MRS/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
-		occupant.visible_message("<span class='boldnotice'>As you enter the machine you feel a strange sensation of increased gravity.</span>", "[occupant] enters into the [src], the glass screen decending with a hiss as the machines whirr up. A scan button glows brightly green on the nearby monitor.")
+		occupant.visible_message("[occupant] enters into the [src], the glass screen decending with a hiss as the machines whirr up. A scan button glows brightly green on the nearby monitor.", "<span class='boldnotice'>As you enter the machine you feel a strange sensation of increased gravity.</span>")
 	update_icon()
 
 /obj/machinery/MRS/proc/scan()
@@ -245,22 +245,62 @@
 				//Liver
 				if(istype(Or, /obj/item/organ/liver))
 					var/obj/item/organ/liver/L = Or
+					var/slimeLiver = FALSE
+					if(istype(L, /obj/item/organ/liver/slime))
+						slimeLiver = TRUE
 					switch(L.metabolic_stress)
-						if(-INFINITY to -10)
-							data["occupant"]["metabolicColour"] = "normal"
-							data["occupant"]["metabolicStress"] = "Chronic liver treatment"
+						if(-INFINITY to -95)
+							if(slimeLiver)
+								data["occupant"]["metabolicColour"] = "basic"
+								data["occupant"]["metabolicStressMax"] = -100
+								data["occupant"]["metabolicStress"] = "End Stage liver treatment [round(L.metabolic_stress, 0.1)]%"
+								data["occupant"]["metabolicStressMin"] = 0
+								data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
+						if(-95 to -25)
+							data["occupant"]["metabolicColour"] = "basic"
+							if(slimeLiver)
+								data["occupant"]["metabolicStressMax"] = -100
+								data["occupant"]["metabolicStress"] = "Chronic liver treatment [round(L.metabolic_stress, 0.1)]%"
+							else //Shouldn't get here, but just in case
+								data["occupant"]["metabolicStressMax"] = -15
+								data["occupant"]["metabolicStress"] = "Chronic liver treatment [round(L.metabolic_stress, 0.1)]%"
+							data["occupant"]["metabolicStressMin"] = 0
+							data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
+						if(-25 to -10)
+							if(slimeLiver)
+								data["occupant"]["metabolicColour"] = "basic"
+								data["occupant"]["metabolicStressMax"] = -100
+								data["occupant"]["metabolicStress"] = "Acute liver treatment [round(L.metabolic_stress, 0.1)]%"
+							else
+								data["occupant"]["metabolicColour"] = "highlight"
+								data["occupant"]["metabolicStressMax"] = -15
+								data["occupant"]["metabolicStress"] = "Chronic liver treatment [round(L.metabolic_stress, 0.1)]%"
+							data["occupant"]["metabolicStressMin"] = 0
+							data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
 						if(-10 to -0.5)
+							data["occupant"]["metabolicStressMax"] = 105
+							data["occupant"]["metabolicStressMin"] = 0
 							data["occupant"]["metabolicColour"] = "highlight"
-							data["occupant"]["metabolicStress"] = "Acute liver treatment"
+							data["occupant"]["metabolicStress"] = "Acute liver treatment [round(L.metabolic_stress, 0.1)]%"
+							data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
 						if(-0.5 to 15)
 							data["occupant"]["metabolicColour"] = "good"
-							data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+							data["occupant"]["metabolicStress"] = "[round(L.metabolic_stress, 0.1)]%"
+							data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
+							data["occupant"]["metabolicStressMax"] = 105
+							data["occupant"]["metabolicStressMin"] = 0
 						if(15 to 25)
 							data["occupant"]["metabolicColour"] = "average"
-							data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+							data["occupant"]["metabolicStress"] = "[round(L.metabolic_stress, 0.1)]%"
+							data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
+							data["occupant"]["metabolicStressMax"] = 105
+							data["occupant"]["metabolicStressMin"] = 0
 						if(25 to INFINITY)
 							data["occupant"]["metabolicColour"] = "bad"
-							data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+							data["occupant"]["metabolicStress"] = "[round(L.metabolic_stress, 0.1)]%"
+							data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
+							data["occupant"]["metabolicStressMax"] = 105
+							data["occupant"]["metabolicStressMin"] = 0
 					if(L.swelling > 10)
 						data["occupant"]["swelling"] = TRUE
 					continue

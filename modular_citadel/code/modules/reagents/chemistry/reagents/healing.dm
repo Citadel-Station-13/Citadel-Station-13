@@ -265,3 +265,14 @@
 	else if(C.reagents.pH < 6.5)
 		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
+
+/datum/reagent/medicine/cyrosenium
+	name = "Cyrosenium"
+	id = "cyrosenium"
+	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	chemical_flags = REAGENT_DEAD_PROCESS
+	purity = 1//for syringe
+	impure_chem 		= "cyrosenium_impure"
+	inverse_chem_val 	= 0.45
+
+//Pauses decay! Does do something, I promise.

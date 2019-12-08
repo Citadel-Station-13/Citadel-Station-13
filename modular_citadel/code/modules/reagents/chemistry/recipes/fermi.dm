@@ -544,3 +544,53 @@
 		var/datum/reagent/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
 		A2.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)
+
+/datum/chemical_reaction/cyrosenium
+	name = "Cryosenium"
+	id = "cryosenium"
+	results = list("cryosenium" = 2.5)
+	required_reagents = list("cryoxadone" = 1, "ice" = 1, "sterilizine" = 1)
+	//FermiChem vars:
+	OptimalTempMin 	= 1
+	OptimalTempMax 	= 300
+	ExplodeTemp 	= 500
+	OptimalpHMin 	= 4
+	OptimalpHMax 	= 10
+	ReactpHLim 		= 4
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 0.5
+	CurveSharppH 	= 0.5
+	ThermicConstant = -5
+	HIonRelease 	= 0
+	RateUpLim 		= 5
+	FermiChem 		= TRUE
+	FermiExplode	= TRUE
+	PurityMin 		= 0.1
+
+//purity != temp (above 50)
+/datum/chemical_reaction/cyrosenium/FermiCreate(datum/reagents/holder, added_volume, added_purity)
+	var/datum/reagents/R = holder.reagents
+	if(!R)
+		return
+	if(R.chem_temp < 20)
+		FermiExplode(R, holder, R.volume, R.chem_temp, R.pH)
+		return
+	var/datum/reagent/medicine/cyrosenium/C = R.has_reagent("cyrosenium")
+	var/step_purity = CLAMP(((R.chem_temp-50)/250), 0, 1)
+	C.purity = ((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume))
+	..()
+
+/datum/chemical_reaction/cyrosenium/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+	playsound(my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	var/_radius = max((volume/100), 1)
+	if(temp < 100)
+		_radius * 2
+
+	for(var/I in circlerangeturfs(center=my_atom, radius=_radius))
+		var/turf/T = I
+		if(istype(T, var/turf/open))
+			T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
+		var/datum/gas_mixture/turf/G = T.air
+		G.temperature = temp
+	..()

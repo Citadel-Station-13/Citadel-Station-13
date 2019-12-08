@@ -85,12 +85,12 @@
 		if(-INFINITY to -10)
 			ignoreTox = TRUE
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.2, ORGAN_TREAT_CHRONIC)
-			owner.adjustToxLoss(-0.2, TRUE)
-		if(-10 to 0)
+			owner.adjustToxLoss(-0.2, TRUE, TRUE)
+		if(-10 to -0.1)
 			ignoreTox = TRUE
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
-			owner.adjustToxLoss(-0.1, TRUE)
-		if(0 to 15)
+			owner.adjustToxLoss(-0.1, TRUE, TRUE)
+		if(-0.1 to 15)
 			if(damage != 0)
 				passive_regen(1/(reagentCount+1)) //pesky zeroes!
 			ignoreTox = TRUE
@@ -98,27 +98,26 @@
 			applyOrganDamage(0.05)
 		if(25 to 40)
 			applyOrganDamage(0.1)
-			owner.adjustToxLoss(0.05, TRUE)
+			owner.adjustToxLoss(0.05, TRUE, TRUE)
 		if(40 to 60)
 			applyOrganDamage(0.15)
-			owner.adjustToxLoss(0.15, TRUE)
+			owner.adjustToxLoss(0.15, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 		if(60 to 90)
 			applyOrganDamage(0.2)
-			owner.adjustToxLoss(0.2, TRUE)
+			owner.adjustToxLoss(0.2, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.15)
 			owner.adjustStaminaLoss(1)
 			swelling += 0.02
 		if(90 to INFINITY)
 			applyOrganDamage(0.25)
-			owner.adjustToxLoss(0.25, TRUE)
+			owner.adjustToxLoss(0.25, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2)
 			owner.adjustStaminaLoss(2)
 			swelling += 0.1
 
 
-
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+	if(filterToxins)
 		//handle liver toxin filtration
 		for(var/I in owner.reagents.reagent_list)
 			var/datum/reagent/pickedreagent = I
@@ -141,7 +140,12 @@
 					continue
 				adjustMetabolicStress(stress)
 
-	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreTox)
+	if(HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		ignoreTox = FALSE
+	if(ignoreTox)
+		ignoreTox = /datum/reagent/toxin //lil hacky but it works
+
+	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = ignoreTox)
 
 	var/metabolic_replenish = ((2*(((damage*100)/maxHealth)/100))/10)+0.05 //0.05 - 0.25
 	if(metabolic_stress > 0)
@@ -149,7 +153,7 @@
 	else if (metabolic_stress < 0)
 		adjustMetabolicStress(metabolic_replenish)
 
-/obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum = 105)
+/obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum = 105, absolute = FALSE)
 	if(!amount)
 		return FALSE
 	if(!maximum)
@@ -171,6 +175,111 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+
+/obj/item/organ/liver/slime
+	name = "Filturatum"
+	icon_state = "liver-s"
+	desc = "A sponge like organ that absorbs and filters out impure reagents when unstressed."
+	maxHealth = 90 //Slimes can treat liver damage a lot easier than most.
+
+/obj/item/organ/liver/slime/metabolic_stress_calc()
+	var/mob/living/carbon/C = owner
+	var/ignoreMeds = FALSE
+	var/reagentCount = LAZYLEN(owner.reagents.reagent_list)
+	switch(metabolic_stress)
+		if(-INFINITY to -95)
+			ignoreMeds = TRUE
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_END_STAGE)
+			owner.Jitter(5)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.15)
+			owner.Dizzy(2)
+		if(-95 to -80)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_CHRONIC)
+			ignoreMeds = TRUE
+			owner.Jitter(2)
+			owner.Dizzy(1.5)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1)
+		if(-80 to -55)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_CHRONIC)
+			ignoreMeds = TRUE
+			owner.Jitter(1.5)
+			owner.Dizzy(1)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.05)
+		if(-50 to -35)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.15, ORGAN_TREAT_CHRONIC)
+			owner.Jitter(0.5)
+			owner.adjustToxLoss(-0.05, TRUE, TRUE)
+		if(-35 to -20)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.25, ORGAN_TREAT_CHRONIC)
+		if(-25 to -10)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.2, ORGAN_TREAT_ACUTE)
+			owner.adjustToxLoss(-0.2, TRUE, TRUE)
+		if(-10 to -0.1)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
+			owner.adjustToxLoss(-0.05, TRUE, TRUE)
+		if(-0.1 to 15)
+			if(damage != 0)
+				passive_regen(1/(reagentCount+1)) //pesky zeroes!
+		if(15 to 25)
+			applyOrganDamage(0.05)
+		if(25 to 40)
+			applyOrganDamage(0.1)
+			owner.adjustToxLoss(0.05, TRUE, TRUE)
+		if(40 to 60)
+			applyOrganDamage(0.15)
+			owner.adjustToxLoss(0.15, TRUE, TRUE)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+		if(60 to 90)
+			applyOrganDamage(0.2)
+			owner.adjustToxLoss(0.2, TRUE, TRUE)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.15)
+			owner.adjustStaminaLoss(1)
+			swelling += 0.02
+		if(90 to INFINITY)
+			applyOrganDamage(0.25)
+			owner.adjustToxLoss(0.25, TRUE, TRUE)
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2)
+			owner.adjustStaminaLoss(2)
+			swelling += 0.1
+
+
+	if(filterToxins)
+		//handle liver toxin filtration
+		for(var/I in owner.reagents.reagent_list)
+			var/datum/reagent/pickedreagent = I
+			//toxins reduce stress
+			if(istype(pickedreagent, /datum/reagent/toxin))
+				var/datum/reagent/toxin/T = I
+				adjustMetabolicStress(-(T.metabolization_rate*T.toxpwr), absolute = TRUE)
+
+			//medicines apply stress
+			if(istype(pickedreagent, /datum/reagent/medicine))
+				var/datum/reagent/medicine/M = I
+				adjustMetabolicStress(M.metabolization_rate*1.5, absolute = TRUE)
+
+	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
+		ignoreMeds = /datum/reagent/medicine
+
+	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreMeds)
+
+	var/metabolic_replenish = (((((damage*100)/maxHealth)/100))/10)+0.05 //0.05 - 0.15 - slower regen
+	if(metabolic_stress > 0)
+		adjustMetabolicStress(-metabolic_replenish, absolute = TRUE)
+	else if (metabolic_stress < 0)
+		adjustMetabolicStress(metabolic_replenish, absolute = TRUE)
+
+//Slimes are inverse
+/obj/item/organ/liver/slime/adjustMetabolicStress(amount, minimum = -100, maximum = 105, absolute = FALSE)
+	if(!amount)
+		return FALSE
+	if(!absolute)
+		amount -= amount //Inverted metabolic effects! Toxins and impurities heal, medicines, etc cause it.
+	maximum = 105
+	minimum = -100
+	if(metabolic_stress>=maximum)
+		return FALSE
+	metabolic_stress = CLAMP(metabolic_stress + amount, minimum*minStressMod, maximum)
+	return TRUE
 
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
