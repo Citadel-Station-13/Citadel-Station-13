@@ -2319,9 +2319,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		pref_species.species_traits -= DIGITIGRADE
 
 	if(DIGITIGRADE in pref_species.species_traits)
-		character.Digitigrade_Leg_Swap(FALSE)
+		character.Digitigrade_Leg_Swap(FALSE, TRUE)
 	else
-		character.Digitigrade_Leg_Swap(TRUE)
+		character.Digitigrade_Leg_Swap(TRUE, TRUE)
 
 	//let's be sure the character updates
 	if(icon_updates)

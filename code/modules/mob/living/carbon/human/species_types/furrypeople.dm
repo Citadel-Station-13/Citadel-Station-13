@@ -73,16 +73,12 @@
 /datum/species/xeno/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	if(("legs" in C.dna.species.mutant_bodyparts) && (C.dna.features["legs"] == "Digitigrade" || C.dna.features["legs"] == "Avian"))
 		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	. = ..()
+	return ..()
 
 /datum/species/xeno/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Plantigrade")
 		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-	. = ..()
+	return ..()
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
 

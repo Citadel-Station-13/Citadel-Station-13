@@ -27,8 +27,7 @@
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#808080"
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION // because I'm too lazy to port these to digi-compatible and to prove a point from /tg/ whining - Pooj
-	suit_style = NORMAL_SUIT_STYLE
+	mutantrace_variation = NONE // because I'm too lazy to port these to digi-compatible and to prove a point from /tg/ whining - Pooj
 
 /obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
 	. = ..()

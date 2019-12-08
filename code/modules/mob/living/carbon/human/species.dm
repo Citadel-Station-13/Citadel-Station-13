@@ -610,22 +610,22 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if("tail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || !H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "tail_lizard"
 
 	if("waggingtail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || !H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "waggingtail_lizard"
 		else if ("tail_lizard" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_lizard"
 
 	if("tail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || !H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "tail_human"
 
 
 	if("waggingtail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || !H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "waggingtail_human"
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
@@ -685,11 +685,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	//Other Races
 	if("mam_tail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || !H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "mam_tail"
 
 	if("mam_waggingtail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || !H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "mam_waggingtail"
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
@@ -720,10 +720,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			species_traits += DIGITIGRADE
 		var/should_be_squished = FALSE
 		if(H.wear_suit)
-			if(H.wear_suit.mutantrace_variation == NO_MUTANTRACE_VARIATION) //we got digitigrade suits now fam
+			if(!(H.wear_suit.mutantrace_variation & STYLE_DIGITIGRADE)) //we got digitigrade suits now fam
 				should_be_squished = TRUE
 		if(H.w_uniform && !H.wear_suit)
-			if(H.w_uniform.mutantrace_variation == NO_MUTANTRACE_VARIATION)
+			if(!(H.w_uniform.mutantrace_variation & STYLE_DIGITIGRADE))
 				should_be_squished = TRUE
 		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
 			O.use_digitigrade = SQUISHED_DIGITIGRADE
