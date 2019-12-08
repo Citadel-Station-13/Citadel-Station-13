@@ -142,7 +142,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/item/gps/internal/elite
 	icon_state = null
 	gpstag = "Menacing Signal"
-	desc = "You're not quite sure how a signal can be bloody."
+	desc = "You're not quite sure how a signal can be menacing."
 	invisibility = 100
 	
 /obj/structure/elite_tumor/attack_hand(mob/user)
