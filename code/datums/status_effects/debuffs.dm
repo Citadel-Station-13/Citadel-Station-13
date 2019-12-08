@@ -489,7 +489,7 @@
 	duration = 100
 	alert_type = /obj/screen/alert/status_effect/kindle
 	var/old_health
-	var/old_oxydam
+	var/old_oxyloss
 
 /datum/status_effect/kindle/tick()
 	owner.Knockdown(15, TRUE, FALSE, 15)
@@ -500,7 +500,7 @@
 	if(!old_health)
 		old_health = owner.health
 	if(!old_oxydam)
-		old_oxydam = owner.getOxyLoss()
+		old_oxyloss = owner.getOxyLoss()
 	var/health_difference = old_health - owner.health - CLAMP(owner.getOxyLoss() - old_oxyloss,0, owner.getOxyLoss())
 	if(!health_difference)
 		return
@@ -509,7 +509,7 @@
 	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
 	duration -= health_difference
 	old_health = owner.health
-	old_oxydam = owner.getOxyLoss()
+	old_oxyloss = owner.getOxyLoss()
 
 /datum/status_effect/kindle/on_remove()
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
