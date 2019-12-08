@@ -24,7 +24,6 @@
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
 	var/obj/loot_drop = null
-	
 		
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
@@ -138,6 +137,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	light_range = 3
 	anchored = TRUE
 	density = FALSE
+	var/obj/item/gps/internal = null
+
+/obj/item/gps/internal/elite
+	icon_state = null
+	gpstag = "Menacing Signal"
+	desc = "You're not quite sure how a signal can be bloody."
+	invisibility = 100
 	
 /obj/structure/elite_tumor/attack_hand(mob/user)
 	. = ..()
@@ -196,7 +202,7 @@ obj/structure/elite_tumor/proc/return_elite()
 		
 /obj/structure/elite_tumor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps, "Menacing Signal")
+	internal = new/obj/item/gps/internal/elite(src)
 	START_PROCESSING(SSobj, src)
 	
 /obj/structure/elite_tumor/Destroy()

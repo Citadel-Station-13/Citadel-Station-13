@@ -28,8 +28,9 @@
 	health = 800
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	attack_verb_continuous = "slashes its arms at"
-	attack_verb_simple = "slash your arms at"
+	attacktext = "slashes its arms at"
+	/*attack_verb_continuous = "slashes its arms at"
+	attack_verb_simple = "slash your arms at"*/
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
@@ -130,7 +131,8 @@
 		visible_message("<span class='boldwarning'>[src] attacks [L] with much force!</span>")
 		to_chat(L, "<span class='userdanger'>[src] grabs you and throws you with much force!</span>")
 		L.safe_throw_at(throwtarget, 10, 1, src)
-		L.Paralyze(20)
+		//L.Paralyze(20)
+		L.Stun(20) //substituting this for the Paralyze from the line above, because we don't have tg paralysis stuff
 		L.adjustBruteLoss(50)
 	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 2)
 		
@@ -224,8 +226,9 @@
 	health = 80
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	attack_verb_continuous = "bites at"
-	attack_verb_simple = "bite at"
+	attacktext = "bites at"
+	/*attack_verb_continuous = "bites at"
+	attack_verb_simple = "bite at"*/
 	attack_sound = 'sound/effects/curse1.ogg'
 	throw_message = "simply misses"
 	speed = 0
@@ -248,7 +251,7 @@
 	icon = 'icons/obj/lavaland/legionnaire_bonfire.dmi'
 	icon_state = "bonfire"
 	max_integrity = 100
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	//move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	anchored = TRUE
 	density = FALSE
 	light_range = 4
