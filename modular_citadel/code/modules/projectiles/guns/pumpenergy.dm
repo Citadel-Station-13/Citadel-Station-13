@@ -94,8 +94,8 @@
 		update_icon()
 
 /obj/item/gun/energy/pumpaction/examine(mob/user)	//so people don't ask HOW TO CHANGE FIRING MODE
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to change firing modes.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to change firing modes.</span>"
 
 /obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file)	//ammo counter for inhands
 	. = ..()
@@ -183,7 +183,6 @@
 	name = "particle blast"
 	damage = 13
 	icon_state = "disablerpellet"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
 /obj/item/projectile/beam/disabler/slug
 	name = "positron blast"
@@ -191,12 +190,10 @@
 	range = 14
 	speed = 0.6
 	icon_state = "disablerslug"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
 /obj/item/projectile/energy/electrode/pump
 	name = "electron blast"
 	icon_state = "stunjectile"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 	color = null
 	nodamage = 1
 	knockdown = 100

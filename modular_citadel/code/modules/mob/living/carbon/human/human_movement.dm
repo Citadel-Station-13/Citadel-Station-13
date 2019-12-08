@@ -5,7 +5,8 @@
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
 	if(. && sprinting && !(movement_type & FLYING) && canmove && !resting && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
-		doSprintLossTiles(1)
+		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
+			doSprintLossTiles(1)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
 			for(var/obj/item/I in held_items)

@@ -104,7 +104,7 @@
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
 	. = ..()
-	if(ismob(loc))
+	if(!. && ismob(loc) && loc == usr)
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
@@ -734,9 +734,8 @@
 /obj/item/disk/medical
 	name = "Defibrillator Upgrade Disk"
 	desc = "A blank upgrade disk, made for a defibrillator"
-	icon = 'modular_citadel/icons/obj/defib_disks.dmi'
-	icon_state = "upgrade_disk"
-	item_state = "heal_disk"
+	icon_state = "heal_disk"
+	item_state = "defib_disk"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/disk/medical/defib_heal
@@ -762,5 +761,3 @@
 	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	icon_state = "fast_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
-
-#undef HALFWAYCRITDEATH

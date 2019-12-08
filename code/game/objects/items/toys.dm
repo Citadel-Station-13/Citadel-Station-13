@@ -148,8 +148,8 @@
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
+	. = ..()
+	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -182,7 +182,7 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", 2)
+		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
 		playsound(src, "gun_dry_fire", 30, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
@@ -204,8 +204,8 @@
 	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+	. = ..()
+	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy swords
@@ -373,8 +373,8 @@
 		return ..()
 
 /obj/item/toy/sword/cx/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /*
  * Foam armblade
@@ -401,6 +401,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
+	hitsound = 'sound/weapons/smash.ogg'
 	attack_verb = list("robusted")
 
 /obj/item/toy/windupToolbox/attack_self(mob/user)
@@ -408,13 +409,33 @@
 		icon_state = "his_grace_awakened"
 		to_chat(user, "<span class='warning'>You wind up [src], it begins to rumble.</span>")
 		active = TRUE
+		playsound(src, 'sound/effects/pope_entry.ogg', 100)
+		Rumble()
 		addtimer(CALLBACK(src, .proc/stopRumble), 600)
 	else
 		to_chat(user, "[src] is already active.")
 
+/obj/item/toy/windupToolbox/proc/Rumble()
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
+		var/matrix/M3 = matrix()
+		var/matrix/M4 = matrix()
+		M1.Translate(-1, 0)
+		M2.Translate(0, 1)
+		M3.Translate(1, 0)
+		M4.Translate(0, -1)
+		transforms = list(M1, M2, M3, M4)
+	animate(src, transform=transforms[1], time=0.2, loop=-1)
+	animate(transform=transforms[2], time=0.1)
+	animate(transform=transforms[3], time=0.2)
+	animate(transform=transforms[4], time=0.3)
+
 /obj/item/toy/windupToolbox/proc/stopRumble()
 	icon_state = initial(icon_state)
 	active = FALSE
+	animate(src, transform=matrix())
 
 /*
  * Subtype of Double-Bladed Energy Swords
@@ -994,8 +1015,7 @@
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
-
+			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 /obj/item/toy/cards/singlecard/verb/Flip()
 	set name = "Flip Card"
@@ -1221,8 +1241,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+	. = ..()
+	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]"
 
 /*
  * Toy Dagger
