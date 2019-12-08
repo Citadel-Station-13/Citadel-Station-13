@@ -273,6 +273,7 @@
 	chemical_flags = REAGENT_DEAD_PROCESS
 	purity = 1//for syringe
 	impure_chem 		= "cyrosenium_impure"
-	inverse_chem_val 	= 0.45
+	inverse_chem_val 	= 0.35
+	metabolization_rate = 0.05
 
 //Pauses decay! Does do something, I promise.
