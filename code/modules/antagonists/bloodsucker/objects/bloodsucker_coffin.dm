@@ -19,17 +19,15 @@
 
 /datum/antagonist/bloodsucker/proc/ClaimCoffin(obj/structure/closet/crate/claimed) // NOTE: This can be any "closet" that you are resting AND inside of.
 	// ALREADY CLAIMED
-	if (claimed.resident)
-		if (claimed.resident == owner.current)
+	if(claimed.resident)
+		if(claimed.resident == owner.current)
 			to_chat(owner, "This is your [src].")
 		else
 			to_chat(owner, "This [src] has already been claimed by another.")
 		return FALSE
-
 	// Bloodsucker Learns new Recipes!
 	owner.teach_crafting_recipe(/datum/crafting_recipe/bloodsucker/vassalrack)
 	owner.teach_crafting_recipe(/datum/crafting_recipe/bloodsucker/candelabrum)
-
 	// This is my Lair
 	coffin = claimed
 	lair = get_area(claimed)
@@ -37,11 +35,8 @@
 	to_chat(owner, "<span class='userdanger'>You have claimed the [claimed] as your place of immortal rest! Your lair is now [lair].</span>")
 	to_chat(owner, "<span class='danger'>You have learned new construction recipes to improve your lair.</span>")
 	to_chat(owner, "<span class='announce'>Bloodsucker Tip: Find new lair recipes in the misc tab of the <i>Crafting Menu</i> at the bottom of the screen, including the <i>Persuasion Rack</i> for converting crew into Vassals.</span><br><br>")
-
 	RunLair() // Start
 	return TRUE
-
-
 
 // crate.dm
 /obj/structure/closet/crate
@@ -101,12 +96,11 @@
 /obj/structure/closet/crate/proc/ClaimCoffin(mob/living/claimant) // NOTE: This can be any "closet" that you are resting AND inside of.
 	// Bloodsucker Claim
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = claimant.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (bloodsuckerdatum)
+	if(bloodsuckerdatum)
 		// Vamp Successfuly Claims Me?
-		if (bloodsuckerdatum.ClaimCoffin(src))
+		if(bloodsuckerdatum.ClaimCoffin(src))
 			resident = claimant
 			anchored = 1					// No moving this
-
 
 /obj/structure/closet/crate/coffin/Destroy()
 	UnclaimCoffin()
@@ -139,30 +133,32 @@
 	return ..()
 
 /obj/structure/closet/crate/coffin/close(mob/living/user)
+	var/turf/Turf = get_turf(src)
+	var/area/A = get_area(src)
 	if (!..())
 		return FALSE
 	// Only the User can put themself into Torpor (if you're already in it, you'll start to heal)
-	if ((user in src))
+	if((user in src))
 		// Bloodsucker Only
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if (bloodsuckerdatum)
+		if(bloodsuckerdatum)
 			LockMe(user)
+			Turf = get_turf(user) //we may have moved. adjust as needed...
+			A = get_area(src)
 			// Claim?
-			if (!bloodsuckerdatum.coffin && !resident)
+			if(!bloodsuckerdatum.coffin && !resident && (is_station_level(Turf.z) || !A.map_name == "Space"))
 				switch(alert(user,"Do you wish to claim this as your coffin? [get_area(src)] will be your lair.","Claim Lair","Yes", "No"))
 					if("Yes")
 						ClaimCoffin(user)
-			// Stake? No Heal!
-			if (user.AmStaked())
+			if (user.AmStaked()) // Stake? No Heal!
 				to_chat(bloodsuckerdatum.owner.current, "<span class='userdanger'>You are staked! Remove the offending weapon from your heart before sleeping.</span>")
 				return
 			// Heal
-			if (bloodsuckerdatum.HandleHealing(0)) // Healing Mult 0 <--- We only want to check if healing is valid!
+			if(bloodsuckerdatum.HandleHealing(0)) // Healing Mult 0 <--- We only want to check if healing is valid!
 				to_chat(bloodsuckerdatum.owner.current, "<span class='notice'>You enter the horrible slumber of deathless Torpor. You will heal until you are renewed.</span>")
 				bloodsuckerdatum.Torpor_Begin()
 			// Level Up?
 			bloodsuckerdatum.SpendRank() // Auto-Fails if not appropriate
-
 	return TRUE
 
 /obj/structure/closet/crate/coffin/attackby(obj/item/W, mob/user, params)
@@ -208,14 +204,6 @@
 					to_chat(resident, "<span class='notice'>You fix the mechanism and lock it.</span>")
 					broken = FALSE
 					locked = TRUE
-
-
-
-
-
-
-
-
 
 // Look up recipes.dm OR pneumaticCannon.dm
 /datum/crafting_recipe/bloodsucker/blackcoffin

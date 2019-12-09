@@ -30,7 +30,7 @@
 		H.physiology.burn_mod *= this_resist//0.5
 	// Stop Running   (Taken from /datum/quirk/nyctophobia in negative.dm)
 	var/was_running = (user.m_intent == MOVE_INTENT_RUN)
-	if (was_running)
+	if(was_running)
 		user.toggle_move_intent()
 	while(bloodsuckerdatum && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
 		// Pay Blood Toll (if awake)
@@ -38,7 +38,7 @@
 			bloodsuckerdatum.AddBloodVolume(-0.5) // Used to be 0.3 blood per 2 seconds, but we're making it more expensive to keep on.
 		sleep(20) // Check every few ticks that we haven't disabled this power
 	// Return to Running (if you were before)
-	if (was_running && user.m_intent != MOVE_INTENT_RUN)
+	if(was_running && user.m_intent != MOVE_INTENT_RUN)
 		user.toggle_move_intent()
 
 /datum/action/bloodsucker/fortitude/DeactivatePower(mob/living/user = owner, mob/living/target)

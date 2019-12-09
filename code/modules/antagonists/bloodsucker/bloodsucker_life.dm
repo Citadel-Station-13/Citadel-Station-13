@@ -15,7 +15,7 @@
 	var/notice_healing = FALSE
 	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA)) // Deduct Blood
-			AddBloodVolume(-0.09) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
+			AddBloodVolume(-0.1) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
 		if(HandleHealing(1)) 		// Heal
 			if(notice_healing == FALSE && owner.current.blood_volume > 0)
 				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
@@ -116,9 +116,9 @@
 			if(mult == 0)
 				return TRUE
 			// We have damage. Let's heal (one time)
-			C.adjustBruteLoss(-bruteheal * mult, forced=TRUE)// Heal BRUTE / BURN in random portions throughout the body.
-			C.adjustFireLoss(-fireheal * mult, forced=TRUE)
-			C.adjustToxLoss(-toxinheal * mult * 2, forced=TRUE) //Toxin healing because vamps arent immune
+			C.adjustBruteLoss(-bruteheal * mult, forced = TRUE)// Heal BRUTE / BURN in random portions throughout the body.
+			C.adjustFireLoss(-fireheal * mult, forced = TRUE)
+			C.adjustToxLoss(-toxinheal * mult * 2, forced = TRUE) //Toxin healing because vamps arent immune
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
@@ -316,44 +316,34 @@
 
 /datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
 	set waitfor = FALSE
-
 	if (!owner.current || !iscarbon(owner.current))
 		return
 	var/mob/living/carbon/C = owner.current
-
 	// Remove Nutrition, Give Bad Food
 	C.nutrition -= food_nutrition
 	foodInGut += food_nutrition
-
 	// Already ate some bad clams? Then we can back out, because we're already sick from it.
 	if (foodInGut != food_nutrition)
 		return
 	// Haven't eaten, but I'm in a Human Disguise.
 	else if (poweron_masquerade)
 		to_chat(C, "<span class='notice'>Your stomach turns, but your \"human disguise\" keeps the food down...for now.</span>")
-
-
 	// Keep looping until we purge. If we have activated our Human Disguise, we ignore the food. But it'll come up eventually...
 	var/sickphase = 0
 	while (foodInGut)
-
 		sleep(50)
-
 		C.adjust_disgust(10 * sickphase)
-
 		// Wait an interval...
 		sleep(50 + 50 * sickphase) // At intervals of 100, 150, and 200. (10 seconds, 15 seconds, and 20 seconds)
-
 		// Died? Cancel
-		if (C.stat == DEAD)
+		if(C.stat == DEAD)
 			return
 		// Put up disguise? Then hold off the vomit.
-		if (poweron_masquerade)
-			if (sickphase > 0)
+		if(poweron_masquerade)
+			if(sickphase > 0)
 				to_chat(C, "<span class='notice'>Your stomach settles temporarily. You regain your composure...for now.</span>")
 			sickphase = 0
 			continue
-
 		switch(sickphase)
 			if (1)
 				to_chat(C, "<span class='warning'>You feel unwell. You can taste ash on your tongue.</span>")
@@ -369,5 +359,4 @@
 				C.Stun(30)
 				//C.Dizzy(50)
 				foodInGut = 0
-
 		sickphase ++

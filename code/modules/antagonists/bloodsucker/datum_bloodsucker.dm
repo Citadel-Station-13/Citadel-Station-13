@@ -42,8 +42,6 @@
 	// TO ADD:
 	//var/static/list/defaultOrgans = list (/obj/item/organ/heart/vampheart,/obj/item/organ/heart/vampeyes)
 
-
-
 /datum/antagonist/bloodsucker/on_gain()
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 	SSticker.mode.check_start_sunlight()// Start Sunlight? (if first Vamp)
@@ -163,14 +161,13 @@
 	// Name First
 	fullname = (vampname ? vampname : owner.current.name)
 	// Title
-	if (vamptitle)
+	if(vamptitle)
 		fullname = vamptitle + " " + fullname
 	// Rep
-	if (include_rep && vampreputation)
+	if(include_rep && vampreputation)
 		fullname = fullname + " the " + vampreputation
 
 	return fullname
-
 
 
 /datum/antagonist/bloodsucker/proc/BuyPower(datum/action/bloodsucker/power)//(obj/effect/proc_holder/spell/power)
@@ -201,8 +198,7 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		S.brutemod *= 0.5
-		S.burnmod += 0.1 													//  <--------------------  Start small, but burn mod increases based on rank!
+		S.brutemod *= 0.5											//  <--------------------  Start small, but burn mod increases based on rank!
 		S.coldmod = 0
 		S.stunmod *= 0.25
 		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
@@ -318,7 +314,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
-		S.burnmod += 0.025 			// Slightly more burn damage
+		S.burnmod *= 0.025 			// Slightly more burn damage
 		S.stunmod *= 0.95			// Slightly less stun time.
 		S.punchdamagelow += 0.5
 		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.
@@ -337,7 +333,6 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		SelectReputation(am_fledgling=FALSE, forced=TRUE)
 	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
-	to_chat(owner.current, "<span class='warning'>However, your weakness to fire and sunlight have also increased!</span>")
 	update_hud(TRUE)
 	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
@@ -354,8 +349,6 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/bloodsucker/create_team(datum/team/team)
 	return
-
-
 
 // Create Objectives
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives() // Fledgling vampires can have different objectives.
@@ -416,11 +409,6 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 /datum/antagonist/bloodsucker/get_team()
 	return clan
 
-
-
-
-
-
 //Name shown on antag list
 /datum/antagonist/bloodsucker/antag_listing_name()
 	return ..() + "([ReturnFullName(TRUE)])"
@@ -431,11 +419,6 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	if (owner && owner.AmFinalDeath())
 		return "<font color=red>Final Death</font>"
 	return ..()
-
-
-
-
-
 
 
 
@@ -700,22 +683,22 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 /datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
 	// No Hud? Get out.
-	if (!owner.current.hud_used)
+	if(!owner.current.hud_used)
 		return
 	// Update Blood Counter
 	if (owner.current.hud_used.blood_display)
 		var/valuecolor = "#FF6666"
-		if (owner.current.blood_volume > BLOOD_VOLUME_SAFE)
+		if(owner.current.blood_volume > BLOOD_VOLUME_SAFE)
 			valuecolor =  "#FFDDDD"
-		else if (owner.current.blood_volume > BLOOD_VOLUME_BAD)
+		else if(owner.current.blood_volume > BLOOD_VOLUME_BAD)
 			valuecolor =  "#FFAAAA"
 		owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume, valuecolor)
 
 	// Update Rank Counter
-	if (owner.current.hud_used.vamprank_display)
+	if(owner.current.hud_used.vamprank_display)
 		var/valuecolor = vamplevel_unspent ? "#FFFF00" : "#FF0000"
 		owner.current.hud_used.vamprank_display.update_counter(vamplevel, valuecolor)
-		if (updateRank) // Only change icon on special request.
+		if(updateRank) // Only change icon on special request.
 			owner.current.hud_used.vamprank_display.icon_state = (vamplevel_unspent > 0) ? "rank_up" : "rank"
 
 

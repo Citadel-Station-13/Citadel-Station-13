@@ -4,13 +4,12 @@
 
 
 /datum/antagonist/bloodsucker/proc/attempt_turn_vassal(mob/living/carbon/C)
+	C.silent = 0
 	return SSticker.mode.make_vassal(C,owner)
 
 /datum/antagonist/bloodsucker/proc/FreeAllVassals()
 	for (var/datum/antagonist/vassal/V in vassals)
 		SSticker.mode.remove_vassal(V.owner)
-
-
 
 /datum/antagonist/vassal
 	name = "Vassal"//WARNING: DO NOT SELECT" // "Vassal"
@@ -28,62 +27,64 @@
 	return ..()
 
 /datum/antagonist/vassal/on_gain()
-
 	SSticker.mode.vassals |= owner // Add if not already in here (and you might be, if you were picked at round start)
-
 	// Mindslave Add
-	if (master)
+	if(master)
 		var/datum/antagonist/bloodsucker/B = master.owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if (B)
+		if(B)
 			B.vassals |= src
 		owner.enslave_mind_to_creator(master.owner.current)
-
 	// Master Pinpointer
 	owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-
 	// Powers
 	var/datum/action/bloodsucker/vassal/recuperate/new_Recuperate = new ()
 	new_Recuperate.Grant(owner.current)
 	powers += new_Recuperate
-
 	// Give Vassal Objective
 	var/datum/objective/bloodsucker/vassal/vassal_objective = new
 	vassal_objective.owner = owner
 	vassal_objective.generate_objective()
 	objectives += vassal_objective
 	objectives_given += vassal_objective
-
+	give_thrall_eyes()
 	// Add Antag HUD
 	update_vassal_icons_added(owner.current, "vassal")
-
 	. = ..()
 
+/datum/antagonist/vassal/proc/give_thrall_eyes()
+	var/obj/item/organ/eyes/vassal/E = new
+	E.Insert(owner.current)
+
+/obj/item/organ/eyes/vassal/
+	lighting_alpha = 180 //  LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE  <--- This is too low a value at 128. We need to SEE what the darkness is so we can hide in it.
+	see_in_dark = 12
+	flash_protect = -1 //These eyes are weaker to flashes, but let you see in the dark
+
+/datum/antagonist/vassal/proc/remove_thrall_eyes()
+	// Eyes
+	var/obj/item/organ/eyes/E = new
+		E.Insert(owner.current)
+
 /datum/antagonist/vassal/on_removal()
-
 	SSticker.mode.vassals -= owner // Add if not already in here (and you might be, if you were picked at round start)
-
 	// Mindslave Remove
 	if (master && master.owner)
 		master.vassals -= src
 		if (owner.enslaved_to == master.owner.current)
 			owner.enslaved_to = null
-
 	// Master Pinpointer
 	owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-
 	// Powers
 	while(powers.len)
 		var/datum/action/power = pick(powers)
 		powers -= power
 		power.Remove(owner.current)
-
 	// Remove Hunter Objectives
 	for(var/O in objectives_given)
 		objectives -= O
 		qdel(O)
 	objectives_given = list()
-
-
+	remove_thrall_eyes()
 	// Clear Antag HUD
 	update_vassal_icons_removed(owner.current)
 
@@ -97,7 +98,6 @@
 	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 	//owner.store_memory("You became the mortal servant of [master.owner.current], a bloodsucking vampire!")
 	antag_memory += "You became the mortal servant of <b>[master.owner.current]</b>, a bloodsucking vampire!<br>"
-
 	// And to your new Master...
 	to_chat(master.owner, "<span class='userdanger'>[owner.current] has become addicted to your immortal blood. [owner.current.p_they(TRUE)] [owner.current.p_are()] now your undying servant!</span>")
 	master.owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -110,7 +110,6 @@
 	// And to your former Master...
 	//if (master && master.owner)
 	//	to_chat(master.owner, "<span class='userdanger'>You feel the bond with your vassal [owner.current] has somehow been broken!</span>")
-
 
 /datum/status_effect/agent_pinpointer/vassal_edition
 	id = "agent_pinpointer"
@@ -139,7 +138,7 @@
 	var/datum/atom_hud/antag/bloodsucker/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
 	hud.join_hud(vassal)
 	set_antag_hud(vassal, icontype) // Located in icons/mob/hud.dmi
-	owner.current.hud_list[ANTAG_HUD].icon = image('icons/mob/hud.dmi', owner.current, "bloodsucker")	
+	owner.current.hud_list[ANTAG_HUD].icon = image('icons/mob/hud.dmi', owner.current, "bloodsucker")
 
 /datum/antagonist/vassal/proc/update_vassal_icons_removed(mob/living/vassal)
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]

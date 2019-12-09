@@ -3,44 +3,34 @@
 /datum/antagonist/bloodsucker/proc/CheckVampOrgans()
 	// Do I have any parts that need replacing?
 	var/obj/item/organ/O
-
 	// Heart
 	O = owner.current.getorganslot(ORGAN_SLOT_HEART)
-	if (!istype(O, /obj/item/organ/heart/vampheart))
+	if(!istype(O, /obj/item/organ/heart/vampheart))
 		qdel(O)
 		var/obj/item/organ/heart/vampheart/H = new
 		H.Insert(owner.current)
 		H.Stop() // Now...stop beating!
-
 	// Eyes
 	O = owner.current.getorganslot(ORGAN_SLOT_EYES)
-	if (!istype(O, /obj/item/organ/eyes/vampeyes))
+	if(!istype(O, /obj/item/organ/eyes/vassal/bloodsucker))
 		qdel(O)
-		var/obj/item/organ/eyes/vampeyes/E = new
+		var/obj/item/organ/eyes/vassal/bloodsucker/E = new
 		E.Insert(owner.current)
 
-
 /datum/antagonist/bloodsucker/proc/RemoveVampOrgans()
-
 	// Heart
 	var/obj/item/organ/heart/H = new
 		H.Insert(owner.current)
 	// Eyes
 	var/obj/item/organ/eyes/E = new
 		E.Insert(owner.current)
-
-
-
 // 		HEART: OVERWRITE	//
 
 /obj/item/organ/heart/proc/HeartStrengthMessage()
 	if (beating)
 		return "a healthy"
 	return "<span class='danger'>an unstable</span>"
-
-
 // 		HEART 		//
-
 /obj/item/organ/heart/vampheart
 	beating = 0
 	var/fakingit = 0
@@ -64,16 +54,11 @@
 	if (fakingit)
 		return "a healthy"
 	return "<span class='danger'>no</span>"	// Bloodsuckers don't have a heartbeat at all when stopped (default is "an unstable")
-
-
 // 		EYES 		//
 
-/obj/item/organ/eyes/vampeyes
-	lighting_alpha = 180 //  LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE  <--- This is too low a value at 128. We need to SEE what the darkness is so we can hide in it.
-	see_in_dark = 12
-	flash_protect = -1
-	//sight_flags = SEE_TURFS // Taken from augmented_eyesight.dm
-
+/obj/item/organ/eyes/vassal/bloodsucker
+	flash_protect = 2 //Eye healing isnt working properly
+	sight_flags = SEE_MOBS // Taken from augmented_eyesight.dm
 
 /*
 //		LIVER		//

@@ -113,7 +113,7 @@
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
 	//return resting || IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
-	return (src.resting)
+	return (src.resting || src.lying)
 	// ABOVE:  Taken from update_mobility() in living.dm
 
 /obj/item/stake/hardened

@@ -73,7 +73,7 @@
 				return
 			//daylight_time -= TIME_BLOODSUCKER_BURN_INTERVAL
 			// Issue Level Up!
-			if (!issued_XP && time_til_cycle <= 15)
+			if(!issued_XP && time_til_cycle <= 15)
 				issued_XP = TRUE
 				vamps_rank_up()
 
@@ -86,9 +86,7 @@
 
 /obj/effect/sunlight/proc/hud_tick()
 	set waitfor = FALSE
-
 	while(!cancel_me)
-
 		// Update all Bloodsucker sunlight huds
 		for(var/datum/mind/M in SSticker.mode.bloodsuckers)
 			if(!istype(M) || !istype(M.current))
@@ -96,7 +94,6 @@
 			var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 			if(istype(bloodsuckerdatum))
 				bloodsuckerdatum.update_sunlight(max(0, time_til_cycle), amDay) // This pings all HUDs
-
 		sleep(10)
 		time_til_cycle --
 

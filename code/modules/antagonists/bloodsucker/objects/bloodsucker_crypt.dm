@@ -400,11 +400,8 @@
 	// FAILSAFE: Still on the rack?
 	if (!(locate(target) in buckled_mobs))
 		return
-
 	// NOTE: You can say YES after torture. It'll apply to next time.
-
 	disloyalty_confirm = TRUE
-
 	if (HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		to_chat(target, "<span class='boldnotice'>You give in to the will of your torturer. If they are successful, you will no longer be loyal to the station!</span>")
 
@@ -419,7 +416,6 @@
 
 
 /obj/structure/bloodsucker/vassalrack/proc/remove_loyalties(mob/living/target)
-
 	// Find Mind Implant & Destroy
 	if (HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		for(var/obj/item/implant/I in target.implants)

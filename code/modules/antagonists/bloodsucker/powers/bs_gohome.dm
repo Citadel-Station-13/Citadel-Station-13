@@ -94,7 +94,7 @@
 		puff.set_up(3, 0, get_turf(owner))
 		puff.start()
 	// TELEPORT: Move to Coffin & Close it!
-	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE) // in teleport.dm?
+	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM) // in teleport.dm?
 	// SLEEP
 	user.resting = TRUE
 	//user.Unconscious(30,0)

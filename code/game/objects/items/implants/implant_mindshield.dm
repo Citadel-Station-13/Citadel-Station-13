@@ -26,7 +26,7 @@
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 
-		if(target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		if(target.mind.has_antag_datum(ANTAG_DATUM_VASSAL))
 			SSticker.mode.remove_vassal(target.mind)
 
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable || target.mind.has_antag_datum(/datum/antagonist/gang/boss))
