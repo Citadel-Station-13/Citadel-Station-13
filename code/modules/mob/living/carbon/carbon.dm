@@ -157,6 +157,7 @@
 	if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
+	var/random_turn = a_itnent == INTENT_DISARM
 	//END OF CIT CHANGES
 
 	var/atom/movable/thrown_thing
