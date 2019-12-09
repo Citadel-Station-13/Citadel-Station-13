@@ -184,7 +184,7 @@
 
 /obj/item/organ/liver/slime/on_life()
 	.=..()
-	if(metabolic_stress < -95)
+	if(metabolic_stress < -95) //Because metabolic stress doesn't proc on a failed liver.
 		owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_END_STAGE)
 
 /obj/item/organ/liver/slime/metabolic_stress_calc()

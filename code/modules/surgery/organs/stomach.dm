@@ -66,9 +66,9 @@
 		return
 	//stomach acid stuff
 	if(C.reagents.pH > 7.25)
-		C.reagents.pH -= 0.1-(damage/1000)
+		C.reagents.pH -= 0.15-(damage/750)
 	else if (C.reagents.pH < 6.75)
-		C.reagents.pH += 0.1-(damage/1000)
+		C.reagents.pH += 0.15-(damage/750)
 
 	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
 	if(!SA)

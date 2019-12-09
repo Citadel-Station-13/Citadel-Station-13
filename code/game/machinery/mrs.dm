@@ -176,32 +176,47 @@
 	if(scannedmob)
 
 		var/mob/living/carbon/C = scannedmob
-
-		//Stomach pH
-		if(C.reagents)
-			switch(C.reagents.pH)
-				if(-INFINITY to 4)
-					data["occupant"]["pHState"] = "Extremely acidic"
-					data["occupant"]["pHcolor"] = "bad"
-				if(4 to 5.5)
-					data["occupant"]["pHState"] = "Too acidic"
-					data["occupant"]["pHcolor"] = "average"
-				if(5.5 to 8.5)
-					data["occupant"]["pHState"] = "Healthy pH" //bad index once? But why?
-					data["occupant"]["pHcolor"] = "good"
-				if(8.5 to 10)
-					data["occupant"]["pHState"] = "Too basic"
-					data["occupant"]["pHcolor"] = "highlight"
-				if(10 to INFINITY)
-					data["occupant"]["pHState"] = "Extremely basic"
-					data["occupant"]["pHcolor"] = "basic"
-			data["occupant"]["pH"] = C.reagents.pH
-
 		//Organ scan
 		data["occupant"]["organs"] = list()
 		data["occupant"]["missing_organs"] = list()
 		data["occupant"]["traumalist"] = list()
 		if(C)
+			//Stomach pH
+			if(C.reagents)
+				switch(C.reagents.pH)
+					if(-INFINITY to 4)
+						data["occupant"]["pHState"] = "Extremely acidic"
+						data["occupant"]["pHcolor"] = "bad"
+					if(4 to 5.5)
+						data["occupant"]["pHState"] = "Too acidic"
+						data["occupant"]["pHcolor"] = "average"
+					if(5.5 to 8.5)
+						data["occupant"]["pHState"] = "Healthy pH" //bad index once? But why?
+						data["occupant"]["pHcolor"] = "good"
+					if(8.5 to 10)
+						data["occupant"]["pHState"] = "Too basic"
+						data["occupant"]["pHcolor"] = "highlight"
+					if(10 to INFINITY)
+						data["occupant"]["pHState"] = "Extremely basic"
+						data["occupant"]["pHcolor"] = "basic"
+				data["occupant"]["pH"] = C.reagents.pH
+
+				var/datum/reagent/metabolic/stomach_acid/Sa = C.reagents.has_reagent("stomach_acid")
+				if(Sa)
+					data["occupant"]["stomachVol"] = Sa.volume
+					switch(Sa.volume)
+						if(0 to 5)
+							data["occupant"]["stomachColor"] = "bad"
+						if(5 to 30)
+							data["occupant"]["stomachColor"] = "average"
+						if(30 to 50)
+							data["occupant"]["stomachColor"] = "good"
+				else
+					data["occupant"]["stomachVol"] = 0
+					data["occupant"]["stomachColor"] = "bad"
+
+
+
 			for(var/obj/item/organ/Or in C.internal_organs)
 				var/state = "Healthy"
 				var/textcolor = "healthy"
@@ -242,6 +257,9 @@
 
 							data["occupant"]["traumalist"] += list(list("Bname" = B.name, "colourB" = colorB, "resist" = trauma))
 						continue
+
+				//Stomach is handled above
+
 
 				//Liver
 				if(istype(Or, /obj/item/organ/liver))

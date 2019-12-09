@@ -3117,7 +3117,6 @@
 #include "modular_citadel\code\modules\projectiles\guns\energy\laser.dm"
 #include "modular_citadel\code\modules\projectiles\projectiles\reusable.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\fermiboom.dm"
-#include "modular_citadel\code\modules\reagents\chemistry\status_effects.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\astrogen.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\eigentstasium.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\enlargement.dm"

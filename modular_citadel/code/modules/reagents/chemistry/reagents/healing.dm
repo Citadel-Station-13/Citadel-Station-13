@@ -243,41 +243,42 @@
 /datum/reagent/medicine/antacidpregen/antacid
 	name = "Antacid"
 	id = "antacid"
-	description = "Antacids neutralise overly acidic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	description = "Antacids neutralise overly acidic pHes in patients. The purer it is, the faster it reduces it. Treats Acute Stomach damage at neutral pHes."
 	color = "#f29b22"
 	purity = 0.8
 
 /datum/reagent/medicine/antacidpregen/antacid/on_mob_life(mob/living/carbon/C)
 	if(C.reagents.pH < 6.5)
 		C.reagents.pH += cached_purity/2
-	else if(C.reagents.pH < 7.5)
+	else if(C.reagents.pH < 8)
 		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
 
 /datum/reagent/medicine/antacidpregen/antbase
 	name = "Antbase"
 	id = "antbase"
-	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Acute Stomach damage at neutral pHes."
 	color = "#853cfa"
 	purity = 0.8
 
 /datum/reagent/medicine/antacidpregen/antbase/on_mob_life(mob/living/carbon/C)
 	if(C.reagents.pH > 7.5)
 		C.reagents.pH -= cached_purity/2
-	else if(C.reagents.pH > 6.5)
+	else if(C.reagents.pH > 6)
 		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
 
 /datum/reagent/medicine/cryosenium
 	name = "Cryosenium"
 	id = "cryosenium"
-	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	description = "Induces a cryostasis in the patient's organs, preventing them from decaying while dead."
 	taste_description = "ice"
 	chemical_flags = REAGENT_DEAD_PROCESS
+	pH = 8.6
 	purity = 1//for syringe
 	color = "#03f4fc"
 	impure_chem 		= "generic_impure"
-	inverse_chem_val 	= 0.4
+	inverse_chem_val 	= 0.43
 	inverse_chem 		= "cryosenium_impure"
 	metabolization_rate = 0.05
 

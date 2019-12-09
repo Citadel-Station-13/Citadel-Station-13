@@ -121,7 +121,7 @@
 /datum/reagent/impure/antihol
 	name = "Soothehol"
 	id = "antihol_impure"
-	description = "Soothes a patient's liver"
+	description = "Soothes a patient's liver by reducing it's metabolic stress. Depending on it's purity, it can reduce it to levels where acute/chronic liver damage is healed."
 	taste_description = "coooked egg"
 	color = "#0004C8"
 	chemical_flags = null
@@ -184,7 +184,7 @@
 	..()
 
 /datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
-	C.adjustOrganLoss(ORGAN_SLOT_EARS, (1-cached_purity))
+	C.adjustOrganLoss(ORGAN_SLOT_EARS, ((1-cached_purity)/2))
 	..()
 
 /datum/reagent/impure/inacusiate/on_mob_delete(mob/living/L)
@@ -195,16 +195,16 @@
 	hearing_args[HEARING_SPANS] += "small"
 
 /datum/reagent/impure/cryosenium
-	name = "cyrogelidia"
+	name = "Cyrogelidia"
 	id = "cryosenium_impure"
 	description = "Freezes the patient in an incuded cyrostasis where they won't take damage or heal. Useful for patients in critical condition so you can grab a cup of tea."
 	reagent_state = LIQUID
 	color = "#03dbfc"
 	metastress = 0
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
-	pH = 1
+	pH = 14
 	chemical_flags = REAGENT_DEAD_PROCESS
-	metabolization_rate = 1
+	metabolization_rate = 2.5
 
 /datum/reagent/impure/cryosenium/on_mob_add(mob/living/carbon/M, amount)
 	M.apply_status_effect(/datum/status_effect/cryosenium)

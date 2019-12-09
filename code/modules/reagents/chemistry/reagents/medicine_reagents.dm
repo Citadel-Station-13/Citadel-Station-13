@@ -1594,7 +1594,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
 	id = "multiver"
-	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by Yamerol medicines)."
+	description = "A purge chem that becomes more effective the more unique medicines present. Slightly heals toxicity while purging all toxins and alcohols but causes lung damage (mitigatable by Yamerol medicines). The purging speed is equal to the total unique medicines and having 5+ unique meds (4+multiver) will make it not purge medicines."
+	color = "#a903fc"
 
 //Wait so... this works by what? You want at least 5 medicines?
 /datum/reagent/medicine/multiver/on_mob_life(mob/living/carbon/human/M)
@@ -1604,7 +1605,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 4.5/medibonus : 3)//Our lungs are 300hp instead of 100.
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 3/medibonus : 2)//Our lungs are 300hp instead of 100.
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.adjustMetabolicStress(1/medibonus)
@@ -1636,7 +1637,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
 	name = "Polypyrylium Oligomers"
 	id = "polypyr"
-	description = "A�purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
+	description = "A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
 	reagent_state = SOLID
 	color = "#9423FF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM

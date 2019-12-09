@@ -56,16 +56,16 @@
 					if(istype(R, /datum/reagent/medicine)) //Is this a medicine?
 						if(M.reagents.has_reagent(R.id))
 							if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
-								M.reagents.add_reagent(R.id, R.volume)
+								M.reagents.add_reagent(R.id, R.volume, added_purity = R.purity)
 							else
 								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1)
-								M.reagents.add_reagent(R.id, transVol)
+								M.reagents.add_reagent(R.id, transVol, added_purity = R.purity)
 						else
 							if(!R.overdose_threshold == 0)
 								var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
-								M.reagents.add_reagent(R.id, transVol)
+								M.reagents.add_reagent(R.id, transVol, added_purity = R.purity)
 							else
-								M.reagents.add_reagent(R.id, R.volume)
+								M.reagents.add_reagent(R.id, R.volume, added_purity = R.purity)
 
 
 

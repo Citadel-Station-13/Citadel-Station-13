@@ -549,7 +549,7 @@
 	name = "Cryosenium"
 	id = "cryosenium"
 	results = list("cryosenium" = 2.5)
-	required_reagents = list("cryoxadone" = 1, "ice" = 1, "sterilizine" = 1)
+	required_reagents = list("cryoxadone" = 1, "ice" = 1, "cryostylane" = 1) //consider sterilizine if needed.
 	//FermiChem vars:
 	OptimalTempMin 	= 1
 	OptimalTempMax 	= 300
@@ -575,7 +575,7 @@
 		FermiExplode(R, R.my_atom, R.total_volume, R.chem_temp, R.pH)
 		return
 	var/datum/reagent/medicine/cryosenium/C = R.has_reagent("cryosenium")
-	var/step_purity = CLAMP(((R.chem_temp-50)/250), 0, 1)
+	var/step_purity = ((R.chem_temp-50)/250)
 	C.purity = ((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume))
 	..()
 
@@ -590,10 +590,10 @@
 		if(!(istype(I, /turf/open)))
 			continue
 		var/turf/open/T2 = I
-		T2.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 5*_radius, wet_time_to_add = 5)
+		T2.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 2*_radius, wet_time_to_add = 5)
 		var/datum/gas_mixture/turf/G = T2.air
 		G.temperature = temp
 
 	for(var/P in required_reagents)
-		R.remove_reagent(P, 5)
+		R.remove_reagent(P, 15)
 	..()

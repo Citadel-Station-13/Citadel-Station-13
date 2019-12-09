@@ -53,6 +53,9 @@
 						<ui-bar min=0 max=14 value='{{data.occupant.pH}}'
 						  state='{{data.occupant.pHcolor}}'>{{data.occupant.pHState}}</ui-bar>
 						</ui-section>
+						<ui-section label=Volume>
+						<span class='{{data.occupant.stomachColor}}'>{{data.occupant.stomachVol}}u</span>
+						</ui-section>
 					{{/if}}
 				{{/if}}
 
