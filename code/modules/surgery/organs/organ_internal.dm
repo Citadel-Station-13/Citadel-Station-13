@@ -85,7 +85,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/mob/living/carbon/C  = owner
-	if(C.reagents && C.reagents.has_reagent("cryosenium")) //Prevents organ decay
+	if(C && C.reagents && C.reagents.has_reagent("cryosenium")) //Prevents organ decay
 		return
 	is_cold()
 	if(organ_flags & ORGAN_FROZEN)

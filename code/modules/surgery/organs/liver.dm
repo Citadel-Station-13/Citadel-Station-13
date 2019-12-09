@@ -182,6 +182,11 @@
 	desc = "A sponge like organ that absorbs and filters out impure reagents when unstressed."
 	maxHealth = 90 //Slimes can treat liver damage a lot easier than most.
 
+/obj/item/organ/liver/slime/on_life()
+	.=..()
+	if(metabolic_stress < -95)
+		owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_END_STAGE)
+
 /obj/item/organ/liver/slime/metabolic_stress_calc()
 	var/mob/living/carbon/C = owner
 	var/ignoreMeds = FALSE
@@ -255,7 +260,7 @@
 			//medicines apply stress
 			if(istype(pickedreagent, /datum/reagent/medicine))
 				var/datum/reagent/medicine/M = I
-				adjustMetabolicStress(M.metabolization_rate*1.5, absolute = TRUE)
+				adjustMetabolicStress(M.metabolization_rate/2, absolute = TRUE)
 
 	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
 		ignoreMeds = /datum/reagent/medicine

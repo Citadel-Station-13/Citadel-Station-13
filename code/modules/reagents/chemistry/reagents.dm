@@ -116,6 +116,7 @@
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
 		var/datum/reagent/R2 = M.reagents.has_reagent(inverse_chem)
+		if(R2)
 			R2.cached_purity = temp_purity
 
 

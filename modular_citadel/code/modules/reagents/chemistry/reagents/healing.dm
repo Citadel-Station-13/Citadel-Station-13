@@ -272,10 +272,12 @@
 	name = "Cryosenium"
 	id = "cryosenium"
 	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
+	taste_description = "ice"
 	chemical_flags = REAGENT_DEAD_PROCESS
 	purity = 1//for syringe
+	color = "#03f4fc"
 	impure_chem 		= "generic_impure"
-	inverse_chem_val 	= 0.35
+	inverse_chem_val 	= 0.4
 	inverse_chem 		= "cryosenium_impure"
 	metabolization_rate = 0.05
 

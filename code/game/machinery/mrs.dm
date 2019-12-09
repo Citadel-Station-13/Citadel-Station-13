@@ -178,23 +178,24 @@
 		var/mob/living/carbon/C = scannedmob
 
 		//Stomach pH
-		switch(C.reagents.pH)
-			if(-INFINITY to 4)
-				data["occupant"]["pHState"] = "Extremely acidic"
-				data["occupant"]["pHcolor"] = "bad"
-			if(4 to 5.5)
-				data["occupant"]["pHState"] = "Too acidic"
-				data["occupant"]["pHcolor"] = "average"
-			if(5.5 to 8.5)
-				data["occupant"]["pHState"] = "Healthy pH" //bad index once? But why?
-				data["occupant"]["pHcolor"] = "good"
-			if(8.5 to 10)
-				data["occupant"]["pHState"] = "Too basic"
-				data["occupant"]["pHcolor"] = "highlight"
-			if(10 to INFINITY)
-				data["occupant"]["pHState"] = "Extremely basic"
-				data["occupant"]["pHcolor"] = "purple"
-		data["occupant"]["pH"] = C.reagents.pH
+		if(C.reagents)
+			switch(C.reagents.pH)
+				if(-INFINITY to 4)
+					data["occupant"]["pHState"] = "Extremely acidic"
+					data["occupant"]["pHcolor"] = "bad"
+				if(4 to 5.5)
+					data["occupant"]["pHState"] = "Too acidic"
+					data["occupant"]["pHcolor"] = "average"
+				if(5.5 to 8.5)
+					data["occupant"]["pHState"] = "Healthy pH" //bad index once? But why?
+					data["occupant"]["pHcolor"] = "good"
+				if(8.5 to 10)
+					data["occupant"]["pHState"] = "Too basic"
+					data["occupant"]["pHcolor"] = "highlight"
+				if(10 to INFINITY)
+					data["occupant"]["pHState"] = "Extremely basic"
+					data["occupant"]["pHcolor"] = "basic"
+			data["occupant"]["pH"] = C.reagents.pH
 
 		//Organ scan
 		data["occupant"]["organs"] = list()

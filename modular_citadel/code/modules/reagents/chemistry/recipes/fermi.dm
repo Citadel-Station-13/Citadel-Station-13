@@ -579,7 +579,7 @@
 	C.purity = ((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume))
 	..()
 
-/datum/chemical_reaction/cryosenium/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+/datum/chemical_reaction/cryosenium/FermiExplode(datum/reagents/R, var/atom/my_atom, volume, temp, pH)
 	playsound(my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
 	var/_radius = max((volume/100), 1)
@@ -593,4 +593,7 @@
 		T2.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 5*_radius, wet_time_to_add = 5)
 		var/datum/gas_mixture/turf/G = T2.air
 		G.temperature = temp
+
+	for(var/P in required_reagents)
+		R.remove_reagent(P, 5)
 	..()
