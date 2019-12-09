@@ -1,3 +1,5 @@
+#define NIGHT_VISION_DARKSIGHT_RANGE 3
+
 /obj/item/organ/eyes
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
@@ -47,7 +49,7 @@
 			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
 		if(HAS_TRAIT(H, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-			see_in_dark = 8
+			see_in_dark = NIGHT_VISION_DARKSIGHT_RANGE
 	M.update_tint()
 	owner.update_sight()
 
