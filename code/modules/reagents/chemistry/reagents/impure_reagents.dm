@@ -204,11 +204,18 @@
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	pH = 14
 	chemical_flags = REAGENT_DEAD_PROCESS
-	metabolization_rate = 2.5
+	metabolization_rate = 2
 
 /datum/reagent/impure/cryosenium/on_mob_add(mob/living/carbon/M, amount)
 	M.apply_status_effect(/datum/status_effect/cryosenium)
 	..()
+
+/datum/reagent/impure/cryosenium/on_mob_life(mob/living/carbon/M)
+	if(M.has_status_effect(/datum/status_effect/cryosenium))
+		return ..()
+	M.reagents.remove_reagent(id, volume)
+	..()
+
 
 /datum/reagent/impure/cryosenium/on_mob_delete(mob/living/carbon/M, amount)
 	M.remove_status_effect(/datum/status_effect/cryosenium)

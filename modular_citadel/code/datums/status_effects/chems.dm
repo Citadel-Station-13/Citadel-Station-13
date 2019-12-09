@@ -16,6 +16,7 @@
 /datum/status_effect/cryosenium/on_apply()
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	cube.color = "#03dbfc"
+	cube.anchored = 1
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
 	return ..()
