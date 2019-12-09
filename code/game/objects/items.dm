@@ -580,7 +580,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, messy_throw = TRUE)
 	thrownby = thrower
-	callback = CALLBACK(src, .proc/after_throw, callback, messy_throw) //replace their callback with our own
+	callback = CALLBACK(src, .proc/after_throw, callback, (spin && messy_throw)) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback, messy_throw)
