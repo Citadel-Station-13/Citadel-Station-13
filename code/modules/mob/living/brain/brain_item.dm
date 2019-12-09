@@ -266,7 +266,9 @@
 		return
 	if(damage > high_threshold) //Stops brains from fully decaying
 		return
-	if(owner.has_reagent("cyrosenium"))
+	var/living/carbon/C = owner
+	var/mob/living/carbon/C  = owner
+	if(C.reagents && C.reagents.has_reagent("cryosenium")) //Prevents organ decay
 		return
 	is_cold()
 	if(organ_flags & ORGAN_FROZEN)

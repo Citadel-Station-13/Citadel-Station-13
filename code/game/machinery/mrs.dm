@@ -139,7 +139,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mrs", name, 375, 600, master_ui, state)
+		ui = new(user, src, ui_key, "mrs", name, 420, 600, master_ui, state)
 		ui.open()
 
 /obj/machinery/MRS/ui_data()
@@ -186,7 +186,7 @@
 				data["occupant"]["pHState"] = "Too acidic"
 				data["occupant"]["pHcolor"] = "average"
 			if(5.5 to 8.5)
-				data["occupant"]["pHState"] = "Healthy pH"
+				data["occupant"]["pHState"] = "Healthy pH" //bad index once? But why?
 				data["occupant"]["pHcolor"] = "good"
 			if(8.5 to 10)
 				data["occupant"]["pHState"] = "Too basic"
@@ -221,7 +221,7 @@
 				if(efficiency > 3 && (Or.damage > 0 && Or.damage < Or.maxHealth))
 					state += ": [round(Or.damage, 0.1)]"
 
-				data["occupant"]["organs"] += list(list("name" = uppertext(Or.name), "damage" = Or.damage, "max_damage" = Or.maxHealth, "state" = state, "color" = textcolor))
+				data["occupant"]["organs"] += list(list("name" = uppertext(Or.name), "slot" = uppertext(Or.slot), "damage" = Or.damage, "max_damage" = Or.maxHealth, "state" = state, "color" = textcolor))
 
 				//Brain
 				if(istype(Or, /obj/item/organ/brain))
@@ -251,12 +251,19 @@
 					switch(L.metabolic_stress)
 						if(-INFINITY to -95)
 							if(slimeLiver)
-								data["occupant"]["metabolicColour"] = "basic"
+								data["occupant"]["metabolicColour"] = "bad"
 								data["occupant"]["metabolicStressMax"] = -100
-								data["occupant"]["metabolicStress"] = "End Stage liver treatment [round(L.metabolic_stress, 0.1)]%"
+								data["occupant"]["metabolicStress"] = "Extreme toxin saturation [round(L.metabolic_stress, 0.1)]%"
 								data["occupant"]["metabolicStressMin"] = 0
 								data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
-						if(-95 to -25)
+						if(-95 to -55)
+							if(slimeLiver)
+								data["occupant"]["metabolicColour"] = "average"
+								data["occupant"]["metabolicStressMax"] = -100
+								data["occupant"]["metabolicStress"] = "High toxin saturation [round(L.metabolic_stress, 0.1)]%"
+								data["occupant"]["metabolicStressMin"] = 0
+								data["occupant"]["metabolicStressVal"] = round(L.metabolic_stress, 0.1)
+						if(-55 to -25)
 							data["occupant"]["metabolicColour"] = "basic"
 							if(slimeLiver)
 								data["occupant"]["metabolicStressMax"] = -100

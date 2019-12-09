@@ -20,7 +20,6 @@
       <ui-bar min=0 max=100 value='{{isText(data.occupant.metabolicStress) ? 100 : data.occupant.metabolicStress}}'
         state='{{data.occupant.metabolicColour}}'>{{data.occupant.metabolicStress}}</ui-bar>
     </ui-section>
-
     {{#if data.occupant.blood}}
       <ui-section label='Blood'>
         <ui-section label='Volume'>

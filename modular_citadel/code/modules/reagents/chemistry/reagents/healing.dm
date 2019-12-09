@@ -266,14 +266,15 @@
 		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
 
-/datum/reagent/medicine/cyrosenium
-	name = "Cyrosenium"
-	id = "cyrosenium"
+/datum/reagent/medicine/cryosenium
+	name = "Cryosenium"
+	id = "cryosenium"
 	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
 	chemical_flags = REAGENT_DEAD_PROCESS
 	purity = 1//for syringe
-	impure_chem 		= "cyrosenium_impure"
+	impure_chem 		= "generic_impure"
 	inverse_chem_val 	= 0.35
+	inverse_chem 		= "cryosenium_impure"
 	metabolization_rate = 0.05
 
 //Pauses decay! Does do something, I promise.

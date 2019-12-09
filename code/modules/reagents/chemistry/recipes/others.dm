@@ -717,3 +717,4 @@
 	required_reagents = list("water" = 1)
 	is_cold_recipe = TRUE
 	required_temp = 250
+	mix_message = "The solution freezes up into ice!"

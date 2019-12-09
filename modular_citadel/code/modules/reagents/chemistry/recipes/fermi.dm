@@ -545,7 +545,7 @@
 		A2.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)
 
-/datum/chemical_reaction/cyrosenium
+/datum/chemical_reaction/cryosenium
 	name = "Cryosenium"
 	id = "cryosenium"
 	results = list("cryosenium" = 2.5)
@@ -568,29 +568,29 @@
 	PurityMin 		= 0.1
 
 //purity != temp (above 50)
-/datum/chemical_reaction/cyrosenium/FermiCreate(datum/reagents/holder, added_volume, added_purity)
-	var/datum/reagents/R = holder.reagents
+/datum/chemical_reaction/cryosenium/FermiCreate(datum/reagents/R, added_volume, added_purity)
 	if(!R)
 		return
 	if(R.chem_temp < 20)
-		FermiExplode(R, holder, R.volume, R.chem_temp, R.pH)
+		FermiExplode(R, R.my_atom, R.total_volume, R.chem_temp, R.pH)
 		return
-	var/datum/reagent/medicine/cyrosenium/C = R.has_reagent("cyrosenium")
+	var/datum/reagent/medicine/cryosenium/C = R.has_reagent("cryosenium")
 	var/step_purity = CLAMP(((R.chem_temp-50)/250), 0, 1)
 	C.purity = ((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume))
 	..()
 
-/datum/chemical_reaction/cyrosenium/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+/datum/chemical_reaction/cryosenium/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	playsound(my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
 	var/_radius = max((volume/100), 1)
 	if(temp < 100)
-		_radius * 2
+		_radius *= 2
 
 	for(var/I in circlerangeturfs(center=my_atom, radius=_radius))
-		var/turf/T = I
-		if(istype(T, var/turf/open))
-			T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
-		var/datum/gas_mixture/turf/G = T.air
+		if(!(istype(I, /turf/open)))
+			continue
+		var/turf/open/T2 = I
+		T2.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 5*_radius, wet_time_to_add = 5)
+		var/datum/gas_mixture/turf/G = T2.air
 		G.temperature = temp
 	..()

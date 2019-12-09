@@ -260,7 +260,7 @@
 	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
 		ignoreMeds = /datum/reagent/medicine
 
-	C.reagents.metabolize(C, can_overdose=TRUE, toxresist = ignoreMeds)
+	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = ignoreMeds)
 
 	var/metabolic_replenish = (((((damage*100)/maxHealth)/100))/10)+0.05 //0.05 - 0.15 - slower regen
 	if(metabolic_stress > 0)

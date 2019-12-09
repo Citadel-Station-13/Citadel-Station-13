@@ -431,7 +431,7 @@
 	initial_contents = list(
 		/obj/item/reagent_containers/medspray/synthtissue = 1,
 		/obj/item/reagent_containers/medspray/sterilizine = 1,
-		/obj/item/reagent_containers/syringe/cyrosenium = 1)
+		/obj/item/reagent_containers/syringe/cryosenium = 1)
 
 /obj/machinery/smartfridge/organ/preloaded/Initialize()
 	..()

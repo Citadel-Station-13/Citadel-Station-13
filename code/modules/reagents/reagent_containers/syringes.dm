@@ -186,10 +186,10 @@
 	desc = "Contains charcoal."
 	list_reagents = list("charcoal" = 15)
 
-/obj/item/reagent_containers/syringe/cyrosenium
-	name = "syringe (cyrosenium)"
-	desc = "Contains cyrosenium - used to freeze a corpse's organs for a short time. 5u is good for 3 minutes."
-	list_reagents = list("cyrosenium" = 15)
+/obj/item/reagent_containers/syringe/cryosenium
+	name = "syringe (cryosenium)"
+	desc = "Contains cryosenium - used to freeze a corpse's organs for a short time. 5u is good for 3 minutes."
+	list_reagents = list("cryosenium" = 15)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"

@@ -25,7 +25,7 @@
 			<ui-section label={{name}}>
 				<ui-bar min='0' max='{{max_damage}}' value='{{damage}}' state='{{color}}'>{{state}}</ui-bar>
 
-				{{#if name == "BRAIN"}}
+				{{#if slot == "BRAIN"}}
 					{{#if data.occupant.traumalist}}
 						<ui-section label=Traumas>
 						{{#each data.occupant.traumalist}}
@@ -36,7 +36,7 @@
 					{{/if}}
 				{{/if}}
 
-				{{#if name == "LIVER"}}
+				{{#if slot == "LIVER"}}
 					<ui-section label=Stress>
 					<ui-bar min='{{data.occupant.metabolicStressMin}}' max='{{data.occupant.metabolicStressMax}}' value='{{data.occupant.metabolicStressVar}}'
 					  state='{{data.occupant.metabolicColour}}'>{{data.occupant.metabolicStress}}</ui-bar>
@@ -47,7 +47,7 @@
 					{{/if}}
 				{{/if}}
 
-				{{#if name == "STOMACH"}}
+				{{#if slot == "STOMACH"}}
 					{{#if data.occupant.pH}}
 						<ui-section label=pH>
 						<ui-bar min=0 max=14 value='{{data.occupant.pH}}'
@@ -56,7 +56,7 @@
 					{{/if}}
 				{{/if}}
 
-				{{#if name == "LUNGS"}}
+				{{#if slot == "LUNGS"}}
 					{{#if data.occupant.lungcollapse}}
 						<br/>
 						<span class='average'>{{data.occupant.lungcollapse}}</span>
