@@ -135,6 +135,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
+	var/turf/T = get_turf(src)
+	T = get_step(T, movedir)
+	if(length(T.contents) > 150)
+		return
 	for(var/atom/movable/A in affecting)
 		if((A.loc == loc) && A.has_gravity())
 			A.ConveyorMove(movedir)
