@@ -839,7 +839,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(eyes.eye_damage > 0)
+	else if(eyes.damage > 0)
 		if(cached_purity > 0.89)
 			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_END_STAGE)
 		else
