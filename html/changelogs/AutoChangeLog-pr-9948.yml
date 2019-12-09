@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Morgues' original alert beeping sound has been restored, they no longer go \"ammunition depleted\""

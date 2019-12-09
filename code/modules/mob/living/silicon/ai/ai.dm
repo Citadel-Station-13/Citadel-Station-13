@@ -176,13 +176,13 @@
 	fire_stacks = 0
 	. = ..()
 
-/mob/living/silicon/ai/proc/set_core_display_icon(client/C)
+/mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	if(client && !C)
 		C = client
-	if(!(C?.prefs?.preferred_ai_core_display))
-		icon_state = display_icon_override || initial(icon_state)
+	if(!input && !C?.prefs?.preferred_ai_core_display)
+		icon_state = initial(icon_state)
 	else
-		var/preferred_icon = display_icon_override || C.prefs.preferred_ai_core_display
+		var/preferred_icon = input ? input : C.prefs.preferred_ai_core_display
 		icon_state = resolve_ai_icon(preferred_icon)
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -202,8 +202,9 @@
 
 	if(!ai_core_icon || incapacitated())
 		return
+
 	display_icon_override = ai_core_icon
-	set_core_display_icon()
+	set_core_display_icon(ai_core_icon)
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -600,7 +601,10 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	emote_display = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/n_emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	if(!n_emote)
+		return
+	emote_display = n_emote
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
 		M.emotion = emote_display
@@ -887,7 +891,7 @@
 	. = ..()
 	if(.) //successfully ressuscitated from death
 		set_eyeobj_visible(TRUE)
-		set_core_display_icon()
+		set_core_display_icon(display_icon_override)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null

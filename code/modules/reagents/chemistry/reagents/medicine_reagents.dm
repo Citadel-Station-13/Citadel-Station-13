@@ -840,10 +840,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		M.set_blindness(0)
 		M.set_blurriness(0)
 	else if(eyes.eye_damage > 0)
-		if(cached_purity > 0.9)
-			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*1.2), ORGAN_TREAT_END_STAGE)
+		if(cached_purity > 0.89)
+			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_END_STAGE)
 		else
-			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*1.2), ORGAN_TREAT_CHRONIC)
+			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/L)
