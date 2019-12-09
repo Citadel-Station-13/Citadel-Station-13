@@ -155,9 +155,10 @@
 	var/target_temperature
 	var/target_heat_capacity
 	// first calculate heat from radiation. there's an implied "* 1 tick" here.
-	// Minimizing temp to 4 billion is mostly to prevent -infinity temperatures.
 	// 0.05 magic multiplicand is, first, 0.1 deciseconds; second, half of the radiation's going right back into the gas.
-	var/heat = (STEFANBOLTZMANN*(share_volume**(2/3))*(min(air.temperature,4000000000)**4))*0.05
+	var/share_constant = STEFANBOLTZMANN*(share_volume**(2/3))*0.05
+	// Minimizing temp to 4 billion is mostly to prevent -infinity temperatures.
+	var/heat = share_constant*(min(air.temperature,4000000000)**4)
 
 	if(isopenturf(target))
 
@@ -169,7 +170,7 @@
 
 			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
 				var/delta_temperature = air.temperature - target_temperature
-
+				heat -= share_constant*(min(target_temperature,4000000000)**4)
 				heat += thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
 
@@ -187,6 +188,7 @@
 			var/sharer_temperature_delta = 0
 
 			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
+				heat -= share_constant*(min(target_temperature,4000000000)**4)
 				heat += thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
 
@@ -203,6 +205,7 @@
 		if((target.heat_capacity>0) && (partial_heat_capacity>0))
 			var/delta_temperature = air.temperature - target.temperature
 
+			heat -= share_constant*(min(target.temperature,4000000000)**4)
 			heat += thermal_conductivity*delta_temperature* \
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
