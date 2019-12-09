@@ -70,7 +70,7 @@
 		current_cycle = 0
 		return
 	current_cycle++
-	playsound(occupant, 'sound/diagnostics/MRS.ogg', 80, 0)
+	playsound(occupant, 'sound/machines/diagnostics/MRS.ogg', 80, 0)
 	update_icon()
 
 /obj/machinery/MRS/emp_act(severity)
