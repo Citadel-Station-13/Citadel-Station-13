@@ -625,14 +625,6 @@
 			sleeper_overlay = "valesecsleeper"
 	return ..()
 
-/obj/item/robot_module/security/Initialize()
-	. = ..()
-	if(!CONFIG_GET(flag/weaken_secborg))
-		for(var/obj/item/gun/energy/disabler/cyborg/pewpew in basic_modules)
-			basic_modules -= pewpew
-			basic_modules += new /obj/item/gun/energy/e_gun/advtaser/cyborg(src)
-			qdel(pewpew)
-
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(

@@ -664,10 +664,8 @@
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
-	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
-	nonlethal_projectile = /obj/item/projectile/beam/disabler
-	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
+	stun_projectile = /obj/item/projectile/beam/disabler
+	stun_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
@@ -675,10 +673,8 @@
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
-	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
-	nonlethal_projectile = /obj/item/projectile/beam/disabler
-	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
+	stun_projectile = /obj/item/projectile/beam/disabler
+	stun_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
@@ -716,8 +712,6 @@
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
-	nonlethal_projectile = /obj/item/projectile/beam/disabler
-	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction

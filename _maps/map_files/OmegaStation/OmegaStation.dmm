@@ -5186,11 +5186,6 @@
 /area/quartermaster/storage)
 "aiR" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun/advtaser,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -5200,6 +5195,11 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/item/gun/energy/disabler,
+/obj/item/gun/energy/disabler{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)

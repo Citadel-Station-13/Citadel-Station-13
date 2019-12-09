@@ -12,7 +12,7 @@
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
-	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
+	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: disable and kill."
 	icon_state = "mini"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
@@ -55,7 +55,7 @@
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
@@ -77,12 +77,12 @@
 
 /obj/item/gun/energy/e_gun/turret
 	name = "hybrid turret gun"
-	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
+	desc = "A heavy hybrid energy cannon with two settings: Disable and kill."
 	icon_state = "turretlaser"
 	item_state = "turretlaser"
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_NONE
@@ -97,7 +97,7 @@
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	selfcharge = EGUN_SELFCHARGE
 	var/fail_tick = 0
 	var/fail_chance = 0

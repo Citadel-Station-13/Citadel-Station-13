@@ -39,8 +39,8 @@
 	var/weaponscheck = TRUE //If true, arrest people for weapons if they don't have access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
-	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
-	var/shoot_sound = 'sound/weapons/taser.ogg'
+	var/projectile = /obj/item/projectile/energy/disabler //Holder for projectile type
+	var/shoot_sound = 'sound/weapons/taser2.ogg'
 	var/cell_type = /obj/item/stock_parts/cell
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
