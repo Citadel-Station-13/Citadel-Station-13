@@ -4,8 +4,8 @@
 /datum/status_effect/cryosenium
 	id = "cryosenium"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1 //Will remove self when reagent is processed.
-	alert_type = /obj/screen/alert/status_effect/freon/stasis/cyosenium
+	duration = 40 //Will remove self when reagent is processed, though limited to 40 to be safe
+	alert_type = /obj/screen/alert/status_effect/freon/stasis/cryosenium
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/cryosenium/on_apply()
@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/status_effect/cryosenium/tick()
-	if(!cube || owner.loc != cube || !owner.has_reagent("cryosenium")) //mostly a just in case kinda thing.
+	if(!cube || owner.loc != cube || !owner.reagents.has_reagent("cryosenium")) //mostly a just in case kinda thing.
 		owner.remove_status_effect(src)
 
 /datum/status_effect/cryosenium/on_remove()

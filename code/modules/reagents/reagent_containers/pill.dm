@@ -197,6 +197,13 @@
 	list_reagents = list("prussian_blue" = 15, "potass_iodide" = 15, "mutadone" = 15, "water" = 5)
 	roundstart = 1
 
+/obj/item/reagent_containers/pill/antacid
+	name = "antacid pill"
+	desc = "Used to treat acidic heartburn in patients."
+	icon_state = "pill17"
+	list_reagents = list("antacid" = 15)
+	roundstart = 1
+
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"

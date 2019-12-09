@@ -219,7 +219,7 @@
 		M.visible_message("The synthetic tissue degrades off [M]'s wounds as they collapse to the floor.")
 //NEEDS ON_MOB_DEAD()
 
-/datum/reagent/antacidpregen
+/datum/reagent/medicine/antacidpregen
 	name = "Antacid pregenitor"
 	id = "antacidpregen"
 	description = "A chem that turns into an antacid or antbase depending on it's reaction conditions. At the end of a reaction it'll turn into either an antacid for treating acidic stomachs, or an antbase for alkaline. Upon conversion the purity is inverted, the more extreme the pH is on reaction, the more effective it is."
@@ -232,7 +232,7 @@
 	//OD gives kidney stones
 	//Reduces Peptic ulcer disease severity too.
 
-/datum/reagent/antacidpregen/on_mob_life(mob/living/carbon/C)
+/datum/reagent/medicine/antacidpregen/on_mob_life(mob/living/carbon/C)
 	var/stomach_heal = -((cached_purity-0.5)*3)
 	if(stomach_heal<0)
 		C.cureOrganDamage(ORGAN_SLOT_TONGUE, stomach_heal, ORGAN_TREAT_ACUTE)
@@ -240,29 +240,31 @@
 		C.adjustOrganLoss(ORGAN_SLOT_STOMACH, stomach_heal)
 	..()
 
-/datum/reagent/antacidpregen/antacid
+/datum/reagent/medicine/antacidpregen/antacid
 	name = "Antacid"
 	id = "antacid"
 	description = "Antacids neutralise overly acidic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
 	color = "#f29b22"
+	purity = 0.8
 
-/datum/reagent/antacidpregen/antacid/on_mob_life(mob/living/carbon/C)
+/datum/reagent/medicine/antacidpregen/antacid/on_mob_life(mob/living/carbon/C)
 	if(C.reagents.pH < 6.5)
 		C.reagents.pH += cached_purity/2
-	else if(C.reagents.pH > 7.5)
+	else if(C.reagents.pH < 7.5)
 		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
 
-/datum/reagent/antacidpregen/antbase
+/datum/reagent/medicine/antacidpregen/antbase
 	name = "Antbase"
 	id = "antbase"
 	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Stomach damage at high purities, but causes it at low."
 	color = "#853cfa"
+	purity = 0.8
 
-/datum/reagent/antacidpregen/antbase/on_mob_life(mob/living/carbon/C)
+/datum/reagent/medicine/antacidpregen/antbase/on_mob_life(mob/living/carbon/C)
 	if(C.reagents.pH > 7.5)
 		C.reagents.pH -= cached_purity/2
-	else if(C.reagents.pH < 6.5)
+	else if(C.reagents.pH > 6.5)
 		C.cureOrganDamage(ORGAN_SLOT_STOMACH, cached_purity, ORGAN_TREAT_ACUTE)
 	..()
 

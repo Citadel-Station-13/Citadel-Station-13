@@ -531,17 +531,17 @@
 	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
 
 /datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, var/atom/my_atom, added_volume)
-	var/datum/reagent/antacidpregen/A = holder.has_reagent("antacidpregen")
+	var/datum/reagent/medicine/antacidpregen/A = holder.has_reagent("antacidpregen")
 	if(!A)
 		return
 	if(holder.pH < 7)
 		holder.add_reagent("antbase", added_volume, added_purity = 1-A.purity)
-		var/datum/reagent/antacidpregen/antbase/B = holder.has_reagent("antbase")
+		var/datum/reagent/medicine/antacidpregen/antbase/B = holder.has_reagent("antbase")
 		B.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)
 	else
 		holder.add_reagent("antacid", added_volume, added_purity = 1-A.purity)
-		var/datum/reagent/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
+		var/datum/reagent/medicine/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
 		A2.cached_purity = 1-A.purity
 		holder.remove_reagent(id, added_volume)
 
@@ -560,7 +560,7 @@
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 0.5
 	CurveSharppH 	= 0.5
-	ThermicConstant = -5
+	ThermicConstant = -3
 	HIonRelease 	= 0
 	RateUpLim 		= 5
 	FermiChem 		= TRUE
