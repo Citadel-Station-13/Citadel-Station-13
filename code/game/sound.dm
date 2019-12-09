@@ -42,7 +42,7 @@
 	S.volume = vol
 	S.environment = 7
 	if(stream)
-		S.status = SOUND_STREAM | SOUND_UPDATE
+		S.status |= SOUND_STREAM
 
 	if(vary)
 		if(frequency)
