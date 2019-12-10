@@ -94,11 +94,8 @@
 	var/list/possible_candidates = list()
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
-	send_applications(possible_candidates)
-	if(assigned.len > 0)
-		return TRUE
-	else
-		return FALSE
+	var/application_successful = send_applications(possible_candidates)
+	return assigned.len > 0 && application_successful
 
 /// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
@@ -113,14 +110,12 @@
 	if(!candidates || candidates.len <= required_candidates)
 		message_admins("The ruleset [name] did not receive enough applications.")
 		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
-		mode.refund_threat(cost)
-		mode.log_threat("Rule [name] refunded [cost] (not receive enough applications)",verbose=TRUE)
-		mode.executed_rules -= src
-		return
+		return FALSE
 
 	message_admins("[candidates.len] players volunteered for the ruleset [name].")
 	log_game("DYNAMIC: [candidates.len] players volunteered for [name].")
 	review_applications()
+	return TRUE
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
