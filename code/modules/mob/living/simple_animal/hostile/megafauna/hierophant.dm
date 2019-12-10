@@ -441,7 +441,7 @@ Difficulty: Normal
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
-		return
+		return altclick_listed_turf(A)
 	blink(A)
 
 //Hierophant overlays
