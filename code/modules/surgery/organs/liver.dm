@@ -147,7 +147,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = ignoreTox)
 
-	var/metabolic_replenish = ((2*(((damage*100)/maxHealth)/100))/10)+0.05 //0.05 - 0.25
+	var/metabolic_replenish = 0.25-((2*(((damage*100)/maxHealth)/100))/10)//0.05 - 0.25
 	if(metabolic_stress > 0)
 		adjustMetabolicStress(-metabolic_replenish)
 	else if (metabolic_stress < 0)
@@ -267,7 +267,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = ignoreMeds)
 
-	var/metabolic_replenish = (((((damage*100)/maxHealth)/100))/10)+0.05 //0.05 - 0.15 - slower regen
+	var/metabolic_replenish = 0.15-(((((damage*100)/maxHealth)/100))/10) //0.05 - 0.15 - slower regen
 	if(metabolic_stress > 0)
 		adjustMetabolicStress(-metabolic_replenish, absolute = TRUE)
 	else if (metabolic_stress < 0)

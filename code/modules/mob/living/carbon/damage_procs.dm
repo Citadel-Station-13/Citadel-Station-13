@@ -136,6 +136,8 @@
 		return
 	if(!amount) //Micro-optimization.
 		return
+	if(O.damage == 0)
+		return
 	if(threshold == ORGAN_TREAT_ACUTE && O.damage>O.high_threshold) //0-45%
 		return
 	if(threshold == ORGAN_TREAT_CHRONIC && O.damage>=O.maxHealth)//45-100%

@@ -143,7 +143,7 @@
 			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_END_STAGE)
 		else
 			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_CHRONIC)
-		return
+		return ..()
 	M.restoreEars()
 	..()
 
@@ -826,6 +826,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
+	//Treatment
+	if(cached_purity > 0.89)
+		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_END_STAGE)
+	else
+		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_CHRONIC)
+
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE) && eyes.damage < 30)
 		if(prob(2*cached_purity))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -839,11 +845,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(eyes.damage > 0)
-		if(cached_purity > 0.89)
-			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_END_STAGE)
-		else
-			M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/L)
