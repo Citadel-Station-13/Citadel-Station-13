@@ -69,7 +69,7 @@
 	if(!C)
 		return
 	//since we can repair fully damaged eyes, check if healing has occurred
-	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE) && !(organ_flags & ORGAN_FAILING))
+	if(HAS_TRAIT_FROM(C, TRAIT_BLIND, EYE_DAMAGE) && !(organ_flags & ORGAN_FAILING))
 		C.cure_blind(EYE_DAMAGE)
 	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
 	if(damage > low_threshold)
@@ -84,7 +84,6 @@
 	else if(damaged)
 		damaged = FALSE
 		C.clear_fullscreen("eye_damage")
-	return
 
 /obj/item/organ/eyes/proc/clear_eye_trauma()
 	var/mob/living/carbon/C = owner
