@@ -1,6 +1,5 @@
 /obj/vehicle/sealed/vectorcraft/rideable/Initialize()
 	. = ..()
-	LoadComponent(/datum/component/riding)
 
 /obj/vehicle/sealed/vectorcraft/rideable/post_unbuckle_mob(mob/living/M)
 	remove_occupant(M)
@@ -16,12 +15,21 @@
 	.=..()
 	driver.pixel_x = pixel_x
 	driver.pixel_y = pixel_y
-	var/datum/component/riding/R = GetComponent(/datum/component/riding)
-	R.handle_ride(driver, calc_angle())
-
+	driver.forceMove(src.loc)
+	driver.dir = dir
 
 /obj/vehicle/sealed/vectorcraft/rideable/mob_enter(mob/living/M)
-	.=..()
+	if(!istype(M))
+		return FALSE
+	M.visible_message("<span class='notice'>[M] climbs into \the [src]!</span>")
+	M.forceMove(src.loc)
+	add_occupant(M)
+	return TRUE
+	if(!driver)
+		driver = M
+		if(gear != "auto")
+			gear = driver.a_intent
+	start_engine()
 	driver.pixel_x = pixel_x
 	driver.pixel_y = pixel_y
 
@@ -49,15 +57,6 @@
 	max_velocity = 20
 	boost_power = 15
 	gear = "auto"
-
-/obj/vehicle/sealed/vectorcraft/rideable/wheelchair/Initialize()
-	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
-	D.set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /obj/vehicle/sealed/vectorcraft/rideable/wheelchair/ComponentInitialize()	//Since it's technically a chair I want it to have chair properties
 	. = ..()

@@ -91,7 +91,10 @@
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
-
+		if(iscarbon(current))
+			var/mob/living/carbon/C = current
+			if(C.combatmode)
+				C.toggle_combat_mode(TRUE, TRUE)
 	if(!language_holder)
 		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
 		language_holder = mob_holder.copy(src)

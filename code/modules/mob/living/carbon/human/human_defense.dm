@@ -339,8 +339,10 @@
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
-
 	if(M.occupant.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
+			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -778,7 +780,7 @@
 					broken_plural = TRUE
 				else
 					var/holder = broken[1]	//our one and only element
-					if(holder[lentext(holder)] == "s")
+					if(holder[length(holder)] == "s")
 						broken_plural = TRUE
 				//Put the items in that list into a string of text
 				for(var/B in broken)
@@ -790,7 +792,7 @@
 					damaged_plural = TRUE
 				else
 					var/holder = damaged[1]
-					if(holder[lentext(holder)] == "s")
+					if(holder[length(holder)] == "s")
 						damaged_plural = TRUE
 				for(var/D in damaged)
 					damaged_message += D

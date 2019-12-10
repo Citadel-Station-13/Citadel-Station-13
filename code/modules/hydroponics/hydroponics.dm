@@ -169,8 +169,27 @@
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
-			else if(pestlevel >= 5)
-				adjustHealth(-1 / rating)
+			if(pestlevel >= 8)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-2 / rating)
+
+				else
+					adjustHealth(2 / rating)
+					adjustPests(-1 / rating)
+
+			else if(pestlevel >= 4)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-1 / rating)
+
+				else
+					adjustHealth(1 / rating)
+					if(prob(50))
+						adjustPests(-1 / rating)
+
+			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+				adjustHealth(-2 / rating)
+				if(prob(5))
+					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -210,6 +229,12 @@
 			needs_update = 1
 		if (needs_update)
 			update_icon()
+
+		if(myseed && prob(5 * (11-myseed.production)))
+			for(var/g in myseed.genes)
+				if(istype(g, /datum/plant_gene/trait))
+					var/datum/plant_gene/trait/selectedtrait = g
+					selectedtrait.on_grow(src)
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
@@ -294,32 +319,31 @@
 
 
 /obj/machinery/hydroponics/examine(user)
-	..()
+	. = ..()
 	if(myseed)
-		to_chat(user, "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>")
+		. += "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>"
 		if (dead)
-			to_chat(user, "<span class='warning'>It's dead!</span>")
+			. += "<span class='warning'>It's dead!</span>"
 		else if (harvest)
-			to_chat(user, "<span class='info'>It's ready to harvest.</span>")
+			. += "<span class='info'>It's ready to harvest.</span>"
 		else if (plant_health <= (myseed.endurance / 2))
-			to_chat(user, "<span class='warning'>It looks unhealthy.</span>")
+			. += "<span class='warning'>It looks unhealthy.</span>"
 	else
-		to_chat(user, "<span class='info'>It's empty.</span>")
+		. += "<span class='info'>It's empty.</span>"
 
 	if(!self_sustaining)
-		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater].</span>")
-		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>")
+		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>"
+		. += "<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
-			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
+			. += "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>"
 	else
-		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
+		. += "<span class='info'>It doesn't require any water or nutrients.</span>"
 
 	if(weedlevel >= 5)
-		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
+		. += "<span class='warning'>It's filled with weeds!</span>"
 	if(pestlevel >= 5)
-		to_chat(user, "<span class='warning'>It's filled with tiny worms!</span>")
-	to_chat(user, "" )
+		. += "<span class='warning'>It's filled with tiny worms!</span>"
 
 
 /obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.

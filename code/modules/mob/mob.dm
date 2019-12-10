@@ -307,8 +307,11 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
-		// shift-click catcher may issue examinate() calls for out-of-sight turfs
+	if(!client)
+		return
+
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A) & COMPONENT_ALLOW_EXAMINE) && ((client.eye != src && client.eye != loc) || (isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))))
+		//cameras & co don't allow users to examine far away things, also shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
 	if(is_blind(src))
@@ -316,7 +319,8 @@
 		return
 
 	face_atom(A)
-	A.examine(src)
+	var/list/result = A.examine(src)
+	to_chat(src, result.Join("\n"))
 
 //same as above
 //note: ghosts can point, this is intended
@@ -445,8 +449,8 @@
 	return
 
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	if(!ckey)
-		return FALSE
+	if(!ckey || !new_mob)
+		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
 	new_mob.ckey = ckey
@@ -929,10 +933,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 /mob/proc/can_hold_items()
 	return FALSE
-
-/mob/proc/get_idcard()
-	return
-
 
 /mob/vv_get_dropdown()
 	. = ..()

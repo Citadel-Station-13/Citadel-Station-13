@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	min_players = 10
 	earliest_start = 30 MINUTES
-	gamemode_blacklist = list("nuclear")
+	gamemode_blacklist = list("nuclear","dynamic")
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
@@ -75,7 +75,7 @@
 				spawner.create(M.ckey)
 				candidates -= M
 			else
-				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
+				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
 

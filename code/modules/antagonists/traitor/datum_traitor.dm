@@ -23,6 +23,7 @@
 	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
+	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	finalize_traitor()
 	..()
 
@@ -48,12 +49,18 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
+	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+
+/datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
+	var/message = hearing_args[HEARING_MESSAGE]
+	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
+	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
+	hearing_args[HEARING_MESSAGE] = message
 
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
-	..()
 
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
@@ -70,7 +77,17 @@
 
 /datum/antagonist/traitor/proc/forge_human_objectives()
 	var/is_hijacker = FALSE
-	if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
+	var/datum/game_mode/dynamic/mode
+	var/is_dynamic = FALSE
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		is_dynamic = TRUE
+		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
+			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
+		else
+			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
+			is_hijacker = (prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
+	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
 		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
@@ -91,6 +108,10 @@
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
 			add_objective(hijack_objective)
+			if(is_dynamic)
+				var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
+				mode.spend_threat(threat_spent)
+				mode.log_threat("[owner.name] spent [threat_spent] on hijack.")
 			return
 
 
@@ -104,6 +125,10 @@
 		var/datum/objective/martyr/martyr_objective = new
 		martyr_objective.owner = owner
 		add_objective(martyr_objective)
+		if(is_dynamic)
+			var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
+			mode.spend_threat(threat_spent)
+			mode.log_threat("[owner.name] spent [threat_spent] on glorious death.")
 		return
 
 	else
@@ -139,7 +164,18 @@
 
 /datum/antagonist/traitor/proc/forge_single_human_objective() //Returns how many objectives are added
 	.=1
-	if(prob(50))
+	var/assassin_prob = 50
+	var/is_dynamic = FALSE
+	var/datum/game_mode/dynamic/mode
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		is_dynamic = TRUE
+		assassin_prob = mode.threat_level*(2/3)
+	if(prob(assassin_prob))
+		if(is_dynamic)
+			var/threat_spent = CONFIG_GET(number/dynamic_assassinate_cost)
+			mode.spend_threat(threat_spent)
+			mode.log_threat("[owner.name] spent [threat_spent] on an assassination target.")
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new

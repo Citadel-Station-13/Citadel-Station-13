@@ -78,6 +78,12 @@
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
 
+/obj/structure/fluff/lightpost/light
+	desc = "That which most enchants the Edinians is the lighting by gas of the boulevards... These humble rows of lamps, shining with a clarity white and pure, have a marvelous effect upon the streets on Nova Edina. Adorned with a cheery garb, in tune with the festive spirits of the city."
+	light_power = 0.8
+	light_range = 10
+	light_color = "#ffbb4d"
+
 /obj/structure/fluff/bus
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
@@ -182,3 +188,59 @@
 	icon_state = "snowlegion"
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/big_chain
+	name = "giant chain"
+	desc = "A towering link of chains leading up to the ceiling."
+	icon = 'icons/effects/32x96.dmi'
+	icon_state = "chain"
+	layer = ABOVE_OBJ_LAYER
+	anchored = TRUE
+	density = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/railing
+	name = "railing"
+	desc = "Basic railing meant to protect idiots like you from falling."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/railing/corner
+	icon_state = "railing_corner"
+	density = FALSE
+
+/obj/structure/fluff/beach_towel
+	name = "beach towel"
+	desc = "A towel decorated in various beach-themed designs."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella
+	name = "beach umbrella"
+	desc = "A fancy umbrella designed to keep the sun off beach-goers."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "brella"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella/security
+	icon_state = "hos_brella"
+
+/obj/structure/fluff/beach_umbrella/science
+	icon_state = "rd_brella"
+
+/obj/structure/fluff/beach_umbrella/engine
+	icon_state = "ce_brella"
+
+/obj/structure/fluff/beach_umbrella/cap
+	icon_state = "cap_brella"
+
+/obj/structure/fluff/beach_umbrella/syndi
+	icon_state = "syndi_brella"

@@ -41,6 +41,8 @@
 	.=..()
 	driver.client.pixel_x = 0
 	driver.client.pixel_y = 0
+	driver.pixel_x = 0
+	driver.pixel_y = 0
 	if(M == driver)
 		driver = null
 		gear = initial(gear)
@@ -82,7 +84,6 @@
 	if(lastmove + movedelay > world.time)
 		return FALSE
 	lastmove = world.time
-
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
 		var/did_move = step(src, direction)
@@ -300,6 +301,7 @@
 		C.adjustBruteLoss(speed/10)
 		to_chat(C, "<span class='warning'><b>You are hit by the [src]!</b></span>")
 		to_chat(driver, "<span class='warning'><b>You just ran into [C] you crazy lunatic!</b></span>")
+		return ..()
 	//playsound
 	if(istype(M, /obj/vehicle/sealed/vectorcraft))
 		var/obj/vehicle/sealed/vectorcraft/Vc = M
@@ -308,6 +310,10 @@
 		Vc.vector["y"] += vector["y"]/2
 		apply_damage(speed/10)
 		bounce()
+		return ..()
+	if(istype(M, /obj/))
+		var/obj/O = M
+		O.obj_integrity -= speed*2
 	..()
 
 //////////////////////////////////////////////////////////////

@@ -382,7 +382,7 @@ SLIME SCANNER
 		else if (S.mutantstomach != initial(S.mutantstomach))
 			mutant = TRUE
 
-		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n" 
+		msg += "\t<span class='info'>Reported Species: [H.dna.custom_species ? H.dna.custom_species : S.name]</span>\n"
 		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
 		if(mutant)
 			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
@@ -523,7 +523,7 @@ SLIME SCANNER
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to activate the barometer function.</span>")
+	. += "<span class='notice'>Alt-click [src] to activate the barometer function.</span>"
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
@@ -651,7 +651,7 @@ SLIME SCANNER
 
 /proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)

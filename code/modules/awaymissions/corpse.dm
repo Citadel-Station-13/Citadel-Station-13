@@ -44,9 +44,8 @@
 		return
 	if(isobserver(user))
 		var/mob/dead/observer/O = user
-		if(!O.can_reenter_round)
-			to_chat(user, "<span class='warning'>You are unable to reenter the round.</span>")
-			return
+		if(!O.can_reenter_round())
+			return FALSE
 	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
@@ -257,7 +256,7 @@
 
 //Non-human spawners
 
-/obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
+/obj/effect/mob_spawn/AICorpse/create(ckey, name) //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
@@ -277,7 +276,7 @@
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
 
-/obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
+/obj/effect/mob_spawn/human/facehugger/create(ckey, name) //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc
@@ -441,7 +440,7 @@
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
 	id = /obj/item/card/id
 
-/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	if(visualsOnly)
 		return

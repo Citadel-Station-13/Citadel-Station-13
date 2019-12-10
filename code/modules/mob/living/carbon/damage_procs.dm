@@ -43,7 +43,7 @@
 				adjustStaminaLoss(damage_amount, forced = forced)
 		//citadel code
 		if(AROUSAL)
-			adjustArousalLoss(damage_amount, forced = forced)
+			adjustArousalLoss(damage_amount)
 	return TRUE
 
 
@@ -157,6 +157,11 @@
 		O.applyOrganDamage(amount, maximum)
 		O.onDamage(amount, maximum)
 
+/mob/living/carbon/proc/getFailingOrgans()
+	.=list()
+	for(var/obj/item/organ/O in internal_organs)
+		if(O.organ_flags & ORGAN_FAILING)
+			.+=O
 
 ////////////////////////////////////////////
 

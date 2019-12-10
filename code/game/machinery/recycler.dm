@@ -40,10 +40,10 @@
 	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
-	..()
-	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
-	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
+	. = ..()
+	. += "The power light is [(stat & NOPOWER) ? "off" : "on"]."
+	. += "The safety-mode light is [safety_mode ? "on" : "off"]."
+	. += "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -109,7 +109,7 @@
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM)
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay)
 		if(brain_holder)
 			emergency_stop(AM)
 		else if(isliving(AM))
