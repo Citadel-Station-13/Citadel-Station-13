@@ -212,7 +212,7 @@ Consuming extracts:
 	taste = "sugar and starlight"
 
 /obj/item/slime_cookie/bluespace/do_effect(mob/living/M, mob/user)
-	var/list/L = get_area_turfs(get_area(get_turf(M)))
+	var/list/L = get_sub_areas_turfs(get_area(M))
 	var/turf/target
 	while (L.len && !target)
 		var/I = rand(1, L.len)

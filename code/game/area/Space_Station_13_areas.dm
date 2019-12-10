@@ -403,7 +403,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/dorms
 	name = "Dormitories"
 	icon_state = "Sleep"
-	safe = TRUE
 
 /area/crew_quarters/dorms/male
 	name = "Male Dorm"
@@ -412,6 +411,29 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/dorms/female
 	name = "Female Dorm"
 	icon_state = "Sleep"
+
+/area/crew_quarters/dorms/cabin
+	name = "Dorms Cabin One"
+	icon_state = "sleep_cabin"
+	safe = TRUE
+
+/area/crew_quarters/dorms/cabin/two
+	name = "Dorms Cabin Two"
+
+/area/crew_quarters/dorms/cabin/three
+	name = "Dorms Cabin Three"
+
+/area/crew_quarters/dorms/cabin/four
+	name = "Dorms Cabin Four"
+
+/area/crew_quarters/dorms/cabin/five
+	name = "Dorms Cabin Five"
+
+/area/crew_quarters/dorms/cabin/six
+	name = "Dorms Cabin Six"
+
+/area/crew_quarters/dorms/cabin/seven
+	name = "Dorms Cabin Seven"
 
 /area/crew_quarters/rehab_dome
 	name = "Rehabilitation Dome"

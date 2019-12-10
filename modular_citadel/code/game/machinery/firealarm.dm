@@ -1,6 +1,6 @@
 /obj/machinery/firealarm/alt_attack_hand(mob/user)
 	if(can_interact(usr))
-		var/area/A = get_area(src)
+		var/area/A = get_base_area(src)
 		if(istype(A))
 			if(A.fire)
 				reset()

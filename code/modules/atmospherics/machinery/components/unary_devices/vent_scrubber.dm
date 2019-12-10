@@ -63,7 +63,7 @@
 	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	if (A)
 		A.air_scrub_names -= id_tag
 		A.air_scrub_info -= id_tag
@@ -135,7 +135,7 @@
 		"sigtype" = "status"
 	))
 
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	if(!A.air_scrub_names[id_tag])
 		name = "\improper [A.name] air scrubber #[A.air_scrub_names.len + 1]"
 		A.air_scrub_names[id_tag] = name

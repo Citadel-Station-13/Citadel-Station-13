@@ -479,34 +479,36 @@ Difficulty: Very Hard
 			NewTerrainTables = /obj/structure/table/abductor
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
-	if(..())
-		var/area/A = get_area(src)
-		if(!A.outdoors && !(A in affected_targets))
-			for(var/atom/Stuff in A)
-				if(isturf(Stuff))
-					var/turf/T = Stuff
-					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
-							var/atom/Picked = pick(NewFlora)
-							new Picked(O)
-						continue
-					if(iswallturf(T) && NewTerrainWalls)
-						T.ChangeTurf(NewTerrainWalls)
-						continue
-				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
-					var/obj/structure/chair/Original = Stuff
-					var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
-					C.setDir(Original.dir)
-					qdel(Stuff)
-					continue
-				if(istype(Stuff, /obj/structure/table) && NewTerrainTables)
-					new NewTerrainTables(Stuff.loc)
-					continue
-			affected_targets += A
+	. = ..()
+	if(!.)
+		return
+	for(var/i in get_sub_areas(src, include_base = TRUE))
+		var/area/A = i
+		if(A.outdoors || (A in affected_targets))
+			continue
+		affected_targets += A
+		for(var/stuff in A)
+			var/atom/target = stuff
+			if(isturf(target))
+				var/turf/T = target
+				if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
+					var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
+					if(O.air)
+						var/datum/gas_mixture/G = O.air
+						G.copy_from_turf(O)
+					if(NewFlora.len && prob(florachance) && !is_blocked_turf(O, TRUE))
+						var/atom/Picked = pick(NewFlora)
+						new Picked(O)
+				else if(iswallturf(T) && NewTerrainWalls)
+					T.ChangeTurf(NewTerrainWalls)
+			else if(NewTerrainChairs && istype(target, /obj/structure/chair))
+				var/obj/structure/chair/Original = target
+				var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
+				C.setDir(Original.dir)
+				qdel(target)
+			else if(NewTerrainTables && istype(target, /obj/structure/table))
+				new NewTerrainTables(target.loc)
+				qdel(target)
 
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."

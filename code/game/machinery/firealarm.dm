@@ -44,7 +44,7 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
-	myarea = get_area(src)
+	myarea = get_base_area(src)
 	LAZYADD(myarea.firealarms, src)
 
 /obj/machinery/firealarm/Destroy()
@@ -116,14 +116,14 @@
 	if(!is_operational() && (last_alarm+FIREALARM_COOLDOWN < world.time))
 		return
 	last_alarm = world.time
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	A.firealert(src)
 	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
 
 /obj/machinery/firealarm/proc/reset()
 	if(!is_operational())
 		return
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	A.firereset(src)
 
 /obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -142,7 +142,7 @@
 	else
 		data["seclevel"] = "green"
 
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	data["alarm"] = A.fire
 
 	return data
@@ -306,7 +306,7 @@
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	if (!A || !A.party)
 		return
 	A.party = FALSE
@@ -315,7 +315,7 @@
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	if (!A || A.party || A.name == "Space")
 		return
 	A.party = TRUE
@@ -325,5 +325,5 @@
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
 	. = ..()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	.["alarm"] = A && A.party

@@ -114,7 +114,7 @@
 			to_chat(mastermind, "<span class='warning'>You feel everything fading away...</span>")
 			dreamer.death(FALSE)
 		if(cleanup)
-			var/obj/effect/vr_clean_master/cleanbot = locate() in get_area(M)
+			var/obj/effect/vr_clean_master/cleanbot = locate() in get_base_area(M)
 			if(cleanbot)
 				LAZYADD(cleanbot.corpse_party, M)
 			if(vr_sleeper)

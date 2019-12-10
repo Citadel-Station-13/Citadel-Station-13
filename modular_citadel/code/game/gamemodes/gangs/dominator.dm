@@ -101,7 +101,7 @@
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (time_remaining < 180))
 				warned = TRUE
-				var/area/domloc = get_area(loc)
+				var/area/domloc = get_base_area(loc)
 				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
 				for(var/G in GLOB.gangs)
 					var/datum/team/gang/tempgang = G
@@ -179,7 +179,7 @@
 		if((tempgang.domination_time != NOT_DOMINATING) || !tempgang.dom_attempts || !in_range(src, user) || !isturf(loc))
 			return 0
 
-		var/area/A = get_area(loc)
+		var/area/A = get_base_area(loc)
 		var/locname = A.map_name
 
 		gang = tempgang

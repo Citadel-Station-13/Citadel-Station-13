@@ -126,7 +126,7 @@
 			T.PlaceOnTop(/turf/open/floor/plating/foam)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
-			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
+			if(get_base_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
 				new/obj/structure/foamedmetal(T)
 				break
 	flick("[icon_state]-disolve", src)
