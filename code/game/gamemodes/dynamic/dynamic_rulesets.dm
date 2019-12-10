@@ -212,6 +212,24 @@
 /datum/dynamic_ruleset/proc/check_finished()
 	return FALSE
 
+/// Returns a list to be displayed on statbus.
+/datum/dynamic_ruleset/proc/get_blackbox_info()
+	var/list/ruleset_data = list()
+	ruleset_data["name"] = name
+	ruleset_data["rule_type"] = ruletype
+	ruleset_data["cost"] = total_cost
+	ruleset_data["weight"] = weight
+	ruleset_data["scaled_times"] = scaled_times
+	ruleset_data["antagonist_type"] = antag_datum
+	ruleset_data["population_tier"] = indice_pop
+	ruleset_data["assigned"] = list()
+	for (var/datum/mind/M in assigned)
+		var/assigned_data = list()
+		assigned_data["key"] = M.key
+		assigned_data["name"] = M.name
+		ruleset_data["assigned"] += list(assigned_data)
+	return ruleset_data
+
 //////////////////////////////////////////////
 //                                          //
 //           ROUNDSTART RULESETS            //
