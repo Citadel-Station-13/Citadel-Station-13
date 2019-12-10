@@ -115,12 +115,15 @@
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
 	if(minimum_players > population)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to low pop")
 		return FALSE
 	if(maximum_players > 0 && population > maximum_players)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to high pop")
 		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
 		indice_pop = 10
 		if(threat_level < high_population_requirement)
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat level")
 			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[high_population_requirement]")
 			return FALSE
 		else
@@ -132,6 +135,7 @@
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		if(threat_level < requirements[indice_pop])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat level")
 			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[requirements[indice_pop]]")
 			return FALSE
 		else
@@ -178,6 +182,7 @@
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
 	if (required_candidates > candidates.len)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough candidates")
 		return FALSE
 	return TRUE
 
