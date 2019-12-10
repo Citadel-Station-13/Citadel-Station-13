@@ -382,7 +382,7 @@
 	return null
 
 /area/proc/get_apc()
-	var/target = master_area ? master_area : src
+	var/target = base_area ? base_area : src
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
 		if(APC.area == target)
 			return APC

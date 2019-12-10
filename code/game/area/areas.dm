@@ -70,7 +70,7 @@
   * Friendly reminder: don't varedit area paths, make new typepaths instead.
   */
 	var/list/area/sub_areas //list of typepaths of the areas you wish to link here, will be replaced with a list of references on mapload.
-	var/area/master_area //The area we wish to use in place of src for certain actions such as APC area linking.
+	var/area/base_area //The area we wish to use in place of src for certain actions such as APC area linking.
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -144,16 +144,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			if(A == src)
 				WARNING("\"[src]\" area a attempted to link with itself.")
 				continue
-			if(A.master_area)
-				WARNING("[src] attempted to link with [A] while the latter is already linked to another area ([A.master_area]).")
+			if(A.base_area)
+				WARNING("[src] attempted to link with [A] while the latter is already linked to another area ([A.base_area]).")
 				continue
 			LAZYADD(sub_areas, A)
-			A.master_area = src
+			A.base_area = src
 
 	return INITIALIZE_HINT_LATELOAD
 
 /area/LateInitialize()
-	if(!master_area) //we don't want to run it twice.
+	if(!base_area) //we don't want to run it twice.
 		power_change()		// all machines set to current power level, also updates icon
 
 /area/proc/reg_in_areas_in_z()
@@ -177,13 +177,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
-	if(master_area)
-		LAZYREMOVE(master_area, src)
-		master_area = null
+	if(base_area)
+		LAZYREMOVE(base_area, src)
+		base_area = null
 	if(sub_areas)
 		for(var/i in sub_areas)
 			var/area/A = i
-			A.master_area = null
+			A.base_area = null
 			sub_areas -= A
 			if(A.requires_power)
 				A.power_light = FALSE

@@ -180,7 +180,7 @@
 		name = "\improper [A.name] APC"
 		stat |= MAINT
 		update_icon()
-		addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, .proc/update), 5)
 
 	GLOB.apcs_list += src
 

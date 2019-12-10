@@ -174,35 +174,36 @@
 
 
 /**
-  * Returns either the base area the target's belongs to or the target's area itself.
+  * Returns the base area the target is located in if there is one.
+  * Alternatively, returns the area as is.
   */
 /proc/get_base_area(atom/target)
 	var/area/A = get_area(target)
-	if(A?.master_area)
-		return A.master_area
+	if(A?.base_area)
+		return A.base_area
 	return A
 
 /**
-  * Returns either null, or a list containing all the sub_areas associated with the base area the target is located in.
+  * Returns either null, or a list containing every sub area associated with our base area.
   * If include_base is TRUE, the base area will also be added to the return list.
   */
-/proc/get_sub_areas(atom/target, include_base = FALSE)
+/proc/get_sub_areas(atom/target, include_base = TRUE)
 	var/area/A = get_area(target)
 	if(!A)
 		return
 	. = list()
-	if(A.master_area)
-		A = A.master_area
+	if(A.base_area)
+		A = A.base_area
 	if(include_base)
 		. += A
 	if(A.sub_areas)
 		. += A.sub_areas
 
 /**
-  * Proc for purposes similar to the get_areas_turfs(), but aimed to include associated areas.
-  * Only takes area (A) instances and paths, no text strings.
-  * Returns a list of all turfs found in the associated sub_areas (including the base's if include_base is TRUE)
-  * and located in the same z as target_z, or anywhere if the latter is 0
+  * Proc used for purposes similar to get_areas_turfs(), but aimed to include associated areas.
+  * Only accepts area instances and paths for the first arg, no text strings.
+  * Returns a list of all turfs found in the sub areas (including the base's if include_base is TRUE)
+  * and located in a z level matching target_z, or anywhere if target_z is 0
   */
 
 /proc/get_sub_areas_turfs(area/A, target_z = 0, include_base = TRUE)
@@ -212,7 +213,7 @@
 		if(target_z == 0 || target_z == T.z)
 			. += T
 /**
-  * Simple proc that returns all a sum of all contents from all associated areas,
+  * Simple proc that returns a sum of all contents from every sub area,
   * Think of the above but for all contents, not just turfs, and without target z.
   */
 
@@ -221,8 +222,8 @@
 		A = GLOB.areas_by_type[A]
 	if(!A)
 		return
-	if(A.master_area)
-		A = A.master_area
+	if(A.base_area)
+		A = A.base_area
 	. = list(A.contents)
 	for(var/i in A.sub_areas)
 		. += A.sub_areas[i].contents

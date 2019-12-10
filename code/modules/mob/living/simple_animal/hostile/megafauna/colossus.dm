@@ -482,7 +482,7 @@ Difficulty: Very Hard
 	. = ..()
 	if(!.)
 		return
-	for(var/i in get_sub_areas(src, include_base = TRUE))
+	for(var/i in get_sub_areas(src))
 		var/area/A = i
 		if(A.outdoors || (A in affected_targets))
 			continue
