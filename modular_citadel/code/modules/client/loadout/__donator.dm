@@ -458,3 +458,9 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/necklace/onion
 	ckeywhitelist = list("cdrcross")
+
+/datum/gear/bikini
+	name = "PLACEHOLDER"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bikini
+	ckeywhitelist = list("PLACEHOLDER")
