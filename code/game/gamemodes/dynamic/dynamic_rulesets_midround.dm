@@ -127,11 +127,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
 		if(candidates.len <= 0)
-			if(i == 1)
-				// We have found no candidates so far and we are out of applicants.
-				mode.refund_threat(cost)
-				mode.log_threat("Rule [name] refunded [cost] (all applications invalid)",verbose=TRUE)
-				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)
 		candidates -= applicant
