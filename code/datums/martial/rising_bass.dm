@@ -112,7 +112,7 @@
 				log_combat(A, D, "deft switched (Rising Bass)")
 				return 1
 			else
-				to_chat(A, "<i>[G] can't be taken out of [D]'s hands!<i>")
+				to_chat(A, "<i>[G] can't be taken out of [D]'s hands!</i>")
 	return 0
 
 /datum/martial_art/the_rising_bass/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
