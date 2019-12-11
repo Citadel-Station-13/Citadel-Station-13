@@ -426,10 +426,7 @@
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			if(istype(R, /datum/reagent/metabolic))
 				continue
-			if(R.volume < 0.5)
-				C.reagents.remove_reagent(R.id,R.volume)
-			else
-				C.reagents.remove_reagent(R.id,R.volume/(20/efficiency))
+			C.reagents.remove_reagent(R.id,R.volume/(40/efficiency))
 	//It is a sleeper after all.
 	if(C)
 		C.AdjustUnconscious(-5, 0)

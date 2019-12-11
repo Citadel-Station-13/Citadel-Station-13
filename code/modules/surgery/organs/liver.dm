@@ -84,11 +84,11 @@
 	switch(metabolic_stress)
 		if(-INFINITY to -10)
 			ignoreTox = TRUE
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.2, ORGAN_TREAT_CHRONIC)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.5, ORGAN_TREAT_CHRONIC)
 			owner.adjustToxLoss(-0.2, TRUE, TRUE)
 		if(-10 to -0.1)
 			ignoreTox = TRUE
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.25, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.1, TRUE, TRUE)
 		if(-0.1 to 15)
 			if(damage != 0)
@@ -211,16 +211,16 @@
 			owner.Dizzy(1)
 			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.05)
 		if(-50 to -35)
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.15, ORGAN_TREAT_CHRONIC)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.35, ORGAN_TREAT_CHRONIC)
 			owner.Jitter(0.5)
 			owner.adjustToxLoss(-0.05, TRUE, TRUE)
 		if(-35 to -20)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.25, ORGAN_TREAT_CHRONIC)
 		if(-25 to -10)
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.2, ORGAN_TREAT_ACUTE)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.4, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.2, TRUE, TRUE)
 		if(-10 to -0.1)
-			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_ACUTE)
+			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.2, ORGAN_TREAT_ACUTE)
 			owner.adjustToxLoss(-0.05, TRUE, TRUE)
 		if(-0.1 to 15)
 			if(damage != 0)
@@ -260,7 +260,7 @@
 			//medicines apply stress
 			if(istype(pickedreagent, /datum/reagent/medicine))
 				var/datum/reagent/medicine/M = I
-				adjustMetabolicStress(M.metabolization_rate/2, absolute = TRUE)
+				adjustMetabolicStress(M.metabolization_rate/4, absolute = TRUE)
 
 	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
 		ignoreMeds = /datum/reagent/medicine
