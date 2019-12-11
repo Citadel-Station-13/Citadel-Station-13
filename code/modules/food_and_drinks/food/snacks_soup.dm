@@ -18,6 +18,7 @@
 	icon_state = "wishsoup"
 	list_reagents = list("water" = 10)
 	tastes = list("wishes" = 1)
+	trash = /obj/item/reagent_containers/glass/bowl
 
 /obj/item/reagent_containers/food/snacks/soup/wish/Initialize()
 	. = ..()
@@ -25,9 +26,11 @@
 	if(wish_true)
 		desc = "A wish come true!"
 		bonus_reagents = list("nutriment" = 9, "vitamin" = 1)
+		trash = /obj/item/reagent_containers/glass/bowl
 	if(wish_true)
 		reagents.add_reagent("nutriment", 9)
 		reagents.add_reagent("vitamin", 1)
+		trash = /obj/item/reagent_containers/glass/bowl
 		foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/meatball
