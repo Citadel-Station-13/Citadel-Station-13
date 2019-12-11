@@ -255,10 +255,109 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"aaC" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin)
+"aaD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms_cabin)
 "aaE" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aaF" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"aaG" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"aaH" = (
+/obj/structure/dresser,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/crew_quarters/dorms_cabin)
+"aaI" = (
+/obj/structure/table_frame/wood,
+/obj/item/crowbar/red,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/dorms_cabin)
+"aaJ" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"aaK" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"aaL" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/letterman_nanotrasen,
+/obj/item/clothing/suit/toggle/lawyer,
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/item/clothing/under/kilt,
+/obj/item/clothing/head/beret,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"aaM" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"aaN" = (
+/obj/structure/bed,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "aaO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -266,9 +365,124 @@
 "aaP" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
+"aaQ" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket{
+	desc = "All the class of a trenchcoat without the security fibers.";
+	icon_state = "detective";
+	name = "trenchcoat"
+	},
+/obj/item/clothing/suit/toggle/lawyer/purple,
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/item/clothing/head/fedora{
+	icon_state = "detective"
+	},
+/obj/item/clothing/under/geisha,
+/obj/item/clothing/head/fedora{
+	icon_state = "curator"
+	},
+/obj/item/clothing/suit/jacket{
+	desc = "This looks awfully familiar...";
+	icon_state = "curator"
+	},
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"aaR" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin)
 "aaS" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/construction/mining/aux_base)
+"aaT" = (
+/obj/item/flashlight/seclite,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/crew_quarters/dorms_cabin)
+"aaU" = (
+/obj/structure/table/wood,
+/obj/item/folder,
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/obj/item/razor,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"aaV" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"aaW" = (
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"aaX" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/item/pen,
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"aaY" = (
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"aaZ" = (
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/newspaper{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/newspaper,
+/obj/item/pen/red,
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/crew_quarters/dorms_cabin)
+"aba" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin)
+"abb" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"abc" = (
+/obj/structure/bed,
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"abd" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "abe" = (
 /obj/effect/turf_decal/delivery,
 /obj/item/twohanded/required/kirbyplants/random,
@@ -277,6 +491,27 @@
 "abf" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
+"abg" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"abh" = (
+/obj/machinery/button/door{
+	id = "Dorm1";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin)
 "abi" = (
 /turf/closed/wall,
 /area/construction/mining/aux_base)
@@ -284,6 +519,64 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"abk" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/beer{
+	desc = "Whatever it is, it reeks of foul, putrid froth.";
+	icon_state = "beer";
+	list_reagents = list("bacchus_blessing" = 15);
+	name = "Delta-Down";
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/crew_quarters/dorms_cabin)
+"abl" = (
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"abm" = (
+/obj/structure/dresser,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"abn" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/machinery/button/door{
+	id = "Dorm3";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"abo" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "abp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -307,6 +600,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"abr" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	id_tag = "Dorm5";
+	name = "Cabin 1"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/crew_quarters/dorms_cabin)
 "abs" = (
 /obj/docking_port/stationary{
 	dir = 1;
@@ -319,11 +626,50 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
+"abt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"abu" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	id_tag = "Dorm2";
+	name = "Cabin 2"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
 "abv" = (
 /obj/item/stack/cable_coil,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/fore)
+"abw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"abx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"aby" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	id_tag = "Dorm3";
+	name = "Cabin 3"
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"abz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"abA" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/four)
+"abB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/four)
 "abC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -376,6 +722,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"abI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	id_tag = "Dorm4";
+	name = "Cabin 4"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"abJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/four)
+"abK" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/five)
+"abL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/five)
+"abM" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	id_tag = "Dorm5";
+	name = "Cabin 5"
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"abN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/five)
+"abO" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/six)
 "abP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -424,6 +804,39 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"abU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/six)
+"abV" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	id_tag = "Dorm6";
+	name = "Cabin 6"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"abW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/six)
+"abX" = (
+/obj/machinery/button/door{
+	id = "Dorm4";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"abY" = (
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "abZ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -487,6 +900,84 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
+"acg" = (
+/obj/structure/dresser,
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"ach" = (
+/obj/machinery/button/door{
+	id = "Dorm5";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"aci" = (
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"acj" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"ack" = (
+/obj/structure/table/wood,
+/obj/item/folder/blue,
+/obj/item/pen/blue,
+/obj/machinery/button/door{
+	id = "Dorm6";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"acl" = (
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"acm" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"acn" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "aco" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -574,6 +1065,74 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
+"acw" = (
+/obj/structure/bed,
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"acx" = (
+/obj/structure/table/wood,
+/obj/item/storage/briefcase{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/briefcase,
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/obj/item/cane,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"acy" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"acz" = (
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"acA" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"acB" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"acC" = (
+/obj/structure/chair/office/dark,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"acD" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/item/pen,
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"acE" = (
+/obj/structure/bed,
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
 "acF" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -740,6 +1299,41 @@
 	},
 /turf/open/space,
 /area/solar/starboard/fore)
+"acR" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"acS" = (
+/obj/structure/table/wood,
+/obj/item/folder,
+/obj/item/pen,
+/obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/obj/item/paicard,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"acT" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/letterman_nanotrasen,
+/obj/item/clothing/suit/toggle/lawyer,
+/obj/item/clothing/under/maid,
+/obj/item/clothing/head/kitty,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
+"acU" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
 "acV" = (
 /obj/machinery/status_display{
 	pixel_x = -32
@@ -804,6 +1398,33 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"acZ" = (
+/obj/structure/bed,
+/obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
+"ada" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket{
+	desc = "All the class of a trenchcoat without the security fibers.";
+	icon_state = "detective";
+	name = "trenchcoat"
+	},
+/obj/item/clothing/suit/toggle/lawyer/purple,
+/obj/item/clothing/head/fedora{
+	icon_state = "detective"
+	},
+/obj/item/clothing/under/lawyer/female,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/five)
 "adb" = (
 /obj/machinery/status_display{
 	pixel_x = -32
@@ -923,6 +1544,38 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
+"adk" = (
+/obj/structure/dresser,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"adl" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/light,
+/obj/item/clothing/suit/jacket{
+	desc = "All the class of a trenchcoat without the security fibers.";
+	icon_state = "greydet";
+	name = "trenchcoat"
+	},
+/obj/item/clothing/suit/toggle/lawyer/black,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/under/redeveninggown,
+/obj/item/clothing/head/rabbitears,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
+"adm" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/six)
 "adq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -78018,22 +78671,6 @@
 "cAw" = (
 /turf/closed/wall,
 /area/crew_quarters/dorms)
-"cAx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "cAy" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -79074,110 +79711,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
-"cCc" = (
-/obj/structure/dresser,
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
-/area/crew_quarters/dorms)
-"cCd" = (
-/obj/structure/table_frame/wood,
-/obj/item/crowbar/red,
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"cCe" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cCf" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cCg" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket/letterman_nanotrasen,
-/obj/item/clothing/suit/toggle/lawyer,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/item/clothing/under/kilt,
-/obj/item/clothing/head/beret,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cCh" = (
-/obj/structure/dresser,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cCi" = (
-/obj/structure/bed,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cCj" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/geisha,
-/obj/item/clothing/head/fedora{
-	icon_state = "curator"
-	},
-/obj/item/clothing/suit/jacket{
-	desc = "This looks awfully familiar...";
-	icon_state = "curator"
-	},
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "cCk" = (
 /obj/machinery/light{
 	dir = 8
@@ -80050,50 +80583,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"cDC" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cDD" = (
-/obj/item/flashlight/seclite,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3"
-	},
-/area/crew_quarters/dorms)
-"cDE" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/obj/item/razor,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cDF" = (
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cDG" = (
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cDH" = (
-/obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/pen,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cDI" = (
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "cDJ" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -81135,53 +81624,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"cFw" = (
-/obj/item/clipboard{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/newspaper{
-	pixel_x = 7;
-	pixel_y = 11
-	},
-/obj/item/newspaper,
-/obj/item/pen/red,
-/turf/open/floor/wood{
-	icon_state = "wood-broken2"
-	},
-/area/crew_quarters/dorms)
-"cFx" = (
-/obj/structure/bed,
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cFy" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cFz" = (
-/obj/structure/bed,
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cFA" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cFB" = (
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "cFC" = (
 /obj/structure/table,
 /obj/item/folder,
@@ -81931,79 +82373,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
-"cGT" = (
-/obj/machinery/button/door{
-	id = "Dorm1";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	specialfunctions = 4
-	},
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cGU" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_x = -3;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	icon_state = "beer";
-	list_reagents = list("bacchus_blessing" = 15);
-	name = "Delta-Down";
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken4"
-	},
-/area/crew_quarters/dorms)
-"cGV" = (
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cGW" = (
-/obj/structure/dresser,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cGX" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/machinery/button/door{
-	id = "Dorm3";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cGY" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "cGZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -82605,44 +82974,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"cIf" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm5";
-	name = "Cabin 1"
-	},
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"cIg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/crew_quarters/dorms)
-"cIh" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm2";
-	name = "Cabin 2"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cIi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/crew_quarters/dorms)
-"cIj" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm3";
-	name = "Cabin 3"
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "cIk" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -86055,30 +86386,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cNT" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm4";
-	name = "Cabin 4"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cNU" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm5";
-	name = "Cabin 5"
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cNV" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm6";
-	name = "Cabin 6"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "cNW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -87059,91 +87366,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cPQ" = (
-/obj/machinery/button/door{
-	id = "Dorm4";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cPR" = (
-/obj/structure/dresser,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cPS" = (
-/obj/machinery/button/door{
-	id = "Dorm5";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cPT" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cPU" = (
-/obj/structure/table/wood,
-/obj/item/folder/blue,
-/obj/item/pen/blue,
-/obj/machinery/button/door{
-	id = "Dorm6";
-	name = "Dormitory Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 7;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"cPV" = (
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"cPW" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "cPX" = (
 /obj/machinery/vending/cola/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -87957,36 +88179,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cRt" = (
-/obj/structure/table/wood,
-/obj/item/storage/briefcase{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/briefcase,
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/obj/item/cane,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cRu" = (
-/obj/structure/chair/office/dark{
-	dir = 1
-	},
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"cRv" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "cRw" = (
 /obj/machinery/vending/snack/random,
 /obj/structure/extinguisher_cabinet{
@@ -89020,24 +89212,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cTa" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cTb" = (
-/obj/structure/chair/office/dark,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cTc" = (
-/obj/structure/bed,
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "cTd" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
@@ -90214,88 +90388,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cUV" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/item/pen,
-/obj/machinery/light,
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/obj/item/paicard,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cUW" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket/letterman_nanotrasen,
-/obj/item/clothing/suit/toggle/lawyer,
-/obj/item/clothing/under/maid,
-/obj/item/clothing/head/kitty,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cUX" = (
-/obj/structure/bed,
-/obj/machinery/light,
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cUY" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/lawyer/female,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cUZ" = (
-/obj/structure/dresser,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"cVa" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/light,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/black,
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/under/redeveninggown,
-/obj/item/clothing/head/rabbitears,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"cVb" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "cVc" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -178246,12 +178338,12 @@ cqd
 cJi
 cKX
 cMu
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+abA
+abA
+abA
+abA
+abA
+abA
 cYg
 cZS
 dbC
@@ -178494,21 +178586,21 @@ cuD
 cqe
 cqe
 cyX
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+aaC
+aaC
+aaC
+aaC
+aaC
+aaC
 cJj
 cKY
 cMv
-cIg
-cPQ
-cFy
-cTa
-cCe
-cAw
+abB
+abX
+acn
+acB
+acR
+abA
 cYh
 cZT
 dbC
@@ -178751,21 +178843,21 @@ cuE
 cwb
 cxs
 coI
-cAw
-cCc
-cDC
-cFw
-cGT
-cIf
+aaC
+aaH
+aaR
+aaZ
+abh
+abr
 cJk
 cKZ
 cMw
-cNT
-cDG
-cDG
-cTb
-cUV
-cAw
+abI
+abY
+abY
+acC
+acS
+abA
 cYi
 cZU
 dbC
@@ -179008,21 +179100,21 @@ bHq
 bHq
 cne
 cyY
-cAx
-cCd
-cDD
-cFx
-cGU
-cAw
+aaD
+aaI
+aaT
+aba
+abk
+aaC
 cJl
 cLa
 cMx
-cIi
-cPR
-cFz
-cDG
-cUW
-cAw
+abJ
+acg
+acw
+abY
+acT
+abA
 cYg
 cZU
 dbC
@@ -179265,21 +179357,21 @@ cuF
 cwc
 cne
 cyZ
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+aaC
+aaC
+aaC
+aaC
+aaC
+aaC
 cJm
 cLb
 cMy
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+abK
+abK
+abK
+abK
+abK
+abK
 cYj
 cZV
 dbC
@@ -179522,21 +179614,21 @@ cuG
 bHq
 cni
 cza
-cAw
-cCe
-cDE
-cFy
-cGV
-cIg
+aaF
+aaJ
+aaU
+abb
+abl
+abt
 cJj
 cLc
 cMz
-cIg
-cPS
-cRt
-cDH
-cCh
-cAw
+abL
+ach
+acx
+acD
+acU
+abK
 cYk
 cZV
 dbC
@@ -179779,21 +179871,21 @@ cuH
 bHq
 cxt
 czb
-cAw
-cCf
-cDF
-cDG
-cDG
-cIh
+aaF
+aaK
+aaV
+aaW
+aaW
+abu
 cJn
 cLd
 cMA
-cNU
-cDI
-cFB
-cDI
-cUX
-cAw
+abM
+aci
+acy
+aci
+acZ
+abK
 cYj
 cZV
 dbC
@@ -180036,21 +180128,21 @@ cuI
 bHq
 cxt
 czc
-cAw
-cCg
-cDG
-cFz
-cGW
-cIi
+aaF
+aaL
+aaW
+abc
+abm
+abw
 cJo
 cLe
 cMB
-cIi
-cPT
-cDI
-cDI
-cUY
-cAw
+abN
+acj
+aci
+aci
+ada
+abK
 cYl
 cZU
 dbC
@@ -180293,21 +180385,21 @@ cuJ
 bHq
 cnf
 czd
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+aaF
+aaF
+aaF
+aaF
+aaF
+aaF
 cJp
 cLf
 cMC
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+abO
+abO
+abO
+abO
+abO
+abO
 cYm
 cZW
 dbC
@@ -180550,21 +180642,21 @@ cuK
 bHq
 cni
 coF
-cAw
-cCh
-cDH
-cFA
-cGX
-cIg
+aaG
+aaM
+aaX
+abd
+abn
+abx
 cJq
 cLg
 cMD
-cIg
-cPU
-cRu
-cPV
-cUZ
-cAw
+abU
+ack
+acz
+acl
+adk
+abO
 cYn
 cZX
 dbD
@@ -180807,21 +180899,21 @@ bHq
 bHq
 cxt
 coI
-cAw
-cCi
-cDI
-cFB
-cDI
-cIj
+aaG
+aaN
+aaY
+abg
+aaY
+aby
 cJr
 cLd
 cMC
-cNV
-cPV
-cPV
-cPV
-cVa
-cAw
+abV
+acl
+acl
+acl
+adl
+abO
 cYo
 cZY
 dbE
@@ -181064,21 +181156,21 @@ aad
 cti
 cxu
 cze
-cAw
-cCj
-cDI
-cDI
-cGY
-cIi
+aaG
+aaQ
+aaY
+aaY
+abo
+abz
 cJo
 cLi
 cMB
-cIi
-cPW
-cRv
-cTc
-cVb
-cAw
+abW
+acm
+acA
+acE
+adm
+abO
 cYp
 cZZ
 cIX
@@ -181321,21 +181413,21 @@ cuL
 cuL
 cxv
 czf
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+aaG
+aaG
+aaG
+aaG
+aaG
+aaG
 cJs
 cKX
 cME
-cAw
-cAw
-cAw
-cAw
-cAw
-cAw
+abO
+abO
+abO
+abO
+abO
+abO
 cYq
 daa
 cuL

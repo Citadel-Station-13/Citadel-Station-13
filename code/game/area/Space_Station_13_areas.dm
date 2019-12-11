@@ -404,6 +404,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 
+/area/crew_quarters/dorms/Initialize()
+	sub_areas = typesof(/area/crew_quarters/dorms_cabin)
+	return ..()
+
 /area/crew_quarters/dorms/male
 	name = "Male Dorm"
 	icon_state = "Sleep"
@@ -412,27 +416,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Female Dorm"
 	icon_state = "Sleep"
 
-/area/crew_quarters/dorms/cabin
+/area/crew_quarters/dorms_cabin
 	name = "Dorms Cabin One"
 	icon_state = "sleep_cabin"
 	safe = TRUE
 
-/area/crew_quarters/dorms/cabin/two
+/area/crew_quarters/dorms_cabin/two
 	name = "Dorms Cabin Two"
 
-/area/crew_quarters/dorms/cabin/three
+/area/crew_quarters/dorms_cabin/three
 	name = "Dorms Cabin Three"
 
-/area/crew_quarters/dorms/cabin/four
+/area/crew_quarters/dorms_cabin/four
 	name = "Dorms Cabin Four"
 
-/area/crew_quarters/dorms/cabin/five
+/area/crew_quarters/dorms_cabin/five
 	name = "Dorms Cabin Five"
 
-/area/crew_quarters/dorms/cabin/six
+/area/crew_quarters/dorms_cabin/six
 	name = "Dorms Cabin Six"
 
-/area/crew_quarters/dorms/cabin/seven
+/area/crew_quarters/dorms_cabin/seven
 	name = "Dorms Cabin Seven"
 
 /area/crew_quarters/rehab_dome
@@ -562,6 +566,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel/main/monastery
 	name = "Monastery"
+
+/area/chapel/main/monastery/Initialize()
+	sub_areas = typesof(/area/chapel/main/monastery_cabin)
+	return ..()
+
+/area/chapel/main/monastery_cabin
+	name = "Monastery Cabin One"
+	icon_state = "sleep_cabin"
+	safe = TRUE
+
+/area/chapel/main/monastery_cabin/two
+	name = "Monastery Cabin Two"
 
 /area/chapel/office
 	name = "Chapel Office"

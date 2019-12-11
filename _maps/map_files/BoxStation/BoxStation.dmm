@@ -226,6 +226,9 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaK" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/seven)
 "aaL" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
@@ -1133,15 +1136,8 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "acN" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	on = 0;
-	pixel_x = -7;
-	pixel_y = 12
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/seven)
 "acO" = (
 /obj/structure/closet/l3closet/security,
 /obj/machinery/camera{
@@ -5726,19 +5722,18 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "alK" = (
-/obj/machinery/button/door{
-	id = "Room Two";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 7;
-	pixel_y = -24;
-	specialfunctions = 4
+/obj/structure/mirror{
+	pixel_y = 32
 	},
-/obj/structure/chair/comfy/brown{
-	dir = 8
+/obj/structure/sink{
+	dir = 1;
+	pixel_y = 25
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/seven)
 "alL" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -6175,18 +6170,11 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "amJ" = (
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/obj/structure/sink{
-	dir = 1;
-	pixel_y = 25
-	},
-/obj/structure/toilet{
-	dir = 4
+/obj/machinery/shower{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "amK" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall,
@@ -6211,11 +6199,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "amO" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "amP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -6365,12 +6351,8 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "anc" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/item/soap,
 /turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "and" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -6474,8 +6456,8 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "anr" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/six)
 "ans" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -6589,11 +6571,15 @@
 /turf/open/floor/plating,
 /area/security/courtroom)
 "anD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/structure/window/reinforced/tinted{
+	dir = 8
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
+/obj/structure/curtain,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/seven)
 "anE" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -6640,15 +6626,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anM" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
-/obj/structure/curtain,
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/obj/structure/chair/sofa/right,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/seven)
 "anN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -7008,9 +6988,12 @@
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aoI" = (
-/obj/structure/fireplace,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/structure/chair/sofa/left,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "aoJ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -7273,13 +7256,12 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apu" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
-	name = "Personal ID-Locked Closet";
-	pixel_y = 15
+/obj/machinery/shower{
+	dir = 4
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/item/soap,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/six)
 "apv" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -7466,13 +7448,18 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apX" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/structure/mirror{
+	pixel_y = 32
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/structure/sink{
+	dir = 1;
+	pixel_y = 25
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/six)
 "apY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -7584,40 +7571,20 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aql" = (
-/obj/structure/mirror{
-	pixel_y = 32
+/obj/structure/closet/secure_closet/personal/cabinet{
+	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
+	name = "Personal ID-Locked Closet";
+	pixel_y = 15
 	},
-/obj/structure/sink{
-	dir = 1;
-	pixel_y = 25
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/seven)
 "aqm" = (
-/obj/structure/chair/sofa/right,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "aqn" = (
-/obj/structure/bed,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/button/door{
-	id = "Dorm4";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
+/obj/structure/fireplace,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "aqo" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -7753,38 +7720,32 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aqC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/chair/comfy/brown{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aqD" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aqE" = (
-/obj/item/flashlight/lamp/green{
-	pixel_x = -3;
-	pixel_y = 22
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/item/radio/intercom{
 	dir = 4;
-	pixel_y = 5
-	},
-/obj/structure/dresser{
-	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
-	name = "Dresser";
-	pixel_y = 7
+	name = "Station Intercom (General)";
+	pixel_x = 27
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
+"aqD" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/six)
+"aqE" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/six)
 "aqF" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	on = 0;
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "aqG" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -7841,11 +7802,19 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqN" = (
-/obj/structure/toilet{
+/obj/machinery/button/door{
+	id = "Room Two";
+	name = "Door Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 7;
+	pixel_y = -24;
+	specialfunctions = 4
+	},
+/obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/seven)
 "aqO" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -7899,13 +7868,11 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aqU" = (
-/obj/structure/closet/secure_closet/personal{
-	desc = "Swipe your ID on this locker to claim it. You can drag it around and use it as your own personal storage area. Very useful.";
-	name = "Personal ID-Locked Locker";
-	pixel_y = 10
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
 "aqV" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -7972,8 +7939,12 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "arf" = (
-/turf/closed/wall,
-/area/crew_quarters/dorms)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/seven)
 "arg" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light{
@@ -7990,25 +7961,27 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "ari" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"arj" = (
-/obj/machinery/door/airlock{
-	id_tag = "Room Two";
-	name = "Room Seven - Luxury Suite"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
-"ark" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/seven)
+"arj" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
+/obj/structure/curtain,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/dorms_cabin/six)
+"ark" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/seven)
 "arl" = (
 /obj/structure/sign/poster/official/ion_rifle,
 /turf/closed/wall/r_wall,
@@ -8063,17 +8036,14 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "ars" = (
-/obj/item/flashlight/lamp/green{
-	pixel_x = -3;
-	pixel_y = 22
+/obj/machinery/door/airlock{
+	id_tag = "Room Two";
+	name = "Room Seven - Luxury Suite"
 	},
-/obj/structure/dresser{
-	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
-	name = "Dresser";
-	pixel_y = 7
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/seven)
 "art" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -8104,11 +8074,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ary" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
 "arz" = (
 /obj/item/coin/gold,
 /obj/item/coin/iron,
@@ -8130,13 +8097,8 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "arD" = (
-/obj/item/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/four)
 "arE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/yellow{
@@ -8340,11 +8302,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/closed/wall,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/five)
 "ase" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -8406,12 +8365,8 @@
 /turf/open/floor/plating,
 /area/security/vacantoffice/b)
 "ask" = (
-/obj/machinery/light/small{
-	dir = 4;
-	light_color = "#d8b1b1"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/six)
 "asl" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -8474,25 +8429,27 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ast" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
+/obj/item/flashlight/lamp/green{
+	pixel_x = -3;
+	pixel_y = 22
 	},
-/obj/structure/chair/sofa/left,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4;
+	pixel_y = 5
+	},
+/obj/structure/dresser{
+	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
+	name = "Dresser";
+	pixel_y = 7
+	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/six)
 "asu" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm5";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = -25;
-	specialfunctions = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/six)
 "asv" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -8741,12 +8698,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ate" = (
-/obj/effect/landmark/xeno_spawn,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/closet/secure_closet/personal{
+	desc = "Swipe your ID on this locker to claim it. You can drag it around and use it as your own personal storage area. Very useful.";
+	name = "Personal ID-Locked Locker";
+	pixel_y = 10
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/three)
 "atf" = (
 /obj/machinery/camera{
 	c_tag = "Bar Storage"
@@ -8757,21 +8715,29 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "atg" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm4";
-	name = "Room Three"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
-"ath" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/three)
+"ath" = (
+/obj/structure/bed,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/machinery/button/door{
+	id = "Dorm4";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "ati" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -8800,15 +8766,19 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "atl" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
 "atm" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
+	name = "Personal ID-Locked Closet";
+	pixel_y = 15
+	},
 /turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/four)
 "atn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -9081,18 +9051,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "aua" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm6";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = -25;
-	specialfunctions = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/chair/comfy/brown{
+	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/four)
 "aub" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/yellow,
@@ -9238,11 +9202,12 @@
 /turf/closed/wall,
 /area/security/vacantoffice/b)
 "aur" = (
-/obj/structure/table/wood/fancy/black,
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "aus" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -9251,22 +9216,18 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aut" = (
-/obj/machinery/door/airlock{
-	id_tag = "Room One";
-	name = "Room Six - Luxury Suite"
+/obj/item/flashlight/lamp/green{
+	pixel_x = -3;
+	pixel_y = 22
 	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
-"auu" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
-	name = "Personal ID-Locked Closet";
-	pixel_y = 15
+/obj/structure/dresser{
+	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
+	name = "Dresser";
+	pixel_y = 7
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"auv" = (
+/area/crew_quarters/dorms_cabin/five)
+"auu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
@@ -9274,25 +9235,21 @@
 	pixel_y = 15
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"auw" = (
-/obj/structure/bed,
+/area/crew_quarters/dorms_cabin/five)
+"auv" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/machinery/button/door{
-	id = "Dorm3";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/five)
+"auw" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
+	name = "Personal ID-Locked Closet";
+	pixel_y = 15
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/six)
 "aux" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -9682,15 +9639,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "avw" = (
-/obj/machinery/button/door{
-	id = "Room One";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	specialfunctions = 4
-	},
+/obj/structure/fireplace,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/six)
 "avx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -10078,15 +10029,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "awo" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
+/obj/structure/bed,
+/obj/item/bedsheet/random,
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/six)
 "awp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -10165,7 +10111,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/three)
 "awz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -10177,13 +10123,12 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness)
 "awA" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm5";
-	name = "Room Four"
+/obj/effect/landmark/xeno_spawn,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "awB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -10381,13 +10326,11 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "awX" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm6";
-	name = "Room Five"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "awY" = (
 /obj/machinery/light{
 	dir = 1
@@ -10759,15 +10702,18 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "axN" = (
-/obj/structure/chair/comfy/black{
-	dir = 8
+/obj/machinery/door/airlock{
+	id_tag = "Dorm4";
+	name = "Room Three"
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/three)
 "axO" = (
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/crew_quarters/dorms)
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "axP" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -10837,15 +10783,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "axT" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm3";
-	name = "Room Two"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "axU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/sign/warning/fire{
@@ -10879,12 +10819,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "axX" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#d8b1b1"
 	},
-/obj/machinery/light/small,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "axY" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -11255,23 +11195,8 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayV" = (
-/obj/structure/bed,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/five)
 "ayW" = (
 /turf/closed/wall,
 /area/ai_monitored/storage/eva)
@@ -14097,15 +14022,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aFe" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm2";
-	name = "Room One"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/five)
 "aFf" = (
 /obj/structure/piano{
 	icon_state = "piano"
@@ -15226,10 +15145,12 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "aHw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/event_spawn,
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#d8b1b1"
+	},
 /turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/area/crew_quarters/dorms_cabin/five)
 "aHx" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -28361,9 +28282,12 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "blU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/six)
 "blV" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -51712,6 +51636,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cmM" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm5";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/four)
 "cmN" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
@@ -51727,6 +51664,56 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cmO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/five)
+"cmP" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm6";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/five)
+"cmQ" = (
+/obj/machinery/button/door{
+	id = "Room One";
+	name = "Door Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/six)
+"cmR" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/six)
+"cmS" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/six)
+"cmT" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/six)
 "cmU" = (
 /obj/machinery/light/small,
 /turf/open/floor/engine/n2,
@@ -51832,6 +51819,17 @@
 /obj/item/clipboard,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"cnh" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"cni" = (
+/obj/structure/closet/secure_closet/personal{
+	desc = "Swipe your ID on this locker to claim it. You can drag it around and use it as your own personal storage area. Very useful.";
+	name = "Personal ID-Locked Locker";
+	pixel_y = 10
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
 "cnj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -51883,6 +51881,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
+"cno" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
 "cnp" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -51897,6 +51901,24 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
+"cnq" = (
+/obj/structure/bed,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/machinery/button/door{
+	id = "Dorm3";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
 "cnr" = (
 /obj/machinery/door/window/southleft{
 	name = "Engineering Delivery";
@@ -51905,6 +51927,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cns" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
 "cnt" = (
 /obj/machinery/camera{
 	c_tag = "Engineering West";
@@ -51919,11 +51947,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cnu" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm5";
+	name = "Room Four"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/four)
 "cnv" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cnw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/four)
 "cnx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51940,6 +51980,14 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cnz" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm6";
+	name = "Room Five"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/five)
 "cnA" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -52014,6 +52062,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"cnI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/five)
+"cnJ" = (
+/obj/machinery/door/airlock{
+	id_tag = "Room One";
+	name = "Room Six - Luxury Suite"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/six)
 "cnK" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -52115,6 +52175,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
+"cnT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/six)
 "cnU" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -52128,6 +52192,18 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cnV" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
+"cnW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
 "cnX" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -52196,6 +52272,79 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"cod" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm3";
+	name = "Room Two"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/two)
+"coe" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin)
+"cof" = (
+/obj/structure/closet/secure_closet/personal{
+	desc = "Swipe your ID on this locker to claim it. You can drag it around and use it as your own personal storage area. Very useful.";
+	name = "Personal ID-Locked Locker";
+	pixel_y = 10
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin)
+"cog" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin)
+"coh" = (
+/obj/structure/bed,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin)
+"coi" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin)
+"coj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin)
+"cok" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin)
+"col" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm2";
+	name = "Room One"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin)
 "cop" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
 	dir = 1
@@ -89729,16 +89878,16 @@ anT
 aoA
 apn
 aqe
-arf
-arf
-arf
-arf
-arf
-arf
-arf
-arf
-arf
-dgz
+ary
+ary
+ary
+ary
+cnh
+cnh
+cnh
+coe
+coe
+coe
 dgz
 dgz
 dgz
@@ -89986,16 +90135,16 @@ anz
 aoB
 aod
 aqe
-arf
-aqU
+ary
+ate
 awy
-arf
-aqU
-awy
-arf
-aqU
-awy
-dgz
+ary
+cni
+cnV
+cnh
+cof
+coj
+coe
 tqg
 ujF
 ujF
@@ -90243,16 +90392,16 @@ anz
 aoz
 aod
 aqe
-arf
-ari
-ate
-arf
-ari
-ath
-arf
-ari
-ath
-dgz
+ary
+atg
+awA
+ary
+cno
+cnW
+cnh
+cog
+cok
+coe
 fvY
 dvc
 dzi
@@ -90500,16 +90649,16 @@ anz
 aoD
 aod
 aqe
-arf
-aqn
+ary
 ath
-arf
-auw
-ath
-arf
-ayV
-ath
-dgz
+awX
+ary
+cnq
+cnW
+cnh
+coh
+cok
+coe
 aCd
 qIw
 gfD
@@ -90757,16 +90906,16 @@ anz
 aoC
 aod
 aqe
-arf
-asd
-atg
-arf
-asd
-axT
-arf
-asd
-aFe
-dgz
+ary
+atl
+axN
+ary
+cns
+cod
+cnh
+coi
+col
+coe
 iVU
 aDK
 vHj
@@ -91528,11 +91677,11 @@ anU
 anC
 cSA
 aqe
-arf
-arf
-arf
-arf
-arf
+arD
+arD
+arD
+arD
+arD
 auC
 aKg
 awr
@@ -91785,11 +91934,11 @@ ajp
 aoG
 cSA
 aqe
-arf
-auu
+arD
 atm
-atm
-arf
+axO
+axO
+arD
 aAd
 auW
 awr
@@ -92042,11 +92191,11 @@ anW
 aoH
 cSA
 aqe
-arf
-aqC
-blU
-blU
-awA
+arD
+aua
+axT
+axT
+cnu
 auy
 aKh
 awr
@@ -92299,11 +92448,11 @@ anV
 ajo
 cSA
 aqe
-arf
-aqD
-ask
-asu
-aun
+arD
+aur
+axX
+cmM
+cnw
 awv
 aKg
 aYI
@@ -92556,11 +92705,11 @@ anY
 ajo
 apq
 aqe
-arf
-arf
-arf
-arf
-arf
+asd
+asd
+asd
+asd
+asd
 auC
 aKN
 aYP
@@ -92813,11 +92962,11 @@ anX
 ajo
 app
 aqi
-arf
-ars
-atm
-atm
-arf
+asd
+aut
+ayV
+ayV
+asd
 aHt
 aKO
 aZb
@@ -93070,11 +93219,11 @@ amu
 ajo
 aps
 aqk
-arf
-auv
-blU
-aHw
-awX
+asd
+auu
+aFe
+cmO
+cnz
 axR
 aKq
 aZZ
@@ -93327,11 +93476,11 @@ anV
 ajo
 apr
 aqj
-arf
-ary
-ask
-aua
-aun
+asd
+auv
+aHw
+cmP
+cnI
 axU
 awr
 awr
@@ -93578,17 +93727,17 @@ ajn
 trb
 ajn
 amr
-ajp
+acN
 ajp
 ajp
 ajo
 apt
 arn
-arf
-arf
-arf
-arf
-arf
+asd
+asd
+asd
+asd
+asd
 asX
 awr
 awr
@@ -94098,11 +94247,11 @@ anb
 ahT
 anZ
 aqo
-arf
-arf
-arf
-arf
-arf
+anr
+anr
+anr
+anr
+anr
 aDW
 avl
 avm
@@ -94355,11 +94504,11 @@ aif
 apw
 aqH
 aqI
-arf
-apu
-atl
-avw
-aut
+anr
+auw
+blU
+cmQ
+cnJ
 axM
 avx
 avn
@@ -94608,15 +94757,15 @@ aod
 ahn
 apx
 ahn
-ahn
-ahn
-ahn
-ahn
-arf
-aoI
-aqF
-awo
-arf
+anr
+anr
+anr
+anr
+anr
+avw
+ask
+cmR
+anr
 aoY
 awr
 awr
@@ -94865,15 +95014,15 @@ aod
 aoK
 amI
 aqp
-ahn
-anc
 anr
-anM
-aqF
-aqF
-aqF
-aur
-aun
+apu
+aqD
+arj
+ask
+ask
+ask
+cmS
+cnT
 aEr
 awr
 awr
@@ -95122,15 +95271,15 @@ aoe
 aoL
 apy
 aqq
-ahn
-aql
-aqN
-arf
+anr
+apX
 aqE
-ark
-aqF
-axN
-arf
+anr
+ast
+awo
+ask
+cmT
+anr
 aKi
 avm
 aAn
@@ -95376,18 +95525,18 @@ aaa
 ahn
 khB
 ahn
-ahn
-ahn
-ahn
-ahn
-arf
-arf
-arf
-asd
-arf
-arf
-arf
-arf
+aaK
+aaK
+aaK
+aaK
+aaK
+aaK
+aaK
+asu
+anr
+anr
+anr
+anr
 aMJ
 azn
 aAo
@@ -95633,13 +95782,13 @@ aaa
 aag
 aag
 aag
-arf
-amJ
-axO
-arf
-apu
-acN
-amP
+aaK
+alK
+amO
+aaK
+aql
+aqF
+ark
 atz
 axL
 atQ
@@ -95890,13 +96039,13 @@ aaa
 aaa
 aaa
 aaa
-arf
-amO
-anr
-anM
-aqF
-alK
-arf
+aaK
+amJ
+anc
+anD
+aqm
+aqN
+aaK
 axZ
 amN
 atZ
@@ -96147,13 +96296,13 @@ aaa
 aaa
 aaa
 aaa
-arf
-arf
-arf
-arf
-aoI
-anD
-arj
+aaK
+aaK
+aaK
+aaK
+aqn
+aqU
+ars
 art
 amN
 amN
@@ -96406,11 +96555,11 @@ aaa
 aaa
 aaa
 aaa
-arf
+aaK
+anM
 aqm
-aqF
-axX
 arf
+aaK
 asb
 asr
 avu
@@ -96663,11 +96812,11 @@ aaa
 aaa
 aaa
 aaa
-arf
-ast
-arD
-apX
-arf
+aaK
+aoI
+aqC
+ari
+aaK
 arO
 aup
 atV
@@ -96920,11 +97069,11 @@ aaa
 aae
 aaa
 aaa
-arf
-arf
-arf
-arf
-arf
+aaK
+aaK
+aaK
+aaK
+aaK
 asZ
 att
 avA

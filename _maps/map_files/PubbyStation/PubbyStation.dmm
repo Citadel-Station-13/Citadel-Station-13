@@ -59,10 +59,590 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
+"aag" = (
+/turf/closed/wall/mineral/iron,
+/area/chapel/main/monastery_cabin)
+"aah" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/chaplain/holidaypriest,
+/obj/item/clothing/suit/chaplain/nun,
+/obj/item/clothing/head/nun_hood,
+/obj/machinery/button/door{
+	id = "Cell1";
+	name = "Cell Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aai" = (
+/obj/structure/dresser,
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aaj" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aak" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/chapel/main/monastery_cabin)
+"aal" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cell1";
+	name = "Cell 1"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aam" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aan" = (
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aao" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aap" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aaq" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/chapel/main/monastery_cabin)
+"aar" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron,
+/area/chapel/main/monastery_cabin)
+"aas" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/instrument/violin,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aat" = (
+/obj/structure/chair/wood/normal{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aau" = (
+/obj/structure/bed,
+/obj/item/bedsheet/green,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin)
+"aav" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/soap/homemade,
+/turf/open/floor/plasteel/showroomfloor,
+/area/chapel/main/monastery_cabin)
+"aaw" = (
+/turf/closed/wall/mineral/iron,
+/area/chapel/main/monastery_cabin/two)
+"aax" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/chaplain/holidaypriest,
+/obj/item/clothing/suit/chaplain/nun,
+/obj/item/clothing/head/nun_hood,
+/obj/machinery/button/door{
+	id = "Cell2";
+	name = "Cell Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aay" = (
+/obj/structure/dresser,
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaz" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXnineteen,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaA" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/chapel/main/monastery_cabin/two)
+"aaB" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cell2";
+	name = "Cell 2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaC" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaD" = (
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaF" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaG" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/chapel/main/monastery_cabin/two)
+"aaH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron,
+/area/chapel/main/monastery_cabin/two)
+"aaI" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaJ" = (
+/obj/structure/chair/wood/normal{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaK" = (
+/obj/structure/bed,
+/obj/item/bedsheet/yellow,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main/monastery_cabin/two)
+"aaL" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/plasteel/showroomfloor,
+/area/chapel/main/monastery_cabin/two)
+"aaM" = (
+/obj/machinery/door/airlock/command{
+	name = "MiniSat Access";
+	req_access_txt = "65"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
+"aaN" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Bridge External Access";
+	req_access_txt = "10;13"
+	},
+/turf/open/floor/plating,
+/area/bridge)
+"aaO" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"aaP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"aaQ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Dorm3Shutters";
+	name = "Dorm Shutters"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/dorms_cabin/three)
+"aaR" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm3Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/three)
+"aaS" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/three)
+"aaT" = (
+/obj/machinery/button/door{
+	id = "Dorm3";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/three)
+"aaU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"aaV" = (
+/obj/machinery/door/airlock/command{
+	name = "MiniSat Access";
+	req_access_txt = "65"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
+"aaW" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Bridge External Access";
+	req_access_txt = "10;13"
+	},
+/turf/open/floor/plating,
+/area/bridge)
+"aaX" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/three)
+"aaY" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/crew_quarters/dorms_cabin/three)
+"aaZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/crew_quarters/dorms_cabin/three)
+"aba" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm3";
+	name = "Dorm 3"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/three)
+"abb" = (
+/obj/machinery/door/airlock/command{
+	name = "External Access";
+	req_one_access_txt = "19; 65"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
+"abc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Dorm2Shutters";
+	name = "Dorm Shutters"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/dorms_cabin/two)
+"abd" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm2Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
+"abe" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"abg" = (
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
+"abh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"abi" = (
+/obj/structure/table/wood,
+/obj/item/storage/book/bible,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
+"abj" = (
+/obj/structure/chair/wood/normal{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
+"abk" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/two)
+"abl" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm2";
+	name = "Dorm 2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin/two)
+"abm" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"abn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Dorm1Shutters";
+	name = "Dorm Shutters"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/dorms_cabin)
+"abo" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm1Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"abp" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"abq" = (
+/obj/machinery/button/door{
+	id = "Dorm1";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"abr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin)
+"abs" = (
+/obj/structure/table/wood,
+/obj/item/storage/book/bible,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"abt" = (
+/obj/structure/chair/wood/normal{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"abu" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"abv" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm1";
+	name = "Dorm 1"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms_cabin)
+"abw" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin)
 "aby" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -7981,16 +8561,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall,
 /area/bridge)
-"atM" = (
-/obj/machinery/door/airlock/command{
-	name = "MiniSat Access";
-	req_access_txt = "65"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
 "atN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -8109,14 +8679,6 @@
 "atY" = (
 /turf/closed/wall,
 /area/bridge)
-"atZ" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Bridge External Access";
-	req_access_txt = "10;13"
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
 "aua" = (
 /obj/structure/closet/secure_closet/freezer/money,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
@@ -8233,10 +8795,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/gateway)
-"auj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/crew_quarters/dorms)
 "auk" = (
 /obj/machinery/door/airlock{
 	name = "Laundry Room"
@@ -8611,48 +9169,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/gateway)
-"avd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Dorm3Shutters";
-	name = "Dorm Shutters"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"ave" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm3Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"avf" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"avg" = (
-/obj/machinery/button/door{
-	id = "Dorm3";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "avh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -9015,28 +9531,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"avQ" = (
-/obj/machinery/door/airlock/command{
-	name = "MiniSat Access";
-	req_access_txt = "65"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
 "avR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9133,16 +9627,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"awc" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Bridge External Access";
-	req_access_txt = "10;13"
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
 "awd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -9236,43 +9720,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"awn" = (
-/obj/structure/dresser,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"awo" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"awp" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"awq" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm3";
-	name = "Dorm 3"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
 "awr" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -10019,17 +10466,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"aye" = (
-/obj/machinery/door/airlock/command{
-	name = "External Access";
-	req_one_access_txt = "19; 65"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
 "ayf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10064,52 +10500,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/stairs,
 /area/hallway/primary/central)
-"ayi" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Dorm2Shutters";
-	name = "Dorm Shutters"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"ayj" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm2Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"ayk" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"ayl" = (
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "aym" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10601,43 +10991,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"azr" = (
-/obj/structure/table/wood,
-/obj/item/storage/book/bible,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"azs" = (
-/obj/structure/chair/wood/normal{
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"azt" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"azu" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm2";
-	name = "Dorm 2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
 "azv" = (
 /obj/structure/chair/comfy{
 	dir = 4
@@ -11522,52 +11875,6 @@
 /obj/item/crowbar,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aBL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Dorm1Shutters";
-	name = "Dorm Shutters"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"aBM" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm1Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aBN" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aBO" = (
-/obj/machinery/button/door{
-	id = "Dorm1";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "aBP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12188,43 +12495,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aDb" = (
-/obj/structure/table/wood,
-/obj/item/storage/book/bible,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aDc" = (
-/obj/structure/chair/wood/normal{
-	dir = 8
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aDd" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aDe" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm1";
-	name = "Dorm 1"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
 "aDf" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -47448,48 +47718,6 @@
 /obj/item/seeds/sugarcane,
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
-"cgL" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/suit/chaplain/holidaypriest,
-/obj/item/clothing/suit/chaplain/nun,
-/obj/item/clothing/head/nun_hood,
-/obj/machinery/button/door{
-	id = "Cell1";
-	name = "Cell Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	specialfunctions = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"cgM" = (
-/obj/structure/dresser,
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"cgN" = (
-/obj/structure/table/wood,
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/item/flashlight/lantern,
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"cgO" = (
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/chapel/main/monastery)
 "cgP" = (
 /obj/structure/transit_tube,
 /turf/open/floor/plating/airless,
@@ -47605,42 +47833,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"chp" = (
-/obj/machinery/door/airlock{
-	id_tag = "Cell1";
-	name = "Cell 1"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chr" = (
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"cht" = (
-/obj/machinery/door/airlock{
-	name = "Bathroom"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chu" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/chapel/main/monastery)
 "chv" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -47716,42 +47908,6 @@
 	},
 /turf/closed/wall,
 /area/chapel/main/monastery)
-"chK" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/item/instrument/violin,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chL" = (
-/obj/structure/chair/wood/normal{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chM" = (
-/obj/structure/bed,
-/obj/item/bedsheet/green,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"chN" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/item/soap/homemade,
-/turf/open/floor/plasteel/showroomfloor,
-/area/chapel/main/monastery)
 "chU" = (
 /obj/structure/sink{
 	dir = 4;
@@ -47816,34 +47972,6 @@
 /obj/structure/transit_tube/crossing,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"cio" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/suit/chaplain/holidaypriest,
-/obj/item/clothing/suit/chaplain/nun,
-/obj/item/clothing/head/nun_hood,
-/obj/machinery/button/door{
-	id = "Cell2";
-	name = "Cell Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	specialfunctions = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"cip" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/easel,
-/obj/item/canvas/twentythreeXnineteen,
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"ciq" = (
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/chapel/main/monastery)
 "cit" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -47898,16 +48026,6 @@
 	},
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
-"ciF" = (
-/obj/machinery/door/airlock{
-	id_tag = "Cell2";
-	name = "Cell 2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
 "ciG" = (
 /obj/machinery/camera{
 	c_tag = "Engineering Supermatter Aft";
@@ -47982,37 +48100,6 @@
 /obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
-"ciX" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/item/storage/crayons,
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"ciY" = (
-/obj/structure/bed,
-/obj/item/bedsheet/yellow,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/grimy,
-/area/chapel/main/monastery)
-"ciZ" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/item/bikehorn/rubberducky,
-/turf/open/floor/plasteel/showroomfloor,
-/area/chapel/main/monastery)
 "cjf" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -81203,15 +81290,15 @@ cdB
 cfm
 cfm
 cfH
-cfm
-cfm
-chp
-cuQ
-cfm
-cfm
-ciF
-cuQ
-cfm
+aag
+aag
+aal
+aar
+aaw
+aaw
+aaB
+aaH
+aaw
 cfm
 fwo
 cfm
@@ -81460,15 +81547,15 @@ cen
 bWV
 ctQ
 cfI
-cfm
-cgL
-chq
-chK
-cfm
-cio
-chq
-ciX
-cfm
+aag
+aah
+aam
+aas
+aaw
+aax
+aaC
+aaI
+aaw
 cfN
 cwA
 cfN
@@ -81717,15 +81804,15 @@ bWV
 bWV
 bWV
 cfJ
-cfm
-cgM
-chr
-chL
-cfm
-cgM
-chr
-chL
-cfm
+aag
+aai
+aan
+aat
+aaw
+aay
+aaD
+aaJ
+aaw
 cfN
 xyT
 cfN
@@ -81974,15 +82061,15 @@ cdD
 ceo
 bOw
 bQg
-cfm
-cgN
-chs
-chM
-cfm
-cip
-chs
-ciY
-cfm
+aag
+aaj
+aao
+aau
+aaw
+aaz
+aaE
+aaK
+aaw
 cfN
 cwA
 cfN
@@ -82231,15 +82318,15 @@ bQg
 bQg
 bQg
 cfL
-cfm
-cfm
-cht
-cfm
-cfm
-cfm
-cht
-cfm
-cfm
+aag
+aag
+aap
+aag
+aaw
+aaw
+aaF
+aaw
+aaw
 cfN
 cwA
 cfN
@@ -82488,15 +82575,15 @@ bQe
 bOw
 bUC
 bQg
-cfm
-cgO
-chu
-chN
-cfm
-ciq
-chu
-ciZ
-cfm
+aag
+aak
+aaq
+aav
+aaw
+aaA
+aaG
+aaL
+aaw
 cfN
 cwA
 cfN
@@ -82745,15 +82832,15 @@ bNs
 bNs
 bNs
 bNs
-cfm
-cfm
-cfm
-cfm
-cfm
-cfm
-cfm
-cfm
-cfm
+aag
+aag
+aag
+aag
+aaw
+aaw
+aaw
+aaw
+aaw
 cfN
 cwA
 cjm
@@ -90363,7 +90450,7 @@ aoz
 aqG
 arC
 asN
-atM
+aaM
 auL
 avO
 awV
@@ -90879,7 +90966,7 @@ arE
 arA
 atO
 auM
-avQ
+aaV
 awW
 axW
 azc
@@ -94736,7 +94823,7 @@ arA
 arA
 arA
 arA
-aye
+abb
 arA
 aAF
 aAH
@@ -95246,9 +95333,9 @@ aaa
 aaa
 aaa
 ahi
-atZ
+aaN
 auV
-awc
+aaW
 axg
 ayg
 azp
@@ -99358,16 +99445,16 @@ aiS
 aiS
 aiS
 aiS
-apX
-avd
-avd
-apX
-ayi
-ayi
-apX
-aBL
-aBL
-apX
+aaO
+aaQ
+aaQ
+aaO
+abc
+abc
+abm
+abn
+abn
+abw
 aET
 rYC
 aET
@@ -99615,16 +99702,16 @@ ale
 ale
 asb
 coe
-apX
-ave
-awn
-apX
-ayj
-azr
-apX
-aBM
-aDb
-apX
+aaO
+aaR
+aaX
+aaO
+abd
+abi
+abm
+abo
+abs
+abw
 oFo
 jOB
 qbZ
@@ -99872,16 +99959,16 @@ apX
 apX
 asc
 atf
-apX
-avf
-awo
-apX
-ayk
-azs
-apX
-aBN
-aDc
-apX
+aaO
+aaS
+aaY
+aaO
+abe
+abj
+abm
+abp
+abt
+abw
 aET
 cor
 aET
@@ -100129,16 +100216,16 @@ apX
 aqT
 asd
 atg
-auj
-avg
-awp
-apX
-ayl
-azt
-apX
-aBO
-aDd
-apX
+aaP
+aaT
+aaZ
+aaO
+abg
+abk
+abm
+abq
+abu
+abw
 aEU
 aFE
 aGA
@@ -100386,16 +100473,16 @@ apX
 aqU
 ase
 ath
-apX
-atf
-awq
-apX
-atf
-azu
-apX
-atf
-aDe
-apX
+aaO
+aaU
+aba
+aaO
+abh
+abl
+abm
+abr
+abv
+abw
 aFF
 vuP
 aGB

@@ -1677,6 +1677,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+"acz" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin)
+"acA" = (
+/turf/closed/wall/rust,
+/area/crew_quarters/dorms_cabin)
+"acB" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/three)
+"acC" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/letterman_nanotrasen,
+/obj/item/clothing/suit/toggle/lawyer,
+/obj/item/clothing/under/maid,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
 "acD" = (
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid,
@@ -2116,6 +2135,40 @@
 /obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"adr" = (
+/obj/structure/dresser,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
+"ads" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket{
+	desc = "All the class of a trenchcoat without the security fibers.";
+	icon_state = "detective";
+	name = "trenchcoat"
+	},
+/obj/item/clothing/suit/toggle/lawyer/purple,
+/obj/item/clothing/head/fedora{
+	icon_state = "detective"
+	},
+/obj/item/clothing/under/geisha,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"adt" = (
+/obj/structure/dresser,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 32
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
+"adu" = (
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
 "adv" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -2134,6 +2187,14 @@
 /obj/item/clothing/head/helmet/space/orange,
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
+"ady" = (
+/obj/structure/bed,
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/obj/item/bedsheet/blue,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin)
 "adz" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
@@ -2279,6 +2340,9 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
+"adM" = (
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "adN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/radio/intercom{
@@ -2380,6 +2444,14 @@
 "adX" = (
 /turf/closed/wall,
 /area/crew_quarters/heads/hop)
+"adY" = (
+/obj/structure/bed,
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/obj/item/bedsheet/red,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms_cabin/three)
 "adZ" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom";
@@ -2410,6 +2482,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aeb" = (
+/turf/closed/wall/rust,
+/area/crew_quarters/dorms_cabin/three)
 "aec" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -2452,6 +2527,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aef" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms_cabin)
 "aeg" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -2477,6 +2565,35 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"aei" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms_cabin/three)
+"aej" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/two)
+"aek" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms_cabin/two)
 "ael" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -2490,6 +2607,9 @@
 	icon_state = "platingdmg3"
 	},
 /area/asteroid/nearstation)
+"aen" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms_cabin/four)
 "aeo" = (
 /obj/structure/table,
 /obj/item/extinguisher/mini,
@@ -2872,6 +2992,19 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aeR" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms_cabin/four)
 "aeS" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
@@ -2889,6 +3022,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aeV" = (
+/turf/closed/wall/rust,
+/area/crew_quarters/dorms_cabin/four)
+"aeW" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
 "aeX" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line{
@@ -2896,6 +3036,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aeY" = (
+/obj/structure/bed,
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/obj/item/bedsheet/brown,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
 "aeZ" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -2907,6 +3055,9 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"afa" = (
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/four)
 "afb" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/turf_decal/stripes/line{
@@ -2917,6 +3068,14 @@
 	},
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
+"afc" = (
+/obj/structure/bed,
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/obj/item/bedsheet/black,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/four)
 "afd" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
@@ -3380,6 +3539,30 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"afJ" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket{
+	desc = "All the class of a trenchcoat without the security fibers.";
+	icon_state = "detective";
+	name = "trenchcoat"
+	},
+/obj/item/clothing/suit/toggle/lawyer/purple,
+/obj/item/clothing/head/fedora{
+	icon_state = "detective"
+	},
+/obj/item/clothing/under/lawyer/female,
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms_cabin/two)
+"afK" = (
+/obj/structure/dresser,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -32
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/crew_quarters/dorms_cabin/two)
 "afL" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating,
@@ -3395,6 +3578,19 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
+"afO" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket{
+	desc = "All the class of a trenchcoat without the security fibers.";
+	icon_state = "greydet";
+	name = "trenchcoat"
+	},
+/obj/item/clothing/suit/toggle/lawyer/black,
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/under/blacktango,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/four)
 "afP" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
@@ -3666,6 +3862,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"agm" = (
+/obj/structure/dresser,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms_cabin/four)
 "agn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
@@ -3812,6 +4015,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"agy" = (
+/turf/closed/wall/rust,
+/area/crew_quarters/dorms_cabin/two)
 "agz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -13844,47 +14050,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
-"axH" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket/letterman_nanotrasen,
-/obj/item/clothing/suit/toggle/lawyer,
-/obj/item/clothing/under/maid,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"axI" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"axJ" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/geisha,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"axK" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "axM" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -14210,28 +14375,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
-"ayz" = (
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"ayA" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/blue,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"ayB" = (
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"ayC" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/red,
-/turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayE" = (
 /obj/structure/table/wood,
@@ -14747,19 +14890,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
-"azD" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -16817,26 +16947,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"aDG" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aDH" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/brown,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aDI" = (
-/obj/structure/bed,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/item/bedsheet/black,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
 "aDJ" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -17518,50 +17628,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
-"aEO" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/lawyer/female,
-/obj/machinery/light/small,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"aEP" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"aEQ" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/black,
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/under/blacktango,
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/dorms)
-"aER" = (
-/obj/structure/dresser,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aES" = (
 /obj/structure/table/wood,
@@ -81051,16 +81117,16 @@ asW
 atQ
 auU
 avZ
-awQ
-awQ
-awQ
-sDl
+acz
+acz
+acz
+acA
 aAH
 bxK
-awQ
-awQ
-awQ
-awQ
+aej
+aej
+aej
+aej
 arY
 awe
 sIK
@@ -81308,16 +81374,16 @@ asX
 atR
 auV
 awa
-sDl
-axH
-ayz
-azD
+acA
+acC
+adu
+aef
 aAH
 aBQ
-azD
-aDG
-aEO
-sDl
+aek
+aeW
+afJ
+agy
 aGD
 aHM
 aIE
@@ -81565,16 +81631,16 @@ asY
 atS
 auW
 awb
-awQ
-axI
-ayA
-awQ
+acz
+adr
+ady
+acz
 aAH
 aBQ
-awQ
-aDH
-aEP
-awQ
+aej
+aeY
+afK
+aej
 aGE
 aHL
 aIF
@@ -81822,16 +81888,16 @@ asZ
 atT
 auX
 awc
-awQ
-awQ
-awQ
-awQ
+acB
+acB
+acB
+acB
 aAI
 aBR
-awQ
-awQ
-awQ
-awQ
+aen
+aen
+aen
+aen
 bxN
 sIB
 cfz
@@ -82079,16 +82145,16 @@ aHF
 atU
 apI
 apI
-awQ
-axJ
-ayB
-azD
+acB
+ads
+adM
+aei
 aAH
 aBS
-azD
-ayz
-aEQ
-sDl
+aeR
+afa
+afO
+aeV
 arY
 aHM
 aIG
@@ -82336,16 +82402,16 @@ atb
 atV
 auY
 awd
-awQ
-axK
-ayC
-awQ
+acB
+adt
+adY
+acB
 abn
 aBT
-awQ
-aDI
-aER
-awQ
+aen
+afc
+agm
+aen
 aGG
 aHM
 aIH
@@ -82593,16 +82659,16 @@ atc
 aoM
 atc
 awe
+acB
+acB
+aeb
+acB
 awQ
 awQ
-sDl
-awQ
-awQ
-awQ
-sDl
-awQ
-awQ
-awQ
+aeV
+aen
+aen
+aen
 arY
 sIB
 aII
