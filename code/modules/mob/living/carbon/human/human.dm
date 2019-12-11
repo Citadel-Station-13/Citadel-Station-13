@@ -868,8 +868,8 @@
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
 		else if(user != target)
 			if(user.a_intent == INTENT_GRAB || INTENT_DISARM || INTENT_HARM)
-			to_chat(user, "<span class='warning'>You need to be in help intent to do that!</span>")
-			return
+				to_chat(user, "<span class='warning'>You need to be in help intent to do that!</span>")
+				return
 			else if(user.a_intent == INTENT_HELP)
 				fireman_carry(target)
 				return
