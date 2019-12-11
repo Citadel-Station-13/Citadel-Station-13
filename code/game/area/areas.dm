@@ -257,7 +257,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		atmosalm = danger_level
 		for(var/i in sub_areas)
-			sub_areas[i].atmosalm = danger_level
+			var/area/A = i
+			A.atmosalm = danger_level
 		return TRUE
 	return FALSE
 
@@ -286,9 +287,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (!fire)
 		set_fire_alarm_effects(TRUE)
 		ModifyFiredoors(FALSE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_icon()
 
 	for (var/item in GLOB.alert_consoles)
 		var/obj/machinery/computer/station_alert/a = item
@@ -309,9 +307,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (fire)
 		set_fire_alarm_effects(FALSE)
 		ModifyFiredoors(TRUE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_icon()
 
 	for (var/item in GLOB.silicon_mobs)
 		var/mob/living/silicon/aiPlayer = item
@@ -360,10 +355,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/alarm in firealarms)
 		var/obj/machinery/firealarm/F = alarm
 		F.update_fire_light(fire)
-	for(var/obj/machinery/light/L in src)
+		F.update_icon()
+	for(var/obj/machinery/light/L in get_sub_areas_contents(src))
 		L.update()
 	for(var/i in sub_areas)
-		sub_areas[i].fire = boolean
+		var/area/A = i
+		A.fire = boolean
 
 /area/proc/updateicon()
 	var/weather_icon
@@ -435,7 +432,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			. += static_environ
 	if(sub_areas)
 		for(var/i in sub_areas)
-			. += sub_areas[i].usage(chan)
+			var/area/A = i
+			. += A.usage(chan)
 
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
@@ -452,7 +450,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	used_environ = 0
 	if(sub_areas)
 		for(var/i in sub_areas)
-			sub_areas[i].clear_usage()
+			var/area/A = i
+			A.clear_usage()
 
 /area/proc/use_power(amount, chan)
 
