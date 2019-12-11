@@ -96,7 +96,7 @@
 	self_consuming = TRUE
 	pH = 13.5
 	metabolization_rate = 0.075 * REM
-	metastress = 0.2
+	metastress = 0
 	var/datum/disease/heart_failure/temp_myo
 
 /datum/reagent/impure/corazone/on_mob_add(mob/living/L)
