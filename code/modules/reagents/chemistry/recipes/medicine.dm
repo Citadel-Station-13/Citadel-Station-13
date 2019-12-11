@@ -245,7 +245,7 @@
 	//FermiChem vars:
 	OptimalTempMin 		= 50		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 300 		// Upper end for above
-	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
+	ExplodeTemp 		= 950 		// Temperature at which reaction explodes
 	OptimalpHMin 		= 5			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	OptimalpHMax 		= 7.5 		// Higest value for above
 	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
