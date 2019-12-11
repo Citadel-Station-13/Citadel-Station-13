@@ -131,24 +131,28 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	reg_in_areas_in_z()
 
 	//so far I'm only implementing it on mapped unique areas, it's easier this way.
-	if(unique && LAZYLEN(sub_areas))
-		var/paths = sub_areas.Copy()
+	if(unique && sub_areas)
+		if(type in sub_areas)
+			WARNING("\"[src]\" typepath found inside its own sub-areas list, please make sure it doesn't share its parent type initial sub-areas value.")
+			sub_areas = null
+		else
+			var/paths = sub_areas.Copy()
+			sub_areas = null
+			for(var/type in paths)
+				var/area/A = GLOB.areas_by_type[type]
+				if(!A) //By chance an area not loaded in the current world, no warning report.
+					continue
+				if(A == src)
+					WARNING("\"[src]\" area a attempted to link with itself.")
+					continue
+				if(A.base_area)
+					WARNING("[src] attempted to link with [A] while the latter is already linked to another area ([A.base_area]).")
+					continue
+				LAZYADD(sub_areas, A)
+				A.base_area = src
+	else if(LAZYLEN(sub_areas))
+		WARNING("sub-areas are currently not supported for non-unique areas such as [src].")
 		sub_areas = null
-		for(var/type in paths)
-			var/area/A = GLOB.areas_by_type[type]
-			if(!A)
-				/* By chance an area not loaded in the station, ruin or map, let's not bother for now.
-				WARNING("No area of type [type] found in GLOB.areas_by_type for [src]'s linked areas.")
-				*/
-				continue
-			if(A == src)
-				WARNING("\"[src]\" area a attempted to link with itself.")
-				continue
-			if(A.base_area)
-				WARNING("[src] attempted to link with [A] while the latter is already linked to another area ([A.base_area]).")
-				continue
-			LAZYADD(sub_areas, A)
-			A.base_area = src
 
 	return INITIALIZE_HINT_LATELOAD
 
