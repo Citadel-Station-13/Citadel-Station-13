@@ -40,25 +40,15 @@
 	result += "<b>Disease name:</b> [disease_name]"
 	result += printplayer(owner)
 
-	var/win = TRUE
 	var/objectives_text = ""
-	var/count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
-		else
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-			win = FALSE
+			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)
-
-	if(win)
-		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
-	else
-		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
 
 	if(istype(owner.current, /mob/camera/disease))
 		var/mob/camera/disease/D = owner.current
