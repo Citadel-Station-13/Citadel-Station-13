@@ -138,13 +138,11 @@
 	var/obj/item/organ/ears/E = M.getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		return
-	if(E.damage > 0)
-		if(cached_purity > 0.9)
-			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_END_STAGE)
-		else
-			M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_CHRONIC)
-		return ..()
-	M.restoreEars()
+
+	if(E.damage > 0 && cached_purity > 0.95)
+		M.restoreEars()
+	else
+		M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_END_STAGE)
 	..()
 
 /datum/reagent/medicine/cryoxadone
@@ -828,9 +826,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		return
 	//Treatment
 	if(cached_purity > 0.89)
-		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_END_STAGE)
+		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.5), ORGAN_TREAT_END_STAGE)
 	else
-		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.2), ORGAN_TREAT_CHRONIC)
+		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.5), ORGAN_TREAT_CHRONIC)
 
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE) && eyes.damage < 30)
 		if(prob(2*cached_purity))
@@ -990,9 +988,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	chemical_flags		= REAGENT_SPLITRETAINVOL
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -(cached_purity*2.2)*REM, ORGAN_TREAT_ACUTE)
-	if(cached_purity > 0.95)
-		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2.2)*REM, ORGAN_TREAT_CHRONIC)
+	C.cureOrganDamage(ORGAN_SLOT_BRAIN, -(cached_purity*2.5)*REM, ORGAN_TREAT_ACUTE)
+	if(cached_purity > 0.9)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity*2.5)*REM, ORGAN_TREAT_CHRONIC)
 	if(prob(cached_purity*10))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
