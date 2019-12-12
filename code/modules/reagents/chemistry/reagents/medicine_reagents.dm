@@ -588,7 +588,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 		if(R == src)
 			continue
 		if(istype(R, /datum/reagent/metabolic))
-			M.reagents.remove_reagent(R.id,1.5)
+			M.reagents.remove_reagent(R.id,1.75)
 			continue
 		M.reagents.remove_reagent(R.id,2)
 	if(slime_friendly)
