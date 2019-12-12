@@ -178,17 +178,18 @@
 	..()
 
 /datum/reagent/medicine/synthtissue/on_mob_dead(mob/living/carbon/C)
-	if(data["injected_vol"] > 14)
-		if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
+	if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
+		if(data["injected_vol"] > 14)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
 					C.reagents.remove_reagent(id, 10)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 					data["injected_vol"] -= 10
 					return ..()
+		if(data["injected_vol"] > 0)
 			C.randomOrganDamage(-data["grown_volume"]/1000)
-		data["injected_vol"] -= metabolization_rate
-	
+			data["injected_vol"] -= metabolization_rate
+
 	if(borrowed_health)
 		C.adjustToxLoss(1)
 		C.adjustCloneLoss(1)
