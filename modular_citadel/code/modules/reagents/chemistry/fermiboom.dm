@@ -61,7 +61,7 @@
 	R.my_atom = my_atom //Give the gas a fingerprint
 
 	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		R.add_reagent(reagent.id, reagent.volume/3) //Seems fine? I think I fixed the infinite explosion bug.
+		R.add_reagent(reagent.id, reagent.volume/3, added_purity = reagent.purity)) //Seems fine? I think I fixed the infinite explosion bug.
 
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
@@ -97,7 +97,7 @@
 			R.add_reagent(reagent.inverse_chem, reagent.volume)
 			R0.remove_reagent(reagent.id, reagent.volume)
 			continue
-		R0.trans_id_to(R, reagent.id, reagent.volume)
+		R.add_reagent(reagent.id, reagent.volume, added_purity = reagent.purity)
 		R0.remove_reagent(reagent.id, reagent.volume)
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
@@ -112,7 +112,7 @@
 	R.my_atom = my_atom //Give the gas a fingerprint
 	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		if((reagent.id in required_reagents) || (reagent.id in results))
-			R0.trans_id_to(R, reagent.id, reagent.volume)
+			R.add_reagent(reagent.id, reagent.volume, added_purity = reagent.purity)
 			R0.remove_reagent(reagent.id, reagent.volume)
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
