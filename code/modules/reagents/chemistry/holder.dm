@@ -751,6 +751,7 @@
 			cachedPurity += R.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
+		fermiEnd()
 		CRASH("No reactants found mid reaction for [fermiReactID]/[C], how it got here is beyond me. Beaker: [holder]")
 	return cachedPurity/i
 
