@@ -10,18 +10,11 @@
 	description = "Toxic chemical isomers made from impure reactions. At low volumes will cause light toxin damage, but as the volume increases, it deals larger amounts, damages the liver, then eventually the heart. This is default impure chem for all chems, and changes only if stated."
 	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME //by default, it will stay hidden on splitting, but take the name of the source on inverting
 	var/metastress = 1
-	var/obj/item/organ/liver/L
 	pH = 3
 
-/datum/reagent/impure/on_mob_add(mob/living/L)
-	var/mob/living/carbon/C = L
-	if(C && (!(L)))
-		L = C.getorganslot(ORGAN_SLOT_LIVER) //reduce calls
-	..()
-
 /datum/reagent/impure/on_mob_life(mob/living/carbon/C)
+	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)//Though, lets be safe
-		L = C.getorganslot(ORGAN_SLOT_LIVER)
 		C.adjustToxLoss(5, TRUE)//Incase of no liver!
 		return ..()
 	L.adjustMetabolicStress(metastress, absolute = TRUE) //causes stress on slimes AND humans
@@ -131,7 +124,7 @@
 /datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
 	if(!L)//Since this is run before the parent proc.
 		L = C.getorganslot(ORGAN_SLOT_LIVER)
-	var/treat_amount = 0.2 + (cached_purity/5) //0.2-0.4
+	var/treat_amount = 0.2 + (cached_purity/2.5) //0.2-0.7
 	L.adjustMetabolicStress(-treat_amount, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
 

@@ -290,9 +290,10 @@
 
 		for(var/obj/item/organ/O in internal_organs)
 			if(O.organ_flags & ORGAN_FAILING)
-				O.setOrganDamage(0)
 				if(only_one)
+					cureOrganDamage(O, -10, ORGAN_TREAT_END_STAGE)
 					return TRUE
+				O.setOrganDamage(0)
 
 		if(has_liver && !getorganslot(ORGAN_SLOT_LIVER))
 			var/obj/item/organ/liver/LI

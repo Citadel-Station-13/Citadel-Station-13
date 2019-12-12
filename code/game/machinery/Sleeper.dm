@@ -27,6 +27,7 @@
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	var/dialysis = FALSE //Is the patient currently undergoing dialysis?
+	var/antirad = FALSE //Is the patient currently undergoing radiation treatment?
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -212,6 +213,7 @@
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
 	data["dialysis"] = dialysis
+	data["antirad"] = antirad
 	data["efficiency"] = efficiency
 	data["current_vol"] = reagents.total_volume
 	data["tot_capacity"] = reagents.maximum_volume
@@ -364,7 +366,8 @@
 		if("synth_all")
 			synth_all_avalible()
 
-
+		if("antirad")
+			antirad = !(antirad)
 		if("dialysis")
 			dialysis = !(dialysis)
 
@@ -433,17 +436,22 @@
 
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
-			L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.15 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
+			L.adjustMetabolicStress(-(0.15+(efficiency/10)), (5+(efficiency*-5))) //0.25 - 0.55 | 0 - 15. Upgrade level 2 can treat acute livers, lvl 4 chronic.
 			C.adjustToxLoss(-(1+(efficiency/4)))
-			C.blood_volume -= 2/efficiency
+			C.blood_volume -= 3/efficiency
 		else
 			C.adjustToxLoss(-5)//counteract missing liver
-			C.blood_volume -= 4/efficiency //but take more blood
-		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
+			C.blood_volume -= 6/efficiency //but take more blood
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			if(istype(R, /datum/reagent/metabolic))
 				continue
 			C.reagents.remove_reagent(R.id,R.volume/(40/efficiency))
+	if(antirad)
+		if(!occupant && !isliving(occupant))
+			dialysis = FALSE
+			return
+		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
+		C.randomOrganDamage(5.2/efficiency)
 	//It is a sleeper after all.
 	if(C)
 		C.AdjustUnconscious(-5, 0)

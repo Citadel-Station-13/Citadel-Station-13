@@ -530,6 +530,17 @@
 	FermiChem 		= TRUE
 	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
 
+/datum/chemical_reaction/antacidpregen/FermiCreate(datum/reagents/R, added_volume, added_purity)
+	.=..()
+	if(!R)
+		return
+	if(R.pH > 14 || R.pH < 0)
+		return
+	if(R.pH > 7)
+		R.pH += 0.5
+	else
+		R.pH -= 0.5
+
 /datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, var/atom/my_atom, added_volume)
 	var/datum/reagent/medicine/antacidpregen/A = holder.has_reagent("antacidpregen")
 	if(!A)

@@ -123,6 +123,9 @@
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 	var/borrowed_health
 	color = "#FFDADA"
+	self_consuming = TRUE
+	chemical_flags = REAGENT_DEAD_PROCESS
+
 
 /datum/reagent/medicine/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
@@ -140,7 +143,7 @@
 				if(data["grown_volume"] > 135 && ((C.health + C.oxyloss)>=80))
 					if(M.revive())
 						M.emote("gasp")
-						borrowed_health *= 2
+						borrowed_health *= 1.5
 						if(borrowed_health < 100)
 							borrowed_health = 100
 						log_combat(M, M, "revived", src)
@@ -157,14 +160,33 @@
 	..()
 
 /datum/reagent/medicine/synthtissue/on_mob_life(mob/living/carbon/C)
-	if(!iscarbon(C))
-		return ..()
 	if(data["injected_vol"] > 14)
 		if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
-					C.reagents.remove_reagent(id, 15)
+					C.reagents.remove_reagent(id, 10)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
+					data["injected_vol"] -= 10
+					return ..()
+			C.randomOrganDamage(-data["grown_volume"]/1000)
+
+	data["injected_vol"] -= metabolization_rate
+	if(borrowed_health)
+		C.adjustToxLoss(1)
+		C.adjustCloneLoss(1)
+		borrowed_health -= 1
+	..()
+
+/datum/reagent/medicine/synthtissue/on_mob_dead(mob/living/carbon/C)
+	if(data["injected_vol"] > 14)
+		if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
+			if(volume >= 14)
+				if(C.regenerate_organs(only_one = TRUE))
+					C.reagents.remove_reagent(id, 10)
+					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
+					data["injected_vol"] -= 10
+					return ..()
+			C.randomOrganDamage(-data["grown_volume"]/1000)
 
 	data["injected_vol"] -= metabolization_rate
 	if(borrowed_health)

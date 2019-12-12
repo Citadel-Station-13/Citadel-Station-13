@@ -10,6 +10,7 @@
 	id = "medicine"
 	value = 2
 	taste_description = "bitterness"
+	var/slime_friendly = FALSE //I assume if you're reading this, you're here to powercreep slimes.
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)
 	current_cycle++
@@ -152,6 +153,7 @@
 	color = "#0000C8"
 	taste_description = "sludge"
 	pH = 11
+	slime_friendly = TRUE
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
 	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
@@ -161,6 +163,8 @@
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		L.equilibrateMetabolicStress(0.1, TRUE)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
@@ -190,6 +194,7 @@
 	color = "#f7832a"
 	taste_description = "spicy jelly"
 	pH = 12
+	slime_friendly = TRUE
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -209,6 +214,8 @@
 		M.adjustFireLoss(-1.5 * power, 0)
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		L.equilibrateMetabolicStress(0.15, TRUE)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	..()
@@ -573,14 +580,16 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	pH = 1 //One of the best buffers, NEVERMIND!
-	var/healtoxinlover = FALSE
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
-	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
-	M.adjustToxLoss(-2*REM, 0, healtoxinlover)
+	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/45
+	M.adjustToxLoss(-2*REM, 0, slime_friendly)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2)
+	if(slime_friendly)
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		L.equilibrateMetabolicStress(0.1, TRUE)
 	..()
 	. = 1
 
@@ -589,8 +598,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	id = "pen_jelly"
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Slimepeople friendly!"
 	color = "#91D865"
-	healtoxinlover = TRUE
 	pH = 12//invert
+	slime_friendly = TRUE
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
@@ -1275,12 +1284,15 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	reagent_state = LIQUID
 	color = "#91D865"
 	taste_description = "jelly"
+	slime_friendly = TRUE
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
 	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjustOxyLoss(-1.5*REM, 0)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+	L.equilibrateMetabolicStress(0.15, TRUE)
 	. = 1
 	..()
 

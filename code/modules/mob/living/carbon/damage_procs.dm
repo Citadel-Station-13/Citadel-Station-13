@@ -178,6 +178,21 @@
 		O.applyOrganDamage(amount, maximum)
 		O.onDamage(amount, maximum)
 
+/mob/living/carbon/proc/randomOrganDamage(amount, maximum)
+	var/organ_list = internal_organs
+	for(var/obj/item/organ/O in organ_list)
+		if(istype(O, /obj/item/organ/genital))
+			organ_list -= O
+	var/obj/item/organ/O = pick(internal_organs)
+	if(!O && status_flags & GODMODE)
+		return FALSE
+	if(!maximum)
+		maximum = O.maxHealth
+	var/_amount = amount * (O.maxHealth/100) //So it's in ratio
+	O.applyOrganDamage(_amount, maximum)
+	O.onDamage(_amount, maximum)
+	return TRUE
+
 /mob/living/carbon/proc/getFailingOrgans()
 	.=list()
 	for(var/obj/item/organ/O in internal_organs)

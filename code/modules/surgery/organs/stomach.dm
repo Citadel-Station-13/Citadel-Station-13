@@ -66,9 +66,11 @@
 		return
 	//stomach acid stuff
 	if(C.reagents.pH > 7.25)
-		C.reagents.pH -= 0.15-(damage/750)
+		var/adjust = C.reagents.pH - (0.15-(damage/750))
+		C.reagents.pH = CLAMP(adjust, 0, 14)
 	else if (C.reagents.pH < 6.75)
-		C.reagents.pH += 0.15-(damage/750)
+		var/adjust = C.reagents.pH + (0.15-(damage/750))
+		C.reagents.pH = CLAMP(adjust, 0, 14)
 
 	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
 	if(!SA)

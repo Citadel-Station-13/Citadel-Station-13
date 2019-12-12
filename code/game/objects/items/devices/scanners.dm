@@ -276,6 +276,8 @@ SLIME SCANNER
 					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 				if(L.swelling > 20)
 					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
+				if(L.metabolic_stress > 55)
+					temp_message += " <span class='danger'>Liver is under heavy stress.</span>"
 
 			//HEART
 			else if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
