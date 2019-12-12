@@ -56,6 +56,7 @@
 	<ui-section label='Control'>
     <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
 	<ui-button icon='{{data.dialysis ? "power-off" : "close"}}' style='{{data.dialysis ? "selected" : null}}' action='dialysis'>Dialysis</ui-button>
+	<ui-button icon='flask' action='synth_all'>Synth Available</ui-button>
 	</ui-section>
 
   <ui-section label='Inject'>

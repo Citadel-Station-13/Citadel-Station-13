@@ -359,6 +359,8 @@
 			else
 				visible_message("<span class='warning'>Access Denied.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		if("synth_all")
+			synth_all_avalible()
 
 
 		if("dialysis")
@@ -406,6 +408,19 @@
 	var/list/av_chem = available_chems.Copy()
 	for(var/chem in av_chem)
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
+
+/obj/machinery/sleeper/proc/synth_all_avalible()
+	for(var/chem in available_chems)
+		if(!synth_allowed(chem))
+			continue
+		var/datum/reagent/R = reagents.has_reagent(chem)
+		if(!R)
+			reagents.add_reagent(chem_buttons[chem], 50)
+		if(R)
+			var/add_ammount = 50 - R.volume
+			if(R > 0)
+				reagents.add_reagent(chem_buttons[chem], 50)
+
 
 /obj/machinery/sleeper/process()
 	var/mob/living/carbon/C = occupant
