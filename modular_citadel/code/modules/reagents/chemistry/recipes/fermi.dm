@@ -546,15 +546,16 @@
 	if(!A)
 		return
 	if(holder.pH < 7)
+		holder.remove_reagent(id, added_volume)
 		holder.add_reagent("antbase", added_volume, added_purity = 1-A.purity)
 		var/datum/reagent/medicine/antacidpregen/antbase/B = holder.has_reagent("antbase")
 		B.cached_purity = 1-A.purity
-		holder.remove_reagent(id, added_volume)
+
 	else
+		holder.remove_reagent(id, added_volume)
 		holder.add_reagent("antacid", added_volume, added_purity = 1-A.purity)
 		var/datum/reagent/medicine/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
 		A2.cached_purity = 1-A.purity
-		holder.remove_reagent(id, added_volume)
 
 /datum/chemical_reaction/cryosenium
 	name = "Cryosenium"
