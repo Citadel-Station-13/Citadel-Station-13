@@ -2248,6 +2248,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
+"fR" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supply)
 "fS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2935,6 +2949,19 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
+"hH" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/control)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3397,19 +3424,25 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "iS" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = -24
 	},
-/obj/effect/turf_decal/tile/brown{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/centcom/supply)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/control)
 "iT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3709,6 +3742,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"jA" = (
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 2;
+	icon_state = "leftsecure";
+	name = "CentCom Stand";
+	req_access_txt = "109"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/control)
 "jB" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -3882,17 +3939,28 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jV" = (
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 2;
+	icon_state = "leftsecure";
+	name = "CentCom Stand";
+	req_access_txt = "109"
+	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "jW" = (
 /obj/structure/closet/secure_closet/contraband/heads,
@@ -4194,6 +4262,16 @@
 "ku" = (
 /turf/closed/indestructible/fakeglass,
 /area/syndicate_mothership)
+"kv" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
 "kw" = (
 /turf/open/floor/plasteel/yellowsiding,
 /area/centcom/supply)
@@ -4227,25 +4305,29 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kB" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/under/skirt/black,
+/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/pants/track,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/waistcoat,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/neck/stripedredscarf,
+/obj/item/clothing/neck/tie/red,
+/obj/item/clothing/head/helmet/space/beret,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/suit/space/officer,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/glasses/eyepatch,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/control)
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
 "kC" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -4364,6 +4446,34 @@
 	icon_state = "alien19"
 	},
 /area/abductor_ship)
+"kR" = (
+/obj/structure/table/wood,
+/obj/item/dice/d20{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/dice/d10{
+	pixel_x = -3
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -32
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "kS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4531,6 +4641,42 @@
 	icon_state = "alien15"
 	},
 /area/abductor_ship)
+"ll" = (
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom/control)
+"lm" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/taperecorder,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/control)
 "ln" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/brown,
@@ -4612,6 +4758,24 @@
 /area/centcom/control)
 "lx" = (
 /obj/structure/extinguisher_cabinet{
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/control)
+"ly" = (
+/obj/structure/filingcabinet/medical,
+/obj/machinery/firealarm{
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -4792,6 +4956,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+"lS" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/white,
+/area/tdome/tdomeobserve)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -4852,6 +5023,17 @@
 	icon_state = "alien11"
 	},
 /area/abductor_ship)
+"ma" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/tdomeobserve)
 "mb" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -5104,6 +5286,26 @@
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
+"mC" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/tdomeadmin)
 "mD" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
@@ -5754,54 +5956,6 @@
 /area/centcom/control)
 "nP" = (
 /obj/machinery/vending/snack,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/control)
-"nQ" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 2;
-	icon_state = "leftsecure";
-	name = "CentCom Stand";
-	req_access_txt = "109"
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/control)
-"nR" = (
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 2;
-	icon_state = "leftsecure";
-	name = "CentCom Stand";
-	req_access_txt = "109"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6862,40 +7016,6 @@
 /area/centcom/ferry)
 "pL" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
-"pM" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
-"pN" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/under/skirt/black,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/pants/track,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/waistcoat,
-/obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/neck/stripedredscarf,
-/obj/item/clothing/neck/tie/red,
-/obj/item/clothing/head/helmet/space/beret,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/suit/space/officer,
-/obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/gloves/color/black,
-/obj/item/clothing/glasses/eyepatch,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "pO" = (
@@ -9201,34 +9321,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
-"uX" = (
-/obj/structure/table/wood,
-/obj/item/dice/d20{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/dice/d10{
-	pixel_x = -3
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/ferry)
 "uY" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -11012,22 +11104,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/control)
-"zK" = (
-/obj/machinery/computer/med_data{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/centcom/control)
 "zL" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -12318,26 +12394,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
-"CH" = (
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/taperecorder,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/control)
 "CI" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -12386,24 +12442,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/control)
-"CM" = (
-/obj/structure/filingcabinet/medical,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "CN" = (
 /obj/structure/table/reinforced,
@@ -14509,13 +14547,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
-"Hq" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel/white,
-/area/tdome/tdomeobserve)
 "Hr" = (
 /obj/structure/table/wood,
 /obj/structure/sign/plaques/thunderdome{
@@ -14551,17 +14582,6 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
-/area/tdome/tdomeobserve)
-"Hu" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Hv" = (
 /obj/machinery/light,
@@ -15829,26 +15849,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/tdome/tdomeadmin)
-"JZ" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "Ka" = (
 /turf/open/floor/plasteel/grimy,
@@ -57355,14 +57355,14 @@ nU
 on
 oI
 pe
-pM
+kv
 qi
 mD
 ry
 sC
 tC
 oB
-uX
+kR
 mD
 su
 ws
@@ -57869,7 +57869,7 @@ mD
 oo
 oI
 pf
-pN
+kB
 qj
 nU
 rr
@@ -60215,7 +60215,7 @@ Gh
 Ep
 GJ
 Hd
-Hq
+lS
 Gx
 GM
 HW
@@ -60231,7 +60231,7 @@ IE
 Is
 JI
 JP
-JZ
+mC
 JG
 Kn
 Iv
@@ -60674,7 +60674,7 @@ aa
 aa
 aa
 iF
-iS
+fR
 iZ
 jf
 jq
@@ -60972,7 +60972,7 @@ tL
 io
 iu
 io
-CH
+lm
 vM
 Ds
 DG
@@ -63028,7 +63028,7 @@ tL
 io
 iu
 io
-CM
+ly
 Da
 Dv
 DJ
@@ -63813,7 +63813,7 @@ Gp
 Ep
 GQ
 Hf
-Hu
+ma
 Gx
 GM
 HW
@@ -65822,7 +65822,7 @@ iU
 jB
 iU
 iU
-jV
+hH
 iU
 iU
 kV
@@ -66107,7 +66107,7 @@ xq
 wI
 yA
 iu
-zK
+ll
 As
 zJ
 BL
@@ -67880,14 +67880,14 @@ aa
 io
 jZ
 iC
-kB
+iS
 in
 lx
 lR
 ml
 mW
 nv
-nQ
+jA
 iC
 iC
 iC
@@ -70971,7 +70971,7 @@ lW
 mq
 na
 lW
-nR
+jV
 iC
 oz
 oR

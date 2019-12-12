@@ -3003,7 +3003,6 @@
 #include "modular_citadel\code\game\gamemodes\miniantags\bot_swarm\swarmer_event.dm"
 #include "modular_citadel\code\game\gamemodes\revolution\revolution.dm"
 #include "modular_citadel\code\game\machinery\displaycases.dm"
-#include "modular_citadel\code\game\machinery\firealarm.dm"
 #include "modular_citadel\code\game\machinery\Sleeper.dm"
 #include "modular_citadel\code\game\machinery\toylathe.dm"
 #include "modular_citadel\code\game\machinery\vending.dm"
