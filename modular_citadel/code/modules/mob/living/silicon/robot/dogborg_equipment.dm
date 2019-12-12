@@ -162,9 +162,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-/obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	. = ..()
-
 /obj/item/analyzer/nose/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)

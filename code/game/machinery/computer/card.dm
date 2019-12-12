@@ -170,19 +170,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		return TRUE
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
 		return
 	if(inserted_modify_id)
 		if(id_eject(user, inserted_modify_id))
 			inserted_modify_id = null
 			updateUsrDialog()
-			return
+			return TRUE
 	if(inserted_scan_id)
 		if(id_eject(user, inserted_scan_id))
 			inserted_scan_id = null
 			updateUsrDialog()
-			return
+			return TRUE
 
 /obj/machinery/computer/card/ui_interact(mob/user)
 	. = ..()

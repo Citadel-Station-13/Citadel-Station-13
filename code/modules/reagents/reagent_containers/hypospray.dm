@@ -338,8 +338,10 @@
 	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
+	. = ..()
 	if(vial)
 		vial.attack_self(user)
+		return TRUE
 
 // Gunna allow this for now, still really don't approve - Pooj
 /obj/item/hypospray/mkii/emag_act(mob/user)
