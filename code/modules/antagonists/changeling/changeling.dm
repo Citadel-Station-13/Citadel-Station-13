@@ -539,10 +539,6 @@
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
 
-	var/changelingwin = 1
-	if(!owner.current)
-		changelingwin = 0
-
 	parts += printplayer(owner)
 
 	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.

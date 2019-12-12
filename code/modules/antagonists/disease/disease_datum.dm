@@ -41,14 +41,13 @@
 	result += printplayer(owner)
 
 	var/objectives_text = ""
+	var/count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
 			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 
 	result += objectives_text
-
-	var/special_role_text = lowertext(name)
 
 	if(istype(owner.current, /mob/camera/disease))
 		var/mob/camera/disease/D = owner.current

@@ -35,7 +35,7 @@
 		report += "<span class='header'>Team had following objectives:</span>"
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text]"
+			report += "<B>Objective #[objective_count]</B>: [objective.explanation_text]"
 			objective_count++
 
 

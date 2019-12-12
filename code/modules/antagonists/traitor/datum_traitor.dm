@@ -379,8 +379,6 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
-
 	return result.Join("<br>")
 
 /datum/antagonist/traitor/roundend_report_footer()

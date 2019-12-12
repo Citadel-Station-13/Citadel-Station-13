@@ -105,7 +105,6 @@
 	parts += "<span class='header'>The blood brothers of [name] were:</span>"
 	for(var/datum/mind/M in members)
 		parts += printplayer(M)
-	var/win = TRUE
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text]"
