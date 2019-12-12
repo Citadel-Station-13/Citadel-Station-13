@@ -585,8 +585,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/45
 	M.adjustToxLoss(-2*REM, 0, slime_friendly)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.id,2)
+		if(R = src)
+			continue
+		if(istype(R, /datum/reagent/metabolic))
+			M.reagents.remove_reagent(R.id,1.5)
+			continue
+		M.reagents.remove_reagent(R.id,2)
 	if(slime_friendly)
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 		L.equilibrateMetabolicStress(0.1, TRUE)
