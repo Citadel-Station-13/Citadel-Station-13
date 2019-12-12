@@ -122,8 +122,7 @@
 	metastress = -0.1
 
 /datum/reagent/impure/antihol/on_mob_life(mob/living/carbon/C)
-	if(!L)//Since this is run before the parent proc.
-		L = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	var/treat_amount = 0.2 + (cached_purity/2.5) //0.2-0.7
 	L.adjustMetabolicStress(-treat_amount, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
