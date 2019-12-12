@@ -234,18 +234,21 @@
 			applyOrganDamage(0.15)
 			owner.adjustToxLoss(0.15, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+			M.slurring += 1
 		if(60 to 90)
 			applyOrganDamage(0.2)
 			owner.adjustToxLoss(0.2, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.15)
 			owner.adjustStaminaLoss(1)
 			swelling += 0.02
+			M.slurring += 1
 		if(90 to INFINITY)
 			applyOrganDamage(0.25)
 			owner.adjustToxLoss(0.25, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2)
 			owner.adjustStaminaLoss(2)
 			swelling += 0.1
+			M.slurring += 2
 
 
 	if(filterToxins)
