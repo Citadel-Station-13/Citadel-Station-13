@@ -235,7 +235,7 @@
 /datum/reagent/medicine/antacidpregen/on_mob_life(mob/living/carbon/C)
 	var/stomach_heal = -((cached_purity-0.5)*3)
 	if(stomach_heal<0)
-		C.cureOrganDamage(ORGAN_SLOT_TONGUE, stomach_heal, ORGAN_TREAT_ACUTE)
+		C.cureOrganDamage(ORGAN_SLOT_TONGUE, stomach_heal, ORGAN_TREAT_END_STAGE)
 	else
 		C.adjustOrganLoss(ORGAN_SLOT_STOMACH, stomach_heal)
 	..()

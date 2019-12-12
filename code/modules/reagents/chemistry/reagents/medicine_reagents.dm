@@ -825,10 +825,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	if (!eyes)
 		return
 	//Treatment
-	if(cached_purity > 0.89)
-		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.5), ORGAN_TREAT_END_STAGE)
-	else
-		M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.5), ORGAN_TREAT_CHRONIC)
+	M.cureOrganDamage(ORGAN_SLOT_EYES, -(cached_purity*2.5), ORGAN_TREAT_END_STAGE)
 
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE) && eyes.damage < 30)
 		if(prob(2*cached_purity))
