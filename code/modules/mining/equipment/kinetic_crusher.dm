@@ -38,12 +38,12 @@
 	return ..()
 
 /obj/item/twohanded/kinetic_crusher/examine(mob/living/user)
-	..()
-	to_chat(user, "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>[force_wielded + detonation_damage]</b> damage.</span>")
-	to_chat(user, "<span class='notice'>Does <b>[force_wielded + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force_wielded + detonation_damage]</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>[force_wielded + detonation_damage]</b> damage.</span>"
+	. += "<span class='notice'>Does <b>[force_wielded + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force_wielded + detonation_damage]</b>.</span>"
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
+		. += "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>"
 
 /obj/item/twohanded/kinetic_crusher/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/crowbar))
@@ -63,8 +63,7 @@
 
 /obj/item/twohanded/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!wielded)
-		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand. You fumble and drop everything.")
-		user.drop_all_held_items()
+		to_chat(user, "<span class='warning'>[src] is too heavy to use with one hand.")
 		return
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	var/target_health = target.health
@@ -202,8 +201,8 @@
 	var/denied_type = /obj/item/crusher_trophy
 
 /obj/item/crusher_trophy/examine(mob/living/user)
-	..()
-	to_chat(user, "<span class='notice'>Causes [effect_desc()] when attached to a kinetic crusher.</span>")
+	. = ..()
+	. += "<span class='notice'>Causes [effect_desc()] when attached to a kinetic crusher.</span>"
 
 /obj/item/crusher_trophy/proc/effect_desc()
 	return "errors"

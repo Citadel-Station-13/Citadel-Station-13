@@ -85,7 +85,7 @@
 /datum/supply_pack/science/monkey
 	name = "Monkey Cube Crate"
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
-	cost = 2000
+	cost = 1500
 	contains = list (/obj/item/storage/box/monkeycubes)
 	crate_name = "monkey cube crate"
 
@@ -131,7 +131,7 @@
 
 /datum/supply_pack/science/relic
 	name = "Relic Crate"
-	desc = "Ever want to play with old discounted toys? Look no more. Contains two relics."
+	desc = "Ever wanted to play with old discounted toys? Look no further. Contains two relics."
 	cost = 1000
 	contraband = TRUE
 	contains = list(/obj/item/relic,

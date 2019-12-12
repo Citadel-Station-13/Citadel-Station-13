@@ -23,15 +23,15 @@
 	adjustmask(user)
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	else
-		adjustmask(user)
+	adjustmask(user)
+	return TRUE
 
 /obj/item/clothing/mask/breath/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to adjust it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to adjust it.</span>"
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."

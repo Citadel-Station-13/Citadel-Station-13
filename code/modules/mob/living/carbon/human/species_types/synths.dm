@@ -9,6 +9,7 @@
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
+	gib_types = /obj/effect/gibspawner/robot
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
 	var/list/initial_species_traits = list(NOTRANSSTING) //for getting these values back for assume_disguise()

@@ -12,10 +12,11 @@
 	var/max_wash_capacity = 5
 
 /obj/machinery/washing_machine/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click it to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src))
 		return
 
@@ -24,11 +25,11 @@
 
 	if(state_open)
 		to_chat(user, "<span class='notice'>Close the door first</span>")
-		return
+		return TRUE
 
 	if(bloody_mess)
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
-		return
+		return TRUE
 
 	if(has_corgi)
 		bloody_mess = 1
@@ -37,6 +38,7 @@
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
 	START_PROCESSING(SSfastprocess, src)
+	return TRUE
 
 /obj/machinery/washing_machine/process()
 	if (!busy)

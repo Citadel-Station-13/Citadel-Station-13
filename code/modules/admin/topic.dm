@@ -1449,9 +1449,7 @@
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
-		var/new_centre = input(usr,"Change the centre of the dynamic mode threat curve. A negative value will give a more peaceful round ; a positive value, a round with higher threat. Any number between -5 and +5 is allowed.", "Change curve centre", null) as num
-		if (new_centre < -5 || new_centre > 5)
-			return alert(usr, "Only values between -5 and +5 are allowed.", null, null, null, null)
+		var/new_centre = input(usr,"Change the centre of the dynamic mode threat curve. A negative value will give a more peaceful round ; a positive value, a round with higher threat. Any number is allowed. This is adjusted by dynamic voting.", "Change curve centre", null) as num
 
 		log_admin("[key_name(usr)] changed the distribution curve center to [new_centre].")
 		message_admins("[key_name(usr)] changed the distribution curve center to [new_centre]", 1)
@@ -2357,7 +2355,7 @@
 
 		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
-		if (!( where in list("onfloor","inhand","inmarked") ))
+		if (!( where in list("onfloor","frompod","inhand","inmarked") ))
 			where = "onfloor"
 
 
@@ -2368,7 +2366,7 @@
 					where = "onfloor"
 				target = usr
 
-			if("onfloor")
+			if("onfloor", "frompod")
 				switch(href_list["offset_type"])
 					if ("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
@@ -2384,7 +2382,10 @@
 				else
 					target = marked_datum
 
+		var/obj/structure/closet/supplypod/centcompod/pod
 		if(target)
+			if(where == "frompod")
+				pod = new()
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
 					if(path in typesof(/turf))
@@ -2393,7 +2394,11 @@
 						if(N && obj_name)
 							N.name = obj_name
 					else
-						var/atom/O = new path(target)
+						var/atom/O
+						if(where == "frompod")
+							O = new path(pod)
+						else
+							O = new path(target)
 						if(!QDELETED(O))
 							O.flags_1 |= ADMIN_SPAWNED_1
 							if(obj_dir)
@@ -2413,6 +2418,8 @@
 										R.module.add_module(I, TRUE, TRUE)
 										R.activate_module(I)
 
+		if(pod)
+			new /obj/effect/abstract/DPtarget(target, pod)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

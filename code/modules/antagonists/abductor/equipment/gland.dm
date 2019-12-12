@@ -20,7 +20,7 @@
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
 	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
-		to_chat(user, "<span class='notice'>It is \a [true_name].</span>")
+		. += "<span class='notice'>It is \a [true_name].</span>"
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -73,7 +73,7 @@
 	clear_mind_control()
 	..()
 
-/obj/item/organ/heart/gland/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/gland/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()
@@ -124,7 +124,7 @@
 	mind_control_uses = 1
 	mind_control_duration = 2400
 
-/obj/item/organ/heart/gland/slime/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/gland/slime/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	owner.faction |= "slime"
 	owner.grant_language(/datum/language/slime)
@@ -286,7 +286,7 @@
 	mind_control_uses = 2
 	mind_control_duration = 900
 
-/obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 

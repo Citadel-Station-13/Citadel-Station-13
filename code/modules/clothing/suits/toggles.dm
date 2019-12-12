@@ -92,11 +92,11 @@
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	else
-		suit_toggle(user)
+	suit_toggle(user)
+	return TRUE
 
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()
@@ -120,8 +120,8 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
-	..()
-	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
+	. = ..()
+	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()

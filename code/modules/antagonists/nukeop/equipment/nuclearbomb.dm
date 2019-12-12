@@ -55,9 +55,9 @@
 /obj/machinery/nuclearbomb/examine(mob/user)
 	. = ..()
 	if(exploding)
-		to_chat(user, "It is in the process of exploding. Perhaps reviewing your affairs is in order.")
+		. += "It is in the process of exploding. Perhaps reviewing your affairs is in order."
 	if(timing)
-		to_chat(user, "There are [get_time_left()] seconds until detonation.")
+		. += "There are [get_time_left()] seconds until detonation."
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
@@ -472,9 +472,9 @@
 /obj/machinery/nuclearbomb/beer/examine(mob/user)
 	. = ..()
 	if(keg.reagents.total_volume)
-		to_chat(user, "<span class='notice'>It has [keg.reagents.total_volume] unit\s left.</span>")
+		. += "<span class='notice'>It has [keg.reagents.total_volume] unit\s left.</span>"
 	else
-		to_chat(user, "<span class='danger'>It's empty.</span>")
+		. += "<span class='danger'>It's empty.</span>"
 
 /obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
@@ -615,7 +615,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	var/captain = user.mind && user.mind.assigned_role == "Captain"
 	var/nukie = user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop)
 	if(ghost || captain || nukie)
-		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
+		. += "<span class='warning'>The serial numbers on [src] are incorrect.</span>"
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander) && !fake)

@@ -20,7 +20,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/dogborg/jaws/examine(mob/user)
 	. = ..()
 	if(!CONFIG_GET(flag/weaken_secborg))
-		to_chat(user, "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>")
+		. += "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>"
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
@@ -162,9 +162,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-/obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	. = ..()
-
 /obj/item/analyzer/nose/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -253,7 +250,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			if(!do_after(R, 50, target = target))
 				return //If they moved away, you can't eat them.
 			to_chat(R, "<span class='notice'>You finish off \the [target.name].</span>")
-			var/obj/item/stock_parts/cell.C = target
+			var/obj/item/stock_parts/cell/C = target
 			R.cell.charge = R.cell.charge + (C.charge / 3) //Instant full cell upgrades op idgaf
 			qdel(target)
 			return
@@ -311,6 +308,42 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 			target.wash_cream()
 	return
+
+//Nerfed tongue for flavour reasons (haha geddit?). Used for aux skins for regular borgs
+/obj/item/soap/tongue/flavour
+	desc = "For giving affectionate kisses."
+
+/obj/item/soap/tongue/flavour/attack_self(mob/user)
+	return
+
+/obj/item/soap/tongue/flavour/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
+		return
+	var/mob/living/silicon/robot/R = user
+	if(ishuman(target))
+		var/mob/living/L = target
+		if(status == 0 && check_zone(R.zone_selected) == "head")
+			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]'s face!</span>", "<span class='notice'>You affectionally lick \the [L]'s face!</span>")
+			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+			return
+		else if(status == 0)
+			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]!</span>", "<span class='notice'>You affectionally lick \the [L]!</span>")
+			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+			return
+
+//Same as above but for noses
+/obj/item/analyzer/nose/flavour/AltClick(mob/user)
+	return
+
+/obj/item/analyzer/nose/flavour/attack_self(mob/user)
+	return
+
+/obj/item/analyzer/nose/flavour/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
+		return
+	do_attack_animation(target, null, src)
+	user.visible_message("<span class='notice'>[user] [pick(attack_verb)] \the [target.name] with their nose!</span>")
+
 
 //Dogfood
 

@@ -21,7 +21,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/delusion = 2,
 	/datum/hallucination/shock = 1,
 	/datum/hallucination/death = 1,
-	/datum/hallucination/oh_yeah = 1
+	/datum/hallucination/oh_yeah = 1,
+	/datum/hallucination/sleeping_carp = 1
 	))
 
 
@@ -672,7 +673,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		"AI [pick("rogue", "is dead")]!!")
 
 	var/list/mob/living/carbon/people = list()
-	var/list/mob/living/carbon/person = null
+	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
 	for(var/mob/living/carbon/H in view(target))
 		if(H == target)
@@ -894,7 +895,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			SEND_SOUND(target, get_announcer_sound("aimalf"))
 		if("meteors") //Meteors inbound!
 			to_chat(target, "<h1 class='alert'>Meteor Alert</h1>")
-			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station. Estimated time until impact: [round(rand(300,600)/60)] minutes.</span><br><br>")
+			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station. Estimated time until impact: [round(rand(180,360)/60)] minutes.</span><br><br>")
 			SEND_SOUND(target, get_announcer_sound("meteors"))
 		if("supermatter")
 			SEND_SOUND(target, 'sound/magic/charge.ogg')
@@ -1293,4 +1294,27 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	H.hal_target = target
 	H.preparePixelProjectile(target, start)
 	H.fire()
+	qdel(src)
+
+/datum/hallucination/sleeping_carp
+
+/datum/hallucination/sleeping_carp/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	var/list/mobsyup
+	for (var/mob/living/carbon/A in orange(C,1))
+		if (get_dist(C,A) < 2)
+			LAZYADD(mobsyup,A)
+	if (!LAZYLEN(mobsyup))
+		qdel(src)
+		return
+	var/mob/living/carbon/G = pick(mobsyup)
+	if (prob(50))
+		C.visible_message("<span class='warning'>[C] falls to the ground screaming and clutching [C.p_their()] wrist!</span>", \
+						  "<span class='userdanger'>[G] grabs your wrist and violently wrenches it to the side!</span>")
+		C.emote("scream")
+		C.dropItemToGround(C.get_active_held_item())
+		C.Knockdown(60)
+	else
+		to_chat(C,"<span class='userdanger'>[G] violently grabs you!</span>")
 	qdel(src)
