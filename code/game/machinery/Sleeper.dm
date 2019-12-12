@@ -420,7 +420,7 @@
 			reagents.add_reagent(chem_buttons[chem], 50)
 		if(R)
 			var/add_amount = 50 - R.volume
-			if(R > 0)
+			if(R.volume > 0)
 				reagents.add_reagent(chem_buttons[chem], add_amount)
 
 
