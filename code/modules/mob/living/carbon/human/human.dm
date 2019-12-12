@@ -890,7 +890,10 @@
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
-		to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
+		if (ishuman(target))
+			to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
+		else
+			to_chat(src, "<span class='notice'>You can't seem to fireman carry that kind of species.</span>")
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(can_piggyback(target))
