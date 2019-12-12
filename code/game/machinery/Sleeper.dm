@@ -419,9 +419,9 @@
 		if(!R)
 			reagents.add_reagent(chem_buttons[chem], 50)
 		if(R)
-			var/add_ammount = 50 - R.volume
+			var/add_amount = 50 - R.volume
 			if(R > 0)
-				reagents.add_reagent(chem_buttons[chem], 50)
+				reagents.add_reagent(chem_buttons[chem], add_amount)
 
 
 /obj/machinery/sleeper/process()

@@ -212,7 +212,7 @@
 	CurveSharpT 		= 0.8 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 15 		// Temperature change per 1u produced
-	HIonRelease 		= 0.0.2 		// pH change per 1u reaction (inverse for some reason)
+	HIonRelease 		= 0.06 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 7.5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
