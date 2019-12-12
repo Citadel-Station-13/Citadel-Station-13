@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	update_preview_icon(current_tab != 2)
 	var/list/dat = list("<center>")
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
@@ -333,7 +333,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
 
-			update_preview_icon()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Flavor Text</h2>"
 			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Examine Text</b></a><br>"
@@ -1565,10 +1564,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-							update_preview_icon()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-							update_preview_icon()
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1578,10 +1575,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor2"] = pref_species.default_color
-							update_preview_icon()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
-							update_preview_icon()
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1591,10 +1586,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor3"] = pref_species.default_color
-							update_preview_icon()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
-							update_preview_icon()
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1736,14 +1729,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["body_markings"] = new_body_markings
 						if(new_body_markings != "None")
 							features["mam_body_markings"] = "None"
-						update_preview_icon()
 
 				if("legs")
 					var/new_legs
 					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in GLOB.legs_list
 					if(new_legs)
 						features["legs"] = new_legs
-						update_preview_icon()
 
 				if("insect_wings")
 					var/new_insect_wings
@@ -1829,7 +1820,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if(new_mam_body_markings == "None")
 							features["mam_body_markings"] = "Plain"
 							features["body_markings"] = "None"
-						update_preview_icon()
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
@@ -2307,8 +2297,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		pref_species = new /datum/species/human
 		save_character()
 
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.features = features.Copy()
+	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species
@@ -2337,7 +2327,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
-		character.update_body_parts()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
