@@ -154,6 +154,8 @@
 	taste_description = "sludge"
 	pH = 11
 	slime_friendly = TRUE
+	cold_reagent = TRUE
+	//self_consuming = TRUE //maybe?
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
 	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
@@ -178,6 +180,7 @@
 	taste_description = "muscle"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	pH = 13
+	cold_reagent = TRUE
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature < T0C)

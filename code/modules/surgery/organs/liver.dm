@@ -27,9 +27,14 @@
 
 /obj/item/organ/liver/on_life()
 	if(is_cold())
+		if(!owner)
+			return
+		for(var/I in owner.reagents.reagent_list)
+			var/datum/reagent/R = I
+			if(R.cold_reagent)
+				R.on_mob_life()
 		return
 	var/mob/living/carbon/C = owner
-
 	if(istype(C))
 		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
 			//metabolize reagents

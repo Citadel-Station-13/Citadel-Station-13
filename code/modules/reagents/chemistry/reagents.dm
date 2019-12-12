@@ -33,6 +33,7 @@
 	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE  //I think this uhhh, makes weird stuff happen when metabolising, but... doesn't seem to do what I think, so I'm gonna leave it.
+	var/cold_reagent = FALSE //Does this reagent process when the owner is on ice? (chilled?)
 	//Fermichem vars:
 	var/purity 				= 1 		//How pure a chemical is from 0 - 1.
 	var/cached_purity		= 1
