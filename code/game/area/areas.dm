@@ -355,6 +355,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/set_fire_alarm_effects(boolean)
 	fire = boolean
+	for(var/i in sub_areas)
+		var/area/A = i
+		A.fire = boolean
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	for(var/alarm in firealarms)
 		var/obj/machinery/firealarm/F = alarm
@@ -362,9 +365,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		F.update_icon()
 	for(var/obj/machinery/light/L in get_sub_areas_contents(src))
 		L.update()
-	for(var/i in sub_areas)
-		var/area/A = i
-		A.fire = boolean
 
 /area/proc/updateicon()
 	var/weather_icon
