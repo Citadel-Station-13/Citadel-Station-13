@@ -187,8 +187,8 @@
 					data["injected_vol"] -= 10
 					return ..()
 			C.randomOrganDamage(-data["grown_volume"]/1000)
-
-	data["injected_vol"] -= metabolization_rate
+		data["injected_vol"] -= metabolization_rate
+	
 	if(borrowed_health)
 		C.adjustToxLoss(1)
 		C.adjustCloneLoss(1)
