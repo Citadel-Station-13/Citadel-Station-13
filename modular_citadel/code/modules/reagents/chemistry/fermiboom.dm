@@ -61,7 +61,7 @@
 	R.my_atom = my_atom //Give the gas a fingerprint
 
 	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		R.add_reagent(reagent.id, reagent.volume/3, added_purity = reagent.purity)) //Seems fine? I think I fixed the infinite explosion bug.
+		R.add_reagent(reagent.id, reagent.volume/3, added_purity = reagent.purity) //Seems fine? I think I fixed the infinite explosion bug.
 
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
