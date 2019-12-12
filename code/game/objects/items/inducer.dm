@@ -205,3 +205,7 @@
 /obj/item/inducer/sci/combat/Initialize()
 	. = ..()
 	update_icon()
+
+/obj/item/inducer/sci/supply
+	opened = FALSE
+	cell_type = /obj/item/stock_parts/cell/inducer_supply

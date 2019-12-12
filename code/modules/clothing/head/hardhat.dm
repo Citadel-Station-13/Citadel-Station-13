@@ -115,8 +115,10 @@
 	toggle_helmet_light(user)
 
 /obj/item/clothing/head/hardhat/weldhat/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
 		toggle_welding_screen(user)
+		return TRUE
 
 /obj/item/clothing/head/hardhat/weldhat/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))

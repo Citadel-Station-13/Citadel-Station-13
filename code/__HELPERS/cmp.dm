@@ -23,6 +23,9 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
 	return sorttext(a.fields[GLOB.cmp_field], b.fields[GLOB.cmp_field])
 
+/proc/cmp_filter_data_priority(list/A, list/B)
+	return A["priority"] - B["priority"]
+
 /proc/cmp_ckey_asc(client/a, client/b)
 	return sorttext(b.ckey, a.ckey)
 
@@ -84,6 +87,9 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_job_display_asc(datum/job/A, datum/job/B)
 	return A.display_order - B.display_order
+
+/proc/cmp_uplink_items_dsc(datum/uplink_item/A, datum/uplink_item/B)
+	return sorttext(initial(B.name), initial(A.name))
 
 /proc/cmp_numbered_displays_name_asc(datum/numbered_display/A, datum/numbered_display/B)
 	return sorttext(A.sample_object.name, B.sample_object.name)

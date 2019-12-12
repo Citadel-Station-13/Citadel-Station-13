@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed hulks, sleeping carp users, pacifists and people with chunky fingers being able to unrestrictly use gun and pneumatic cannon circuit assemblies."
+  - bugfix: "Fixed gun circuit assemblies being only usable by human mobs."
+  - balance: "Doubled the locomotion circuit external cooldown, thus halving the movable assemblies' movespeed."
