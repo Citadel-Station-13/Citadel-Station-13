@@ -10,6 +10,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
+					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
 					/obj/item/reagent_containers/glass/beaker/waterbottle = 10)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
@@ -60,6 +61,12 @@
 
 /obj/machinery/vending/cola/sodie
 	icon_state = "soda"
+
+/obj/machinery/vending/cola/pwr_game
+	icon_state = "pwr_game"
+	name = "\improper Pwr Game Vendor"
+	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
+	product_slogans = "The POWER that gamers crave! PWR GAME!"
 
 /obj/machinery/vending/cola/shamblers
 	name = "\improper Shambler's Vendor"
