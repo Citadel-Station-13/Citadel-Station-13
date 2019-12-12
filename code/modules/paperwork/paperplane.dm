@@ -126,6 +126,7 @@
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user), NO_TK))
 		return
 	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
@@ -138,3 +139,4 @@
 
 	I = new plane_type(user, src)
 	user.put_in_hands(I)
+	return TRUE
