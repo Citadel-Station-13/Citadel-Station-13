@@ -76,8 +76,8 @@
 	if (get_dist(src,user) > 1)
 		if (iscarbon(user))
 			var/mob/living/carbon/H = user
-				if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
-					return FALSE
+			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
+				return FALSE
 		else
 			return FALSE
 	if(!stored_card && !stored_card2)
