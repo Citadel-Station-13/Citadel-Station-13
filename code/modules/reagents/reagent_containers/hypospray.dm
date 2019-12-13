@@ -121,11 +121,11 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
-	..()
+	. = ..()
 	if(reagents && reagents.reagent_list.len)
-		to_chat(usr, "<span class='notice'>It is currently loaded.</span>")
+		. += "<span class='notice'>It is currently loaded.</span>"
 	else
-		to_chat(usr, "<span class='notice'>It is spent.</span>")
+		. += "<span class='notice'>It is spent.</span>"
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "illegal stimpack medipen"
@@ -296,10 +296,10 @@
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
 	if(vial)
-		to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+		. += "[vial] has [vial.reagents.total_volume]u remaining."
 	else
-		to_chat(user, "It has no vial loaded in.")
-	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
+		. += "It has no vial loaded in."
+	. += "[src] is set to [mode ? "Inject" : "Spray"] contents on application."
 
 /obj/item/hypospray/mkii/proc/unload_hypo(obj/item/I, mob/user)
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
@@ -338,8 +338,10 @@
 	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
+	. = ..()
 	if(vial)
 		vial.attack_self(user)
+		return TRUE
 
 // Gunna allow this for now, still really don't approve - Pooj
 /obj/item/hypospray/mkii/emag_act(mob/user)

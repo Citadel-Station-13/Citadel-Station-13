@@ -27,6 +27,8 @@
 	var/pullshocksafely = FALSE //Dose the unit have the healdisk upgrade?
 	var/primetime = 0 // is the defib faster
 	var/timedeath = 10
+	var/disarm_shock_time = 10
+	var/always_emagged = FALSE
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -104,7 +106,7 @@
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
 	. = ..()
-	if(ismob(loc))
+	if(!. && ismob(loc) && loc == usr)
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
@@ -140,6 +142,7 @@
 
 /obj/item/defibrillator/emag_act(mob/user)
 	. = ..()
+	always_emagged = TRUE
 	safety = !safety
 	to_chat(user, "<span class='warning'>You silently [safety ? "enable" : "disable"] [src]'s safety protocols with the cryptographic sequencer.</span>")
 	return TRUE
@@ -154,7 +157,7 @@
 		safety = FALSE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, 0)
-	else
+	else if(!always_emagged)
 		safety = TRUE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, 0)
@@ -257,6 +260,8 @@
 	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
 	combat = TRUE
 	safety = FALSE
+	always_emagged = TRUE
+	disarm_shock_time = 0
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
@@ -293,6 +298,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/disarm_shock_time = 10
 
 	var/mob/listeningTo
 
@@ -467,7 +473,7 @@
 	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
 			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
 	busy = TRUE
-	if(do_after(user, 10, target = M))
+	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, target = M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
 		M.adjustStaminaLoss(50)
@@ -734,9 +740,8 @@
 /obj/item/disk/medical
 	name = "Defibrillator Upgrade Disk"
 	desc = "A blank upgrade disk, made for a defibrillator"
-	icon = 'modular_citadel/icons/obj/defib_disks.dmi'
-	icon_state = "upgrade_disk"
-	item_state = "heal_disk"
+	icon_state = "heal_disk"
+	item_state = "defib_disk"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/disk/medical/defib_heal
@@ -762,5 +767,3 @@
 	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	icon_state = "fast_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
-
-#undef HALFWAYCRITDEATH

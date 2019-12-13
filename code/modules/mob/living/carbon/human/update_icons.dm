@@ -126,7 +126,7 @@ There are several things that need to be remembered:
 		var/alt_worn = U.alternate_worn_icon
 
 		if(!U.force_alternate_icon && U.mutantrace_variation && U.suit_style == DIGITIGRADE_SUIT_STYLE)
-			alt_worn = 'modular_citadel/icons/mob/uniform_digi.dmi'
+			alt_worn = 'icons/mob/uniform_digi.dmi'
 
 		var/mutable_appearance/uniform_overlay
 
@@ -306,7 +306,7 @@ There are several things that need to be remembered:
 		update_observer_view(shoes,1)
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/digishoes.dmi'
+				S.alternate_worn_icon = 'icons/mob/feet_digi.dmi'
 			else
 				S.alternate_worn_icon = null
 		var/t_state = shoes.item_state
@@ -352,7 +352,7 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/head/H = head
 		if(H.mutantrace_variation)
 			if(H.muzzle_var == ALT_STYLE)
-				H.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_helmet.dmi'
+				H.alternate_worn_icon = 'icons/mob/head_muzzled.dmi'
 			else
 				H.alternate_worn_icon = null
 
@@ -412,17 +412,17 @@ There are several things that need to be remembered:
 		if(!item_level_support && !S.force_alternate_icon)
 			if(S.mutantrace_variation) //Just make sure we've got this checked too
 				if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
-					S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
+					S.alternate_worn_icon = 'icons/mob/suit_digi.dmi'
 				else
 					S.alternate_worn_icon = null
 
 				if(S.tauric == TRUE) //Are we a suit with tauric mode possible?
 					if(S.taurmode == SNEK_TAURIC)
-						S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
+						S.alternate_worn_icon = 'icons/mob/taur_naga.dmi'
 					if(S.taurmode == PAW_TAURIC)
-						S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
+						S.alternate_worn_icon = 'icons/mob/taur_canine.dmi'
 					if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE)
-						S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
+						S.alternate_worn_icon = 'icons/mob/suit_digi.dmi'
 					else if(S.taurmode == NOT_TAURIC && S.adjusted == NORMAL_STYLE)
 						S.alternate_worn_icon = null
 
@@ -470,7 +470,7 @@ There are several things that need to be remembered:
 		remove_overlay(FACEMASK_LAYER)
 		if(M.mutantrace_variation)
 			if(M.muzzle_var == ALT_STYLE)
-				M.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_mask.dmi'
+				M.alternate_worn_icon = 'icons/mob/mask_muzzled.dmi'
 			else
 				M.alternate_worn_icon = null
 

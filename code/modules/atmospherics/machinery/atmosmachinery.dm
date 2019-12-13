@@ -41,11 +41,11 @@ Pipelines + Other Objects -> Pipe network
 	var/on = FALSE
 
 /obj/machinery/atmospherics/examine(mob/user)
-	..()
+	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
 		var/mob/living/L = user
 		if(L.ventcrawler)
-			to_chat(L, "<span class='notice'>Alt-click to crawl through it.</span>")
+			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
 	if(!isnull(setdir))
@@ -338,10 +338,9 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(is_type_in_list(src, GLOB.ventcrawl_machinery))
-		L.handle_ventcrawl(src)
-		return
-	..()
+	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))
+		return L.handle_ventcrawl(src)
+	return ..()
 
 
 /obj/machinery/atmospherics/proc/can_crawl_through()

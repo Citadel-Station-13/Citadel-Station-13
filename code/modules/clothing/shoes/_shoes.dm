@@ -66,7 +66,7 @@
 			if(adjusted == NORMAL_STYLE)
 				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_DNA_to_color())
 			else
-				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_DNA_to_color())
+				. += mutable_appearance('icons/mob/feet_digi.dmi', "shoeblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()

@@ -88,20 +88,21 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/examine(mob/user)
-	..()
+	. = ..()
 	if(panel_open)
-		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+		. += "<span class='notice'>[src]'s maintenance hatch is open!</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>"
 		switch(macrotier)
 			if(1)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>5u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>5u</b>.<span>"
 			if(2)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>3u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>3u</b>.<span>"
 			if(3)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>2u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>2u</b>.<span>"
 			if(4)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>1u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>1u</b>.<span>"
+
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -382,9 +383,10 @@
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
 	else
@@ -396,7 +398,6 @@
 	cell = null
 	if(beaker)
 		beaker.forceMove(drop_location())
-		beaker = null
 	return ..()
 
 /obj/machinery/chem_dispenser/proc/get_macro_resolution()
@@ -427,10 +428,11 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
+	return TRUE
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()

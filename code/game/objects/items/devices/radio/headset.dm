@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return TOXLOSS
 
 /obj/item/radio/headset/examine(mob/user)
-	..()
+	. = ..()
 
 	if(item_flags & IN_INVENTORY && loc == user)
 		// construction of frequency description
@@ -45,12 +45,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 				else
 					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
-		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
+		. += "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)]."
 
 		if(command)
-			to_chat(user, "<span class='info'>Alt-click to toggle the high-volume mode.</span>")
+			. += "<span class='info'>Alt-click to toggle the high-volume mode.</span>"
 	else
-		to_chat(user, "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>")
+		. += "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>"
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
@@ -326,8 +326,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/radio/headset/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
 		return
 	if (command)
 		use_command = !use_command
 		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
+		return TRUE
