@@ -30,8 +30,10 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		M.update_inv_hands()
 
 obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
+	. = TRUE
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return

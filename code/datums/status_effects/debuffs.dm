@@ -481,7 +481,7 @@
 	deltimer(timerid)
 
 
-//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active.
+//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active. Does not take into account Oxy-damage
 /datum/status_effect/kindle
 	id = "kindle"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -489,6 +489,7 @@
 	duration = 100
 	alert_type = /obj/screen/alert/status_effect/kindle
 	var/old_health
+	var/old_oxyloss
 
 /datum/status_effect/kindle/tick()
 	owner.Knockdown(15, TRUE, FALSE, 15)
@@ -498,7 +499,9 @@
 		C.stuttering = max(5, C.stuttering)
 	if(!old_health)
 		old_health = owner.health
-	var/health_difference = old_health - owner.health
+	if(!old_oxyloss)
+		old_oxyloss = owner.getOxyLoss()
+	var/health_difference = old_health - owner.health - CLAMP(owner.getOxyLoss() - old_oxyloss,0, owner.getOxyLoss())
 	if(!health_difference)
 		return
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as [owner.p_theyre()] harmed!</span>", \
@@ -506,6 +509,7 @@
 	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
 	duration -= health_difference
 	old_health = owner.health
+	old_oxyloss = owner.getOxyLoss()
 
 /datum/status_effect/kindle/on_remove()
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
@@ -540,6 +544,38 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+
+//GOLEM GANG
+
+/datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
+	id = "strandling"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /obj/screen/alert/status_effect/strandling
+
+/datum/status_effect/strandling/on_apply()
+	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+	return ..()
+
+/datum/status_effect/strandling/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+	return ..()
+
+/obj/screen/alert/status_effect/strandling
+	name = "Choking strand"
+	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
+	icon_state = "his_grace"
+	alerttooltipstyle = "hisgrace"
+
+/obj/screen/alert/status_effect/strandling/Click(location, control, params)
+	. = ..()
+	to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+	if(do_after(mob_viewer, 35, null, mob_viewer))
+		if(isliving(mob_viewer))
+			var/mob/living/L = mob_viewer
+			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+
 
 datum/status_effect/pacify
 	id = "pacify"

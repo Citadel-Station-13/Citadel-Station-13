@@ -32,6 +32,7 @@
 	. += "<span class='notice'>Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.</span>"
 
 /obj/item/desynchronizer/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
@@ -40,6 +41,7 @@
 		new_duration = CLAMP(new_duration, 50, max_duration)
 		duration = new_duration
 		to_chat(user, "<span class='notice'>You set the duration to [DisplayTimeText(duration)].</span>")
+	return TRUE
 
 /obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)

@@ -244,6 +244,7 @@
 		return ..()
 
 /obj/structure/blob/proc/chemeffectreport()
+	RETURN_TYPE(/list)
 	. = list()
 	if(overmind)
 		. += "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
@@ -253,6 +254,7 @@
 		. += "<b>No Material Detected!</b><br>"
 
 /obj/structure/blob/proc/typereport()
+	RETURN_TYPE(/list)
 	. = list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
 	. += "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>"
 	. += "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
