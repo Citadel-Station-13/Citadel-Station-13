@@ -409,8 +409,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 	var/list/additional_reagents = list()
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
@@ -466,23 +465,6 @@
 		for(var/obj/item/reagent_containers/borghypo/H in R.module.modules)
 			H.bypass_protection = initial(H.bypass_protection)
 
-/obj/item/borg/upgrade/defib
-	name = "medical cyborg defibrillator"
-	desc = "An upgrade to the Medical module, installing a built-in \
-		defibrillator, for on the scene revival."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
-
-/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = new(R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
-
 /obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
@@ -497,8 +479,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -521,8 +502,7 @@
 	require_module = 1
 	module_type = list(
 		/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -642,8 +622,7 @@
 	icon_state = "pinpointer_crew"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
