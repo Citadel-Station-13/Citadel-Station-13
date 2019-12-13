@@ -685,11 +685,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	//Other Races
 	if("mam_tail" in mutant_bodyparts)
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || (H.dna.features["taur"] && H.dna.features["taur"] != "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
 			bodyparts_to_add -= "mam_tail"
 
 	if("mam_waggingtail" in mutant_bodyparts)
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || (H.dna.features["taur"] && H.dna.features["taur"] != "None"))
+		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
 			bodyparts_to_add -= "mam_waggingtail"
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
