@@ -236,6 +236,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return rule.round_result()
 	return ..()
 
+/datum/game_mode/dynamic/generate_report()
+	return "Mysterious signals that demonstrate strange dynamics have been detected in your sector. Watch out for oddities."
+
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(threat_level))

@@ -827,8 +827,7 @@ Proc for attack log creation, because really why not
 
 // Filter stuff
 /atom/movable/proc/add_filter(name,priority,list/params)
-	if(!filter_data)
-		filter_data = list()
+	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
@@ -836,7 +835,7 @@ Proc for attack log creation, because really why not
 
 /atom/movable/proc/update_filters()
 	filters = null
-	sortTim(filter_data,associative = TRUE)
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()

@@ -56,6 +56,7 @@
 	name = "Engineering Hardsuit"
 	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and mask!"
 	cost = 2250
+	access = ACCESS_ENGINE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
@@ -65,7 +66,7 @@
 	name = "Atmospherics Hardsuit"
 	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank. Ask the CE to open."
 	cost = 5000
-	access = ACCESS_CE
+	access = ACCESS_CE //100% Fire and Bio resistance
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine/atmos)
@@ -74,7 +75,7 @@
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
-	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
+	desc = "An industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Does not contain spare ammo for the industrial RCD or any other RCD models."
 	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
@@ -152,7 +153,7 @@
 
 /datum/supply_pack/engineering/dna_vault
 	name = "DNA Vault Parts"
-	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
+	desc = "Secure the longevity of the current state of civilization within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes." //C'mon now, it's nae just humans on the station these days
 	cost = 12000
 	special = TRUE
 	contains = list(

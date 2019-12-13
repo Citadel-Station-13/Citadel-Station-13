@@ -40,6 +40,9 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
+/obj/item/stack/sheet/glass/five
+	amount = 5
+
 /obj/item/stack/sheet/glass/get_main_recipes()
 	. = ..()
 	. += GLOB.glass_recipes

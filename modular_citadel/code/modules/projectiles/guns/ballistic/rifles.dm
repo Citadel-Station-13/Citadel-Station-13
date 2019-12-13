@@ -207,8 +207,10 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 /obj/item/gun/ballistic/automatic/AM4B/AltClick(mob/living/user)
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
+	. = TRUE
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
@@ -217,6 +219,7 @@
 		if(body_color_input)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
+
 /obj/item/gun/ballistic/automatic/AM4B/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to recolor it.</span>"

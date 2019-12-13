@@ -541,6 +541,7 @@
 	clean_blood()
 
 /obj/item/twohanded/dualsaber/hypereutactic/AltClick(mob/living/user)
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
 		return
 	if(user.incapacitated() || !istype(user))
@@ -553,6 +554,7 @@
 		light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 		update_light()
+	return TRUE
 
 /obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file)
 	. = ..()
@@ -659,6 +661,7 @@
 	qdel(src)
 
 /obj/item/twohanded/spear/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
 		..()
 		if(!explosive)
@@ -667,6 +670,7 @@
 			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 			if(input)
 				src.war_cry = input
+		return TRUE
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list

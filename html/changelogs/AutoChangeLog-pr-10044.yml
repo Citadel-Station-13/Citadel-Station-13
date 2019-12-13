@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Made wooden cabinet/closets... actually made of wood."
+  - tweak: "Wooden cabinets are now deconstructable with a screwdriver."
+  - tweak: "Deconstruction of large crates and other closet subtypes deconstructable with tools other than the welder is no longer instant."

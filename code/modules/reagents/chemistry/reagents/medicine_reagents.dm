@@ -793,6 +793,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
+	eyes.applyOrganDamage(-2)
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -807,8 +808,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(eyes.eye_damage > 0)
-		M.adjust_eye_damage(-1)
 	..()
 
 /datum/reagent/medicine/atropine
