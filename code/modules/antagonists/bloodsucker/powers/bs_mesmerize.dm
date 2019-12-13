@@ -11,7 +11,7 @@
 	button_icon_state = "power_mez"
 	bloodcost = 30
 	cooldown = 200
-	target_range = 2
+	target_range = 1
 	power_activates_immediately = FALSE
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
@@ -94,8 +94,8 @@
 
 	if(do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
-		var/power_time = 90 + level_current * 15
-		target.silent = power_time + 50
+		var/power_time = 90 + level_current * 12
+		target.silent = power_time + 20
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 100 + level_current * 15)
 		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 		target.Stun(power_time)

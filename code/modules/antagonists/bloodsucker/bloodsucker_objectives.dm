@@ -43,7 +43,7 @@
 
 //						EXPLANATION
 /datum/objective/bloodsucker/lair/update_explanation_text()
-	explanation_text = "Create a lair by claiming a coffin."//  Make sure to keep it safe!"
+	explanation_text = "Create a lair by claiming a coffin, and protect it until the end of the shift"//  Make sure to keep it safe!"
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/lair/check_completion()
@@ -63,7 +63,6 @@
 	// LOOKUP: /datum/crewmonitor/proc/update_data(z)  for .assignment to see how to get a person's PDA.
 	var/list/roles = list(
 		"Captain",
-		"Head of Security",
 		"Head of Personnel",
 		"Research Director",
 		"Chief Engineer",
@@ -71,7 +70,6 @@
 		"Quartermaster"
 	)
 	var/list/departs = list(
-		"Head of Security",
 		"Research Director",
 		"Chief Engineer",
 		"Chief Medical Officer",
@@ -93,8 +91,6 @@
 	// Department?
 	else
 		switch(target_role)
-			if("Head of Security")
-				department_string = "Security"
 			if("Research Director")
 				department_string = "Science"
 			if("Chief Engineer")
@@ -260,7 +256,7 @@
 	var/list/all_items = owner.current.GetAllContents() // Includes items inside other items.
 	var/itemcount = FALSE
 	for(var/obj/I in all_items) //Check for items
-		if(istype(I, /obj/item/organ/heart))
+		if(I == /obj/item/organ/heart)
 			itemcount ++
 			if (itemcount >= target_amount) // Got the right amount?
 				return TRUE

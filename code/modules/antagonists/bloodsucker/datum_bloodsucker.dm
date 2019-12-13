@@ -33,7 +33,7 @@
 	var/foodInGut = 0					// How much food to throw up later. You shouldn't have eaten that.
 	var/warn_sun_locker = FALSE			// So we only get the locker burn message once per day.
 	var/warn_sun_burn = FALSE			// So we only get the sun burn message once per day.
-
+	var/had_toxlover = FALSE
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
 										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_NOCLONE)
@@ -185,16 +185,17 @@
 	for (var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, "bloodsucker")
 	if(HAS_TRAIT(owner.current, TRAIT_TOXINLOVER)) //No slime bonuses here, no thank you
+		had_toxlover = TRUE
 		REMOVE_TRAIT(owner.current, TRAIT_TOXINLOVER, "species")
 	// Traits: Species
-	if (ishuman(owner.current))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		S.species_traits |= DRINKSBLOOD
 	// Clear Addictions
 	owner.current.reagents.addiction_list = list() // Start over from scratch. Lucky you! At least you're not addicted to blood anymore (if you were)
 	// Stats
-	if (ishuman(owner.current))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
@@ -233,6 +234,9 @@
 	// Traits
 	for(var/T in defaultTraits)
 		REMOVE_TRAIT(owner.current, T, "bloodsucker")
+	if(had_toxlover == TRUE)
+		ADD_TRAIT(owner.current, TRAIT_TOXINLOVER, "species")
+
 	// Traits: Species
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current

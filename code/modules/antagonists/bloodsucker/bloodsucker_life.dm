@@ -47,10 +47,10 @@
 	var/blood_taken = min(feedAmount, target.blood_volume) * mult	// Starts at 15 (now 8 since we doubled the Feed time)
 	target.blood_volume -= blood_taken
 	// Simple Animals lose a LOT of blood, and take damage. This is to keep cats, cows, and so forth from giving you insane amounts of blood.
-	if (!ishuman(target))
+	if(!ishuman(target))
 		target.blood_volume -= (blood_taken / max(target.mob_size, 0.1)) * 3.5 // max() to prevent divide-by-zero
 		target.apply_damage_type(blood_taken / 3.5) // Don't do too much damage, or else they die and provide no blood nourishment.
-		if (target.blood_volume <= 0)
+		if(target.blood_volume <= 0)
 			target.blood_volume = 0
 			target.death(0)
 	///////////
@@ -59,9 +59,9 @@
 	// our volume * temp, + their volume * temp, / total volume
 	///////////
 	// Reduce Value Quantity
-	if (target.stat == DEAD)	// Penalty for Dead Blood
+	if(target.stat == DEAD)	// Penalty for Dead Blood
 		blood_taken /= 3
-	if (!ishuman(target))		// Penalty for Non-Human Blood
+	if(!ishuman(target))		// Penalty for Non-Human Blood
 		blood_taken /= 2
 	//if (!iscarbon(target))	// Penalty for Animals (they're junk food)
 	// Apply to Volume
@@ -84,7 +84,7 @@
 	//It is called from your coffin on close (by you only)
 	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-	owner.current.adjustStaminaLoss(-3 * (regenRate * 2) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustStaminaLoss(-2 + (regenRate * -10) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
@@ -102,6 +102,9 @@
 			costMult = 0.25
 			C.ExtinguishMob()
 			CureDisabilities() 	// Extinguish Fire
+			C.remove_all_embedded_objects() // Remove Embedded!
+			owner.current.regenerate_organs() // Heal Organs (will respawn original eyes etc. but we replace right away, next)
+			CheckVampOrgans() // Heart, Eyes
 		else
 			if(owner.current.blood_volume <= 0) // No Blood? Lower Mult
 				mult = 0.25
@@ -128,7 +131,7 @@
 				for (var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
 					owner.current.regenerate_limb(targetLimbZone, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
 					var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimbZone ) // 2) Limb returns Damaged
-					AddBloodVolume(20 * costMult)	// Costs blood to heal
+					AddBloodVolume(50 * costMult)	// Costs blood to heal
 					L.brute_dam = 60
 					to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
 					playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
@@ -141,12 +144,8 @@
 					if (istype(BP) && BP.status == 2)
 						message_admins("T2: [BP] ")
 						BP.drop_limb()
-						return TRUE
-						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.
-			*/
-			C.remove_all_embedded_objects() // Remove Embedded!
-			owner.current.regenerate_organs() // Heal Organs (will respawn original eyes etc. but we replace right away, next)
-			CheckVampOrgans() // Heart, Eyes
+						return TRUE */
+						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.*/
 	return FALSE
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()

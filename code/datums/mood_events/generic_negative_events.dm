@@ -201,7 +201,7 @@
 
 /datum/mood_event/vampcandle
 	description = "<span class='umbra'>Something is making your mind feel... loose...</span>\n"
-	mood_change = -20
+	mood_change = -10
 	timeout = 1 MINUTES
 
 /datum/mood_event/drankblood_bad

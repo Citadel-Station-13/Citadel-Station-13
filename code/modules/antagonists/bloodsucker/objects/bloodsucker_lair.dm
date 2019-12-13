@@ -28,9 +28,6 @@
 		return
 		*/
 
-
-
-
 /datum/antagonist/bloodsucker/proc/RunLair()
 	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
 	while(!AmFinalDeath() && coffin && lair)
@@ -64,7 +61,7 @@
 			// STEP TWO: DIRT
 			new /obj/effect/decal/cleanable/dirt (T_Dirty)
 		// Find Animals in Area
-		if(rand(0,2) == 0)
+	/*	if(rand(0,2) == 0)
 			var/mobCount = 0
 			var/mobMax = CLAMP(area_turfs.len / 25, 1, 4)
 			for (var/turf/T in area_turfs)
@@ -74,17 +71,16 @@
 					mobCount ++
 					if (mobCount >= mobMax) // Already at max
 						break
-			// Spawn One
+			 Spawn One
 			if(mobCount < mobMax)
-				// Seek Out Location
+				 Seek Out Location
 				while(area_turfs.len > 0)
-					sleep(240) //We dont want this to happen often
 					var/turf/T = pick(area_turfs) // We use while&pick instead of a for/loop so it's random, rather than from the top of the list.
 					if(T && !T.density)
 						var/mob/living/simple_animal/SA = /mob/living/simple_animal/mouse // pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
 						new SA (T)
 						break
-					area_turfs -= T
+					area_turfs -= T*/
 		// NOTE: area_turfs is now cleared out!
 	if(coffin)
 		coffin.UnclaimCoffin()

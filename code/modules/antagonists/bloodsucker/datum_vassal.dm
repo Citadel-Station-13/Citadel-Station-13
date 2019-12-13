@@ -47,6 +47,7 @@
 	objectives += vassal_objective
 	objectives_given += vassal_objective
 	give_thrall_eyes()
+	owner.current.grant_language(/datum/language/vampiric)
 	// Add Antag HUD
 	update_vassal_icons_added(owner.current, "vassal")
 	. = ..()
@@ -85,6 +86,7 @@
 		qdel(O)
 	objectives_given = list()
 	remove_thrall_eyes()
+	owner.current.remove_language(/datum/language/vampiric)
 	// Clear Antag HUD
 	update_vassal_icons_removed(owner.current)
 
@@ -146,5 +148,5 @@
 	set_antag_hud(vassal, null)
 
 //Displayed at the start of roundend_category section, default to roundend_category header
-/datum/antagonist/vassal/roundend_report_header()
-	return 	"<span class='header'>Loyal to their bloodsucking masters, the Vassals were:</span><br><br>"
+/*/datum/antagonist/vassal/roundend_report_header()
+	return 	"<span class='header'>Loyal to their bloodsucking masters, the Vassals were:</span><br><br>"*/

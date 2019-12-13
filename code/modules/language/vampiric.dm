@@ -2,7 +2,7 @@
 
 /datum/language/vampiric
 	name = "Blah-Sucker"
-	desc = "The native language of the Bloodsucker elders, learned intuitively by Fledglings as they pass from death into immortality."
+	desc = "The native language of the Bloodsucker elders, learned intuitively by Fledglings and as they pass from death into immortality. Thralls are also given the ability to speak this as apart of their conversion ritual."
 	speech_verb = "growls"
 	ask_verb = "growls"
 	exclaim_verb = "snarls"
@@ -10,6 +10,7 @@
 	key = "b"
 	space_chance = 40
 	default_priority = 90
+	icon_state = "bloodsucker"
 
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD // Hide the icon next to your text if someone doesn't know this language.
 	syllables = list(
@@ -22,6 +23,3 @@
 		"froz","etz","tzil",
 		"t'","k'","t'","k'","th'","tz'"
 		)
-
-	icon_state = "bloodsucker"
-	icon = 'icons/mob/hud.dmi'

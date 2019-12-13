@@ -112,14 +112,14 @@
 		if (user != M)
 			to_chat(user, "<span class='notice'>You force [M] to drink from the [src]</span>")
 			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>")
-			if (!do_mob(user, M, 50))
+			if(!do_mob(user, M, 50))
 				return
 		else
-			if (!do_mob(user, M, 10))
+			if(!do_mob(user, M, 10))
 				return
 			to_chat(user, "<span class='notice'>You take a sip from the [src].</span>")
 			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>")
-		if (reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
+		if(reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
 			return
 		var/gulp_size = 5
 		var/fraction = min(gulp_size / reagents.total_volume, 1)
