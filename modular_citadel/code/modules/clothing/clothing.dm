@@ -56,7 +56,7 @@
 		add_overlay(tertiary_overlay)
 
 /obj/item/clothing/AltClick(mob/living/user)
-	..()
+	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
 		switch(choice)	//Lets the list's options actually lead to something
@@ -78,6 +78,7 @@
 					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 				user.regenerate_icons()
+		return TRUE
 
 /obj/item/clothing/examine(mob/user)
 	. = ..()

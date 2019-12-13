@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - config: "added multi_keyed_list, delimiter defaults to |."

@@ -173,9 +173,9 @@ proc/get_top_level_mob(var/mob/S)
 	message = "<b>[user]</b> " + "<i>[message]</i>"
 
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(message=message,hearing_distance=1, no_ghosts = TRUE)
+		user.audible_message(message=message,hearing_distance=1, ignored_mobs = GLOB.dead_mob_list)
 	else
-		user.visible_message(message=message,self_message=message,vision_distance=1, no_ghosts = TRUE)
+		user.visible_message(message=message,self_message=message,vision_distance=1, ignored_mobs = GLOB.dead_mob_list)
 	log_emote("[key_name(user)] : (SUBTLER) [message]")
 
 	message = null
