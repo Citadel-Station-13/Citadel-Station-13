@@ -239,7 +239,7 @@
 	name = "bungo curry"
 	desc = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
 	icon_state = "bungocurry"
-	bonus_reagents = list("vitamin" = 5, "bungojuice" = 6)
+	bonus_reagents = list("vitamin" = 11)
 	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 	filling_color = "#E6A625"
