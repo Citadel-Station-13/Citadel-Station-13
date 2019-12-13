@@ -3,9 +3,7 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = 1
-	knockdown = 60
-	knockdown_stamoverride = 36
-	knockdown_stam_max = 50
+	stamina = 5 //Let's give this some staminaloss so that multiple tasers unloading onto a single spaceman is still a quick knockdown
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
@@ -14,6 +12,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 	var/tase_duration = 50
+	var/stamloss_to_knockdown = 36 //This allows tasers to still be capable of knocking a spaceman down, but you either have to have a lot of tasers, patience, or be a turret to do so.
 
 /obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -28,6 +27,8 @@
 		else if((C.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(C, TRAIT_STUNIMMUNE))
 			C.apply_status_effect(STATUS_EFFECT_TASED, tase_duration)
 			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
+			if(C.getStaminaLoss() >= stamloss_to_knockdown && !C.resting)
+				C.Knockdown(60, override_stamdmg = 0)
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)

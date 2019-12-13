@@ -83,7 +83,6 @@
 //TASER
 /datum/status_effect/electrode
 	id = "tased"
-	blocks_combatmode = TRUE
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 
@@ -93,8 +92,6 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
 
 /datum/status_effect/electrode/on_remove()
