@@ -119,7 +119,7 @@
 	shape = D.features["breasts_shape"]
 	fluid_id = D.features["breasts_fluid"]
 	if(!D.features["breasts_producing"])
-		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION)
+		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 	if(!isnum(size))
 		cached_size = breast_values[size]
 	else
