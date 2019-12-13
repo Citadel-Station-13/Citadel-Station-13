@@ -226,6 +226,12 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaK" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "aaL" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
@@ -13472,13 +13478,6 @@
 /area/crew_quarters/bar)
 "aDP" = (
 /obj/structure/chair/comfy/brown{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-"aDQ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -95402,7 +95401,7 @@ cNE
 aQP
 awB
 awB
-aDQ
+aaK
 aFi
 awB
 awB
