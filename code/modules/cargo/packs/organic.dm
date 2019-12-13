@@ -192,7 +192,7 @@
 	desc = "Contains coal and coal accessories. (Note: only ten coal sheets.)"
 	cost = 1000
 	crate_type = /obj/structure/closet/crate
-	contains = list(/obj/item/stack/sheet/mineral/coal/ten,)
+	contains = list(/obj/item/stack/sheet/mineral/coal/ten)
 	crate_name = "grilling fuel kit crate"
 
 /datum/supply_pack/organic/cream_piee
