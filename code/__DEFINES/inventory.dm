@@ -130,21 +130,16 @@
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
 
+//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
+#define NORMAL_STYLE		0
+#define ALT_STYLE			1
+
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
-//Helmets/masks for muzzles or beaks
-#define NORMAL_FACED		0
-#define	MUZZLE_FACED		1
-#define	BEAKED_FACED		2
-
-//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
-#define NORMAL_STYLE		0
-#define ALT_STYLE			1
-
-//flags for outfits that have mutantrace variants
+//flags for outfits that have mutantrace variants: These are hard sprited too.
 #define STYLE_DIGITIGRADE		(1<<0) //jumpsuits, suits and shoes
 #define STYLE_MUZZLE			(1<<1) //hats or masks
 #define STYLE_SNEK_TAURIC		(1<<2) //taur-friendly suits

@@ -104,45 +104,46 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNIFORM]
 		inv.update_icon()
 
-	var/obj/item/clothing/under/U = w_uniform
-	U.screen_loc = ui_iclothing
-	if(client && hud_used && hud_used.hud_shown)
-		if(hud_used.inventory_shown)
-			client.screen += w_uniform
-	update_observer_view(w_uniform,1)
+	if(istype(w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = w_uniform
+		U.screen_loc = ui_iclothing
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				client.screen += w_uniform
+		update_observer_view(w_uniform,1)
 
-	if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
-		return
-
-
-	var/t_color = U.item_color
-	if(!t_color)
-		t_color = U.icon_state
-	if(U.adjusted == ALT_STYLE)
-		t_color = "[t_color]_d"
-
-	var/alt_worn = U.alternate_worn_icon
-	var/variant_flag = NONE
-
-	if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE)
-		alt_worn = 'icons/mob/uniform_digi.dmi'
-		variant_flag |= STYLE_DIGITIGRADE
-
-	var/mutable_appearance/uniform_overlay
-
-	if(dna && dna.species.sexes)
-		var/G = (gender == FEMALE) ? "f" : "m"
-		if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-			uniform_overlay = U.build_worn_icon("[t_color]", UNIFORM_LAYER, alt_worn ? alt_worn : 'icons/mob/uniform.dmi', FALSE, U.fitted, variant_flag)
-
-	if(!uniform_overlay)
-		uniform_overlay = U.build_worn_icon("[t_color]", UNIFORM_LAYER, alt_worn ? alt_worn : 'icons/mob/uniform.dmi', FALSE, style_flags = variant_flag)
+		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
+			return
 
 
-	if(OFFSET_UNIFORM in dna.species.offset_features)
-		uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
-		uniform_overlay.pixel_y += dna.species.offset_features[OFFSET_UNIFORM][2]
-	overlays_standing[UNIFORM_LAYER] = uniform_overlay
+		var/t_color = U.item_color
+		if(!t_color)
+			t_color = U.icon_state
+		if(U.adjusted == ALT_STYLE)
+			t_color = "[t_color]_d"
+
+		var/alt_worn = U.alternate_worn_icon
+		var/variant_flag = NONE
+
+		if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE)
+			alt_worn = 'icons/mob/uniform_digi.dmi'
+			variant_flag |= STYLE_DIGITIGRADE
+
+		var/mutable_appearance/uniform_overlay
+
+		if(dna && dna.species.sexes)
+			var/G = (gender == FEMALE) ? "f" : "m"
+			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
+				uniform_overlay = U.build_worn_icon("[t_color]", UNIFORM_LAYER, alt_worn ? alt_worn : 'icons/mob/uniform.dmi', FALSE, U.fitted, variant_flag)
+
+		if(!uniform_overlay)
+			uniform_overlay = U.build_worn_icon("[t_color]", UNIFORM_LAYER, alt_worn ? alt_worn : 'icons/mob/uniform.dmi', FALSE, style_flags = variant_flag)
+
+
+		if(OFFSET_UNIFORM in dna.species.offset_features)
+			uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
+			uniform_overlay.pixel_y += dna.species.offset_features[OFFSET_UNIFORM][2]
+		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
@@ -671,6 +672,8 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-robotic"
 		if(BP.use_digitigrade)
 			. += "-digitigrade[BP.use_digitigrade]"
+			if(BP.digitigrade_type)
+				. += "-[BP.digitigrade_type]"
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
 		if(BP.body_markings)

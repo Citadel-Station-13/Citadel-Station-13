@@ -286,15 +286,12 @@
 		if("orange")
 			. = "ffc905"
 
-/mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back, update = FALSE)
-	var/body_plan_changed = FALSE
+/mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = X
 		if((O.body_part == LEG_LEFT || O.body_part == LEG_RIGHT) && ((!O.use_digitigrade && !swap_back) || (O.use_digitigrade && swap_back)))
-			O.use_digitigrade = FULL_DIGITIGRADE
-			body_plan_changed = TRUE
-	if(update && body_plan_changed) // most times this proc is called on on_species_gain and on_species_loss, so set_species() already handles the update.
-		update_body()
+			O.use_digitigrade = swap_back ? FULL_DIGITIGRADE : NOT_DIGITIGRADE
+			O.update_limb()
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
