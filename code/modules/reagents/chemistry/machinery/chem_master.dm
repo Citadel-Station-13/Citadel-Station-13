@@ -103,6 +103,10 @@
 		updateUsrDialog()
 		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
+		. = TRUE // no afterattack
+		if(panel_open)
+			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
+			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		replace_pillbottle(user, I)
