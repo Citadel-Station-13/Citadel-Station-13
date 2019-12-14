@@ -203,7 +203,7 @@
 			trans_data = copy_data(T)
 
 
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE, bypass_pH = FALSE) //we only handle reaction after every reagent has been transfered.
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE, bypass_pH = _bypass_pH) //we only handle reaction after every reagent has been transfered.
 
 		remove_reagent(T.id, transfer_amount, ignore_pH = TRUE)
 
