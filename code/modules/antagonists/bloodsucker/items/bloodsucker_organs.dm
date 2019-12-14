@@ -20,16 +20,11 @@
 /datum/antagonist/bloodsucker/proc/RemoveVampOrgans()
 	// Heart
 	var/obj/item/organ/heart/H = new
-		H.Insert(owner.current)
+	H.Insert(owner.current)
 	// Eyes
 	var/obj/item/organ/eyes/E = new
-		E.Insert(owner.current)
+	E.Insert(owner.current)
 // 		HEART: OVERWRITE	//
-
-/obj/item/organ/heart/proc/HeartStrengthMessage()
-	if (beating)
-		return "a healthy"
-	return "<span class='danger'>an unstable</span>"
 // 		HEART 		//
 /obj/item/organ/heart/vampheart
 	beating = 0
@@ -51,7 +46,7 @@
 	fakingit = 1 // We're pretending to beat, to fool people.
 
 /obj/item/organ/heart/vampheart/HeartStrengthMessage()
-	if (fakingit)
+	if(fakingit)
 		return "a healthy"
 	return "<span class='danger'>no</span>"	// Bloodsuckers don't have a heartbeat at all when stopped (default is "an unstable")
 // 		EYES 		//

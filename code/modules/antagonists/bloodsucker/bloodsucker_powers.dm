@@ -128,7 +128,7 @@
 /datum/action/bloodsucker/proc/CheckCanDeactivate(display_error)
 	return TRUE
 
-/datum/action/bloodsucker/UpdateButtonIcon()
+/datum/action/bloodsucker/UpdateButtonIcon(force = FALSE)
 	background_icon_state = active? background_icon_state_on : background_icon_state_off
 	..()//UpdateButtonIcon()
 
@@ -197,28 +197,28 @@
 
 // Click power: Begin Aim
 /datum/action/bloodsucker/targeted/Trigger()
-	if (active && CheckCanDeactivate(TRUE))
+	if(active && CheckCanDeactivate(TRUE))
 		DeactivateRangedAbility()
 		DeactivatePower()
 		return
-	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
+	if(!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
 	active = !active
 	UpdateButtonIcon()
 	// Create & Link Targeting Proc
 	var/mob/living/L = owner
-	if (L.ranged_ability)
+	if(L.ranged_ability)
 		L.ranged_ability.remove_ranged_ability()
 	bs_proc_holder.add_ranged_ability(L)
 
-	if (message_Trigger != "")
+	if(message_Trigger != "")
 		to_chat(owner, "<span class='announce'>[message_Trigger]</span>")
 
 /datum/action/bloodsucker/targeted/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
-	if (!owner.client)	// <--- We don't allow non client usage so that using powers like mesmerize will FAIL if you try to use them as ghost. Why? because ranged_abvility in spell.dm
+	if(!owner.client)	// <--- We don't allow non client usage so that using powers like mesmerize will FAIL if you try to use them as ghost. Why? because ranged_abvility in spell.dm
 		return FALSE	//		doesn't let you remove powers if you're not there. So, let's just cancel the power entirely.
 	return TRUE
 
@@ -247,13 +247,13 @@
 // Click Target
 /datum/action/bloodsucker/targeted/proc/ClickWithPower(atom/A)
 	// CANCEL RANGED TARGET check
-	if (power_in_use || !CheckValidTarget(A))
+	if(power_in_use || !CheckValidTarget(A))
 		return FALSE
 	// Valid? (return true means DON'T cancel power!)
-	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE) || !CheckCanTarget(A, TRUE))
+	if(!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE) || !CheckCanTarget(A, TRUE))
 		return TRUE
 	// Skip this part so we can return TRUE right away.
-	if (power_activates_immediately)
+	if(power_activates_immediately)
 		PowerActivatedSuccessfully() // Mesmerize pays only after success.
 	power_in_use = TRUE	 // Lock us into this ability until it successfully fires off. Otherwise, we pay the blood even if we fail.
 	FireTargetedPower(A) // We use this instead of ActivatePower(), which has no input

@@ -103,7 +103,7 @@
 						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
 						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
 						"Melanthus","Teuthras","Orchamus","Amyntor","Axion",  // Greek
-						"Thoth","Thutmose","Osorkon,","Nofret","Minmotu","Khafra" // Egyptian
+						"Thoth","Thutmose","Osorkon,","Nofret","Minmotu","Khafra", // Egyptian
 						"Dio")
 
 	else
@@ -113,7 +113,7 @@
 						"Alcestis","Damaris","Elisavet","Khthonia","Teodora",  // Greek
 						"Nefret","Ankhesenpep") // Egyptian
 
-/datum/antagonist/bloodsucker/proc/SelectTitle(am_fledgling = 0, forced=FALSE)
+/datum/antagonist/bloodsucker/proc/SelectTitle(am_fledgling = 0, forced = FALSE)
 	// Already have Title
 	if (!forced && vamptitle != null)
 		return
@@ -181,6 +181,7 @@
 	// Powers
 	BuyPower(new /datum/action/bloodsucker/feed)
 	BuyPower(new /datum/action/bloodsucker/masquerade)
+	BuyPower(new /datum/action/bloodsucker/veil)
 	// Traits
 	for (var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, "bloodsucker")
@@ -334,7 +335,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 
 	// Assign True Reputation
 	if(vamplevel == 4)
-		SelectReputation(am_fledgling=FALSE, forced=TRUE)
+		SelectReputation(am_fledgling = FALSE, forced = TRUE)
 	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	update_hud(TRUE)

@@ -196,7 +196,7 @@
 	..()
 	unbuckle_mob(M)
 
-/obj/structure/bloodsucker/vassalrack/unbuckle_mob(mob/living/buckled_mob)//, force=FALSE)
+/obj/structure/bloodsucker/vassalrack/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
 	if(!..())
 		return
 	var/matrix/m180 = matrix(buckled_mob.transform)
@@ -388,7 +388,7 @@
 		/*	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 				alert_text += "\n\nYou will no longer be loyal to the station!"
 			if(SSticker.mode.AmValidAntag(target.mind))  */
-				alert_text += "\n\nYou will not lose your current objectives, but they come second to the will of your new master!"
+			alert_text += "\n\nYou will not lose your current objectives, but they come second to the will of your new master!"
 			switch(alert(target, alert_text,"THE HORRIBLE PAIN! WHEN WILL IT END?!","Yes, Master!", "NEVER!"))
 				if("Yes, Master!")
 					disloyalty_accept(target)

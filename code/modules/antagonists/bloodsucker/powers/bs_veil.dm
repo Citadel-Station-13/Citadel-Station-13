@@ -1,8 +1,4 @@
 
-
-
-
-
 /datum/action/bloodsucker/veil
 	name = "Veil of Many Faces"
 	desc = "Disguise yourself in the illusion of another identity."
@@ -169,7 +165,6 @@
 
 /obj/effect/particle_effect/smoke/vampsmoke
 	opaque = FALSE
-	amount = 0
 	lifetime = 0
 /obj/effect/particle_effect/smoke/vampsmoke/fade_out(frames = 6)
 	..(frames)

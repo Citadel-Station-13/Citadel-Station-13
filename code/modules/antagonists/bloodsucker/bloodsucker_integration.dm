@@ -117,14 +117,14 @@
 
 	// Normal Creatures:
 	if(!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		return blood_volume < BLOOD_VOLUME_SAFE
+		return blood_volume < (BLOOD_VOLUME_SAFE * blood_ratio)
 
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if(bloodsuckerdatum.poweron_masquerade)
 		return FALSE
 
 	// If a Bloodsucker is malnourished, AND if his temperature matches his surroundings (aka he hasn't fed recently and looks COLD)...
-	return  blood_volume < BLOOD_VOLUME_OKAY // && !(bodytemperature <= get_temperature() + 2)
+	return  blood_volume < (BLOOD_VOLUME_OKAY * blood_ratio) // && !(bodytemperature <= get_temperature() + 2)
 
 /mob/living/carbon/human/ShowAsPaleExamine()
 	// Check for albino, as per human/examine.dm's check.

@@ -62,9 +62,8 @@
 	flash_protect = -1 //These eyes are weaker to flashes, but let you see in the dark
 
 /datum/antagonist/vassal/proc/remove_thrall_eyes()
-	// Eyes
 	var/obj/item/organ/eyes/E = new
-		E.Insert(owner.current)
+	E.Insert(owner.current)
 
 /datum/antagonist/vassal/on_removal()
 	SSticker.mode.vassals -= owner // Add if not already in here (and you might be, if you were picked at round start)
