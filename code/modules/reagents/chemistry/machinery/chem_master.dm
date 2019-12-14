@@ -117,7 +117,7 @@
 		return
 	if(beaker)
 		replace_beaker(user)
-	else
+	else if(bottle)
 		replace_pillbottle(user)
 	return TRUE
 
@@ -130,7 +130,6 @@
 	if(new_beaker)
 		beaker = new_beaker
 	update_icon()
-	return TRUE
 
 /obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
@@ -142,8 +141,6 @@
 			adjust_item_drop_location(B)
 	if(new_bottle)
 		bottle = new_bottle
-	update_icon()
-	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
 	replace_beaker(usr)
