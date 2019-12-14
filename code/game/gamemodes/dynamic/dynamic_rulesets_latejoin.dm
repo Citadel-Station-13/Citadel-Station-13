@@ -69,6 +69,8 @@
 	high_population_requirement = 15
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
+	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
+
 
 //////////////////////////////////////////////
 //                                          //
@@ -93,6 +95,7 @@
 	requirements = list(101,101,70,40,40,40,40,40,40,40)
 	high_population_requirement = 40
 	flags = HIGHLANDER_RULESET
+	property_weights = list("trust" = -3, "chaos" = 5, "extended" = -5, "valid" = 2)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	var/datum/team/revolution/revolution

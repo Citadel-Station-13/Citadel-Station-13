@@ -80,6 +80,8 @@
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
 	var/delay = 0
+	/// List of tags for use in storytellers.
+	var/list/property_weights = list()
 
 /datum/dynamic_ruleset/New()
 	..()

@@ -60,7 +60,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	announce_text = "Dynamic mode!" // This needs to be changed maybe
 
 	reroll_friendly = FALSE;
-
+	// Current storyteller
+	var/datum/dynamic_storyteller/storyteller = null
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0

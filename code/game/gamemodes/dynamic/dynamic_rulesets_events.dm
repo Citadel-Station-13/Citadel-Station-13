@@ -46,6 +46,7 @@
 	cost = 10
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	requirements = list(70,60,50,50,40,40,40,30,20,15)
+	property_weights = list("story_potential" = 1, "trust" = 1, "chaos" = 1)
 	high_population_requirement = 15
 
 /datum/dynamic_ruleset/event/pirates/ready(forced = FALSE)
@@ -69,6 +70,7 @@
 	cost = 10
 	requirements = list(70,60,50,50,40,40,40,30,20,15)
 	high_population_requirement = 15
+	property_weights = list("chaos" = 1, "valid" = 1)
 
 //////////////////////////////////////////////
 //                                          //
@@ -88,6 +90,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5) // yes, can happen on fake-extended
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("chaos" = 1, "extended" = 2)
 
 /datum/dynamic_ruleset/event/ventclog/ready()
 	if(mode.threat_level > 30 && mode.threat >= 5 && prob(20))
@@ -125,6 +128,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("story_potential" = 5, "extended" = 1)
 
 //////////////////////////////////////////////
 //                                          //
@@ -143,6 +147,7 @@
 	repeatable_weight_decrease = 2
 	requirements = list(60,50,40,30,30,30,30,30,30,30)
 	high_population_requirement = 30
+	property_weights = list("extended" = -2)
 
 /datum/dynamic_ruleset/event/meteor_wave/ready()
 	if(mode.threat_level > 40 && mode.threat >= 25 && prob(20))
@@ -174,6 +179,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/anomaly_flux
 	name = "Anomaly: Hyper-Energetic Flux"
@@ -187,6 +193,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 10
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/anomaly_gravitational
 	name = "Anomaly: Gravitational"
@@ -198,6 +205,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/anomaly_pyroclastic
 	name = "Anomaly: Pyroclastic"
@@ -211,6 +219,7 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/anomaly_vortex
 	name = "Anomaly: Vortex"
@@ -224,6 +233,7 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 //////////////////////////////////////////////
 //                                          //
@@ -243,6 +253,7 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
+	property_weights = list("extended" = -1, "chaos" = 1)
 
 /datum/dynamic_ruleset/event/carp_migration
 	name = "Carp Migration"
@@ -254,6 +265,7 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/communications_blackout
 	name = "Communications Blackout"
@@ -267,6 +279,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1, "chaos" = 1)
 
 /datum/dynamic_ruleset/event/processor_overload
 	name = "Processor Overload"
@@ -280,6 +293,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1, "chaos" = 1)
 
 /datum/dynamic_ruleset/event/space_dust
 	name = "Minor Space Dust"
@@ -293,6 +307,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/major_dust
 	name = "Major Space Dust"
@@ -306,6 +321,7 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/electrical_storm
 	name = "Electrical Storm"
@@ -319,6 +335,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/heart_attack
 	name = "Random Heart Attack"
@@ -332,6 +349,7 @@
 	requirements = list(101,101,101,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/event/radiation_storm
 	name = "Radiation Storm"
@@ -343,3 +361,4 @@
 	required_enemies = list(1,1,1,1,1,1,1,1,1,1)
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
+	property_weights = list("extended" = 1,"chaos" = 1)
