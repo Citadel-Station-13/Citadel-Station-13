@@ -52,6 +52,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
+GLOBAL_VAR_INIT(dynamic_storyteller, /datum/dynamic_storyteller/classic)
+
 /datum/game_mode/dynamic
 	name = "dynamic mode"
 	config_tag = "dynamic"
@@ -60,8 +62,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	announce_text = "Dynamic mode!" // This needs to be changed maybe
 
 	reroll_friendly = FALSE;
-	// Current storyteller
-	var/datum/dynamic_storyteller/storyteller = null
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
