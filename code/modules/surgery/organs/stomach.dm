@@ -98,7 +98,7 @@
 
 
 /obj/item/organ/stomach/proc/regen_stomach_acid(amount)
-	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
+	var/datum/reagent/metabolic/stomach_acid/SA = reagents.has_reagent("stomach_acid")
 	if(!SA)
 		owner.reagents.add_reagent(stomach_acid, amount)
 	else if(SA.volume < 50)
