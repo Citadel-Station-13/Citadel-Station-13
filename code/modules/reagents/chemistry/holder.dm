@@ -233,7 +233,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.id, copy_amount * multiplier, trans_data, added_purity = T.purity, bypass_pH = _bypass_pH)
+		R.add_reagent(T.id, copy_amount * multiplier, trans_data, added_purity = T.purity)
 
 	src.update_total()
 	R.update_total()
@@ -980,7 +980,7 @@
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
 
-/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE, purge_meta = FALSE)//Added a safety check for the trans_id_to
 
 	if(isnull(amount))
 		amount = 0
