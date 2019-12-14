@@ -147,8 +147,8 @@
 	var/list/data = list()
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
+	data["occupant"] = list()
 	if(mob_occupant)
-		data["occupant"] = list()
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
@@ -174,7 +174,6 @@
 	//Scanned mob state
 
 	if(scannedmob)
-
 		var/mob/living/carbon/C = scannedmob
 		//Organ scan
 		data["occupant"]["organs"] = list()

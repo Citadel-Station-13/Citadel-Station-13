@@ -53,7 +53,7 @@
 	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
-		reagents.trans_to(M, reagents.total_volume)
+		reagents.trans_to(M, reagents.total_volume, method = apply_type)
 	qdel(src)
 	return 1
 

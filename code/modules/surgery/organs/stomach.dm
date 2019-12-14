@@ -98,11 +98,14 @@
 
 
 /obj/item/organ/stomach/proc/regen_stomach_acid(amount)
-	var/datum/reagent/metabolic/stomach_acid/SA = reagents.has_reagent("stomach_acid")
+	if(!owner || !owner.reagents)
+		return FALSE
+	var/datum/reagent/metabolic/stomach_acid/SA = owner.reagents.has_reagent("stomach_acid")
 	if(!SA)
 		owner.reagents.add_reagent(stomach_acid, amount)
 	else if(SA.volume < 50)
 		SA.volume = CLAMP(SA.volume + amount, 0, 50)
+	owner.reagents.pH = 7
 
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
@@ -142,9 +145,11 @@
 
 /obj/item/organ/stomach/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	.=..()
-	if(owner.reagents)
-		owner.reagents.add_reagent("stomach_acid", 50)
-		owner.reagents.pH = 7
+	regen_stomach_acid(50)
+
+/obj/item/organ/stomach/Initialize()
+	..()
+	regen_stomach_acid(50)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
