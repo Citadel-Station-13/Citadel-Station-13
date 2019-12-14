@@ -139,16 +139,11 @@
 		if (prev_disfigured)
 			ADD_TRAIT(H, TRAIT_DISFIGURED, "husk") // NOTE: We are ASSUMING husk. // H.status_flags |= DISFIGURED	// Restore "Unknown" disfigurement
 		H.dna.features = prev_features
-
 		// Apply Appearance
 		H.update_body() // Outfit and underware, also body.
 		H.update_hair()
 		H.update_body_parts()	// Body itself, maybe skin color?
-
 		cast_effect() // POOF
-
-
-
 
 	// CAST EFFECT //	// General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
 /datum/action/bloodsucker/veil/proc/cast_effect()
@@ -160,8 +155,6 @@
 	puff.attach(owner) // OPTIONAL
 	puff.start()
 	owner.spin(8, 1) // Spin around like a loon.
-
-	..()
 
 /obj/effect/particle_effect/smoke/vampsmoke
 	opaque = FALSE
