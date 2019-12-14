@@ -184,7 +184,7 @@
 
 	var/_bypass_pH = FALSE
 	if(method == TOUCH | VAPOR)
-		_ignore_pH = TRUE
+		_bypass_pH = TRUE
 
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
@@ -229,7 +229,7 @@
 
 	var/_bypass_pH = FALSE
 	if(method == TOUCH | VAPOR)
-		_ignore_pH = TRUE
+		_bypass_pH = TRUE
 
 	if(amount < 0)
 		return
