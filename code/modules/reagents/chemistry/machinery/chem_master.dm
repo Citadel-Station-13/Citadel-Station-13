@@ -147,8 +147,9 @@
 		bottle = new_bottle
 
 /obj/machinery/chem_master/on_deconstruction()
-	replace_beaker(usr)
-	replace_pillbottle(usr)
+	var/atom/A = drop_location()
+	beaker.forceMove(A)
+	bottle.forceMove(A)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
