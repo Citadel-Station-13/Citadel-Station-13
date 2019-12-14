@@ -1,8 +1,7 @@
 /**
   * The virtual reality turned component.
   * Originally created to overcome issues of mob polymorphing locking the player inside virtual reality
-  * and allow for a more "realistic" virtual reality in a virtual reality experience.
-  * (I was there when VR sleepers were first tested on /tg/station, it was whacky.)
+  * and allow for a more "immersive" virtual reality in a virtual reality experience.
   * In short, a barebone not so hardcoded VR framework.
   * If you plan to add more devices that make use of this component, remember to isolate their specific code outta here where possible.
   */
@@ -46,9 +45,10 @@
 	RegisterSignal(quit_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
 	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
 	RegisterSignal(M, COMSIG_MOB_GHOSTIZE, .proc/be_a_quitter)
-	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/pass_me_the_remote)
-	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, .proc/pass_me_the_remote)
-	if(mastermind)
+	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/on_player_transfer)
+	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, .proc/on_player_transfer)
+	RegisterSignal(current_mind, COMSIG_PRE_MIND_TRANSFER, .proc/pre_player_transfer)
+	if(mastermind?.current)
 		mastermind.current.audiovisual_redirect = M
 
 /datum/component/virtual_reality/UnregisterFromParent()
@@ -57,24 +57,24 @@
 		quit_action.Remove(parent)
 		UnregisterSignal(quit_action, COMSIG_ACTION_TRIGGER)
 	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MOB_KEY_CHANGE, COMSIG_MOB_GHOSTIZE))
-	UnregisterSignal(current_mind, COMSIG_MIND_TRANSFER)
+	UnregisterSignal(current_mind, list(COMSIG_MIND_TRANSFER, COMSIG_PRE_MIND_TRANSFER))
 	current_mind = null
-	if(mastermind)
+	if(mastermind?.current)
 		mastermind.current.audiovisual_redirect = null
 
 /**
   * Called when attempting to connect a mob to a virtual reality mob.
-  * This will return FALSE if the mob is without player or dead.
+  * This will return FALSE if the mob is without player or dead. TRUE otherwise
   */
 /datum/component/virtual_reality/proc/connect(mob/M)
 	if(!M.mind || M.stat == DEAD)
 		return FALSE
 	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
 	mastermind = M.mind
-	RegisterSignal(mastermind, COMSIG_MIND_TRANSFER, .proc/switch_player)
-	var/datum/component/virtual_reality/clusterfk = M.GetComponent(/datum/component/virtual_reality)
-	if(clusterfk)
-		clusterfk.inception = src
+	RegisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER, .proc/switch_player)
+	var/datum/component/virtual_reality/VR = M.GetComponent(/datum/component/virtual_reality)
+	if(VR)
+		VR.inception = src
 	var/mob/vr_M = parent
 	SStgui.close_user_uis(M, src)
 	M.transfer_ckey(vr_M, FALSE)
@@ -93,7 +93,7 @@
 	new_mob.audiovisual_redirect = parent
 
 /**
-  * VR sleeper emag_act() hook.
+  * emag_act() hook. Makes the game deadlier, killing the mastermind mob too should the parent die.
   */
 /datum/component/virtual_reality/proc/you_only_live_once()
 	if(you_die_in_the_game_you_die_for_real)
@@ -102,17 +102,16 @@
 	return TRUE
 
 /**
-  * Takes care of moving the component from a mob to another when their mind or ckey is transferred.
-  * The very reason this component even exists (else one would be stuck playing as a monky if monkyified)
-  * Should the new mob happen to be one of the virtual realities ultimately associated the player
-  * a 180° turn will be done and quit the session instead.
+  * Called to stop the mind transfer should the new mob happen to be the mastermind's or in a damn mess associated with us.
+  * Since the target's mind.current is null'd in the mind transfer process,
+  * This has to be done in a different signal proc than on_player_transfer(), by then the mastermind.current will be null.
   */
-/datum/component/virtual_reality/proc/pass_me_the_remote(datum/source, mob/new_mob)
+/datum/component/virtual_reality/proc/pre_player_transfer(datum/source, mob/new_mob, mob/old_mob)
 	if(mastermind && new_mob == mastermind.current)
 		quit()
-		return
+		return COMPONENT_STOP_MIND_TRANSFER
 	var/datum/component/virtual_reality/VR = new_mob.GetComponent(/datum/component/virtual_reality)
-	if(VR.inception)
+	if(VR?.inception)
 		var/datum/component/virtual_reality/VR2 = VR.inception
 		var/emergency_quit = FALSE
 		while(VR2)
@@ -121,8 +120,14 @@
 				break
 			VR2 = VR2.inception
 		if(emergency_quit)
-			VR.inception.quit() //this will make the ckey revert back to the new mob.
-			return
+			VR.inception.quit() //this will revert the ckey back to new_mob.
+			return COMPONENT_STOP_MIND_TRANSFER
+
+/**
+  * Takes care of moving the component from a mob to another when their mind or ckey is transferred.
+  * The very reason this component even exists (else one would be stuck playing as a monky if monkyified)
+  */
+/datum/component/virtual_reality/proc/on_player_transfer(datum/source, mob/new_mob, mob/old_mob)
 	new_mob.TakeComponent(src)
 
 /**
@@ -168,7 +173,7 @@
 	var/mob/M = parent
 	if(!session_paused)
 		var/mob/dreamer = override || mastermind?.current
-		if(!dreamer) //This should NEVER happen.
+		if(!dreamer) //This shouldn't happen.
 			stack_trace("virtual reality component quit() called without a mob to transfer the parent key to.")
 			to_chat(M, "<span class='warning'>You feel a dreadful sensation, something terrible happened. You try to wake up, but you find yourself unable to...</span>")
 			qdel(src)
@@ -189,7 +194,7 @@
 		qdel(src)
 	else if(mastermind)
 		UnregisterSignal(mastermind.current, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
-		UnregisterSignal(mastermind, COMSIG_MIND_TRANSFER)
+		UnregisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER)
 		mastermind = null
 		session_paused = TRUE
 

@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.lying || !iscarbon(target) || !Adjacent(target) || user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
+	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
 		return
 	close_machine(target)
 
