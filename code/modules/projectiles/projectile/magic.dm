@@ -514,30 +514,25 @@
 	icon_state = "nuclear"
 	nodamage = TRUE
 	var/mob/living/victim = null
+	var/used = 0
 
 /obj/item/projectile/magic/nuclear/on_hit(target)
-	new/obj/effect/temp_visual/nuclear(get_turf(src))
+	if(used)
+		return
+	new/obj/effect/temp_visual/slugboom(get_turf(src))
 	if(ismob(target))
 		if(target == victim)
 			return
+		used = 1
 		visible_message("<span class='danger'>[victim] slams into [target] with explosive force!</span>")
-		explosion(src, 2, 3, 4, 0, 6, 0)
-		qdel(src)
-		return
+		explosion(src, 2, 3, 4, -1, TRUE, FALSE, 5)
 	else
+		used = 1
 		victim.take_overall_damage(30,30)
-		explosion(src, -1, -1, -1, 0, 3, 0)
-		qdel(src)
-		return //Autistically making it return and qdel because for some reason it was blowing up three times?
+		victim.Knockdown(60)
+		explosion(src, -1, -1, -1, -1, FALSE, FALSE, 5)
 
 /obj/item/projectile/magic/nuclear/Destroy()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()
-
-/obj/effect/temp_visual/nuclear //where's a good place to put this boi
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "slugboom"
-	randomdir = FALSE
-	duration = 60
-	pixel_x = -48

@@ -187,9 +187,9 @@
 	name = "\improper PURE MANLINESS"
 	desc = "SHOW THEM RAW POWER"
 	catchphrase = "I CAST FIST!"
-	on_use_sound = 'sound/weapons/mortar_long_whistle.ogg'
-	icon = 'icons/mecha/mecha_equipment.dmi'
-	icon_state = "mecha_honker"
+	on_use_sound = 'sound/weapons/nuclear_fist.ogg'
+	icon_state = "disintegrate"
+	item_state = "disintegrate"
 
 /obj/item/melee/touch_attack/nuclearfist/afterattack(atom/movable/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
@@ -198,10 +198,6 @@
 		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
 		return
 	var/mob/M = target
-	do_sparks(4, FALSE, M.loc)
-	for(var/mob/living/L in view(src, 7))
-		if(L != user)
-			L.flash_act(affect_silicon = FALSE)
 	var/atom/A = M.anti_magic_check()
 	if(A)
 		if(isitem(A))

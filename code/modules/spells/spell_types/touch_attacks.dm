@@ -79,7 +79,8 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = 0
 	cooldown_min = 200 //100 deciseconds reduction per rank
-
-	action_icon_state = "gib"
+	
+	action_icon = 'icons/obj/projectiles.dmi'
+	action_icon_state = "nuclear"
