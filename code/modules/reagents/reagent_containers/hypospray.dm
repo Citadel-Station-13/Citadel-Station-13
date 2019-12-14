@@ -63,6 +63,11 @@
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list("epinephrine" = 30, "lesser_syndicate_nanites" = 40, "leporazine" = 15, "atropine" = 15)
 
+/obj/item/reagent_containers/hypospray/combat/omnizine // owned idiot
+	desc = "A modified air-needle autoinjector, used by underfunded support operatives to slowly heal injuries in combat and limp away from a fight."
+	volume = 90
+	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
+
 /obj/item/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
 	volume = 100
