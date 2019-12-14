@@ -58,14 +58,14 @@
 	if(bottle)
 		bottle.ex_act(severity, target)
 
-/obj/machinery/chem_master/handle_atom_del(atom/A)
-	..()
+/obj/machinery/chem_master/Exited(atom/movable/A, atom/newloc)
+	. = ..()
 	if(A == beaker)
 		beaker = null
-		reagents.clear_reagents()
 		update_icon()
-	else if(A == bottle)
+	if(A == bottle)
 		bottle = null
+		update_icon()
 
 /obj/machinery/chem_master/update_icon()
 	cut_overlays()
@@ -115,32 +115,33 @@
 	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	replace_beaker(user)
+	if(beaker)
+		replace_beaker(user)
+	else
+		replace_pillbottle(user)
 	return TRUE
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/beaker/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			B.put_in_hands(beaker)
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
 	return TRUE
 
 /obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
-		bottle.forceMove(drop_location())
+		var/obj/item/storage/pill_bottle/B = bottle
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			B.put_in_hands(bottle)
 		else
-			adjust_item_drop_location(bottle)
+			adjust_item_drop_location(B)
 	if(new_bottle)
 		bottle = new_bottle
-	else
-		bottle = null
 	update_icon()
 	return TRUE
 
@@ -261,15 +262,16 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
-				var/target_loc = bottle ? bottle : drop_location()
+				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
 					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
+						target_loc = bottle
 
 				for(var/i in 1 to amount)
-					if(i < drop_threshold)
+					if(i <= drop_threshold)
 						P = new(target_loc)
 					else
 						P = new(drop_location())
