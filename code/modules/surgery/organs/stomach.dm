@@ -57,7 +57,7 @@
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 			applyOrganDamage(0.3)
 		if(4 to 5.5)
-			applyOrganDamage(0.2)
+			applyOrganDamage(0.15)
 		if(5.5 to INFINITY)
 			passive_regen()
 
