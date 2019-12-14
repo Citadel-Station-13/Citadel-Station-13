@@ -175,12 +175,16 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0, method = INGEST)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
 	if(amount < 0)
 		return
+
+	var/_bypass_pH = FALSE
+	if(method == TOUCH | VAPOR)
+		_ignore_pH = TRUE
 
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
@@ -199,7 +203,7 @@
 			trans_data = copy_data(T)
 
 
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE, bypass_pH = _bypass_pH) //we only handle reaction after every reagent has been transfered.
 
 		remove_reagent(T.id, transfer_amount, ignore_pH = TRUE)
 
@@ -210,7 +214,7 @@
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1, method = INGEST)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -223,6 +227,10 @@
 			return
 		R = target.reagents
 
+	var/_bypass_pH = FALSE
+	if(method == TOUCH | VAPOR)
+		_ignore_pH = TRUE
+
 	if(amount < 0)
 		return
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
@@ -233,7 +241,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.id, copy_amount * multiplier, trans_data, added_purity = T.purity)
+		R.add_reagent(T.id, copy_amount * multiplier, trans_data, added_purity = T.purity, bypass_pH = _bypass_pH)
 
 	src.update_total()
 	R.update_total()
@@ -861,7 +869,10 @@
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, other_pH, no_react = 0, ignore_pH = FALSE)
+
+//ignore_pH calculates pH based off the passed in pH.
+//bypass_pH has no pH calculations.
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, other_pH, no_react = 0, ignore_pH = FALSE, bypass_pH = FALSE)
 
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -918,10 +929,11 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 
 	//cacluate reagent based pH shift.
-	if(ignore_pH)
-		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
-	else
-		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
+	if(!bypass_pH)
+		if(ignore_pH)
+			pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
+		else
+			pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
 	if(istype(my_atom, /obj/item/reagent_containers/))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.pH_check()//checks beaker resilience

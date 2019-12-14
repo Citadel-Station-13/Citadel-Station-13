@@ -41,9 +41,9 @@
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(M, amount_per_transfer_from_this)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this, method = INJECT)
 			else
-				trans = reagents.copy_to(M, amount_per_transfer_from_this)
+				trans = reagents.copy_to(M, amount_per_transfer_from_this, method = INJECT)
 
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
 
@@ -431,7 +431,7 @@
 
 				var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
 				vial.reagents.reaction(L, INJECT, fraction)
-				vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
+				vial.reagents.trans_to(target, vial.amount_per_transfer_from_this, method = INJECT)
 				if(vial.amount_per_transfer_from_this >= 15)
 					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
 				if(vial.amount_per_transfer_from_this < 15)
@@ -466,7 +466,7 @@
 						L.log_message("<font color='orange'>applied [src] to  themselves ([contained]).</font>", INDIVIDUAL_ATTACK_LOG)
 				var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
 				vial.reagents.reaction(L, PATCH, fraction)
-				vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
+				vial.reagents.trans_to(target, vial.amount_per_transfer_from_this, method = PATCH)
 				if(vial.amount_per_transfer_from_this >= 15)
 					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
 				if(vial.amount_per_transfer_from_this < 15)

@@ -16,6 +16,8 @@
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
+	var/stomach_acid = "stomach_acid"
+
 /obj/item/organ/stomach/on_life()
 	if(is_cold())
 		return
@@ -74,7 +76,7 @@
 
 	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
 	if(!SA)
-		owner.reagents.add_reagent("stomach_acid", 1)
+		owner.reagents.add_reagent(stomach_acid, 1)
 		applyOrganDamage(5)
 	else if(SA.volume < 50)
 		SA.volume = CLAMP(SA.volume + 1, 0, 50)
@@ -95,7 +97,12 @@
 			to_chat(C, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 
-
+/obj/item/organ/stomach/proc/regen_stomach_acid(amount)
+	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
+	if(!SA)
+		owner.reagents.add_reagent(stomach_acid, amount)
+	else if(SA.volume < 50)
+		SA.volume = CLAMP(SA.volume + amount, 0, 50)
 
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)

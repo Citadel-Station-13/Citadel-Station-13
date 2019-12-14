@@ -839,10 +839,14 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	var/obj/item/organ/stomach/S = getorganslot(ORGAN_SLOT_STOMACH)
+	if(S)
+		S.regen_stomach_acid(50)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
 	restoreEars()
+	reagents.pH = 7
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
