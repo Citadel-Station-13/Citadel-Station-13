@@ -120,7 +120,7 @@ Property weights are:
 	name = "Intrigue"
 	desc = "Rules that lead the crew to distrust one another."
 	curve_width = 4
-	property_weights = list("trust" = -5, "valid" = -1)
+	property_weights = list("trust" = -5)
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"
