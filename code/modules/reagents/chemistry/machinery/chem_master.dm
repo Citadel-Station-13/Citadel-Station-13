@@ -127,7 +127,7 @@
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		var/obj/item/reagent_containers/beaker/B = beaker
+		var/obj/item/reagent_containers/B = beaker
 		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
 			B.put_in_hands(beaker)
