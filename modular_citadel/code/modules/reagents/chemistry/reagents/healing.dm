@@ -77,6 +77,7 @@
 			templungs = TRUE
 
 	C.adjustOxyLoss(-3)
+	C.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity*2.5)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 
 /datum/reagent/fermi/yamerol/on_mob_delete(mob/living/carbon/C)
