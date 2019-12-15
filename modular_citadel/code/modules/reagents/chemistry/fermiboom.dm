@@ -102,8 +102,7 @@
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
-	R0.remove_all(50)
-	R0.chem_temp = 300
+	R0.clear_reagents()
 	return
 
 //Spews out the contents of the beaker in a smokecloud
@@ -118,6 +117,5 @@
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
-	R0.remove_all(50)
-	R0.chem_temp = 300
+	R0.clear_reagents()
 	return
