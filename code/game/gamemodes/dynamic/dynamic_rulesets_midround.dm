@@ -773,5 +773,5 @@
 	assigned += M.mind
 	M.mind.special_role = antag_flag
 	if(mode.make_bloodsucker(M.mind))
-	mode.bloodsuckers += M
+		mode.bloodsuckers += M
 	return TRUE
