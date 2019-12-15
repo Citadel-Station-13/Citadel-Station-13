@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(vote)
 							voted[usr.ckey] -= vote
 							choices[choices[vote]]--
 						else
-							voted[usr.ckey].Add(vote)
+							voted[usr.ckey] += vote
 							choices[choices[vote]]++
 					else
 						voted += usr.ckey
