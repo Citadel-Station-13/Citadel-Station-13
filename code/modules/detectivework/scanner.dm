@@ -187,9 +187,11 @@
 	return time2text(world.time + 432000, ":ss")
 
 /obj/item/detective_scanner/AltClick(mob/living/user)
+	. = ..()
 	// Best way for checking if a player can use while not incapacitated, etc
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
+	. = TRUE
 	if(!LAZYLEN(log))
 		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
 		return

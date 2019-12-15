@@ -33,6 +33,7 @@
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
 	hud_type = /datum/hud/constructs
+	blood_volume = 0
 	var/list/construct_spells = list()
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
@@ -459,4 +460,3 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
-

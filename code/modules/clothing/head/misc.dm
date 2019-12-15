@@ -370,9 +370,9 @@
 /obj/item/clothing/head/hotel
 	name = "Telegram cap"
 	desc = "A bright red cap warn by hotel staff. Or people who want to be a singing telegram"
-	icon_state = "telegramhat"
-	item_color = "telegramhat"
-	dog_fashion = null
+	icon_state = "telegram"
+	item_color = "telegram"
+	dog_fashion = /datum/dog_fashion/head/telegram
 
 /obj/item/clothing/head/colour
 	name = "Singer cap"
