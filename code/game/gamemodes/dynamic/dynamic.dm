@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
-GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
+GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 
 /datum/game_mode/dynamic
 	name = "dynamic mode"
@@ -373,6 +373,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			if("Event")
 				if(ruleset.weight)
 					events += ruleset
+	storyteller = new GLOB.dynamic_storyteller_type
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++
@@ -422,13 +423,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
 		return TRUE
-	var/list/drafted_rules = list()
-	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
-			rule.candidates = candidates.Copy()
-			rule.trim_candidates()
-			if (rule.ready() && rule.candidates.len > 0)
-				drafted_rules[rule] = rule.weight
+	var/list/drafted_rules = storyteller.roundstart_draft()
 	if(!drafted_rules.len)
 		message_admins("Not enough threat level for roundstart antags!")
 		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
@@ -655,7 +650,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
-
+	
+	storyteller.do_process()
+	
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
 			return
@@ -673,21 +670,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 		update_playercounts()
 		if (get_injection_chance())
-			var/cur_threat_frac = threat/threat_level
-			var/list/drafted_rules = list()
-			var/antag_num = current_players[CURRENT_LIVING_ANTAGS].len
-			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
-				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
-					// Classic secret : only autotraitor/minor roles
-					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-						continue
-					rule.trim_candidates()
-					if (rule.ready())
-						if(!antag_num)
-							drafted_rules[rule] = round(rule.get_weight() + (rule.cost * cur_threat_frac))
-						else
-							drafted_rules[rule] = rule.get_weight()
+			var/list/drafted_rules = storyteller.midround_draft()
 			if (drafted_rules.len > 0)
 				picking_midround_latejoin_rule(drafted_rules)
 		else
@@ -699,11 +682,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		message_admins("DYNAMIC: Doing event injection.")
 		log_game("DYNAMIC: Doing event injection.")
 		update_playercounts()
-		var/list/drafted_rules = list()
-		for(var/datum/dynamic_ruleset/event/rule in events)
-			if(rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
-				if(rule.ready())
-					drafted_rules[rule] = rule.get_weight()
+		var/list/drafted_rules = storyteller.event_draft()
 		if(drafted_rules.len > 0)
 			picking_midround_latejoin_rule(drafted_rules)
 
@@ -795,22 +774,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
-		var/list/drafted_rules = list()
-		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
-			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
-				// Classic secret : only autotraitor/minor roles
-				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-					continue
-				// No stacking : only one round-ender, unless threat level > stacking_limit.
-				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
-						continue
-
-				rule.candidates = list(newPlayer)
-				rule.trim_candidates()
-				if (rule.ready())
-					drafted_rules[rule] = rule.get_weight()
-
+		var/list/drafted_rules = storyteller.latejoin_draft(newPlayer)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
