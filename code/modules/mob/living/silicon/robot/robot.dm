@@ -112,6 +112,8 @@
 	var/bellyup = 0
 	var/dogborg = FALSE
 
+	var/cansprint = 1
+
 /mob/living/silicon/robot/get_cell()
 	return cell
 
@@ -233,7 +235,6 @@
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
-	"Medihound" = /obj/item/robot_module/medihound, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed double whitespace gap in human and AI examine. Fixed single whitespace in carbon examine."

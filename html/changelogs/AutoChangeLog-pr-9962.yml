@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed limbs' set_disabled NOT dropping your held items, updating your hand slot inventory screen image, prompting chat messages and making your character scream like a sissy."

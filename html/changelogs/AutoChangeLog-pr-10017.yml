@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - balance: "Gas filters now push gas the same way volume pumps do."
-  - balance: "Gas filters now won't clog if only one output is clogged."

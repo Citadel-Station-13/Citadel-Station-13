@@ -1,0 +1,4 @@
+author: "PersianXerxes"
+delete-after: True
+changes: 
+  - rscdel: "Removed night vision quirk"
