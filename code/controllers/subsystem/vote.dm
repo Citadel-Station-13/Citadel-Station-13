@@ -1,3 +1,6 @@
+#define PLURALITY 0
+#define APPROVAL 1
+
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
@@ -10,8 +13,10 @@ SUBSYSTEM_DEF(vote)
 	var/started_time = null
 	var/time_remaining = 0
 	var/mode = null
+	var/vote_system = PLURALITY
 	var/question = null
 	var/list/choices = list()
+	var/list/choice_descs = list() // optional descriptions
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/generated_actions = list()
@@ -124,9 +129,6 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
-#define PEACE "calm"
-#define CHAOS "chaotic"
-
 /datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
@@ -153,32 +155,15 @@ SUBSYSTEM_DEF(vote)
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = "dynamic"
-				if("extended" in choices)
-					if(. == "extended")
-						GLOB.dynamic_forced_extended = TRUE // we still do the rest of the stuff
-					choices[PEACE] += choices["extended"]
-				var/mean = 0
-				var/voters = 0
-				for(var/client/c in GLOB.clients)
-					var/vote = c.prefs.preferred_chaos
-					if(vote)
-						voters += 1
-						switch(vote)
-							if(CHAOS_NONE)
-								mean -= 0.1
-							if(CHAOS_LOW)
-								mean -= 0.05
-							if(CHAOS_HIGH)
-								mean += 0.05
-							if(CHAOS_MAX)
-								mean += 0.1
-				mean/=voters
-				if(voted.len != 0)
-					mean += (choices[PEACE]*-1+choices[CHAOS])/voted.len
-				GLOB.dynamic_curve_centre = mean*20
-				GLOB.dynamic_curve_width = CLAMP(2-abs(mean*5),0.5,4)
-				to_chat(world,"<span class='boldannounce'>Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width].</span>")
-				log_admin("Dynamic curve centre set to [GLOB.dynamic_curve_centre] and width set to [GLOB.dynamic_curve_width]")
+				if(. == "extended")
+					GLOB.dynamic_forced_extended = TRUE // we still do the rest of the stuff
+					GLOB.dynamic_storyteller_type = /datum/dynamic_storyteller/liteextended
+					GLOB.dynamic_forced_threat_level = 15
+				else
+					var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
+					GLOB.dynamic_storyteller_type = S
+					GLOB.dynamic_curve_centre = initial(S.curve_centre)
+					GLOB.dynamic_curve_width = initial(S.curve_width)
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -203,20 +188,36 @@ SUBSYSTEM_DEF(vote)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return 0
-		if(!(usr.ckey in voted))
-			if(vote && 1<=vote && vote<=choices.len)
-				voted += usr.ckey
-				voted[usr.ckey] = vote
-				choices[choices[vote]]++	//check this
-				return vote
-		else if(vote && 1<=vote && vote<=choices.len)
-			choices[choices[voted[usr.ckey]]]--
-			voted[usr.ckey] = vote
-			choices[choices[vote]]++
-			return vote
+		if(vote && vote >= 1 && vote <= choices.len)
+			switch(vote_system)
+				if(PLURALITY)
+					if(usr.ckey in voted)
+						choices[choices[voted[usr.ckey]]]--
+						voted[usr.ckey] = vote
+						choices[choices[vote]]++
+						return vote
+					else
+						voted += usr.ckey
+						voted[usr.ckey] = vote
+						choices[choices[vote]]++	//check this
+						return vote
+				if(APPROVAL)
+					if(usr.ckey in voted)
+						if(vote in voted[usr.ckey])
+							voted[usr.ckey] -= vote
+							choices[choices[vote]]--
+						else
+							voted[usr.ckey].Add(vote)
+							choices[choices[vote]]++
+					else
+						voted += usr.ckey
+						voted[usr.ckey] = list(vote)
+						choices[choices[vote]]++
+						return vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+	vote_system = votesystem
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
@@ -259,9 +260,11 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				var/saved_threats = SSpersistence.saved_threat_levels
 				if((saved_threats[1]+saved_threats[2]+saved_threats[3])>150)
-					choices.Add("extended",PEACE,CHAOS)
-				else
-					choices.Add(PEACE,CHAOS)
+					choices.Add("extended")
+				for(var/T in config.storyteller_cache)
+					var/datum/dynamic_storyteller/S = T
+					choices.Add(initial(S.name))
+					choice_descs.Add(initial(S.desc))
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -311,13 +314,21 @@ SUBSYSTEM_DEF(vote)
 			. += "<h2>Vote: '[question]'</h2>"
 		else
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
+		. += "<h3>Vote [vote_system == PLURALITY ? "your top choice" : "all that apply"].</h3>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
-			var/ivotedforthis = ((C.ckey in voted) && (voted[C.ckey] == i) ? TRUE : FALSE)
+			var/ivotedforthis = FALSE
+			switch(vote_system)
+				if(PLURALITY)
+					ivotedforthis = ((C.ckey in voted) && (voted[C.ckey] == i))
+				if(APPROVAL)
+					ivotedforthis = ((C.ckey in voted) && (i in voted[C.ckey]))
 			if(!votes)
 				votes = 0
 			. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
+			if(choice_descs.len >= i)
+				. += "<li>[choice_descs[i]]</li>"
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
@@ -392,7 +403,7 @@ SUBSYSTEM_DEF(vote)
 	set category = "OOC"
 	set name = "Vote"
 
-	var/datum/browser/popup = new(src, "vote", "Voting Panel")
+	var/datum/browser/popup = new(src, "vote", "Voting Panel",nwidth=600,nheight=600)
 	popup.set_window_options("can_close=0")
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
@@ -419,6 +430,3 @@ SUBSYSTEM_DEF(vote)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]
 		if(P)
 			P.player_actions -= src
-
-#undef PEACE
-#undef CHAOS
