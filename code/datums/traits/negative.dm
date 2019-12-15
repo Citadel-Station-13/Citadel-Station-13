@@ -359,6 +359,11 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	H?.cure_trauma_type(mute, TRAUMA_RESILIENCE_ABSOLUTE)
 
+/datum/quirk/mute/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
+		qdel(src)
+
 /datum/quirk/unstable
 	name = "Unstable"
 	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
