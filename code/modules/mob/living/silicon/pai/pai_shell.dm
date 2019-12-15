@@ -91,20 +91,13 @@
 	..()
 	update_resting_icon(resting)
 
-/mob/living/silicon/pai/proc/update_icon()
-	if((chassis == "custom") && !custom_holoform_icon)
-		chassis = pick(possible_chassis - "custom")
-	if(chassis != "custom")
-		icon_state = "[chassis]_[resting]"
-	else
-		icon = custom_holoform_icon
-		icon_state = ""
-	update_transform()
-
 /mob/living/silicon/pai/proc/update_resting_icon(rest)
 	if(chassis == "custom")
+		lying_prev = lying
 		if(resting)
 			lying = pick(90, 270)
+		else
+			lying = 0
 	else
 		lying = 0
 	update_icon()

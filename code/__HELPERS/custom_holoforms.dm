@@ -16,7 +16,7 @@
 	if(length(inhand_equipment))
 		for(var/path in inhand_equipment)
 			var/obj/item/I = new path
-			mannequin.equip_to_slot_if_possible(I, SLOT_IN_HANDS, TRUE, TRUE, TRUE, TRUE)
+			mannequin.equip_to_slot_if_possible(I, SLOT_HANDS, TRUE, TRUE, TRUE, TRUE)
 	var/icon/result = getFlatIcon(mannequin)
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
 	return result

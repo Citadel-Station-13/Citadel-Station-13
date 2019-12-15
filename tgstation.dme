@@ -2183,6 +2183,7 @@
 #include "code\modules\mob\living\silicon\pai\personality.dm"
 #include "code\modules\mob\living\silicon\pai\say.dm"
 #include "code\modules\mob\living\silicon\pai\software.dm"
+#include "code\modules\mob\living\silicon\pai\update_icon.dm"
 #include "code\modules\mob\living\silicon\robot\death.dm"
 #include "code\modules\mob\living\silicon\robot\emote.dm"
 #include "code\modules\mob\living\silicon\robot\examine.dm"
