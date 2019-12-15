@@ -812,6 +812,7 @@
 	weight = 2
 	cost = 15
 	scaling_cost = 10
+	property_weights = list("extended" = 2, "chaos" = -1, "trust" = -3, "story_potential" = -2, "conversion" = 1)
 	requirements = list(90,80,70,60,50,50,50,50,50,50)
 	high_population_requirement = 50
 	antag_cap = list(1,1,1,1,1,2,2,2,2,2)
