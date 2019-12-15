@@ -523,9 +523,9 @@
 	glass_desc = "Stinging with flavour."
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent("sugar",5)
-	if(prob(50))
-		M.reagents.add_reagent("honey",2)
+	M.reagents.add_reagent("sugar",2)
+	if(prob(25))
+		M.reagents.add_reagent("honey",1)
 
 /datum/reagent/consumable/buzz_fuzz/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
@@ -550,9 +550,9 @@
 		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Idea of the worker drone", "A Hive of Flavour", "The Queen approved it!")]</span>")
 	..()
 
-/datum/reagent/consumable/buzz_fuzz/addiction_act_stage3(mob/living/M)
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage4(mob/living/M)
 	if(prob(25))
-		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Idea of the worker drone", "A Hive of Flavour", "Sap back that missing energy!", "Got Honey?", "The Queen approved it!")]</span>")
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Ideal of the worker drone", "A Hive of Flavour", "Sap back that missing energy!", "Got Honey?", "The Queen approved it!")]</span>")
 	..()
 
 /datum/reagent/consumable/grey_bull
