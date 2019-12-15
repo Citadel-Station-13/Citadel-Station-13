@@ -113,7 +113,7 @@ Property weights are:
 /datum/dynamic_storyteller/cowabunga
 	name = "Cowabunga"
 	curve_centre = 10
-	desc = "The most chaotic rules only. A validhunter's dream."
+	desc = "The most chaotic rules are weighted heavily here. Rounds are nasty, brutish and short."
 	property_weights = list("extended" = -1, "chaos" = 10)
 
 /datum/dynamic_storyteller/suspicion
