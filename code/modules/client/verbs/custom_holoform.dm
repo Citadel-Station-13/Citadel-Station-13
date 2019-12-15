@@ -11,8 +11,8 @@
 
 	if(prefs.last_custom_holoform < world.time + CUSTOM_HOLOFORM_DELAY)
 		to_chat(src, "<span class='warning'>You are attempting to change custom holoforms too fast!</span>")
-	var/mutable_appearance/new_holoform = user_interface_custom_holoform(src)
+	var/icon/new_holoform = user_interface_custom_holoform(src)
 	if(new_holoform)
-		prefs.custom_holoform = new_holoform
+		prefs.custom_holoform_icon = new_holoform
 		prefs.last_custom_holoform = world.time
 		to_chat(src, "<span class='boldnotice'>Holoform set.</span>")
