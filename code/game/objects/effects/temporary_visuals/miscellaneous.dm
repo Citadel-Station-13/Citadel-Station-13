@@ -447,5 +447,5 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "slugboom"
 	randomdir = FALSE
-	duration = 60
+	duration = 30
 	pixel_x = -24

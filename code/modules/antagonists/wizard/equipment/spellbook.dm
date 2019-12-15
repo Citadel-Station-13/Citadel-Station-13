@@ -144,7 +144,6 @@
 /datum/spellbook_entry/nuclearfist
 	name = "Nuclear Fist"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
-	cost = 3
 
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"

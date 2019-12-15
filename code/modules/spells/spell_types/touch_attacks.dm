@@ -74,13 +74,12 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
 	name = "Nuclear Fist"
-	desc = "This spell channels raw manliness, allowing you punch your enemies across the galaxy, causing them to detonate violently if hitting any other living being midflight."
+	desc = "This spell channels raw manliness, allowing you punch your enemies across the galaxy, causing them to detonate violently if hitting any other living being midflight. Does not work while laying down."
 	hand_path = /obj/item/melee/touch_attack/nuclearfist
 
 	school = "evocation"
-	charge_max = 600
+	charge_max = 200
 	clothes_req = 0
-	cooldown_min = 200 //100 deciseconds reduction per rank
-	
-	action_icon = 'icons/obj/projectiles.dmi'
-	action_icon_state = "nuclear"
+	cooldown_min = 40
+
+	action_icon_state = "nuclearfist"
