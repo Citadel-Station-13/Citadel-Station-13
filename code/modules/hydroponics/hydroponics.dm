@@ -583,7 +583,7 @@
 		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
 		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
 
-	// Slactic Acid
+	// Sulphuric Acid
 	if(S.has_reagent("sacid", 1))
 		adjustHealth(-round(S.get_reagent_amount("sacid") * 1))
 		adjustToxic(round(S.get_reagent_amount("sacid") * 1.5))
@@ -601,7 +601,7 @@
 		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
 		adjustWeeds(-rand(4,8))
 
-	// Napalm
+	// Napalm, not known for being good for anything organic
 	if(S.has_reagent("napalm", 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
@@ -672,7 +672,7 @@
 	if(S.has_reagent("strangereagent", 1))
 		spawnplant()
 
-	// Honey, Pests are dieing of surgar, so is the plant
+	// Honey, Pests are dieing of sugar, so is the plant
 	if(S.has_reagent("honey", 1))
 		adjustPests(-rand(2,5))
 		adjustHealth(-round(S.get_reagent_amount("honey") * 1))
