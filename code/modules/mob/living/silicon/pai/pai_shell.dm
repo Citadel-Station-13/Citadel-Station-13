@@ -91,7 +91,7 @@
 	..()
 	update_resting_icon(resting)
 
-/mob/living/silicon/pai/update_icon()
+/mob/living/silicon/pai/proc/update_icon()
 	if((chassis == "custom") && !custom_holoform_icon)
 		chassis = pick(possible_chassis - "custom")
 	if(chassis != "custom")

@@ -34,7 +34,7 @@
 //Errors go to user.
 /proc/generate_custom_holoform_from_prefs_safe(datum/preferences/prefs, mob/user)
 	if(user)
-		if(user.prefs.last_custom_holoform < world.time + CUSTOM_HOLOFORM_DELAY)
+		if(user.client.prefs.last_custom_holoform < world.time + CUSTOM_HOLOFORM_DELAY)
 			return
 	return generate_custom_holoform_from_prefs(prefs, null, null, TRUE)
 

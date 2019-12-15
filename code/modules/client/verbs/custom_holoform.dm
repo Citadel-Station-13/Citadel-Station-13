@@ -1,8 +1,8 @@
 /client/verb/clear_custom_holoform()
-	set naame = "Clear Custom Holoform"
+	set name = "Clear Custom Holoform"
 	set desc = "Clear your current custom holoform"
 
-	prefs?.custom_holoform = null
+	prefs?.custom_holoform_icon = null
 	to_chat(src, "<span class='boldnotice'>Holoform removed.</span>")
 
 /client/verb/set_custom_holoform()
