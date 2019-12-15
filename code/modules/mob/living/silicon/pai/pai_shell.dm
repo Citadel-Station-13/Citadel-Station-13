@@ -91,11 +91,23 @@
 	..()
 	update_resting_icon(resting)
 
-/mob/living/silicon/pai/proc/update_resting_icon(rest)
-	if(rest)
-		icon_state = "[chassis]_rest"
+/mob/living/silicon/pai/update_icon()
+	if((chassis == "custom") && !custom_holoform_icon)
+		chassis = pick(possible_chassis - "custom")
+	if(chassis != "custom")
+		icon_state = "[chassis]_[resting]"
 	else
-		icon_state = "[chassis]"
+		icon = custom_holoform_icon
+		icon_state = ""
+	update_transform()
+
+/mob/living/silicon/pai/proc/update_resting_icon(rest)
+	if(chassis == "custom")
+		if(resting)
+			lying = pick(90, 270)
+	else
+		lying = 0
+	update_icon()
 	if(loc != card)
 		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
 

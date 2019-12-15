@@ -681,14 +681,20 @@
 				"green face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/ai.dmi',
-				"creature" = 'icons/mob/ai.dmi'
+				"creature" = 'icons/mob/ai.dmi',
+				"custom"
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("xeno queen")
+					if("custom")
+						if(client?.prefs?.custom_holoform_icon)
+							holo_icon = client.prefs.custom_holoform_icon
+						else
+							holo_icon = getHologramIcon(icon("female", 'icons/mob/ai.dmi'))
+					else if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
