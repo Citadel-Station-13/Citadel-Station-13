@@ -21,6 +21,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_ip
 	var/last_id
 
+	var/mutable_appearance/custom_holoform
+	var/last_custom_holoform = 0
+
 	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
 	var/saveprefcooldown
 	var/loadprefcooldown

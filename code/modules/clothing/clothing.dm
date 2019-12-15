@@ -47,7 +47,6 @@
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects.
 
-
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
