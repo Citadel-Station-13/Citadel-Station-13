@@ -188,7 +188,7 @@
 	spellname = "nuclear fist"
 	icon_state ="booknuclearfist"
 	desc = "This book radiates confidence."
-	remarks = list("Line them up....", ".. knock em' down...", "Dress in yellow for maximum effect... why?", "The energey comes from spinach... huh", "Work out for three years? No way!", "Oh I'll cast you a spell allright...", "What ho mighty wizard... ho ho ho...")
+	remarks = list("Line them up....", ".. knock em' down...", "Dress in yellow for maximum effect... why?", "The energy comes from spinach... huh", "Work out for three years? No way!", "Oh I'll cast you a spell allright...", "What ho mighty wizard... ho ho ho...")
 
 /obj/item/book/granter/spell/nuclearfist/recoil(mob/living/carbon/user)
 	..()
