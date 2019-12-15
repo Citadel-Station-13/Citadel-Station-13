@@ -40,6 +40,19 @@ area/edina/street/street2 //Just so laying areas is easier
 /area/edina/protected //Prevents ice storms
 	name = "Sheltered Nova Edina"
 
+/////////////////Edina specific derivitives///////////////////////////////////
+
+area/edina/crew_quarters/holo_atrium
+	name = "Hologram atrium"
+
+area/edina/crew_quarters/store/clothes
+	name = "Clothes Store"
+
+area/edina/crew_quarters/store/plushies
+	name = "Plushies Store"
+
+area/edina/crew_quarters/store/pet
+	name = "Pet Store"
 
 /turf/open/floor/grass/snow/edina//But for now, we just handle what is outside, for light control etc.
 	name = "Scottish snow"
