@@ -1,4 +1,4 @@
-#define NIGHT_VISION_DARKSIGHT_RANGE 2
+#define NIGHT_VISION_DARKSIGHT_RANGE 3
 
 /obj/item/organ/eyes
 	name = BODY_ZONE_PRECISE_EYES
