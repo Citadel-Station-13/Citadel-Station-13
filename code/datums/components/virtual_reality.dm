@@ -2,8 +2,9 @@
   * The virtual reality turned component.
   * Originally created to overcome issues of mob polymorphing locking the player inside virtual reality
   * and allow for a more "immersive" virtual reality in a virtual reality experience.
+  * It relies on comically complex order of logic, expect things to break if procs such as mind/transfer_to() are revamped.
   * In short, a barebone not so hardcoded VR framework.
-  * If you plan to add more devices that make use of this component, remember to isolate their specific code outta here where possible.
+  * If you plan to add more devices that make use of this component, remember to isolate their code outta here where possible.
   */
 /datum/component/virtual_reality
 	can_transfer = TRUE
@@ -16,7 +17,8 @@
 	//This one's name should be self explainatory, currently used for emags.
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	//Used to allow people to play recursively playing vr while playing vr without many issues.
-	var/datum/component/virtual_reality/inception
+	var/datum/component/virtual_reality/level_below
+	var/datum/component/virtual_reality/level_above
 	//Used to stop the component from executing certain functions that'd cause us some issues otherwise.
 	//FALSE if there is a connected player, otherwise TRUE.
 	var/session_paused = TRUE
@@ -24,8 +26,8 @@
 	var/allow_mastermind_transfer = FALSE
 
 /datum/component/virtual_reality/Initialize(yolo = FALSE, _allow_mastermind_transfer = FALSE)
-	var/mob/vr_M = parent
-	if(!istype(vr_M) || !vr_M.mind)
+	var/mob/M = parent
+	if(!istype(M) || !M.mind)
 		return COMPONENT_INCOMPATIBLE
 	you_die_in_the_game_you_die_for_real = yolo
 	allow_mastermind_transfer = _allow_mastermind_transfer
@@ -33,6 +35,12 @@
 
 /datum/component/virtual_reality/Destroy()
 	QDEL_NULL(quit_action)
+	if(level_above)
+		level_above.level_below = null
+		level_above = null
+	if(level_below)
+		level_below.level_above = null
+		level_below = null
 	return ..()
 
 /datum/component/virtual_reality/RegisterWithParent()
@@ -67,30 +75,22 @@
   * This will return FALSE if the mob is without player or dead. TRUE otherwise
   */
 /datum/component/virtual_reality/proc/connect(mob/M)
-	if(!M.mind || M.stat == DEAD)
+	var/mob/vr_M = parent
+	if(!M.mind || M.stat == DEAD || !vr_M.mind || vr_M.stat == DEAD)
 		return FALSE
-	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
-	mastermind = M.mind
-	RegisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER, .proc/switch_player)
 	var/datum/component/virtual_reality/VR = M.GetComponent(/datum/component/virtual_reality)
 	if(VR)
-		VR.inception = src
-	var/mob/vr_M = parent
-	SStgui.close_user_uis(M, src)
+		VR.level_below = src
+		level_above = VR
 	M.transfer_ckey(vr_M, FALSE)
+	mastermind = M.mind
+	mastermind.current.audiovisual_redirect = parent
+	RegisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER, .proc/switch_player)
+	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
+	RegisterSignal(M, COMSIG_MOB_PRE_PLAYER_CHANGE, .proc/player_hijacked)
+	SStgui.close_user_uis(vr_M, src)
 	session_paused = FALSE
 	return TRUE
-
-/**
-  * Called when the mastermind mind is transferred to another mob.
-  * This is pretty much going to simply quit the session until machineries support polymorphed occupants etcetera.
-  */
-/datum/component/virtual_reality/proc/switch_player(datum/source, mob/new_mob, mob/old_mob)
-	if(!allow_mastermind_transfer)
-		quit()
-		return
-	old_mob.audiovisual_redirect = null
-	new_mob.audiovisual_redirect = parent
 
 /**
   * emag_act() hook. Makes the game deadlier, killing the mastermind mob too should the parent die.
@@ -102,26 +102,60 @@
 	return TRUE
 
 /**
-  * Called to stop the mind transfer should the new mob happen to be the mastermind's or in a damn mess associated with us.
-  * Since the target's mind.current is null'd in the mind transfer process,
+  * Called when the mastermind mind is transferred to another mob.
+  * This is pretty much just going to simply quit the session until machineries support polymorphed occupants etcetera.
+  */
+/datum/component/virtual_reality/proc/switch_player(datum/source, mob/new_mob, mob/old_mob)
+	if(session_paused)
+		return
+	if(!allow_mastermind_transfer)
+		quit()
+		return COMPONENT_STOP_MIND_TRANSFER
+	UnregisterSignal(old_mob, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MOB_PRE_PLAYER_CHANGE))
+	RegisterSignal(new_mob, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/game_over)
+	RegisterSignal(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, .proc/player_hijacked)
+	old_mob.audiovisual_redirect = null
+	new_mob.audiovisual_redirect = parent
+
+/**
+  * Called to stop the player mind from being transferred should the new mob happen to be one of our masterminds'.
+  * Since the target's mind.current is going to be null'd in the mind transfer process,
   * This has to be done in a different signal proc than on_player_transfer(), by then the mastermind.current will be null.
   */
 /datum/component/virtual_reality/proc/pre_player_transfer(datum/source, mob/new_mob, mob/old_mob)
-	if(mastermind && new_mob == mastermind.current)
+	if(!mastermind || session_paused)
+		return
+	if(new_mob == mastermind.current)
 		quit()
 		return COMPONENT_STOP_MIND_TRANSFER
-	var/datum/component/virtual_reality/VR = new_mob.GetComponent(/datum/component/virtual_reality)
-	if(VR?.inception)
-		var/datum/component/virtual_reality/VR2 = VR.inception
-		var/emergency_quit = FALSE
-		while(VR2)
-			if(VR2 == src)
-				emergency_quit = TRUE
-				break
-			VR2 = VR2.inception
-		if(emergency_quit)
-			VR.inception.quit() //this will revert the ckey back to new_mob.
+	if(!level_above)
+		return
+	var/datum/component/virtual_reality/VR = level_above
+	while(VR)
+		if(VR.mastermind.current == new_mob)
+			VR.quit() //this will revert the ckey back to new_mob.
 			return COMPONENT_STOP_MIND_TRANSFER
+		VR = VR.level_above
+
+/**
+  * Called when someone or something else is somewhat about to replace the mastermind's mob key somehow.
+  * And potentially lock the player in a broken virtual reality plot. Not really something to be proud of.
+  */
+/datum/component/virtual_reality/proc/player_hijacked(datum/source, mob/our_character, mob/their_character)
+	if(session_paused)
+		return
+	if(!their_character)
+		quit(cleanup = TRUE)
+		return
+	var/will_it_be_handled_in_their_pre_player_transfer = FALSE
+	var/datum/component/virtual_reality/VR = src
+	while(VR)
+		if(VR.parent == their_character)
+			will_it_be_handled_in_their_pre_player_transfer = TRUE
+			break
+		VR = VR.level_below
+	if(!will_it_be_handled_in_their_pre_player_transfer) //it's not the player playing shenanigeans, abandon all ships.
+		quit(cleanup = TRUE)
 
 /**
   * Takes care of moving the component from a mob to another when their mind or ckey is transferred.
@@ -172,38 +206,40 @@
 /datum/component/virtual_reality/proc/quit(deathcheck = FALSE, cleanup = FALSE, mob/override)
 	var/mob/M = parent
 	if(!session_paused)
-		var/mob/dreamer = override || mastermind?.current
+		session_paused = TRUE
+		var/mob/dreamer = override || mastermind.current
 		if(!dreamer) //This shouldn't happen.
-			stack_trace("virtual reality component quit() called without a mob to transfer the parent key to.")
+			stack_trace("virtual reality component quit() called without a mob to transfer the parent ckey to.")
 			to_chat(M, "<span class='warning'>You feel a dreadful sensation, something terrible happened. You try to wake up, but you find yourself unable to...</span>")
 			qdel(src)
 			return
-		if(inception?.parent)
-			inception.vr_in_a_vr(dreamer, deathcheck, cleanup, src)
-		else if(M.ckey)
+		if(level_below?.parent)
+			level_below.vr_in_a_vr(dreamer, deathcheck, (deathcheck && cleanup))
+		else
 			M.transfer_ckey(dreamer, FALSE)
 			if(deathcheck)
 				to_chat(dreamer, "<span class='warning'>You feel everything fading away...</span>")
 				dreamer.death(FALSE)
-			dreamer.stop_sound_channel(CHANNEL_HEARTBEAT)
-			dreamer.audiovisual_redirect = null
+		mastermind.current.audiovisual_redirect = null
+		if(!cleanup)
+			if(level_above)
+				level_above.level_below = null
+				level_above = null
+			UnregisterSignal(mastermind.current, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MOB_PRE_PLAYER_CHANGE))
+			UnregisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER)
+			mastermind = null
 	if(cleanup)
 		var/obj/effect/vr_clean_master/cleanbot = locate() in get_area(M)
 		if(cleanbot)
 			LAZYOR(cleanbot.corpse_party, M)
 		qdel(src)
-	else if(mastermind)
-		UnregisterSignal(mastermind.current, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
-		UnregisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER)
-		mastermind = null
-		session_paused = TRUE
 
 /**
   * Used for recursive virtual realities shenanigeans and should be called only through the above proc.
   */
-/datum/component/virtual_reality/proc/vr_in_a_vr(mob/player, deathcheck = FALSE, cleanup = FALSE, datum/component/virtual_reality/yo_dawg)
+/datum/component/virtual_reality/proc/vr_in_a_vr(mob/player, deathcheck = FALSE, lethal_cleanup = FALSE)
 	var/mob/M = parent
-	quit(deathcheck, cleanup, player, yo_dawg)
-	yo_dawg.inception = null
-	if(deathcheck && cleanup)
+	quit(deathcheck, lethal_cleanup, player)
+	M.audiovisual_redirect = null
+	if(lethal_cleanup)
 		M.death(FALSE)

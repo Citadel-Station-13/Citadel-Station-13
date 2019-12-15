@@ -88,7 +88,8 @@
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	var/old_character = current
-	if(SEND_SIGNAL(src, COMSIG_PRE_MIND_TRANSFER, new_character, old_character) & COMPONENT_STOP_MIND_TRANSFER)
+	var/signals = SEND_SIGNAL(new_character, COMSIG_MOB_PRE_PLAYER_CHANGE, new_character, old_character) | SEND_SIGNAL(src, COMSIG_PRE_MIND_TRANSFER, new_character, old_character)
+	if(signals & COMPONENT_STOP_MIND_TRANSFER)
 		return
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null

@@ -97,7 +97,7 @@
 					VR = vr_mob.GetComponent(/datum/component/virtual_reality)
 				if(!(VR?.connect(M)))
 					if(allow_creating_vr_mobs)
-						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
+						to_chat(occupant, "<span class='warning'>Virtual avatar [vr_mob ? "corrupted" : "missing"], attempting to create one...</span>")
 						var/obj/effect/landmark/vr_spawn/V = get_vr_spawnpoint()
 						var/turf/T = get_turf(V)
 						if(T)
@@ -106,6 +106,8 @@
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
 						to_chat(occupant, "<span class='warning'>The virtual world does not support the creation of new virtual avatars, aborting transfer</span>")
+				else
+					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 			. = TRUE
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
@@ -169,6 +171,8 @@
 		VR.RegisterSignal(src, COMSIG_MACHINE_EJECT_OCCUPANT, /datum/component/virtual_reality.proc/revert_to_reality)
 		VR.RegisterSignal(src, COMSIG_PARENT_QDELETING, /datum/component/virtual_reality.proc/machine_destroyed)
 		to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
+	else
+		to_chat(M, "<span class='notice'>Transfer failed! virtual reality data likely corrupted!</span>")
 
 /obj/machinery/vr_sleeper/proc/unset_vr_mob(datum/component/virtual_reality/VR)
 	vr_mob = null
