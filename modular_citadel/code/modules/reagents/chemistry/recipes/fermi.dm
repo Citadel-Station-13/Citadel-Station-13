@@ -525,7 +525,7 @@
 	CurveSharpT 	= 0.5
 	CurveSharppH 	= 2
 	ThermicConstant = 0
-	HIonRelease 	= 0.1
+	HIonRelease 	= -0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
@@ -540,6 +540,7 @@
 		R.pH += 0.5
 	else
 		R.pH -= 0.5
+	R.pH = CLAMP(R.pH, 0, 14)
 
 /datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, var/atom/my_atom, added_volume)
 	var/datum/reagent/medicine/antacidpregen/A = holder.has_reagent("antacidpregen")
@@ -588,7 +589,7 @@
 		return
 	var/datum/reagent/medicine/cryosenium/C = R.has_reagent("cryosenium")
 	var/step_purity = ((R.chem_temp-50)/250)
-	C.purity = ((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume))
+	C.purity = CLAMP(((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume)), 0, 1)
 	..()
 
 /datum/chemical_reaction/cryosenium/FermiExplode(datum/reagents/R, var/atom/my_atom, volume, temp, pH)
