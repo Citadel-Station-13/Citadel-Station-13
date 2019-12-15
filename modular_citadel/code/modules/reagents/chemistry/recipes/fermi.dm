@@ -517,16 +517,17 @@
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
-	ExplodeTemp 	= 1000
+	ExplodeTemp 	= 2000
 	OptimalpHMin 	= 6.8
 	OptimalpHMax 	= 7.2
-	ReactpHLim 		= 7
+	ReactpHLim 		= 8
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 0.5
 	CurveSharppH 	= 2
 	ThermicConstant = 0
 	HIonRelease 	= -0.1
 	RateUpLim 		= 2
+	PurityMin 		= 0
 	FermiChem 		= TRUE
 	FermiExplode	= FERMI_EXPLOSION_TYPE_SMOKE
 
