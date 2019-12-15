@@ -126,7 +126,7 @@
 					/obj/item/clothing/head/christmashatg = 3,
 					/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
 					/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
-					/obj/item/clothing/shoes/winterboots/santaboots = 3,
+					/obj/item/clothing/shoes/winterboots/santaboots = 3)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
