@@ -12,7 +12,6 @@
 	var/filling = FALSE
 	var/obj/item/reagent_containers/blood/bag = null
 	var/obj/item/reagent_containers/blood/outbag = null
-	var/bloodstored = 0
 	var/maxbloodstored = 1000
 	var/menustat = "menu"
 	var/efficiency = 0
@@ -20,13 +19,21 @@
 
 /obj/machinery/bloodbankgen/Initialize()
 	. = ..()
-	create_reagents(1000)
+	create_reagents(maxbloodstored, AMOUNT_VISIBLE)
 	update_icon()
 
 /obj/machinery/bloodbankgen/Destroy()
 	QDEL_NULL(bag)
 	QDEL_NULL(outbag)
 	return ..()
+
+/obj/machinery/bloodbankgen/examine(mob/user)
+	. = ..()
+	if(bag)
+		. += "<span class='notice'>It has \a [bag.name] hooked to its <b>input</b> slot. The counter reads: \"Current Capacity: [bag.reagents.total_volume] of [bag.reagents.maximum_volume]\"</span>"
+	if(outbag)
+		. += "<span class='notice'>It has \a [bag.name] hooked to its <b>output</b> slot. The counter reads: \"Current Capacity: [outbag.reagents.total_volume] of [outbag.reagents.maximum_volume]\"</span>"
+
 
 /obj/machinery/bloodbankgen/handle_atom_del(atom/A)
 	..()
@@ -110,44 +117,31 @@
 	if(!is_operational())
 		return
 
-	bloodstored = reagents.total_volume
-
 	var/transfer_amount = 20
 
 	if(draining)
-		if(reagents.total_volume >= reagents.maximum_volume || !bag)
-			draining = FALSE
-			updateUsrDialog()
+		if(reagents.total_volume >= reagents.maximum_volume || !bag || !bag.reagents.total_volume)
+			beep_stop_pumping()
 			return
-		if(bag.reagents.total_volume)
-			var/datum/reagent/blood/B = bag.reagents.has_reagent("blood")
-			if(!B)
-				beep_stop_pumping()
-				return
-			//monitor the machine and blood bag's reagents storage.
-			var/amount = min(B.volume, min(transfer_amount, reagents.maximum_volume - reagents.total_volume))
-			if(!amount)
-				beep_stop_pumping()
-				return
-			var/bonus = bag.blood_type == "SY" ? 0 : 5 * efficiency //no infinite loops using synthetics.
-			reagents.add_reagent("syntheticblood", amount + bonus)
-			bag.reagents.remove_reagent("blood", amount)
-			update_icon()
-		return
+		var/blood_amount = bag.reagents.get_reagent_amount("blood")
+		//monitor the machine and blood bag's reagents storage.
+		var/amount = min(blood_amount, min(transfer_amount, reagents.maximum_volume - reagents.total_volume))
+		if(!amount)
+			beep_stop_pumping()
+			return
+		var/bonus = bag.blood_type == "SY" ? 0 : 5 * efficiency //no infinite loops using synthetics.
+		reagents.add_reagent("syntheticblood", amount + bonus)
+		bag.reagents.remove_reagent("blood", amount)
+		update_icon()
 
 	if(filling)
-		if(!reagents || !reagents.total_volume || !outbag)
-			filling = FALSE //there ain't anything in the machine yo.
-			updateUsrDialog()
+		if(!reagents.total_volume || outbag.reagents.total_volume >= outbag.reagents.maximum_volume || !outbag)
+			beep_stop_pumping("[src] pings.", TRUE)
 			return
-		if(outbag.reagents.total_volume < outbag.reagents.maximum_volume)
-			//monitor the output bag's  reagents storage.
-			var/amount = min(transfer_amount, outbag.reagents.maximum_volume - outbag.reagents.total_volume)
-			if(!amount)
-				beep_stop_pumping("[src] pings.", TRUE)
-				return
-			reagents.trans_to(outbag, amount)
-			update_icon()
+		//monitor the output bag's  reagents storage.
+		var/amount = min(transfer_amount, outbag.reagents.maximum_volume - outbag.reagents.total_volume)
+		reagents.trans_to(outbag, amount)
+		update_icon()
 
 /obj/machinery/bloodbankgen/proc/beep_stop_pumping(msg = "[src] beeps loudly.", out_instead_of_in = FALSE)
 	if(out_instead_of_in)
@@ -248,7 +242,7 @@
 	if(!bag && !outbag)
 		dat += "<div class='statusDisplay'>No containers inside, please insert container.</div>"
 
-	var/datum/browser/popup = new(user, "bloodbankgen", name, 350, 520)
+	var/datum/browser/popup = new(user, "bloodbankgen", name, 350, 420)
 	popup.set_content(dat)
 	popup.open()
 
@@ -286,6 +280,7 @@
 		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
 			usr.put_in_hands(bag)
 		bag = null
+		draining = null
 		update_icon()
 
 /obj/machinery/bloodbankgen/proc/detachoutput()
@@ -294,6 +289,7 @@
 		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
 			usr.put_in_hands(outbag)
 		outbag = null
+		filling = null
 		update_icon()
 
 /obj/machinery/bloodbankgen/proc/attachinput(obj/item/O, mob/user)
