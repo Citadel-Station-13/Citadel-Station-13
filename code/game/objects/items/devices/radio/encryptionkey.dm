@@ -47,7 +47,7 @@
 /obj/item/encryptionkey/headset_rob
 	name = "robotics radio encryption key"
 	icon_state = "rob_cypherkey"
-	channels = list(RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_ENGINEERING = 1)
+	channels = list(RADIO_CHANNEL_SCIENCE = 1)
 
 /obj/item/encryptionkey/headset_med
 	name = "medical radio encryption key"
