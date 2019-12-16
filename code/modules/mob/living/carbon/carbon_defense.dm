@@ -322,7 +322,7 @@
 				"<span class='notice'>[H] shakes [target]'s hand.</span>", \
 				"<span class='notice'>You shake [target]'s hand.</span>", )
 			
-		else if(H.zone_sel.selecting == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
+		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
 			H.visible_message( \
 				"<span class='notice'>[H] boops [target]'s nose.</span>", \
 				"<span class='notice'>You boop [target] on the nose.</span>", )
