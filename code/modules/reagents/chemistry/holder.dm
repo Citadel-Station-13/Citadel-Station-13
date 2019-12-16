@@ -594,9 +594,9 @@
 		fermiEnd()
 		return
 
-	if(!my_atom)
+	if(!my_atom || my_atom.reagents.reagent_list.len == 0)
 		if(GLOB.Debug2)
-			message_admins("fermiEnd due to the atom no longer existing.")
+			message_admins("fermiEnd due to the atom/reagents no longer existing.")
 		fermiEnd()
 		return
 
@@ -645,6 +645,7 @@
 	//get purity from combined beaker reactant purities HERE.
 	var/purity = 1
 
+
 	//Begin checks
 	//For now, purity is handled elsewhere (on add)
 	//Calculate DeltapH (Deviation of pH from optimal)
@@ -681,6 +682,7 @@
 
 	//Then adjust purity of result with reagent purity.
 	purity *= reactant_purity(C)
+
 
 	var/removeChemAmmount //remove factor
 	var/addChemAmmount //add factor
