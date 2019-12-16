@@ -178,7 +178,7 @@
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 		if(APPRENTICE_MARTIAL)
-			owner.AddSpell(new /obj/effect/proc_holder/spell/self/basic_heal(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist(null))
 			H.put_in_hands(new /obj/item/book/granter/martial/plasma_fist(H))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned mystical martial abilities. You are able to cast a flesh mending spell.")
 
