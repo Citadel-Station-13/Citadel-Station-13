@@ -74,7 +74,10 @@
 	if(!isturf(loc) && loc != card)
 		to_chat(src, "<span class='boldwarning'>You can not change your holochassis composite while not on the ground or in your card!</span>")
 		return FALSE
-	var/choicetype = input(src, "What type of chassis do you want to use?") as null|anything in list("Preset - Basic", "Custom", "Preset - Dynamic")
+	var/list/choices = list("Preset - Basic", "Preset - Dynamic")
+	if(CONFIG_GET(flag/pai_custom_holoforms))
+		choices += "Custom"
+	var/choicetype = input(src, "What type of chassis do you want to use?") as null|anything in choices
 	if(!choicetype)
 		return FALSE
 	switch(choicetype)

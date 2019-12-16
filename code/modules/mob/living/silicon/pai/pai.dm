@@ -72,6 +72,7 @@
 	var/emittermaxhealth = 20
 	var/emitterregen = 0.25
 	var/emitter_next_use = 0
+	var/emitter_emp_cd = 300
 	var/emittercd = 50
 	var/emitteroverloadcd = 100
 
