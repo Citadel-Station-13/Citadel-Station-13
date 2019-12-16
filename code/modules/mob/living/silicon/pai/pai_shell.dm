@@ -128,3 +128,19 @@
 		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE
 	return ..()
+
+/mob/living/silicon/pai/verb/toggle_chassis_sit()
+	set name = "Toggle Chassis Sit"
+	set category = "IC"
+	set desc = "Whether or not to try to use a sitting icon versus a resting icon. Takes priority over belly-up resting."
+	dynamic_chassis_sit = !dynamic_chassis_sit
+	to_chat(usr, "<span class='boldnotice'>You are now [dynamic_chassis_sit? "sitting" : "lying down"].</span>")
+	update_icon()
+
+/mob/living/silicon/pai/verb/toggle_chassis_bellyup()
+	set name = "Toggle Chassis Belly Up"
+	set category = "IC"
+	set desc = "Whether or not to try to use a belly up icon while resting. Overridden by sitting."
+	dynamic_chassis_bellyup = !dynamic_chassis_bellyup
+	to_chat(usr, "<span class='boldnotice'>You are now lying on your [dynamic_chassis_bellyup? "back" : "front"].</span>")
+	update_icon()

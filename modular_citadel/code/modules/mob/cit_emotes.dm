@@ -77,8 +77,7 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/effects/snap01.ogg'
-	mob_type_allowed_typecache = list(/mob/living/carbon/)
-
+	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap
 	key = "snap"
@@ -87,7 +86,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/snap/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -101,7 +100,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/snap2/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -115,7 +114,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/snap3/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -129,7 +128,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/awoo/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -143,7 +142,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/nya/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -157,7 +156,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/weh/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -171,7 +170,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/peep/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -190,10 +189,9 @@
 	key_third_person = "lets out a tiny squeak"
 	message = "lets out a tiny squeak!"
 	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -207,7 +205,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/merp/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
@@ -221,7 +219,7 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/bark/run_emote(mob/living/user, params)
-	if(ishuman(user))
+	if(iscarbon(user) || ispAI(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
