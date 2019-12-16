@@ -324,7 +324,7 @@
 			
 		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
 			M.visible_message( \
-				"<span class='notice'>[H] boops [target]'s nose.</span>", \
+				"<span class='notice'>[M] boops [src]'s nose.</span>", \
 				"<span class='notice'>You boop [src] on the nose.</span>", )
 			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 		
