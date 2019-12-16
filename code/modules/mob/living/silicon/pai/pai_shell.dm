@@ -78,29 +78,32 @@
 	if(!isturf(loc) && loc != card)
 		to_chat(src, "<span class='boldwarning'>You can not change your holochassis composite while not on the ground or in your card!</span>")
 		return FALSE
-	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
-	if(!choice)
+	var/choicetype = input(src, "What type of chassis do you want to use?") as null|anything in list("Preset - Basic", "Custom", "Preset - Dynamic")
+	if(!choicetype)
 		return FALSE
-	chassis = choice
+	switch(choicetype)
+		if("Custom")
+			chassis = "custom"
+		if("Preset - Basic")
+			var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
+			if(!choice)
+				return FALSE
+			chassis = choice
+		if("Preset - Dynamic")
+			var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in dynamic_chassis_icons
+			if(!choice)
+				return FALSE
+			chassis = "dynamic"
+			dynamic_chassis = choice
+	resist_a_rest(FALSE, TRUE)
 	update_icon()
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()
-	..()
-	update_resting_icon(resting)
-
-/mob/living/silicon/pai/proc/update_resting_icon(rest)
-	if(chassis == "custom")
-		lying_prev = lying
-		if(resting)
-			lying = pick(90, 270)
-		else
-			lying = 0
-	else
-		lying = 0
-	update_icon()
+	. = ..()
 	if(loc != card)
-		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
+		visible_message("<span class='notice'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
+	update_icon()
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM)
 	return FALSE

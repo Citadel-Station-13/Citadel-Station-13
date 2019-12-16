@@ -1,6 +1,6 @@
 // Generates a holoform appearance
 // Equipment list is slot = path.
-/proc/generate_custom_holoform_from_prefs(datum/preferences/prefs, list/equipment_by_slot, list/inhand_equipment, copy_job_first = FALSE, debug)
+/proc/generate_custom_holoform_from_prefs(datum/preferences/prefs, list/equipment_by_slot, list/inhand_equipment, copy_job_first = FALSE)
 	ASSERT(prefs)
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
 	prefs.copy_to(mannequin)
@@ -28,29 +28,34 @@
 	mannequin.setDir(WEST)
 	var/icon/west = getFlatIcon(mannequin)
 
-	var/icon/
+	var/icon/combined = new
+	combined.Insert(north, dir = NORTH)
+	combined.Insert(south, dir = SOUTH)
+	combined.Insert(east, dir = EAST)
+	combined.Insert(west, dir = WEST)
 
-	if(!debug)
-		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
-	return result
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
+	return combined
 
-/proc/process_holoform_icon_filter(icon/I, filter_type)
+/proc/process_holoform_icon_filter(icon/I, filter_type, clone = TRUE)
+	if(clone)
+		I = icon(I)		//Clone
 	switch(filter_type)
 		if(HOLOFORM_FILTER_AI)
-			I = getHologramIcon(I, FALSE)
+			I = getHologramIcon(I)
 		if(HOLOFORM_FILTER_STATIC)
-			I = getStaticIcon(I, FALSE)
+			I = getStaticIcon(I)
 		if(HOLOFORM_FILTER_PAI)
-			I = getPAIHologramIcon(I, FALSE)
+			I = getPAIHologramIcon(I)
 	return I
 
 //Errors go to user.
-/proc/generate_custom_holoform_from_prefs_safe(datum/preferences/prefs, mob/user, debug = FALSE)
+/proc/generate_custom_holoform_from_prefs_safe(datum/preferences/prefs, mob/user)
 	if(user)
 		if(user.client.prefs.last_custom_holoform > world.time - CUSTOM_HOLOFORM_DELAY)
 			to_chat(user, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")
 			return
-	return generate_custom_holoform_from_prefs(prefs, null, null, TRUE, debug)
+	return generate_custom_holoform_from_prefs(prefs, null, null, TRUE)
 
 //Prompts this client for custom holoform parameters.
 /proc/user_interface_custom_holoform(client/C)

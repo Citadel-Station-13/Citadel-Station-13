@@ -698,7 +698,6 @@
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
-	return
 
 /mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"

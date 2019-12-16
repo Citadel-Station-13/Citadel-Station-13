@@ -949,7 +949,7 @@ world
 
 /proc/getPAIHologramIcon(icon/A, safety = TRUE)
 	var/icon/flat_icon = safety? A : new(A)
-	flat_icon.ColorTone(rgb(0, 102, 0))
+	flat_icon.SetIntensity(0.8, 1, 1)
 	flat_icon.ChangeOpacity(0.8)
 	return flat_icon
 

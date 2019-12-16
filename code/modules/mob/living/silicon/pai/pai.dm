@@ -58,10 +58,10 @@
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE,
-									"fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "borgi" = FALSE ,
-									"parrot" = FALSE, "bear" = FALSE , "mushroom" = FALSE, "crow" = FALSE ,
-									"fairy" = FALSE , "spiderbot" = FALSE, "custom" = FALSE)		//assoc value is whether it can be picked up.
+	var/dynamic_chassis
+	var/list/possible_chassis			//initialized in initialize.
+	var/list/dynamic_chassis_icons		//ditto.
+	var/list/chassis_pixel_offsets_x	//stupid dogborgs
 	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
 	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
 	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
@@ -119,6 +119,13 @@
 		pda.ownjob = "pAI Messenger"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
+
+	possible_chassis = typelist(NAMEOF(src, possible_chassis), list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE,
+									"fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "borgi" = FALSE ,
+									"parrot" = FALSE, "bear" = FALSE , "mushroom" = FALSE, "crow" = FALSE ,
+									"fairy" = FALSE , "spiderbot" = FALSE))		//assoc value is whether it can be picked up.
+	dynamic_chassis_icons = typelist(NAMEOF(src, dynamic_chassis_icons), initialize_dynamic_chassis_icons())
+	chassis_pixel_offsets_x = typelist(NAMEOF(src, chassis_pixel_offsets_x), default_chassis_pixel_offsets_x())
 
 	. = ..()
 
@@ -294,3 +301,45 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/mob/living/silicon/pai/proc/initialize_dynamic_chassis_icons()
+	. = list()
+	var/icon/curr		//for inserts
+	var/icon/temp		//for extracts
+
+	//This is a horrible system and I wish I was not as lazy and did something smarter, like just generating a new icon in memory which is probably more efficient.
+
+	//Basic /tg/ cyborgs
+	.["Cyborg - Engineering (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "engineer"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Medical (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "medical"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "sec"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Clown (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "clown"), HOLOFORM_FILTER_PAI, FALSE)
+
+	//Citadel dogborgs
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valeeng")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valeeng-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Engineering (dog - valeeng)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "medihound")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "medihound-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Medical (dog - medihound)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "k9")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "k9-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (dog - k9)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valesec")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valesec-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (dog - valesec)"] = curr
+
+/mob/living/silicon/pai/proc/default_chassis_pixel_offsets_x()
+	. = list()
+	.["Cyborg - Engineering (dog - valeeng)"] = -16
+	.["Cyborg - Medical (dog - medihound)"] = -16
+	.["Cyborg - Security (dog - k9)"] = -16
+	.["Cyborg - Security (dog - valesec)"] = -16
