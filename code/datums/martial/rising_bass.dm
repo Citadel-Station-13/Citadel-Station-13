@@ -141,7 +141,7 @@
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Rising Bass...</i></b>")
 
 	to_chat(usr, "<span class='notice'>Side Kick</span>: Disarm Harm. Forces opponent to step to the side.")
-	to_chat(usr, "<span class='notice'>Shoulder Flip</span>: Grab Harm Disarm Grab Grab. Flips opponent over your shoulder and stuns.")
+	to_chat(usr, "<span class='notice'>Shoulder Flip</span>: Grab Harm Disarm Grab Harm Harm. Flips opponent over your shoulder and stuns.")
 	to_chat(usr, "<span class='notice'>Repulse Punch</span>: Grab Harm Grab Harm. Slams the opponent far away from you.")
 	to_chat(usr, "<span class='notice'>Foot Smash</span>: Harm Harm. Stuns opponent, minor damage.")
 	to_chat(usr, "<span class='notice'>Deft Switch</span>: Grab Disarm Disarm. Switches the opponent's held item for your own. Most useful with nothing in your hand.")
