@@ -319,7 +319,7 @@
 		
 		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
 			M.visible_message( \
-				"<span class='notice'>[H] shakes [target]'s hand.</span>", \
+				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
 				"<span class='notice'>You shake [src]'s hand.</span>", )
 			
 		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
