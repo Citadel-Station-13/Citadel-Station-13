@@ -145,8 +145,7 @@
 	AR.Grant(src)
 	AL.Grant(src)
 	ALM.Grant(src)
-	emittersemicd = TRUE
-	addtimer(CALLBACK(src, .proc/emittercool), 600)
+	emitter_next_use = world.time + 10 SECONDS
 
 /mob/living/silicon/pai/Life()
 	if(hacking)

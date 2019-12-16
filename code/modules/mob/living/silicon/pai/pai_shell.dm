@@ -12,11 +12,11 @@
 		. = fold_in(force)
 		return
 
-	if(world_time < emitter_next_use)
+	if(world.time < emitter_next_use)
 		to_chat(src, "<span class='warning'>Error: Holochassis emitters recycling. Please try again later.</span>")
 		return FALSE
 
-	emitter_next_use = world_time + emittercd
+	emitter_next_use = world.time + emittercd
 	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
@@ -46,7 +46,7 @@
 	holoform = TRUE
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
-	emitter_next_use = world_time + (force? emitteroverloadcd : emittercd)
+	emitter_next_use = world.time + (force? emitteroverloadcd : emittercd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
