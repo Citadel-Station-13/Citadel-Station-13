@@ -326,7 +326,7 @@
 			H.visible_message( \
 				"<span class='notice'>[H] boops [target]'s nose.</span>", \
 				"<span class='notice'>You boop [target] on the nose.</span>", )
-			playsound(src, 'sound/items/Nose_boop.ogg', 10, 0)
+			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 		
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
