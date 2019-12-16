@@ -130,7 +130,7 @@
 		var/obj/item/reagent_containers/B = beaker
 		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			B.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
 	update_icon()
@@ -140,7 +140,7 @@
 		var/obj/item/storage/pill_bottle/B = bottle
 		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			B.put_in_hands(bottle)
+			user.put_in_hands(B)
 		else
 			adjust_item_drop_location(B)
 	if(new_bottle)
