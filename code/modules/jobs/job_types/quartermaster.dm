@@ -26,7 +26,7 @@
 					ACCESS_SEC_DOORS, ACCESS_HEADS)
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
-	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
