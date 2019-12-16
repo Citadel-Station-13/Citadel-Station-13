@@ -82,9 +82,7 @@
 	if(!choice)
 		return FALSE
 	chassis = choice
-	icon_state = "[chassis]"
-	if(resting)
-		icon_state = "[chassis]_rest"
+	update_icon()
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()

@@ -1,7 +1,10 @@
 /mob/living/silicon/pai/proc/update_icon()
-	if((chassis == "custom") && !custom_holoform_icon)
-		chassis = pick(possible_chassis - "custom")
+	if(chassis == "custom")
+		custom_holoform_icon = client?.prefs?.get_filtered_holoform(HOLOFORM_FILTER_PAI)
+		if(!custom_holoform_icon)
+			chassis = pick(possible_chassis - "custom")
 	if(chassis != "custom")
+		icon = initial(icon)
 		icon_state = "[chassis]_[resting]"
 	else
 		icon = custom_holoform_icon

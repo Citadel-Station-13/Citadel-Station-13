@@ -691,9 +691,9 @@
 				switch(input)
 					if("custom")
 						if(client?.prefs?.custom_holoform_icon)
-							holo_icon = client.prefs.custom_holoform_icon
+							holo_icon = client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
 						else
-							holo_icon = getHologramIcon(icon("female", 'icons/mob/ai.dmi'))
+							holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
 					else if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
