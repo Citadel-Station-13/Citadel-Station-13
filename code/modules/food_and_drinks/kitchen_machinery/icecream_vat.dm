@@ -131,7 +131,6 @@
 					I.add_ice_cream(flavour_name, beaker.reagents)
 				else
 					I.add_ice_cream(flavour_name)
-				I.add_ice_cream(flavour_name)
 				if(I.reagents.total_volume < 10)
 					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
 				updateDialog()
@@ -252,7 +251,7 @@
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R = null)
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
@@ -311,9 +310,11 @@
 	qdel(src)
 
 /obj/machinery/icecream_vat/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return TRUE
 
 /obj/machinery/icecream_vat/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)

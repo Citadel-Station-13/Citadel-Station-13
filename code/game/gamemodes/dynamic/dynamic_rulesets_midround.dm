@@ -734,3 +734,31 @@
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
+
+//////////////////////////////////////////////
+//                                          //
+//               BLOODSUCKERS               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/bloodsucker
+  name = "Bloodsucker Infiltrator"
+  config_tag = "latejoin_bloodsucker"
+  antag_datum = ANTAG_DATUM_BLOODSUCKER
+  antag_flag = ROLE_TRAITOR
+  restricted_roles = list("AI", "Cyborg")
+  protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+  required_candidates = 1
+  weight = 3
+  cost = 10
+  requirements = list(90,80,70,60,55,50,45,40,35,30)
+  high_population_requirement = 30
+  repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/bloodsucker/execute()
+  var/mob/M = pick(candidates)
+  assigned += M.mind
+  M.mind.special_role = antag_flag
+  if(mode.make_bloodsucker(M.mind))
+    mode.bloodsuckers += M
+  return TRUE
