@@ -12,6 +12,8 @@
 	layer = ABOVE_MOB_LAYER
 	breach_time = 100 //ten seconds till all goes to shit
 	recharge_rate = 100
+	internals_req_access = list()
+	add_req_access = 0
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
 	spawn_tracked = FALSE
 
