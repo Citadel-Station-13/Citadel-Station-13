@@ -108,74 +108,55 @@
 
 /obj/machinery/bloodbankgen/process()
 	if(!is_operational())
-		return PROCESS_KILL
+		return
 
 	bloodstored = reagents.total_volume
 
 	var/transfer_amount = 20
 
 	if(draining)
-		if(reagents.total_volume >= reagents.maximum_volume)
-			draining = FALSE
-			return
-
-		if(bag)
-			if(bag.reagents.total_volume)
-				var/datum/reagent/blood/B = bag.reagents.has_reagent("blood")
-				if(B)
-					var/amount = reagents.maximum_volume - reagents.total_volume //monitor the machine's internal storage
-					amount = min(amount, transfer_amount)
-					if(!amount)
-						draining = FALSE
-						updateUsrDialog()
-						visible_message("[src] beeps loudly.")
-						playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-						return
-
-					if(bag.blood_type == "SY") //no infinite loops using synthetics.
-						reagents.add_reagent("syntheticblood", amount)
-					else
-						reagents.add_reagent("syntheticblood", (amount+(5*efficiency)))
-
-					if(bag.reagents.total_volume >= amount)
-						bag.reagents.remove_reagent("blood", amount)
-					else
-						visible_message("[src] beeps loudly.")
-						playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-						draining = FALSE
-
-					bag.update_icon()
-					update_icon()
-					updateUsrDialog()
-		else
+		if(reagents.total_volume >= reagents.maximum_volume || !bag)
 			draining = FALSE
 			updateUsrDialog()
 			return
+		if(bag.reagents.total_volume)
+			var/datum/reagent/blood/B = bag.reagents.has_reagent("blood")
+			if(!B)
+				beep_stop_pumping()
+				return
+			//monitor the machine and blood bag's reagents storage.
+			var/amount = min(B.volume, min(transfer_amount, reagents.maximum_volume - reagents.total_volume))
+			if(!amount)
+				beep_stop_pumping()
+				return
+			var/bonus = bag.blood_type == "SY" ? 0 : 5 * efficiency //no infinite loops using synthetics.
+			reagents.add_reagent("syntheticblood", amount + bonus)
+			bag.reagents.remove_reagent("blood", amount)
+			update_icon()
+		return
 
 	if(filling)
-		if(!reagents || !reagents.total_volume)
+		if(!reagents || !reagents.total_volume || !outbag)
 			filling = FALSE //there ain't anything in the machine yo.
+			updateUsrDialog()
 			return
-		if(outbag && outbag.reagents.total_volume < outbag.reagents.maximum_volume)
-			var/amount = outbag.reagents.maximum_volume - outbag.reagents.total_volume //monitor the output bag's internal storage
-			amount = min(amount, transfer_amount)
+		if(outbag.reagents.total_volume < outbag.reagents.maximum_volume)
+			//monitor the output bag's  reagents storage.
+			var/amount = min(transfer_amount, outbag.reagents.maximum_volume - outbag.reagents.total_volume)
 			if(!amount)
-				filling = FALSE
-				visible_message("[src] pings.")
-				playsound(loc, 'sound/machines/beep.ogg', 50, 1)
-				updateUsrDialog()
+				beep_stop_pumping("[src] pings.", TRUE)
 				return
-
 			reagents.trans_to(outbag, amount)
-			outbag.update_icon()
 			update_icon()
-			updateUsrDialog()
-		else
-			visible_message("[src] pings.")
-			playsound(loc, 'sound/machines/beep.ogg', 50, 1)
-			filling = FALSE
-			updateUsrDialog()
-			return
+
+/obj/machinery/bloodbankgen/proc/beep_stop_pumping(msg = "[src] beeps loudly.", out_instead_of_in = FALSE)
+	if(out_instead_of_in)
+		filling = FALSE
+	else
+		draining = FALSE
+	updateUsrDialog()
+	audible_message(msg)
+	playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 
 /obj/machinery/bloodbankgen/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -198,8 +179,8 @@
 
 	if(istype(O, /obj/item/reagent_containers/blood))
 		. = TRUE //no afterattack
-		var/msg = ""
-		if(!panel_open)
+		var/msg
+		if(panel_open)
 			. += "Close the maintenance panel"
 		if(!anchored)
 			. += "[msg ? " and a" : "A"]nchor its bolts"
@@ -338,23 +319,22 @@
 		to_chat(user, "<span class='notice'>There is already something in this slot!</span>")
 
 /obj/machinery/bloodbankgen/Topic(href, href_list)
-	if(..() || panel_open)
+	. = ..()
+	if(. | !is_operational())
 		return
 
 	usr.set_machine(src)
 
 	if(href_list["activateinput"])
 		activateinput()
-		updateUsrDialog()
 
 	else if(href_list["detachinput"])
 		detachinput()
-		updateUsrDialog()
 
 	else if(href_list["activateoutput"])
 		activateoutput()
-		updateUsrDialog()
 
 	else if(href_list["detachoutput"])
 		detachoutput()
-		updateUsrDialog()
+
+	updateUsrDialog()
