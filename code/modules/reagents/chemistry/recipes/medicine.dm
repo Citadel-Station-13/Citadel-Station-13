@@ -29,13 +29,13 @@
 	ExplodeTemp 		= 1800 		// Temperature at which reaction explodes
 	OptimalpHMin 		= 2			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	OptimalpHMax 		= 5 		// Higest value for above
-	ReactpHLim 			= 5			// How far out pH wil react, giving impurity place (Exponential phase)
+	ReactpHLim 			= 10		// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 0.05 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 1 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 0.33 		// Temperature change per 1u produced
 	HIonRelease 		= 0.08 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 20 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 50 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 	PurityMin 			= 0
@@ -120,7 +120,7 @@
 		St.purity = 1
 	var/amount = CLAMP(0.002, 0, N.volume)
 	N.volume -= amount
-	St.data["grown_volume"] += CLAMP(0, 0.1, added_volume)
+	St.data["grown_volume"] += CLAMP(0, RateUpLim, added_volume)
 	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"
 
 /datum/chemical_reaction/styptic_powder
@@ -209,7 +209,7 @@
 	OptimalpHMax 		= 8.5 		// Higest value for above
 	ReactpHLim 			= 5			// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT 		= 0.8 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharpT 		= 0.4 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 1 		// Temperature change per 1u produced
 	HIonRelease 		= 0.06 		// pH change per 1u reaction (inverse for some reason)
@@ -252,7 +252,7 @@
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 1 		// How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= -1 		// Temperature change per 1u produced
+	ThermicConstant		= -0.1 		// Temperature change per 1u produced
 	HIonRelease 		= 0 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 10	 	// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
@@ -278,10 +278,10 @@
 	OptimalpHMax 		= 10 		// Higest value for above
 	ReactpHLim 			= 4 		// How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT 		= 1 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharpT 		= 0.8 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= 2 		// Temperature change per 1u produced
-	HIonRelease 		= 0.015 		// pH change per 1u reaction (inverse for some reason)
+	ThermicConstant		= 1 		// Temperature change per 1u produced
+	HIonRelease 		= 0.015 	// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 15 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_INVERTSMOKE
@@ -305,7 +305,7 @@
 	CurveSharppH 		= 2 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -1 		// Temperature change per 1u produced
 	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 5 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 7.5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 	PurityMin 			= 0
@@ -388,7 +388,7 @@
 	required_reagents = list("phenol" = 2, "lithium" = 1)
 	mix_message = "The solution gurgles as its viscosity increases."
 	//FermiChem vars:
-	OptimalTempMin 		= 250		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMin 		= 200		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 300 		// Upper end for above
 	ExplodeTemp 		= 500 		// Temperature at which reaction explodes
 	OptimalpHMin 		= 7			// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
@@ -397,7 +397,7 @@
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 0.1 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 0.8 		// How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= -2.5 		// Temperature change per 1u produced
+	ThermicConstant		= -0.25 		// Temperature change per 1u produced
 	HIonRelease 		= -0.02 	// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 15 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
