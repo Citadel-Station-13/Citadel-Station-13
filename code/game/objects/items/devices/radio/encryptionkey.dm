@@ -38,7 +38,7 @@
 	name = "robotics radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the engineering channel, use :e. For research, use :n."
 	icon_state = "rob_cypherkey"
-	channels = list("Science" = 1, "Engineering" = 1)
+	channels = list("Science" = 1)
 
 /obj/item/encryptionkey/headset_med
 	name = "medical radio encryption key"
