@@ -55,6 +55,11 @@
 	update_icon()
 	return 1
 
+/obj/item/organ/heart/proc/HeartStrengthMessage()
+	if(beating)
+		return "a healthy"
+	return "<span class='danger'>an unstable</span>"
+
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
 	S.icon_state = "[icon_base]-off"
