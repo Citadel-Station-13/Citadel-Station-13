@@ -5,4 +5,10 @@
 		..(message)
 
 /mob/living/silicon/pai/binarycheck()
-	return 0
+	return FALSE
+
+/mob/living/silicon/pai/radio()
+	if(radio_short)
+		to_chat(src, "<span class='warning'>Your radio is shorted out!</span>")
+		return ITALICS | REDUCE_RANGE
+	return ..()

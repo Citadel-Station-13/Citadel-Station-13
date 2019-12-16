@@ -71,13 +71,14 @@
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
 	var/emitterregen = 0.25
+	var/emitter_next_use = 0
 	var/emittercd = 50
 	var/emitteroverloadcd = 100
-	var/emittersemicd = FALSE
 
-	var/overload_ventcrawl = 0
-	var/overload_bulletblock = 0	//Why is this a good idea?
-	var/overload_maxhealth = 0
+	var/radio_short = FALSE
+	var/radio_short_cooldown = 5 MINUTES
+	var/radio_short_timerid
+
 	canmove = FALSE
 	var/silent = FALSE
 	var/brightness_power = 5
@@ -239,7 +240,7 @@
 /datum/action/innate/pai/shell/Trigger()
 	..()
 	if(P.holoform)
-		P.fold_in(0)
+		P.fold_in(FALSE)
 	else
 		P.fold_out()
 
@@ -303,6 +304,19 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/mob/living/silicon/pai/proc/short_radio()
+	if(radio_short_timerid)
+		deltimer(radio_short_timerid)
+	radio_short = TRUE
+	to_chat(src, "<span class='danger'>Your radio shorts out!</span>")
+	radio_short_timerid = addtimer(CALLBACK(src, .proc/unshort_radio), radio_short_cooldown, flags = TIMER_STOPPABLE)
+
+/mob/living/silicon/pai/proc/unshort_radio()
+	radio_short = FALSE
+	to_chat(src, "<span class='danger'>You feel your radio is operational once more.</span>")
+	if(radio_short_timerid)
+		deltimer(radio_short_timerid)
 
 /mob/living/silicon/pai/proc/initialize_dynamic_chassis_icons()
 	. = list()

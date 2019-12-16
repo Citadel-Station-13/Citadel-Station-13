@@ -12,12 +12,11 @@
 		. = fold_in(force)
 		return
 
-	if(emittersemicd)
+	if(world_time < emitter_next_use)
 		to_chat(src, "<span class='warning'>Error: Holochassis emitters recycling. Please try again later.</span>")
 		return FALSE
 
-	emittersemicd = TRUE
-	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
+	emitter_next_use = world_time + emittercd
 	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
@@ -46,20 +45,17 @@
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
 
-/mob/living/silicon/pai/proc/emittercool()
-	emittersemicd = FALSE
-
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
-	emittersemicd = TRUE
-	if(!force)
-		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
-	else
-		addtimer(CALLBACK(src, .proc/emittercool), emitteroverloadcd)
+	emitter_next_use = world_time + (force? emitteroverloadcd : emittercd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
 		return
-	visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
+	if(force)
+		short_radio()
+		visible_message("<span class='warning'>[src] shorts out, collapsing back into their storage card, sparks emitted from their radio antenna!</span>")
+	else
+		visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
 	stop_pulling()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
