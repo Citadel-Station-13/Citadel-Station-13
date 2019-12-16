@@ -949,8 +949,10 @@ world
 
 /proc/getPAIHologramIcon(icon/A, safety = TRUE)
 	var/icon/flat_icon = safety? A : new(A)
-	flat_icon.SetIntensity(0.8, 1, 1)
+	flat_icon.SetIntensity(0.8, 1, 0.9)
 	flat_icon.ChangeOpacity(0.8)
+	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanlineslow")//Scanline effect.
+	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
 //What the mob looks like as animated static
