@@ -594,6 +594,12 @@
 		fermiEnd()
 		return
 
+	if(!my_atom)
+		if(GLOB.Debug2)
+			message_admins("fermiEnd due to the atom no longer existing.")
+		fermiEnd()
+		return
+
 	fermiReact(fermiReactID, chem_temp, pH, cached_required_reagents, cached_results, multiplier)
 	if(round(reactedVol, CHEMICAL_QUANTISATION_LEVEL) == round(targetVol, CHEMICAL_QUANTISATION_LEVEL))
 		if(GLOB.Debug2)

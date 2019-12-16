@@ -59,8 +59,8 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-	if(!B.reagents)
-		B.reagents.add_reagent(id, reac_volume)
+	if(T.reagents)
+		T.reagents.add_reagent(id, reac_volume, data)
 	B.update_icon()
 
 /datum/reagent/blood/on_new(list/data)

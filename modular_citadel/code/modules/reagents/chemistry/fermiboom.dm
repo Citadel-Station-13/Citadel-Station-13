@@ -90,7 +90,7 @@
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.my_atom = my_atom //Give the gas a fingerprint
-	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+	for(var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		if(!(reagent.id in required_reagents) || !(reagent.id in results))
 			continue
 		if(reagent.inverse_chem)
@@ -102,7 +102,7 @@
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
-	R0.clear_reagents()
+	clear_reactants(R0)
 	return
 
 //Spews out the contents of the beaker in a smokecloud
@@ -117,5 +117,15 @@
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
-	R0.clear_reagents()
+	clear_reactants(R0)
 	return
+
+/datum/chemical_reaction/proc/clear_reactants(datum/reagents/R0)
+	if(!R0)
+		return FALSE
+	for(var/datum/reagent/R in R0.reagent_list)
+		if(!(R.id in required_reagents))
+			continue
+		R0.remove_reagent(R.id, R.volume)
+	R0.fermiEnd()
+	return TRUE

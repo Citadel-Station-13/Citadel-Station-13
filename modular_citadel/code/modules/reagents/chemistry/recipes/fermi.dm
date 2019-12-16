@@ -559,6 +559,10 @@
 		var/datum/reagent/medicine/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
 		A2.cached_purity = 1-A.purity
 
+/datum/chemical_reaction/antacidpregen/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+	.=..()
+	R0.clear_reagents()
+
 /datum/chemical_reaction/cryosenium
 	name = "Cryosenium"
 	id = "cryosenium"
