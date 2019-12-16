@@ -317,7 +317,7 @@
 			else
 				return
 		
-		else if(H.zone_sel.selecting == "r_hand" || H.zone_sel.selecting == "l_hand")
+		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
 			H.visible_message( \
 				"<span class='notice'>[H] shakes [target]'s hand.</span>", \
 				"<span class='notice'>You shake [target]'s hand.</span>", )
