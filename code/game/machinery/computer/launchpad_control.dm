@@ -74,8 +74,8 @@
 			t += "<A href='?src=[REF(src)];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-right
 			t += "<BR>"
 			t += "<div class='statusDisplay'>Current offset:</div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"]</div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"]</div><BR>"
+			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"] <a href='?src=[REF(src)];sety=1;pad=[current_pad]'>\[SET\]</a></div><BR>"
+			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"] <a href='?src=[REF(src)];setx=1;pad=[current_pad]'>\[SET\]</a></div><BR>"
 
 			t += "<BR><A href='?src=[REF(src)];launch=1;pad=[current_pad]'>Launch</A>"
 			t += " <A href='?src=[REF(src)];pull=1;pad=[current_pad]'>Pull</A>"
@@ -132,6 +132,16 @@
 		if(!new_name)
 			return
 		pad.display_name = new_name
+	
+	if(href_list["setx"])
+		var/newx = input(usr, "Input new x offset", pad.display_name, pad.x_offset) as null|num
+		if(!isnull(newx))
+			pad.x_offset = CLAMP(newx, -pad.range, pad.range)
+
+	if(href_list["sety"])
+		var/newy = input(usr, "Input new y offset", pad.display_name, pad.y_offset) as null|num
+		if(!isnull(newy))
+			pad.y_offset = CLAMP(newy, -pad.range, pad.range)
 
 	if(href_list["remove"])
 		if(usr && alert(usr, "Are you sure?", "Remove Launchpad", "I'm Sure", "Abort") != "Abort")
