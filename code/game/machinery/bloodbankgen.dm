@@ -135,7 +135,7 @@
 		update_icon()
 
 	if(filling)
-		if(!reagents.total_volume || outbag.reagents.total_volume >= outbag.reagents.maximum_volume || !outbag)
+		if(!reagents.total_volume || !outbag || outbag.reagents.total_volume >= outbag.reagents.maximum_volume)
 			beep_stop_pumping("[src] pings.", TRUE)
 			return
 		//monitor the output bag's  reagents storage.
