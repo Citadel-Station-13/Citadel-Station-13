@@ -28,13 +28,6 @@
 	QDEL_NULL(outbag)
 	return ..()
 
-/obj/machinery/bloodbankgen/contents_explosion(severity, target)
-	..()
-	if(bag)
-		bag.ex_act(severity, target)
-	if(outbag)
-		outbag.ex_act(severity, target)
-
 /obj/machinery/bloodbankgen/handle_atom_del(atom/A)
 	..()
 	if(A == bag)
@@ -188,7 +181,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
-	if(default_deconstruction_screwdriver(user, "bloodbank-off", "bloodbank-off", O))
+	if(default_deconstruction_screwdriver(user, "bloodbank-off", "bloodbank-off", O) || default_unfasten_wrench(user, O, 20) == SUCCESSFUL_UNFASTEN)
 		if(bag)
 			var/obj/item/reagent_containers/blood/B = bag
 			B.forceMove(drop_location())
@@ -204,30 +197,36 @@
 		return
 
 	if(istype(O, /obj/item/reagent_containers/blood))
-		. = 1 //no afterattack
+		. = TRUE //no afterattack
+		var/msg = ""
 		if(!panel_open)
-			if(bag && outbag)
-				to_chat(user, "<span class='warning'>This machine already has bags attached.</span>")
+			. += "Close the maintenance panel"
+		if(!anchored)
+			. += "[msg ? " and a" : "A"]nchor its bolts"
+		if(length(msg))
+			to_chat(user, "<span class='warning'>[msg] first.</span>")
+			return
+		if(bag && outbag)
+			to_chat(user, "<span class='warning'>This machine already has bags attached.</span>")
 
-			if(!bag && !outbag)
-				var/choice = alert(user, "Choose where to place [O]", "", "Input", "Cancel", "Output")
-				switch(choice)
-					if("Cancel")
-						return FALSE
-					if("Input")
-						attachinput(O, user)
-					if("Output")
-						attachoutput(O, user)
-			else if(!bag)
-				attachinput(O, user)
-			else if(!outbag)
-				attachoutput(O, user)
-		else
-			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
-		return
-
+		if(!bag && !outbag)
+			var/choice = alert(user, "Choose where to place [O]", "", "Input", "Cancel", "Output")
+			switch(choice)
+				if("Cancel")
+					return FALSE
+				if("Input")
+					attachinput(O, user)
+				if("Output")
+					attachoutput(O, user)
+		else if(!bag)
+			attachinput(O, user)
+		else if(!outbag)
+			attachoutput(O, user)
 	else
 		to_chat(user, "<span class='warning'>You cannot put this in [src]!</span>")
+
+/obj/machinery/bloodbankgen/is_operational()
+	return ..() && anchored
 
 /obj/machinery/bloodbankgen/ui_interact(mob/user)
 	. = ..()

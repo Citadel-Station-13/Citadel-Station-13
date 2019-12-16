@@ -332,16 +332,19 @@
 	medical_record_text = "Patient has an extreme or irrational fear and aversion to an undefined stimuli."
 	var/datum/brain_trauma/mild/phobia/phobia
 
-/datum/quirk/phobia/add()
+/datum/quirk/phobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
-	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/mute
 	name = "Mute"
 	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
 	value = -2 //HALP MAINTS
-	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
@@ -350,13 +353,16 @@
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	mute = new
-	H.gain_trauma(mute, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(mute, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/mute/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(mute, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/mute/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
 		qdel(src)
-
 
 /datum/quirk/unstable
 	name = "Unstable"
@@ -384,3 +390,6 @@
 	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes eyes
 		H.put_in_hands(glasses)
 	H.regenerate_icons()
+
+/datum/quirk/blindness/remove()
+	quirk_holder?.cure_blind(ROUNDSTART_TRAIT)

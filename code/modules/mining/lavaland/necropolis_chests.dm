@@ -398,6 +398,7 @@
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
+	w_class = WEIGHT_CLASS_BULKY
 	force = 18
 
 /obj/item/ammo_casing/magic/hook
