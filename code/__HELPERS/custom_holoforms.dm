@@ -1,10 +1,12 @@
 // Generates a holoform appearance
 // Equipment list is slot = path.
-/proc/generate_custom_holoform_from_prefs(datum/preferences/prefs, list/equipment_by_slot, list/inhand_equipment, copy_job_first = FALSE)
+/proc/generate_custom_holoform_from_prefs(datum/preferences/prefs, list/equipment_by_slot, list/inhand_equipment, copy_job = FALSE, apply_loadout = FALSE)
 	ASSERT(prefs)
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
 	prefs.copy_to(mannequin)
-	if(copy_job_first)
+	if(apply_loadout && prefs.parent)
+		SSjob.equip_loadout(prefs.parent.mob, mannequin)
+	if(copy_job)
 		var/datum/job/highest = prefs.get_highest_job()
 		if(highest && !istype(highest, /datum/job/ai) && !istype(highest, /datum/job/cyborg))
 			highest.equip(mannequin, TRUE, preference_source = prefs.parent)
@@ -55,7 +57,7 @@
 		if(user.client.prefs.last_custom_holoform > world.time - CUSTOM_HOLOFORM_DELAY)
 			to_chat(user, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")
 			return
-	return generate_custom_holoform_from_prefs(prefs, null, null, TRUE)
+	return generate_custom_holoform_from_prefs(prefs, null, null, TRUE, TRUE)
 
 //Prompts this client for custom holoform parameters.
 /proc/user_interface_custom_holoform(client/C)

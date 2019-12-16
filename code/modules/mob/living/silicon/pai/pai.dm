@@ -311,8 +311,16 @@
 
 	//Basic /tg/ cyborgs
 	.["Cyborg - Engineering (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "engineer"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Engineering (loaderborg)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "loaderborg", HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Engineering (handyeng)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "handyeng", HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Engineering (sleekeng)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "sleekeng", HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Engineering (marinaeng)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "marinaeng", HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Medical (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "medical"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Medical (marinamed)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "marinamed"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Medical (eyebotmed)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "eyebotmed"), HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Security (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "sec"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (sleeksec)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "sleeksec"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (marinasec)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/robots.dmi', "marinasec"), HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Clown (default)"] = process_holoform_icon_filter(icon('icons/mob/robots.dmi', "clown"), HOLOFORM_FILTER_PAI, FALSE)
 
 	//Citadel dogborgs
@@ -321,21 +329,58 @@
 	curr.Insert(temp, "rest")
 	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Engineering (dog - valeeng)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "pupdozer")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "pupdozer-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Engineering (dog - pupdozer)"] = curr
 	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "medihound")
 	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "medihound-rest")
 	curr.Insert(temp, "rest")
 	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Medical (dog - medihound)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "medihounddark")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "medihounddark-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Medical (dog - medihounddark)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valemed")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valemed-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Medical (dog - valemed)"] = curr
 	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "k9")
 	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "k9-rest")
 	curr.Insert(temp, "rest")
 	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Security (dog - k9)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "k9dark")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "k9dark-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (dog - k9dark)"] = curr
 	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valesec")
 	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valesec-rest")
 	curr.Insert(temp, "rest")
 	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
 	.["Cyborg - Security (dog - valesec)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valeserv")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valeserv-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Service (dog - valeserv)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valeservdark")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valeservdark-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Service (dog - valeservdark)"] = curr
+	curr = icon('modular_citadel/icons/mob/widerobot.dmi', "valesci")
+	temp = icon('modular_citadel/icons/mob/widerobot.dmi', "valesci-rest")
+	curr.Insert(temp, "rest")
+	process_holoform_icon_filter(curr, HOLOFORM_FILTER_PAI, FALSE)
+	.["Cyborg - Security (dog - valesci)"] = curr
+
+	.["Cyborg - Misc (dog - blade)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/widerobot.dmi', "blade"), HOLOFORM_FILTER_PAI, FALSE)
 
 /mob/living/silicon/pai/proc/default_chassis_pixel_offsets_x()
 	. = list()
