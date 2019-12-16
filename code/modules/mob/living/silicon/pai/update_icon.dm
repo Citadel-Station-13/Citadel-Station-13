@@ -6,10 +6,14 @@
 	if(chassis == "dynamic")		//handle dynamic generated icons
 		icon = dynamic_chassis_icons[dynamic_chassis]
 		var/list/states = icon_states(icon)
+		icon_state = ""
 		if(resting)		//The next line is some bullshit but I can make it worse if you want and make it a single line instead of four.. :)
-			icon_state = (dynamic_chassis_sit && ("sit" in states) && "sit") || (dynamic_chassis_bellyup && ("bellyup" in states) && "bellyup") || (("rest") in states && "rest") || ""
-		else
-			icon_state = ""
+			if(dynamic_chassis_sit && ("sit") in states)
+				icon_state = "sit"
+			else if(dynamic_chassis_bellyup && ("bellyup") in states)
+				icon_state = "bellyup"
+			else if("rest" in states)
+				icon_state = "rest"
 		rotate_on_lying = FALSE
 	else if(chassis == "custom")
 		icon = custom_holoform_icon
