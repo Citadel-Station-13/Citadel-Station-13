@@ -316,7 +316,17 @@
 
 			else
 				return
-
+		
+		else if(H.zone_sel.selecting == "r_hand" || H.zone_sel.selecting == "l_hand")
+			H.visible_message( \
+				"<span class='notice'>[H] shakes [target]'s hand.</span>", \
+				"<span class='notice'>You shake [target]'s hand.</span>", )
+			
+		else if(H.zone_sel.selecting == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
+			H.visible_message( \
+				"<span class='notice'>[H] boops [target]'s nose.</span>", \
+				"<span class='notice'>You boop [target] on the nose.</span>", )
+		
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
