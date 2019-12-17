@@ -340,7 +340,7 @@ All foods are distributed among various categories. Use common sense.
 		if(!M.is_drainable())
 			to_chat(user, "<span class='warning'>[M] is unable to be dunked in!</span>")
 			return
-		if(M.reagents.trans_to(src, dunk_amount, transfered_by = user))	//if reagents were transfered, show the message
+		if(M.reagents.trans_to(src, dunk_amount, reagents.trans_to = user))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dunk \the [src] into \the [M].</span>")
 			return
 		if(!M.reagents.total_volume)
