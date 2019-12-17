@@ -532,7 +532,7 @@
 		var/mob/living/carbon/C = M
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
-			S.success_multiplier = max(0.4, S.success_multiplier) // +40% success probability on each step, compared to bacchus' blessing's ~46%
+			S.success_multiplier = max(0.1, S.success_multiplier) // +10% success probability on each step, compared to bacchus' blessing's ~46%
 	..()
 
 /datum/reagent/consumable/buzz_fuzz/addiction_act_stage1(mob/living/M)
