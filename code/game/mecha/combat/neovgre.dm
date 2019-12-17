@@ -49,7 +49,7 @@
 	for(var/mob/M in src)
 		to_chat(M, "<span class='brass'>You are consumed by the fires raging within Neovgre...</span>")
 		M.dust()
-	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, 0)
+	playsound(src, 'sound/effects/neovgre_exploding.ogg', 100, 0)
 	src.visible_message("<span class = 'userdanger'>The reactor has gone critical, its going to blow!</span>")
 	addtimer(CALLBACK(src,.proc/go_critical),breach_time)
 
