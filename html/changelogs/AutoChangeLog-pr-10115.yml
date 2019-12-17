@@ -1,0 +1,5 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - rscadd: "New lavaland ruin: Pulsating tumor"
+  - rscadd: "New class of lavaland mobs, a bit weaker than megafauna but still stronger than most of what you normally see"

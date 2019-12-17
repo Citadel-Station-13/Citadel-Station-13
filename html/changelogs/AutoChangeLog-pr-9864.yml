@@ -1,5 +1,0 @@
-author: "Knouli"
-delete-after: True
-changes: 
-  - rscadd: "attack_self proc for the legion core which triggers a self-heal al la the previous 'afterattack' proc, as if clicking on the character's own sprite to self-heal"
-  - rscadd: "admin logging for all three use cases of legion core healing - afterattack, attack_self, and implanted ui_action_click"

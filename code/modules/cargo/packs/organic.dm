@@ -47,7 +47,6 @@
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
 
-
 /datum/supply_pack/organic/randomised/candy/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)

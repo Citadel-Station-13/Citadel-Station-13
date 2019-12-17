@@ -8,6 +8,7 @@
 	speak_emote = list("clicks")
 	emote_hear = list("clicks.")
 	emote_see = list("clacks.")
+	blood_volume = 350
 	speak_chance = 1
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)

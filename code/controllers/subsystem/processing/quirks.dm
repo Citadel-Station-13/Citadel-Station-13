@@ -12,27 +12,40 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/quirk_names_by_path = list()
 	var/list/quirk_points = list()	//Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	var/list/quirk_objects = list()	//A list of all quirk objects in the game, since some may process
+	var/list/quirk_blacklist = list() //A list a list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
 		SetupQuirks()
+		quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic"),list("Ageusia","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"))
 	return ..()
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
-	for(var/V in subtypesof(/datum/quirk))
+// Sort by Positive, Negative, Neutral; and then by name
+	var/list/quirk_list = sortList(subtypesof(/datum/quirk), /proc/cmp_quirk_asc)
+
+	for(var/V in quirk_list)
 		var/datum/quirk/T = V
 		quirks[initial(T.name)] = T
 		quirk_points[initial(T.name)] = initial(T.value)
 		quirk_names_by_path[T] = initial(T.name)
 
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects, roundstart = FALSE, datum/job/job, silent = FALSE, mob/to_chat_target)
-	GenerateQuirks(cli)
-	var/list/quirks = cli.prefs.character_quirks.Copy()
+	var/badquirk = FALSE
+	var/list/my_quirks = cli.prefs.all_quirks.Copy()
 	var/list/cut
-	if(job && job.blacklisted_quirks)
+	if(job?.blacklisted_quirks)
 		cut = filter_quirks(quirks, job)
-	for(var/V in quirks)
-		user.add_quirk(V, spawn_effects)
+	for(var/V in my_quirks)
+		var/datum/quirk/Q = quirks[V]
+		if(Q)
+			user.add_quirk(Q, spawn_effects)
+		else
+			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
+			cli.prefs.all_quirks -= V
+			badquirk = TRUE
+	if(badquirk)
+		cli.prefs.save_character()
 	if(!silent && LAZYLEN(cut))
 		to_chat(to_chat_target || user, "<span class='boldwarning'>All of your non-neutral character quirks have been cut due to these quirks conflicting with your job assignment: [english_list(cut)].</span>")
 
@@ -85,8 +98,3 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				quirks -= i
 
 	return cut
-
-/datum/controller/subsystem/processing/quirks/proc/GenerateQuirks(client/user)
-	if(user.prefs.character_quirks.len)
-		return
-	user.prefs.character_quirks = user.prefs.all_quirks

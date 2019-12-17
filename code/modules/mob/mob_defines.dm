@@ -99,6 +99,12 @@
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
+	/**
+	  * The sound made on death
+	  *
+	  * leave null for no sound. used for *deathgasp
+	  */
+	var/deathsound = null
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
