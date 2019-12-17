@@ -33,9 +33,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		cut = filter_quirks(quirks, job)
 	for(var/V in quirks)
 		user.add_quirk(V, spawn_effects)
-	if(!silent && LAZYLEN(cut))
-		to_chat(to_chat_target || user, "<span class='boldwarning'>All of your non-neutral character quirks have been cut due to these quirks conflicting with your job assignment: [english_list(cut)].</span>")
-
+	if (!silent && LAZYLEN(cut))
+		to_chat(to_chat_target || user, "<span class='boldwarning'>Some quirks have been cut from your character because of these quirks conflicting with your job assignment: [english_list(cut)].</span>")
 /datum/controller/subsystem/processing/quirks/proc/quirk_path_by_name(name)
 	return quirks[name]
 
@@ -53,6 +52,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/proc/filter_quirks(list/quirks, datum/job/job)
 	var/list/cut = list()
 	var/list/banned_names = list()
+	var/pointscut = 0
 	for(var/i in job.blacklisted_quirks)
 		var/name = quirk_name_by_path(i)
 		if(name)
@@ -62,7 +62,30 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		for(var/i in blacklisted)
 			quirks -= i
 			cut += i
-
+			pointscut += quirk_points_by_name(i)
+	if (pointscut != 0)
+		var/list/pickquirks = list()
+		var/k = 0
+		while (k < 50) //chances and randoms
+			k++
+			if (!(pick(quirks) in pickquirks))
+				pickquirks += pick(quirks)
+			if (LAZYLEN(pickquirks) == LAZYLEN(quirks))
+				break
+		for (var/l in quirks) //make sure we get them all with no repeats
+			if (LAZYLEN(pickquirks) == LAZYLEN(quirks))
+				break
+			if (!(l in pickquirks))
+				pickquirks += l
+		for (var/i in pickquirks)
+			if (quirk_points_by_name(i) < pointscut || (pointscut < 0) ? quirk_points_by_name(i) <= 0 : quirk_points_by_name(i) >= 0)
+				continue
+			else
+				quirks -= i
+				cut += i
+				pointscut += quirk_points_by_name(i)
+			if (pointscut == 0)
+				break
 	/*	//Code to automatically reduce positive quirks until balance is even.
 	var/points_used = total_points(quirks)
 	if(points_used > 0)
@@ -78,11 +101,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	*/
 
 	//Nah, let's null all non-neutrals out.
-	if(cut.len)
-		for(var/i in quirks)
-			if(quirk_points_by_name(i) != 0)
-				//cut += i		-- Commented out: Only show the ones that triggered the quirk purge.
-				quirks -= i
+	if (pointscut != 0)// only if the pointscutting didn't work.
+		if(cut.len)
+			for(var/i in quirks)
+				if(quirk_points_by_name(i) != 0)
+					//cut += i		-- Commented out: Only show the ones that triggered the quirk purge.
+					quirks -= i
 
 	return cut
 
