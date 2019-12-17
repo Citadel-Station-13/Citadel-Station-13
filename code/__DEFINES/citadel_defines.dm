@@ -119,3 +119,8 @@
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4
+
+// Voting stuff (move this somewhere else eventually probs)
+#define PLURALITY 0
+#define APPROVAL 1
+#define IRV 2
