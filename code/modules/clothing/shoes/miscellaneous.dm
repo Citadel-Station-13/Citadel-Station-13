@@ -129,6 +129,21 @@
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/obj/item/clothing/shoes/winterboots/christmasbootsr
+	name = "red christmas boots"
+	desc = "A pair of fluffy red christmas boots!"
+	icon_state = "christmasbootsr"
+
+/obj/item/clothing/shoes/winterboots/christmasbootsg
+	name = "green christmas boots"
+	desc = "A pair of fluffy green christmas boots!"
+	icon_state = "christmasbootsg"
+
+/obj/item/clothing/shoes/winterboots/santaboots
+	name = "santa boots"
+	desc = "A pair of santa boots! How traditional!!"
+	icon_state = "santaboots"
+
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."

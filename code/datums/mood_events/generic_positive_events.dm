@@ -140,6 +140,17 @@
 	timeout = 15 MINUTES
 
 //Power gamer stuff below
+/datum/mood_event/drankblood
+	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
+	mood_change = 10
+	timeout = 900
+
+/datum/mood_event/coffinsleep
+	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
+	mood_change = 8
+	timeout = 1200
+
+//Cursed stuff below.
 
 /datum/mood_event/orgasm
 	description = "<span class='userlove'>I came!</span>\n" //funny meme haha
@@ -153,3 +164,8 @@
 /datum/mood_event/fedprey
 	description = "<span class='nicegreen'>It feels quite cozy in here.</span>\n"
 	mood_change = 3
+
+/datum/mood_event/hope_lavaland
+	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
+	mood_change = 5
+

@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes reviver implant having been a crapshot ever since soft-crit was introduced years ago."
+  - tweak: "Added a \"convalescence\" time (about 15 seconds) after the user is out of unconsciousbess/crit to ensure they are properly stabilized."
+  - tweak: "Added a 15 minutes hardcap for accumulated revive cooldown (equivalent to 150 points of brute or burn healed) above which the implant starts cooling down regardless of user's conditions."

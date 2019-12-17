@@ -252,7 +252,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			QDEL_NULL(eyes)
 		if(should_have_eyes && !eyes)
 			eyes = new mutanteyes
-			eyes.Insert(C)
+			eyes.Insert(C, TRUE)
 
 		if(ears && (replace_current || !should_have_ears))
 			ears.Remove(C,1)
@@ -1279,6 +1279,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT(H, TRAIT_FAT))//I share your pain, past coder.

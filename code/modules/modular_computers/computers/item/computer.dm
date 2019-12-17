@@ -126,7 +126,7 @@
 			portable_drive.verb_pickup()
 
 /obj/item/modular_computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(issilicon(user))
 		return
 
@@ -142,7 +142,7 @@
 				return
 			if(ai_slot)
 				ai_slot.try_eject(null, user)
-
+		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
