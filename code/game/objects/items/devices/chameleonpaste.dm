@@ -10,6 +10,7 @@
 	var/intube = TRUE
 	var/obj/item/chameleon = null
 	var/obj/item/scanned
+	var/currenticon
 
 /obj/item/chameleonpaste/examine(mob/user)
 	..()
@@ -24,13 +25,14 @@
 		chameleon.righthand_file = scanned.righthand_file
 		chameleon.lefthand_file = scanned.lefthand_file
 		chameleon.item_state = scanned.item_state
+		currenticon = chameleon.icon_state
 		chameleon.icon_state = scanned.icon_state
 		chameleon.name = scanned.name
 		chameleon.desc = scanned.desc
 /obj/item/chameleonpaste/proc/revealappearance()
 	if (chameleon)
 		chameleon.icon = initial(chameleon.icon)
-		chameleon.icon_state = initial(chameleon.icon_state)
+		chameleon.icon_state = currenticon
 		chameleon.name = initial(chameleon.name)
 		chameleon.desc = initial(chameleon.desc)
 		chameleon.righthand_file = initial(chameleon.righthand_file)
