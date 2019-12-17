@@ -141,6 +141,10 @@
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
+/datum/spellbook_entry/nuclearfist
+	name = "Nuclear Fist"
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech

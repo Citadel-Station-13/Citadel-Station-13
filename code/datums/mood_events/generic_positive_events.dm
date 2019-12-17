@@ -157,3 +157,8 @@
 /datum/mood_event/fedprey
 	description = "<span class='nicegreen'>It feels quite cozy in here.</span>\n"
 	mood_change = 3
+
+/datum/mood_event/hope_lavaland
+	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
+	mood_change = 5
+
