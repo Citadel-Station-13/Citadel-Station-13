@@ -204,3 +204,18 @@
 	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/eng
 	restricted_desc = "Engineering and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")
+
+/datum/gear/christmascoatr
+	name = "Red Christmas Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+
+/datum/gear/christmascoatg
+	name = "Green Christmas Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+
+/datum/gear/christmascoatrg
+	name = "Red and Green Christmas Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatrg

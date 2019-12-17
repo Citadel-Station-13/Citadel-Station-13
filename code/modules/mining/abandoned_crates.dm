@@ -181,10 +181,11 @@
 	else
 		return ..()
 
+//this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	if(user.canUseTopic(src, BE_CLOSE))
+		attack_hand(user)
+		return TRUE
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
