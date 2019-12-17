@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(vote)
 	var/started_time = null
 	var/time_remaining = 0
 	var/mode = null
-	var/vote_system = PLURALITY
+	var/vote_system = PLURALITY_VOTING
 	var/question = null
 	var/list/choices = list()
 	var/list/choice_descs = list() // optional descriptions
@@ -87,22 +87,29 @@ SUBSYSTEM_DEF(vote)
 	return .
 
 /datum/controller/subsystem/vote/proc/get_result_runoff()
-	for(var/i in 1 to choices.len) // if it takes more than this something REALLY wrong happened
+	var/already_lost_runoff = list()
+	for(var/n in 1 to choices.len) // if it takes more than this something REALLY wrong happened
 		for(var/ckey in voted)
-			choices[voted[ckey][1]]++
+			choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
 		var/least_vote = 100000
 		var/least_voted
-		for(var/option in choices)
+		for(var/i in 1 to choices.len)
+			var/option = choices[i]
 			if(choices[option] > voted.len/2)
-				return option
-			else if(choices[option] < least_vote)
+				message_admins("[option] has a majority, returning...")
+				return list(option)
+			else if(choices[option] < least_vote && !(option in already_lost_runoff))
 				least_vote = choices[option]
-				least_voted = option
+				least_voted = i
+		message_admins("[choices[least_voted]] lost the runoff, running again...")
+		already_lost_runoff += choices[least_voted]
 		for(var/ckey in voted)
 			voted[ckey] -= least_voted
+		for(var/option in choices)
+			choices[option] = 0
 
 /datum/controller/subsystem/vote/proc/announce_result()
-	var/list/winners = vote_system == IRV ? get_result_runoff() : get_result()
+	var/list/winners = vote_system == INSTANT_RUNOFF_VOTING ? get_result_runoff() : get_result()
 	var/text
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -202,7 +209,7 @@ SUBSYSTEM_DEF(vote)
 			return 0
 		if(vote && vote >= 1 && vote <= choices.len)
 			switch(vote_system)
-				if(PLURALITY)
+				if(PLURALITY_VOTING)
 					if(usr.ckey in voted)
 						choices[choices[voted[usr.ckey]]]--
 						voted[usr.ckey] = vote
@@ -213,7 +220,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = vote
 						choices[choices[vote]]++	//check this
 						return vote
-				if(APPROVAL)
+				if(APPROVAL_VOTING)
 					if(usr.ckey in voted)
 						if(vote in voted[usr.ckey])
 							voted[usr.ckey] -= vote
@@ -226,7 +233,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = list(vote)
 						choices[choices[vote]]++
 						return vote
-				if(IRV)
+				if(INSTANT_RUNOFF_VOTING)
 					if(usr.ckey in voted)
 						if(vote in voted[usr.ckey])
 							voted[usr.ckey] -= vote
@@ -236,7 +243,7 @@ SUBSYSTEM_DEF(vote)
 					voted[usr.ckey] += vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
 	vote_system = votesystem
 	if(!mode)
 		if(started_time)
@@ -335,41 +342,37 @@ SUBSYSTEM_DEF(vote)
 		else
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		switch(vote_system)
-			if(PLURALITY)
+			if(PLURALITY_VOTING)
 				. += "<h3>Vote one.</h3>"
-			if(APPROVAL)
+			if(APPROVAL_VOTING)
 				. += "<h3>Vote any number of choices.</h3>"
-			if(IRV)
+			if(INSTANT_RUNOFF_VOTING)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom.</h3>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		switch(vote_system)
-			if(PLURALITY, APPROVAL)
+			if(PLURALITY_VOTING, APPROVAL_VOTING)
 				for(var/i=1,i<=choices.len,i++)
 					var/votes = choices[choices[i]]
 					var/ivotedforthis = FALSE
 					switch(vote_system)
-						if(PLURALITY)
+						if(PLURALITY_VOTING)
 							ivotedforthis = ((C.ckey in voted) && (voted[C.ckey] == i))
-						if(APPROVAL)
+						if(APPROVAL_VOTING)
 							ivotedforthis = ((C.ckey in voted) && (i in voted[C.ckey]))
 					if(!votes)
 						votes = 0
 					. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
-			if(IRV)
-				var/list/display_choices = choices.Copy()
-				if(C.ckey in voted)
-					for(var/vote in voted[C.ckey])
-						display_choices.Cut(vote,vote+1)
-						. += "<li><b><a href='?src=[REF(src)];vote=[vote]'>[choices[vote]]</a></li>" // no reasonable way to show votes with IRV
-						if(choice_descs.len >= vote)
-							. += "<li>[choice_descs[vote]]</li>"
-				for(var/choice in display_choices)
-					var/index = choices.Find(choice)
-					. += "<li><a href='?src=[REF(src)];vote=[index]'>[choices[index]]</a></li>"
-					if(choice_descs.len >= index)
-						. += "<li>[choice_descs[index]]</li>"
+			if(INSTANT_RUNOFF_VOTING)
+				for(var/i=1,i<=choices.len,i++)
+					var/vote = ((C.ckey in voted) ? (voted[C.ckey].Find(i)) : 0)
+					if(vote)
+						. += "<li><b><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([vote])</b></li>"
+					else
+						. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a></li>"
+					if(choice_descs.len >= i)
+						. += "<li>[choice_descs[i]]</li>"
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "

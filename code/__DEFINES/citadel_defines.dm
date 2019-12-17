@@ -121,6 +121,6 @@
 #define NORMIE_HEARCHECK 4
 
 // Voting stuff (move this somewhere else eventually probs)
-#define PLURALITY 0
-#define APPROVAL 1
-#define IRV 2
+#define PLURALITY_VOTING 0
+#define APPROVAL_VOTING 1
+#define INSTANT_RUNOFF_VOTING 2
