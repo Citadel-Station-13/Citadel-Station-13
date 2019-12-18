@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize(timeofday)
+	SSmapping.seedStation()
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	return ..()
 
