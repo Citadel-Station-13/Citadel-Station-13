@@ -1,0 +1,11 @@
+author: "Mickyan, nemvar, RaveRadbury, AnturK, SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Certain incompatible quirks can no longer be taken together."
+  - bugfix: "If an admin sends a ghost back to the lobby, they can now choose a different set of quirks."
+  - spellcheck: "the quirk menu went through some minor formatting changes."
+  - bugfix: "Podcloning now lets you keep your quirks."
+  - rscadd: "Quirks have flavor text in medical records."
+  - spellcheck: "All quirk medical records refer to \"Patient\", removing a few instances of \"Subject\"."
+  - tweak: "Quirks no longer apply to off-station roundstart antagonists."
+  - code_imp: "Mood quirks are now only processed by the quirk holders"
