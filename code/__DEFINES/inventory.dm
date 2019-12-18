@@ -4,9 +4,9 @@
 #define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
 #define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
 #define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in an inventory, ex: Defibrillator, Backpack, Space Suits
-#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons
-#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe
+#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in a normal bag, ex: Defibrillator, Backpack, Space Suits
+#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons - Can not fit in Boh
+#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe - Can not fit in Boh
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -28,7 +28,9 @@
 #define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
 #define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
 #define ITEM_SLOT_NECK			(1<<13)
-#define ITEM_SLOT_SUITSTORE		(1<<14)
+#define ITEM_SLOT_HANDS			(1<<14)
+#define ITEM_SLOT_BACKPACK		(1<<15)
+#define ITEM_SLOT_SUITSTORE		(1<<16)
 
 //SLOTS
 #define SLOT_BACK			1
@@ -86,6 +88,10 @@
 			. = ITEM_SLOT_ICLOTHING
 		if(SLOT_L_STORE, SLOT_R_STORE)
 			. = ITEM_SLOT_POCKET
+		if(SLOT_HANDS)
+			. = ITEM_SLOT_HANDS
+		if(SLOT_IN_BACKPACK)
+			. = ITEM_SLOT_BACKPACK
 		if(SLOT_S_STORE)
 			. = ITEM_SLOT_SUITSTORE
 
@@ -237,3 +243,6 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 
 //Internals checker
 #define GET_INTERNAL_SLOTS(C) list(C.head, C.wear_mask)
+
+//Slots that won't trigger humans' update_genitals() on equip().
+GLOBAL_LIST_INIT(no_genitals_update_slots, list(SLOT_L_STORE, SLOT_R_STORE, SLOT_S_STORE, SLOT_IN_BACKPACK, SLOT_LEGCUFFED, SLOT_HANDCUFFED, SLOT_HANDS, SLOT_GENERC_DEXTROUS_STORAGE))

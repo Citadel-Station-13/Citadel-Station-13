@@ -5,6 +5,7 @@
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	slot_flags = ITEM_SLOT_OCLOTHING
+	body_parts_covered = CHEST
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	var/suittoggled = FALSE
@@ -30,12 +31,12 @@
 				adjusted = NORMAL_STYLE
 
 		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
-			if(H.dna.features["taur"] in list("Naga", "Tentacle"))
+			if(H.dna.features["taur"] in GLOB.noodle_taurs)
 				taurmode = SNEK_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger","Deer"))
+			else if(H.dna.features["taur"] in GLOB.paw_taurs)
 				taurmode = PAW_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
@@ -53,11 +54,11 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-		IF_HAS_BLOOD_DNA(src)
-			if(taurmode >= SNEK_TAURIC)
-				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood")
+		if(blood_DNA)
+			if(tauric && taurmode >= SNEK_TAURIC)
+				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood", color = blood_DNA_to_color())
 			else
-				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood", color = blood_DNA_to_color())
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform

@@ -158,13 +158,14 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 
 
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
+	reagents.add_reagent("chloralhydrate", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 
@@ -173,11 +174,15 @@
  */
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	sharpness = IS_SHARP
 	var/on = FALSE
 
 /obj/item/pen/edagger/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
+	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
+
+/obj/item/pen/edagger/get_sharpness()
+	return on * sharpness
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
@@ -200,8 +205,6 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
-	butchering.butchering_enabled = on
 	update_icon()
 
 /obj/item/pen/edagger/update_icon()

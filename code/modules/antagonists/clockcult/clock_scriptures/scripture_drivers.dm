@@ -80,7 +80,7 @@
 	power_cost = 125
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
+	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted and healed of some of their wounds after 8 seconds if they do not move.</span>"
 	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
@@ -215,6 +215,9 @@
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))
 		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
+		return
+	if(!isturf(invoker.loc))
+		to_chat(invoker, "<span class='danger'>You must be visible to return!</span>")
 		return
 	return TRUE
 

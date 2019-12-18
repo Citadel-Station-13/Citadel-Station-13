@@ -17,20 +17,22 @@
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
+	horn_color = "85615a"
+	wing_color = "fff"
 	if(!pref_species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(equip_job = TRUE)
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 	var/highest_pref = 0
 	for(var/job in job_preferences)
-		if(job_preferences[job] > highest_pref)
+		if(job_preferences["[job]"] > highest_pref)
 			previewJob = SSjob.GetJob(job)
-			highest_pref = job_preferences[job]
+			highest_pref = job_preferences["[job]"]
 
 	if(previewJob)
 		// Silicons only need a very basic preview since there is no customization for them.
@@ -43,12 +45,11 @@
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	mannequin.cut_overlays()
 	// Apply the Dummy's preview background first so we properly layer everything else on top of it.
 	mannequin.add_overlay(mutable_appearance('modular_citadel/icons/ui/backgrounds.dmi', bgstate, layer = SPACE_LAYER))
 	copy_to(mannequin)
 
-	if(previewJob)
+	if(previewJob && equip_job)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE, preference_source = parent)
 

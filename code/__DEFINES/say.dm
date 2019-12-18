@@ -23,6 +23,8 @@
 #define MODE_WHISPER "whisper"
 #define MODE_WHISPER_CRIT "whispercrit"
 
+#define MODE_CUSTOM_SAY "custom_say"
+
 #define MODE_DEPARTMENT "department"
 #define MODE_KEY_DEPARTMENT "h"
 #define MODE_TOKEN_DEPARTMENT ":h"
@@ -73,8 +75,16 @@
 #define LINGHIVE_LING 2
 #define LINGHIVE_LINK 3
 
+//whether the emote is visible or audible.
+#define EMOTE_VISIBLE 1
+#define EMOTE_AUDIBLE 2
+
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			2048		//Citadel edit: What's the WORST that could happen?
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80
+
+// Audio/Visual Flags. Used to determine what sense are required to notice a message.
+#define MSG_VISUAL (1<<0)
+#define MSG_AUDIBLE (1<<1)

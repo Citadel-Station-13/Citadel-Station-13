@@ -1,4 +1,5 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
+#define MAX_RECENT_MAP_RECORD 10
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -11,6 +12,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
+	var/list/saved_threat_levels = list(1,1,1)
+	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
@@ -25,6 +28,8 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
+	LoadRecentThreats()
+	LoadRecentMaps()
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
@@ -163,6 +168,24 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
+/datum/controller/subsystem/persistence/proc/LoadRecentThreats()
+	var/json_file = file("data/RecentThreatLevels.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_threat_levels = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentMaps()
+	var/json_file = file("data/RecentMaps.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_maps = json["maps"]
+
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
@@ -204,6 +227,8 @@ SUBSYSTEM_DEF(persistence)
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
+	CollectThreatLevel()
+	RecordMaps()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
@@ -358,6 +383,27 @@ SUBSYSTEM_DEF(persistence)
 	file_data["data"] = saved_modes
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectThreatLevel()
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		saved_threat_levels[3] = saved_threat_levels[2]
+		saved_threat_levels[2] = saved_threat_levels [1]
+		saved_threat_levels[1] = mode.threat_level
+		var/json_file = file("data/RecentThreatLevels.json")
+		var/list/file_data = list()
+		file_data["data"] = saved_threat_levels
+		fdel(json_file)
+		WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/RecordMaps()
+	saved_maps = saved_maps?.len ? list("[SSmapping.config.map_name]") | saved_maps : list("[SSmapping.config.map_name]")
+	var/json_file = file("data/RecentMaps.json")
+	var/list/file_data = list()
+	file_data["maps"] = saved_maps
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
 
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)

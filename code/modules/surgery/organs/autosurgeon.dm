@@ -17,9 +17,10 @@
 	if(starting_organ)
 		insert_organ(new starting_organ(src))
 
-/obj/item/autosurgeon/proc/insert_organ(var/obj/item/I)
+/obj/item/autosurgeon/proc/insert_organ(var/obj/item/organ/I)
 	storedorgan = I
 	I.forceMove(src)
+	I.organ_flags |= ORGAN_FROZEN //Stops decay
 	name = "[initial(name)] ([storedorgan.name])"
 
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
@@ -98,6 +99,29 @@
 
 /obj/item/autosurgeon/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver
+
+/obj/item/autosurgeon/anti_drop
+	starting_organ = /obj/item/organ/cyberimp/brain/anti_drop
+
+//BOX O' IMPLANTS
+
+/obj/item/storage/box/cyber_implants
+	name = "boxed cybernetic implants"
+	desc = "A sleek, sturdy box."
+	icon_state = "syndiebox"
+	illustration = "cyber_implants"
+	var/list/boxed = list(
+		/obj/item/autosurgeon/thermal_eyes,
+		/obj/item/autosurgeon/xray_eyes,
+		/obj/item/autosurgeon/anti_stun,
+		/obj/item/autosurgeon/reviver)
+	var/amount = 5
+
+/obj/item/storage/box/cyber_implants/PopulateContents()
+	var/implant
+	while(contents.len <= amount)
+		implant = pick(boxed)
+		new implant(src)
 
 /obj/item/autosurgeon/penis
 	desc = "A single use autosurgeon that contains a penis. A screwdriver can be used to remove it, but implants can't be placed back in."

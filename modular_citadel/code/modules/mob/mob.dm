@@ -3,9 +3,11 @@
 
 /mob/say_mod(input, message_mode)
 	var/customsayverb = findtext(input, "*")
-	if(customsayverb)
+	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
+		message_mode = MODE_CUSTOM_SAY
 		return lowertext(copytext(input, 1, customsayverb))
-	. = ..()
+	else
+		return ..()
 
 /atom/movable/proc/attach_spans(input, list/spans)
 	var/customsayverb = findtext(input, "*")
@@ -16,10 +18,10 @@
 	else
 		return
 
-/mob/living/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
+/mob/living/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)
 	. = ..()
-	if(istype(speaker, /mob/living))
-		var/turf/speakturf = get_turf(speaker)
-		var/turf/sourceturf = get_turf(src)
-		if(istype(speakturf) && istype(sourceturf) && !(speakturf in get_hear(5, sourceturf)))
-			. = "<citspan class='small'>[.]</citspan>" //Don't ask how the fuck this works. It just does.
+	if(isliving(speaker))
+		var/turf/sourceturf = get_turf(source)
+		var/turf/T = get_turf(src)
+		if(sourceturf && T && !(sourceturf in get_hear(5, T)))
+			. = "<span class='small'>[.]</span>"

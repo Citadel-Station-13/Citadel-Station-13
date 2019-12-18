@@ -40,6 +40,8 @@
 
 	var/stun_projectile = null		//stun mode projectile type
 	var/stun_projectile_sound
+	var/nonlethal_projectile		//projectile to use in stun mode when the target is resting, if any
+	var/nonlethal_projectile_sound
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
@@ -535,13 +537,22 @@
 					T = closer
 					break
 
+	var/mob/living/carbon/C
+	if(iscarbon(target))
+		C = target
+
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
-		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		if(nonlethal_projectile && C && C.resting)
+			use_power(reqpower*0.5)
+			A = new nonlethal_projectile(T)
+			playsound(loc, nonlethal_projectile_sound, 75, 1)
+		else
+			use_power(reqpower)
+			A = new stun_projectile(T)
+			playsound(loc, stun_projectile_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
@@ -551,6 +562,7 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
 	A.firer = src
+	A.fired_from = src
 	A.fire()
 	return A
 
@@ -635,6 +647,7 @@
 	has_cover = 0
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
+	mode = TURRET_LETHAL
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
@@ -653,6 +666,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
@@ -662,6 +677,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
@@ -679,8 +696,28 @@
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/shuttle
+	scan_range = 9
+	shot_delay = 3
+	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+
+/obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
+	if(target)
+		setDir(get_dir(base, target))//even if you can't shoot, follow the target
+		shootAt(target)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
+		return TRUE
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
@@ -801,10 +838,10 @@
 		T.cp = src
 
 /obj/machinery/turretid/examine(mob/user)
-	..()
+	. = ..()
 	if(issilicon(user) && (!stat & BROKEN))
-		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>")
-		to_chat(user, "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>")
+		. += "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>"
+		. += "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)

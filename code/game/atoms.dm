@@ -36,6 +36,12 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
+	var/icon/blood_splatter_icon
+	var/list/fingerprints
+	var/list/fingerprintshidden
+	var/list/blood_DNA
+	var/list/suit_fibers
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -180,6 +186,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null
@@ -220,7 +230,7 @@
 	return FALSE
 
 /atom/proc/CheckExit()
-	return 1
+	return TRUE
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -234,6 +244,11 @@
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
+
+//used on altdisarm() for special interactions between the shoved victim (target) and the src, with user being the one shoving the target on it.
+// IMPORTANT: if you wish to add a new own shove_act() to a certain object, remember to add SHOVABLE_ONTO to its obj_flags bitfied var first.
+/atom/proc/shove_act(mob/living/target, mob/living/user)
+	return FALSE
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
@@ -249,48 +264,57 @@
 	if(article)
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
+
+	var/should_override = FALSE
+
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
+		should_override = TRUE
+
+
+	if(blood_DNA && !istype(src, /obj/effect/decal))
+		override[EXAMINE_POSITION_BEFORE] = " blood-stained "
+		should_override = TRUE
+
+	if(should_override)
 		. = override.Join("")
 
+///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, get_examine_string(user, TRUE))
+	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
-		to_chat(user, desc)
+		. += desc
 
 	if(reagents)
 		if(reagents.reagents_holder_flags & TRANSPARENT)
-			to_chat(user, "It contains:")
-			if(reagents.reagent_list.len)
+			. += "It contains:"
+			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						to_chat(user, "[R.volume] units of [R.name]")
+						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents")
+					. += "[total_volume] units of various reagents"
 			else
-				to_chat(user, "Nothing.")
+				. += "Nothing."
 		else if(reagents.reagents_holder_flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+				. += "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
 			else
-				to_chat(user, "<span class='danger'>It's empty.</span>")
+				. += "<span class='danger'>It's empty.</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
-
-/atom/proc/prevent_content_explosion()
-	return FALSE
 
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
@@ -321,12 +345,14 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	var/blood_id = get_blood_id()
+	if(!(blood_id =="blood" || blood_id == "jellyblood"))
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != "blood")
+	var/blood_id = get_blood_id()
+	if(!(blood_id =="blood" || blood_id == "jellyblood"))
 		return
 	var/list/blood_dna = list()
 	if(dna)
@@ -344,18 +370,116 @@
 	var/new_blood_dna = L.get_blood_dna_list()
 	if(!new_blood_dna)
 		return FALSE
-	var/old_length = blood_DNA_length()
-	add_blood_DNA(new_blood_dna)
-	if(blood_DNA_length() == old_length)
+	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
+	var/old_length = blood_DNA.len
+	blood_DNA |= new_blood_dna
+	if(blood_DNA.len == old_length)
 		return FALSE
 	return TRUE
+
+//to add blood dna info to the object's blood_DNA list
+/atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
+	LAZYINITLIST(blood_DNA)
+	var/old_length = blood_DNA.len
+	blood_DNA |= blood_dna
+	if(blood_DNA.len > old_length)
+		return TRUE
+		//some new blood DNA was added
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
-	return add_blood_DNA(blood_dna)
+	return add_blood_DNA(blood_dna, M.diseases)
+
+//to add blood onto something, with blood dna info to include.
+/atom/proc/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	return FALSE
+
+/obj/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	return transfer_blood_dna(blood_dna, diseases)
+
+/obj/item/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	. = ..()
+	if(!.)
+		return
+	add_blood_overlay()
+
+/obj/item/proc/add_blood_overlay()
+	if(!blood_DNA.len)
+		return
+	if(initial(icon) && initial(icon_state))
+		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
+		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
+		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
+		add_overlay(blood_splatter_icon)
+
+/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	. = ..()
+	transfer_blood = rand(2, 4)
+
+/turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
+	if(!B)
+		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
+	B.transfer_blood_dna(blood_dna, diseases) //give blood info to the blood decal.
+	return TRUE //we bloodied the floor
+
+/mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	if(head)
+		head.add_blood_DNA(blood_dna, diseases)
+		update_inv_head()
+	else if(wear_mask)
+		wear_mask.add_blood_DNA(blood_dna, diseases)
+		update_inv_wear_mask()
+	if(wear_neck)
+		wear_neck.add_blood_DNA(blood_dna, diseases)
+		update_inv_neck()
+	if(wear_suit)
+		wear_suit.add_blood_DNA(blood_dna, diseases)
+		update_inv_wear_suit()
+	else if(w_uniform)
+		w_uniform.add_blood_DNA(blood_dna, diseases)
+		update_inv_w_uniform()
+	if(gloves)
+		var/obj/item/clothing/gloves/G = gloves
+		G.add_blood_DNA(blood_dna, diseases)
+	else
+		transfer_blood_dna(blood_dna, diseases)
+		bloody_hands = rand(2, 4)
+	update_inv_gloves()	//handles bloody hands overlays and updating
+	return TRUE
+
+/atom/proc/blood_DNA_to_color()
+	var/list/colors = list()//first we make a list of all bloodtypes present
+	for(var/bloop in blood_DNA)
+		if(colors[blood_DNA[bloop]])
+			colors[blood_DNA[bloop]]++
+		else
+			colors[blood_DNA[bloop]] = 1
+
+	var/final_rgb = BLOOD_COLOR_HUMAN	//a default so we don't have white blood graphics if something messed up
+
+	if(colors.len)
+		var/sum = 0 //this is all shitcode, but it works; trust me
+		final_rgb = bloodtype_to_color(colors[1])
+		sum = colors[colors[1]]
+		if(colors.len > 1)
+			var/i = 2
+			while(i <= colors.len)
+				var/tmp = colors[colors[i]]
+				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
+				sum += tmp
+				i++
+
+	return final_rgb
+
+/atom/proc/clean_blood()
+	if(islist(blood_DNA))
+		blood_DNA = null
+		return TRUE
 
 /atom/proc/wash_cream()
 	return TRUE
@@ -405,7 +529,7 @@
 /atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)
@@ -440,7 +564,7 @@
 
 
 //Hook for running code when a dir change occurs
-/atom/proc/setDir(newdir)
+/atom/proc/setDir(newdir, ismousemovement=FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -533,7 +657,7 @@
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -685,8 +809,7 @@ Proc for attack log creation, because really why not
 
 // Filter stuff
 /atom/movable/proc/add_filter(name,priority,list/params)
-	if(!filter_data)
-		filter_data = list()
+	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
@@ -694,7 +817,7 @@ Proc for attack log creation, because really why not
 
 /atom/movable/proc/update_filters()
 	filters = null
-	sortTim(filter_data,associative = TRUE)
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
@@ -706,7 +829,10 @@ Proc for attack log creation, because really why not
 		return filters[filter_data.Find(name)]
 
 /atom/movable/proc/remove_filter(name)
-	if(filter_data[name])
+	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
 		return TRUE
+
+/atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)

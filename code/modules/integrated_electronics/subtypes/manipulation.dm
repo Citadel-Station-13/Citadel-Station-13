@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	complexity = 10
 	cooldown_per_use = 1
-	ext_cooldown = 2
+	ext_cooldown = 4
 	inputs = list("direction" = IC_PINTYPE_DIR)
 	outputs = list("obstacle" = IC_PINTYPE_REF)
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
@@ -339,7 +339,7 @@
 	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A] with non-lethal force.")
 	A.forceMove(drop_location())
-	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, , , , CALLBACK(src, .proc/post_throw, A))
+	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, null, null, null, CALLBACK(src, .proc/post_throw, A))
 
 	// If the item came from a grabber now we can update the outputs since we've thrown it.
 	if(istype(G))
@@ -411,7 +411,7 @@
 	.=..()
 
 /obj/item/integrated_circuit/manipulation/matman/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	set_pin_data(IC_OUTPUT, 2, materials.total_amount)
 	for(var/I in 1 to mtypes.len)
 		var/datum/material/M = materials.materials[mtypes[I]]
@@ -423,7 +423,7 @@
 	return TRUE
 
 /obj/item/integrated_circuit/manipulation/matman/do_work(ord)
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	if(!check_target(H))
 		activate_pin(4)
@@ -441,7 +441,7 @@
 			else
 				activate_pin(4)
 		if(2)
-			GET_COMPONENT_FROM(mt, /datum/component/material_container, H)
+			var/datum/component/material_container/mt = H.GetComponent(/datum/component/material_container)
 			var/suc
 			for(var/I in 1 to mtypes.len)
 				var/datum/material/M = materials.materials[mtypes[I]]
@@ -467,7 +467,7 @@
 			activate_pin(6)
 
 /obj/item/integrated_circuit/manipulation/matman/Destroy()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 	.=..()
 
@@ -509,14 +509,14 @@
 			if(!container || !istype(container,/obj/item/storage) || !Adjacent(container))
 				return
 
-			GET_COMPONENT_FROM(STR, /datum/component/storage, container)
+			var/datum/component/storage/STR = container.GetComponent(/datum/component/storage)
 			if(!STR)
 				return
 
 			STR.attackby(src, target_obj)
 
 		else
-			GET_COMPONENT_FROM(STR, /datum/component/storage, target_obj.loc)
+			var/datum/component/storage/STR = target_obj.loc.GetComponent(/datum/component/storage)
 			if(!STR)
 				return
 

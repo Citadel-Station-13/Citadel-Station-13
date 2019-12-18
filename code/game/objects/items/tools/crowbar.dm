@@ -31,7 +31,7 @@
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "crowbar_brass"
+	icon_state = "crowbar_clock"
 	toolspeed = 0.5
 
 /obj/item/crowbar/bronze
@@ -63,6 +63,8 @@
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "crowbar_cyborg"
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5

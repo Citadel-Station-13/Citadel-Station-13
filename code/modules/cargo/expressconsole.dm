@@ -156,7 +156,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
-				rank = H.get_assignment()
+				rank = H.get_assignment(hand_first = TRUE)
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
@@ -183,7 +183,7 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						SSshuttle.points -= SO.pack.cost
-						new /obj/effect/DPtarget(LZ, podType, SO)
+						new /obj/effect/abstract/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -200,7 +200,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/DPtarget(LZ, podType, SO)
+							new /obj/effect/abstract/DPtarget(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

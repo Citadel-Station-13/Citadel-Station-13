@@ -16,7 +16,7 @@
 
 /obj/structure/fermenting_barrel/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>")
+	. += "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>"
 
 /obj/structure/fermenting_barrel/proc/makeWine(obj/item/reagent_containers/food/snacks/grown/fruit)
 	if(fruit.reagents)
@@ -69,10 +69,3 @@
 		icon_state = "barrel_open"
 	else
 		icon_state = "barrel"
-
-/datum/crafting_recipe/fermenting_barrel
-	name = "Wooden Barrel"
-	result = /obj/structure/fermenting_barrel
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 30)
-	time = 50
-	category = CAT_PRIMAL

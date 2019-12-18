@@ -22,14 +22,19 @@
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
+
+/datum/quirk/depression/on_process()
+	if(prob(0.05))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	value = -1
 	mood_quirk = TRUE
+	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	var/obj/item/heirloom
 	var/where
 
@@ -119,7 +124,7 @@
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 
 /datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustBrainLoss(0.2)
+	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
@@ -143,6 +148,7 @@
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
+	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -163,7 +169,8 @@
 	desc = "Bright lights irritate you. Your eyes start to water, your skin feels itchy against the photon radiation, and your hair gets dry and frizzy. Maybe it's a medical condition. If only Nanotrasen was more considerate of your needs..."
 	value = -1
 	gain_text = "<span class='danger'>The safty of light feels off...</span>"
-	lose_text = "<span class='notice'>Enlighing.</span>"
+	lose_text = "<span class='notice'>Enlightening.</span>"
+	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
 
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
@@ -332,23 +339,32 @@
 	medical_record_text = "Patient has an extreme or irrational fear and aversion to an undefined stimuli."
 	var/datum/brain_trauma/mild/phobia/phobia
 
-/datum/quirk/phobia/add()
+/datum/quirk/phobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
-	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/mute
 	name = "Mute"
 	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
 	value = -2 //HALP MAINTS
-	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+	var/datum/brain_trauma/severe/mute/mute
 
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(TRAIT_MUTE, TRAUMA_RESILIENCE_SURGERY)
+	mute = new
+	H.gain_trauma(mute, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/mute/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(mute, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/mute/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
@@ -363,3 +379,24 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+
+/datum/quirk/blindness
+	name = "Blind"
+	desc = "You are completely blind, nothing can counteract this."
+	value = -4
+	gain_text = "<span class='danger'>You can't see anything.</span>"
+	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
+	medical_record_text = "Patient has permanent blindness."
+
+/datum/quirk/blindness/add()
+	quirk_holder.become_blind(ROUNDSTART_TRAIT)
+
+/datum/quirk/blindness/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/glasses/sunglasses/blindfold/white/glasses = new(get_turf(H))
+	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes eyes
+		H.put_in_hands(glasses)
+	H.regenerate_icons()
+
+/datum/quirk/blindness/remove()
+	quirk_holder?.cure_blind(ROUNDSTART_TRAIT)

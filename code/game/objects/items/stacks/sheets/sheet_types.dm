@@ -10,6 +10,7 @@
  * Runed Metal (cult)
  * Brass (clockwork cult)
  * Bronze (bake brass)
+ * Cotton/Duracotton
  */
 
 /*
@@ -107,6 +108,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/metal
 	grind_results = list("iron" = 20)
 	point_value = 2
+	tableVariant = /obj/structure/table
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -168,6 +170,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list("iron" = 20, "plasma" = 20)
 	point_value = 23
+	tableVariant = /obj/structure/table/reinforced
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plasteel_recipes
@@ -184,36 +187,48 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
  */
 GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
+	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
+	null, \
+	new/datum/stack_recipe_list("pews", list(
+		new /datum/stack_recipe("pew (middle)", /obj/structure/chair/pew, 3, one_per_turf = TRUE, on_floor = TRUE),\
+		new /datum/stack_recipe("pew (left)", /obj/structure/chair/pew/left, 3, one_per_turf = TRUE, on_floor = TRUE),\
+		new /datum/stack_recipe("pew (right)", /obj/structure/chair/pew/right, 3, one_per_turf = TRUE, on_floor = TRUE),\
+		)),
+	null, \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
+	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
+	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
+	null, \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("plywood chair", /obj/structure/chair/comfy/plywood, 4, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	null, \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("rustic wooden door", /obj/structure/mineral_door/woodrustic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	null, \
+	new/datum/stack_recipe("wooden barrel", /obj/structure/fermenting_barrel, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
-	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
-	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
-	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
-	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
-	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
+	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
+	null, \
+	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
+	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	))
 
 /obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
-	desc = "One can only guess that this is a bunch of wood."
+	desc = "One can only guess that this is a bunch of wood. You might be able to make a stake with this if you use something sharp on it"
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	item_state = "sheet-wood"
@@ -225,12 +240,68 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	grind_results = list("carbon" = 20)
 
+
+/obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
+	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
+	if(W.get_sharpness())
+		user.visible_message("[user] begins whittling [src] into a pointy object.", \
+				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
+				 "<span class='italics'>You hear wood carving.</span>")
+		// 8 Second Timer
+		if(!do_after(user, 80, TRUE, src))
+			return
+		// Make Stake
+		var/obj/item/stake/basic/new_item = new(user.loc)
+		user.visible_message("[user] finishes carving a stake out of [src].", \
+				 "<span class='notice'>You finish carving a stake out of [src].</span>")
+		// Prepare to Put in Hands (if holding wood)
+		var/obj/item/stack/sheet/mineral/wood/N = src
+		var/replace = (user.get_inactive_held_item() == N)
+		// Use Wood
+		N.use(1)
+		// If stack depleted, put item in that hand (if it had one)
+		if (!N && replace)
+			user.put_in_hands(new_item)
+	if(istype(W, merge_type))
+		var/obj/item/stack/S = W
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+	else
+		. = ..()
+
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.wood_recipes
 	return ..()
 
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
+
+/*
+ * Bamboo
+ */
+
+GLOBAL_LIST_INIT(bamboo_recipes, list ( \
+	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 70), \
+	))
+
+/obj/item/stack/sheet/mineral/bamboo
+	name = "bamboo cuttings"
+	desc = "Finely cut bamboo sticks."
+	singular_name = "cut bamboo"
+	icon_state = "sheet-bamboo"
+	item_state = "sheet-bamboo"
+	icon = 'icons/obj/stack_objects.dmi'
+	throwforce = 15
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/mineral/bamboo
+	grind_results = list("carbon" = 5)
+
+/obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bamboo_recipes
+	return ..()
+
 
 /*
  * Cloth
@@ -270,6 +341,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
+	pull_effort = 90
+	is_fabric = TRUE
+	loom_result = /obj/item/stack/sheet/silk
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
@@ -278,6 +352,22 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 
 /obj/item/stack/sheet/cloth/ten
 	amount = 10
+
+/obj/item/stack/sheet/cloth/thirty
+	amount = 30
+
+/obj/item/stack/sheet/silk
+	name = "silk"
+	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
+	singular_name = "silk sheet"
+	icon_state = "sheet-silk"
+	item_state = "sheet-cloth"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/silk
+
+//obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
+//	recipes = GLOB.silk_recipes
+//	return ..()
 
 //Durathread fuck slash-asterisk comments
 	GLOBAL_LIST_INIT(durathread_recipes, list ( \
@@ -474,6 +564,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	novariants = FALSE
 	grind_results = list("iron" = 5, "teslium" = 15, "holyoil" = 1)
 	merge_type = /obj/item/stack/tile/brass
+	tableVariant = /obj/structure/table/reinforced/brass
 
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -526,6 +617,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	novariants = FALSE
 	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
+	tableVariant = /obj/structure/table/bronze
 
 /obj/item/stack/tile/bronze/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user)) //still lets them build with it, just gives a message
@@ -584,6 +676,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
+	new /datum/stack_recipe("large trash cart", /obj/structure/closet/crate/bin,50),\
 	new /datum/stack_recipe("wet floor sign", /obj/item/caution, 2)))
 
 /obj/item/stack/sheet/plastic
@@ -645,6 +738,12 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	pull_effort = 30
 	loom_result = /obj/item/stack/sheet/cloth
 
+/obj/item/stack/sheet/cotton/ten
+	amount = 10
+
+/obj/item/stack/sheet/cotton/thirty
+	amount = 30
+
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
 	desc = "A bundle of raw durathread ready to be spun on the loom."
@@ -653,5 +752,3 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
-
-

@@ -29,10 +29,11 @@
 		icon_state = "mixer0b"
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
+	return TRUE
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
@@ -77,6 +78,16 @@
 		updateUsrDialog()
 		update_icon()
 		return
+
+	if(beaker)
+		if(istype(I, /obj/item/reagent_containers/dropper))
+			var/obj/item/reagent_containers/dropper/D = I
+			D.afterattack(beaker, user, 1)
+
+		if(istype(I, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/S = I
+			S.afterattack(beaker, user, 1)
+
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()

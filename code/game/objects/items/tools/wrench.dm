@@ -26,13 +26,15 @@
 /obj/item/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "wrench_cyborg"
 	toolspeed = 0.5
 
 /obj/item/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "wrench_brass"
+	icon_state = "wrench_clock"
 	toolspeed = 0.5
 
 /obj/item/wrench/bronze

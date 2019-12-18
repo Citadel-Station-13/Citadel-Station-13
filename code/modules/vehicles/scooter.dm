@@ -75,7 +75,7 @@
 		H.adjustStaminaLoss(40)
 		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			H.adjustBrainLoss(3)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
@@ -94,6 +94,7 @@
 		qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/AltClick(mob/user)
+	. = ..()
 	var/datum/component/riding/R = src.GetComponent(/datum/component/riding)
 	if (!adjusted_speed)
 		R.vehicle_move_delay = 0
@@ -103,6 +104,7 @@
 		R.vehicle_move_delay = 1
 		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go slower.</span>")
 		adjusted_speed = FALSE
+	return TRUE
 
 //CONSTRUCTION
 /obj/item/scooter_frame
@@ -201,7 +203,7 @@
 		H.adjustStaminaLoss(10)
 		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			H.adjustBrainLoss(1)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)

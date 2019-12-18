@@ -27,9 +27,9 @@
 		return 0
 	charge_tick = 0
 	var/mob/living/M = loc
-	if(istype(M) && M.blood_volume >= 20)
+	if(istype(M) && M.blood_volume >= 5)
 		charges++
-		M.blood_volume -= 20
+		M.blood_volume -= 5
 	if(charges == 1)
 		recharge_newshot()
 	return 1

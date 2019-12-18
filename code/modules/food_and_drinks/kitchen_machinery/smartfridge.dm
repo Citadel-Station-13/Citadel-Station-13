@@ -145,6 +145,13 @@
 			O.forceMove(src)
 			return TRUE
 
+///Really simple proc, just moves the object "O" into the hands of mob "M" if able, done so I could modify the proc a little for the organ fridge
+/obj/machinery/smartfridge/proc/dispense(obj/item/O, var/mob/M)
+	if(!M.put_in_hands(O))
+		O.forceMove(drop_location())
+		adjust_item_drop_location(O)
+
+
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -197,9 +204,7 @@
 			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
-						if(!usr.put_in_hands(O))
-							O.forceMove(drop_location())
-							adjust_item_drop_location(O)
+						dispense(O, usr)
 						break
 				if (visible_contents)
 					update_icon()
@@ -209,8 +214,7 @@
 				if(desired <= 0)
 					break
 				if(O.name == params["name"])
-					O.forceMove(drop_location())
-					adjust_item_drop_location(O)
+					dispense(O, usr)
 					desired--
 			if (visible_contents)
 				update_icon()
@@ -377,6 +381,62 @@
 
 /obj/machinery/smartfridge/extract/preloaded
 	initial_contents = list(/obj/item/slime_scanner = 2)
+
+// ------------------------- You think you're better than Chem, huh?
+// Organ Surgery Smartfridge
+// ------------------------- Just wait till Tamiorgans
+/obj/machinery/smartfridge/organ
+	name = "smart organ storage"
+	desc = "A refrigerated storage unit for organ storage."
+	max_n_of_items = 25	//vastly lower to prevent processing too long
+	var/repair_rate = 0
+
+/obj/machinery/smartfridge/organ/accept_check(obj/item/O)
+	if(istype(O, /obj/item/organ))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/syringe))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/glass/bottle))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/medspray))
+		return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/organ/load(obj/item/O)
+	. = ..()
+	if(!.)	//if the item loads, clear can_decompose
+		return
+	if(istype(O, /obj/item/organ))
+		var/obj/item/organ/organ = O
+		organ.organ_flags |= ORGAN_FROZEN
+
+/obj/machinery/smartfridge/organ/RefreshParts()
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		max_n_of_items = 20 * B.rating
+		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1))
+
+/obj/machinery/smartfridge/organ/process()
+	for(var/organ in contents)
+		var/obj/item/organ/O = organ
+		if(!istype(O))
+			return
+		O.applyOrganDamage(-repair_rate)
+
+/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+	. = ..()
+	if(istype(AM))
+		AM.organ_flags &= ~ORGAN_FROZEN
+
+/obj/machinery/smartfridge/organ/preloaded
+	initial_contents = list(
+		/obj/item/reagent_containers/medspray/synthtissue = 1,
+		/obj/item/reagent_containers/medspray/sterilizine = 1)
+
+/obj/machinery/smartfridge/organ/preloaded/Initialize()
+	..()
+	var/list = list(/obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tail, /obj/item/organ/stomach)
+	var/newtype = pick(list)
+	load(new newtype(src.loc))
 
 // -----------------------------
 // Chemistry Medical Smartfridge

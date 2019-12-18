@@ -37,7 +37,7 @@
 	species = "lily"
 	plantname = "Lily Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/poppy/lily
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/bee_balm, /obj/item/seeds/poppy/lily/trumpet)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy/lily
 	seed = /obj/item/seeds/poppy/lily
@@ -46,6 +46,43 @@
 	icon_state = "lily"
 	tastes = list("pelts " = 1)
 	filling_color = "#FFA500"
+
+/obj/item/seeds/poppy/lily/trumpet
+	name = "pack of spaceman's trumpet seeds"
+	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
+	icon_state = "seed-trumpet"
+	species = "spacemanstrumpet"
+	plantname = "Spaceman's Trumpet Plant"
+	product = /obj/item/reagent_containers/food/snacks/grown/trumpet
+	lifespan = 80
+	production = 5
+	endurance = 10
+	maturation = 12
+	yield = 4
+	potency = 20
+	growthstages = 4
+	weed_rate = 2
+	weed_chance = 10
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "spacemanstrumpet-grow"
+	icon_dead = "spacemanstrumpet-dead"
+	mutatelist = list()
+	genes = list(/datum/plant_gene/reagent/polypyr)
+	reagents_add = list("nutriment" = 0.05)
+	rarity = 30
+
+/obj/item/seeds/poppy/lily/trumpet/Initialize()
+	..()
+	unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
+
+/obj/item/reagent_containers/food/snacks/grown/trumpet
+	seed = /obj/item/seeds/poppy/lily/trumpet
+	name = "spaceman's trumpet"
+	desc = "A vivid flower that smells faintly of freshly cut grass. Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon."
+	icon_state = "spacemanstrumpet"
+	filling_color = "#FF6347"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
 
 // Geranium
 /obj/item/seeds/poppy/geranium
@@ -145,6 +182,7 @@
 	icon_grow = "moonflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
+	genes = list(/datum/plant_gene/trait/glow/purple)
 	mutatelist = list()
 	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
 	rarity = 15
@@ -221,3 +259,61 @@
 	if(!user.gloves)
 		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
 		user.adjustFireLoss(rand(1, 5))
+
+// Beebalm
+/obj/item/seeds/bee_balm
+	name = "pack of Bee Balm seeds"
+	desc = "These seeds grow into Bee Balms."
+	icon_state = "seed-bee_balm"
+	species = "bee_balm"
+	plantname = "Bee Balm Buds"
+	product = /obj/item/reagent_containers/food/snacks/grown/bee_balm
+	endurance = 10
+	maturation = 8
+	yield = 3
+	potency = 30
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "bee_balm-grow"
+	icon_dead = "bee_balm-dead"
+	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/bee_balm/honey) //Lower odds of becoming honey
+	reagents_add = list("spaceacillin" = 0.1, "sterilizine" = 0.05)
+
+/obj/item/reagent_containers/food/snacks/grown/bee_balm
+	seed = /obj/item/seeds/bee_balm
+	name = "bee balm"
+	desc = "A flower used for medical antiseptic in history."
+	icon_state = "bee_balm"
+	filling_color = "#FF6347"
+	bitesize_mod = 8
+	tastes = list("strong antiseptic " = 1)
+	foodtype = GROSS
+
+// Beebalm
+/obj/item/seeds/bee_balm/honey
+	name = "pack of Honey Balm seeds"
+	desc = "These seeds grow into Honey Balms."
+	icon_state = "seed-bee_balmalt"
+	species = "seed-bee_balm_alt"
+	plantname = "Honey Balm Pods"
+	product = /obj/item/reagent_containers/food/snacks/grown/bee_balm/honey
+	endurance = 1
+	maturation = 10
+	yield = 1
+	potency = 1
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "bee_balmalt-grow"
+	icon_dead = "bee_balmalt-dead"
+	reagents_add = list("honey" = 0.1, "lye" = 0.3) //To make wax
+	rarity = 30
+
+/obj/item/reagent_containers/food/snacks/grown/bee_balm/honey
+	seed = /obj/item/seeds/bee_balm/honey
+	name = "honey balm"
+	desc = "A large honey filled pod of a flower."
+	icon_state = "bee_balmalt"
+	filling_color = "#FF6347"
+	bitesize_mod = 8
+	tastes = list("wax" = 1)
+	foodtype = SUGAR

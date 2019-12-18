@@ -169,6 +169,7 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
+				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 			else if (input == null || sanitycheck == null || length(input) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
@@ -180,10 +181,11 @@
 	else
 		return ..()
 
+//this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	if(user.canUseTopic(src, BE_CLOSE))
+		attack_hand(user)
+		return TRUE
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
@@ -213,6 +215,12 @@
 			return
 	return ..()
 
+/obj/structure/closet/secure/loot/dive_into(mob/living/user)
+	if(!locked)
+		return ..()
+	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
+	return FALSE
+
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 	if(!locked)
@@ -227,4 +235,6 @@
 		..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
+	if(!locked && disassembled)
+		return ..()
 	boom()

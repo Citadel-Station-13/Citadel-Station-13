@@ -58,14 +58,14 @@
 	if(bottle)
 		bottle.ex_act(severity, target)
 
-/obj/machinery/chem_master/handle_atom_del(atom/A)
-	..()
+/obj/machinery/chem_master/Exited(atom/movable/A, atom/newloc)
+	. = ..()
 	if(A == beaker)
 		beaker = null
-		reagents.clear_reagents()
 		update_icon()
-	else if(A == bottle)
+	if(A == bottle)
 		bottle = null
+		update_icon()
 
 /obj/machinery/chem_master/update_icon()
 	cut_overlays()
@@ -103,6 +103,10 @@
 		updateUsrDialog()
 		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
+		. = TRUE // no afterattack
+		if(panel_open)
+			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
+			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		replace_pillbottle(user, I)
@@ -112,40 +116,40 @@
 		return ..()
 
 /obj/machinery/chem_master/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	replace_beaker(user)
-	return
+	if(beaker)
+		replace_beaker(user)
+	else if(bottle)
+		replace_pillbottle(user)
+	return TRUE
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
-	return TRUE
 
 /obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
-		bottle.forceMove(drop_location())
+		var/obj/item/storage/pill_bottle/B = bottle
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 		else
-			adjust_item_drop_location(bottle)
+			adjust_item_drop_location(B)
 	if(new_bottle)
 		bottle = new_bottle
-	else
-		bottle = null
-	update_icon()
-	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
-	replace_beaker(usr)
-	replace_pillbottle(usr)
+	var/atom/A = drop_location()
+	beaker.forceMove(A)
+	bottle.forceMove(A)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -175,7 +179,7 @@
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBotContent"] = bottle.contents.len
 		data["pillBotMaxContent"] = STRB.max_items
 
@@ -260,15 +264,16 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
-				var/target_loc = bottle ? bottle : drop_location()
+				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
-					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
+						target_loc = bottle
 
 				for(var/i in 1 to amount)
-					if(i < drop_threshold)
+					if(i <= drop_threshold)
 						P = new(target_loc)
 					else
 						P = new(drop_location())
@@ -384,6 +389,38 @@
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_part)
 			. = TRUE
+
+		if("createDart")
+			for(var/datum/reagent/R in reagents.reagent_list)
+				if(!(istype(R, /datum/reagent/medicine)))
+					visible_message("<b>The [src]</b> beeps, \"<span class='warning'>SmartDarts are insoluble with non-medicinal compounds.\"</span>")
+					return
+
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+			var/amount = 1
+			var/vol_each = min(reagents.total_volume, 20)
+			if(text2num(many))
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many darts?", amount) as num|null), 0, 10)
+				if(!amount)
+					return
+				vol_each = min(reagents.total_volume / amount, 20)
+
+			var/name = stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				return
+
+			var/obj/item/reagent_containers/syringe/dart/D
+			for(var/i = 0; i < amount; i++)
+				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
+				D.name = trim("[name] SmartDart")
+				adjust_item_drop_location(D)
+				reagents.trans_to(D, vol_each)
+				D.mode=!mode
+				D.update_icon()
+			. = TRUE
+
 		//END CITADEL ADDITIONS
 		if("analyzeBeak")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
@@ -397,15 +434,15 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				if(istype(R, /datum/reagent/fermi))
+				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+				if(Rcr && Rcr.FermiChem)
 					fermianalyze = TRUE
-					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
 					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
-					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
 				else
 					fermianalyze = FALSE
 					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
@@ -432,7 +469,7 @@
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
-					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
 				else
 					fermianalyze = FALSE
 					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))

@@ -145,6 +145,12 @@
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
+		if(!SSticker || !SSticker.IsRoundInProgress())
+			var/msg = "[key_name(usr)] attempted to join the round using a href that shouldn't be available at this moment!"
+			log_admin(msg)
+			message_admins(msg)
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
 
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
@@ -289,7 +295,7 @@
 	else
 		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
-	observer.key = key
+	transfer_ckey(observer, FALSE)
 	observer.client = client
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
@@ -315,6 +321,8 @@
 			return "Your account is not old enough for [jobtitle]."
 		if(JOB_UNAVAILABLE_SLOTFULL)
 			return "[jobtitle] is already filled to capacity."
+		if(JOB_UNAVAILABLE_SPECIESLOCK)
+			return "Your species cannot play as a [jobtitle]."
 	return "Error: Unknown job availability."
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
@@ -340,6 +348,8 @@
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
+	if(!client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
+		return JOB_UNAVAILABLE_SPECIESLOCK
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -463,10 +473,7 @@
 	var/free_space = 0
 	for(var/list/category in list(GLOB.command_positions) + list(GLOB.supply_positions) + list(GLOB.engineering_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
 		var/cat_color = "fff" //random default
-		if(SSjob.name_occupations && SSjob.name_occupations[category[1]])
-			cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
-		else
-			cat_color = SSjob.occupations[category[1]].selection_color
+		cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
 

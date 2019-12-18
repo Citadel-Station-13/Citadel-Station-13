@@ -272,7 +272,7 @@
 /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	name = "blackberry and strawberry chocolate cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_cake_slice"
+	icon_state = "blackbarry_strawberries_cake_coco_slice"
 	filling_color = "#FFD700"
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
@@ -335,7 +335,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	icon_state = "vanillacake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
 	bonus_reagents = list("sugar" = 15, "vanilla" = 15)
-	tastes = list("caje" = 1, "sugar" = 1, "vanilla" = 10)
+	tastes = list("cake" = 1, "sugar" = 1, "vanilla" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY
 
 /obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
@@ -361,4 +361,21 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	icon_state = "clowncake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/store/cake/peach_cake
+	name = "peach cake"
+	desc = "A peach filled cake."
+	icon_state = "peachcake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
+	bonus_reagents = list("sugar" = 5, "peachjuice" = 15)
+	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
+	name = "peach cake slice"
+	desc = "A slice of peach cake."
+	icon_state = "peach_slice"
+	filling_color = "#00FFFF"
+	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY

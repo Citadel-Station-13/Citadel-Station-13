@@ -212,11 +212,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(succumbed)
 		succumb()
-		to_chat(src, compose_message(src, language, message, , spans, message_mode))
+		to_chat(src, compose_message(src, language, message, null, spans, message_mode))
 
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(!client)
 		return
@@ -231,13 +231,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
 	// Recompose message for AI hrefs, language incomprehension.
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-	message = hear_intercept(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, FALSE, source)
 
-	show_message(message, 2, deaf_message, deaf_type)
-	return message
-
-/mob/living/proc/hear_intercept(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
 	return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
@@ -248,8 +244,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
 	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
-	if(say_test(message) == "2")	//CIT CHANGE - ditto
-		yellareas = get_areas_in_range(message_range*0.5,src)	//CIT CHANGE - ditto
+	if(!eavesdrop_range && say_test(message) == "2")	//CIT CHANGE - ditto
+		yellareas = get_areas_in_range(message_range*0.5, source)	//CIT CHANGE - ditto
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
@@ -260,7 +256,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue
-		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
+		if(get_dist(M, source) > 7 || M.z != z) //they're out of range of normal hearing
 			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 				continue
 			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
@@ -272,15 +268,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/eavesrendered
 	if(eavesdrop_range)
 		eavesdropping = stars(message)
-		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
+		eavesrendered = compose_message(src, message_language, eavesdropping, null, spans, message_mode, FALSE, source)
 
-	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
+	var/rendered = compose_message(src, message_language, message, null, spans, message_mode, FALSE, source)
 	for(var/_AM in listening)
 		var/atom/movable/AM = _AM
 		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
-			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
+			AM.Hear(eavesrendered, src, message_language, eavesdropping, null, spans, message_mode, source)
 		else
-			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
+			AM.Hear(rendered, src, message_language, message, null, spans, message_mode, source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//speech bubble
@@ -357,8 +353,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
-	var/obj/item/implant/radio/imp = locate() in src
-	if(imp && imp.radio.on)
+	var/obj/item/implant/radio/imp = locate() in implants
+	if(imp?.radio.on)
 		if(message_mode == MODE_HEADSET)
 			imp.radio.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
@@ -391,16 +387,16 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 0
 
 /mob/living/say_mod(input, message_mode)
-	if(message_mode == MODE_WHISPER)
-		. = verb_whisper
-	else if(message_mode == MODE_WHISPER_CRIT)
+	. = ..()
+	if(message_mode == MODE_WHISPER_CRIT)
 		. = "[verb_whisper] in [p_their()] last breath"
-	else if(stuttering)
-		. = "stammers"
-	else if(derpspeech)
-		. = "gibbers"
-	else
-		. = ..()
+	else if(message_mode != MODE_CUSTOM_SAY)
+		if(message_mode == MODE_WHISPER)
+			. = verb_whisper
+		else if(stuttering)
+			. = "stammers"
+		else if(derpspeech)
+			. = "gibbers"
 
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)

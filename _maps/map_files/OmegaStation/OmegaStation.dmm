@@ -955,6 +955,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"abn" = (
+/obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Locker Room East";
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/bedsheetbin/color,
+/turf/open/floor/plasteel/white/corner,
+/area/crew_quarters/dorms)
 "abo" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -1266,6 +1279,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"abQ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/arcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "abR" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -15282,19 +15311,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"aAJ" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/obj/machinery/camera{
-	c_tag = "Locker Room East";
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/crew_quarters/dorms)
 "aAK" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall,
@@ -26273,7 +26289,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aUZ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/landmark/barthpot,
 /turf/open/floor/wood,
 /area/library)
 "aVa" = (
@@ -27285,6 +27301,9 @@
 	dir = 2
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -28598,6 +28617,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aYU" = (
@@ -29133,6 +29155,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
@@ -30064,10 +30089,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbs" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbt" = (
@@ -37157,20 +37180,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"dEa" = (
-/obj/machinery/computer/arcade,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/maintenance/port)
 "dFV" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -42871,6 +42880,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"uvp" = (
+/obj/machinery/smartfridge/organ/preloaded{
+	pixel_y = 2
+	},
+/turf/closed/wall,
+/area/medical/medbay/zone3)
 "uxJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -43068,7 +43083,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "vsf" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -76187,7 +76202,7 @@ aZp
 bak
 bbc
 bbQ
-dEa
+abQ
 bdD
 beu
 sKE
@@ -81586,7 +81601,7 @@ aSh
 bcf
 bcW
 blt
-aSh
+uvp
 aOL
 bfA
 bfX
@@ -82325,7 +82340,7 @@ awQ
 axK
 ayC
 awQ
-aAJ
+abn
 aBT
 awQ
 aDI

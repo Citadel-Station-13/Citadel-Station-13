@@ -1,6 +1,6 @@
 /datum/component/decal
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-
+	can_transfer = TRUE
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
@@ -17,6 +17,7 @@
 	apply()
 
 /datum/component/decal/RegisterWithParent()
+	. = ..()
 	if(first_dir)
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
 	if(cleanable)
@@ -25,6 +26,7 @@
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 /datum/component/decal/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE))
 
 /datum/component/decal/Destroy()
@@ -71,5 +73,5 @@
 	if(strength >= cleanable)
 		qdel(src)
 
-/datum/component/decal/proc/examine(datum/source, mob/user)
-	to_chat(user, description)
+/datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
+	examine_list += description

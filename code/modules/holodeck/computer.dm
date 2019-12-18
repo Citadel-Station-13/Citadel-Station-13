@@ -111,6 +111,11 @@
 			if(A)
 				load_program(A)
 		if("safety")
+			if(!issilicon(usr) && !IsAdminGhost(usr))
+				var/msg = "[key_name(usr)] attempted to emag the holodeck using a href they shouldn't have!"
+				message_admins(msg)
+				log_admin(msg)
+				return
 			obj_flags ^= EMAGGED
 			if((obj_flags & EMAGGED) && program && emag_programs[program.name])
 				emergency_shutdown()

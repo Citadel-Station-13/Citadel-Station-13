@@ -6,40 +6,90 @@
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
 
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
+	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD	//threshold at 30
+	low_threshold = 0.15 * STANDARD_ORGAN_THRESHOLD	//threshold at 15
+
+	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
+	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
+	now_failing = "<span class='warning'>Darkness envelopes you, as your eyes go blind!</span>"
+	now_fixed = "<span class='info'>Color and shapes are once again perceivable.</span>"
+	high_threshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
+	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
+
 	var/sight_flags = 0
 	var/see_in_dark = 2
-	var/eye_damage = 0
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/old_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
+	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
-	..()
+	. = ..()
+	if(!.)
+		return
+	if(damage == initial(damage))
+		clear_eye_trauma()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/HMN = owner
-		old_eye_color = HMN.eye_color
+		var/mob/living/carbon/human/H = owner
+		old_eye_color = H.eye_color
 		if(eye_color)
-			HMN.eye_color = eye_color
-			HMN.regenerate_icons()
+			H.eye_color = eye_color
 		else
-			eye_color = HMN.eye_color
-		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
+			eye_color = H.eye_color
+		if(!special)
+			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
+		if(HAS_TRAIT(H, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 			see_in_dark = 8
 	M.update_tint()
 	owner.update_sight()
 
+
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
-	..()
+	clear_eye_trauma()
+	. = ..()
 	if(ishuman(M) && eye_color)
-		var/mob/living/carbon/human/HMN = M
-		HMN.eye_color = old_eye_color
-		HMN.regenerate_icons()
-	M.update_tint()
-	M.update_sight()
+		var/mob/living/carbon/human/H = M
+		H.eye_color = old_eye_color
+		if(!special)
+			H.dna.species.handle_body()
+	if(!special)
+		M.update_tint()
+		M.update_sight()
+
+/obj/item/organ/eyes/on_life()
+	..()
+	var/mob/living/carbon/C = owner
+	//since we can repair fully damaged eyes, check if healing has occurred
+	if((organ_flags & ORGAN_FAILING) && (damage < maxHealth))
+		organ_flags &= ~ORGAN_FAILING
+		C.cure_blind(EYE_DAMAGE)
+	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
+	if(damage > 20)
+		damaged = TRUE
+		if(organ_flags & ORGAN_FAILING)
+			C.become_blind(EYE_DAMAGE)
+		else if(damage > 30)
+			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
+	else if(damaged)
+		damaged = FALSE
+		C.clear_fullscreen("eye_damage")
+	return
+
+/obj/item/organ/eyes/proc/clear_eye_trauma()
+	var/mob/living/carbon/C = owner
+	C.clear_fullscreen("eye_damage")
+	C.cure_blind(EYE_DAMAGE)
+	damaged = FALSE
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
@@ -71,6 +121,7 @@
 /obj/item/organ/eyes/night_vision/zombie
 	name = "undead eyes"
 	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
+	sight_flags = SEE_MOBS
 
 /obj/item/organ/eyes/night_vision/nightmare
 	name = "burning red eyes"
@@ -88,15 +139,17 @@
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
 	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	if(prob(10 * severity))
-		return
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)
+	if(severity == EMP_HEAVY)
+		owner.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
+
 
 /obj/item/organ/eyes/robotic/xray
 	name = "\improper X-ray eyes"
@@ -137,7 +190,7 @@
 	M.become_blind("flashlight_eyes")
 
 
-/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, special = FALSE)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
@@ -178,7 +231,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove()
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	terminate_effects()
 	. = ..()
 
@@ -289,7 +342,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
 	if(!islist(eye_lighting))
 		regenerate_light_effects()
-	if((eye_lighting.len < light_beam_distance) || !on_mob)
+	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	sync_light_effects()
 	update_visuals()

@@ -111,14 +111,7 @@
 		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
-	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		return
-	if(!isturf(user.loc)) //No magically doing it from inside closets
-		return
-	if(target.buckled || target.has_buckled_mobs())
-		return
-	if(target.mob_size > MOB_SIZE_HUMAN)
-		to_chat(user, "<span class='warning'>[target] doesn't fit inside [src]!</span>")
+	if(!can_stuff_mob_in(target, user))
 		return
 	add_fingerprint(user)
 	if(user == target)
@@ -136,6 +129,24 @@
 			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
+
+/obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
+	if(!pushing && !iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
+		if (iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if (!borg.module || !borg.module.canDispose)
+				return
+		else
+			return FALSE
+	if(!isturf(user.loc)) //No magically doing it from inside closets
+		return FALSE
+	if(target.buckled || target.has_buckled_mobs())
+		return FALSE
+	if(target.mob_size > MOB_SIZE_HUMAN)
+		if(!pushing)
+			to_chat(user, "<span class='warning'>[target] doesn't fit inside [src]!</span>")
+		return FALSE
+	return TRUE
 
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)
@@ -265,6 +276,7 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 	var/datum/oracle_ui/themed/nano/ui
+	obj_flags = CAN_BE_HIT | USES_TGUI | SHOVABLE_ONTO
 
 /obj/machinery/disposal/bin/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -276,7 +288,7 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		GET_COMPONENT_FROM(STR, /datum/component/storage, T)
+		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			STR.remove_from_storage(O,src)
@@ -305,7 +317,7 @@
 	if(Adjacent(user))
 		return TRUE
 	return ..()
-	
+
 
 /obj/machinery/disposal/bin/oui_data(mob/user)
 	var/list/data = list()
@@ -347,6 +359,12 @@
 			. = TRUE
 	ui.soft_update_fields()
 
+/obj/machinery/disposal/bin/alt_attack_hand(mob/user)
+	if(can_interact(usr))
+		flush = !flush
+		update_icon()
+		return TRUE
+	return FALSE
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM)
 	if(isitem(AM) && AM.CanEnterDisposals())
@@ -359,6 +377,17 @@
 			return ..()
 	else
 		return ..()
+
+/obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
+	if(!can_stuff_mob_in(target, user, TRUE))
+		return FALSE
+	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.forceMove(src)
+	user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
+		"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, target, "shoved", "into [src] (disposal bin)")
+	return TRUE
+
 
 /obj/machinery/disposal/bin/flush()
 	..()

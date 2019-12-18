@@ -70,6 +70,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.deco_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/deco_wings, GLOB.deco_wings_list)
 	if(!GLOB.insect_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
 	if(!GLOB.insect_fluffs_list.len)
@@ -138,6 +140,7 @@
 		"tail_lizard"		= pick(GLOB.tails_list_lizard),
 		"tail_human"		= "None",
 		"wings"				= "None",
+		"deco_wings"		= "None",
 		"snout"				= pick(GLOB.snouts_list),
 		"horns"				= pick(GLOB.horns_list),
 		"ears"				= "None",
@@ -157,7 +160,6 @@
 		"xenodorsal" 		= "Standard",
 		"xenohead" 			= "Standard",
 		"xenotail" 			= "Xenomorph Tail",
-		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= pick(GLOB.cock_shapes_list),
@@ -397,6 +399,12 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = 0
 			break
 
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.recoveringstam)
+				. = 0
+				break
+
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0
@@ -514,12 +522,14 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			prefs = new
 
-		var/adminoverride = 0
+		var/override = FALSE
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+			override = TRUE
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue

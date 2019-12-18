@@ -42,8 +42,8 @@
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
-	destination.set_species(species.type, icon_update=0)
 	destination.dna.features = features.Copy()
+	destination.set_species(species.type, icon_update=0)
 	destination.dna.real_name = real_name
 	destination.dna.nameless = nameless
 	destination.dna.custom_species = custom_species
@@ -254,7 +254,6 @@
 	if(icon_update)
 		update_body()
 		update_hair()
-		update_body_parts()
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 

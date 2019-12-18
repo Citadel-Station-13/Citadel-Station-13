@@ -113,7 +113,7 @@
 /obj/singularity/wizard/attack_tk(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		var/datum/component/mood/insaneinthemembrane = C.GetComponent(/datum/component/mood)
 		if(insaneinthemembrane.sanity < 15)
 			return //they've already seen it and are about to die, or are just too insane to care
 		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
@@ -198,7 +198,7 @@
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
 
-	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.set_species(/datum/species/skeleton/space, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
@@ -255,7 +255,7 @@
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(I.is_hot())
+		if(I.get_temperature())
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
@@ -324,14 +324,11 @@
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()
-	possible = list()
+	LAZYINITLIST(possible)
 	if(!voodoo_link)
 		return
-	var/list/prints = voodoo_link.return_fingerprints()
-	if(!length(prints))
-		return FALSE
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(prints[md5(H.dna.uni_identity)])
+		if(md5(H.dna.uni_identity) in voodoo_link.fingerprints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
@@ -343,9 +340,9 @@
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
-    user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-    user.gib()
-    return(BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.gib()
+	return(BRUTELOSS)
 
 /obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
@@ -386,7 +383,9 @@
 	if(!istype(user) || on_cooldown)
 		return
 	var/turf/T = get_turf(user)
-	if(!T)
+	var/area/A = get_area(user)
+	if(!T || !A || A.noteleport)
+		to_chat(user, "<span class='warning'>You play \the [src], yet no sound comes out of it... Looks like it won't work here.</span>")
 		return
 	on_cooldown = TRUE
 	last_user = user

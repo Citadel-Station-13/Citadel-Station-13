@@ -6,6 +6,7 @@
 	dir_in = 1 //Facing North.
 	max_integrity = 250
 	deflect_chance = 5
+	force = 20
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 30, "energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 6
@@ -13,6 +14,7 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 	step_energy_drain = 3
+	leg_overload_coeff = 300
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
@@ -20,12 +22,15 @@
 	icon_state = "darkgygax"
 	max_integrity = 300
 	deflect_chance = 15
+	force = 25
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 50, "energy" = 35, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 35000
 	leg_overload_coeff = 100
 	operation_req_access = list(ACCESS_SYNDICATE)
+	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
+	spawn_tracked = FALSE
 
 /obj/mecha/combat/gygax/dark/loaded/Initialize()
 	. = ..()
@@ -45,7 +50,6 @@
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
-
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Grant(user, src)
@@ -62,7 +66,3 @@
 /obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
-
-/obj/mecha/combat/Initialize()
-	. = ..()
-	trackers += new /obj/item/mecha_parts/mecha_tracking(src)

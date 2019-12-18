@@ -6,58 +6,19 @@
 	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
+	value = 20
+	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
+	inverse_chem			= "fermiTox"
+
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
 	. = ..()
-	if(!M)
-		return
-	if(purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-	if (purity == 1 || DoNotSplit == TRUE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
-		return
-	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(id, amount, FALSE)
-		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [InverseChem]")
-		return
-	else
-		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
-		M.reagents.remove_reagent(id, (impureVol), FALSE)
-		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [ImpureChem]")
-	return
 
 //When merging two fermichems, see above
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
-	if(!ishuman(M))
-		return
-	if (purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
-	if (purity == 1 || DoNotSplit == TRUE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [id] in themselves")
-		return
-	else if (InverseChemVal > purity)
-		M.reagents.remove_reagent(id, amount, FALSE)
-		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
-		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
-			if(R.name == "")
-				R.name = name//Negative effects are hidden
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [InverseChem]")
-		return
-	else
-		var/impureVol = amount * (1 - purity)
-		M.reagents.remove_reagent(id, impureVol, FALSE)
-		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
-		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
-			if(R.name == "")
-				R.name = name//Negative effects are hidden
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [id]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [ImpureChem]")
-	return
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +38,7 @@
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	metabolization_rate = 0.2
 	overdose_threshold = 25
-	DoNotSplit = TRUE
+	chemical_flags = REAGENT_DONOTSPLIT
 	pH = 4
 	can_synth = TRUE
 
@@ -86,10 +47,7 @@
 	. = ..()
 	if(M.head)
 		var/obj/item/W = M.head
-		if(istype(W, /obj/item/clothing/head/hattip))
-			qdel(W)
-		else
-			M.dropItemToGround(W, TRUE)
+		M.dropItemToGround(W, TRUE)
 	var/hat = new /obj/item/clothing/head/hattip()
 	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
 
@@ -99,13 +57,18 @@
 		return ..()
 	var/hatArmor = 0
 	if(!overdosed)
-		hatArmor = (purity/10)
+		hatArmor = (cached_purity/10)
 	else
-		hatArmor = - (purity/10)
+		hatArmor = (cached_purity/10)
 	if(hatArmor > 90)
 		return ..()
 	var/obj/item/W = M.head
 	W.armor = W.armor.modifyAllRatings(hatArmor)
+	..()
+
+/datum/reagent/fermi/hatmium/reaction_turf(turf/T, reac_volume)
+	if(reac_volume >= 5)
+		new /obj/item/clothing/head/hattip(T)
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,9 +85,9 @@
 	color = "#f9b9bc" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	InverseChemVal 		= 0
+	inverse_chem_val 		= 0
 	var/obj/item/organ/tongue/nT
-	DoNotSplit = TRUE
+	chemical_flags = REAGENT_DONOTSPLIT
 	pH = 5
 	var/obj/item/organ/tongue/T
 	can_synth = TRUE
@@ -190,7 +153,7 @@
 	..()
 
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
-	if(purity < 1)//Only permanent if you're a good chemist.
+	if(cached_purity < 0.95)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
 		nT.Remove(M)
 		qdel(nT)
@@ -206,50 +169,55 @@
 //Writen by Trilby!! Embellsished a little by me.
 
 /datum/reagent/fermi/nanite_b_gone
-	name = "Naninte bane"
+	name = "Nanite bane"
 	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
 	overdose_threshold = 15
-	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
-	InverseChem 		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	impure_chem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
+	inverse_chem_val 		= 0.25
+	inverse_chem		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
+	value = 90
 	can_synth = FALSE
+	var/react_objs = list()
 
 /datum/reagent/fermi/nanite_b_gone/on_mob_life(mob/living/carbon/C)
-	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
-	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
+	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -purity//0.5 seems to be the default to me, so it'll neuter them.
+	N.nanite_volume += -cached_purity*5//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
-	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
+	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
-		//empulse((get_turf(C)), 3, 2)//So the nanites randomize
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
-		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
+		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -2
+	N.nanite_volume += -10*cached_purity
 	..()
 
-/datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
+datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
+	for(var/active_obj in react_objs)
+		if(O == active_obj)
+			return
+	react_objs += O
 	O.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
-	name = "Naninte bain"
+	name = "Electromagnetic crystals"
 	id = "nanite_b_goneTox"
-	description = "Poorly made, and shocks you!"
-	metabolization_rate = 1
+	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
+	metabolization_rate = 0.5
+	chemical_flags = REAGENT_INVISIBLE
 
 //Increases shock events.
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
@@ -287,8 +255,7 @@
 	if((method==VAPOR) && (!C.wear_mask))
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
-		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-		L.adjustLungLoss(acidstr*2, C)
+		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, acidstr*2)
 		C.apply_damage(acidstr/5, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
@@ -315,7 +282,7 @@
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	addProc = TRUE
+	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -325,15 +292,15 @@
 	else
 		holder.remove_reagent("fermiTest", volume)//Avoiding recurrsion
 	var/location = get_turf(holder.my_atom)
-	if(purity < 0.34 || purity == 1)
+	if(cached_purity < 0.34 || cached_purity == 1)
 		var/datum/effect_system/foam_spread/s = new()
 		s.set_up(volume*2, location, holder)
 		s.start()
-	if((purity < 0.67 && purity >= 0.34)|| purity == 1)
+	if((cached_purity < 0.67 && cached_purity >= 0.34)|| cached_purity == 1)
 		var/datum/effect_system/smoke_spread/chem/s = new()
 		s.set_up(holder, volume*2, location)
 		s.start()
-	if(purity >= 0.67)
+	if(cached_purity >= 0.67)
 		for (var/datum/reagent/reagent in holder.reagent_list)
 			if (istype(reagent, /datum/reagent/fermi))
 				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
@@ -346,22 +313,6 @@
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1)
 	holder.clear_reagents()
 
-/datum/reagent/fermi/fermiTox
-	name = "FermiTox"
-	id = "fermiTox"
-	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
-	data = "merge"
-	color = "FFFFFF"
-	can_synth = FALSE
-
-//I'm concerned this is too weak, but I also don't want deathmixes.
-/datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
-	if(C.dna && istype(C.dna.species, /datum/species/jelly))
-		C.adjustToxLoss(-2)
-	else
-		C.adjustToxLoss(2)
-	..()
-
 /datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"
 	id = "acidic_buffer"
@@ -372,9 +323,11 @@
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
@@ -392,9 +345,11 @@
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
+	if(holder.has_reagent("stabilizing_agent"))
+		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
+		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
@@ -408,10 +363,11 @@
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
 	name = "secretcatchem" //an attempt at hiding it
 	id = "secretcatchem"
-	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed."
+	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed. If used on someone in crit, it will turn them into a cat permanently, until the cat is killed."
 	taste_description = "hairballs and cream"
 	color = "#ffc224"
 	var/catshift = FALSE
+	var/perma = FALSE
 	var/mob/living/simple_animal/pet/cat/custom_cat/catto = null
 	can_synth = FALSE
 
@@ -420,7 +376,7 @@
 
 /datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
 	. = ..()
-	if(purity >= 0.8)//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1. It already requires felind too, so no new functionality there.
+	if(cached_purity >= 0.9)//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1.
 		//exception(al) handler:
 		H.dna.features["ears"]  = "Cat"
 		H.dna.features["mam_ears"] = "Cat"
@@ -437,20 +393,30 @@
 	H.forceMove(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "cats")
-	//Just to deal with rascally ghosts
-	//ADD_TRAIT(catto, TRAIT_NODEATH, "catto")//doesn't work
-	//catto.health = 1000 //To simulate fake death, while preventing ghosts escaping.
+	if(H.InCritical())
+		perma = TRUE
+		volume = 5
+		H.stat = DEAD
+		catto.origin = H
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
+	if(!catto)
+		metabolization_rate = 5
+		return ..()
 	if(catto.health <= 0) //So the dead can't ghost
 		if(prob(10))
-			to_chat(H, "<span class='notice'>You feel your body start to slowly shift back from it's dead form.</span>")
+			to_chat(catto, "<span class='notice'>You feel your body start to slowly shift back from it's dead form.</span>")
+		perma = FALSE
+		metabolization_rate = 1
 	else if(prob(5))
 		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 		catto.say("lets out a meowrowr!*")
 	..()
 
 /datum/reagent/fermi/secretcatchem/on_mob_delete(mob/living/carbon/H)
+	if(perma)
+		to_chat(H, "<span class='notice'>You feel your body settle into it's new form. You won't be able to shift back on death anymore.</span>")
+		return
 	var/words = "Your body shifts back to normal."
 	H.forceMove(catto.loc)
 	catto.mind.transfer_to(H)
@@ -460,3 +426,20 @@
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")
+
+
+/datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
+	if(istype(L, /mob/living/simple_animal/pet/cat/custom_cat) && cached_purity >= 0.85)
+		var/mob/living/simple_animal/pet/cat/custom_cat/catto = L
+		if(catto.origin)
+			var/mob/living/carbon/human/H = catto.origin
+			H.stat = CONSCIOUS
+			log_game("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
+			to_chat(catto, "<span class='notice'>Your body shifts back to normal!</span>")
+			H.forceMove(catto.loc)
+			catto.mind.transfer_to(H)
+			if(!L.mind) //Just in case
+				qdel(L)
+			else //This should never happen, but just in case, so their game isn't ruined.
+				catto.icon_state = "custom_cat"
+				catto.health = 50

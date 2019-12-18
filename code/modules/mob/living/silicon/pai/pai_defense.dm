@@ -81,10 +81,13 @@
 /mob/living/silicon/pai/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/pai/adjustStaminaLoss(amount)
-	take_holo_damage(amount & 0.25)
+/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health, forced = FALSE)
+	if(forced)
+		take_holo_damage(amount)
+	else
+		take_holo_damage(amount * 0.25)
 
-/mob/living/silicon/pai/adjustBrainLoss(amount)
+/mob/living/silicon/pai/adjustOrganLoss(slot, amount, maximum = 500) //I kept this in, unlike tg
 	Knockdown(amount * 0.2)
 
 /mob/living/silicon/pai/getBruteLoss()
@@ -102,16 +105,10 @@
 /mob/living/silicon/pai/getCloneLoss()
 	return FALSE
 
-/mob/living/silicon/pai/getBrainLoss()
-	return FALSE
-
 /mob/living/silicon/pai/getStaminaLoss()
 	return FALSE
 
 /mob/living/silicon/pai/setCloneLoss()
-	return FALSE
-
-/mob/living/silicon/pai/setBrainLoss()
 	return FALSE
 
 /mob/living/silicon/pai/setStaminaLoss()
