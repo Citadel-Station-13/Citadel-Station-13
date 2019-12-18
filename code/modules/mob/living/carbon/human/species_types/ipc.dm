@@ -8,8 +8,8 @@
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
-	mutant_bodyparts = list("ipc_screen", "ipc_antenna")
-	default_features = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
+	mutant_bodyparts = list(FEAT_IPC_SCREEN, FEAT_IPC_ANTENNA)
+	default_features = list(FEAT_IPC_SCREEN = "Blank", FEAT_IPC_ANTENNA = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
 	mutanttongue = /obj/item/organ/tongue/robot/ipc
@@ -37,8 +37,8 @@
 
 /datum/action/innate/monitor_change/Activate()
 	var/mob/living/carbon/human/H = owner
-	var/new_ipc_screen = input(usr, "Choose your character's screen:", "Monitor Display") as null|anything in GLOB.ipc_screens_list
+	var/new_ipc_screen = input(usr, "Choose your character's screen:", "Monitor Display") as null|anything in selectable_accessories(GLOB.mutant_features_list[FEAT_IPC_SCREEN], H.client.ckey)
 	if(!new_ipc_screen)
 		return
-	H.dna.features["ipc_screen"] = new_ipc_screen
+	H.dna.features[FEAT_IPC_SCREEN] = new_ipc_screen
 	H.update_body()

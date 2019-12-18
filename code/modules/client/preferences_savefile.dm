@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	24
+#define SAVEFILE_VERSION_MAX	25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -323,8 +323,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
-		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
+	if(!S["features[FEAT_MUTCOLOR]"] || S["features[FEAT_MUTCOLOR]"] == "#000")
+		WRITE_FILE(S["features[FEAT_MUTCOLOR]"]	, "#FFF")
 
 	if(!S["features["horn_color"]"] || S["features["horn_color"]"] == "#000")
 		WRITE_FILE(S["features["horn_color"]"]	, "#85615a")
@@ -357,19 +357,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]				>> backbag
 	S["jumpsuit_style"]			>> jumpsuit_style
 	S["uplink_loc"]				>> uplink_spawn_loc
-	S["feature_mcolor"]					>> features["mcolor"]
-	S["feature_lizard_tail"]			>> features["tail_lizard"]
-	S["feature_lizard_snout"]			>> features["snout"]
-	S["feature_lizard_horns"]			>> features["horns"]
-	S["feature_lizard_frills"]			>> features["frills"]
-	S["feature_lizard_spines"]			>> features["spines"]
-	S["feature_lizard_body_markings"]	>> features["body_markings"]
-	S["feature_lizard_legs"]			>> features["legs"]
-	S["feature_human_tail"]				>> features["tail_human"]
-	S["feature_human_ears"]				>> features["ears"]
-	S["feature_insect_wings"]			>> features["insect_wings"]
-	S["feature_deco_wings"]			>> features["deco_wings"]
-	S["feature_insect_fluff"]			>> features["insect_fluff"]
+	S["feature_mcolor"]					>> features[FEAT_MUTCOLOR]
+	S["feature_lizard_tail"]			>> features[FEAT_TAIL_LIZARD]
+	S["feature_lizard_snout"]			>> features[FEAT_SNOUT]
+	S["feature_lizard_horns"]			>> features[FEAT_HORNS]
+	S["feature_lizard_frills"]			>> features[FEAT_FRILLS]
+	S["feature_lizard_spines"]			>> features[FEAT_SPINES]
+	S["feature_lizard_body_markings"]	>> features[FEAT_MARKINGS]
+	S["feature_lizard_legs"]			>> features[FEAT_LEGS]
+	S["feature_human_tail"]				>> features[FEAT_TAIL_HUMAN]
+	S["feature_human_ears"]				>> features[FEAT_EARS]
+	S["feature_insect_wings"]			>> features[FEAT_INSECT_WINGS]
+	S["feature_deco_wings"]			>> features[FEAT_DECO_WINGS]
+	S["feature_insect_fluff"]			>> features[FEAT_INSECT_FLUFF]
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -393,19 +393,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			>> features["exhibitionist"]
-	S["feature_mcolor2"]				>> features["mcolor2"]
-	S["feature_mcolor3"]				>> features["mcolor3"]
-	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
-	S["feature_mam_tail"]				>> features["mam_tail"]
-	S["feature_mam_ears"]				>> features["mam_ears"]
+	S["feature_mcolor2"]				>> features[FEAT_MUTCOLOR2]
+	S["feature_mcolor3"]				>> features[FEAT_MUTCOLOR3]
+	S["feature_mam_body_markings"]		>> features[FEAT_MAM_MARKINGS]
+	S["feature_mam_tail"]				>> features[FEAT_TAIL_MAM]
+	S["feature_mam_ears"]				>> features[FEAT_MAM_EARS]
 	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
-	S["feature_taur"]					>> features["taur"]
-	S["feature_mam_snouts"]				>> features["mam_snouts"]
+	S["feature_taur"]					>> features[FEAT_TAUR]
+	S["feature_mam_snouts"]				>> features[FEAT_MAM_SNOUT]
 	S["feature_meat"]					>> features["meat_type"]
 	//Xeno features
-	S["feature_xeno_tail"]				>> features["xenotail"]
-	S["feature_xeno_dors"]				>> features["xenodorsal"]
-	S["feature_xeno_head"]				>> features["xenohead"]
+	S["feature_xeno_tail"]				>> features[FEAT_XENO_TAIL]
+	S["feature_xeno_dors"]				>> features[FEAT_XENO_DORSAL]
+	S["feature_xeno_head"]				>> features[FEAT_XENO_HEAD]
 	//cock features
 	S["feature_has_cock"]				>> features["has_cock"]
 	S["feature_cock_shape"]				>> features["cock_shape"]
@@ -462,8 +462,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!custom_names[custom_name_id])
 			custom_names[custom_name_id] = get_default_name(custom_name_id)
 
-	if(!features["mcolor"] || features["mcolor"] == "#000")
-		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	if(!features[FEAT_MUTCOLOR] || features[FEAT_MUTCOLOR] == "#000")
+		features[FEAT_MUTCOLOR] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 
 	if(!features["horn_color"] || features["horn_color"] == "#000")
 		features["horn_color"] = "85615a"
@@ -497,19 +497,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag							= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	jumpsuit_style					= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["tail_lizard"]			= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
-	features["tail_human"]			= sanitize_inlist(features["tail_human"], GLOB.tails_list_human)
-	features["snout"]				= sanitize_inlist(features["snout"], GLOB.snouts_list)
-	features["horns"]				= sanitize_inlist(features["horns"], GLOB.horns_list)
-	features["ears"]				= sanitize_inlist(features["ears"], GLOB.ears_list)
-	features["frills"]				= sanitize_inlist(features["frills"], GLOB.frills_list)
-	features["spines"]				= sanitize_inlist(features["spines"], GLOB.spines_list)
-	features["body_markings"]		= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list)
-	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
-	features["deco_wings"] 			= sanitize_inlist(features["deco_wings"], GLOB.deco_wings_list, "None")
-	features["insect_fluff"]		= sanitize_inlist(features["insect_fluff"], GLOB.insect_fluffs_list)
+	features[FEAT_MUTCOLOR]			= sanitize_hexcolor(features[FEAT_MUTCOLOR], 3, 0)
+	features[FEAT_TAIL_LIZARD]		= sanitize_inlist(features[FEAT_TAIL_LIZARD], GLOB.mutant_features_list[FEAT_TAIL_LIZARD])
+	features[FEAT_TAIL_HUMAN]		= sanitize_inlist(features[FEAT_TAIL_HUMAN], GLOB.mutant_features_list[FEAT_TAIL_HUMAN])
+	features[FEAT_SNOUT]			= sanitize_inlist(features[FEAT_SNOUT], GLOB.mutant_features_list[FEAT_SNOUT])
+	features[FEAT_HORNS]			= sanitize_inlist(features[FEAT_HORNS], GLOB.mutant_features_list[FEAT_HORNS])
+	features[FEAT_EARS]				= sanitize_inlist(features[FEAT_EARS], GLOB.mutant_features_list[FEAT_EARS])
+	features[FEAT_FRILLS]			= sanitize_inlist(features[FEAT_FRILLS], GLOB.mutant_features_list[FEAT_FRILLS])
+	features[FEAT_SPINES]			= sanitize_inlist(features[FEAT_SPINES], GLOB.mutant_features_list[FEAT_SPINES])
+	features[FEAT_MARKINGS]			= sanitize_inlist(features[FEAT_MARKINGS], GLOB.mutant_features_list[FEAT_MARKINGS])
+	features[FEAT_LEGS]				= sanitize_inlist(features[FEAT_LEGS], GLOB.mutant_features_list[FEAT_LEGS])
+	features[FEAT_INSECT_WINGS] 	= sanitize_inlist(features[FEAT_INSECT_WINGS], GLOB.mutant_features_list[FEAT_INSECT_WINGS])
+	features[FEAT_DECO_WINGS] 		= sanitize_inlist(features[FEAT_DECO_WINGS], GLOB.mutant_features_list[FEAT_DECO_WINGS], "None")
+	features[FEAT_INSECT_FLUFF]		= sanitize_inlist(features[FEAT_INSECT_FLUFF], GLOB.mutant_features_list[FEAT_INSECT_FLUFF])
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -568,19 +568,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]				, uplink_spawn_loc)
 	WRITE_FILE(S["species"]					, pref_species.id)
-	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
-	WRITE_FILE(S["feature_lizard_tail"]				, features["tail_lizard"])
-	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
-	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
-	WRITE_FILE(S["feature_lizard_horns"]			, features["horns"])
-	WRITE_FILE(S["feature_human_ears"]				, features["ears"])
-	WRITE_FILE(S["feature_lizard_frills"]			, features["frills"])
-	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
-	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
-	WRITE_FILE(S["feature_lizard_legs"]				, features["legs"])
-	WRITE_FILE(S["feature_insect_wings"]			, features["insect_wings"])
-	WRITE_FILE(S["feature_deco_wings"]				, features["deco_wings"])
-	WRITE_FILE(S["feature_insect_fluff"]			, features["insect_fluff"])
+	WRITE_FILE(S["feature_mcolor"]					, features[FEAT_MUTCOLOR])
+	WRITE_FILE(S["feature_lizard_tail"]				, features[FEAT_TAIL_LIZARD])
+	WRITE_FILE(S["feature_human_tail"]				, features[FEAT_TAIL_HUMAN])
+	WRITE_FILE(S["feature_lizard_snout"]			, features[FEAT_SNOUT])
+	WRITE_FILE(S["feature_lizard_horns"]			, features[FEAT_HORNS])
+	WRITE_FILE(S["feature_human_ears"]				, features[FEAT_EARS])
+	WRITE_FILE(S["feature_lizard_frills"]			, features[FEAT_FRILLS])
+	WRITE_FILE(S["feature_lizard_spines"]			, features[FEAT_SPINES])
+	WRITE_FILE(S["feature_lizard_body_markings"]	, features[FEAT_MARKINGS])
+	WRITE_FILE(S["feature_lizard_legs"]				, features[FEAT_LEGS])
+	WRITE_FILE(S["feature_insect_wings"]			, features[FEAT_INSECT_WINGS])
+	WRITE_FILE(S["feature_deco_wings"]				, features[FEAT_DECO_WINGS])
+	WRITE_FILE(S["feature_insect_fluff"]			, features[FEAT_INSECT_FLUFF])
 	WRITE_FILE(S["feature_meat"]					, features["meat_type"])
 
 	//Custom names

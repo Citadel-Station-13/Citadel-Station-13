@@ -75,8 +75,8 @@
 	id = "podweak"
 	limbs_id = "pod"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list(FEAT_TAIL_MAM, FEAT_MAM_EARS, FEAT_MAM_MARKINGS, FEAT_MAM_SNOUT, FEAT_TAUR, FEAT_LEGS)
+	default_features = list(FEAT_MUTCOLOR = "FFF",FEAT_MUTCOLOR2 = "FFF",FEAT_MUTCOLOR3 = "FFF", FEAT_MAM_SNOUT = "Husky", FEAT_TAIL_MAM = "Husky", FEAT_MAM_EARS = "Husky", FEAT_MAM_MARKINGS = "Husky", FEAT_TAUR = "None", FEAT_LEGS = "Normal Legs")
 	light_nutrition_gain_factor = 7.5
 	light_bruteheal = 0.2
 	light_burnheal = 0.2

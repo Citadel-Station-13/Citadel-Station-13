@@ -327,9 +327,9 @@
 		//body marking memes
 		var/list/colorlist = list()
 		colorlist.Cut()
-		colorlist += ReadRGB("[H.dna.features["mcolor"]]0")
-		colorlist += ReadRGB("[H.dna.features["mcolor2"]]0")
-		colorlist += ReadRGB("[H.dna.features["mcolor3"]]0")
+		colorlist += ReadRGB("[H.dna.features[FEAT_MUTCOLOR]]0")
+		colorlist += ReadRGB("[H.dna.features[FEAT_MUTCOLOR2]]0")
+		colorlist += ReadRGB("[H.dna.features[FEAT_MUTCOLOR3]]0")
 		colorlist += list(0,0,0, S.hair_alpha)
 		for(var/index=1, index<=colorlist.len, index++)
 			colorlist[index] = colorlist[index]/255
@@ -347,26 +347,27 @@
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
 			else
-				species_color = H.dna.features["mcolor"]
+				species_color = H.dna.features[FEAT_MUTCOLOR]
 			should_draw_greyscale = TRUE
 		else
 			species_color = ""
 
-		if("legs" in S.default_features)
+		if(FEAT_LEGS in S.default_features)
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
 				if(DIGITIGRADE in S.species_traits)
-					digitigrade_type = lowertext(H.dna.features["legs"])
+					digitigrade_type = lowertext(H.dna.features[FEAT_LEGS])
 			else
 				digitigrade_type = null
 
-		if("mam_body_markings" in S.default_features)
+		if(FEAT_MAM_MARKINGS in S.default_features)
 			var/datum/sprite_accessory/Smark
-			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
+			var/list/marks = GLOB.mutant_features_list[FEAT_MAM_MARKINGS]
+			Smark = marks[H.dna.features[FEAT_MAM_MARKINGS]]
 			if(Smark)
 				body_markings_icon = Smark.icon
-			if(H.dna.features["mam_body_markings"] != "None")
-				body_markings = lowertext(H.dna.features["mam_body_markings"])
-				aux_marking = lowertext(H.dna.features["mam_body_markings"])
+			if(H.dna.features[FEAT_MAM_MARKINGS] != "None")
+				body_markings = lowertext(H.dna.features[FEAT_MAM_MARKINGS])
+				aux_marking = lowertext(H.dna.features[FEAT_MAM_MARKINGS])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"

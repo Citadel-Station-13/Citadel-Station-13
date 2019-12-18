@@ -10,7 +10,7 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/H)
+/proc/randomize_human(mob/living/carbon/human/H, update = TRUE, list/randomize_features)
 	H.gender = pick(MALE, FEMALE)
 	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
@@ -29,18 +29,9 @@
 	H.saved_undershirt = H.undershirt
 	H.saved_socks = H.socks
 
-	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
-	H.dna.features["mcolor"] = random_short_color()
-	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
-	H.dna.features["snout"] = pick(GLOB.snouts_list)
-	H.dna.features["horns"] = pick(GLOB.horns_list)
-	H.dna.features["frills"] = pick(GLOB.frills_list)
-	H.dna.features["spines"] = pick(GLOB.spines_list)
-	H.dna.features["body_markings"] = pick(GLOB.body_markings_list)
-	H.dna.features["insect_wings"] = pick(GLOB.insect_wings_list)
-	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
-	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)
+	if(randomize_features)
+		random_features(randomize_features)
 
-	H.update_body()
-	H.update_hair()
-	H.update_body_parts()
+	if(update)
+		H.update_body()
+		H.update_hair()

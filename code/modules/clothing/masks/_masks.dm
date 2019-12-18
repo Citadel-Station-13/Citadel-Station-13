@@ -30,14 +30,14 @@
 	var/datum/species/pref_species = H.dna.species
 
 	if(mutantrace_variation)
-		if("mam_snouts" in pref_species.default_features)
-			if(H.dna.features["mam_snouts"] != "None")
+		if(FEAT_MAM_SNOUT in pref_species.default_features)
+			if(H.dna.features[FEAT_MAM_SNOUT] != "None")
 				muzzle_var = ALT_STYLE
 			else
 				muzzle_var = NORMAL_STYLE
 
-		else if("snout" in pref_species.default_features)
-			if(H.dna.features["snout"] != "None")
+		else if(FEAT_SNOUT in pref_species.default_features)
+			if(H.dna.features[FEAT_SNOUT] != "None")
 				muzzle_var = ALT_STYLE
 			else
 				muzzle_var = NORMAL_STYLE

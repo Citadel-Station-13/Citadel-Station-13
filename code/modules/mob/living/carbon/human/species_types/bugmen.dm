@@ -4,9 +4,9 @@
 	default_color = "00FF00"
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
-	mutant_bodyparts = list("mam_ears", "mam_snout", "mam_tail", "taur", "insect_wings", "mam_snouts", "insect_fluff","horns")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None",
-							"insect_wings" = "None", "insect_fluff" = "None", "mam_snouts" = "None", "taur" = "None","horns" = "None")
+	mutant_bodyparts = list(FEAT_MAM_EARS, FEAT_MAM_SNOUT, FEAT_TAIL_MAM, FEAT_TAUR, FEAT_INSECT_WINGS, FEAT_MAM_SNOUT, FEAT_INSECT_FLUFF,FEAT_HORNS)
+	default_features = list(FEAT_MUTCOLOR = "FFF",FEAT_MUTCOLOR2 = "FFF",FEAT_MUTCOLOR3 = "FFF", FEAT_TAIL_MAM = "None", FEAT_MAM_EARS = "None",
+							FEAT_INSECT_WINGS = "None", FEAT_INSECT_FLUFF = "None", FEAT_MAM_SNOUT = "None", FEAT_TAUR = "None",FEAT_HORNS = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -25,21 +25,21 @@
 	. = ..()
 
 /datum/species/insect/can_wag_tail(mob/living/carbon/human/H)
-	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+	return (FEAT_TAIL_MAM in mutant_bodyparts) || (FEAT_TAIL_MAM_WAG in mutant_bodyparts)
 
 /datum/species/insect/is_wagging_tail(mob/living/carbon/human/H)
-	return ("mam_waggingtail" in mutant_bodyparts)
+	return (FEAT_TAIL_MAM_WAG in mutant_bodyparts)
 
 /datum/species/insect/start_wagging_tail(mob/living/carbon/human/H)
-	if("mam_tail" in mutant_bodyparts)
-		mutant_bodyparts -= "mam_tail"
-		mutant_bodyparts |= "mam_waggingtail"
+	if(FEAT_TAIL_MAM in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_MAM
+		mutant_bodyparts |= FEAT_TAIL_MAM_WAG
 	H.update_body()
 
 /datum/species/insect/stop_wagging_tail(mob/living/carbon/human/H)
-	if("mam_waggingtail" in mutant_bodyparts)
-		mutant_bodyparts -= "mam_waggingtail"
-		mutant_bodyparts |= "mam_tail"
+	if(FEAT_TAIL_MAM_WAG in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_MAM_WAG
+		mutant_bodyparts |= FEAT_TAIL_MAM
 	H.update_body()
 
 /datum/species/insect/qualifies_for_rank(rank, list/features)

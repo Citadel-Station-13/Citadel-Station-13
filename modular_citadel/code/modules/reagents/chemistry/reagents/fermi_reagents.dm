@@ -378,8 +378,8 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	. = ..()
 	if(cached_purity >= 0.9)//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1.
 		//exception(al) handler:
-		H.dna.features["ears"]  = "Cat"
-		H.dna.features["mam_ears"] = "Cat"
+		H.dna.features[FEAT_EARS]  = "Cat"
+		H.dna.features[FEAT_MAM_EARS] = "Cat"
 		H.verb_say = "mewls"
 		catshift = TRUE
 		playsound(get_turf(H), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
@@ -388,7 +388,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	H.mind.transfer_to(catto)
 	catto.name = H.name
 	catto.desc = "A cute catto! They remind you of [H] somehow."
-	catto.color = "#[H.dna.features["mcolor"]]"
+	catto.color = "#[H.dna.features[FEAT_MUTCOLOR]]"
 	catto.pseudo_death = TRUE
 	H.forceMove(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")

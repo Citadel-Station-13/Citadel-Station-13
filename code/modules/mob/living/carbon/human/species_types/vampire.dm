@@ -5,7 +5,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	default_features = list(FEAT_MUTCOLOR = "FFF", FEAT_TAIL_HUMAN = "None", FEAT_EARS = "None", FEAT_WINGS = "None")
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutant_heart = /obj/item/organ/heart/vampire

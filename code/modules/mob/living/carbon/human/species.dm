@@ -53,6 +53,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
 	var/dangerous_existence //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
+	var/list/randomized_features //list containing all DNA features that should be randomized on random mobs.
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by handle_mutant_bodyparts() below.
 	var/list/mutant_organs = list()		//Internal organs that are unique to this race.
@@ -68,7 +69,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
-	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature[FEAT_MUTCOLOR]
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
 
@@ -289,7 +290,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		C.hud_used.update_locked_slots()
 
 	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
-	if(("legs" in C.dna.species.mutant_bodyparts) && (C.dna.features["legs"] == "Digitigrade" || C.dna.features["legs"] == "Avian"))
+	if((FEAT_LEGS in C.dna.species.mutant_bodyparts) && (C.dna.features[FEAT_LEGS] == "Digitigrade" || C.dna.features[FEAT_LEGS] == "Avian"))
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
@@ -423,7 +424,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!forced_colour)
 				if(hair_color)
 					if(hair_color == "mutcolor")
-						facial_overlay.color = "#" + H.dna.features["mcolor"]
+						facial_overlay.color = "#" + H.dna.features[FEAT_MUTCOLOR]
 					else
 						facial_overlay.color = "#" + hair_color
 				else
@@ -486,7 +487,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(!forced_colour)
 					if(hair_color)
 						if(hair_color == "mutcolor")
-							hair_overlay.color = "#" + H.dna.features["mcolor"]
+							hair_overlay.color = "#" + H.dna.features[FEAT_MUTCOLOR]
 						else
 							hair_overlay.color = "#" + hair_color
 					else
@@ -609,102 +610,102 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
-	if("tail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
-			bodyparts_to_add -= "tail_lizard"
+	if(FEAT_TAIL_LIZARD in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features[FEAT_TAUR] == "None"))
+			bodyparts_to_add -= FEAT_TAIL_LIZARD
 
-	if("waggingtail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
-			bodyparts_to_add -= "waggingtail_lizard"
-		else if ("tail_lizard" in mutant_bodyparts)
-			bodyparts_to_add -= "waggingtail_lizard"
+	if(FEAT_TAIL_LIZARD_WAG in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features[FEAT_TAUR] == "None"))
+			bodyparts_to_add -= FEAT_TAIL_LIZARD_WAG
+		else if (FEAT_TAIL_LIZARD in mutant_bodyparts)
+			bodyparts_to_add -= FEAT_TAIL_LIZARD_WAG
 
-	if("tail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
-			bodyparts_to_add -= "tail_human"
+	if(FEAT_TAIL_HUMAN in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features[FEAT_TAUR] == "None"))
+			bodyparts_to_add -= FEAT_TAIL_HUMAN
 
 
-	if("waggingtail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
-			bodyparts_to_add -= "waggingtail_human"
-		else if ("tail_human" in mutant_bodyparts)
-			bodyparts_to_add -= "waggingtail_human"
+	if(FEAT_TAIL_HUMAN_WAG in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features[FEAT_TAUR] == "None"))
+			bodyparts_to_add -= FEAT_TAIL_HUMAN_WAG
+		else if (FEAT_TAIL_HUMAN in mutant_bodyparts)
+			bodyparts_to_add -= FEAT_TAIL_HUMAN_WAG
 
-	if("spines" in mutant_bodyparts)
-		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "spines"
+	if(FEAT_SPINES in mutant_bodyparts)
+		if(!H.dna.features[FEAT_SPINES] || H.dna.features[FEAT_SPINES] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= FEAT_SPINES
 
-	if("waggingspines" in mutant_bodyparts)
-		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "waggingspines"
+	if(FEAT_SPINES_WAG in mutant_bodyparts)
+		if(!H.dna.features[FEAT_SPINES] || H.dna.features[FEAT_SPINES] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= FEAT_SPINES_WAG
 		else if ("tail" in mutant_bodyparts)
-			bodyparts_to_add -= "waggingspines"
+			bodyparts_to_add -= FEAT_SPINES_WAG
 
-	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
+	if(FEAT_SNOUT in mutant_bodyparts) //Take a closer look at that snout!
 		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "snout"
+			bodyparts_to_add -= FEAT_SNOUT
 
-	if("frills" in mutant_bodyparts)
-		if(!H.dna.features["frills"] || H.dna.features["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "frills"
+	if(FEAT_FRILLS in mutant_bodyparts)
+		if(!H.dna.features[FEAT_FRILLS] || H.dna.features[FEAT_FRILLS] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= FEAT_FRILLS
 
-	if("horns" in mutant_bodyparts)
-		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "horns"
+	if(FEAT_HORNS in mutant_bodyparts)
+		if(!H.dna.features[FEAT_HORNS] || H.dna.features[FEAT_HORNS] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= FEAT_HORNS
 
-	if("ears" in mutant_bodyparts)
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "ears"
+	if(FEAT_EARS in mutant_bodyparts)
+		if(!H.dna.features[FEAT_EARS] || H.dna.features[FEAT_EARS] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= FEAT_EARS
 
-	if("wings" in mutant_bodyparts)
-		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
-			bodyparts_to_add -= "wings"
+	if(FEAT_WINGS in mutant_bodyparts)
+		if(!H.dna.features[FEAT_WINGS] || H.dna.features[FEAT_WINGS] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
+			bodyparts_to_add -= FEAT_WINGS
 
 	if("wings_open" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))
 			bodyparts_to_add -= "wings_open"
-		else if ("wings" in mutant_bodyparts)
+		else if (FEAT_WINGS in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
-	if("insect_fluff" in mutant_bodyparts)
-		if(!H.dna.features["insect_fluff"] || H.dna.features["insect_fluff"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "insect_fluff"
+	if(FEAT_INSECT_FLUFF in mutant_bodyparts)
+		if(!H.dna.features[FEAT_INSECT_FLUFF] || H.dna.features[FEAT_INSECT_FLUFF] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= FEAT_INSECT_FLUFF
 
 //CITADEL EDIT
 	//Race specific bodyparts:
 	//Xenos
-	if("xenodorsal" in mutant_bodyparts)
-		if(!H.dna.features["xenodorsal"] || H.dna.features["xenodorsal"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
-			bodyparts_to_add -= "xenodorsal"
-	if("xenohead" in mutant_bodyparts)//This is an overlay for different castes using different head crests
-		if(!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "xenohead"
-	if("xenotail" in mutant_bodyparts)
-		if(!H.dna.features["xenotail"] || H.dna.features["xenotail"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "xenotail"
+	if(FEAT_XENO_DORSAL in mutant_bodyparts)
+		if(!H.dna.features[FEAT_XENO_DORSAL] || H.dna.features[FEAT_XENO_DORSAL] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
+			bodyparts_to_add -= FEAT_XENO_DORSAL
+	if(FEAT_XENO_HEAD in mutant_bodyparts)//This is an overlay for different castes using different head crests
+		if(!H.dna.features[FEAT_XENO_HEAD] || H.dna.features[FEAT_XENO_HEAD] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= FEAT_XENO_HEAD
+	if(FEAT_XENO_TAIL in mutant_bodyparts)
+		if(!H.dna.features[FEAT_XENO_TAIL] || H.dna.features[FEAT_XENO_TAIL] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= FEAT_XENO_TAIL
 
 	//Other Races
-	if("mam_tail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
-			bodyparts_to_add -= "mam_tail"
+	if(FEAT_TAIL_MAM in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features[FEAT_TAUR] == "None"))
+			bodyparts_to_add -= FEAT_TAIL_MAM
 
-	if("mam_waggingtail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features["taur"] == "None"))
-			bodyparts_to_add -= "mam_waggingtail"
-		else if ("mam_tail" in mutant_bodyparts)
-			bodyparts_to_add -= "mam_waggingtail"
+	if(FEAT_TAIL_MAM_WAG in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR) || (!H.dna.features[FEAT_TAUR] == "None"))
+			bodyparts_to_add -= FEAT_TAIL_MAM_WAG
+		else if (FEAT_TAIL_MAM in mutant_bodyparts)
+			bodyparts_to_add -= FEAT_TAIL_MAM_WAG
 
-	if("mam_ears" in mutant_bodyparts)
-		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "mam_ears"
+	if(FEAT_MAM_EARS in mutant_bodyparts)
+		if(!H.dna.features[FEAT_MAM_EARS] || H.dna.features[FEAT_MAM_EARS] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= FEAT_MAM_EARS
 
-	if("mam_snouts" in mutant_bodyparts) //Take a closer look at that snout!
+	if(FEAT_MAM_SNOUT in mutant_bodyparts) //Take a closer look at that snout!
 		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "mam_snouts"
+			bodyparts_to_add -= FEAT_MAM_SNOUT
 
-	if("taur" in mutant_bodyparts)
-		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
-			bodyparts_to_add -= "taur"
+	if(FEAT_TAUR in mutant_bodyparts)
+		if(!H.dna.features[FEAT_TAUR] || H.dna.features[FEAT_TAUR] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
+			bodyparts_to_add -= FEAT_TAUR
 
 //END EDIT
 
@@ -746,65 +747,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/S
-			switch(bodypart)
-				if("tail_lizard")
-					S = GLOB.tails_list_lizard[H.dna.features["tail_lizard"]]
-				if("waggingtail_lizard")
-					S = GLOB.animated_tails_list_lizard[H.dna.features["tail_lizard"]]
-				if("tail_human")
-					S = GLOB.tails_list_human[H.dna.features["tail_human"]]
-				if("waggingtail_human")
-					S = GLOB.animated_tails_list_human[H.dna.features["tail_human"]]
-				if("spines")
-					S = GLOB.spines_list[H.dna.features["spines"]]
-				if("waggingspines")
-					S = GLOB.animated_spines_list[H.dna.features["spines"]]
-				if("snout")
-					S = GLOB.snouts_list[H.dna.features["snout"]]
-				if("frills")
-					S = GLOB.frills_list[H.dna.features["frills"]]
-				if("horns")
-					S = GLOB.horns_list[H.dna.features["horns"]]
-				if("ears")
-					S = GLOB.ears_list[H.dna.features["ears"]]
-				if("body_markings")
-					S = GLOB.body_markings_list[H.dna.features["body_markings"]]
-				if("wings")
-					S = GLOB.wings_list[H.dna.features["wings"]]
-				if("wingsopen")
-					S = GLOB.wings_open_list[H.dna.features["wings"]]
-				if("deco_wings")
-					S = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
-				if("legs")
-					S = GLOB.legs_list[H.dna.features["legs"]]
-				if("insect_wings")
-					S = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
-				if("insect_fluff")
-					S = GLOB.insect_fluffs_list[H.dna.features["insect_fluff"]]
-				if("caps")
-					S = GLOB.caps_list[H.dna.features["caps"]]
-				if("ipc_screen")
-					S = GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
-				if("ipc_antenna")
-					S = GLOB.ipc_antennas_list[H.dna.features["ipc_antenna"]]
-				if("mam_tail")
-					S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
-				if("mam_waggingtail")
-					S = GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
-				if("mam_body_markings")
-					S = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
-				if("mam_ears")
-					S = GLOB.mam_ears_list[H.dna.features["mam_ears"]]
-				if("mam_snouts")
-					S = GLOB.mam_snouts_list[H.dna.features["mam_snouts"]]
-				if("taur")
-					S = GLOB.taur_list[H.dna.features["taur"]]
-				if("xenodorsal")
-					S = GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
-				if("xenohead")
-					S = GLOB.xeno_head_list[H.dna.features["xenohead"]]
-				if("xenotail")
-					S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
+			var/list/L = GLOB.mutant_features_list[bodypart]
+			if(L)
+				S = L[H.dna.features[bodypart]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -814,19 +759,19 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			accessory_overlay.color = null //just because. reee.
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "xenotail")
+			if(bodypart == FEAT_TAIL_LIZARD || bodypart == FEAT_TAIL_HUMAN || bodypart == FEAT_TAIL_MAM || bodypart == FEAT_XENO_TAIL)
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard")
+			else if(bodypart == FEAT_TAIL_LIZARD_WAG)
 				bodypart = "waggingtail"
-			if(bodypart == "mam_waggingtail" || bodypart == "waggingtail_human")
+			if(bodypart == FEAT_TAIL_MAM_WAG || bodypart == FEAT_TAIL_HUMAN_WAG)
 				bodypart = "tailwag"
-			if(bodypart == "mam_ears" || bodypart == "ears")
+			if(bodypart == FEAT_MAM_EARS || bodypart == FEAT_EARS)
 				bodypart = "ears"
-			if(bodypart == "mam_snouts" || bodypart == "snout")
+			if(bodypart == FEAT_MAM_SNOUT || bodypart == FEAT_SNOUT)
 				bodypart = "snout"
-			if(bodypart == "xenohead")
+			if(bodypart == FEAT_XENO_HEAD)
 				bodypart = "xhead"
-			if(bodypart == "insect_wings" || bodypart == "deco_wings")
+			if(bodypart == FEAT_INSECT_WINGS || bodypart == FEAT_DECO_WINGS)
 				bodypart = "insect_wings"
 
 			if(S.gender_specific)
@@ -839,9 +784,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			var/list/colorlist = list()
 			colorlist.Cut()
-			colorlist += ReadRGB("[H.dna.features["mcolor"]]0")
-			colorlist += ReadRGB("[H.dna.features["mcolor2"]]0")
-			colorlist += ReadRGB("[H.dna.features["mcolor3"]]0")
+			colorlist += ReadRGB("[H.dna.features[FEAT_MUTCOLOR]]0")
+			colorlist += ReadRGB("[H.dna.features[FEAT_MUTCOLOR2]]0")
+			colorlist += ReadRGB("[H.dna.features[FEAT_MUTCOLOR3]]0")
 			colorlist += list(0,0,0, hair_alpha)
 			for(var/index=1, index<=colorlist.len, index++)
 				colorlist[index] = colorlist[index]/255
@@ -855,24 +800,24 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 							if(fixed_mut_color)
 								accessory_overlay.color = "#[fixed_mut_color]"
 							else
-								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+								accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR]]"
 						if(MUTCOLORS2)
 							if(fixed_mut_color2)
 								accessory_overlay.color = "#[fixed_mut_color2]"
 							else
-								accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
+								accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR2]]"
 						if(MUTCOLORS3)
 							if(fixed_mut_color3)
 								accessory_overlay.color = "#[fixed_mut_color3]"
 							else
-								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+								accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR3]]"
 
 						if(MATRIXED)
 							accessory_overlay.color = list(colorlist)
 
 						if(HAIR)
 							if(hair_color == "mutcolor")
-								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+								accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR]]"
 							else
 								accessory_overlay.color = "#[H.hair_color]"
 						if(FACEHAIR)
@@ -886,7 +831,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				else
 					accessory_overlay.color = forced_colour
 			else
-				if(bodypart == "ears")
+				if(bodypart == FEAT_EARS)
 					accessory_overlay.icon_state = "m_ears_none_[layertext]"
 				if(bodypart == "tail")
 					accessory_overlay.icon_state = "m_tail_husk_[layertext]"
@@ -937,20 +882,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						if(fixed_mut_color)
 							extra_accessory_overlay.color = "#[fixed_mut_color]"
 						else
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							extra_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR]]"
 					if(MUTCOLORS2)
 						if(fixed_mut_color2)
 							extra_accessory_overlay.color = "#[fixed_mut_color2]"
 						else
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
+							extra_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR2]]"
 					if(MUTCOLORS3)
 						if(fixed_mut_color3)
 							extra_accessory_overlay.color = "#[fixed_mut_color3]"
 						else
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+							extra_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR3]]"
 					if(HAIR)
 						if(hair_color == "mutcolor")
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+							extra_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR3]]"
 						else
 							extra_accessory_overlay.color = "#[H.hair_color]"
 					if(FACEHAIR)
@@ -983,20 +928,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						if(fixed_mut_color)
 							extra2_accessory_overlay.color = "#[fixed_mut_color]"
 						else
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR]]"
 					if(MUTCOLORS2)
 						if(fixed_mut_color2)
 							extra2_accessory_overlay.color = "#[fixed_mut_color2]"
 						else
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR2]]"
 					if(MUTCOLORS3)
 						if(fixed_mut_color3)
 							extra2_accessory_overlay.color = "#[fixed_mut_color3]"
 						else
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR3]]"
 					if(HAIR)
 						if(hair_color == "mutcolor3")
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features[FEAT_MUTCOLOR]]"
 						else
 							extra2_accessory_overlay.color = "#[H.hair_color]"
 					if(HORNCOLOR)

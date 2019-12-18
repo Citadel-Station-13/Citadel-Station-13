@@ -48,6 +48,19 @@
 				female += D.name
 	return L
 
+/**
+  * Returns a new list only containing unrestricted accessories from an already existing list L.
+  * If a key is given, those sprite accessories the key is whitelisted for will also be returned.
+  * Used to stop lame donor accessories from appearing on randomly generated features
+  */
+/proc/selectable_accessories(list/L, key)
+	. = list()
+	for(var/A in L)
+		var/datum/sprite_accessory/S = L[A]
+		if(S && (!S.ckeys_allowed || (key && (key in S.ckeys_allowed))))
+			.[A] = S
+
+
 /datum/sprite_accessory
 	var/icon			//the icon file the accessory is located in
 	var/icon_state		//the icon_state of the accessory

@@ -403,7 +403,7 @@
 				SEND_SOUND(H, sound(get_announcer_sound("animes")))
 
 				if(H.dna.species.id == "human")
-					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
+					if(H.dna.features[FEAT_TAIL_HUMAN] == "None" || H.dna.features[FEAT_EARS] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
 						ears.Insert(H, drop_if_replaced=FALSE)

@@ -39,7 +39,7 @@
 			if(H.dna.species.use_skintones)
 				body_coloring = "#[skintone2hex(H.skin_tone)]"
 			else
-				body_coloring = "#[H.dna.features["mcolor"]]"
+				body_coloring = "#[H.dna.features[FEAT_MUTCOLOR]]"
 
 	else if(gib_mob_type)
 		var/mob/living/temp_mob = new gib_mob_type(src) //generate a fake mob so that we pull the right type of DNA for the gibs.
@@ -51,7 +51,7 @@
 				if(H.dna.species.use_skintones)
 					body_coloring = "#[skintone2hex(H.skin_tone)]"
 				else
-					body_coloring = "#[H.dna.features["mcolor"]]"
+					body_coloring = "#[H.dna.features[FEAT_MUTCOLOR]]"
 			else
 				dna_to_add = temp_mob.get_blood_dna_list()
 		else if(!issilicon(temp_mob))

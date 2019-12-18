@@ -128,7 +128,7 @@
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if("wings" in H.dna.species.mutant_bodyparts)
+	if(FEAT_WINGS in H.dna.species.mutant_bodyparts)
 		. = "opens " + message
 	else
 		. = "closes " + message
@@ -143,17 +143,17 @@
 /mob/living/carbon/human/proc/OpenWings()
 	if(!dna || !dna.species)
 		return
-	if("wings" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "wings"
-		dna.species.mutant_bodyparts |= "wingsopen"
+	if(FEAT_WINGS in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= FEAT_WINGS
+		dna.species.mutant_bodyparts |= FEAT_WINGS_OPEN
 	update_body()
 
 /mob/living/carbon/human/proc/CloseWings()
 	if(!dna || !dna.species)
 		return
-	if("wingsopen" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "wingsopen"
-		dna.species.mutant_bodyparts |= "wings"
+	if(FEAT_WINGS_OPEN in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= FEAT_WINGS_OPEN
+		dna.species.mutant_bodyparts |= FEAT_WINGS
 	update_body()
 	if(isturf(loc))
 		var/turf/T = loc

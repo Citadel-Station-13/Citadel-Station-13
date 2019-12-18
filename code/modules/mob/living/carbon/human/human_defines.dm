@@ -57,6 +57,8 @@
 
 	var/nameless = FALSE //For drones of both the insectoid and robotic kind. And other types of nameless critters.
 
+	var/datum/species/race = /datum/species/human //Used to customize whichever species will the human be on Initialize(), useful for debugging amongst other things.
+
 	var/custom_species = null
 
 	var/datum/personal_crafting/handcrafting

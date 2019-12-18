@@ -1,8 +1,8 @@
 /datum/species/mush //mush mush codecuck
 	name = "Anthromorphic Mushroom"
 	id = "mush"
-	mutant_bodyparts = list("caps")
-	default_features = list("caps" = "Round")
+	mutant_bodyparts = list(FEAT_CAPS)
+	default_features = list(FEAT_CAPS = "Round")
 
 	fixed_mut_color = "DBBF92"
 	hair_color = "FF4B19" //cap color, spot color uses eye color
@@ -33,8 +33,8 @@
 	. = ..()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(!H.dna.features["caps"])
-			H.dna.features["caps"] = "Round"
+		if(!H.dna.features[FEAT_CAPS])
+			H.dna.features[FEAT_CAPS] = "Round"
 			handle_mutant_bodyparts(H)
 		H.faction |= "mushroom"
 		mush = new(null)

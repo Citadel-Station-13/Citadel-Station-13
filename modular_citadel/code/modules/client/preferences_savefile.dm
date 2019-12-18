@@ -1,18 +1,18 @@
 /datum/preferences/proc/cit_character_pref_load(savefile/S)
 	//ipcs
-	S["feature_ipc_screen"] >> features["ipc_screen"]
-	S["feature_ipc_antenna"] >> features["ipc_antenna"]
+	S["feature_ipc_screen"] >> features[FEAT_IPC_SCREEN]
+	S["feature_ipc_antenna"] >> features[FEAT_IPC_ANTENNA]
 
-	features["ipc_screen"] 	= sanitize_inlist(features["ipc_screen"], GLOB.ipc_screens_list)
-	features["ipc_antenna"] 	= sanitize_inlist(features["ipc_antenna"], GLOB.ipc_antennas_list)
+	features[FEAT_IPC_SCREEN] 	= sanitize_inlist(features[FEAT_IPC_SCREEN], GLOB.mutant_features_list[FEAT_IPC_SCREEN])
+	features[FEAT_IPC_ANTENNA] 	= sanitize_inlist(features[FEAT_IPC_ANTENNA], GLOB.mutant_features_list[FEAT_IPC_ANTENNA])
 	//Citadel
 	features["flavor_text"]		= sanitize_text(features["flavor_text"], initial(features["flavor_text"]))
-	if(!features["mcolor2"] || features["mcolor"] == "#000")
-		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["mcolor3"] || features["mcolor"] == "#000")
-		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
-	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
+	if(!features[FEAT_MUTCOLOR2] || features[FEAT_MUTCOLOR] == "#000")
+		features[FEAT_MUTCOLOR2] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	if(!features[FEAT_MUTCOLOR3] || features[FEAT_MUTCOLOR] == "#000")
+		features[FEAT_MUTCOLOR3] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	features[FEAT_MUTCOLOR2]	= sanitize_hexcolor(features[FEAT_MUTCOLOR2], 3, 0)
+	features[FEAT_MUTCOLOR3]	= sanitize_hexcolor(features[FEAT_MUTCOLOR3], 3, 0)
 
 	//gear loadout
 	var/text_to_load
@@ -28,22 +28,22 @@
 
 /datum/preferences/proc/cit_character_pref_save(savefile/S)
 	//ipcs
-	WRITE_FILE(S["feature_ipc_screen"], features["ipc_screen"])
-	WRITE_FILE(S["feature_ipc_antenna"], features["ipc_antenna"])
+	WRITE_FILE(S["feature_ipc_screen"], features[FEAT_IPC_SCREEN])
+	WRITE_FILE(S["feature_ipc_antenna"], features[FEAT_IPC_ANTENNA])
 	//Citadel
 	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
-	WRITE_FILE(S["feature_mcolor2"], features["mcolor2"])
-	WRITE_FILE(S["feature_mcolor3"], features["mcolor3"])
-	WRITE_FILE(S["feature_mam_body_markings"], features["mam_body_markings"])
-	WRITE_FILE(S["feature_mam_tail"], features["mam_tail"])
-	WRITE_FILE(S["feature_mam_ears"], features["mam_ears"])
+	WRITE_FILE(S["feature_mcolor2"], features[FEAT_MUTCOLOR2])
+	WRITE_FILE(S["feature_mcolor3"], features[FEAT_MUTCOLOR3])
+	WRITE_FILE(S["feature_mam_body_markings"], features[FEAT_MAM_MARKINGS])
+	WRITE_FILE(S["feature_mam_tail"], features[FEAT_TAIL_MAM])
+	WRITE_FILE(S["feature_mam_ears"], features[FEAT_MAM_EARS])
 	WRITE_FILE(S["feature_mam_tail_animated"], features["mam_tail_animated"])
-	WRITE_FILE(S["feature_taur"], features["taur"])
-	WRITE_FILE(S["feature_mam_snouts"],	features["mam_snouts"])
+	WRITE_FILE(S["feature_taur"], features[FEAT_TAUR])
+	WRITE_FILE(S["feature_mam_snouts"],	features[FEAT_MAM_SNOUT])
 	//Xeno features
-	WRITE_FILE(S["feature_xeno_tail"], features["xenotail"])
-	WRITE_FILE(S["feature_xeno_dors"], features["xenodorsal"])
-	WRITE_FILE(S["feature_xeno_head"], features["xenohead"])
+	WRITE_FILE(S["feature_xeno_tail"], features[FEAT_XENO_TAIL])
+	WRITE_FILE(S["feature_xeno_dors"], features[FEAT_XENO_DORSAL])
+	WRITE_FILE(S["feature_xeno_head"], features[FEAT_XENO_HEAD])
 	//cock features
 	WRITE_FILE(S["feature_has_cock"], features["has_cock"])
 	WRITE_FILE(S["feature_cock_shape"], features["cock_shape"])

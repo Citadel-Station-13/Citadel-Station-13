@@ -293,22 +293,22 @@
 				else if (mood.sanity >= SANITY_DISTURBED)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 			if(H.dna.species.can_wag_tail(H))
-				if("tail_human" in pref_species.default_features)
-					if(H.dna.features["tail_human"] == "None")
+				if(FEAT_TAIL_HUMAN in pref_species.default_features)
+					if(H.dna.features[FEAT_TAIL_HUMAN] == "None")
 						return
 					else
 						if(!H.dna.species.is_wagging_tail())
 							H.emote("wag")
 
-				if("tail_lizard" in pref_species.default_features)
-					if(H.dna.features["tail_lizard"] == "None")
+				if(FEAT_TAIL_LIZARD in pref_species.default_features)
+					if(H.dna.features[FEAT_TAIL_LIZARD] == "None")
 						return
 					else
 						if(!H.dna.species.is_wagging_tail())
 							H.emote("wag")
 
-				if("mam_tail" in pref_species.default_features)
-					if(H.dna.features["mam_tail"] == "None")
+				if(FEAT_TAIL_MAM in pref_species.default_features)
+					if(H.dna.features[FEAT_TAIL_MAM] == "None")
 						return
 					else
 						if(!H.dna.species.is_wagging_tail())

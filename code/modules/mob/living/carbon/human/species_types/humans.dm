@@ -4,8 +4,8 @@
 	default_color = "FFFFFF"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS_PARTSONLY,WINGCOLOR)
-	mutant_bodyparts = list("ears", "tail_human", "wings", "taur", "deco_wings") // CITADEL EDIT gives humans snowflake parts
-	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF","tail_human" = "None", "ears" = "None", "wings" = "None", "taur" = "None", "deco_wings" = "None")
+	mutant_bodyparts = list(FEAT_EARS, FEAT_TAIL_HUMAN, FEAT_WINGS, FEAT_TAUR, FEAT_DECO_WINGS) // CITADEL EDIT gives humans snowflake parts
+	default_features = list(FEAT_MUTCOLOR = "FFF", FEAT_MUTCOLOR2 = "FFF",FEAT_MUTCOLOR3 = "FFF",FEAT_TAIL_HUMAN = "None", FEAT_EARS = "None", FEAT_WINGS = "None", FEAT_TAUR = "None", FEAT_DECO_WINGS = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
@@ -24,19 +24,19 @@
 	. = ..()
 
 /datum/species/human/can_wag_tail(mob/living/carbon/human/H)
-	return ("tail_human" in mutant_bodyparts) || ("waggingtail_human" in mutant_bodyparts)
+	return (FEAT_TAIL_HUMAN in mutant_bodyparts) || (FEAT_TAIL_HUMAN_WAG in mutant_bodyparts)
 
 /datum/species/human/is_wagging_tail(mob/living/carbon/human/H)
-	return ("waggingtail_human" in mutant_bodyparts)
+	return (FEAT_TAIL_HUMAN_WAG in mutant_bodyparts)
 
 /datum/species/human/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
-		mutant_bodyparts -= "tail_human"
-		mutant_bodyparts |= "waggingtail_human"
+	if(FEAT_TAIL_HUMAN in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_HUMAN
+		mutant_bodyparts |= FEAT_TAIL_HUMAN_WAG
 	H.update_body()
 
 /datum/species/human/stop_wagging_tail(mob/living/carbon/human/H)
-	if("waggingtail_human" in mutant_bodyparts)
-		mutant_bodyparts -= "waggingtail_human"
-		mutant_bodyparts |= "tail_human"
+	if(FEAT_TAIL_HUMAN_WAG in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_HUMAN_WAG
+		mutant_bodyparts |= FEAT_TAIL_HUMAN
 	H.update_body()

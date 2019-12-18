@@ -250,8 +250,8 @@
 				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
 				return
 		//So people who haven't set stuff up don't get rainbow surprises.
-		dna.features["cock_color"] = "[dna.features["mcolor"]]"
-		dna.features["breasts_color"] = "[dna.features["mcolor"]]"
+		dna.features["cock_color"] = "[dna.features[FEAT_MUTCOLOR]]"
+		dna.features["breasts_color"] = "[dna.features[FEAT_MUTCOLOR]]"
 	else //If there's a new organ, make it the same colour.
 		if(breastCheck == FALSE)
 			dna.features["breasts_color"] = dna.features["cock_color"]

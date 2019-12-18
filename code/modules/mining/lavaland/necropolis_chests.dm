@@ -844,7 +844,7 @@
 	switch(random)
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			H.dna.features = list(FEAT_MUTCOLOR = "A02720", FEAT_TAIL_LIZARD = "Dark Tiger", FEAT_TAIL_HUMAN = "None", FEAT_SNOUT = "Sharp", FEAT_HORNS = "Curled", FEAT_EARS = "None", FEAT_WINGS = "None", FEAT_FRILLS = "None", FEAT_SPINES = "Long", FEAT_MARKINGS = "Dark Tiger Body", FEAT_LEGS = "Digitigrade Legs")
 			H.eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)

@@ -6,14 +6,14 @@
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
-	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur", "deco_wings")
+	mutant_bodyparts = list(FEAT_TAIL_LIZARD, FEAT_SNOUT, FEAT_SPINES, FEAT_HORNS, FEAT_FRILLS, FEAT_MARKINGS, FEAT_LEGS, FEAT_TAUR, FEAT_DECO_WINGS)
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5
 	heatmod = 0.67
-	default_features = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round",
-							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
-							  "legs" = "Digitigrade", "taur" = "None", "deco_wings" = "None")
+	default_features = list(FEAT_MUTCOLOR = "0F0", FEAT_MUTCOLOR2 = "0F0", FEAT_MUTCOLOR3 = "0F0", FEAT_TAIL_LIZARD = "Smooth", FEAT_SNOUT = "Round",
+							 FEAT_HORNS = "None", FEAT_FRILLS = "None", FEAT_SPINES = "None", FEAT_MARKINGS = "None",
+							  FEAT_LEGS = "Digitigrade", FEAT_TAUR = "None", FEAT_DECO_WINGS = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -52,36 +52,36 @@
 	. = ..()
 
 /datum/species/lizard/can_wag_tail(mob/living/carbon/human/H)
-	return ("tail_lizard" in mutant_bodyparts) || ("waggingtail_lizard" in mutant_bodyparts)
+	return (FEAT_TAIL_LIZARD in mutant_bodyparts) || (FEAT_TAIL_LIZARD_WAG in mutant_bodyparts)
 
 /datum/species/lizard/is_wagging_tail(mob/living/carbon/human/H)
-	return ("waggingtail_lizard" in mutant_bodyparts)
+	return (FEAT_TAIL_LIZARD_WAG in mutant_bodyparts)
 
 /datum/species/lizard/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_lizard" in mutant_bodyparts)
-		mutant_bodyparts -= "tail_lizard"
-		mutant_bodyparts -= "spines"
-		mutant_bodyparts |= "waggingtail_lizard"
-		mutant_bodyparts |= "waggingspines"
+	if(FEAT_TAIL_LIZARD in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_LIZARD
+		mutant_bodyparts -= FEAT_SPINES
+		mutant_bodyparts |= FEAT_TAIL_LIZARD_WAG
+		mutant_bodyparts |= FEAT_SPINES_WAG
 	H.update_body()
 
 /datum/species/lizard/stop_wagging_tail(mob/living/carbon/human/H)
-	if("waggingtail_lizard" in mutant_bodyparts)
-		mutant_bodyparts -= "waggingtail_lizard"
-		mutant_bodyparts -= "waggingspines"
-		mutant_bodyparts |= "tail_lizard"
-		mutant_bodyparts |= "spines"
+	if(FEAT_TAIL_LIZARD_WAG in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_LIZARD_WAG
+		mutant_bodyparts -= FEAT_SPINES_WAG
+		mutant_bodyparts |= FEAT_TAIL_LIZARD
+		mutant_bodyparts |= FEAT_SPINES
 	H.update_body()
 
 /datum/species/lizard/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	if(("legs" in C.dna.species.mutant_bodyparts) && (C.dna.features["legs"] == "Digitigrade" || C.dna.features["legs"] == "Avian"))
+	if((FEAT_LEGS in C.dna.species.mutant_bodyparts) && (C.dna.features[FEAT_LEGS] == "Digitigrade" || C.dna.features[FEAT_LEGS] == "Avian"))
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 	return ..()
 
 /datum/species/lizard/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Plantigrade")
+	if((FEAT_LEGS in C.dna.species.mutant_bodyparts) && C.dna.features[FEAT_LEGS] == "Plantigrade")
 		species_traits -= DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
@@ -100,7 +100,7 @@
 	brutemod = 0.9
 
 /datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	if((C.dna.features["spines"] != "None" ) && (C.dna.features["tail_lizard"] == "None")) //tbh, it's kinda ugly for them not to have a tail yet have floating spines
-		C.dna.features["tail_lizard"] = "Smooth"
+	if((C.dna.features[FEAT_SPINES] != "None" ) && (C.dna.features[FEAT_TAIL_LIZARD] == "None")) //tbh, it's kinda ugly for them not to have a tail yet have floating spines
+		C.dna.features[FEAT_TAIL_LIZARD] = "Smooth"
 		C.update_body()
 	return ..()

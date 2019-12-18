@@ -15,11 +15,10 @@
 
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
-	randomize_human(src)
+	randomize_human(src, initial(race.randomized_features), FALSE) //last argument false since the icons will be update on set_species
 	dna.initialize_dna()
 
-	if(dna.species)
-		set_species(dna.species.type)
+	set_species(race)
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
@@ -955,12 +954,9 @@
 	. = ..()
 	. *= physiology.do_after_speed
 
-/mob/living/carbon/human/species
-	var/race = null
+//species specific sub-human spawn paths below.
 
-/mob/living/carbon/human/species/Initialize()
-	. = ..()
-	set_species(race)
+/mob/living/carbon/human/species //This is a dummy path, but it is still useful for easy typecaches and subtype lists.
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
@@ -1135,3 +1131,6 @@
 
 /mob/living/carbon/human/species/roundstartslime
 	race = /datum/species/jelly/roundstartslime
+
+/mob/living/carbon/human/species/dwarf
+	race = /datum/species/dwarf //and the race the path is set to.

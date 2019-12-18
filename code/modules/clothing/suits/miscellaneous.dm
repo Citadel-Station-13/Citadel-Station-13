@@ -155,7 +155,7 @@
 	desc = "A soft brown cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive the ladies mad."
 	icon_state = "owl_wings"
 	item_state = "owl_wings"
-	togglename = "wings"
+	togglename = FEAT_WINGS
 	body_parts_covered = ARMS
 	actions_types = list(/datum/action/item_action/toggle_wings)
 

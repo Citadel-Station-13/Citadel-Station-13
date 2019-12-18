@@ -20,7 +20,7 @@
 		return
 	if(broken || !Adjacent(user))
 		return
-		
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
@@ -165,12 +165,12 @@
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
+				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features[FEAT_MUTCOLOR]) as color|null
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
 					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
-						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+						H.dna.features[FEAT_MUTCOLOR] = sanitize_hexcolor(new_mutantcolor)
 
 					else
 						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")

@@ -30,13 +30,13 @@
 			else if(adjusted == ALT_STYLE)
 				adjusted = NORMAL_STYLE
 
-		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
-			if(H.dna.features["taur"] in GLOB.noodle_taurs)
+		if((FEAT_TAUR in H.dna.species.mutant_bodyparts) && (H.dna.features[FEAT_TAUR] != "None"))
+			if(H.dna.features[FEAT_TAUR] in GLOB.noodle_taurs)
 				taurmode = SNEK_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			else if(H.dna.features["taur"] in GLOB.paw_taurs)
+			else if(H.dna.features[FEAT_TAUR] in GLOB.paw_taurs)
 				taurmode = PAW_TAURIC
 				if(tauric == TRUE)
 					center = TRUE

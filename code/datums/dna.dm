@@ -105,21 +105,17 @@
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"])
-		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"])
-		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"])
-		if(!GLOB.mam_tails_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
-		L[DNA_MUTANTTAIL_BLOCK] = construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
-		if(!GLOB.mam_ears_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
-		L[DNA_MUTANTEAR_BLOCK] = construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
-		if(!GLOB.mam_body_markings_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
-		L[DNA_MUTANTMARKING_BLOCK] = construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
-		if(!GLOB.taur_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, GLOB.taur_list)
-		L[DNA_TAUR_BLOCK] = construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
+		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features[FEAT_MUTCOLOR])
+		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features[FEAT_MUTCOLOR2])
+		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features[FEAT_MUTCOLOR3])
+		var/list/tails = GLOB.mutant_features_list[FEAT_TAIL_MAM]
+		L[DNA_MUTANTTAIL_BLOCK] = construct_block(tails.Find(features[FEAT_TAIL_MAM]), tails.len)
+		var/list/ears = GLOB.mutant_features_list[FEAT_MAM_EARS]
+		L[DNA_MUTANTEAR_BLOCK] = construct_block(ears.Find(features[FEAT_MAM_EARS]), ears.len)
+		var/list/marks = GLOB.mutant_features_list[FEAT_MAM_MARKINGS]
+		L[DNA_MUTANTMARKING_BLOCK] = construct_block(marks.Find(features[FEAT_MAM_MARKINGS]), marks.len)
+		var/list/taurs = GLOB.mutant_features_list[FEAT_TAUR]
+		L[DNA_TAUR_BLOCK] = construct_block(taurs.Find(features[FEAT_TAUR]), taurs.len)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
@@ -171,19 +167,23 @@
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 		if(DNA_COLOR_ONE_BLOCK)
-			sanitize_hexcolor(features["mcolor"])
+			sanitize_hexcolor(features[FEAT_MUTCOLOR])
 		if(DNA_COLOR_TWO_BLOCK)
-			sanitize_hexcolor(features["mcolor2"])
+			sanitize_hexcolor(features[FEAT_MUTCOLOR2])
 		if(DNA_COLOR_THREE_BLOCK)
-			sanitize_hexcolor(features["mcolor3"])
+			sanitize_hexcolor(features[FEAT_MUTCOLOR3])
 		if(DNA_MUTANTTAIL_BLOCK)
-			construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
+			var/list/tails = GLOB.mutant_features_list[FEAT_TAIL_MAM]
+			construct_block(tails.Find(features[FEAT_TAIL_MAM]), tails.len)
 		if(DNA_MUTANTEAR_BLOCK)
-			construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
+			var/list/ears = GLOB.mutant_features_list[FEAT_MAM_EARS]
+			construct_block(ears.Find(features[FEAT_MAM_EARS]), ears.len)
 		if(DNA_MUTANTMARKING_BLOCK)
-			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+			var/list/marks = GLOB.mutant_features_list[FEAT_MAM_MARKINGS]
+			construct_block(marks.Find(features[FEAT_MAM_MARKINGS]), marks.len)
 		if(DNA_TAUR_BLOCK)
-			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
+			var/list/taurs = GLOB.mutant_features_list[FEAT_TAUR]
+			construct_block(taurs.Find(features[FEAT_TAUR]), taurs.len)
 
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name && nameless == D.nameless && custom_species == D.custom_species)

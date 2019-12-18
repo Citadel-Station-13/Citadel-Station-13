@@ -195,12 +195,12 @@
 				return
 			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
 				if(helmet.mutantrace_variation)
-					if("mam_snouts" in pref_species.default_features)
-						if(H.dna.features["mam_snouts"] != "None")
+					if(FEAT_MAM_SNOUT in pref_species.default_features)
+						if(H.dna.features[FEAT_MAM_SNOUT] != "None")
 							helmet.muzzle_var = ALT_STYLE
 
-					else if("snout" in pref_species.default_features)
-						if(H.dna.features["snout"] != "None")
+					else if(FEAT_SNOUT in pref_species.default_features)
+						if(H.dna.features[FEAT_SNOUT] != "None")
 							helmet.muzzle_var = ALT_STYLE
 					else
 						helmet.muzzle_var = NORMAL_STYLE

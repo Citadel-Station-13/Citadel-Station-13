@@ -85,7 +85,7 @@
 			facial_hair_style = H.facial_hair_style
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
-					facial_hair_color = H.dna.features["mcolor"]
+					facial_hair_color = H.dna.features[FEAT_MUTCOLOR]
 				else
 					facial_hair_color = S.hair_color
 			else
@@ -100,7 +100,7 @@
 			hair_style = H.hair_style
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
-					hair_color = H.dna.features["mcolor"]
+					hair_color = H.dna.features[FEAT_MUTCOLOR]
 				else
 					hair_color = S.hair_color
 			else

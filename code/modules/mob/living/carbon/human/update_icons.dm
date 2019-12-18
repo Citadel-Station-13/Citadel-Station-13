@@ -273,15 +273,15 @@ There are several things that need to be remembered:
 /*
 	if(!shoes && bloody_feet)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
-		if(dna.features["taur"] != "None")
-			if(dna.features["taur"] in GLOB.noodle_taurs)
+		if(dna.features[FEAT_TAUR] != "None")
+			if(dna.features[FEAT_TAUR] in GLOB.noodle_taurs)
 				bloody_overlay = mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "snekbloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
 				if(get_num_legs() < 2)
 					if(has_left_leg())
 						bloody_overlay.icon_state = "snekbloodyfeet_left"
 					else if(has_right_leg())
 						bloody_overlay.icon_state = "snekbloodyfeet_right"
-			else if(dna.features["taur"] in GLOB.paw_taurs)
+			else if(dna.features[FEAT_TAUR] in GLOB.paw_taurs)
 				bloody_overlay = mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "pawbloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
 				if(get_num_legs() < 2)
 					if(has_left_leg())
@@ -646,8 +646,8 @@ generate/load female uniform sprites matching all previously decided variables
 		. += "-coloured-[skin_tone]"
 	else if(dna.species.fixed_mut_color)
 		. += "-coloured-[dna.species.fixed_mut_color]"
-	else if(dna.features["mcolor"])
-		. += "-coloured-[dna.features["mcolor"]]-[dna.features["mcolor2"]]-[dna.features["mcolor3"]]"
+	else if(dna.features[FEAT_MUTCOLOR])
+		. += "-coloured-[dna.features[FEAT_MUTCOLOR]]-[dna.features[FEAT_MUTCOLOR2]]-[dna.features[FEAT_MUTCOLOR3]]"
 	else
 		. += "-not_coloured"
 
@@ -656,7 +656,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/is_taur = FALSE
 	var/mob/living/carbon/human/H = src
-	if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
+	if((FEAT_TAUR in H.dna.species.mutant_bodyparts) && (H.dna.features[FEAT_TAUR] != "None"))
 		is_taur = TRUE
 
 
