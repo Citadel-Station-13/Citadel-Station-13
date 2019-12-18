@@ -104,7 +104,9 @@
 		visible_message("<span class='notice'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
 	update_icon()
 
-/mob/living/silicon/pai/start_pulling(atom/movable/AM)
+/mob/living/silicon/pai/start_pulling(atom/movable/AM, gs)
+	if(ispAI(AM))
+		return ..()
 	return FALSE
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
