@@ -35,7 +35,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/my_quirks = cli.prefs.all_quirks.Copy()
 	var/list/cut
 	if(job?.blacklisted_quirks)
-		cut = filter_quirks(quirks, job)
+		cut = filter_quirks(my_quirks, job)
 	for(var/V in my_quirks)
 		var/datum/quirk/Q = quirks[V]
 		if(Q)
