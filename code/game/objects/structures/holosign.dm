@@ -69,9 +69,9 @@
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo firelock"
-	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
-	icon_state = "holo_firelock"
+	name = "holo fan"
+	desc = "A holographic barrier resembling a tiny fan. Though it does not prevent solid objects from passing through, gas is kept out. Somehow."
+	icon_state = "holo_fan"
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
@@ -80,6 +80,28 @@
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
+
+/obj/structure/holosign/barrier/firelock
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects or gas from passing through, temperature changes are kept out."
+	icon_state = "holo_firelock"
+	density = TRUE
+	anchored = TRUE
+	alpha = 150
+
+/obj/structure/holosign/barrier/firelock/BlockSuperconductivity()
+	return TRUE
+
+/obj/structure/holosign/barrier/firelock/fire_act(exposed_temperature,exposed_volume)
+	return
+
+/obj/structure/holosign/barrier/firelock/CanPass(atom/movable/mover, turf/target)
+	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
+		return 1
+	if(iscarbon(mover))
+		var/mob/living/carbon/C = mover
+		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
+			return 1
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
