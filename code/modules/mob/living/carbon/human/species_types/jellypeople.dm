@@ -116,6 +116,33 @@
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
+/datum/species/jelly/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		stop_wagging_tail(H)
+
+/datum/species/jelly/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+	. = ..()
+
+/datum/species/jelly/can_wag_tail(mob/living/carbon/human/H)
+	return (FEAT_TAIL_MAM in mutant_bodyparts) || (FEAT_TAIL_MAM_WAG in mutant_bodyparts)
+
+/datum/species/jelly/is_wagging_tail(mob/living/carbon/human/H)
+	return (FEAT_TAIL_MAM_WAG in mutant_bodyparts)
+
+/datum/species/jelly/start_wagging_tail(mob/living/carbon/human/H)
+	if(FEAT_TAIL_MAM in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_MAM
+		mutant_bodyparts |= FEAT_TAIL_MAM_WAG
+	H.update_body()
+
+/datum/species/jelly/stop_wagging_tail(mob/living/carbon/human/H)
+	if(FEAT_TAIL_MAM_WAG in mutant_bodyparts)
+		mutant_bodyparts -= FEAT_TAIL_MAM_WAG
+		mutant_bodyparts |= FEAT_TAIL_MAM
+	H.update_body()
+
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
@@ -411,34 +438,6 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-
-/datum/species/jelly/roundstartslime/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/jelly/roundstartslime/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/jelly/roundstartslime/can_wag_tail(mob/living/carbon/human/H)
-	return (FEAT_TAIL_MAM in mutant_bodyparts) || (FEAT_TAIL_MAM_WAG in mutant_bodyparts)
-
-/datum/species/jelly/roundstartslime/is_wagging_tail(mob/living/carbon/human/H)
-	return (FEAT_TAIL_MAM_WAG in mutant_bodyparts)
-
-/datum/species/jelly/roundstartslime/start_wagging_tail(mob/living/carbon/human/H)
-	if(FEAT_TAIL_MAM in mutant_bodyparts)
-		mutant_bodyparts -= FEAT_TAIL_MAM
-		mutant_bodyparts |= FEAT_TAIL_MAM_WAG
-	H.update_body()
-
-/datum/species/jelly/roundstartslime/stop_wagging_tail(mob/living/carbon/human/H)
-	if(FEAT_TAIL_MAM_WAG in mutant_bodyparts)
-		mutant_bodyparts -= FEAT_TAIL_MAM_WAG
-		mutant_bodyparts |= FEAT_TAIL_MAM
-	H.update_body()
-
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
@@ -800,19 +799,16 @@
 	link_minds = new(src)
 	link_minds.Grant(C)
 	slimelink_owner = C
-	link_mob(C)
+	link_mob(C, TRUE)
 
-/datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/datum/species/jelly/stargazer/proc/link_mob(mob/living/M, selflink = FALSE)
+	if(QDELETED(M) || (M in linked_mobs))
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
-		return FALSE
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		return FALSE
-	if(M in linked_mobs)
+	if(!selflink && (M.stat == DEAD || HAS_TRAIT(M, TRAIT_MINDSHIELD) || M.anti_magic_check(FALSE, FALSE, TRUE, 0)))
 		return FALSE
 	linked_mobs.Add(M)
-	to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	if(!selflink)
+		to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
