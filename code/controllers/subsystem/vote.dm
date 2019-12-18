@@ -125,9 +125,6 @@ SUBSYSTEM_DEF(vote)
 			if(i != j && p[i][j] > p[j][i])
 				choices[choices[i]]++
 				// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
-	
-
-
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	if(vote_system == RANKED_CHOICE_VOTING)
