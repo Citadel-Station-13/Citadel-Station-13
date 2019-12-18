@@ -1114,7 +1114,7 @@
 				var/intensity_desc = "a hint of"
 				if(percent > minimum_percent * 2 || percent == 100)
 					intensity_desc = ""
-				else if(percent > minimum_percent * 3)
+				if(percent > minimum_percent * 3)  // CITCHANGE - food now tasty
 					intensity_desc = "the strong flavor of"
 				if(intensity_desc != "")
 					out += "[intensity_desc] [taste_desc]"
