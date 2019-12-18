@@ -17,7 +17,7 @@
 	GLOB.mutant_features_list[FEAT_MARKINGS] = init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings)
 	GLOB.mutant_features_list[FEAT_TAIL_LIZARD] = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard)
 	GLOB.mutant_features_list[FEAT_TAIL_LIZARD_WAG] = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard)
-	GLOB.mutant_features_list[FEAT_TAIL_HUMAN] = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
+	GLOB.mutant_features_list[FEAT_TAIL_HUMAN] = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human)
 	GLOB.mutant_features_list[FEAT_TAIL_HUMAN_WAG] = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human)
 	GLOB.mutant_features_list[FEAT_SNOUT] = init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts)
 	GLOB.mutant_features_list[FEAT_HORNS] = init_sprite_accessory_subtypes(/datum/sprite_accessory/horns)
