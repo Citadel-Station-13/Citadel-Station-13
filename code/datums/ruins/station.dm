@@ -1,3 +1,7 @@
+/datum/map_template/ruin/station
+	prefix = "_maps/RandomRuins/StationRuins/"
+	cost = 0
+
 /datum/map_template/ruin/station/box/engine
 	id = "engine_sm"
 	suffix = "engine_sm.dmm"
