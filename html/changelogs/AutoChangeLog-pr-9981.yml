@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "You can no longer estimate the amount of reagents found inside a damp rag."
-  - tweak: "You can now squeeze a rag's reagents into another open container, as long as the other one is not full."

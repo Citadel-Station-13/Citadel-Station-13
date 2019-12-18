@@ -1,0 +1,5 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Fixed stargazers being unable to link to themselves if mindshielded or if holding psionic shielding devices (tinfoil hats) when the species is set."
+  - bugfix: "Fixes non-roundstart slimes being unable to wag their tail."

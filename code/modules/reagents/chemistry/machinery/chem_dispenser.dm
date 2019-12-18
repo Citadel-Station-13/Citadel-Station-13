@@ -161,7 +161,7 @@
 	. = ..()
 	if(A == beaker)
 		beaker = null
-		cut_overlays()
+		update_icon()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -428,10 +428,11 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
+	return TRUE
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
