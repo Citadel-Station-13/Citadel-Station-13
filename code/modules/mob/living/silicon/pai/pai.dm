@@ -86,12 +86,6 @@
 
 	var/icon/custom_holoform_icon
 
-/mob/living/silicon/pai/can_unbuckle()
-	return FALSE
-
-/mob/living/silicon/pai/can_buckle()
-	return FALSE
-
 /mob/living/silicon/pai/Destroy()
 	if (loc != card)
 		card.forceMove(drop_location())
