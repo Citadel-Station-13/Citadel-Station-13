@@ -131,7 +131,7 @@
 	var/turf/open/location = get_turf(my_atom)
 	if(location)
 		E.location_created = location
-		E.data.["location_created"] = location
+		E.data["location_created"] = location
 
 
 //serum
@@ -282,9 +282,7 @@
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 5)
-	//required_reagents = list("iron" = 1, "iodine" = 1) Test vars
-	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
-	required_reagents = list("cocoa" = 1, "bluespace" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1) //TEMPORARY UNTIL HEADMINS GIVE THE OKAY FOR MK USE.
+	required_reagents = list("cocoa" = 1, "bluespace" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
 	required_catalysts = list("blood" = 1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
@@ -314,16 +312,16 @@
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 			E.purity = 0
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
+	if (B.data["gender"] == "female")
+		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
 	else
-		E.data.["creatorGender"] = "Master"
+		E.data["creatorGender"] = "Master"
 		E.creatorGender = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.creatorName = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	E.creatorID = B.data.["ckey"]
+	E.data["creatorName"] = B.data["real_name"]
+	E.creatorName = B.data["real_name"]
+	E.data["creatorID"] = B.data["ckey"]
+	E.creatorID = B.data["ckey"]
 
 //So slimes can play too.
 /datum/chemical_reaction/fermi/enthrall/slime
@@ -337,16 +335,16 @@
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
 			E.purity = 0
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
+	if (B.data["gender"] == "female")
+		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
 	else
-		E.data.["creatorGender"] = "Master"
+		E.data["creatorGender"] = "Master"
 		E.creatorGender = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.creatorName = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	E.creatorID = B.data.["ckey"]
+	E.data["creatorName"] = B.data["real_name"]
+	E.creatorName = B.data["real_name"]
+	E.data["creatorID"] = B.data["ckey"]
+	E.creatorID = B.data["ckey"]
 
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/turf/T = get_turf(my_atom)
@@ -506,9 +504,9 @@
 	name = "secretcatchem"
 	id = "secretcatchem"
 	results = list("secretcatchem" = 5)
-	required_reagents = list("stable_plasma" = 1, "sugar" = 1, "cream" = 1, "clonexadone" = 1)//Yes this will make a plushie if you don't lucky guess. It'll eat all your reagents too.
+	required_reagents = list("stable_plasma" = 1, "sugar" = 1, "cream" = 1, "clonexadone" = 1)//Yes this will make a kitty if you don't lucky guess. It'll eat all your reagents too.
 	required_catalysts = list("SDGF" = 1)
-	required_temp = 600
+	required_temp = 500
 	mix_message = "the reaction gives off a meow!"
 	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
 	//FermiChem vars:

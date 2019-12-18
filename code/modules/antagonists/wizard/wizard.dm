@@ -57,19 +57,19 @@
 	if(!GLOB.wizardstart.len)
 		SSjob.SendToLateJoin(owner.current)
 		to_chat(owner, "HOT INSERTION, GO GO GO")
-	owner.current.forceMove(pick(GLOB.wizardstart))
+	else
+		owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
 	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieving this, the better! Make sure there's a decent amount of crew alive to tell of your tale.")
+	new_objective.completed = TRUE //So they can greentext without admin intervention.
 	new_objective.owner = owner
 	objectives += new_objective
 
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = owner
-	objectives += escape_objective
-
-	for(var/datum/objective/O in objectives)
-		owner.objectives += O
+	if (!(locate(/datum/objective/escape) in objectives))
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = owner
+		objectives += escape_objective
 
 /datum/antagonist/wizard/on_removal()
 	unregister()
@@ -165,7 +165,7 @@
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
 		if(APPRENTICE_BLUESPACE)
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
 		if(APPRENTICE_HEALING)
@@ -183,7 +183,6 @@
 	new_objective.owner = owner
 	new_objective.target = master
 	new_objective.explanation_text = "Protect [master.current.real_name], the wizard."
-	owner.objectives += new_objective
 	objectives += new_objective
 
 //Random event wizard
@@ -251,7 +250,6 @@
 /datum/antagonist/wizard/academy/create_objectives()
 	var/datum/objective/new_objective = new("Protect Wizard Academy from the intruders")
 	new_objective.owner = owner
-	owner.objectives += new_objective
 	objectives += new_objective
 
 //Solo wizard report

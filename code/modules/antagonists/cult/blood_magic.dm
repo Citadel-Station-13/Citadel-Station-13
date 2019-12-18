@@ -651,7 +651,7 @@
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
 	. = ..()
 	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>The [name] currently has <b>[uses]</b> blood charges left.</span>")
+		. += "<span class='cultitalic'>The [name] currently has <b>[uses]</b> blood charges left.</span>"
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)

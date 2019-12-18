@@ -58,19 +58,3 @@
 	modules += new /obj/item/analyzer/nose(src)
 	emag = new /obj/item/dogborg/pounce(src)
 	fix_modules()
-
-/obj/item/robot_module/medihound
-	name = "MediHound module"
-
-/obj/item/robot_module/medihound/New()
-	..()
-	modules += new /obj/item/dogborg/jaws/small(src)
-	modules += new /obj/item/storage/bag/borgdelivery(src)
-	modules += new /obj/item/analyzer/nose(src)
-	modules += new /obj/item/soap/tongue(src)
-	modules += new /obj/item/healthanalyzer(src)
-	modules += new /obj/item/dogborg/sleeper(src)
-	modules += new /obj/item/twohanded/shockpaddles/hound(src)
-	modules += new /obj/item/sensor_device(src)
-	emag = new /obj/item/dogborg/pounce(src)
-	fix_modules()

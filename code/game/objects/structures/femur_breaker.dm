@@ -23,24 +23,14 @@
 	var/current_action = 0 // What's currently happening to the femur breaker
 
 /obj/structure/femur_breaker/examine(mob/user)
-	..()
-
-	var/msg = ""
-
-	msg += "It is [anchored ? "secured to the floor." : "unsecured."]<br/>"
-
+	. = ..()
+	. += "It is [anchored ? "secured to the floor." : "unsecured."]"
 	if (slat_status == BREAKER_SLAT_RAISED)
-		msg += "The breaker slat is in a neutral position."
+		. += "The breaker slat is in a neutral position."
 	else
-		msg += "The breaker slat is lowered, and must be raised."
-
+		. += "The breaker slat is lowered, and must be raised."
 	if (LAZYLEN(buckled_mobs))
-		msg += "<br/>"
-		msg += "Someone appears to be strapped in. You can help them unbuckle, or activate the femur breaker."
-
-	to_chat(user, msg)
-
-	return msg
+		. += "Someone appears to be strapped in. You can help them unbuckle, or activate the femur breaker."
 
 /obj/structure/femur_breaker/attack_hand(mob/user)
 	add_fingerprint(user)

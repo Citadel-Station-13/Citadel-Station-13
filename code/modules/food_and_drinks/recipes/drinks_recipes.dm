@@ -382,7 +382,7 @@
 	results = list("neurotoxin" = 2)
 	required_reagents = list("gargleblaster" = 1, "morphine" = 1)
 	//FermiChem vars: Easy to make, but hard to make potent
-	OptimalTempMin 		= 200 // Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMin 		= 100 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax		= 950 // Upper end for above
 	ExplodeTemp			= 999 //Temperature at which reaction explodes
 	OptimalpHMin		= 4.6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)

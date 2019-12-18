@@ -73,6 +73,7 @@
 	prev_size = cached_size
 	cached_size = new_value
 	update()
+	..()
 
 /obj/item/organ/genital/breasts/update_size()//wah
 	var/rounded_cached = round(cached_size)
@@ -118,7 +119,7 @@
 	shape = D.features["breasts_shape"]
 	fluid_id = D.features["breasts_fluid"]
 	if(!D.features["breasts_producing"])
-		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION)
+		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 	if(!isnum(size))
 		cached_size = breast_values[size]
 	else

@@ -113,11 +113,13 @@
 					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushpet", /datum/mood_event/plushpet)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plush_nostuffing", /datum/mood_event/plush_nostuffing)
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
@@ -125,6 +127,7 @@
 			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
 			I.play_tool_sound(src)
 			stuffed = FALSE
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushjack", /datum/mood_event/plushjack)
 		else
 			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
 			user.put_in_hands(grenade)
@@ -147,6 +150,7 @@
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushplay", /datum/mood_event/plushplay)
 		return
 	return ..()
 
@@ -158,7 +162,7 @@
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
-		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", 1,
+		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", MSG_VISUAL,
 			"<span class='notice'>They're happy.</span>", 0)
 		Kisser.cheer_up()
 		cheer_up()
@@ -166,10 +170,10 @@
 	//never again
 	else if(Kisser in scorned)
 		//message, visible, alternate message, neither visible nor audible
-		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", 1,
+		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", MSG_VISUAL,
 			"<span class='notice'>That didn't feel like it worked.</span>", 0)
 	else if(src in Kisser.scorned)
-		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", 1,
+		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", MSG_VISUAL,
 			"<span class='notice'>That didn't feel like it worked.</span>", 0)
 
 	//first comes love
@@ -190,7 +194,7 @@
 			new_lover(Kisser)
 			Kisser.new_lover(src)
 		else
-			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", 1,
+			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", MSG_VISUAL,
 								"<span class='notice'>That didn't feel like it worked, this time.</span>", 0)
 
 	//then comes marriage
@@ -558,6 +562,37 @@
 	item_state = "almaz"
 	squeak_override = list('modular_citadel/sound/voice/raptor_purr.ogg' = 1)
 
+/obj/item/toy/plush/lizardplushie/garou
+	icon_state = "garou"
+	item_state = "garou"
+
+/obj/item/toy/plush/lizardplushie/augments
+	icon_state = "augments"
+	item_state = "augments"
+	squeak_override = list('modular_citadel/sound/voice/weh.ogg' = 1) //I have no mouth and I must weh
+	attack_verb = list("hugged", "patted", "snugged", "booped")
+
+/obj/item/toy/plush/lizardplushie/xekov
+	icon_state = "xekov"
+	item_state = "xekov"
+
+/obj/item/toy/plush/lizardplushie/greg
+	icon_state = "greg"
+	item_state = "greg"
+
+/obj/item/toy/plush/lizardplushie/sin
+	icon_state = "sin"
+	item_state = "sin"
+	desc = "An adorable stuffed toy that resembles a lizardperson.. It faintly smells of sulfur."
+
+/obj/item/toy/plush/lizardplushie/ends
+	icon_state = "ends"
+	item_state = "ends"
+
+/obj/item/toy/plush/lizardplushie/lyssa
+	icon_state = "lyssa"
+	item_state = "lyssa"
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
@@ -715,6 +750,14 @@
 	item_state = "bhijn"
 	attack_verb = list("closed", "reworked", "merged")
 
+/obj/item/toy/plush/aiplush
+	name = "AI plushie"
+	desc = "A little stuffed toy AI core... it appears to be malfunctioning."
+	icon_state = "exo"
+	item_state = "exo"
+	attack_verb = list("hacked", "detonated", "overloaded")
+	squeak_override = list('sound/machines/beep.ogg' = 9, 'sound/machines/buzz-two.ogg' = 1)
+
 /obj/item/toy/plush/bird
 	name = "bird plushie"
 	desc = "An adorable stuffed plushie that resembles an avian."
@@ -862,6 +905,18 @@
 	item_state = "redwood"
 	attack_verb = list("ordered", "bapped", "reprimanded")
 
+/obj/item/toy/plush/mammal/marisol
+	desc = "An adorable stuffed toy resembling a demi-wolf security officer."
+	icon_state = "marisol"
+	item_state = "marisol"
+	attack_verb = list("arrested", "harmbattoned", "lasered")
+
+/obj/item/toy/plush/mammal/minty
+	desc = "An adorable stuffed toy resembling some sort of crew member. It smells like mint.."
+	icon_state = "minty"
+	item_state = "minty"
+	attack_verb = list("freshened", "brushed")
+
 /obj/item/toy/plush/mammal/dog
 	desc = "An adorable stuffed toy that resembles a canine."
 	icon_state = "katlin"
@@ -929,8 +984,8 @@
 
 /obj/item/toy/plush/catgirl/skylar
 	desc = "An adorable stuffed toy that resembles a degenerate."
-	icon_state = "skylar"
-	item_state = "skylar"
+	icon_state = "skylar2"
+	item_state = "skylar2"
 	attack_verb = list("powergamed", "merged", "tabled")
 	squeak_override = list('sound/effects/meow1.ogg' = 1)
 
@@ -942,15 +997,15 @@
 	desc = "A masked stuffed toy that resembles a feline scientist."
 	icon_state = "trilby"
 	item_state = "trilby"
-	attack_verb = list("pred", "coded", "remembered")
+	attack_verb = list("PR'd", "coded", "remembered")
 
 /obj/item/toy/plush/catgirl/fermis
-    name = "medcat plushie"
-    desc = "An affectionate stuffed toy that resembles a certain medcat, comes complete with battery operated wagging tail!! You get the impression she's cheering you on to to find happiness and be kind to people."
-    icon_state = "fermis"
-    item_state = "fermis"
-    attack_verb = list("cuddled", "petpatted", "wigglepurred")
-    squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
+	name = "medcat plushie"
+	desc = "An affectionate stuffed toy that resembles a certain medcat, comes complete with battery operated wagging tail!! You get the impression she's cheering you on to to find happiness and be kind to people."
+	icon_state = "fermis"
+	item_state = "fermis"
+	attack_verb = list("cuddled", "petpatted", "wigglepurred")
+	squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
 
 /obj/item/toy/plush/catgirl/mariaf
 	desc = "An adorable stuffed toy that resembles a very tall cat girl."
@@ -963,3 +1018,9 @@
 	icon_state = "maya"
 	item_state = "maya"
 	attack_verb = list("nuked", "arrested", "harmbatonned")
+
+/obj/item/toy/plush/catgirl/marisa
+	desc = "An adorable stuffed toy that resembles a crew member, or maybe a witch. Having it makes you feel you can win."
+	icon_state = "marisa"
+	item_state = "marisa"
+	attack_verb = list("blasted", "sparked", "dazzled")

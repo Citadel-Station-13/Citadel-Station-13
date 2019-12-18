@@ -22,6 +22,7 @@
 		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/slime,
+		/datum/language/vampiric,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
@@ -62,7 +63,7 @@
 		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
 
 
-/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod

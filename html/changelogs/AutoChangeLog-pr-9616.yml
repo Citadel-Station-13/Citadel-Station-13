@@ -1,7 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - tweak: "Jukeboxes now have 6 audio channels available to them, up from the previous accidental 2 and previously intended 5 channels."
-  - bugfix: "Jukeboxes now work again on clients running versions higher than 512.1459."
-  - bugfix: "People will no longer have their ears consumed by an eldritch god if multiple jukeboxes are active and the first jukebox in the jukebox list stops playing, then tries to play again"
-  - tweak: "Instead of the debug text for invalid jukebox behavior being printed to world, the debug text is now restricted to the runtime panel."

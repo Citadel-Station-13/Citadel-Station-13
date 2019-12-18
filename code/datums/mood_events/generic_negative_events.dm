@@ -5,8 +5,8 @@
 	mood_change = -1
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
-  description = "<span class='boldwarning'>I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow...</span>\n"
-  mood_change = -8
+	description = "<span class='boldwarning'>I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow...</span>\n"
+	mood_change = -8
 
 /datum/mood_event/on_fire
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>\n"
@@ -55,14 +55,14 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
-  description = "<span class='boldwarning'>I can't even end it all!</span>\n"
-  mood_change = -10
-  timeout = 1 MINUTES
+	description = "<span class='boldwarning'>I can't even end it all!</span>\n"
+	mood_change = -10
+	timeout = 1 MINUTES
 
 /datum/mood_event/dismembered
-  description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
-  mood_change = -8
-  timeout = 2400
+	description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
+	mood_change = -8
+	timeout = 2400
 
 /datum/mood_event/noshoes
 	description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
@@ -92,20 +92,20 @@
 			mood_change = 2
 
 /datum/mood_event/brain_damage
-  mood_change = -3
+	mood_change = -3
 
 /datum/mood_event/brain_damage/add_effects()
-  var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
-  description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
+	var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
+	description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
 
 /datum/mood_event/hulk //Entire duration of having the hulk mutation
-  description = "<span class='warning'>HULK SMASH!</span>\n"
-  mood_change = -4
+	description = "<span class='warning'>HULK SMASH!</span>\n"
+	mood_change = -4
 
 /datum/mood_event/epilepsy //Only when the mutation causes a seizure
-  description = "<span class='warning'>I should have paid attention to the epilepsy warning.</span>\n"
-  mood_change = -3
-  timeout = 3000
+	description = "<span class='warning'>I should have paid attention to the epilepsy warning.</span>\n"
+	mood_change = -3
+	timeout = 3000
 
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
@@ -176,3 +176,70 @@
 
 /datum/mood_event/revenant_blight/add_effects()
 	description = "<span class='umbra'>Just give up, [pick("no one will miss you", "there is nothing you can do to help", "even a clown would be more useful than you", "does it even matter in the end?")]...</span>\n"
+
+/datum/mood_event/plushjack
+	description = "<span class='warning'>I have butchered a plush recently.</span>\n"
+	mood_change = -1
+	timeout = 2 MINUTES
+
+/datum/mood_event/plush_nostuffing
+	description = "<span class='warning'>A plush I tried to pet had no stuffing...</span>\n"
+	mood_change = -1
+	timeout = 2 MINUTES
+
+//Cursed stuff below
+
+/datum/mood_event/emptypred
+	description = "<span class='nicegreen'>I had to let someone out.</span>\n"
+	mood_change = -2
+	timeout = 1 MINUTES
+
+/datum/mood_event/emptyprey
+	description = "<span class='nicegreen'>It feels quite cold out here.</span>\n"
+	mood_change = -2
+	timeout = 1 MINUTES
+
+/datum/mood_event/vampcandle
+	description = "<span class='umbra'>Something is making your mind feel... loose...</span>\n"
+	mood_change = -10
+	timeout = 1 MINUTES
+
+/datum/mood_event/drankblood_bad
+	description = "<span class='boldwarning'>I drank the blood of a lesser creature. Disgusting.</span>\n"
+	mood_change = -4
+	timeout = 900
+
+/datum/mood_event/drankblood_dead
+	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
+	mood_change = -7
+	timeout = 900
+
+/datum/mood_event/drankblood_synth
+	description = "<span class='boldwarning'>I drank synthetic blood. What is wrong with me?</span>\n"
+	mood_change = -7
+	timeout = 900
+
+/datum/mood_event/drankkilled
+	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
+	mood_change = -12
+	timeout = 6000
+
+/datum/mood_event/madevamp
+	description = "<span class='boldwarning'>A soul has been cursed to undeath by my own hand.</span>\n"
+	mood_change = -10
+	timeout = 10000
+
+/datum/mood_event/vampatefood
+	description = "<span class='boldwarning'>Mortal nourishment no longer sustains me. I feel unwell.</span>\n"
+	mood_change = -6
+	timeout = 1000
+
+/datum/mood_event/daylight_1
+	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
+	mood_change = -3
+	timeout = 1000
+
+/datum/mood_event/daylight_2
+	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
+	mood_change = -6
+	timeout = 1200

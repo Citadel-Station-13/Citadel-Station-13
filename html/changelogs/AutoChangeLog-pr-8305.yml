@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - server: "Discord bot will now report when a round ends and give the vague news ticker that a sister-station would have received for the game mode and result of the round."
