@@ -1,6 +1,7 @@
 /datum/species/mush //mush mush codecuck
 	name = "Anthromorphic Mushroom"
 	id = "mush"
+	randomized_features = list(FEAT_CAPS, FEAT_MUTCOLOR)
 	mutant_bodyparts = list(FEAT_CAPS)
 	default_features = list(FEAT_CAPS = "Round")
 

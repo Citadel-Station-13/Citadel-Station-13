@@ -5,6 +5,7 @@
 	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	randomized_features = list(FEAT_TAIL_MAM, FEAT_MAM_EARS, FEAT_MAM_MARKINGS, FEAT_MAM_SNOUT, FEAT_MUTCOLOR, FEAT_MUTCOLOR2, FEAT_MUTCOLOR3)
 	mutant_bodyparts = list(FEAT_TAIL_MAM, FEAT_MAM_EARS, FEAT_MAM_MARKINGS, FEAT_MAM_SNOUT, FEAT_DECO_WINGS, FEAT_TAUR, FEAT_HORNS, FEAT_LEGS)
 	default_features = list(FEAT_MUTCOLOR = "FFF",FEAT_MUTCOLOR2 = "FFF",FEAT_MUTCOLOR3 = "FFF", FEAT_MAM_SNOUT = "Husky", FEAT_TAIL_MAM = "Husky", FEAT_MAM_EARS = "Husky", FEAT_DECO_WINGS = "None",
 						 FEAT_MAM_MARKINGS = "Husky", FEAT_TAUR = "None", FEAT_HORNS = "None", FEAT_LEGS = "Plantigrade", "meat_type" = "Mammalian")
@@ -58,6 +59,7 @@
 	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	randomized_features = list(FEAT_XENO_TAIL, FEAT_XENO_HEAD, FEAT_XENO_DORSAL, FEAT_MUTCOLOR)
 	mutant_bodyparts = list(FEAT_XENO_TAIL, FEAT_XENO_HEAD, FEAT_XENO_DORSAL, FEAT_MAM_MARKINGS, FEAT_TAUR, FEAT_LEGS)
 	default_features = list(FEAT_XENO_TAIL="Xenomorph Tail",FEAT_XENO_HEAD="Standard",FEAT_XENO_DORSAL="Standard", FEAT_MAM_MARKINGS = "Xeno",FEAT_MUTCOLOR = "0F0",FEAT_MUTCOLOR2 = "0F0",FEAT_MUTCOLOR3 = "0F0",FEAT_TAUR = "None", FEAT_LEGS = "Digitigrade")
 	attack_verb = "slash"

@@ -176,9 +176,9 @@
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
-	randomize_human(owner)
-	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/insect, /datum/species/fly))
-	owner.set_species(species)
+	var/datum/species/S = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/insect, /datum/species/fly))
+	randomize_human(owner, initial(S.randomized_features), FALSE)
+	owner.set_species(S)
 
 /obj/item/organ/heart/gland/ventcrawling
 	true_name = "pliant cartilage enabler"

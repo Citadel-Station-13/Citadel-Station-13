@@ -6,6 +6,7 @@
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
+	randomized_features = list(FEAT_TAIL_LIZARD, FEAT_SNOUT, FEAT_SPINES, FEAT_FRILLS, FEAT_MARKINGS, FEAT_MUTCOLOR)
 	mutant_bodyparts = list(FEAT_TAIL_LIZARD, FEAT_SNOUT, FEAT_SPINES, FEAT_HORNS, FEAT_FRILLS, FEAT_MARKINGS, FEAT_LEGS, FEAT_TAUR, FEAT_DECO_WINGS)
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard

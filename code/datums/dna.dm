@@ -196,10 +196,10 @@
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
-/datum/dna/proc/initialize_dna(newblood_type)
+/datum/dna/proc/initialize_dna(newblood_type, list/randomized_features)
 	if(newblood_type)
 		blood_type = newblood_type
-	features = random_features()
+	features = random_features(randomized_features)
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()

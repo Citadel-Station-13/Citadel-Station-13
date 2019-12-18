@@ -847,7 +847,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	randomize_human(H)
+	randomize_human(H, H.dna.species.randomized_features)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"

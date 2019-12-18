@@ -107,7 +107,7 @@
 #define HORNCOLOR		24
 #define WINGCOLOR		25
 
-
+//DNA features defines. For mutant bodyparts, that's also used on species' mutant_features and GLOB.mutant_features_list.
 #define FEAT_MUTCOLOR			"mcolor"
 #define FEAT_MUTCOLOR2			"mcolor2"
 #define FEAT_MUTCOLOR3			"mcolor3"

@@ -8,6 +8,7 @@
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
+	randomized_features = list(FEAT_IPC_SCREEN, FEAT_IPC_ANTENNA, FEAT_MUTCOLOR)
 	mutant_bodyparts = list(FEAT_IPC_SCREEN, FEAT_IPC_ANTENNA)
 	default_features = list(FEAT_IPC_SCREEN = "Blank", FEAT_IPC_ANTENNA = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc

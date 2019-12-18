@@ -10,7 +10,7 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/H, update = TRUE, list/randomize_features)
+/proc/randomize_human(mob/living/carbon/human/H, list/randomized_features, update = TRUE)
 	H.gender = pick(MALE, FEMALE)
 	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
@@ -29,8 +29,8 @@
 	H.saved_undershirt = H.undershirt
 	H.saved_socks = H.socks
 
-	if(randomize_features)
-		random_features(randomize_features)
+	if(randomized_features)
+		random_features(randomized_features)
 
 	if(update)
 		H.update_body()

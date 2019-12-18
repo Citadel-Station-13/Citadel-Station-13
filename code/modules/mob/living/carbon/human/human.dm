@@ -14,8 +14,8 @@
 	create_bodyparts()
 
 	//initialize dna. for spawned humans; overwritten by other code
-	create_dna(src)
-	randomize_human(src, initial(race.randomized_features), FALSE) //last argument false since the icons will be update on set_species
+	create_dna(src, initial(race.randomized_features))
+	randomize_human(src, update = FALSE) //update_false since the icons will be update on set_species() anyway.
 	dna.initialize_dna()
 
 	set_species(race)

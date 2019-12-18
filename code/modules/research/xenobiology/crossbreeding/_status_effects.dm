@@ -774,7 +774,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		originalDNA = new H.dna.type
 		originalname = H.real_name
 		H.dna.copy_dna(originalDNA)
-		randomize_human(H)
+		randomize_human(H, H.dna.species.randomized_features)
 	return ..()
 
 /datum/status_effect/stabilized/green/tick() //Only occasionally give examiners a warning.
