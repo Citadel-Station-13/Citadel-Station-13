@@ -87,15 +87,47 @@ SUBSYSTEM_DEF(vote)
 	return .
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes()
+	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
+	var/list/d[][] = new/list(choices.len,choices.len) // yes, "d" is the preffered nomenclature. mathematicians are weird.
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		for(var/a in 1 to choices.len)
 			for(var/b in a+1 to choices.len)
-				var/vote_sgn = SIGN(this_vote.Find(a)-this_vote.Find(b))
+				var/a_rank = this_vote.Find(a)
+				var/b_rank = this_vote.Find(b)
+				a_rank = a_rank ? a_rank : choices.len+1
+				b_rank = b_rank ? b_rank : choices.len+1
+				var/vote_sgn = SIGN(a_rank-b_rank)
 				if(vote_sgn==-1)
-					choices[choices[a]]++
+					d[a][b]++
 				else if(vote_sgn==1)
-					choices[choices[b]]++
+					d[b][a]++
+	var/list/p[][] = new/list(choices.len,choices.len) //i'm so sorry.
+	for(var/i in 1 to choices.len)
+		for(var/j in i+1 to choices.len)
+			var/pref_number = d[i][j]
+			var/opposite_pref = d[j][i]
+			if(pref_number>opposite_pref)
+				p[i][j] = d[i][j]
+				p[j][i] = 0
+			else
+				p[i][j] = 0
+				p[j][i] = d[i][j]
+	for(var/i in 1 to choices.len)
+		for(var/j in 1 to choices.len)
+			if(i != j)
+				for(var/k in 1 to choices.len) // YEAH O(n^3) !!
+					if(i != k && j != k)
+						p[j][k] = max(p[j][k],min(p[j][i], p[i][k]))
+	//one last pass, now that we've done the math
+	for(var/i in 1 to choices.len)
+		for(var/j in 1 to choices.len)
+			if(i != j && p[i][j] > p[j][i])
+				choices[choices[i]]++
+				// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
+	
+
+
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	if(vote_system == RANKED_CHOICE_VOTING)
