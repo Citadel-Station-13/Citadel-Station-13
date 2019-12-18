@@ -86,30 +86,21 @@ SUBSYSTEM_DEF(vote)
 				. += option
 	return .
 
-/datum/controller/subsystem/vote/proc/get_result_runoff()
-	var/already_lost_runoff = list()
-	for(var/n in 1 to choices.len) // if it takes more than this something REALLY wrong happened
-		for(var/ckey in voted)
-			choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
-		var/least_vote = 100000
-		var/least_voted
-		for(var/i in 1 to choices.len)
-			var/option = choices[i]
-			if(choices[option] > voted.len/2)
-				message_admins("[option] has a majority, returning...")
-				return list(option)
-			else if(choices[option] < least_vote && !(option in already_lost_runoff))
-				least_vote = choices[option]
-				least_voted = i
-		message_admins("[choices[least_voted]] lost the runoff, running again...")
-		already_lost_runoff += choices[least_voted]
-		for(var/ckey in voted)
-			voted[ckey] -= least_voted
-		for(var/option in choices)
-			choices[option] = 0
+/datum/controller/subsystem/vote/proc/calculate_condorcet_votes()
+	for(var/ckey in voted)
+		var/list/this_vote = voted[ckey]
+		for(var/a in 1 to choices.len)
+			for(var/b in a+1 to choices.len)
+				var/vote_sgn = SIGN(this_vote.Find(a)-this_vote.Find(b))
+				if(vote_sgn==-1)
+					choices[choices[a]]++
+				else if(vote_sgn==1)
+					choices[choices[b]]++
 
 /datum/controller/subsystem/vote/proc/announce_result()
-	var/list/winners = vote_system == INSTANT_RUNOFF_VOTING ? get_result_runoff() : get_result()
+	if(vote_system == RANKED_CHOICE_VOTING)
+		calculate_condorcet_votes()
+	var/list/winners = get_result()
 	var/text
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -233,7 +224,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = list(vote)
 						choices[choices[vote]]++
 						return vote
-				if(INSTANT_RUNOFF_VOTING)
+				if(RANKED_CHOICE_VOTING)
 					if(usr.ckey in voted)
 						if(vote in voted[usr.ckey])
 							voted[usr.ckey] -= vote
@@ -346,7 +337,7 @@ SUBSYSTEM_DEF(vote)
 				. += "<h3>Vote one.</h3>"
 			if(APPROVAL_VOTING)
 				. += "<h3>Vote any number of choices.</h3>"
-			if(INSTANT_RUNOFF_VOTING)
+			if(RANKED_CHOICE_VOTING)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom.</h3>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		switch(vote_system)
@@ -364,7 +355,7 @@ SUBSYSTEM_DEF(vote)
 					. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
-			if(INSTANT_RUNOFF_VOTING)
+			if(RANKED_CHOICE_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
 					var/vote = (myvote ? (myvote.Find(i)) : 0)

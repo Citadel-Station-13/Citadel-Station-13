@@ -481,7 +481,7 @@ SUBSYSTEM_DEF(ticker)
 		SSticker.modevoted = TRUE
 		var/dynamic = CONFIG_GET(flag/dynamic_voting)
 		if(dynamic)
-			SSvote.initiate_vote("dynamic","server",TRUE,INSTANT_RUNOFF_VOTING)
+			SSvote.initiate_vote("dynamic","server",TRUE,RANKED_CHOICE_VOTING)
 		else
 			SSvote.initiate_vote("roundtype","server",TRUE,PLURALITY_VOTING)
 
