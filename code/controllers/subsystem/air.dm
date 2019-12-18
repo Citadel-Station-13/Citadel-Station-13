@@ -391,6 +391,9 @@ SUBSYSTEM_DEF(air)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
 		CHECK_TICK
+	
+	if(!initialized)
+		return
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
 	if(!pipe_init_dirs_cache[type])
