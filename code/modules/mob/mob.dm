@@ -802,11 +802,14 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 //can the mob be buckled to something by default?
 /mob/proc/can_buckle()
-	return 1
+	return TRUE
 
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
-	return 1
+	return TRUE
+
+/mob/proc/can_buckle_others(mob/living/target, atom/buckle_to)
+	return TRUE
 
 //Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)

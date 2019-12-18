@@ -145,3 +145,6 @@
 	dynamic_chassis_bellyup = !dynamic_chassis_bellyup
 	to_chat(usr, "<span class='boldnotice'>You are now lying on your [dynamic_chassis_bellyup? "back" : "front"].</span>")
 	update_icon()
+
+/mob/living/silicon/pai/can_buckle_others(mob/living/target, atom/buckle_to)
+	return ispAI(target) && ..()
