@@ -366,7 +366,12 @@ SUBSYSTEM_DEF(vote)
 						. += "<li>[choice_descs[i]]</li>"
 			if(INSTANT_RUNOFF_VOTING)
 				for(var/i=1,i<=choices.len,i++)
-					var/vote = ((C.ckey in voted) ? (voted[C.ckey].Find(i)) : 0)
+					var/vote = 0
+					//linter yells at me if i use Find here
+					if(C.ckey in voted)
+						for(var/n=1,n<=voted[C.ckey].len,n++)
+							if(voted[C.ckey][n] == i)
+								vote = n
 					if(vote)
 						. += "<li><b><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([vote])</b></li>"
 					else
