@@ -378,7 +378,7 @@
 	flags = HIGHLANDER_RULESET
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-	property_weights = list("trust" = -3, "chaos" = 5, "extended" = -5, "valid" = 2)
+	property_weights = list("trust" = -3, "chaos" = 5, "extended" = -5, "valid" = 2, "conversion" = 1)
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
