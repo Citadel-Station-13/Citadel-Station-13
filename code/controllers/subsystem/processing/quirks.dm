@@ -63,28 +63,28 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	for(var/i in quirk_names)
 		. += quirk_points_by_name(i)
 
-/datum/controller/subsystem/processing/quirks/proc/filter_quirks(list/quirks, datum/job/job)
+/datum/controller/subsystem/processing/quirks/proc/filter_quirks(list/our_quirks, datum/job/job)
 	var/list/cut = list()
 	var/list/banned_names = list()
 	for(var/i in job.blacklisted_quirks)
 		var/name = quirk_name_by_path(i)
 		if(name)
 			banned_names += name
-	var/list/blacklisted = quirks & banned_names
+	var/list/blacklisted = our_quirks & banned_names
 	if(length(blacklisted))
 		for(var/i in blacklisted)
-			quirks -= i
+			our_quirks -= i
 			cut += i
 
 	/*	//Code to automatically reduce positive quirks until balance is even.
-	var/points_used = total_points(quirks)
+	var/points_used = total_points(our_quirks)
 	if(points_used > 0)
 		//they owe us points, let's collect.
-		for(var/i in quirks)
+		for(var/i in our_quirks)
 			var/points = quirk_points_by_name(i)
 			if(points > 0)
 				cut += i
-				quirks -= i
+				our_quirks -= i
 				points_used -= points
 			if(points_used <= 0)
 				break
@@ -92,9 +92,9 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	//Nah, let's null all non-neutrals out.
 	if(cut.len)
-		for(var/i in quirks)
+		for(var/i in our_quirks)
 			if(quirk_points_by_name(i) != 0)
 				//cut += i		-- Commented out: Only show the ones that triggered the quirk purge.
-				quirks -= i
+				our_quirks -= i
 
 	return cut
