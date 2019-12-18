@@ -60,7 +60,7 @@
 	var/y = round((world.maxy - height)/2)
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE, stationroom = stationroom)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -74,7 +74,7 @@
 
 	return level
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T, centered = FALSE, stationroom = FALSE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
