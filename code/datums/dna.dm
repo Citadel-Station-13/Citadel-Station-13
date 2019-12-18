@@ -199,10 +199,10 @@
 /datum/dna/proc/initialize_dna(newblood_type)
 	if(newblood_type)
 		blood_type = newblood_type
+	features = random_features()
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
-	features = random_features()
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
