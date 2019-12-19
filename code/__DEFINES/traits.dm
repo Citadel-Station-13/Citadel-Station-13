@@ -118,6 +118,7 @@
 #define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
+#define TRAIT_DISK_VERIFIER     "disk-verifier"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
@@ -227,3 +228,5 @@
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define NUKEOP_TRAIT "nuke-op"
+#define DEATHSQUAD_TRAIT "deathsquad"
