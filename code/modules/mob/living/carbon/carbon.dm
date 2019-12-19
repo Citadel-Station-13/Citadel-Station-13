@@ -161,7 +161,7 @@
 
 	var/obj/item/I = src.get_active_held_item()
 
-
+	var/atom/movable/thrown_thing
 	var/mob/living/throwable_mob
 
 	if(istype(I, /obj/item/clothing/head/mob_holder))
