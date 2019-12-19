@@ -392,6 +392,9 @@ SUBSYSTEM_DEF(air)
 		AM.build_network()
 		CHECK_TICK
 
+	if(!initialized)
+		return
+
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
 	if(!pipe_init_dirs_cache[type])
 		pipe_init_dirs_cache[type] = list()
