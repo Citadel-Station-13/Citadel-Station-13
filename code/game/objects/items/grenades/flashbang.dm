@@ -41,7 +41,6 @@
 /obj/item/grenade/flashbang/proc/flash(mob/living/M, turf/source)
 	if(M.stat == DEAD)	//They're dead!
 		return
-	var/distance = get_dist(get_turf(M, source))
+	var/distance = get_dist(get_turf(M), source)
 	if(M.flash_act(affect_silicon = 1))
 		M.Knockdown(max(200/max(1,distance), 60))
-
