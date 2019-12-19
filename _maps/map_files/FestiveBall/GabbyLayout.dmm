@@ -35544,6 +35544,10 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /turf/open/floor/festive/wooden/wooden1,
 /area/bridge/showroom/corporate)
+"bZL" = (
+/obj/machinery/telecomms/server/presets/science,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "bZP" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/festive/alleyway,
@@ -35588,12 +35592,6 @@
 /obj/item/poster/random_official,
 /turf/open/floor/festive/alleyway,
 /area/maintenance/starboard/fore)
-"cdC" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "cfg" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -35658,6 +35656,10 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
+"ckn" = (
+/obj/machinery/telecomms/receiver/preset_right,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "cmJ" = (
 /turf/open/floor/wood,
 /area/security/main)
@@ -35843,10 +35845,6 @@
 	},
 /turf/open/floor/wood,
 /area/security/warden)
-"dhK" = (
-/obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "dmu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -35866,17 +35864,15 @@
 	},
 /turf/open/floor/carpet/red,
 /area/crew_quarters/heads/hos)
+"dny" = (
+/obj/machinery/ntnet_relay,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/edina)
 "dpn" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSRightEnd,
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"dpD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/edina)
 "dqS" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Transferring Control";
@@ -35955,6 +35951,12 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/crew_quarters/bar/atrium)
+"dCP" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "dDh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow,
@@ -36049,13 +36051,18 @@
 	},
 /turf/open/floor/circuit,
 /area/edina)
+"dUR" = (
+/obj/machinery/telecomms/processor/preset_four,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "dVy" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "dWu" = (
-/turf/open/space/basic,
+/obj/structure/chair/sofa,
+/turf/open/floor/carpet/royalblack,
 /area/edina)
 "dYp" = (
 /obj/machinery/telecomms/hub/preset,
@@ -36198,7 +36205,11 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "esW" = (
-/turf/open/space/basic,
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat AI Chamber South";
+	network = list("aicore")
+	},
+/turf/open/floor/circuit,
 /area/edina)
 "etI" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -36302,7 +36313,13 @@
 /turf/closed/wall/mineral/iron,
 /area/ai_monitored/security/armory)
 "eJh" = (
-/turf/open/space/basic,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/circuit,
 /area/edina)
 "eJA" = (
 /turf/open/floor/carpet,
@@ -36452,7 +36469,14 @@
 /turf/open/floor/wood,
 /area/security/main)
 "ffd" = (
-/turf/open/space/basic,
+/obj/machinery/turretid{
+	control_area = "/area/ai_monitored/turret_protected/aisat/atmos";
+	name = "Exterior Turret Control";
+	pixel_y = 32;
+	req_access = null;
+	req_access_txt = "65"
+	},
+/turf/open/floor/circuit,
 /area/edina)
 "ffA" = (
 /obj/structure/cable/yellow{
@@ -36480,15 +36504,6 @@
 	},
 /turf/open/floor/festive/alleyway,
 /area/security/processing)
-"fhi" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/edina)
 "fjL" = (
 /obj/structure/chair/comfy{
 	dir = 1
@@ -36620,10 +36635,6 @@
 /obj/item/clothing/suit/armor/centcom,
 /turf/open/floor/festive/wooden/wooden1,
 /area/bridge/showroom/corporate)
-"fFs" = (
-/obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "fGC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36635,10 +36646,6 @@
 /obj/effect/festive/street/streetlinesouth,
 /turf/open/floor/festive/cobblestone,
 /area/science/robotics/mechbay)
-"fLo" = (
-/obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "fLY" = (
 /obj/machinery/light/small,
 /obj/structure/disposalpipe/segment{
@@ -36743,11 +36750,11 @@
 /turf/open/floor/wood,
 /area/security/prison)
 "gbZ" = (
-/obj/machinery/camera/motion{
-	c_tag = "MiniSat AI Chamber South";
-	network = list("aicore")
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel/dark,
 /area/edina)
 "gcg" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -36872,13 +36879,12 @@
 /turf/open/floor/wood,
 /area/security/prison)
 "gBy" = (
-/obj/machinery/power/terminal{
-	dir = 1
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
 	},
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/turf/open/floor/circuit,
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/dark,
 /area/edina)
 "gCn" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,
@@ -37001,14 +37007,14 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
 "gTS" = (
-/obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat/atmos";
-	name = "Exterior Turret Control";
-	pixel_y = 32;
-	req_access = null;
-	req_access_txt = "65"
+/obj/machinery/porta_turret/ai{
+	dir = 4;
+	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser;
+	nonlethal_projectile = /obj/item/projectile/beam/disabler/slug
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/grass/snow/edina{
+	initial_gas_mix = "o2=22;n2=82;TEMP=270"
+	},
 /area/edina)
 "gUH" = (
 /obj/structure/grille,
@@ -37055,11 +37061,10 @@
 /turf/open/floor/holofloor,
 /area/security/prison)
 "haw" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/structure/cable{
+	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/edina)
 "haY" = (
 /obj/structure/cable/yellow{
@@ -37079,18 +37084,6 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/security/processing)
-"hdm" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/tcommsat/server";
-	dir = 4;
-	name = "Telecomms Server APC";
-	pixel_x = 25
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/edina)
 "her" = (
 /obj/machinery/vending/boozeomat/all_access,
 /obj/machinery/light{
@@ -37120,22 +37113,20 @@
 /turf/open/floor/festive/alleyway,
 /area/maintenance/starboard/fore)
 "hfP" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
-/obj/machinery/holopad,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/edina)
 "hgl" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4;
-	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser;
-	nonlethal_projectile = /obj/item/projectile/beam/disabler/slug
+/obj/machinery/turretid{
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	name = "Antechamber Turret Control";
+	pixel_y = -24;
+	req_access = null;
+	req_access_txt = "65"
 	},
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=22;n2=82;TEMP=270"
-	},
+/turf/open/floor/carpet/royalblack,
 /area/edina)
 "hhI" = (
 /obj/structure/table/wood/fancy,
@@ -37318,9 +37309,13 @@
 /area/security/detectives_office)
 "hSL" = (
 /obj/structure/cable{
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
-/turf/open/floor/carpet/royalblack,
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Chamber Hallway";
+	req_one_access_txt = "65"
+	},
+/turf/open/floor/wood,
 /area/edina)
 "hTK" = (
 /obj/structure/table/wood/fancy/red,
@@ -37439,6 +37434,12 @@
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/festive/cobblestone,
 /area/science/robotics/mechbay)
+"iou" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "iqE" = (
 /obj/structure/grille,
 /obj/structure/festive/whitebrick/windowNSLeftEnd,
@@ -37461,10 +37462,6 @@
 /obj/machinery/suit_storage_unit/hos,
 /turf/open/floor/carpet/red,
 /area/crew_quarters/heads/hos)
-"iCN" = (
-/obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "iDh" = (
 /obj/effect/festive/street/streetlineeast,
 /obj/structure/disposalpipe/segment{
@@ -37596,10 +37593,11 @@
 /turf/closed/festive/whitebrick,
 /area/bridge)
 "iPN" = (
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Service Bay";
+	req_one_access_txt = "65"
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/wood,
 /area/edina)
 "iQT" = (
 /obj/structure/table,
@@ -37765,14 +37763,10 @@
 /turf/open/floor/carpet/red,
 /area/crew_quarters/heads/hos)
 "jlZ" = (
-/obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
-	name = "Antechamber Turret Control";
-	pixel_y = -24;
-	req_access = null;
-	req_access_txt = "65"
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/wood,
 /area/edina)
 "jmD" = (
 /obj/machinery/door/airlock/security{
@@ -37885,13 +37879,10 @@
 /turf/open/floor/festive/stairs/stairssouth,
 /area/security/main)
 "jBA" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Chamber Hallway";
-	req_one_access_txt = "65"
-	},
+/obj/item/clothing/head/welding,
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/wood,
 /area/edina)
 "jCC" = (
@@ -37947,6 +37938,14 @@
 	},
 /turf/open/floor/wood,
 /area/security/prison)
+"jMI" = (
+/obj/machinery/camera{
+	c_tag = "Telecomms Server Room";
+	dir = 1;
+	network = list("tcomms")
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "jNm" = (
 /obj/machinery/processor,
 /turf/open/floor/wood,
@@ -38037,6 +38036,10 @@
 /obj/structure/chair/sofa/left,
 /turf/open/floor/carpet/royalblack,
 /area/edina)
+"kfM" = (
+/obj/machinery/telecomms/receiver/preset_left,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "kiv" = (
 /obj/structure/chair/sofa/right,
 /obj/machinery/flasher{
@@ -38062,10 +38065,6 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/festive/alleyway,
 /area/crew_quarters/bar/atrium)
-"kqX" = (
-/obj/machinery/telecomms/bus/preset_four,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "ksL" = (
 /obj/machinery/power/apc{
 	areastring = "/area/teleporter";
@@ -38115,9 +38114,9 @@
 /turf/open/floor/festive/wooden/wooden1,
 /area/bridge/showroom/corporate)
 "kDz" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Service Bay";
-	req_one_access_txt = "65"
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/open/floor/wood,
 /area/edina)
@@ -38462,10 +38461,11 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "lNf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/festive/alleyway,
 /area/edina)
 "lNo" = (
 /obj/structure/showcase/machinery/tv,
@@ -38475,6 +38475,10 @@
 /obj/effect/landmark/start/lawyer,
 /turf/open/floor/wood,
 /area/lawoffice)
+"lPm" = (
+/obj/machinery/telecomms/server/presets/security,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "lPA" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restroom"
@@ -38733,10 +38737,12 @@
 /turf/open/floor/wood,
 /area/security/main)
 "mtl" = (
-/obj/item/clothing/head/welding,
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/edina)
 "mtx" = (
@@ -38750,6 +38756,10 @@
 /obj/structure/festive/whitebrick/windowWEMiddle,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
+"muf" = (
+/obj/machinery/telecomms/server/presets/medical,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "mwc" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -38760,9 +38770,14 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "myM" = (
-/obj/machinery/firealarm{
+/obj/machinery/power/apc{
+	areastring = "/area/ai_monitored/turret_protected/aisat/hallway";
 	dir = 4;
-	pixel_x = 24
+	name = "MiniSat Chamber Hallway APC";
+	pixel_x = 27
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
 	},
 /turf/open/floor/wood,
 /area/edina)
@@ -38886,11 +38901,14 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "mNc" = (
-/obj/effect/turf_decal/weather/snow/corner,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
+/obj/structure/rack,
+/obj/item/multitool,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 3
 	},
-/turf/open/floor/festive/alleyway,
+/turf/open/floor/wood,
 /area/edina)
 "mNu" = (
 /obj/structure/chair/stool,
@@ -38899,6 +38917,10 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
+"mNG" = (
+/obj/machinery/telecomms/bus/preset_two,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "mOF" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
@@ -38965,10 +38987,6 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"nea" = (
-/obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "nep" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin/towel,
@@ -39511,10 +39529,6 @@
 "oxF" = (
 /turf/closed/festive/whitebrick,
 /area/crew_quarters/heads/captain/private)
-"oAE" = (
-/obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "oBE" = (
 /obj/item/paper,
 /obj/structure/table/wood,
@@ -39606,10 +39620,6 @@
 	dir = 8
 	},
 /turf/open/floor/festive/alleyway,
-/area/edina)
-"oPw" = (
-/obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "oRl" = (
 /obj/machinery/airalarm/directional/east,
@@ -39812,11 +39822,18 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "pxC" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Service Bay";
+	dir = 8;
+	network = list("minisat");
+	start_active = 1
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
 	},
 /turf/open/floor/wood,
 /area/edina)
@@ -39840,15 +39857,7 @@
 /turf/open/floor/holofloor,
 /area/security/prison)
 "pAF" = (
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/aisat/hallway";
-	dir = 4;
-	name = "MiniSat Chamber Hallway APC";
-	pixel_x = 27
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/machinery/recharge_station,
 /turf/open/floor/wood,
 /area/edina)
 "pAR" = (
@@ -40088,10 +40097,6 @@
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/ai_monitored/security/armory)
-"pUI" = (
-/obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "pUK" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -40131,6 +40136,10 @@
 	},
 /turf/open/floor/festive/wooden/wooden1,
 /area/ai_monitored/security/armory)
+"pYG" = (
+/obj/machinery/telecomms/broadcaster/preset_right,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "pZb" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -40271,14 +40280,11 @@
 /turf/open/floor/holofloor,
 /area/security/prison)
 "qzt" = (
-/obj/structure/rack,
-/obj/item/multitool,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/machinery/holopad,
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plasteel/dark,
 /area/edina)
 "qzy" = (
 /obj/structure/chair/comfy/brown{
@@ -40373,10 +40379,6 @@
 	},
 /turf/open/floor/holofloor,
 /area/security/prison)
-"qLm" = (
-/obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "qMx" = (
 /obj/machinery/button/door{
 	id = "permabolt3";
@@ -40423,19 +40425,9 @@
 /turf/open/floor/wood,
 /area/security/prison)
 "qSs" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "MiniSat Service Bay";
-	dir = 8;
-	network = list("minisat");
-	start_active = 1
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/structure/table/reinforced,
+/obj/item/stock_parts/cell/high,
+/obj/machinery/cell_charger,
 /turf/open/floor/wood,
 /area/edina)
 "qSB" = (
@@ -40454,8 +40446,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "qVP" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/wood,
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Foyer";
+	req_one_access_txt = "32;19"
+	},
+/turf/open/floor/festive/alleyway,
 /area/edina)
 "rcg" = (
 /obj/machinery/door/poddoor/shutters,
@@ -40491,8 +40486,8 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/festive/cobblestone,
 /area/science/robotics/mechbay)
-"rkB" = (
-/obj/machinery/telecomms/bus/preset_three,
+"riR" = (
+/obj/machinery/telecomms/bus/preset_one,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "rlo" = (
@@ -40677,11 +40672,13 @@
 /turf/open/floor/carpet/red,
 /area/crew_quarters/heads/hos)
 "rIF" = (
-/obj/machinery/holopad,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/dark,
+/obj/structure/table/wood,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
+"rJf" = (
+/obj/machinery/telecomms/processor/preset_one,
+/turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "rLG" = (
 /obj/machinery/door/airlock/security/glass{
@@ -40721,10 +40718,6 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/wood,
 /area/bridge/meeting_room/council)
-"rQz" = (
-/obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "rUt" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -40814,10 +40807,10 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/edina)
 "spA" = (
-/obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/high,
-/obj/machinery/cell_charger,
-/turf/open/floor/wood,
+/obj/machinery/computer/telecomms/monitor{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "sqC" = (
 /obj/effect/landmark/start/security_officer,
@@ -40877,11 +40870,14 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "sCS" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Foyer";
-	req_one_access_txt = "32;19"
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
 	},
-/turf/open/floor/festive/alleyway,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
 /area/edina)
 "sDj" = (
 /obj/structure/cable/yellow{
@@ -41086,9 +41082,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
 "tek" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/plasteel/dark/telecomms,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
 /area/edina)
 "teu" = (
 /turf/open/floor/carpet/royalblue,
@@ -41175,10 +41173,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/starboard/fore)
-"tsD" = (
-/obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "ttA" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable/yellow{
@@ -41189,6 +41183,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"tug" = (
+/obj/machinery/telecomms/processor/preset_three,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "tuo" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -41267,6 +41265,19 @@
 	},
 /turf/open/floor/wood,
 /area/security/main)
+"tEM" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/edina)
+"tFZ" = (
+/obj/machinery/telecomms/bus/preset_four,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "tGR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -41297,10 +41308,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/gateway)
-"tJy" = (
-/obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "tNL" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -41401,12 +41408,6 @@
 	},
 /turf/open/floor/wood,
 /area/security/main)
-"ulA" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/edina)
 "ump" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -41466,6 +41467,18 @@
 	},
 /turf/open/floor/festive/alleyway,
 /area/security/brig)
+"upT" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/tcommsat/server";
+	dir = 4;
+	name = "Telecomms Server APC";
+	pixel_x = 25
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/edina)
 "uqa" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/paper_bin,
@@ -41487,6 +41500,16 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
 /area/bridge/meeting_room/council)
+"usb" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/edina)
+"usy" = (
+/obj/machinery/telecomms/server/presets/command,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "usV" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -41526,6 +41549,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/wood,
 /area/security/warden)
+"uyX" = (
+/obj/machinery/telecomms/bus/preset_three,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/edina)
 "uzT" = (
 /obj/structure/rack,
 /obj/item/storage/box/rubbershot{
@@ -41598,8 +41625,8 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "uHb" = (
-/obj/machinery/computer/telecomms/monitor{
-	dir = 8
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
@@ -41621,10 +41648,6 @@
 /obj/structure/closet/toolcloset,
 /turf/open/floor/festive/alleyway,
 /area/maintenance/starboard/fore)
-"uLc" = (
-/obj/machinery/telecomms/broadcaster/preset_right,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "uLP" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "permabolt3";
@@ -41799,10 +41822,6 @@
 /obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/festive/wooden/wooden1,
 /area/ai_monitored/security/armory)
-"vbm" = (
-/obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "vbF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
@@ -41854,14 +41873,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "vdM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
+/obj/machinery/telecomms/server/presets/service,
+/turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "vfi" = (
 /obj/structure/cable/yellow{
@@ -42087,11 +42100,8 @@
 /turf/open/floor/festive/wooden/wooden1,
 /area/ai_monitored/security/armory)
 "vWa" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
+/obj/machinery/telecomms/server/presets/supply,
+/turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "vXH" = (
 /obj/machinery/light{
@@ -42099,16 +42109,18 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
-"vYg" = (
-/obj/machinery/ntnet_relay,
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/edina)
 "vYx" = (
 /turf/open/floor/carpet/purple,
 /area/crew_quarters/bar/atrium)
 "vYK" = (
 /turf/closed/wall/mineral/iron,
 /area/security/warden)
+"vZg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/edina)
 "vZs" = (
 /obj/effect/festive/street/streetlinenorth,
 /turf/open/floor/festive/cobblestone,
@@ -42212,10 +42224,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
-"wkG" = (
-/obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "wnN" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable/yellow{
@@ -42293,12 +42301,6 @@
 "wxx" = (
 /turf/open/floor/festive/wooden/wooden1,
 /area/security/nuke_storage)
-"wCl" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "wCU" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/effect/festive/street/streetlinenorth,
@@ -42416,9 +42418,7 @@
 /turf/open/floor/festive/alleyway,
 /area/security/brig)
 "wMG" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/machinery/telecomms/server/presets/common,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "wOV" = (
@@ -42433,14 +42433,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plasteel,
 /area/bridge)
-"wSq" = (
-/obj/machinery/camera{
-	c_tag = "Telecomms Server Room";
-	dir = 1;
-	network = list("tcomms")
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/edina)
 "wSZ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -42549,7 +42541,7 @@
 /turf/open/floor/festive/sidewalk,
 /area/edina)
 "xoE" = (
-/obj/machinery/telecomms/server/presets/service,
+/obj/machinery/telecomms/server/presets/engineering,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "xoO" = (
@@ -42806,7 +42798,7 @@
 /turf/open/floor/wood,
 /area/security/warden)
 "xWq" = (
-/obj/machinery/telecomms/server/presets/supply,
+/obj/machinery/telecomms/processor/preset_two,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/edina)
 "xWO" = (
@@ -62221,7 +62213,7 @@ ayO
 ayO
 ayO
 aaf
-hgl
+gTS
 aaf
 aaf
 aaf
@@ -63502,8 +63494,8 @@ bdd
 bdi
 bdi
 byC
+esW
 gbZ
-haw
 ayO
 ayO
 ayO
@@ -63759,8 +63751,8 @@ bde
 bdj
 bdi
 dRf
+eJh
 gBy
-hfP
 ayO
 ayO
 ayO
@@ -64016,7 +64008,7 @@ bdh
 bdi
 bdi
 bdi
-gTS
+ffd
 ajm
 ayO
 ayO
@@ -64801,21 +64793,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -65058,21 +65050,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -65305,7 +65297,7 @@ ayO
 ayO
 ayO
 aaf
-hgl
+gTS
 aaf
 aaf
 aaf
@@ -65315,21 +65307,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -65572,21 +65564,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -65806,21 +65798,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -65850,7 +65827,22 @@ ayO
 ayO
 ayO
 ayO
-ffd
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+aaf
 ayO
 ayO
 ayO
@@ -66063,21 +66055,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -66101,13 +66078,28 @@ aaf
 aaf
 aaf
 aaf
-hSL
-kVC
-lNf
-pxC
-qVP
 ayO
-ffd
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+haw
+kVC
+jlZ
+mtl
+pAF
+ayO
+aaf
 ayO
 mID
 ara
@@ -66320,21 +66312,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -66358,13 +66335,28 @@ aaf
 aaf
 aaf
 aaf
-iPN
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+hfP
 ayO
 sen
+myM
 pAF
-qVP
 ayO
-ffd
+aaf
 ayO
 rrS
 ghv
@@ -66377,11 +66369,11 @@ ayO
 ayO
 ayO
 sjF
-xoE
-nea
+vdM
+xWq
 sjF
-tJy
-vbm
+riR
+bZL
 sjF
 ayO
 aaf
@@ -66577,21 +66569,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -66615,13 +66592,28 @@ aaf
 aaf
 aaf
 aaf
-iPN
 ayO
 ayO
 ayO
 ayO
 ayO
-ffd
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+hfP
+ayO
+ayO
+ayO
+ayO
+ayO
+aaf
 ayO
 rrS
 ghv
@@ -66634,11 +66626,11 @@ oEN
 pqM
 uRm
 sjF
-xWq
-qLm
+vWa
+mNG
 sjF
-dhK
-tsD
+rJf
+muf
 sjF
 ayO
 aaf
@@ -66834,21 +66826,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -66872,13 +66849,28 @@ aaf
 aaf
 aaf
 aaf
-iPN
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+hfP
 ayO
 tDK
 aTs
 aTs
 tDK
-ffd
+aaf
 ayO
 kfz
 xay
@@ -66887,14 +66879,14 @@ xay
 xay
 ara
 ayO
-tek
+rIF
 lJl
 qpD
 xpl
 xpl
 hCB
 sjF
-pUI
+kfM
 xpl
 xpl
 ayO
@@ -67091,21 +67083,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -67129,13 +67106,28 @@ aaf
 aaf
 aaf
 aaf
-iPN
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+hfP
 ayO
 hJu
 hJu
 hJu
 hJu
-ffd
+aaf
 ayO
 ara
 xay
@@ -67152,7 +67144,7 @@ xpl
 sjF
 sjF
 sjF
-cdC
+dCP
 xpl
 ayO
 aaf
@@ -67348,21 +67340,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -67386,13 +67363,28 @@ aaf
 aaf
 aaf
 aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 ugT
-jBA
+hSL
 dBi
 dBi
-rIF
+qzt
 dBi
-ffd
+aaf
 ayO
 ara
 xay
@@ -67409,8 +67401,8 @@ sjF
 sjF
 dYp
 sjF
-fhi
-vYg
+tEM
+dny
 ayO
 aaf
 aaf
@@ -67605,21 +67597,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -67643,13 +67620,28 @@ aaf
 aaf
 aaf
 aaf
-jlZ
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+hgl
 ayO
 hJu
 hJu
 hJu
 hJu
-ffd
+aaf
 ayO
 ara
 xay
@@ -67661,13 +67653,13 @@ ayO
 uTV
 xpl
 oxb
-wMG
-wMG
-ulA
+uHb
+uHb
+vZg
 usV
-ulA
-wCl
-wSq
+vZg
+iou
+jMI
 ayO
 aaf
 aaf
@@ -67862,21 +67854,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -67900,13 +67877,28 @@ aaf
 aaf
 aaf
 aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 ara
 ayO
 tDK
 aTs
 aTs
 tDK
-ffd
+aaf
 ayO
 ara
 xay
@@ -67917,12 +67909,12 @@ ara
 ayO
 kbJ
 kbJ
-vdM
+sCS
 xpl
 ffY
-uLc
-dpD
-wkG
+pYG
+usb
+ckn
 xpl
 xpl
 ayO
@@ -68119,21 +68111,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -68157,13 +68134,28 @@ aaf
 aaf
 aaf
 aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 ara
 ayO
 ayO
 ayO
 ayO
 ayO
-ffd
+aaf
 ayO
 ara
 xay
@@ -68172,15 +68164,15 @@ xay
 xay
 ara
 ayO
-uHb
+spA
 toF
-vWa
+tek
 sjF
-fFs
-iCN
-dpD
-rkB
-rQz
+wMG
+dUR
+usb
+uyX
+usy
 sjF
 ayO
 aaf
@@ -68376,21 +68368,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -68414,13 +68391,28 @@ aaf
 aaf
 aaf
 aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 ara
 ayO
-mtl
-qzt
-spA
+jBA
+mNc
+qSs
 ayO
-ffd
+aaf
 ayO
 ara
 xay
@@ -68433,11 +68425,11 @@ ayO
 ayO
 ayO
 sjF
-oPw
-kqX
-hdm
-oAE
-fLo
+xoE
+tFZ
+upT
+tug
+lPm
 sjF
 ayO
 aaf
@@ -68633,21 +68625,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -68671,13 +68648,28 @@ aaf
 aaf
 aaf
 aaf
-ara
-kDz
-myM
-qSs
-spA
 ayO
-ffd
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ara
+iPN
+kDz
+pxC
+qSs
+ayO
+aaf
 ayO
 ara
 ara
@@ -68890,21 +68882,6 @@ aaf
 aaf
 aaf
 aaf
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
-ffd
 aaf
 aaf
 aaf
@@ -68934,12 +68911,27 @@ ayO
 ayO
 ayO
 ayO
-ffd
 ayO
 ayO
 ayO
-sCS
-sCS
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+aaf
+ayO
+ayO
+ayO
+qVP
+qVP
 ayO
 ayO
 ayO
@@ -69170,21 +69162,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -69427,21 +69419,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -69684,21 +69676,21 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
+ayO
 aaf
 aaf
 aaf
@@ -70472,7 +70464,7 @@ tAx
 tAx
 qQY
 aSJ
-mNc
+lNf
 aaf
 ars
 acw
