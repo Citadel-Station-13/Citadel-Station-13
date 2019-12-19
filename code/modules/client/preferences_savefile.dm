@@ -181,7 +181,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["widescreenpref"]		>> widescreenpref
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
-	S["lewdchem"]			>> lewdchem
 	S["preferred_chaos"]	>> preferred_chaos
 
 
@@ -278,7 +277,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
-	WRITE_FILE(S["lewdchem"], lewdchem)
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 
 	return 1

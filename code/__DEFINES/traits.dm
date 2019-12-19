@@ -164,7 +164,6 @@
 #define TRAIT_MASO              "masochism"
 #define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
-#define TRAIT_PHARMA            "hepatic_pharmacokinesis"
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"

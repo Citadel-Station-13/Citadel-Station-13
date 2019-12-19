@@ -115,7 +115,7 @@
 #define FORCED_MASC			(1<<6)
 #define HYPNO				(1<<7)
 
-#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
+#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)

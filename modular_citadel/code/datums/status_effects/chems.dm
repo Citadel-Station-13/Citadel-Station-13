@@ -214,7 +214,7 @@
 	set name = "Toggle Lewd MKUltra"
 	set desc = "Allows you to toggle if you'd like lewd flavour messages for MKUltra."
 	client.prefs.cit_toggles ^= HYPNO
-	to_chat(usr, "You [(client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for MKUltra.")
+	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for MKUltra.")
 
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
@@ -273,7 +273,7 @@
 		if(!H.canbearoused)
 			H.client?.prefs.cit_toggles &= ~HYPNO
 	lewd = (owner.client?.prefs.cit_toggles & HYPNO) && (master.client?.prefs.cit_toggles & HYPNO)
-	var/message = "[lewd ? "I am a good pet for [enthrallGender]." : "[master] is a really inspirational person!")]"
+	var/message = "[(lewd ? "I am a good pet for [enthrallGender]." : "[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
 	to_chat(owner, "<span class='[(lewd ?"big velvet":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")
 	log_game("FERMICHEM: MKULTRA: Status applied on [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].")

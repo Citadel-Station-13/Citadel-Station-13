@@ -244,6 +244,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>ERP Preferences</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -978,11 +979,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Breast enlargement:</b> <a href='?_src_=prefs;task=input;preference=breast_enlargement'>[cit_toggles & BREAST_ENLARGEMENT ? "Allowed" : "Disallowed"]</a><br>"
-			dat += "<b>Penis enlargement:</b> <a href='?_src_=prefs;task=input;preference=penis_enlargement'>[cit_toggles & PENIS_ENLARGEMENT ? "Allowed" : "Disallowed"]</a><br>"
-			dat += "<b>Forced feminization:</b> <a href='?_src_=prefs;task=input;preference=feminization'>[cit_toggles & FORCED_FEM ? "Allowed" : "Disallowed"]</a><br>"
-			dat += "<b>Forced masculinization:</b> <a href='?_src_=prefs;preference=masculinization'>[cit_toggles & FORCED_MASC ? "Allowed" : "Disallowed"]</a><br>"
-			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[cit_toggles & HYPNO ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Breast Enlargement:</b> <a href='?_src_=prefs;preference=breast_enlargement'>[(cit_toggles & BREAST_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Penis Enlargement:</b> <a href='?_src_=prefs;preference=penis_enlargement'>[(cit_toggles & PENIS_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Forced Feminization:</b> <a href='?_src_=prefs;preference=feminization'>[(cit_toggles & FORCED_FEM) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Forced Masculinization:</b> <a href='?_src_=prefs;preference=masculinization'>[(cit_toggles & FORCED_MASC) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[(cit_toggles & HYPNO) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<br>"
 
 	dat += "<hr><center>"
