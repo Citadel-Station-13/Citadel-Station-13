@@ -820,11 +820,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
-			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Lewdchem:</b><a href='?_src_=prefs;preference=lewdchem'>[lewdchem == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
@@ -977,6 +972,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "</font>"
 				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 			dat += "</table>"
+		if(4) // ERP mechanics
+			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Breast enlargement:</b> <a href='?_src_=prefs;task=input;preference=breast_enlargement'>[cit_toggles & BREAST_ENLARGEMENT ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Penis enlargement:</b> <a href='?_src_=prefs;task=input;preference=penis_enlargement'>[cit_toggles & PENIS_ENLARGEMENT ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Forced feminization:</b> <a href='?_src_=prefs;task=input;preference=feminization'>[cit_toggles & FORCED_FEM ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Forced masculinization:</b> <a href='?_src_=prefs;preference=masculinization'>[cit_toggles & FORCED_MASC ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[cit_toggles & HYPNO ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<br>"
 
 	dat += "<hr><center>"
 
@@ -2016,8 +2023,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					features["genitals_use_skintone"] = !features["genitals_use_skintone"]
 				if("arousable")
 					arousable = !arousable
-				if("lewdchem")
-					lewdchem = !lewdchem
 				if("has_cock")
 					features["has_cock"] = !features["has_cock"]
 					if(features["has_cock"] == FALSE)
@@ -2164,6 +2169,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("toggledigestionnoise")
 					cit_toggles ^= DIGESTION_NOISES
+
+				if("breast_enlargement")
+					cit_toggles ^= BREAST_ENLARGEMENT
+
+				if("penis_enlargement")
+					cit_toggles ^= PENIS_ENLARGEMENT
+
+				if("feminization")
+					cit_toggles ^= FORCED_FEM
+
+				if("masculinization")
+					cit_toggles ^= FORCED_MASC
+
+				if("hypno")
+					cit_toggles ^= HYPNO
+
 				//END CITADEL EDIT
 
 				if("ambientocclusion")

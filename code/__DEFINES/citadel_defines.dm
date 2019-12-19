@@ -109,6 +109,11 @@
 #define MEDIHOUND_SLEEPER	(1<<0)
 #define EATING_NOISES		(1<<1)
 #define DIGESTION_NOISES	(1<<2)
+#define BREAST_ENLARGEMENT	(1<<3)
+#define PENIS_ENLARGEMENT	(1<<4)
+#define FORCED_FEM			(1<<5)
+#define FORCED_MASC			(1<<6)
+#define HYPNO				(1<<7)
 
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
 
