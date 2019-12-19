@@ -415,7 +415,7 @@
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature
 
-	if(!HAS_TRAIT(H, TRAIT_RESISTCOLD)) // COLD DAMAGE
+	if(!HAS_TRAIT(H, TRAIT_RESISTCOLD) || !has_cold_protection()) // COLD DAMAGE
 		var/cold_modifier = H.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
 			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
@@ -444,6 +444,19 @@
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
+
+/obj/item/organ/lungs/proc/has_cold_protection()
+	var/mob/living/carbon/human/H = owner
+	if(!H)
+		return FALSE
+	if(!H.wear_neck)
+		return FALSE
+	if(istype(H.wear_neck, /obj/item/clothing/neck/scarf))
+		return TRUE
+	var/striped_scarves = list(/obj/item/clothing/neck/stripedredscarf, /obj/item/clothing/neck/stripedgreenscarf, /obj/item/clothing/neck/stripedbluescarf)
+	if(is_type_in_list(H.wear_neck, striped_scarves))
+		return TRUE
+	return FALSE
 
 
 /obj/item/organ/lungs/on_life()
