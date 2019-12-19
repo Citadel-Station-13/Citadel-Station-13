@@ -48603,10 +48603,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/chief)
-"cfG" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cfH" = (
 /obj/machinery/button/door{
 	id = "ceprivacy";
@@ -50064,12 +50060,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
-"cjh" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cji" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -52423,13 +52413,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"cqm" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cqn" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -55767,36 +55750,11 @@
 /obj/machinery/vending/engivend,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cDz" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cDB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"cDH" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"cDI" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 5
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cDJ" = (
@@ -84822,7 +84780,7 @@ cSS
 ckD
 cTc
 cTe
-cfG
+cgR
 cgw
 bUX
 bUX
@@ -89195,8 +89153,8 @@ cgU
 cgU
 cis
 cjN
-cDz
-cDH
+bUX
+bUX
 bUX
 bUX
 bUX
@@ -89452,8 +89410,8 @@ cgM
 cgQ
 cjS
 cjN
-cqm
-cgR
+bUX
+bUX
 bUX
 bUX
 bUX
@@ -89709,8 +89667,8 @@ ccw
 ccw
 cDl
 cjN
-cjh
-cDI
+bUX
+bUX
 bUX
 bUX
 bUX
