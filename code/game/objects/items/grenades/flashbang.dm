@@ -15,8 +15,6 @@
 	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 4, 2)
 	flashbang_mobs(flashbang_turf, flashbang_range)
-	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
-		bang(get_turf(M), M)
 	qdel(src)
 
 /obj/item/grenade/flashbang/proc/flashbang_mobs(turf/source, range)
