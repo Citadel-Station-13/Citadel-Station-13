@@ -2,7 +2,7 @@
 	name = "Hovertruck"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. This one comes equipt with a sizeable boot that can store up to 3 items!"
 	icon_state = "zoomscoot"
-	max_integrity = 150
+	max_integrity = 200
 	var/obj/structure/boot = list()//Trunkspace of craft
 	var/boot_size = 3
 	max_acceleration = 3

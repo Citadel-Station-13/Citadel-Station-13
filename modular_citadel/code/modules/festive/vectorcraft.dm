@@ -58,6 +58,9 @@
 	check_gears()
 	if(!driver)
 		stop_engine()
+	if(driver.stat == DEAD)
+		mob_exit(driver)
+		stop_engine()
 
 /obj/vehicle/sealed/vectorcraft/proc/stop_engine()
 	STOP_PROCESSING(SSvectorcraft, src)
