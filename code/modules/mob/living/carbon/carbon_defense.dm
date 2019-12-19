@@ -316,7 +316,18 @@
 
 			else
 				return
-
+		
+		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
+			M.visible_message( \
+				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
+				"<span class='notice'>You shake [src]'s hand.</span>", )
+			
+		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
+			M.visible_message( \
+				"<span class='notice'>[M] boops [src]'s nose.</span>", \
+				"<span class='notice'>You boop [src] on the nose.</span>", )
+			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
+		
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
