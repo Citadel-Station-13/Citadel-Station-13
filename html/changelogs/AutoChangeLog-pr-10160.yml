@@ -1,0 +1,6 @@
+author: "nicbn, Kevinz000, ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "Fire alarm is now simpler. Touch it to activate, touch it to deactivate. When activated, it will blink inconsistently if it is emagged."
+  - bugfix: "You can no longer spam fire alarms. Also, they're logged again."
+  - bugfix: "Fixed fire alarms not updating icons properly after being emagged and hacked by Malf AI's."
