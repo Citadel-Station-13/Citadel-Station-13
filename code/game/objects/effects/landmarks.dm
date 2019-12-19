@@ -475,5 +475,5 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 // The landmark for the Engine
 
 /obj/effect/landmark/stationroom/box/engine
-	template_names = list("Engine SM", /*"Engine Singulo",*/ "Engine Tesla")
+	template_names = list("Engine SM", "Engine Singulo", "Engine Tesla")
 	icon = 'icons/rooms/box/engine.dmi'
