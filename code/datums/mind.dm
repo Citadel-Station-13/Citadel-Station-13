@@ -88,6 +88,9 @@
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	var/old_character = current
+	var/signals = SEND_SIGNAL(new_character, COMSIG_MOB_PRE_PLAYER_CHANGE, new_character, old_character) | SEND_SIGNAL(src, COMSIG_PRE_MIND_TRANSFER, new_character, old_character)
+	if(signals & COMPONENT_STOP_MIND_TRANSFER)
+		return
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
@@ -125,7 +128,6 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
-	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 
 //CIT CHANGE - makes arousal update when transfering bodies
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
@@ -133,6 +135,8 @@
 		if(L.client && L.client.prefs)
 			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
 			L.update_arousal_hud() //Removes the old icon
+
+	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 
 /datum/mind/proc/store_memory(new_text)
 	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
