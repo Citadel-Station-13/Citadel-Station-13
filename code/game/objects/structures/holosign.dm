@@ -85,23 +85,13 @@
 	name = "holo firelock"
 	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects or gas from passing through, temperature changes are kept out."
 	icon_state = "holo_firelock"
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
 	alpha = 150
+	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/firelock/BlockSuperconductivity()
+/obj/structure/holosign/barrier/firelock/blocksTemperature()
 	return TRUE
-
-/obj/structure/holosign/barrier/firelock/fire_act(exposed_temperature,exposed_volume)
-	return
-
-/obj/structure/holosign/barrier/firelock/CanPass(atom/movable/mover, turf/target)
-	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
-		return 1
-	if(iscarbon(mover))
-		var/mob/living/carbon/C = mover
-		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
-			return 1
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
