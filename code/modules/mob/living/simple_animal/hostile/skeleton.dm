@@ -12,6 +12,7 @@
 	emote_see = list("rattles")
 	a_intent = INTENT_HARM
 	maxHealth = 40
+	blood_volume = 0
 	health = 40
 	speed = 1
 	harm_intent_damage = 5
