@@ -280,10 +280,10 @@
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 
 		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
-					M.visible_message( \
-						"<span class='notice'>[M] boops [src]'s nose.</span>", \
-						"<span class='notice'>You boop [src] on the nose.</span>", )
-					playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
+			M.visible_message( \
+				"<span class='notice'>[M] boops [src]'s nose.</span>", \
+				"<span class='notice'>You boop [src] on the nose.</span>", )
+			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 
 		else if(check_zone(M.zone_selected) == "head")
 			var/mob/living/carbon/human/H = src
