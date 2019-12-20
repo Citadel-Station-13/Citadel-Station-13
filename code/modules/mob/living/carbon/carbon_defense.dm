@@ -279,6 +279,12 @@
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 
+		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
+					M.visible_message( \
+						"<span class='notice'>[M] boops [src]'s nose.</span>", \
+						"<span class='notice'>You boop [src] on the nose.</span>", )
+					playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
+
 		else if(check_zone(M.zone_selected) == "head")
 			var/mob/living/carbon/human/H = src
 			var/datum/species/pref_species = H.dna.species
@@ -321,12 +327,6 @@
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
 				"<span class='notice'>You shake [src]'s hand.</span>", )
-			
-		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
-			M.visible_message( \
-				"<span class='notice'>[M] boops [src]'s nose.</span>", \
-				"<span class='notice'>You boop [src] on the nose.</span>", )
-			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 		
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
