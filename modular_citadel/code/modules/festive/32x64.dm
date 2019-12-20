@@ -46,7 +46,7 @@
 	icon = 'modular_citadel/code/modules/festive/city_sign.dmi'
 	icon_state = "sign"
 
-/obj/structure/streetdecor/lampfestive
+/obj/structure/streetdecor/bigtree
 	name = "Big festive tree"
 	desc = "Big tree. Big heck. Big festive cheer!"
 	layer = 4

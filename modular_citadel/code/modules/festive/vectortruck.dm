@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/vectorcraft/boot
 	name = "Hovertruck"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. This one comes equipt with a sizeable boot that can store up to 3 items!"
-	icon_state = "zoomscoot"
+	icon_state = "truck"
 	max_integrity = 200
 	var/obj/structure/boot = list()//Trunkspace of craft
 	var/boot_size = 3
@@ -34,6 +34,7 @@
 		o.forceMove(drop_location())
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance //weewoos have to go fast
+	name = "Ambulance"
 	var/obj/machinery/sleeper/ambulance/Sl
 	max_acceleration = 3
 	accel_step = 0.15
@@ -42,11 +43,12 @@
 	max_velocity = 100
 	boost_power = 25
 	enginesound_delay = 0
+	icon_state = "ambutruck"
 	var/weewoo = FALSE
 	var/weewoocount = 0
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize()
-	new /obj/machinery/sleeper/ambulance
+	Sl = new /obj/machinery/sleeper/ambulance
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/process()
 	..()
