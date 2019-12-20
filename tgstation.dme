@@ -3083,6 +3083,7 @@
 #include "modular_citadel\code\modules\custom_loadout\read_from_file.dm"
 #include "modular_citadel\code\modules\festive\32x64.dm"
 #include "modular_citadel\code\modules\festive\festive_decals.dm"
+#include "modular_citadel\code\modules\festive\festive_notes.dm"
 #include "modular_citadel\code\modules\festive\privacy.dm"
 #include "modular_citadel\code\modules\festive\turfs.dm"
 #include "modular_citadel\code\modules\festive\vector_process.dm"
