@@ -461,7 +461,7 @@ if(driver.sprinting && !(boost_cooldown))
 			return 1
 		if(INTENT_DISARM)
 			return 2
-		if("grab")
+		if(INTENT_GRAB)
 			return 3
 		if(INTENT_HARM)
 			return 4
