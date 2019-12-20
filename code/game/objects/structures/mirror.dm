@@ -20,10 +20,9 @@
 		return
 	if(broken || !Adjacent(user))
 		return
-
+		
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
@@ -226,9 +225,13 @@
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(new_eye_color)
-				H.eye_color = sanitize_hexcolor(new_eye_color)
+				var/n_color = sanitize_hexcolor(new_eye_color)
+				var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+				if(eyes)
+					eyes.eye_color = n_color
+				H.eye_color = n_color
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				H.update_body()
+				H.dna.species.handle_body()
 	if(choice)
 		curse(user)
 
