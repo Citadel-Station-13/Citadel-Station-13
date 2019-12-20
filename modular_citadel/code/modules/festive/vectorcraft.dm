@@ -59,18 +59,26 @@
 //////////////////////////////////////////////////////////////
 
 /obj/vehicle/sealed/vectorcraft/proc/start_engine()
+	if(dead_check())
+		return
 	START_PROCESSING(SSvectorcraft, src)
 	check_gears()
 	if(!driver)
 		stop_engine()
-	if(driver.stat > 0)
-		mob_exit(driver)
-		stop_engine()
+
 
 /obj/vehicle/sealed/vectorcraft/proc/stop_engine()
 	STOP_PROCESSING(SSvectorcraft, src)
 	vector = list("x" = 0, "y" = 0)
 	acceleration = initial(acceleration)
+
+/obj/vehicle/sealed/vectorcraft/proc/dead_check()
+	if(driver.stat > 0)
+		mob_exit(driver)
+		stop_engine()
+		return TRUE
+	return FALSE
+
 
 
 //Move the damn car
@@ -136,6 +144,7 @@
 //I got over messy process procs
 /obj/vehicle/sealed/vectorcraft/process()
 	hover_loop()
+	dead_check()
 
 //////////////////////////////////////////////////////////////
 //					Movement procs						   	//
