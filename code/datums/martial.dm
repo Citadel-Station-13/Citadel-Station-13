@@ -8,7 +8,9 @@
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/reroute_deflection = FALSE //Delete the bullet, or actually deflect it in some direction?
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb
+	var/no_guns = FALSE
 	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
@@ -26,15 +28,13 @@
 
 /datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
 	if(D != current_target)
-		reset_streak(D)
+		current_target = D
+		streak = ""
+		restraining = 0
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak,2)
 	return
-
-/datum/martial_art/proc/reset_streak(mob/living/carbon/human/new_target)
-	current_target = new_target
-	streak = ""
 
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
@@ -81,7 +81,7 @@
 		D.forcesay(GLOB.hit_appends)
 	return 1
 
-/datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = FALSE)
+/datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(!istype(H) || !H.mind)
 		return FALSE
 	if(H.mind.martial_art)

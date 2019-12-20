@@ -65,9 +65,6 @@
 		target.visible_message("...[target] wakes up, alive and aware!")
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
-		for(var/obj/item/organ/O in target.internal_organs)//zap those buggers back to life!
-			if(O.organ_flags & ORGAN_FAILING)
-				O.applyOrganDamage(-5)
 		return TRUE
 	else
 		user.visible_message("...[target.p_they()] convulses, then lies still.")

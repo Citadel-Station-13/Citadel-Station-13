@@ -55,9 +55,6 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 /obj/item/stack/sheet/mineral/sandstone/thirty
 	amount = 30
 
-/obj/item/stack/sheet/mineral/sandstone/twelve
-	amount = 12
-
 /*
  * Sandbags
  */

@@ -37,15 +37,7 @@
 		/obj/item/screwdriver,
 		/obj/item/valentine,
 		/obj/item/stamp,
-		/obj/item/key,
-		/obj/item/cartridge,
-		/obj/item/camera_film,
-		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/reagent_containers/food/snacks/grown/poppy,
-		/obj/item/instrument/harmonica,
-		/obj/item/mining_voucher,
-		/obj/item/suit_voucher,
-		/obj/item/reagent_containers/pill))
+		/obj/item/key))
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()

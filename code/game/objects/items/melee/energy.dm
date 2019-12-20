@@ -320,12 +320,11 @@
 		M.update_inv_hands()
 
 /obj/item/melee/transforming/energy/sword/cx/AltClick(mob/living/user)
-	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return TRUE
+		return
 
 	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
@@ -333,7 +332,6 @@
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 		update_light()
-	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/examine(mob/user)
 	. = ..()

@@ -132,8 +132,8 @@
 	..()
 	if(!user.canUseTopic(src))
 		return
-	eject_part(user)
-	return TRUE
+	else
+		eject_part(user)
 
 /obj/machinery/aug_manipulator/power_change()
 	..()

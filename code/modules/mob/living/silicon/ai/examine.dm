@@ -3,16 +3,18 @@
 	if (stat == DEAD)
 		. += "<span class='deadsay'>It appears to be powered-down.</span>"
 	else
+		. += "<span class='warning'>"
 		if (getBruteLoss())
 			if (getBruteLoss() < 30)
-				. += "<span class='warning'>It looks slightly dented.</span>"
+				. += "It looks slightly dented."
 			else
-				. += "<span class='danger'>It looks severely dented!</span>"
+				. += "<B>It looks severely dented!</B>"
 		if (getFireLoss())
 			if (getFireLoss() < 30)
-				. += "<span class='warning'>It looks slightly charred.</span>"
+				. += "It looks slightly charred."
 			else
-				. += "<span class='danger'>Its casing is melted and heat-warped!</span>"
+				. += "<B>Its casing is melted and heat-warped!</B>"
+		. += "</span>"
 		if(deployed_shell)
 			. += "The wireless networking light is blinking."
 		else if (!shunted && !client)

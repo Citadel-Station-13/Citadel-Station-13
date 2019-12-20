@@ -93,7 +93,6 @@
 	var/list/all_eyes = list()
 	var/max_multicams = 6
 	var/display_icon_override
-	var/emote_display = "Neutral" //text string of the current emote we set for the status displays, to prevent logins resetting it.
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -202,7 +201,6 @@
 
 	if(!ai_core_icon || incapacitated())
 		return
-
 	display_icon_override = ai_core_icon
 	set_core_display_icon(ai_core_icon)
 
@@ -601,15 +599,12 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/n_emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	if(!n_emote)
-		return
-	emote_display = n_emote
+	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
-		M.emotion = emote_display
+		M.emotion = emote
 		M.update()
-	if (emote_display == "Friend Computer")
+	if (emote == "Friend Computer")
 		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 		if(!frequency)
@@ -831,7 +826,7 @@
 
 	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
 
-	show_message(rendered, MSG_AUDIBLE)
+	show_message(rendered, 2)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
 	..()

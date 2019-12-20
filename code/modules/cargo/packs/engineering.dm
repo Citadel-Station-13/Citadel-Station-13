@@ -56,7 +56,6 @@
 	name = "Engineering Hardsuit"
 	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and mask!"
 	cost = 2250
-	access = ACCESS_ENGINE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
@@ -66,7 +65,7 @@
 	name = "Atmospherics Hardsuit"
 	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank. Ask the CE to open."
 	cost = 5000
-	access = ACCESS_CE //100% Fire and Bio resistance
+	access = ACCESS_CE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine/atmos)
@@ -75,7 +74,7 @@
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
-	desc = "An industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Does not contain spare ammo for the industrial RCD or any other RCD models."
+	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
 	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
@@ -92,11 +91,15 @@
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000
+	charge = 5000
+
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard cell-based equipment anytime, anywhere. Contains two Inducers."
 	cost = 2300
-	contains = list(/obj/item/inducer/sci/supply, /obj/item/inducer/sci/supply)
+	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}, /obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}) //FALSE doesn't work in modified type paths apparently.
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -118,6 +121,18 @@
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+
+/datum/supply_pack/engineering/siezedpower
+	name = "Siezed Power Cell Crate"
+	desc = "We took the means of power! Contains three high-voltage plus power cells."
+	cost = 1300
+	contraband = TRUE
+	contains = list(/obj/item/stock_parts/cell/high/plus,
+					/obj/item/stock_parts/cell/high/plus,
+					/obj/item/stock_parts/cell/high/plus)
+	crate_name = "siezed crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire shuttle engine into one tiny little crate. Requires CE access to open."
@@ -126,6 +141,22 @@
 	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
+
+/datum/supply_pack/engineering/siezedproduction 
+	name = "The Means of Production"
+	desc = "We will win for we have took over the production! S five metal sheets, five wire, three matter bins, one manipulater and one sheet of glass."
+	cost = 1500
+	contraband = TRUE
+	contains = list(/obj/item/stock_parts/cell/high/plus,
+					/obj/item/circuitboard/machine/autolathe,
+					/obj/item/stack/cable_coil/random/five,
+					/obj/item/stack/sheet/metal/five,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stack/sheet/glass,)
+	crate_name = "siezed crate"
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
@@ -153,7 +184,7 @@
 
 /datum/supply_pack/engineering/dna_vault
 	name = "DNA Vault Parts"
-	desc = "Secure the longevity of the current state of civilization within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes." //C'mon now, it's nae just humans on the station these days
+	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
 	cost = 12000
 	special = TRUE
 	contains = list(

@@ -508,21 +508,6 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/obj/item/clothing/suit/hooded/wintercoat/centcom
-	name = "centcom winter coat"
-	icon_state = "coatcentcom"
-	item_state = "coatcentcom"
-	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 35, "bomb" = 40, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
-
-/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
-	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
-
-/obj/item/clothing/head/hooded/winterhood/centcom
-	icon_state = "winterhood_centcom"
-	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 35, "bomb" = 40, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
-
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
@@ -741,15 +726,6 @@
 /obj/item/clothing/head/hooded/winterhood/qm
 	icon_state = "winterhood_qm"
 
-/obj/item/clothing/suit/hooded/wintercoat/aformal
-	name = "assistant's formal winter coat"
-	icon_state = "coataformal"
-	item_state = "coataformal"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/aformal
-
-/obj/item/clothing/head/hooded/winterhood/aformal
-	icon_state = "winterhood_aformal"
-
 /obj/item/clothing/suit/hooded/wintercoat/miner
 	name = "mining winter coat"
 	icon_state = "coatminer"
@@ -760,27 +736,6 @@
 
 /obj/item/clothing/head/hooded/winterhood/miner
 	icon_state = "winterhood_miner"
-
-/obj/item/clothing/suit/hooded/wintercoat/ratvar
-	name = "ratvarian winter coat"
-	icon_state = "coatratvar"
-	item_state = "coatratvar"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/ratvar
-
-/obj/item/clothing/head/hooded/winterhood/ratvar
-	icon_state = "winterhood_ratvar"
-	light_range = 3
-	light_power = 1
-	light_color = "#B18B25" //clockwork slab background top color
-
-/obj/item/clothing/suit/hooded/wintercoat/narsie
-	name = "narsian winter coat"
-	icon_state = "coatnarsie"
-	item_state = "coatnarsie"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/narsie
-
-/obj/item/clothing/head/hooded/winterhood/narsie
-	icon_state = "winterhood_narsie"
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
@@ -831,33 +786,3 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
-
-/obj/item/clothing/suit/hooded/wintercoat/christmascoatr
-	name = "red christmas coat"
-	desc = "A festive red Christmas coat! Smells like Candy Cane!"
-	icon_state = "christmascoatr"
-	item_state = "christmascoatr"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodr
-
-/obj/item/clothing/head/hooded/winterhood/christmashoodr
-	icon_state = "christmashoodr"
-
-/obj/item/clothing/suit/hooded/wintercoat/christmascoatg
-	name = "green christmas coat"
-	desc = "A festive green Christmas coat! Smells like Candy Cane!"
-	icon_state = "christmascoatg"
-	item_state = "christmascoatg"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodg
-
-/obj/item/clothing/head/hooded/winterhood/christmashoodg
-	icon_state = "christmashoodg"
-
-/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
-	name = "red and green christmas coat"
-	desc = "A festive red and green Christmas coat! Smells like Candy Cane!"
-	icon_state = "christmascoatrg"
-	item_state = "christmascoatrg"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodrg
-
-/obj/item/clothing/head/hooded/winterhood/christmashoodrg
-	icon_state = "christmashoodrg"

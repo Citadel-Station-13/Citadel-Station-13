@@ -39,12 +39,23 @@
 	if(..())
 		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.a_intent == INTENT_HARM && stat == DEAD && (butcher_results || guaranteed_butcher_results)) //can we butcher it?
+		var/datum/component/butchering/butchering = I.GetComponent(/datum/component/butchering)
+		if(butchering && butchering.butchering_enabled)
+			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
+			if(do_mob(user, src, butchering.speed) && Adjacent(I))
+				butchering.Butcher(user, src)
+			return 1
+		else if(I.get_sharpness() && !butchering) //give sharp objects butchering functionality, for consistency
+			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
+			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
+			return
 	return I.attack(src, user)
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
-		return
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
@@ -110,7 +121,7 @@
 			totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
+		if(I.damtype == BRUTE)
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -163,3 +174,4 @@
 
 /obj/item/proc/getweight()
 	return total_mass || w_class * 1.25
+

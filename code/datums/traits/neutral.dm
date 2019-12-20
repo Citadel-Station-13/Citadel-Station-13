@@ -16,7 +16,6 @@
 	value = 0
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
-	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 
 /datum/quirk/pineapple_liker/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -35,7 +34,6 @@
 	value = 0
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
-	medical_record_text = "Patient is correct to think that pineapple is disgusting."
 
 /datum/quirk/pineapple_hater/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -54,7 +52,6 @@
 	value = 0
 	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
 	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
-	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 
 /datum/quirk/deviant_tastes/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -95,7 +92,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You feel more prudish.</span>"
 	lose_text = "<span class='notice'>You don't feel as prudish as before.</span>"
-	medical_record_text = "Patient exhibits a special gene that makes them immune to aphrodisiacs."
+	medical_record_text = "Patient exhibits a special gene that makes them immune to Crocin and Hexacrocin."
 
 /datum/quirk/libido
 	name = "Nymphomania"
@@ -137,7 +134,6 @@
 	value = 0
 	mob_trait = TRAIT_PHARMA
 	lose_text = "<span class='notice'>Your liver feels different.</span>"
-	medical_record_text = "Non-invasive tests report that the patient's metabolism is indeed incompatible with a certain \"stimulants\"."
 	var/active = FALSE
 	var/power = 0
 	var/cachedmoveCalc = 1

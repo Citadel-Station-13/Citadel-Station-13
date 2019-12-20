@@ -141,10 +141,6 @@
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
-/datum/spellbook_entry/nuclearfist
-	name = "Nuclear Fist"
-	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
-
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
@@ -395,12 +391,6 @@
 	category = "Assistance"
 	dynamic_requirement = 50
 	dynamic_cost = 10
-
-/datum/spellbook_entry/item/plasmafist
-	name = "Plasma Fist"
-	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
-	item_path = /obj/item/book/granter/martial/plasma_fist
-	cost = 3
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"

@@ -41,6 +41,7 @@
 	..()
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -51,9 +52,6 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-		
-	else
-		. = ..()
 
 	add_fingerprint(M)
 

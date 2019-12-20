@@ -316,6 +316,9 @@
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
 
+/atom/proc/prevent_content_explosion()
+	return FALSE
+
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
 
@@ -809,7 +812,8 @@ Proc for attack log creation, because really why not
 
 // Filter stuff
 /atom/movable/proc/add_filter(name,priority,list/params)
-	LAZYINITLIST(filter_data)
+	if(!filter_data)
+		filter_data = list()
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
@@ -817,7 +821,7 @@ Proc for attack log creation, because really why not
 
 /atom/movable/proc/update_filters()
 	filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	sortTim(filter_data,associative = TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()

@@ -92,11 +92,11 @@
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
-	. = ..()
+	..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	suit_toggle(user)
-	return TRUE
+	else
+		suit_toggle(user)
 
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()

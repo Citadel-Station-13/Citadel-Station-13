@@ -94,9 +94,8 @@
 		cpu.eject_card()
 
 /obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
 	if(cpu)
-		return cpu.AltClick(user)
+		cpu.AltClick(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.

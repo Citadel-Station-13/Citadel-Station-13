@@ -442,10 +442,3 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
-
-/obj/effect/temp_visual/slugboom
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "slugboom"
-	randomdir = FALSE
-	duration = 30
-	pixel_x = -24

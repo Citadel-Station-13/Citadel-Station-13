@@ -38,7 +38,7 @@
 			continue
 		. += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
 
-	var/list/msg = list()
+	var/list/msg = list("<span class='warning'>")
 	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
@@ -78,8 +78,9 @@
 	if(pulledby && pulledby.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
 
-	if(msg.len)
-		. += "<span class='warning'>[msg.Join("")]</span>"
+	msg += "</span>"
+
+	. += msg.Join("")
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)

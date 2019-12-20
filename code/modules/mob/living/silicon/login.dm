@@ -4,7 +4,4 @@
 		var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(TRUE)
-		var/datum/antagonist/bloodsucker/V = mind.has_antag_datum(/datum/antagonist/bloodsucker)
-		if(V)
-			mind.remove_antag_datum(V)
 	..()

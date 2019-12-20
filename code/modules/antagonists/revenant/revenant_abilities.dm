@@ -5,7 +5,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		altclick_listed_turf(A)
+		AltClickNoInteract(src, A)
 		return
 
 	if(ishuman(A))

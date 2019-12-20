@@ -186,10 +186,8 @@
 	..()
 
 /obj/machinery/microwave/AltClick(mob/user)
-	. = ..()
 	if(user.canUseTopic(src, !issilicon(usr)))
 		cook()
-		return TRUE
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()

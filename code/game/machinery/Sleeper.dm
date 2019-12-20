@@ -36,11 +36,12 @@
 	RefreshParts()
 	add_inital_chems()
 
-/obj/machinery/sleeper/on_deconstruction()
-	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
+/obj/machinery/sleeper/Destroy()
+	var/obj/item/reagent_containers/sleeper_buffer/buffer = new /obj/item/reagent_containers/sleeper_buffer(loc)
 	buffer.volume = reagents.maximum_volume
 	buffer.reagents.maximum_volume = reagents.maximum_volume
 	reagents.trans_to(buffer.reagents, reagents.total_volume)
+	..()
 
 /obj/machinery/sleeper/proc/add_inital_chems()
 	for(var/i in available_chems)
@@ -181,14 +182,12 @@
 		open_machine()
 
 /obj/machinery/sleeper/AltClick(mob/user)
-	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(state_open)
 		close_machine()
 	else
 		open_machine()
-	return TRUE
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()

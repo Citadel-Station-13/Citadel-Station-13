@@ -134,6 +134,17 @@
 /mob/proc/Dizzy(amount)
 	dizziness = max(dizziness,amount,0)
 
+/////////////////////////////////// EYE DAMAGE ////////////////////////////////////
+
+/mob/proc/damage_eyes(amount)
+	return
+
+/mob/proc/adjust_eye_damage(amount)
+	return
+
+/mob/proc/set_eye_damage(amount)
+	return
+
 /////////////////////////////////// EYE_BLIND ////////////////////////////////////
 
 /mob/proc/blind_eyes(amount)

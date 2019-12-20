@@ -73,7 +73,7 @@
 	id = "synthtissue"
 	results = list("synthtissue" = 5)
 	required_reagents = list("synthflesh" = 1)
-	required_catalysts = list("sugar" = 0.1)
+	required_catalysts = list("nutriment" = 0.1)
 	//FermiChem vars:
 	OptimalTempMin 		= 305		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 315 		// Upper end for above
@@ -86,13 +86,13 @@
 	CurveSharppH 		= 2.5 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 0.01 		// Temperature change per 1u produced
 	HIonRelease 		= 0.015 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 0.1 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 0.05 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	PurityMin 			= 0
 
 /datum/chemical_reaction/synthtissue/FermiCreate(datum/reagents/holder, added_volume, added_purity)
 	var/datum/reagent/synthtissue/St = holder.has_reagent("synthtissue")
-	var/datum/reagent/N = holder.has_reagent("sugar")
+	var/datum/reagent/N = holder.has_reagent("nutriment")
 	if(!St)
 		return
 	if(holder.chem_temp > 320)

@@ -459,10 +459,10 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("me", EMOTE_VISIBLE, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
 		if(prob(1))
-			emote("me", EMOTE_VISIBLE, pick("dances around.","chases its tail!"))
+			emote("me", 1, pick("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
@@ -618,7 +618,7 @@
 
 	if(!stat && !resting && !buckled)
 		if(prob(1))
-			emote("me", EMOTE_VISIBLE, pick("dances around.","chases her tail."))
+			emote("me", 1, pick("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
@@ -629,7 +629,7 @@
 
 	if(!stat && !resting && !buckled)
 		if(prob(1))
-			emote("me", EMOTE_VISIBLE, pick("chases its tail."))
+			emote("me", 1, pick("chases its tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
@@ -648,8 +648,8 @@
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
-				emote("me", EMOTE_VISIBLE, "yaps happily!")
+				emote("me", 1, "yaps happily!")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", EMOTE_VISIBLE, "growls!")
+				emote("me", 1, "growls!")

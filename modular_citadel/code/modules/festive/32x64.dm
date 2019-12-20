@@ -19,7 +19,7 @@
 	layer = 4
 	density = TRUE
 	anchored = TRUE
-	light_power = 1.6
+	light_power = 1.4
 	light_range = 15
 	light_color = "#ffbb4d"
 

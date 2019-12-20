@@ -828,14 +828,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	send_message(U,list(P))
 
 /obj/item/pda/AltClick()
-	. = ..()
+	..()
+
 	if(id)
 		remove_id()
 		playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 	else
 		remove_pen()
 		playsound(src, 'sound/machines/button4.ogg', 50, 1)
-	return TRUE
 
 /obj/item/pda/CtrlClick()
 	..()
@@ -1044,7 +1044,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", MSG_VISUAL, "<span class='warning'>You hear a loud *pop*!</span>", MSG_AUDIBLE)
+		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", 1)
 	else
 		visible_message("<span class='danger'>[src] explodes!</span>", "<span class='warning'>You hear a loud *pop*!</span>")
 

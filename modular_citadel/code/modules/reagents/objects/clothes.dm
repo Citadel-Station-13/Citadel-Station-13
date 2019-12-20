@@ -34,6 +34,7 @@
 		if(src == C.head)
 			C.emote("me",1,"tips their hat.",TRUE)
 			return
+	..()
 
 /obj/item/clothing/head/hattip/equipped(mob/M, slot)
 	. = ..()

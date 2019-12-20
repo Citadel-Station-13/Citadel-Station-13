@@ -66,7 +66,3 @@
 
 /obj/effect/projectile/tracer/wormhole
 	icon_state = "wormhole_g"
-
-/obj/effect/projectile/tracer/laser/wavemotion
-	name = "particle trail"
-	icon_state = "tracer_wavemotion"

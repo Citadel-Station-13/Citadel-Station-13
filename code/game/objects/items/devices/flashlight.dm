@@ -431,7 +431,6 @@
 	icon_state = "glowstick"
 	item_state = "glowstick"
 	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
-	rad_flags = RAD_NO_CONTAMINATE
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()

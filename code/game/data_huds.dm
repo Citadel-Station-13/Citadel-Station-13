@@ -189,13 +189,7 @@
 		if(tod)
 			var/tdelta = round(world.time - timeofdeath)
 			if(tdelta < (DEFIB_TIME_LIMIT * 10))
-				var/obj/item/organ/heart/He = getorgan(/obj/item/organ/heart)
-				if(He)
-					holder.icon_state = "huddefib"
-					if(He.organ_flags & ORGAN_FAILING)
-						holder.icon_state = "huddefibheart"
-				else
-					holder.icon_state = "huddefibheart"
+				holder.icon_state = "huddefib"
 				return
 		holder.icon_state = "huddead"
 	else

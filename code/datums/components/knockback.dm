@@ -10,7 +10,6 @@
 	src.throw_anchored = throw_anchored
 
 /datum/component/knockback/RegisterWithParent()
-	. = ..()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(parent))
@@ -19,7 +18,6 @@
 		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
 /datum/component/knockback/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

@@ -284,7 +284,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		var/datum/action/peepholeCancel/PHC = new
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
-		return TRUE
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)

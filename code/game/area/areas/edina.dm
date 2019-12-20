@@ -9,7 +9,7 @@ area/edina
 	requires_power = TRUE
 	always_unpowered = TRUE
 
-	//dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE

@@ -843,7 +843,7 @@
 		return FALSE
 
 	if (D.id == "water" && !no_react && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
-		if (pH < 2)
+		if (pH <= 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
 			var/turf/T = get_turf(my_atom)
@@ -1112,7 +1112,7 @@
 				if(percent < minimum_percent)
 					continue
 				var/intensity_desc = "a hint of"
-				if(ISINRANGE(percent, minimum_percent * 2, minimum_percent * 3)|| percent == 100)
+				if(percent > minimum_percent * 2 || percent == 100)
 					intensity_desc = ""
 				else if(percent > minimum_percent * 3)
 					intensity_desc = "the strong flavor of"

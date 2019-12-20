@@ -517,17 +517,16 @@ update_label("John Doe", "Clowny")
 		return
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return TRUE
+		return
 	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",id_color) as color|null
 		if(!in_range(src, user) || !energy_color_input)
-			return TRUE
+			return
 		if(user.incapacitated() || !istype(user))
 			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-			return TRUE
+			return
 		id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		return TRUE
 
 /obj/item/card/id/knight/Initialize()
 	. = ..()

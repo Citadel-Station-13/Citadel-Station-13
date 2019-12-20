@@ -122,21 +122,12 @@
 	user.put_in_active_hand(pryjaws)
 
 /obj/item/wirecutters/power/attack(mob/living/carbon/C, mob/user)
-	if(istype(C))
-		if(C.handcuffed)
-			user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
-			qdel(C.handcuffed)
-			return
-		else if(C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
-			var/man = C == user ? "your" : "[C]'\s"
-			user.visible_message("<span class='notice'>[user] attempts to remove the durathread strand from around [man] neck.</span>", \
-								"<span class='notice'>You attempt to remove the durathread strand from around [man] neck.</span>")
-			if(do_after(user, 15, null, C))
-				user.visible_message("<span class='notice'>[user] succesfuly removes the durathread strand.</span>",
-									"<span class='notice'>You succesfuly remove the durathread strand.</span>")
-				C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
-			return
-	..()
+	if(istype(C) && C.handcuffed)
+		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
+		qdel(C.handcuffed)
+		return
+	else
+		..()
 
 /obj/item/wirecutters/advanced
 	name = "advanced wirecutters"

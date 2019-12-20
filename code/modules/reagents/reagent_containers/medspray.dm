@@ -100,8 +100,3 @@
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list("sterilizine" = 60)
-
-/obj/item/reagent_containers/medspray/synthtissue
-	name = "Synthtissue young culture spray"
-	desc = "Spray bottle loaded with synthtissue. Useful in synthtissue grafting surgeries."
-	list_reagents = list("synthtissue" = 60)

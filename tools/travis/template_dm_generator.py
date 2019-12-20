@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import os.path
 import sys
 
 folders = ["_maps/RandomRuins", "_maps/RandomZLevels", "_maps/shuttles",

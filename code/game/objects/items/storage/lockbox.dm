@@ -114,12 +114,11 @@
 		. += "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>"
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
-	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
 			update_icon()
-			return TRUE
+		..()
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)

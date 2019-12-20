@@ -575,9 +575,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
-		/obj/item/assembly/mousetrap,
-		/obj/item/screwdriver,
-		/obj/item/stack/cable_coil
+		/obj/item/assembly/mousetrap
 		))
 
 /obj/item/storage/belt/bandolier
@@ -757,12 +755,22 @@
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.can_hold = typecacheof(fitting_swords)
-	STR.quickdraw = TRUE
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
 	if(length(contents))
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+
+/obj/item/storage/belt/sabre/AltClick(mob/user)
+	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(length(contents))
+		var/obj/item/I = contents[1]
+		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
+		user.put_in_hands(I)
+		update_icon()
+	else
+		to_chat(user, "[src] is empty.")
 
 /obj/item/storage/belt/sabre/update_icon()
 	. = ..()

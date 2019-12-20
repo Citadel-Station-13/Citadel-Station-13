@@ -14,7 +14,6 @@
 		return
 	if(disk)
 		eject()
-		return TRUE
 
 /obj/item/nanite_hijacker/examine(mob/user)
 	. = ..()

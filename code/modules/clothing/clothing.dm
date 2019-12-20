@@ -62,7 +62,7 @@
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
-	if(!. && !M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
+	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
@@ -253,14 +253,16 @@ BLIND     // can't see anything
 			H.update_suit_sensors()
 
 /obj/item/clothing/under/AltClick(mob/user)
-	. = ..()
+	if(..())
+		return 1
+
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	if(attached_accessory)
-		remove_accessory(user)
 	else
-		rolldown()
-	return TRUE
+		if(attached_accessory)
+			remove_accessory(user)
+		else
+			rolldown()
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"

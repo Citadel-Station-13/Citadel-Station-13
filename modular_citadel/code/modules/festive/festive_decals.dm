@@ -12,7 +12,7 @@
 /obj/effect/decal/festive/fairylights
 	name = "Fairy lights"
 	desc = "A strand of smol glowing lights, almost as if the lights themselves were faries."
-	icon_state = "y_fairylights"
+	icon_state = "y_fairlights"
 
 /obj/effect/decal/festive/mistletoe
 	name = "Mistletoe"

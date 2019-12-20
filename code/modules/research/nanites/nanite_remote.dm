@@ -35,7 +35,6 @@
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-		return TRUE
 
 /obj/item/nanite_remote/emag_act(mob/user)
 	. = ..()

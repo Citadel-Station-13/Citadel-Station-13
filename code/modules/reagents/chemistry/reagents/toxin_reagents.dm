@@ -33,7 +33,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
-	pH = 2.3
+	pH = 2
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
@@ -220,7 +220,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 	taste_mult = 1
-	pH = 2.7
+	pH = 2
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
@@ -986,3 +986,4 @@
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
 	. = 1
 	..()
+

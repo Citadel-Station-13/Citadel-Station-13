@@ -338,9 +338,10 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))
-		return L.handle_ventcrawl(src)
-	return ..()
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery))
+		L.handle_ventcrawl(src)
+		return
+	..()
 
 
 /obj/machinery/atmospherics/proc/can_crawl_through()

@@ -56,16 +56,11 @@
 
 /obj/item/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
-	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat and get people back in the fight."
+	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
-	volume = 100
-	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("epinephrine" = 30, "lesser_syndicate_nanites" = 40, "leporazine" = 15, "atropine" = 15)
-
-/obj/item/reagent_containers/hypospray/combat/omnizine // owned idiot
-	desc = "A modified air-needle autoinjector, used by underfunded support operatives to slowly heal injuries in combat and limp away from a fight."
 	volume = 90
+	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
@@ -140,7 +135,7 @@
 	list_reagents = list("stimulants" = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
-	name = "the reason the syndicate major league team wins"
+	name = "the reason the syndicate major league team wins."
 	desc = "They say drugs never win, but look where you are now, then where they are."
 	icon_state = "baseballstim"
 	volume = 50
@@ -343,10 +338,8 @@
 	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
-	. = ..()
 	if(vial)
 		vial.attack_self(user)
-		return TRUE
 
 // Gunna allow this for now, still really don't approve - Pooj
 /obj/item/hypospray/mkii/emag_act(mob/user)
