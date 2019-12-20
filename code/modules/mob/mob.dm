@@ -566,9 +566,9 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/is_muzzled()
 	return 0
 
-/mob/Stat()
+/mob/Stat(delayoverride)
 	. = ..()
-	var/statdelay = 20
+	var/statdelay = delayoverride || 20
 	if(statpanel("Status"))
 		if (client)
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
