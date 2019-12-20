@@ -459,7 +459,7 @@ if(driver.sprinting && !(boost_cooldown))
 	switch(gear)
 		if(INTENT_HELP)
 			return 1
-		if("disarm")
+		if(INTENT_DISARM)
 			return 2
 		if("grab")
 			return 3
