@@ -24,7 +24,7 @@
 	immunity_type = "rad"
 
 /datum/weather/ice_storm/weather_act(mob/living/L)
-	L.adjust_bodytemperature(-rand(10,20))
+	//L.adjust_bodytemperature(-rand(10,20))
 
 /datum/weather/ice_storm/weather_act_turf(area/N)
 	.=..()

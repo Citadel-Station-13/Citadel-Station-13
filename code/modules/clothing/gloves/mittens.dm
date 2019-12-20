@@ -10,13 +10,14 @@
 
 /obj/item/clothing/gloves/mittens/random
 
-/obj/item/clothing/gloves/mittens/random/New()
+/obj/item/clothing/gloves/mittens/random/Initialize()
+	..()
 	var/colours = list("black", "yellow", "lightbrown", "brown", "orange", "red", "purple", "green", "blue", "kitten")
 	var/picked_c = pick(colours)
 	if(picked_c == "kitten")
 		new /obj/item/clothing/gloves/mittens/kitten(loc)
 		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 	item_state = "[picked_c]gloves"
 	item_color = "[picked_c]"
 	color = picked_c

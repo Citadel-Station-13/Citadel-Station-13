@@ -35,6 +35,7 @@
 		if(gear != "auto")
 			gear = driver.a_intent
 	start_engine()
+	driver.to_chat("Welcome to the future of cars! Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears, r for handbrake, alt for brake and shift for boost! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear.")
 	return ..()
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
@@ -283,6 +284,11 @@
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 
+
+/obj/vehicle/sealed/vectorcraft/attack_hand(mob/user)
+	remove_key(driver)
+	..()
+
 //Heals/damages the car
 /obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
@@ -305,13 +311,14 @@
 //
 /obj/vehicle/sealed/vectorcraft/Bump(atom/M)
 	var/speed = calc_speed()
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
-		C.throw_at(throw_target, 10, 14)
-		C.adjustBruteLoss(speed/10)
+	if(isliving(M))
+		var/mob/living/C = M
+		if(!C.anchored)
+			var/atom/throw_target = get_edge_target_turf(C, calc_angle())
+			C.throw_at(throw_target, 10, 14)
 		to_chat(C, "<span class='warning'><b>You are hit by the [src]!</b></span>")
 		to_chat(driver, "<span class='warning'><b>You just ran into [C] you crazy lunatic!</b></span>")
+		C.adjustBruteLoss(speed/10)
 		return ..()
 	//playsound
 	if(istype(M, /obj/vehicle/sealed/vectorcraft))
@@ -324,8 +331,9 @@
 		return ..()
 	if(istype(M, /obj/))
 		var/obj/O = M
-		O.take_damage(speed*2.5)
-	..()
+		if(O.layer >= 3) //please don't break pipes
+			O.take_damage(speed*2.5)
+	return ..()
 
 //////////////////////////////////////////////////////////////
 //					Calc procs						    	//

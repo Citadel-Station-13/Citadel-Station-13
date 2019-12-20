@@ -92,6 +92,8 @@
 	..()
 
 /mob/living/simple_animal/jacq/proc/poof()
+	if(!active)
+		return FALSE
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
