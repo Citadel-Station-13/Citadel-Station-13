@@ -39,8 +39,12 @@
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
 	.=..()
-	driver.client.pixel_x = 0
-	driver.client.pixel_y = 0
+	if(!driver)
+		stop_engine()
+		return
+	if(driver.client)
+		driver.client.pixel_x = 0
+		driver.client.pixel_y = 0
 	driver.pixel_x = 0
 	driver.pixel_y = 0
 	if(M == driver)
@@ -58,7 +62,7 @@
 	check_gears()
 	if(!driver)
 		stop_engine()
-	if(driver.stat == DEAD)
+	if(driver.stat > 0)
 		mob_exit(driver)
 		stop_engine()
 

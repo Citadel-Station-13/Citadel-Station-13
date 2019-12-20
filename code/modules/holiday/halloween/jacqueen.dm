@@ -117,6 +117,8 @@
 
 	if(!targets)
 		targets = GLOB.generic_event_spawns
+	if(!targets)
+		return FALSE
 
 	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
 		var/atom/A = pick(targets)

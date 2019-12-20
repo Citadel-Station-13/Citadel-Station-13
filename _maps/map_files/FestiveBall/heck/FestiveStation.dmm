@@ -18771,13 +18771,13 @@
 "aUx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "aUy" = (
 /obj/machinery/status_display,
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "aUz" = (
@@ -18793,7 +18793,7 @@
 	pixel_y = 8
 	},
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "aUB" = (
@@ -18825,7 +18825,7 @@
 /area/storage/tools)
 "aUD" = (
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "aUE" = (
@@ -18839,7 +18839,7 @@
 	pixel_y = -8
 	},
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "aUF" = (
@@ -23238,7 +23238,7 @@
 	dir = 8
 	},
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "beI" = (
@@ -23246,7 +23246,7 @@
 	dir = 4
 	},
 /turf/closed/festive/creambrick{
-	color = "#ffbb4d"
+	color = "#ffeeab"
 	},
 /area/storage/tools)
 "beJ" = (
