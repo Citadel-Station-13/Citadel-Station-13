@@ -460,13 +460,13 @@ if(driver.sprinting && !(boost_cooldown))
 //Converts "gear" from intent to numerics
 /obj/vehicle/sealed/vectorcraft/proc/convert_gear()
 	switch(gear)
-		if("help")
+		if(INTENT_HELP)
 			return 1
-		if("disarm")
+		if(INTENT_DISARM)
 			return 2
-		if("grab")
+		if(INTENT_GRAB)
 			return 3
-		if("harm")
+		if(INTENT_HARM)
 			return 4
 
 //Calculates the acceleration

@@ -16,7 +16,7 @@
 	driver.pixel_x = pixel_x
 	driver.pixel_y = pixel_y
 	driver.forceMove(src.loc)
-	driver.dir = dir
+	driver.setDir(dir)
 
 /obj/vehicle/sealed/vectorcraft/rideable/mob_enter(mob/living/M)
 	if(!istype(M))
