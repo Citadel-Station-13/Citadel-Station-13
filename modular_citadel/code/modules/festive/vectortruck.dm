@@ -96,7 +96,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if((isAI(user) || !user.canUseTopic(src, !issilicon(user))
+	if(isAI(user) || !user.canUseTopic(src, !issilicon(user)))
 		return
 
 	switch(choice)
