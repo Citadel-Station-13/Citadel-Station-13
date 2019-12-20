@@ -1,5 +1,5 @@
 //Same as snow_storm basically, but cools outside turf temps. StreetStation only
-#define ICY_SNOW_TEMP 100
+#define ICY_SNOW_TEMP 200
 /datum/weather/ice_storm
 	name = "Icestorm"
 	desc = "Harsh snowstorms roam the topside of this arctic planet, burying any area unfortunate enough to be in its path."
@@ -32,4 +32,3 @@
 	for(var/turf/open/T in N)
 		var/datum/gas_mixture/turf/G = T.air
 		G.temperature = ICY_SNOW_TEMP
-
