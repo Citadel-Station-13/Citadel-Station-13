@@ -9,7 +9,7 @@ area/edina
 	requires_power = TRUE
 	always_unpowered = TRUE
 
-	//dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -77,6 +77,7 @@ area/edina/crew_quarters/store/pet
 		if(!W.use(1))
 			return
 		var/turf/open/floor/T = PlaceOnTop(W.turf_type)
+		T.icon_state = initial(T.icon_state)
 		if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = W
 			var/turf/open/floor/light/F = T
