@@ -70,6 +70,10 @@
 
 //Move the damn car
 /obj/vehicle/sealed/vectorcraft/vehicle_move(cached_direction)
+	if(!driver)
+		stop_engine()
+	if(driver.stat == DEAD)
+		mob_exit(driver)
 	dir = cached_direction
 	check_gears()
 	check_boost()

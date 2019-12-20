@@ -45,3 +45,16 @@
 
 	icon = 'modular_citadel/code/modules/festive/city_sign.dmi'
 	icon_state = "sign"
+
+/obj/structure/streetdecor/lampfestive
+	name = "Big festive tree"
+	desc = "Big tree. Big heck. Big festive cheer!"
+	layer = 4
+	density = TRUE
+	anchored = TRUE
+	light_power = 2
+	light_range = 30
+	light_color = "#ffbb4d"
+
+	icon = 'modular_citadel/code/modules/festive/bigtree.dmi'
+	icon_state = "bigtree"

@@ -25,7 +25,7 @@
 			return TRUE
 	if(iscarbon(dropping))
 		var/mob/living/carbon/M = dropping
-		mob_try_enter(mob/M)
+		mob_try_enter(M)
 		to_chat(user, "<span class='notice'>You put [M] into the [src]!</span>")
 		return TRUE
 
@@ -46,7 +46,7 @@
 	var/weewoocount = 0
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize()
-	new var/obj/machinery/sleeper/ambulance
+	new /obj/machinery/sleeper/ambulance
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/process()
 	..()
@@ -56,7 +56,7 @@
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/MouseDrop_T(mob/living/L, mob/user)
 	if(isliving(L))
 		Sl.close_machine(L)
-		to_chat(user, "<span class='notice'>You put [M] into the [src]'s emergency sleeper!</span>")
+		to_chat(user, "<span class='notice'>You put [L] into the [src]'s emergency sleeper!</span>")
 		return TRUE
 	..()
 
@@ -73,8 +73,6 @@
 	var/list/options = list()
 
 	if(isAI(user))
-		if(stat & NOPOWER)
-			return
 		options["radial_eject_car"] = radial_eject_car
 	else
 		if(vector["y"] == 0 && vector["x"] == 0)
@@ -98,7 +96,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if((isAI(user) || !user.canUseTopic(src, !issilicon(user))
 		return
 
 	switch(choice)
