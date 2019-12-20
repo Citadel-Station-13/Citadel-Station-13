@@ -76,7 +76,7 @@
 				if(check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"
-					if((ACCESS_CAPTAIN in I.access))
+					if((20 in I.access))
 						authenticated = 2
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				if(obj_flags & EMAGGED)
