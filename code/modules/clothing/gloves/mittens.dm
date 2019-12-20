@@ -16,7 +16,7 @@
 	if(picked_c == "kitten")
 		new /obj/item/clothing/gloves/mittens/kitten(loc)
 		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 	item_state = "[picked_c]gloves"
 	item_color = "[picked_c]"
 	color = picked_c
