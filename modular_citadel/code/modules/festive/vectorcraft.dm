@@ -35,7 +35,7 @@
 		if(gear != "auto")
 			gear = driver.a_intent
 	start_engine()
-	driver.to_chat("Welcome to the future of cars! Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears, r for handbrake, alt for brake and shift for boost! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear.")
+	to_chat(M, "Welcome to the future of cars! Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears, r for handbrake, alt for brake and shift for boost! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear.")
 	return ..()
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
@@ -285,6 +285,10 @@
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 
 
+/obj/vehicle/sealed/vectorcraft/attack_hand(mob/user)
+	remove_key(driver)
+	..()
+
 //Heals/damages the car
 /obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
@@ -460,13 +464,13 @@ if(driver.sprinting && !(boost_cooldown))
 //Converts "gear" from intent to numerics
 /obj/vehicle/sealed/vectorcraft/proc/convert_gear()
 	switch(gear)
-		if(INTENT_HELP)
+		if("help")
 			return 1
-		if(INTENT_DISARM)
+		if("disarm")
 			return 2
-		if(INTENT_GRAB)
+		if("grab")
 			return 3
-		if(INTENT_HARM)
+		if("harm")
 			return 4
 
 //Calculates the acceleration
