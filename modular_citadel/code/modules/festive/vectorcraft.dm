@@ -181,7 +181,7 @@
 	y += y_move
 	pixel_x = round(tile_loc["x"], 1)
 	pixel_y = round(tile_loc["y"], 1)
-	if(driver)
+	if(driver && driver.client)
 		driver.client.pixel_x = pixel_x
 		driver.client.pixel_y = pixel_y
 
@@ -320,7 +320,7 @@
 		return ..()
 	if(istype(M, /obj/))
 		var/obj/O = M
-		O.obj_integrity -= speed*2
+		O.obj_integrity -= speed*2.5
 	..()
 
 //////////////////////////////////////////////////////////////

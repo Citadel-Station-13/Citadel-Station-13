@@ -1,5 +1,5 @@
-#define LOG_BURN_TIMER 150
-#define PAPER_BURN_TIMER 5
+#define LOG_BURN_TIMER 1000
+#define PAPER_BURN_TIMER 100
 #define MAXIMUM_BURN_TIMER 3000
 
 /obj/structure/fireplace
