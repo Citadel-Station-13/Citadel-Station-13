@@ -11,9 +11,16 @@
 					/obj/item/reagent_containers/food/snacks/no_raisin = 6,
 					/obj/item/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 6)
-	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
-	premium = list(/obj/item/storage/box/donkpockets = 1,
-					/obj/item/reagent_containers/food/snacks/poppypretzel = 3)
+	contraband = list(
+					/obj/item/reagent_containers/food/snacks/cracker = 12,
+					/obj/item/reagent_containers/food/snacks/beans = 2,
+					/obj/item/reagent_containers/food/snacks/honeybar = 6,
+					/obj/item/reagent_containers/food/snacks/syndicake = 6)
+	premium = list(
+					/obj/item/reagent_containers/food/snacks/lollipop = 2,
+					/obj/item/reagent_containers/food/snacks/spiderlollipop = 2,
+					/obj/item/reagent_containers/food/snacks/chococoin = 1,
+					/obj/item/storage/box/donkpockets = 2)
 
 	refill_canister = /obj/item/vending_refill/snack
 	var/chef_compartment_access = "28" //ACCESS_KITCHEN
