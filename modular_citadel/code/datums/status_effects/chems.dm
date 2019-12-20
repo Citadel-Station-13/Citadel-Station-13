@@ -743,7 +743,7 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent("neurine"))
 		deltaResist *= 1.5
-	if (!HAS_TRAIT(owner, TRAIT_CROCRIN_IMMUNE) && M.canbearoused && lewd)
+	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && M.canbearoused && lewd)
 		if (owner.reagents.has_reagent("anaphro"))
 			deltaResist *= 1.5
 		if (owner.reagents.has_reagent("anaphro+"))

@@ -170,6 +170,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
+	if(M.client?.prefs.cit_toggles & NEVER_HYPNO) // Just in case people are opting out of this
+		holder.remove_reagent(id, 10000000)
+		return
 	if(!ishuman(M))//Just to make sure screwy stuff doesn't happen.
 		return
 	if(!creatorID)
@@ -183,7 +186,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			E.enthrallID = creatorID
 			E.enthrallGender = creatorGender
 			E.master = get_mob_by_key(creatorID)
-			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(E.lewd?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
+			to_chat(M, "<span class='big love'><i>Your addled, plastic, mind bends under the chemical influence of a new [(E.lewd?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>") //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
 			log_game("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
 			return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
@@ -194,7 +197,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle you speak in a more charasmatic and sultry tone.)]</span>")
+		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle you speak in a more charasmatic and sultry tone.</i></span>")
 	else
 		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
@@ -230,7 +233,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 				M.reagents.remove_reagent(id, volume)
 				FallInLove(C, M)
 			return
-
 	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth. NEVERMIND ADD THIS LATER I CAN'T GET IT TO WORK
 		return
 	if(!M.client)

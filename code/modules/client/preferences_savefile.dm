@@ -512,6 +512,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			job_preferences -= j
 
 	all_quirks = SANITIZE_LIST(all_quirks)
+	
+	for(var/V in all_quirks) // quirk migration
+		switch(V)
+			if("Acute hepatic pharmacokinesis")
+				DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
+				DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
+				ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
+				ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
+				cli.prefs.all_quirks -= V
+			if("Crocin Immunity")
+				ENABLE_BITFIELD(cit_toggles,NO_APHRO)
+				cli.prefs.all_quirks -= V
+			if("Buns of Steel")
+				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
+				cli.prefs.all_quirks -= V
 
 	cit_character_pref_load(S)
 

@@ -114,6 +114,9 @@
 #define FORCED_FEM			(1<<5)
 #define FORCED_MASC			(1<<6)
 #define HYPNO				(1<<7)
+#define NEVER_HYPNO			(1<<8)
+#define NO_APHRO			(1<<9)
+#define NO_ASS_SLAP			(1<<9)
 
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
 

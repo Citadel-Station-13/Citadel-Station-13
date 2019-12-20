@@ -159,7 +159,6 @@
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
-#define TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
 #define TRAIT_EXHIBITIONIST		"exhibitionist"
@@ -167,7 +166,6 @@
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
-#define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
 #define TRAIT_FREESPRINT		"free_sprinting"
 
