@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Dying, ghosting, having your mind / ckey transferred to another mob, going softcrit or otherwise unconscious now properly turn off combat mode."
-  - bugfix: "combat mode can't be toggled on while non fully conscious anymore."

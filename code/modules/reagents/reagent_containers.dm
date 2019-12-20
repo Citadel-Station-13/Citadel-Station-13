@@ -156,6 +156,10 @@
 	if(beaker_weakness_bitflag & PH_WEAK)
 		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
 			START_PROCESSING(SSobj, src)
+	else if((reagents.pH < -3) || (reagents.pH > 17))
+		visible_message("<span class='notice'>[icon2html(src, viewers(src))] \The [src] is damaged by the super pH and begins to deform!</span>")
+		reagents.pH = CLAMP(reagents.pH, -3, 17)
+		container_HP -= 1
 
 
 /obj/item/reagent_containers/process()

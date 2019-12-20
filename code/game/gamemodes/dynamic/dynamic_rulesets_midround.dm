@@ -94,11 +94,8 @@
 	var/list/possible_candidates = list()
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
-	send_applications(possible_candidates)
-	if(assigned.len > 0)
-		return TRUE
-	else
-		return FALSE
+	var/application_successful = send_applications(possible_candidates)
+	return assigned.len > 0 && application_successful
 
 /// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
@@ -113,25 +110,18 @@
 	if(!candidates || candidates.len <= required_candidates)
 		message_admins("The ruleset [name] did not receive enough applications.")
 		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
-		mode.refund_threat(cost)
-		mode.log_threat("Rule [name] refunded [cost] (not receive enough applications)",verbose=TRUE)
-		mode.executed_rules -= src
-		return
+		return FALSE
 
 	message_admins("[candidates.len] players volunteered for the ruleset [name].")
 	log_game("DYNAMIC: [candidates.len] players volunteered for [name].")
 	review_applications()
+	return TRUE
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
 		if(candidates.len <= 0)
-			if(i == 1)
-				// We have found no candidates so far and we are out of applicants.
-				mode.refund_threat(cost)
-				mode.log_threat("Rule [name] refunded [cost] (all applications invalid)",verbose=TRUE)
-				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)
 		candidates -= applicant
@@ -744,3 +734,31 @@
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
+
+//////////////////////////////////////////////
+//                                          //
+//               BLOODSUCKERS               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/bloodsucker
+  name = "Bloodsucker Infiltrator"
+  config_tag = "latejoin_bloodsucker"
+  antag_datum = ANTAG_DATUM_BLOODSUCKER
+  antag_flag = ROLE_TRAITOR
+  restricted_roles = list("AI", "Cyborg")
+  protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+  required_candidates = 1
+  weight = 3
+  cost = 10
+  requirements = list(90,80,70,60,55,50,45,40,35,30)
+  high_population_requirement = 30
+  repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/bloodsucker/execute()
+  var/mob/M = pick(candidates)
+  assigned += M.mind
+  M.mind.special_role = antag_flag
+  if(mode.make_bloodsucker(M.mind))
+    mode.bloodsuckers += M
+  return TRUE

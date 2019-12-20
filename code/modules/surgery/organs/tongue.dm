@@ -22,6 +22,7 @@
 		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/slime,
+		/datum/language/vampiric,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2

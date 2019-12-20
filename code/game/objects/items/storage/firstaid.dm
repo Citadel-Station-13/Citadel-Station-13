@@ -176,18 +176,36 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 16
+	STR.max_items = 8
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
-	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/reagent_containers/hypospray/combat/omnizine(src)
+	new /obj/item/reagent_containers/medspray/styptic(src)
+	new /obj/item/reagent_containers/medspray/silver_sulf(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
+/obj/item/storage/firstaid/tactical/nukeop
+	name = "improved combat medical kit"
+
+/obj/item/storage/firstaid/tactical/nukeop/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/defibrillator/compact/combat/loaded(src)
+	new /obj/item/reagent_containers/hypospray/combat(src)
+	new /obj/item/reagent_containers/medspray/styptic(src)
+	new /obj/item/reagent_containers/medspray/silver_sulf(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
+	new /obj/item/clothing/glasses/hud/health/night(src)
+	
 /*
  * Pill Bottles
  */
