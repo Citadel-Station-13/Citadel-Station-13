@@ -28,6 +28,7 @@
 	tertiary_color = "#808080"
 	can_adjust = FALSE
 	mutantrace_variation = NO_MUTANTRACE_VARIATION // because I'm too lazy to port these to digi-compatible and to prove a point from /tg/ whining - Pooj
+	force_alternate_icon = TRUE	//in the rare case that someone actually decides to make digi-compatible stuff, this should come in handy
 	suit_style = NORMAL_SUIT_STYLE
 
 /obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
@@ -46,6 +47,18 @@
 				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
 				tertiary_worn.color = tertiary_color
 				. += tertiary_worn
+
+/obj/item/clothing/under/polychromic/equipped(mob/user, slot)	//enables digitigrade compatibility without utilizing uniform_digi.dmi
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		if(mutantrace_variation)
+			if(DIGITIGRADE in H.dna.species.species_traits)
+				item_color = "[initial(item_color)]_d"	//prevents cases of "shorts_d_d"
+				H.update_inv_wear_suit()
+			else
+				item_color = initial(item_color)
 
 /obj/item/clothing/under/polychromic/shirt	//COPY PASTE THIS TO MAKE A NEW THING
 	name = "polychromic button-up shirt"
@@ -89,6 +102,7 @@
 	secondary_color = "#808080"
 	tertiary_color = "#808080"
 	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = MUTANTRACE_VARIATION	//to enable digitigrade wearing
 
 /obj/item/clothing/under/polychromic/jumpsuit
 	name = "polychromic tri-tone jumpsuit"
