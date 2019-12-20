@@ -1,6 +1,6 @@
 /obj/vehicle/sealed/vectorcraft/cyber
 	name = "Cyberscuttle"
-	desc = "A rhobust hovercar that, until recently, could self drive. Unfortunately it was found that the AI was terrified of orbs and drove away from them at all costs. Overall a smashing hovercar."
+	desc = "A robust hovercar that, until recently, could self drive. Unfortunately it was found that the AI was terrified of orbs and drove away from them at all costs. Overall a smashing hovercar."
 	max_acceleration = 4.5
 	accel_step = 0.18
 	acceleration = 0.35
