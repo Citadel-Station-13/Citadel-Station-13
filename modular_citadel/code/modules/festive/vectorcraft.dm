@@ -463,7 +463,7 @@ if(driver.sprinting && !(boost_cooldown))
 			return 2
 		if("grab")
 			return 3
-		if("harm")
+		if(INTENT_HARM)
 			return 4
 
 //Calculates the acceleration
