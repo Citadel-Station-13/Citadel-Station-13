@@ -320,7 +320,7 @@
 		return ..()
 	if(istype(M, /obj/))
 		var/obj/O = M
-		O.obj_integrity -= speed*2.5
+		O.take_damage(speed*2.5)
 	..()
 
 //////////////////////////////////////////////////////////////
