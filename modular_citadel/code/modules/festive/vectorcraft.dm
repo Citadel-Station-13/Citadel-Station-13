@@ -35,7 +35,7 @@
 		if(gear != "auto")
 			gear = driver.a_intent
 	start_engine()
-	driver.to_chat("Welcome to the future of cars! Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears, r for handbrake, alt for brake and shift for boost! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear.")
+	to_chat(M, "Welcome to the future of cars! Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears, r for handbrake, alt for brake and shift for boost! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear.")
 	return ..()
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
