@@ -133,16 +133,19 @@
 	name = "red christmas boots"
 	desc = "A pair of fluffy red christmas boots!"
 	icon_state = "christmasbootsr"
+	item_state = "christmasbootsr"
 
 /obj/item/clothing/shoes/winterboots/christmasbootsg
 	name = "green christmas boots"
 	desc = "A pair of fluffy green christmas boots!"
 	icon_state = "christmasbootsg"
+	item_state = "christmasbootsg"
 
 /obj/item/clothing/shoes/winterboots/santaboots
 	name = "santa boots"
 	desc = "A pair of santa boots! How traditional!!"
 	icon_state = "santaboots"
+	item_state = "santaboots"
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
