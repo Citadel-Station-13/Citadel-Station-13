@@ -137,11 +137,11 @@
 		rebuild_modules()
 	return I
 
-//Adds flavoursome dogborg items to dogborg variants without mechanical benefits
+//Sleepers are purely flavor, the tongue and nose are functional
 /obj/item/robot_module/proc/dogborg_equip()
-	var/obj/item/I = new /obj/item/analyzer/nose/flavour(src)
+	var/obj/item/I = new /obj/item/analyzer/nose(src)
 	basic_modules += I
-	I = new /obj/item/soap/tongue/flavour(src)
+	I = new /obj/item/soap/tongue(src)
 	basic_modules += I
 	I = new /obj/item/dogborg/sleeper/K9/flavour(src)
 	if(istype(src, /obj/item/robot_module/engineering))
