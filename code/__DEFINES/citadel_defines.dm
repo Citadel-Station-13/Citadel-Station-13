@@ -57,9 +57,9 @@
 #define BALLS_SACK_SIZE_DEF	8
 #define BALLS_SACK_SIZE_MAX 40
 
-#define CUM_RATE			0.035
+#define CUM_RATE			2 // holy shit what a really shitty define name - relates to units per arbitrary measure of time?
 #define CUM_RATE_MULT		1
-#define CUM_EFFICIENCY		1//amount of nutrition required per life()
+#define CUM_EFFICIENCY		1 //amount of nutrition required per life()
 
 #define EGG_GIRTH_MIN		1//inches
 #define EGG_GIRTH_DEF		6

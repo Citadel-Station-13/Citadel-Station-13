@@ -14,7 +14,7 @@
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 10)
 		return
 
 	var/obj/effect/decal/cleanable/semen/S = locate() in T
@@ -80,7 +80,7 @@
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 10)
 		return
 
 	var/obj/effect/decal/cleanable/femcum/S = locate() in T

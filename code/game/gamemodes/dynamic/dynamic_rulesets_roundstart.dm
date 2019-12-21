@@ -22,6 +22,7 @@
 	high_population_requirement = 40
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1, "valid" = 1)
+	always_max_weight = TRUE
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
