@@ -383,6 +383,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 				if(ruleset.weight)
 					events += ruleset
 	storyteller = new GLOB.dynamic_storyteller_type
+	storyteller.on_start()
 	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)

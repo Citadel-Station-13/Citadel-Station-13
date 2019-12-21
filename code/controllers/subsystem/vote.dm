@@ -1,4 +1,4 @@
-#define VOTE_COOLDOWN 5
+#define VOTE_COOLDOWN 10
 
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
@@ -143,6 +143,8 @@ SUBSYSTEM_DEF(vote)
 			text += "<b>[capitalize(mode)] Vote</b>"
 		if(was_roundtype_vote)
 			stored_gamemode_votes = list()
+		if(!obfuscated && vote_system == RANKED_CHOICE_VOTING)
+			text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
@@ -166,6 +168,8 @@ SUBSYSTEM_DEF(vote)
 	to_chat(world, "\n<font color='purple'>[text]</font>")
 	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
 		var/admintext = "Obfuscated results"
+		if(vote_system == RANKED_CHOICE_VOTING)
+			admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			admintext += "\n<b>[choices[i]]:</b> [votes]"
@@ -198,15 +202,10 @@ SUBSYSTEM_DEF(vote)
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = "dynamic"
-				if(. == "extended")
-					GLOB.dynamic_forced_extended = TRUE // we still do the rest of the stuff
-					GLOB.dynamic_storyteller_type = /datum/dynamic_storyteller/liteextended
-					GLOB.dynamic_forced_threat_level = 15
-				else
-					var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
-					GLOB.dynamic_storyteller_type = S
-					GLOB.dynamic_curve_centre = initial(S.curve_centre)
-					GLOB.dynamic_curve_width = initial(S.curve_width)
+				var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
+				GLOB.dynamic_storyteller_type = S
+				GLOB.dynamic_curve_centre = initial(S.curve_centre)
+				GLOB.dynamic_curve_width = initial(S.curve_width)
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -309,9 +308,6 @@ SUBSYSTEM_DEF(vote)
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("dynamic")
-				var/saved_threats = SSpersistence.saved_threat_levels
-				if((saved_threats[1]+saved_threats[2]+saved_threats[3])>150)
-					choices.Add("extended")
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
 					choices.Add(initial(S.name))
@@ -372,11 +368,11 @@ SUBSYSTEM_DEF(vote)
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		switch(vote_system)
 			if(PLURALITY_VOTING)
-				. += "<h3>Vote one.</h3>"
+				. += "<h1>Vote one.</h1>"
 			if(APPROVAL_VOTING)
-				. += "<h3>Vote any number of choices.</h3>"
+				. += "<h1>Vote any number of choices.</h1>"
 			if(RANKED_CHOICE_VOTING)
-				. += "<h3>Vote by order of preference. Revoting will demote to the bottom.</h3>"
+				. += "<h1>Vote by order of preference. Revoting will demote to the bottom.</h1>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)

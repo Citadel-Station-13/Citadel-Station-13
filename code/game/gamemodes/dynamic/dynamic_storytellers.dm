@@ -25,6 +25,9 @@ Property weights are:
 /datum/dynamic_storyteller/proc/do_process()
 	return
 
+/datum/dynamic_storyteller/proc/on_start()
+	return
+
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in mode.roundstart_rules)
@@ -104,17 +107,27 @@ Property weights are:
 	property_weights = list("valid" = 3, "trust" = 5)
 
 /datum/dynamic_storyteller/liteextended
-	name = "Extended-lite"
+	name = "Calm"
 	desc = "Rules that are likely to lead to rounds that reach their finish at the shuttle autocall."
 	curve_centre = -5
 	curve_width = 0.5
 	property_weights = list("extended" = 5, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
+/datum/dynamic_storyteller/extended
+	name = "Extended"
+	desc = "No antags. Few threatening events. The calmest shift imaginable."
+	curve_centre = -20
+	curve_width = 0.5
+	
+/datum/dynamic_storyteller/extended/on_start()
+	GLOB.dynamic_forced_extended = TRUE
+
+
 /datum/dynamic_storyteller/memes
 	name = "Story"
 	desc = "Rules that might lead to fun stories to tell."
 	curve_width = 4
-	property_weights = list("story_potential" = 10)
+	property_weights = list("story_potential" = 10, "extended" = 1)
 
 /datum/dynamic_storyteller/cowabunga
 	name = "Cowabunga"
