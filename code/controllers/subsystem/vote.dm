@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(vote)
 	//one last pass, now that we've done the math
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
-			if(i != j && p[i][j] > p[j][i])
+			if(i != j && p[i][j] >= p[j][i])
 				choices[choices[i]]++
 				// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
 
