@@ -100,22 +100,31 @@
 	return TRUE
 
 /mob/living/AltClick(mob/user)
-	mob_try_pickup(user)
-	..()
+	. = ..()
+	if(mob_try_pickup(user))
+		return TRUE
 
 
 // I didn't define these for mobs, because you shouldn't be able to breathe out of mobs and using their loc isn't always the logical thing to do.
-/obj/item/clothing/head/mob_holder/return_air()
-	var/atom/location = loc
-	if(location)
-		return location.loc.return_air(args)
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
 	var/atom/location = loc
-	if(location)
-		return location.loc.assume_air(env)
+	if(!loc)
+		return //null
+	var/turf/T = get_turf(loc)
+	while(location != T)
+		location = location.loc
+		if(ismob(location)))
+			return location.loc.assume_air(env)
+	return loc.assume_air(env)
 
 /obj/item/clothing/head/mob_holder/remove_air(amount)
 	var/atom/location = loc
-	if(location)
-		return location.loc.remove_air(amount)
+	if(!loc)
+		return //null
+	var/turf/T = get_turf(loc)
+	while(location != T)
+		location = location.loc
+		if(ismob(location)))
+			return location.loc.remove_air(amount)
+	return loc.remove_air(amount)
