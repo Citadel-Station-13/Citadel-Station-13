@@ -20,7 +20,7 @@
 	var/accel_step = 0.3
 	var/acceleration = 0.4
 	var/max_deceleration = 2
-	var/max_velocity = 105
+	var/max_velocity = 110
 	var/boost_power = 15
 	var/enginesound_delay = 0
 	var/gear
