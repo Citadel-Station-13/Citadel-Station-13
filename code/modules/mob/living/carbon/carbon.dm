@@ -598,6 +598,9 @@
 		sight |= E.sight_flags
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
+		if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
+			lighting_alpha = min(LIGHTING_PLANE_ALPHA_NV_TRAIT, lighting_alpha)
+			see_in_dark = max(NIGHT_VISION_DARKSIGHT_RANGE, see_in_dark)
 
 	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
