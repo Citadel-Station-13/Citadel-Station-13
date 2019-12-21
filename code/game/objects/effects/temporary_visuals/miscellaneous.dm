@@ -6,7 +6,9 @@
 	layer = BELOW_MOB_LAYER
 	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, new_color)
+	if(new_color)
+		color = new_color
 	if(set_dir in GLOB.diagonals)
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
@@ -41,7 +43,7 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+	color = BLOOD_COLOR_XENO
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
@@ -313,6 +315,11 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
+
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
 	duration = 5
@@ -341,6 +348,10 @@
 /obj/effect/temp_visual/impact_effect/purple_laser
 	icon_state = "impact_laser_purple"
 	duration = 4
+
+/obj/effect/temp_visual/impact_effect/shrink
+	icon_state = "m_shield"
+	duration = 10
 
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
@@ -435,3 +446,10 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/slugboom
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "slugboom"
+	randomdir = FALSE
+	duration = 30
+	pixel_x = -24

@@ -1,5 +1,6 @@
 /datum/sprite_accessory/horns
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	color_src = HORNCOLOR
 
 /datum/sprite_accessory/horns/none
 	name = "None"
@@ -24,3 +25,12 @@
 /datum/sprite_accessory/horns/angler
 	name = "Angeler"
 	icon_state = "angler"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/horns/antler
+	name = "Deer Antlers"
+	icon_state = "deer"
+
+/datum/sprite_accessory/horns/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"

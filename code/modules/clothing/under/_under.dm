@@ -22,8 +22,8 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		IF_HAS_BLOOD_DNA(src)
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		if(blood_DNA)
+			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
 		if(accessory_overlay)
 			. += accessory_overlay
 
@@ -137,23 +137,23 @@
 
 
 /obj/item/clothing/under/examine(mob/user)
-	..()
+	. = ..()
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
-			to_chat(user, "Alt-click on [src] to wear it normally.")
+			. += "Alt-click on [src] to wear it normally."
 		else
-			to_chat(user, "Alt-click on [src] to wear it casually.")
+			. += "Alt-click on [src] to wear it casually."
 	if (has_sensor == BROKEN_SENSORS)
-		to_chat(user, "Its sensors appear to be shorted out.")
+		. += "Its sensors appear to be shorted out."
 	else if(has_sensor > NO_SENSORS)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
-				to_chat(user, "Its sensors appear to be disabled.")
+				. += "Its sensors appear to be disabled."
 			if(SENSOR_LIVING)
-				to_chat(user, "Its binary life sensors appear to be enabled.")
+				. += "Its binary life sensors appear to be enabled."
 			if(SENSOR_VITALS)
-				to_chat(user, "Its vital tracker appears to be enabled.")
+				. += "Its vital tracker appears to be enabled."
 			if(SENSOR_COORDS)
-				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
+				. += "Its vital tracker and tracking beacon appear to be enabled."
 	if(attached_accessory)
-		to_chat(user, "\A [attached_accessory] is attached to it.")
+		. += "\A [attached_accessory] is attached to it."

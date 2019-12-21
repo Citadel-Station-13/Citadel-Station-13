@@ -61,12 +61,12 @@
 		cut_overlays()
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
-	..()
+	. = ..()
 	if(max_mod_capacity)
-		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /obj/item/gun/energy/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -77,6 +77,12 @@
 			M.uninstall(src)
 	else
 		to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
+
+/obj/item/gun/energy/kinetic_accelerator/Exited(atom/movable/AM)
+	. = ..()
+	if((AM in modkits) && istype(AM, /obj/item/borg/upgrade/modkit))
+		var/obj/item/borg/upgrade/modkit/M = AM
+		M.uninstall(src, FALSE)
 
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/borg/upgrade/modkit))
@@ -261,7 +267,7 @@
 	icon_state = "modkit"
 	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
+	module_type = list(/obj/item/robot_module/miner)
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30
@@ -270,8 +276,8 @@
 	var/minebot_exclusive = FALSE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
+	. = ..()
+	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))
@@ -287,6 +293,8 @@
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
+	if(src in KA.modkits) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
+		return
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
 			to_chat(user, "<span class='notice'>The modkit you're trying to install is only rated for minebot use.</span>")
@@ -322,11 +330,10 @@
 		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module.modules)
 			uninstall(KA)
 
-/obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
-	forceMove(get_turf(KA))
+/obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, forcemove = TRUE)
 	KA.modkits -= src
-
-
+	if(forcemove)
+		forceMove(get_turf(KA))
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 

@@ -33,6 +33,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -67,6 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
+	var/reskinned = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -79,6 +81,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
+	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
 
 	var/tool_behaviour = NONE
@@ -95,9 +98,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
-	var/datum/rpg_loot/rpg_loot = null
-
-
 	//Tooltip vars
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
@@ -108,7 +108,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
-
 
 /obj/item/Initialize()
 
@@ -123,7 +122,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	actions_types = null
 
 	if(GLOB.rpg_loot_items)
-		rpg_loot = new(src)
+		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -141,6 +140,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else if (!istype(embedding, /datum/embedding_behavior))
 		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -148,7 +150,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
-	QDEL_NULL(rpg_loot)
 	return ..()
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -186,14 +187,24 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	src.loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
-	..()
-	var/pronoun
-	if(src.gender == PLURAL)
-		pronoun = "They are"
+	. = ..()
+
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
+
+	if(resistance_flags & INDESTRUCTIBLE)
+		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
-	to_chat(user, "[pronoun] a [size] item." )
+		if(resistance_flags & LAVA_PROOF)
+			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
+		if(resistance_flags & FREEZE_PROOF)
+			. += "[src] is made of cold-resistant materials."
+		if(resistance_flags & FIRE_PROOF)
+			. += "[src] is made of fire-retardant materials."
+
+
+
 
 	if(!user.research_scanner)
 		return
@@ -205,7 +216,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/boostable_nodes = techweb_item_boost_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
+			if(!node)
+				continue
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
@@ -228,7 +241,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join())
+	. += research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -384,13 +397,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
-	var/list/directaccess = usr.DirectAccess()
+	var/list/directaccess = usr.DirectAccess()	//This, specifically, is what requires the copypaste. If this were after the adjacency check, then it'd be impossible to use items in your inventory, among other things.
+												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess)))
 		if(!usr.get_active_held_item())
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)
 				melee_attack_chain(usr, over)
-			return
+			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
@@ -406,12 +420,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
-		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
+		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
-/obj/item/proc/item_action_slot_check(slot, mob/user)
+/obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
@@ -419,10 +433,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-//Set disable_warning to 1 if you wish it to not give you outputs.
+//Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
-		return 0
+		return FALSE
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
@@ -512,12 +526,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-	M.adjust_blurriness(3)
-	M.adjust_eye_damage(rand(2,4))
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(eyes.eye_damage >= 10)
+	M.adjust_blurriness(3)
+	eyes.applyOrganDamage(rand(2,4))
+	if(eyes.damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
@@ -531,9 +545,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Knockdown(40)
-		if (prob(eyes.eye_damage - 10 + 1))
+		if (prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
+
+/obj/item/clean_blood()
+	. = ..()
+	if(.)
+		if(blood_splatter_icon)
+			cut_overlay(blood_splatter_icon)
+
+/obj/item/clothing/gloves/clean_blood()
+	. = ..()
+	if(.)
+		transfer_blood = 0
 
 /obj/item/singularity_pull(S, current_size)
 	..()
@@ -545,7 +570,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
 	if(A && !QDELETED(A))
 		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, A, throwingdatum)
-		if(is_hot() && isliving(A))
+		if(get_temperature() && isliving(A))
 			var/mob/living/L = A
 			L.IgniteMob()
 		var/itempush = 1
@@ -579,6 +604,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
+/obj/item/proc/get_worn_belt_overlay(icon_file)
+	return
+
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
 		return
@@ -609,10 +637,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(flags & ITEM_SLOT_NECK)
 		owner.update_inv_neck()
 
-/obj/item/proc/is_hot()
+/obj/item/proc/get_temperature()
 	return heat
 
-/obj/item/proc/is_sharp()
+/obj/item/proc/get_sharpness()
 	return sharpness
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
@@ -639,7 +667,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		location.hotspot_expose(flame_heat, 1)
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""

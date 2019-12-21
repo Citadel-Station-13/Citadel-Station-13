@@ -13,7 +13,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_sec
-	radio_channel = "Security"
+	radio_channel = RADIO_CHANNEL_SECURITY
 	bot_type = SEC_BOT
 	model = "ED-209"
 	bot_core = /obj/machinery/bot_core/secbot
@@ -195,7 +195,7 @@ Auto Patrol[]"},
 				shootAt(user)
 
 /mob/living/simple_animal/bot/ed209/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
@@ -379,7 +379,7 @@ Auto Patrol[]"},
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
-	Sa.build_step = 1
+	Sa.build_step = ASSEMBLY_SECOND_STEP
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/assembly/prox_sensor(Tsec)

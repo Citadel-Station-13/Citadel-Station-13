@@ -24,6 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	rad_flags = RAD_PROTECT_CONTENTS //So the cartridges dont annoyingly get irradiated, and the signallers inside being radded as well
 
 	var/obj/item/integrated_signaler/radio = null
 
@@ -498,6 +499,23 @@ Code:
 				else
 					menu += "[ldat]"
 
+				menu += "<h4>Pimpin' Ride:</h4>"
+
+				ldat = null
+				for (var/obj/vehicle/ridden/janicart/M in world)
+					var/turf/ml = get_turf(M)
+
+					if(ml)
+						if (ml.z != cl.z)
+							continue
+						var/direction = get_dir(src, M)
+						ldat += "Ride - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b><br>"
+
+				if (!ldat)
+					menu += "None"
+				else
+					menu += "[ldat]"
+
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
@@ -672,15 +690,16 @@ Code:
 				active_bot = null
 
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
+				active_bot.bot_control("summon", usr, host_pda.GetAccess())
 
 			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(command= href_list["op"], user= usr)
+				active_bot.bot_control(href_list["op"], usr)
 		playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
-
-		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
+		var/mob/living/simple_animal/bot/mulebot/mule = active_bot
+		if (istype(mule))
+			active_bot.bot_control(href_list["mule"], usr, TRUE)
 
 	if(!host_pda)
 		return
@@ -755,4 +774,4 @@ Code:
 	return ""
 
 //This is called for special abilities of cartridges
-/obj/item/cartridge/proc/special(mov/living/user, list/params)
+/obj/item/cartridge/proc/special(mob/living/user, list/params)

@@ -56,7 +56,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ah" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (
@@ -149,9 +149,6 @@
 /area/shuttle/escape)
 "as" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -228,18 +225,13 @@
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/reinforced,
-/obj/item/scalpel,
-/obj/item/circular_saw,
-/obj/item/retractor,
-/obj/item/hemostat,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/item/surgicaldrill,
-/obj/item/cautery,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aC" = (
@@ -426,6 +418,22 @@
 /area/shuttle/escape)
 "aW" = (
 /turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"aX" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aY" = (
+/obj/docking_port/mobile/emergency{
+	dwidth = 14;
+	height = 18;
+	name = "CentCom Raven Battlecruiser";
+	width = 32
+	},
+/obj/machinery/door/airlock/hatch,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "aZ" = (
 /obj/effect/turf_decal/tile/green,
@@ -760,16 +768,6 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape)
-"bE" = (
-/obj/docking_port/mobile/emergency{
-	dwidth = 14;
-	height = 18;
-	name = "CentCom Raven Battlecruiser";
-	width = 32
-	},
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "bF" = (
 /obj/effect/turf_decal/tile/green{
@@ -1331,9 +1329,13 @@
 "eP" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
-"UQ" = (
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/plating,
+"Mb" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Shuttle EVA";
+	req_access_txt = "19"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1349,17 +1351,17 @@ bJ
 cs
 bJ
 bJ
-UQ
+aX
 cs
-bE
+aY
 bJ
 bJ
 cs
 ad
 aa
-UQ
+aX
 bJ
-UQ
+aX
 cs
 bJ
 cs
@@ -1651,7 +1653,7 @@ cs
 ad
 cr
 cs
-aR
+Mb
 cs
 ar
 br
@@ -1893,7 +1895,7 @@ bJ
 bJ
 bJ
 cs
-cs
+en
 ad
 ad
 ad
@@ -1909,7 +1911,7 @@ ab
 bJ
 bJ
 cs
-cs
+en
 ad
 ad
 ad

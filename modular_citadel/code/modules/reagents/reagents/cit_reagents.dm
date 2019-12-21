@@ -2,24 +2,24 @@
 /datum/reagent/consumable/semen
 	name = "Semen"
 	id = "semen"
-	description = "Sperm from some animal. Useless for anything but insemination, really."
+	description = "Sperm from some animal. I bet you'll drink this out of a bucket someday."
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
 	reagent_state = LIQUID
 	color = "#FFFFFF" // rgb: 255, 255, 255
+	can_synth = FALSE
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 10)
 		return
 
 	var/obj/effect/decal/cleanable/semen/S = locate() in T
 	if(!S)
 		S = new(T)
-	S.reagents.add_reagent("semen", reac_volume)
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -39,7 +39,9 @@
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-	S.add_blood_DNA(return_blood_DNA())
+	if(S.blood_DNA)
+		blood_DNA |= S.blood_DNA.Copy()
+	..()
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
@@ -50,6 +52,7 @@
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
 	reagent_state = LIQUID
 	color = "#AAAAAA77"
+	can_synth = FALSE
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 
 /obj/effect/decal/cleanable/femcum
@@ -70,19 +73,19 @@
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	F.add_blood_DNA(return_blood_DNA())
+	if(F.blood_DNA)
+		blood_DNA |= F.blood_DNA.Copy()
 	..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 10)
 		return
 
 	var/obj/effect/decal/cleanable/femcum/S = locate() in T
 	if(!S)
 		S = new(T)
-	S.reagents.add_reagent("femcum", reac_volume)
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -111,8 +114,8 @@
 	name = "Hexacrocin"
 	id = "aphro+"
 	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
-					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a\
-					 permanent increase in libido (commonly referred to as 'bimbofication')."
+					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
+					permanent increase in libido (commonly referred to as 'bimbofication')."
 	taste_description = "liquid desire"
 	color = "#FF2BFF"//dark pink
 	addiction_threshold = 20
@@ -138,16 +141,16 @@
 
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
 	if(prob(30))
-		M.adjustBrainLoss(2)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 	..()
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage3(mob/living/M)
 	if(prob(30))
-		M.adjustBrainLoss(3)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3)
 
 		..()
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage4(mob/living/M)
 	if(prob(30))
-		M.adjustBrainLoss(4)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)

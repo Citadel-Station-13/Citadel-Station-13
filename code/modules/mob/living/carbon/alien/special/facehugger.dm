@@ -15,7 +15,7 @@
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	throw_range = 5
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
@@ -33,16 +33,18 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	sterile = 1
+	sterile = TRUE
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
 	item_state = "facehugger_inactive"
+	sterile = TRUE
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
 	item_state = "facehugger_impregnated"
+	sterile = TRUE
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -69,16 +71,16 @@
 		Leap(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
-	..()
+	. = ..()
 	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			to_chat(user, "<span class='boldannounce'>[src] is not moving.</span>")
+			. += "<span class='boldannounce'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			to_chat(user, "<span class='boldannounce'>[src] seems to be active!</span>")
+			. += "<span class='boldannounce'>[src] seems to be active!</span>"
 	if (sterile)
-		to_chat(user, "<span class='boldannounce'>It looks like the proboscis has been removed.</span>")
+		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
 
 /obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

@@ -1,4 +1,0 @@
-author: "CameronWoof"
-delete-after: True
-changes: 
-  - bugfix: "The closed O2 crate now uses the same color scheme as the open one"

@@ -34,11 +34,10 @@
 	var/turf/T = get_turf(target)
 	if(target in view(user.client.view, user))
 		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
-		user.forceMove(T)
-		playsound(T, dash_sound, 25, 1)
-		var/obj/spot2 = new phasein(get_turf(user), user.dir)
-		spot1.Beam(spot2,beam_effect,time=20)
-		current_charges--
+		if(do_teleport(user, T, null, TRUE, null, null, dash_sound, dash_sound, TRUE, TELEPORT_CHANNEL_FREE, TRUE))
+			var/obj/spot2 = new phasein(get_turf(user), user.dir)
+			spot1.Beam(spot2,beam_effect,time=20)
+			current_charges--
 		holder.update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 

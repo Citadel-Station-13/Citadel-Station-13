@@ -29,21 +29,21 @@
 	rad_flags = RAD_PROTECT_CONTENTS
 
 /obj/structure/window/examine(mob/user)
-	..()
+	. = ..()
 	if(reinf)
 		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
-			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the frame.</span>")
+			. += "<span class='notice'>The window is <b>screwed</b> to the frame.</span>"
 		else if(anchored && state == WINDOW_IN_FRAME)
-			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>")
+			. += "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>"
 		else if(anchored && state == WINDOW_OUT_OF_FRAME)
-			to_chat(user, "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>")
+			. += "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>"
 		else if(!anchored)
-			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
 	else
 		if(anchored)
-			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
+			. += "<span class='notice'>The window is <b>screwed</b> to the floor.</span>"
 		else
-			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -281,8 +281,17 @@
 	. += new /obj/effect/decal/cleanable/glass(location)
 	if (reinf)
 		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
+	if (get_dist(src,user) > 1)
+		if (iscarbon(user))
+			var/mob/living/carbon/H = user
+			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
+				return FALSE
+		else
+			return FALSE
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
@@ -408,6 +417,15 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_NO_INSULATION
+
+/obj/structure/window/plasma/spawnDebris(location)
+	. = list()
+	. += new /obj/item/shard/plasma(location)
+	. += new /obj/effect/decal/cleanable/glass/plasma(location)
+	if (reinf)
+		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard/plasma(location)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -720,8 +738,8 @@
 
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
-	if(W.is_hot())
-		fire_act(W.is_hot())
+	if(W.get_temperature())
+		fire_act(W.get_temperature())
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()

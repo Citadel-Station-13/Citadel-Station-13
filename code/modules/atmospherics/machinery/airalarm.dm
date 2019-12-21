@@ -222,11 +222,11 @@
 	. = ..()
 	switch(buildstage)
 		if(0)
-			to_chat(user, "<span class='notice'>It is missing air alarm electronics.</span>")
+			. += "<span class='notice'>It is missing air alarm electronics.</span>"
 		if(1)
-			to_chat(user, "<span class='notice'>It is missing wiring.</span>")
+			. += "<span class='notice'>It is missing wiring.</span>"
 		if(2)
-			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>")
+			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
@@ -823,11 +823,11 @@
 	return ..()
 
 /obj/machinery/airalarm/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
-	else
-		togglelock(user)
+	togglelock(user)
+	return TRUE
 
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
 	if(stat & (NOPOWER|BROKEN))
@@ -848,11 +848,13 @@
 	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
 	playsound(src, "sparks", 50, 1)
+	return TRUE
 
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()

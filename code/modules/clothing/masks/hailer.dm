@@ -7,10 +7,10 @@
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	item_state = "sechailer"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
@@ -69,12 +69,14 @@
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
-/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
-	if(safety)
-		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
-	else
+
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
+	. = ..()
+	if(!safety)
 		return
+	safety = FALSE
+	to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
+	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"

@@ -38,9 +38,7 @@
 			if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
 				H.adjust_disgust(-5 + -2.5 * fraction)
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-				if(mood)
-					mood.add_event(null, "fav_food", /datum/mood_event/favorite_food)
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
 				last_check_time = world.time
 				return
 	..()
@@ -308,7 +306,6 @@
 	tastes = list("bread" = 1, "egg" = 1, "cheese" = 1)
 	foodtype = GRAIN | MEAT | DAIRY
 
-
 /obj/item/reagent_containers/food/snacks/sugarcookie
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
@@ -369,6 +366,16 @@
 	tastes = list("cake" = 3, "blue cherry" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
+/obj/item/reagent_containers/food/snacks/strawberrycupcake
+	name = "Strawberry cupcake"
+	desc = "Strawberry inside a delicious cupcake."
+	icon_state = "strawberrycupcake"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	filling_color = "#F0E68C"
+	tastes = list("cake" = 2, "strawberry" = 1)
+	foodtype = GRAIN | FRUIT | SUGAR
+
 /obj/item/reagent_containers/food/snacks/honeybun
 	name = "honey bun"
 	desc = "A sticky pastry bun glazed with honey."
@@ -379,7 +386,7 @@
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtype = GRAIN
 
-#define PANCAKE_MAX_STACK 10
+#define PANCAKE_MAX_STACK 30
 
 /obj/item/reagent_containers/food/snacks/pancakes
 	name = "pancake"
@@ -440,11 +447,11 @@
 	if (pancakeCount)
 		var/obj/item/reagent_containers/food/snacks/S = contents[pancakeCount]
 		bitecount = S.bitecount
-	..()
+	. = ..()
 	if (pancakeCount)
 		for(var/obj/item/reagent_containers/food/snacks/pancakes/ING in contents)
 			ingredients_listed += "[ING.name], "
-		to_chat(user, "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)].")
+		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 	bitecount = originalBites
 
 /obj/item/reagent_containers/food/snacks/pancakes/attackby(obj/item/I, mob/living/user, params)

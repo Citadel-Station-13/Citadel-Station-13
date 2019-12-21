@@ -161,11 +161,13 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	armour_penetration = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
 	var/fake = FALSE
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
@@ -244,6 +246,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
+	slot_flags = NONE
 	flags_1 = NONE
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
@@ -331,7 +334,7 @@
 /obj/item/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
-			if(I.is_sharp())
+			if(I.get_sharpness())
 				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
 				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
 				H.do_item_attack_animation(C, used_item = I)

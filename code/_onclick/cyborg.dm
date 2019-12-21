@@ -55,6 +55,17 @@
 
 	var/obj/item/W = get_active_held_item()
 
+	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
+		var/atom/movable/C = A
+		if(C.can_buckle && C.has_buckled_mobs())
+			if(C.buckled_mobs.len > 1)
+				var/unbuckled = input(src, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in C.buckled_mobs
+				if(C.user_unbuckle_mob(unbuckled,src))
+					return
+			else
+				if(C.user_unbuckle_mob(C.buckled_mobs[1],src))
+					return
+
 	if(!W && get_dist(src,A) <= interaction_range)
 		A.attack_robot(src)
 		return
@@ -99,7 +110,8 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/A)
 	A.BorgCtrlClick(src)
 /mob/living/silicon/robot/AltClickOn(atom/A)
-	A.BorgAltClick(src)
+	if(!A.BorgAltClick(src))
+		altclick_listed_turf(A)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)
@@ -143,20 +155,17 @@
 		..()
 
 /atom/proc/BorgAltClick(mob/living/silicon/robot/user)
-	AltClick(user)
-	return
+	return AltClick(user)
 
 /obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
-	else
-		..()
+		return AIAltClick()
+	return ..()
 
 /obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
-	else
-		..()
+		return AIAltClick()
+	return ..()
 
 /*
 	As with AI, these are not used in click code,

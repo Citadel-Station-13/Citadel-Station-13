@@ -119,9 +119,9 @@
 
 
 /mob/living/simple_animal/parrot/examine(mob/user)
-	..()
+	. = ..()
 	if(stat)
-		to_chat(user, pick("This parrot is no more.", "This is a late parrot.", "This is an ex-parrot."))
+		. += pick("This parrot is no more.", "This is a late parrot.", "This is an ex-parrot.")
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -143,7 +143,7 @@
 		stat("Held Item", held_item)
 		stat("Mode",a_intent)
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(speaker != src && prob(50)) //Dont imitate ourselves
 		if(!radio_freq || prob(10))
@@ -241,23 +241,23 @@
 					clearlist(available_channels)
 					for(var/ch in headset_to_add.channels)
 						switch(ch)
-							if("Engineering")
-								available_channels.Add(":e")
-							if("Command")
-								available_channels.Add(":c")
-							if("Security")
-								available_channels.Add(":s")
-							if("Science")
-								available_channels.Add(":n")
-							if("Medical")
-								available_channels.Add(":m")
-							if("Supply")
-								available_channels.Add(":u")
-							if("Service")
-								available_channels.Add(":v")
+							if(RADIO_CHANNEL_ENGINEERING)
+								available_channels.Add(RADIO_TOKEN_ENGINEERING)
+							if(RADIO_CHANNEL_COMMAND)
+								available_channels.Add(RADIO_TOKEN_COMMAND)
+							if(RADIO_CHANNEL_SECURITY)
+								available_channels.Add(RADIO_TOKEN_SECURITY)
+							if(RADIO_CHANNEL_SCIENCE)
+								available_channels.Add(RADIO_TOKEN_SCIENCE)
+							if(RADIO_CHANNEL_MEDICAL)
+								available_channels.Add(RADIO_TOKEN_MEDICAL)
+							if(RADIO_CHANNEL_SUPPLY)
+								available_channels.Add(RADIO_TOKEN_SUPPLY)
+							if(RADIO_CHANNEL_SERVICE)
+								available_channels.Add(RADIO_TOKEN_SERVICE)
 
 					if(headset_to_add.translate_binary)
-						available_channels.Add(":b")
+						available_channels.Add(MODE_TOKEN_BINARY)
 	else
 		return ..()
 
@@ -437,7 +437,7 @@
 			//Search for item to steal
 			parrot_interest = search_for_item()
 			if(parrot_interest)
-				emote("me", 1, "looks in [parrot_interest]'s direction and takes flight.")
+				emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
 				icon_state = icon_living
 			return
@@ -459,7 +459,7 @@
 			if(AM)
 				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
 					parrot_interest = AM
-					emote("me", 1, "turns and flies towards [parrot_interest].")
+					emote("me", EMOTE_VISIBLE, "turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
 				else	//Else it's a perch
@@ -760,7 +760,7 @@
 		held_item = null
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		emote("me", 1, "[src] eagerly downs the cracker.")
+		emote("me", EMOTE_VISIBLE, "[src] eagerly downs the cracker.")
 		return 1
 
 
@@ -897,6 +897,11 @@
 
 	. = ..()
 
+/mob/living/simple_animal/parrot/Poly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
+		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
+
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
@@ -911,7 +916,7 @@
 		if(mind)
 			mind.transfer_to(G)
 		else
-			G.key = key
+			transfer_ckey(G)
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()

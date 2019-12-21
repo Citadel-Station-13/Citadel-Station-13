@@ -25,6 +25,7 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/list/crusher_loot
 	var/medal_type
 	var/score_type = BOSS_SCORE
@@ -40,9 +41,6 @@
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
-	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
@@ -118,8 +116,10 @@
 	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
+	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1)) //Don't award medals if the medal type isn't set
 		return FALSE
+	if(!SSmedals.hub_enabled) // This allows subtypes to carry on other special rewards not tied with medals. (such as bubblegum's arena shuttle)
+		return TRUE
 
 	for(var/mob/living/L in view(7,src))
 		if(L.stat || !L.client)
@@ -127,7 +127,7 @@
 		var/client/C = L.client
 		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
 		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
 			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
 		SSmedals.SetScore(BOSS_SCORE, C, 1)
 		SSmedals.SetScore(score_type, C, 1)

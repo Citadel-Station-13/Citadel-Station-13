@@ -34,7 +34,7 @@
 	if(_directory)
 		directory = _directory
 	if(entries)
-		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
+		CRASH("/datum/controller/configuration/Load() called more than once!")
 	InitEntries()
 	LoadModes()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
@@ -101,6 +101,7 @@
 	log_config("Loading config file [filename]...")
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
+	var/list/postload_required = list()
 	for(var/L in lines)
 		L = trim(L)
 		if(!L)
@@ -157,17 +158,23 @@
 			else
 				warning("[new_ver.type] is deprecated but gave no proper return for DeprecationUpdate()")
 
-		var/validated = E.ValidateAndSet(value)
+		var/validated = E.ValidateAndSet(value, TRUE)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
 		else
 			if(E.modified && !E.dupes_allowed)
 				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+		if(E.postload_required)
+			postload_required[E] = TRUE
 
 		E.resident_file = filename
 
 		if(validated)
 			E.modified = TRUE
+
+	for(var/i in postload_required)
+		var/datum/config_entry/E = i
+		E.OnPostload()
 
 	++.
 

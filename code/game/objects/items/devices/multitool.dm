@@ -32,12 +32,30 @@
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
 
+/obj/item/multitool/chaplain
+	name = "\improper hypertool"
+	desc = "Used for pulsing wires to test which to cut. Also emits microwaves to fry some brains!"
+	damtype = BRAIN
+	force = 18
+	armour_penetration = 35
+	hitsound = 'sound/effects/sparks4.ogg'
+	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	throw_speed = 3
+	throw_range = 4
+	throwforce = 10
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/multitool/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
 /obj/item/multitool/examine(mob/user)
-	..()
+	. = ..()
 	if(selected_io)
-		to_chat(user, "<span class='notice'>Activate [src] to detach the data wire.</span>")
+		. += "<span class='notice'>Activate [src] to detach the data wire.</span>"
 	if(buffer)
-		to_chat(user, "<span class='notice'>Its buffer contains [buffer].</span>")
+		. += "<span class='notice'>Its buffer contains [buffer].</span>"
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
@@ -229,6 +247,8 @@
 /obj/item/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
 
 /obj/item/multitool/abductor
@@ -237,3 +257,10 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+/obj/item/multitool/advanced
+	name = "advanced multitool"
+	desc = "The reproduction of an abductor's multitool, this multitool is a classy silver."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "multitool"
+	toolspeed = 0.2

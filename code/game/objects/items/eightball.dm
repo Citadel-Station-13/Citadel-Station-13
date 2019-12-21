@@ -122,7 +122,7 @@
 	interact(user)
 	return ..()
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	. = ..()
 	last_message = raw_message
 
@@ -206,7 +206,7 @@
 	switch(action)
 		if("vote")
 			var/selected_answer = params["answer"]
-			if(!selected_answer in possible_answers)
+			if(!(selected_answer in possible_answers))
 				return
 			else
 				votes[user.ckey] = selected_answer

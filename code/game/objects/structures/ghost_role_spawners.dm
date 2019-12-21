@@ -45,7 +45,7 @@
 	death = FALSE
 	anchored = FALSE
 	density = FALSE
-	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
+	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You would never leave its beautiful expanse. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 	assignedrole = "Ash Walker"
 
@@ -66,7 +66,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER, ignore_dnr_observers = TRUE)
 
 /datum/outfit/ashwalker
 	name ="Ashwalker"
@@ -133,7 +133,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
-		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
+		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM, ignore_dnr_observers = TRUE)
 	if(has_owner && creator)
 		flavour_text = "<span class='big bold'>You are a Golem.</span><b> You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost.</b>"
@@ -151,6 +151,9 @@
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
+		if(has_owner)
+			var/datum/species/golem/G = H.dna.species
+			G.owner = owner
 		H.set_cloned_appearance()
 		if(!name)
 			if(has_owner)
@@ -321,8 +324,9 @@
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/telegram
 	shoes = /obj/item/clothing/shoes/laceup
+	head = /obj/item/clothing/head/hotel
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield)
@@ -372,7 +376,7 @@
 	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
 	var/area/A = get_area(src)
 	if(!mapload && A)
-		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 	objectives = "Be [owner.name]'s friend, and keep [owner.name] alive, so you don't get sent back to hell."
 	spell = summoning_spell
 
@@ -422,7 +426,7 @@
 	implants = list(/obj/item/implant/weapons_auth)
 	id = /obj/item/card/id/syndicate
 
-/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
@@ -561,7 +565,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton/pirate
+	mob_species = /datum/species/skeleton/space
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE

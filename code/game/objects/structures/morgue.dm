@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/Initialize()
 	. = ..()
 	GLOB.bodycontainers += src
+	recursive_organ_check(src)
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
@@ -101,6 +102,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 5)
+	recursive_organ_check(src)
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist(mob/living/user)
@@ -120,6 +122,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		open()
 
 /obj/structure/bodycontainer/proc/open()
+	recursive_organ_check(src)
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	playsound(src, 'sound/effects/roll.ogg', 5, 1)
 	var/turf/T = get_step(src, dir)
@@ -130,10 +133,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/proc/close()
 	playsound(src, 'sound/effects/roll.ogg', 5, 1)
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
+			if(ismob(AM) && !isliving(AM))
+				continue
 			AM.forceMove(src)
+	recursive_organ_check(src)
 	update_icon()
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
@@ -157,15 +163,16 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	..()
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+	. = ..()
+	. += "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>"
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
+	return TRUE
 
 /obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
@@ -186,7 +193,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+							playsound(src, 'sound/machines/beeping_alarm.ogg', 50, 0) //Clone them you blind fucks
 							next_beep = world.time + beep_cooldown
 					break
 
@@ -301,7 +308,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
+	layer = TRAY_LAYER
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
 	pass_flags = LETPASSTHROW

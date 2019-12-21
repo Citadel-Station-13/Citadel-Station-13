@@ -11,7 +11,7 @@
 
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 4
 	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power))
 	STR.can_hold = typecacheof(list(
@@ -36,7 +36,16 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/screwdriver,
 		/obj/item/valentine,
-		/obj/item/stamp))
+		/obj/item/stamp,
+		/obj/item/key,
+		/obj/item/cartridge,
+		/obj/item/camera_film,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/reagent_containers/food/snacks/grown/poppy,
+		/obj/item/instrument/harmonica,
+		/obj/item/mining_voucher,
+		/obj/item/suit_voucher,
+		/obj/item/reagent_containers/pill))
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()
@@ -60,12 +69,27 @@
 /obj/item/storage/wallet/update_icon()
 	var/new_state = "wallet"
 	if(front_id)
-		new_state = "wallet_[front_id.icon_state]"
+		new_state = "wallet_id"
 	if(new_state != icon_state)		//avoid so many icon state changes.
 		icon_state = new_state
 
 /obj/item/storage/wallet/GetID()
 	return front_id
+
+/obj/item/storage/wallet/RemoveID()
+	if(!front_id)
+		return
+	. = front_id
+	front_id.forceMove(get_turf(src))
+
+/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	attackby(inserting_id)
+	if(inserting_id in contents)
+		return TRUE
+	return FALSE
 
 /obj/item/storage/wallet/GetAccess()
 	if(LAZYLEN(combined_access))

@@ -15,10 +15,10 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 	if(!has_buckled_mobs())
-		to_chat(user, "<span class='notice'>Drag your sprite to sit in it.</span>")
+		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -317,9 +317,6 @@
 			new stack_type(get_turf(loc))
 	qdel(src)
 
-
-
-
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
@@ -338,7 +335,6 @@
 				C.Knockdown(20)
 		smash(user)
 
-
 /obj/item/chair/stool
 	name = "stool"
 	icon_state = "stool_toppled"
@@ -351,6 +347,70 @@
 	icon_state = "bar_toppled"
 	item_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+//////////////////////////
+//Brass & Bronze stools!//
+//////////////////////////
+
+/obj/structure/chair/stool/bar/brass
+	name = "brass bar stool"
+	desc = "A brass bar stool with red silk for a pillow."
+	icon_state = "barbrass"
+	item_chair = /obj/item/chair/stool/bar/brass
+	buildstacktype = /obj/item/stack/tile/brass
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bar/bronze
+	name = "bronze bar stool"
+	desc = "A bronze bar stool with red silk for a pillow."
+	icon_state = "barbrass"
+	item_chair = /obj/item/chair/stool/bar/bronze
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+
+/obj/structure/chair/stool/brass
+	name = "brass stool"
+	desc = "A brass stool with a silk top for comfort."
+	icon_state = "stoolbrass"
+	item_chair = /obj/item/chair/stool/brass
+	buildstacktype = /obj/item/stack/tile/brass
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bronze
+	name = "bronze stool"
+	desc = "A bronze stool with a silk top for comfort."
+	icon_state = "stoolbrass"
+	item_chair = /obj/item/chair/stool/bronze
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+
+/obj/item/chair/stool/brass
+	name = "brass stool"
+	icon_state = "stoolbrass_toppled"
+	item_state = "stoolbrass"
+	origin_type = /obj/structure/chair/stool/brass
+
+/obj/item/chair/stool/bar/brass
+	name = "brass bar stool"
+	icon_state = "barbrass_toppled"
+	item_state = "stoolbrass_bar"
+	origin_type = /obj/structure/chair/stool/bar/brass
+
+/obj/item/chair/stool/bronze
+	name = "bronze stool"
+	icon_state = "stoolbrass_toppled"
+	item_state = "stoolbrass"
+	origin_type = /obj/structure/chair/stool/bronze
+
+/obj/item/chair/stool/bar/bronze
+	name = "bronze bar stool"
+	icon_state = "barbrass_toppled"
+	item_state = "stoolbrass_bar"
+	origin_type = /obj/structure/chair/stool/bar/bronze
+
+/////////////////////////////////
+//End of Brass & Bronze stools!//
+/////////////////////////////////
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
@@ -389,6 +449,9 @@
 	item_chair = null
 	var/turns = 0
 
+/obj/structure/chair/brass/ComponentInitialize()
+	return //it spins with the power of ratvar, not components.
+
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
@@ -404,6 +467,7 @@
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
+	. = ..()
 	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
@@ -415,6 +479,7 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+	return TRUE
 
 /obj/structure/chair/bronze
 	name = "brass chair"
@@ -429,3 +494,40 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+
+/obj/structure/chair/sofa
+	name = "old ratty sofa"
+	icon_state = "sofamiddle"
+	icon = 'icons/obj/sofa.dmi'
+	buildstackamount = 1
+	var/mutable_appearance/armrest
+
+/obj/structure/chair/sofa/Initialize()
+	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
+	return ..()
+
+/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
+	. = ..()
+	update_armrest()
+
+/obj/structure/chair/sofa/proc/update_armrest()
+	if(has_buckled_mobs())
+		add_overlay(armrest)
+	else
+		cut_overlay(armrest)
+
+/obj/structure/chair/sofa/post_unbuckle_mob()
+	. = ..()
+	update_armrest()
+
+/obj/structure/chair/sofa/left
+	icon_state = "sofaend_left"
+
+/obj/structure/chair/sofa/right
+	icon_state = "sofaend_right"
+
+/obj/structure/chair/sofa/corner
+	icon_state = "sofacorner"
+
+/obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
+	return

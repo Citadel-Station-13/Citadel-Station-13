@@ -44,6 +44,10 @@
 	icon_state = "plate"
 	resistance_flags = NONE
 
+/obj/item/trash/plate/alt
+	desc = "Still some dip left. Sadly still just trash..."
+	icon_state = "plate1"
+
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"

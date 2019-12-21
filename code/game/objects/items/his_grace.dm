@@ -12,8 +12,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	icon = 'icons/obj/items_and_weapons.dmi'
-	w_class = WEIGHT_CLASS_GIGANTIC
+	w_class = WEIGHT_CLASS_BULKY
 	force = 12
+	total_mass = TOTAL_MASS_NORMAL_ITEM // average toolbox
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/awakened = FALSE
@@ -28,7 +29,7 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	GLOB.poi_list += src
-	AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_POST_THROW = CALLBACK(src, .proc/move_gracefully)))
+	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -51,23 +52,23 @@
 	return
 
 /obj/item/his_grace/examine(mob/user)
-	..()
+	. = ..()
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
+				. += "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>"
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
+				. += "<span class='his_grace'>[src] would like a snack.</span>"
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
+				. += "<span class='his_grace'>[src] is quite hungry now.</span>"
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
+				. += "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>"
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
+				. += "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
+				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
 	else
-		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
+		. += "<span class='his_grace'>[src] is latched closed.</span>"
 
 /obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
@@ -174,6 +175,7 @@
 /obj/item/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
 		return
+	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
@@ -185,7 +187,10 @@
 		bloodthirst = max(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
-	if(LAZYLEN(contents) >= victims_needed)
+	for(var/mob/living/C in contents)
+		if(C.mind)
+			victims++
+	if(victims >= victims_needed)
 		ascend()
 	update_stats()
 

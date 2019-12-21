@@ -5,7 +5,8 @@
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
 	if(. && sprinting && !(movement_type & FLYING) && canmove && !resting && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
-		adjustStaminaLossBuffered(0.3)
+		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
+			doSprintLossTiles(1)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
 			for(var/obj/item/I in held_items)
@@ -24,9 +25,9 @@
 	sprinting = !sprinting
 	if(!resting && m_intent == MOVE_INTENT_RUN && canmove)
 		if(sprinting)
-			playsound_local(src, 'modular_citadel/sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
+			playsound_local(src, 'sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 		else
-			playsound_local(src, 'modular_citadel/sound/misc/sprintdeactivate.ogg', 50, FALSE, pressure_affected = FALSE)
+			playsound_local(src, 'sound/misc/sprintdeactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/sprintbutton/selector in hud_used.static_inventory)
 			selector.insert_witty_toggle_joke_here(src)

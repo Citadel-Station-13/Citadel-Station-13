@@ -74,7 +74,8 @@
 			to_chat(user, "<span class='notice'>You start adding [I] to [src]...</span>")
 			if(do_after(user, 50, target=src))
 				W.use(5)
-				new /turf/closed/wall/mineral/wood/nonmetal(get_turf(src))
+				var/turf/T = get_turf(src)
+				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
 				return
 	return ..()
@@ -148,13 +149,15 @@
 	var/mode = SINGLE
 
 /obj/item/grenade/barrier/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to toggle modes.</span>"
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	toggle_mode(user)
+	return TRUE
 
 /obj/item/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)

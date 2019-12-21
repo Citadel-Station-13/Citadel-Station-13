@@ -1,4 +1,4 @@
-/obj/structure/sign/barsign // All Signs are 64 by 32 pixels, they take two tiles
+/obj/structure/sign/barsign // All Signs are 64 by 64 pixels, though most of them are made to fit 64 x 32 and only take the two lowermost tiles.
 	name = "Bar Sign"
 	desc = "A bar sign with no writing on it."
 	icon = 'icons/obj/barsigns.dmi'
@@ -112,12 +112,16 @@
 
 
 /obj/structure/sign/barsign/emag_act(mob/user)
+	. = ..()
 	if(broken || (obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(10 SECONDS)
+	addtimer(CALLBACK(src, .proc/syndie_bar_good), 10 SECONDS)
+	return TRUE
+
+/obj/structure/sign/barsign/proc/syndie_bar_good()
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	req_access = list(ACCESS_SYNDICATE)
 

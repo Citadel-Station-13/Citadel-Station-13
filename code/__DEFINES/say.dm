@@ -6,17 +6,45 @@
 //Message modes. Each one defines a radio channel, more or less.
 #define MODE_HEADSET "headset"
 #define MODE_ROBOT "robot"
+
 #define MODE_R_HAND "right hand"
+#define MODE_KEY_R_HAND "r"
+
 #define MODE_L_HAND "left hand"
+#define MODE_KEY_L_HAND "l"
+
 #define MODE_INTERCOM "intercom"
+#define MODE_KEY_INTERCOM "i"
+
 #define MODE_BINARY "binary"
+#define MODE_KEY_BINARY "b"
+#define MODE_TOKEN_BINARY ":b"
+
 #define MODE_WHISPER "whisper"
 #define MODE_WHISPER_CRIT "whispercrit"
+
+#define MODE_CUSTOM_SAY "custom_say"
+
 #define MODE_DEPARTMENT "department"
+#define MODE_KEY_DEPARTMENT "h"
+#define MODE_TOKEN_DEPARTMENT ":h"
+
+#define MODE_ADMIN "admin"
+#define MODE_KEY_ADMIN "p"
+
+#define MODE_DEADMIN "deadmin"
+#define MODE_KEY_DEADMIN "d"
+
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
+
 #define MODE_CHANGELING "changeling"
+#define MODE_KEY_CHANGELING "g"
+#define MODE_TOKEN_CHANGELING ":g"
+
 #define MODE_VOCALCORDS "cords"
+#define MODE_KEY_VOCALCORDS "x"
+
 #define MODE_MONKEY "monkeyhive"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
@@ -47,8 +75,16 @@
 #define LINGHIVE_LING 2
 #define LINGHIVE_LINK 3
 
+//whether the emote is visible or audible.
+#define EMOTE_VISIBLE 1
+#define EMOTE_AUDIBLE 2
+
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			2048		//Citadel edit: What's the WORST that could happen?
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80
+
+// Audio/Visual Flags. Used to determine what sense are required to notice a message.
+#define MSG_VISUAL (1<<0)
+#define MSG_AUDIBLE (1<<1)

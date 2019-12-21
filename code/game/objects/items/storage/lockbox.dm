@@ -15,7 +15,7 @@
 
 /obj/item/storage/lockbox/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 14
 	STR.max_items = 4
@@ -48,14 +48,16 @@
 		to_chat(user, "<span class='danger'>It's locked!</span>")
 
 /obj/item/storage/lockbox/emag_act(mob/user)
-	if(!broken)
-		broken = TRUE
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
-		desc += "It appears to be broken."
-		icon_state = src.icon_broken
-		if(user)
-			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
-			return
+	. = ..()
+	if(broken)
+		return
+	broken = TRUE
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+	desc += "It appears to be broken."
+	icon_state = src.icon_broken
+	if(user)
+		visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
+	return TRUE
 
 /obj/item/storage/lockbox/Entered()
 	. = ..()
@@ -99,24 +101,25 @@
 
 /obj/item/storage/lockbox/medal/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 10
 	STR.max_combined_w_class = 20
 	STR.can_hold = typecacheof(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
-	..()
+	. = ..()
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(!locked)
-		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
+		. += "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>"
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
 			update_icon()
-		..()
+			return TRUE
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)

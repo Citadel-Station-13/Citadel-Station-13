@@ -208,6 +208,7 @@
 	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
 	owner.adjustOxyLoss(-(grace_heal * 2))
 	owner.adjustCloneLoss(-grace_heal)
+	owner.adjustStaminaLoss(-(grace_heal * 25))
 
 /datum/status_effect/his_grace/on_remove()
 	owner.log_message("lost His Grace's stun immunity", LOG_ATTACK)
@@ -355,7 +356,7 @@
 		var/new_staminaloss = owner.getStaminaLoss()
 		if(new_staminaloss < last_staminaloss)
 			var/heal_amount = -5 // CIT CHANGE - makes blood drunk status effect not exhaust you
-			owner.adjustStaminaLoss(heal_amount, updating_health = FALSE)
+			owner.adjustStaminaLoss(heal_amount, FALSE)
 			new_staminaloss = owner.getStaminaLoss()
 			needs_health_update = TRUE
 		last_staminaloss = new_staminaloss
@@ -520,7 +521,7 @@
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
 			itemUser.adjustOxyLoss(-1.5)
 			itemUser.adjustStaminaLoss(-1.5)
-			itemUser.adjustBrainLoss(-1.5)
+			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
 		//Heal all those around you, unbiased
 		for(var/mob/living/L in view(7, owner))
@@ -532,7 +533,7 @@
 				L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
 				L.adjustOxyLoss(-3.5)
 				L.adjustStaminaLoss(-3.5)
-				L.adjustBrainLoss(-3.5)
+				L.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3.5)
 				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
 			else if(issilicon(L))
 				L.adjustBruteLoss(-3.5)

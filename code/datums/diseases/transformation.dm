@@ -67,7 +67,7 @@
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
-				new_mob.key = affected_mob.key
+				affected_mob.transfer_ckey(new_mob)
 
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
@@ -82,7 +82,7 @@
 		to_chat(affected_mob, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbaned player.")
 		affected_mob.ghostize(0)
-		affected_mob.key = C.key
+		C.transfer_ckey(affected_mob)
 	else
 		to_chat(new_mob, "Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!")
 		new_mob.death()

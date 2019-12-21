@@ -88,20 +88,21 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/examine(mob/user)
-	..()
+	. = ..()
 	if(panel_open)
-		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+		. += "<span class='notice'>[src]'s maintenance hatch is open!</span>"
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>"
 		switch(macrotier)
 			if(1)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>5u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>5u</b>.<span>"
 			if(2)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>3u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>3u</b>.<span>"
 			if(3)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>2u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>2u</b>.<span>"
 			if(4)
-				to_chat(user, "<span class='notice'>Macro granularity at <b>1u</b>.<span>")
+				. += "<span class='notice'>Macro granularity at <b>1u</b>.<span>"
+
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -114,7 +115,6 @@
 	recharge_counter++
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
-	..()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -7
@@ -139,12 +139,14 @@
 
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return
 	to_chat(user, "<span class='notice'>You short out [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -155,11 +157,11 @@
 	if(beaker)
 		beaker.ex_act(severity, target)
 
-/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
-	..()
+/obj/machinery/chem_dispenser/Exited(atom/movable/A, atom/newloc)
+	. = ..()
 	if(A == beaker)
 		beaker = null
-		cut_overlays()
+		update_icon()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -189,10 +191,16 @@
 		data["beakerCurrentVolume"] = beakerCurrentVolume
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerCurrentpH"] = beaker.reagents.pH
+		//pH accuracy
+		for(var/obj/item/stock_parts/capacitor/C in component_parts)
+			data["partRating"]= 10**(C.rating-1)
+
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 		data["beakerTransferAmounts"] = null
+		data["beakerCurrentpH"] = null
 
 	var/chemicals[0]
 	var/recipes[0]
@@ -244,7 +252,7 @@
 			if(!is_operational())
 				return
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in beaker.possible_transfer_amounts))
 				beaker.reagents.remove_all(amount)
 				work_animation()
 				. = TRUE
@@ -375,9 +383,10 @@
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
 	else
@@ -389,7 +398,6 @@
 	cell = null
 	if(beaker)
 		beaker.forceMove(drop_location())
-		beaker = null
 	return ..()
 
 /obj/machinery/chem_dispenser/proc/get_macro_resolution()
@@ -420,10 +428,11 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
+	return TRUE
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
@@ -638,6 +647,70 @@
 /obj/machinery/chem_dispenser/fullupgrade/Initialize()
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
+
+/obj/machinery/chem_dispenser/abductor
+	name = "reagent synthesizer"
+	desc = "Synthesizes a variety of reagents using proto-matter."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "chem_dispenser"
+	has_panel_overlay = FALSE
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
+	working_state = null
+	nopower_state = null
+	dispensable_reagents = list(
+		"hydrogen",
+		"lithium",
+		"carbon",
+		"nitrogen",
+		"oxygen",
+		"fluorine",
+		"sodium",
+		"aluminium",
+		"silicon",
+		"phosphorus",
+		"sulfur",
+		"chlorine",
+		"potassium",
+		"iron",
+		"copper",
+		"mercury",
+		"radium",
+		"water",
+		"ethanol",
+		"sugar",
+		"sacid",
+		"welding_fuel",
+		"silver",
+		"iodine",
+		"bromine",
+		"stable_plasma",
+		"oil",
+		"ammonia",
+		"ash",
+		"acetone",
+		"phenol",
+		"diethylamine",
+		"mine_salve",
+		"toxin",
+		"space_drugs",
+		"plasma",
+		"frostoil",
+		"uranium",
+		"histamine",
+		"morphine"
+	)
+
+/obj/machinery/chem_dispenser/abductor/Initialize()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)

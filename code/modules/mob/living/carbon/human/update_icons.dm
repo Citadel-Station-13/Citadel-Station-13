@@ -123,25 +123,20 @@ There are several things that need to be remembered:
 			if(U.adjusted == ALT_STYLE)
 				t_color = "[t_color]_d"
 
-		if(U.mutantrace_variation)
-			if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
-				U.alternate_worn_icon = 'modular_citadel/icons/mob/uniform_digi.dmi'
-				if(U.adjusted == ALT_STYLE)
-					t_color = "[t_color]_d_l"
-				else if(U.adjusted == NORMAL_STYLE)
-					t_color = "[t_color]_l"
-			else
-				U.alternate_worn_icon = null
+		var/alt_worn = U.alternate_worn_icon
+
+		if(!U.force_alternate_icon && U.mutantrace_variation && U.suit_style == DIGITIGRADE_SUIT_STYLE)
+			alt_worn = 'icons/mob/uniform_digi.dmi'
 
 		var/mutable_appearance/uniform_overlay
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = ((w_uniform.alternate_worn_icon) ? w_uniform.alternate_worn_icon : 'icons/mob/uniform.dmi'), isinhands = FALSE, femaleuniform = U.fitted)
+				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (alt_worn ? alt_worn : 'icons/mob/uniform.dmi'), isinhands = FALSE, femaleuniform = U.fitted)
 
 		if(!uniform_overlay)
-			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = ((w_uniform.alternate_worn_icon) ? w_uniform.alternate_worn_icon : 'icons/mob/uniform.dmi'), isinhands = FALSE)
+			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (alt_worn ? alt_worn : 'icons/mob/uniform.dmi'), isinhands = FALSE)
 
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
@@ -185,7 +180,7 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(!gloves && bloody_hands)
-		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
+		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER, color = blood_DNA_to_color())
 		if(get_num_arms() < 2)
 			if(has_left_hand())
 				bloody_overlay.icon_state = "bloodyhands_left"
@@ -275,6 +270,32 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
 		inv.update_icon()
+/*
+	if(!shoes && bloody_feet)
+		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
+		if(dna.features["taur"] != "None")
+			if(dna.features["taur"] in GLOB.noodle_taurs)
+				bloody_overlay = mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "snekbloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
+				if(get_num_legs() < 2)
+					if(has_left_leg())
+						bloody_overlay.icon_state = "snekbloodyfeet_left"
+					else if(has_right_leg())
+						bloody_overlay.icon_state = "snekbloodyfeet_right"
+			else if(dna.features["taur"] in GLOB.paw_taurs)
+				bloody_overlay = mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "pawbloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
+				if(get_num_legs() < 2)
+					if(has_left_leg())
+						bloody_overlay.icon_state = "pawbloodyfeet_left"
+					else if(has_right_leg())
+						bloody_overlay.icon_state = "pawbloodyfeet_right"
+		else
+			if(get_num_legs() < 2)
+				if(has_left_leg())
+					bloody_overlay.icon_state = "bloodyfeet_left"
+				else if(has_right_leg())
+					bloody_overlay.icon_state = "bloodyfeet_right"
+
+		overlays_standing[GLOVES_LAYER] = bloody_overlay*/
 
 	if(shoes)
 		var/obj/item/clothing/shoes/S = shoes
@@ -285,11 +306,13 @@ There are several things that need to be remembered:
 		update_observer_view(shoes,1)
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/digishoes.dmi'
+				S.alternate_worn_icon = 'icons/mob/feet_digi.dmi'
 			else
 				S.alternate_worn_icon = null
-
-		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.alternate_worn_icon) ? shoes.alternate_worn_icon : 'icons/mob/feet.dmi'))
+		var/t_state = shoes.item_state
+		if (!t_state)
+			t_state = shoes.icon_state
+		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = t_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.alternate_worn_icon) ? shoes.alternate_worn_icon : 'icons/mob/feet.dmi'))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
@@ -313,7 +336,7 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = s_store.icon_state
 		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance(((s_store.alternate_worn_icon) ? s_store.alternate_worn_icon : 'icons/mob/belt_mirror.dmi'), t_state, -SUIT_STORE_LAYER)
-		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_LAYER]
+		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_STORE_LAYER]
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
@@ -329,7 +352,7 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/head/H = head
 		if(H.mutantrace_variation)
 			if(H.muzzle_var == ALT_STYLE)
-				H.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_helmet.dmi'
+				H.alternate_worn_icon = 'icons/mob/head_muzzled.dmi'
 			else
 				H.alternate_worn_icon = null
 
@@ -377,34 +400,38 @@ There are several things that need to be remembered:
 
 	if(wear_suit)
 		var/obj/item/clothing/suit/S = wear_suit
+		var/item_level_support = FALSE // LISTEN! If you must degrade the code with further snowflake checks, at least keep it compatible with worn non-clothing items!
+		if(!istype(S))
+			item_level_support = TRUE
 		wear_suit.screen_loc = ui_oclothing
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		if(S.mutantrace_variation) //Just make sure we've got this checked too
-			if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
-			else
-				S.alternate_worn_icon = null
-
-			if(S.tauric == TRUE) //Are we a suit with tauric mode possible?
-				if(S.taurmode == SNEK_TAURIC)
-					S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
-				if(S.taurmode == PAW_TAURIC)
-					S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
-				if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE)
-					S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
-				else if(S.taurmode == NOT_TAURIC && S.adjusted == NORMAL_STYLE)
+		if(!item_level_support && !S.force_alternate_icon)
+			if(S.mutantrace_variation) //Just make sure we've got this checked too
+				if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE) //are we not a taur, but we have Digitigrade legs? Run this check first, then.
+					S.alternate_worn_icon = 'icons/mob/suit_digi.dmi'
+				else
 					S.alternate_worn_icon = null
+
+				if(S.tauric == TRUE) //Are we a suit with tauric mode possible?
+					if(S.taurmode == SNEK_TAURIC)
+						S.alternate_worn_icon = 'icons/mob/taur_naga.dmi'
+					if(S.taurmode == PAW_TAURIC)
+						S.alternate_worn_icon = 'icons/mob/taur_canine.dmi'
+					if(S.taurmode == NOT_TAURIC && S.adjusted == ALT_STYLE)
+						S.alternate_worn_icon = 'icons/mob/suit_digi.dmi'
+					else if(S.taurmode == NOT_TAURIC && S.adjusted == NORMAL_STYLE)
+						S.alternate_worn_icon = null
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
-		if(S.center)
+		if(!item_level_support && S.center)
 			suit_overlay = center_image(suit_overlay, S.dimension_x, S.dimension_y)
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_hair()
@@ -443,7 +470,7 @@ There are several things that need to be remembered:
 		remove_overlay(FACEMASK_LAYER)
 		if(M.mutantrace_variation)
 			if(M.muzzle_var == ALT_STYLE)
-				M.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_mask.dmi'
+				M.alternate_worn_icon = 'icons/mob/mask_muzzled.dmi'
 			else
 				M.alternate_worn_icon = null
 
@@ -467,14 +494,6 @@ There are several things that need to be remembered:
 			back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
 			overlays_standing[BACK_LAYER] = back_overlay
 		apply_overlay(BACK_LAYER)
-
-/mob/living/carbon/human/update_inv_legcuffed()
-	remove_overlay(LEGCUFF_LAYER)
-	clear_alert("legcuffed")
-	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
-		apply_overlay(LEGCUFF_LAYER)
-		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
@@ -710,9 +729,9 @@ generate/load female uniform sprites matching all previously decided variables
 		if(lip_style && (LIPS in dna.species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
 			lip_overlay.color = lip_color
-			if(OFFSET_FACE in dna.species.offset_features)
-				lip_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
-				lip_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
+			if(OFFSET_LIPS in dna.species.offset_features)
+				lip_overlay.pixel_x += dna.species.offset_features[OFFSET_LIPS][1]
+				lip_overlay.pixel_y += dna.species.offset_features[OFFSET_LIPS][2]
 			add_overlay(lip_overlay)
 
 		// eyes
@@ -725,9 +744,9 @@ generate/load female uniform sprites matching all previously decided variables
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			if((EYECOLOR in dna.species.species_traits) && has_eyes)
 				eye_overlay.color = "#" + eye_color
-			if(OFFSET_FACE in dna.species.offset_features)
-				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
+			if(OFFSET_EYES in dna.species.offset_features)
+				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
+				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
 			add_overlay(eye_overlay)
 
 	dna.species.handle_hair(src)

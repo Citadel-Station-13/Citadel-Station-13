@@ -134,6 +134,13 @@
 	static_inventory += using
 	//END OF CITADEL CHANGES
 
+	//same as above but buffer.
+	using = new /obj/screen/sprint_buffer
+	using.screen_loc = ui_sprintbufferloc
+	sprint_buffer = using
+	static_inventory += using
+
+
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
@@ -341,6 +348,13 @@
 
 	devilsouldisplay = new /obj/screen/devil/soul_counter
 	infodisplay += devilsouldisplay
+
+	blood_display = new /obj/screen/bloodsucker/blood_counter	// Blood Volume
+	infodisplay += blood_display
+	vamprank_display = new /obj/screen/bloodsucker/rank_counter	// Vampire Rank
+	infodisplay += vamprank_display
+	sunlight_display = new /obj/screen/bloodsucker/sunlight_counter	// Sunlight
+	infodisplay += sunlight_display
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

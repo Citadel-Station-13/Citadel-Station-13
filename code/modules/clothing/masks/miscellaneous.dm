@@ -313,3 +313,9 @@
 			message = replacetextEx(message,regex(capitalize(key),"g"), "[capitalize(value)]")
 			message = replacetextEx(message,regex(key,"g"), "[value]")
 	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/mask/bandana/durathread
+	name = "durathread bandana"
+	desc =  "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
+	icon_state = "banddurathread"
+

@@ -33,7 +33,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
 /obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
 	. = ..()
@@ -488,7 +488,7 @@
 	S.set_up(4,0,get_turf(target))
 	S.start()
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
-	do_teleport(target, F, 0)
+	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	if(!tesla_shock)

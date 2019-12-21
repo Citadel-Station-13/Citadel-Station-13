@@ -7,15 +7,15 @@ GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/faci
 GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear/bottom indexed by name
+GLOBAL_LIST_EMPTY_TYPED(underwear_list, /datum/sprite_accessory/underwear/bottom)		//stores bottoms indexed by name
 GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
 GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
 	//Undershirts
-GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/underwear/top indexed by name
+GLOBAL_LIST_EMPTY_TYPED(undershirt_list, /datum/sprite_accessory/underwear/top) 	//stores tops indexed by name
 GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
 GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
-GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/underwear/socks indexed by name
+GLOBAL_LIST_EMPTY_TYPED(socks_list, /datum/sprite_accessory/underwear/socks)		//stores socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)
@@ -33,8 +33,10 @@ GLOBAL_LIST_EMPTY(animated_tails_list_human)
 GLOBAL_LIST_EMPTY(ears_list)
 GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
+GLOBAL_LIST_EMPTY(deco_wings_list)
 GLOBAL_LIST_EMPTY(r_wings_list)
-GLOBAL_LIST_EMPTY(moth_wings_list)
+GLOBAL_LIST_EMPTY(insect_wings_list)
+GLOBAL_LIST_EMPTY(insect_fluffs_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
@@ -44,10 +46,15 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	":thinking:",
 	"Alien",
 	"Angel",
+	"Angryface",
+	"AtlantisCZE",
 	"Banned",
 	"Bliss",
 	"Blue",
-	"Clown",
+	"Boy",
+	"Boy-Malf",
+	"Girl",
+	"Girl-Malf",
 	"Database",
 	"Dorf",
 	"Firewall",
@@ -59,26 +66,44 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Hades",
 	"Heartline",
 	"Helios",
+	"Hotdog",
+	"Hourglass",
 	"House",
 	"Inverted",
+	"Jack",
 	"Matrix",
 	"Monochrome",
+	"Mothman",
 	"Murica",
 	"Nanotrasen",
 	"Not Malf",
+	"Patriot",
+	"Pirate",
 	"President",
-	"Random",
 	"Rainbow",
-	"Red",
+	"Clown",
+	"Random",
+	"Ravensdale",
 	"Red October",
+	"Red",
+	"Royal",
+	"Searif",
+	"Serithi",
+	"SilveryFerret",
+	"Smiley",
 	"Static",
 	"Syndicat Meow",
 	"TechDemon",
+	"Terminal",
 	"Text",
 	"Too Deep",
 	"Triumvirate",
 	"Triumvirate-M",
-	"Weird"))
+	"Wasp",
+	"Weird",
+	"Xerxes",
+	"Yes-Man"
+	))
 
 /proc/resolve_ai_icon(input)
 	if(!input || !(input in GLOB.ai_core_display_screens))
@@ -99,6 +124,11 @@ GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_
 #define DSATCHEL "Department Satchel"
 #define DDUFFELBAG "Department Duffel Bag"
 GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL))
+
+//Suit/Skirt
+#define PREF_SUIT "Jumpsuit"
+#define PREF_SKIRT "Jumpskirt"
+GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"

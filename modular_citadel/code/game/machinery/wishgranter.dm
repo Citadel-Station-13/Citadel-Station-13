@@ -63,7 +63,9 @@
 					to_chat(user, "<B>Your wish is 'granted', but at a terrible cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your eyes to match the darkness in your heart.")
 					user.dna.add_mutation(BLINDMUT)
-					user.adjust_eye_damage(100)
+					var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+					if(eyes)
+						eyes.applyOrganDamage(eyes.maxHealth)
 					var/list/destinations = list()
 					for(var/obj/item/beacon/B in GLOB.teleportbeacons)
 						var/turf/T = get_turf(B)
@@ -95,7 +97,7 @@
 					killwish.grasp_range = 6
 					killwish.melee_damage_upper = 30
 					killwish.grasp_chance = 50
-					killwish.loot = list(/obj/item/twohanded/hypereutactic)
+					killwish.loot = list(/obj/item/twohanded/dualsaber/hypereutactic)
 					charges--
 					insisting = FALSE
 					if(!charges)

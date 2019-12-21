@@ -31,6 +31,15 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/bloodbankgen
+	name = "Blood Bank Generator (Machine Board)"
+	build_path = /obj/machinery/bloodbankgen
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/glass = 1)
+
 /obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
@@ -399,6 +408,7 @@
 		/obj/machinery/smartfridge/food = "food",
 		/obj/machinery/smartfridge/drinks = "drinks",
 		/obj/machinery/smartfridge/extract = "slimes",
+		/obj/machinery/smartfridge/organ = "organs",
 		/obj/machinery/smartfridge/chemistry = "chems",
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
 		/obj/machinery/smartfridge/disks = "disks")
@@ -419,8 +429,8 @@
 		return ..()
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>")
+	. = ..()
+	. += "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>"
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator (Machine Board)"
@@ -655,6 +665,13 @@
 	name = "Booze Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/drinks/beer
 
+/obj/item/circuitboard/machine/chem_dispenser/abductor
+	name = "Reagent Synthetizer (Abductor Machine Board)"
+	icon_state = "abductor_mod"
+	build_path = /obj/machinery/chem_dispenser/abductor
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
 	build_path = /obj/machinery/smoke_machine
@@ -765,7 +782,7 @@
 
 /obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
 	. = ..()
-	to_chat(user, "Cloud ID is currently set to [cloud_id].")
+	. += "Cloud ID is currently set to [cloud_id]."
 
 /obj/item/circuitboard/machine/nanite_program_hub
 	name = "Nanite Program Hub (Machine Board)"
@@ -926,19 +943,21 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/dish_drive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>")
-	to_chat(user, "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>")
+	. = ..()
+	. += "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>"
+	. += "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>"
 
 /obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
 	suction = !suction
 	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
 
 /obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
+	. = ..()
 	if(!user.Adjacent(src))
 		return
 	transmit = !transmit
 	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
+	return TRUE
 
 /obj/item/circuitboard/machine/stacking_unit_console
 	name = "Stacking Machine Console (Machine Board)"
@@ -973,3 +992,12 @@
 	name = "Ore Silo (Machine Board)"
 	build_path = /obj/machinery/ore_silo
 	req_components = list()
+
+/obj/item/circuitboard/machine/autobottler
+	name = "Auto-Bottler (Machine Board)"
+	build_path = /obj/machinery/rnd/production/protolathe/department/autobottler //Manips make you print things cheaper, even chems
+	req_components = list(/obj/item/stock_parts/matter_bin = 5,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/reagent_containers/glass/beaker = 6) //So it can hold lots of chems

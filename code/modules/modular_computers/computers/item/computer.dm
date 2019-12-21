@@ -126,7 +126,7 @@
 			portable_drive.verb_pickup()
 
 /obj/item/modular_computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(issilicon(user))
 		return
 
@@ -142,7 +142,7 @@
 				return
 			if(ai_slot)
 				ai_slot.try_eject(null, user)
-
+		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -156,6 +156,21 @@
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
+
+/obj/item/modular_computer/RemoveID()
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return
+	return card_slot.RemoveID()
+
+/obj/item/modular_computer/InsertID(obj/item/inserting_item)
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return FALSE
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	return card_slot.try_insert(inserting_id)
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -178,20 +193,20 @@
 			turn_on(user)
 
 /obj/item/modular_computer/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
-		return 0
-	else
-		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
-		return 1
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
+	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
-	..()
+	. = ..()
 	if(obj_integrity <= integrity_failure)
-		to_chat(user, "<span class='danger'>It is heavily damaged!</span>")
+		. += "<span class='danger'>It is heavily damaged!</span>"
 	else if(obj_integrity < max_integrity)
-		to_chat(user, "<span class='warning'>It is damaged.</span>")
+		. += "<span class='warning'>It is damaged.</span>"
 
 /obj/item/modular_computer/update_icon()
 	cut_overlays()

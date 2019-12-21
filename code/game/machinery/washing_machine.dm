@@ -11,15 +11,12 @@
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
 
-/obj/machinery/washing_machine/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
-
 /obj/machinery/washing_machine/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click it to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src))
 		return
 
@@ -28,11 +25,11 @@
 
 	if(state_open)
 		to_chat(user, "<span class='notice'>Close the door first</span>")
-		return
+		return TRUE
 
 	if(bloody_mess)
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
-		return
+		return TRUE
 
 	if(has_corgi)
 		bloody_mess = 1
@@ -41,6 +38,7 @@
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
 	START_PROCESSING(SSfastprocess, src)
+	return TRUE
 
 /obj/machinery/washing_machine/process()
 	if (!busy)
@@ -59,7 +57,8 @@
 		M.Translate(rand(-3, 3), rand(-1, 3))
 		animate(src, transform=M, time=2)
 
-/obj/machinery/washing_machine/proc/clean_blood()
+/obj/machinery/washing_machine/clean_blood()
+	..()
 	if(!busy)
 		bloody_mess = FALSE
 		update_icon()
@@ -67,7 +66,8 @@
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+		AM.clean_blood()
 		AM.machine_wash(src)
 
 	busy = FALSE
@@ -90,6 +90,12 @@
 	qdel(src)
 
 /obj/item/paper/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		if(istype(WM.color_source, /obj/item/toy/crayon))
+			var/obj/item/toy/crayon/CR = WM.color_source
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
+
+/obj/item/reagents_containers/rag/towel/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
 		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
@@ -212,6 +218,10 @@
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
+
+	if(istype(W, /obj/item/clothing/head/mob_holder))
+		to_chat(user, "<span class='warning'>It's too unwieldly to put in this way.</span>")
+		return 1
 
 	else if(user.a_intent != INTENT_HARM)
 

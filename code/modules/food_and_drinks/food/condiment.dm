@@ -16,6 +16,7 @@
 	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
 	 "ketchup" = list("ketchup", "ketchup bottle", "You feel more American already."),
+	 "mustard" = list("mustard", "mustard bottle", "A spice mixed with enzymes and water."),
 	 "capsaicin" = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers now!"),
 	 "enzyme" = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
 	 "soysauce" = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
@@ -281,6 +282,12 @@
 	name = "ketchup pack"
 	originalname = "ketchup"
 	list_reagents = list("ketchup" = 10)
+
+//Mustard
+/obj/item/reagent_containers/food/condiment/pack/mustard
+	name = "mustard pack"
+	originalname = "mustard"
+	list_reagents = list("mustard" = 10)
 
 //Hot sauce
 /obj/item/reagent_containers/food/condiment/pack/hotsauce

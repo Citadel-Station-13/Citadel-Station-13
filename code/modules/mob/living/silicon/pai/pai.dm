@@ -58,7 +58,10 @@
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE,
+									"fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "borgi" = FALSE ,
+									"parrot" = FALSE, "bear" = FALSE , "mushroom" = FALSE, "crow" = FALSE ,
+									"fairy" = FALSE , "spiderbot" = FALSE)		//assoc value is whether it can be picked up.
 	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
 	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
 	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
@@ -192,7 +195,7 @@
 /mob/proc/makePAI(delold)
 	var/obj/item/paicard/card = new /obj/item/paicard(get_turf(src))
 	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
-	pai.key = key
+	transfer_ckey(pai)
 	pai.name = name
 	card.setPersonality(pai)
 	if(delold)
@@ -266,8 +269,8 @@
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
-	..()
-	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
+	. = ..()
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Life()
 	if(stat == DEAD)

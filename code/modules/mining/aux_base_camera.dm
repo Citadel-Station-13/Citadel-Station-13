@@ -25,6 +25,13 @@
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5
+	upgrade = TRUE
+	var/obj/machinery/computer/camera_advanced/base_construction/console
+
+/obj/item/construction/rcd/internal/check_menu(mob/living/user)
+	if(!istype(user) || user.incapacitated() || !user.Adjacent(console))
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "base construction console"
@@ -49,12 +56,10 @@
 
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/camera_advanced/base_construction/Initialize()
-	. = ..()
-	RCD = new(src)
-
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	. = ..()
+	RCD = new(src)
+	RCD.console = src
 	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
 		RCD.matter = RCD.max_matter
 		fans_remaining = 4
@@ -85,7 +90,7 @@
 		return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/Destroy()
-	qdel(RCD)
+	QDEL_NULL(RCD)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
@@ -140,7 +145,8 @@
 	remote_eye = C.remote_control
 	B = target
 	if(!B.RCD) //The console must always have an RCD.
-		B.RCD = new /obj/item/construction/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+		B.RCD = new /obj/item/construction/rcd/internal(B) //If the RCD is lost somehow, make a new (empty) one!
+		B.RCD.console = B
 
 /datum/action/innate/aux_base/proc/check_spot()
 //Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.
@@ -195,34 +201,35 @@
 
 	var/list/buildlist = list("Walls and Floors" = 1,"Airlocks" = 2,"Deconstruction" = 3,"Windows and Grilles" = 4)
 	var/buildmode = input("Set construction mode.", "Base Console", null) in buildlist
-	B.RCD.mode = buildlist[buildmode]
-	to_chat(owner, "Build mode is now [buildmode].")
+	if(buildmode)
+		B.RCD.mode = buildlist[buildmode]
+		to_chat(owner, "Build mode is now [buildmode].")
 
 /datum/action/innate/aux_base/airlock_type
 	name = "Select Airlock Type"
 	button_icon_state = "airlock_select"
 
-datum/action/innate/aux_base/airlock_type/Activate()
+/datum/action/innate/aux_base/airlock_type/Activate()
 	if(..())
 		return
 
-	B.RCD.change_airlock_setting()
+	B.RCD.change_airlock_access(usr)
 
 
-datum/action/innate/aux_base/window_type
+/datum/action/innate/aux_base/window_type
 	name = "Select Window Type"
 	button_icon_state = "window_select"
 
-datum/action/innate/aux_base/window_type/Activate()
+/datum/action/innate/aux_base/window_type/Activate()
 	if(..())
 		return
-	B.RCD.toggle_window_type()
+	B.RCD.toggle_window_type(usr)
 
-datum/action/innate/aux_base/place_fan
+/datum/action/innate/aux_base/place_fan
 	name = "Place Tiny Fan"
 	button_icon_state = "build_fan"
 
-datum/action/innate/aux_base/place_fan/Activate()
+/datum/action/innate/aux_base/place_fan/Activate()
 	if(..())
 		return
 
@@ -244,11 +251,11 @@ datum/action/innate/aux_base/place_fan/Activate()
 	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
 	playsound(fan_turf, 'sound/machines/click.ogg', 50, 1)
 
-datum/action/innate/aux_base/install_turret
+/datum/action/innate/aux_base/install_turret
 	name = "Install Plasma Anti-Wildlife Turret"
 	button_icon_state = "build_turret"
 
-datum/action/innate/aux_base/install_turret/Activate()
+/datum/action/innate/aux_base/install_turret/Activate()
 	if(..())
 		return
 

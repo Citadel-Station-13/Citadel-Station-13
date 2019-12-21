@@ -199,6 +199,7 @@
 	if(prob(35))
 		sparks.start()
 	P.firer = user ? user : src
+	P.fired_from = src
 	if(last_projectile_params)
 		P.p_x = last_projectile_params[2]
 		P.p_y = last_projectile_params[3]
@@ -339,12 +340,13 @@
 	projectile_sound = initial(projectile_sound)
 
 /obj/machinery/power/emitter/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
 	obj_flags |= EMAGGED
-	if(user)
-		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+	user?.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+	return TRUE
 
 
 /obj/machinery/power/emitter/prototype

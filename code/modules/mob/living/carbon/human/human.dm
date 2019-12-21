@@ -32,7 +32,7 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		togglesprint()
 
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 
 
 /mob/living/carbon/human/ComponentInitialize()
@@ -488,7 +488,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
@@ -574,7 +574,7 @@
 		return threatcount
 
 	//Check for ID
-	var/obj/item/card/id/idcard = get_idcard()
+	var/obj/item/card/id/idcard = get_idcard(FALSE)
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
 		threatcount += 4
 
@@ -623,6 +623,7 @@
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
+	undershirt = "Nude"
 	update_body()
 	update_hair()
 	update_genitals()
@@ -688,16 +689,17 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
-	if(gloves)
-		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
-			update_inv_gloves()
+/mob/living/carbon/human/clean_blood()
+	var/mob/living/carbon/human/H = src
+	if(H.gloves)
+		if(H.gloves.clean_blood())
+			H.update_inv_gloves()
 	else
-		if(bloody_hands)
-			bloody_hands = 0
-			update_inv_gloves()
+		..() // Clear the Blood_DNA list
+		if(H.bloody_hands)
+			H.bloody_hands = 0
+			H.update_inv_gloves()
+	update_icons()	//apply the now updated overlays to the mob
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
@@ -801,6 +803,11 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
+		if(hud_used.staminas)
+			hud_used.staminas.icon_state = staminahudamount()
+		if(hud_used.staminabuffer)
+			hud_used.staminabuffer.icon_state = staminabufferhudamount()
+
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -811,6 +818,8 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	if(blood_volume < (BLOOD_VOLUME_NORMAL*blood_ratio))
+		blood_volume = (BLOOD_VOLUME_NORMAL*blood_ratio)
 	..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
@@ -849,66 +858,100 @@
 	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=[REF(src)]"
 	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=[REF(src)]"
 	.["Copy outfit"] = "?_src_=vars;[HrefToken()];copyoutfit=[REF(src)]"
+	.["Add/Remove Quirks"] = "?_src_=vars;[HrefToken()];modquirks=[REF(src)]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
-	if(user == target && can_piggyback(target) && pulling == target && (HAS_TRAIT(src, TRAIT_PACIFISM) || grab_state >= GRAB_AGGRESSIVE) && stat == CONSCIOUS)
-		buckle_mob(target,TRUE,TRUE)
+	if(pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+		//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
+		if(user == target && can_piggyback(target))
+			piggyback(target)
+			return
+		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
+		else if(user != target)
+			if(user.a_intent == INTENT_GRAB)
+				fireman_carry(target)
+				return
 	. = ..()
 
-/mob/living/carbon/human/proc/piggyback_instant(mob/living/M)
-	return buckle_mob(M, TRUE, TRUE, FALSE, TRUE)
+//src is the user that will be carrying, target is the mob to be carried
+/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
+	return (istype(target) && target.stat == CONSCIOUS)
 
-//Can C try to piggyback at all.
-/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
-	if(istype(C) && C.stat == CONSCIOUS)
-		return TRUE
-	return FALSE
+/mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
+	return (ishuman(target) && target.lying)
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, bypass_piggybacking = FALSE, no_delay = FALSE)
+/mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
+	if(can_be_firemanned(target))
+		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
+			"<span class='notice'>You start lifting [target] onto your back...</span>")
+		if(do_after(src, 30, TRUE, target))
+			//Second check to make sure they're still valid to be carried
+			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+				target.resting = FALSE
+				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+				return
+		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
+	else
+		if (ishuman(target))
+			to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
+		else
+			to_chat(src, "<span class='notice'>You can't seem to fireman carry that kind of species.</span>")
+
+/mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
+	if(can_piggyback(target))
+		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
+		if(do_after(target, 15, target = src))
+			if(can_piggyback(target))
+				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
+					return
+				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
+		else
+			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
+	else
+		to_chat(target, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
+
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
-	if(bypass_piggybacking)
-		return ..()
-	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
+	if(!is_type_in_typecache(target, can_ride_typecache))
+		target.visible_message("<span class='warning'>[target] really can't seem to mount [src]...</span>")
 		return
+	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-	riding_datum.ride_check_rider_incapacitated = TRUE
-	riding_datum.ride_check_rider_restrained = TRUE
-	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
-	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
+	if(target_hands_needed)
+		riding_datum.ride_check_rider_restrained = TRUE
+	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
-	if(can_piggyback(M))
-		riding_datum.ride_check_ridden_incapacitated = TRUE
-		visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
-		if(no_delay || do_after(M, 15, target = src))
-			if(can_piggyback(M))
-				if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-					M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
-					return
-				if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-					M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
-					return
-			. = ..(M, force, check_loc)
-			stop_pulling()
-		else
-			visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
-	else
-		. = ..(M,force,check_loc)
-		stop_pulling()
+	var/equipped_hands_self
+	var/equipped_hands_target
+	if(hands_needed)
+		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed, target)
+	if(target_hands_needed)
+		equipped_hands_target = riding_datum.equip_buckle_inhands(target, target_hands_needed)
+
+	if(hands_needed || target_hands_needed)
+		if(hands_needed && !equipped_hands_self)
+			src.visible_message("<span class='warning'>[src] can't get a grip on [target] because their hands are full!</span>",
+				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
+			return
+		else if(target_hands_needed && !equipped_hands_target)
+			target.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
+				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
+			return
+
+	stop_pulling()
+	riding_datum.handle_vehicle_layer()
+	. = ..(target, force, check_loc)
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(istype(bp, /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.blocks_shove_knockdown)
-				return TRUE
+	for(var/obj/item/clothing/C in get_equipped_items()) //doesn't include pockets
+		if(C.blocks_shove_knockdown)
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
+	remove_movespeed_modifier(MOVESPEED_ID_SHOVE)
 	var/active_item = get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
 		visible_message("<span class='warning'>[src.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1005,6 +1048,21 @@
 /mob/living/carbon/human/species/golem/plastic
 	race = /datum/species/golem/plastic
 
+/mob/living/carbon/human/species/golem/bronze
+	race = /datum/species/golem/bronze
+
+/mob/living/carbon/human/species/golem/cardboard
+	race = /datum/species/golem/cardboard
+
+/mob/living/carbon/human/species/golem/leather
+	race = /datum/species/golem/leather
+
+/mob/living/carbon/human/species/golem/bone
+	race = /datum/species/golem/bone
+
+/mob/living/carbon/human/species/golem/durathread
+	race = /datum/species/golem/durathread
+
 /mob/living/carbon/human/species/golem/clockwork
 	race = /datum/species/golem/clockwork
 
@@ -1029,8 +1087,8 @@
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
 
-/mob/living/carbon/human/species/moth
-	race = /datum/species/moth
+/mob/living/carbon/human/species/insect
+	race = /datum/species/insect
 
 /mob/living/carbon/human/species/mush
 	race = /datum/species/mush
@@ -1067,3 +1125,18 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+
+/mob/living/carbon/human/species/mammal
+	race = /datum/species/mammal
+
+/mob/living/carbon/human/species/insect
+	race = /datum/species/insect
+
+/mob/living/carbon/human/species/xeno
+	race = /datum/species/xeno
+
+/mob/living/carbon/human/species/ipc
+	race = /datum/species/ipc
+
+/mob/living/carbon/human/species/roundstartslime
+	race = /datum/species/jelly/roundstartslime

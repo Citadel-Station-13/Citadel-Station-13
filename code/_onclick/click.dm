@@ -67,7 +67,7 @@
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
-	next_click = world.time + 1
+	next_click = world.time + world.tick_lag
 
 	if(check_click_intercept(params,A))
 		return
@@ -200,7 +200,7 @@
 			if (!target.loc)
 				continue
 
-			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH))
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH) && target.loc.canReachInto(src, ultimate_target, next, view_only, tool))
 				next += target.loc
 
 		checking = next
@@ -214,6 +214,10 @@
 
 /mob/living/DirectAccess(atom/target)
 	return ..() + GetAllContents()
+
+//This is called reach into but it's called on the deepest things first so uh, make sure to account for that!
+/atom/proc/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return TRUE
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -317,8 +321,7 @@
 	return
 /atom/proc/ShiftClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	if(user.client && user.client.eye == user || user.client.eye == user.loc)
-		user.examinate(src)
+	user.examinate(src)
 	return
 
 /*
@@ -350,8 +353,17 @@
 	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
-	A.AltClick(src)
-	return
+	if(!A.AltClick(src))
+		altclick_listed_turf(A)
+
+/mob/proc/altclick_listed_turf(atom/A)
+	var/turf/T = get_turf(A)
+	if(T == A.loc || T == A)
+		if(T == listed_turf)
+			listed_turf = null
+		else if(TurfAdjacent(T))
+			listed_turf = T
+			client.statpanel = T.name
 
 /mob/living/carbon/AltClickOn(atom/A)
 	if(!stat && mind && iscarbon(A) && A != src)
@@ -363,18 +375,7 @@
 	..()
 
 /atom/proc/AltClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
-	var/turf/T = get_turf(src)
-	if(T && user.TurfAdjacent(T))
-		user.listed_turf = T
-		user.client.statpanel = T.name
-
-// Use this instead of /mob/proc/AltClickOn(atom/A) where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.listed_turf = T
-		user.client.statpanel = T.name
+	. = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)

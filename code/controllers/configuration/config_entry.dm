@@ -1,6 +1,7 @@
 #define VALUE_MODE_NUM 0
 #define VALUE_MODE_TEXT 1
 #define VALUE_MODE_FLAG 2
+#define VALUE_MODE_NUM_LIST 3
 
 #define KEY_MODE_TEXT 0
 #define KEY_MODE_TYPE 1
@@ -19,6 +20,7 @@
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
 
 	var/vv_VAS = TRUE		//Force validate and set on VV. VAS proccall guard will run regardless.
+	var/postload_required = FALSE		//requires running OnPostload()
 
 	var/dupes_allowed = FALSE
 
@@ -72,6 +74,9 @@
 /datum/config_entry/proc/DeprecationUpdate(value)
 	return
 
+/datum/config_entry/proc/OnPostload()
+	return
+
 /datum/config_entry/string
 	config_entry_value = ""
 	abstract_type = /datum/config_entry/string
@@ -80,7 +85,7 @@
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
 	return var_name != "auto_trim" && ..()
 
-/datum/config_entry/string/ValidateAndSet(str_val)
+/datum/config_entry/string/ValidateAndSet(str_val, during_load)
 	if(!VASProcCallGuard(str_val))
 		return FALSE
 	config_entry_value = auto_trim ? trim(str_val) : str_val
@@ -187,6 +192,18 @@
 			if(VALUE_MODE_TEXT)
 				new_value = key_value
 				continue_check_value = new_value
+			if(VALUE_MODE_NUM_LIST)
+				// this is all copy+pasted from number list up there, but it's super basic so I don't see it being changed soon
+				var/list/new_list = list()
+				var/list/values = splittext(key_value," ")
+				for(var/I in values)
+					var/temp = text2num(I)
+					if(isnull(temp))
+						log_admin("invalid number list entry in [key_name]: [I]")
+						continue_check_value = FALSE
+					new_list += temp
+				new_value = new_list
+				continue_check_value = new_list.len
 		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
 			config_entry_value[new_key] = new_value
 			return TRUE
@@ -194,3 +211,27 @@
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
+
+//snowflake for donator things being on one line smh
+/datum/config_entry/multi_keyed_flag
+	vv_VAS = FALSE
+	abstract_type = /datum/config_entry/multi_keyed_flag
+	config_entry_value = list()
+	var/delimiter = "|"
+
+/datum/config_entry/multi_keyed_flag/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, delimiter))
+		return FALSE
+	return ..()
+
+/datum/config_entry/multi_keyed_flag/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
+	str_val = trim(str_val)
+	var/list/keys = splittext(str_val, delimiter)
+	for(var/i in keys)
+		config_entry_value[process_key(i)] = TRUE
+	return length(keys)? TRUE : FALSE
+
+/datum/config_entry/multi_keyed_flag/proc/process_key(key)
+	return trim(key)

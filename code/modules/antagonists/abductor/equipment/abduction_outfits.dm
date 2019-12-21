@@ -1,6 +1,6 @@
 /datum/outfit/abductor
 	name = "Abductor Basic"
-	uniform = /obj/item/clothing/under/color/grey //they're greys gettit
+	uniform = /obj/item/clothing/under/abductor
 	shoes = /obj/item/clothing/shoes/combat
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset/abductor
@@ -24,7 +24,7 @@
 			for(var/obj/item/abductor/gizmo/G in B.contents)
 				console.AddGizmo(G)
 
-/datum/outfit/abductor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/abductor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	if(!visualsOnly)
 		link_to_console(H)
@@ -34,7 +34,7 @@
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	suit_store = /obj/item/abductor_baton
+	suit_store = /obj/item/abductor/baton
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(
@@ -49,8 +49,8 @@
 		/obj/item/abductor/gizmo = 1
 		)
 
-/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	if(!visualsOnly)
-		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(H)
+		var/obj/item/implant/abductor/beamplant = new
 		beamplant.implant(H)

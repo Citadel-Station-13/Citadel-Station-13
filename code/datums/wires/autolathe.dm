@@ -30,6 +30,7 @@
 			addtimer(CALLBACK(A, /obj/machinery/autolathe.proc/reset, wire), 60)
 		if(WIRE_SHOCK)
 			A.shocked = !A.shocked
+			A.shock(usr, 50)
 			addtimer(CALLBACK(A, /obj/machinery/autolathe.proc/reset, wire), 60)
 		if(WIRE_DISABLE)
 			A.disabled = !A.disabled
@@ -40,9 +41,11 @@
 	switch(wire)
 		if(WIRE_HACK)
 			A.adjust_hacked(!mend)
-		if(WIRE_HACK)
+		if(WIRE_SHOCK)
 			A.shocked = !mend
+			A.shock(usr, 50)
 		if(WIRE_DISABLE)
 			A.disabled = !mend
 		if(WIRE_ZAP)
 			A.shock(usr, 50)
+

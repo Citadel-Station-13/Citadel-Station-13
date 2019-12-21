@@ -20,7 +20,7 @@ Based and maintained from /tg/station.<BR>
 **Forums:** http://citadel-station.net/forum/ <BR>
 **Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
 **Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
-**Discord:**  [Here](https://discord.gg/3gJ9pnM). <BR>
+**Discord:**  [Here](https://discord.gg/E6SQuhz). <BR>
 
 ## DOWNLOADING
 

@@ -6,6 +6,7 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -158,22 +159,34 @@
 		return
 	//END OF CIT CHANGES
 
-	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_held_item()
 
-	if(!I)
-		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			var/mob/living/throwable_mob = pulling
-			if(!throwable_mob.buckled)
-				thrown_thing = throwable_mob
+	var/atom/movable/thrown_thing
+	var/mob/living/throwable_mob
+
+	if(istype(I, /obj/item/clothing/head/mob_holder))
+		var/obj/item/clothing/head/mob_holder/holder = I
+		if(holder.held_mob)
+			throwable_mob = holder.held_mob
+			holder.release()
+
+	if(!I || throwable_mob)
+		if(!throwable_mob && pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
+			throwable_mob = pulling
+
+		if(throwable_mob && !throwable_mob.buckled)
+			thrown_thing = throwable_mob
+			if(pulling)
 				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
-					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
-				adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
-				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-				var/turf/end_T = get_turf(target)
-				if(start_T && end_T)
-					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+			if(HAS_TRAIT(src, TRAIT_PACIFISM))
+				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+				return
+			
+			adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
+			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+			var/turf/end_T = get_turf(target)
+			if(start_T && end_T)
+				log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
 	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
@@ -192,6 +205,8 @@
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
+
+
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
@@ -238,7 +253,7 @@
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & MASKINTERNALS))
+			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
@@ -246,7 +261,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.clothing_flags & MASKINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+						if((wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -255,7 +270,7 @@
 
 
 /mob/living/carbon/fall(forced)
-    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+	loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -270,9 +285,13 @@
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
+		var/buckle_cd = 600
+		if(handcuffed)
+			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
+			buckle_cd = O.breakouttime
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, 0, target = src))
+					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
+		if(do_after(src, buckle_cd, 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -477,11 +496,13 @@
 		if(message)
 			visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else
 		if(message)
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
-
+			if(!isflyperson(src))
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
 	if(stun)
 		Stun(80)
 
@@ -577,8 +598,11 @@
 		sight |= E.sight_flags
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
+		if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
+			lighting_alpha = min(LIGHTING_PLANE_ALPHA_NV_TRAIT, lighting_alpha)
+			see_in_dark = max(NIGHT_VISION_DARKSIGHT_RANGE, see_in_dark)
 
-	if(client.eye != src)
+	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
@@ -634,6 +658,18 @@
 	else
 		. += INFINITY
 
+/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS,CHEST,GROIN,LEGS,FEET,ARMS,HEAD))
+	var/list/tally = list()
+	for(var/obj/item/I in get_equipped_items())
+		for(var/zone in target_zones)
+			if(I.body_parts_covered & zone)
+				tally["[zone]"] = max(1 - I.permeability_coefficient, target_zones["[zone]"])
+	var/protection = 0
+	for(var/key in tally)
+		protection += tally[key]
+	protection *= INVERSE(target_zones.len)
+	return protection
+
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
 
@@ -687,9 +723,10 @@
 		clear_fullscreen("critvision")
 
 	//Oxygen damage overlay
-	if(oxyloss)
+	var/windedup = getOxyLoss() + getStaminaLoss() * 0.2
+	if(windedup)
 		var/severity = 0
-		switch(oxyloss)
+		switch(windedup)
 			if(10 to 20)
 				severity = 1
 			if(20 to 25)
@@ -768,9 +805,13 @@
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
 			blind_eyes(1)
+			if(combatmode)
+				toggle_combat_mode(TRUE, TRUE)
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
+				if(combatmode)
+					toggle_combat_mode(TRUE, TRUE)
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
@@ -785,7 +826,8 @@
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
+		if(handcuffed.demoralize_criminals)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
@@ -798,7 +840,7 @@
 		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
-		B.damaged_brain = FALSE
+		B.brain_death = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
@@ -884,7 +926,7 @@
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src) //Currently, only carbons or higher use mood, move this once that changes.
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
 	if(mood)
 		switch(mood.sanity) //Alters do_after delay based on how sane you are
 			if(SANITY_INSANE to SANITY_DISTURBED)
@@ -916,3 +958,22 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
+
+/mob/living/carbon/proc/hypnosis_vulnerable()//unused atm, but added in case
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+		return FALSE
+	if(hallucinating())
+		return TRUE
+	if(IsSleeping())
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_DUMB))
+		return TRUE
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+	if(mood)
+		if(mood.sanity < SANITY_UNSTABLE)
+			return TRUE
+
+/mob/living/carbon/transfer_ckey(mob/new_mob, send_signal = TRUE)
+	if(combatmode)
+		toggle_combat_mode(TRUE, TRUE)
+	return ..()

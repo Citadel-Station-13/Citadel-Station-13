@@ -3,6 +3,8 @@ GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as t
 
 GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
+#define CANT_REENTER_ROUND -1
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -17,8 +19,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
+	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
-	var/can_reenter_round = TRUE
+	var/reenter_round_timeout = 0 // used to prevent people from coming back through ghost roles/midround antags as they suicide/cryo for a duration set by CONFIG_GET(number/suicide_reenter_round_timer) and CONFIG_GET(number/roundstart_suicide_time_limit)
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -231,7 +234,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/r_val
 	var/b_val
 	var/g_val
-	var/color_format = lentext(input_color)
+	var/color_format = length(input_color)
 	if(color_format == 3)
 		r_val = hex2num(copytext(input_color, 1, 2))*16
 		g_val = hex2num(copytext(input_color, 2, 3))*16
@@ -260,16 +263,25 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = 1)
-	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
-			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
-			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-			ghost.can_reenter_corpse = can_reenter_corpse
-			ghost.can_reenter_round = (can_reenter_corpse && !suiciding)
-			ghost.key = key
-			return ghost
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+	penalize = suiciding || penalize // suicide squad.
+	if(!key || cmptext(copytext(key,1,2),"@") || (SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize) & COMPONENT_BLOCK_GHOSTING))
+		return //mob has no key, is an aghost or some component hijacked.
+	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
+	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
+	ghost.can_reenter_corpse = can_reenter_corpse
+	if(penalize) //penalizing them from making a ghost role / midround antag comeback right away.
+		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+			penalty += roundstart_quit_limit - world.time
+		if(penalty)
+			ghost.reenter_round_timeout = world.realtime + penalty
+			if(ghost.reenter_round_timeout - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+				ghost.reenter_round_timeout = CANT_REENTER_ROUND
+	transfer_ckey(ghost, FALSE)
+	return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -280,36 +292,57 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-// CITADEL EDIT
-	if(istype(loc, /obj/machinery/cryopod))
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
-		if(response != "Ghost")//darn copypaste
-			return
-		var/obj/machinery/cryopod/C = loc
-		C.despawn_occupant()
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
-// END EDIT
+
+	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+	if(world.time < roundstart_quit_limit)
+		penalty += roundstart_quit_limit - world.time
+	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+		penalty = CANT_REENTER_ROUND
 
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty == CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
-		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
-		suicide_log(TRUE)
+		if(istype(loc, /obj/machinery/cryopod))
+			var/obj/machinery/cryopod/C = loc
+			C.despawn_occupant()
+		else
+			ghostize(0, penalize = TRUE) //0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+			suicide_log(TRUE)
 
 /mob/camera/verb/ghost()
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
+		return
+
+	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+	if(world.time < roundstart_quit_limit)
+		penalty += roundstart_quit_limit - world.time
+	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+		penalty = CANT_REENTER_ROUND
+
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty == CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 	if(response != "Ghost")
 		return
-	ghostize(0)
+	ghostize(0, penalize = TRUE)
+
+/mob/dead/observer/proc/can_reenter_round(silent = FALSE)
+	if(reenter_round_timeout != CANT_REENTER_ROUND && reenter_round_timeout <= world.realtime)
+		return TRUE
+	if(!silent)
+		to_chat(src, "<span class='warning'>You are unable to reenter the round[reenter_round_timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(reenter_round_timeout - world.realtime)]" : ""].</span>")
+	return FALSE
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
@@ -348,7 +381,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	mind.current.key = key
+	transfer_ckey(mind.current, FALSE)
 	return 1
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -597,6 +630,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Possess!"
 	set desc= "Take over the body of a mindless creature!"
 
+	if(!can_reenter_round())
+		return FALSE
+
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
@@ -617,10 +653,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
 		return 0
 
-	if(!can_reenter_round)
-		to_chat(src, "<span class='warning'>You are unable to re-enter the round.</span>")
-		return FALSE
-
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -628,7 +660,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
-	target.key = key
+	transfer_ckey(target, FALSE)
 	target.faction = list("neutral")
 	return 1
 
@@ -830,9 +862,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
-	..()
+	. = ..()
 	if(!invisibility)
-		to_chat(user, "It seems extremely obvious.")
+		. += "It seems extremely obvious."
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value
@@ -865,3 +897,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
+
+#undef CANT_REENTER_ROUND

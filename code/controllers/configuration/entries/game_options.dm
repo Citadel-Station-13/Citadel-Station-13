@@ -66,9 +66,16 @@
 
 /datum/config_entry/flag/disable_human_mood
 
+/datum/config_entry/flag/disable_borg_flash_knockdown //Should borg flashes be capable of knocking humanoid entities down?
+
+/datum/config_entry/flag/weaken_secborg //Brings secborgs and k9s back in-line with the other borg modules
+
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
+
+/datum/config_entry/number/minimum_secborg_alert	//Minimum alert level for secborgs to be chosen.
+	config_entry_value = 3
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6
@@ -131,6 +138,14 @@
 	integer = FALSE
 	min_val = 0
 	max_val = 1
+
+/datum/config_entry/number/suicide_reenter_round_timer
+	config_entry_value = 30
+	min_val = 0
+
+/datum/config_entry/number/roundstart_suicide_time_limit
+	config_entry_value = 30
+	min_val = 0
 
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000
@@ -364,3 +379,10 @@
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
+
+/datum/config_entry/number/marauder_delay_non_reebe
+	config_entry_value = 1800
+	min_val = 0
+
+/datum/config_entry/flag/allow_clockwork_marauder_on_station
+	config_entry_value = TRUE

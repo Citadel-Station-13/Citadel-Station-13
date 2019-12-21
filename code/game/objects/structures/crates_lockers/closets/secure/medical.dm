@@ -61,6 +61,7 @@
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
+	new /obj/item/clothing/under/rank/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/cartridge/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
@@ -70,7 +71,7 @@
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/assembly/flash/handheld(src)
-//	new /obj/item/reagent_containers/hypospray/CMO(src) // CITADEL EDIT comments out the hypospray mk I. the MK II kit is modularized
+	new /obj/item/storage/hypospraykit/cmo(src)
 	new /obj/item/autosurgeon/cmo(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
@@ -80,6 +81,8 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/CMO(src)
 	new	/obj/item/storage/lockbox/medal/medical(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cmo(src)
+	new /obj/item/clothing/head/beret/cmo/blue(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"

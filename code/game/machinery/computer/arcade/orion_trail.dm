@@ -736,6 +736,7 @@
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
@@ -743,6 +744,7 @@
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
 	obj_flags |= EMAGGED
+	return TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
@@ -760,13 +762,13 @@
 	var/active = 0 //if the ship is on
 
 /obj/item/orion_ship/examine(mob/user)
-	..()
+	. = ..()
 	if(!(in_range(user, src)))
 		return
 	if(!active)
-		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped down.</span>")
+		. += "<span class='notice'>There's a little switch on the bottom. It's flipped down.</span>"
 	else
-		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>")
+		. += "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>"
 
 /obj/item/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
 	if(active)
