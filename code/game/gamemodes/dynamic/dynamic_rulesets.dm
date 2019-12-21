@@ -80,6 +80,9 @@
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
 	var/delay = 0
+	/// Whether or not recent-round weight values are taken into account for this ruleset.
+	/// Weight reduction uses the same values as secret's recent-round mode weight reduction.
+	var/always_max_weight = FALSE
 
 /datum/dynamic_ruleset/New()
 	..()
@@ -91,8 +94,15 @@
 	var/costs = CONFIG_GET(keyed_list/dynamic_cost)
 	var/requirementses = CONFIG_GET(keyed_list/dynamic_requirements) // can't damn well use requirements
 	var/high_population_requirements = CONFIG_GET(keyed_list/dynamic_high_population_requirement)
+	var/list/repeated_mode_adjust = CONFIG_GET(number_list/repeated_mode_adjust)
 	if(config_tag in weights)
-		weight = weights[config_tag]
+		var/weight_mult = 1
+		if(!always_max_weight && SSpersistence.saved_dynamic_rules.len == 3 && repeated_mode_adjust.len == 3)
+			var/saved_dynamic_rules = SSpersistence.saved_dynamic_rules
+			for(var/i in 1 to 3)
+				if(config_tag in saved_dynamic_rules[i])
+					weight_mult -= (repeated_mode_adjust[i]/100)
+		weight = weights[config_tag] * weight_mult
 	if(config_tag in costs)
 		cost = costs[config_tag]
 	if(config_tag in requirementses)
@@ -115,12 +125,15 @@
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
 	if(minimum_players > population)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to low pop")
 		return FALSE
 	if(maximum_players > 0 && population > maximum_players)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to high pop")
 		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
 		indice_pop = 10
 		if(threat_level < high_population_requirement)
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat level")
 			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[high_population_requirement]")
 			return FALSE
 		else
@@ -132,6 +145,7 @@
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		if(threat_level < requirements[indice_pop])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat level")
 			log_game("DYNAMIC: [name] did not reach threat level threshold: [threat_level]/[requirements[indice_pop]]")
 			return FALSE
 		else
@@ -178,6 +192,7 @@
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
 	if (required_candidates > candidates.len)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough candidates")
 		return FALSE
 	return TRUE
 
@@ -211,6 +226,24 @@
 /// Only called if ruleset is flagged as HIGHLANDER_RULESET
 /datum/dynamic_ruleset/proc/check_finished()
 	return FALSE
+
+/// Returns a list to be displayed on statbus.
+/datum/dynamic_ruleset/proc/get_blackbox_info()
+	var/list/ruleset_data = list()
+	ruleset_data["name"] = name
+	ruleset_data["rule_type"] = ruletype
+	ruleset_data["cost"] = total_cost
+	ruleset_data["weight"] = weight
+	ruleset_data["scaled_times"] = scaled_times
+	ruleset_data["antagonist_type"] = antag_datum
+	ruleset_data["population_tier"] = indice_pop
+	ruleset_data["assigned"] = list()
+	for (var/datum/mind/M in assigned)
+		var/assigned_data = list()
+		assigned_data["key"] = M.key
+		assigned_data["name"] = M.name
+		ruleset_data["assigned"] += list(assigned_data)
+	return ruleset_data
 
 //////////////////////////////////////////////
 //                                          //
