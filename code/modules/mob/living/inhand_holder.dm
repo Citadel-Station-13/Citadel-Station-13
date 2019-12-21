@@ -114,7 +114,7 @@
 	var/turf/T = get_turf(loc)
 	while(location != T)
 		location = location.loc
-		if(ismob(location)))
+		if(ismob(location))
 			return location.loc.assume_air(env)
 	return loc.assume_air(env)
 
@@ -125,6 +125,6 @@
 	var/turf/T = get_turf(loc)
 	while(location != T)
 		location = location.loc
-		if(ismob(location)))
+		if(ismob(location))
 			return location.loc.remove_air(amount)
 	return loc.remove_air(amount)
