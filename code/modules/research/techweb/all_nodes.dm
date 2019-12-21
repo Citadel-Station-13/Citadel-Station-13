@@ -1056,7 +1056,7 @@
 							/obj/item/crowbar/abductor, /obj/item/multitool/abductor,
 							/obj/item/stock_parts/cell/infinite/abductor, /obj/item/weldingtool/abductor,
 							/obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor,
-							/obj/item/abductor_baton, /obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
+							/obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

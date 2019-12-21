@@ -208,3 +208,15 @@
 /datum/quirk/bloodpressure/remove()
 	var/mob/living/M = quirk_holder
 	M.blood_ratio = 1
+
+/datum/quirk/night_vision
+	name = "Night Vision"
+	desc = "You can see slightly more clearly in full darkness than most people."
+	value = 1
+	mob_trait = TRAIT_NIGHT_VISION
+	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
+	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
+
+/datum/quirk/night_vision/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.update_sight()

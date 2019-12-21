@@ -379,3 +379,10 @@
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
+
+/datum/config_entry/number/marauder_delay_non_reebe
+	config_entry_value = 1800
+	min_val = 0
+
+/datum/config_entry/flag/allow_clockwork_marauder_on_station
+	config_entry_value = TRUE
