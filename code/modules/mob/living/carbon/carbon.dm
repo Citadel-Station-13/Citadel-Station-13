@@ -174,9 +174,10 @@
 		if(!throwable_mob && pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
 			throwable_mob = pulling
 
-		if(!throwable_mob.buckled)
+		if(throwable_mob && !throwable_mob.buckled)
 			thrown_thing = throwable_mob
-			stop_pulling()
+			if(pulling)
+				stop_pulling()
 			if(HAS_TRAIT(src, TRAIT_PACIFISM))
 				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				return
