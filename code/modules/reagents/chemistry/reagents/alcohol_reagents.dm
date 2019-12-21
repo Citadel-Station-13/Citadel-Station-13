@@ -77,6 +77,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 	return ..()
 
+/datum/reagent/consumable/ethanol/on_mob_add(mob/living/L,amount)
+	if(HAS_TRAIT(L, TRAIT_NO_ALCOHOL) && boozepwr > 0)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.vomit()
+		L.reagents.remove_all_type(/datum/reagent/consumable/ethanol, amount*4, 0, 1)
+	return ..()
+
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
 	id = "beer"

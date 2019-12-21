@@ -150,3 +150,23 @@
 	medical_record_text = "Patient never skipped ass day."
 	gain_text = "<span class='notice'>Your ass rivals those of golems.</span>"
 	lose_text = "<span class='notice'>Your butt feels more squishy and slappable.</span>"
+
+/datum/quirk/alcohol_intolerance
+	name = "Alcohol Intolerance"
+	desc = "Your body just can't handle alcohol at all. You don't get drunk faster, you just vomit it right back up as soon as you taste any."
+	value = 0
+	mob_trait = TRAIT_NO_ALCOHOL
+	gain_text = "<span class='danger'>Just smelling alcohol makes you feel a little sick.</span>"
+	lose_text = "<span class='notice'>You no longer feel like vomiting just from the thought of alcohol.</span>"
+	medical_record_text = "Patient's body violently rejects ethyl alcohol."
+
+/datum/quirk/alcohol_intolerance/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.disliked_food |= ALCOHOL
+
+/datum/quirk/alcohol_intolerance/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~ALCOHOL

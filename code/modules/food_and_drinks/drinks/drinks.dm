@@ -448,7 +448,6 @@
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
 	list_reagents = list("tonic" = 50)
-	foodtype = ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "soda water"

@@ -171,7 +171,7 @@
 #define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
 #define TRAIT_FREESPRINT		"free_sprinting"
-
+#define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
