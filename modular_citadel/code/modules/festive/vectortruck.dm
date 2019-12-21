@@ -1,8 +1,8 @@
 /obj/vehicle/sealed/vectorcraft/boot
 	name = "Hovertruck"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. This one comes equipt with a sizeable boot that can store up to 3 items!"
-	icon_state = "zoomscoot"
-	max_integrity = 150
+	icon_state = "truck"
+	max_integrity = 200
 	var/obj/structure/boot = list()//Trunkspace of craft
 	var/boot_size = 3
 	max_acceleration = 3
@@ -25,7 +25,7 @@
 			return TRUE
 	if(iscarbon(dropping))
 		var/mob/living/carbon/M = dropping
-		mob_try_enter(mob/M)
+		mob_try_enter(M)
 		to_chat(user, "<span class='notice'>You put [M] into the [src]!</span>")
 		return TRUE
 
@@ -34,6 +34,7 @@
 		o.forceMove(drop_location())
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance //weewoos have to go fast
+	name = "Ambulance"
 	var/obj/machinery/sleeper/ambulance/Sl
 	max_acceleration = 3
 	accel_step = 0.15
@@ -42,11 +43,12 @@
 	max_velocity = 100
 	boost_power = 25
 	enginesound_delay = 0
+	icon_state = "ambutruck"
 	var/weewoo = FALSE
 	var/weewoocount = 0
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/Initialize()
-	new var/obj/machinery/sleeper/ambulance
+	Sl = new /obj/machinery/sleeper/ambulance
 
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/process()
 	..()
@@ -56,7 +58,7 @@
 /obj/vehicle/sealed/vectorcraft/boot/ambulance/MouseDrop_T(mob/living/L, mob/user)
 	if(isliving(L))
 		Sl.close_machine(L)
-		to_chat(user, "<span class='notice'>You put [M] into the [src]'s emergency sleeper!</span>")
+		to_chat(user, "<span class='notice'>You put [L] into the [src]'s emergency sleeper!</span>")
 		return TRUE
 	..()
 
@@ -73,8 +75,6 @@
 	var/list/options = list()
 
 	if(isAI(user))
-		if(stat & NOPOWER)
-			return
 		options["radial_eject_car"] = radial_eject_car
 	else
 		if(vector["y"] == 0 && vector["x"] == 0)
@@ -98,7 +98,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if(isAI(user) || !user.canUseTopic(src, !issilicon(user)))
 		return
 
 	switch(choice)

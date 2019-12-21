@@ -7,8 +7,8 @@
 	density = TRUE
 	anchored = TRUE
 	light_power = 1.4
-	light_range = 15
-	light_color = "#ffbb4d"
+	light_range = 10
+	light_color = "#ffeeab"
 
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post"
@@ -19,9 +19,9 @@
 	layer = 4
 	density = TRUE
 	anchored = TRUE
-	light_power = 1.4
-	light_range = 15
-	light_color = "#ffbb4d"
+	light_power = 1.6
+	light_range = 10
+	light_color = "#ffeeab"
 
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post_festive"
@@ -45,3 +45,16 @@
 
 	icon = 'modular_citadel/code/modules/festive/city_sign.dmi'
 	icon_state = "sign"
+
+/obj/structure/streetdecor/bigtree
+	name = "Big festive tree"
+	desc = "Big tree. Big heck. Big festive cheer!"
+	layer = 4
+	density = TRUE
+	anchored = TRUE
+	light_power = 2
+	light_range = 30
+	light_color = "#ffeeab"
+
+	icon = 'modular_citadel/code/modules/festive/bigtree.dmi'
+	icon_state = "bigtree"

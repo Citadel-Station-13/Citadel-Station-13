@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed character setup preview bodyparts not displaying correctly most of times."
+  - bugfix: "Fixed character appearance preview displaying the mannequin in job attire instead of undergarments."

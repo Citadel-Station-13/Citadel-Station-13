@@ -1,45 +1,56 @@
-area/edina
+/area/edina
 	name = "Nova Edina wilderness"
 	icon_state = "edina"
-	valid_territory = FALSE
 	has_gravity = STANDARD_GRAVITY
-	icon = 'icons/turf/areas.dmi'
 	clockwork_warp_allowed = FALSE // Can servants warp into this area from Reebe?
 	clockwork_warp_fail = "The aurora borealis is interfering with your teleport! Try somewhere closer to the city."
-	requires_power = TRUE
 	always_unpowered = TRUE
 
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	//dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambientsounds = SPACE
+	//ambientsounds = SPACE //For later
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 
-	/// If false, loading multiple maps with this area type will create multiple instances.
-	unique = TRUE
-
-
-area/edina/backstreet
+/area/edina/backstreet
 	name = "Nova Edina backstreets"
 	icon_state = "edina_alley"
 	clockwork_warp_allowed = TRUE
 	ambientsounds = MAINTENANCE
 	always_unpowered = FALSE //Sure you can have power if you want
 
-area/edina/street
+/area/edina/street
 	name = "Nova Edina Streets"
 	icon_state = "edina_street"
 	ambientsounds = null //TODO:add ?
 
-area/edina/street/street2 //Just so laying areas is easier
+/area/edina/street/street2 //Just so laying areas is easier
 	icon_state = "edina_street2"
 
 /area/edina/protected //Prevents ice storms
 	name = "Sheltered Nova Edina"
 
+/////////////////Edina specific derivitives///////////////////////////////////
+
+/area/edina/crew_quarters
+	clockwork_warp_allowed = TRUE
+	valid_territory = TRUE
+	blob_allowed = TRUE
+
+/area/edina/crew_quarters/holo_atrium
+	name = "Hologram atrium"
+
+/area/edina/crew_quarters/store/clothes
+	name = "Clothes Store"
+
+/area/edina/crew_quarters/store/plushies
+	name = "Plushies Store"
+
+/area/edina/crew_quarters/store/pet
+	name = "Pet Store"
 
 /turf/open/floor/grass/snow/edina//But for now, we just handle what is outside, for light control etc.
 	name = "Scottish snow"
@@ -64,6 +75,7 @@ area/edina/street/street2 //Just so laying areas is easier
 		if(!W.use(1))
 			return
 		var/turf/open/floor/T = PlaceOnTop(W.turf_type)
+		T.icon_state = initial(T.icon_state)
 		if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = W
 			var/turf/open/floor/light/F = T

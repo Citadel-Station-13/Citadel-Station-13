@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed welding, thirteen loko, welding and wraith spectacles not blinding people as expected. Thank you all whomst reported this issue in the suggestions box channel instead of the github repository's issues section, very smart!"

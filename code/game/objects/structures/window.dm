@@ -285,6 +285,13 @@
 		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
+	if (get_dist(src,user) > 1)
+		if (iscarbon(user))
+			var/mob/living/carbon/H = user
+			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
+				return FALSE
+		else
+			return FALSE
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE

@@ -16,11 +16,11 @@
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
-	var/max_acceleration = 5
-	var/accel_step = 0.2
-	var/acceleration = 0.35
+	var/max_acceleration = 5.25
+	var/accel_step = 0.3
+	var/acceleration = 0.4
 	var/max_deceleration = 2
-	var/max_velocity = 100
+	var/max_velocity = 110
 	var/boost_power = 15
 	var/enginesound_delay = 0
 	var/gear
@@ -35,12 +35,17 @@
 		if(gear != "auto")
 			gear = driver.a_intent
 	start_engine()
+	to_chat(M, "Welcome to the future of cars! Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears, r for handbrake, alt for brake and shift for boost! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear.")
 	return ..()
 
 /obj/vehicle/sealed/vectorcraft/mob_exit(mob/living/M)
 	.=..()
-	driver.client.pixel_x = 0
-	driver.client.pixel_y = 0
+	if(!driver)
+		stop_engine()
+		return
+	if(driver.client)
+		driver.client.pixel_x = 0
+		driver.client.pixel_y = 0
 	driver.pixel_x = 0
 	driver.pixel_y = 0
 	if(M == driver)
@@ -54,19 +59,34 @@
 //////////////////////////////////////////////////////////////
 
 /obj/vehicle/sealed/vectorcraft/proc/start_engine()
+	if(dead_check())
+		return
 	START_PROCESSING(SSvectorcraft, src)
 	check_gears()
 	if(!driver)
 		stop_engine()
+
 
 /obj/vehicle/sealed/vectorcraft/proc/stop_engine()
 	STOP_PROCESSING(SSvectorcraft, src)
 	vector = list("x" = 0, "y" = 0)
 	acceleration = initial(acceleration)
 
+/obj/vehicle/sealed/vectorcraft/proc/dead_check()
+	if(driver.stat > 0)
+		mob_exit(driver)
+		stop_engine()
+		return TRUE
+	return FALSE
+
+
 
 //Move the damn car
 /obj/vehicle/sealed/vectorcraft/vehicle_move(cached_direction)
+	if(!driver)
+		stop_engine()
+	if(driver.stat == DEAD)
+		mob_exit(driver)
 	dir = cached_direction
 	check_gears()
 	check_boost()
@@ -124,6 +144,7 @@
 //I got over messy process procs
 /obj/vehicle/sealed/vectorcraft/process()
 	hover_loop()
+	dead_check()
 
 //////////////////////////////////////////////////////////////
 //					Movement procs						   	//
@@ -174,7 +195,7 @@
 	y += y_move
 	pixel_x = round(tile_loc["x"], 1)
 	pixel_y = round(tile_loc["y"], 1)
-	if(driver)
+	if(driver && driver.client)
 		driver.client.pixel_x = pixel_x
 		driver.client.pixel_y = pixel_y
 
@@ -272,10 +293,15 @@
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 
+
+/obj/vehicle/sealed/vectorcraft/attack_hand(mob/user)
+	remove_key(driver)
+	..()
+
 //Heals/damages the car
 /obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
-	var/healthratio = ((obj_integrity/max_integrity)/2) + 0.5
+	var/healthratio = ((obj_integrity/max_integrity)/4) + 0.75
 	max_acceleration = initial(max_acceleration) * healthratio
 	max_deceleration = initial(max_deceleration) * healthratio
 	boost_power = initial(boost_power) * healthratio
@@ -294,13 +320,14 @@
 //
 /obj/vehicle/sealed/vectorcraft/Bump(atom/M)
 	var/speed = calc_speed()
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		var/atom/throw_target = get_edge_target_turf(C, calc_angle())
-		C.throw_at(throw_target, 10, 14)
-		C.adjustBruteLoss(speed/10)
+	if(isliving(M))
+		var/mob/living/C = M
+		if(!C.anchored)
+			var/atom/throw_target = get_edge_target_turf(C, calc_angle())
+			C.throw_at(throw_target, 10, 14)
 		to_chat(C, "<span class='warning'><b>You are hit by the [src]!</b></span>")
 		to_chat(driver, "<span class='warning'><b>You just ran into [C] you crazy lunatic!</b></span>")
+		C.adjustBruteLoss(speed/10)
 		return ..()
 	//playsound
 	if(istype(M, /obj/vehicle/sealed/vectorcraft))
@@ -313,8 +340,9 @@
 		return ..()
 	if(istype(M, /obj/))
 		var/obj/O = M
-		O.obj_integrity -= speed*2
-	..()
+		if(O.density)
+			O.take_damage(speed*2.5)
+	return ..()
 
 //////////////////////////////////////////////////////////////
 //					Calc procs						    	//
@@ -483,7 +511,7 @@ if(driver.sprinting && !(boost_cooldown))
 			enginesound_delay = world.time + 16
 	else
 		if(gear_val == 1)
-			acceleration += accel_step*2.5
+			acceleration += accel_step*3.5
 		else
 			acceleration += accel_step
 		if(!enginesound_delay)

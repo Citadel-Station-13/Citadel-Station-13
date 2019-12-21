@@ -1,0 +1,8 @@
+author: "Nervere and subject217, Militaires, py01, nemvar"
+delete-after: True
+changes: 
+  - balance: "The cook's CQC now only works when in the kitchen or the kitchen backroom."
+  - spellcheck: "corrected CQC help instructions"
+  - bugfix: "CQC and Sleeping Carp are properly logged."
+  - tweak: "CQC can passively grab targets when not on grab intent. Passive grabs do not count towards combos for CQC or Sleeping carp."
+  - code_imp: "Martial Art and NOGUN cleanup."
