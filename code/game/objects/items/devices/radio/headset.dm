@@ -92,12 +92,6 @@
 	icon_state = "eng_headset"
 	keyslot = new /obj/item/encryptionkey/headset_eng
 
-/obj/item/radio/headset/headset_rob
-	name = "robotics radio headset"
-	desc = "Made specifically for the roboticists, who cannot decide between departments.\nTo access the engineering channel, use :e. For research, use :n."
-	icon_state = "rob_headset"
-	keyslot = new /obj/item/encryptionkey/headset_rob
-
 /obj/item/radio/headset/headset_med
 	name = "medical radio headset"
 	desc = "A headset for the trained staff of the medbay.\nTo access the medical channel, use :m."
