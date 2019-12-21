@@ -20,7 +20,7 @@
 	var/accel_step = 0.3
 	var/acceleration = 0.4
 	var/max_deceleration = 2
-	var/max_velocity = 100
+	var/max_velocity = 105
 	var/boost_power = 15
 	var/enginesound_delay = 0
 	var/gear
@@ -511,7 +511,7 @@ if(driver.sprinting && !(boost_cooldown))
 			enginesound_delay = world.time + 16
 	else
 		if(gear_val == 1)
-			acceleration += accel_step*2.5
+			acceleration += accel_step*3.5
 		else
 			acceleration += accel_step
 		if(!enginesound_delay)

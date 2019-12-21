@@ -6,7 +6,6 @@
 	acceleration = 0.35
 	max_deceleration = 3.5
 	max_velocity = 95
-	boost_power = 15
 	max_integrity = 150
 	icon_state = "cyber"
 
@@ -43,3 +42,15 @@
 	max_velocity = 90
 	boost_power = 25
 	max_integrity = 200
+
+/obj/vehicle/sealed/vectorcraft/auto
+	name = "Automatic hovercraft"
+	gear = "auto"
+	icon_state = "zoomscoot_auto"
+	max_acceleration = 4
+	accel_step = 0.25
+	acceleration = 0.35
+	max_deceleration = 3.5
+	max_velocity = 85
+	boost_power = 10
+	max_integrity = 100
