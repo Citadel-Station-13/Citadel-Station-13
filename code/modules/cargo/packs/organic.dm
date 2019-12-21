@@ -47,6 +47,26 @@
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
 
+/datum/supply_pack/organic/exoticseeds
+	name = "Exotic Seeds Crate"
+	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
+	cost = 1500
+	contains = list(/obj/item/seeds/nettle,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/plump,
+					/obj/item/seeds/liberty,
+					/obj/item/seeds/amanita,
+					/obj/item/seeds/reishi,
+					/obj/item/seeds/banana,
+					/obj/item/seeds/bamboo,
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
+	crate_name = "exotic seeds crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
+
 /datum/supply_pack/organic/food
 	name = "Food Crate"
 	desc = "Get things cooking with this crate full of useful ingredients! Contains a two dozen eggs, three bananas, and two bags of flour and rice, two cartons of milk, soymilk, as well as salt and pepper shakers, an enzyme and sugar bottle, and three slabs of monkeymeat."

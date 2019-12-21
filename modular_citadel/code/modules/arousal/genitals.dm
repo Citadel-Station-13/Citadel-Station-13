@@ -132,7 +132,7 @@
 		amount += 0.1
 	var/multiplier = fluid_mult
 	if(reagents.total_volume >= 5)
-		multiplier *= 0.5
+		multiplier *= 0.8
 	if(reagents.total_volume < reagents.maximum_volume)
 		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
 		reagents.add_reagent(fluid_id, (amount * multiplier))//generate the cum
