@@ -568,7 +568,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 /mob/Stat(delayoverride)
 	. = ..()
-	var/statdelay = delayoverride || 20
+	var/statdelay = delayoverride || 10
 	if(statpanel("Status"))
 		if (client)
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
