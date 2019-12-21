@@ -382,6 +382,9 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+		if(!initialized)
+		return
+
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmosinit()
@@ -391,9 +394,6 @@ SUBSYSTEM_DEF(air)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
 		CHECK_TICK
-
-	if(!initialized)
-		return
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
 	if(!pipe_init_dirs_cache[type])
