@@ -3,7 +3,7 @@
 	desc = "It fills you with holiday cheer."
 	icon = 'modular_citadel/code/modules/festive/festive_objects.dmi'
 	icon_state = "holly"
-	plane = GAME_PLANE //makes the graffiti visible over a wall.
+	plane = -5 //makes the graffiti visible over a wall. I think
 
 /obj/effect/decal/festive/holly
 	name = "Holly"

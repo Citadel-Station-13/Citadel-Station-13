@@ -2,7 +2,7 @@
 	name = "Cyberscuttle"
 	desc = "A robust hovercar that, until recently, could self drive. Unfortunately it was found that the AI was terrified of orbs and drove away from them at all costs. Overall a smashing hovercar."
 	max_acceleration = 4.5
-	accel_step = 0.18
+	accel_step = 0.25
 	acceleration = 0.35
 	max_deceleration = 3.5
 	max_velocity = 95
@@ -14,7 +14,7 @@
 	name = "Clowncraft"
 	icon_state = "clowncar"
 	max_acceleration = 4.7
-	accel_step = 0.18
+	accel_step = 0.25
 	acceleration = 0.35
 	max_deceleration = 4
 	max_velocity = 90
@@ -26,8 +26,8 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease."
 	icon_state = "truck"
 	max_acceleration = 4.25
-	accel_step = 0.17
-	acceleration = 0.33
+	accel_step = 0.25
+	acceleration = 0.35
 	max_deceleration = 5
 	max_velocity = 90
 	boost_power = 10
@@ -37,8 +37,8 @@
 	name = "Ambulance"
 	icon_state = "ambutruck"
 	max_acceleration = 4.25
-	accel_step = 0.17
-	acceleration = 0.33
+	accel_step = 0.25
+	acceleration = 0.35
 	max_deceleration = 5
 	max_velocity = 90
 	boost_power = 25

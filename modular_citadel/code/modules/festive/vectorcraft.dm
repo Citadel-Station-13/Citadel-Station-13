@@ -16,9 +16,9 @@
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
-	var/max_acceleration = 5
-	var/accel_step = 0.2
-	var/acceleration = 0.35
+	var/max_acceleration = 5.25
+	var/accel_step = 0.3
+	var/acceleration = 0.4
 	var/max_deceleration = 2
 	var/max_velocity = 100
 	var/boost_power = 15
@@ -301,7 +301,7 @@
 //Heals/damages the car
 /obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
-	var/healthratio = ((obj_integrity/max_integrity)/2) + 0.5
+	var/healthratio = ((obj_integrity/max_integrity)/4) + 0.75
 	max_acceleration = initial(max_acceleration) * healthratio
 	max_deceleration = initial(max_deceleration) * healthratio
 	boost_power = initial(boost_power) * healthratio
@@ -340,7 +340,7 @@
 		return ..()
 	if(istype(M, /obj/))
 		var/obj/O = M
-		if(O.layer >= 3) //please don't break pipes
+		if(O.density)
 			O.take_damage(speed*2.5)
 	return ..()
 
