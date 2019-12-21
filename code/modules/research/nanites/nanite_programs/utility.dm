@@ -240,7 +240,7 @@
 		for(var/mob/living/L in range(5, host_mob))
 			if(!(MOB_ORGANIC in L.mob_biotypes) && !(MOB_UNDEAD in L.mob_biotypes))
 				continue
-			if(!disease_spread_air_walk(T, get_turf(L)))
+			if(!disease_air_spread_walk(T, get_turf(L)))
 				continue
 			target_hosts += L
 		if(!target_hosts.len)
