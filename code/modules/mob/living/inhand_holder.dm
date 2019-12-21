@@ -57,7 +57,6 @@
 	qdel(src)
 
 /obj/item/clothing/head/mob_holder/relaymove(mob/user)
-	to_chat(user, "<span class='warning'>You must resist in order to escape!</span>")
 	return
 
 /obj/item/clothing/head/mob_holder/container_resist()
