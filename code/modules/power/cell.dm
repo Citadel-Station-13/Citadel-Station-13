@@ -94,11 +94,11 @@
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)
-	..()
+	. = ..()
 	if(rigged)
-		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
+		. += "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
-		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
+		. += "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -360,3 +360,7 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+//found inside the inducers ordered from cargo.
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000

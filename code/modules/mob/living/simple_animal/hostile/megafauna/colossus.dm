@@ -373,10 +373,10 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -651,7 +651,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE)
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
 	. = ..()
 	if(.)
 		death()

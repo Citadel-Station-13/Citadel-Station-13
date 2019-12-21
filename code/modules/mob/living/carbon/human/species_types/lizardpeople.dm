@@ -94,7 +94,7 @@
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
-	inherent_traits = list(TRAIT_NOGUNS)
+	inherent_traits = list(TRAIT_CHUNKYFINGERS)
 	mutantlungs = /obj/item/organ/lungs/ashwalker
 	burnmod = 0.9
 	brutemod = 0.9

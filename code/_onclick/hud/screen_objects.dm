@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
-	return
+	return list()
 
 /obj/screen/orbit()
 	return
@@ -642,6 +642,12 @@
 	icon = 'icons/mob/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/screen/healths/lavaland_elite
+	icon = 'icons/mob/screen_elite.dmi'
+	icon_state = "elite_health0"
+	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll

@@ -280,44 +280,41 @@
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, "[get_examine_string(user, TRUE)].")
+	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
-		to_chat(user, desc)
+		. += desc
 
 	if(reagents)
 		if(reagents.reagents_holder_flags & TRANSPARENT)
-			to_chat(user, "It contains:")
-			if(reagents.reagent_list.len)
+			. += "It contains:"
+			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						to_chat(user, "[R.volume] units of [R.name]")
+						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents")
+					. += "[total_volume] units of various reagents"
 			else
-				to_chat(user, "Nothing.")
+				. += "Nothing."
 		else if(reagents.reagents_holder_flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+				. += "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
 			else
-				to_chat(user, "<span class='danger'>It's empty.</span>")
+				. += "<span class='danger'>It's empty.</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
-
-/atom/proc/prevent_content_explosion()
-	return FALSE
 
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
@@ -660,7 +657,7 @@
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -812,8 +809,7 @@ Proc for attack log creation, because really why not
 
 // Filter stuff
 /atom/movable/proc/add_filter(name,priority,list/params)
-	if(!filter_data)
-		filter_data = list()
+	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
@@ -821,7 +817,7 @@ Proc for attack log creation, because really why not
 
 /atom/movable/proc/update_filters()
 	filters = null
-	sortTim(filter_data,associative = TRUE)
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()

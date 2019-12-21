@@ -11,9 +11,9 @@
 
 
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
-	..()
+	. = ..()
 	if(stored_card)
-		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it.")
+		. += "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it."
 
 /obj/item/computer_hardware/ai_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
@@ -41,6 +41,13 @@
 
 
 /obj/item/computer_hardware/ai_slot/try_eject(slot=0,mob/living/user = null,forced = 0)
+	if (get_dist(src,user) > 1)
+		if (iscarbon(user))
+			var/mob/living/carbon/H = user
+			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
+				return FALSE
+		else
+			return FALSE
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There is no card in \the [src].</span>")
 		return FALSE

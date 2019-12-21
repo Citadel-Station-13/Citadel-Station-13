@@ -13,6 +13,7 @@
 	mob_biotypes = list(MOB_ROBOTIC)
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	speech_span = SPAN_ROBOT
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	no_vore = TRUE
 
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
@@ -70,9 +71,6 @@
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
-
-/mob/living/silicon/prevent_content_explosion()
-	return TRUE
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
