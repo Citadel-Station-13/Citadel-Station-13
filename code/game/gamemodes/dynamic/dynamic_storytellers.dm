@@ -54,6 +54,8 @@ Property weights are:
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = rule.get_weight() + property_weight
+		else if(threat < rule.cost)
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
@@ -76,6 +78,8 @@ Property weights are:
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = rule.get_weight() + property_weight
+		else if(threat < rule.cost)
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/event_draft()
@@ -88,6 +92,8 @@ Property weights are:
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = rule.get_weight() + property_weight
+		else if(threat < rule.cost)
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 /datum/dynamic_storyteller/team
