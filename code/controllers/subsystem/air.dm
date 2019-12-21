@@ -382,7 +382,7 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
-		if(!initialized)
+	if(!initialized)
 		return
 
 	for(var/A in atmos_machines)
