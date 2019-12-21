@@ -80,6 +80,9 @@
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
 	var/delay = 0
+	/// Whether or not recent-round weight values are taken into account for this ruleset.
+	/// Weight reduction uses the same values as secret's recent-round mode weight reduction.
+	var/always_max_weight = FALSE
 
 /datum/dynamic_ruleset/New()
 	..()
@@ -91,8 +94,15 @@
 	var/costs = CONFIG_GET(keyed_list/dynamic_cost)
 	var/requirementses = CONFIG_GET(keyed_list/dynamic_requirements) // can't damn well use requirements
 	var/high_population_requirements = CONFIG_GET(keyed_list/dynamic_high_population_requirement)
+	var/list/repeated_mode_adjust = CONFIG_GET(number_list/repeated_mode_adjust)
 	if(config_tag in weights)
-		weight = weights[config_tag]
+		var/weight_mult = 1
+		if(!always_max_weight && SSpersistence.saved_dynamic_rules.len == 3 && repeated_mode_adjust.len == 3)
+			var/saved_dynamic_rules = SSpersistence.saved_dynamic_rules
+			for(var/i in 1 to 3)
+				if(config_tag in saved_dynamic_rules[i])
+					weight_mult -= (repeated_mode_adjust[i]/100)
+		weight = weights[config_tag] * weight_mult
 	if(config_tag in costs)
 		cost = costs[config_tag]
 	if(config_tag in requirementses)
