@@ -484,6 +484,8 @@ SUBSYSTEM_DEF(ticker)
 			SSvote.initiate_vote("dynamic","server",hideresults=FALSE,votesystem=RANKED_CHOICE_VOTING,forced=TRUE)
 		else
 			SSvote.initiate_vote("roundtype","server",hideresults=TRUE,votesystem=PLURALITY_VOTING,forced=TRUE)
+		SSvote.end_time = SSticker.start_at - 10
+		to_chat(world, "\n<font color='purple'><b>Voting time has been extended to [DisplayTimeText(SSvote.end_time-world.time)].</font>")
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

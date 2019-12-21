@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(vote)
 
 	var/initiator = null
 	var/started_time = null
-	var/time_remaining = 0
+	var/end_time = 0
 	var/mode = null
 	var/vote_system = PLURALITY_VOTING
 	var/question = null
@@ -27,9 +27,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
-		time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
-
-		if(time_remaining < 0)
+		if(end_time < world.time)
 			result()
 			for(var/client/C in voting)
 				C << browse(null, "window=vote;can_close=0")
@@ -46,7 +44,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
-	time_remaining = 0
+	end_time = 0
 	mode = null
 	question = null
 	choices.Cut()
@@ -332,7 +330,7 @@ SUBSYSTEM_DEF(vote)
 		log_vote(text)
 		var/vp = CONFIG_GET(number/vote_period)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
-		time_remaining = round(vp/10)
+		end_time = started_time+vp
 		for(var/c in GLOB.clients)
 			SEND_SOUND(c, sound('sound/misc/server-ready.ogg'))
 			var/client/C = c
@@ -373,7 +371,7 @@ SUBSYSTEM_DEF(vote)
 				. += "<h1>Vote any number of choices.</h1>"
 			if(RANKED_CHOICE_VOTING)
 				. += "<h1>Vote by order of preference. Revoting will demote to the bottom.</h1>"
-		. += "Time Left: [time_remaining] s<hr><ul>"
+		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)
 				for(var/i=1,i<=choices.len,i++)
