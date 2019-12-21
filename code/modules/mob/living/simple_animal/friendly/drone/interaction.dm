@@ -32,7 +32,7 @@
 //picky up the drone c:
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	..()
-	if(user.a_intent=="help")
+	if(user.a_intent == INTENT_HELP)
 		mob_try_pickup(user)
 
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
