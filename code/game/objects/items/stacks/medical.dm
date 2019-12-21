@@ -45,6 +45,9 @@
 		return
 	to_chat(user, "<span class='notice'>\The [src] won't work on a robotic limb!</span>")
 
+/obj/item/stack/medical/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")
+
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
