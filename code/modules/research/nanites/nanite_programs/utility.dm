@@ -243,6 +243,7 @@
 			if(!disease_air_spread_walk(T, get_turf(L)))
 				continue
 			target_hosts += L
+		target_hosts -= host_mob
 		if(!target_hosts.len)
 			return
 		var/mob/living/infectee = pick(target_hosts)
