@@ -481,9 +481,9 @@ SUBSYSTEM_DEF(ticker)
 		SSticker.modevoted = TRUE
 		var/dynamic = CONFIG_GET(flag/dynamic_voting)
 		if(dynamic)
-			SSvote.initiate_vote("dynamic","server",TRUE,RANKED_CHOICE_VOTING)
+			SSvote.initiate_vote("dynamic","server",hideresults=TRUE,votesystem=RANKED_CHOICE_VOTING,forced=TRUE)
 		else
-			SSvote.initiate_vote("roundtype","server",TRUE,PLURALITY_VOTING)
+			SSvote.initiate_vote("roundtype","server",hideresults=TRUE,votesystem=PLURALITY_VOTING,forced=TRUE)
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

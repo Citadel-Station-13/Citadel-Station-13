@@ -1,3 +1,5 @@
+#define VOTE_COOLDOWN 5
+
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
@@ -17,6 +19,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/generated_actions = list()
+	var/next_pop = 0
 
 	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
 
@@ -31,13 +34,14 @@ SUBSYSTEM_DEF(vote)
 			for(var/client/C in voting)
 				C << browse(null, "window=vote;can_close=0")
 			reset()
-		else
+		else if(next_pop < world.time)
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel")
+				client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=600)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
+			next_pop = world.time+VOTE_COOLDOWN
 
 
 /datum/controller/subsystem/vote/proc/reset()
@@ -263,7 +267,7 @@ SUBSYSTEM_DEF(vote)
 					voted[usr.ckey] += vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
 	vote_system = votesystem
 	if(!mode)
 		if(started_time)
@@ -342,6 +346,11 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
+			if(forced)
+				var/datum/browser/popup = new(C, "vote", "Voting Panel",nwidth=600,nheight=600)
+				popup.set_window_options("can_close=0")
+				popup.set_content(SSvote.interface(C))
+				popup.open(0)
 		return 1
 	return 0
 
