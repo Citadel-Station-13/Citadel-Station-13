@@ -955,19 +955,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"abn" = (
-/obj/structure/table,
-/obj/machinery/camera{
-	c_tag = "Locker Room East";
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/bedsheetbin/color,
-/turf/open/floor/plasteel/white/corner,
-/area/crew_quarters/dorms)
 "abo" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -1279,22 +1266,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"abQ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/computer/arcade{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/maintenance/port)
 "abR" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -4863,6 +4834,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/gun/energy/pumpaction/blaster,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aip" = (
@@ -14753,7 +14725,7 @@
 "azD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	name = "Cabin"
+	name = "Bar Back Room"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -15310,6 +15282,19 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"aAJ" = (
+/obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Locker Room East";
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/bedsheetbin/color,
+/turf/open/floor/plasteel/white/corner,
 /area/crew_quarters/dorms)
 "aAK" = (
 /obj/structure/sign/poster/random,
@@ -37180,6 +37165,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"dEa" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/arcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "dFV" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -39022,6 +39023,12 @@
 	dir = 1
 	},
 /area/engine/atmos)
+"ooX" = (
+/obj/machinery/smartfridge/organ/preloaded{
+	pixel_y = 2
+	},
+/turf/closed/wall,
+/area/medical/medbay/zone3)
 "oql" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plasteel,
@@ -42882,12 +42889,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"uvp" = (
-/obj/machinery/smartfridge/organ/preloaded{
-	pixel_y = 2
-	},
-/turf/closed/wall,
-/area/medical/medbay/zone3)
 "uxJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -76204,7 +76205,7 @@ aZp
 bak
 bbc
 bbQ
-abQ
+dEa
 bdD
 beu
 sKE
@@ -81603,7 +81604,7 @@ aSh
 bcf
 bcW
 blt
-uvp
+ooX
 aOL
 bfA
 bfX
@@ -82342,7 +82343,7 @@ awQ
 axK
 ayC
 awQ
-abn
+aAJ
 aBT
 awQ
 aDI
