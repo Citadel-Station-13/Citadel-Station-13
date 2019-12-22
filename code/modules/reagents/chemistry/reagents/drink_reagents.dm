@@ -515,7 +515,7 @@
 	name = "Buzz Fuzz"
 	description = "~A Hive of Flavour!~ NOTICE: Addicting."
 	id = "buzz_fuzz"
-	addiction_threshold = 14
+	addiction_threshold = 26 //A can and a sip
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "carbonated honey and pollen"
 	glass_icon_state = "buzz_fuzz"
@@ -523,8 +523,8 @@
 	glass_desc = "Stinging with flavour."
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent("sugar",2)
-	if(prob(25))
+	M.reagents.add_reagent("sugar",1)
+	if(prob(5))
 		M.reagents.add_reagent("honey",1)
 	..()
 
