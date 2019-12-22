@@ -13,13 +13,13 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/button/door{
+	dir = 1;
+	id = "engsm";
+	name = "Radiation Shutters Control";
+	req_access_txt = "10"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -262,6 +262,14 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"rl" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine West";
+	dir = 4;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "rm" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -321,15 +329,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"va" = (
-/obj/machinery/light,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine South";
-	dir = 1;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "wt" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -354,7 +353,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "xJ" = (
 /obj/item/tank/internals/emergency_oxygen/engi{
@@ -389,6 +388,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"yN" = (
+/obj/machinery/light,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine South";
+	dir = 1;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "yU" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -492,6 +500,14 @@
 "Ch" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"CA" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine East";
+	dir = 8;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "DF" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -512,6 +528,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"ED" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine Northeast";
+	network = list("ss13","engine")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "ER" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
@@ -535,16 +559,13 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "FK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "FM" = (
 /obj/structure/cable{
@@ -819,14 +840,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"SA" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Northeast";
-	network = list("ss13","engine")
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "SD" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -893,14 +906,6 @@
 "WI" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
-"WN" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine East";
-	dir = 8;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "WP" = (
 /obj/structure/lattice/catwalk,
@@ -970,12 +975,16 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "Zz" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine West";
-	dir = 4;
-	network = list("ss13","engine")
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
 /area/engine/engineering)
 "ZF" = (
 /obj/structure/cable/yellow{
@@ -1243,7 +1252,7 @@ Pt
 Pt
 Pt
 Pt
-Zz
+rl
 Pt
 Pt
 Pt
@@ -1343,7 +1352,7 @@ MJ
 "}
 (13,1,1) = {"
 NS
-cB
+xx
 fh
 zW
 Bh
@@ -1399,7 +1408,7 @@ MJ
 "}
 (15,1,1) = {"
 jH
-xx
+FK
 Ch
 wt
 tE
@@ -1455,7 +1464,7 @@ MJ
 "}
 (17,1,1) = {"
 wt
-FK
+Zz
 Wf
 Ox
 nR
@@ -1482,7 +1491,7 @@ MJ
 MJ
 "}
 (18,1,1) = {"
-Ch
+cB
 Bb
 qP
 ZF
@@ -1502,7 +1511,7 @@ xQ
 ku
 rm
 Yl
-va
+yN
 Ch
 tC
 dz
@@ -1692,7 +1701,7 @@ dz
 dz
 FP
 FP
-SA
+ED
 dz
 dz
 Yl
@@ -1747,7 +1756,7 @@ Pt
 Pt
 Pt
 Pt
-WN
+CA
 Pt
 Pt
 Pt
