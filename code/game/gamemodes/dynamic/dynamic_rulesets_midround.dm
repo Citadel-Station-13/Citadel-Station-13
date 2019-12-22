@@ -110,6 +110,10 @@
 
 	if(!candidates || candidates.len <= required_candidates)
 		message_admins("The ruleset [name] did not receive enough applications.")
+		if(candidates)
+			message_admins("Only received [candidates.len], needed [required_candidates].")
+		else
+			message_admins("There were no candidates.")
 		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
 		return FALSE
 
