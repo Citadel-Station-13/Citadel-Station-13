@@ -314,7 +314,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/power/emitter,
-/turf/open/floor/circuit/red,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "tC" = (
 /obj/structure/grille,
@@ -714,7 +714,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "Mn" = (
 /obj/structure/cable{
@@ -730,7 +730,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "MJ" = (
 /turf/open/space/basic,
@@ -932,7 +932,7 @@
 /area/engine/engineering)
 "WI" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "WP" = (
 /obj/structure/lattice/catwalk,
