@@ -141,7 +141,7 @@
 
 
 //Cult Blood Spells
-/datum/action/innate/cult/blood_spell/stun
+/datum/action/innate/cult/blood_spell/
 	name = "Stun"
 	desc = "A potent spell that will stun and mute victims upon contact."
 	button_icon_state = "hand"
@@ -448,9 +448,9 @@
 				S.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/C = L
-				C.silent += 6
-				C.stuttering += 15
-				C.cultslurring += 15
+				C.silent = 6
+				C.stuttering = 15
+				C.cultslurring = 15
 				C.Jitter(15)
 			if(is_servant_of_ratvar(L))
 				L.adjustBruteLoss(15)
