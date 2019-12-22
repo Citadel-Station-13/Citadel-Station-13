@@ -467,7 +467,7 @@ datum/gear/darksabresheath
 
 /datum/gear/mikujacket
 	name = "starlight singer jacket"
-	category = SLOT_W_UNIFORM
+	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/mikujacket
 	ckeywhitelist = list("grandvegeta")
 
