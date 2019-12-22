@@ -150,6 +150,13 @@
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"kC" = (
+/obj/structure/sign/warning/radiation/rad_area,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "kK" = (
 /turf/closed/wall,
 /area/engine/engineering)
@@ -190,6 +197,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/area/engine/engineering)
+"mZ" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "nR" = (
 /obj/structure/cable{
@@ -234,6 +245,15 @@
 	},
 /obj/structure/cable/yellow,
 /obj/machinery/power/rad_collector,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"sr" = (
+/obj/machinery/light,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity Engine South";
+	dir = 1;
+	network = list("ss13","engine")
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "tl" = (
@@ -438,7 +458,15 @@
 "Ch" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
-"CU" = (
+"CN" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity Engine East";
+	dir = 8;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"DK" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity Engine West";
 	dir = 4;
@@ -689,15 +717,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"Po" = (
-/obj/machinery/light,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine South";
-	dir = 1;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "Pt" = (
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -706,6 +725,7 @@
 	c_tag = "Singularity Engine Northeast";
 	network = list("ss13","engine")
 	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Ra" = (
@@ -719,6 +739,12 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"Rr" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "Si" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -737,14 +763,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"Uk" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine East";
-	dir = 8;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "Um" = (
 /turf/template_noop,
 /area/template_noop)
@@ -776,6 +794,9 @@
 	name = "Engineering External Access";
 	req_access_txt = "10;13"
 	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "WQ" = (
@@ -806,6 +827,12 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"Yn" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/engine/engineering)
 "YY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1103,7 +1130,7 @@ rm
 rm
 rm
 rm
-CU
+DK
 rm
 rm
 rm
@@ -1362,7 +1389,7 @@ rm
 rm
 yq
 Yl
-Po
+sr
 Ch
 tC
 dz
@@ -1570,11 +1597,11 @@ fh
 kh
 mB
 ZY
-jH
-Ch
-Ch
+kC
+mZ
+mZ
 Qk
-dz
+Rr
 Yl
 dz
 dz
@@ -1607,7 +1634,7 @@ rm
 rm
 rm
 rm
-Uk
+CN
 rm
 rm
 rm
@@ -1626,7 +1653,7 @@ Um
 Um
 Um
 fh
-kK
+Yn
 BG
 Ch
 tC
@@ -1654,7 +1681,7 @@ Um
 Um
 Um
 fh
-kK
+Yn
 kK
 Ch
 Ch

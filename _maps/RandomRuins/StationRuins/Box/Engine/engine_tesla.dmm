@@ -156,6 +156,14 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"js" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine East";
+	dir = 8;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "jx" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -228,6 +236,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"nL" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "nR" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -262,14 +276,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"rl" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine West";
-	dir = 4;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "rm" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -277,6 +283,19 @@
 /obj/machinery/field/generator,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"rT" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
+"tc" = (
+/obj/machinery/light,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine South";
+	dir = 1;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "tl" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -375,6 +394,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"yj" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine West";
+	dir = 4;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "yo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/rack,
@@ -388,15 +415,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"yN" = (
-/obj/machinery/light,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine South";
-	dir = 1;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "yU" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -500,14 +518,6 @@
 "Ch" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
-"CA" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine East";
-	dir = 8;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "DF" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -528,14 +538,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"ED" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Northeast";
-	network = list("ss13","engine")
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "ER" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
@@ -652,6 +654,12 @@
 	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plasteel,
+/area/engine/engineering)
+"JZ" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/closed/wall,
 /area/engine/engineering)
 "Kg" = (
 /obj/structure/reflector/single/anchored{
@@ -798,6 +806,7 @@
 	c_tag = "Tesla Engine Northeast";
 	network = list("ss13","engine")
 	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Ra" = (
@@ -849,6 +858,13 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"Tr" = (
+/obj/structure/sign/warning/radiation/rad_area,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "TE" = (
 /obj/machinery/power/tesla_coil,
 /obj/structure/cable{
@@ -889,6 +905,14 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"VR" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine Northeast";
+	network = list("ss13","engine")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "Wf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -900,6 +924,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
 	req_access_txt = "10;13"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -1252,7 +1279,7 @@ Pt
 Pt
 Pt
 Pt
-rl
+yj
 Pt
 Pt
 Pt
@@ -1511,7 +1538,7 @@ xQ
 ku
 rm
 Yl
-yN
+tc
 Ch
 tC
 dz
@@ -1701,7 +1728,7 @@ dz
 dz
 FP
 FP
-ED
+VR
 dz
 dz
 Yl
@@ -1719,11 +1746,11 @@ fh
 kh
 mB
 ZY
-jH
-Ch
-Ch
+Tr
+rT
+rT
 Qk
-dz
+nL
 Yl
 dz
 dz
@@ -1756,7 +1783,7 @@ Pt
 Pt
 Pt
 Pt
-CA
+js
 Pt
 Pt
 Pt
@@ -1775,7 +1802,7 @@ Um
 Um
 Um
 fh
-kK
+JZ
 BG
 Ch
 tC
@@ -1803,7 +1830,7 @@ Um
 Um
 Um
 fh
-kK
+JZ
 kK
 Ch
 Ch
