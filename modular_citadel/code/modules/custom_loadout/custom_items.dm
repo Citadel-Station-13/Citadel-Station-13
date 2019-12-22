@@ -513,7 +513,7 @@
 
 /obj/item/clothing/under/mikubikini
 	name = "starlight singer bikini"
-	desc = "PLACEHOLDER"
+	desc = " "
 	icon_state = "mikubikini"
 	item_state = "mikubikini"
 	icon = 'icons/obj/custom.dmi'
@@ -531,7 +531,7 @@
 
 /obj/item/clothing/head/mikuhair
 	name = "starlight singer hair"
-	desc = "PLACEHOLDER"
+	desc = " "
 	icon_state = "mikuhair"
 	item_state = "mikuhair"
 	icon = 'icons/obj/custom.dmi'
@@ -540,7 +540,7 @@
 
 /obj/item/clothing/gloves/mikugloves
 	name = "starlight singer gloves"
-	desc = "PLACEHOLDER"
+	desc = " "
 	icon_state = "mikugloves"
 	item_state = "mikugloves"
 	icon = 'icons/obj/custom.dmi'
@@ -549,7 +549,7 @@
 
 /obj/item/clothing/shoes/sneakers/mikuleggings
 	name = "starlight singer leggings"
-	desc = "PLACEHOLDER"
+	desc = " "
 	icon_state = "mikuleggings"
 	item_state = "mikuleggings"
 	icon = 'icons/obj/custom.dmi'
