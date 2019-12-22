@@ -1201,7 +1201,6 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "Ex" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},

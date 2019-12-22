@@ -1,8 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aT" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/button/door{
 	dir = 4;
@@ -11,9 +8,14 @@
 	pixel_x = 24;
 	req_access_txt = "10"
 	},
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -107,7 +109,7 @@
 /area/engine/engineering)
 "fr" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Southwest";
+	c_tag = "Tesla Engine Southwest";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -123,12 +125,12 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/flashlight,
 /obj/item/pipe_dispenser,
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -187,16 +189,6 @@
 "kK" = (
 /turf/closed/wall,
 /area/engine/engineering)
-"kT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "la" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
@@ -223,9 +215,11 @@
 /area/engine/engineering)
 "me" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/color/black,
-/obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mB" = (
@@ -249,6 +243,15 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"oZ" = (
+/obj/machinery/light,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine South";
+	dir = 1;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 "qH" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
@@ -259,8 +262,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -272,9 +275,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "rM" = (
-/obj/machinery/field/generator{
-	anchored = 1
-	},
+/obj/machinery/field/generator,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "tl" = (
@@ -293,8 +294,8 @@
 /area/engine/engineering)
 "tv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/power/emitter/anchored,
 /obj/structure/cable,
+/obj/machinery/power/emitter,
 /turf/open/floor/circuit/red,
 /area/engine/engineering)
 "tC" = (
@@ -347,10 +348,13 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "xx" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/floor/plasteel,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "xJ" = (
 /obj/item/tank/internals/emergency_oxygen/engi{
@@ -373,8 +377,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "yo" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "yq" = (
@@ -392,6 +397,7 @@
 	name = "Engineering External Access";
 	req_access_txt = "10;13"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "zW" = (
@@ -421,7 +427,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "AF" = (
-/obj/structure/closet/radiation,
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Bb" = (
@@ -433,13 +440,16 @@
 	light_color = "#c1caff"
 	},
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Particle Accelerator";
+	c_tag = "Particle Accelerator";
 	network = list("ss13","engine")
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/the_singularitygen/tesla,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "Bh" = (
@@ -497,6 +507,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ER" = (
@@ -516,13 +529,22 @@
 /obj/item/weldingtool/largetank,
 /obj/item/wrench,
 /obj/item/stack/cable_coil/red,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"FK" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"FK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
 /area/engine/engineering)
 "FM" = (
 /obj/structure/cable{
@@ -556,6 +578,8 @@
 	pixel_x = -24;
 	req_access_txt = "10"
 	},
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "HW" = (
@@ -638,7 +662,7 @@
 /area/engine/engineering)
 "LJ" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Southeast";
+	c_tag = "Tesla Engine Southeast";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -655,6 +679,14 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
+/area/engine/engineering)
+"LZ" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine East";
+	dir = 8;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Mi" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -715,16 +747,16 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "Ox" = (
-/obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/box,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "Pg" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -750,11 +782,19 @@
 /area/engine/engineering)
 "Qk" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Northeast";
+	c_tag = "Tesla Engine Northeast";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"QM" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine Northeast";
+	network = list("ss13","engine")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "Ra" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -799,7 +839,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -823,7 +863,7 @@
 /area/template_noop)
 "UL" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Northwest";
+	c_tag = Tesla Engine Northwest";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,
@@ -845,12 +885,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "Wf" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -901,7 +935,7 @@
 /area/space/nearstation)
 "Yd" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -936,16 +970,18 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "Zz" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine West";
+	dir = 4;
+	network = list("ss13","engine")
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ZF" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -1207,7 +1243,7 @@ Pt
 Pt
 Pt
 Pt
-Pt
+Zz
 Pt
 Pt
 Pt
@@ -1252,7 +1288,7 @@ MJ
 (11,1,1) = {"
 xJ
 gf
-xx
+fh
 dN
 YY
 MD
@@ -1307,8 +1343,8 @@ MJ
 "}
 (13,1,1) = {"
 NS
-kh
 cB
+fh
 zW
 Bh
 tv
@@ -1363,8 +1399,8 @@ MJ
 "}
 (15,1,1) = {"
 jH
-Nz
-FK
+xx
+Ch
 wt
 tE
 rj
@@ -1392,7 +1428,7 @@ MJ
 (16,1,1) = {"
 Ch
 ES
-Zz
+ZK
 ZK
 zZ
 ZK
@@ -1419,7 +1455,7 @@ MJ
 "}
 (17,1,1) = {"
 wt
-eJ
+FK
 Wf
 Ox
 nR
@@ -1466,7 +1502,7 @@ xQ
 ku
 rm
 Yl
-Hc
+oZ
 Ch
 tC
 dz
@@ -1656,7 +1692,7 @@ dz
 dz
 FP
 FP
-FP
+QM
 dz
 dz
 Yl
@@ -1711,7 +1747,7 @@ Pt
 Pt
 Pt
 Pt
-Pt
+LZ
 Pt
 Pt
 Pt

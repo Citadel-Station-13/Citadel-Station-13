@@ -1,8 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aT" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/button/door{
 	dir = 4;
@@ -11,13 +8,17 @@
 	pixel_x = 24;
 	req_access_txt = "10"
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cB" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
+/obj/machinery/button/door{
+	dir = 1;
+	id = "engsm";
+	name = "Radiation Shutters Control";
+	req_access_txt = "10"
 	},
-/turf/open/floor/plasteel,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -82,7 +83,7 @@
 /area/engine/engineering)
 "fr" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Southwest";
+	c_tag = "Singularity Engine Southwest";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -98,12 +99,12 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/flashlight,
 /obj/item/pipe_dispenser,
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -145,25 +146,12 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow,
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "kK" = (
 /turf/closed/wall,
-/area/engine/engineering)
-"kT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
 /area/engine/engineering)
 "la" = (
 /obj/structure/table,
@@ -190,10 +178,11 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "me" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/color/black,
-/obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/closet/radiation,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mB" = (
@@ -228,7 +217,7 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -240,11 +229,11 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "rM" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/structure/cable/yellow,
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "tl" = (
@@ -262,8 +251,8 @@
 /area/engine/engineering)
 "tv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/power/emitter/anchored,
 /obj/structure/cable,
+/obj/machinery/power/emitter,
 /turf/open/floor/circuit/red,
 /area/engine/engineering)
 "tC" = (
@@ -316,8 +305,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "xx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/structure/cable/yellow{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -334,28 +326,28 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "xQ" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "yo" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "yq" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "yU" = (
@@ -366,6 +358,7 @@
 	name = "Engineering External Access";
 	req_access_txt = "10;13"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "zW" = (
@@ -407,36 +400,26 @@
 	light_color = "#c1caff"
 	},
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Particle Accelerator";
+	c_tag = "Particle Accelerator";
 	network = list("ss13","engine")
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/the_singularitygen,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"Bh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/engine/engineering)
 "Bj" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "BG" = (
@@ -455,11 +438,22 @@
 "Ch" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"CU" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity Engine West";
+	dir = 4;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "Eu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ER" = (
@@ -479,9 +473,15 @@
 /obj/item/weldingtool/largetank,
 /obj/item/wrench,
 /obj/item/stack/cable_coil/red,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "FK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -519,6 +519,7 @@
 	pixel_x = -24;
 	req_access_txt = "10"
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "HW" = (
@@ -604,7 +605,7 @@
 /area/engine/engineering)
 "LJ" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Southeast";
+	c_tag = "Singularity Engine Southeast";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -670,36 +671,39 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"Oe" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "Og" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "Ox" = (
-/obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/box,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "Pg" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"Po" = (
+/obj/machinery/light,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity Engine South";
+	dir = 1;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "Pt" = (
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Qk" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Northeast";
+	c_tag = "Singularity Engine Northeast";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,
@@ -733,12 +737,20 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"Uk" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Singularity Engine East";
+	dir = 8;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "Um" = (
 /turf/template_noop,
 /area/template_noop)
 "UL" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Engineering Singularity Northwest";
+	c_tag = "Singularity Engine Northwest";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,
@@ -753,12 +765,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Wf" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -779,17 +785,14 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "WX" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Xk" = (
-/obj/machinery/field/generator{
-	anchored = 1
-	},
+/obj/machinery/field/generator,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Yd" = (
@@ -829,17 +832,23 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "Zz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ZF" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -852,6 +861,7 @@
 "ZY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light,
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 
@@ -1093,7 +1103,7 @@ rm
 rm
 rm
 rm
-rm
+CU
 rm
 rm
 rm
@@ -1138,7 +1148,7 @@ MJ
 (11,1,1) = {"
 xJ
 gf
-xx
+fh
 dN
 YY
 MD
@@ -1193,23 +1203,23 @@ MJ
 "}
 (13,1,1) = {"
 NS
-kh
-cB
+xx
+fh
 zW
 dW
 ea
 rj
 rm
 eL
-Oe
-Oe
-ku
-Oe
+Kg
+Kg
 rM
-Oe
+Kg
 rM
-Oe
-Oe
+Kg
+rM
+Kg
+Kg
 tl
 Yl
 Hc
@@ -1249,8 +1259,8 @@ MJ
 "}
 (15,1,1) = {"
 jH
-Nz
 FK
+Ch
 wt
 tE
 rj
@@ -1278,7 +1288,7 @@ MJ
 (16,1,1) = {"
 Ch
 ES
-Zz
+ZK
 ZK
 zZ
 ZK
@@ -1305,7 +1315,7 @@ MJ
 "}
 (17,1,1) = {"
 wt
-eJ
+Zz
 Wf
 Ox
 nR
@@ -1332,7 +1342,7 @@ MJ
 MJ
 "}
 (18,1,1) = {"
-Ch
+cB
 Bb
 qP
 ZF
@@ -1352,7 +1362,7 @@ rm
 rm
 yq
 Yl
-Hc
+Po
 Ch
 tC
 dz
@@ -1481,15 +1491,15 @@ ea
 rj
 rm
 ic
-Oe
-Oe
-ku
-Oe
+Kg
+Kg
 rM
-Oe
+Kg
 rM
-Oe
-Oe
+Kg
+rM
+Kg
+Kg
 Ce
 Yl
 Hc
@@ -1597,7 +1607,7 @@ rm
 rm
 rm
 rm
-rm
+Uk
 rm
 rm
 rm
