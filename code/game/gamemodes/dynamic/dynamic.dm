@@ -653,7 +653,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 		if (rule.persistent)
 			current_rules += rule
 		return TRUE
-	rule.clean_up()
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
