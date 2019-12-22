@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes()
 	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
-	var/list/d[][] = new/list(choices.len,choices.len) // yes, "d" is the preffered nomenclature. mathematicians are weird.
+	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		for(var/a in 1 to choices.len)
@@ -101,12 +101,12 @@ SUBSYSTEM_DEF(vote)
 				var/b_rank = this_vote.Find(b)
 				a_rank = a_rank ? a_rank : choices.len+1
 				b_rank = b_rank ? b_rank : choices.len+1
-				var/vote_sgn = SIGN(a_rank-b_rank)
-				if(vote_sgn==-1)
+				if(a_rank>b_rank)
 					d[a][b]++
-				else if(vote_sgn==1)
+				else if(b_rank>a_rank)
 					d[b][a]++
-	var/list/p[][] = new/list(choices.len,choices.len) //i'm so sorry.
+				//if equal, do nothing
+	var/list/p[][] = new/list(choices.len,choices.len) //matrix of shortest path from a to b
 	for(var/i in 1 to choices.len)
 		for(var/j in i+1 to choices.len)
 			var/pref_number = d[i][j]
@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
 			if(i != j && p[i][j] >= p[j][i])
-				choices[choices[i]]++
+				choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
 				// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
 
 /datum/controller/subsystem/vote/proc/announce_result()
