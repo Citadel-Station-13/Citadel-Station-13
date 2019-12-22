@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
+	var/list/saved_dynamic_rules = list(list(),list(),list())
 	var/list/saved_threat_levels = list(1,1,1)
 	var/list/saved_maps
 	var/list/saved_trophies = list()
@@ -227,7 +228,10 @@ SUBSYSTEM_DEF(persistence)
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
-	CollectThreatLevel()
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		CollectThreatLevel(mode)
+		CollectRulesets(mode)
 	RecordMaps()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
@@ -384,17 +388,27 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/datum/controller/subsystem/persistence/proc/CollectThreatLevel()
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		saved_threat_levels[3] = saved_threat_levels[2]
-		saved_threat_levels[2] = saved_threat_levels [1]
-		saved_threat_levels[1] = mode.threat_level
-		var/json_file = file("data/RecentThreatLevels.json")
-		var/list/file_data = list()
-		file_data["data"] = saved_threat_levels
-		fdel(json_file)
-		WRITE_FILE(json_file, json_encode(file_data))
+/datum/controller/subsystem/persistence/proc/CollectThreatLevel(var/datum/game_mode/dynamic/mode)
+	saved_threat_levels[3] = saved_threat_levels[2]
+	saved_threat_levels[2] = saved_threat_levels [1]
+	saved_threat_levels[1] = mode.threat_level
+	var/json_file = file("data/RecentThreatLevels.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_threat_levels
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectRulesets(var/datum/game_mode/dynamic/mode)
+	saved_dynamic_rules[3] = saved_dynamic_rules[2]
+	saved_dynamic_rules[2] = saved_dynamic_rules[1]
+	saved_dynamic_rules[1] = list()
+	for(var/datum/dynamic_ruleset/ruleset in mode.executed_rules)
+		saved_dynamic_rules[1] += ruleset.config_tag
+	var/json_file = file("data/RecentRulesets.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_dynamic_rules
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/RecordMaps()
 	saved_maps = saved_maps?.len ? list("[SSmapping.config.map_name]") | saved_maps : list("[SSmapping.config.map_name]")

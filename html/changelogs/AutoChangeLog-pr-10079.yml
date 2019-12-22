@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed reactive armor onmob overlays not updating when toggled and reactive teleport armor still using forceMove() instead of do_teleport()"
