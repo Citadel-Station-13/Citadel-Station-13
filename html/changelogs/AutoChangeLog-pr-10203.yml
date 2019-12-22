@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - tweak: "changed mecha internals access for some special mechs."
+  - tweak: "no more mech maintenance access for engineers."

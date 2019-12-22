@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - imageadd: "Improved the two grayscale towel item sprites a little."
-  - bugfix: "Fixed towels onmob suit overlays. Again."

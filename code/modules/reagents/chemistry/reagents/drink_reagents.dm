@@ -407,10 +407,6 @@
 	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 
-/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
-	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
-
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(id)
 	..()
@@ -483,7 +479,6 @@
 	glass_name = "glass of lemon-lime"
 	glass_desc = "You're pretty certain a real fruit has never actually touched this."
 
-
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
@@ -514,6 +509,51 @@
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/buzz_fuzz
+	name = "Buzz Fuzz"
+	description = "~A Hive of Flavour!~ NOTICE: Addicting."
+	id = "buzz_fuzz"
+	addiction_threshold = 26 //A can and a sip
+	color = "#8CFF00" // rgb: 135, 255, 0
+	taste_description = "carbonated honey and pollen"
+	glass_icon_state = "buzz_fuzz"
+	glass_name = "honeycomb of Buzz Fuzz"
+	glass_desc = "Stinging with flavour."
+
+/datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
+	M.reagents.add_reagent("sugar",1)
+	if(prob(5))
+		M.reagents.add_reagent("honey",1)
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.1, S.success_multiplier) // +10% success probability on each step, compared to bacchus' blessing's ~46%
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage1(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "A Hive of Flavour")]</span>")
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage2(mob/living/M)
+	if(prob(10))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "A Hive of Flavour", "The Queen approved it!")]</span>")
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage3(mob/living/M)
+	if(prob(15))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Ideal of the worker drone", "A Hive of Flavour", "The Queen approved it!")]</span>")
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage4(mob/living/M)
+	if(prob(25))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Ideal of the worker drone", "A Hive of Flavour", "Sap back that missing energy!", "Got Honey?", "The Queen approved it!")]</span>")
 	..()
 
 /datum/reagent/consumable/grey_bull
@@ -767,7 +807,6 @@
 /datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
-
 
 /datum/reagent/consumable/milk/chocolate_milk
 	name = "Chocolate Milk"

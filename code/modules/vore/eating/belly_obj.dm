@@ -595,7 +595,7 @@
 
 	for(var/mob/living/H in hearing_mobs)
 		if(H && H.client && (isturf(H.loc)))
-			H.show_message(struggle_outer_message, 1) // visible
+			H.show_message(struggle_outer_message, MSG_VISUAL) // visible
 
 	to_chat(R,struggle_user_message)
 
