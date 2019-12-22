@@ -40,6 +40,14 @@ SUBSYSTEM_DEF(vote)
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
 			next_pop = world.time+VOTE_COOLDOWN
+			if(vote_system == RANKED_CHOICE_VOTING)
+				for(var/client/C in GLOB.clients)
+					if((C.ckey in voted) && voted[C.ckey].len < choices.len && !(C in voting))
+						client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=600)
+						client_popup.set_window_options("can_close=0")
+						client_popup.set_content(interface(C))
+						client_popup.open(0)
+
 
 
 /datum/controller/subsystem/vote/proc/reset()
@@ -165,6 +173,14 @@ SUBSYSTEM_DEF(vote)
 	log_vote(text)
 	remove_action_buttons()
 	to_chat(world, "\n<font color='purple'>[text]</font>")
+	switch(vote_system)
+		if(APPROVAL_VOTING,PLURALITY_VOTING)
+			for(var/i=1,i<=choices.len,i++)
+				SSblackbox.record_feedback("tally","voting",choices[choices[i]],choices[i])
+		if(RANKED_CHOICE_VOTING)
+			for(var/i=1,i<=voted.len,i++)
+				for(var/j=1,j<=voted[i].len,j++)
+					SSblackbox.record_feedback("tally","voting",1,"[j]\th: "+choices[choices[j]])
 	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
 		var/admintext = "Obfuscated results"
 		if(vote_system == RANKED_CHOICE_VOTING)
@@ -222,7 +238,7 @@ SUBSYSTEM_DEF(vote)
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
-
+	
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
@@ -367,11 +383,14 @@ SUBSYSTEM_DEF(vote)
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		switch(vote_system)
 			if(PLURALITY_VOTING)
-				. += "<h1>Vote one.</h1>"
+				. += "<h3>Vote one.</h3>"
 			if(APPROVAL_VOTING)
-				. += "<h1>Vote any number of choices.</h1>"
+				. += "<h3>Vote any number of choices.</h3>"
 			if(RANKED_CHOICE_VOTING)
-				. += "<h1>Vote by order of preference. Revoting will demote to the bottom.</h1>"
+				var/list/myvote = voted[C.ckey]
+				. += "<h3>Vote by order of preference. Revoting will demote to the bottom.</h3>"
+				if(myvote && myvote.len < choices.len)
+					. += "<h1>Please rank all your preferences. You have not done so.</h1>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)
