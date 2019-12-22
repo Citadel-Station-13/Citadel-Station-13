@@ -143,11 +143,14 @@ SUBSYSTEM_DEF(vote)
 	var/list/winners = get_result()
 	var/text
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
+	var/vote_title_text
 	if(winners.len > 0)
 		if(question)
 			text += "<b>[question]</b>"
+			vote_title_text = "[question]"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
+			vote_title_text = "[capitalize(mode)] Vote"
 		if(was_roundtype_vote)
 			stored_gamemode_votes = list()
 		if(!obfuscated && vote_system == RANKED_CHOICE_VOTING)
@@ -176,11 +179,11 @@ SUBSYSTEM_DEF(vote)
 	switch(vote_system)
 		if(APPROVAL_VOTING,PLURALITY_VOTING)
 			for(var/i=1,i<=choices.len,i++)
-				SSblackbox.record_feedback("tally","voting",choices[choices[i]],choices[i])
+				SSblackbox.record_feedback("nested tally","voting",choices[choices[i]],list(vote_title_text,choices[i]))
 		if(RANKED_CHOICE_VOTING)
 			for(var/i=1,i<=voted.len,i++)
-				for(var/j=1,j<=voted[i].len,j++)
-					SSblackbox.record_feedback("tally","voting",1,"[j]\th: "+choices[choices[j]])
+				for(var/j=1,j<=voted[voted[i]].len,j++)
+					SSblackbox.record_feedback("nested tally","voting",1,list(vote_title_text,"[j]\th","[choices[j]]"))
 	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
 		var/admintext = "Obfuscated results"
 		if(vote_system == RANKED_CHOICE_VOTING)

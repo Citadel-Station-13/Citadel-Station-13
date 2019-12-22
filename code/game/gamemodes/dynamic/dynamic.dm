@@ -397,7 +397,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 		log_game("DYNAMIC: [roundstart_rules.len] rules.")
 		return TRUE
 	SSblackbox.record_feedback("tally","dynamic",roundstart_rules.len,"Roundstart rules considered")
-	SSblackbox.record_feedback("tally","dynamic",roundstart_rules.len,"Players readied up")
+	SSblackbox.record_feedback("tally","dynamic",roundstart_pop_ready,"Players readied up")
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
 	else
