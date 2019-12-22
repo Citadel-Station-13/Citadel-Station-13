@@ -26,9 +26,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/extraction_point,
 		/obj/machinery/syndicatebomb,
 		/obj/item/hilbertshotel
-	))
-	- typecacheof(list(/mob/living/simple_animal/revenant, /mob/living/simple_animal/slaughter))	//These things have snowflake handling.
-	)
+	)))
 
 GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 	/mob/living/simple_animal/revenant,
@@ -57,7 +55,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 
 /obj/docking_port/mobile/supply/canMove()
 	if(is_station_level(z))
-		return check_blacklist(shuttle_areas, GLOB.blacklisted_cargo_types)
+		return check_blacklist(shuttle_areas, GLOB.blacklisted_cargo_types - GLOB.cargo_shuttle_leave_behind_typecache)
 	return ..()
 
 /obj/docking_port/mobile/supply/enterTransit()
