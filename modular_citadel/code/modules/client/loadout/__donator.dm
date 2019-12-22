@@ -463,29 +463,29 @@ datum/gear/darksabresheath
 	name = "starlight singer bikini"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/mikubikini
-	ckeywhitelist = list("PLACEHOLDER")
+	ckeywhitelist = list("grandvegeta")
 
 /datum/gear/mikujacket
 	name = "starlight singer jacket"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/suit/mikujacket
-	ckeywhitelist = list("PLACEHOLDER")
+	ckeywhitelist = list("grandvegeta")
 
 /datum/gear/mikuhair
 	name = "starlight singer hair"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/head/mikuhair
-	ckeywhitelist = list("PLACEHOLDER")
+	ckeywhitelist = list("grandvegeta")
 
 /datum/gear/mikugloves
 	name = "starlight singer gloves"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/gloves/mikugloves
-	ckeywhitelist = list("PLACEHOLDER")
+	ckeywhitelist = list("grandvegeta")
 
 /datum/gear/mikuleggings
 	name = "starlight singer leggings"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/shoes/sneakers/mikuleggings
-	ckeywhitelist = list("PLACEHOLDER")
+	ckeywhitelist = list("grandvegeta")
 
