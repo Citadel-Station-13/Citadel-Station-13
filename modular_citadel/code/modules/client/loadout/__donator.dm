@@ -485,7 +485,6 @@ datum/gear/darksabresheath
 
 /datum/gear/mikuleggings
 	name = "starlight singer leggings"
-	category = SLOT_W_UNIFORM
+	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sneakers/mikuleggings
 	ckeywhitelist = list("grandvegeta")
-
