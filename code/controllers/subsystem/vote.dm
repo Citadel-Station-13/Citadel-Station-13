@@ -48,6 +48,7 @@ SUBSYSTEM_DEF(vote)
 	mode = null
 	question = null
 	choices.Cut()
+	choice_descs.Cut()
 	voted.Cut()
 	voting.Cut()
 	obfuscated = FALSE //CIT CHANGE - obfuscated votes
