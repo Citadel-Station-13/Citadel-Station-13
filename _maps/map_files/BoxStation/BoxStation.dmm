@@ -1882,14 +1882,12 @@
 	dir = 8
 	},
 /obj/item/gun/energy/pumpaction/blaster{
-	step_x = 0;
-	step_y = 0
+	pixel_x = 3;
+	pixel_y = -3;
 	},
 /obj/item/gun/energy/pumpaction/blaster{
 	pixel_x = 3;
 	pixel_y = -3;
-	step_x = 0;
-	step_y = 0
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
