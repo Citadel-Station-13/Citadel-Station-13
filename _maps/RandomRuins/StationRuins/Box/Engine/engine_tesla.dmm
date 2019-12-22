@@ -241,7 +241,7 @@
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/engine/engineering)
 "nR" = (
 /obj/structure/cable{
 	icon_state = "4-8"
