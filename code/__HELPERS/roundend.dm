@@ -320,6 +320,8 @@
 			parts += "[FOURSPACES][FOURSPACES][str]"
 		for(var/entry in mode.threat_tallies)
 			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Threat left")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

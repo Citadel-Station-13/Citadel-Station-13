@@ -21,7 +21,6 @@
 
 	var/sight_flags = 0
 	var/see_in_dark = 2
-	var/eye_damage = 0
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/old_eye_color = "fff"
@@ -45,12 +44,8 @@
 			eye_color = H.eye_color
 		if(!special)
 			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
-		if(HAS_TRAIT(H, TRAIT_NIGHT_VISION) && !lighting_alpha)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-			see_in_dark = 8
 	M.update_tint()
 	owner.update_sight()
-
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	clear_eye_trauma()

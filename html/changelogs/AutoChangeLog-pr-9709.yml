@@ -1,5 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "8 new cargo crates!"
-  - tweak: "tablet cargo crate by -3k"

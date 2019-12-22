@@ -132,13 +132,9 @@
 	transfer_fingerprints_to(B)
 	qdel(src)
 
-
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
-
 
 /obj/item/reagent_containers/food/drinks/trophy
 	name = "pewter cup"
@@ -178,7 +174,6 @@
 	materials = list(MAT_SILVER=800)
 	volume = 100
 
-
 /obj/item/reagent_containers/food/drinks/trophy/bronze_cup
 	name = "bronze cup"
 	desc = "At least you ranked!"
@@ -190,7 +185,7 @@
 	materials = list(MAT_METAL=400)
 	volume = 25
 
-///////////////////////////////////////////////Drinks
+///////////////////////////////////////////////Drinks/////////////////////////////////////////
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
@@ -210,7 +205,6 @@
 	desc = "Coffee that's been blow dried into a granulated powder. This packet includes self heating water for your nutritional pleasure."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "condi_cornoil"
-
 
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
@@ -243,9 +237,7 @@
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
 	foodtype = SUGAR
-
 	resistance_flags = FREEZE_PROOF
-
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
@@ -357,8 +349,7 @@
 		desc = "A small carton, intended for holding drinks."
 
 
-
-//////////////////////////drinkingglass and shaker//
+//////////////////////////drinkingglass and shaker/////////////////////////////////////////////////////////////////////////////////////
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
 //	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
 //	icon states.
@@ -399,8 +390,8 @@
 	volume = 30
 	spillable = TRUE
 
-//////////////////////////soda_cans//
-//These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
+//////////////////////////soda_cans////////////////////////////////////////////////////
+//These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm//
 
 /obj/item/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
@@ -425,7 +416,6 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 	..()
-
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
@@ -513,6 +503,13 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
+	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/soda_cans/buzz_fuzz
+	name = "Buzz Fuzz"
+	desc = "The sister drink of Shambler's Juice! Uses real honey, making it a sweet tooth's dream drink. The slogan reads ''A Hive of Flavour'', there's also a label about how it is adddicting."
+	icon_state = "honeysoda_can"
+	list_reagents = list("buzz_fuzz" = 25, "honey" = 5)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull

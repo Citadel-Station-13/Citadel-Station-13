@@ -115,8 +115,10 @@
 	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
+	. = TRUE
 	if(!defib)
 		to_chat(user, "<span class='warning'>It'd be hard to remove a defib unit from a mount that has none.</span>")
 		return

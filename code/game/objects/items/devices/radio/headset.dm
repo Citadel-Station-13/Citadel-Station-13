@@ -326,8 +326,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/radio/headset/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
 		return
 	if (command)
 		use_command = !use_command
 		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
+		return TRUE

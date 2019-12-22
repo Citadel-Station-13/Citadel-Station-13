@@ -400,7 +400,7 @@
 	display_name = "Cyborg Upgrades: Medical"
 	description = "Medical upgrades for cyborgs."
 	prereq_ids = list("adv_biotech", "robotics")
-	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_advhealth", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor")
+	design_ids = list("borg_upgrade_advhealth", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
@@ -1043,13 +1043,20 @@
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
-	boost_item_paths = list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien, /obj/item/retractor/alien, /obj/item/circular_saw/alien,
-	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor, /obj/item/stock_parts/cell/infinite/abductor,
-	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 20000
 	hidden = TRUE
 	design_ids = list("alienalloy")
+
+/datum/techweb_node/alientech/New()
+	. = ..()
+	boost_item_paths = typesof(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
+							/obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/cautery/alien,
+							/obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor,
+							/obj/item/crowbar/abductor, /obj/item/multitool/abductor,
+							/obj/item/stock_parts/cell/infinite/abductor, /obj/item/weldingtool/abductor,
+							/obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor,
+							/obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

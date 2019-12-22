@@ -1094,7 +1094,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -3052,7 +3052,7 @@
 "afp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/camera{
@@ -3138,7 +3138,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/camera{
@@ -4288,7 +4288,7 @@
 /area/maintenance/starboard/fore)
 "ahk" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/light_switch{
@@ -4440,7 +4440,7 @@
 "ahy" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -4475,7 +4475,7 @@
 "ahB" = (
 /obj/machinery/photocopier,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/structure/cable/white{
@@ -7740,7 +7740,7 @@
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/camera{
@@ -7886,7 +7886,7 @@
 "anj" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -8367,7 +8367,7 @@
 "anZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -8554,7 +8554,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/red{
@@ -9965,7 +9965,7 @@
 	icon_state = "plant-21"
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -10216,7 +10216,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/item/paper_bin,
@@ -11445,7 +11445,7 @@
 "atj" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -12887,7 +12887,7 @@
 /area/hallway/primary/port)
 "avX" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -12902,7 +12902,7 @@
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/light_switch{
@@ -14105,7 +14105,7 @@
 /area/engine/atmos)
 "ayl" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -14116,7 +14116,7 @@
 "aym" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/delivery,
@@ -16093,7 +16093,7 @@
 "aCh" = (
 /obj/machinery/vending/snack/random,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -16503,7 +16503,7 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/chef,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/camera{
@@ -16714,7 +16714,7 @@
 /area/engine/break_room)
 "aDw" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -17444,7 +17444,7 @@
 "aEK" = (
 /obj/machinery/vending/clothing,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
@@ -17977,7 +17977,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/structure/cable{
@@ -18209,7 +18209,7 @@
 /area/hallway/primary/port)
 "aFL" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -20148,7 +20148,7 @@
 /obj/structure/table,
 /obj/item/storage/pill_bottle/dice,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/light{
@@ -21489,7 +21489,7 @@
 "aLg" = (
 /obj/machinery/vending/snack/random,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -22597,7 +22597,7 @@
 /area/maintenance/starboard/central)
 "aNF" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -23062,7 +23062,7 @@
 /area/engine/engineering)
 "aOG" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -23834,7 +23834,7 @@
 "aPW" = (
 /obj/machinery/vending/snack/random,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25049,7 +25049,7 @@
 	name = "emergency shower"
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -26916,7 +26916,7 @@
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28252,7 +28252,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -29794,7 +29794,7 @@
 /area/hallway/primary/aft)
 "baN" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -30100,7 +30100,7 @@
 /area/medical/medbay/zone3)
 "bbu" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -31241,7 +31241,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -32128,7 +32128,7 @@
 /area/security/checkpoint)
 "beK" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -34456,7 +34456,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/light/small{
@@ -37099,7 +37099,7 @@
 "dai" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -40387,7 +40387,7 @@
 /area/maintenance/starboard)
 "sHf" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
@@ -42215,6 +42215,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/firealarm{
+	dir = 1;
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -42280,6 +42281,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/firealarm{
+	dir = 1;
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/tile/neutral,
