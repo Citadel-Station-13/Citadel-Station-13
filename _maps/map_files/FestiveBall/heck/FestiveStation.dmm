@@ -22255,7 +22255,7 @@
 "bcl" = (
 /obj/item/key,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/vehicle/sealed/vectorcraft/boot{
+/obj/vehicle/sealed/vectorcraft{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -22587,7 +22587,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/obj/vehicle/sealed/vectorcraft/boot{
+/obj/vehicle/sealed/vectorcraft{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
