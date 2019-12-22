@@ -193,15 +193,26 @@
 				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>")
 			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 		else
-			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
-			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-			L.Knockdown(15, TRUE, FALSE, 15)
-			L.apply_status_effect(STATUS_EFFECT_KINDLE)
-			L.flash_act(1, 1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = L
-				S.emp_act(EMP_HEAVY)
-			if(iscultist(L))
+			if(!iscultist(L))
+				L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
+				"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+				L.Knockdown(15, TRUE, FALSE, 15)
+				L.apply_status_effect(STATUS_EFFECT_KINDLE)
+				L.flash_act(1, 1)
+				if(issilicon(target))
+					var/mob/living/silicon/S = L
+					S.emp_act(EMP_HEAVY)
+			else //for Nar'sian weaklings
+				to_chat(L, "<span class='heavy_brass'>\"How does it feel to see the light, dog?\"</span>")
+				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \
+				"<span class='userdanger'>Your vision suddenly screams with a flash of burning hot light!</span>")  //Debuffs Narsian cultists hard + deals some burn instead of just hardstunning them; Only the confusion part can stack
+				L.flash_act(1,1)
+				if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.stuttering = max(8, C.stuttering)
+					C.drowsyness = max(8, C.drowsyness)
+					C.confused += CLAMP(16 - C.confused, 0, 8)
+					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
 	..()
 

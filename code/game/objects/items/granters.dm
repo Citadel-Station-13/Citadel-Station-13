@@ -183,6 +183,23 @@
 	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
 
+/obj/item/book/granter/spell/nuclearfist
+	spell = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+	spellname = "nuclear fist"
+	icon_state ="booknuclearfist"
+	desc = "This book radiates confidence."
+	remarks = list("Line them up....", ".. knock em' down...", "Dress in yellow for maximum effect... why?", "The energy comes from spinach... huh", "Work out for three years? No way!", "Oh I'll cast you a spell allright...", "What ho mighty wizard... ho ho ho...")
+
+/obj/item/book/granter/spell/nuclearfist/recoil(mob/living/carbon/user)
+	..()
+	to_chat(user, "<span class='danger'>Your arm spontaneously detonates!</span>")
+	explosion(user.loc, -1, 0, 2, -1, FALSE, FALSE, 2)
+	var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
+	if(part)
+		part.dismember()
+		qdel(part)
+
+
 /obj/item/book/granter/spell/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"

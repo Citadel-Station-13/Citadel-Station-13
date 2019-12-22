@@ -404,9 +404,6 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
-	if(!I)//CIT CHANGE - allows "using" empty hands
-		use_that_empty_hand() //CIT CHANGE - ditto
-		update_inv_hands() // CIT CHANGE - ditto.
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -465,9 +462,10 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
 	if(!ckey || !new_mob)
 		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
+	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
+	new_mob.ckey = ckey
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
-	new_mob.ckey = ckey
 	return TRUE
 
 /mob/verb/cancel_camera()
