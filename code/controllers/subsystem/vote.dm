@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(vote)
 		if(RANKED_CHOICE_VOTING)
 			for(var/i=1,i<=voted.len,i++)
 				for(var/j=1,j<=voted[voted[i]].len,j++)
-					SSblackbox.record_feedback("nested tally","voting",1,list(vote_title_text,"[j]\th","[choices[j]]"))
+					SSblackbox.record_feedback("nested tally","voting",1,list(vote_title_text,"[j]\th",choices[voted[voted[i]][j]]))
 	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
 		var/admintext = "Obfuscated results"
 		if(vote_system == RANKED_CHOICE_VOTING)
