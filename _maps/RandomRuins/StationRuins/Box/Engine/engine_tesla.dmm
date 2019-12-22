@@ -243,15 +243,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"oZ" = (
-/obj/machinery/light,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine South";
-	dir = 1;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "qH" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
@@ -329,6 +320,15 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
+/area/engine/engineering)
+"va" = (
+/obj/machinery/light,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine South";
+	dir = 1;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "wt" = (
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -680,14 +680,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"LZ" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine East";
-	dir = 8;
-	network = list("ss13","engine")
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "Mi" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/stripes/line{
@@ -787,14 +779,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"QM" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Northeast";
-	network = list("ss13","engine")
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "Ra" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -835,6 +819,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"SA" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine Northeast";
+	network = list("ss13","engine")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "SD" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -863,7 +855,7 @@
 /area/template_noop)
 "UL" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = Tesla Engine Northwest";
+	c_tag = "Tesla Engine Northwest";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,
@@ -901,6 +893,14 @@
 "WI" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
+/area/engine/engineering)
+"WN" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Tesla Engine East";
+	dir = 8;
+	network = list("ss13","engine")
+	},
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "WP" = (
 /obj/structure/lattice/catwalk,
@@ -1502,7 +1502,7 @@ xQ
 ku
 rm
 Yl
-oZ
+va
 Ch
 tC
 dz
@@ -1692,7 +1692,7 @@ dz
 dz
 FP
 FP
-QM
+SA
 dz
 dz
 Yl
@@ -1747,7 +1747,7 @@ Pt
 Pt
 Pt
 Pt
-LZ
+WN
 Pt
 Pt
 Pt
