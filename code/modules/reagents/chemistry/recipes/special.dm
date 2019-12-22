@@ -122,6 +122,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 		.[pathR] = textreagents[R]
 
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
+	created = text2num(recipe_data["timestamp"])
 	required_reagents = SANITIZE_LIST(recipe_data["required_reagents"])
 	required_catalysts = SANITIZE_LIST(recipe_data["required_catalysts"])
 	required_temp = recipe_data["required_temp"]
