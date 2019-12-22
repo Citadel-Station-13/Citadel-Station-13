@@ -115,7 +115,7 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
+		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 2)
 
 /datum/status_effect/electrode/on_remove()
 	if(iscarbon(owner))
