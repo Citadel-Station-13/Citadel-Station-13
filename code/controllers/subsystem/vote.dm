@@ -40,13 +40,6 @@ SUBSYSTEM_DEF(vote)
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
 			next_pop = world.time+VOTE_COOLDOWN
-			if(vote_system == RANKED_CHOICE_VOTING)
-				for(var/client/C in GLOB.clients)
-					if((C.ckey in voted) && voted[C.ckey].len < choices.len && !(C in voting))
-						client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=600)
-						client_popup.set_window_options("can_close=0")
-						client_popup.set_content(interface(C))
-						client_popup.open(0)
 
 
 
