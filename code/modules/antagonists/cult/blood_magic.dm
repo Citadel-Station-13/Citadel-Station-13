@@ -589,6 +589,7 @@
 			var/obj/item/clothing/suit/hooded/wintercoat/candidate = target
 			if (do_after(user,30,target=candidate))
 				new /obj/item/clothing/suit/hooded/wintercoat/narsie(T)
+				qdel(candidate)
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around the winter coat, transforming it into a narsian winter coat!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
