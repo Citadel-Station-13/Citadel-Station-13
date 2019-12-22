@@ -479,7 +479,7 @@ datum/gear/darksabresheath
 
 /datum/gear/mikugloves
 	name = "starlight singer gloves"
-	category = SLOT_W_UNIFORM
+	category = SLOT_GLOVES
 	path = /obj/item/clothing/gloves/mikugloves
 	ckeywhitelist = list("grandvegeta")
 
