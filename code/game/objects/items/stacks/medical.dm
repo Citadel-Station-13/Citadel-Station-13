@@ -2,8 +2,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/stack_objects.dmi'
-	amount = 6
-	max_amount = 6
+	amount = 12
+	max_amount = 12
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -55,9 +55,8 @@
 	icon_state = "brutepack"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	var/heal_brute = 25
+	var/heal_brute = 20
 	self_delay = 20
-	max_amount = 12
 	grind_results = list("styptic_powder" = 10)
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
@@ -92,7 +91,6 @@
 	var/stop_bleeding = 1800
 	var/heal_brute = 5
 	self_delay = 10
-	max_amount = 12
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
@@ -125,6 +123,7 @@
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
+	heal_brute = 0
 
 /obj/item/stack/medical/gauze/cyborg
 	materials = list()
@@ -139,9 +138,8 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	var/heal_burn = 25
+	var/heal_burn = 20
 	self_delay = 20
-	max_amount = 12
 	grind_results = list("silver_sulfadiazine" = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
