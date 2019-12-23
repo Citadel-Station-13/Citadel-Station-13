@@ -90,7 +90,7 @@ SUBSYSTEM_DEF(vote)
 				. += option
 	return .
 
-/datum/controller/subsystem/vote/proc/calculate_condorcet_votes()
+/datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
 	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
 	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
@@ -126,24 +126,26 @@ SUBSYSTEM_DEF(vote)
 	//one last pass, now that we've done the math
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
-			if(i != j && p[i][j] >= p[j][i])
-				choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
-				// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
+			if(i != j)
+				SSblackbox.record_feedback("nested tally","voting",p[i][j],list(blackbox_text,"Shortest Paths",num2text(i),num2text(j)))
+				if(p[i][j] >= p[j][i])
+					choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
+					// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
 
 /datum/controller/subsystem/vote/proc/announce_result()
-	if(vote_system == RANKED_CHOICE_VOTING)
-		calculate_condorcet_votes()
-	var/list/winners = get_result()
-	var/text
-	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	var/vote_title_text
+	var/text
+	if(question)
+		text += "<b>[question]</b>"
+		vote_title_text = "[question]"
+	else
+		text += "<b>[capitalize(mode)] Vote</b>"
+		vote_title_text = "[capitalize(mode)] Vote"
+	if(vote_system == RANKED_CHOICE_VOTING)
+		calculate_condorcet_votes(vote_title_text)
+	var/list/winners = get_result()
+	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
-		if(question)
-			text += "<b>[question]</b>"
-			vote_title_text = "[question]"
-		else
-			text += "<b>[capitalize(mode)] Vote</b>"
-			vote_title_text = "[capitalize(mode)] Vote"
 		if(was_roundtype_vote)
 			stored_gamemode_votes = list()
 		if(!obfuscated && vote_system == RANKED_CHOICE_VOTING)
