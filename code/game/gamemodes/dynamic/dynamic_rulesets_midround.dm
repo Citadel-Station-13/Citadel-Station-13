@@ -41,6 +41,9 @@
 		if (!istype(M, required_type))
 			trimmed_list.Remove(M)
 			continue
+		if (M.GetComponent(/datum/component/virtual_reality))
+			trimmed_list.Remove(M)
+			continue
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
@@ -84,6 +87,7 @@
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return TRUE
 
@@ -91,11 +95,8 @@
 	var/list/possible_candidates = list()
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
-	send_applications(possible_candidates)
-	if(assigned.len > 0)
-		return TRUE
-	else
-		return FALSE
+	var/application_successful = send_applications(possible_candidates)
+	return assigned.len > 0 && application_successful
 
 /// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
@@ -107,28 +108,21 @@
 
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become a [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 
-	if(!candidates || candidates.len <= 0)
-		message_admins("The ruleset [name] received no applications.")
-		log_game("DYNAMIC: The ruleset [name] received no applications.")
-		mode.refund_threat(cost)
-		mode.log_threat("Rule [name] refunded [cost] (no applications)",verbose=TRUE)
-		mode.executed_rules -= src
-		return
+	if(!candidates || candidates.len <= required_candidates)
+		message_admins("The ruleset [name] did not receive enough applications.")
+		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
+		return FALSE
 
 	message_admins("[candidates.len] players volunteered for the ruleset [name].")
 	log_game("DYNAMIC: [candidates.len] players volunteered for [name].")
 	review_applications()
+	return TRUE
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
 		if(candidates.len <= 0)
-			if(i == 1)
-				// We have found no candidates so far and we are out of applicants.
-				mode.refund_threat(cost)
-				mode.log_threat("Rule [name] refunded [cost] (all applications invalid)",verbose=TRUE)
-				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)
 		candidates -= applicant
@@ -150,7 +144,7 @@
 
 		finish_setup(new_character, i)
 		assigned += applicant
-		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = makeBody(applicant)
@@ -186,6 +180,7 @@
 	repeatable = TRUE
 	high_population_requirement = 15
 	flags = TRAITOR_RULESET
+	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
@@ -283,6 +278,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	config_tag = "midround_wizard"
+	persistent = TRUE
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
@@ -293,9 +289,11 @@
 	requirements = list(90,90,70,50,50,50,50,40,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE
+	var/datum/mind/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -306,6 +304,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
+	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+		return FALSE
+
+	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
+		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
+			return FALSE
+
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
+
+	return RULESET_STOP_PROCESSING
 
 //////////////////////////////////////////////
 //                                          //
@@ -344,6 +356,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -380,6 +393,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -411,6 +425,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -510,6 +525,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -548,6 +564,7 @@
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		return FALSE
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
 		var/turf/T = get_turf(L)
@@ -595,6 +612,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
@@ -646,6 +664,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	team = new /datum/team/abductor_team
 	if(team.team_number > ABDUCTOR_MAX_TEAMS)
@@ -685,6 +704,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
@@ -725,3 +745,31 @@
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
+
+//////////////////////////////////////////////
+//                                          //
+//               BLOODSUCKERS               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/bloodsucker
+  name = "Bloodsucker Infiltrator"
+  config_tag = "latejoin_bloodsucker"
+  antag_datum = ANTAG_DATUM_BLOODSUCKER
+  antag_flag = ROLE_TRAITOR
+  restricted_roles = list("AI", "Cyborg")
+  protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+  required_candidates = 1
+  weight = 3
+  cost = 10
+  requirements = list(90,80,70,60,55,50,45,40,35,30)
+  high_population_requirement = 30
+  repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/bloodsucker/execute()
+  var/mob/M = pick(candidates)
+  assigned += M.mind
+  M.mind.special_role = antag_flag
+  if(mode.make_bloodsucker(M.mind))
+    mode.bloodsuckers += M
+  return TRUE

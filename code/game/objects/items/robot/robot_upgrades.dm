@@ -74,7 +74,7 @@
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		if(R.speed < 0)
+		if(!R.cansprint)
 			to_chat(R, "<span class='notice'>A VTEC unit is already installed!</span>")
 			to_chat(user, "<span class='notice'>There's no room for another VTEC unit!</span>")
 			return FALSE
@@ -82,11 +82,13 @@
 		//R.speed = -2 // Gotta go fast.
         //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
 		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
+		R.cansprint = 0
 
 /obj/item/borg/upgrade/vtec/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
 		R.speed = initial(R.speed)
+		R.cansprint = 1
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid energy blaster cooling module"
@@ -203,7 +205,7 @@
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
+	module_type = list(/obj/item/robot_module/butler)
 
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -230,7 +232,7 @@
 	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = list(/obj/item/robot_module/janitor, /obj/item/robot_module/scrubpup)
+	module_type = list(/obj/item/robot_module/butler)
 
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -409,8 +411,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 	var/list/additional_reagents = list()
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
@@ -466,23 +467,6 @@
 		for(var/obj/item/reagent_containers/borghypo/H in R.module.modules)
 			H.bypass_protection = initial(H.bypass_protection)
 
-/obj/item/borg/upgrade/defib
-	name = "medical cyborg defibrillator"
-	desc = "An upgrade to the Medical module, installing a built-in \
-		defibrillator, for on the scene revival."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
-
-/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = new(R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
-
 /obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
@@ -497,8 +481,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -521,9 +504,7 @@
 	require_module = 1
 	module_type = list(
 		/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound,
-		/obj/item/robot_module/borgi)
+		/obj/item/robot_module/syndicate_medical)
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -607,7 +588,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "borg_BS_RPED"
 	require_module = TRUE
-	module_type = list(/obj/item/robot_module/engineering)
+	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -643,8 +624,7 @@
 	icon_state = "pinpointer_crew"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical,
-		/obj/item/robot_module/medihound)
+		/obj/item/robot_module/syndicate_medical)
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()

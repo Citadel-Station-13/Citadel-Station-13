@@ -134,7 +134,6 @@
 	var/voracious = hound ? TRUE : FALSE
 	var/list/targets = target && hound ? list(target) : contents
 	if(hound)
-		hound.setClickCooldown(50)
 		if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 			voracious = FALSE
 		else
@@ -154,6 +153,7 @@
 		playsound(loc, voracious ? 'sound/effects/splat.ogg' : 'sound/effects/bin_close.ogg', 50, 1)
 	items_preserved.Cut()
 	cleaning = FALSE
+	patient = null
 	if(hound)
 		update_gut(hound)
 
@@ -447,7 +447,7 @@
 	if (!target.devourable)
 		to_chat(user, "The target registers an error code. Unable to insert into [src].")
 		return
-	if(target)
+	if(patient)
 		to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
 		return
 	if(target.buckled)
@@ -524,3 +524,7 @@
 			update_gut()
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
+
+/obj/item/dogborg/sleeper/K9/flavour
+	name = "Recreational Sleeper"
+	desc = "A mounted, underslung sleeper, intended for holding willing occupants for leisurely purposes."

@@ -55,17 +55,15 @@
 	return automatic
 
 /obj/item/pneumatic_cannon/examine(mob/user)
-	..()
-	var/list/out = list()
+	. = ..()
 	if(!in_range(user, src))
-		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
+		. += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
+		. += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
-	to_chat(user, out.Join("<br>"))
+		. += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -215,7 +213,7 @@
 		loadedWeightClass -= I.w_class
 	else if (A == tank)
 		tank = null
-		update_icons()
+		update_icon()
 
 /obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
@@ -241,14 +239,13 @@
 			return
 		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
 		tank = thetank
-	update_icons()
+	update_icon()
 
-/obj/item/pneumatic_cannon/proc/update_icons()
+/obj/item/pneumatic_cannon/update_icon()
 	cut_overlays()
 	if(!tank)
 		return
 	add_overlay(tank.icon_state)
-	update_icon()
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))

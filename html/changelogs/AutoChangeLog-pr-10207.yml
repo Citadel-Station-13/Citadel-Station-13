@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Pubbystation's wall Nanomeds being inconsistent with other stations'."

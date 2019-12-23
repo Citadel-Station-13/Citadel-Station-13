@@ -158,3 +158,12 @@
 	time = 50
 	always_availible = TRUE
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/wintercoat_cosmic
+	name = "Cosmic Winter Coat"
+	result = /obj/item/clothing/suit/hooded/wintercoat/cosmic
+	reqs = list(/obj/item/clothing/suit/hooded/wintercoat = 1,
+				/obj/item/bedsheet/cosmos = 1)
+	time = 60
+	always_availible = TRUE
+	category = CAT_CLOTHING
