@@ -198,3 +198,48 @@
 	description = "<span class='nicegreen'>It feels quite cold out here.</span>\n"
 	mood_change = -2
 	timeout = 1 MINUTES
+
+/datum/mood_event/vampcandle
+	description = "<span class='umbra'>Something is making your mind feel... loose...</span>\n"
+	mood_change = -10
+	timeout = 1 MINUTES
+
+/datum/mood_event/drankblood_bad
+	description = "<span class='boldwarning'>I drank the blood of a lesser creature. Disgusting.</span>\n"
+	mood_change = -4
+	timeout = 900
+
+/datum/mood_event/drankblood_dead
+	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
+	mood_change = -7
+	timeout = 900
+
+/datum/mood_event/drankblood_synth
+	description = "<span class='boldwarning'>I drank synthetic blood. What is wrong with me?</span>\n"
+	mood_change = -7
+	timeout = 900
+
+/datum/mood_event/drankkilled
+	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
+	mood_change = -12
+	timeout = 6000
+
+/datum/mood_event/madevamp
+	description = "<span class='boldwarning'>A soul has been cursed to undeath by my own hand.</span>\n"
+	mood_change = -10
+	timeout = 10000
+
+/datum/mood_event/vampatefood
+	description = "<span class='boldwarning'>Mortal nourishment no longer sustains me. I feel unwell.</span>\n"
+	mood_change = -6
+	timeout = 1000
+
+/datum/mood_event/daylight_1
+	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
+	mood_change = -3
+	timeout = 1000
+
+/datum/mood_event/daylight_2
+	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
+	mood_change = -6
+	timeout = 1200

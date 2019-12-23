@@ -18,6 +18,7 @@
 	maxHealth = 50000
 	health = 50000
 	healable = 0
+	blood_volume = 0
 
 	harm_intent_damage = 10
 	obj_damage = 100

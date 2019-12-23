@@ -56,18 +56,17 @@
 
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
+	//If they have Acute hepatic pharmacokinesis, then route processing though liver.
+	if(HAS_TRAIT(H, TRAIT_PHARMA) || !H.canbearoused)
+		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.swelling += 0.05
+		else
+			H.adjustToxLoss(1)
+		return..()
+	//otherwise proceed as normal
 	if(!B) //If they don't have breasts, give them breasts.
 
-		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
-		if(HAS_TRAIT(H, TRAIT_PHARMA) || !H.canbearoused)
-			var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-			if(L)
-				L.swelling += 0.05
-			else
-				H.adjustToxLoss(1)
-			return..()
-
-		//otherwise proceed as normal
 		B = new
 		if(H.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
 			B.color = skintone2hex(H.skin_tone)
@@ -222,18 +221,17 @@
 		return ..()
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
+	//If they have Acute hepatic pharmacokinesis, then route processing though liver.
+	if(HAS_TRAIT(H, TRAIT_PHARMA) || !H.canbearoused)
+		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.swelling += 0.05
+		else
+			H.adjustToxLoss(1)
+		return ..()
+	//otherwise proceed as normal
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
 
-		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
-		if(HAS_TRAIT(H, TRAIT_PHARMA) || !H.canbearoused)
-			var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-			if(L)
-				L.swelling += 0.05
-			else
-				H.adjustToxLoss(1)
-			return ..()
-
-		//otherwise proceed as normal
 		P = new
 		P.length = 1
 		to_chat(H, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")

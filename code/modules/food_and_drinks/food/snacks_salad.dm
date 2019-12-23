@@ -47,7 +47,7 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "milk" = 10, "vitamin" = 2)
 	tastes = list("oats" = 1, "milk" = 1)
-	foodtype = DAIRY | GRAIN
+	foodtype = DAIRY | GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/salad/fruit
 	name = "fruit salad"
@@ -55,7 +55,7 @@
 	icon_state = "fruitsalad"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 4)
 	tastes = list("fruit" = 1)
-	foodtype = FRUIT
+	foodtype = FRUIT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/salad/jungle
 	name = "jungle salad"
@@ -64,7 +64,7 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "banana" = 5, "vitamin" = 4)
 	tastes = list("fruit" = 1, "the jungle" = 1)
-	foodtype = FRUIT
+	foodtype = FRUIT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/salad/citrusdelight
 	name = "citrus delight"
@@ -73,7 +73,7 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "vitamin" = 5)
 	tastes = list("sourness" = 1, "leaves" = 1)
-	foodtype = FRUIT
+	foodtype = FRUIT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/salad/ricebowl
 	name = "ricebowl"
@@ -91,7 +91,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	tastes = list("rice" = 1)
-	foodtype = GRAIN
+	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	name = "rice pudding"

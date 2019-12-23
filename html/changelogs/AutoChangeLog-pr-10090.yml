@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "Regenerative nanites, a \"chemical\" used in the combat stimulant injector. Actually quite stimulating, and not bad in a pinch for a nuclear operative. Check the Combat Medic Kit!"
+  - tweak: "The Combat Medic Kit now has an advanced health analyzer and medisprays instead of patches and a chloral syringe."
+  - balance: "The Advanced Syndicate Surgery Duffelbag or whatever it was doesn't get the better injector, because nobody uses it and so nobody's bothered to update it."

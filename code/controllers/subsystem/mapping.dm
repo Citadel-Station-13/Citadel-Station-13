@@ -528,16 +528,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
-	
+
 	// Station Ruins
 /datum/controller/subsystem/mapping
 	var/list/station_room_templates = list()
 
 /datum/controller/subsystem/mapping/proc/seedStation()
-	message_admins("Seeding Station")
 	for(var/V in GLOB.stationroom_landmarks)
 		var/obj/effect/landmark/stationroom/LM = V
 		LM.load()
-	message_admins("Station seeded")
 	if(GLOB.stationroom_landmarks.len)
 		seedStation() //I'm sure we can trust everyone not to insert a 1x1 rooms which loads a landmark which loads a landmark which loads a la...

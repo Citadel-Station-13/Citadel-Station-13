@@ -1,6 +1,0 @@
-author: "Naksu, ShizCalev"
-delete-after: True
-changes: 
-  - refactor: "Refactored examine-code"
-  - bugfix: "Examining a human with a burned prosthetic limb will no longer tell you that the limb is blistered."
-  - tweak: "Items will now inform you if they are resistant to frost, fire, acid, and lava when examined."

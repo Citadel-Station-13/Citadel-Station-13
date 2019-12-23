@@ -449,6 +449,9 @@
 	item_chair = null
 	var/turns = 0
 
+/obj/structure/chair/brass/ComponentInitialize()
+	return //it spins with the power of ratvar, not components.
+
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
@@ -464,6 +467,7 @@
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
+	. = ..()
 	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
@@ -475,6 +479,7 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+	return TRUE
 
 /obj/structure/chair/bronze
 	name = "brass chair"

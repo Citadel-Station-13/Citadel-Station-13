@@ -9,12 +9,13 @@
 #define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
-#define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
-#define ONE_ATMOSPHERE			101.325	//kPa
-#define TCMB					2.7		// -270.3degC
-#define TCRYO					225		// -48.15degC
-#define T0C						273.15	// 0degC
-#define T20C					293.15	// 20degC
+#define R_IDEAL_GAS_EQUATION	8.31446261815324	//kPa*L/(K*mol)
+#define ONE_ATMOSPHERE			101.325				//kPa
+#define TCMB					2.7					// -270.3degC
+#define TCRYO					225					// -48.15degC
+#define T0C						273.15				// 0degC
+#define T20C					293.15				// 20degC
+#define STEFANBOLTZMANN			(5.670373*10e-8) 	// W/(m^2*K^4)
 
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 #define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005) //compared against for superconductivity
@@ -149,9 +150,9 @@
 
 //OPEN TURF ATMOS
 #define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
-#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15°C telecommunications. also used for xenobiology slime killrooms
+#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15Â°C telecommunications. also used for xenobiology slime killrooms
 #define AIRLESS_ATMOS				"TEMP=2.7" //space
-#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15°C snow and ice turfs
+#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15Â°C snow and ice turfs
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
