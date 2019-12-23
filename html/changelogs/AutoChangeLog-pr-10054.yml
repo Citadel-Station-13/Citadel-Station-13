@@ -1,0 +1,5 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - balance: ".357 speedloaders in autolathes are now individual bullets instead, speedloaders are now illegal tech, costs less total metal to make 7 bullets than a previous speedloader. 7.62mm bullets in autolathe when hacked and costs more metal to make 5 7.62mm bullets than getting a clip from the seclathe."
+  - tweak: "mentions that you can refill speedloaders on .357 uplink description"
