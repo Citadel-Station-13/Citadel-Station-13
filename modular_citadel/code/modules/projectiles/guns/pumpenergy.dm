@@ -83,15 +83,17 @@
 	return 1
 
 /obj/item/gun/energy/pumpaction/AltClick(mob/living/user)	//for changing firing modes since attackself is already used for pumping
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
-		return
-	if(user.incapacitated() || !istype(user))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	if(ammo_type.len > 1)
-		select_fire(user)
-		update_icon()
+		if(user.incapacitated() || !istype(user))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		else
+			select_fire(user)
+			update_icon()
+		return TRUE
 
 /obj/item/gun/energy/pumpaction/examine(mob/user)	//so people don't ask HOW TO CHANGE FIRING MODE
 	. = ..()
@@ -183,7 +185,6 @@
 	name = "particle blast"
 	damage = 13
 	icon_state = "disablerpellet"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
 /obj/item/projectile/beam/disabler/slug
 	name = "positron blast"
@@ -191,12 +192,10 @@
 	range = 14
 	speed = 0.6
 	icon_state = "disablerslug"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
 /obj/item/projectile/energy/electrode/pump
 	name = "electron blast"
 	icon_state = "stunjectile"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 	color = null
 	nodamage = 1
 	knockdown = 100

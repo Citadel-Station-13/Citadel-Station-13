@@ -107,6 +107,27 @@
 	else
 		return ..()
 
+/obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
+	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0)
+		if (user != M)
+			to_chat(user, "<span class='notice'>You force [M] to drink from the [src]</span>")
+			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>")
+			if(!do_mob(user, M, 50))
+				return
+		else
+			if(!do_mob(user, M, 10))
+				return
+			to_chat(user, "<span class='notice'>You take a sip from the [src].</span>")
+			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>")
+		if(reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
+			return
+		var/gulp_size = 5
+		var/fraction = min(gulp_size / reagents.total_volume, 1)
+		reagents.reaction(M, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
+		reagents.trans_to(M, gulp_size)
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	..()
+
 /obj/item/reagent_containers/blood/bluespace
 	name = "bluespace blood pack"
 	desc = "Contains blood used for transfusion, this one has been made with bluespace technology to hold much more blood. Must be attached to an IV drip."

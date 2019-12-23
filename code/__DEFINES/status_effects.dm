@@ -46,7 +46,7 @@
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
-#define STATUS_EFFECT_TASED /datum/status_effect/electrode //the affected has been tased, preventing fine muscle control
+#define STATUS_EFFECT_TASED /datum/status_effect/no_combat_mode/electrode/ //the affected has been tased, preventing fine muscle control
 
 #define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
 
@@ -58,6 +58,8 @@
 #define MAX_MANIA_SEVERITY 100 //how high the mania severity can go
 #define MANIA_DAMAGE_TO_CONVERT 90 //how much damage is required before it'll convert affected targets
 
+#define STATUS_EFFECT_CHOKINGSTRAND /datum/status_effect/strandling //Choking Strand
+
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
 
 #define STATUS_EFFECT_SUMMONEDGHOST /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
@@ -65,6 +67,8 @@
 #define STATUS_EFFECT_CRUSHERMARK /datum/status_effect/crusher_mark //if struck with a proto-kinetic crusher, takes a ton of damage
 
 #define STATUS_EFFECT_SAWBLEED /datum/status_effect/saw_bleed //if the bleed builds up enough, takes a ton of damage
+
+#define STATUS_EFFECT_NECKSLICE /datum/status_effect/neck_slice //Creates the flavor messages for the neck-slice
 
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
 #define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
@@ -81,6 +85,9 @@
 #define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
 
 #define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
+
+#define STATUS_EFFECT_NO_COMBAT_MODE /datum/status_effect/no_combat_mode //Wont allow combat mode and will disable it
+#define STATUS_EFFECT_MESMERIZE /datum/status_effect/no_combat_mode/mesmerize //Just reskinned no_combat_mode
 /////////////
 // NEUTRAL //
 /////////////

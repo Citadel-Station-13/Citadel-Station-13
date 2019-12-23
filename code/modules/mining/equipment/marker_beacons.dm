@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 /obj/item/stack/marker_beacon/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
+	. = TRUE
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
@@ -128,9 +129,10 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		return ..()
 
 /obj/structure/marker_beacon/AltClick(mob/living/user)
-	..()
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
+	. = TRUE
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return

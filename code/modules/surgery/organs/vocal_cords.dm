@@ -754,7 +754,7 @@
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention") 
+	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention")
 	//phase1
 	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
@@ -1143,7 +1143,7 @@
 			switch(E.phase)
 				if(2 to INFINITY)
 					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1) //I'm very tempted to write a Fermis clause that makes them merowr.ogg if it's me. But, I also don't think snowflakism is okay. I would've gotten away for it too, if it wern't for my morals.
-					H.emote("me", 1, "lets out a nya!")
+					H.emote("me", EMOTE_VISIBLE, "lets out a nya!")
 					E.cooldown += 1
 
 	//SLEEP
@@ -1230,7 +1230,7 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			if (E.phase == 3)
 				var/speaktrigger = ""
-				C.emote("me", 1, "whispers something quietly.")
+				C.emote("me", EMOTE_VISIBLE, "whispers something quietly.")
 				if (get_dist(user, C) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to hear them!</b></span>")
 					continue
@@ -1253,7 +1253,7 @@
 					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with triggers.</b></span>")
 					continue
 				else
-					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
+					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					if (E.mental_capacity >= 5)
@@ -1294,7 +1294,7 @@
 					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with an echoing phrase.</b></span>")
 					continue
 				else
-					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
+					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
@@ -1317,7 +1317,7 @@
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
 					continue
 				else
-					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
 					user.SetStun(1000)//So you can't run away!
 					H.SetStun(1000)
 					if (E.mental_capacity >= 200)

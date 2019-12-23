@@ -299,7 +299,7 @@
 	rate = 0.04
 	glow_color = "#AAD84B"
 
-datum/plant_gene/trait/glow/white
+/datum/plant_gene/trait/glow/white
 	name = "White Bioluminescence"
 	glow_color = "#FFFFFF"
 

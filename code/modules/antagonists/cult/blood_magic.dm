@@ -438,21 +438,27 @@
 				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
-			L.Knockdown(160)
-			L.adjustStaminaLoss(140) //Ensures hard stamcrit
-			L.flash_act(1,1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = L
-				S.emp_act(EMP_HEAVY)
-			else if(iscarbon(target))
-				var/mob/living/carbon/C = L
-				C.silent += 6
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(15)
-			if(is_servant_of_ratvar(L))
+			if(!iscultist(L))
+				L.Knockdown(160)
+				L.adjustStaminaLoss(140) //Ensures hard stamcrit
+				L.flash_act(1,1)
+				if(issilicon(target))
+					var/mob/living/silicon/S = L
+					S.emp_act(EMP_HEAVY)
+				else if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.silent += CLAMP(12 - C.silent, 0, 6)
+					C.stuttering += CLAMP(30 - C.stuttering, 0, 15)
+					C.cultslurring += CLAMP(30 - C.cultslurring, 0, 15)
+					C.Jitter(15)
+			else					// cultstun no longer hardstuns + damages hostile cultists, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
+				if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.stuttering = max(10, C.stuttering)
+					C.drowsyness = max(10, C.drowsyness)
+					C.confused += CLAMP(20 - C.confused, 0, 10)
 				L.adjustBruteLoss(15)
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
 		uses--
 	..()
 
