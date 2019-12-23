@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
 			if(i != j)
-				SSblackbox.record_feedback("nested tally","voting",p[i][j],list(blackbox_text,"Shortest Paths",num2text(i),num2text(j)))
+				SSblackbox.record_feedback("nested tally","voting",p[i][j],list(blackbox_text,"Shortest Paths",choices[i],choices[j]))
 				if(p[i][j] >= p[j][i])
 					choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
 					// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
