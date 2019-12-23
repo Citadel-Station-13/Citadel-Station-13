@@ -382,6 +382,6 @@
 
 /datum/config_entry/keyed_list/box_random_engine
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 	lowercase = FALSE
 	splitter = "-"

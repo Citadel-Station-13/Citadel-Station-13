@@ -168,8 +168,9 @@
 	var/key_value = null
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
+		key_name = copytext(str_val, 1, key_pos)
 		if(lowercase)
-			key_name = lowertext(copytext(str_val, 1, key_pos))
+			key_name = lowertext(key_name)
 		key_value = copytext(str_val, key_pos + 1)
 		var/new_key
 		var/new_value
