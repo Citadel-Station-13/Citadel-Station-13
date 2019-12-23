@@ -198,6 +198,7 @@
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
+	foodtype = BREAKFAST
 
 //Used by MREs
 /obj/item/reagent_containers/food/drinks/coffee/type2
@@ -317,27 +318,27 @@
 				icon_state = "orangebox"
 				name = "orange juice box"
 				desc = "A great source of vitamins. Stay healthy!"
-				foodtype = FRUIT
+				foodtype = FRUIT | BREAKFAST
 			if("milk")
 				icon_state = "milkbox"
 				name = "carton of milk"
 				desc = "An excellent source of calcium for growing space explorers."
-				foodtype = DAIRY
+				foodtype = DAIRY | BREAKFAST
 			if("applejuice")
 				icon_state = "juicebox"
 				name = "apple juice box"
 				desc = "Sweet apple juice. Don't be late for school!"
-				foodtype = FRUIT
+				foodtype = FRUIT | BREAKFAST
 			if("grapejuice")
 				icon_state = "grapebox"
 				name = "grape juice box"
 				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
-				foodtype = FRUIT
+				foodtype = FRUIT | BREAKFAST
 			if("chocolate_milk")
 				icon_state = "chocolatebox"
 				name = "carton of chocolate milk"
 				desc = "Milk for cool kids!"
-				foodtype = SUGAR
+				foodtype = SUGAR | BREAKFAST
 			if("eggnog")
 				icon_state = "nog2"
 				name = "carton of eggnog"
@@ -524,3 +525,10 @@
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list("nitrogen" = 24, "oxygen" = 6)
+
+/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
+	name = "Monkey Energy"
+	desc = "Unleash the ape!"
+	icon_state = "monkey_energy"
+	list_reagents = list("monkey_energy" = 50)
+	foodtype = SUGAR | JUNKFOOD
