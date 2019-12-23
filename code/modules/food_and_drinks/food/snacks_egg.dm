@@ -94,7 +94,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 3)
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
-	foodtype = MEAT | FRIED
+	foodtype = MEAT | FRIED | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
@@ -104,7 +104,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	tastes = list("egg" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
@@ -116,7 +116,7 @@
 	bitesize = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("egg" = 1, "cheese" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/omelette/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/kitchen/fork))
@@ -145,5 +145,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST

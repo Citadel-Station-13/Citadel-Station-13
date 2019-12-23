@@ -72,6 +72,11 @@
 	desc = "It's still good. Four second rule!"
 	icon_state = "flour"
 
+/obj/effect/decal/cleanable/greenglow/ecto
+	name = "ectoplasmic puddle"
+	desc = "You know who to call."
+	light_power = 2
+
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
