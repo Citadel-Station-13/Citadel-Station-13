@@ -476,3 +476,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/box/engine
 	template_names = list("Engine SM", "Engine Singulo", "Engine Tesla")
 	icon = 'icons/rooms/box/engine.dmi'
+
+
+/obj/effect/landmark/stationroom/box/engine/New()
+	. = ..()
+	template_names = CONFIG_GET(keyed_list/box_random_engine)
