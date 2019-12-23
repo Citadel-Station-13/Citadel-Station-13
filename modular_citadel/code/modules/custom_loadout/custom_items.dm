@@ -518,7 +518,7 @@
 	item_state = "mikubikini"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/mikujacket
 	name = "starlight singer jacket"
@@ -527,7 +527,7 @@
 	item_state = "mikujacket"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/mikuhair
 	name = "starlight singer hair"
@@ -536,7 +536,7 @@
 	item_state = "mikuhair"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/gloves/mikugloves
@@ -546,7 +546,7 @@
 	item_state = "mikugloves"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/shoes/sneakers/mikuleggings
 	name = "starlight singer leggings"
@@ -555,4 +555,4 @@
 	item_state = "mikuleggings"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
