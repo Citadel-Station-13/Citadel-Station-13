@@ -134,6 +134,12 @@
 	mood_change = 3
 	timeout = 3000
 
+/datum/mood_event/breakfast
+	description = "<span class='nicegreen'>Nothing like a hearty breakfast to start the shift.</span>\n"
+	mood_change = 2
+	timeout = 15 MINUTES
+
+//Power gamer stuff below
 /datum/mood_event/drankblood
 	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
 	mood_change = 10
@@ -143,6 +149,7 @@
 	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
 	mood_change = 8
 	timeout = 1200
+
 //Cursed stuff below.
 
 /datum/mood_event/orgasm
