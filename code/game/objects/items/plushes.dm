@@ -583,7 +583,7 @@
 /obj/item/toy/plush/lizardplushie/sin
 	icon_state = "sin"
 	item_state = "sin"
-	desc = "An adorable stuffed toy that resembles a lizardperson.. It faintly smells of sulfur."
+	desc = "An adorable stuffed toy that resembles a lizardperson. It faintly smells of sulfur."
 
 /obj/item/toy/plush/lizardplushie/ends
 	icon_state = "ends"
@@ -592,6 +592,15 @@
 /obj/item/toy/plush/lizardplushie/lyssa
 	icon_state = "lyssa"
 	item_state = "lyssa"
+
+/obj/item/toy/plush/lizardplushie/owai
+	icon_state = "owai"
+	item_state = "owai"
+	desc = "An adorable stuffed toy that resembles a lizardperson.\nIt has too many pets."
+
+/obj/item/toy/plush/lizardplushie/ayshe
+	icon_state = "ayshe"
+	item_state = "ayshe"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -796,6 +805,10 @@
 /obj/item/toy/plush/sergal/gladwyn
 	icon_state = "gladwyn"
 	item_state = "gladwyn"
+
+/obj/item/toy/plush/sergal/langley
+	icon_state = "langley"
+	item_state = "langley"
 
 /obj/item/toy/plush/sergal/jermaine
 	icon_state = "jermaine"
