@@ -4,6 +4,7 @@
 	var/list/property_weights = list()
 	var/curve_centre = 0
 	var/curve_width = 1.8
+	var/flags = 0
 	var/datum/game_mode/dynamic/mode = null
 
 /**
@@ -135,6 +136,7 @@ Property weights are:
 	desc = "Chaos: low. Variation: medium. Likely antags: bloodsuckers, traitors, sentient disease, revenant."
 	curve_centre = -5
 	curve_width = 0.5
+	flags = NO_ASSASSIN
 	property_weights = list("extended" = 5, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
 /datum/dynamic_storyteller/extended
