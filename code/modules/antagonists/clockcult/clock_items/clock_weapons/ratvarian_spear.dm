@@ -56,8 +56,14 @@
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
 			if(!L.anti_magic_check())
-				if(issilicon(L) || iscultist(L))
+				if(issilicon(L))
 					L.Knockdown(100)
+				else if(iscultist(L))
+					L.confused += CLAMP(10 - L.confused, 0, 5) // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
+					to_chat(L, "<span class ='userdanger'>[src] crashes into you with burning force, sending you reeling!</span>")
+					L.adjust_fire_stacks(2)
+					L.Knockdown(1)
+					L.IgniteMob()
 				else
 					L.Knockdown(40)
 				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar

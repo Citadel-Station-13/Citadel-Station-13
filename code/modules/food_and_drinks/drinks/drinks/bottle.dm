@@ -429,7 +429,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list("orangejuice" = 100)
-	foodtype = FRUIT
+	foodtype = FRUIT| BREAKFAST
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"

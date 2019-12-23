@@ -1,0 +1,4 @@
+author: "Putnam"
+delete-after: True
+changes: 
+  - tweak: "Dynamic rulesets have lower weight if a round recently featured them (except traitor)."

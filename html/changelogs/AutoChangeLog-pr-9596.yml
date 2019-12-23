@@ -1,0 +1,11 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - rscadd: "Abductor chem dispenser, and added it to the abductor console."
+  - rscadd: "\"Superlingual matrix\" to the abductor console. It's the abductor's tongue. Can be used to link it to your abductor communication channel and then implanted into a test subject."
+  - rscadd: "Shrink ray and added it to the abductor console."
+  - soundadd: "Shrink ray sound effect (its the fucking mega man death sound)"
+  - rscadd: "special jumpsuit for abductors"
+  - imageadd: "abductor jumpsuit, including digi version if a digitigrade person somehow manages to get their hands on it. sprites for the shrink ray and chem dispenser."
+  - rscadd: "new glands to play with, including the all-access gland, the quantum gland, and the blood type randomiser."
+  - code_imp: "split every gland into its own file instead of all being in one file"
