@@ -402,8 +402,3 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE
 
 	return FALSE
-
-/obj/item/integrated_circuit/can_trigger_gun(mob/living/user)
-	if(!user.is_holding(src))
-		return FALSE
-	return ..()

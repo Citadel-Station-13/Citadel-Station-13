@@ -149,8 +149,8 @@
 
 	friend_talk(message)
 
-/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
-	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, FALSE, source))
+/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode))
 
 /mob/camera/imaginary_friend/proc/friend_talk(message)
 	message = capitalize(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))

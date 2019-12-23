@@ -464,20 +464,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/datum/map_template/template = SSmapping.station_room_templates[template_name]
 	if(!template)
 		return FALSE
-	testing("Room \"[template_name]\" placed at ([T.x], [T.y], [T.z])")
+	testing("Ruin \"[template_name]\" placed at ([T.x], [T.y], [T.z])")
 	template.load(T, centered = FALSE)
 	template.loaded++
 	GLOB.stationroom_landmarks -= src
 	qdel(src)
+	message_admins("Stationroom loaded successfully")
 	return TRUE
 
-// The landmark for the Engine on Box
+// The landmark for the Engine
 
 /obj/effect/landmark/stationroom/box/engine
 	template_names = list("Engine SM", "Engine Singulo", "Engine Tesla")
 	icon = 'icons/rooms/box/engine.dmi'
-
-
-/obj/effect/landmark/stationroom/box/engine/New()
-	. = ..()
-	template_names = CONFIG_GET(keyed_list/box_random_engine)

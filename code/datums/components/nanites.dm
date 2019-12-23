@@ -34,7 +34,6 @@
 			cloud_sync()
 
 /datum/component/nanites/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
@@ -58,7 +57,6 @@
 		RegisterSignal(parent, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 
 /datum/component/nanites/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
 								COMSIG_NANITE_UI_DATA,
 								COMSIG_NANITE_GET_PROGRAMS,

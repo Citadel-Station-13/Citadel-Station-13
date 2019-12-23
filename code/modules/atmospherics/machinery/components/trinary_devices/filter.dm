@@ -28,7 +28,6 @@
 		return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
-	. = ..()
 	var/area/A = get_area(src)
 	var/turf/T = get_turf(src)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
@@ -36,7 +35,6 @@
 		to_chat(user,"<span class='notice'>You maximize the flow rate on the [src].</span>")
 		investigate_log("Filter, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Filter, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-		return TRUE
 
 /obj/machinery/atmospherics/components/trinary/filter/layer1
 	piping_layer = PIPING_LAYER_MIN

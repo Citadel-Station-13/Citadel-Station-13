@@ -47,7 +47,6 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -91,7 +90,6 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -101,7 +99,6 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -112,7 +109,6 @@
 	filling_color = "#DEB887"
 	tastes = list("soy" = 1)
 	foodtype = VEGETABLES
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/cheesyfries
 	name = "cheesy fries"
@@ -132,7 +128,6 @@
 	list_reagents = list("bad_food" = 30)
 	filling_color = "#8B4513"
 	foodtype = GROSS
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/carrotfries
 	name = "carrot fries"
@@ -406,6 +401,7 @@
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
+
 /obj/item/reagent_containers/food/snacks/powercrepe
 	name = "Powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
@@ -587,7 +583,6 @@
 	filling_color = "#ffdf26"
 	tastes = list("strawberries" = 5, "chocolate" = 3)
 	foodtype = FRUIT | SUGAR
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/chocolatebanana
 	name = "Chocolate dipped banana"
@@ -597,16 +592,3 @@
 	filling_color = "#ffdf26"
 	tastes = list("banana" = 5, "chocolate" = 3)
 	foodtype = FRUIT | SUGAR
-	dunkable = TRUE
-
-/obj/item/reagent_containers/food/snacks/cornchips
-	name = "boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
-	icon_state = "boritos"
-	trash = /obj/item/trash/boritos
-	bitesize = 2
-	list_reagents = list("nutriment" = 3, "cooking_oil" = 2, "sodiumchloride" = 3)
-	filling_color = "#ECA735"
-	tastes = list("fried corn" = 1)
-	foodtype = JUNKFOOD | FRIED
-	dunkable = TRUE

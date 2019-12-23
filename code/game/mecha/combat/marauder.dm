@@ -10,7 +10,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	infra_luminosity = 3
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
-	internals_req_access = list(ACCESS_CENT_SPECOPS, ACCESS_ROBOTICS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
@@ -47,7 +46,6 @@
 	name = "\improper Seraph"
 	icon_state = "seraph"
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
-	internals_req_access = list(ACCESS_CENT_SPECOPS, ACCESS_ROBOTICS)
 	step_in = 3
 	max_integrity = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
@@ -74,7 +72,6 @@
 	name = "\improper Mauler"
 	icon_state = "mauler"
 	operation_req_access = list(ACCESS_SYNDICATE)
-	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip = 5
 

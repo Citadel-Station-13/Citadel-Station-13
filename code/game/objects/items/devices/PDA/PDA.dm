@@ -828,14 +828,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	send_message(U,list(P))
 
 /obj/item/pda/AltClick()
-	. = ..()
+	..()
+
 	if(id)
 		remove_id()
 		playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 	else
 		remove_pen()
 		playsound(src, 'sound/machines/button4.ogg', 50, 1)
-	return TRUE
 
 /obj/item/pda/CtrlClick()
 	..()

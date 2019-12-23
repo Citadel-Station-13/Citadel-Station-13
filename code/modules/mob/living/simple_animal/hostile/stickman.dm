@@ -13,7 +13,6 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	blood_volume = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	environment_smash = ENVIRONMENT_SMASH_NONE

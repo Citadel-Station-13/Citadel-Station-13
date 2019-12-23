@@ -5,31 +5,28 @@
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with robust coffee."
-	icon = 'icons/obj/food/donut.dmi'
-	icon_state = "donut"
+	icon_state = "donut1"
 	bitesize = 5
 	bonus_reagents = list("sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sprinkles" = 1, "sugar" = 2)
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
-	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
-	dunkable = TRUE
-	var/decorated_icon = "donut_homer"
-	var/is_decorated = FALSE
+	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
+	var/frosted_icon = "donut2"
+	var/is_frosted = FALSE
 	var/extra_reagent = null
-	var/decorated_adjective = "sprinkled"
 
 /obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
 	if(prob(30))
-		decorate_donut()
+		frost_donut()
 
-/obj/item/reagent_containers/food/snacks/donut/proc/decorate_donut()
-	if(is_decorated || !decorated_icon)
+/obj/item/reagent_containers/food/snacks/donut/proc/frost_donut()
+	if(is_frosted || !frosted_icon)
 		return
-	is_decorated = TRUE
-	name = "[decorated_adjective] [name]"
-	icon_state = decorated_icon //delish~!
+	is_frosted = TRUE
+	name = "frosted [name]"
+	icon_state = frosted_icon //delish~!
 	reagents.add_reagent("sprinkles", 1)
 	filling_color = "#FF69B4"
 	return TRUE
@@ -46,282 +43,63 @@
 				return
 	..()
 
-/obj/item/reagent_containers/food/snacks/donut/plain
-	//Use this donut ingame
-
 /obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
-	icon_state = "donut_chaos"
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
-	reagents.add_reagent(extra_reagent, 3)
-
-/obj/item/reagent_containers/food/snacks/donut/meat
-	name = "Meat Donut"
-	desc = "Tastes as gross as it looks."
-	icon_state = "donut_meat"
-	bonus_reagents = list("ketchup" = 1)
-	list_reagents = list("nutriment" = 3, "ketchup" = 2)
-	tastes = list("meat" = 1)
-	foodtype = JUNKFOOD | MEAT | GROSS | FRIED | BREAKFAST
-
-/obj/item/reagent_containers/food/snacks/donut/berry
-	name = "pink donut"
-	desc = "Goes great with a soy latte."
-	icon_state = "donut_pink"
-	bonus_reagents = list("berryjuice" = 3, "sprinkles" = 1) //Extra sprinkles to reward frosting
-	filling_color = "#E57d9A"
-	decorated_icon = "donut_homer"
-
-/obj/item/reagent_containers/food/snacks/donut/trumpet
-	name = "spaceman's donut"
-	desc = "Goes great with a cold beaker of malk."
-	icon_state = "donut_purple"
-	bonus_reagents = list("polypyr" = 3, "sprinkles" = 1)
-	tastes = list("donut" = 3, "violets" = 1)
-	is_decorated = TRUE
-	filling_color = "#8739BF"
-
-/obj/item/reagent_containers/food/snacks/donut/apple
-	name = "apple donut"
-	desc = "Goes great with a shot of cinnamon schnapps."
-	icon_state = "donut_green"
-	bonus_reagents = list("applejuice" = 3, "sprinkles" = 1)
-	tastes = list("donut" = 3, "green apples" = 1)
-	is_decorated = TRUE
-	filling_color = "#6ABE30"
-
-/obj/item/reagent_containers/food/snacks/donut/caramel
-	name = "caramel donut"
-	desc = "Goes great with a mug of hot coco."
-	icon_state = "donut_beige"
-	bonus_reagents = list("caramel" = 3, "sprinkles" = 1)
-	tastes = list("donut" = 3, "buttery sweetness" = 1)
-	is_decorated = TRUE
-	filling_color = "#D4AD5B"
-
-/obj/item/reagent_containers/food/snacks/donut/choco
-	name = "chocolate donut"
-	desc = "Goes great with a glass of warm milk."
-	icon_state = "donut_choc"
-	bonus_reagents = list("hot_coco" = 3, "sprinkles" = 1) //the coco reagent is just bitter.
-	tastes = list("donut" = 4, "bitterness" = 1)
-	decorated_icon = "donut_choc_sprinkles"
-	filling_color = "#4F230D"
-
-/obj/item/reagent_containers/food/snacks/donut/blumpkin
-	name = "blumpkin donut"
-	desc = "Goes great with a mug of soothing drunken blumpkin."
-	icon_state = "donut_blue"
-	bonus_reagents = list("blumpkinjuice" = 3, "sprinkles" = 1)
-	tastes = list("donut" = 2, "blumpkin" = 1)
-	is_decorated = TRUE
-	filling_color = "#2788C4"
-
-/obj/item/reagent_containers/food/snacks/donut/bungo
-	name = "bungo donut"
-	desc = "Goes great with a mason jar of hippie's delight."
-	icon_state = "donut_yellow"
-	bonus_reagents = list("bungojuice" = 3, "sprinkles" = 1)
-	tastes = list("donut" = 3, "tropical sweetness" = 1)
-	is_decorated = TRUE
-	filling_color = "#DEC128"
-
-/obj/item/reagent_containers/food/snacks/donut/matcha
-	name = "matcha donut"
-	desc = "Goes great with a cup of tea."
-	icon_state = "donut_olive"
-	bonus_reagents = list("teapowder = 3", "sprinkles" = 1)
-	tastes = list("donut" = 3, "matcha" = 1)
-	is_decorated = TRUE
-	filling_color = "#879630"
-
-//////////////////////JELLY DONUTS/////////////////////////
+	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
 	desc = "You jelly?"
-	icon_state = "jelly"
-	decorated_icon = "jelly_homer"
+	icon_state = "jdonut1"
+	frosted_icon = "jdonut2"
 	bonus_reagents = list("sugar" = 1, "vitamin" = 1)
 	extra_reagent = "berryjuice"
 	tastes = list("jelly" = 1, "donut" = 3)
-	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR | BREAKFAST
+	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/Initialize()
 	. = ..()
 	if(extra_reagent)
 		reagents.add_reagent("[extra_reagent]", 3)
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/plain //use this ingame to avoid inheritance related crafting issues.
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/berry
-	name = "pink jelly donut"
-	desc = "Goes great with a soy latte."
-	icon_state = "jelly_pink"
-	bonus_reagents = list("berryjuice" = 3, "sprinkles" = 1, "vitamin" = 1) //Extra sprinkles to reward frosting.
-	filling_color = "#E57d9A"
-	decorated_icon = "jelly_homer"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/trumpet
-	name = "spaceman's jelly donut"
-	desc = "Goes great with a cold beaker of malk."
-	icon_state = "jelly_purple"
-	bonus_reagents = list("polypyr" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "violets" = 1)
-	is_decorated = TRUE
-	filling_color = "#8739BF"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/apple
-	name = "apple jelly donut"
-	desc = "Goes great with a shot of cinnamon schnapps."
-	icon_state = "jelly_green"
-	bonus_reagents = list("applejuice" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "green apples" = 1)
-	is_decorated = TRUE
-	filling_color = "#6ABE30"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/caramel
-	name = "caramel jelly donut"
-	desc = "Goes great with a mug of hot coco."
-	icon_state = "jelly_beige"
-	bonus_reagents = list("caramel" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "buttery sweetness" = 1)
-	is_decorated = TRUE
-	filling_color = "#D4AD5B"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/choco
-	name = "chocolate jelly donut"
-	desc = "Goes great with a glass of warm milk."
-	icon_state = "jelly_choc"
-	bonus_reagents = list("hot_coco" = 3, "sprinkles" = 1, "vitamin" = 1) //the coco reagent is just bitter.
-	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	decorated_icon = "jelly_choc_sprinkles"
-	filling_color = "#4F230D"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin
-	name = "blumpkin jelly donut"
-	desc = "Goes great with a mug of soothing drunken blumpkin."
-	icon_state = "jelly_blue"
-	bonus_reagents = list("blumpkinjuice" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 2, "blumpkin" = 1)
-	is_decorated = TRUE
-	filling_color = "#2788C4"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/bungo
-	name = "bungo jelly donut"
-	desc = "Goes great with a mason jar of hippie's delight."
-	icon_state = "jelly_yellow"
-	bonus_reagents = list("bungojuice" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "tropical sweetness" = 1)
-	is_decorated = TRUE
-	filling_color = "#DEC128"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/matcha
-	name = "matcha jelly donut"
-	desc = "Goes great with a cup of tea."
-	icon_state = "jelly_olive"
-	bonus_reagents = list("teapowder" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
-	is_decorated = TRUE
-	filling_color = "#879630"
-
-//////////////////////////SLIME DONUTS/////////////////////////
-
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
-	icon_state = "jelly"
+	icon_state = "jdonut1"
 	extra_reagent = "slimejelly"
-	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR | BREAKFAST
+	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain
+/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly
+	name = "jelly donut"
+	desc = "You jelly?"
+	icon_state = "jdonut1"
+	extra_reagent = "cherryjelly"
+	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/berry
-	name = "pink jelly donut"
-	desc = "Goes great with a soy latte."
-	icon_state = "jelly_pink"
-	bonus_reagents = list("berryjuice" = 3, "sprinkles" = 1, "vitamin" = 1) //Extra sprinkles to reward frosting
-	filling_color = "#E57d9A"
+/obj/item/reagent_containers/food/snacks/donut/meat
+	bonus_reagents = list("ketchup" = 1)
+	list_reagents = list("nutriment" = 3, "ketchup" = 2)
+	tastes = list("meat" = 1)
+	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/trumpet
-	name = "spaceman's jelly donut"
-	desc = "Goes great with a cold beaker of malk."
-	icon_state = "jelly_purple"
-	bonus_reagents = list("polypyr" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "violets" = 1)
-	is_decorated = TRUE
-	filling_color = "#8739BF"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/apple
-	name = "apple jelly donut"
-	desc = "Goes great with a shot of cinnamon schnapps."
-	icon_state = "jelly_green"
-	bonus_reagents = list("applejuice" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "green apples" = 1)
-	is_decorated = TRUE
-	filling_color = "#6ABE30"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/caramel
-	name = "caramel jelly donut"
-	desc = "Goes great with a mug of hot coco."
-	icon_state = "jelly_beige"
-	bonus_reagents = list("caramel" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "buttery sweetness" = 1)
-	is_decorated = TRUE
-	filling_color = "#D4AD5B"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/choco
-	name = "chocolate jelly donut"
-	desc = "Goes great with a glass of warm milk."
-	icon_state = "jelly_choc"
-	bonus_reagents = list("hot_coco" = 3, "sprinkles" = 1, "vitamin" = 1) //the coco reagent is just bitter.
-	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	decorated_icon = "jelly_choc_sprinkles"
-	filling_color = "#4F230D"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin
-	name = "blumpkin jelly donut"
-	desc = "Goes great with a mug of soothing drunken blumpkin."
-	icon_state = "jelly_blue"
-	bonus_reagents = list("blumpkinjuice" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 2, "blumpkin" = 1)
-	is_decorated = TRUE
-	filling_color = "#2788C4"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/bungo
-	name = "bungo jelly donut"
-	desc = "Goes great with a mason jar of hippie's delight."
-	icon_state = "jelly_yellow"
-	bonus_reagents = list("bungojuice" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "tropical sweetness" = 1)
-	is_decorated = TRUE
-	filling_color = "#DEC128"
-
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/matcha
-	name = "matcha jelly donut"
-	desc = "Goes great with a cup of tea."
-	icon_state = "jelly_olive"
-	bonus_reagents = list("teapowder" = 3, "sprinkles" = 1, "vitamin" = 1)
-	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
-	is_decorated = TRUE
-	filling_color = "#879630"
-
-/obj/item/reagent_containers/food/snacks/donut/glaze
-	name = "glazed donut"
-	desc = "A sugar glazed donut."
-	icon_state = "donut_glaze"
+/obj/item/reagent_containers/food/snacks/donut/semen
+	name = "\"cream\" donut"
+	desc = "That cream looks a little runny..."
+	icon_state = "donut3"
 	bitesize = 10
-	bonus_reagents = list("sugar" = 3)
-	list_reagents = list("nutriment" = 3, "sugar" = 8)
+	bonus_reagents = list("semen" = 1)
+	list_reagents = list("nutriment" = 3, "sugar" = 2, "semen" = 5)
 	filling_color = "#FFFFFF"
 	tastes = list("donut" = 1, "salt" = 3)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
+
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
@@ -333,14 +111,14 @@
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#F4A460"
 	tastes = list("muffin" = 1)
-	foodtype = GRAIN | SUGAR | BREAKFAST
+	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
 	icon_state = "berrymuffin"
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
-	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
@@ -348,7 +126,7 @@
 	alpha = 125
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 	tastes = list("muffin" = 3, "spookiness" = 1)
-	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
@@ -371,7 +149,7 @@
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	filling_color = "#D2691E"
 	tastes = list("waffles" = 1)
-	foodtype = GRAIN | SUGAR | BREAKFAST
+	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/soylentgreen
 	name = "\improper Soylent Green"
@@ -382,7 +160,7 @@
 	list_reagents = list("nutriment" = 10, "vitamin" = 1)
 	filling_color = "#9ACD32"
 	tastes = list("waffles" = 7, "people" = 1)
-	foodtype = GRAIN | MEAT
+	foodtype = GRAIN | GROSS | MEAT
 
 /obj/item/reagent_containers/food/snacks/soylenviridians
 	name = "\improper Soylent Virdians"
@@ -405,7 +183,7 @@
 	list_reagents = list("nutriment" = 8, "mushroomhallucinogen" = 2, "vitamin" = 2)
 	filling_color = "#00BFFF"
 	tastes = list("waffle" = 1, "mushrooms" = 1)
-	foodtype = GRAIN | VEGETABLES | SUGAR | BREAKFAST
+	foodtype = GRAIN | VEGETABLES | TOXIC | SUGAR
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -418,8 +196,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1)
-	foodtype = GRAIN | SUGAR
-	dunkable = TRUE
+	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
@@ -436,7 +213,6 @@
 	desc = "The heated food of choice for the seasoned traitor."
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
-	cooked_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
 
@@ -539,7 +315,6 @@
 	filling_color = "#CD853F"
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -560,7 +335,6 @@
 	filling_color = "#D2691E"
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -571,7 +345,6 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"
@@ -594,7 +367,7 @@
 	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/strawberrycupcake
-	name = "strawberry cupcake"
+	name = "Strawberry cupcake"
 	desc = "Strawberry inside a delicious cupcake."
 	icon_state = "strawberrycupcake"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
@@ -611,9 +384,9 @@
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
 	tastes = list("pastry" = 1, "sweetness" = 1)
-	foodtype = GRAIN | SUGAR
+	foodtype = GRAIN
 
-#define PANCAKE_MAX_STACK 10
+#define PANCAKE_MAX_STACK 30
 
 /obj/item/reagent_containers/food/snacks/pancakes
 	name = "pancake"
@@ -624,7 +397,7 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#D2691E"
 	tastes = list("pancakes" = 1)
-	foodtype = GRAIN | SUGAR | BREAKFAST
+	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/pancakes/blueberry
 	name = "blueberry pancake"

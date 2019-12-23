@@ -236,14 +236,10 @@
 /datum/nanite_program/spreading/active_effect()
 	if(prob(10))
 		var/list/mob/living/target_hosts = list()
-		var/turf/T = get_turf(host_mob)
-		for(var/mob/living/L in range(5, host_mob))
+		for(var/mob/living/L in oview(5, host_mob))
 			if(!(MOB_ORGANIC in L.mob_biotypes) && !(MOB_UNDEAD in L.mob_biotypes))
 				continue
-			if(!disease_air_spread_walk(T, get_turf(L)))
-				continue
 			target_hosts += L
-		target_hosts -= host_mob
 		if(!target_hosts.len)
 			return
 		var/mob/living/infectee = pick(target_hosts)

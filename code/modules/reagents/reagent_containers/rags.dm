@@ -104,7 +104,6 @@
 				msg += "'s liquids into \the [target]"
 				reagents.trans_to(target, reagents.total_volume)
 			to_chat(user, "<span class='notice'>[msg].</span>")
-		return TRUE
 
 
 /obj/item/reagent_containers/rag/towel

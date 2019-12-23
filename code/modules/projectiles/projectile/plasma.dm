@@ -1,4 +1,5 @@
 obj/item/projectile/energy/plasmabolt
+	icon = 'modular_citadel/icons/obj/VGProjectile.dmi'
 	name = "plasma bolt"
 	icon_state = "plasma"
 	flag = "energy"

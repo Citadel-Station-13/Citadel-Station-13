@@ -615,11 +615,6 @@
 		return
 	..()
 
-/obj/item/electronic_assembly/can_trigger_gun(mob/living/user) //sanity checks against pocket death weapon circuits
-	if(!can_fire_equipped || !user.is_holding(src))
-		return FALSE
-	return ..()
-
 /obj/item/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
 	name = "type-a electronic assembly"
 

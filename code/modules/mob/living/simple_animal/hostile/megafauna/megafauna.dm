@@ -116,10 +116,8 @@
 	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1)) //Don't award medals if the medal type isn't set
+	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
-	if(!SSmedals.hub_enabled) // This allows subtypes to carry on other special rewards not tied with medals. (such as bubblegum's arena shuttle)
-		return TRUE
 
 	for(var/mob/living/L in view(7,src))
 		if(L.stat || !L.client)

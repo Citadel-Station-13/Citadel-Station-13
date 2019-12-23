@@ -97,10 +97,8 @@
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
-	. = ..()
 	if(user.canUseTopic(src, !issilicon(user)))
 		do_the_dishes(TRUE)
-		return TRUE
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
 	if(!contents.len)

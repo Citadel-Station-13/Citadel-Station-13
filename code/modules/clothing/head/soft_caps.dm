@@ -22,11 +22,11 @@
 
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
-	. = ..()
+	..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	flip(user)
-	return TRUE
+	else
+		flip(user)
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)

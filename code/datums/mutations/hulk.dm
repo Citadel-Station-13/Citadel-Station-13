@@ -5,7 +5,7 @@
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
-	species_allowed = list("fly") //no skeleton/lizard hulk
+	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
@@ -13,7 +13,6 @@
 		return
 	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
 	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
-	ADD_TRAIT(owner, TRAIT_CHUNKYFINGERS, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
@@ -32,7 +31,6 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
 	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
-	ADD_TRAIT(owner, TRAIT_CHUNKYFINGERS, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
 	UnregisterSignal(owner, COMSIG_MOB_SAY)

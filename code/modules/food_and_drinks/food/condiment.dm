@@ -26,7 +26,6 @@
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
 	 "mayonnaise" = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."),
-	 "bbqsauce" = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 	 "peanut_butter" = list("peanutbutter", "peanut butter jar", "A deliciously and sticky spread made from peanuts."))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
@@ -300,8 +299,3 @@
 	name = "astrotame pack"
 	originalname = "astrotame"
 	list_reagents = list("astrotame" = 5)
-
-/obj/item/reagent_containers/food/condiment/pack/bbqsauce
-	name = "bbq sauce pack"
-	originalname = "bbq sauce"
-	list_reagents = list("bbqsauce" = 10)

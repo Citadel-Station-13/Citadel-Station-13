@@ -76,14 +76,12 @@
 	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
-	. = ..()
 	if (!user.canUseTopic(src, !issilicon(user)))
 		return
 	if (express_console)
 		unlink_console()
 	else
 		to_chat(user, "<span class='notice'>There is no linked console!</span>")
-	return TRUE
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console

@@ -51,12 +51,10 @@
 		open_machine()
 
 /obj/machinery/harvester/AltClick(mob/user)
-	. = ..()
 	if(harvesting || !user || !isliving(user) || state_open)
 		return
 	if(can_harvest())
 		start_harvest()
-	return TRUE
 
 /obj/machinery/harvester/proc/can_harvest()
 	if(!powered(EQUIP) || state_open || !occupant || !iscarbon(occupant))

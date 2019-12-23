@@ -110,8 +110,7 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/A)
 	A.BorgCtrlClick(src)
 /mob/living/silicon/robot/AltClickOn(atom/A)
-	if(!A.BorgAltClick(src))
-		altclick_listed_turf(A)
+	A.BorgAltClick(src)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)
@@ -155,17 +154,20 @@
 		..()
 
 /atom/proc/BorgAltClick(mob/living/silicon/robot/user)
-	return AltClick(user)
+	AltClick(user)
+	return
 
 /obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		return AIAltClick()
-	return ..()
+		AIAltClick()
+	else
+		..()
 
 /obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		return AIAltClick()
-	return ..()
+		AIAltClick()
+	else
+		..()
 
 /*
 	As with AI, these are not used in click code,

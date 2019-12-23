@@ -21,11 +21,9 @@
 			RegisterSignal(parent, bounce, .proc/bounce_up)
 
 /datum/component/bouncy/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, bounce_signals, .proc/bounce_up)
 
 /datum/component/bouncy/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, bounce_signals)
 
 /datum/component/bouncy/proc/bounce_up(datum/source)

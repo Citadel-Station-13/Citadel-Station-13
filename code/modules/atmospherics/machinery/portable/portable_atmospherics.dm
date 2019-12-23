@@ -81,13 +81,11 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
-	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
 		return
 	if(holding)
 		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
 		replace_tank(user, TRUE)
-		return TRUE
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
 	. = ..()

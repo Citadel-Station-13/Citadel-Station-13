@@ -76,22 +76,6 @@
 	required_reagents = list("corn_starch" = 1, "sacid" = 1)
 	required_temp = 374
 
-/datum/chemical_reaction/caramel
-	name = "Caramel"
-	id = "caramel"
-	results = list("caramel" = 1)
-	required_reagents = list("sugar" = 1)
-	required_temp = 413
-	mob_react = FALSE
-
-/datum/chemical_reaction/caramel_burned
-	name = "Caramel burned"
-	id = "caramel_burned"
-	results = list("carbon" = 1)
-	required_reagents = list("caramel" = 1)
-	required_temp = 483
-	mob_react = FALSE
-
 /datum/chemical_reaction/cheesewheel
 	name = "Cheesewheel"
 	id = "cheesewheel"
@@ -177,9 +161,3 @@
 	new /obj/item/reagent_containers/food/snacks/salad/ricebowl(location)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
-
-/datum/chemical_reaction/bbqsauce
-	name = "BBQ Sauce"
-	id = "bbqsauce"
-	results = list("bbqsauce" = 5)
-	required_reagents = list("ash" = 1, "tomatojuice" = 1, "salglu_solution" = 3, "blackpepper" = 1)

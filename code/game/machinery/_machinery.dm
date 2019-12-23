@@ -181,9 +181,8 @@ Class Procs:
 		if(isliving(A))
 			var/mob/living/L = A
 			L.update_canmove()
-	if(occupant)
-		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
-		occupant = null
+	SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
+	occupant = null
 
 /obj/machinery/proc/can_be_occupant(atom/movable/am)
 	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)

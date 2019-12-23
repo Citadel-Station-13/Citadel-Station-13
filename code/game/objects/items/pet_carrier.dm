@@ -70,7 +70,6 @@
 	update_icon()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
-	. = ..()
 	if(open || !user.canUseTopic(src, BE_CLOSE))
 		return
 	locked = !locked
@@ -80,7 +79,6 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_icon()
-	return TRUE
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
 	if(user.a_intent == INTENT_HARM)

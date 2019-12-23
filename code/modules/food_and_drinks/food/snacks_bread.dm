@@ -5,7 +5,7 @@
 	slices_num = 5
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
-	dunkable = TRUE
+
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -16,7 +16,6 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -271,7 +270,6 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	list_reagents = list("nutriment" = 4)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	tastes = list("butter" = 1, "toast" = 1)
-	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/butterbiscuit
 	name = "butter biscuit"
@@ -282,7 +280,6 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	list_reagents = list("nutriment" = 5)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
-	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/butterdog
 	name = "butterdog"

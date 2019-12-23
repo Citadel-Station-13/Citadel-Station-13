@@ -138,10 +138,8 @@
 	chassis.toggle_strafe()
 
 /obj/mecha/AltClick(mob/living/user)
-	. = ..()
 	if((user == occupant) && user.canUseTopic(src))
 		toggle_strafe()
-		return TRUE
 
 /obj/mecha/proc/toggle_strafe()
 	strafe = !strafe

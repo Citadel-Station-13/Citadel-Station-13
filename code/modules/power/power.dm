@@ -46,9 +46,9 @@
 	else
 		return 0
 
-/obj/machinery/power/proc/avail(amount)
+/obj/machinery/power/proc/avail()
 	if(powernet)
-		return amount ? powernet.avail >= amount : powernet.avail
+		return powernet.avail
 	else
 		return 0
 

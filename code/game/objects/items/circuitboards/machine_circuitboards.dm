@@ -665,13 +665,6 @@
 	name = "Booze Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/drinks/beer
 
-/obj/item/circuitboard/machine/chem_dispenser/abductor
-	name = "Reagent Synthetizer (Abductor Machine Board)"
-	icon_state = "abductor_mod"
-	build_path = /obj/machinery/chem_dispenser/abductor
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
-	needs_anchored = FALSE
-
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
 	build_path = /obj/machinery/smoke_machine
@@ -952,12 +945,10 @@
 	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
 
 /obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
-	. = ..()
 	if(!user.Adjacent(src))
 		return
 	transmit = !transmit
 	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
-	return TRUE
 
 /obj/item/circuitboard/machine/stacking_unit_console
 	name = "Stacking Machine Console (Machine Board)"

@@ -28,7 +28,3 @@
 
 /obj/effect/projectile/muzzle/wormhole
 	icon_state = "wormhole_g"
-
-/obj/effect/projectile/muzzle/laser/wavemotion
-	name = "particle backblast"
-	icon_state = "muzzle_wavemotion"

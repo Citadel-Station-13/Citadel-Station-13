@@ -702,11 +702,11 @@
 		return ..()
 
 /obj/machinery/power/apc/AltClick(mob/user)
-	. = ..()
+	..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
-	togglelock(user)
-	return TRUE
+	else
+		togglelock(user)
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -1113,9 +1113,9 @@
 	if(terminal && terminal.powernet)
 		terminal.add_load(amount)
 
-/obj/machinery/power/apc/avail(amount)
+/obj/machinery/power/apc/avail()
 	if(terminal)
-		return terminal.avail(amount)
+		return terminal.avail()
 	else
 		return 0
 

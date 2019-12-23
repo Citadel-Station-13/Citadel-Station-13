@@ -30,7 +30,6 @@
 		return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
-	. = ..()
 	var/area/A = get_area(src)
 	var/turf/T = get_turf(src)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
@@ -38,7 +37,6 @@
 		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
 		investigate_log("Mixer, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Mixer, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-		return TRUE
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 /obj/machinery/atmospherics/components/trinary/mixer/layer1

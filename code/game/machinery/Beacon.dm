@@ -25,10 +25,10 @@
 // update the invisibility and icon
 /obj/machinery/bluespace_beacon/hide(intact)
 	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
+	updateicon()
 
 // update the icon_state
-/obj/machinery/bluespace_beacon/update_icon()
+/obj/machinery/bluespace_beacon/proc/updateicon()
 	var/state="floor_beacon"
 
 	if(invisibility)
@@ -45,4 +45,4 @@
 	else if (Beacon.loc != loc)
 		Beacon.forceMove(loc)
 
-	update_icon()
+	updateicon()

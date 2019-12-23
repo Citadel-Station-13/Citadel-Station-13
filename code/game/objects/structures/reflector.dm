@@ -167,12 +167,10 @@
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else if(finished)
 		rotate(user)
-	return TRUE
 
 
 //TYPES OF REFLECTORS, SINGLE, DOUBLE, BOX

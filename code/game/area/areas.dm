@@ -327,7 +327,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/obj/machinery/light/L in src)
 		L.update()
 
-/area/proc/update_icon()
+/area/proc/updateicon()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!weather_icon)
 		icon_state = null
 
-/area/space/update_icon()
+/area/space/updateicon()
 	icon_state = null
 
 /*
@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/power_change()
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
-	update_icon()
+	updateicon()
 
 /area/proc/usage(chan)
 	var/used = 0

@@ -161,16 +161,12 @@
 	..()
 	new /obj/item/clothing/accessory/armband/medblue(src)
 	new /obj/item/encryptionkey/headset_med(src)
-
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
 	req_access = list(ACCESS_FORENSICS_LOCKERS)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	cutting_tool = /obj/item/screwdriver
-
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/det(src)
