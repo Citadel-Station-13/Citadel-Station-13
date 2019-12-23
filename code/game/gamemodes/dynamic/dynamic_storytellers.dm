@@ -99,48 +99,49 @@ Property weights are:
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
+
+/datum/dynamic_storyteller/cowabunga
+	name = "Chaotic"
+	curve_centre = 10
+	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
+	property_weights = list("extended" = -1, "chaos" = 10)
+
 /datum/dynamic_storyteller/team
 	name = "Teamwork"
-	desc = "Rules that are likely to get the crew to work together against a common enemy."
+	desc = "Chaos: high. Variation: low. Likely antags: nukies, clockwork cult, wizard, blob, xenomorph."
 	curve_centre = 2
 	curve_width = 1.5
 	property_weights = list("valid" = 3, "trust" = 5)
 
+/datum/dynamic_storyteller/classic
+	name = "Classic"
+	desc = "Chaos: medium. Variation: highest. Default dynamic."
+
+/datum/dynamic_storyteller/memes
+	name = "Story"
+	desc = "Chaos: medium. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
+	curve_width = 4
+	property_weights = list("story_potential" = 10, "extended" = 1)
+
+/datum/dynamic_storyteller/suspicion
+	name = "Intrigue"
+	desc = "Chaos: low. Variation: high. Likely antags: traitor, bloodsucker. Rare: revs, blood cult."
+	curve_centre = -2
+	curve_width = 4
+	property_weights = list("trust" = -5)
+
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
-	desc = "Rules that are likely to lead to rounds that reach their finish at the shuttle autocall."
+	desc = "Chaos: low. Variation: medium. Likely antags: bloodsuckers, traitors, sentient disease, revenant."
 	curve_centre = -5
 	curve_width = 0.5
 	property_weights = list("extended" = 5, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
 /datum/dynamic_storyteller/extended
 	name = "Extended"
-	desc = "No antags. Few threatening events. The calmest shift imaginable."
+	desc = "Chaos: none. Variation: none. Likely antags: none."
 	curve_centre = -20
 	curve_width = 0.5
 	
 /datum/dynamic_storyteller/extended/on_start()
 	GLOB.dynamic_forced_extended = TRUE
-
-
-/datum/dynamic_storyteller/memes
-	name = "Story"
-	desc = "Rules that might lead to fun stories to tell."
-	curve_width = 4
-	property_weights = list("story_potential" = 10, "extended" = 1)
-
-/datum/dynamic_storyteller/cowabunga
-	name = "Cowabunga"
-	curve_centre = 10
-	desc = "The most chaotic rules are weighted heavily here. Rounds are nasty, brutish and short."
-	property_weights = list("extended" = -1, "chaos" = 10)
-
-/datum/dynamic_storyteller/suspicion
-	name = "Intrigue"
-	desc = "Rules that lead the crew to distrust one another."
-	curve_width = 4
-	property_weights = list("trust" = -5)
-
-/datum/dynamic_storyteller/classic
-	name = "Classic"
-	desc = "Uses default dynamic weights and nothing else. The most variety."

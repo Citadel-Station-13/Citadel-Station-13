@@ -212,11 +212,17 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				GLOB.master_mode = "dynamic"
-				var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
-				GLOB.dynamic_storyteller_type = S
-				GLOB.dynamic_curve_centre = initial(S.curve_centre)
-				GLOB.dynamic_curve_width = initial(S.curve_width)
+				if(. == "Secret")
+					GLOB.master_mode = "secret"
+					SSticker.save_mode(.)
+					message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
+					log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
+				else
+					GLOB.master_mode = "dynamic"
+					var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
+					GLOB.dynamic_storyteller_type = S
+					GLOB.dynamic_curve_centre = initial(S.curve_centre)
+					GLOB.dynamic_curve_width = initial(S.curve_width)
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -323,6 +329,8 @@ SUBSYSTEM_DEF(vote)
 					var/datum/dynamic_storyteller/S = T
 					choices.Add(initial(S.name))
 					choice_descs.Add(initial(S.desc))
+				choices.Add("Secret")
+				choice_descs.Add("Standard secret. Switches mode if it wins.")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
