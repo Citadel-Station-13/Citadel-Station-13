@@ -101,9 +101,9 @@ SUBSYSTEM_DEF(vote)
 				var/b_rank = this_vote.Find(b)
 				a_rank = a_rank ? a_rank : choices.len+1
 				b_rank = b_rank ? b_rank : choices.len+1
-				if(a_rank>b_rank)
+				if(a_rank<b_rank)
 					d[a][b]++
-				else if(b_rank>a_rank)
+				else if(b_rank<a_rank)
 					d[b][a]++
 				//if equal, do nothing
 	var/list/p[][] = new/list(choices.len,choices.len) //matrix of shortest path from a to b
