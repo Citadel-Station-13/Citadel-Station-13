@@ -395,7 +395,7 @@ SUBSYSTEM_DEF(vote)
 				. += "<h3>Vote any number of choices.</h3>"
 			if(RANKED_CHOICE_VOTING)
 				var/list/myvote = voted[C.ckey]
-				. += "<h3>Vote by order of preference. Revoting will demote to the bottom.</h3>"
+				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
 				if(myvote && myvote.len < choices.len)
 					. += "<h1>Please rank all your preferences. You have not done so.</h1>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
