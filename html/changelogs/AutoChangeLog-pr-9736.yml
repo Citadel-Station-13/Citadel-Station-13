@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - code_imp: "Antag rep proc is now easier to read and supports returning a list."

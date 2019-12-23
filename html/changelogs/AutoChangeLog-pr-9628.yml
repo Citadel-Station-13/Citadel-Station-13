@@ -1,9 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "six more crates, A barrel, A Loom, 40 cotton sheets, two sets of fruit crates, raw lumber crate"
-  - rscadd: "All fermi chems, Boozes, Medical, food chems now sell"
-  - rscadd: "Loads more to sell - Mech gear, Cooking and more!"
-  - tweak: "Moved around the vaule of some things and removed elastic of most items"
-  - balance: "Rebreather implants will now loss vaule, Do to being just metal and glass"
-  - balance: "lowered how many chems are in lewd chem kegs to be around 150-100 as well as the fancy booze kegs"

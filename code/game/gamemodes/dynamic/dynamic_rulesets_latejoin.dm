@@ -36,9 +36,9 @@
 					continue // Dead players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
-
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return ..()
 
@@ -69,6 +69,7 @@
 	high_population_requirement = 15
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
+	always_max_weight = TRUE
 
 //////////////////////////////////////////////
 //                                          //

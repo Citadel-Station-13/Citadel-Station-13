@@ -30,6 +30,7 @@
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
 	anchored = TRUE
+	blood_volume = 0
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point
 	var/mob/living/beam_debuff_target

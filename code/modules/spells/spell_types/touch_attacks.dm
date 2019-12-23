@@ -23,7 +23,7 @@
 		remove_hand(TRUE)
 		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
 		return
-	
+
 	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
 			if(ChargeHand(C))
@@ -71,3 +71,15 @@
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+	name = "Nuclear Fist"
+	desc = "This spell channels raw manliness, allowing you punch your enemies across the galaxy, causing them to detonate violently if hitting any other living being midflight. Does not work while laying down."
+	hand_path = /obj/item/melee/touch_attack/nuclearfist
+
+	school = "evocation"
+	charge_max = 200
+	clothes_req = 0
+	cooldown_min = 40
+
+	action_icon_state = "nuclearfist"

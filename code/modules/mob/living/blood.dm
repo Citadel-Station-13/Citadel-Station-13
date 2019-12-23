@@ -36,6 +36,9 @@
 	if(bleed_rate <= 0)
 		bleed_rate = 0
 
+	if(HAS_TRAIT(src, TRAIT_NOMARROW)) //Bloodsuckers don't need to be here.
+		return
+
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space

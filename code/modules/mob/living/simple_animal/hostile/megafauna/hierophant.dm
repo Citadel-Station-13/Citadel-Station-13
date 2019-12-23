@@ -50,6 +50,7 @@ Difficulty: Normal
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
+	blood_volume = 0
 	speed = 1
 	move_to_delay = 11
 	ranged = 1
@@ -441,7 +442,7 @@ Difficulty: Normal
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
-		return
+		return altclick_listed_turf(A)
 	blink(A)
 
 //Hierophant overlays

@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Launchpads can now take number inputs for offsets rather than just buttons."
