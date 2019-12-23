@@ -80,15 +80,36 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-//TASER
-/datum/status_effect/electrode
-	id = "tased"
+/datum/status_effect/no_combat_mode/
+	id = "no_combat_mode"
 	blocks_combatmode = TRUE
-	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	status_type = STATUS_EFFECT_REPLACE
 
-/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
+
+/datum/status_effect/no_combat_mode/mesmerize
+	id = "Mesmerize"
+	alert_type = /obj/screen/alert/status_effect/mesmerized
+
+/obj/screen/alert/status_effect/mesmerized
+	name = "Mesmerized"
+	desc = "You cant tear your sight from who is in front of you...Their gaze is simply too enthralling.."
+	icon = 'icons/mob/actions/bloodsucker.dmi'
+	icon_state = "power_mez"
+
+/datum/status_effect/no_combat_mode/electrode
+	id = "tased"
+
+/datum/status_effect/no_combat_mode/electrode/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration)) //TODO, figure out how to grab from subtype
 		duration = set_duration
 	. = ..()
 	if(iscarbon(owner))
@@ -97,17 +118,17 @@
 			C.toggle_combat_mode(TRUE)
 		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
 
-/datum/status_effect/electrode/on_remove()
+/datum/status_effect/no_combat_mode/electrode/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
 	. = ..()
 
-/datum/status_effect/electrode/tick()
+/datum/status_effect/no_combat_mode/electrode/tick()
 	if(owner)
 		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 
-/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
+/datum/status_effect/no_combat_mode/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
 	return 2
 
 //OTHER DEBUFFS
@@ -387,6 +408,19 @@
 		owner.adjustBruteLoss(bleed_damage)
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
+
+/datum/status_effect/neck_slice
+	id = "neck_slice"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	duration = -1
+
+/datum/status_effect/neck_slice/tick()
+	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD || H.bleed_rate <= 8)
+		H.remove_status_effect(/datum/status_effect/neck_slice)
+	if(prob(10))
+		H.emote(pick("gasp", "gag", "choke"))
 
 /mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)

@@ -27,6 +27,7 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = 100000
+	blood_volume = 0
 
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
