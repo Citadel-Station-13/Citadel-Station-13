@@ -26,8 +26,8 @@
 		desc = "A wish come true!"
 		bonus_reagents = list("nutriment" = 9, "vitamin" = 1)
 	if(wish_true)
-		reagents.add_reagent("nutriment", 9)
-		reagents.add_reagent("vitamin", 1)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment, 9)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 1)
 		foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/meatball
@@ -101,9 +101,11 @@
 
 /obj/item/reagent_containers/food/snacks/soup/mystery/Initialize()
 	. = ..()
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
-	bonus_reagents = list("[extra_reagent]" = 5, "nutriment" = 6)
-	reagents.add_reagent("[extra_reagent]", 5)
+	extra_reagent = pick(/datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil,
+					/datum/reagent/medicine/omnizine, /datum/reagent/consumable/banana, /datum/reagent/blood,
+					/datum/reagent/toxin/slimejelly, /datum/reagent/toxin, /datum/reagent/carbon, /datum/reagent/medicine/oculine)
+	bonus_reagents = list(extra_reagent = 5, /datum/reagent/consumable/nutriment = 6)
+	reagents.add_reagent(extra_reagent, 5)
 
 /obj/item/reagent_containers/food/snacks/soup/hotchili
 	name = "hot chili"

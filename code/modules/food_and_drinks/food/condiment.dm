@@ -153,11 +153,11 @@
 	if(!proximity)
 		return
 	if(isturf(target))
-		if(!reagents.has_reagent("sodiumchloride", 2))
+		if(!reagents.has_reagent(/datum/reagent/consumable/sodiumchloride, 2))
 			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
-		reagents.remove_reagent("sodiumchloride", 2)
+		reagents.remove_reagent(/datum/reagent/consumable/sodiumchloride, 2)
 		new/obj/effect/decal/cleanable/salt(target)
 		return
 

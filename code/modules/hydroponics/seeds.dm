@@ -195,7 +195,7 @@
 		var/list/data = null
 		if(rid == "blood") // Hack to make blood in plants always O-
 			data = list("blood_type" = "O-")
-		if(rid == "nutriment" || rid == "vitamin")
+		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 			// apple tastes of apple.
 			data = T.tastes
 

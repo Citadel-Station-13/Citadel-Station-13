@@ -73,9 +73,9 @@
 				if(M.fire_stacks)
 					var/minus_plus = M.fire_stacks < 0 ? 1 : -1
 					var/amount = min(abs(M.fire_stacks), soak_efficiency)
-					var/r_id = "fuel"
+					var/r_id = /datum/reagent/fuel
 					if(M.fire_stacks < 0)
-						r_id = "water"
+						r_id = /datum/reagent/water
 					reagents.add_reagent(r_id, amount * 0.3)
 					M.adjust_fire_stacks(minus_plus * amount)
 				M.wash_cream()

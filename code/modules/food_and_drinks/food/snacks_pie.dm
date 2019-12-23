@@ -148,9 +148,9 @@
 	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
-		bonus_reagents = list("nutriment" = 1, "omnizine" = 5, "vitamin" = 4)
+		bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	if(fey)
-		reagents.add_reagent("omnizine", 5)
+		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
 
 
 /obj/item/reagent_containers/food/snacks/pie/xemeatpie

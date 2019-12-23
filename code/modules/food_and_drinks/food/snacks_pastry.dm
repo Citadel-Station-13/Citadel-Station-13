@@ -27,7 +27,7 @@
 	is_frosted = TRUE
 	name = "frosted [name]"
 	icon_state = frosted_icon //delish~!
-	reagents.add_reagent("sprinkles", 1)
+	reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
 	filling_color = "#FF69B4"
 	return TRUE
 
@@ -51,8 +51,11 @@
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
-	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
-	reagents.add_reagent("[extra_reagent]", 3)
+	extra_reagent = pick(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil,
+					/datum/reagent/drug/krokodil, /datum/reagent/toxin/plasma, /datum/reagent/consumable/coco,
+					/datum/reagent/toxin/slimejelly, /datum/reagent/consumable/banana, /datum/reagent/consumable/berryjuice,
+					/datum/reagent/medicine/omnizine)
+	reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
@@ -67,7 +70,7 @@
 /obj/item/reagent_containers/food/snacks/donut/jelly/Initialize()
 	. = ..()
 	if(extra_reagent)
-		reagents.add_reagent("[extra_reagent]", 3)
+		reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
@@ -260,10 +263,10 @@
 	if(fey)
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
-		bonus_reagents = list("omnizine" = 5, "nutriment" = 1, "vitamin" = 1)
+		bonus_reagents = list(/datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	. = ..()
 	if(fey)
-		reagents.add_reagent("omnizine", 5)
+		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
 
 /obj/item/reagent_containers/food/snacks/cracker
 	name = "cracker"

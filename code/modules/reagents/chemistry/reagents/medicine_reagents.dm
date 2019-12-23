@@ -13,7 +13,7 @@
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
+	holder.remove_reagent(type, metabolization_rate / M.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
 
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"
@@ -95,8 +95,8 @@
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
-	if(holder.has_reagent("mindbreaker"))
-		holder.remove_reagent("mindbreaker", 5)
+	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
+		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
@@ -112,10 +112,10 @@
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	if(holder.has_reagent("mindbreaker"))
-		holder.remove_reagent("mindbreaker", 5)
-	if(holder.has_reagent("histamine"))
-		holder.remove_reagent("histamine", 5)
+	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
+		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+	if(holder.has_reagent(/datum/reagent/toxin/histamine))
+		holder.remove_reagent(/datum/reagent/toxin/histamine, 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
@@ -374,12 +374,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
 	if(prob(3))
 		to_chat(M, "<span class = 'warning'>You feel salty.</span>")
-		holder.add_reagent("sodiumchloride", 1)
-		holder.remove_reagent("salglu_solution", 0.5)
+		holder.add_reagent(/datum/reagent/consumable/sodiumchloride, 1)
+		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	else if(prob(3))
 		to_chat(M, "<span class = 'warning'>You feel sweet.</span>")
-		holder.add_reagent("sugar", 1)
-		holder.remove_reagent("salglu_solution", 0.5)
+		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
+		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	if(prob(33))
 		M.adjustBruteLoss(0.5*REM, 0)
 		M.adjustFireLoss(0.5*REM, 0)
@@ -473,9 +473,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
 	. = 1
-	for(var/datum/reagent/R in M.reagents.reagent_list)
+	for(var/A in M.reagents.reagent_list)
+		var/datum/reagent/R = A
 		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
+			M.reagents.remove_reagent(R.type,1)
 	..()
 
 /datum/reagent/medicine/omnizine
@@ -516,9 +517,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 1.5
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/M)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
+	for(var/A in M.reagents.reagent_list)
+		var/datum/reagent/R = A
 		if(R != src)
-			M.reagents.remove_reagent(R.id,2.5)
+			M.reagents.remove_reagent(R.type,2.5)
 	if(M.health > 20)
 		M.adjustToxLoss(2.5*REM, 0)
 		. = 1
@@ -565,9 +567,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
 	M.adjustToxLoss(-2*REM, 0, healtoxinlover)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
+	for(var/A in M.reagents.reagent_list)
+		var/datum/reagent/R = A
 		if(R != src)
-			M.reagents.remove_reagent(R.id,2)
+			M.reagents.remove_reagent(R.type,2)
 	..()
 	. = 1
 
@@ -708,7 +711,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	if(prob(10))
 		M.drowsyness += 1
 	M.jitteriness -= 1
-	M.reagents.remove_reagent("histamine",3)
+	M.reagents.remove_reagent(/datum/reagent/toxin/histamine,3)
 	..()
 
 /datum/reagent/medicine/morphine
@@ -966,8 +969,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
-	if(holder.has_reagent("neurotoxin"))
-		holder.remove_reagent("neurotoxin", 5)
+	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
+		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5)
 	if(prob(15))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
@@ -1058,7 +1061,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
 	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
-	M.reagents.remove_reagent("sugar", 3)
+	M.reagents.remove_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
@@ -1132,7 +1135,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.id,1)
+		M.reagents.remove_reagent(R.type,1)
 	..()
 	. = 1
 
@@ -1302,7 +1305,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.id,5)
+		M.reagents.remove_reagent(R.type,5)
 	M.drowsyness += 2
 	if(M.jitteriness >= 3)
 		M.jitteriness -= 3

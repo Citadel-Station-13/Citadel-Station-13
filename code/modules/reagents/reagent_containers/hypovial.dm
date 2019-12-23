@@ -5,7 +5,6 @@
 	desc = "A hypovial compatible with most hyposprays."
 	icon_state = "hypovial"
 	spillable = FALSE
-	var/comes_with = list() //Easy way of doing this.
 	volume = 10
 	possible_transfer_amounts = list(1,2,5,10)
 	obj_flags = UNIQUE_RENAME
@@ -24,8 +23,6 @@
 	. = ..()
 	if(!icon_state)
 		icon_state = "hypovial"
-	for(var/R in comes_with)
-		reagents.add_reagent(R,comes_with[R])
 	update_icon()
 
 
@@ -116,84 +113,84 @@
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine
 	name = "red hypovial (bicaridine)"
 	icon_state = "hypovial-b"
-	comes_with = list("bicaridine" = 30)
+	list_reagents = list("bicaridine" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin
 	name = "green hypovial (Anti-Tox)"
 	icon_state = "hypovial-a"
-	comes_with = list("antitoxin" = 30)
+	list_reagents = list("antitoxin" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane
 	name = "orange hypovial (kelotane)"
 	icon_state = "hypovial-k"
-	comes_with = list("kelotane" = 30)
+	list_reagents = list("kelotane" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin
 	name = "blue hypovial (dexalin)"
 	icon_state = "hypovial-d"
-	comes_with = list("dexalin" = 30)
+	list_reagents = list("dexalin" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord
 	name = "hypovial (tricordrazine)"
 	icon_state = "hypovial"
-	comes_with = list("tricordrazine" = 30)
+	list_reagents = list("tricordrazine" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction
 	name = "pink hypovial (breast treatment)"
 	icon_state = "hypovial-pink"
-	comes_with = list("BEsmaller_hypo" = 30)
+	list_reagents = list("BEsmaller_hypo" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction
 	name = "pink hypovial (penis treatment)"
 	icon_state = "hypovial-pink"
-	comes_with = list("PEsmaller_hypo" = 30)
+	list_reagents = list("PEsmaller_hypo" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
 	name = "deluxe hypovial"
 	icon_state = "hypoviallarge-cmos"
-	comes_with = list("omnizine" = 20, "leporazine" = 20, "atropine" = 20)
+	list_reagents = list("omnizine" = 20, "leporazine" = 20, "atropine" = 20)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/bicaridine
 	name = "large red hypovial (bicaridine)"
 	icon_state = "hypoviallarge-b"
-	comes_with = list("bicaridine" = 60)
+	list_reagents = list("bicaridine" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/antitoxin
 	name = "large green hypovial (anti-tox)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("antitoxin" = 60)
+	list_reagents = list("antitoxin" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/kelotane
 	name = "large orange hypovial (kelotane)"
 	icon_state = "hypoviallarge-k"
-	comes_with = list("kelotane" = 60)
+	list_reagents = list("kelotane" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/dexalin
 	name = "large blue hypovial (dexalin)"
 	icon_state = "hypoviallarge-d"
-	comes_with = list("dexalin" = 60)
+	list_reagents = list("dexalin" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/charcoal
 	name = "large black hypovial (charcoal)"
 	icon_state = "hypoviallarge-t"
-	comes_with = list("charcoal" = 60)
+	list_reagents = list("charcoal" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/tricord
 	name = "large hypovial (tricord)"
 	icon_state = "hypoviallarge"
-	comes_with = list("tricordrazine" = 60)
+	list_reagents = list("tricordrazine" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/salglu
 	name = "large green hypovial (salglu)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("salglu_solution" = 60)
+	list_reagents = list("salglu_solution" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/synthflesh
 	name = "large orange hypovial (synthflesh)"
 	icon_state = "hypoviallarge-k"
-	comes_with = list("synthflesh" = 60)
+	list_reagents = list("synthflesh" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat
 	name = "combat hypovial"
 	icon_state = "hypoviallarge-t"
-	comes_with = list("epinephrine" = 3, "omnizine" = 19, "leporazine" = 19, "atropine" = 19) //Epinephrine's main effect here is to kill suff damage, so we don't need much given atropine
+	list_reagents = list("epinephrine" = 3, "omnizine" = 19, "leporazine" = 19, "atropine" = 19) //Epinephrine's main effect here is to kill suff damage, so we don't need much given atropine

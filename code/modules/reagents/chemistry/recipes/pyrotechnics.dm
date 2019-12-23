@@ -33,9 +33,9 @@
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("nitroglycerin", created_volume*2)
+	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume*2)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin_explosion
@@ -191,9 +191,9 @@
 	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
 
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("sorium", created_volume*4)
+	holder.remove_reagent(/datum/reagent/sorium, created_volume*4)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = CLAMP(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
@@ -216,9 +216,9 @@
 	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
 
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("liquid_dark_matter", created_volume*3)
+	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
@@ -241,7 +241,7 @@
 	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
 	var/location = get_turf(holder.my_atom)
 	do_sparks(2, TRUE, location)
@@ -255,7 +255,7 @@
 				C.Knockdown(60)
 			else
 				C.Stun(100)
-	holder.remove_reagent("flash_powder", created_volume*3)
+	holder.remove_reagent(/datum/reagent/flash_powder, created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
 	name = "Flash powder activation"
@@ -284,9 +284,9 @@
 	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("smoke_powder", created_volume*3)
+	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume*3)
 	var/smoke_radius = round(sqrt(created_volume * 1.5), 1)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/smoke_spread/chem/S = new
@@ -301,7 +301,7 @@
 /datum/chemical_reaction/smoke_powder_smoke
 	name = "smoke_powder_smoke"
 	id = "smoke_powder_smoke"
-	required_reagents = list("smoke_powder" = 1)
+	required_reagents = list(/datum/reagent/smoke_powder = 1)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -324,9 +324,9 @@
 	required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1)
 
 /datum/chemical_reaction/sonic_powder/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("sonic_powder", created_volume*3)
+	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume*3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
@@ -351,7 +351,7 @@
 	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
 	var/turf/open/T = get_turf(holder.my_atom)
 	if(istype(T))

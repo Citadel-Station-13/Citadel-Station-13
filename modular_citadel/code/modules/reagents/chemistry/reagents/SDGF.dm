@@ -49,9 +49,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/list/candies = list()
 	var/pollStarted = FALSE
 	var/startHunger
-	impure_chem 			= "SDGFtox"
+	impure_chem 			= /datum/reagent/impure/SDGFtox
 	inverse_chem_val 		= 0.5
-	inverse_chem		= "SDZF"
+	inverse_chem		= /datum/reagent/impure/SDZF
 	can_synth = TRUE
 
 
@@ -122,7 +122,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				SM.nutrition = startHunger/2
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
-				SM.reagents.add_reagent("SDGFheal", volume)
+				SM.reagents.add_reagent(/datum/reagent/fermi/SDGFheal, volume)
 				M.reagents.remove_reagent(id, volume)
 				log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Sentient clones made")
@@ -265,7 +265,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.set_species(mutation)
 
 		//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
-		SM.reagents.add_reagent("SDGFheal", volume)
+		SM.reagents.add_reagent(/datum/reagent/fermi/SDGFheal, volume)
 		M.reagents.remove_reagent(id, volume)
 
 		SM.updatehealth()
@@ -338,7 +338,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.adjustToxLoss(1, 0)// the warning!
 
 		if(86)//mean clone time!
-			if (!M.reagents.has_reagent("pen_acid"))//Counterplay is pent.)
+			if (!M.reagents.has_reagent(/datum/reagent/medicine/pen_acid))//Counterplay is pent.)
 				message_admins("(non-infectious) SDZF: Zombie spawned at [M] [COORD(M)]!")
 				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1

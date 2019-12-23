@@ -188,12 +188,12 @@
 GLOBAL_VAR_INIT(frying_hardmode, TRUE)
 GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
 GLOBAL_LIST_INIT(frying_bad_chems, list(
-"bad_food" = 10,
-"clf3" = 2,
-"aranesp" = 2,
-"blackpowder" = 10,
-"phlogiston" = 3,
-"cyanide" = 3,
+/datum/reagent/toxin/bad_food = 10,
+/datum/reagent/clf3 = 2,
+/datum/reagent/drug/aranesp = 2,
+/datum/reagent/blackpowder = 10,
+/datum/reagent/phlogiston = 3,
+/datum/reagent/toxin/cyanide = 3,
 ))
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)

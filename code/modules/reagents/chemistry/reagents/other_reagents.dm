@@ -62,7 +62,7 @@
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 	if(!B.reagents)
-		B.reagents.add_reagent(id, reac_volume)
+		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()
 
 /datum/reagent/blood/on_new(list/data)
@@ -392,9 +392,9 @@
 				remove_servant_of_ratvar(M)
 			M.jitteriness = 0
 			M.stuttering = 0
-			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+			holder.del_reagent(type)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			return
-	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
+	holder.remove_reagent(type, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
@@ -414,7 +414,7 @@
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent(id,reac_volume/4)
+		M.reagents.add_reagent(type, reac_volume/4)
 		return
 	return ..()
 
@@ -437,7 +437,7 @@
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(id, 1)
+	holder.remove_reagent(type, 1)
 	return TRUE
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
@@ -452,7 +452,7 @@
 	M.adjustToxLoss(1, 0)
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 150)
-	holder.remove_reagent(id, 1)
+	holder.remove_reagent(type, 1)
 	pH = 0.1
 
 /datum/reagent/fuel/holyoil		//Its oil
@@ -481,7 +481,7 @@
 		M.adjustToxLoss(3, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustStaminaLoss(10, 0)
-		holder.remove_reagent(id, 1)
+		holder.remove_reagent(type, 1)
 	return TRUE
 
 //We only get 30u to start with...
@@ -815,7 +815,7 @@
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
 		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
-		H.reagents.del_reagent(id)
+		H.reagents.del_reagent(type)
 
 	switch(current_cycle)
 		if(1 to 6)
@@ -830,7 +830,7 @@
 		if(20 to INFINITY)
 			var/species_type = pick(subtypesof(/datum/species/jelly))
 			H.set_species(species_type)
-			H.reagents.del_reagent(id)
+			H.reagents.del_reagent(type)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
 
 /datum/reagent/mulligan
@@ -1089,7 +1089,7 @@
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent("radium", reac_volume)
+			GG.reagents.add_reagent(/datum/reagent/radium, reac_volume)
 
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
@@ -1127,7 +1127,7 @@
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
-			M.reagents.add_reagent("toxin", reac_volume)
+			M.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
 	..()
 
 /datum/reagent/iron/overdose_start(mob/living/M)
@@ -1159,7 +1159,7 @@
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_SILVER))
-		M.reagents.add_reagent("toxin", reac_volume)
+		M.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
 	..()
 
 /datum/reagent/uranium
@@ -1181,7 +1181,7 @@
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent("uranium", reac_volume)
+			GG.reagents.add_reagent(/datum/reagent/uranium, reac_volume)
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1527,7 +1527,7 @@
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
 	current_cycle++
-	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().
+	holder.remove_reagent(type, 0.99)		//Gives time for the next tick of life().
 	. = TRUE //Update status effects.
 
 /datum/reagent/nitryl

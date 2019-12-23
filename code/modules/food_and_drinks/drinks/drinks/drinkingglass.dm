@@ -103,7 +103,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				reagents.add_reagent("eggyolk", 5)
+				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 5)
 				qdel(E)
 			return
 	else

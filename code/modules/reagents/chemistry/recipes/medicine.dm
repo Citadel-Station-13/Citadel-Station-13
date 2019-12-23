@@ -70,10 +70,10 @@
 
 /datum/chemical_reaction/synthtissue
 	name = "Synthtissue"
-	id = "synthtissue"
-	results = list("synthtissue" = 5)
-	required_reagents = list("synthflesh" = 1)
-	required_catalysts = list("sugar" = 0.1)
+	id = /datum/reagent/synthtissue
+	results = list(/datum/reagent/synthtissue = 5)
+	required_reagents = list(/datum/reagent/medicine/synthflesh = 1)
+	required_catalysts = list(/datum/reagent/consumable/sugar = 0.1)
 	//FermiChem vars:
 	OptimalTempMin 		= 305		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 315 		// Upper end for above
@@ -91,13 +91,13 @@
 	PurityMin 			= 0
 
 /datum/chemical_reaction/synthtissue/FermiCreate(datum/reagents/holder, added_volume, added_purity)
-	var/datum/reagent/synthtissue/St = holder.has_reagent("synthtissue")
-	var/datum/reagent/N = holder.has_reagent("sugar")
+	var/datum/reagent/synthtissue/St = holder.has_reagent(/datum/reagent/synthtissue)
+	var/datum/reagent/N = holder.has_reagent(/datum/reagent/consumable/sugar)
 	if(!St)
 		return
 	if(holder.chem_temp > 320)
 		var/temp_ratio = 1-(330 - holder.chem_temp)/10
-		holder.remove_reagent(src.id, added_volume*temp_ratio)
+		holder.remove_reagent(id, added_volume*temp_ratio)
 	if(St.purity < 1)
 		St.volume *= St.purity
 		St.purity = 1

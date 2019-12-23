@@ -41,7 +41,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(origin.mind && origin.mind != originalmind)
 		to_chat(originalmind.current, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
 		return ..()
-	if(origin.reagents.has_reagent("astral") )
+	if(origin.reagents.has_reagent(/datum/reagent/fermi/astral) )
 		var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in origin.reagents.reagent_list
 		if(As.current_cycle < 10)
 			to_chat(originalmind.current, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
@@ -90,7 +90,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(id, current_cycle/10, FALSE)//exponent
+	metabolization_rate = current_cycle/10 //exponential
 	sleepytime+=5
 	if(G)//This is a mess because of how slow qdel is, so this is all to stop runtimes.
 		if(G.mind)

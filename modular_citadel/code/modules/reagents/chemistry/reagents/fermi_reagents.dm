@@ -7,9 +7,9 @@
 	taste_description	= "affection and love!"
 	can_synth = FALSE
 	value = 20
-	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	impure_chem 			= /datum/reagent/impure/fermiTox // What chemical is metabolised with an inpure reaction
 	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
-	inverse_chem			= "fermiTox"
+	inverse_chem			= /datum/reagent/impure/fermiTox
 
 
 //This should process fermichems to find out how pure they are and what effect to do.
@@ -174,9 +174,9 @@
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
 	overdose_threshold = 15
-	impure_chem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
+	impure_chem 			= /datum/reagent/fermi/nanite_b_goneTox //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.25
-	inverse_chem		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	inverse_chem		= /datum/reagent/fermi/nanite_b_goneTox //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
 	value = 90
@@ -290,7 +290,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	else
-		holder.remove_reagent("fermiTest", volume)//Avoiding recurrsion
+		holder.del_reagent(type)//Avoiding recurrsion
 	var/location = get_turf(holder.my_atom)
 	if(cached_purity < 0.34 || cached_purity == 1)
 		var/datum/effect_system/foam_spread/s = new()
@@ -323,7 +323,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
@@ -333,7 +333,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(id, volume, ignore_pH = TRUE)
+	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
 /datum/reagent/fermi/basic_buffer
@@ -345,7 +345,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
@@ -355,7 +355,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(id, volume, ignore_pH = TRUE)
+	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
 //Turns you into a cute catto while it's in your system.

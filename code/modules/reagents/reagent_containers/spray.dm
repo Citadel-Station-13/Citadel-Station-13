@@ -52,13 +52,13 @@
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
-	if(reagents.has_reagent("sacid"))
+	if(reagents.has_reagent(/datum/reagent/toxin/acid))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [AREACOORD(T)].")
-	if(reagents.has_reagent("facid"))
+	if(reagents.has_reagent(/datum/reagent/toxin/acid/fluacid))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
 		log_game("[key_name(user)] fired Fluacid from \a [src] at [AREACOORD(T)].")
-	if(reagents.has_reagent("lube"))
+	if(reagents.has_reagent(/datum/reagent/lube))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [ADMIN_VERBOSEJMP(T)].")
 		log_game("[key_name(user)] fired Space lube from \a [src] at [AREACOORD(T)].")
 	return
@@ -235,9 +235,9 @@
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE
 	volume = 100
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	var/generate_amount = 5
-	var/generate_type = "water"
+	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
 	var/generate_delay = 10	//deciseconds
 	can_fill_from_container = FALSE
@@ -245,9 +245,9 @@
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
 	name = "nova flower"
 	desc = "This doesn't look safe at all..."
-	list_reagents = list("clf3" = 3)
+	list_reagents = list(/datum/reagent/clf3 = 3)
 	volume = 3
-	generate_type = "clf3"
+	generate_type = /datum/reagent/clf3
 	generate_amount = 1
 	generate_delay = 40		//deciseconds
 

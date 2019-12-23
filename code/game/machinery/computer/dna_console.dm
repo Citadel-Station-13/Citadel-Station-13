@@ -342,9 +342,9 @@
 			current_screen = href_list["text"]
 		if("rejuv")
 			if(viable_occupant && viable_occupant.reagents)
-				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount("potass_iodide")
+				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount(/datum/reagent/medicine/potass_iodide)
 				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
-				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
+				viable_occupant.reagents.add_reagent(/datum/reagent/medicine/potass_iodide, can_add)
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)

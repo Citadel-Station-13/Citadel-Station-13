@@ -155,7 +155,7 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
-			if(blood_id == "blood" || blood_id == "jellyblood") //normal blood
+			if(blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) //normal blood
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing

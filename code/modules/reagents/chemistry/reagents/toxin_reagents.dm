@@ -66,8 +66,8 @@
 	pH = 4
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
-	if(holder.has_reagent("epinephrine"))
-		holder.remove_reagent("epinephrine", 2*REM)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
 	return ..()
 
@@ -437,8 +437,8 @@
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		holder.add_reagent("histamine", pick(5,15))
-		holder.remove_reagent("formaldehyde", 1.2)
+		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
+		holder.remove_reagent(type, 1.2)
 	else
 		return ..()
 
@@ -456,8 +456,8 @@
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
 	if(prob(15))
-		M.reagents.add_reagent("histamine", pick(5,10))
-		M.reagents.remove_reagent("venom", 1.1)
+		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
+		M.reagents.remove_reagent(type, 1.1)
 	else
 		..()
 
@@ -518,7 +518,7 @@
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("itching_powder", reac_volume)
+		M.reagents.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -534,8 +534,8 @@
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
-		M.reagents.add_reagent("histamine",rand(1,3))
-		M.reagents.remove_reagent("itching_powder",1.2)
+		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
+		M.reagents.remove_reagent(type,1.2)
 		return
 	..()
 
@@ -680,7 +680,7 @@
 		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
 		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
-				C.reagents.remove_reagent(R.id,1)
+				C.reagents.remove_reagent(R.type,1)
 
 /datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/C)
 	. = ..()
@@ -799,10 +799,10 @@
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
 	var/remove_amt = 5
-	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid") || holder.has_reagent("pen_jelly"))
+	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid) || holder.has_reagent(/datum/reagent/medicine/pen_acid/pen_jelly))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.id,remove_amt)
+		M.reagents.remove_reagent(R.type,remove_amt)
 	return ..()
 
 //ACID
@@ -869,7 +869,7 @@
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M)
 	if(current_cycle > delay)
-		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
+		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
 			M.Knockdown(20, 0)

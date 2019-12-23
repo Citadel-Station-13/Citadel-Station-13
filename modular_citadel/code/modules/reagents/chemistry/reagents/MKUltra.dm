@@ -218,7 +218,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 			if(LAZYLEN(seen))
 				return
-			M.reagents.remove_reagent(id, volume)
+			M.reagents.del_reagent(type)
 			FallInLove(M, pick(seen))
 			return
 

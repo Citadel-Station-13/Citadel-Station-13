@@ -26,9 +26,9 @@
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 17
 	metabolization_rate = 0.25
-	impure_chem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
+	impure_chem 			= /datum/reagent/fermi/BEsmaller //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.35
-	inverse_chem		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
+	inverse_chem		= /datum/reagent/fermi/BEsmaller //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
 	var/message_spam = FALSE
 
@@ -44,7 +44,7 @@
 			M.Knockdown(50)
 			M.Stun(50)
 			B.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(id, volume)
+		M.reagents.del_reagent(type)
 		return
 	var/mob/living/carbon/human/H = M
 	if(!H.getorganslot(ORGAN_SLOT_BREASTS) && H.emergent_genital_call())
@@ -78,7 +78,7 @@
 		B.cached_size = 0
 		B.prev_size = 0
 		to_chat(H, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-		H.reagents.remove_reagent(id, 5)
+		H.reagents.remove_reagent(type, 5)
 		B.Insert(H)
 
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
@@ -192,9 +192,9 @@
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 17 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
-	impure_chem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	impure_chem 			= /datum/reagent/fermi/PEsmaller //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.35
-	inverse_chem		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
+	inverse_chem		= /datum/reagent/fermi/PEsmaller //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
 	var/message_spam = FALSE
 
@@ -210,7 +210,7 @@
 			M.Knockdown(50)
 			M.Stun(50)
 			P.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(id, volume)
+		M.reagents.del_reagent(id)
 		return
 	var/mob/living/carbon/human/H = M
 	if(!H.getorganslot(ORGAN_SLOT_PENIS) && H.emergent_genital_call())
@@ -236,7 +236,7 @@
 		P.length = 1
 		to_chat(H, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
 		P.prev_length = 1
-		H.reagents.remove_reagent(id, 5)
+		H.reagents.remove_reagent(type, 5)
 		P.Insert(H)
 
 	P.modify_size(0.1)

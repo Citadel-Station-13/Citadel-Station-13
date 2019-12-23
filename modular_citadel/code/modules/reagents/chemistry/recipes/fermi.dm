@@ -9,19 +9,19 @@
 /datum/chemical_reaction/proc/FermiFinish(datum/reagents/holder, var/atom/my_atom, reactVol)
 	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
-			var/datum/reagent/R = my_atom.reagents.has_reagent("[id]")
+			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
 			if(R.purity == 1)
 				continue
 
 			var/cached_volume = R.volume
 			if(clear_conversion == REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
-					my_atom.reagents.remove_reagent(R.id, cached_volume, FALSE)
+					my_atom.reagents.remove_reagent(R.type, cached_volume, FALSE)
 					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
 
 			else if (clear_conversion == REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
-				my_atom.reagents.remove_reagent(R.id, (impureVol), FALSE)
+				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
 				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
 				R.cached_purity = R.purity
 				R.purity = 1
@@ -76,14 +76,15 @@
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.my_atom = my_atom //Give the gas a fingerprint
 
-	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		R.add_reagent(reagent.id, reagent.volume/3) //Seems fine? I think I fixed the infinite explosion bug.
+	for (var/A in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+		var/datum/reagent/R2 = A
+		R.add_reagent(R2.type, R2.volume/3) //Seems fine? I think I fixed the infinite explosion bug.
 
-		if (reagent.purity < 0.6)
-			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
+		if (R2.purity < 0.6)
+			ImpureTot = (ImpureTot + (1-R2.purity)) / 2
 
 	if(pH < 4) //if acidic, make acid spray
-		R.add_reagent("fermiAcid", (volume/3))
+		R.add_reagent(/datum/reagent/impure/fermiTox, (volume/3))
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
@@ -203,8 +204,8 @@
 	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
 	var/cached_volume = BE.volume
 	if(BE.purity < 0.35)
-		holder.remove_reagent(src.id, cached_volume)
-		holder.add_reagent("BEsmaller", cached_volume)
+		holder.remove_reagent(type, cached_volume)
+		holder.add_reagent(/datum/reagent/fermi/BEsmaller, cached_volume)
 
 
 /datum/chemical_reaction/fermi/breast_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
@@ -252,8 +253,8 @@
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
 	var/cached_volume = PE.volume
 	if(PE.purity < 0.35)
-		holder.remove_reagent(src.id, cached_volume)
-		holder.add_reagent("PEsmaller", cached_volume)
+		holder.remove_reagent(type, cached_volume)
+		holder.add_reagent(/datum/reagent/fermi/PEsmaller, cached_volume)
 
 /datum/chemical_reaction/fermi/astral
 	name = "Astrogen"
@@ -350,7 +351,7 @@
 	var/turf/T = get_turf(my_atom)
 	var/datum/reagents/R = new/datum/reagents(1000)
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("enthrallExplo", volume)
+	R.add_reagent(/datum/reagent/fermi/enthrallExplo, volume)
 	s.set_up(R, volume/2, T)
 	s.start()
 	my_atom.reagents.clear_reagents()

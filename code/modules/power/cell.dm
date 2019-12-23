@@ -106,7 +106,7 @@
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
 	..()
-	rigged = reagents?.has_reagent("plasma", 5) ? TRUE : FALSE //has_reagent returns the reagent datum
+	rigged = reagents?.has_reagent(/datum/reagent/toxin/plasma, 5) ? TRUE : FALSE //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)

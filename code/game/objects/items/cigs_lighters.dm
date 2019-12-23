@@ -113,7 +113,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 30
-	var/list/list_reagents = list("nicotine" = 15)
+	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
@@ -268,29 +268,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/uplift
 	desc = "An Uplift Smooth brand cigarette."
-	list_reagents = list("nicotine" = 7.5, "menthol" = 7.5)
+	list_reagents = list(/datum/reagent/drug/nicotine = 7.5, /datum/reagent/consumable/menthol = 7.5)
 
 /obj/item/clothing/mask/cigarette/robust
 	desc = "A Robust brand cigarette."
 
 /obj/item/clothing/mask/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
-	list_reagents = list("nicotine" = 15, "gold" = 1)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/gold = 1)
 
 /obj/item/clothing/mask/cigarette/carp
 	desc = "A Carp Classic brand cigarette."
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
-	list_reagents = list("nicotine" = 15, "omnizine" = 15)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, "omnizine" = 15)
 
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
-	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/toxin/lipolicide = 4, /datum/reagent/ammonia = 2, /datum/reagent/toxin/plantbgone = 1, /datum/reagent/toxin = 1.5)
 
 /obj/item/clothing/mask/cigarette/xeno
 	desc = "A Xeno Filtered brand cigarette."
-	list_reagents = list ("nicotine" = 20, "regen_jelly" = 15, "krokodil" = 4)
+	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
 // Rollies.
 
@@ -313,17 +313,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_y = rand(-5, 5)
 
 /obj/item/clothing/mask/cigarette/rollie/nicotine
-	list_reagents = list("nicotine" = 15)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy
-	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/drug/mushroomhallucinogen = 35)
 	starts_lit = TRUE
 
 /obj/item/clothing/mask/cigarette/rollie/cannabis
-	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
+	list_reagents = list(/datum/reagent/drug/space_drugs = 15, /datum/reagent/toxin/lipolicide = 35)
 
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
-	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 35, /datum/reagent/toxin/lipolicide = 15)
 
 /obj/item/cigbutt/roach
 	name = "roach"
@@ -377,7 +377,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigbutt"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	grind_results = list("carbon" = 2)
+	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/cigbutt/cigarbutt
 	name = "cigar butt"
@@ -719,7 +719,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	. = ..()
 	create_reagents(chem_volume, NO_REACT) // so it doesn't react until you light it
-	reagents.add_reagent("nicotine", 50)
+	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","black","white","green","purple","yellow","orange")

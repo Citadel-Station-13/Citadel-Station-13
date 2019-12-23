@@ -227,8 +227,8 @@
 		if(M.getBruteLoss() && prob(20))
 			M.heal_bodypart_damage(1,0, 0)
 			. = 1
-	if(holder.has_reagent("capsaicin"))
-		holder.remove_reagent("capsaicin", 2)
+	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
 	..()
 
 /datum/reagent/consumable/soymilk
@@ -285,8 +285,8 @@
 	M.AdjustSleeping(-40, FALSE)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
-	if(holder.has_reagent("frostoil"))
-		holder.remove_reagent("frostoil", 5)
+	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
+		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
 	..()
 	. = 1
 
@@ -523,9 +523,9 @@
 	glass_desc = "Stinging with flavour."
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent("sugar",1)
+	M.reagents.add_reagent(/datum/reagent/consumable/sugar,1)
 	if(prob(5))
-		M.reagents.add_reagent("honey",1)
+		M.reagents.add_reagent(/datum/reagent/consumable/honey,1)
 	..()
 
 /datum/reagent/consumable/buzz_fuzz/reaction_mob(mob/living/M, method=TOUCH, reac_volume)

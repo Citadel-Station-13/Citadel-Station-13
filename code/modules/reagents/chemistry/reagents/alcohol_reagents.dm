@@ -662,7 +662,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/M)
 	if(QDELETED(light_holder))
-		M.reagents.del_reagent("tequilasunrise") //If we lost our light object somehow, remove the reagent
+		M.reagents.del_reagent(type) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != M)
 		light_holder.forceMove(M)
 	return ..()
@@ -1456,9 +1456,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
 	//SplitChem			= TRUE
-	impure_chem 			= "neuroweak"
+	impure_chem 			= /datum/reagent/consumable/ethanol/neuroweak
 	inverse_chem_val 		= 0.5 //Clear conversion
-	inverse_chem			= "neuroweak"
+	inverse_chem			= /datum/reagent/consumable/ethanol/neuroweak
 	value = 4
 
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
@@ -1468,12 +1468,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.set_drugginess(50)
 	M.dizziness +=2
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
-	if(prob(20) && !holder.has_reagent("neuroweak"))
+	if(prob(20) && !holder.has_reagent(/datum/reagent/consumable/ethanol/neuroweak))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
 		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
 	if(current_cycle > 5)
-		if(prob(20) && !holder.has_reagent("neuroweak"))
+		if(prob(20) && !holder.has_reagent(/datum/reagent/consumable/ethanol/neuroweak))
 			var/t = pickt()
 			ADD_TRAIT(M, t, type)
 			M.adjustStaminaLoss(10)
@@ -1504,12 +1504,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 3
 
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
-	if(holder.has_reagent("neurotoxin"))
+	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
-		M.reagents.remove_reagent("neurotoxin", 1.5 * REAGENTS_METABOLISM, FALSE)
-	if(holder.has_reagent("fentanyl"))
+		M.reagents.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 1.5 * REAGENTS_METABOLISM, FALSE)
+	else if(holder.has_reagent(/datum/reagent/toxin/fentanyl))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM, 150)
-		M.reagents.remove_reagent("fentanyl", 0.75 * REAGENTS_METABOLISM, FALSE)
+		M.reagents.remove_reagent(/datum/reagent/toxin/fentanyl, 0.75 * REAGENTS_METABOLISM, FALSE)
 	else
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5*REM, 150)
 		M.dizziness +=2
@@ -1862,7 +1862,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L)
 	..()
 	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
-		L.reagents.del_reagent("alexander")
+		L.reagents.del_reagent(type)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)
 	if(mighty_shield)

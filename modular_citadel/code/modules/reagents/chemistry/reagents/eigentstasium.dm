@@ -69,7 +69,7 @@
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,M)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	if(!M.reagents.has_reagent("stabilizing_agent"))
+	if(!M.reagents.has_reagent(/datum/reagent/stabilizing_agent))
 		do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 		do_sparks(5,FALSE,M)
 	qdel(Eigenstate)

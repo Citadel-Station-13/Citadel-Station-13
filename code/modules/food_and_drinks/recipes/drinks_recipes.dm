@@ -404,8 +404,8 @@
 	var/datum/reagent/consumable/ethanol/neurotoxin/Nt = locate(/datum/reagent/consumable/ethanol/neurotoxin) in my_atom.reagents.reagent_list
 	var/cached_volume = Nt.volume
 	if(Nt.purity < 0.5)
-		holder.remove_reagent(src.id, cached_volume)
-		holder.add_reagent("neuroweak", cached_volume)
+		holder.remove_reagent(type, cached_volume)
+		holder.add_reagent(/datum/reagent/consumable/ethanol/neuroweak, cached_volume)
 */
 
 /datum/chemical_reaction/neurotoxin/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//reduced size

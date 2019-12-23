@@ -1,5 +1,14 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
+GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
+
+/proc/build_name2reagent()
+	. = list()
+	for (var/t in subtypesof(/datum/reagent))
+		var/datum/reagent/R = t
+		if (length(initial(R.name)))
+			.[ckey(initial(R.name))] = t
+
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
@@ -58,7 +67,7 @@
 			var/modifier = CLAMP((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
-				M.reagents.add_reagent(id, amount)
+				M.reagents.add_reagent(type, amount)
 	return 1
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
@@ -70,7 +79,7 @@
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	if(holder)
-		holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
 //called when a mob processes chems when dead.
@@ -79,7 +88,7 @@
 		return
 	current_cycle++
 	if(holder)
-		holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
 // Called when this reagent is first added to a mob
@@ -98,9 +107,9 @@
 		return
 
 	if ((inverse_chem_val > purity) && (inverse_chem))//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(id, amount, FALSE)
+		M.reagents.remove_reagent(type, amount, FALSE)
 		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
-		var/datum/reagent/R = M.reagents.has_reagent("[inverse_chem]")
+		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
 		if(R.chemical_flags & REAGENT_SNEAKYNAME)
 			R.name = name//Negative effects are hidden
 			if(R.chemical_flags & REAGENT_INVISIBLE)
@@ -110,7 +119,7 @@
 	else if (impure_chem)
 		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
-			M.reagents.remove_reagent(id, (impureVol), FALSE)
+			M.reagents.remove_reagent(type, (impureVol), FALSE)
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
@@ -149,9 +158,9 @@
 		return
 
 	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
-		M.reagents.remove_reagent(id, amount, FALSE)
+		M.reagents.remove_reagent(type, amount, FALSE)
 		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
-		var/datum/reagent/R = M.reagents.has_reagent("[inverse_chem]")
+		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
 		if(R.chemical_flags & REAGENT_SNEAKYNAME)
 			R.name = name//Negative effects are hidden
 			if(R.chemical_flags & REAGENT_INVISIBLE)
@@ -161,7 +170,7 @@
 	else if (impure_chem) //SPLIT
 		var/impureVol = amount * (1 - purity)
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
-			M.reagents.remove_reagent(id, impureVol, FALSE)
+			M.reagents.remove_reagent(type, impureVol, FALSE)
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
 		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [id]")
 		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [impure_chem]")

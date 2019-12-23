@@ -19,7 +19,7 @@
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	M.nutrition += nutriment_factor
-	holder.remove_reagent(src.id, metabolization_rate)
+	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == INGEST)
@@ -121,7 +121,7 @@
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
 			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location(), O)
 			F.fry(volume)
-			F.reagents.add_reagent("cooking_oil", reac_volume)
+			F.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
 
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
@@ -216,8 +216,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("cryostylane"))
-				holder.remove_reagent("cryostylane", 5)
+			if(holder.has_reagent(/datum/reagent/cryostylane))
+				holder.remove_reagent(/datum/reagent/cryostylane, 5)
 			if(isslime(M))
 				heating = rand(5,20)
 		if(15 to 25)
@@ -249,8 +249,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("capsaicin"))
-				holder.remove_reagent("capsaicin", 5)
+			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -538,7 +538,7 @@
 		var/obj/effect/decal/cleanable/flour/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
 		reagentdecal = locate() in T //Might have merged with flour already there.
 		if(reagentdecal)
-			reagentdecal.reagents.add_reagent("flour", reac_volume)
+			reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -603,7 +603,7 @@
 	taste_description = "sweet slime"
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M)
-	holder.add_reagent("sugar", 3)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
 
 /datum/reagent/consumable/honey
@@ -617,7 +617,7 @@
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent("sugar",3)
+	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
@@ -767,7 +767,7 @@
 /* //We don't have ethereals here, so I'll just comment it out.
 /datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
-	
+
 		var/mob/living/carbon/C = M
 		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))

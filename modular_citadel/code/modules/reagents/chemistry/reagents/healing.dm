@@ -6,9 +6,9 @@
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	impure_chem 			= "yamerol_tox"
+	impure_chem 			= /datum/reagent/impure/yamerol_tox
 	inverse_chem_val 		= 0.4
-	inverse_chem		= "yamerol_tox"
+	inverse_chem		= /datum/reagent/impure/yamerol_tox
 	can_synth = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
@@ -34,7 +34,7 @@
 			qdel(T)
 			nT.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
@@ -50,7 +50,7 @@
 				T = new()
 			T.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 		else
 			if((oT.name == "fluffy tongue") && (purity == 1))
 				var/obj/item/organ/tongue/T
@@ -62,13 +62,13 @@
 				qdel(oT)
 				T.Insert(C)
 				to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
-				holder.remove_reagent(src.id, "10")
+				holder.remove_reagent(type, 10)
 
 		if(!C.getorganslot(ORGAN_SLOT_LUNGS))
 			var/obj/item/organ/lungs/yamerol/L = new()
 			L.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge in your chest.</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 	C.adjustOxyLoss(-3)
 	..()
 
@@ -143,7 +143,7 @@
 		if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
-					C.reagents.remove_reagent(id, 15)
+					C.reagents.remove_reagent(type, 15)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 
 	data["injected_vol"] -= metabolization_rate
