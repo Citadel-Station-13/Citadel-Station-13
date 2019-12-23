@@ -108,7 +108,7 @@
 
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become a [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 
-	if(!candidates || candidates.len <= required_candidates)
+	if(!candidates || candidates.len < required_candidates)
 		message_admins("The ruleset [name] did not receive enough applications.")
 		if(candidates)
 			message_admins("Only received [candidates.len], needed [required_candidates].")
