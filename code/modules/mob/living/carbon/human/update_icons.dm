@@ -399,13 +399,10 @@ There are several things that need to be remembered:
 		var/datum/sprite_accessory/taur/T
 		if("taur" in dna.species.mutant_bodyparts)
 			T = GLOB.taur_list[dna.features["taur"]]
-			if(T)
-				center = T.center
-				dimension_x = T.dimension_x
-				dimension_y = T.dimension_y
 
 		if(!item_level_support && S.mutantrace_variation)
 			if(T?.taur_mode)
+				var/init_worn_icon = worn_icon
 				variation_flag |= S.mutantrace_variation & T.taur_mode || S.mutantrace_variation & T.alt_taur_mode
 				switch(variation_flag)
 					if(STYLE_HOOF_TAURIC)
@@ -414,6 +411,10 @@ There are several things that need to be remembered:
 						worn_icon = 'icons/mob/taur_naga.dmi'
 					if(STYLE_PAW_TAURIC)
 						worn_icon = 'icons/mob/taur_canine.dmi'
+				if(worn_icon != init_worn_icon) //worn icon sprite was changed, taur offsets will have to be applied.
+					center = T.center
+					dimension_x = T.dimension_x
+					dimension_y = T.dimension_y
 			else if((DIGITIGRADE in dna.species.species_traits) && S.mutantrace_variation & STYLE_DIGITIGRADE) //not a taur, but digitigrade legs.
 				worn_icon = 'icons/mob/suit_digi.dmi'
 				variation_flag |= STYLE_DIGITIGRADE
