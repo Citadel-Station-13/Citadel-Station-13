@@ -163,6 +163,13 @@
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20 */
 
+/datum/map_template/ruin/lavaland/alien_nest
+	name = "Alien Nest"
+	id = "alien-nest"
+	description = "Not even Necropolis is safe from alien infestation. The competition for hosts has locked the legion and aliens in an endless conflict that can only be resolved by a PKA."
+	suffix = "lavaland_surface_alien_nest.dmm"
+	cost = 20
+
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
 	id = "fountain"
@@ -223,3 +230,12 @@
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
+
+/datum/map_template/ruin/lavaland/elite_tumor
+	name = "Pulsating Tumor"
+	id = "tumor"
+	description = "A strange tumor which houses a powerful beast..."
+	suffix = "lavaland_surface_elite_tumor.dmm"
+	cost = 5
+	always_place = TRUE
+	allow_duplicates = TRUE 

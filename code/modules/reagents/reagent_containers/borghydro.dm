@@ -124,9 +124,8 @@ Borg Hypospray
 	return
 
 /obj/item/reagent_containers/borghypo/examine(mob/user)
-	usr = user
-	..()
-	DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	. = ..()
+	. += DescribeContents() //Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
 	var/empty = 1
@@ -134,11 +133,11 @@ Borg Hypospray
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
+			. += "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
 			empty = 0
 
 	if(empty)
-		to_chat(usr, "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>")
+		. += "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
 
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"

@@ -28,7 +28,7 @@
 /obj/item/melee/transforming/energy/add_blood_DNA(list/blood_dna)
 	return FALSE
 
-/obj/item/melee/transforming/energy/is_sharp()
+/obj/item/melee/transforming/energy/get_sharpness()
 	return active * sharpness
 
 /obj/item/melee/transforming/energy/process()
@@ -46,7 +46,7 @@
 			STOP_PROCESSING(SSobj, src)
 			set_light(0)
 
-/obj/item/melee/transforming/energy/is_hot()
+/obj/item/melee/transforming/energy/get_temperature()
 	return active * heat
 
 /obj/item/melee/transforming/energy/ignition_effect(atom/A, mob/user)
@@ -320,11 +320,12 @@
 		M.update_inv_hands()
 
 /obj/item/melee/transforming/energy/sword/cx/AltClick(mob/living/user)
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
+		return TRUE
 
 	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
@@ -332,10 +333,11 @@
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 		update_light()
+	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file)
 	. = ..()

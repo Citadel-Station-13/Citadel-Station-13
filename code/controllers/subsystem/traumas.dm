@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(traumas)
 						"cats" = strings(PHOBIA_FILE, "cats"),
 						"syndicate"= strings(PHOBIA_FILE, "syndicate"),
 						"eye" = strings(PHOBIA_FILE, "eye")
-            )
+						)
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209)),
@@ -87,13 +87,13 @@ SUBSYSTEM_DEF(traumas)
 					"skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human)),
-				   	"conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/head_of_security,
+					"conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/head_of_security,
 												 /obj/item/clothing/under/rank/chief_engineer, /obj/item/clothing/under/rank/chief_medical_officer,
 												 /obj/item/clothing/under/rank/head_of_personnel, /obj/item/clothing/under/rank/research_director,
 												 /obj/item/clothing/under/rank/head_of_security/grey, /obj/item/clothing/under/rank/head_of_security/alt,
 												 /obj/item/clothing/under/rank/research_director/alt, /obj/item/clothing/under/rank/research_director/turtleneck,
 												 /obj/item/clothing/under/captainparade, /obj/item/clothing/under/hosparademale, /obj/item/clothing/under/hosparadefem,
-												 /obj/item/clothing/head/helmet/abductor, /obj/item/clothing/suit/armor/abductor/vest, /obj/item/abductor_baton,
+												 /obj/item/clothing/head/helmet/abductor, /obj/item/clothing/suit/armor/abductor/vest, /obj/item/abductor/baton,
 												 /obj/item/storage/belt/military/abductor, /obj/item/gun/energy/alien, /obj/item/abductor/silencer,
 												 /obj/item/abductor/gizmo, /obj/item/clothing/under/rank/centcom_officer,
 												 /obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
@@ -136,7 +136,7 @@ SUBSYSTEM_DEF(traumas)
 					"aliens"   = typecacheof(list(/obj/item/clothing/mask/facehugger, /obj/item/organ/body_egg/alien_embryo,
 						/obj/structure/alien, /obj/item/toy/toy_xeno,
 						/obj/item/clothing/suit/armor/abductor, /obj/item/abductor, /obj/item/gun/energy/alien,
-						/obj/item/abductor_baton, /obj/item/radio/headset/abductor, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
+						/obj/item/abductor/baton, /obj/item/radio/headset/abductor, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
 						/obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/surgicaldrill/alien, /obj/item/cautery/alien,
 						/obj/item/clothing/head/helmet/abductor, /obj/structure/bed/abductor, /obj/structure/table_frame/abductor,
 						/obj/structure/table/abductor, /obj/structure/table/optable/abductor, /obj/structure/closet/abductor, /obj/item/organ/heart/gland,
@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(traumas)
 
 					"syndicate" = typecacheof(list(/obj/item/stack/tile/mineral/plastitanium, /obj/machinery/computer/shuttle/syndicate, /obj/machinery/computer/shuttle/syndicate/recall, /obj/machinery/computer/shuttle/syndicate/drop_pod, /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate, /obj/machinery/recharge_station,
 						/obj/machinery/porta_turret/syndicate, /obj/structure/closet/syndicate, /obj/machinery/suit_storage_unit/syndicate, /obj/item/clothing/under/syndicate, /obj/item/folder/syndicate, /obj/item/documents/syndicate, /obj/item/clothing/glasses/phantomthief/syndicate, /obj/item/antag_spawner/nuke_ops, /obj/item/storage/box/syndicate,
-						/obj/structure/fluff/empty_sleeper/syndicate, /obj/item/implant/radio/syndicate, /obj/item/clothing/head/helmet/space/syndicate, /obj/machinery/nuclearbomb/syndicate, /obj/item/grenade/syndieminibomb, /obj/item/storage/backpack/duffelbag/syndie, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver/syndie,
+						/obj/structure/fluff/empty_sleeper/syndicate, /obj/item/implant/radio/syndicate, /obj/item/clothing/head/helmet/space/syndicate, /obj/machinery/nuclearbomb/syndicate, /obj/item/grenade/syndieminibomb, /obj/item/storage/backpack/duffelbag/syndie, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver,
 						/obj/item/gun/ballistic/automatic/shotgun/bulldog, /obj/item/gun/ballistic/automatic/c20r, /obj/item/gun/ballistic/automatic/m90, /obj/item/gun/ballistic/automatic/l6_saw, /obj/item/storage/belt/grenade/full, /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate, /obj/item/gun/energy/kinetic_accelerator/crossbow,
 						/obj/item/melee/transforming/energy/sword/saber, /obj/item/twohanded/dualsaber, /obj/item/melee/powerfist, /obj/item/storage/box/syndie_kit, /obj/item/grenade/spawnergrenade/manhacks, /obj/item/grenade/chem_grenade/bioterrorfoam, /obj/item/reagent_containers/spray/chemsprayer/bioterror, /obj/item/ammo_box/magazine/m10mm,
 						/obj/item/ammo_box/magazine/pistolm9mm, /obj/item/ammo_box/a357, /obj/item/ammo_box/magazine/m12g, /obj/item/ammo_box/magazine/mm195x129, /obj/item/antag_spawner/nuke_ops, /obj/mecha/combat/gygax/dark, /obj/mecha/combat/marauder/mauler, /obj/item/soap/syndie, /obj/item/gun/syringe/syndicate, /obj/item/cartridge/virus/syndicate,

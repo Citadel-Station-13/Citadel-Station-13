@@ -1,5 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes: 
-  - rscadd: "Adds beanbag slugs to the sec protolathe at round start"
-  - bugfix: "Brings shotgun ammo availability back in like between seclathe and autolathe."

@@ -41,7 +41,7 @@ LINEN BINS
 	return
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters) || I.is_sharp())
+	if(istype(I, /obj/item/wirecutters) || I.get_sharpness())
 		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
@@ -294,13 +294,13 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 /obj/structure/bedsheetbin/examine(mob/user)
-	..()
+	. = ..()
 	if(amount < 1)
-		to_chat(user, "There are no sheets in the bin.")
+		. += "There are no sheets in the bin."
 	else if(amount == 1)
-		to_chat(user, "There is one sheet in the bin.")
+		. += "There is one sheet in the bin."
 	else
-		to_chat(user, "There are [amount] sheets in the bin.")
+		. += "There are [amount] sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()

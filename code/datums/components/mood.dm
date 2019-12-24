@@ -8,7 +8,7 @@
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/sanity_level = 5 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
-	var/datum/mood_event/list/mood_events = list()
+	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
 
@@ -125,6 +125,9 @@
 			screen_obj.icon_state = "mood[mood_level]"
 
 /datum/component/mood/process() //Called on SSmood process
+	if(QDELETED(parent)) // workaround to an obnoxious sneaky periodical runtime.
+		qdel(src)
+		return
 	var/mob/living/owner = parent
 
 	switch(mood_level)
@@ -146,15 +149,6 @@
 			setSanity(sanity+0.25, maximum=SANITY_GREAT)
 		if(9)
 			setSanity(sanity+0.4, maximum=SANITY_GREAT)
-
-	if(HAS_TRAIT(owner, TRAIT_DEPRESSION))
-		if(prob(0.05))
-			add_event(null, "depression", /datum/mood_event/depression)
-			clear_event(null, "jolly")
-	if(HAS_TRAIT(owner, TRAIT_JOLLY))
-		if(prob(0.05))
-			add_event(null, "jolly", /datum/mood_event/jolly)
-			clear_event(null, "depression")
 
 	HandleNutrition(owner)
 
@@ -245,11 +239,11 @@
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	hud.infodisplay += screen_obj
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
-	if(!screen_obj)
+	if(!screen_obj || !parent)
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used

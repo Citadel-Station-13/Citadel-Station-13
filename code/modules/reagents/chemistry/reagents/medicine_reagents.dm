@@ -8,6 +8,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	value = 2
 	taste_description = "bitterness"
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M)
@@ -127,6 +128,7 @@
 	description = "Instantly restores all hearing to the patient, but does not cure deafness."
 	color = "#6600FF" // rgb: 100, 165, 255
 	pH = 2
+	value = 10
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
 	M.restoreEars()
@@ -209,6 +211,7 @@
 	overdose_threshold = 30
 	taste_description = "fish"
 	pH = 12.2
+	value = 20
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -242,6 +245,7 @@
 	color = "#ffeac9"
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 50
+	value = 3
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -280,6 +284,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	pH = 10.7
+	value = 4
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 25)
@@ -304,6 +309,7 @@
 	pH = 6.7
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 50
+	value = 3
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -346,8 +352,11 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 	pH = 5.5
+	value = 1
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
+	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
+		return
 	if(last_added)
 		M.blood_volume -= last_added
 		last_added = 0
@@ -426,6 +435,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.5
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 40
+	value = 6
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
@@ -458,6 +468,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "ash"
 	pH = 5
+	value = 1
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -476,6 +487,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	pH = 2
+	value = 5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-0.5*REM, 0)
@@ -629,7 +641,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases stun resistance. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -783,6 +795,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
+	eyes.applyOrganDamage(-2)
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -797,8 +810,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(eyes.eye_damage > 0)
-		M.adjust_eye_damage(-1)
 	..()
 
 /datum/reagent/medicine/atropine
@@ -871,39 +882,48 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 100 brute and burn damage (independent of one another), and causes slight damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Only functions when applied by patch or spray, if the target has less than 100 brute and burn damage (independent of one another) and hasn't been husked. Causes slight damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 	pH = 0
 
-/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
-			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+		if(M.suiciding || M.hellbound) //they are never coming back
+			M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
 			return
-		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(HAS_TRAIT(M, TRAIT_NOCLONE)) && !M.hellbound)
-			if(!M)
-				return
-			if(M.notify_ghost_cloning(source = M))
-				spawn (100) //so the ghost has time to re-enter
-					return
+		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || HAS_TRAIT(M, TRAIT_HUSK)) //body is too damaged to be revived
+			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+			M.do_jitter_animation(10)
+			return
+		else
+			M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
+			M.notify_ghost_cloning(source = M)
+			M.do_jitter_animation(10)
+			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
+			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
 
-			else
+			spawn(100) //so the ghost has time to re-enter
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
+						C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL*C.blood_ratio) //so you don't instantly re-die from a lack of blood
+					for(var/organ in C.internal_organs)
+						var/obj/item/organ/O = organ
+						if(O.damage > O.maxHealth/2)
+							O.setOrganDamage(O.maxHealth/2) //so you don't instantly die from organ damage when being revived
+
 				M.adjustOxyLoss(-20, 0)
 				M.adjustToxLoss(-20, 0)
-				var/mob/living/carbon/H = M
-				for(var/organ in H.internal_organs)
-					var/obj/item/organ/O = organ
-					O.setOrganDamage(0)
 				M.updatehealth()
-
 				if(M.revive())
+					M.grab_ghost()
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
 	..()
+
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(0.5*REM, 0)
@@ -929,6 +949,21 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	id = "neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
+
+/datum/reagent/medicine/neurine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!(method == INJECT))
+		return
+	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B || (!(B.organ_flags & ORGAN_FAILING)))
+		return
+	B.applyOrganDamage(-20)
+	if(prob(80))
+		B.gain_trauma_type(BRAIN_TRAUMA_MILD)
+	else if(prob(50))
+		B.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+	else
+		B.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("neurotoxin"))
@@ -1176,7 +1211,30 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	M.adjustStaminaLoss(-25*REM,0)
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
+		M.blood_volume += 40 // blood fall out man bad
+	..()
+	. = 1
+
+/datum/reagent/medicine/lesser_syndicate_nanites // the one in the injector
+	name = "Regenerative Nanites"
+	id = "lesser_syndicate_nanites"
+	description = "Miniature medical robots that restore damage and get operatives back in the fight."
+	reagent_state = SOLID
+	color = "#555555"
+	pH = 11
+
+/datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-3*REM, 0) // hidden gold shh
+	M.adjustFireLoss(-3*REM, 0)
+	M.adjustOxyLoss(-15, 0)
+	M.adjustToxLoss(-3*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
+	M.adjustCloneLoss(-3*REM, 0)
 	M.adjustStaminaLoss(-20*REM,0)
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
+		M.blood_volume += 20 // blood fall out man bad
 	..()
 	. = 1
 
@@ -1192,19 +1250,19 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-    M.adjustBruteLoss(-1.5*REM, 0)
-    M.adjustFireLoss(-1.5*REM, 0)
-    M.adjustOxyLoss(-1.5*REM, 0)
-    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-    . = 1
-    ..()
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
+	..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-    M.adjustOxyLoss(2.6*REM, 0)
-    M.adjustBruteLoss(3.5*REM, 0)
-    M.adjustFireLoss(3.5*REM, 0)
-    ..()
-    . = 1
+	M.adjustOxyLoss(2.6*REM, 0)
+	M.adjustBruteLoss(3.5*REM, 0)
+	M.adjustFireLoss(3.5*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
@@ -1454,3 +1512,50 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/silibinin
+	name = "Silibinin"
+	id = "silibinin"
+	description = "A thistle derrived hepatoprotective flavolignan mixture that help reverse damage to the liver."
+	reagent_state = SOLID
+	color = "#FFFFD0"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
+	..()
+	. = 1
+
+/datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
+	name = "Polypyrylium Oligomers"
+	id = "polypyr"
+	description = "A�purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
+	reagent_state = SOLID
+	color = "#9423FF"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 50
+	taste_description = "numbing bitterness"
+
+/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I w�nted a collection of small positive effects, this is as hard to obtain as coniine after all.
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25)
+	M.adjustBruteLoss(-0.35, 0)
+	if(prob(50))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.bleed_rate = max(H.bleed_rate - 1, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/polypyr/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M) && reac_volume >= 0.5)
+			var/mob/living/carbon/human/H = M
+			H.hair_color = "92f"
+			H.facial_hair_color = "92f"
+			H.update_hair()
+
+/datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
+	..()
+	. = 1
+

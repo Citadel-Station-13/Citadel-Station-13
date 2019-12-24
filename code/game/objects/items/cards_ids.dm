@@ -113,7 +113,7 @@
 
 /obj/item/card/emag/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It has <b>[uses ? uses : "no"]</b> charges left.</span>")
+	. += "<span class='notice'>It has <b>[uses ? uses : "no"]</b> charges left.</span>"
 
 /obj/item/card/emag/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/emagrecharge))
@@ -139,9 +139,9 @@
 /obj/item/emagrecharge/examine(mob/user)
 	. = ..()
 	if(uses)
-		to_chat(user, "<span class='notice'>It can add up to [uses] charges to compatible devices</span>")
+		. += "<span class='notice'>It can add up to [uses] charges to compatible devices</span>"
 	else
-		to_chat(user, "<span class='warning'>It has a small, red, blinking light coming from inside of it. It's spent.</span>")
+		. += "<span class='warning'>It has a small, red, blinking light coming from inside of it. It's spent.</span>"
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
@@ -193,14 +193,17 @@
 		return
 
 /obj/item/card/id/examine(mob/user)
-	..()
+	. = ..()
 	if(mining_points)
-		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
+		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 
 /obj/item/card/id/GetAccess()
 	return access
 
 /obj/item/card/id/GetID()
+	return src
+
+/obj/item/card/id/RemoveID()
 	return src
 
 /*
@@ -402,13 +405,13 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/prisoner/examine(mob/user)
 	. = ..()
 	if(sentence && world.time < sentence)
-		to_chat(user, "<span class='notice'>You're currently serving a sentence for [crime]. <b>[DisplayTimeText(sentence - world.time)]</b> left.</span>")
+		. += "<span class='notice'>You're currently serving a sentence for [crime]. <b>[DisplayTimeText(sentence - world.time)]</b> left.</span>"
 	else if(goal)
-		to_chat(user, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
+		. += "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
 	else if(!sentence)
-		to_chat(user, "<span class='warning'>You are currently serving a permanent sentence for [crime].</span>")
+		. += "<span class='warning'>You are currently serving a permanent sentence for [crime].</span>"
 	else
-		to_chat(user, "<span class='notice'>Your sentence is up! You're free!</span>")
+		. += "<span class='notice'>Your sentence is up! You're free!</span>"
 
 /obj/item/card/id/prisoner/one
 	name = "Prisoner #13-001"
@@ -514,24 +517,25 @@ update_label("John Doe", "Clowny")
 		return
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
+		return TRUE
 	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",id_color) as color|null
 		if(!in_range(src, user) || !energy_color_input)
-			return
+			return TRUE
 		if(user.incapacitated() || !istype(user))
 			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-			return
+			return TRUE
 		id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
+		return TRUE
 
 /obj/item/card/id/knight/Initialize()
 	. = ..()
 	update_icon()
 
 /obj/item/card/id/knight/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/card/id/knight/blue
 	id_color = "#0000FF"

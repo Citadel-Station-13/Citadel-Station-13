@@ -112,7 +112,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 24 && S["feature_exhibitionist"])
 		var/datum/quirk/exhibitionism/E
 		var/quirk_name = initial(E.name)
-		neutral_quirks += quirk_name
 		all_quirks += quirk_name
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -183,6 +182,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
 	S["lewdchem"]			>> lewdchem
+	S["preferred_chaos"]	>> preferred_chaos
+
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -278,6 +279,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
 	WRITE_FILE(S["lewdchem"], lewdchem)
+	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 
 	return 1
 
@@ -383,9 +385,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	S["all_quirks"]			>> all_quirks
-	S["positive_quirks"]	>> positive_quirks
-	S["negative_quirks"]	>> negative_quirks
-	S["neutral_quirks"]		>> neutral_quirks
 
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
@@ -516,10 +515,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	positive_quirks = SANITIZE_LIST(positive_quirks)
-	negative_quirks = SANITIZE_LIST(negative_quirks)
-	neutral_quirks	= SANITIZE_LIST(neutral_quirks)
-
 	cit_character_pref_load(S)
 
 	return 1
@@ -595,9 +590,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
-	WRITE_FILE(S["positive_quirks"]		, positive_quirks)
-	WRITE_FILE(S["negative_quirks"]		, negative_quirks)
-	WRITE_FILE(S["neutral_quirks"]		, neutral_quirks)
 
 	cit_character_pref_save(S)
 

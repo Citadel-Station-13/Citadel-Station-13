@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - balance: "Clockwork marauders are now on a configured summon cooldown if being summoned on station. They also rapidly bleed health while in or next to space. And they glow brighter."

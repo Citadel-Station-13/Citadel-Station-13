@@ -308,7 +308,7 @@
 		/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
 		/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
 		/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
-   		/obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5,
+		/obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5,
 		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
 		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
@@ -319,9 +319,9 @@
 		pizza_preferences = list()
 
 /obj/item/pizzabox/infinite/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user))
-		to_chat(user, "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>")
+		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	QDEL_NULL(pizza)

@@ -27,7 +27,7 @@
 
 /datum/supply_pack/engine/am_shielding
 	name = "Antimatter Shielding Crate"
-	desc = "Contains ten Antimatter shields, somehow crammed into a crate."
+	desc = "Contains nine Antimatter shields, somehow crammed into a crate."
 	cost = 2500
 	contains = list(/obj/item/am_shielding_container,
 					/obj/item/am_shielding_container,
@@ -37,8 +37,7 @@
 					/obj/item/am_shielding_container,
 					/obj/item/am_shielding_container,
 					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container) //10 shields: 3x3 containment and a core
+					/obj/item/am_shielding_container) //9 shields: 3x3 containment and a core
 	crate_name = "antimatter shielding crate"
 
 /datum/supply_pack/engine/emitter

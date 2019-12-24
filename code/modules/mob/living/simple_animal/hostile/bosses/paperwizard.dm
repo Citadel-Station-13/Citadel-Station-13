@@ -130,7 +130,7 @@
 			qdel(copy)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
-	..()
+	. = ..()
 	qdel(src) //I see through your ruse!
 
 //fancy effects

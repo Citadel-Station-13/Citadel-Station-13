@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a ghostchat eavesdropping exploit concerning VR."
+  - bugfix: "Fixes VR deaths being broadcasted in deadchat."

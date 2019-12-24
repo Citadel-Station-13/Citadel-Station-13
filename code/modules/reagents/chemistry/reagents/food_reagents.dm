@@ -12,6 +12,7 @@
 	id = "consumable"
 	taste_description = "generic food"
 	taste_mult = 4
+	value = 0.1
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
@@ -91,6 +92,7 @@
 	name = "Vitamin"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	value = 0.5
 
 	brute_heal = 1
 	burn_heal = 1
@@ -106,6 +108,7 @@
 	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
 	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
 	taste_mult = 0.8
+	value = 1
 	taste_description = "oil"
 	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
@@ -138,7 +141,7 @@
 	return TRUE
 
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
-	if(!istype(T))
+	if(!istype(T) || isgroundlessturf(T))
 		return
 	if(reac_volume >= 5)
 		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
@@ -156,6 +159,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
+	value = 1
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
@@ -237,6 +241,7 @@
 	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
+	value = 2
 	pH = 13 //HMM! I wonder
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
@@ -438,6 +443,7 @@
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	id = "sprinkles"
+	value = 3
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
@@ -453,6 +459,7 @@
 	id = "peanut_butter"
 	description = "A popular food paste made from ground dry-roasted peanuts."
 	color = "#C29261"
+	value = 3
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	taste_description = "peanuts"
 
@@ -461,6 +468,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	nutriment_factor = 20 * REAGENTS_METABOLISM
+	value = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 
@@ -479,6 +487,7 @@
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
 	id = "enzyme"
+	value = 1
 	description = "A universal enzyme used in the preperation of certain chemicals and foods."
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_description = "sweetness"
@@ -518,6 +527,7 @@
 /datum/reagent/consumable/flour
 	name = "Flour"
 	id = "flour"
+	value = 0.5
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
@@ -535,6 +545,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
+	value = 1
 	taste_description = "cherry"
 
 /datum/reagent/consumable/bluecherryjelly
@@ -542,11 +553,13 @@
 	id = "bluecherryjelly"
 	description = "Blue and tastier kind of cherry jelly."
 	color = "#00F0FF"
+	value = 12
 	taste_description = "blue cherry"
 
 /datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
+	value = 0.5
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
 	nutriment_factor = 3 * REAGENTS_METABOLISM
@@ -556,6 +569,7 @@
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
 	id = "vanilla"
+	value = 1
 	description = "A fatty, bitter paste made from vanilla pods."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
@@ -565,6 +579,7 @@
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	id = "eggyolk"
+	value = 1
 	description = "It's full of protein."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
@@ -573,6 +588,7 @@
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
 	id = "corn_starch"
+	value = 2
 	description = "A slippery solution."
 	color = "#f7f6e4"
 	taste_description = "slime"
@@ -580,6 +596,7 @@
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	id = "corn_syrup"
+	value = 1
 	description = "Decays into sugar."
 	color = "#fff882"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
@@ -594,6 +611,7 @@
 	id = "honey"
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
+	value = 15
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
@@ -608,18 +626,19 @@
 	..()
 
 /datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-  if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
-    var/mob/living/carbon/C = M
-    for(var/s in C.surgeries)
-      var/datum/surgery/S = s
-      S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
-  ..()
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
+	..()
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
 	id = "mayonnaise"
 	description = "An white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
+	value = 5
 	taste_description = "mayonnaise"
 
 /datum/reagent/consumable/tearjuice
@@ -737,6 +756,30 @@
 	taste_description = "mournful honking"
 	pH = 9.2
 
+/datum/reagent/consumable/liquidelectricity
+	name = "Liquid Electricity"
+	id = "liquidelectricity"
+	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#97ee63"
+	taste_description = "pure electricity"
+
+/* //We don't have ethereals here, so I'll just comment it out.
+/datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
+
+		var/mob/living/carbon/C = M
+		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
+		if(istype(stomach))
+			stomach.adjust_charge(reac_volume * REM)
+*/
+
+/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
+	if(prob(25)) // && !isethereal(M))
+		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
+		playsound(M, "sparks", 50, TRUE)
+	return ..()
+
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
 	id = "astrotame"
@@ -748,12 +791,23 @@
 	taste_mult = 8
 	taste_description = "sweetness"
 	overdose_threshold = 17
+	value = 0.2
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M)
 	if(M.disgust < 80)
 		M.adjust_disgust(10)
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/caramel
+	name = "Caramel"
+	id = "caramel"
+	description = "Who would have guessed that heated sugar could be so delicious?"
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	color = "#D98736"
+	taste_mult = 2
+	taste_description = "caramel"
+	reagent_state = SOLID
 
 /datum/reagent/consumable/secretsauce
 	name = "secret sauce"
@@ -766,3 +820,27 @@
 	taste_mult = 100
 	can_synth = FALSE
 	pH = 6.1
+
+/datum/reagent/consumable/char
+	name = "Char"
+	id = "char"
+	description = "Essence of the grill. Has strange properties when overdosed."
+	reagent_state = LIQUID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#C8C8C8"
+	taste_mult = 6
+	taste_description = "smoke"
+	overdose_threshold = 25
+
+/datum/reagent/consumable/char/overdose_process(mob/living/carbon/M)
+	if(prob(10))
+		M.say(pick("I hate my grill.", "I just want to grill something right for once...", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Tetris. That was a good game..."))
+
+/datum/reagent/consumable/bbqsauce
+	name = "BBQ Sauce"
+	id = "bbqsauce"
+	description = "Sweet, Smokey, Savory, and gets everywhere. Perfect for Grilling."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#78280A" // rgb: 120 40, 10
+	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
+	taste_description = "smokey sweetness"

@@ -56,11 +56,16 @@
 
 /obj/item/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
-	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
+	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat and get people back in the fight."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
-	volume = 90
+	volume = 100
 	ignore_flags = 1 // So they can heal their comrades.
+	list_reagents = list("epinephrine" = 30, "lesser_syndicate_nanites" = 40, "leporazine" = 15, "atropine" = 15)
+
+/obj/item/reagent_containers/hypospray/combat/omnizine // owned idiot
+	desc = "A modified air-needle autoinjector, used by underfunded support operatives to slowly heal injuries in combat and limp away from a fight."
+	volume = 90
 	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
@@ -121,11 +126,11 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
-	..()
+	. = ..()
 	if(reagents && reagents.reagent_list.len)
-		to_chat(usr, "<span class='notice'>It is currently loaded.</span>")
+		. += "<span class='notice'>It is currently loaded.</span>"
 	else
-		to_chat(usr, "<span class='notice'>It is spent.</span>")
+		. += "<span class='notice'>It is spent.</span>"
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "illegal stimpack medipen"
@@ -135,7 +140,7 @@
 	list_reagents = list("stimulants" = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
-	name = "the reason the syndicate major league team wins."
+	name = "the reason the syndicate major league team wins"
 	desc = "They say drugs never win, but look where you are now, then where they are."
 	icon_state = "baseballstim"
 	volume = 50
@@ -296,10 +301,10 @@
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
 	if(vial)
-		to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+		. += "[vial] has [vial.reagents.total_volume]u remaining."
 	else
-		to_chat(user, "It has no vial loaded in.")
-	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
+		. += "It has no vial loaded in."
+	. += "[src] is set to [mode ? "Inject" : "Spray"] contents on application."
 
 /obj/item/hypospray/mkii/proc/unload_hypo(obj/item/I, mob/user)
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
@@ -338,8 +343,10 @@
 	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
+	. = ..()
 	if(vial)
 		vial.attack_self(user)
+		return TRUE
 
 // Gunna allow this for now, still really don't approve - Pooj
 /obj/item/hypospray/mkii/emag_act(mob/user)

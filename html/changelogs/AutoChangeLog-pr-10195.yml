@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a few negative quirks not being properly removed when deleted."
+  - tweak: "Phobia and mute quirks are no longer cheesed by brain surgery grade healing or medicines."
