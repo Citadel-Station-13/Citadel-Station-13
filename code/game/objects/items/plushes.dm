@@ -1024,3 +1024,31 @@
 	icon_state = "marisa"
 	item_state = "marisa"
 	attack_verb = list("blasted", "sparked", "dazzled")
+
+/obj/item/toy/plush/catblob
+	name = "cat blob plushie"
+	desc = "A blob like cat plushie! How cute."
+	icon_state = "plushie_blob_cat"
+	item_state = "plushie_blob_cat"
+	attack_verb = list("nya~", "purr", "blobbed")
+	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
+
+/obj/item/toy/plush/catblob/cozy
+	name = "cozy cat blob plushie"
+	desc = "A blob like cat plushie! This one looks relaxed and cozy."
+	icon_state = "plushie_blob_cat_cozy"
+	item_state = "plushie_blob_cat_cozy"
+	attack_verb = list("snuggled", "purr", "blobbed")
+
+/obj/item/toy/plush/catblob/love
+	name = "heart cat blob plushie"
+	desc = "A blob like cat plushie! Looks to be in love with something."
+	icon_state = "plushie_blob_catheart"
+	item_state = "plushie_blob_catheart"
+
+/obj/item/toy/plush/catblob/pout
+	name = "pouty cat blob plushie"
+	desc = "A blob like cat plushie! Looks rather upset at something."
+	icon_state = "plushie_blob_catheart"
+	item_state = "plushie_blob_catheart"
+	attack_verb = list("pouted", "blobbed")
