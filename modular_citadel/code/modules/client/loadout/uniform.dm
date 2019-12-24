@@ -78,6 +78,11 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/plaid_skirt
 
+/datum/gear/sweptskirt
+	name = "Swept skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/shorts/skirtswept
+
 /datum/gear/schoolgirlblue
 	name = "Blue Schoolgirl Uniform"
 	category = SLOT_W_UNIFORM
@@ -98,10 +103,40 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/schoolgirl/orange
 
+/datum/gear/croptop
+	name = "Croptop"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/croptop
+
 /datum/gear/stripeddress
 	name = "Striped Dress"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripeddress
+
+/datum/gear/greendress
+	name = "Green Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/greendress
+
+/datum/gear/pinkdress
+	name = "Pink Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pinkdress
+
+/datum/gear/flowerdress
+	name = "Flower Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/flowerdress
+
+/datum/gear/sundress
+	name = "Sundress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sundress
+
+/datum/gear/sundresswhite
+	name = "White Sundress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sundress/white
 
 /datum/gear/kilt
 	name = "Kilt"
@@ -116,7 +151,11 @@
 /datum/gear/athleticshorts
 	name = "Athletic Shorts"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/shorts
+	path = /obj/item/clothing/under/shorts/red
+/datum/gear/yoga
+	name = "Yoga Pants"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/yogapants
 
 /datum/gear/bjeans
 	name = "Black Jeans"
@@ -127,6 +166,21 @@
 	name = "Classic Jeans"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/pants/classicjeans
+
+/datum/gear/rjeans
+	name = "Ripped Jeans"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/rippedjeans
+
+/datum/gear/jshorts
+	name = "Jean Shorts"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/shorts/jean
+
+/datum/gear/denimskirt
+	name = "Denim Skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/shorts/denimskirt
 
 /datum/gear/khaki
 	name = "Khaki Pants"
@@ -362,4 +416,3 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
 	cost = 3
-	

@@ -36,3 +36,21 @@
 	name = "purple athletic shorts"
 	icon_state = "purpleshorts"
 	item_color = "purpleshorts"
+
+/obj/item/clothing/under/shorts/jean
+	name = "short jean shorts"
+	desc = "Who likes short shorts? we like short shorts!"
+	icon_state = "jean_shorts"
+	item_color = "jean_shorts"
+
+/obj/item/clothing/under/shorts/denimskirt
+	name = "short denim skirt"
+	desc = "Who likes short skirts? we like short skirts!"
+	icon_state = "denim_skirt"
+	item_color = "denim_skirt"
+
+/obj/item/clothing/under/shorts/skirtswept
+	name = "swept skirt"
+	desc = "Feel the breeze"
+	icon_state = "skirt_swept"
+	item_color = "skirt_swept"
