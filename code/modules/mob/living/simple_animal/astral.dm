@@ -27,6 +27,7 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = 100000
+	blood_volume = 0
 
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
@@ -57,3 +58,9 @@
 				return
 			to_chat(A, "[src] projects into your mind, <b><i> \"[message]\"</b></i>")
 			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")
+
+//Delete the mob if there's no mind! Pay that mob no mind.
+/mob/living/simple_animal/astral/Life()
+	if(!mind)
+		qdel(src)
+	. = ..()

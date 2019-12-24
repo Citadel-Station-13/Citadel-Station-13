@@ -43,16 +43,17 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
+	. += "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>"
 
 /obj/item/camera/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
 	picture_size_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-
+	return TRUE
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -81,8 +82,8 @@
 	..()
 
 /obj/item/camera/examine(mob/user)
-	..()
-	to_chat(user, "It has [pictures_left] photos left.")
+	. = ..()
+	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)

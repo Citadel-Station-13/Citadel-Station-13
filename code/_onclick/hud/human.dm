@@ -349,6 +349,13 @@
 	devilsouldisplay = new /obj/screen/devil/soul_counter
 	infodisplay += devilsouldisplay
 
+	blood_display = new /obj/screen/bloodsucker/blood_counter	// Blood Volume
+	infodisplay += blood_display
+	vamprank_display = new /obj/screen/bloodsucker/rank_counter	// Vampire Rank
+	infodisplay += vamprank_display
+	sunlight_display = new /obj/screen/bloodsucker/sunlight_counter	// Sunlight
+	infodisplay += sunlight_display
+
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.update_icon(mymob)

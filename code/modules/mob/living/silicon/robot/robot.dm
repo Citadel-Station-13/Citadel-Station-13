@@ -112,6 +112,8 @@
 	var/bellyup = 0
 	var/dogborg = FALSE
 
+	var/cansprint = 1
+
 /mob/living/silicon/robot/get_cell()
 	return cell
 
@@ -159,6 +161,7 @@
 	else if(!mmi || !mmi.brainmob)
 		mmi = new (src)
 		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain.organ_flags |= ORGAN_FROZEN
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
@@ -233,14 +236,12 @@
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
-	"Medihound" = /obj/item/robot_module/medihound, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
-		modulelist["Security K-9"] = /obj/item/robot_module/k9
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
@@ -832,7 +833,7 @@
 		robot_suit.head.flash2.burn_out()
 		robot_suit.head.flash2 = null
 		robot_suit.head = null
-		robot_suit.updateicon()
+		robot_suit.update_icon()
 	else
 		new /obj/item/robot_suit(T)
 		new /obj/item/bodypart/l_leg/robot(T)
@@ -1098,9 +1099,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		AddComponent(/datum/component/cleaning)
+		AddElement(/datum/element/cleaning)
 	else
-		qdel(GetComponent(/datum/component/cleaning))
+		RemoveElement(/datum/element/cleaning)
 
 	hat_offset = module.hat_offset
 
@@ -1295,6 +1296,6 @@
 			bellyup = 1
 	update_icons()
 
-/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_stamina = 1)
+/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_health = 1)
 	if(istype(cell))
 		cell.charge -= amount*5

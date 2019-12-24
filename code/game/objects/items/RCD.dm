@@ -46,8 +46,8 @@ RLD
 	spark_system.attach(src)
 
 /obj/item/construction/examine(mob/user)
-	..()
-	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
+	. = ..()
+	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -133,15 +133,14 @@ RLD
 	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
-	else
-		return TRUE
-
-/obj/item/construction/proc/prox_check(proximity)
-	if(proximity)
-		return TRUE
-	else
+	var/view_range = user.client ? user.client.view : world.view
+	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
+	//jarring, but it should stop people from targetting atoms they can't see...
+	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
+	if(!((user in view(view_range, A)) || (user in viewers(view_range, A))))
+		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in the given direction... to no avail.</span>")
 		return FALSE
-
+	return TRUE
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -523,7 +522,12 @@ RLD
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(!prox_check(proximity))
+	if(!proximity)
+		if(!ranged || !range_check(A,user)) //early return not-in-range sanity.
+			return
+		if(target_check(A,user))
+			user.Beam(A,icon_state="rped_upgrade",time=30)
+		rcd_create(A,user)
 		return
 	rcd_create(A, user)
 
@@ -635,6 +639,7 @@ RLD
 	max_matter = INFINITY
 	matter = INFINITY
 	upgrade = TRUE
+	ranged = TRUE
 
 // Ranged RCD
 
@@ -650,18 +655,8 @@ RLD
 	item_state = "oldrcd"
 	has_ammobar = FALSE
 
-/obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	. = ..()
-	if(!range_check(A,user))
-		return
-	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
-	rcd_create(A,user)
-
-
 
 // RAPID LIGHTING DEVICE
-
 
 
 /obj/item/construction/rld

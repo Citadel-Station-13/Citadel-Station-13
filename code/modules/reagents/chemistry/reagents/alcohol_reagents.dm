@@ -199,17 +199,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
 
 	if(prob(5) && iscarbon(M))
+		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 		if(HAS_TRAIT(M, TRAIT_BLIND))
-			var/obj/item/organ/eyes/eye = M.getorganslot(ORGAN_SLOT_EYES)
-			if(istype(eye))
-				eye.Remove(M)
-				eye.forceMove(get_turf(M))
+			if(eyes)
+				eyes.Remove(M)
+				eyes.forceMove(get_turf(M))
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")
 				M.adjustBruteLoss(15)
 		else
 			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
-			M.become_blind(EYE_DAMAGE)
+			eyes?.applyOrganDamage(eyes.maxHealth)
 			M.emote("scream")
 
 	if(prob(3) && iscarbon(M))
@@ -610,6 +610,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 1.3
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C)
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
 		C.blood_volume = min((BLOOD_VOLUME_NORMAL*C.blood_ratio), C.blood_volume + 3) //Bloody Mary quickly restores blood loss.
 	..()
@@ -1830,6 +1832,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 2
 
 /datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/throat_soothed)
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 

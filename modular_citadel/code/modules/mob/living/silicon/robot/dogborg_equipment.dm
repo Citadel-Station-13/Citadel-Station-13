@@ -20,7 +20,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/dogborg/jaws/examine(mob/user)
 	. = ..()
 	if(!CONFIG_GET(flag/weaken_secborg))
-		to_chat(user, "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>")
+		. += "<span class='notice'>Use help intent to attempt to non-lethally incapacitate the target by latching on with your maw. This is more effective against exhausted and resting targets.</span>"
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
@@ -161,9 +161,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			var/gas_concentration = env_gases[id]/total_moles
 			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
-
-/obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	. = ..()
 
 /obj/item/analyzer/nose/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -355,15 +352,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	desc = "A novelty bowl of assorted mech fabricator byproducts. Mockingly feed this to the sec-dog to help it recharge."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state= "kibble"
-
-//Defibs
-
-/obj/item/twohanded/shockpaddles/cyborg/hound
-	name = "Paws of Life"
-	desc = "MediHound specific shock paws."
-	icon = 'icons/mob/dogborg.dmi'
-	icon_state = "defibpaddles0"
-	item_state = "defibpaddles0"
 
 // Pounce stuff for K-9
 

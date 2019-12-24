@@ -1,13 +1,9 @@
-GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
-
-/proc/get_uplink_items(var/datum/game_mode/gamemode = null, allow_sales = TRUE, allow_restricted = TRUE)
-	var/list/filtered_uplink_items = list()
+/proc/get_uplink_items(datum/game_mode/gamemode, allow_sales = TRUE, allow_restricted = TRUE)
+	var/list/filtered_uplink_items = GLOB.uplink_categories.Copy() // list of uplink categories without associated values.
 	var/list/sale_items = list()
 
 	for(var/path in GLOB.uplink_items)
 		var/datum/uplink_item/I = new path
-		if(!I.item)
-			continue
 		if(I.include_modes.len)
 			if(!gamemode && SSticker.mode && !(SSticker.mode.type in I.include_modes))
 				continue
@@ -23,9 +19,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		if (I.restricted && !allow_restricted)
 			continue
 
-		if(!filtered_uplink_items[I.category])
-			filtered_uplink_items[I.category] = list()
-		filtered_uplink_items[I.category][I.name] = I
+		LAZYSET(filtered_uplink_items[I.category], I.name, I)
+
 		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
 			sale_items += I
 	if(allow_sales)
@@ -45,9 +40,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
 			A.item = I.item
 
-			if(!filtered_uplink_items[A.category])
-				filtered_uplink_items[A.category] = list()
-			filtered_uplink_items[A.category][A.name] = A
+			LAZYSET(filtered_uplink_items[A.category], A.name, A)
+
+	for(var/category in filtered_uplink_items)
+		if(!filtered_uplink_items[category]) //empty categories with no associated uplink item. Remove.
+			filtered_uplink_items -= category
+
 	return filtered_uplink_items
 
 
@@ -106,15 +104,76 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	to_chat(user, "[A] materializes onto the floor.")
 	return A
 
-//Discounts (dynamically filled above)
-/datum/uplink_item/discounts
-	category = "Discounted Gear"
+/*
+	Uplink Categories:
+	Due to how the typesof() in-built byond proc works, it should be kept in mind
+	the order categories are displayed in the uplink UI is same to the order they are loaded in the code.
+	I trust no extra filter is needed as long as they are all contained within the following lines.
+	When adding new uplink categories, please keep them separate from their sub paths here and without set item.
+	Failure to comply may result in the new categories being listed at the bottom of the UI.
+*/
 
-//All bundles and telecrystals
+/datum/uplink_item/holiday
+	category = "Holiday"
+
 /datum/uplink_item/bundles_TC
 	category = "Bundles and Telecrystals"
 	surplus = 0
 	cant_discount = TRUE
+
+/datum/uplink_item/dangerous
+	category = "Conspicuous and Dangerous Weapons"
+
+/datum/uplink_item/stealthy_weapons
+	category = "Stealthy and Inconspicuous Weapons"
+
+/datum/uplink_item/ammo
+	category = "Ammunition"
+	surplus = 40
+
+/datum/uplink_item/explosives
+	category = "Grenades and Explosives"
+
+/datum/uplink_item/support
+	category = "Support and Mechanized Exosuits"
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/suits
+	category = "Space Suits, Hardsuits and Clothing"
+	surplus = 40
+
+/datum/uplink_item/stealthy_tools
+	category = "Stealth and Camouflage Items"
+
+/datum/uplink_item/device_tools
+	category = "Devices and Tools"
+
+/datum/uplink_item/implants
+	category = "Implants"
+	surplus = 50
+
+/datum/uplink_item/role_restricted
+	category = "Role-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	surplus = 0
+
+/datum/uplink_item/badass
+	category = "(Pointless) Badassery"
+	surplus = 0
+
+//Discounts (dynamically filled above)
+/datum/uplink_item/discounts
+	category = "Discounted Gear"
+
+
+/*
+	Uplink Items:
+	Unlike categories, uplink item entries are automatically sorted alphabetically on server init in a global list,
+	When adding new entries to the file, please keep them sorted by category.
+*/
+
+//All bundles and telecrystals
 
 /datum/uplink_item/bundles_TC/chemical
 	name = "Bioterror bundle"
@@ -288,8 +347,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 
 // Dangerous Items
-/datum/uplink_item/dangerous
-	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
@@ -544,8 +601,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 10
 
 // Stealthy Weapons
-/datum/uplink_item/stealthy_weapons
-	category = "Stealthy and Inconspicuous Weapons"
 
 /datum/uplink_item/stealthy_weapons/combatglovesplus
 	name = "Combat Gloves Plus"
@@ -563,12 +618,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 13
 	surplus = 0
-
-/datum/uplink_item/dangerous/phantomthief
-	name = "Syndicate Mask"
-	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
-	item = /obj/item/clothing/glasses/phantomthief/syndicate
-	cost = 2
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -671,9 +720,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 6
 
 // Ammunition
-/datum/uplink_item/ammo
-	category = "Ammunition"
-	surplus = 40
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
@@ -765,12 +811,11 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
-	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
+	desc = "A speed loader that contains seven additional .357 Magnum rounds, and can be further reloaded with individual bullets; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/revolver/ap
 	name = ".357 Armor Piercing Speed Loader"
@@ -923,8 +968,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/explosives
-	category = "Grenades and Explosives"
+//Grenades and Explosives
 
 /datum/uplink_item/explosives/bioterrorfoam
 	name = "Bioterror Foam Grenade"
@@ -1081,10 +1125,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 
 //Support and Mechs
-/datum/uplink_item/support
-	category = "Support and Mechanized Exosuits"
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/support/clown_reinforcement
 	name = "Clown Reinforcements"
@@ -1155,8 +1195,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 140
 
 // Stealth Items
-/datum/uplink_item/stealthy_tools
-	category = "Stealth and Camouflage Items"
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
@@ -1266,17 +1304,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/jammer
 	cost = 5
 
-/*/datum/uplink_item/stealthy_tools/syndi_borer
-	name = "Syndicate Brain Slug"
-	desc = "A small cortical borer, modified to be completely loyal to the owner. \
-			Genetically infertile, these brain slugs can assist medically in a support role, or take direct action \
-			to assist their host."
-	item = /obj/item/antag_spawner/syndi_borer
-	refundable = TRUE
-	cost = 10
-	surplus = 20 //Let's not have this be too common
-	exclude_modes = list(/datum/game_mode/nuclear) */
-
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
@@ -1287,9 +1314,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	surplus = 30
 
 //Space Suits and Hardsuits
-/datum/uplink_item/suits
-	category = "Space Suits, Hardsuits and Clothing"
-	surplus = 40
 
 /datum/uplink_item/suits/turtlenck
 	name = "Tactical Turtleneck"
@@ -1364,8 +1388,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	exclude_modes = list()
 
 // Devices and Tools
-/datum/uplink_item/device_tools
-	category = "Devices and Tools"
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
@@ -1378,6 +1400,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	name = "Electromagnet Charging Device"
 	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
 	item = /obj/item/emagrecharge
+	cost = 2
+
+/datum/uplink_item/device_tools/phantomthief
+	name = "Syndicate Mask"
+	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
+	item = /obj/item/clothing/glasses/phantomthief/syndicate
 	cost = 2
 
 /datum/uplink_item/device_tools/cutouts
@@ -1543,7 +1571,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
 			for rapid healing, a medical night vision HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
-	item = /obj/item/storage/firstaid/tactical
+	item = /obj/item/storage/firstaid/tactical/nukeop
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -1557,9 +1585,16 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 /datum/uplink_item/device_tools/surgerybag_adv
 	name = "Advanced Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all advanced surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit."
+			a Syndicate brand MMI, a straitjacket, a muzzle, and an outdated, yet still useful Combat Medic Kit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
 	cost = 10
+
+/datum/uplink_item/device_tools/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	cost = 3
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -1599,9 +1634,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 
 // Implants
-/datum/uplink_item/implants
-	category = "Implants"
-	surplus = 50
 
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
@@ -1698,10 +1730,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	include_modes = list(/datum/game_mode/nuclear)
 
 // Role-specific items
-/datum/uplink_item/role_restricted
-	category = "Role-Restricted"
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	surplus = 0
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
@@ -1734,14 +1762,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
-
-/datum/uplink_item/role_restricted/brainwash_disk
-	name = "Brainwashing Surgery Program"
-	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
-	Insert into an Operating Console to enable the procedure."
-	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor", "Roboticist")
-	cost = 3
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
@@ -1929,10 +1949,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/gun/energy/emitter
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
 
-// Pointless
-/datum/uplink_item/badass
-	category = "(Pointless) Badassery"
-	surplus = 0
+// Pointless (Badassery)
 
 /datum/uplink_item/badass/costumes/obvious_chameleon
 	name = "Broken Chameleon Kit"
@@ -1985,12 +2002,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 1
-
-/datum/uplink_item/badass/phantomthief
-	name = "Syndicate Mask"
-	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
-	item = /obj/item/clothing/glasses/phantomthief/syndicate
-	cost = 2
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"

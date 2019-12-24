@@ -67,9 +67,9 @@ God bless America.
 	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine()
-	..()
+	. = ..()
 	if(frying)
-		to_chat(usr, "You can make out \a [frying] in the oil.")
+		. += "You can make out \a [frying] in the oil."
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -79,6 +79,9 @@ God bless America.
 		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
 		I.reagents.trans_to(src, I.reagents.total_volume)
 		qdel(I)
+		return
+	if(istype(I,/obj/item/clothing/head/mob_holder))
+		to_chat(user, "<span class='warning'>This does not fit in the fryer.</span>") // TODO: Deepfrying instakills mobs, spawns a whole deep-fried mob. 
 		return
 	if(!reagents.has_reagent("cooking_oil"))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")

@@ -141,6 +141,10 @@
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
+/datum/spellbook_entry/nuclearfist
+	name = "Nuclear Fist"
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
@@ -392,6 +396,12 @@
 	dynamic_requirement = 50
 	dynamic_cost = 10
 
+/datum/spellbook_entry/item/plasmafist
+	name = "Plasma Fist"
+	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
+	item_path = /obj/item/book/granter/martial/plasma_fist
+	cost = 3
+
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
 	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
@@ -602,11 +612,11 @@
 	var/list/categories = list()
 
 /obj/item/spellbook/examine(mob/user)
-	..()
+	. = ..()
 	if(owner)
-		to_chat(user, "There is a small signature on the front cover: \"[owner]\".")
+		. += "There is a small signature on the front cover: \"[owner]\"."
 	else
-		to_chat(user, "It appears to have no author.")
+		. += "It appears to have no author."
 
 /obj/item/spellbook/Initialize()
 	. = ..()

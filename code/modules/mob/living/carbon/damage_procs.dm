@@ -65,6 +65,8 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
+		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -74,6 +76,8 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
+		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -157,6 +161,11 @@
 		O.applyOrganDamage(amount, maximum)
 		O.onDamage(amount, maximum)
 
+/mob/living/carbon/proc/getFailingOrgans()
+	.=list()
+	for(var/obj/item/organ/O in internal_organs)
+		if(O.organ_flags & ORGAN_FAILING)
+			.+=O
 
 ////////////////////////////////////////////
 

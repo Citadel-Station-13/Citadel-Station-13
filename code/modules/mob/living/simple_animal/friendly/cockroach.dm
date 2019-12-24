@@ -3,6 +3,7 @@
 	desc = "This station is just crawling with bugs."
 	icon_state = "cockroach"
 	icon_dead = "cockroach"
+	blood_volume = 50
 	health = 1
 	maxHealth = 1
 	turns_per_move = 5

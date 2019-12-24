@@ -749,17 +749,17 @@
 		to_chat(world, "[user]'s power is [power_multiplier].")
 
 	//Mixables
-	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara")
-	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job")
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job")
+	var/static/regex/enthral_words = regex("relax|obey|love|serve|so easy|ara ara")
+	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job|splendid|jolly good|bloody brilliant")
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|snap") //works
+	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention")
 	//phase1
 	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/speak_words = regex("talk to me|speak")
-	var/static/regex/antiresist_words = regex("unable to resist|give in")//useful if you think your target is resisting a lot
+	var/static/regex/antiresist_words = regex("unable to resist|give in|stop being difficult")//useful if you think your target is resisting a lot
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
@@ -768,11 +768,11 @@
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
-	var/static/regex/strip_words = regex("strip|derobe|nude")
+	var/static/regex/strip_words = regex("strip|derobe|nude|at ease|suit off")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
-	var/static/regex/liedown_words = regex("lie down") //TO ADD
-	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel")
+	var/static/regex/liedown_words = regex("lie down")
+	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel|army crawl")
 	//phase 3
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
@@ -780,14 +780,14 @@
 	var/static/regex/custom_echo = regex("obsess|fills your mind|loop")
 	var/static/regex/instill_words = regex("feel|entice|overwhel")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
-	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
-	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
+	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed|word from hq")
+	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die|heroes never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-	var/static/regex/hallucinate_words = regex("get high|hallucinate")
+	var/static/regex/hallucinate_words = regex("get high|hallucinate|trip balls")
 	var/static/regex/hot_words = regex("heat|hot|hell")
 	var/static/regex/cold_words = regex("cold|cool down|chill|freeze")
-	var/static/regex/getup_words = regex("get up")
-	var/static/regex/pacify_words = regex("more and more docile|complaisant|friendly|pacifist")
+	var/static/regex/getup_words = regex("get up|hop to it")
+	var/static/regex/pacify_words = regex("docile|complaisant|friendly|pacifist")
 	var/static/regex/charge_words = regex("charge|oorah|attack")
 
 	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)
@@ -1013,7 +1013,7 @@
 						speaktrigger += "I'm really, really horny, "
 
 			//collar
-			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
+			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar) && H.client?.prefs.lewdchem)
 				speaktrigger += "I love the collar you gave me, "
 			//End
 			if(H.client?.prefs.lewdchem)
@@ -1143,7 +1143,7 @@
 			switch(E.phase)
 				if(2 to INFINITY)
 					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1) //I'm very tempted to write a Fermis clause that makes them merowr.ogg if it's me. But, I also don't think snowflakism is okay. I would've gotten away for it too, if it wern't for my morals.
-					H.emote("me", 1, "lets out a nya!")
+					H.emote("me", EMOTE_VISIBLE, "lets out a nya!")
 					E.cooldown += 1
 
 	//SLEEP
@@ -1230,7 +1230,7 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			if (E.phase == 3)
 				var/speaktrigger = ""
-				C.emote("me", 1, "whispers something quietly.")
+				C.emote("me", EMOTE_VISIBLE, "whispers something quietly.")
 				if (get_dist(user, C) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to hear them!</b></span>")
 					continue
@@ -1249,8 +1249,11 @@
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
 					continue
+				if(!H.client?.prefs.lewdchem)
+					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with triggers.</b></span>")
+					continue
 				else
-					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
+					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					if (E.mental_capacity >= 5)
@@ -1287,8 +1290,11 @@
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new echophrase!</b></span>")
 					continue
+				if(!H.client?.prefs.lewdchem)
+					to_chat(user, "<span class='warning'>[H] seems incapable of being implanted with an echoing phrase.</b></span>")
+					continue
 				else
-					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
+					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
@@ -1311,7 +1317,7 @@
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
 					continue
 				else
-					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
 					user.SetStun(1000)//So you can't run away!
 					H.SetStun(1000)
 					if (E.mental_capacity >= 200)
@@ -1342,8 +1348,8 @@
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase == 3 && H.client?.prefs.lewdchem)
-				var/instill = stripped_input(user, "Instill an emotion in your [(user.client?.prefs.lewdchem?"Your pet":"listener")].", MAX_MESSAGE_LEN)
+			if(E.phase >= 3 && H.client?.prefs.lewdchem)
+				var/instill = stripped_input(user, "Instill an emotion in [H].", MAX_MESSAGE_LEN)
 				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")
 				log_game("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")

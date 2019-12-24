@@ -315,6 +315,11 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
+
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
 	duration = 5
@@ -343,6 +348,10 @@
 /obj/effect/temp_visual/impact_effect/purple_laser
 	icon_state = "impact_laser_purple"
 	duration = 4
+
+/obj/effect/temp_visual/impact_effect/shrink
+	icon_state = "m_shield"
+	duration = 10
 
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
@@ -437,3 +446,10 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/slugboom
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "slugboom"
+	randomdir = FALSE
+	duration = 30
+	pixel_x = -24

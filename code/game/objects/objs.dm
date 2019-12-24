@@ -224,16 +224,17 @@
 	.["Modify armor values"] = "?_src_=vars;[HrefToken()];modarmor=[REF(src)]"
 
 /obj/examine(mob/user)
-	..()
+	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
-		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+		. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
 	if(unique_reskin && (!current_skin || always_reskinnable))
-		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
+		. += "<span class='notice'>Alt-click it to reskin it.</span>"
 
 /obj/AltClick(mob/user)
 	. = ..()
 	if(unique_reskin && (!current_skin || always_reskinnable) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
+		return TRUE
 
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))

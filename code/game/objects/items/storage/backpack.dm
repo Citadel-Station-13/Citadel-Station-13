@@ -253,7 +253,7 @@
 
 /obj/item/storage/backpack/satchel/bone
 	name = "bone satchel"
-	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
+	desc = "A grotesque satchel made of sinews and bones."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
 	slot_flags = ITEM_SLOT_BACK
@@ -551,7 +551,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/storage/firstaid/tactical(src)
+	new /obj/item/storage/firstaid/tactical/nukeop(src)
 	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 
