@@ -224,8 +224,6 @@ SUBSYSTEM_DEF(vote)
 					GLOB.master_mode = "dynamic"
 					var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
 					GLOB.dynamic_storyteller_type = S
-					GLOB.dynamic_curve_centre = initial(S.curve_centre)
-					GLOB.dynamic_curve_width = initial(S.curve_width)
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")

@@ -181,7 +181,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
+	dat += "<br>Injection Timers: (<b>[storyteller.get_injection_chance(TRUE)]%</b> chance)<BR>"
 	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	dat += "Event: [(event_injection_cooldown-world.time)>60*10 ? "[round((event_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(event_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];forceevent=1'>\[Now!\]</a><BR>"
@@ -339,6 +339,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 	SSblackbox.record_feedback("tally","dynamic_threat",peaceful_percentage,"Percent of same-vote rounds that are more peaceful")
 
 /datum/game_mode/dynamic/can_start()
+	storyteller = new GLOB.dynamic_storyteller_type // this is where all the initialization happens
+	storyteller.on_start()
+	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
 	message_admins("Dynamic mode parameters for the round:")
 	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
@@ -348,19 +351,12 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 		threat = threat_level
-		SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Threat level (forced by admins)")
+		SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Threat level (forced)")
 	else
 		generate_threat()
 
-	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
-	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
+	storyteller.start_injection_cooldowns()
 
-	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
-	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
-	
-	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
-	
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	initial_threat_level = threat_level
 	return TRUE
@@ -382,9 +378,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 			if("Event")
 				if(ruleset.weight)
 					events += ruleset
-	storyteller = new GLOB.dynamic_storyteller_type
-	storyteller.on_start()
-	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++
@@ -675,8 +668,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
-		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
+		midround_injection_cooldown = storyteller.get_midround_cooldown() + world.time
 
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
@@ -685,19 +677,17 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 		log_game("DYNAMIC: Checking for midround injection.")
 
 		update_playercounts()
-		if (get_injection_chance())
+		if (prob(storyteller.get_injection_chance()))
 			SSblackbox.record_feedback("tally","dynamic",1,"Attempted midround injections")
 			var/list/drafted_rules = storyteller.midround_draft()
 			if (drafted_rules.len > 0)
 				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
 				picking_midround_latejoin_rule(drafted_rules)
-		else
-			midround_injection_cooldown = (midround_injection_cooldown + world.time)/2
+		// get_injection_chance can do things on fail
 
 	if(event_injection_cooldown < world.time)
 		SSblackbox.record_feedback("tally","dynamic",1,"Attempted event injections")
-		var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-		event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
+		event_injection_cooldown = storyteller.get_event_cooldown() + world.time
 		message_admins("DYNAMIC: Doing event injection.")
 		log_game("DYNAMIC: Doing event injection.")
 		update_playercounts()
@@ -726,31 +716,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
-
-/// Gets the chance for latejoin and midround injection, the dry_run argument is only used for forced injection.
-/datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
-	if(forced_injection)
-		forced_injection = !dry_run
-		return 100
-	var/chance = 0
-	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
-	if (!current_players[CURRENT_LIVING_ANTAGS].len)
-		chance += 80 // No antags at all? let's boost those odds!
-	else
-		var/current_pop_per_antag = current_players[CURRENT_LIVING_PLAYERS].len / current_players[CURRENT_LIVING_ANTAGS].len
-		if (current_pop_per_antag > max_pop_per_antag)
-			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
-		else
-			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (current_players[CURRENT_DEAD_PLAYERS].len > current_players[CURRENT_LIVING_PLAYERS].len)
-		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (threat > 70)
-		chance += 15
-	if (threat < 30)
-		chance -= 15
-	return round(max(0,chance))
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
@@ -793,13 +758,12 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 			picking_midround_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
 		forced_latejoin_rule = null
 
-	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
+	else if (latejoin_injection_cooldown < world.time && prob(storyteller.get_injection_chance()))
 		SSblackbox.record_feedback("tally","dynamic",1,"Attempted latejoin injections")
 		var/list/drafted_rules = storyteller.latejoin_draft(newPlayer)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
-			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)

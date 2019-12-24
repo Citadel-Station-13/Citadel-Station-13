@@ -673,7 +673,7 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
-	property_weights = list("story_potential" = 10, "extended" = 1, "valid" = 1, "trust" = -3)
+	property_weights = list("story_potential" = 10, "extended" = -2, "valid" = 1, "trust" = -3, "chaos" = 4)
 	repeatable_weight_decrease = 4
 	repeatable = TRUE
 

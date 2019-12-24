@@ -4,6 +4,7 @@
 	var/list/property_weights = list()
 	var/curve_centre = 0
 	var/curve_width = 1.8
+	var/forced_threat_level = -1
 	var/flags = 0
 	var/datum/game_mode/dynamic/mode = null
 
@@ -22,12 +23,61 @@ Property weights are:
 	..()
 	if (istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
+		GLOB.dynamic_curve_centre = curve_centre
+		GLOB.dynamic_curve_width = curve_width
+		GLOB.dynamic_forced_threat_level = forced_threat_level
+
+/datum/dynamic_storyteller/proc/start_injection_cooldowns()
+	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
+	mode.latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
+
+	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
+	mode.midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
+	
+	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
+	mode.event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
 
 /datum/dynamic_storyteller/proc/do_process()
 	return
 
 /datum/dynamic_storyteller/proc/on_start()
 	return
+
+/datum/dynamic_storyteller/proc/get_midround_cooldown()
+	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
+	return round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
+
+/datum/dynamic_storyteller/proc/get_event_cooldown()
+	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
+	return round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max))
+
+/datum/dynamic_storyteller/proc/get_latejoin_cooldown()
+	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
+	return round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
+
+/datum/dynamic_storyteller/proc/get_injection_chance(dry_run = FALSE)
+	if(mode.forced_injection)
+		mode.forced_injection = !dry_run
+		return 100
+	var/chance = 0
+	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
+	var/high_pop_factor = (mode.current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
+	var/max_pop_per_antag = max(5,15 - round(mode.threat_level/10) - round(mode.current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
+	if (!mode.current_players[CURRENT_LIVING_ANTAGS].len)
+		chance += 80 // No antags at all? let's boost those odds!
+	else
+		var/current_pop_per_antag = mode.current_players[CURRENT_LIVING_PLAYERS].len / mode.current_players[CURRENT_LIVING_ANTAGS].len
+		if (current_pop_per_antag > max_pop_per_antag)
+			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
+		else
+			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
+	if (mode.current_players[CURRENT_DEAD_PLAYERS].len > mode.current_players[CURRENT_LIVING_PLAYERS].len)
+		chance -= 30 // More than half the crew died? ew, let's calm down on antags
+	if (mode.threat > 70)
+		chance += 15
+	if (mode.threat < 30)
+		chance -= 15
+	return round(max(0,chance))
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -106,6 +156,22 @@ Property weights are:
 	curve_centre = 10
 	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
 	property_weights = list("extended" = -1, "chaos" = 10)
+	var/refund_cooldown
+	
+/datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
+	return ..() / 4
+
+/datum/dynamic_storyteller/cowabunga/get_event_cooldown()
+	return ..() / 4
+
+/datum/dynamic_storyteller/cowabunga/get_latejoin_cooldown()
+	return ..() / 4
+
+/datum/dynamic_storyteller/cowabunga/do_process()
+	if(refund_cooldown < world.time)
+		mode.refund_threat(10)
+		mode.log_threat("Cowabunga it is. Refunded 10 threat. Threat is now [mode.threat].")
+		refund_cooldown = world.time + 300 SECONDS
 
 /datum/dynamic_storyteller/team
 	name = "Teamwork"
@@ -114,13 +180,16 @@ Property weights are:
 	curve_width = 1.5
 	property_weights = list("valid" = 3, "trust" = 5)
 
+/datum/dynamic_storyteller/team/get_injection_chance()
+	return (mode.current_players[CURRENT_LIVING_ANTAGS].len ? 0 : ..())
+
 /datum/dynamic_storyteller/classic
 	name = "Classic"
 	desc = "Chaos: medium. Variation: highest. Default dynamic."
 
 /datum/dynamic_storyteller/memes
 	name = "Story"
-	desc = "Chaos: medium. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
+	desc = "Chaos: varies. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
 	curve_width = 4
 	property_weights = list("story_potential" = 10, "extended" = 1)
 
@@ -129,7 +198,7 @@ Property weights are:
 	desc = "Chaos: low. Variation: high. Likely antags: traitor, bloodsucker. Rare: revs, blood cult."
 	curve_centre = -2
 	curve_width = 4
-	property_weights = list("trust" = -5)
+	property_weights = list("trust" = -5, "extended" = 3)
 
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
@@ -144,6 +213,6 @@ Property weights are:
 	desc = "Chaos: none. Variation: none. Likely antags: none."
 	curve_centre = -20
 	curve_width = 0.5
-	
+
 /datum/dynamic_storyteller/extended/on_start()
 	GLOB.dynamic_forced_extended = TRUE
