@@ -48,7 +48,7 @@
 	if(mind)
 		if (mind.martial_art && mind.martial_art.dodge_chance)
 			if(!lying && dna && !dna.check_mutation(HULK))
-				if(mind.martial_art.dodge_chance >= rand(0,100))
+				if(prob(mind.martial_art.dodge_chance))
 					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
 					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
 					return -1
