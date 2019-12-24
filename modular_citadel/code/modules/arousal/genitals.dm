@@ -106,6 +106,10 @@
 	return
 
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
+	fluid_max_volume += modifier*2.5
+	fluid_rate += modifier/10
+	if(reagents)
+		reagents.maximum_volume = fluid_max_volume
 	return
 
 /obj/item/organ/genital/proc/update_size()
@@ -128,7 +132,7 @@
 		amount += 0.1
 	var/multiplier = fluid_mult
 	if(reagents.total_volume >= 5)
-		multiplier *= 0.5
+		multiplier *= 0.8
 	if(reagents.total_volume < reagents.maximum_volume)
 		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
 		reagents.add_reagent(fluid_id, (amount * multiplier))//generate the cum
@@ -336,4 +340,3 @@
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
-

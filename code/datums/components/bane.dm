@@ -19,12 +19,14 @@
 	src.damage_multiplier = damage_multiplier
 
 /datum/component/bane/RegisterWithParent()
+	. = ..()
 	if(speciestype)
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/speciesCheck)
 	else
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/mobCheck)
 
 /datum/component/bane/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
 
 /datum/component/bane/proc/speciesCheck(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

@@ -92,6 +92,7 @@ PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
 PROBABILITY CLOWNOPS 0
+PROBABILITY BLOODSUCKER 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -114,6 +115,7 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
+CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -481,17 +483,17 @@ MIDROUND_ANTAG_TIME_CHECK 60
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.7
 
-## A time, in real-time deciseconds, applied upon suicide, cryosleep or ghosting whilst alive
-## during which the player shouldn't be able to come back through
+## A "timeout", in real-time minutes, applied upon suicide, cryosleep or ghosting whilst alive,
+## during which the player shouldn't be able to come back into the round through
 ## midround playable roles or mob spawners.
 ## Set to 0 to completely disable it.
-SUICIDE_REENTER_ROUND_TIMER 18000
+SUICIDE_REENTER_ROUND_TIMER 30
 
-## A time, in real-time deciseconds, below which the player receives
-## a timed penalty, for purposes similar to the aforementioned one (can also stack)
-## and equal to this config difference with world.time.
+## A world time threshold, in minutes, under which the player receives
+## an extra timeout, purposely similar to the above one (and also stacks with),
+## equal to the difference between the current world.time and this threshold.
 ## Both configs are indipendent from each other, disabling one won't affect the other.
-ROUNDSTART_SUICIDE_TIME_LIMIT 18000
+ROUNDSTART_SUICIDE_TIME_LIMIT 30
 
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
@@ -572,3 +574,8 @@ MONKEYCAP 64
 
 #Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
 DYNAMIC_VOTING
+
+## Choose which Engine to start the round with, comment to remove an Engine from the rotation
+BOX_RANDOM_ENGINE Engine SM
+BOX_RANDOM_ENGINE Engine Tesla
+BOX_RANDOM_ENGINE Engine Singulo

@@ -22,6 +22,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
+	blood_volume = 0
 	var/doing_move_loop = FALSE
 	var/mob/living/set_target
 	var/timerid

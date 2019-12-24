@@ -5,8 +5,8 @@
 	burnt_states = list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plasteel/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
@@ -16,17 +16,17 @@
 
 
 /turf/open/floor/plasteel/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 /turf/open/floor/plasteel/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 
 /turf/open/floor/plasteel/dark
 	icon_state = "darkfull"
 /turf/open/floor/plasteel/dark/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 /turf/open/floor/plasteel/dark/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 /turf/open/floor/plasteel/airless/dark
 	icon_state = "darkfull"
 /turf/open/floor/plasteel/dark/side
@@ -50,7 +50,7 @@
 /turf/open/floor/plasteel/airless/white/corner
 	icon_state = "whitecorner"
 /turf/open/floor/plasteel/white/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 
 /turf/open/floor/plasteel/yellowsiding
@@ -82,7 +82,7 @@
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
 /turf/open/floor/plasteel/freezer/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
@@ -111,7 +111,7 @@
 /turf/open/floor/plasteel/cult/narsie_act()
 	return
 /turf/open/floor/plasteel/cult/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 
 /turf/open/floor/plasteel/stairs
