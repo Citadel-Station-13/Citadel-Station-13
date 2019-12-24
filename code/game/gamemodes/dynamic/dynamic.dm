@@ -300,6 +300,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/proc/log_threat(var/log_str,var/verbose = FALSE)
 	threat_log_verbose += ("[worldtime2text()]: "+log_str)
+	SSblackbox.record_feedback("tally","dynamic_threat_log",1,log_str)
 	if(!verbose)
 		threat_log += log_str
 
@@ -329,6 +330,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
 	threat = threat_level
+	SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Initial threat level")
+	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_centre,"Curve centre")
+	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_width,"Curve width")
+	SSblackbox.record_feedback("tally","dynamic_threat",peaceful_percentage,"Percent of same-vote rounds that are more peaceful")
 
 /datum/game_mode/dynamic/can_start()
 	message_admins("Dynamic mode parameters for the round:")
@@ -340,6 +345,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 		threat = threat_level
+		SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Threat level (forced by admins)")
 	else
 		generate_threat()
 
@@ -384,7 +390,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (roundstart_rules.len <= 0)
 		log_game("DYNAMIC: [roundstart_rules.len] rules.")
 		return TRUE
-
+	SSblackbox.record_feedback("tally","dynamic",roundstart_rules.len,"Roundstart rules considered")
+	SSblackbox.record_feedback("tally","dynamic",roundstart_rules.len,"Players readied up")
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
 	else
@@ -537,6 +544,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(rule.execute())
 		if(rule.persistent)
 			current_rules += rule
+		SSblackbox.record_feedback("associative","dynamic_rulesets",1,rule.get_blackbox_info())
 		return TRUE
 	rule.clean_up()	// Refund threat, delete teams and so on.
 	executed_rules -= rule
@@ -615,6 +623,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				else if(new_rule.flags & ONLY_RULESET)
 					only_ruleset_executed = TRUE
 				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
+				SSblackbox.record_feedback("associative","dynamic_rulesets",1,new_rule.get_blackbox_info())
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
@@ -639,6 +648,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 		executed_rules += rule
+		SSblackbox.record_feedback("associative","dynamic_rulesets",1,rule.get_blackbox_info())
 		rule.candidates.Cut()
 		if (rule.persistent)
 			current_rules += rule
@@ -655,6 +665,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
+			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
+			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
 
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
@@ -673,6 +685,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		update_playercounts()
 		if (get_injection_chance())
+			SSblackbox.record_feedback("tally","dynamic",1,"Attempted midround injections")
 			var/cur_threat_frac = threat/threat_level
 			var/list/drafted_rules = list()
 			var/antag_num = current_players[CURRENT_LIVING_ANTAGS].len
@@ -688,12 +701,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 							drafted_rules[rule] = round(rule.get_weight() + (rule.cost * cur_threat_frac))
 						else
 							drafted_rules[rule] = rule.get_weight()
+				else if(threat < rule.cost)
+					SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 			if (drafted_rules.len > 0)
+				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
 				picking_midround_latejoin_rule(drafted_rules)
 		else
 			midround_injection_cooldown = (midround_injection_cooldown + world.time)/2
 
 	if(event_injection_cooldown < world.time)
+		SSblackbox.record_feedback("tally","dynamic",1,"Attempted event injections")
 		var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
 		event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
 		message_admins("DYNAMIC: Doing event injection.")
@@ -704,7 +721,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if(rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 				if(rule.ready())
 					drafted_rules[rule] = rule.get_weight()
+			else if(threat < rule.cost)
+				SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 		if(drafted_rules.len > 0)
+			SSblackbox.record_feedback("tally","dynamic",1,"Successful event injections")
 			picking_midround_latejoin_rule(drafted_rules)
 
 /// Updates current_players.
@@ -795,6 +815,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
+		SSblackbox.record_feedback("tally","dynamic",1,"Attempted latejoin injections")
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
@@ -812,12 +833,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					drafted_rules[rule] = rule.get_weight()
 
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
+			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
 	threat = min(threat_level,threat+regain)
+	SSblackbox.record_feedback("tally","dynamic_threat",regain,"Refunded threat")
 	log_threat("[regain] refunded. Threat is now [threat].", verbose = TRUE)
 
 /// Generate threat and increase the threat_level if it goes beyond, capped at 100
@@ -825,11 +848,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	threat = min(100, threat+gain)
 	if(threat > threat_level)
 		threat_level = threat
+	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Created threat")
 	log_threat("[gain] created. Threat is now [threat] and threat level is now [threat_level].", verbose = TRUE)
 
 /// Expend threat, can't fall under 0.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
 	threat = max(threat-cost,0)
+	SSblackbox.record_feedback("tally","dynamic_threat",cost,"Threat spent")
 	log_threat("[cost] spent. Threat is now [threat].", verbose = TRUE)
 
 /// Turns the value generated by lorentz distribution to threat value between 0 and 100.
