@@ -8,7 +8,6 @@
 	name = "The Rising Bass"
 	id = MARTIALART_RISINGBASS
 	dodge_chance = 100
-	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/rising_bass_help
 
@@ -145,3 +144,13 @@
 	to_chat(usr, "<span class='notice'>Repulse Punch</span>: Grab Harm Grab Harm. Slams the opponent far away from you.")
 	to_chat(usr, "<span class='notice'>Foot Smash</span>: Harm Harm. Stuns opponent, minor damage.")
 	to_chat(usr, "<span class='notice'>Deft Switch</span>: Grab Disarm Disarm. Switches the opponent's held item for your own. Most useful with nothing in your hand.")
+
+/datum/martial_art/the_rising_bass/teach(mob/living/carbon/human/H, make_temporary = FALSE)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(H, TRAIT_NOGUNS, RISING_BASS_TRAIT)
+
+/datum/martial_art/the_rising_bass/on_remove(mob/living/carbon/human/H)
+	. = ..()
+	REMOVE_TRAIT(H, TRAIT_NOGUNS, RISING_BASS_TRAIT)
