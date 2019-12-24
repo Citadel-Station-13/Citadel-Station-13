@@ -660,7 +660,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
 			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
 	
-	storyteller.do_process()
+	if(!storyteller.do_process())
+		return
 	
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
