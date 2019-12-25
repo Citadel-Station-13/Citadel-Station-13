@@ -90,7 +90,7 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = rule.get_weight() + property_weight
+				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/midround_draft()
@@ -107,7 +107,7 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = rule.get_weight() + property_weight
+				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
 		else if(mode.threat < rule.cost)
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
@@ -131,7 +131,7 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = rule.get_weight() + property_weight
+				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
 		else if(mode.threat < rule.cost)
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
@@ -145,7 +145,7 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = rule.get_weight() + property_weight
+				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
 		else if(mode.threat < rule.cost)
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules

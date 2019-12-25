@@ -390,7 +390,7 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/CollectThreatLevel(var/datum/game_mode/dynamic/mode)
 	saved_threat_levels[3] = saved_threat_levels[2]
-	saved_threat_levels[2] = saved_threat_levels [1]
+	saved_threat_levels[2] = saved_threat_levels[1]
 	saved_threat_levels[1] = mode.threat_level
 	var/json_file = file("data/RecentThreatLevels.json")
 	var/list/file_data = list()
@@ -402,8 +402,9 @@ SUBSYSTEM_DEF(persistence)
 	saved_dynamic_rules[3] = saved_dynamic_rules[2]
 	saved_dynamic_rules[2] = saved_dynamic_rules[1]
 	saved_dynamic_rules[1] = list()
-	for(var/datum/dynamic_ruleset/ruleset in mode.executed_rules)
-		saved_dynamic_rules[1] += ruleset.config_tag
+	for(var/r in mode.executed_rules)
+		var/datum/dynamic_ruleset/rule = r
+		saved_dynamic_rules[1] += rule.config_tag
 	var/json_file = file("data/RecentRulesets.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_dynamic_rules
