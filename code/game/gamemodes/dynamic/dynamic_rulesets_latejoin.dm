@@ -74,8 +74,9 @@
 
 /datum/dynamic_ruleset/latejoin/infiltrator/execute()
 	. = ..()
-	log_admin("[M] was made into a traitor by dynamic.")
-	message_admins("[M] was made into a traitor by dynamic.")
+	for(var/datum/mind/M in assigned)
+		log_admin("[M.name] was made into a traitor by dynamic.")
+		message_admins("[M.name] was made into a traitor by dynamic.")
 
 //////////////////////////////////////////////
 //                                          //
