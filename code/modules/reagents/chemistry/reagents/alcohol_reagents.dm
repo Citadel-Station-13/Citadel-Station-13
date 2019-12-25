@@ -36,7 +36,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
+	if(HAS_TRAIT(L, TRAIT_NO_ALCOHOL))
+		C.adjustToxLoss((boozepwr/25)*REM,forced = TRUE)
+	else if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
@@ -75,14 +77,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				var/datum/surgery/S = s
 				S.success_multiplier = max(0.1*power_multiplier, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
-	return ..()
-
-/datum/reagent/consumable/ethanol/on_mob_add(mob/living/L,amount)
-	if(HAS_TRAIT(L, TRAIT_NO_ALCOHOL) && boozepwr > 0)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.vomit()
-		L.reagents.remove_all_type(/datum/reagent/consumable/ethanol, amount*4, 0, 1)
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer
