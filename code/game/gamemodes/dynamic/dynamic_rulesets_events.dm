@@ -136,11 +136,11 @@
 	required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	weight = 4
 	// no repeatable weight decrease. too variable to be unfun multiple times in one round
-	cost = 3
+	cost = 1
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
-	property_weights = list("story_potential" = 5, "extended" = 1)
+	property_weights = list("story_potential" = 1, "extended" = 1)
 	always_max_weight = TRUE
 
 //////////////////////////////////////////////
