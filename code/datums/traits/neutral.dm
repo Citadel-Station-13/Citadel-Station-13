@@ -153,12 +153,10 @@
 
 /datum/quirk/alcohol_intolerance
 	name = "Alcohol Intolerance"
-	desc = "Your body just can't handle alcohol at all. You don't get drunk faster, you just vomit it right back up as soon as you taste any."
+	desc = "You take toxin damage from alcohol rather than getting drunk."
 	value = 0
 	mob_trait = TRAIT_NO_ALCOHOL
-	gain_text = "<span class='danger'>Just smelling alcohol makes you feel a little sick.</span>"
-	lose_text = "<span class='notice'>You no longer feel like vomiting just from the thought of alcohol.</span>"
-	medical_record_text = "Patient's body violently rejects ethyl alcohol."
+	medical_record_text = "Patient's body does not react properly to ethyl alcohol."
 
 /datum/quirk/alcohol_intolerance/add()
 	var/mob/living/carbon/human/H = quirk_holder
