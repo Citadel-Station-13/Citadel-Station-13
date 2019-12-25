@@ -160,10 +160,7 @@ Property weights are:
 	
 /datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
 	return ..() / 4
-
-/datum/dynamic_storyteller/cowabunga/get_event_cooldown()
-	return ..() / 4
-
+	
 /datum/dynamic_storyteller/cowabunga/get_latejoin_cooldown()
 	return ..() / 4
 
