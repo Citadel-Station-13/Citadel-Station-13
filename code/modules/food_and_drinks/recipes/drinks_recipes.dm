@@ -34,7 +34,7 @@
 	name = "Nuka Cola"
 	id = "nuka_cola"
 	results = list("nuka_cola" = 6)
-	required_reagents = list("uranium" = 1, "cola" = 6)
+	required_reagents = list("uranium" = 1, /datum/reagent/consumable/space_cola = 6)
 
 /datum/chemical_reaction/moonshine
 	name = "Moonshine"
@@ -81,7 +81,7 @@
 	name = "Rum and Coke"
 	id = "rumcoke"
 	results = list("rumcoke" = 3)
-	required_reagents = list("rum" = 2, "cola" = 1)
+	required_reagents = list("rum" = 2, /datum/reagent/consumable/space_cola = 1)
 
 /datum/chemical_reaction/cuba_libre
 	name = "Cuba Libre"
@@ -111,7 +111,7 @@
 	name = "Whiskey Cola"
 	id = "whiskeycola"
 	results = list("whiskeycola" = 3)
-	required_reagents = list("whiskey" = 2, "cola" = 1)
+	required_reagents = list("whiskey" = 2, /datum/reagent/consumable/space_cola = 1)
 
 /datum/chemical_reaction/screwdriver
 	name = "Screwdriver"
@@ -307,7 +307,7 @@
 	name = "Sbiten"
 	id = "sbiten"
 	results = list("sbiten" = 10)
-	required_reagents = list("vodka" = 10, "capsaicin" = 1)
+	required_reagents = list("vodka" = 10, /datum/reagent/consumable/capsaicin = 1)
 
 /datum/chemical_reaction/red_mead
 	name = "Red Mead"
@@ -646,7 +646,7 @@
 	name = "Crevice Spike"
 	id = "crevice_spike"
 	results = list("crevice_spike" = 6)
-	required_reagents = list("limejuice" = 2, "capsaicin" = 4) //2 powdered delta (sour), 4 flanergide (spicy)
+	required_reagents = list("limejuice" = 2, /datum/reagent/consumable/capsaicin = 4) //2 powdered delta (sour), 4 flanergide (spicy)
 	mix_message = "The mixture stings your eyes as it settles."
 
 /datum/chemical_reaction/sake
@@ -698,7 +698,7 @@
 	name = "Fernet Cola"
 	id = "fernet_cola"
 	results = list("fernet_cola" = 2)
-	required_reagents = list("fernet" = 1, "cola" = 1)
+	required_reagents = list("fernet" = 1, /datum/reagent/consumable/space_cola = 1)
 
 /datum/chemical_reaction/fanciulli
 	name = "Fanciulli"
@@ -812,7 +812,7 @@
 	name = "Red Queen"
 	id = "red_queen"
 	results = list("red_queen" = 10)
-	required_reagents = list("tea" = 6, "mercury" = 2, "blackpepper" = 1, "growthserum" = 1)
+	required_reagents = list("tea" = 6, /datum/reagent/mercury = 2, "blackpepper" = 1, "growthserum" = 1)
 
 /datum/chemical_reaction/catnip_tea
 	name = "Catnip Tea"

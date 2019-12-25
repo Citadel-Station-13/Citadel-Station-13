@@ -431,7 +431,7 @@
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
-	list_reagents = list("cola" = 30)
+	list_reagents = list(/datum/reagent/consumable/space_cola = 30)
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
@@ -469,7 +469,7 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-	list_reagents = list("cola" = 15, "orangejuice" = 15)
+	list_reagents = list(/datum/reagent/consumable/space_cola = 15, "orangejuice" = 15)
 	foodtype = SUGAR | FRUIT | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind
@@ -524,7 +524,7 @@
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
-	list_reagents = list("nitrogen" = 24, "oxygen" = 6)
+	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
 	name = "Monkey Energy"

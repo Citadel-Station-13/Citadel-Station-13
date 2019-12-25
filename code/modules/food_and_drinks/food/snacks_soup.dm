@@ -112,7 +112,7 @@
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "tomatojuice" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, "capsaicin" = 1, "tomatojuice" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 1, "tomatojuice" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1)
 	foodtype = VEGETABLES
 
@@ -121,7 +121,7 @@
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "tomatojuice" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, "frostoil" = 1, "tomatojuice" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/frostoil = 1, "tomatojuice" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("tomato" = 1, "mint" = 1)
 	foodtype = VEGETABLES
 
@@ -242,7 +242,7 @@
 	desc = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
 	icon_state = "bungocurry"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 11)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, "capsaicin" = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 5)
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 	filling_color = "#E6A625"
 	foodtype = VEGETABLES | FRUIT | DAIRY

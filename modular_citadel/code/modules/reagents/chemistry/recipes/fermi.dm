@@ -181,7 +181,7 @@
 	name = "Sucubus milk"
 	id = "breast_enlarger"
 	results = list("breast_enlarger" = 8)
-	required_reagents = list("salglu_solution" = 1, /datum/reagent/consumable/milk = 1, "synthflesh" = 2, "silicon" = 3, "aphro" = 3)
+	required_reagents = list("salglu_solution" = 1, /datum/reagent/consumable/milk = 1, "synthflesh" = 2, /datum/reagent/silicon = 3, "aphro" = 3)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -446,7 +446,7 @@
 	name = "Acetic acid buffer"
 	id = "acidic_buffer"
 	results = list("acidic_buffer" = 10) //acetic acid
-	required_reagents = list("salglu_solution" = 1, /datum/reagent/consumable/ethanol = 3, "oxygen" = 3, "water" = 3)
+	required_reagents = list("salglu_solution" = 1, /datum/reagent/consumable/ethanol = 3, /datum/reagent/oxygen = 3, "water" = 3)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500

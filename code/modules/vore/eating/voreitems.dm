@@ -59,4 +59,4 @@
 	name = "Ickypak"
 	id = "ickypak"
 	results = list("ickypak" = 2)
-	required_reagents = list("chlorine" = 2 , /datum/reagent/oil = 1) */
+	required_reagents = list(/datum/reagent/chlorine = 2 , /datum/reagent/oil = 1) */

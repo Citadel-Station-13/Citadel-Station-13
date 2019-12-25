@@ -208,7 +208,7 @@
 	name = "crocin"
 	id = "aphro"
 	results = list("aphro" = 6)
-	required_reagents = list(/datum/reagent/carbon = 2, "hydrogen" = 2, "oxygen" = 2, "water" = 1)
+	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/oxygen = 2, "water" = 1)
 	required_temp = 400
 	mix_message = "The mixture boils off a pink vapor..."//The water boils off, leaving the crocin
 
@@ -224,7 +224,7 @@
 	name = "camphor"
 	id = "anaphro"
 	results = list("anaphro" = 6)
-	required_reagents = list(/datum/reagent/carbon = 2, "hydrogen" = 2, "oxygen" = 2, "sulfur" = 1)
+	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/oxygen = 2, "sulfur" = 1)
 	required_temp = 400
 	mix_message = "The mixture boils off a yellow, smelly vapor..."//Sulfur burns off, leaving the camphor
 

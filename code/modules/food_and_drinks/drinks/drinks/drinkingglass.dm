@@ -85,7 +85,7 @@
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola
 	name = "Space Cola"
-	list_reagents = list("cola" = 50)
+	list_reagents = list(/datum/reagent/consumable/space_cola = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"

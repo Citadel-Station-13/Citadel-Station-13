@@ -124,7 +124,7 @@
 	name = "Hell Ramen"
 	id = "hell_ramen"
 	results = list("hell_ramen" = 6)
-	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
+	required_reagents = list(/datum/reagent/consumable/capsaicin = 1, "hot_ramen" = 6)
 
 /datum/chemical_reaction/imitationcarpmeat
 	name = "Imitation Carpmeat"

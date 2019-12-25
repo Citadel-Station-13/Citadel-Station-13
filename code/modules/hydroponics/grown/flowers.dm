@@ -209,7 +209,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list("condensedcapsaicin" = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
 /obj/item/grown/novaflower
@@ -227,7 +227,7 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
-	grind_results = list("capsaicin" = 0, "condensedcapsaicin" = 0)
+	grind_results = list(/datum/reagent/consumable/capsaicin = 0, "condensedcapsaicin" = 0)
 	tastes = list("cooked sunflower" = 1)
 
 /obj/item/grown/novaflower/add_juice()

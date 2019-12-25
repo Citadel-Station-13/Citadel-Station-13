@@ -3,13 +3,13 @@
 	name = "Sterilizine"
 	id = "sterilizine"
 	results = list("sterilizine" = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, "charcoal" = 1, "chlorine" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, "charcoal" = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/lube
 	name = "Space Lube"
 	id = "lube"
 	results = list("lube" = 4)
-	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
+	required_reagents = list("water" = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/spraytan
 	name = "Spray Tan"
@@ -27,13 +27,13 @@
 	name = "Impedrezene"
 	id = "impedrezene"
 	results = list("impedrezene" = 2)
-	required_reagents = list("mercury" = 1, "oxygen" = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/cryptobiolin
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
 	results = list("cryptobiolin" = 3)
-	required_reagents = list("potassium" = 1, "oxygen" = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/glycerol
 	name = "Glycerol"
@@ -45,12 +45,12 @@
 	name = "Sodium Chloride"
 	id = "sodiumchloride"
 	results = list(/datum/reagent/consumable/sodiumchloride = 3)
-	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
+	required_reagents = list("water" = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
 	id = "solidplasma"
-	required_reagents = list(/datum/reagent/iron = 5, "frostoil" = 5, /datum/reagent/toxin/plasma = 20)
+	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
@@ -61,7 +61,7 @@
 /datum/chemical_reaction/goldsolidification
 	name = "Solid Gold"
 	id = "solidgold"
-	required_reagents = list("frostoil" = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
+	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
@@ -73,7 +73,7 @@
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"
 	results = list("condensedcapsaicin" = 5)
-	required_reagents = list("capsaicin" = 1, /datum/reagent/consumable/ethanol = 5)
+	required_reagents = list(/datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/ethanol = 5)
 
 /datum/chemical_reaction/soapification
 	name = "Soapification"
@@ -96,7 +96,7 @@
 /datum/chemical_reaction/candlefication
 	name = "Candlefication"
 	id = "candlefication"
-	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
+	required_reagents = list("liquidgibs" = 5, /datum/reagent/oxygen  = 5) //
 	required_temp = 374
 	mob_react = FALSE
 
@@ -121,14 +121,14 @@
 	name = "Direct Carbon Oxidation"
 	id = "burningcarbon"
 	results = list("co2" = 3)
-	required_reagents = list(/datum/reagent/carbon = 1, "oxygen" = 2)
+	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/oxygen = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
 
 /datum/chemical_reaction/nitrous_oxide
 	name = "Nitrous Oxide"
 	id = "nitrous_oxide"
 	results = list("nitrous_oxide" = 5)
-	required_reagents = list(/datum/reagent/ammonia = 2, "nitrogen" = 1, "oxygen" = 2)
+	required_reagents = list(/datum/reagent/ammonia = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
 	required_temp = 525
 
 //Technically a mutation toxin
@@ -363,7 +363,7 @@
 	name = "Foam surfactant"
 	id = "foam surfactant"
 	results = list("fluorosurfactant" = 5)
-	required_reagents = list("fluorine" = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/foam
 	name = "Foam"
@@ -432,7 +432,7 @@
 	name = "Foaming Agent"
 	id = "foaming_agent"
 	results = list("foaming_agent" = 1)
-	required_reagents = list("lithium" = 1, "hydrogen" = 1)
+	required_reagents = list("lithium" = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/smart_foaming_agent
 	name = "Smart foaming Agent"
@@ -448,7 +448,7 @@
 	name = "Ammonia"
 	id = "ammonia"
 	results = list(/datum/reagent/ammonia = 3)
-	required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
+	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/diethylamine
 	name = "Diethylamine"
@@ -484,7 +484,7 @@
 	name = "Drying agent"
 	id = "drying_agent"
 	results = list("drying_agent" = 3)
-	required_reagents = list("stable_plasma" = 2, /datum/reagent/consumable/ethanol = 1, "sodium" = 1)
+	required_reagents = list("stable_plasma" = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/sodium = 1)
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 
@@ -492,19 +492,19 @@
 	name = "acetone"
 	id = "acetone"
 	results = list(/datum/reagent/acetone = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, "oxygen" = 1)
+	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/oil
 	name = "Oil"
 	id = "oil"
 	results = list(/datum/reagent/oil = 3)
-	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/carbon = 1, "hydrogen" = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/phenol
 	name = "phenol"
 	id = "phenol"
 	results = list(/datum/reagent/phenol = 3)
-	required_reagents = list("water" = 1, "chlorine" = 1, /datum/reagent/oil = 1)
+	required_reagents = list("water" = 1, /datum/reagent/chlorine = 1, /datum/reagent/oil = 1)
 
 /datum/chemical_reaction/ash
 	name = "Ash"
@@ -572,13 +572,13 @@
 	name = "saltpetre"
 	id = "saltpetre"
 	results = list("saltpetre" = 3)
-	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 3)
 
 /datum/chemical_reaction/lye
 	name = "lye"
 	id = "lye"
 	results = list("lye" = 3)
-	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 1)
+	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/lye2
 	name = "lye"

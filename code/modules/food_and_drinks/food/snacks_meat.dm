@@ -11,7 +11,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	bitesize = 3
 	filling_color = "#CD853F"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, "capsaicin" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
@@ -247,7 +247,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bitesize = 4
 	filling_color = "#FFA07A"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, "capsaicin" = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 6)
 	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
 	foodtype = MEAT
 
@@ -271,8 +271,8 @@
 	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
 	icon_state = "spiderlegcooked"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "capsaicin" = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, "capsaicin" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/capsaicin = 2)
 	filling_color = "#000000"
 	tastes = list("hot peppers" = 1, "cobwebs" = 1)
 	foodtype = MEAT
@@ -293,8 +293,8 @@
 	name = "carp sashimi"
 	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
 	icon_state = "sashimi"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "capsaicin" = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, "capsaicin" = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 5)
 	filling_color = "#FA8072"
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtype = MEAT | TOXIC
@@ -349,7 +349,7 @@
 	name = "fiesta skewer"
 	icon_state = "fiestaskewer"
 	tastes = list("tex-mex" = 3, "cumin" = 2)
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5, "capsaicin" = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 3)
 
 /obj/item/reagent_containers/food/snacks/bbqribs
 	name = "bbq ribs"

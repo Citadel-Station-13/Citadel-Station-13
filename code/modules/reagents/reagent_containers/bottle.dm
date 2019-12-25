@@ -127,12 +127,12 @@
 /obj/item/reagent_containers/glass/bottle/capsaicin
 	name = "Capsaicin Bottle"
 	desc = "A small bottle. Contains hot sauce."
-	list_reagents = list("capsaicin" = 30)
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 30)
 
 /obj/item/reagent_containers/glass/bottle/frostoil
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
-	list_reagents = list("frostoil" = 30)
+	list_reagents = list(/datum/reagent/consumable/frostoil = 30)
 
 /obj/item/reagent_containers/glass/bottle/traitor
 	name = "syndicate bottle"
@@ -313,7 +313,7 @@
 
 /obj/item/reagent_containers/glass/bottle/hydrogen
 	name = "hydrogen bottle"
-	list_reagents = list("hydrogen" = 30)
+	list_reagents = list(/datum/reagent/hydrogen = 30)
 
 /obj/item/reagent_containers/glass/bottle/lithium
 	name = "lithium bottle"
@@ -325,19 +325,19 @@
 
 /obj/item/reagent_containers/glass/bottle/nitrogen
 	name = "nitrogen bottle"
-	list_reagents = list("nitrogen" = 30)
+	list_reagents = list(/datum/reagent/nitrogen = 30)
 
 /obj/item/reagent_containers/glass/bottle/oxygen
 	name = "oxygen bottle"
-	list_reagents = list("oxygen" = 30)
+	list_reagents = list(/datum/reagent/oxygen = 30)
 
 /obj/item/reagent_containers/glass/bottle/fluorine
 	name = "fluorine bottle"
-	list_reagents = list("fluorine" = 30)
+	list_reagents = list(/datum/reagent/fluorine = 30)
 
 /obj/item/reagent_containers/glass/bottle/sodium
 	name = "sodium bottle"
-	list_reagents = list("sodium" = 30)
+	list_reagents = list(/datum/reagent/sodium = 30)
 
 /obj/item/reagent_containers/glass/bottle/aluminium
 	name = "aluminium bottle"
@@ -345,7 +345,7 @@
 
 /obj/item/reagent_containers/glass/bottle/silicon
 	name = "silicon bottle"
-	list_reagents = list("silicon" = 30)
+	list_reagents = list(/datum/reagent/silicon = 30)
 
 /obj/item/reagent_containers/glass/bottle/phosphorus
 	name = "phosphorus bottle"
@@ -357,11 +357,11 @@
 
 /obj/item/reagent_containers/glass/bottle/chlorine
 	name = "chlorine bottle"
-	list_reagents = list("chlorine" = 30)
+	list_reagents = list(/datum/reagent/chlorine = 30)
 
 /obj/item/reagent_containers/glass/bottle/potassium
 	name = "potassium bottle"
-	list_reagents = list("potassium" = 30)
+	list_reagents = list(/datum/reagent/potassium = 30)
 
 /obj/item/reagent_containers/glass/bottle/iron
 	name = "iron bottle"
@@ -373,7 +373,7 @@
 
 /obj/item/reagent_containers/glass/bottle/mercury
 	name = "mercury bottle"
-	list_reagents = list("mercury" = 30)
+	list_reagents = list(/datum/reagent/mercury = 30)
 
 /obj/item/reagent_containers/glass/bottle/radium
 	name = "radium bottle"
@@ -405,7 +405,7 @@
 
 /obj/item/reagent_containers/glass/bottle/iodine
 	name = "iodine bottle"
-	list_reagents = list("iodine" = 30)
+	list_reagents = list(/datum/reagent/iodine = 30)
 
 /obj/item/reagent_containers/glass/bottle/bromine
 	name = "bromine bottle"

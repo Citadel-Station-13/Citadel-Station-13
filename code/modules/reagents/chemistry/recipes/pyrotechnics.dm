@@ -49,13 +49,13 @@
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
-	required_reagents = list("water" = 1, "potassium" = 1)
+	required_reagents = list("water" = 1, /datum/reagent/potassium = 1)
 	strengthdiv = 10
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
 	id = "holyboom"
-	required_reagents = list("holywater" = 1, "potassium" = 1)
+	required_reagents = list("holywater" = 1, /datum/reagent/potassium = 1)
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -105,7 +105,7 @@
 	name = "Thermite"
 	id = "thermite"
 	results = list("thermite" = 3)
-	required_reagents = list("aluminium" = 1, /datum/reagent/iron = 1, "oxygen" = 1)
+	required_reagents = list("aluminium" = 1, /datum/reagent/iron = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
@@ -148,13 +148,13 @@
 	name = "stabilizing_agent"
 	id = "stabilizing_agent"
 	results = list("stabilizing_agent" = 3)
-	required_reagents = list(/datum/reagent/iron = 1, "oxygen" = 1, "hydrogen" = 1)
+	required_reagents = list(/datum/reagent/iron = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
 	results = list("clf3" = 4)
-	required_reagents = list("chlorine" = 1, "fluorine" = 3)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 3)
 	required_temp = 424
 
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
@@ -181,14 +181,14 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	id = "methboom2"
-	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
+	required_reagents = list("diethylamine" = 1, /datum/reagent/iodine = 1, "phosphorus" = 1, /datum/reagent/hydrogen = 1) //diethylamine is often left over from mixing the ephedrine.
 	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
 	id = "sorium"
 	results = list("sorium" = 4)
-	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, /datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, /datum/reagent/nitrogen = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -238,7 +238,7 @@
 	name = "Flash powder"
 	id = "flash_powder"
 	results = list("flash_powder" = 3)
-	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
+	required_reagents = list("aluminium" = 1, /datum/reagent/potassium = 1, "sulfur" = 1 )
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -281,7 +281,7 @@
 	name = "smoke_powder"
 	id = "smoke_powder"
 	results = list("smoke_powder" = 3)
-	required_reagents = list("potassium" = 1, /datum/reagent/consumable/sugar = 1, "phosphorus" = 1)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/consumable/sugar = 1, "phosphorus" = 1)
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -321,7 +321,7 @@
 	name = "sonic_powder"
 	id = "sonic_powder"
 	results = list("sonic_powder" = 3)
-	required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1)
+	required_reagents = list(/datum/reagent/oxygen = 1, /datum/reagent/consumable/space_cola = 1, "phosphorus" = 1)
 
 /datum/chemical_reaction/sonic_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -369,7 +369,7 @@
 	name = "cryostylane"
 	id = "cryostylane"
 	results = list("cryostylane" = 3)
-	required_reagents = list("water" = 1, "stable_plasma" = 1, "nitrogen" = 1)
+	required_reagents = list("water" = 1, "stable_plasma" = 1, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // cools the fuck down
@@ -379,7 +379,7 @@
 	name = "ephemeral cryostylane reaction"
 	id = "cryostylane_oxygen"
 	results = list("cryostylane" = 1)
-	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+	required_reagents = list("cryostylane" = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
@@ -389,7 +389,7 @@
 	name = "ephemeral pyrosium reaction"
 	id = "pyrosium_oxygen"
 	results = list("pyrosium" = 1)
-	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+	required_reagents = list("pyrosium" = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)

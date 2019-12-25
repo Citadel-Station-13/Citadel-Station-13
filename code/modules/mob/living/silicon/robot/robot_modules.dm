@@ -677,7 +677,7 @@
 
 /obj/item/reagent_containers/spray/cyborg_lube
 	name = "lube spray"
-	list_reagents = list("lube" = 250)
+	list_reagents = list(/datum/reagent/lube = 250)
 
 /obj/item/robot_module/clown
 	name = "Clown"

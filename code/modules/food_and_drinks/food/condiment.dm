@@ -294,7 +294,7 @@
 /obj/item/reagent_containers/food/condiment/pack/hotsauce
 	name = "hotsauce pack"
 	originalname = "hotsauce"
-	list_reagents = list("capsaicin" = 10)
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 10)
 
 /obj/item/reagent_containers/food/condiment/pack/astrotame
 	name = "astrotame pack"

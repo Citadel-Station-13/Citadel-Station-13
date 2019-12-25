@@ -3,7 +3,7 @@
 	name = "formaldehyde"
 	id = "Formaldehyde"
 	results = list("formaldehyde" = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, "oxygen" = 1, /datum/reagent/silver = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
 	required_temp = 420
 
 /datum/chemical_reaction/fentanyl
@@ -17,7 +17,7 @@
 	name = "Cyanide"
 	id = "cyanide"
 	results = list(/datum/reagent/toxin/cyanide = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/ammonia = 1, "oxygen" = 1)
+	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1)
 	required_temp = 380
 
 /datum/chemical_reaction/itching_powder
@@ -30,7 +30,7 @@
 	name = "Fluorosulfuric acid"
 	id = "facid"
 	results = list(/datum/reagent/toxin/acid/fluacid = 4)
-	required_reagents = list(/datum/reagent/toxin/acid = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
+	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/fluorine = 1, /datum/reagent/hydrogen = 1, /datum/reagent/potassium = 1)
 	required_temp = 380
 
 /datum/chemical_reaction/sulfonal
@@ -43,25 +43,25 @@
 	name = "lipolicide"
 	id = "lipolicide"
 	results = list("lipolicide" = 3)
-	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
+	required_reagents = list(/datum/reagent/mercury = 1, "diethylamine" = 1, "ephedrine" = 1)
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
 	results = list("mutagen" = 3)
-	required_reagents = list(/datum/reagent/radium = 1, "phosphorus" = 1, "chlorine" = 1)
+	required_reagents = list(/datum/reagent/radium = 1, "phosphorus" = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/lexorin
 	name = "Lexorin"
 	id = "lexorin"
 	results = list("lexorin" = 3)
-	required_reagents = list(/datum/reagent/toxin/plasma = 1, "hydrogen" = 1, "oxygen" = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
 	results = list("chloralhydrate" = 1)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, "chlorine" = 3, "water" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/chlorine = 3, "water" = 1)
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
 	name = "Mute Toxin"
@@ -85,13 +85,13 @@
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
 	results = list("mindbreaker" = 5)
-	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
+	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, "charcoal" = 1)
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"
 	id = "Heparin"
 	results = list("heparin" = 4)
-	required_reagents = list("formaldehyde" = 1, "sodium" = 1, "chlorine" = 1, "lithium" = 1)
+	required_reagents = list("formaldehyde" = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1, "lithium" = 1)
 	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
 
 /datum/chemical_reaction/rotatium
