@@ -38,7 +38,7 @@ Property weights are:
 	mode.event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
 
 /datum/dynamic_storyteller/proc/do_process()
-	return TRUE
+	return
 
 /datum/dynamic_storyteller/proc/on_start()
 	return
@@ -172,7 +172,6 @@ Property weights are:
 		mode.refund_threat(10)
 		mode.log_threat("Cowabunga it is. Refunded 10 threat. Threat is now [mode.threat].")
 		refund_cooldown = world.time + 300 SECONDS
-	return TRUE
 
 /datum/dynamic_storyteller/team
 	name = "Teamwork"
@@ -217,10 +216,3 @@ Property weights are:
 
 /datum/dynamic_storyteller/extended/on_start()
 	GLOB.dynamic_forced_extended = TRUE
-
-/datum/dynamic_storyteller/ghosts
-	name = "Ghosts"
-	desc = "Deadchat control everything. Maximum variation."
-
-/datum/dynamic_storyteller/ghosts/do_process()
-	

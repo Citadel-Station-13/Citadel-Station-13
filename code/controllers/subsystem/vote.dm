@@ -8,15 +8,11 @@ SUBSYSTEM_DEF(vote)
 
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
-	var/list/stored_gamemode_votes = list() //Basically the last voted gamemode is stored here for end-of-round use.
-
-/datum/vote
 	var/initiator = null
 	var/started_time = null
 	var/end_time = 0
 	var/mode = null
 	var/vote_system = PLURALITY_VOTING
-	var/name = "Vote"
 	var/question = null
 	var/list/choices = list()
 	var/list/choice_descs = list() // optional descriptions
@@ -27,11 +23,9 @@ SUBSYSTEM_DEF(vote)
 
 	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
 
-/datum/vote/New()
-	. = ..()
-	START_PROCESSING(SSvote,src)
+	var/list/stored_gamemode_votes = list() //Basically the last voted gamemode is stored here for end-of-round use.
 
-/datum/vote/process()
+/datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		if(end_time < world.time)
 			result()
@@ -49,7 +43,7 @@ SUBSYSTEM_DEF(vote)
 
 
 
-/datum/vote/proc/reset()
+/datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	end_time = 0
 	mode = null
@@ -61,7 +55,7 @@ SUBSYSTEM_DEF(vote)
 	obfuscated = FALSE //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
 
-/datum/vote/proc/get_result()
+/datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
@@ -96,7 +90,7 @@ SUBSYSTEM_DEF(vote)
 				. += option
 	return .
 
-/datum/vote/proc/calculate_condorcet_votes()
+/datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
 	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
 	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
@@ -133,19 +127,22 @@ SUBSYSTEM_DEF(vote)
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
 			if(i != j)
-				SSblackbox.record_feedback("nested tally","voting",p[i][j],list(name,"Shortest Paths",choices[i],choices[j]))
+				SSblackbox.record_feedback("nested tally","voting",p[i][j],list(blackbox_text,"Shortest Paths",choices[i],choices[j]))
 				if(p[i][j] >= p[j][i])
 					choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
 					// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
 
-/datum/vote/proc/announce_result()
+/datum/controller/subsystem/vote/proc/announce_result()
+	var/vote_title_text
 	var/text
 	if(question)
 		text += "<b>[question]</b>"
+		vote_title_text = "[question]"
 	else
 		text += "<b>[capitalize(mode)] Vote</b>"
+		vote_title_text = "[capitalize(mode)] Vote"
 	if(vote_system == RANKED_CHOICE_VOTING)
-		calculate_condorcet_votes()
+		calculate_condorcet_votes(vote_title_text)
 	var/list/winners = get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -193,7 +190,7 @@ SUBSYSTEM_DEF(vote)
 		message_admins(admintext)
 	return .
 
-/datum/vote/proc/result() // TODO: update result to be different for each vote type
+/datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
 	if(.)
@@ -247,7 +244,7 @@ SUBSYSTEM_DEF(vote)
 	
 	return .
 
-/datum/vote/proc/submit_vote(vote)
+/datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -287,7 +284,7 @@ SUBSYSTEM_DEF(vote)
 					voted[usr.ckey] += vote
 	return 0
 
-/datum/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
 	vote_system = votesystem
 	if(!mode)
 		if(started_time)
@@ -370,14 +367,10 @@ SUBSYSTEM_DEF(vote)
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
-		if(question)
-			name = "[question]"
-		else
-			name = "[capitalize(mode)] Vote"
 		return 1
 	return 0
 
-/datum/vote/proc/interface(client/C)
+/datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
 	var/admin = 0
@@ -432,14 +425,6 @@ SUBSYSTEM_DEF(vote)
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
-	. += "<a href='?src=[REF(src)];vote=close' style='position:absolute;right:50px'>Close</a>"
-	return .
-
-/datum/controller/subsystem/vote/proc/interface()
-	if(votes.len)
-		. += "<h2>Ongoing votes:</h2><hr><ul><li>"
-		for(var/i=1,i<=votes.len,i++)
-			. += "<li><b><a href='?src=[REF(src)];open_vote[i]'>[votes[i].mode]"
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
@@ -465,8 +450,11 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
+	. += "<a href='?src=[REF(src)];vote=close' style='position:absolute;right:50px'>Close</a>"
+	return .
 
-/datum/vote/Topic(href,href_list[],hsrc)
+
+/datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
@@ -496,7 +484,7 @@ SUBSYSTEM_DEF(vote)
 			submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()
 
-/datum/vote/proc/remove_action_buttons()
+/datum/controller/subsystem/vote/proc/remove_action_buttons()
 	for(var/v in generated_actions)
 		var/datum/action/vote/V = v
 		if(!QDELETED(V))
