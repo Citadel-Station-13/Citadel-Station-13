@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(vote)
 		else if(next_pop < world.time)
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=600)
+				client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=700)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
@@ -363,7 +363,7 @@ SUBSYSTEM_DEF(vote)
 			V.Grant(C.mob)
 			generated_actions += V
 			if(forced)
-				var/datum/browser/popup = new(C, "vote", "Voting Panel",nwidth=600,nheight=600)
+				var/datum/browser/popup = new(C, "vote", "Voting Panel",nwidth=600,nheight=700)
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
@@ -496,7 +496,7 @@ SUBSYSTEM_DEF(vote)
 	set category = "OOC"
 	set name = "Vote"
 
-	var/datum/browser/popup = new(src, "vote", "Voting Panel",nwidth=600,nheight=600)
+	var/datum/browser/popup = new(src, "vote", "Voting Panel",nwidth=600,nheight=700)
 	popup.set_window_options("can_close=0")
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
