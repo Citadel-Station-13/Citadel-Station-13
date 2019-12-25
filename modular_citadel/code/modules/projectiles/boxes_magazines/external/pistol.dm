@@ -54,7 +54,7 @@
 	name = "handgun magazine (.45)"
 	id = "m45"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 60000)
+	materials = list(MAT_METAL = 80000)
 	build_path = /obj/item/ammo_box/magazine/m45
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -64,7 +64,7 @@
 	desc = "A gun magazine."
 	id = "pistolm9mm"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 55000)
+	materials = list(MAT_METAL = 80000)
 	build_path = /obj/item/ammo_box/magazine/pistolm9mm
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
