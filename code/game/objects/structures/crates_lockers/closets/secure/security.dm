@@ -19,7 +19,6 @@
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
 	new /obj/item/clothing/head/caphat/parade(src)
-	new /obj/item/clothing/head/caphat/beret(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/rank/captain/femformal(src)  //citadel edit
 	new /obj/item/clothing/head/crown/fancy(src)
@@ -29,12 +28,14 @@
 	new /obj/item/radio/headset/heads/captain(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
-	new /obj/item/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/storage/belt/sabre(src)
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/Captain(src)
-	new /obj/item/clothing/head/caphat/beret/white(src)
+	if(prob(50))
+		new /obj/item/clothing/head/caphat/beret(src)
+	else
+		new /obj/item/clothing/head/caphat/beret/white(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
