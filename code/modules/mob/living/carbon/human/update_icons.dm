@@ -469,7 +469,7 @@ There are several things that need to be remembered:
 		if(!muzzled && ("snout" in dna.species.default_features) && dna.features["snout"] != "None")
 			muzzled = TRUE
 		if(muzzled && M.mutantrace_variation & STYLE_MUZZLE)
-			alt_icon = 'icons/mob/head_muzzled.dmi'
+			alt_icon = 'icons/mob/mask_muzzled.dmi'
 			variation_flag |= STYLE_MUZZLE
 
 		overlays_standing[FACEMASK_LAYER] = M.build_worn_icon(wear_mask.icon_state, FACEMASK_LAYER, alt_icon ? alt_icon : 'icons/mob/mask.dmi', style_flags = variation_flag)
