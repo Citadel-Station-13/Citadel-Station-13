@@ -236,7 +236,7 @@
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
-	list_reagents = list("hot_coco" = 30, "sugar" = 5)
+	list_reagents = list("hot_coco" = 30, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
 

@@ -80,7 +80,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive)
 	mutatelist = list()
-	reagents_add = list("nutriment" = 0.05, "silibinin" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, "silibinin" = 0.1)
 
 /obj/item/seeds/galaxythistle/Initialize()
 	..()
@@ -116,7 +116,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage
 	seed = /obj/item/seeds/cabbage
@@ -142,7 +142,7 @@
 	maturation = 3
 	yield = 4
 	growthstages = 2
-	reagents_add = list("sugar" = 0.25)
+	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
 
 /obj/item/reagent_containers/food/snacks/grown/sugarcane
@@ -173,7 +173,7 @@
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
+	reagents_add = list("sulfur" = 0.1, /datum/reagent/carbon = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
@@ -195,7 +195,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
 	mutatelist = list()
-	reagents_add = list("nutriment" = 0.1, "sugar" = 0.1, "blackpowder" = 0.7)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, "blackpowder" = 0.7)
 	rarity = 60 //See above
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
@@ -232,7 +232,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate()
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
-	
+
 // Lavaland cactus
 
 /obj/item/seeds/lavaland/cactus

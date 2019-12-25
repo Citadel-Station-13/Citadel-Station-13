@@ -12,7 +12,7 @@
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace, /obj/item/seeds/banana/exotic_banana)
-	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
+	reagents_add = list(/datum/reagent/consumable/banana = 0.1, "potassium" = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
@@ -70,7 +70,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
-	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
+	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/banana/mime
@@ -100,7 +100,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
+	reagents_add = list("bluespace" = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
@@ -137,7 +137,7 @@
 	name = "banana spider"
 	desc = "You do not know what it is, but you can bet the clown would love it."
 	icon_state = "exoticbanana"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW | FRUIT
 	grind_results = list("blood" = 20, "liquidgibs" = 5)
 	var/awakening = 0

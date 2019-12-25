@@ -48,12 +48,12 @@
 /obj/item/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
-	list_reagents = list("toxin" = 30)
+	list_reagents = list(/datum/reagent/toxin = 30)
 
 /obj/item/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
 	desc = "A small bottle of cyanide. Bitter almonds?"
-	list_reagents = list("cyanide" = 30)
+	list_reagents = list(/datum/reagent/toxin/cyanide = 30)
 
 /obj/item/reagent_containers/glass/bottle/spewium
 	name = "spewium bottle"
@@ -90,7 +90,7 @@
 /obj/item/reagent_containers/glass/bottle/plasma
 	name = "liquid plasma bottle"
 	desc = "A small bottle of liquid plasma. Extremely toxic and reacts with micro-organisms inside blood."
-	list_reagents = list("plasma" = 30)
+	list_reagents = list(/datum/reagent/toxin/plasma = 30)
 
 /obj/item/reagent_containers/glass/bottle/synaptizine
 	name = "synaptizine bottle"
@@ -105,7 +105,7 @@
 /obj/item/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A small bottle of ammonia."
-	list_reagents = list("ammonia" = 30)
+	list_reagents = list(/datum/reagent/ammonia = 30)
 
 /obj/item/reagent_containers/glass/bottle/diethylamine
 	name = "diethylamine bottle"
@@ -115,7 +115,7 @@
 /obj/item/reagent_containers/glass/bottle/facid
 	name = "Fluorosulfuric Acid Bottle"
 	desc = "A small bottle. Contains a small amount of fluorosulfuric acid."
-	list_reagents = list("facid" = 30)
+	list_reagents = list(/datum/reagent/toxin/acid/fluacid = 30)
 
 /obj/item/reagent_containers/glass/bottle/adminordrazine
 	name = "Adminordrazine Bottle"
@@ -321,7 +321,7 @@
 
 /obj/item/reagent_containers/glass/bottle/carbon
 	name = "carbon bottle"
-	list_reagents = list("carbon" = 30)
+	list_reagents = list(/datum/reagent/carbon = 30)
 
 /obj/item/reagent_containers/glass/bottle/nitrogen
 	name = "nitrogen bottle"
@@ -365,7 +365,7 @@
 
 /obj/item/reagent_containers/glass/bottle/iron
 	name = "iron bottle"
-	list_reagents = list("iron" = 30)
+	list_reagents = list(/datum/reagent/iron = 30)
 
 /obj/item/reagent_containers/glass/bottle/copper
 	name = "copper bottle"
@@ -377,31 +377,31 @@
 
 /obj/item/reagent_containers/glass/bottle/radium
 	name = "radium bottle"
-	list_reagents = list("radium" = 30)
+	list_reagents = list(/datum/reagent/radium = 30)
 
 /obj/item/reagent_containers/glass/bottle/water
 	name = "water bottle"
-	list_reagents = list("water" = 30)
+	list_reagents = list(/datum/reagent/water = 30)
 
 /obj/item/reagent_containers/glass/bottle/ethanol
 	name = "ethanol bottle"
-	list_reagents = list("ethanol" = 30)
+	list_reagents = list(/datum/reagent/consumable/ethanol = 30)
 
 /obj/item/reagent_containers/glass/bottle/sugar
 	name = "sugar bottle"
-	list_reagents = list("sugar" = 30)
+	list_reagents = list(/datum/reagent/consumable/sugar = 30)
 
 /obj/item/reagent_containers/glass/bottle/sacid
 	name = "sulphuric acid bottle"
-	list_reagents = list("sacid" = 30)
+	list_reagents = list(/datum/reagent/toxin/acid = 30)
 
 /obj/item/reagent_containers/glass/bottle/welding_fuel
 	name = "welding fuel bottle"
-	list_reagents = list("welding_fuel" = 30)
+	list_reagents = list(/datum/reagent/fuel = 30)
 
 /obj/item/reagent_containers/glass/bottle/silver
 	name = "silver bottle"
-	list_reagents = list("silver" = 30)
+	list_reagents = list(/datum/reagent/silver = 30)
 
 /obj/item/reagent_containers/glass/bottle/iodine
 	name = "iodine bottle"

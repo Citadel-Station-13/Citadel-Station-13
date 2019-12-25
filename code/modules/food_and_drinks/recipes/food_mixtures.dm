@@ -12,7 +12,7 @@
 	name = "Tofu"
 	id = "tofu"
 	required_reagents = list("soymilk" = 10)
-	required_catalysts = list("enzyme" = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mob_react = FALSE
 
 /datum/chemical_reaction/tofu/on_reaction(datum/reagents/holder, created_volume)
@@ -24,7 +24,7 @@
 /datum/chemical_reaction/chocolate_bar
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
-	required_reagents = list("soymilk" = 2, "cocoa" = 2, "sugar" = 2)
+	required_reagents = list("soymilk" = 2, "cocoa" = 2, /datum/reagent/consumable/sugar = 2)
 
 /datum/chemical_reaction/chocolate_bar/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -36,7 +36,7 @@
 /datum/chemical_reaction/chocolate_bar2
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
-	required_reagents = list("chocolate_milk" = 4, "sugar" = 2)
+	required_reagents = list("chocolate_milk" = 4, /datum/reagent/consumable/sugar = 2)
 	mob_react = FALSE
 
 /datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, created_volume)
@@ -67,27 +67,27 @@
 	name = "Soy Sauce"
 	id = "soysauce"
 	results = list("soysauce" = 5)
-	required_reagents = list("soymilk" = 4, "sacid" = 1)
+	required_reagents = list("soymilk" = 4, /datum/reagent/toxin/acid = 1)
 
 /datum/chemical_reaction/corn_syrup
 	name = "corn_syrup"
 	id = "corn_syrup"
 	results = list("corn_syrup" = 5)
-	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	required_reagents = list("corn_starch" = 1, /datum/reagent/toxin/acid = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/caramel
 	name = "Caramel"
 	id = "caramel"
 	results = list("caramel" = 1)
-	required_reagents = list("sugar" = 1)
+	required_reagents = list(/datum/reagent/consumable/sugar = 1)
 	required_temp = 413
 	mob_react = FALSE
 
 /datum/chemical_reaction/caramel_burned
 	name = "Caramel burned"
 	id = "caramel_burned"
-	results = list("carbon" = 1)
+	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list("caramel" = 1)
 	required_temp = 483
 	mob_react = FALSE
@@ -95,8 +95,8 @@
 /datum/chemical_reaction/cheesewheel
 	name = "Cheesewheel"
 	id = "cheesewheel"
-	required_reagents = list("milk" = 40)
-	required_catalysts = list("enzyme" = 5)
+	required_reagents = list(/datum/reagent/consumable/milk = 40)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/cheesewheel/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -153,7 +153,7 @@
 /datum/chemical_reaction/cakebatter
 	name = "Cake Batter"
 	id = "cakebatter"
-	required_reagents = list("eggyolk" = 15, "flour" = 15, "sugar" = 5)
+	required_reagents = list("eggyolk" = 15, "flour" = 15, /datum/reagent/consumable/sugar = 5)
 	mix_message = "The ingredients form a cake batter."
 
 /datum/chemical_reaction/cakebatter/on_reaction(datum/reagents/holder, created_volume)
@@ -163,7 +163,7 @@
 
 /datum/chemical_reaction/cakebatter/vegan
 	id = "vegancakebatter"
-	required_reagents = list("soymilk" = 15, "flour" = 15, "sugar" = 5)
+	required_reagents = list("soymilk" = 15, "flour" = 15, /datum/reagent/consumable/sugar = 5)
 
 /datum/chemical_reaction/ricebowl
 	name = "Rice Bowl"

@@ -29,7 +29,7 @@
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	results = list("nitroglycerin" = 2)
-	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
+	required_reagents = list("glycerol" = 1, /datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/toxin/acid = 1)
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
@@ -105,12 +105,12 @@
 	name = "Thermite"
 	id = "thermite"
 	results = list("thermite" = 3)
-	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+	required_reagents = list("aluminium" = 1, /datum/reagent/iron = 1, "oxygen" = 1)
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
 	id = "emp_pulse"
-	required_reagents = list("uranium" = 1, "iron" = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
+	required_reagents = list("uranium" = 1, /datum/reagent/iron = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -123,7 +123,7 @@
 /datum/chemical_reaction/beesplosion
 	name = "Bee Explosion"
 	id = "beesplosion"
-	required_reagents = list("honey" = 1, "strange_reagent" = 1, "radium" = 1)
+	required_reagents = list("honey" = 1, "strange_reagent" = 1, /datum/reagent/radium = 1)
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = holder.my_atom.drop_location()
@@ -148,7 +148,7 @@
 	name = "stabilizing_agent"
 	id = "stabilizing_agent"
 	results = list("stabilizing_agent" = 3)
-	required_reagents = list("iron" = 1, "oxygen" = 1, "hydrogen" = 1)
+	required_reagents = list(/datum/reagent/iron = 1, "oxygen" = 1, "hydrogen" = 1)
 
 /datum/chemical_reaction/clf3
 	name = "Chlorine Trifluoride"
@@ -188,7 +188,7 @@
 	name = "Sorium"
 	id = "sorium"
 	results = list("sorium" = 4)
-	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
+	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -213,7 +213,7 @@
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	results = list("liquid_dark_matter" = 3)
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
+	required_reagents = list("stable_plasma" = 1, /datum/reagent/radium = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -281,7 +281,7 @@
 	name = "smoke_powder"
 	id = "smoke_powder"
 	results = list("smoke_powder" = 3)
-	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
+	required_reagents = list("potassium" = 1, /datum/reagent/consumable/sugar = 1, "phosphorus" = 1)
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -348,7 +348,7 @@
 	name = "phlogiston"
 	id = "phlogiston"
 	results = list("phlogiston" = 3)
-	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
+	required_reagents = list("phosphorus" = 1, /datum/reagent/toxin/acid = 1, "stable_plasma" = 1)
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -363,7 +363,7 @@
 	name = "Napalm"
 	id = "napalm"
 	results = list("napalm" = 3)
-	required_reagents = list("oil" = 1, "welding_fuel" = 1, "ethanol" = 1 )
+	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
 
 /datum/chemical_reaction/cryostylane
 	name = "cryostylane"
@@ -399,7 +399,7 @@
 	name = "pyrosium"
 	id = "pyrosium"
 	results = list("pyrosium" = 3)
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "phosphorus" = 1)
+	required_reagents = list("stable_plasma" = 1, /datum/reagent/radium = 1, "phosphorus" = 1)
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
@@ -409,7 +409,7 @@
 	name = "Teslium"
 	id = "teslium"
 	results = list("teslium" = 3)
-	required_reagents = list("stable_plasma" = 1, "silver" = 1, "blackpowder" = 1)
+	required_reagents = list("stable_plasma" = 1, /datum/reagent/silver = 1, "blackpowder" = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
@@ -466,7 +466,7 @@
 	name = "Firefighting Foam"
 	id = "firefighting_foam"
 	results = list("firefighting_foam" = 3)
-	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
+	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,/datum/reagent/carbon = 1)
 	required_temp = 200
 	is_cold_recipe = 1
 

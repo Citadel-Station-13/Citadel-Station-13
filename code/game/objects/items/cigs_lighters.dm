@@ -506,7 +506,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
-	grind_results = list("iron" = 1, "welding_fuel" = 5, "oil" = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -665,7 +665,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 3000 //Blue flame!
 	light_color = LIGHT_COLOR_CYAN
 	overlay_state = "slime"
-	grind_results = list("iron" = 1, "welding_fuel" = 5, "pyroxadone" = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, "pyroxadone" = 5)
 
 
 ///////////

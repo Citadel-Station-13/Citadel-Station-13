@@ -16,7 +16,7 @@
 	icon_dead = "cocoapod-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod, /obj/item/seeds/cocoapod/bungotree)
-	reagents_add = list("cocoa" = 0.25, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/coco = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/cocoapod
 	seed = /obj/item/seeds/cocoapod
@@ -39,7 +39,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/vanillapod
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list()
-	reagents_add = list("vanilla" = 0.25, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/vanilla = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/vanillapod
 	seed = /obj/item/seeds/cocoapod/vanillapod
@@ -64,7 +64,7 @@
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list()
-	reagents_add = list("enzyme" = 0.1, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "bungotree-grow"

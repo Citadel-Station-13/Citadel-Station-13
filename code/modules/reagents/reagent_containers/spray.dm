@@ -218,7 +218,7 @@
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
-	list_reagents = list("water" = 10)
+	list_reagents = list(/datum/reagent/water = 10)
 
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return

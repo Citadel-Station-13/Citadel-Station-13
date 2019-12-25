@@ -4,19 +4,19 @@
 	name = "Goldschlager"
 	id = "goldschlager"
 	results = list("goldschlager" = 10)
-	required_reagents = list("vodka" = 10, "gold" = 1)
+	required_reagents = list("vodka" = 10, /datum/reagent/gold = 1)
 
 /datum/chemical_reaction/patron
 	name = "Patron"
 	id = "patron"
 	results = list("patron" = 10)
-	required_reagents = list("tequila" = 10, "silver" = 1)
+	required_reagents = list("tequila" = 10, /datum/reagent/silver = 1)
 
 /datum/chemical_reaction/bilk
 	name = "Bilk"
 	id = "bilk"
 	results = list("bilk" = 2)
-	required_reagents = list("milk" = 1, "beer" = 1)
+	required_reagents = list(/datum/reagent/consumable/milk = 1, "beer" = 1)
 
 /datum/chemical_reaction/icetea
 	name = "Iced Tea"
@@ -40,36 +40,36 @@
 	name = "Moonshine"
 	id = "moonshine"
 	results = list("moonshine" = 10)
-	required_reagents = list("nutriment" = 5, "sugar" = 5)
-	required_catalysts = list("enzyme" = 5)
+	required_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/wine
 	name = "Wine"
 	id = "wine"
 	results = list("wine" = 10)
 	required_reagents = list("grapejuice" = 10)
-	required_catalysts = list("enzyme" = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/spacebeer
 	name = "Space Beer"
 	id = "spacebeer"
 	results = list("beer" = 10)
 	required_reagents = list("flour" = 10)
-	required_catalysts = list("enzyme" = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/vodka
 	name = "Vodka"
 	id = "vodka"
 	results = list("vodka" = 10)
 	required_reagents = list("potato" = 10)
-	required_catalysts = list("enzyme" = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/kahlua
 	name = "Kahlua"
 	id = "kahlua"
 	results = list("kahlua" = 5)
-	required_reagents = list("coffee" = 5, "sugar" = 5)
-	required_catalysts = list("enzyme" = 5)
+	required_reagents = list("coffee" = 5, /datum/reagent/consumable/sugar = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/gin_tonic
 	name = "Gin and Tonic"
@@ -147,13 +147,13 @@
 	name = "Toxins Special"
 	id = "toxinsspecial"
 	results = list("toxinsspecial" = 5)
-	required_reagents = list("rum" = 2, "vermouth" = 1, "plasma" = 2)
+	required_reagents = list("rum" = 2, "vermouth" = 1, /datum/reagent/toxin/plasma = 2)
 
 /datum/chemical_reaction/beepsky_smash
 	name = "Beepksy Smash"
 	id = "beepksysmash"
 	results = list("beepskysmash" = 5)
-	required_reagents = list("limejuice" = 2, "quadruple_sec" = 2, "iron" = 1)
+	required_reagents = list("limejuice" = 2, "quadruple_sec" = 2, /datum/reagent/iron = 1)
 
 /datum/chemical_reaction/doctor_delight
 	name = "The Doctor's Delight"
@@ -184,7 +184,7 @@
 	id = "hooch"
 	results = list("hooch" = 3)
 	required_reagents = list ("ethanol" = 2, "welding_fuel" = 1)
-	required_catalysts = list("enzyme" = 1)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 1)
 
 /datum/chemical_reaction/irish_coffee
 	name = "Irish Coffee"
@@ -268,7 +268,7 @@
 	name = "Singulo"
 	id = "singulo"
 	results = list("singulo" = 10)
-	required_reagents = list("vodka" = 5, "radium" = 1, "wine" = 5)
+	required_reagents = list("vodka" = 5, /datum/reagent/radium = 1, "wine" = 5)
 
 /datum/chemical_reaction/alliescocktail
 	name = "Allies Cocktail"
@@ -320,7 +320,7 @@
 	id = "mead"
 	results = list("mead" = 2)
 	required_reagents = list("honey" = 2)
-	required_catalysts = list("enzyme" = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
 /datum/chemical_reaction/iced_beer
 	name = "Iced Beer"
@@ -344,19 +344,19 @@
 	name = "Cafe Latte"
 	id = "cafe_latte"
 	results = list("cafe_latte" = 2)
-	required_reagents = list("coffee" = 1, "milk" = 1)
+	required_reagents = list("coffee" = 1, /datum/reagent/consumable/milk = 1)
 
 /datum/chemical_reaction/acidspit
 	name = "Acid Spit"
 	id = "acidspit"
 	results = list("acidspit" = 6)
-	required_reagents = list("sacid" = 1, "wine" = 5)
+	required_reagents = list(/datum/reagent/toxin/acid = 1, "wine" = 5)
 
 /datum/chemical_reaction/amasec
 	name = "Amasec"
 	id = "amasec"
 	results = list("amasec" = 10)
-	required_reagents = list("iron" = 1, "wine" = 5, "vodka" = 5)
+	required_reagents = list(/datum/reagent/iron = 1, "wine" = 5, "vodka" = 5)
 
 /datum/chemical_reaction/changelingsting
 	name = "Changeling Sting"
@@ -458,7 +458,7 @@
 	name = "Silencer"
 	id = "silencer"
 	results = list("silencer" = 3)
-	required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
+	required_reagents = list("nothing" = 1, "cream" = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/driestmartini
 	name = "Driest Martini"
@@ -482,7 +482,7 @@
 	name = "Vanilla Pudding"
 	id = "vanillapudding"
 	results = list("vanillapudding" = 20)
-	required_reagents = list("vanilla" = 5, "milk" = 5, "eggyolk" = 5)
+	required_reagents = list(/datum/reagent/consumable/vanilla = 5, /datum/reagent/consumable/milk = 5, "eggyolk" = 5)
 
 /datum/chemical_reaction/drunkenblumpkin
 	name = "Drunken Blumpkin"
@@ -525,14 +525,14 @@
 	name = "Whiskey Sour"
 	id = "whiskey_sour"
 	results = list("whiskey_sour" = 3)
-	required_reagents = list("whiskey" = 1, "lemonjuice" = 1, "sugar" = 1)
+	required_reagents = list("whiskey" = 1, "lemonjuice" = 1, /datum/reagent/consumable/sugar = 1)
 	mix_message = "The mixture darkens to a rich gold hue."
 
 /datum/chemical_reaction/fetching_fizz
 	name = "Fetching Fizz"
 	id = "fetching_fizz"
 	results = list("fetching_fizz" = 3)
-	required_reagents = list("nuka_cola" = 1, "iron" = 1) //Manufacturable from only the mining station
+	required_reagents = list("nuka_cola" = 1, /datum/reagent/iron = 1) //Manufacturable from only the mining station
 	mix_message = "The mixture slightly vibrates before settling."
 
 /datum/chemical_reaction/hearty_punch
@@ -554,7 +554,7 @@
 	name = "Lemonade"
 	id = "lemonade"
 	results = list("lemonade" = 5)
-	required_reagents = list("lemonjuice" = 2, "water" = 2, "sugar" = 1, "ice" = 1)
+	required_reagents = list("lemonjuice" = 2, "water" = 2, /datum/reagent/consumable/sugar = 1, "ice" = 1)
 	mix_message = "You're suddenly reminded of home."
 
 /datum/chemical_reaction/arnold_palmer
@@ -568,7 +568,7 @@
 	name = "chocolate milk"
 	id = "chocolate_milk"
 	results = list("chocolate_milk" = 2)
-	required_reagents = list("milk" = 1, "cocoa" = 1)
+	required_reagents = list(/datum/reagent/consumable/milk = 1, "cocoa" = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
 
 /datum/chemical_reaction/eggnog
@@ -625,21 +625,21 @@
 	name = "Squirt Cider"
 	id = "squirt_cider"
 	results = list("squirt_cider" = 1)
-	required_reagents = list("water" = 1, "tomatojuice" = 1, "nutriment" = 1)
+	required_reagents = list("water" = 1, "tomatojuice" = 1, /datum/reagent/consumable/nutriment = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
 
 /datum/chemical_reaction/fringe_weaver
 	name = "Fringe Weaver"
 	id = "fringe_weaver"
 	results = list("fringe_weaver" = 10)
-	required_reagents = list("ethanol" = 9, "sugar" = 1) //9 karmotrine, 1 adelhyde
+	required_reagents = list(/datum/reagent/consumable/ethanol = 9, /datum/reagent/consumable/sugar = 1) //9 karmotrine, 1 adelhyde
 	mix_message = "The mix turns a pleasant cream color and foams up."
 
 /datum/chemical_reaction/sugar_rush
 	name = "Sugar Rush"
 	id = "sugar_rush"
 	results = list("sugar_rush" = 4)
-	required_reagents = list("sugar" = 2, "lemonjuice" = 1, "wine" = 1) //2 adelhyde (sweet), 1 powdered delta (sour), 1 karmotrine (alcohol)
+	required_reagents = list(/datum/reagent/consumable/sugar = 2, "lemonjuice" = 1, "wine" = 1) //2 adelhyde (sweet), 1 powdered delta (sour), 1 karmotrine (alcohol)
 	mix_message = "The mixture bubbles and brightens into a girly pink."
 
 /datum/chemical_reaction/crevice_spike
@@ -654,7 +654,7 @@
 	id = "sake"
 	results = list("sake" = 10)
 	required_reagents = list("rice" = 10)
-	required_catalysts = list("enzyme" = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
 
 /datum/chemical_reaction/peppermint_patty
@@ -692,7 +692,7 @@
 	name = "Mojito"
 	id = "mojito"
 	results = list("mojito" = 5)
-	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
+	required_reagents = list("rum" = 1, /datum/reagent/consumable/sugar = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
 
 /datum/chemical_reaction/fernet_cola
 	name = "Fernet Cola"
@@ -716,19 +716,19 @@
 	name = "Power Gamer"
 	id = "pwr_game"
 	results = list("pwr_game" = 5)
-	required_reagents = list("sodawater" = 1, "blackcrayonpowder" = 1, "sodiumchloride" = 1)
+	required_reagents = list("sodawater" = 1, "blackcrayonpowder" = 1, /datum/reagent/consumable/sodiumchloride = 1)
 
 /datum/chemical_reaction/pinkmilk
 	name = "Strawberry Milk"
 	id = "pinkmilk"
 	results = list("pinkmilk" = 5)
-	required_reagents = list("aphro+" = 1, "milk" = 1)
+	required_reagents = list("aphro+" = 1, /datum/reagent/consumable/milk = 1)
 
 /datum/chemical_reaction/pinktea
 	name = "Strawberry Tea"
 	id = "pinktea"
 	results = list("pinktea" = 5)
-	required_reagents = list("aphro" = 1, "arnold_palmer" = 1, "sugar" = 1)
+	required_reagents = list("aphro" = 1, "arnold_palmer" = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/blank_paper
 	name = "Blank Paper"
@@ -775,7 +775,7 @@
 	name = "Rubberneck"
 	id = "rubberneck"
 	results = list("rubberneck" = 10)
-	required_reagents = list("ethanol" = 4, "grey_bull" = 5, "astrotame" = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 4, "grey_bull" = 5, "astrotame" = 1)
 
 /datum/chemical_reaction/duplex
 	name = "Duplex"
@@ -787,13 +787,13 @@
 	name = "Trappist"
 	id = "trappist"
 	results = list("trappist" = 5)
-	required_reagents = list("ale" = 2, "holywater" = 2, "sugar" = 1)
+	required_reagents = list("ale" = 2, "holywater" = 2, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/cream_soda
 	name = "Cream Soda"
 	id = "cream_soda"
 	results = list("cream_soda" = 4)
-	required_reagents = list("sugar" = 2, "sodawater" = 2, "vanilla" = 1)
+	required_reagents = list(/datum/reagent/consumable/sugar = 2, "sodawater" = 2, /datum/reagent/consumable/vanilla = 1)
 
 /datum/chemical_reaction/blazaam
 	name = "Blazaam"
@@ -805,7 +805,7 @@
 	name = "Planet Cracker"
 	id = "planet_cracker"
 	results = list("planet_cracker" = 4)
-	required_reagents = list("champagne" = 2, "lizardwine" = 2, "eggyolk" = 1, "gold" = 1)
+	required_reagents = list("champagne" = 2, "lizardwine" = 2, "eggyolk" = 1, /datum/reagent/gold = 1)
 	mix_message = "The liquid's color starts shifting as the nanogold is alternately corroded and redeposited."
 
 /datum/chemical_reaction/red_queen

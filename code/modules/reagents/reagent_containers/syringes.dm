@@ -211,7 +211,7 @@
 /obj/item/reagent_containers/syringe/plasma
 	name = "syringe (plasma)"
 	desc = "Contains plasma."
-	list_reagents = list("plasma" = 15)
+	list_reagents = list(/datum/reagent/toxin/plasma = 15)
 
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
@@ -223,7 +223,7 @@
 	list_reagents = list("chloralhydrate" = 50)
 
 /obj/item/reagent_containers/syringe/lethal/execution
-	list_reagents = list("amatoxin" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10) //Citadel edit, changing out plasma from lethals
+	list_reagents = list("amatoxin" = 15, "formaldehyde" = 15, /datum/reagent/toxin/cyanide = 10, /datum/reagent/toxin/acid/fluacid = 10) //Citadel edit, changing out plasma from lethals
 
 /obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"

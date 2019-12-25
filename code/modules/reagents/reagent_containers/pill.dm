@@ -82,14 +82,14 @@
 	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
-	list_reagents = list("toxin" = 50)
+	list_reagents = list(/datum/reagent/toxin = 50)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
-	list_reagents = list("cyanide" = 50)
+	list_reagents = list(/datum/reagent/toxin/cyanide = 50)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/adminordrazine
@@ -138,7 +138,7 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list("mannitol" = 50)
+	list_reagents = list(/datum/reagent/medicine/mannitol = 50)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/mutadone
@@ -187,14 +187,14 @@
 	name = "prussian blue pill"
 	desc = "Used to treat heavy radition poisoning."
 	icon_state = "prussian_blue"
-	list_reagents = list("prussian_blue" = 25, "water" = 10)
+	list_reagents = list("prussian_blue" = 25, /datum/reagent/water = 10)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/mutarad
 	name = "radiation treatment deluxe pill"
 	desc = "Used to treat heavy radition poisoning and genetic defects."
 	icon_state = "anit_rad_fixgene"
-	list_reagents = list("prussian_blue" = 15, "potass_iodide" = 15, "mutadone" = 15, "water" = 5)
+	list_reagents = list("prussian_blue" = 15, "potass_iodide" = 15, "mutadone" = 15, /datum/reagent/water = 5)
 	roundstart = 1
 
 ///////////////////////////////////////// this pill is used only in a legion mob drop
@@ -212,7 +212,7 @@
 
 /obj/item/reagent_containers/pill/happy
 	name = "happy pill"
-	list_reagents = list("sugar" = 10, "space_drugs" = 10)
+	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/drug/space_drugs = 10)
 
 
 /obj/item/reagent_containers/pill/lsd

@@ -234,7 +234,7 @@
 	list_reagents = list("cryoxadone" = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list("slimejelly" = 50)
@@ -335,7 +335,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	list_reagents = list(/datum/reagent/water = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -352,7 +352,7 @@
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	materials = list(MAT_GLASS=0)
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
 	container_HP = 1

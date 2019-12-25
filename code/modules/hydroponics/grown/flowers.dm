@@ -15,7 +15,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list("bicaridine" = 0.2, "nutriment" = 0.05)
+	reagents_add = list("bicaridine" = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -68,7 +68,7 @@
 	icon_dead = "spacemanstrumpet-dead"
 	mutatelist = list()
 	genes = list(/datum/plant_gene/reagent/polypyr)
-	reagents_add = list("nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
 
 /obj/item/seeds/poppy/lily/trumpet/Initialize()
@@ -119,7 +119,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	reagents_add = list("nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -148,7 +148,7 @@
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.04)
+	reagents_add = list("cornoil" = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
@@ -184,7 +184,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
 	genes = list(/datum/plant_gene/trait/glow/purple)
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list("moonshine" = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/moonflower
@@ -209,7 +209,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
+	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
 /obj/item/grown/novaflower

@@ -199,7 +199,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	list_reagents = list("chlorine" = 3, "ammonia" = 1)
+	list_reagents = list("chlorine" = 3, /datum/reagent/ammonia = 1)
 
 /obj/item/reagent_containers/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
