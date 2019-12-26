@@ -11585,11 +11585,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Bp" = (
-/obj/item/paicard,
-/obj/structure/table/wood,
-/turf/open/floor/engine/cult,
-/area/wizard_station)
 "Bs" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -16598,6 +16593,10 @@
 "Mm" = (
 /turf/open/floor/grass,
 /area/centcom/holding)
+"Ms" = (
+/obj/effect/mob_spawn/human/ghostcafe,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Mt" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -17246,6 +17245,11 @@
 "Qe" = (
 /turf/open/ai_visible,
 /area/ai_multicam_room)
+"Qi" = (
+/obj/item/paicard,
+/obj/structure/table/wood,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Qk" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -25747,7 +25751,7 @@ lI
 lI
 lI
 Ax
-Bp
+Qi
 qZ
 qZ
 Ax
@@ -47628,7 +47632,7 @@ Xk
 GY
 NT
 Xk
-Xk
+Ms
 Xk
 NT
 vt
