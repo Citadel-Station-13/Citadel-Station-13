@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
-	var/list/saved_storytellers = list("extended","chaotic","secret")
+	var/list/saved_storytellers = list("foo","bar","baz")
 	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()

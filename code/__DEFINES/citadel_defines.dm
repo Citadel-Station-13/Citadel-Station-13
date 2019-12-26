@@ -127,4 +127,3 @@
 
 // Dynamic storyteller stuff (see above, move later)
 #define NO_ASSASSIN		(1<<0)
-#define EXTREME_ROUND	(1<<1)

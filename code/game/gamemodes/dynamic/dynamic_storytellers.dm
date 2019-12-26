@@ -6,6 +6,7 @@
 	var/curve_width = 1.8
 	var/forced_threat_level = -1
 	var/flags = 0
+	var/weight = 3 // how many rounds need to have been recently played for this storyteller to be left out of the vote
 	var/datum/game_mode/dynamic/mode = null
 
 /**
@@ -155,8 +156,8 @@ Property weights are:
 	name = "Chaotic"
 	curve_centre = 10
 	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
-	flags = EXTREME_ROUND
 	property_weights = list("extended" = -1, "chaos" = 10)
+	weight = 1
 	var/refund_cooldown
 	
 /datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
@@ -176,6 +177,7 @@ Property weights are:
 	desc = "Chaos: high. Variation: low. Likely antags: nukies, clockwork cult, wizard, blob, xenomorph."
 	curve_centre = 2
 	curve_width = 1.5
+	weight = 2
 	property_weights = list("valid" = 3, "trust" = 5)
 
 /datum/dynamic_storyteller/team/get_injection_chance()
@@ -204,13 +206,14 @@ Property weights are:
 	curve_centre = -5
 	curve_width = 0.5
 	flags = NO_ASSASSIN
-	property_weights = list("extended" = 5, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
+	weight = 2
+	property_weights = list("extended" = 1, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
 /datum/dynamic_storyteller/extended
 	name = "Extended"
 	desc = "Chaos: none. Variation: none. Likely antags: none."
 	curve_centre = -20
-	flags = EXTREME_ROUND
+	weight = 1
 	curve_width = 0.5
 
 /datum/dynamic_storyteller/extended/on_start()
