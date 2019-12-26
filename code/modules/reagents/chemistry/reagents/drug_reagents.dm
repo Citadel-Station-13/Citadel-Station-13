@@ -41,7 +41,7 @@
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	id = "nicotine"
-	value = 1
+	value = 0
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
