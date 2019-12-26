@@ -328,8 +328,14 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
-					choices.Add(initial(S.name))
-					choice_descs.Add(initial(S.desc))
+					var/recent_rounds = 0
+					if(initial(S.flags) & EXTREME_ROUND)
+						for(var/i in 1 to 3)
+							if(SSpersistence.saved_storytellers[i] == initial(S.name))
+								recent_rounds++
+					if(recent_rounds<2)
+						choices.Add(initial(S.name))
+						choice_descs.Add(initial(S.desc))
 				choices.Add("Secret")
 				choice_descs.Add("Standard secret. Switches mode if it wins.")
 			if("custom")

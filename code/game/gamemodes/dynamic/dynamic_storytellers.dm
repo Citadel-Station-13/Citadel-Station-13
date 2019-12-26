@@ -155,6 +155,7 @@ Property weights are:
 	name = "Chaotic"
 	curve_centre = 10
 	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
+	flags = EXTREME_ROUND
 	property_weights = list("extended" = -1, "chaos" = 10)
 	var/refund_cooldown
 	
@@ -209,6 +210,7 @@ Property weights are:
 	name = "Extended"
 	desc = "Chaos: none. Variation: none. Likely antags: none."
 	curve_centre = -20
+	flags = EXTREME_ROUND
 	curve_width = 0.5
 
 /datum/dynamic_storyteller/extended/on_start()

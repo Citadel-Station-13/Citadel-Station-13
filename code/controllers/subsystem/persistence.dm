@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
-	var/list/saved_threat_levels = list(1,1,1)
+	var/list/saved_storytellers = list("extended","chaotic","secret")
 	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
-	LoadRecentThreats()
+	LoadRecentStorytellers()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
@@ -169,14 +169,14 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
-/datum/controller/subsystem/persistence/proc/LoadRecentThreats()
-	var/json_file = file("data/RecentThreatLevels.json")
+/datum/controller/subsystem/persistence/proc/LoadRecentStorytellers()
+	var/json_file = file("data/RecentStorytellers.json")
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
-	saved_threat_levels = json["data"]
+	saved_storytellers = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/json_file = file("data/RecentMaps.json")
@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(persistence)
 	CollectRoundtype()
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		CollectThreatLevel(mode)
+		CollectStoryteller(mode)
 		CollectRulesets(mode)
 	RecordMaps()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
@@ -388,13 +388,13 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/datum/controller/subsystem/persistence/proc/CollectThreatLevel(var/datum/game_mode/dynamic/mode)
-	saved_threat_levels[3] = saved_threat_levels[2]
-	saved_threat_levels[2] = saved_threat_levels[1]
-	saved_threat_levels[1] = mode.threat_level
-	var/json_file = file("data/RecentThreatLevels.json")
+/datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
+	saved_storytellers[3] = saved_storytellers[2]
+	saved_storytellers[2] = saved_storytellers[1]
+	saved_storytellers[1] = mode.storyteller.name
+	var/json_file = file("data/RecentStorytellers.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_threat_levels
+	file_data["data"] = saved_storytellers
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 

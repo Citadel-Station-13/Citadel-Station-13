@@ -125,5 +125,6 @@
 #define APPROVAL_VOTING 1
 #define RANKED_CHOICE_VOTING 2
 
-// Dynamic stuff (see above, move later)
-#define NO_ASSASSIN (1<<0)
+// Dynamic storyteller stuff (see above, move later)
+#define NO_ASSASSIN		(1<<0)
+#define EXTREME_ROUND	(1<<1)
