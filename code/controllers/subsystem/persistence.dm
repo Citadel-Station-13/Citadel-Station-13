@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadTrophies()
 	LoadRecentModes()
 	LoadRecentStorytellers()
+	LoadRecentRulesets()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
@@ -168,6 +169,15 @@ SUBSYSTEM_DEF(persistence)
 	if(!json)
 		return
 	saved_modes = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentRulesets()
+	var/json_file = file("data/RecentRulesets.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_dynamic_rules = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadRecentStorytellers()
 	var/json_file = file("data/RecentStorytellers.json")
