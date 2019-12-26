@@ -767,7 +767,7 @@
 /* //We don't have ethereals here, so I'll just comment it out.
 /datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
-	
+
 		var/mob/living/carbon/C = M
 		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
@@ -799,6 +799,16 @@
 	..()
 	. = TRUE
 
+/datum/reagent/consumable/caramel
+	name = "Caramel"
+	id = "caramel"
+	description = "Who would have guessed that heated sugar could be so delicious?"
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	color = "#D98736"
+	taste_mult = 2
+	taste_description = "caramel"
+	reagent_state = SOLID
+
 /datum/reagent/consumable/secretsauce
 	name = "secret sauce"
 	id = "secret_sauce"
@@ -810,3 +820,27 @@
 	taste_mult = 100
 	can_synth = FALSE
 	pH = 6.1
+
+/datum/reagent/consumable/char
+	name = "Char"
+	id = "char"
+	description = "Essence of the grill. Has strange properties when overdosed."
+	reagent_state = LIQUID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#C8C8C8"
+	taste_mult = 6
+	taste_description = "smoke"
+	overdose_threshold = 25
+
+/datum/reagent/consumable/char/overdose_process(mob/living/carbon/M)
+	if(prob(10))
+		M.say(pick("I hate my grill.", "I just want to grill something right for once...", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Tetris. That was a good game..."))
+
+/datum/reagent/consumable/bbqsauce
+	name = "BBQ Sauce"
+	id = "bbqsauce"
+	description = "Sweet, Smokey, Savory, and gets everywhere. Perfect for Grilling."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#78280A" // rgb: 120 40, 10
+	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
+	taste_description = "smokey sweetness"

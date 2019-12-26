@@ -17,7 +17,8 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
 					/obj/item/reagent_containers/food/drinks/soda_cans/air = 1,
-					/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1)
+					/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
+					/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1)
 	refill_canister = /obj/item/vending_refill/cola
 
 /obj/item/vending_refill/cola
