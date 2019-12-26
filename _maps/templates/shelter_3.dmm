@@ -43,7 +43,7 @@
 "i" = (
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/pod/dark,
 /area/survivalpod)
