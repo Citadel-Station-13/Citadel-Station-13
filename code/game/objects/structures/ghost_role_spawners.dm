@@ -607,33 +607,21 @@
 	density = FALSE
 	death = FALSE
 	assignedrole = "Ghost Cafe Visitor"
+	flavour_text = "Is this what life after death is like?"
+	skip_reentry_check = TRUE
+	banType = "ghostcafe"
 
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
-		new_spawn.fully_replace_character_name(newname = new_spawn.client.prefs.real_name)
-		new_spawn.nameless = new_spawn.client.prefs.nameless
-		new_spawn.gender = new_spawn.client.prefs.gender
-		new_spawn.dna.features = new_spawn.client.prefs.features.Copy()
-		new_spawn.flavor_text = new_spawn.dna.features["flavor_text"]
-		new_spawn.dna.custom_species = new_spawn.client.prefs.custom_species
-		new_spawn.eye_color = new_spawn.client.prefs.eye_color
-		new_spawn.hair_color = new_spawn.client.prefs.facial_hair_color
-		new_spawn.skin_tone = new_spawn.client.prefs.skin_tone
-		new_spawn.facial_hair_style = new_spawn.client.prefs.facial_hair_style
-		new_spawn.hair_color = new_spawn.client.prefs.hair_color
-		new_spawn.hair_style = new_spawn.client.prefs.hair_style
-		new_spawn.saved_socks = new_spawn.client.prefs.socks
-		new_spawn.socks = new_spawn.client.prefs.socks
-		new_spawn.socks_color = new_spawn.client.prefs.socks_color
-		new_spawn.saved_undershirt = new_spawn.client.prefs.undershirt
-		new_spawn.undershirt = new_spawn.client.prefs.undershirt
-		new_spawn.shirt_color = new_spawn.client.prefs.shirt_color
-		new_spawn.saved_underwear = new_spawn.client.prefs.underwear
-		new_spawn.underwear = new_spawn.client.prefs.underwear
-		new_spawn.undie_color = new_spawn.client.prefs.undie_color
-		new_spawn.set_species(new_spawn.client.prefs.pref_species, icon_update=1)
-		new_spawn.give_genitals(TRUE)
-		var/datum/outfit/O = new /datum/outfit/vr()
+		new_spawn.client.prefs.copy_to(new_spawn)
+		var/datum/outfit/O = new /datum/outfit/ghostcafe()
 		O.equip(new_spawn)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
+
+/datum/outfit/ghostcafe
+	name = "ID, jumpsuit and shoes"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id
+		
