@@ -1359,6 +1359,13 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/suits/roller_skates
+	name = "Roller Skates"
+	desc = "Shoes with hidden roller blades to speed away from the crime. Note - Roller blades are not hidden"
+	item = /obj/item/clothing/shoes/rollers
+	cost = 3
+	exclude_modes = list(/datum/game_mode/nuclear) //Nukies dont get cool things
+
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
 	desc = "This red and black Syndicate space suit is less encumbering than Nanotrasen variants, \
@@ -1640,7 +1647,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
-
 
 // Implants
 

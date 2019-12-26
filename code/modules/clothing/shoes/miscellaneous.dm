@@ -327,7 +327,7 @@
 		lightCycle = 0
 		active = FALSE
 
-// kevin is into feet
+// Foot Wraps
 /obj/item/clothing/shoes/wraps
 	name = "gilded leg wraps"
 	desc = "Ankle coverings. These ones have a golden design."
@@ -348,3 +348,12 @@
 	name = "blue leg wraps"
 	desc = "Ankle coverings. Hang ten, brother."
 	icon_state = "bluecuffs"
+
+//Roller Skakes
+/obj/item/clothing/shoes/rollers
+	name = "roller skates"
+	desc = "Looking under these shoes, shows hidden roller blades. How stealthy..." //Its not stealthy at all
+	icon_state = "black"
+	item_color = "black"
+	slowdown = -0.45
+	permeability_coefficient = 0.30
