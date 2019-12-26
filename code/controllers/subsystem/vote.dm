@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/choice_descs = list() // optional descriptions
 	var/list/voted = list()
 	var/list/voting = list()
+	var/list/saved = list()
 	var/list/generated_actions = list()
 	var/next_pop = 0
 
@@ -29,6 +30,7 @@ SUBSYSTEM_DEF(vote)
 	if(mode)
 		if(end_time < world.time)
 			result()
+			SSpersistence.SaveSavedVotes()
 			for(var/client/C in voting)
 				C << browse(null, "window=vote;can_close=0")
 			reset()
@@ -282,6 +284,7 @@ SUBSYSTEM_DEF(vote)
 						voted += usr.ckey
 						voted[usr.ckey] = list()
 					voted[usr.ckey] += vote
+					saved -= usr.ckey
 	return 0
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
@@ -367,6 +370,9 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
+			if((vote_type in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[vote_type]))
+				voted[C.ckey] = SSpersistence.saved_votes[vote_type][C.ckey]
+				saved += C.ckey
 			if(forced)
 				var/datum/browser/popup = new(C, "vote", "Voting Panel",nwidth=600,nheight=700)
 				popup.set_window_options("can_close=0")
@@ -399,8 +405,6 @@ SUBSYSTEM_DEF(vote)
 			if(RANKED_CHOICE_VOTING)
 				var/list/myvote = voted[C.ckey]
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
-				if(myvote && myvote.len < choices.len)
-					. += "<h1>Please rank all your preferences. You have not done so.</h1>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)
@@ -417,6 +421,7 @@ SUBSYSTEM_DEF(vote)
 					. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
+				. += "</ul><hr>"
 			if(RANKED_CHOICE_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
@@ -427,7 +432,12 @@ SUBSYSTEM_DEF(vote)
 						. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a></li>"
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
-		. += "</ul><hr>"
+				. += "</ul><hr>"
+				if(!(C.ckey in saved))
+					. += "(<a href='?src=[REF(src)];vote=save'>Save vote</a>)"
+				else
+					. += "(Saved!)"
+				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
 	else
@@ -485,6 +495,15 @@ SUBSYSTEM_DEF(vote)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
+		if("reset")
+			if(usr.ckey in voted)
+				voted -= usr.ckey
+		if("save")
+			if(usr.ckey in voted)
+				if(!(mode in SSpersistence.saved_votes))
+					SSpersistence.saved_votes[mode] = list()
+				SSpersistence.saved_votes[mode][usr.ckey] = voted[usr.ckey]
+				saved += usr.ckey
 		else
 			submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()

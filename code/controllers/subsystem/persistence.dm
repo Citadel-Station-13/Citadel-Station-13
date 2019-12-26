@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
 	var/list/picture_logging_information = list()
+	var/list/saved_votes = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
 
@@ -33,6 +34,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadRecentRulesets()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
+	LoadSavedVotes()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
@@ -206,6 +208,15 @@ SUBSYSTEM_DEF(persistence)
 			return
 		return
 	antag_rep = json_decode(json)
+
+/datum/controller/subsystem/persistence/proc/LoadSavedVotes()
+	var/json_file = file("data/SavedVotes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_votes = json["data"]
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -482,5 +493,12 @@ SUBSYSTEM_DEF(persistence)
 			recipe_data["required_container"] = "[R.required_container]"
 			file_data["[R.id]"] = recipe_data
 
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/SaveSavedVotes()
+	var/json_file = file("data/SavedVotes.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_votes
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
