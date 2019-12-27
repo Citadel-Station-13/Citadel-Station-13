@@ -96,7 +96,7 @@
 		if(1)
 			new_objective = new("Sabotage the station. Attempt to break the supermatter, break windows, kill beepsky, or so on. However: avoid maiming.")
 		if(2)
-			new_objective = new("Bother security. Start a manhunt, however you please, and be annoying. However: avoid killing.")
+			new_objective = new("Harass security. Start a manhunt, however you please. However: avoid killing, and if you must die, at least make your death glorious.")
 		if(3)
 			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees.")
 		if(4)
