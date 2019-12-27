@@ -157,7 +157,7 @@ Property weights are:
 	curve_centre = 10
 	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
 	property_weights = list("extended" = -1, "chaos" = 10)
-	weight = 1
+	weight = 2
 	var/refund_cooldown
 	
 /datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
@@ -213,7 +213,7 @@ Property weights are:
 	name = "Extended"
 	desc = "Chaos: none. Variation: none. Likely antags: none."
 	curve_centre = -20
-	weight = 1
+	weight = 2
 	curve_width = 0.5
 
 /datum/dynamic_storyteller/extended/on_start()
