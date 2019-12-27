@@ -338,7 +338,7 @@
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum]
 		if (gas_breathed > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount("stimulum")
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/stimulum)
 			H.reagents.add_reagent(/datum/reagent/stimulum, max(0, 5 - existing))
 		breath_gases[/datum/gas/stimulum]-=gas_breathed
 

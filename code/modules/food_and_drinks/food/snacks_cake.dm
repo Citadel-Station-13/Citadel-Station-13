@@ -385,7 +385,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	desc = "A spaceman's trumpet frosted cake."
 	icon_state = "trumpetcake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/trumpet
-	bonus_reagents = list("polypyr" = 15, "cream" = 5, /datum/reagent/consumable/nutriment/vitamin = 5, "berryjuice" = 5)
+	bonus_reagents = list("polypyr" = 15, "cream" = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/berryjuice = 5)
 	filling_color = "#7A3D80"
 	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR

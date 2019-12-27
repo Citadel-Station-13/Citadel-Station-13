@@ -57,7 +57,7 @@
 						if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
 							M.reagents.add_reagent(R.type, R.volume)
 						else
-							var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1)
+							var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.type)) -1)
 							M.reagents.add_reagent(R.type, transVol)
 					else
 						if(!R.overdose_threshold == 0)

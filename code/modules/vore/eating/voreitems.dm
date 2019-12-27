@@ -57,6 +57,6 @@
 
 /datum/chemical_reaction/ickypak
 	name = "Ickypak"
-	id = "ickypak"
-	results = list("ickypak" = 2)
+	id = /datum/reagent/medicine/ickypak
+	results = list(/datum/reagent/medicine/ickypak = 2)
 	required_reagents = list(/datum/reagent/chlorine = 2 , /datum/reagent/oil = 1) */

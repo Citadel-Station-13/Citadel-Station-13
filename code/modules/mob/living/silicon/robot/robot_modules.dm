@@ -673,7 +673,7 @@
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
 	color = "#A000A0"
-	list_reagents = list("drying_agent" = 250)
+	list_reagents = list(/datum/reagent/drying_agent = 250)
 
 /obj/item/reagent_containers/spray/cyborg_lube
 	name = "lube spray"

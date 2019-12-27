@@ -25,7 +25,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
-	grind_results = list("phosphorus" = 2)
+	grind_results = list(/datum/reagent/phosphorus = 2)
 
 /obj/item/match/process()
 	smoketime--
@@ -169,15 +169,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/welder.ogg'
 	damtype = "fire"
 	force = 4
-	if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start()
 		qdel(src)
 		return
-	if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
+	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
 		e.start()
 		qdel(src)
 		return
@@ -282,7 +282,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
-	list_reagents = list(/datum/reagent/drug/nicotine = 15, "omnizine" = 15)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/medicine/omnizine = 15)
 
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
@@ -665,7 +665,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 3000 //Blue flame!
 	light_color = LIGHT_COLOR_CYAN
 	overlay_state = "slime"
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, "pyroxadone" = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/medicine/pyroxadone = 5)
 
 
 ///////////
@@ -810,14 +810,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				reagents.reaction(C, INGEST, fraction)
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
 					reagents.remove_any(REAGENTS_METABOLISM)
-				if(reagents.get_reagent_amount("welding_fuel"))
+				if(reagents.get_reagent_amount(/datum/reagent/fuel))
 					//HOT STUFF
 					C.fire_stacks = 2
 					C.IgniteMob()
 
-				if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+				if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 					var/datum/effect_system/reagents_explosion/e = new()
-					e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+					e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 					e.start()
 					qdel(src)
 				return

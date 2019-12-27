@@ -91,7 +91,7 @@
 	desc = "No black birds, this is a good sign."
 	icon_state = "berryclafoutis"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, "berryjuice" = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/berryjuice = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1, "blackberries" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 

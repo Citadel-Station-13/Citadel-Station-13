@@ -194,7 +194,7 @@
 	name = "robust coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-	list_reagents = list("coffee" = 30)
+	list_reagents = list(/datum/reagent/consumable/coffee = 30)
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE

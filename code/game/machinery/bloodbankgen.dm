@@ -123,7 +123,7 @@
 		if(reagents.total_volume >= reagents.maximum_volume || !bag || !bag.reagents.total_volume)
 			beep_stop_pumping()
 			return
-		var/blood_amount = bag.reagents.get_reagent_amount("blood")
+		var/blood_amount = bag.reagents.get_reagent_amount(/datum/reagent/blood)
 		//monitor the machine and blood bag's reagents storage.
 		var/amount = min(blood_amount, min(transfer_amount, reagents.maximum_volume - reagents.total_volume))
 		if(!amount)

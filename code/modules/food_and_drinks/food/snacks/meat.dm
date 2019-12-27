@@ -88,7 +88,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, "slimejelly" = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin/slimejelly = 3)
 	filling_color = "#00FFFF"
 	tastes = list("slime" = 1, "jelly" = 1)
 	foodtype = MEAT | RAW | TOXIC
@@ -131,7 +131,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	icon_state = "flymeat"
 	desc = "Nothing says tasty like maggot filled radioactive mutant flesh."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, "uranium" = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/uranium = 3)
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtype = MEAT | RAW | GROSS
 
@@ -225,7 +225,7 @@
 	name = "bear meat"
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 12, "morphine" = 5, /datum/reagent/consumable/nutriment/vitamin = 2, "cooking_oil" = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, "cooking_oil" = 6)
 	filling_color = "#FFB6C1"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear
@@ -271,7 +271,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, "blood" = 5, "cooking_oil" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, "cooking_oil" = 1)
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4

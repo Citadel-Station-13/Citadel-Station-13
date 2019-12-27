@@ -173,7 +173,7 @@
 	name = "strawberry snowcone"
 	desc = "A strawberry snowball in a paper cup."
 	icon_state = "blue_sc"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, "berryjuice" = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/berryjuice = 10)
 	tastes = list("ice" = 1, "water" = 1, " strawberry" = 5)
 	foodtype = FRUIT
 
@@ -181,7 +181,7 @@
 	name = "berry snowcone"
 	desc = "Berry syrup drizzled over a snowball in a paper cup."
 	icon_state = "berry_sc"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, "berryjuice" = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/berryjuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "berries" = 5)
 	foodtype = FRUIT
 

@@ -12,7 +12,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
-	reagents_add = list("oculine" = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list(/datum/reagent/medicine/oculine = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/carrot
 	seed = /obj/item/seeds/carrot
@@ -22,7 +22,7 @@
 	filling_color = "#FFA500"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	juice_results = list("carrotjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
 	wine_power = 30
 
 /obj/item/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
@@ -54,7 +54,7 @@
 	icon_state = "parsnip"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	juice_results = list("parsnipjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/parsnipjuice = 0)
 	wine_power = 35
 
 

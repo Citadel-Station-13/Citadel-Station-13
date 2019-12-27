@@ -139,7 +139,7 @@
 	icon_state = "exoticbanana"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW | FRUIT
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
+	grind_results = list(/datum/reagent/blood = 20, "liquidgibs" = 5)
 	var/awakening = 0
 
 /obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable/attack_self(mob/user)

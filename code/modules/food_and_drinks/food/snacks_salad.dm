@@ -17,8 +17,8 @@
 	name = "\improper Aesir salad"
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
-	bonus_reagents = list("omnizine" = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, "omnizine" = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list(/datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1)
 	foodtype = VEGETABLES
 

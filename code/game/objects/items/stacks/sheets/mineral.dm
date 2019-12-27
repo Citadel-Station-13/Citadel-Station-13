@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	sheettype = "uranium"
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
-	grind_results = list("uranium" = 20)
+	grind_results = list(/datum/reagent/uranium = 20)
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/uranium
 
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	sheettype = "bananium"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
-	grind_results = list("banana" = 20)
+	grind_results = list(/datum/reagent/consumable/banana = 20)
 	point_value = 50
 	merge_type = /obj/item/stack/sheet/mineral/bananium
 
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	singular_name = "snow block"
 	force = 1
 	throwforce = 2
-	grind_results = list("ice" = 20)
+	grind_results = list(/datum/reagent/consumable/ice = 20)
 	merge_type = /obj/item/stack/sheet/mineral/snow
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \

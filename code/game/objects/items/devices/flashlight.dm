@@ -267,7 +267,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
-	grind_results = list("sulfur" = 15)
+	grind_results = list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.

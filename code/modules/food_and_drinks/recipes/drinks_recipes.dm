@@ -34,7 +34,7 @@
 	name = "Nuka Cola"
 	id = "nuka_cola"
 	results = list("nuka_cola" = 6)
-	required_reagents = list("uranium" = 1, /datum/reagent/consumable/space_cola = 6)
+	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/consumable/space_cola = 6)
 
 /datum/chemical_reaction/moonshine
 	name = "Moonshine"
@@ -202,7 +202,7 @@
 	name = "Atomic Bomb"
 	id = "atomicbomb"
 	results = list("atomicbomb" = 10)
-	required_reagents = list("b52" = 10, "uranium" = 1)
+	required_reagents = list("b52" = 10, /datum/reagent/uranium = 1)
 
 /datum/chemical_reaction/margarita
 	name = "Margarita"
@@ -220,7 +220,7 @@
 	name = "Three Mile Island Iced Tea"
 	id = "threemileisland"
 	results = list("threemileisland" = 10)
-	required_reagents = list("longislandicedtea" = 10, "uranium" = 1)
+	required_reagents = list("longislandicedtea" = 10, /datum/reagent/uranium = 1)
 
 /datum/chemical_reaction/whiskeysoda
 	name = "Whiskey Soda"
@@ -244,7 +244,7 @@
 	name = "Manhattan Project"
 	id = "manhattan_proj"
 	results = list("manhattan_proj" = 10)
-	required_reagents = list("manhattan" = 10, "uranium" = 1)
+	required_reagents = list("manhattan" = 10, /datum/reagent/uranium = 1)
 
 /datum/chemical_reaction/vodka_tonic
 	name = "Vodka and Tonic"
@@ -280,7 +280,7 @@
 	name = "Demons Blood"
 	id = "demonsblood"
 	results = list("demonsblood" = 4)
-	required_reagents = list("rum" = 1, "spacemountainwind" = 1, "blood" = 1, "dr_gibb" = 1)
+	required_reagents = list("rum" = 1, "spacemountainwind" = 1, /datum/reagent/blood = 1, "dr_gibb" = 1)
 
 /datum/chemical_reaction/booger
 	name = "Booger"
@@ -298,7 +298,7 @@
 	name = "Barefoot"
 	id = "barefoot"
 	results = list("barefoot" = 3)
-	required_reagents = list("berryjuice" = 1, "cream" = 1, "vermouth" = 1)
+	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, "cream" = 1, "vermouth" = 1)
 
 
 ////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
@@ -313,7 +313,7 @@
 	name = "Red Mead"
 	id = "red_mead"
 	results = list("red_mead" = 2)
-	required_reagents = list("blood" = 1, "mead" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "mead" = 1)
 
 /datum/chemical_reaction/mead
 	name = "Mead"
@@ -332,7 +332,7 @@
 	name = "Grog"
 	id = "grog"
 	results = list("grog" = 2)
-	required_reagents = list("rum" = 1, "water" = 1)
+	required_reagents = list("rum" = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/soy_latte
 	name = "Soy Latte"
@@ -380,7 +380,7 @@
 	name = "Neurotoxin"
 	id = "neurotoxin"
 	results = list("neurotoxin" = 2)
-	required_reagents = list("gargleblaster" = 1, "morphine" = 1)
+	required_reagents = list("gargleblaster" = 1, /datum/reagent/medicine/morphine = 1)
 	//FermiChem vars: Easy to make, but hard to make potent
 	OptimalTempMin 		= 100 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax		= 950 // Upper end for above
@@ -440,7 +440,7 @@
 	name = "Devils Kiss"
 	id = "devilskiss"
 	results = list("devilskiss" = 3)
-	required_reagents = list("blood" = 1, "kahlua" = 1, "rum" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "kahlua" = 1, "rum" = 1)
 
 /datum/chemical_reaction/hippiesdelight
 	name = "Hippies Delight"
@@ -554,7 +554,7 @@
 	name = "Lemonade"
 	id = "lemonade"
 	results = list("lemonade" = 5)
-	required_reagents = list("lemonjuice" = 2, "water" = 2, /datum/reagent/consumable/sugar = 1, "ice" = 1)
+	required_reagents = list("lemonjuice" = 2, /datum/reagent/water = 2, /datum/reagent/consumable/sugar = 1, "ice" = 1)
 	mix_message = "You're suddenly reminded of home."
 
 /datum/chemical_reaction/arnold_palmer
@@ -581,7 +581,7 @@
 	name = "Nar'sour"
 	id = "narsour"
 	results = list("narsour" = 1)
-	required_reagents = list("blood" = 1, "lemonjuice" = 1, "demonsblood" = 1)
+	required_reagents = list(/datum/reagent/blood = 1, "lemonjuice" = 1, "demonsblood" = 1)
 	mix_message = "The mixture develops a sinister glow."
 	mix_sound = 'sound/effects/singlebeat.ogg'
 
@@ -618,14 +618,14 @@
 	name = "Bastion Bourbon"
 	id = "bastion_bourbon"
 	results = list("bastion_bourbon" = 2)
-	required_reagents = list("tea" = 1, "creme_de_menthe" = 1, "triple_citrus" = 1, "berryjuice" = 1) //herbal and minty, with a hint of citrus and berry
+	required_reagents = list("tea" = 1, "creme_de_menthe" = 1, "triple_citrus" = 1, /datum/reagent/consumable/berryjuice = 1) //herbal and minty, with a hint of citrus and berry
 	mix_message = "You catch an aroma of hot tea and fruits as the mix blends into a blue-green color."
 
 /datum/chemical_reaction/squirt_cider
 	name = "Squirt Cider"
 	id = "squirt_cider"
 	results = list("squirt_cider" = 1)
-	required_reagents = list("water" = 1, "tomatojuice" = 1, /datum/reagent/consumable/nutriment = 1)
+	required_reagents = list(/datum/reagent/water = 1, "tomatojuice" = 1, /datum/reagent/consumable/nutriment = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
 
 /datum/chemical_reaction/fringe_weaver
@@ -781,7 +781,7 @@
 	name = "Duplex"
 	id = "duplex"
 	results = list("duplex" = 4)
-	required_reagents = list("hcider" = 2, "applejuice" = 1, "berryjuice" = 1)
+	required_reagents = list("hcider" = 2, "applejuice" = 1, /datum/reagent/consumable/berryjuice = 1)
 
 /datum/chemical_reaction/trappist
 	name = "Trappist"

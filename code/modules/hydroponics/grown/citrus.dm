@@ -31,7 +31,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	filling_color = "#00FF00"
-	juice_results = list("limejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/limejuice = 0)
 
 // Electric Lime
 /obj/item/seeds/lime/electric
@@ -78,7 +78,7 @@
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
-	juice_results = list("orangejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = "triple_sec"
 
 
@@ -98,7 +98,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, "haloperidol" = 0.15)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/haloperidol = 0.15)
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d
 	seed = /obj/item/seeds/orange_3d
@@ -106,7 +106,7 @@
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
 	filling_color = "#FFA500"
-	juice_results = list("orangejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = "triple_sec"
 	tastes = list("polygons" = 1, "oranges" = 1)
 
@@ -142,7 +142,7 @@
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
-	juice_results = list("lemonjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon

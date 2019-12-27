@@ -49,19 +49,19 @@
 	name = "Hot Coco"
 	id = "hot_coco"
 	results = list("hot_coco" = 5)
-	required_reagents = list("water" = 5, "cocoa" = 1)
+	required_reagents = list(/datum/reagent/water = 5, "cocoa" = 1)
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"
 	id = "coffee"
 	results = list("coffee" = 5)
-	required_reagents = list("coffeepowder" = 1, "water" = 5)
+	required_reagents = list("coffeepowder" = 1, /datum/reagent/water = 5)
 
 /datum/chemical_reaction/tea
 	name = "Tea"
 	id = "tea"
 	results = list("tea" = 5)
-	required_reagents = list("teapowder" = 1, "water" = 5)
+	required_reagents = list("teapowder" = 1, /datum/reagent/water = 5)
 
 /datum/chemical_reaction/soysauce
 	name = "Soy Sauce"
@@ -106,7 +106,7 @@
 /datum/chemical_reaction/synthmeat
 	name = "synthmeat"
 	id = "synthmeat"
-	required_reagents = list("blood" = 5, "cryoxadone" = 1)
+	required_reagents = list(/datum/reagent/blood = 5, "cryoxadone" = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, created_volume)
@@ -118,7 +118,7 @@
 	name = "Hot Ramen"
 	id = "hot_ramen"
 	results = list("hot_ramen" = 3)
-	required_reagents = list("water" = 1, "dry_ramen" = 3)
+	required_reagents = list(/datum/reagent/water = 1, "dry_ramen" = 3)
 
 /datum/chemical_reaction/hell_ramen
 	name = "Hell Ramen"
@@ -142,7 +142,7 @@
 /datum/chemical_reaction/dough
 	name = "Dough"
 	id = "dough"
-	required_reagents = list("water" = 10, "flour" = 15)
+	required_reagents = list(/datum/reagent/water = 10, "flour" = 15)
 	mix_message = "The ingredients form a dough."
 
 /datum/chemical_reaction/dough/on_reaction(datum/reagents/holder, created_volume)
@@ -168,7 +168,7 @@
 /datum/chemical_reaction/ricebowl
 	name = "Rice Bowl"
 	id = "ricebowl"
-	required_reagents = list("rice" = 10, "water" = 10)
+	required_reagents = list("rice" = 10, /datum/reagent/water = 10)
 	required_container = /obj/item/reagent_containers/glass/bowl
 	mix_message = "The rice absorbs the water."
 

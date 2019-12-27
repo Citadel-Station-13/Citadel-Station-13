@@ -144,7 +144,7 @@
 	return TRUE
 
 /obj/item/reagent_containers/food/snacks/grown/on_grind()
-	var/nutriment = reagents.get_reagent_amount("nutriment")
+	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	if(grind_results&&grind_results.len)
 		for(var/i in 1 to grind_results.len)
 			grind_results[grind_results[i]] = nutriment

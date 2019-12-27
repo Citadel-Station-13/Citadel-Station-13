@@ -26,7 +26,7 @@
 	filling_color = "#FF00FF"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	juice_results = list("berryjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
 	distill_reagent = "gin"
 
@@ -65,7 +65,7 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
-	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/toxin/coniine = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/berries/death
@@ -91,7 +91,7 @@
 	endurance = 25
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/glow/white, /datum/plant_gene/trait/noreact, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("uranium" = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/uranium = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/berries/glow
@@ -135,7 +135,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list("cherryjelly" = 0)
+	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 30
 
@@ -159,7 +159,7 @@
 	filling_color = "#6495ED"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list("bluecherryjelly" = 0)
+	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
 
@@ -184,7 +184,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	grind_results = list("cherryjelly" = 0)
+	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 50
 
@@ -218,7 +218,7 @@
 	filling_color = "#FF1493"
 	bitesize_mod = 2
 	foodtype = FRUIT
-	juice_results = list("grapejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
 	distill_reagent = "wine"
 
@@ -230,7 +230,7 @@
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
 	product = /obj/item/reagent_containers/food/snacks/grown/grapes/green
-	reagents_add = list("kelotane" = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1)
+	reagents_add = list(/datum/reagent/medicine/kelotane = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1)
 	// No rarity: technically it's a beneficial mutant, but it's not exactly "new"...
 	mutatelist = list()
 

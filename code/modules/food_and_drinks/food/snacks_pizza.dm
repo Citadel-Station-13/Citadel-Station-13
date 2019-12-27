@@ -96,7 +96,7 @@
 	icon_state = "donkpocketpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/donkpocket
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 25, "tomatojuice" = 6, "omnizine" = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 25, "tomatojuice" = 6, /datum/reagent/medicine/omnizine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
 
@@ -174,7 +174,7 @@
 	desc = "Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni."
 	icon_state = "arnoldpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/iron = 10, "omnizine" = 30)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/iron = 10, /datum/reagent/medicine/omnizine = 30)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 
 /obj/item/reagent_containers/food/snacks/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm

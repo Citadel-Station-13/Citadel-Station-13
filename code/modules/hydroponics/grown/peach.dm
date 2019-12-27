@@ -23,5 +23,5 @@
 	filling_color = "#FF4500"
 	bitesize = 25
 	foodtype = FRUIT
-	juice_results = list("peachjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/peachjuice = 0)
 	tastes = list("peach" = 1)

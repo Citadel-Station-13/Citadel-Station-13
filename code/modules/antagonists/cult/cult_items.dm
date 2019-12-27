@@ -487,7 +487,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
-	list_reagents = list("unholywater" = 50)
+	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"

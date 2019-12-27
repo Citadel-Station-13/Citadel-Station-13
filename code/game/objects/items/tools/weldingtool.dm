@@ -97,7 +97,7 @@
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(loc)
-	var/plasmaAmount = reagents.get_reagent_amount("plasma")
+	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 

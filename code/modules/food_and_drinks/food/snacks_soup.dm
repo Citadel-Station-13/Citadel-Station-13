@@ -42,8 +42,8 @@
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "slimejelly" = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, "slimejelly" = 5, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/slimejelly = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/slimejelly = 5, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("slime" = 1)
 	foodtype = TOXIC | SUGAR
 
@@ -52,7 +52,7 @@
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 6)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, "blood" = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/blood = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("iron" = 1)
 	foodtype = GROSS
 
@@ -87,7 +87,7 @@
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "omnizine" = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("nettles" = 1)
 	foodtype = VEGETABLES
 

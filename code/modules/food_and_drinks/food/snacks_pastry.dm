@@ -77,7 +77,7 @@
 	name = "pink donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "donut_pink"
-	bonus_reagents = list("berryjuice" = 3, "sprinkles" = 1) //Extra sprinkles to reward frosting
+	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, "sprinkles" = 1) //Extra sprinkles to reward frosting
 	filling_color = "#E57d9A"
 	decorated_icon = "donut_homer"
 
@@ -167,7 +167,7 @@
 	name = "pink jelly donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "jelly_pink"
-	bonus_reagents = list("berryjuice" = 3, "sprinkles" = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting.
+	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, "sprinkles" = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting.
 	filling_color = "#E57d9A"
 	decorated_icon = "jelly_homer"
 
@@ -249,7 +249,7 @@
 	name = "pink jelly donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "jelly_pink"
-	bonus_reagents = list("berryjuice" = 3, "sprinkles" = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting
+	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, "sprinkles" = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting
 	filling_color = "#E57d9A"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/trumpet
@@ -437,8 +437,8 @@
 /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
-	bonus_reagents = list("omnizine" = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, "omnizine" = 3)
+	bonus_reagents = list(/datum/reagent/medicine/omnizine = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 3)
 	cooked_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN

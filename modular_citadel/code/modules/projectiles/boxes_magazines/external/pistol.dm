@@ -4,7 +4,7 @@
 	id = "10mminc"
 	build_type = PROTOLATHE
 	materials = list(MAT_PLASMA = 50000, MAT_METAL = 18000)
-	reagents_list = list("plasma" = 120, "napalm" = 240)
+	reagents_list = list(/datum/reagent/toxin/plasma = 120, /datum/reagent/napalm = 240)
 	build_path = /obj/item/ammo_box/magazine/m10mm/fire
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -25,7 +25,7 @@
 	id = "10mmhp"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 40000, MAT_GLASS = 50000)
-	reagents_list = list("sonic_powder" = 280)
+	reagents_list = list(/datum/reagent/sonic_powder = 280)
 	build_path = /obj/item/ammo_box/magazine/m10mm/hp
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

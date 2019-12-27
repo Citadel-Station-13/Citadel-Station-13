@@ -42,7 +42,7 @@
 
 /obj/item/slime_extract/on_grind()
 	if(Uses)
-		grind_results["slimejelly"] = 20
+		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
@@ -78,7 +78,7 @@
 	name = "grey slime extract"
 	icon_state = "grey slime extract"
 	effectmod = "reproductive"
-	activate_reagents = list("blood","plasma","water")
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -103,7 +103,7 @@
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
 	effectmod = "symbiont"
-	activate_reagents = list("blood","plasma","water")
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -132,7 +132,7 @@
 	name = "silver slime extract"
 	icon_state = "silver slime extract"
 	effectmod = "consuming"
-	activate_reagents = list("plasma","water")
+	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/silver/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -157,7 +157,7 @@
 	name = "metal slime extract"
 	icon_state = "metal slime extract"
 	effectmod = "industrial"
-	activate_reagents = list("plasma","water")
+	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -181,7 +181,7 @@
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
 	effectmod = "regenerative"
-	activate_reagents = list("blood","plasma")
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -200,7 +200,7 @@
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
 	effectmod = "self-sustaining"
-	activate_reagents = list("plasma")
+	activate_reagents = list(/datum/reagent/toxin/plasma)
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -223,7 +223,7 @@
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
 	effectmod = "burning"
-	activate_reagents = list("blood","plasma","water")
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -243,7 +243,7 @@
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 	effectmod = "charged"
-	activate_reagents = list("blood","plasma","water")
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -266,7 +266,7 @@
 	name = "red slime extract"
 	icon_state = "red slime extract"
 	effectmod = "sanguine"
-	activate_reagents = list("blood","plasma","water")
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
