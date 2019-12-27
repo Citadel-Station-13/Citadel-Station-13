@@ -863,7 +863,7 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Lavaland", "Heavy", "Sleek", "Marina", "Can", "Spider", "Asteroid", "Droid")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Lavaland", "Heavy", "Sleek", "Marina", "Can", "Spider", "Asteroid", "Droid", "Blade")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -891,6 +891,13 @@
 		if("Heavy")
 			cyborg_base_icon = "heavymin"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+		if("Blade")
+			cyborg_base_icon = "blade"
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
+			hat_offset = INFINITY
 	return ..()
 
 /obj/item/robot_module/syndicate
