@@ -1,7 +1,6 @@
 #define PINPOINTER_MINIMUM_RANGE 15
 #define PINPOINTER_EXTRA_RANDOM_RANGE 10
 #define PINPOINTER_PING_TIME 40
-#define PROB_ACTUAL_TRAITOR 20
 #define TRAITOR_AGENT_ROLE "Syndicate External Affairs Agent"
 
 /datum/antagonist/traitor/internal_affairs
@@ -215,14 +214,6 @@
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
 			add_objective(kill_objective)
-
-		//Optional traitor objective
-		if(prob(PROB_ACTUAL_TRAITOR))
-			employer = "The Syndicate"
-			owner.special_role = TRAITOR_AGENT_ROLE
-			special_role = TRAITOR_AGENT_ROLE
-			syndicate = TRUE
-			forge_single_objective()
 	return
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
@@ -254,7 +245,6 @@
 /datum/antagonist/traitor/internal_affairs/greet()
 	greet_iaa()
 
-#undef PROB_ACTUAL_TRAITOR
 #undef PINPOINTER_EXTRA_RANDOM_RANGE
 #undef PINPOINTER_MINIMUM_RANGE
 #undef PINPOINTER_PING_TIME
