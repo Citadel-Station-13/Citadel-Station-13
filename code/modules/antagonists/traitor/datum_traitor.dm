@@ -76,20 +76,18 @@
 /datum/antagonist/traitor/proc/forge_human_objectives()
 	var/chaos_level = 0
 	var/datum/game_mode/dynamic/mode
-	var/is_dynamic = FALSE
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
-		is_dynamic = TRUE
-		for(var/i in 1 to 4)
+		// round() is a floor actually, isn't that fun
+		// basically: below 30 players reduces max, below 50 threat level reduces max, otherwise does max rolls
+		for(var/i in 1 to max(2,min(4,round(mode.threat_level/12.5),round(GLOB.joined_player_list.len/7.5))))
 			if(prob(mode.threat_level))
 				chaos_level++
 	else
-		for(var/i in 1 to 4)
+		for(var/i in 1 to max(2,min(4,round(GLOB.joined_player_list.len/7.5))))
 			if(prob(50))
 				chaos_level++
 	var/datum/objective/new_objective
-	if(is_dynamic)
-		chaos_level = min(chaos_level,round(mode.threat_level/12.5)) // round() is actually a floor function
 	switch(chaos_level)
 		if(0)
 			new_objective = new("Cause trouble for Nanotrasen. Steal something important, such as a family heirloom or a hand tele. However: avoid harming.")
