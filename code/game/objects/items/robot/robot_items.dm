@@ -816,3 +816,13 @@
 			return
 		else
 			to_chat(user, "<span class='danger'>Your gripper cannot hold \the [target].</span>")
+
+/obj/item/gun/energy/plasmacutter/cyborg
+	name = "cyborg plasma cutter"
+	desc = "A basic variation of the plasma cutter, compressed into a cyborg chassis. Less effective than normal plasma cutters."
+	force = 15
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/weak)
+	can_charge = FALSE
+	selfcharge = EGUN_SELFCHARGE_BORG
+	cell_type = /obj/item/stock_parts/cell/secborg
+	charge_delay = 5

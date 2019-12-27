@@ -624,15 +624,6 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_holding
-	name = "Cyborg Upgrade (Ore Satchel of Holding)"
-	id = "borg_upgrade_holding"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/soh
-	materials = list(MAT_METAL = 10000, MAT_GOLD = 250, MAT_URANIUM = 500)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_lavaproof
 	name = "Cyborg Upgrade (Lavaproof Tracks)"
 	id = "borg_upgrade_lavaproof"

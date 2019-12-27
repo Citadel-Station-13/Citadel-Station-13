@@ -171,33 +171,6 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/soh
-	name = "mining cyborg satchel of holding"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/miner)
-
-/obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/storage/bag/ore/cyborg/S in R.module)
-			R.module.remove_module(S, TRUE)
-
-		var/obj/item/storage/bag/ore/holding/H = new /obj/item/storage/bag/ore/holding(R.module)
-		R.module.basic_modules += H
-		R.module.add_module(H, FALSE, TRUE)
-
-/obj/item/borg/upgrade/soh/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/storage/bag/ore/holding/H in R.module)
-			R.module.remove_module(H, TRUE)
-
-		var/obj/item/storage/bag/ore/cyborg/S = new (R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
-
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."

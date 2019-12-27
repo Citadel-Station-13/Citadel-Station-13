@@ -850,6 +850,7 @@
 		/obj/item/storage/bag/sheetsnatcher/borg,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/gun/energy/plasmacutter/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
 	emag_modules = list(/obj/item/borg/stun)
@@ -894,6 +895,7 @@
 		if("Blade")
 			cyborg_base_icon = "blade"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			sleeper_overlay = "bladesleeper"
 			has_snowflake_deadsprite = TRUE
 			dogborg = TRUE
 			cyborg_pixel_offset = -16
