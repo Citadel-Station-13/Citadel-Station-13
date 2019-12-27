@@ -43,11 +43,19 @@
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
 			darkness_view = 1
+			range = 1
 			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
 			darkness_view = 2
+			range = 4
+			lighting_alpha = null
+
+		if(MODE_RAD) //undoes the last mode, tray
+			vision_flags = NONE
+			darkness_view = 4
+			range = 12
 			lighting_alpha = null
 
 	if(ishuman(user))
