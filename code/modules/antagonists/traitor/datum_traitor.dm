@@ -100,7 +100,7 @@
 		if(3)
 			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees.")
 		if(4)
-			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. [pick(list("Cowabunga it is.","Tally ho!"))]")
+			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. Hijack the shuttle if it is called.")
 	new_objective.completed = TRUE
 	new_objective.owner = owner
 	add_objective(new_objective)
