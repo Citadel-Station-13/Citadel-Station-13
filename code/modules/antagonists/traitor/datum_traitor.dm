@@ -90,15 +90,15 @@
 	var/datum/objective/new_objective
 	switch(chaos_level)
 		if(0)
-			new_objective = new("Cause trouble for Nanotrasen. Steal something important, such as a family heirloom or a hand tele. However: avoid harming.")
+			new_objective = new("Cybersun Industries has selected you to find and steal an important heirloom or valuable technology belonging to Nanotrasen. Ensure your actions are covert and avoid leaving a body count if possible.")
 		if(1)
-			new_objective = new("Sabotage the station. Attempt to break the supermatter, break windows, kill beepsky, or so on. However: avoid killing.")
+			new_objective = new("You have been chosen by the Tiger Cooperative to perform acts of sabotage throughout the station you have been planted on. Terrorize the station, but leave enough intact to embarass Nanotrasen, not anger them.")
 		if(2)
-			new_objective = new("Harass security. Start a manhunt, however you please. Kill if you must, but leave crew alive to tell the tale.")
+			new_objective = new("The Waffle Corporation has given you the task to create the biggest prank the station's security force has seen! Harass security, and don't stop while you can still honk!")
 		if(3)
-			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees. Make them fear.")
+			new_objective = new("The Donk Corporation has hired you with the task to maim the crew in whatever way you can. Strain the resources of medical staff, and create a hostile working enviroment for human resources.")
 		if(4)
-			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. [pick(list("Hijack the shuttle if it is called.","Die a glorious death and take the station with you."))]")
+			new_objective = new("The Gorlex Mauraders have deployed you personally, with only one order: destroy the station, and leave none alive. [pick(list("Ensure none can escape total destruction by hijacking the escape shuttle, if it ever comes.","Die a glorious death, and take everyone else with you."))]")
 	new_objective.completed = TRUE
 	new_objective.owner = owner
 	add_objective(new_objective)
