@@ -184,8 +184,8 @@ Property weights are:
 	return (mode.current_players[CURRENT_LIVING_ANTAGS].len ? 0 : ..())
 
 /datum/dynamic_storyteller/classic
-	name = "Classic"
-	desc = "Chaos: medium. Variation: highest. Default dynamic."
+	name = "Random"
+	desc = "Chaos: medium. Variation: highest. No special weights attached."
 
 /datum/dynamic_storyteller/memes
 	name = "Story"
