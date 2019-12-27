@@ -137,6 +137,7 @@
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
+	value = 4
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 	taste_description = "sludge"
@@ -158,6 +159,7 @@
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
+	value = 6
 	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
 	color = "#0000C8"
 	taste_description = "muscle"
@@ -175,6 +177,7 @@
 /datum/reagent/medicine/pyroxadone
 	name = "Pyroxadone"
 	id = "pyroxadone"
+	value = 8
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
@@ -352,7 +355,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 	pH = 5.5
-	value = 1
+	value = 0.5
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
@@ -394,6 +397,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#6D6374"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	pH = 2.6
+	value = 0.1
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/C)
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
@@ -556,6 +560,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	name = "Pentetic Acid"
 	id = "pen_acid"
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
+	value = 5
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -574,6 +579,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/pen_acid/pen_jelly
 	name = "Pentetic Jelly"
 	id = "pen_jelly"
+	value = 4
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Slimepeople friendly!"
 	color = "#91D865"
 	healtoxinlover = TRUE
@@ -582,6 +588,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
+	value = 2.5
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -607,6 +614,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/salbutamol
 	name = "Salbutamol"
 	id = "salbutamol"
+	value = 0
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
 	reagent_state = LIQUID
 	color = "#00FFFF"
@@ -714,6 +722,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/morphine
 	name = "Morphine"
 	id = "morphine"
+	value = 0
 	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
@@ -784,6 +793,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/oculine
 	name = "Oculine"
 	id = "oculine"
+	value = 1
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
 	reagent_state = LIQUID
 	color = "#FFFFFF"
@@ -815,6 +825,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/atropine
 	name = "Atropine"
 	id = "atropine"
+	value = 2.5
 	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
 	reagent_state = LIQUID
 	color = "#000000"
@@ -845,6 +856,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
+	value = 1
 	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
@@ -882,6 +894,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
+	value = 10
 	description = "A miracle drug capable of bringing the dead back to life. Only functions when applied by patch or spray, if the target has less than 100 brute and burn damage (independent of one another) and hasn't been husked. Causes slight damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
@@ -934,6 +947,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
 	id = "mannitol"
+	value = 0.5
 	description = "Efficiently restores brain damage."
 	color = "#DCDCFF"
 	pH = 10.4
@@ -947,6 +961,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	id = "neurine"
+	value = 6
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#EEFF8F"
 
@@ -975,6 +990,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/mutadone
 	name = "Mutadone"
 	id = "mutadone"
+	value = 0.2
 	description = "Removes jitteriness and restores genetic defects."
 	color = "#5096C8"
 	taste_description = "acid"
@@ -990,6 +1006,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/antihol
 	name = "Antihol"
 	id = "antihol"
+	value = 0.2
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
 	taste_description = "raw egg"
@@ -1049,6 +1066,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/insulin
 	name = "Insulin"
 	id = "insulin"
+	value = 0 //Dont sell this
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
 	color = "#FFFFF0"
@@ -1157,6 +1175,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
+	value = 0.1
 	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
 	reagent_state = LIQUID
 	color = "#e650c0"
@@ -1183,6 +1202,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/regen_jelly
 	name = "Regenerative Jelly"
 	id = "regen_jelly"
+	value = 5
 	description = "Gradually regenerates all types of damage, without harming slime anatomy."
 	reagent_state = LIQUID
 	color = "#91D865"
@@ -1196,9 +1216,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	. = 1
 	..()
 
-/datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
+/datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs, Or Hydro strange seeds
 	name = "Restorative Nanites"
 	id = "syndicate_nanites"
+	value = 20
 	description = "Miniature medical robots that swiftly restore bodily damage."
 	reagent_state = SOLID
 	color = "#555555"
@@ -1220,6 +1241,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/lesser_syndicate_nanites // the one in the injector
 	name = "Regenerative Nanites"
 	id = "lesser_syndicate_nanites"
+	value = 10
 	description = "Miniature medical robots that restore damage and get operatives back in the fight."
 	reagent_state = SOLID
 	color = "#555555"
@@ -1241,7 +1263,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/neo_jelly
 	name = "Neo Jelly"
 	id = "neo_jelly"
-	description = "Gradually regenerates all types of damage, without harming slime anatomy.Can OD"
+	value = 6
+	description = "Gradually regenerates all types of damage, without harming slime anatomy. Can OD."
 	reagent_state = LIQUID
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	color = "#91D865"
@@ -1267,6 +1290,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
 	id = "earthsblood"
+	value = 12 //Alternative medicine
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
 	color = rgb(255, 175, 0)
 	overdose_threshold = 25
@@ -1378,10 +1402,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	return TRUE
 
 /datum/reagent/medicine/corazone
-	// Heart attack code will not do damage if corazone is present
-	// because it's SPACE MAGIC ASPIRIN
 	name = "Corazone"
-	id = "corazone"
+	id = "corazone"	// Heart attack code will not do damage if corazone is present, because it's SPACE MAGIC ASPIRIN
+	value = 2.5
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
 	self_consuming = TRUE
@@ -1413,6 +1436,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/modafinil
 	name = "Modafinil"
 	id = "modafinil"
+	value = 10
 	description = "Long-lasting sleep suppressant that very slightly reduces stun and knockdown times. Overdosing has horrendous side effects and deals lethal oxygen damage, will knock you unconscious if not dealt with."
 	reagent_state = LIQUID
 	color = "#BEF7D8" // palish blue white
@@ -1481,6 +1505,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/psicodine
 	name = "Psicodine"
 	id = "psicodine"
+	value = 2.5
 	description = "Suppresses anxiety and other various forms of mental distress. Overdose causes hallucinations and minor toxin damage."
 	reagent_state = LIQUID
 	color = "#07E79E"
@@ -1529,6 +1554,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
 	name = "Polypyrylium Oligomers"
 	id = "polypyr"
+	value = 25 //Sounds rare and usefull. NT has a market for it if not its over hyped
 	description = "A�purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
 	reagent_state = SOLID
 	color = "#9423FF"
