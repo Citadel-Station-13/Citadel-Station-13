@@ -56,6 +56,12 @@
 	var/datum/mind/origin
 	var/time
 
+/obj/item/organ/body_egg/changeling_egg/on_death()
+	. = ..()
+	if(!owner)
+		return
+	egg_process()
+
 /obj/item/organ/body_egg/changeling_egg/egg_process()
 	// Changeling eggs grow in dead people
 	time++
