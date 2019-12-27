@@ -54,6 +54,9 @@
 		H.blur_eyes(5)
 		eyes.applyOrganDamage(5)
 
+/obj/item/clothing/glasses/proc/ranged_attack(mob/living/carbon/human/user,atom/A, params)
+	return
+
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
