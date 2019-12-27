@@ -200,9 +200,9 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		S.brutemod *= 0.5											//  <--------------------  Start small, but burn mod increases based on rank!
+		S.brutemod *= 0.4											//  <--------------------  Start small, but burn mod increases based on rank!
 		S.coldmod = 0
-		S.stunmod *= 0.25
+		S.stunmod *= 0.35
 		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
@@ -319,8 +319,8 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
-		S.burnmod *= 0.025 			// Slightly more burn damage
-		S.stunmod *= 0.95			// Slightly less stun time.
+		S.burnmod *= 0.02 			// Slightly more burn damage
+		S.stunmod *= 0.9			// Slightly less stun time.
 		S.punchdamagelow += 0.5
 		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.
 	// More Health
