@@ -110,7 +110,7 @@
 			totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE)
+		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -163,4 +163,3 @@
 
 /obj/item/proc/getweight()
 	return total_mass || w_class * 1.25
-

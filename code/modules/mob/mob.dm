@@ -404,9 +404,6 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
-	if(!I)//CIT CHANGE - allows "using" empty hands
-		use_that_empty_hand() //CIT CHANGE - ditto
-		update_inv_hands() // CIT CHANGE - ditto.
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -465,9 +462,10 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
 	if(!ckey || !new_mob)
 		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
+	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
+	new_mob.ckey = ckey
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
-	new_mob.ckey = ckey
 	return TRUE
 
 /mob/verb/cancel_camera()
@@ -568,9 +566,9 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/is_muzzled()
 	return 0
 
-/mob/Stat()
-	..()
-
+/mob/Stat(delayoverride)
+	. = ..()
+	var/statdelay = delayoverride || 10
 	if(statpanel("Status"))
 		if (client)
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
@@ -578,7 +576,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
+		stat(null, "Round ID: [GLOB.round_id || "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		stat(null, "Round Time: [WORLDTIME2TEXT("hh:mm:ss")]")
 		stat(null, "Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
@@ -588,8 +586,9 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
-	if(client && client.holder)
+	if(client?.holder)
 		if(statpanel("MC"))
+			statdelay = 0		//It's assumed that if you're doing this you are doing debug stuff, don't do ioditic things.
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
@@ -615,6 +614,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 			GLOB.ahelp_tickets.stat_entry()
 		if(length(GLOB.sdql2_queries))
 			if(statpanel("SDQL2"))
+				statdelay = 0		//It's assumed that if you're doing this you are doing debug stuff, don't do ioditic things.
 				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
 				for(var/i in GLOB.sdql2_queries)
 					var/datum/SDQL2_query/Q = i
@@ -638,14 +638,13 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
-
-
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
+	sleep(statdelay)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
@@ -811,26 +810,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 //Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
 	return IsAdminGhost(src) || Adjacent(A)
-
-//Can the mob see reagents inside of containers?
-/mob/proc/can_see_reagents()
-	if(stat == DEAD) //Ghosts and such can always see reagents
-		return 1
-	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
-		return 1
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.head && istype(H.head, /obj/item/clothing))
-			var/obj/item/clothing/CL = H.head
-			if(CL.scan_reagents)
-				return 1
-		if(H.wear_mask && H.wear_mask.scan_reagents)
-			return 1
-		if(H.glasses && istype(H.glasses, /obj/item/clothing))
-			var/obj/item/clothing/CL = H.glasses
-			if(CL.scan_reagents)
-				return 1
-	return 0
 
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)

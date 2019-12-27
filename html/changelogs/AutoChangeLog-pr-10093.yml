@@ -1,0 +1,15 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "ports all the new donuts, burgars, and chicken stuff from RG"
+  - rscadd: "ports new snowcone"
+  - rscadd: "ports grill"
+  - rscadd: "ports beakfeast tag/mood lit as TG has it"
+  - rscadd: "ports all the amazing new sprites"
+  - tweak: "ports crafting for many things like snowcones needing water"
+  - balance: "ports of many craftings"
+  - soundadd: "lowers fryers sound"
+  - imageadd: "ported icons for new food/grill"
+  - imagedel: "ports the deletion of some icons and images"
+  - spellcheck: "ports a spell check for the snowcones"
+  - code_imp: "ports fixes for stuff I didnt know were even broken with snowcones"

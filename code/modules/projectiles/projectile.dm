@@ -180,7 +180,7 @@
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 
-			if(iscarbon(L))
+			if(iscarbon(L) && !HAS_TRAIT(L, TRAIT_NOMARROW))
 				var/mob/living/carbon/C = L
 				C.bleed(damage)
 			else

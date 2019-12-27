@@ -23,7 +23,7 @@
 	if(!d_type)
 		return 0
 	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
@@ -46,6 +46,12 @@
 			return spec_return
 
 	if(mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance)
+			if(!lying && dna && !dna.check_mutation(HULK))
+				if(prob(mind.martial_art.dodge_chance))
+					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
+					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
+					return -1
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
@@ -116,6 +122,10 @@
 		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
+	if(wear_neck)
+		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return 1
 	return 0
 
 /mob/living/carbon/human/proc/check_block()
@@ -141,7 +151,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && !(mind.martial_art && mind.martial_art.dodge_chance == 100))
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -154,7 +164,9 @@
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 					hitpush = FALSE
 					skipcatch = TRUE //can't catch the now embedded item
-
+	if (mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance == 100)
+			skipcatch = FALSE
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
@@ -388,43 +400,34 @@
 		return
 	var/b_loss = 0
 	var/f_loss = 0
-	var/bomb_armor = getarmor(null, "bomb")
+	var/bomb_armor = max(0,(100-getarmor(null, "bomb"))/100)
 
 	switch (severity)
 		if (1)
-			if(prob(bomb_armor))
-				b_loss = 500
+			if(bomb_armor)
+				b_loss = 500*bomb_armor
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
-				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
+				damage_clothes(400*bomb_armor, BRUTE, "bomb")
 			else
-				for(var/I in contents)
-					var/atom/A = I
-					A.ex_act(severity)
+				damage_clothes(400,BRUTE,"bomb")
 				gib()
 				return
 
 		if (2)
-			b_loss = 60
-			f_loss = 60
-			if(bomb_armor)
-				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
-				f_loss = b_loss
-			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
+			b_loss = 60*bomb_armor
+			f_loss = 60*bomb_armor
+			damage_clothes(200*bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(max(70 - (bomb_armor * 0.5), 0)))
-				Unconscious(200)
+			Unconscious(200*bomb_armor)
 
 		if(3)
-			b_loss = 30
-			if(bomb_armor)
-				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
+			b_loss = 30*bomb_armor
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(max(50 - (bomb_armor * 0.5), 0)))
-				Unconscious(160)
+			Unconscious(100*bomb_armor)
 
 	take_overall_damage(b_loss,f_loss)
 
