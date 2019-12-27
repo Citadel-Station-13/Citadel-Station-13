@@ -74,67 +74,37 @@
 			forge_human_objectives()
 
 /datum/antagonist/traitor/proc/forge_human_objectives()
-	var/is_hijacker = FALSE
+	var/chaos_level = 0
 	var/datum/game_mode/dynamic/mode
 	var/is_dynamic = FALSE
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
-			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
-		else
-			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
-			is_hijacker = (prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
-	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
-		is_hijacker = prob(10)
-	var/martyr_chance = prob(20)
-	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-		if(!SSticker.mode.exchange_red)
-			SSticker.mode.exchange_red = owner
-		else
-			SSticker.mode.exchange_blue = owner
-			assign_exchange_role(SSticker.mode.exchange_red)
-			assign_exchange_role(SSticker.mode.exchange_blue)
-		objective_count += 1					//Exchange counts towards number of objectives
-	var/toa = CONFIG_GET(number/traitor_objectives_amount)
-	for(var/i = objective_count, i < toa, i++)
-		forge_single_objective()
-
-	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
-		if (!(locate(/datum/objective/hijack) in objectives))
-			var/datum/objective/hijack/hijack_objective = new
-			hijack_objective.owner = owner
-			add_objective(hijack_objective)
-			if(is_dynamic)
-				var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
-				mode.spend_threat(threat_spent)
-				mode.log_threat("[owner.name] spent [threat_spent] on hijack.")
-			return
-
-
-	var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
-	for(var/datum/objective/O in objectives)
-		if(!O.martyr_compatible)
-			martyr_compatibility = 0
-			break
-
-	if(martyr_compatibility && martyr_chance)
-		var/datum/objective/martyr/martyr_objective = new
-		martyr_objective.owner = owner
-		add_objective(martyr_objective)
-		if(is_dynamic)
-			var/threat_spent = CONFIG_GET(number/dynamic_hijack_cost)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("[owner.name] spent [threat_spent] on glorious death.")
-		return
-
+		for(var/i in 1 to 4)
+			if(prob(mode.threat_level))
+				chaos_level++
 	else
-		if(!(locate(/datum/objective/escape) in objectives))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = owner
-			add_objective(escape_objective)
-			return
+		for(var/i in 1 to 4)
+			if(prob(50))
+				chaos_level++
+	var/datum/objective/new_objective
+	if(is_dynamic)
+		chaos_level = min(chaos_level,round(mode.threat_level/12.5)) // round() is actually a floor function
+	switch(chaos_level)
+		if(0)
+			new_objective = new("Cause trouble for Nanotrasen. Steal something important, such as a family heirloom or a hand tele. However: avoid harming.")
+		if(1)
+			new_objective = new("Sabotage the station. Attempt to break the supermatter, break windows, kill beepsky, or so on. However: avoid maiming.")
+		if(2)
+			new_objective = new("Bother security. Start a manhunt, however you please, and be annoying. However: avoid killing.")
+		if(3)
+			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees.")
+		if(4)
+			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. [pick(list("Cowabunga it is.","Tally ho!"))]")
+	new_objective.completed = TRUE
+	new_objective.owner = owner
+	objectives += new_objective
+	return
 
 /datum/antagonist/traitor/proc/forge_ai_objectives()
 	var/objective_count = 0

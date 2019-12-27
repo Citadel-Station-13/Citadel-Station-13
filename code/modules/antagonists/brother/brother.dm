@@ -120,15 +120,35 @@
 	objectives += O
 
 /datum/team/brother_team/proc/forge_brother_objectives()
-	objectives = list()
-	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
-		forge_single_objective()
-	if(is_hijacker)
-		if(!locate(/datum/objective/hijack) in objectives)
-			add_objective(new/datum/objective/hijack)
-	else if(!locate(/datum/objective/escape) in objectives)
-		add_objective(new/datum/objective/escape)
+	var/chaos_level = 0
+	var/datum/game_mode/dynamic/mode
+	var/is_dynamic = FALSE
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		is_dynamic = TRUE
+		for(var/i in 1 to 4)
+			if(prob(mode.threat_level))
+				chaos_level++
+	else
+		for(var/i in 1 to 4)
+			if(prob(50))
+				chaos_level++
+	var/datum/objective/new_objective
+	if(is_dynamic)
+		chaos_level = min(chaos_level,round(mode.threat_level/12.5)) // round() is actually a floor function
+	switch(chaos_level)
+		if(0)
+			new_objective = new("Cause trouble for Nanotrasen. Steal something important, such as a family heirloom or a hand tele. However: avoid harming.")
+		if(1)
+			new_objective = new("Sabotage the station. Attempt to break the supermatter, break windows, kill beepsky, or so on. However: avoid maiming.")
+		if(2)
+			new_objective = new("Bother security. Start a manhunt, however you please, and be annoying. However: avoid killing.")
+		if(3)
+			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees.")
+		if(4)
+			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. [pick(list("Cowabunga it is.","Tally ho!"))]")
+	new_objective.completed = TRUE //So they can greentext without admin intervention.
+	add_objective(new_objective)
 
 /datum/team/brother_team/proc/forge_single_objective()
 	if(prob(50))
