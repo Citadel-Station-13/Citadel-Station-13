@@ -1,7 +1,7 @@
 /datum/reagent/drug
 	name = "Drug"
 	id = "drug"
-	value = 12
+	value = 6
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
@@ -13,7 +13,7 @@
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
 	id = "space_drugs"
-	value = 6
+	value = 3
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -41,7 +41,7 @@
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	id = "nicotine"
-	value = 0
+	value = 0.5 //Tobbaco, should still be a crash crop
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -113,6 +113,7 @@
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
 	id = "krokodil"
+	value = 5
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#0064B4"
@@ -168,6 +169,7 @@
 	description = "Reduces stun times by about 300%, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
+	value = 5
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -262,6 +264,7 @@
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
+	value = 12
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -461,6 +464,7 @@
 /datum/reagent/drug/skooma
 	name = "Skooma"
 	id = "skooma"
+	value = 10
 	description = "An ancient, highly-addictive drug of long-forgotten times. It greatly improves the user's speed and strength, but heavily impedes their intelligence and agility."
 	reagent_state = LIQUID
 	color = "#F3E0F9"
