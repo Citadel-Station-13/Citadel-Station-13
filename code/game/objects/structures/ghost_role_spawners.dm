@@ -615,7 +615,7 @@
 	if(new_spawn.client)
 		new_spawn.client.prefs.copy_to(new_spawn)
 		var/datum/outfit/O = new /datum/outfit/ghostcafe()
-		O.equip(new_spawn)
+		O.equip(new_spawn, FALSE, new_spawn.client)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
 
