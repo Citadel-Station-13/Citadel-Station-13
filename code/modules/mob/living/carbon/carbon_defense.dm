@@ -50,6 +50,9 @@
 
 /mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
 	. = FALSE
+	if(mind)
+		if(mind.martial_art && mind.martial_art.dodge_chance == 100)
+			return TRUE
 	if(!skip_throw_mode_check && !in_throw_mode)
 		return
 	if(get_active_held_item())
@@ -63,6 +66,13 @@
 		if(can_catch_item())
 			if(istype(AM, /obj/item))
 				var/obj/item/I = AM
+				if (mind)
+					if (mind.martial_art && mind.martial_art.dodge_chance == 100) //autocatch for rising bass
+						if (get_active_held_item())
+							visible_message("<span class='warning'>[I] falls to the ground as [src] chops it out of the air!</span>")
+							return 1
+						if(!in_throw_mode)
+							throw_mode_on()
 				if(isturf(I.loc))
 					I.attack_hand(src)
 					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
@@ -279,6 +289,12 @@
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 
+		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
+			M.visible_message( \
+				"<span class='notice'>[M] boops [src]'s nose.</span>", \
+				"<span class='notice'>You boop [src] on the nose.</span>", )
+			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
+
 		else if(check_zone(M.zone_selected) == "head")
 			var/mob/living/carbon/human/H = src
 			var/datum/species/pref_species = H.dna.species
@@ -316,7 +332,12 @@
 
 			else
 				return
-
+		
+		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
+			M.visible_message( \
+				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
+				"<span class='notice'>You shake [src]'s hand.</span>", )
+		
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
@@ -355,30 +376,30 @@
 		if (damage == 1)
 			to_chat(src, "<span class='warning'>Your eyes sting a little.</span>")
 			if(prob(40))
-				adjust_eye_damage(1)
+				eyes.applyOrganDamage(1)
 
 		else if (damage == 2)
 			to_chat(src, "<span class='warning'>Your eyes burn.</span>")
-			adjust_eye_damage(rand(2, 4))
+			eyes.applyOrganDamage(rand(2, 4))
 
 		else if( damage >= 3)
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
-			adjust_eye_damage(rand(12, 16))
+			eyes.applyOrganDamage(rand(12, 16))
 
-		if(eyes.eye_damage > 10)
+		if(eyes.damage > 10)
 			blind_eyes(damage)
 			blur_eyes(damage * rand(3, 6))
 
-			if(eyes.eye_damage > 20)
-				if(prob(eyes.eye_damage - 20))
+			if(eyes.damage > 20)
+				if(prob(eyes.damage - 20))
 					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
-				else if(prob(eyes.eye_damage - 25))
+				else if(prob(eyes.damage - 25))
 					if(!HAS_TRAIT(src, TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
-					become_blind(EYE_DAMAGE)
+					eyes.applyOrganDamage(eyes.maxHealth)
 
 			else
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")

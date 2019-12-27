@@ -153,6 +153,7 @@
 		playsound(loc, voracious ? 'sound/effects/splat.ogg' : 'sound/effects/bin_close.ogg', 50, 1)
 	items_preserved.Cut()
 	cleaning = FALSE
+	patient = null
 	if(hound)
 		update_gut(hound)
 
@@ -525,5 +526,5 @@
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
 
 /obj/item/dogborg/sleeper/K9/flavour
-	name = "Mobile Sleeper"
+	name = "Recreational Sleeper"
 	desc = "A mounted, underslung sleeper, intended for holding willing occupants for leisurely purposes."

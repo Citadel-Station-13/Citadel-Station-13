@@ -15,7 +15,11 @@
 	if (wear_mask)
 		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
 	if (wear_neck)
-		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
+		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
+	if(can_be_held)
+		. += "[t_He] looks small enough to be picked up with <b>Alt+Click</b>!\n"
+
+
 
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
@@ -38,7 +42,7 @@
 			continue
 		. += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
 
-	var/list/msg = list("<span class='warning'>")
+	var/list/msg = list()
 	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
@@ -78,9 +82,8 @@
 	if(pulledby && pulledby.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
 
-	msg += "</span>"
-
-	. += msg.Join("")
+	if(msg.len)
+		. += "<span class='warning'>[msg.Join("")]</span>"
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)

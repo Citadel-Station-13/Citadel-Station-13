@@ -117,20 +117,23 @@
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
-
+	if(!.)
+		return
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(src.dna.check_mutation(HULK))
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return FALSE
 		if(HAS_TRAIT(src, TRAIT_NOGUNS))
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
-	if(mind)
-		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
-			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-			return FALSE
 
-	return .
+/mob/living/carbon/human/can_see_reagents()
+	. = ..()
+	if(.) //No need to run through all of this if it's already true.
+		return
+	if(isclothing(glasses) && (glasses.clothing_flags & SCAN_REAGENTS))
+		return TRUE
+
 /*
 /mob/living/carbon/human/transfer_blood_dna(list/blood_dna)
 	..()

@@ -313,14 +313,15 @@
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
 		parts += "[FOURSPACES]Threat left: [mode.threat]"
 		parts += "[FOURSPACES]Executed rules:"
+		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
+			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+		parts += "[FOURSPACES]Other threat changes:"
 		for(var/str in mode.threat_log)
 			parts += "[FOURSPACES][FOURSPACES][str]"
 		for(var/entry in mode.threat_tallies)
 			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
-		/*
-		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
-			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
-		*/
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Threat left")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

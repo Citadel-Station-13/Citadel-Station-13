@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - balance: "Rebalanced cult vs cult stun effects to debuff instead of stun"

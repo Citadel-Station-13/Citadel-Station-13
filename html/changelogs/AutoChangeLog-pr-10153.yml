@@ -1,0 +1,4 @@
+author: "Linzolle"
+delete-after: True
+changes: 
+  - bugfix: "fireman failure has a different message depending on the circumstance"
