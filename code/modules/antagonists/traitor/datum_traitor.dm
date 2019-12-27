@@ -94,13 +94,13 @@
 		if(0)
 			new_objective = new("Cause trouble for Nanotrasen. Steal something important, such as a family heirloom or a hand tele. However: avoid harming.")
 		if(1)
-			new_objective = new("Sabotage the station. Attempt to break the supermatter, break windows, kill beepsky, or so on. However: avoid maiming.")
+			new_objective = new("Sabotage the station. Attempt to break the supermatter, break windows, kill beepsky, or so on. However: avoid killing.")
 		if(2)
-			new_objective = new("Harass security. Start a manhunt, however you please. However: avoid killing, and if you must die, at least make your death glorious.")
+			new_objective = new("Harass security. Start a manhunt, however you please. Kill if you must, but leave crew alive to tell the tale.")
 		if(3)
-			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees.")
+			new_objective = new("Make medical busy. Poison, maim, kill. However: leave recoverable bodies, and avoid murder sprees. Make them fear.")
 		if(4)
-			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. Hijack the shuttle if it is called.")
+			new_objective = new("Use any means at your disposal to destroy the station and everyone on it. [pick(list("Hijack the shuttle if it is called.","Die a glorious death and take the station with you."))]")
 	new_objective.completed = TRUE
 	new_objective.owner = owner
 	add_objective(new_objective)
