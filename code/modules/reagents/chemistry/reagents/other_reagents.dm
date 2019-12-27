@@ -256,6 +256,7 @@
 /datum/reagent/water
 	name = "Water"
 	id = "water"
+	value = 0
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
@@ -328,6 +329,7 @@
 /datum/reagent/water/holywater
 	name = "Holy Water"
 	id = "holywater"
+	value = 0.1
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 	glass_icon_state  = "glass_clear"
@@ -408,6 +410,7 @@
 /datum/reagent/fuel/unholywater	//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
+	value = 1
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
 	pH = 6.5
@@ -443,6 +446,7 @@
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
 	id = "hell_water"
+	value = 3
 	description = "YOUR FLESH! IT BURNS!"
 	taste_description = "burning"
 
@@ -458,6 +462,7 @@
 /datum/reagent/fuel/holyoil		//Its oil
 	name = "Zelus Oil"
 	id = "holyoil"
+	value = 3
 	description = "Oil blessed by a greater being."
 	taste_description = "metallic oil"
 
@@ -497,12 +502,14 @@
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
 	id = "godblood"
+	value = 4
 	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
 	overdose_threshold = 150
 
 /datum/reagent/lube
 	name = "Space Lube"
 	id = "lube"
+	value = 1.5
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
@@ -524,6 +531,7 @@
 /datum/reagent/spraytan
 	name = "Spray Tan"
 	id = "spraytan"
+	value = 0.5
 	description = "A substance applied to the skin to darken the skin."
 	color = "#FFC080" // rgb: 255, 196, 128  Bright orange
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
@@ -625,6 +633,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
 	taste_description = "slime"
+	value = 6
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
@@ -778,7 +787,6 @@
 	race = /datum/species/lizard/ashwalker
 	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
 
-
 //DANGEROUS RACES
 /datum/reagent/mutationtoxin/shadow
 	name = "Shadow Mutation Toxin"
@@ -836,6 +844,7 @@
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	id = "mulligan"
+	value = 5
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
@@ -852,6 +861,7 @@
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
+	value = 10
 	description = "An advanced corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 	taste_description = "slime"
@@ -863,6 +873,7 @@
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
 	id = "gluttonytoxin"
+	value = 100
 	description = "An advanced corruptive toxin produced by something terrible."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	can_synth = FALSE
@@ -874,6 +885,7 @@
 /datum/reagent/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"
+	value = 1
 	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
 	color = "#202040" // rgb: 20, 20, 40
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -930,7 +942,6 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
-
 
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -1065,6 +1076,7 @@
 /datum/reagent/glycerol
 	name = "Glycerol"
 	id = "glycerol"
+	value = 1
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "sweetness"
@@ -1144,6 +1156,7 @@
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"
+	value = 3
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
@@ -1152,6 +1165,7 @@
 /datum/reagent/silver
 	name = "Silver"
 	id = "silver"
+	value = 2
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
@@ -1165,6 +1179,7 @@
 /datum/reagent/uranium
 	name ="Uranium"
 	id = "uranium"
+	value = 2.38
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
@@ -1186,6 +1201,7 @@
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
 	id = "bluespace"
+	value = 3.75
 	description = "A dust composed of microscopic bluespace crystals, with minor space-warping properties."
 	reagent_state = SOLID
 	color = "#0000CC"
@@ -1235,7 +1251,6 @@
 	glass_name = "glass of welder fuel"
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 	pH = 4
-
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(method == TOUCH || method == VAPOR)
@@ -1318,6 +1333,7 @@
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
 	id = "ez_clean"
+	value = 1
 	description = "A powerful, acidic cleaner sold by Waffle Co. Affects organic matter while leaving other objects unaffected."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
@@ -1338,6 +1354,7 @@
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
+	value = 1
 	description = "Cryptobiolin causes confusion and dizziness."
 	color = "#7529b3" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -1354,6 +1371,7 @@
 /datum/reagent/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
+	value = 1
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	color = "#587a31" // rgb: 200, 165, 220A
 	taste_description = "numbness"
@@ -1372,6 +1390,7 @@
 /datum/reagent/nanomachines
 	name = "Nanomachines"
 	id = "nanomachines"
+	value = 50
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 	can_synth = FALSE
@@ -1384,6 +1403,7 @@
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
 	id = "xenomicrobes"
+	value = 150
 	description = "Microbes with an entirely alien cellular structure."
 	color = "#535E66" // rgb: 83, 94, 102
 	can_synth = FALSE
@@ -1396,6 +1416,7 @@
 /datum/reagent/fungalspores
 	name = "Tubercle bacillus Cosmosis microbes"
 	id = "fungalspores"
+	value = 250
 	description = "Active fungal spores."
 	color = "#92D17D" // rgb: 146, 209, 125
 	can_synth = FALSE
@@ -1406,17 +1427,19 @@
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
-/datum/reagent/fluorosurfactant//foam precursor
+/datum/reagent/fluorosurfactant //foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
+	value = 1
 	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 	color = "#9E6B38" // rgb: 158, 107, 56
 	taste_description = "metal"
 	pH = 11
 
-/datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
+/datum/reagent/foaming_agent // Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
 	id = "foaming_agent"
+	value = 1
 	description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
@@ -1426,6 +1449,7 @@
 /datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
 	name = "Smart foaming agent"
 	id = "smart_foaming_agent"
+	value = 2 //Connects to wifi
 	description = "An agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
@@ -1444,6 +1468,7 @@
 /datum/reagent/diethylamine
 	name = "Diethylamine"
 	id = "diethylamine"
+	value = 1
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
 	taste_description = "iron"
@@ -1551,10 +1576,10 @@
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
-
 /datum/reagent/colorful_reagent/crayonpowder
 	name = "Crayon Powder"
 	id = "crayon powder"
+	value = 0.1
 	var/colorname = "none"
 	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
 	reagent_state = SOLID
@@ -1564,7 +1589,6 @@
 
 /datum/reagent/colorful_reagent/crayonpowder/New()
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
-
 
 /datum/reagent/colorful_reagent/crayonpowder/red
 	name = "Red Crayon Powder"
@@ -1596,7 +1620,6 @@
 	colorname = "green"
 	color = "#A8E61D" // green
 	random_color_list = list("#A8E61D")
-
 
 /datum/reagent/colorful_reagent/crayonpowder/blue
 	name = "Blue Crayon Powder"
@@ -1640,6 +1663,7 @@
 /datum/reagent/plantnutriment
 	name = "Generic nutriment"
 	id = "plantnutriment"
+	value = 1.5
 	description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
 	color = "#000000" // RBG: 0, 0, 0
 	var/tox_prob = 0
@@ -1671,6 +1695,7 @@
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
 	id = "robustharvestnutriment"
+	value = 2
 	description = "Very potent nutriment that prevents plants from mutating."
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 15
@@ -1721,6 +1746,7 @@
 /datum/reagent/phenol
 	name = "Phenol"
 	id = "phenol"
+	value = 0.1
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
 	taste_description = "sweet and tarry" //Again, not a strong acid.
@@ -1747,6 +1773,7 @@
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	id = "colorful_reagent"
+	value = 1
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
 	color = "#FFFF00"
@@ -1777,6 +1804,7 @@
 /datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
 	id = "hair_dye"
+	value = 3
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
 	color = "#ff00dd"
@@ -1794,6 +1822,7 @@
 /datum/reagent/barbers_aid
 	name = "Barber's Aid"
 	id = "barbers_aid"
+	value = 3
 	description = "A solution to hair loss across the world."
 	reagent_state = LIQUID
 	color = "#fac34b"
@@ -1812,6 +1841,7 @@
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
 	id = "concentrated_barbers_aid"
+	value = 6
 	description = "A concentrated solution to hair loss across the world."
 	reagent_state = LIQUID
 	color = "#ffaf00"
@@ -1828,6 +1858,7 @@
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	id = "saltpetre"
+	value = 3
 	description = "Volatile. Controversial. Third Thing."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -1846,6 +1877,7 @@
 /datum/reagent/drying_agent
 	name = "Drying agent"
 	id = "drying_agent"
+	value = 5
 	description = "A desiccant. Can be used to dry things."
 	reagent_state = LIQUID
 	color = "#A70FFF"
@@ -1866,6 +1898,7 @@
 /datum/reagent/carpet
 	name = "Liquid Carpet"
 	id = "carpet"
+	value = 3
 	description = "For those that need a more creative way to roll out a carpet."
 	reagent_state = LIQUID
 	color = "#b51d05"
@@ -1998,12 +2031,12 @@
 		F.PlaceOnTop(/turf/open/floor/carpet/royalblue)
 	..()
 
-
 // Virology virus food chems.
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
+	value = 0.2
 	color = "#A3C00F" // rgb: 163,192,15
 	taste_description = "sourness"
 
@@ -2056,6 +2089,7 @@
 /datum/reagent/royal_bee_jelly
 	name = "royal bee jelly"
 	id = "royal_bee_jelly"
+	value = 25
 	description = "Royal Bee Jelly, if injected into a Queen Space Bee said bee will split into two bees."
 	color = "#00ff80"
 	taste_description = "strange honey"
@@ -2093,6 +2127,7 @@
 /datum/reagent/magillitis
 	name = "Magillitis"
 	id = "magillitis"
+	value = 50
 	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	reagent_state = LIQUID
 	color = "#00f041"
@@ -2105,6 +2140,7 @@
 /datum/reagent/growthserum
 	name = "Growth Serum"
 	id = "growthserum"
+	value = 4
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0
 	var/current_size = 1
@@ -2145,6 +2181,7 @@
 /datum/reagent/glitter
 	name = "generic glitter"
 	id = "glitter"
+	value = 0.2
 	description = "if you can see this description, contact a coder."
 	color = "#FFFFFF" //pure white
 	taste_description = "plastic"
@@ -2179,6 +2216,7 @@
 /datum/reagent/pax
 	name = "pax"
 	id = "pax"
+	value = 1
 	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"
 	taste_description = "water"
@@ -2219,6 +2257,7 @@
 /datum/reagent/pax/peaceborg
 	name = "synth-pax"
 	id = "synthpax"
+	value = 0
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -2256,6 +2295,7 @@
 /datum/reagent/tranquility
 	name = "Tranquility"
 	id = "tranquility"
+	value = 10
 	description = "A highly mutative liquid of unknown origin."
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
@@ -2268,6 +2308,7 @@
 /datum/reagent/moonsugar
 	name = "Moonsugar"
 	id = "moonsugar"
+	value = 5
 	description = "The primary precursor for an ancient feline delicacy known as skooma. While it has no notable effects on it's own, mixing it with morphine in a chilled container may yield interesting results."
 	color = "#FAEAFF"
 	taste_description = "synthetic catnip"
@@ -2315,6 +2356,7 @@
 /datum/reagent/mustardgrind
 	name = "Mustardgrind"
 	id = "mustardgrind"
+	value = 0.1
 	description = "A powerd that is mixed with water and enzymes to make mustard."
 	color = "#BCC740" //RGB: 188, 199, 64
 	taste_description = "plant dust"
@@ -2322,6 +2364,7 @@
 /datum/reagent/pax/catnip
 	name = "catnip"
 	id = "catnip"
+	value = 0
 	taste_description = "grass"
 	description = "A colorless liquid that makes people more peaceful and felines more happy."
 	metabolization_rate = 1.75 * REAGENTS_METABOLISM
