@@ -4,6 +4,7 @@
 /datum/reagent/toxin
 	name = "Toxin"
 	id = "toxin"
+	value = 0.1
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
 	taste_description = "bitterness"
@@ -19,6 +20,7 @@
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
 	id = "amatoxin"
+	value = 0.2
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
@@ -57,6 +59,7 @@
 /datum/reagent/toxin/plasma
 	name = "Plasma"
 	id = "plasma"
+	value = 1
 	description = "Plasma in its liquid form."
 	taste_description = "bitterness"
 	specific_heat = SPECIFIC_HEAT_PLASMA
@@ -114,6 +117,7 @@
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	id = "slimejelly"
+	value = 2
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -148,6 +152,7 @@
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
 	id = "carpotoxin"
+	value = 0.5
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
@@ -203,6 +208,7 @@
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
+	value = 1
 	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
@@ -482,6 +488,7 @@
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"
 	id = "cyanide"
+	value = 1 //Also usefull in labs
 	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a stun."
 	reagent_state = LIQUID
 	color = "#00B4FF"
@@ -500,6 +507,7 @@
 /datum/reagent/toxin/bad_food
 	name = "Bad Food"
 	id = "bad_food"
+	value = 0
 	description = "The result of some abomination of cookery, food so bad it's toxic."
 	reagent_state = LIQUID
 	color = "#d6d6d8"
@@ -542,6 +550,7 @@
 /datum/reagent/toxin/initropidril
 	name = "Initropidril"
 	id = "initropidril"
+	value = 3
 	description = "A powerful poison with insidious effects. It can cause stuns, lethal breathing failure, and cardiac arrest."
 	reagent_state = LIQUID
 	color = "#7F10C0"
@@ -636,6 +645,7 @@
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
 	id = "lipolicide"
+	value = 1
 	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body."
 	taste_description = "mothballs"
 	reagent_state = LIQUID
@@ -653,6 +663,7 @@
 /datum/reagent/toxin/coniine
 	name = "Coniine"
 	id = "coniine"
+	value = 0.5
 	description = "Coniine metabolizes extremely slowly, but deals high amounts of toxin damage and stops breathing."
 	reagent_state = LIQUID
 	color = "#7DC3A0"
@@ -787,10 +798,10 @@
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
-
 /datum/reagent/toxin/anacea
 	name = "Anacea"
 	id = "anacea"
+	value = 2
 	description = "A toxin that quickly purges medicines and metabolizes very slowly."
 	reagent_state = LIQUID
 	color = "#3C5133"
@@ -806,7 +817,6 @@
 	return ..()
 
 //ACID
-
 
 /datum/reagent/toxin/acid
 	name = "Sulphuric acid"
