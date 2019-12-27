@@ -50,6 +50,9 @@
 
 /mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
 	. = FALSE
+	if(mind)
+		if(mind.martial_art && mind.martial_art.dodge_chance == 100)
+			return TRUE
 	if(!skip_throw_mode_check && !in_throw_mode)
 		return
 	if(get_active_held_item())
@@ -63,6 +66,13 @@
 		if(can_catch_item())
 			if(istype(AM, /obj/item))
 				var/obj/item/I = AM
+				if (mind)
+					if (mind.martial_art && mind.martial_art.dodge_chance == 100) //autocatch for rising bass
+						if (get_active_held_item())
+							visible_message("<span class='warning'>[I] falls to the ground as [src] chops it out of the air!</span>")
+							return 1
+						if(!in_throw_mode)
+							throw_mode_on()
 				if(isturf(I.loc))
 					I.attack_hand(src)
 					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
