@@ -385,6 +385,7 @@
 			desc = "A coconut. This one's sliced open, with all its delicious contents for your eyes to savour."
 			playsound(user, W.hitsound, 50, 1, -1)
 			return
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attack(mob/living/M, mob/user, obj/target)
 	if(M && user.a_intent == INTENT_HARM && !spillable)
@@ -402,11 +403,11 @@
 
 			//Display an attack message.
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] has cracked open a [src.name] on [M]'s head!</span>", \
-						"<span class='userdanger'>[user] has cracked open a [src.name] on [M]'s head!</span>")
+				M.visible_message("<span class='danger'>[user] has cracked open a [name] on [M]'s head!</span>", \
+						"<span class='userdanger'>[user] has cracked open a [name] on [M]'s head!</span>")
 			else
-				user.visible_message("<span class='danger'>[M] cracks open a [src.name] on their [M.p_them()] head!</span>", \
-						"<span class='userdanger'>[M] cracks open a [src.name] on [M.p_their()] head!</span>")
+				user.visible_message("<span class='danger'>[M] cracks open a [name] on their [M.p_them()] head!</span>", \
+						"<span class='userdanger'>[M] cracks open a [name] on [M.p_their()] head!</span>")
 
 			//The coconut breaks open so splash its reagents
 			spillable = TRUE
