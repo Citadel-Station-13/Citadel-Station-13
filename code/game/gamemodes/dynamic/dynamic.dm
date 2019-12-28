@@ -741,7 +741,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > 0))
 				current_players[CURRENT_LIVING_ANTAGS].Add(M)
 		else
-			if (istype(M,/mob/dead/observer))
+			if (isobserver(M))
 				var/mob/dead/observer/O = M
 				if (O.started_as_observer) // Observers
 					current_players[CURRENT_OBSERVERS].Add(M)
