@@ -380,14 +380,10 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		spintime -= speed
 
 /mob/proc/update_pull_hud_icon()
-	if(hud_used)
-		if(hud_used.pull_icon)
-			hud_used.pull_icon.update_icon(src)
+	hud_used?.pull_icon?.update_icon()
 
 /mob/proc/update_rest_hud_icon()
-	if(hud_used)
-		if(hud_used.rest_icon)
-			hud_used.rest_icon.update_icon(src)
+	hud_used?.rest_icon?.update_icon()
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
