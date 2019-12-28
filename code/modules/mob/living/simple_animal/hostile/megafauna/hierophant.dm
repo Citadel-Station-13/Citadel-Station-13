@@ -594,12 +594,14 @@ Difficulty: Normal
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
+	var/list/nohurt
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once)
+/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once, list/donthurt = list())
 	. = ..()
 	if(only_hit_once)
 		hit_things = only_hit_once
 	friendly_fire_check = friendly_fire
+	nohurt = donthurt
 	if(new_caster)
 		hit_things += new_caster
 	if(ismineralturf(loc)) //drill mineral turfs
@@ -627,6 +629,8 @@ Difficulty: Normal
 	if(!damage)
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
+		if (L in nohurt)
+			continue
 		hit_things += L
 		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)
 			continue
