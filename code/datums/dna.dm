@@ -299,10 +299,10 @@
 /datum/dna/stored/check_mutation(mutation_name)
 	return
 
-/datum/dna/stored/remove_all_mutations()
+/datum/dna/stored/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
 	return
 
-/datum/dna/stored/remove_mutation_group(list/group)
+/datum/dna/stored/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
 	return
 
 /////////////////////////// DNA MOB-PROCS //////////////////////
