@@ -326,8 +326,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		F.update_fire_light(fire)
 	for(var/obj/machinery/light/L in src)
 		L.update()
-
-/area/proc/update_icon()
+/**
+  * Update the icon state of the area
+  *
+  * Im not sure what the heck this does, somethign to do with weather being able to set icon
+  * states on areas?? where the heck would that even display?
+  */
+/area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -337,7 +342,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!weather_icon)
 		icon_state = null
 
-/area/space/update_icon()
+/**
+  * Update the icon of the area (overridden to always be null for space
+  */
+/area/space/update_icon_state()
 	icon_state = null
 
 /*
