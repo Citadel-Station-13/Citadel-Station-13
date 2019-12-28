@@ -960,7 +960,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if (reagents.total_volume > 80)
 		. += "<span class='notice'>The bowl is filled to the brim.</span>"
 	else if (reagents.total_volume > 40)
-		. += user, "<span class='notice'>The bowl has plenty weed in it.</span>"
+		. += "<span class='notice'>The bowl has plenty weed in it.</span>"
 	else
 		. += "<span class='notice'>The bowl has some weed in it.</span>"
 
