@@ -601,9 +601,8 @@ Difficulty: Normal
 	if(only_hit_once)
 		hit_things = only_hit_once
 	friendly_fire_check = friendly_fire
-	if (!donthurt)
-		donthurt = list()
-	nohurt = donthurt
+	if(donthurt)
+		hit_things += donthurt
 	if(new_caster)
 		hit_things += new_caster
 	if(ismineralturf(loc)) //drill mineral turfs
@@ -631,8 +630,6 @@ Difficulty: Normal
 	if(!damage)
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
-		if (L in nohurt)
-			continue
 		hit_things += L
 		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)
 			continue
