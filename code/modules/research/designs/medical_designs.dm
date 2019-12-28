@@ -152,7 +152,7 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/crewpinpointer
+/datum/design/handheldcrewmonitor
 	name = "Handheld Crew Monitor"
 	desc = "A miniature machine that tracks suit sensors across the station."
 	id = "handheldcrewmonitor"
