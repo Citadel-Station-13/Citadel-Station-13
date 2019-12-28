@@ -200,7 +200,7 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		S.brutemod *= 0.2											//  <--------------------  Start small, but burn mod increases based on rank!
+		S.brutemod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
 		S.coldmod = 0
 		S.stunmod *= 0.35
 		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
