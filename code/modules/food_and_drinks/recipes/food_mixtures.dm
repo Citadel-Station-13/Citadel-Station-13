@@ -129,7 +129,7 @@
 /datum/chemical_reaction/imitationcarpmeat
 	name = "Imitation Carpmeat"
 	id = "imitationcarpmeat"
-	required_reagents = list("carpotoxin" = 5)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5)
 	required_container = /obj/item/reagent_containers/food/snacks/tofu
 	mix_message = "The mixture becomes similar to carp meat."
 

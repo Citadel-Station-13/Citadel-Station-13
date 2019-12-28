@@ -184,7 +184,7 @@
 	icon_state = "virus_food"
 	anchored = TRUE
 	density = FALSE
-	reagent_id = "virusfood"
+	reagent_id = /datum/reagent/toxin/mutagen/mutagenvirusfood
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"

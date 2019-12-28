@@ -25,16 +25,16 @@
 	var/flavour_name = "vanilla"
 	var/obj/item/reagent_containers/beaker = null
 	var/static/list/icecream_vat_reagents = list(
-		"milk" = 6,
-		"flour" = 6,
-		"sugar" = 6,
-		"ice" = 6,
-		"cocoa" = 6,
-		"vanilla" = 6,
-		"berryjuice" = 6,
-		"singulo" = 6,
-		"peachjuice" = 6,
-		"grapejuice" = 6)
+		/datum/reagent/consumable/milk = 6,
+		/datum/reagent/consumable/flour = 6,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/ice = 6,
+		/datum/reagent/consumable/coco = 6,
+		/datum/reagent/consumable/vanilla = 6,
+		/datum/reagent/consumable/berryjuice = 6,
+		/datum/reagent/consumable/ethanol/singulo = 6,
+		/datum/reagent/consumable/peachjuice = 6,
+		/datum/reagent/consumable/grapejuice = 6)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
