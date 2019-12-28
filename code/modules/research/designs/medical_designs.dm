@@ -157,7 +157,7 @@
 	desc = "A miniature machine that tracks suit sensors across the station."
 	id = "handheldcrewmonitor"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500)
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500, MAT_SILVER = 200)
 	build_path = /obj/item/sensor_device
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
