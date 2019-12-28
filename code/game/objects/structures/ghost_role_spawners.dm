@@ -30,7 +30,7 @@
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/carbon/human/new_spawn)
 	new_spawn.exempt_from_health_events = TRUE
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
@@ -253,7 +253,7 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
-/obj/effect/mob_spawn/human/hermit/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/hermit/special(mob/living/carbon/human/new_spawn)
 	new_spawn.exempt_from_health_events = TRUE
 
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
@@ -358,7 +358,7 @@
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
 
-/obj/effect/mob_spawn/human/hotel_staff/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/hotel_staff/special(mob/living/carbon/human/new_spawn)
 	new_spawn.exempt_from_health_events = TRUE
 
 /obj/effect/mob_spawn/human/demonic_friend
