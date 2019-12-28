@@ -288,8 +288,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	var/newvolume
-	newvolume = 50 + round(seed.potency,10)
+	var/newvolume = 50 + round(seed.potency,10)
 	if (seed.get_gene(/datum/plant_gene/trait/maxchem))
 		newvolume = newvolume + 50
 	volume = newvolume
@@ -299,23 +298,25 @@
 	transform *= TRANSFORM_USING_VARIABLE(40, 100) + 0.5 //temporary fix for size?
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attack_self(mob/user)
-	if (opened == TRUE)
-		if(possible_transfer_amounts.len)
-			var/i=0
-			for(var/A in possible_transfer_amounts)
-				i++
-				if(A == amount_per_transfer_from_this)
-					if(i<possible_transfer_amounts.len)
-						amount_per_transfer_from_this = possible_transfer_amounts[i+1]
-					else
-						amount_per_transfer_from_this = possible_transfer_amounts[1]
-					to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
-					return
+	if (opened)
+		if(!possible_transfer_amounts.len)
+			return
+		var/i=0
+		for(var/A in possible_transfer_amounts)
+			i++
+			if(A != amount_per_transfer_from_this)
+				continue
+			if(i<possible_transfer_amounts.len)
+				amount_per_transfer_from_this = possible_transfer_amounts[i+1]
+			else
+				amount_per_transfer_from_this = possible_transfer_amounts[1]
+			to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+			return
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attackby(obj/item/W, mob/user, params)
 	//DEFUSING NADE LOGIC
-	if (W.tool_behaviour == TOOL_WIRECUTTER && fused == TRUE)
-		user.show_message("<span class='notice'>You cut the fuse!</span>", 1)
+	if (W.tool_behaviour == TOOL_WIRECUTTER && fused)
+		user.show_message("<span class='notice'>You cut the fuse!</span>", MSG_VISUAL)
 		playsound(user, W.hitsound, 50, 1, -1)
 		icon_state = "coconut_carved"
 		desc = "A coconut. This one's got a hole in it."
@@ -327,14 +328,14 @@
 			set_light(0, 0.0)
 		return
 	//IGNITING NADE LOGIC
-	if(fusedactive == FALSE && fused == TRUE)
+	if(!fusedactive && fused)
 		var/lighting_text = W.ignition_effect(src, user)
 		if(lighting_text)
 			user.visible_message("<span class='warning'>[user] ignites [src]'s fuse!</span>", "<span class='userdanger'>You ignite the [src]'s fuse!</span>")
 			fusedactive = TRUE
 			defused = FALSE
 			playsound(src, 'sound/effects/fuse.ogg', 100, 0)
-			message_admins("[ADMIN_LOOKUPFLW(user)] ignited a coconut bomb for detonation at [ADMIN_VERBOSEJMP(user)] "+ pretty_string_from_reagent_list(reagents.reagent_list))
+			message_admins("[ADMIN_LOOKUPFLW(user)] ignited a coconut bomb for detonation at [ADMIN_VERBOSEJMP(user)] [pretty_string_from_reagent_list(reagents.reagent_list)]")
 			log_game("[key_name(user)] primed a coconut grenade for detonation at [AREACOORD(user)].")
 			addtimer(CALLBACK(src, .proc/prime), 5 SECONDS)
 			icon_state = "coconut_grenade_active"
@@ -346,7 +347,7 @@
 
 	//ADDING A FUSE, NADE LOGIC
 	if (istype(W,/obj/item/stack/sheet/cloth) || istype(W,/obj/item/stack/sheet/durathread))
-		if (carved == TRUE && straw == FALSE && fused == FALSE)
+		if (carved && !straw && !fused)
 			user.show_message("<span class='notice'>You add a fuse to the coconut!</span>", 1)
 			W.use(1)
 			fused = TRUE
@@ -355,14 +356,14 @@
 			name = "coconut bomb"
 			return
 	//ADDING STRAW LOGIC
-	if (istype(W,/obj/item/stack/sheet/mineral/bamboo) && opened == TRUE && straw == FALSE && fused == FALSE)
+	if (istype(W,/obj/item/stack/sheet/mineral/bamboo) && opened && !straw && fused)
 		user.show_message("<span class='notice'>You add a bamboo straw to the coconut!</span>", 1)
 		straw = TRUE
 		W.use(1)
 		icon_state += "_straw"
 		desc = "You can already feel like you're on a tropical vacation."
 	//OPENING THE NUT LOGIC
-	if (carved == FALSE && chopped == FALSE)
+	if (!carved && !chopped)
 		if(W.tool_behaviour == TOOL_SCREWDRIVER)
 			user.show_message("<span class='notice'>You make a hole in the coconut!</span>", 1)
 			carved = TRUE
@@ -386,7 +387,7 @@
 			return
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attack(mob/living/M, mob/user, obj/target)
-	if(M && user.a_intent == INTENT_HARM && spillable == FALSE)
+	if(M && user.a_intent == INTENT_HARM && !spillable)
 		var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 		if (affecting == BODY_ZONE_HEAD && prob(15))
 			//smash the nut open
@@ -420,7 +421,7 @@
 	if(fusedactive)
 		return
 
-	if(opened == FALSE)
+	if(!opened)
 		return
 
 	if(!canconsume(M, user))
@@ -430,37 +431,36 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 
-	if(istype(M))
-		if(user.a_intent == INTENT_HARM && spillable == TRUE)
-			var/R
-			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
-			if(reagents)
-				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
-			if(isturf(target) && reagents.reagent_list.len && thrownby)
-				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
-			reagents.reaction(M, TOUCH)
-			log_combat(user, M, "splashed", R)
-			reagents.clear_reagents()
+	if(user.a_intent == INTENT_HARM && spillable)
+		var/R
+		M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
+						"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+		if(reagents)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				R += A.id + " ("
+				R += num2text(A.volume) + "),"
+		if(isturf(target) && reagents.reagent_list.len && thrownby)
+			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
+			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
+		reagents.reaction(M, TOUCH)
+		log_combat(user, M, "splashed", R)
+		reagents.clear_reagents()
+	else
+		if(M != user)
+			M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
+						"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+			if(!do_mob(user, M))
+				return
+			if(!reagents || !reagents.total_volume)
+				return // The drink might be empty after the delay, such as by spam-feeding
+			M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+			log_combat(user, M, "fed", reagents.log_list())
 		else
-			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
-							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
-				if(!do_mob(user, M))
-					return
-				if(!reagents || !reagents.total_volume)
-					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
-				log_combat(user, M, "fed", reagents.log_list())
-			else
-				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
-			var/fraction = min(5/reagents.total_volume, 1)
-			reagents.reaction(M, INGEST, fraction)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
+		var/fraction = min(5/reagents.total_volume, 1)
+		reagents.reaction(M, INGEST, fraction)
+		addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/afterattack(obj/target, mob/user, proximity)
 	. = ..()
