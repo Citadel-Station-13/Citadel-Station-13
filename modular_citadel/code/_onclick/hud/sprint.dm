@@ -12,10 +12,11 @@
 		var/mob/living/carbon/human/H = usr
 		H.togglesprint()
 
-/obj/screen/sprintbutton/proc/insert_witty_toggle_joke_here(mob/living/carbon/human/H)
-	if(!H)
+/obj/screen/sprintbutton/update_icon_state()
+	var/mob/living/user = hud?.mymob
+	if(istype(user))
 		return
-	if(H.sprinting)
+	if(user.sprinting)
 		icon_state = "act_sprint_on"
 	else
 		icon_state = "act_sprint"
