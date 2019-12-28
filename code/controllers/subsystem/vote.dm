@@ -403,7 +403,6 @@ SUBSYSTEM_DEF(vote)
 			if(APPROVAL_VOTING)
 				. += "<h3>Vote any number of choices.</h3>"
 			if(RANKED_CHOICE_VOTING)
-				var/list/myvote = voted[C.ckey]
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
