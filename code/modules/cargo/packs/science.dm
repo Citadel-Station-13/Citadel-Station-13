@@ -81,6 +81,16 @@
 					/obj/item/integrated_electronics/wirer)
 	crate_name = "circuitry starter pack crate"
 
+/datum/supply_pack/science/glasswork
+	name = "GlassBlower Gear Crate"
+	desc = "Learn and make glassworks of usefull things for a profit! Contains glassworking tools and blowing rods. Glass not included."
+	cost = 1000
+	contains = list(/obj/item/glasswork/glasskit,
+					/obj/item/glasswork/glasskit,
+					/obj/item/glasswork/blowing_rod,
+					/obj/item/glasswork/blowing_rod)
+	crate_name = "glassblower gear crate"
+
 /datum/supply_pack/science/adv_surgery_tools
 	name = "Med-Co Advanced surgery tools"
 	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."

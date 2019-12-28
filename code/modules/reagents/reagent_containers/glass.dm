@@ -8,15 +8,6 @@
 	resistance_flags = ACID_PROOF
 	container_HP = 2
 
-/obj/item/reagent_containers/glass/slug
-	name = "glass slug"
-	desc = "A small slug of solid glass, produced from a kiln."
-	icon_state = "glassslug"
-	amount_per_transfer_from_this = 0
-	possible_transfer_amounts = list(0)
-	volume = 0
-	resistance_flags = ACID_PROOF
-
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
 		return
