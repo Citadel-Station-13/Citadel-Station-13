@@ -9,7 +9,7 @@
 	internal_radio = FALSE
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, blood_type, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
