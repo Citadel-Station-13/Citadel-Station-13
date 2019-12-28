@@ -17,7 +17,7 @@
 			to_chat(user, "Your head pounds for a moment, before your vision clears. The Wish Granter, sensing the darkness in your heart, has given you limitless power, and it's all yours!")
 			user.dna.add_mutation(HULK)
 			user.dna.add_mutation(XRAY)
-			user.dna.add_mutation(COLDRES)
+			user.dna.add_mutation(SPACEMUT)
 			user.dna.add_mutation(TK)
 			user.next_move_modifier *= 0.5	//half the delay between attacks!
 			to_chat(user, "Things around you feel slower!")

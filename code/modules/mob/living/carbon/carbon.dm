@@ -181,7 +181,7 @@
 			if(HAS_TRAIT(src, TRAIT_PACIFISM))
 				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				return
-			
+
 			adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -623,7 +623,13 @@
 			if(M.name == XRAY)
 				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 				see_in_dark = max(see_in_dark, 8)
+	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
+		sight |= (SEE_MOBS)
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
+	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = max(see_in_dark, 8)
 	if(see_override)
 		see_invisible = see_override
 	. = ..()

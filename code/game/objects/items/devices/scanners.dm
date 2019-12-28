@@ -150,7 +150,10 @@ SLIME SCANNER
 		msg += "\n\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>"
 		if(advanced)
 			msg += "\n\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>"
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(advanced && H.has_dna())
+			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 	to_chat(user, msg)
 	msg = ""
@@ -777,3 +780,62 @@ SLIME SCANNER
 	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
 	if(!response)
 		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
+
+/obj/item/sequence_scanner
+	name = "genetic sequence scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gene"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "A hand-held scanner able to swiftly scan someone for potential mutations. Hold near a DNA console to update from their database."
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(MAT_METAL=200)
+	var/list/discovered = list() //hit a dna console to update the scanners database
+
+/obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+
+	add_fingerprint(user)
+
+	gene_scan(M, user, src)
+
+/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
+	. = ..()
+	if(!istype(O) || !proximity)
+		return
+
+	if(istype(O, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/C = O
+		if(C.stored_research)
+			to_chat(user, "<span class='notice'>[name] database updated.</span>")
+			discovered = C.stored_research.discovered_mutations
+		else
+			to_chat(user,"<span class='warning'>No database to update from.</span>")
+
+/proc/gene_scan(mob/living/carbon/C, mob/living/user, obj/item/sequence_scanner/G)
+	if(!iscarbon(C) || !C.has_dna())
+		return
+	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
+	for(var/A in C.dna.mutation_index)
+		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
+		var/mut_name
+		if(G && (A in G.discovered))
+			mut_name = "[HM.name] ([HM.alias])"
+		else
+			mut_name = HM.alias
+		var/temp = GET_GENE_STRING(HM.type, C.dna)
+		var/display
+		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
+			if(i)
+				display += "-"
+			display += copytext(temp, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+
+
+		to_chat(user, "<span class='boldnotice'>- [mut_name] > [display]</span>")
