@@ -68,3 +68,4 @@
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
 	var/last_fire_update
+	var/exempt_from_health_events = FALSE

@@ -30,6 +30,8 @@
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+	new_spawn.exempt_from_health_events = TRUE
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker
@@ -251,6 +253,9 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/hermit/special(mob/living/new_spawn)
+	new_spawn.exempt_from_health_events = TRUE
+
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
 	name = "broken rejuvenation pod"
@@ -352,6 +357,9 @@
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+
+/obj/effect/mob_spawn/human/hotel_staff/special(mob/living/new_spawn)
+	new_spawn.exempt_from_health_events = TRUE
 
 /obj/effect/mob_spawn/human/demonic_friend
 	name = "Essence of friendship"
@@ -618,6 +626,7 @@
 		O.equip(new_spawn, FALSE, new_spawn.client)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
+		new_spawn.exempt_from_health_events = TRUE
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"
@@ -639,4 +648,4 @@
 			uniform = /obj/item/clothing/under/color/random
 		else
 			uniform = /obj/item/clothing/under/skirt/color/random
-		
+
