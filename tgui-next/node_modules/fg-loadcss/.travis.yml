@@ -1,6 +1,0 @@
-language: node_js
-node_js:
-  - 6.11.1
-before_script:
-  - npm install
-script: grunt -v
