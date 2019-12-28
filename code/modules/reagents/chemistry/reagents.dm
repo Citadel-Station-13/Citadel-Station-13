@@ -15,7 +15,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /datum/reagent
 	var/name = "Reagent"
-	var/id = "reagent"
 	var/description = ""
 	var/specific_heat = SPECIFIC_HEAT_DEFAULT		//J/(K*mol)
 	var/taste_description = "metaphorical salt"
@@ -97,12 +96,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return
 	var/mob/living/carbon/M = L
 	if (purity == 1)
-		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [id]")
+		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [type]")
 		return
 	if(cached_purity == 1)
 		cached_purity = purity
 	else if(purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+		CRASH("Purity below 0 for chem: [type], Please let Fermis Know!")
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
 
@@ -121,7 +120,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
 			M.reagents.remove_reagent(type, (impureVol), FALSE)
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
+		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [type]")
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
 	return
 
@@ -149,11 +148,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(!iscarbon(M))
 		return
 	if (purity == 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
+		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [type]")
 		return
 	cached_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
 	if (purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+		CRASH("Purity below 0 for chem: [type], Please let Fermis Know!")
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
 
@@ -172,7 +171,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
 			M.reagents.remove_reagent(type, impureVol, FALSE)
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [id]")
+		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [type]")
 		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [impure_chem]")
 	return
 
@@ -189,29 +188,29 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_light, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_light, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_medium, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_medium, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_severe, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_severe, name)
 	if(prob(30))
 		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_critical, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_critical, name)
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return

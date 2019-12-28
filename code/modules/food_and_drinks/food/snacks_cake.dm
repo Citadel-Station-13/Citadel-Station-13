@@ -40,8 +40,8 @@
 	icon_state = "carrotcake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/carrot
 	slices_num = 5
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, "oculine" = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 20, "oculine" = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/medicine/oculine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
 
@@ -50,7 +50,7 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	filling_color = "#FFA500"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, "oculine" = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/oculine = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
 
@@ -171,8 +171,8 @@
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday
 	slices_num = 5
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7, "sprinkles" = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 20, "sprinkles" = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
 
@@ -181,7 +181,7 @@
 	desc = "A slice of your birthday."
 	icon_state = "birthdaycakeslice"
 	filling_color = "#DC143C"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, "sprinkles" = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sprinkles = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
 
@@ -282,7 +282,7 @@
 	desc = "A cake made for angels and chaplains alike! Contains holy water."
 	icon_state = "holy_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/holy_cake_slice
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3, "holy_water" = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/water/holywater = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "clouds" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 
@@ -351,7 +351,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	desc = "A funny cake with a clown face on it."
 	icon_state = "clowncake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/clown_slice
-	bonus_reagents = list(/datum/reagent/consumable/sugar = 15, "laugher" = 15)
+	bonus_reagents = list(/datum/reagent/consumable/sugar = 15, /datum/reagent/consumable/laughter = 15)
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY
 
@@ -368,7 +368,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	desc = "A peach filled cake."
 	icon_state = "peachcake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
-	bonus_reagents = list(/datum/reagent/consumable/sugar = 5, "peachjuice" = 15)
+	bonus_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/peachjuice = 15)
 	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY
 
@@ -385,7 +385,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	desc = "A spaceman's trumpet frosted cake."
 	icon_state = "trumpetcake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/trumpet
-	bonus_reagents = list("polypyr" = 15, "cream" = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/berryjuice = 5)
+	bonus_reagents = list(/datum/reagent/medicine/polypyr = 15, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/berryjuice = 5)
 	filling_color = "#7A3D80"
 	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR

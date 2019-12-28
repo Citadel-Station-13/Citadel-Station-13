@@ -15,7 +15,6 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
-	id = "astral"
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "your mind"

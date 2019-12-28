@@ -3,7 +3,6 @@
 
 /datum/reagent/fermi
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
-	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
 	value = 20
@@ -32,7 +31,6 @@
 
 /datum/reagent/fermi/hatmium //for hatterhat
 	name = "Hat growth serium"
-	id = "hatmium"
 	description = "A strange substance that draws in a hat from the hat dimention."
 	color = "#7c311a" // rgb: , 0, 255
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
@@ -80,7 +78,6 @@
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
-	id = "furranium"
 	description = "OwO whats this?"
 	color = "#f9b9bc" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
@@ -170,7 +167,6 @@
 
 /datum/reagent/fermi/nanite_b_gone
 	name = "Nanite bane"
-	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
 	overdose_threshold = 15
@@ -214,7 +210,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
-	id = "nanite_b_goneTox"
 	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
 	metabolization_rate = 0.5
 	chemical_flags = REAGENT_INVISIBLE
@@ -237,7 +232,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/fermiAcid
 	name = "Acid vapour"
-	id = "fermiAcid"
 	description = "Someone didn't do like an otter, and add acid to water."
 	taste_description = "acid burns, ow"
 	color = "#FFFFFF"
@@ -280,7 +274,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/fermiTest
 	name = "Fermis Test Reagent"
-	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
 	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = FALSE
@@ -303,10 +296,10 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if(cached_purity >= 0.67)
 		for (var/datum/reagent/reagent in holder.reagent_list)
 			if (istype(reagent, /datum/reagent/fermi))
-				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.type]
 				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
 			else
-				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.type]
 				Ferm.on_reaction(holder, reagent.volume)
 	for(var/mob/M in viewers(8, location))
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
@@ -315,7 +308,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"
-	id = "acidic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	pH = 0
@@ -338,7 +330,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/basic_buffer
 	name = "Basic buffer"
-	id = "basic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
@@ -362,7 +353,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 //If you manage to gamble perfectly, makes you have cat ears after you transform back. But really, you shouldn't end up with that with how random it is.
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
 	name = "secretcatchem" //an attempt at hiding it
-	id = "secretcatchem"
 	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed. If used on someone in crit, it will turn them into a cat permanently, until the cat is killed."
 	taste_description = "hairballs and cream"
 	color = "#ffc224"

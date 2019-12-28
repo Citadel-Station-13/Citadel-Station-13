@@ -184,7 +184,7 @@
 		data["chem"] = list()
 		for(var/chem in injection_chems)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-			data["chem"] += list(list("name" = R.name, "id" = R.id))
+			data["chem"] += list(list("name" = R.name, "id" = R.type))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = patient

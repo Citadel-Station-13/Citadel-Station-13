@@ -40,7 +40,6 @@
 
 /datum/reagent/medicine/normalcillin
 	name = "Normalcillin"
-	id = "normalcillin"
 	description = "Translucent cyan liquid."
 	reagent_state = LIQUID
 	color = "#00FFFF"

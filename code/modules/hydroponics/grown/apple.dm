@@ -24,9 +24,9 @@
 	filling_color = "#FF4500"
 	bitesize = 100 // Always eat the apple in one bite
 	foodtype = FRUIT
-	juice_results = list("applejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/applejuice = 0)
 	tastes = list("apple" = 1)
-	distill_reagent = "hcider"
+	distill_reagent = /datum/reagent/consumable/ethanol/hcider
 
 // Gold Apple
 /obj/item/seeds/apple/gold

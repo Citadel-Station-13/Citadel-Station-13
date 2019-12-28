@@ -28,7 +28,7 @@
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
-	distill_reagent = "gin"
+	distill_reagent = /datum/reagent/consumable/ethanol/gin
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -39,7 +39,7 @@
 	plantname = "Poison-Berry Bush"
 	product = /obj/item/reagent_containers/food/snacks/grown/berries/poison
 	mutatelist = list(/obj/item/seeds/berry/death)
-	reagents_add = list(/datum/reagent/toxin/cyanide = 0.15, "tirizene" = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/toxin/cyanide = 0.15, /datum/reagent/toxin/staminatoxin = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 10 // Mildly poisonous berries are common in reality
 
 /obj/item/reagent_containers/food/snacks/grown/berries/poison
@@ -49,7 +49,7 @@
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
 	foodtype = FRUIT | TOXIC
-	juice_results = list("poisonberryjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
@@ -220,7 +220,7 @@
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
-	distill_reagent = "wine"
+	distill_reagent = /datum/reagent/consumable/ethanol/wine
 
 // Green Grapes
 /obj/item/seeds/grape/green
@@ -240,7 +240,7 @@
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
 	tastes = list("green grape" = 1)
-	distill_reagent = "cognac"
+	distill_reagent = /datum/reagent/consumable/ethanol/cognac
 
 // Strawberry
 /obj/item/seeds/strawberry

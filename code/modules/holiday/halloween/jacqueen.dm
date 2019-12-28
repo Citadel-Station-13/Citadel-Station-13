@@ -411,7 +411,6 @@
 
 /datum/reagent/mutationtoxin/pumpkinhead
 	name = "Pumpkin head mutation toxin"
-	id = "pumpkinmutationtoxin"
 	race = /datum/species/dullahan/pumpkin
 	mutationtext = "<span class='spooky'>The pain subsides. You feel your head roll off your shoulders... and you smell pumpkin."
 	//I couldn't get the replace head sprite with a pumpkin to work so, it is what it is.

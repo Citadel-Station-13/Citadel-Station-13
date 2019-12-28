@@ -20,7 +20,6 @@
 
 /datum/reagent/fermi/breast_enlarger
 	name = "Succubus milk"
-	id = "breast_enlarger"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
@@ -124,7 +123,6 @@
 
 /datum/reagent/fermi/BEsmaller
 	name = "Modesty milk"
-	id = "BEsmaller"
 	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix. Produced by reacting impure Succubus milk."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
@@ -147,7 +145,6 @@
 
 /datum/reagent/fermi/BEsmaller_hypo
 	name = "Rectify milk" //Rectify
-	id = "BEsmaller_hypo"
 	color = "#E60584"
 	taste_description = "a milky ice cream like flavour."
 	metabolization_rate = 0.25
@@ -186,7 +183,6 @@
 //Since someone else made this in the time it took me to PR it, I merged them.
 /datum/reagent/fermi/penis_enlarger // Due to popular demand...!
 	name = "Incubus draft"
-	id = "penis_enlarger"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
@@ -210,7 +206,7 @@
 			M.Knockdown(50)
 			M.Stun(50)
 			P.throw_at(T2, 8, 1)
-		M.reagents.del_reagent(id)
+		M.reagents.del_reagent(type)
 		return
 	var/mob/living/carbon/human/H = M
 	if(!H.getorganslot(ORGAN_SLOT_PENIS) && H.emergent_genital_call())
@@ -280,7 +276,6 @@
 
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Chastity draft"
-	id = "PEsmaller"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a smaller gentleman's package via a potent testosterone mix. Produced by reacting impure Incubus draft."
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
@@ -304,7 +299,6 @@
 
 /datum/reagent/fermi/PEsmaller_hypo
 	name = "Rectify draft"
-	id = "PEsmaller_hypo"
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	description = "A medicine used to treat organomegaly in a patient's penis."

@@ -1,6 +1,5 @@
 /datum/reagent/fermi/yamerol
 	name = "Yamerol"
-	id = "yamerol"
 	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
@@ -74,7 +73,6 @@
 
 /datum/reagent/impure/yamerol_tox
 	name = "Yamer oh no"
-	id = "yamerol_tox"
 	description = "A dangerous, cloying toxin that stucks to a patient’s respiratory system, damaging their tongue, lungs and causing suffocation."
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
@@ -96,7 +94,6 @@
 
 /datum/reagent/synthtissue
 	name = "Synthtissue"
-	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.05 //Give them time to graft

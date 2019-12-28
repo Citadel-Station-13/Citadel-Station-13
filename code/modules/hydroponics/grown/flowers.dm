@@ -27,7 +27,7 @@
 	bitesize_mod = 3
 	tastes = list("sesame seeds" = 1)
 	foodtype = VEGETABLES | GROSS
-	distill_reagent = "vermouth"
+	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -130,7 +130,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
-	distill_reagent = "vermouth"
+	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -195,7 +195,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
-	distill_reagent = "absinthe" //It's made from flowers.
+	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 	tastes = list("glowbugs" = 1)
 
 // Novaflower

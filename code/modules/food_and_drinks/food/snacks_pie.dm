@@ -61,7 +61,7 @@
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
-	list_reagents = list("laughter" = 15)
+	list_reagents = list(/datum/reagent/consumable/laughter = 15)
 	stunning = FALSE
 
 /obj/item/reagent_containers/food/snacks/pie/cream/body
@@ -128,7 +128,7 @@
 	icon_state = "amanita_pie"
 	bitesize = 4
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, "amatoxin" = 3, "mushroomhallucinogen" = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin/amatoxin = 3, /datum/reagent/drug/mushroomhallucinogen = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtype = GRAIN | VEGETABLES | TOXIC | GROSS
 
@@ -223,7 +223,7 @@
 	name = "mime tart"
 	desc = "..."
 	icon_state = "mimetart"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4, "nothing" = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nothing = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pie" = 1, "nothing" = 1)
 	foodtype = GRAIN
@@ -329,6 +329,6 @@
 	name = "peach pie"
 	desc = "A pie with peach filling."
 	icon_state = "strawberrypie"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 6, "peachjuice" = 15)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/peachjuice = 15)
 	tastes = list("peach" = 1, "pie" = 1)
 	foodtype = GRAIN | FRUIT

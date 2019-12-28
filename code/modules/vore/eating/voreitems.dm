@@ -35,7 +35,6 @@
 /*
 /datum/reagent/medicine/ickypak
 	name = "Ickypak"
-	id = "ickypak"
 	description = "A foul-smelling green liquid, for inducing muscle contractions to expel accidentally ingested things."
 	reagent_state = LIQUID
 	color = "#0E900E"

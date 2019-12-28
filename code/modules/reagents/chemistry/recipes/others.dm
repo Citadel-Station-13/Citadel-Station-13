@@ -192,7 +192,7 @@
 /datum/chemical_reaction/virus_food_mutagen_salineglucose
 	name = "sucrose agar"
 	id = "salineglucosevirusfood"
-	results = list("sugarvirusfood" = 2)
+	results = list(/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar = 2)
 	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/toxin/mutagen/mutagenvirusfood = 1)
 
 /datum/chemical_reaction/virus_food_uranium
@@ -430,14 +430,14 @@
 
 /datum/chemical_reaction/foaming_agent
 	name = "Foaming Agent"
-	id = "foaming_agent"
-	results = list("foaming_agent" = 1)
+	id = /datum/reagent/foaming_agent
+	results = list(/datum/reagent/foaming_agent = 1)
 	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/smart_foaming_agent
 	name = "Smart foaming Agent"
-	id = "smart_foaming_agent"
-	results = list("smart_foaming_agent" = 3)
+	id = /datum/reagent/smart_foaming_agent
+	results = list(/datum/reagent/smart_foaming_agent = 3)
 	required_reagents = list(/datum/reagent/foaming_agent = 3, /datum/reagent/acetone = 1, /datum/reagent/iron = 1)
 	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 

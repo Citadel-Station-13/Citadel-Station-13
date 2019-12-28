@@ -27,7 +27,7 @@
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
+					R += A.type + " ("
 					R += num2text(A.volume) + "),"
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")

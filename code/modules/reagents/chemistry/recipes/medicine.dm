@@ -21,7 +21,7 @@
 /datum/chemical_reaction/inacusiate
 	name = "inacusiate"
 	id = /datum/reagent/medicine/inacusiate
-	results = list("inacusiate" = 2)
+	results = list(/datum/reagent/medicine/inacusiate = 2)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/charcoal = 1)
 
 /datum/chemical_reaction/synaptizine

@@ -11,7 +11,6 @@
 
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
-	id = "eigenstate"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
 	taste_description = "wiggly cosmic dust."
 	color = "#5020F4" // rgb: 50, 20, 255
@@ -169,7 +168,7 @@
 
 	if(prob(20))
 		do_sparks(5,FALSE,M)
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_overdose")//holdover until above fix works
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")//holdover until above fix works
 	..()
 
 /datum/reagent/fermi/eigenstate/reaction_turf(turf/T, reac_volume)
