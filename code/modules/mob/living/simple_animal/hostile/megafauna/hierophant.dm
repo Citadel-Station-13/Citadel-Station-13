@@ -596,7 +596,7 @@ Difficulty: Normal
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
 	var/list/nohurt
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once, list/donthurt)
+/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once, list/donthurt = null)
 	. = ..()
 	if(only_hit_once)
 		hit_things = only_hit_once
