@@ -152,6 +152,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/crewpinpointer
+	name = "Handheld Crew Monitor"
+	desc = "A miniature machine that tracks suit sensors across the station."
+	id = "handheldcrewmonitor"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500)
+	build_path = /obj/item/sensor_device
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/holobarrier_med
 	name = "PENLITE holobarrier projector"
 	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
