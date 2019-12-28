@@ -183,7 +183,7 @@
 	BuyPower(new /datum/action/bloodsucker/masquerade)
 	BuyPower(new /datum/action/bloodsucker/veil)
 	// Traits
-	for (var/T in defaultTraits)
+	for(var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, "bloodsucker")
 	if(HAS_TRAIT(owner.current, TRAIT_TOXINLOVER)) //No slime bonuses here, no thank you
 		had_toxlover = TRUE
@@ -200,10 +200,10 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		S.brutemod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
-		S.coldmod = 0
-		S.stunmod *= 0.35
-		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
+		physiology.brutemod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
+		physiology.coldmod = 0
+		physiology.stunmod *= 0.35
+		physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
