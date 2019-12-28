@@ -158,6 +158,7 @@ Property weights are:
 	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
 	property_weights = list("extended" = -1, "chaos" = 10)
 	weight = 2
+	flags = WAROPS_ALWAYS_ALLOWED
 	var/refund_cooldown
 	
 /datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
@@ -178,6 +179,7 @@ Property weights are:
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
+	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 3, "trust" = 5)
 
 /datum/dynamic_storyteller/team/get_injection_chance()

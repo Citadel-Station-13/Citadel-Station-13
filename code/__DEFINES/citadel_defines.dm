@@ -126,4 +126,5 @@
 #define RANKED_CHOICE_VOTING 2
 
 // Dynamic storyteller stuff (see above, move later)
-#define NO_ASSASSIN		(1<<0)
+#define NO_ASSASSIN				(1<<0)
+#define WAROPS_ALWAYS_ALLOWED	(1<<1)
