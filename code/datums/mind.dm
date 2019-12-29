@@ -135,6 +135,9 @@
 		if(L.client && L.client.prefs)
 			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
 			L.update_arousal_hud() //Removes the old icon
+			if (L.client.prefs.auto_ooc)
+				if (L.client.prefs.chat_toggles & CHAT_OOC)
+					L.client.prefs.chat_toggles ^= CHAT_OOC
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 

@@ -15,6 +15,7 @@
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
+	var/auto_ooc = FALSE
 	var/lewdchem = FALSE
 
 	//vore prefs
