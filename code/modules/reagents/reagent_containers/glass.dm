@@ -105,7 +105,6 @@
 			return
 	..()
 
-
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units. Unable to withstand extreme pHes"
@@ -166,12 +165,20 @@
 	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
 	volume = 3
 
+/obj/item/reagent_containers/glass/beaker/glass_dish/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
+
 /obj/item/reagent_containers/glass/beaker/flask_large
 	name = "large flask"
 	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
 	materials = list(MAT_GLASS=2500)
 	icon_state = "flasklarge"
 	volume = 80
+
+/obj/item/reagent_containers/glass/beaker/flask_large/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/flask_small
 	name = "small flask"
@@ -180,6 +187,10 @@
 	icon_state = "flasksmall"
 	volume = 40
 
+/obj/item/reagent_containers/glass/beaker/flask_small/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
+
 /obj/item/reagent_containers/glass/beaker/flaskspouty
 	name = "flask with spout"
 	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
@@ -187,6 +198,10 @@
 	icon_state = "flaskspouty"
 	possible_transfer_amounts = list(1,2,3,4,5,10,15,20,25,30,50,100,120)
 	volume = 120
+
+/obj/item/reagent_containers/glass/beaker/flaskspouty/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"

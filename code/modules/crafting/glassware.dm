@@ -32,6 +32,8 @@
 /obj/item/lens
 	name = "Optical Lens"
 	desc = "Good for selling or crafting, by itself its useless"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "glass_optics"
 
 //////////////////////Chem Disk/////////////////////
 //Two Steps                                       //
@@ -124,7 +126,7 @@
 
 /obj/item/glasswork/glass_base/glass_lens_part4/attackby(obj/item/I, mob/user, params)
 	..()
-	if(tool_behaviour == TOOL_GLASS_CUT)
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new next_step(user.loc, 1)
 		new rod(user.loc, 1)
 		qdel(src)
@@ -132,6 +134,7 @@
 /obj/item/glasswork/glass_base/glass_lens_part5
 	name = "Unpolished glass lens"
 	desc = "A small unpolished glass lens. Could be polished with some cloth."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "glass_optics"
 	next_step = /obj/item/glasswork/glass_base/glass_lens_part6
 
@@ -144,6 +147,7 @@
 /obj/item/glasswork/glass_base/glass_lens_part6
 	name = "Unrefined glass lens"
 	desc = "A small polished glass lens. Just needs to be refined with some sandstone."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "glass_optics"
 	next_step = /obj/item/lens
 
