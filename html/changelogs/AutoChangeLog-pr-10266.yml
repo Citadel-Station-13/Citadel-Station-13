@@ -1,0 +1,5 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - rscadd: "Adds Insect markings"
+  - rscadd: "Adds three new moth wings."

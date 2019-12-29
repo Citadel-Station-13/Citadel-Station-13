@@ -275,6 +275,18 @@
 	name = "Snow"
 	icon_state = "snow"
 
+/datum/sprite_accessory/insect_fluff/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/insect_fluff/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
+/datum/sprite_accessory/insect_fluff/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"
+
 /datum/sprite_accessory/insect_fluff/colored
 	name = "Colored (Hair)"
 	icon_state = "snow"
