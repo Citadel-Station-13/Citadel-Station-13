@@ -110,6 +110,7 @@
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/range = null
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
@@ -141,12 +142,21 @@
 		return
 	if (istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
+	if(issilicon(user))
+		var/mob/living/silicon/robot/borgo = user
+		for(var/obj/item/cyborg_clamp/C in borgo.module.modules)
+			for(var/obj/structure/ore_box/B in C)
+				box = B
+
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
 		for(var/A in tile)
 			if (!is_type_in_typecache(A, STR.can_hold))
 				continue
 			if (box)
+				if(range)
+					for(var/obj/item/stack/ore/ore in range(range, user))
+						user.transferItemToLoc(A, box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
 			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
@@ -168,6 +178,7 @@
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
+	range = 1
 
 /obj/item/storage/bag/ore/cyborg/ComponentInitialize()
 	. = ..()

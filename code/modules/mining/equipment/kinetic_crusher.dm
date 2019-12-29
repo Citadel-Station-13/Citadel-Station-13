@@ -35,7 +35,7 @@
 	detonation_damage = 60
 	wielded = 1
 
-/obj/item/twohanded/kinetic_crusher/cyborg/wield()
+/obj/item/twohanded/kinetic_crusher/cyborg/unwield()
 	return
 
 /obj/item/twohanded/kinetic_crusher/Initialize()

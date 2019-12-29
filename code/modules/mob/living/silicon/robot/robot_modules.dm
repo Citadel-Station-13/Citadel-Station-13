@@ -852,6 +852,8 @@
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gun/energy/plasmacutter/cyborg,
 		/obj/item/gps/cyborg,
+		/obj/item/weapon/gripper/mining,
+		/obj/item/cyborg_clamp,
 		/obj/item/stack/marker_beacon)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(

@@ -771,7 +771,6 @@
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
 		wrapped = null
-		to_chat(user, "<span class='danger'>You drop \the [wrapped].</span>")
 	return ..()
 
 /obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
@@ -823,19 +822,15 @@
 	desc = "A simple grasping tool for carrying and deploying shelter capsules."
 	icon_state = "gripper_mining"
 	can_hold = list(
-		/obj/item/survivalcapsule/luxury
+		/obj/item/survivalcapsule
 		)
-
-/obj/item/weapon/gripper/mining/afterattack()
-	return
 
 /obj/item/weapon/gripper/mining/attack_self()
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
 		wrapped = null
-		to_chat(user, "<span class='danger'>You deploy \the [wrapped].</span>")
 		wrapped.attack_self()
-	return ..()
+	return
 
 /obj/item/gun/energy/plasmacutter/cyborg
 	name = "cyborg plasma cutter"
@@ -846,3 +841,45 @@
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 5
+
+/obj/item/cyborg_clamp
+	name = "cyborg loading clamp"
+	desc = "Equipment for supply cyborgs. Lifts objects and loads them into cargo. Will not carry living beings."
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_clamp"
+	tool_behaviour = TOOL_RETRACTOR
+	var/cargo_capacity = 8
+	var/cargo = list()
+
+/obj/item/cyborg_clamp/afterattack(atom/target, mob/user, proximity)
+	if(isobj(target))
+		var/obj/O = target
+		if(!O.anchored)
+			if(contents.len < cargo_capacity)
+				user.visible_message("[user] lifts [target] and starts to load it into its cargo compartment.")
+				O.anchored = TRUE
+				if(do_mob(user, O, 20))
+					for(var/mob/chump in target.contents)
+						to_chat(user, "<span class='warning'>Error: Living entity detected in [target]. Cannot load.</span>")
+						O.anchored = initial(O.anchored)
+						return
+					cargo += O
+					O.forceMove(src)
+					O.anchored = FALSE
+					to_chat(user, "<span class='notice'>[target] successfully loaded.</span>")
+					playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
+				else
+					O.anchored = initial(O.anchored)
+			else
+				to_chat(user, "<span class='warning'>Not enough room in cargo compartment! Maximum of eight objects!</span>")
+		else
+			to_chat(user, "<span class='warning'>[target] is firmly secured!</span>")
+
+/obj/item/cyborg_clamp/attack_self(mob/user)
+	var/obj/chosen_cargo = input(user, "Drop what?") as null|anything in cargo
+	if(!chosen_cargo)
+		return
+	chosen_cargo.forceMove(get_turf(chosen_cargo))
+	cargo -= chosen_cargo
+	user.visible_message("[user] unloads [chosen_cargo] from its cargo.")
+	playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
