@@ -152,7 +152,7 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/crewpinpointer
+/datum/design/telescopiciv
 	name = "Telescopic IV Drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
 	id = "telescopiciv"
