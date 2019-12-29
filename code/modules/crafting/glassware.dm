@@ -5,19 +5,22 @@
 	desc = "Failer to code. Contact your local bug remover..."
 	icon = 'icons/obj/glassworks.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	force = 0
+	force = 1
 	throw_speed = 1
 	throw_range = 3
+	tool_behaviour = null
 
 /obj/item/glasswork/glasskit
 	name = "Glass Working Tools"
 	desc = "A lovely belt of most the tools you will need to shape, mold, and refine glass into more advanced shapes."
 	icon_state = "glass_tools"
+	tool_behaviour = TOOL_GLASS_CUT
 
 /obj/item/glasswork/blowing_rod
 	name = "Glass Working Blow Rod"
 	desc = "A hollow metal stick made for glass blowing."
 	icon_state = "blowing_rods_unused"
+	tool_behaviour = TOOL_BLOW
 
 /obj/item/glasswork/glass_base
 	name = "Glass Fodder Sheet"
@@ -33,32 +36,32 @@
 
 //////////////////////Chem Disk/////////////////////
 //Two Steps                                       //
-//Sells for 300 cr, takes 10 glass shets           //
+//Sells for 300 cr, takes 10 glass shets          //
 //Usefull for chem spliting                       //
 ////////////////////////////////////////////////////
 
 /obj/item/glasswork/glass_base/dish
 	name = "Glass Fodder Sheet"
 	desc = "A set of glass sheets set aside for glass working, this one is ideal for a small glass dish. Needs to be cut with some tools."
-	next_step = /obj/item/glasswork/glass_base/glass_dish
+	next_step = /obj/item/glasswork/glass_base/dish/part1
 	make = /obj/item/reagent_containers/glass/beaker/glass_dish
 
 /obj/item/glasswork/glass_base/dish/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/dish)
+		qdel(src)
 
-/obj/item/glasswork/glass_base/glass_dish
+/obj/item/glasswork/glass_base/dish/part1
 	name = "Half Chem Dish Sheet"
-	desc = "A sheet of glass cut in half, looks like it still needs some more sanding down"
+	desc = "A sheet of glass cut in half, looks like it still needs some more cutting down"
 	icon_state = "glass_base_half"
 
-/obj/item/glasswork/glass_base/glass_dish/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/dish/part1/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new make(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_dish)
+		qdel(src)
 
 //////////////////////Lens//////////////////////////
 //Six Steps                                       //
@@ -66,19 +69,19 @@
 //Usefull for selling and later crafting          //
 ////////////////////////////////////////////////////
 
-/obj/item/glasswork/glass_base/lens
+/obj/item/glasswork/glass_base/glass_lens
 	name = "Glass Fodder Sheet"
 	desc = "A set of glass sheets set aside for glass working, this one is ideal for a small glass lens. Needs to be cut with some tools."
-	next_step = /obj/item/glasswork/glass_base/glass_dish
+	next_step = /obj/item/glasswork/glass_base/glass_lens/part1
 	make = /obj/item/lens
 
 /obj/item/glasswork/glass_base/lens/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/lens)
+		qdel(src)
 
-/obj/item/glasswork/glass_base/glass_lens
+/obj/item/glasswork/glass_base/glass_lens/part1
 	name = "Glass Fodder Sheet"
 	desc = "Cut glass ready to be heated. Needs to be heated with some tools."
 	icon_state = "glass_base_half"
@@ -86,9 +89,9 @@
 
 /obj/item/glasswork/glass_base/glass_lens/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens/part2
 	name = "Glass Fodder Sheet"
@@ -98,9 +101,9 @@
 
 /obj/item/glasswork/glass_base/glass_lens/part2/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens/part2)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens/part3
 	name = "Glass Fodder Sheet"
@@ -110,9 +113,9 @@
 
 /obj/item/glasswork/glass_base/glass_lens/part3/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/blowing_rod))
+	if(I.tool_behaviour == TOOL_BLOW)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens/part3)
+		qdel(src)
 		qdel(I)
 
 /obj/item/glasswork/glass_base/glass_lens/part4
@@ -123,10 +126,10 @@
 
 /obj/item/glasswork/glass_base/glass_lens/part4/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(tool_behaviour == TOOL_GLASS_CUT)
 		new next_step(user.loc, 1)
 		new rod(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens/part4)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens/part5
 	name = "Unpolished glass lens"
@@ -138,18 +141,19 @@
 	..()
 	if(istype(I, /obj/item/stack/sheet/cloth))
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens/part5)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/glass_lens/part6
 	name = "Unrefined glass lens"
 	desc = "A small polished glass lens. Just needs to be refined with some sandstone."
 	icon_state = "glass_optics"
+	next_step = null
 
 /obj/item/glasswork/glass_base/glass_lens/part6/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/sheet/mineral/sandstone))
 		new make(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens/part6)
+		qdel(src)
 
 //////////////////////Spouty Flask//////////////////
 //Four Steps                                      //
@@ -165,21 +169,21 @@
 
 /obj/item/glasswork/glass_base/spouty/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/spouty)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/spouty/part2
 	name = "Glass Fodder Sheet"
-	desc = "Cut glass that has been heated. Needs to be heated more with some tools."
-	icon_state = "glass_base_heat"
+	desc = "Cut glass that has been heated. Needs to be heated with some tools."
+	icon_state = "glass_base_half"
 	next_step = /obj/item/glasswork/glass_base/spouty/part3
 
 /obj/item/glasswork/glass_base/spouty/part2/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/spouty/part2)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/spouty/part3
 	name = "Glass Fodder Sheet"
@@ -189,22 +193,23 @@
 
 /obj/item/glasswork/glass_base/glass_lens/part3/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/blowing_rod))
+	if(I.tool_behaviour == TOOL_BLOW)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/glass_lens/part3)
+		qdel(src)
 		qdel(I)
 
 /obj/item/glasswork/glass_base/spouty/part4
 	name = "Glass Fodder Sheet"
 	desc = "Cut glass that has been heated into a blob of hot glass. Needs to be cut off onto a blow tube."
 	icon_state = "blowing_rods_inuse"
+	next_step = null
 
 /obj/item/glasswork/glass_base/spouty/part4/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new make(user.loc, 1)
 		new rod(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/spouty/part4)
+		qdel(src)
 
 //////////////////////Small Bulb Flask//////////////
 //Two Steps                                       //
@@ -220,34 +225,35 @@
 
 /obj/item/glasswork/glass_base/flask_small/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/flask_small)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/flask_small/part1
 	name = "Metled Glass"
 	desc = "A blob of metled glass, this one is ideal for a small flask. Needs to be blown with some tools."
 	icon_state = "glass_base_molding"
-	next_step = /obj/item/glasswork/glass_base/spouty/part2
+	next_step = /obj/item/glasswork/glass_base/flask_small/part2
 
 /obj/item/glasswork/glass_base/flask_small/part1/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/blowing_rod))
+	if(I.tool_behaviour == TOOL_BLOW)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/flask_small/part1)
+		qdel(src)
 		qdel(I)
 
 /obj/item/glasswork/glass_base/flask_small/part2
 	name = "Metled Glass"
 	desc = "A blob of metled glass on the end of a blowing rod. Needs to be cut off with some tools."
 	icon_state = "blowing_rods_inuse"
+	next_step = null
 
 /obj/item/glasswork/glass_base/flask_small/part2/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new make(user.loc, 1)
 		new rod(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/flask_small/part2)
+		qdel(src)
 
 //////////////////////Large Bulb Flask//////////////
 //Two Steps                                       //
@@ -261,11 +267,11 @@
 	next_step = /obj/item/glasswork/glass_base/flask_large/part1
 	make = /obj/item/reagent_containers/glass/beaker/flask_large
 
-/obj/item/glasswork/glass_base/flask_large/part1/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/flask_large/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/flask_large/part1)
+		qdel(src)
 
 /obj/item/glasswork/glass_base/flask_large/part1
 	name = "Metled Glass"
@@ -273,26 +279,22 @@
 	icon_state = "glass_base_molding"
 	next_step = /obj/item/glasswork/glass_base/flask_large/part2
 
-/obj/item/glasswork/glass_base/flask_large/part2/attackby(obj/item/I, mob/user, params)
+/obj/item/glasswork/glass_base/flask_large/part1/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/blowing_rod))
+	if(I.tool_behaviour == TOOL_BLOW)
 		new next_step(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/flask_large/part2)
+		qdel(src)
 		qdel(I)
 
 /obj/item/glasswork/glass_base/flask_large/part2
 	name = "Metled Glass"
 	desc = "A blob of metled glass on the end of a blowing rod. Needs to be cut off with some tools."
 	icon_state = "blowing_rods_inuse"
+	next_step = null
 
 /obj/item/glasswork/glass_base/flask_large/part2/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/glasswork/glass_base))
+	if(I.tool_behaviour == TOOL_GLASS_CUT)
 		new make(user.loc, 1)
 		new rod(user.loc, 1)
-		qdel(/obj/item/glasswork/glass_base/flask_large/part2)
-
-
-
-
-
+		qdel(src)
