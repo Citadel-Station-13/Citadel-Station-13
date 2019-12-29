@@ -1586,7 +1586,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		user.adjustStaminaLossBuffered(3)
 		return FALSE
-	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin) && !(target.client?.prefs.cit_toggles & NO_ASS_SLAP))
+	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
+			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
+			return FALSE
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
 		user.adjustStaminaLossBuffered(3)
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
