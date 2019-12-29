@@ -610,3 +610,42 @@
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
 	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/marshmallow
+	name = "marshmallow"
+	desc = "A marshmallow filled with fluffy marshmallow fluff."
+	icon_state = "marshmallow"
+	list_reagents = list("sugar" = 5, "nutriment" = 2)
+	filling_color = "#fafafa"
+	w_class = WEIGHT_CLASS_TINY
+	tastes = list("marshmallow" = 2)
+	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/snacks/marshmallow/attackby(obj/item/I, mob/user)
+	switch (I.get_temperature())
+		if (355 to 1500)
+			if (prob(30))
+				burnmallow()
+		if (1500 to 2000)
+			if (prob(50))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (2000 to 3000)
+			if (prob(10))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (3000 to INFINITY)
+			burnmallow(TRUE)
+	..()
+
+/obj/item/reagent_containers/food/snacks/marshmallow/proc/burnmallow(reallyburned = FALSE)
+	if (reallyburned && icon_state != "marshmallowrburned")
+		icon_state = "marshmallowrburned"
+		desc = "[initial(desc)] It looks very burned."
+		tastes = list("charcoal" = 2)
+	else if (icon_state != "marshmallowrburned")
+		icon_state = "marshmallowburned"
+		desc = "[initial(desc)] It looks just right for eating!"
+		tastes = list("marshmallow" = 1, "cream" = 1)
