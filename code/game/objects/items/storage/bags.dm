@@ -156,7 +156,7 @@
 			if (box)
 				if(range)
 					for(var/obj/item/stack/ore/ore in range(range, user))
-						user.transferItemToLoc(A, box)
+						user.transferItemToLoc(ore, box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
 			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
