@@ -193,7 +193,7 @@ Property weights are:
 	name = "Story"
 	desc = "Chaos: varies. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
 	curve_width = 4
-	property_weights = list("story_potential" = 10, "extended" = 1)
+	property_weights = list("story_potential" = 10)
 
 /datum/dynamic_storyteller/suspicion
 	name = "Intrigue"
