@@ -10,7 +10,6 @@
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
 	var/old_grab_state = null
-	var/restraining = FALSE
 
 /datum/martial_art/cqc/reset_streak(mob/living/carbon/human/new_target)
 	. = ..()

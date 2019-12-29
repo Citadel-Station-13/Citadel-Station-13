@@ -50,11 +50,9 @@
 
 /mob/living/carbon/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
 	. = ..()
-	if(!skip_throw_mode_check && !in_throw_mode)
+	if(!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) && !skip_throw_mode_check && !in_throw_mode)
 		return
-	if(get_active_held_item())
-		return
-	if(restrained())
+	if(get_active_held_item() || restrained())
 		return
 	I.attack_hand(src)
 	if(get_active_held_item() == I) //if our attack_hand() picks up the item...
@@ -327,12 +325,12 @@
 
 			else
 				return
-		
+
 		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
 				"<span class='notice'>You shake [src]'s hand.</span>", )
-		
+
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")

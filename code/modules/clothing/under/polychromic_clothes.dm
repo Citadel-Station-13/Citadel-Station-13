@@ -4,7 +4,7 @@
 //		Polychromic clothes simply consist of 4 sprites: A base, unrecoloured sprite, and up to 3 greyscaled sprites. 					  //
 //	In order to add more polychromic clothes, simply create a base sprite, and up to 3 recolourable overlays for it,  					  //
 //	and then name them as follows: [name], [name]-primary, [name]-secondary, [name]-tertiary. The sprites should	  					  //
-//	ideally be in 'modular_citadel/icons/polyclothes/item/uniform.dmi' and 'modular_citadel/icons/polyclothes/mob/uniform.dmi' for the	  //
+//	ideally be in 'icons/obj/clothing/uniform.dmi' and 'icons/mob/uniform.dmi' for the	  														  //
 //	worn sprites. After that, copy paste the code from any of the example clothes and 													  //
 //	change the names around. [name] should go in BOTH icon_state and item_color. You can preset colors and disable	  					  //
 //	any overlays using the self-explainatory vars.																	  					  //
@@ -15,8 +15,6 @@
 /obj/item/clothing/under/polychromic	//enables all three overlays to reduce copypasta and defines basic stuff
 	name = "polychromic suit"
 	desc = "For when you want to show off your horrible colour coordination skills."
-	icon = 'modular_citadel/icons/polyclothes/item/uniform.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/polyclothes/mob/uniform.dmi'
 	icon_state = "polysuit"
 	item_color = "polysuit"
 	item_state = "sl_suit"
@@ -27,23 +25,22 @@
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#808080"
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION // because I'm too lazy to port these to digi-compatible and to prove a point from /tg/ whining - Pooj
-	suit_style = NORMAL_SUIT_STYLE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION //Not all clothes are currently digi-compatible (only the shorts are as of time of writing)
 
-/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
+/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens.
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
 			if(hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
 				primary_worn.color = primary_color	//colors the overlay
 				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
 			if(hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
 				secondary_worn.color = secondary_color
 				. += secondary_worn
 			if(hastertiary)
-				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
+				var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary")
 				tertiary_worn.color = tertiary_color
 				. += tertiary_worn
 
@@ -89,6 +86,7 @@
 	secondary_color = "#808080"
 	tertiary_color = "#808080"
 	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = MUTANTRACE_VARIATION	//to enable digitigrade wearing
 
 /obj/item/clothing/under/polychromic/jumpsuit
 	name = "polychromic tri-tone jumpsuit"

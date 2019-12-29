@@ -171,6 +171,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_FREESPRINT		"free_sprinting"
 
 
@@ -226,6 +227,7 @@
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
+#define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define NUKEOP_TRAIT "nuke-op"

@@ -46,6 +46,12 @@
 			return spec_return
 
 	if(mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance)
+			if(!lying && dna && !dna.check_mutation(HULK))
+				if(prob(mind.martial_art.dodge_chance))
+					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
+					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
+					return -1
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
