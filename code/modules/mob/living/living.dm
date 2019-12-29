@@ -280,7 +280,11 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")		//Cit change - And they thought ERP was bad.
+			var/mob/living/carbon/human/H = src
+			if (ishuman(H) && (H.dna.features["taur"] == "Naga" || H.dna.features["taur"] == "Tentacle"))
+				visible_message("<span class='warning'>[src] has [H.dna.features["taur"] == "Naga" ? "coiled their tail" : "wrapped their tentacles"] around [M] passively!</span>") //snowflakes! but also fun.
+			else
+				visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")		//Cit change - And they thought ERP was bad.
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
