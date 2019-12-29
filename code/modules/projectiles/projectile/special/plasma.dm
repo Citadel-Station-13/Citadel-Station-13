@@ -51,5 +51,5 @@
 /obj/item/projectile/plasma/weak
 	dismemberment = 0
 	damage = 10
-	range = 2
+	range = 4
 	mine_range = 0

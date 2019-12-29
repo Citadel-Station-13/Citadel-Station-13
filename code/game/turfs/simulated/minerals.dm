@@ -47,7 +47,7 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/pickaxe/I, mob/user, params)
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -64,6 +64,10 @@
 
 		if(I.use_tool(src, user, 40, volume=50))
 			if(ismineralturf(src))
+				if(I.digrange > 0)
+					for(var/turf/closed/mineral/M in range(user,I.digrange))
+						if(get_dir(user,M)&user.dir)
+							M.gets_drilled()
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
