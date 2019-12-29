@@ -771,6 +771,7 @@
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
 		wrapped = null
+		to_chat(user, "<span class='danger'>You drop \the [wrapped].</span>")
 	return ..()
 
 /obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
@@ -816,6 +817,25 @@
 			return
 		else
 			to_chat(user, "<span class='danger'>Your gripper cannot hold \the [target].</span>")
+
+/obj/item/weapon/gripper/mining
+	name = "shelter capsule deployer"
+	desc = "A simple grasping tool for carrying and deploying shelter capsules."
+	icon_state = "gripper_mining"
+	can_hold = list(
+		/obj/item/survivalcapsule/luxury
+		)
+
+/obj/item/weapon/gripper/mining/afterattack()
+	return
+
+/obj/item/weapon/gripper/mining/attack_self()
+	if(wrapped)
+		wrapped.forceMove(get_turf(wrapped))
+		wrapped = null
+		to_chat(user, "<span class='danger'>You deploy \the [wrapped].</span>")
+		wrapped.attack_self()
+	return ..()
 
 /obj/item/gun/energy/plasmacutter/cyborg
 	name = "cyborg plasma cutter"
