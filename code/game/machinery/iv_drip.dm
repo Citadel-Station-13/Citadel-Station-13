@@ -222,5 +222,22 @@
 
 	. += "\t<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
 
+/obj/machinery/iv_drip/telescopic
+	name = "telescopic IV drip"
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
+	icon_state = "iv_drip"
+
+/obj/machinery/iv_drip/telescopic/update_icon()
+	..()
+	icon_state = icon_state + "_tele"
+
+/obj/machinery/iv_drip/telescopic/AltClick(mob/user)
+	if (attached)
+		return ..()
+	if (beaker)
+		return ..()
+	new /obj/item/tele_iv(get_turf(src))
+	qdel(src)
+
 #undef IV_TAKING
 #undef IV_INJECTING
