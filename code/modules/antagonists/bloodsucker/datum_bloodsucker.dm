@@ -201,9 +201,9 @@
 		var/datum/species/S = H.dna.species
 		var/datum/physiology/physiology
 		// Make Changes
-		physiology.brutemod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
-		physiology.coldmod = 0
-		physiology.stunmod *= 0.35
+		physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
+		physiology.cold_mod = 0
+		physiology.stun_mod *= 0.35
 		physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
