@@ -31,7 +31,7 @@
 
 /obj/item/twohanded/kinetic_crusher/cyborg //probably give this a unique sprite later
 	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
-	force_wielded = 10 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
+	force = 10 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
 	detonation_damage = 60
 	wielded = 1
 
