@@ -380,7 +380,11 @@
 	pestlevel = 0 // Reset
 	update_icon()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
-
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
@@ -414,7 +418,11 @@
 	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
-
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if( weedlevel > 5 )
@@ -524,7 +532,7 @@
 	if(S.has_reagent("charcoal", 1))
 		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
 
-	// NIGGA, YOU JUST WENT ON FULL RETARD.
+	// Toxins, not good for anything
 	if(S.has_reagent("toxin", 1))
 		adjustToxic(round(S.get_reagent_amount("toxin") * 2))
 
@@ -539,14 +547,14 @@
 		adjustNutri(round(S.get_reagent_amount("beer") * 0.25))
 		adjustWater(round(S.get_reagent_amount("beer") * 0.7))
 
-	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+	// Fluorine one of the most corrosive and deadly gasses
 	if(S.has_reagent("fluorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
 		adjustToxic(round(S.get_reagent_amount("fluorine") * 2.5))
 		adjustWater(-round(S.get_reagent_amount("fluorine") * 0.5))
 		adjustWeeds(-rand(1,4))
 
-	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+	// Chlorine one of the most corrosive and deadly gasses
 	if(S.has_reagent("chlorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("chlorine") * 1))
 		adjustToxic(round(S.get_reagent_amount("chlorine") * 1.5))
@@ -561,7 +569,7 @@
 		adjustWater(-round(S.get_reagent_amount("phosphorus") * 0.5))
 		adjustWeeds(-rand(1,2))
 
-	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
+	// Plants should not have sugar, they can't use it and it prevents them getting water/nutients, it is good for mold though...
 	if(S.has_reagent("sugar", 1))
 		adjustWeeds(rand(1,2))
 		adjustPests(rand(1,2))
@@ -583,13 +591,13 @@
 		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
 		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
 
-	// Man, you guys are retards
+	// Sulphuric Acid
 	if(S.has_reagent("sacid", 1))
 		adjustHealth(-round(S.get_reagent_amount("sacid") * 1))
 		adjustToxic(round(S.get_reagent_amount("sacid") * 1.5))
 		adjustWeeds(-rand(1,2))
 
-	// SERIOUSLY
+	// Acid
 	if(S.has_reagent("facid", 1))
 		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
 		adjustToxic(round(S.get_reagent_amount("facid") * 3))
@@ -601,7 +609,7 @@
 		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
 		adjustWeeds(-rand(4,8))
 
-	// why, just why
+	// Napalm, not known for being good for anything organic
 	if(S.has_reagent("napalm", 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
@@ -638,13 +646,14 @@
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
 			myseed.adjust_potency(round(salt*0.5))
+
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent("ash", 1))
 		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
 		adjustNutri(round(S.get_reagent_amount("ash") * 0.5))
 		adjustWeeds(-1)
 
-	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
+	// Diethylamine is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 	if(S.has_reagent("diethylamine", 1))
 		adjustHealth(round(S.get_reagent_amount("diethylamine") * 1))
 		adjustNutri(round(S.get_reagent_amount("diethylamine") * 2))
@@ -652,26 +661,37 @@
 			myseed.adjust_yield(round(S.get_reagent_amount("diethylamine") * 0.02))
 		adjustPests(-rand(1,2))
 
-	// Compost, effectively
+	// Nutriment Compost, effectively
 	if(S.has_reagent("nutriment", 1))
 		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
 		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
 
-	// Compost for EVERYTHING
+	// Virusfood Compost for EVERYTHING
 	if(S.has_reagent("virusfood", 1))
 		adjustNutri(round(S.get_reagent_amount("virusfood") * 0.5))
 		adjustHealth(-round(S.get_reagent_amount("virusfood") * 0.5))
 
-	// FEED ME
+	// Blood
 	if(S.has_reagent("blood", 1))
 		adjustNutri(round(S.get_reagent_amount("blood") * 1))
 		adjustPests(rand(2,4))
 
-	// FEED ME SEYMOUR
+	// Strange reagent
 	if(S.has_reagent("strangereagent", 1))
 		spawnplant()
 
-	// The best stuff there is. For testing/debugging.
+	// Honey, Pests are dieing of sugar, so is the plant
+	if(S.has_reagent("honey", 1))
+		adjustPests(-rand(2,5))
+		adjustHealth(-round(S.get_reagent_amount("honey") * 1))
+
+	// Buzz Fuzz, a drink seemingly made for plants...
+	if(S.has_reagent("buzz_fuzz", 1))
+		adjustPests(-rand(2,5))
+		adjustHealth(round(S.get_reagent_amount("buzz_fuzz") * 0.1))
+		adjustNutri(round(S.get_reagent_amount("buzz_fuzz") * 0.5))
+
+	// Adminordrazine the best stuff there is. For testing/debugging.
 	if(S.has_reagent("adminordrazine", 1))
 		adjustWater(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustHealth(round(S.get_reagent_amount("adminordrazine") * 1))
@@ -769,6 +789,15 @@
 			to_chat(user, "<span class='notice'>You plant [O].</span>")
 			dead = 0
 			myseed = O
+			name = "hydroponics tray ([myseed.plantname])"
+			if(!myseed.productdesc) //we haven't changed our produce's description
+				if(myseed.product)
+					myseed.productdesc = initial(myseed.product.desc)
+				else if(myseed.desc)
+					myseed.productdesc = myseed.desc
+				else
+					myseed.productdesc = "A fascinating specimen."
+			desc = myseed.productdesc
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
@@ -834,6 +863,8 @@
 					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 				qdel(myseed)
 				myseed = null
+				name = initial(name)
+				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
 
@@ -866,6 +897,8 @@
 		qdel(myseed)
 		myseed = null
 		update_icon()
+		name = initial(name)
+		desc = initial(desc)
 	else
 		if(user)
 			examine(user)
@@ -883,6 +916,8 @@
 		qdel(myseed)
 		myseed = null
 		dead = 0
+		name = initial(name)
+		desc = initial(desc)
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///

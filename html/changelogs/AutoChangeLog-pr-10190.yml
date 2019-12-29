@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "New softdrink that comes in its own vender!"
+  - rscadd: "Honey now has a reaction with plants"

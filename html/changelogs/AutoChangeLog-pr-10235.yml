@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - balance: "flashbangs process light/sound separately and uses viewers(), so xray users beware."

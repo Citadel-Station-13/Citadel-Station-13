@@ -87,6 +87,7 @@
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return TRUE
 
@@ -179,6 +180,7 @@
 	repeatable = TRUE
 	high_population_requirement = 15
 	flags = TRAITOR_RULESET
+	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
@@ -291,6 +293,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -353,6 +356,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -389,6 +393,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -420,6 +425,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -519,6 +525,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	return ..()
 
@@ -557,6 +564,7 @@
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		return FALSE
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
 		var/turf/T = get_turf(L)
@@ -604,6 +612,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
@@ -655,6 +664,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	team = new /datum/team/abductor_team
 	if(team.team_number > ABDUCTOR_MAX_TEAMS)
@@ -694,6 +704,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
@@ -734,3 +745,31 @@
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
+
+//////////////////////////////////////////////
+//                                          //
+//               BLOODSUCKERS               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/bloodsucker
+  name = "Bloodsucker Infiltrator"
+  config_tag = "latejoin_bloodsucker"
+  antag_datum = ANTAG_DATUM_BLOODSUCKER
+  antag_flag = ROLE_TRAITOR
+  restricted_roles = list("AI", "Cyborg")
+  protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+  required_candidates = 1
+  weight = 3
+  cost = 10
+  requirements = list(90,80,70,60,55,50,45,40,35,30)
+  high_population_requirement = 30
+  repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/bloodsucker/execute()
+  var/mob/M = pick(candidates)
+  assigned += M.mind
+  M.mind.special_role = antag_flag
+  if(mode.make_bloodsucker(M.mind))
+    mode.bloodsuckers += M
+  return TRUE

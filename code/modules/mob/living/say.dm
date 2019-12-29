@@ -216,6 +216,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	return 1
 
+/mob/living/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)
+	. = ..()
+	if(isliving(speaker))
+		var/turf/sourceturf = get_turf(source)
+		var/turf/T = get_turf(src)
+		if(sourceturf && T && !(sourceturf in get_hear(5, T)))
+			. = "<span class='small'>[.]</span>"
+
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(!client)

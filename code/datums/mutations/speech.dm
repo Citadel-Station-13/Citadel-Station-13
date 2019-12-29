@@ -95,6 +95,7 @@
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
 		message = replacetext(message," whore "," lady ")
+		message = replacetext(message," gamer "," intellectual ")
 		message = replacetext(message," nerd "," smarty pants ")
 		message = replacetext(message," moron "," fun person ")
 		message = replacetext(message," IT'S LOOSE "," EVERYTHING IS FINE ")

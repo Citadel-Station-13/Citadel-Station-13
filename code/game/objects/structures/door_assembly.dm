@@ -73,7 +73,7 @@
 
 		else if(glass)
 			user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly...")
-			if(W.use_tool(src, user, 40, volume=50))
+			if(W.use_tool(src, user, 40, volume=50) && glass)
 				to_chat(user, "<span class='notice'>You weld the glass panel out.</span>")
 				if(heat_proof_finished)
 					new /obj/item/stack/sheet/rglass(get_turf(src))

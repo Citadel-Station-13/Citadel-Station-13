@@ -3,6 +3,17 @@
 	var/typepath // typepath of the event
 	var/triggering
 
+/datum/dynamic_ruleset/event/get_blackbox_info()
+	var/list/ruleset_data = list()
+	ruleset_data["name"] = name
+	ruleset_data["rule_type"] = ruletype
+	ruleset_data["cost"] = total_cost
+	ruleset_data["weight"] = weight
+	ruleset_data["scaled_times"] = scaled_times
+	ruleset_data["event_type"] = typepath
+	ruleset_data["population_tier"] = indice_pop
+	return ruleset_data
+
 /datum/dynamic_ruleset/event/execute()
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
@@ -26,6 +37,7 @@
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return TRUE
 
@@ -125,6 +137,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	always_max_weight = TRUE
 
 //////////////////////////////////////////////
 //                                          //
@@ -146,12 +159,15 @@
 
 /datum/dynamic_ruleset/event/meteor_wave/ready()
 	if(mode.threat_level > 40 && mode.threat >= 25 && prob(20))
+		name = "Meteor Wave: Threatening"
 		cost = 25
 		typepath = /datum/round_event/meteor_wave/threatening
 	else if(mode.threat_level > 50 && mode.threat >= 40 && prob(30))
+		name = "Meteor Wave: Catastrophic"
 		cost = 40
 		typepath = /datum/round_event/meteor_wave/catastrophic
 	else
+		name = "Meteor Wave: Normal"
 		cost = 15
 		typepath = /datum/round_event/meteor_wave
 	return ..()
@@ -280,6 +296,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/event/space_dust
 	name = "Minor Space Dust"
@@ -293,6 +310,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/event/major_dust
 	name = "Major Space Dust"
@@ -332,6 +350,7 @@
 	requirements = list(101,101,101,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/event/radiation_storm
 	name = "Radiation Storm"
