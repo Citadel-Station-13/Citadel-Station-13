@@ -199,6 +199,7 @@
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
+		var/datum/physiology/physiology
 		// Make Changes
 		physiology.brutemod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
 		physiology.coldmod = 0
