@@ -164,7 +164,7 @@
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(prob(50 - efficiency*10)) //Chance to give a bad mutation.
-		H.randmutb() //100% bad mutation. Can be cured with mutadone.
+		H.randmutng() //Not good mutation. Can be cured with mutadone.
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H

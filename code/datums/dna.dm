@@ -365,6 +365,12 @@
 	var/datum/mutation/human/num = pick(candidates)
 	. = num.force_give(src)
 
+/mob/living/carbon/proc/randmutng()
+	if(!has_dna())
+		return
+	var/datum/mutation/human/HM = pick((GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
+	. = HM.force_give(src)
+
 /mob/living/carbon/proc/randmutb()
 	if(!has_dna())
 		return
