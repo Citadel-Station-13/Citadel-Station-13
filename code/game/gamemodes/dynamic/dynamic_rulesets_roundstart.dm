@@ -110,7 +110,7 @@
 	cost = 15
 	scaling_cost = 15
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	property_weights = list("trust" = -2, "valid" = 3)
+	property_weights = list("trust" = -2, "valid" = 2)
 	high_population_requirement = 10
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
 	var/team_mode_probability = 30
@@ -163,7 +163,7 @@
 	cost = 30
 	requirements = list(101,101,101,60,50,50,50,50,50,50)
 	high_population_requirement = 50
-	property_weights = list("story_potential" = 5, "trust" = 1, "chaos" = 3, "extended" = -2, "valid" = 10)
+	property_weights = list("story_potential" = 2, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
@@ -226,7 +226,7 @@
 	weight = 3
 	cost = 30
 	requirements = list(101,101,101,80,70,60,50,50,50,50)
-	property_weights = list("story_potential" = -1, "trust" = -1, "chaos" = 1, "conversion" = 1, "extended" = -5, "valid" = 5)
+	property_weights = list("story_potential" = -1, "trust" = -1, "chaos" = 1, "conversion" = 1, "extended" = -2, "valid" = 2)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,2,2,3,3,4,4,4,4,4)
@@ -288,7 +288,7 @@
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(1,1,2,3,4,5,5,5,5,5)
-	property_weights = list("story_potential" = 3, "trust" = 5, "chaos" = 2, "extended" = -5, "valid" = 10)
+	property_weights = list("story_potential" = 2, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
@@ -379,7 +379,7 @@
 	flags = HIGHLANDER_RULESET
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-	property_weights = list("trust" = -3, "chaos" = 5, "extended" = -5, "valid" = 2, "conversion" = 1)
+	property_weights = list("trust" = -2, "chaos" = 2, "extended" = -2, "valid" = 2, "conversion" = 1)
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -497,7 +497,7 @@
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	property_weights = list("extended" = 1000)
+	property_weights = list("extended" = 2)
 	high_population_requirement = 101
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
@@ -525,7 +525,7 @@
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,3,3,4,4,4,4,4,4,4)
-	property_weights = list("trust" = 3, "chaos" = 5, "extended" = -5, "conversion" = 1, "valid" = 10)
+	property_weights = list("trust" = 2, "chaos" = 2, "extended" = -2, "conversion" = 1, "valid" = 2)
 	var/ark_time
 
 /datum/dynamic_ruleset/roundstart/clockcult/pre_execute()
@@ -625,7 +625,7 @@
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
-	property_weights = list("trust" = 5, "chaos" = 5, "extended" = -5, "story_potential" = 10, "valid" = 10)
+	property_weights = list("trust" = 2, "chaos" = 2, "extended" = -2, "story_potential" = 2, "valid" = 2)
 
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
@@ -710,7 +710,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
-	property_weights = list("extended" = -10, "chaos" = 5, "conversion" = 1, "valid" = 10)
+	property_weights = list("extended" = -2, "chaos" = 2, "conversion" = 1, "valid" = 2)
 	var/players_per_carrier = 30
 	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
@@ -772,7 +772,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
-	property_weights = list("extended" = -10, "chaos" = 5, "trust" = 5)
+	property_weights = list("extended" = -2, "chaos" = 2, "trust" = 2)
 	var/meteordelay = 2000
 	var/nometeors = 0
 	var/rampupdelta = 5
@@ -813,7 +813,7 @@
 	weight = 2
 	cost = 15
 	scaling_cost = 10
-	property_weights = list("extended" = 2, "chaos" = -1, "trust" = -3, "story_potential" = -2, "conversion" = 1)
+	property_weights = list("extended" = 2, "chaos" = -1, "trust" = -2, "story_potential" = -2, "conversion" = 1)
 	requirements = list(90,80,70,60,50,50,50,50,50,50)
 	high_population_requirement = 50
 	antag_cap = list(1,1,1,1,1,2,2,2,2,2)

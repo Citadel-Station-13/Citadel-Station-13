@@ -101,7 +101,7 @@
 	requirements = list(101,101,70,40,40,40,40,40,40,40)
 	high_population_requirement = 40
 	flags = HIGHLANDER_RULESET
-	property_weights = list("trust" = -3, "chaos" = 5, "extended" = -5, "valid" = 2, "conversion" = 1)
+	property_weights = list("trust" = -2, "chaos" = 2, "extended" = -2, "valid" = 2, "conversion" = 1)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	var/datum/team/revolution/revolution
@@ -211,7 +211,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	property_weights = list("extended" = 2, "chaos" = -1, "trust" = -3, "story_potential" = -2, "conversion" = 1, "valid" = 1)
+	property_weights = list("extended" = 2, "chaos" = -1, "trust" = -2, "story_potential" = -2, "conversion" = 1, "valid" = 1)
 	requirements = list(90,80,70,60,55,50,45,40,35,30)
 	high_population_requirement = 30
 	repeatable = TRUE
