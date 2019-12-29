@@ -854,6 +854,7 @@
 		/obj/item/gps/cyborg,
 		/obj/item/weapon/gripper/mining,
 		/obj/item/cyborg_clamp,
+		/obj/item/card/id/miningborg,
 		/obj/item/stack/marker_beacon)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(

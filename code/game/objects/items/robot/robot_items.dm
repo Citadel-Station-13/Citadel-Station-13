@@ -828,8 +828,8 @@
 /obj/item/weapon/gripper/mining/attack_self()
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
-		wrapped = null
 		wrapped.attack_self()
+		wrapped = null
 	return
 
 /obj/item/gun/energy/plasmacutter/cyborg
@@ -883,3 +883,8 @@
 	cargo -= chosen_cargo
 	user.visible_message("[user] unloads [chosen_cargo] from its cargo.")
 	playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
+
+/obj/item/card/id/miningborg
+	name = "mining point card"
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	icon_state = "data_1"
