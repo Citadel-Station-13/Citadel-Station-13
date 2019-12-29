@@ -781,6 +781,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					S = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
 				if("insect_fluff")
 					S = GLOB.insect_fluffs_list[H.dna.features["insect_fluff"]]
+				if("insect_markings")
+					S = GLOB.insect_markings_list[H.dna.features["insect_markings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 				if("ipc_screen")
@@ -1279,6 +1281,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT(H, TRAIT_FAT))//I share your pain, past coder.

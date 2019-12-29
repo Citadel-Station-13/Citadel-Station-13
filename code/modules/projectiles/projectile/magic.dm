@@ -508,3 +508,31 @@
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+
+/obj/item/projectile/magic/nuclear
+	name = "\proper blazing manliness"
+	icon_state = "nuclear"
+	nodamage = TRUE
+	var/mob/living/victim = null
+	var/used = 0
+
+/obj/item/projectile/magic/nuclear/on_hit(target)
+	if(used)
+		return
+	new/obj/effect/temp_visual/slugboom(get_turf(src))
+	if(ismob(target))
+		if(target == victim)
+			return
+		used = 1
+		visible_message("<span class='danger'>[victim] slams into [target] with explosive force!</span>")
+		explosion(src, 2, 3, 4, -1, TRUE, FALSE, 5)
+	else
+		used = 1
+		victim.take_overall_damage(30,30)
+		victim.Knockdown(60)
+		explosion(src, -1, -1, -1, -1, FALSE, FALSE, 5)
+
+/obj/item/projectile/magic/nuclear/Destroy()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
+	. = ..()

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Spinfusor nerf: Upped the casing and ammo box size by one step, removed the projectile's dismemberment value (explosions can still rip a limb or two off), halved the ammo box capacity, reduced the spinfusor ammo supply pack contents from 32 to 8, removed the casing's ability to explode when thrown."
