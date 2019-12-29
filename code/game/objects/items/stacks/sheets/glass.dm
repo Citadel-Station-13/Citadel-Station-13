@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	null, \
 	new/datum/stack_recipe_list("glass working bases", list( \
 		new/datum/stack_recipe("chem dish", /obj/item/glasswork/glass_base/dish, 10), \
-		new/datum/stack_recipe("lens", /obj/item/glasswork/glass_base/lens, 15), \
+		new/datum/stack_recipe("lens", /obj/item/glasswork/glass_base/glass_lens, 15), \
 		new/datum/stack_recipe("spout flask", /obj/item/glasswork/glass_base/spouty, 20), \
 		new/datum/stack_recipe("small bulb flask", /obj/item/glasswork/glass_base/flask_small, 5), \
 		new/datum/stack_recipe("large bottle flask", /obj/item/glasswork/glass_base/flask_large, 15), \
