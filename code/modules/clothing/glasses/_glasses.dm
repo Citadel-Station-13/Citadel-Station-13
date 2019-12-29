@@ -55,7 +55,7 @@
 		eyes.applyOrganDamage(5)
 
 /obj/item/clothing/glasses/proc/ranged_attack(mob/living/carbon/human/user,atom/A, params)
-	return
+	return FALSE
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
