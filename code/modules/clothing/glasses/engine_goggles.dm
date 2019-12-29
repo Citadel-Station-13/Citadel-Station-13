@@ -19,7 +19,7 @@
 
 	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_RAD, MODE_RAD = MODE_NONE)
 	var/mode = MODE_NONE
-	var/range = 1
+	var/range = 6
 
 /obj/item/clothing/glasses/meson/engine/prescription
 	name = "prescription engineering scanner goggles"
@@ -48,14 +48,6 @@
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
-			darkness_view = 2
-			range = 4
-			lighting_alpha = null
-
-		if(MODE_RAD) //undoes the last mode, tray
-			vision_flags = NONE
-			darkness_view = 4
-			range = 12
 			lighting_alpha = null
 
 	if(ishuman(user))
