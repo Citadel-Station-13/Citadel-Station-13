@@ -254,7 +254,7 @@
 	var/obj/item/assembly/flash/installed
 
 /obj/item/clothing/glasses/sunglasses/stunglasses/Initialize()
-	..()
+	. = ..()
 	if (!installed)
 		installed = new(src)
 
@@ -263,7 +263,6 @@
 		installed.attack_self(user)
 	else
 		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
-
 
 /obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
 	if (istype(W,/obj/item/screwdriver))
@@ -276,6 +275,7 @@
 			W.forceMove(src)
 			to_chat(user, "<span class = 'notice'>You install [W] into [src].</span>")
 			installed = W
+	. = ..()
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"

@@ -86,7 +86,7 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
 	category = CAT_CLOTHING
-
+/* //Kevinz doesn't want it as a recipe for now, leaving it in if anything ever changes to let it in
 /datum/crafting_recipe/stunglasses
 	name = "Stunglasses"
 	result = /obj/item/clothing/glasses/sunglasses/stunglasses
@@ -96,7 +96,7 @@
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
-
+*/
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"
 	result = /obj/item/clothing/suit/ghost_sheet
