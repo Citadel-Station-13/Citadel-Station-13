@@ -253,7 +253,7 @@
 		to_chat(user, "<span class='info'>Cloud ID: [cloud_id ? cloud_id : "Disabled"]</span>")
 		to_chat(user, "<span class='info'>================</span>")
 		to_chat(user, "<span class='info'>Program List:</span>")
-		if(diagnostics)
+		if(!diagnostics)
 			to_chat(user, "<span class='alert'>Diagnostics Disabled</span>")
 		else
 			for(var/X in programs)

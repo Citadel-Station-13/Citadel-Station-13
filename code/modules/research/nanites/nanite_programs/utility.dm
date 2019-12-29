@@ -130,7 +130,8 @@
 
 /datum/nanite_program/stealth
 	name = "Stealth"
- 	desc = "The nanites mask their activity from superficial scans, becoming undetectable by HUDs and non-specialized scanners."	rogue_types = list(/datum/nanite_program/toxic)
+	desc = "The nanites mask their activity from superficial scans, becoming undetectable by HUDs and non-specialized scanners."
+	rogue_types = list(/datum/nanite_program/toxic)
 	use_rate = 0.2
 
 /datum/nanite_program/stealth/enable_passive_effect()
@@ -300,7 +301,7 @@
 
 /datum/nanite_program/dermal_button/set_extra_setting(user, setting)
 	if(setting == "Sent Code")
-	var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
+		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
 		if(isnull(new_code))
 			return
 		sent_code = CLAMP(round(new_code, 1), 1, 9999)
