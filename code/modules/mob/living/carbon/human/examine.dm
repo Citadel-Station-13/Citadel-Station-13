@@ -15,6 +15,13 @@
 
 	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
+	var/vampDesc = ReturnVampExamine(user) // Vamps recognize the names of other vamps.
+	var/vassDesc = ReturnVassalExamine(user) // Vassals recognize each other's marks.
+	if (vampDesc != "") // If we don't do it this way, we add a blank space to the string...something to do with this -->  . += ""
+		. += vampDesc
+	if (vassDesc != "")
+		. += vassDesc
+
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
@@ -237,13 +244,13 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < (BLOOD_VOLUME_SAFE*blood_ratio))
+	if(ShowAsPaleExamine())
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	else if(bleed_rate)
-		if(reagents.has_reagent("heparin"))
+		if(bleed_rate >= 8) //8 is the rate at which heparin causes you to bleed
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"

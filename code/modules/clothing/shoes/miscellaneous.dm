@@ -89,12 +89,12 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(user.mind && user.mind.assigned_role == "Clown")
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
-	if(user.mind && user.mind.assigned_role == "Clown")
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/jester
@@ -128,6 +128,21 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/winterboots/christmasbootsr
+	name = "red christmas boots"
+	desc = "A pair of fluffy red christmas boots!"
+	icon_state = "christmasbootsr"
+
+/obj/item/clothing/shoes/winterboots/christmasbootsg
+	name = "green christmas boots"
+	desc = "A pair of fluffy green christmas boots!"
+	icon_state = "christmasbootsg"
+
+/obj/item/clothing/shoes/winterboots/santaboots
+	name = "santa boots"
+	desc = "A pair of santa boots! How traditional!!"
+	icon_state = "santaboots"
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"

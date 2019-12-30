@@ -330,6 +330,27 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/gear_harness
 
+//Christmas
+/datum/gear/christmasmaler
+	name = "Red Masculine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasmaler
+
+/datum/gear/christmasmaleg
+	name = "Green Masculine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasmaleg
+
+/datum/gear/christmasfemaler
+	name = "Red Feminine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasfemaler
+
+/datum/gear/christmasfemaleg
+	name = "Green Feminine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasfemaleg
+
 /datum/gear/pinkstripper
 	name = "Pink stripper outfit"
 	category = SLOT_W_UNIFORM

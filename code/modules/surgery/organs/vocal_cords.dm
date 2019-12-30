@@ -560,7 +560,7 @@
 	else if((findtext(message, honk_words)))
 		cooldown = COOLDOWN_MEME
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 25)
-		if(user.mind && user.mind.assigned_role == "Clown")
+		if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
 			for(var/mob/living/carbon/C in listeners)
 				C.slip(140 * power_multiplier)
 			cooldown = COOLDOWN_MEME

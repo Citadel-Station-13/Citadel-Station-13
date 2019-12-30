@@ -355,6 +355,8 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	value = 1
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
+	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
+		return
 	if(last_added)
 		M.blood_volume -= last_added
 		last_added = 0
@@ -793,6 +795,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
+	eyes.applyOrganDamage(-2)
 	if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -807,8 +810,6 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(eyes.eye_damage > 0)
-		M.adjust_eye_damage(-1)
 	..()
 
 /datum/reagent/medicine/atropine
@@ -1210,7 +1211,30 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	M.adjustStaminaLoss(-25*REM,0)
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
+		M.blood_volume += 40 // blood fall out man bad
+	..()
+	. = 1
+
+/datum/reagent/medicine/lesser_syndicate_nanites // the one in the injector
+	name = "Regenerative Nanites"
+	id = "lesser_syndicate_nanites"
+	description = "Miniature medical robots that restore damage and get operatives back in the fight."
+	reagent_state = SOLID
+	color = "#555555"
+	pH = 11
+
+/datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-3*REM, 0) // hidden gold shh
+	M.adjustFireLoss(-3*REM, 0)
+	M.adjustOxyLoss(-15, 0)
+	M.adjustToxLoss(-3*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
+	M.adjustCloneLoss(-3*REM, 0)
 	M.adjustStaminaLoss(-20*REM,0)
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
+		M.blood_volume += 20 // blood fall out man bad
 	..()
 	. = 1
 

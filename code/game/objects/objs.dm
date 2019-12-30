@@ -172,9 +172,6 @@
 /obj/proc/container_resist(mob/living/user)
 	return
 
-/obj/proc/update_icon()
-	return
-
 /mob/proc/unset_machine()
 	if(machine)
 		machine.on_unset_machine(src)
@@ -233,6 +230,7 @@
 	. = ..()
 	if(unique_reskin && (!current_skin || always_reskinnable) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
+		return TRUE
 
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
