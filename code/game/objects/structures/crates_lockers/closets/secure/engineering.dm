@@ -12,18 +12,12 @@
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/hardhat/weldhat/white(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/tank/jetpack/suit(src)
 	new /obj/item/cartridge/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
-	new /obj/item/storage/toolbox/mechanical(src)
-	new /obj/item/clothing/suit/hazardvest(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/areaeditor/blueprints(src)
-	new /obj/item/airlock_painter(src)
 	new /obj/item/holosign_creator/engineering(src)
-	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/multitool(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/door_remote/chief_engineer(src)
@@ -56,6 +50,12 @@
 	for(var/i in 1 to 3)
 		new /obj/item/multitool(src)
 
+/obj/structure/closet/secure_closet/engineering_electrical_empty
+	name = "electrical supplies locker"
+	req_access = list(ACCESS_ENGINE_EQUIP)
+	icon_state = "eng"
+	icon_door = "eng_elec"
+
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
@@ -67,7 +67,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/welding(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weldingtool(src)
+		new /obj/item/weldingtool/largetank(src)
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
@@ -84,6 +84,10 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 
+/obj/structure/closet/secure_closet/engineering_personal_empty
+	name = "engineer's locker"
+	req_access = list(ACCESS_ENGINE_EQUIP)
+	icon_state = "eng_secure"
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
