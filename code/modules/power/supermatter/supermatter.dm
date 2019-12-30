@@ -66,6 +66,8 @@
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
+#define SUPERMATTER_INTEGRITY_MULT 1.3 //(loss of integrity / 10) ^ 1.3
+
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -158,6 +160,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/looping_sound/supermatter/soundloop
 
 	var/moveable = FALSE
+	var/min_damage = 0
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -359,6 +362,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 			//capping damage
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
+			damage = max(min_damage, damage) //max integrity
 			if(damage > damage_archived && prob(10))
 				playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
@@ -451,7 +455,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		l.rad_act(rads)
 
 	power -= ((power/500)**3) * powerloss_inhibitor
-
+	if (damage < 75)
+		power = (power * ((100 - (0.15*damage - 5)**2) / 100)) + power*0.25
+	else
+		power = power * (((damage**1.3)-(2*damage))/100)
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
 		if(power > POWER_PENALTY_THRESHOLD)
@@ -474,7 +481,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
-
+	if (damage - damage_archived > 0)
+		min_damage += ((damage - damage_archived) / 10) ** SUPERMATTER_INTEGRITY_MULT
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
 			alarm()
