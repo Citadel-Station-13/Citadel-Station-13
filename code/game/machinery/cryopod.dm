@@ -177,8 +177,6 @@
 	// 15 minutes-ish safe period before being despawned.
 	var/time_till_despawn = 15 * 600 // This is reduced by 90% if a player manually enters cryo
 	var/despawn_world_time = null          // Used to keep track of the safe period.
-	var/penalize_cryo = TRUE	// Makes it so that players who cryo are not eligible for midround antags.
-	var/announce_cryo = TRUE	// Makes it so when players cryo it's announced to the station
 
 	var/obj/machinery/computer/cryopod/control_computer
 	var/last_no_computer_message = 0
@@ -410,7 +408,7 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(FALSE, penalize = penalize_cryo)
+		mob_occupant.ghostize(FALSE, penalize = TRUE)
 
 	QDEL_NULL(occupant)
 	open_machine()
@@ -494,7 +492,3 @@
 //Attacks/effects.
 /obj/machinery/cryopod/blob_act()
 	return //Sorta gamey, but we don't really want these to be destroyed.
-
-/obj/machinery/cryopod/ghost_cafe
-	penalize_cryo = FALSE
-	announce_cryo = FALSE

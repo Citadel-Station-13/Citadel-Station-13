@@ -620,6 +620,8 @@
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
 		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, "Ghost Cafe")
+		var/datum/action/ghost/G = new(new_spawn)
+		G.Grant(new_spawn)
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"
