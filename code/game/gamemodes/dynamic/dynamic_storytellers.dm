@@ -188,6 +188,7 @@ Property weights are:
 /datum/dynamic_storyteller/classic
 	name = "Random"
 	desc = "Chaos: medium. Variation: highest. No special weights attached."
+	curve_width = 4
 
 /datum/dynamic_storyteller/memes
 	name = "Story"
