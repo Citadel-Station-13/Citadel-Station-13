@@ -1263,7 +1263,7 @@
 /obj/item/storage/box/marshmallow
 	name = "box of marshmallows"
 	desc = "A box of marshmallows."
-	icon_state = "marshmallowbox"
+	illustration = "marshmallow"
 
 /obj/item/storage/box/marshmallow/PopulateContents()
 	for (var/i in 1 to 5)
