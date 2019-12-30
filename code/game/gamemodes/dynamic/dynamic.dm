@@ -674,6 +674,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
 			return
+		if((world.realtime - SSshuttle.realtimeofstart) > SSshuttle.auto_call) // no rules after shuttle is auto-called
+			return
 		message_admins("DYNAMIC: Checking for midround injection.")
 		log_game("DYNAMIC: Checking for midround injection.")
 
@@ -748,7 +750,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
 		return
-
+	if((world.realtime - SSshuttle.realtimeofstart) > SSshuttle.auto_call) // no rules after shuttle is auto-called
+		return
 	update_playercounts()
 
 	if (forced_latejoin_rule)
