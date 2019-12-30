@@ -629,6 +629,8 @@
 		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+		to_chat(new_spawn,"<span class='boldwarning'>You maybe sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
+		to_chat(new_spawn,"<span class='boldwarning'>You can turn yourself into a ghost and freely reenter your body with the ghost action.</span>")
 		var/datum/action/ghost/G = new(new_spawn)
 		G.Grant(new_spawn)
 
