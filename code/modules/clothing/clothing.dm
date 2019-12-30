@@ -298,6 +298,33 @@ BLIND     // can't see anything
 				user.regenerate_icons()
 	return TRUE
 
+/obj/item/clothing/neck/AltClick(mob/user)
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	// Polychrome stuff:
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+	return TRUE
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"
