@@ -106,7 +106,7 @@
 		return "Everyone"
 	return data["targets"][1]
 
-/datum/signal/subspace/pda/proc/format_message(emojify = FALSE)
+/datum/signal/subspace/pda/proc/format_message()
 	if (logged && data["photo"])
 		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
 	return "\"[data["message"]]\""
