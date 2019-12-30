@@ -401,6 +401,9 @@ SUBSYSTEM_DEF(ticker)
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
+				if (living.client.prefs && living.client.prefs.auto_ooc)
+					if (living.client.prefs.chat_toggles & CHAT_OOC)
+						living.client.prefs.chat_toggles ^= CHAT_OOC
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 			livings += living
