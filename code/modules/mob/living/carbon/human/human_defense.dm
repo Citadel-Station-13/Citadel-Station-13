@@ -652,7 +652,7 @@
 	if(mind)
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
 			gain = 100
-		if(mind.assigned_role == "Clown")
+		if(HAS_TRAIT(mind, TRAIT_CLOWN_MENTALITY))
 			gain = rand(-300, 300)
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()

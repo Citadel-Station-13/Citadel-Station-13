@@ -171,6 +171,7 @@
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
 
 
@@ -228,6 +229,7 @@
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
+#define NUKEOP_ANTAGONIST "nukeop-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define NUKEOP_TRAIT "nuke-op"
 #define DEATHSQUAD_TRAIT "deathsquad"
