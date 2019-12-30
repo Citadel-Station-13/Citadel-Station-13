@@ -367,27 +367,18 @@
 		return
 	//OPENING THE NUT LOGIC
 	if (!carved && !chopped)
-		if(W.tool_behaviour == TOOL_SCREWDRIVER)
-			user.show_message("<span class='notice'>You make a hole in the coconut!</span>", 1)
-			carved = TRUE
-			opened = TRUE
-			reagent_flags = OPENCONTAINER
-			ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
-			icon_state = "coconut_carved"
-			desc = "A coconut. This one's got a hole in it."
-			playsound(user, W.hitsound, 50, 1, -1)
-			return
-		else if(W.sharpness)
-			user.show_message("<span class='notice'>You slice the coconut open!</span>", 1)
-			chopped = TRUE
-			opened = TRUE
-			reagent_flags = OPENCONTAINER
-			ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
-			spillable = TRUE
-			icon_state = "coconut_chopped"
-			desc = "A coconut. This one's sliced open, with all its delicious contents for your eyes to savour."
-			playsound(user, W.hitsound, 50, 1, -1)
-			return
+		var/screwdrivered = W.tool_behaviour == TOOL_SCREWDRIVER
+        if(screwdrivered || W.sharpness)
+            user.show_message("<span class='notice'>You [screwdrivered ? "make a hole in the coconut" : "slice the coconut open"]!</span>", 1)
+            carved = TRUE
+            opened = TRUE
+			spillable = !screwdrivered
+            reagent_flags = OPENCONTAINER
+            ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+            icon_state = screwdrivered ? "coconut_carved" : "coconut_chopped"
+            desc = "A coconut. [screwdrivered ? "This one's got a hole in it" : "This one's sliced open, with all its delicious contents for your eyes to savour"]."
+            playsound(user, W.hitsound, 50, 1, -1)
+            return
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attack(mob/living/M, mob/user, obj/target)
