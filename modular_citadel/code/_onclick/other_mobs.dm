@@ -9,6 +9,8 @@
 	return TRUE
 
 /mob/living/carbon/human/AltRangedAttack(atom/A, params)
+	if (!(src in viewers(11,A)))
+		return FALSE
 	if(!has_active_hand())
 		to_chat(src, "<span class='notice'>You ponder your life choices and sigh.</span>")
 		return TRUE
