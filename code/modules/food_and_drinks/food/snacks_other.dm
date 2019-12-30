@@ -644,10 +644,15 @@
 /obj/item/reagent_containers/food/snacks/marshmallow/proc/burnmallow(reallyburned = FALSE)
 	if (reallyburned && burned == 1)
 		icon_state = "marshmallowrburned"
-		desc = "[initial(desc)] It looks very burned."
 	else if (burned == 0)
 		icon_state = "marshmallowburned"
-		desc = "[initial(desc)] It looks just right for eating!"
+
+/obj/item/reagent_containers/food/snacks/marshmallow/proc/examine(mob/user)
+	. = ..()
+	if (burned == 2)
+		. += "It looks very burned."
+	if (burned == 1)
+		. += "It looks just right for eating!"
 
 /obj/item/reagent_containers/food/snacks/marshmallow/fire_act(temp,volume)
 	switch (temp)
