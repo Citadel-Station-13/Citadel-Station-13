@@ -1,0 +1,6 @@
+author: "Ghommie (also porting PRs by AnturK and Arkatos)"
+delete-after: True
+changes: 
+  - bugfix: "Fixed light eaters not burning out borg lamplights and flashes.
+fix Fixed light eater not affecting open turfs emitting lights such as light tiles and fairy grass."
+  - bugfix: "Fixed an empty reference about light eater armblade disintegration after Heart of Darkness removal."
