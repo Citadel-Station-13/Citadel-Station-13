@@ -1,4 +1,4 @@
 author: "Arturlang"
 delete-after: True
 changes: 
-  - rscadd: "Adds Bloodsuckers, beware."
+  - tweak: "Vampires are no longer as tanky"
