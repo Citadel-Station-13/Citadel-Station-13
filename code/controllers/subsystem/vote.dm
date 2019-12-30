@@ -110,15 +110,16 @@ SUBSYSTEM_DEF(vote)
 				//if equal, do nothing
 	var/list/p[][] = new/list(choices.len,choices.len) //matrix of shortest path from a to b
 	for(var/i in 1 to choices.len)
-		for(var/j in i+1 to choices.len)
-			var/pref_number = d[i][j]
-			var/opposite_pref = d[j][i]
-			if(pref_number>opposite_pref)
-				p[i][j] = d[i][j]
-				p[j][i] = 0
-			else
-				p[i][j] = 0
-				p[j][i] = d[i][j]
+		for(var/j in 1 to choices.len)
+			if(i != j)
+				var/pref_number = d[i][j]
+				var/opposite_pref = d[j][i]
+				if(pref_number>opposite_pref)
+					p[i][j] = d[i][j]
+					p[j][i] = 0
+				else
+					p[i][j] = 0
+					p[j][i] = d[i][j]
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
 			if(i != j)
