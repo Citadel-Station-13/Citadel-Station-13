@@ -1,0 +1,8 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "New tab in preferences screen: \"ERP preferences\""
+  - rscadd: "New opt-outs for individual effects of incubus draught, succubus milk"
+  - rscdel: "Acute hepatic pharmacokinesis has been removed, replaced with above"
+  - tweak: "Renamed \"Toggle Lewdchem\" to \"Toggle Lewd MKUltra\", since that's what it actually means, and made it toggle the \"hypno\" setting (rename it again if more hypno mechanics are added)."
+  - tweak: "Made MKUltra's lewd messages require both people involved to have hypno opted-in."
