@@ -232,12 +232,11 @@
 	icon_state = icon_state + "_tele"
 
 /obj/machinery/iv_drip/telescopic/AltClick(mob/user)
-	if (attached)
-		return ..()
-	if (beaker)
+	if (attached || beaker || !user.canUseTopic(src, BE_CLOSE))
 		return ..()
 	new /obj/item/tele_iv(get_turf(src))
 	qdel(src)
+	return TRUE
 
 #undef IV_TAKING
 #undef IV_INJECTING
