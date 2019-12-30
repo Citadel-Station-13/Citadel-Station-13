@@ -149,7 +149,7 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
-/datum/supply_pack/engine/supermatter_shard
+/datum/supply_pack/engine/supermatter_spray
 	name = "Supermatter Spray Crate"
 	desc = "The single thing that can truly heal the supermatter."
 	cost = 2000
