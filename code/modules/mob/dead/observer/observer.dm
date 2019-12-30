@@ -283,6 +283,9 @@ Works together with spawning an observer, noted above.
 				client.reenter_round_timeout = penalty
 			else //A disconnected player (quite likely for cryopods)
 				ghost.clientless_round_timeout = penalty
+	if (client && client.prefs && client.prefs.auto_ooc)
+		if (!(client.prefs.chat_toggles & CHAT_OOC))
+			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
 	return ghost
 
