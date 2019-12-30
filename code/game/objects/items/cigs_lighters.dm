@@ -1021,30 +1021,32 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	//we take a hit here, after an uninterrupted delay
 	if(!do_after(user, 25, target = user))
 		return
-	if (reagents && reagents.total_volume)
-		var/fraction = 12 * hit_strength
+	if (!(reagents && reagents.total_volume))
+		return
 
-		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-		s.set_up(reagents, hit_strength, 18, user.loc)
-		s.start()
+	var/fraction = 12 * hit_strength
 
-		reagents.reaction(user, INGEST, fraction)
-		if(!reagents.trans_to(user, fraction))
-			reagents.remove_any(fraction)
+	var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+	s.set_up(reagents, hit_strength, 18, user.loc)
+	s.start()
 
-		if (hit_strength == 2 && prob(15))
-			user.emote("cough")
-			user.adjustOxyLoss(15)
+	reagents.reaction(user, INGEST, fraction)
+	if(!reagents.trans_to(user, fraction))
+		reagents.remove_any(fraction)
 
-		user.visible_message("<span class='notice'>[user] takes a [hittext] from the [src]!</span>", \
-								"<span class='notice'>You take a [hittext] from [src].</span>")
+	if (hit_strength == 2 && prob(15))
+		user.emote("cough")
+		user.adjustOxyLoss(15)
 
-		firecharges = firecharges - 1
-		if (!firecharges)
-			bongturnoff()
-		if (!reagents.total_volume)
-			firecharges = 0
-			bongturnoff()
+	user.visible_message("<span class='notice'>[user] takes a [hittext] from the [src]!</span>", \
+							"<span class='notice'>You take a [hittext] from [src].</span>")
+
+	firecharges = firecharges - 1
+	if (!firecharges)
+		bongturnoff()
+	if (!reagents.total_volume)
+		firecharges = 0
+		bongturnoff()
 
 
 

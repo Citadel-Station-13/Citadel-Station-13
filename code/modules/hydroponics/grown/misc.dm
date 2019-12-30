@@ -298,20 +298,22 @@
 	transform *= TRANSFORM_USING_VARIABLE(40, 100) + 0.5 //temporary fix for size?
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attack_self(mob/user)
-	if (opened)
-		if(!possible_transfer_amounts.len)
-			return
-		var/i=0
-		for(var/A in possible_transfer_amounts)
-			i++
-			if(A != amount_per_transfer_from_this)
-				continue
-			if(i<possible_transfer_amounts.len)
-				amount_per_transfer_from_this = possible_transfer_amounts[i+1]
-			else
-				amount_per_transfer_from_this = possible_transfer_amounts[1]
-			to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
-			return
+	if (!opened)
+		return
+
+	if(!possible_transfer_amounts.len)
+		return
+	var/i=0
+	for(var/A in possible_transfer_amounts)
+		i++
+		if(A != amount_per_transfer_from_this)
+			continue
+		if(i<possible_transfer_amounts.len)
+			amount_per_transfer_from_this = possible_transfer_amounts[i+1]
+		else
+			amount_per_transfer_from_this = possible_transfer_amounts[1]
+		to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+		return
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/attackby(obj/item/W, mob/user, params)
 	//DEFUSING NADE LOGIC
@@ -362,6 +364,7 @@
 		W.use(1)
 		icon_state += "_straw"
 		desc = "You can already feel like you're on a tropical vacation."
+		return
 	//OPENING THE NUT LOGIC
 	if (!carved && !chopped)
 		if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -507,15 +510,16 @@
 	transform *= TRANSFORM_USING_VARIABLE(40, 100) + 0.5 //temporary fix for size?
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/proc/prime()
-	if (!defused)
-		var/turf/T = get_turf(src)
-		reagents.chem_temp = 1000
-		//Disable seperated contents when the grenade primes
-		if (seed.get_gene(/datum/plant_gene/trait/noreact))
-			DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
-		reagents.handle_reactions()
-		log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
-		qdel(src)
+	if (defused)
+		return
+	var/turf/T = get_turf(src)
+	reagents.chem_temp = 1000
+	//Disable seperated contents when the grenade primes
+	if (seed.get_gene(/datum/plant_gene/trait/noreact))
+		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	reagents.handle_reactions()
+	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/ex_act(severity)
 	qdel(src)
