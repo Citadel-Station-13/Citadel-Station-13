@@ -647,7 +647,7 @@
 	else if (burned == 0)
 		icon_state = "marshmallowburned"
 
-/obj/item/reagent_containers/food/snacks/marshmallow/proc/examine(mob/user)
+/obj/item/reagent_containers/food/snacks/marshmallow/examine(mob/user)
 	. = ..()
 	if (burned == 2)
 		. += "It looks very burned."
