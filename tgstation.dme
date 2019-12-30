@@ -467,6 +467,7 @@
 #include "code\datums\elements\_element.dm"
 #include "code\datums\elements\cleaning.dm"
 #include "code\datums\elements\earhealing.dm"
+#include "code\datums\elements\ghost_role_eligibility.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
 #include "code\datums\helper_datums\icon_snapshot.dm"

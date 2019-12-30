@@ -618,6 +618,8 @@
 		O.equip(new_spawn, FALSE, new_spawn.client)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
+		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, "Ghost Cafe")
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"

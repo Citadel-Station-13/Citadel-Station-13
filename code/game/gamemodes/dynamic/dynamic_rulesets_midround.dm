@@ -17,10 +17,10 @@
 	var/list/living_antags = list()
 	var/list/dead_players = list()
 	var/list/list_observers = list()
+	var/list/ghost_eligible = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
-	required_type = /mob/dead/observer
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 
@@ -34,6 +34,8 @@
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
+	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	ghost_eligible = trim_list(eligibility.get_all_ghost_role_eligible())
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
@@ -70,6 +72,25 @@
 				continue
 	return trimmed_list
 
+/datum/dynamic_ruleset/midround/from_ghosts/trim_list(list/L = list())
+	var/list/trimmed_list = L.Copy()
+	for(var/mob/M in trimmed_list)
+		if (!M.client) // Are they connected?
+			trimmed_list.Remove(M)
+			continue
+		if(!mode.check_age(M.client, minimum_required_age))
+			trimmed_list.Remove(M)
+			continue
+		if(antag_flag_override)
+			if(!(antag_flag_override in M.client.prefs.be_special) || jobban_isbanned(M.ckey, antag_flag_override))
+				trimmed_list.Remove(M)
+				continue
+		else
+			if(!(antag_flag in M.client.prefs.be_special) || jobban_isbanned(M.ckey, antag_flag))
+				trimmed_list.Remove(M)
+				continue
+	return trimmed_list
+
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
 
@@ -91,11 +112,15 @@
 			return FALSE
 	return TRUE
 
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = FALSE)
+	if (required_candidates > ghost_eligible.len)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
+		return FALSE
+	return ..()
+
+
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
-	var/list/possible_candidates = list()
-	possible_candidates.Add(dead_players)
-	possible_candidates.Add(list_observers)
-	var/application_successful = send_applications(possible_candidates)
+	var/application_successful = send_applications(ghost_eligible)
 	return assigned.len > 0 && application_successful
 
 /// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
@@ -292,9 +317,6 @@
 	var/datum/mind/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -354,12 +376,6 @@
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
-	return ..()
-
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
 	new_character.mind.special_role = "Nuclear Operative"
 	new_character.mind.assigned_role = "Nuclear Operative"
@@ -391,12 +407,6 @@
 	high_population_requirement = 50
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/blob/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
-	return ..()
-
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
 	var/body = applicant.become_overmind()
 	return body
@@ -422,12 +432,6 @@
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
 	var/list/vents = list()
-
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
-	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
@@ -523,12 +527,6 @@
 	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
 	high_population_requirement = 5
 
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
-	return ..()
-
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	applicant.transfer_ckey(virus, FALSE)
@@ -562,9 +560,6 @@
 	for(var/mob/M in GLOB.dead_mob_list)
 		deadMobs++
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
-		return FALSE
-	if(required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
 		var/turf/T = get_turf(L)
@@ -611,9 +606,6 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/ready(forced = FALSE)
-	if(required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			spawn_locs += L.loc
@@ -663,9 +655,6 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
-	if(required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
 	team = new /datum/team/abductor_team
 	if(team.team_number > ABDUCTOR_MAX_TEAMS)
 		return FALSE
@@ -703,9 +692,6 @@
 	var/spawn_loc
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/ready(forced = FALSE)
-	if(required_candidates > (dead_players.len + list_observers.len))
-		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
-		return FALSE
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
