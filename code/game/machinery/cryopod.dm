@@ -401,7 +401,7 @@
 	if(control_computer)
 		control_computer.frozen_crew += "[mob_occupant.real_name]"
 
-	if(GLOB.announcement_systems.len && announce_cryo)
+	if(GLOB.announcement_systems.len)
 		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
 		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
