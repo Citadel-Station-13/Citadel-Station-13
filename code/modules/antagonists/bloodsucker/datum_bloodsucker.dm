@@ -199,12 +199,11 @@
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
-		var/datum/physiology/physiology
 		// Make Changes
-		physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
-		physiology.cold_mod = 0
-		physiology.stun_mod *= 0.35
-		physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
+		H.physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
+		H.physiology.cold_mod = 0
+		H.physiology.stun_mod *= 0.35
+		H.physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
