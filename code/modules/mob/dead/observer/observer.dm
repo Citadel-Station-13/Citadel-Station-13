@@ -3,8 +3,6 @@ GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as t
 
 GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
-#define CANT_REENTER_ROUND -1
-
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -21,7 +19,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
-	var/reenter_round_timeout = 0 // used to prevent people from coming back through ghost roles/midround antags as they suicide/cryo for a duration set by CONFIG_GET(number/suicide_reenter_round_timer) and CONFIG_GET(number/roundstart_suicide_time_limit)
+	var/clientless_round_timeout = 0 //mobs will lack a client as long as their player is disconnected. See client_defines.dm "reenter_round_timeout"
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -178,7 +176,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
  * |- Ricotez
  */
-/mob/dead/observer/proc/update_icon(new_form)
+/mob/dead/observer/update_icon(new_form)
+	. = ..()
 	if(client) //We update our preferences in case they changed right before update_icon was called.
 		ghost_accs = client.prefs.ghost_accs
 		ghost_others = client.prefs.ghost_others
@@ -277,9 +276,16 @@ Works together with spawning an observer, noted above.
 		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
 			penalty += roundstart_quit_limit - world.time
 		if(penalty)
-			ghost.reenter_round_timeout = world.realtime + penalty
-			if(ghost.reenter_round_timeout - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
-				ghost.reenter_round_timeout = CANT_REENTER_ROUND
+			penalty += world.realtime
+			if(penalty - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+				penalty = CANT_REENTER_ROUND
+			if(client)
+				client.reenter_round_timeout = penalty
+			else //A disconnected player (quite likely for cryopods)
+				ghost.clientless_round_timeout = penalty
+	if (client && client.prefs && client.prefs.auto_ooc)
+		if (!(client.prefs.chat_toggles & CHAT_OOC))
+			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
 	return ghost
 
@@ -338,10 +344,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(0, penalize = TRUE)
 
 /mob/dead/observer/proc/can_reenter_round(silent = FALSE)
-	if(reenter_round_timeout != CANT_REENTER_ROUND && reenter_round_timeout <= world.realtime)
+	var/timeout = clientless_round_timeout
+	if(client)
+		timeout = client.reenter_round_timeout
+	if(timeout != CANT_REENTER_ROUND && timeout <= world.realtime)
 		return TRUE
-	if(!silent)
-		to_chat(src, "<span class='warning'>You are unable to reenter the round[reenter_round_timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(reenter_round_timeout - world.realtime)]" : ""].</span>")
+	if(!silent && client)
+		to_chat(src, "<span class='warning'>You are unable to reenter the round[timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(timeout - world.realtime)]" : ""].</span>")
 	return FALSE
 
 /mob/dead/observer/Move(NewLoc, direct)
@@ -897,5 +906,3 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
-
-#undef CANT_REENTER_ROUND

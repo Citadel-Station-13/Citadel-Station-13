@@ -186,8 +186,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["widescreenpref"]		>> widescreenpref
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
-	S["lewdchem"]			>> lewdchem
 	S["preferred_chaos"]	>> preferred_chaos
+	S["auto_ooc"]	>> auto_ooc
 
 
 	//try to fix any outdated data if necessary
@@ -224,7 +224,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 65535, initial(cit_toggles))
-
+	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 
 	return 1
 
@@ -283,8 +283,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
-	WRITE_FILE(S["lewdchem"], lewdchem)
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
+	WRITE_FILE(S["auto_ooc"], auto_ooc)
 
 	return 1
 
@@ -371,9 +371,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_legs"]			>> features["legs"]
 	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_human_ears"]				>> features["ears"]
+	S["feature_deco_wings"]				>> features["deco_wings"]
 	S["feature_insect_wings"]			>> features["insect_wings"]
-	S["feature_deco_wings"]			>> features["deco_wings"]
 	S["feature_insect_fluff"]			>> features["insect_fluff"]
+	S["feature_insect_markings"]		>> features["insect_markings"]
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -508,9 +509,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"]				= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"]		= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
 	features["legs"]				= sanitize_inlist(features["legs"], GLOB.legs_list, "Plantigrade")
-	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 	features["deco_wings"] 			= sanitize_inlist(features["deco_wings"], GLOB.deco_wings_list, "None")
 	features["insect_fluff"]		= sanitize_inlist(features["insect_fluff"], GLOB.insect_fluffs_list)
+	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
+	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -519,6 +521,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			job_preferences -= j
 
 	all_quirks = SANITIZE_LIST(all_quirks)
+
+	for(var/V in all_quirks) // quirk migration
+		switch(V)
+			if("Acute hepatic pharmacokinesis")
+				DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
+				DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
+				ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
+				ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
+				all_quirks -= V
+			if("Crocin Immunity")
+				ENABLE_BITFIELD(cit_toggles,NO_APHRO)
+				all_quirks -= V
+			if("Buns of Steel")
+				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
+				all_quirks -= V
 
 	cit_character_pref_load(S)
 
@@ -575,10 +592,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]				, features["legs"])
-	WRITE_FILE(S["feature_insect_wings"]			, features["insect_wings"])
 	WRITE_FILE(S["feature_deco_wings"]				, features["deco_wings"])
+	WRITE_FILE(S["feature_insect_wings"]			, features["insect_wings"])
 	WRITE_FILE(S["feature_insect_fluff"]			, features["insect_fluff"])
+	WRITE_FILE(S["feature_insect_markings"]			, features["insect_markings"])
 	WRITE_FILE(S["feature_meat"]					, features["meat_type"])
+
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

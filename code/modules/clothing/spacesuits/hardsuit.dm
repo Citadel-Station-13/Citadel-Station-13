@@ -445,7 +445,7 @@
 	flash_protect = 0
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	scan_reagents = TRUE
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -467,7 +467,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80)
 	var/obj/machinery/doppler_array/integrated/bomb_radar
-	scan_reagents = TRUE
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize()
@@ -588,8 +588,7 @@
 /obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
 	if(!..() || !ishuman(M))
 		return FALSE
-	var/mob/living/carbon/human/H = M
-	if(H.mind.assigned_role == "Clown")
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CLOWN_MENTALITY))
 		return TRUE
 	else
 		return FALSE
@@ -637,7 +636,7 @@
 	armor = list("melee" = 20, "bullet" = 15, "laser" = 15, "energy" = 45, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	item_color = "ancient"
 	brightness_on = 16
-	scan_reagents = TRUE
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 	flash_protect = 5 //We will not be flash by bombs
 	tint = 1
 	var/obj/machinery/doppler_array/integrated/bomb_radar

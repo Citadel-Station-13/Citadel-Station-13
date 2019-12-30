@@ -46,6 +46,12 @@
 			return spec_return
 
 	if(mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance)
+			if(!lying && dna && !dna.check_mutation(HULK))
+				if(prob(mind.martial_art.dodge_chance))
+					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
+					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
+					return -1
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
@@ -145,7 +151,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && !(mind.martial_art && mind.martial_art.dodge_chance == 100))
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -158,7 +164,9 @@
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 					hitpush = FALSE
 					skipcatch = TRUE //can't catch the now embedded item
-
+	if (mind)
+		if (mind.martial_art && mind.martial_art.dodge_chance == 100)
+			skipcatch = FALSE
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
@@ -644,7 +652,7 @@
 	if(mind)
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
 			gain = 100
-		if(mind.assigned_role == "Clown")
+		if(HAS_TRAIT(mind, TRAIT_CLOWN_MENTALITY))
 			gain = rand(-300, 300)
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
