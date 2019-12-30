@@ -987,7 +987,7 @@
 "atG" = (/obj/structure/cable/yellow{icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating,/area/maintenance/port/fore)
 "atH" = (/obj/structure/cable/yellow{icon_state = "4-8"},/obj/structure/cable/yellow{icon_state = "2-4"},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/floor/plating,/area/maintenance/port/fore)
 "atI" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/structure/cable/yellow{icon_state = "1-8"},/obj/structure/disposalpipe/segment{dir = 9},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating,/area/maintenance/port/fore)
-"atK" = (/obj/machinery/computer/gulag_teleporter_computer{dir = 1},/turf/open/floor/plasteel/dark,/area/security/brig)
+"atK" = (/obj/machinery/computer/prisoner/gulag_teleporter_computer{dir = 1},/turf/open/floor/plasteel/dark,/area/security/brig)
 "atL" = (/obj/machinery/gulag_teleporter,/turf/open/floor/plasteel/dark,/area/security/brig)
 "atM" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel,/area/security/brig)
 "atN" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/security/brig)
