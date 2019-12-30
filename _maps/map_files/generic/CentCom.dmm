@@ -2108,10 +2108,6 @@
 	},
 /turf/closed/indestructible/riveted,
 /area/space)
-"fy" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/tdome/arena_source)
 "fz" = (
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
@@ -15117,10 +15113,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
-"Is" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/tdome/arena)
 "It" = (
 /turf/open/floor/plasteel,
 /area/tdome/arena)
@@ -16975,6 +16967,13 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Oy" = (
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 26
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Oz" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -18240,6 +18239,12 @@
 /obj/machinery/door/airlock/wood{
 	id_tag = "Ninja6";
 	name = "Dorm 6"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"WB" = (
+/obj/machinery/cryopod/ghost_cafe{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
@@ -47762,9 +47767,9 @@ Xk
 Xk
 GY
 NT
-Xk
+Oy
 Ms
-Xk
+WB
 NT
 vt
 Mx
@@ -60356,14 +60361,14 @@ GM
 HW
 HW
 Il
-Is
+IF
 IE
 IX
 Jh
 Jh
 Js
 IE
-Is
+IF
 JI
 JP
 JZ
@@ -63954,14 +63959,14 @@ GM
 HW
 HW
 Il
-Is
+IF
 IJ
 IY
 Jk
 Jk
 Jt
 IJ
-Is
+IF
 JI
 JP
 Kc
@@ -78178,14 +78183,14 @@ fa
 fn
 fr
 fx
-fy
+fF
 fE
 fL
 fN
 fN
 fS
 fE
-fy
+fF
 ab
 aa
 aa
@@ -81776,14 +81781,14 @@ dA
 dA
 dA
 fx
-fy
+fF
 fJ
 fM
 fQ
 fQ
 fT
 fJ
-fy
+fF
 ab
 aa
 aa
