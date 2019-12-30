@@ -182,7 +182,7 @@ Property weights are:
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 3, "trust" = 5)
 
-/datum/dynamic_storyteller/team/get_injection_chance()
+/datum/dynamic_storyteller/team/get_injection_chance(dry_run = false)
 	return (mode.current_players[CURRENT_LIVING_ANTAGS].len ? 0 : ..())
 
 /datum/dynamic_storyteller/classic
@@ -211,6 +211,9 @@ Property weights are:
 	flags = NO_ASSASSIN
 	weight = 2
 	property_weights = list("extended" = 1, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
+
+/datum/dynamic_storyteller/liteextended/get_injection_chance(dry_run = FALSE)
+	return ..()/2
 
 /datum/dynamic_storyteller/extended
 	name = "Extended"
