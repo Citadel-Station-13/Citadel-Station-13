@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Adds reflector blobs to shield blob upgrades"
