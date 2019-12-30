@@ -9,9 +9,8 @@
 
 /obj/item/tele_iv/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(proximity)
-		if(isopenturf(target))
-			deploy_iv(user, target)
+	if(proximity|| isopenturf(target))
+		deploy_iv(user, target)
 
 /obj/item/tele_iv/proc/deploy_iv(mob/user, atom/location)
 	new /obj/machinery/iv_drip/telescopic(location)
