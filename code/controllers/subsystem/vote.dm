@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(vote)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return 0
-		if(vote && vote >= 1 && vote <= choices.len)
+		if(vote && ISINRANGE(vote, 1, choices.len))
 			switch(vote_system)
 				if(PLURALITY_VOTING)
 					if(usr.ckey in voted)

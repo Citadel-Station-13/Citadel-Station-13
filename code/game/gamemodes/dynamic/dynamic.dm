@@ -1,14 +1,3 @@
-#define CURRENT_LIVING_PLAYERS	1
-#define CURRENT_LIVING_ANTAGS	2
-#define CURRENT_DEAD_PLAYERS	3
-#define CURRENT_OBSERVERS	    4
-
-#define ONLY_RULESET       1
-#define HIGHLANDER_RULESET 2
-#define TRAITOR_RULESET    4
-#define MINOR_RULESET      8
-
-#define RULESET_STOP_PROCESSING 1
 
 // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (10 MINUTES))
