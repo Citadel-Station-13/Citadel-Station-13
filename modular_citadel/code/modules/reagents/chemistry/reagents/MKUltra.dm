@@ -168,7 +168,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(M.client?.prefs.cit_toggles & NEVER_HYPNO) // Just in case people are opting out of this
-		holder.remove_reagent(id, 10000000)
+		holder.del_reagent(type)
 		return
 	if(!ishuman(M))//Just to make sure screwy stuff doesn't happen.
 		return
