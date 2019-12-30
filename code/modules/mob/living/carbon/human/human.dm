@@ -32,7 +32,7 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		togglesprint()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /mob/living/carbon/human/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 
 
 /mob/living/carbon/human/ComponentInitialize()
@@ -488,7 +488,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
@@ -574,7 +574,7 @@
 		return threatcount
 
 	//Check for ID
-	var/obj/item/card/id/idcard = get_idcard()
+	var/obj/item/card/id/idcard = get_idcard(FALSE)
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
 		threatcount += 4
 
@@ -803,10 +803,8 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
-		if(hud_used.staminas)
-			hud_used.staminas.icon_state = staminahudamount()
-		if(hud_used.staminabuffer)
-			hud_used.staminabuffer.icon_state = staminabufferhudamount()
+		hud_used.staminas?.update_icon_state()
+		hud_used.staminabuffer?.update_icon_state()
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	if(admin_revive)
@@ -858,6 +856,7 @@
 	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=[REF(src)]"
 	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=[REF(src)]"
 	.["Copy outfit"] = "?_src_=vars;[HrefToken()];copyoutfit=[REF(src)]"
+	.["Add/Remove Quirks"] = "?_src_=vars;[HrefToken()];modquirks=[REF(src)]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if(pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
@@ -867,8 +866,9 @@
 			return
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
 		else if(user != target)
-			fireman_carry(target)
-			return
+			if(user.a_intent == INTENT_GRAB)
+				fireman_carry(target)
+				return
 	. = ..()
 
 //src is the user that will be carrying, target is the mob to be carried
@@ -890,7 +890,10 @@
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
-		to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
+		if (ishuman(target))
+			to_chat(src, "<span class='notice'>You can't fireman carry [target] while they're standing!</span>")
+		else
+			to_chat(src, "<span class='notice'>You can't seem to fireman carry that kind of species.</span>")
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(can_piggyback(target))
@@ -946,7 +949,7 @@
 	return FALSE
 
 /mob/living/carbon/human/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
+	remove_movespeed_modifier(MOVESPEED_ID_SHOVE)
 	var/active_item = get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
 		visible_message("<span class='warning'>[src.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1042,6 +1045,21 @@
 
 /mob/living/carbon/human/species/golem/plastic
 	race = /datum/species/golem/plastic
+
+/mob/living/carbon/human/species/golem/bronze
+	race = /datum/species/golem/bronze
+
+/mob/living/carbon/human/species/golem/cardboard
+	race = /datum/species/golem/cardboard
+
+/mob/living/carbon/human/species/golem/leather
+	race = /datum/species/golem/leather
+
+/mob/living/carbon/human/species/golem/bone
+	race = /datum/species/golem/bone
+
+/mob/living/carbon/human/species/golem/durathread
+	race = /datum/species/golem/durathread
 
 /mob/living/carbon/human/species/golem/clockwork
 	race = /datum/species/golem/clockwork

@@ -16,6 +16,7 @@
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
 	window_name = "Honkomatic Bike Horn Unit v1.0.7"
+	oil_spill_type = /obj/effect/decal/cleanable/oil/slippery //slip and slide fun for the whole family
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 	path_image_color = "#FF69B4"
 
@@ -49,7 +50,7 @@
 
 /mob/living/simple_animal/bot/honkbot/proc/sensor_blink()
 	icon_state = "honkbot-c"
-	addtimer(CALLBACK(src, .proc/update_icon), 5, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 5, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 //honkbots react with sounds.
 /mob/living/simple_animal/bot/honkbot/proc/react_ping()
@@ -176,7 +177,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			playsound(src, "honkbot_e", 50, 0)
 			spam_flag = TRUE // prevent spam
 			icon_state = "honkbot-e"
-			addtimer(CALLBACK(src, .proc/update_icon), 30, TIMER_OVERRIDE|TIMER_UNIQUE)
+			addtimer(CALLBACK(src, /atom/.proc/update_icon), 30, TIMER_OVERRIDE|TIMER_UNIQUE)
 		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack

@@ -372,15 +372,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	var/mob/living/carbon/human/H = owner
-	if(istype(H))
-		H.physiology.speed_mod += 0.5
+	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	var/mob/living/carbon/human/H = owner
-	if(istype(H))
-		H.physiology.speed_mod -= 0.5
+	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -567,7 +563,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	name = "burning fingertips"
 	desc = "You shouldn't see this."
 
-/obj/item/hothands/is_hot()
+/obj/item/hothands/get_temperature()
 	return 290 //Below what's required to ignite plasma.
 
 /datum/status_effect/stabilized/darkpurple
@@ -692,20 +688,15 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			H.physiology.speed_mod--
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	else if(mod < 1)
 		mod++
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			H.physiology.speed_mod++
+		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	var/mob/living/carbon/human/H = owner
-	if(istype(H))
-		H.physiology.speed_mod += -mod //Reset the changes.
+	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -913,10 +904,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
-	ADD_TRAIT(owner, TRAIT_GOTTAGOFAST,"slimestatus")
+	ADD_TRAIT(owner, TRAIT_FREESPRINT, "stabilized_slime")
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
+	owner.adjustStaminaLoss(-4.5)
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
 		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent("epinephrine"))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
@@ -924,7 +916,8 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_GOTTAGOFAST,"slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_FREESPRINT, "stabilized_slime")
+	return ..()
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

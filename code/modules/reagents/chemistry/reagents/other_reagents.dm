@@ -1,7 +1,8 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
 	id = "blood"
+	value = 1
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
 	description = "Blood from some creature."
 	metabolization_rate = 5 //fast rate so it disappears fast.
@@ -29,7 +30,7 @@
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
-		if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if((HAS_TRAIT(C, TRAIT_NOMARROW) || blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM * C.blood_ratio)
 			// we don't care about bloodtype here, we're just refilling the mob
 
@@ -37,6 +38,8 @@
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return //We dont want vampires getting toxed from blood
 	var/blood_id = C.get_blood_id()
 	if((blood_id == "blood" || blood_id == "jellyblood"))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
@@ -68,7 +71,7 @@
 		color = bloodtype_to_color(data["blood_type"])
 		if(data["blood_type"] == "SY")
 			name = "Synthetic Blood"
-			taste_description = "oily"
+			taste_description = "oil"
 
 		if(data["blood_type"] == "X*")
 			name = "Xenomorph Blood"
@@ -83,12 +86,12 @@
 
 		if(data["blood_type"] == "BUG")
 			name = "Insect Blood"
-			taste_description = "greasy"
+			taste_description = "grease"
 			pH = 7.25
 
 		if(data["blood_type"] == "L")
 			name = "Lizard Blood"
-			taste_description = "spicy"
+			taste_description = "something spicy"
 			pH = 6.85
 
 
@@ -503,12 +506,20 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
+	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs.
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(TURF_WET_LUBE, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
+		T.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
+
+///Stronger kind of lube. Applies TURF_WET_SUPERLUBE.
+/datum/reagent/lube/superlube
+	name = "Super Duper Lube"
+	id = "superlube"
+	description = "This \[REDACTED\] has been outlawed after the incident on \[DATA EXPUNGED\]."
+	lube_kind = TURF_WET_SUPERLUBE
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -1107,6 +1118,8 @@
 	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
 		C.blood_volume += 0.01 //we'll have synthetics from medbay.
 	..()
@@ -1529,10 +1542,10 @@
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1645,7 +1658,7 @@
 	description = "Cheap and extremely common type of plant nutriment."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 10
-	pH = 2
+	pH = 2.5
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1653,7 +1666,7 @@
 	description = "Unstable nutriment that makes plants mutate more often than usual."
 	color = "#1A1E4D" // RBG: 26, 30, 77
 	tox_prob = 25
-	pH = 1.5
+	pH = 3.5
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1661,7 +1674,7 @@
 	description = "Very potent nutriment that prevents plants from mutating."
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 15
-	pH = 1
+	pH = 2.5
 
 // GOON OTHERS
 
@@ -2263,24 +2276,6 @@
 	if(prob(20))
 		to_chat(M, "You find yourself unable to supress the desire to meow!")
 		M.emote("nya")
-	..()
-
-//Kept for legacy, I think it will break everything if you enable it.
-/datum/reagent/penis_enlargement
-	name = "Penis Enlargement"
-	id = "penis_enlargement"
-	description = "A patented chemical forumula by Doctor Ronald Hyatt that is guaranteed to bring maximum GROWTH and LENGTH to your penis, today!"
-	color = "#888888"
-	taste_description = "chinese dragon powder"
-	metabolization_rate = INFINITY //So it instantly removes all of itself. Don't want to put strain on the system.
-
-/datum/reagent/penis_enlargement/on_mob_life(mob/living/carbon/C)
-	var/obj/item/organ/genital/penis/P = C.getorganslot(ORGAN_SLOT_PENIS)
-	if(P)
-		var/added_length = round(volume/30,0.01) //Every 30u gives an extra inch. Rounded to the nearest 0.01 so float fuckery doesn't occur with the division by 30.
-		if(added_length >= 0.20) //Only add the length if it's greater than or equal to 0.2. This is to prevent people from smoking the reagents and causing the penis to update constantly.
-			P.length += added_length
-			P.update()
 	..()
 
 /datum/reagent/changeling_string

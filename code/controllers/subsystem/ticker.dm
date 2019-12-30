@@ -303,7 +303,7 @@ SUBSYSTEM_DEF(ticker)
 	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
-	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
+	SEND_SOUND(world, sound(get_announcer_sound("welcome")))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -384,8 +384,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-			if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
-				SSquirks.AssignQuirks(N.new_character, N.client, TRUE, TRUE, SSjob.GetJob(player.mind.assigned_role), FALSE, N)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
+					SSquirks.AssignQuirks(N.new_character, N.client, TRUE, TRUE, SSjob.GetJob(player.mind.assigned_role), FALSE, N)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -401,6 +401,9 @@ SUBSYSTEM_DEF(ticker)
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
+				if (living.client.prefs && living.client.prefs.auto_ooc)
+					if (living.client.prefs.chat_toggles & CHAT_OOC)
+						living.client.prefs.chat_toggles ^= CHAT_OOC
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 			livings += living
@@ -479,7 +482,8 @@ SUBSYSTEM_DEF(ticker)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server",TRUE)
+		var/dynamic = CONFIG_GET(flag/dynamic_voting)
+		SSvote.initiate_vote(dynamic ? "dynamic" : "roundtype","server",TRUE)
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

@@ -2,7 +2,7 @@
 //For custom items.
 
 // Unless there's a digitigrade version make sure you add mutantrace_variation = NO_MUTANTRACE_VARIATION to all clothing/under and shoes - Pooj
-// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in modular_citadel/icons/mob
+// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in icons/mob
 
 /obj/item/custom/ceb_soap
 	name = "Cebutris' Soap"
@@ -493,6 +493,7 @@
 	item_state = "blueberet"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/flight
 	name = "flight goggles"
@@ -509,3 +510,49 @@
 	icon_state = "onion"
 	item_state = "onion"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/under/mikubikini
+	name = "starlight singer bikini"
+	desc = " "
+	icon_state = "mikubikini"
+	item_state = "mikubikini"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/mikujacket
+	name = "starlight singer jacket"
+	desc = " "
+	icon_state = "mikujacket"
+	item_state = "mikujacket"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/mikuhair
+	name = "starlight singer hair"
+	desc = " "
+	icon_state = "mikuhair"
+	item_state = "mikuhair"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/gloves/mikugloves
+	name = "starlight singer gloves"
+	desc = " "
+	icon_state = "mikugloves"
+	item_state = "mikugloves"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/shoes/sneakers/mikuleggings
+	name = "starlight singer leggings"
+	desc = " "
+	icon_state = "mikuleggings"
+	item_state = "mikuleggings"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION

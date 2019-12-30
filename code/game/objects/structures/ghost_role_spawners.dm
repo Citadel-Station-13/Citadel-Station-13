@@ -30,6 +30,8 @@
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/carbon/human/new_spawn)
+	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker
@@ -66,7 +68,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER, ignore_dnr_observers = TRUE)
 
 /datum/outfit/ashwalker
 	name ="Ashwalker"
@@ -133,7 +135,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
-		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
+		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM, ignore_dnr_observers = TRUE)
 	if(has_owner && creator)
 		flavour_text = "<span class='big bold'>You are a Golem.</span><b> You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost.</b>"
@@ -151,6 +153,9 @@
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
+		if(has_owner)
+			var/datum/species/golem/G = H.dna.species
+			G.owner = owner
 		H.set_cloned_appearance()
 		if(!name)
 			if(has_owner)
@@ -248,6 +253,9 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/hermit/special(mob/living/carbon/human/new_spawn)
+	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
 	name = "broken rejuvenation pod"
@@ -321,8 +329,9 @@
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/telegram
 	shoes = /obj/item/clothing/shoes/laceup
+	head = /obj/item/clothing/head/hotel
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield)
@@ -349,6 +358,9 @@
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
 
+/obj/effect/mob_spawn/human/hotel_staff/special(mob/living/carbon/human/new_spawn)
+	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+
 /obj/effect/mob_spawn/human/demonic_friend
 	name = "Essence of friendship"
 	desc = "Oh boy! Oh boy! A friend!"
@@ -372,7 +384,7 @@
 	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
 	var/area/A = get_area(src)
 	if(!mapload && A)
-		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 	objectives = "Be [owner.name]'s friend, and keep [owner.name] alive, so you don't get sent back to hell."
 	spell = summoning_spell
 
@@ -422,7 +434,7 @@
 	implants = list(/obj/item/implant/weapons_auth)
 	id = /obj/item/card/id/syndicate
 
-/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
@@ -591,3 +603,49 @@
 
 /obj/effect/mob_spawn/human/pirate/gunner
 	rank = "Gunner"
+
+/obj/effect/mob_spawn/human/ghostcafe
+	name = "ghost cafe sleeper"
+	uses = -1
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_name = "a ghost cafe visitor"
+	roundstart = FALSE
+	anchored = TRUE
+	density = FALSE
+	death = FALSE
+	assignedrole = "Ghost Cafe Visitor"
+	flavour_text = "Is this what life after death is like?"
+	skip_reentry_check = TRUE
+	banType = "ghostcafe"
+
+/obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
+	if(new_spawn.client)
+		new_spawn.client.prefs.copy_to(new_spawn)
+		var/datum/outfit/O = new /datum/outfit/ghostcafe()
+		O.equip(new_spawn, FALSE, new_spawn.client)
+		SSjob.equip_loadout(null, new_spawn, FALSE)
+		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
+		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+
+/datum/outfit/ghostcafe
+	name = "ID, jumpsuit and shoes"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id
+
+
+/datum/outfit/ghostcafe/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+	..()
+	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
+	if (CONFIG_GET(flag/grey_assistants))
+		if(suited)
+			uniform = /obj/item/clothing/under/color/grey
+		else
+			uniform = /obj/item/clothing/under/skirt/color/grey
+	else
+		if(suited)
+			uniform = /obj/item/clothing/under/color/random
+		else
+			uniform = /obj/item/clothing/under/skirt/color/random
+

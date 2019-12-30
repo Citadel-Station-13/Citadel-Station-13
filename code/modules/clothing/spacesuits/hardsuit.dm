@@ -65,7 +65,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", 1)
+		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", MSG_VISUAL)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	. = ..()
@@ -135,7 +135,7 @@
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
-		jetpack.turn_off()
+		jetpack.turn_off(user)
 		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
@@ -212,7 +212,7 @@
 	icon_state = "hardsuit0-white"
 	item_state = "ce_helm"
 	item_color = "white"
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 90)
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 90)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
@@ -221,7 +221,7 @@
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 90)
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 50, "bio" = 100, "rad" = 95, "fire" = 100, "acid" = 90)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
@@ -433,7 +433,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
 
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical
@@ -445,7 +445,7 @@
 	flash_protect = 0
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	scan_reagents = TRUE
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -467,7 +467,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80)
 	var/obj/machinery/doppler_array/integrated/bomb_radar
-	scan_reagents = TRUE
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize()
@@ -590,8 +590,7 @@
 /obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
 	if(!..() || !ishuman(M))
 		return FALSE
-	var/mob/living/carbon/human/H = M
-	if(H.mind.assigned_role == "Clown")
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CLOWN_MENTALITY))
 		return TRUE
 	else
 		return FALSE
@@ -638,7 +637,7 @@
 	armor = list("melee" = 20, "bullet" = 15, "laser" = 15, "energy" = 45, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	item_color = "ancient"
 	brightness_on = 16
-	scan_reagents = TRUE
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 	flash_protect = 5 //We will not be flash by bombs
 	tint = 1
 	var/obj/machinery/doppler_array/integrated/bomb_radar
@@ -958,26 +957,18 @@
 /obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/energy_overlay
-		if(taurmode == SNEK_TAURIC)
-			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
-		else if(taurmode == PAW_TAURIC)
-			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
-		else
-			energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
-
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
 		energy_overlay.plane = ABOVE_LIGHTING_LAYER
 		energy_overlay.color = energy_color
 		. += energy_overlay
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/AltClick(mob/living/user)
-	if(user.incapacitated() || !istype(user))
+	. = ..()
+	if(!in_range(src, user) || !istype(user))
+		return
+	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	if(user.incapacitated() || !istype(user) || !in_range(src, user))
-		return
+		return TRUE
 
 	if(alert("Are you sure you want to recolor your armor stripes?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",energy_color) as color|null
@@ -993,7 +984,8 @@
 			user.update_inv_wear_suit()
 			light_color = energy_color
 			update_light()
+	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"

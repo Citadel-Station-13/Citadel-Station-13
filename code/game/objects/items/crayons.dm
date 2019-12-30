@@ -150,11 +150,13 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(has_cap)
 			is_capped = !is_capped
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 			update_icon()
+			return TRUE
 
 /obj/item/toy/crayon/proc/staticDrawables()
 
@@ -665,10 +667,10 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
-		to_chat(user, "It has [charges_left] use\s left.")
+		. += "It has [charges_left] use\s left."
 	else
-		to_chat(user, "It is empty.")
-	to_chat(user, "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>")
+		. += "It is empty."
+	. += "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>"
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -829,7 +831,7 @@
 /obj/item/toy/crayon/spraycan/gang/examine(mob/user)
 	. = ..()
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/gang) || isobserver(user))
-		to_chat(user, "This spraycan has been specially modified with a stage 2 nozzle kit, making it faster.")
+		. += "This spraycan has been specially modified with a stage 2 nozzle kit, making it faster."
 
 /obj/item/toy/crayon/spraycan/infinite
 	name = "infinite spraycan"

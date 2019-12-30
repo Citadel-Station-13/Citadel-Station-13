@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 8
+	var/max_save_slots = 16
 
 	//non-preference stuff
 	var/muted = 0
@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
+	var/preferred_chaos = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 	var/pda_skin = PDA_SKIN_ALT
@@ -102,6 +103,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"legs" = "Plantigrade",
 		"insect_wings" = "Plain",
 		"insect_fluff" = "None",
+		"insect_markings" = "None",
 		"mcolor2" = "FFF",
 		"mcolor3" = "FFF",
 		"mam_body_markings" = "Plain",
@@ -113,7 +115,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"xenohead" = "Standard",
 		"xenotail" = "Xenomorph Tail",
 		"taur" = "None",
-		"exhibitionist" = FALSE,
 		"genitals_use_skintone" = FALSE,
 		"has_cock" = FALSE,
 		"cock_shape" = "Human",
@@ -170,12 +171,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/prefered_security_department = SEC_DEPT_RANDOM
 	var/custom_species = null
 
-		//Quirk list
-	var/list/positive_quirks = list()
-	var/list/negative_quirks = list()
-	var/list/neutral_quirks = list()
+	//Quirk list
 	var/list/all_quirks = list()
-	var/list/character_quirks = list()
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
@@ -221,7 +218,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 16
+				max_save_slots = 24
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -241,13 +238,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	update_preview_icon(current_tab != 2)
 	var/list/dat = list("<center>")
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>Content Preferences</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -333,12 +331,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
 
-			update_preview_icon()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Flavor Text</h2>"
 			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Examine Text</b></a><br>"
-			if(lentext(features["flavor_text"]) <= 40)
-				if(!lentext(features["flavor_text"]))
+			if(length(features["flavor_text"]) <= 40)
+				if(!length(features["flavor_text"]))
 					dat += "\[...\]"
 				else
 					dat += "[features["flavor_text"]]"
@@ -625,6 +622,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a>"
 
+			if("insect_markings" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Insect markings</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=insect_markings;task=input'>[features["insect_markings"]]</a><BR>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -825,17 +835,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
-			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
-			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Lewdchem:</b><a href='?_src_=prefs;preference=lewdchem'>[lewdchem == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Auto OOC:</b> <a href='?_src_=prefs;preference=auto_ooc'>[auto_ooc ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+			var/p_chaos
+			if (!preferred_chaos)
+				p_chaos = "No preference"
+			else
+				p_chaos = preferred_chaos
+			dat += "<b>Preferred Chaos Amount:</b> <a href='?_src_=prefs;preference=preferred_chaos;task=input'>[p_chaos]</a><br>"
 			dat += "<br>"
 			dat += "</td>"
 			dat += "</tr></table>"
@@ -977,6 +988,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "</font>"
 				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 			dat += "</table>"
+		if(4) // Content preferences
+			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<h2>Fetish content prefs</h2>"
+			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Forced Feminization:</b> <a href='?_src_=prefs;preference=feminization'>[(cit_toggles & FORCED_FEM) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Forced Masculinization:</b> <a href='?_src_=prefs;preference=masculinization'>[(cit_toggles & FORCED_MASC) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Lewd Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[(cit_toggles & HYPNO) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "</td>"
+			dat +="<td width='300px' height='300px' valign='top'>"
+			dat += "<h2>Other content prefs</h2>"
+			dat += "<b>Breast Enlargement:</b> <a href='?_src_=prefs;preference=breast_enlargement'>[(cit_toggles & BREAST_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Penis Enlargement:</b> <a href='?_src_=prefs;preference=penis_enlargement'>[(cit_toggles & PENIS_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[(cit_toggles & NEVER_HYPNO) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<b>Aphrodisiacs:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_APHRO) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<br>"
+
 
 	dat += "<hr><center>"
 
@@ -1196,7 +1227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
-		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
+		dat += "<center>[GetPositiveQuirkCount()] / [MAX_QUIRKS] max positive quirks<br>\
 		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
 		for(var/V in SSquirks.quirks)
 			var/datum/quirk/T = SSquirks.quirks[V]
@@ -1227,12 +1258,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
 			else
 				if(has_quirk)
-					dat += "<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
+					dat += "<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
+					<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)]<br>"
 				else
-					dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
-		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
+					dat += "<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Remove" : "Take"] ([quirk_cost] pts.)</a> \
+					<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)]<br>"
+		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Quirks</a></center>"
 
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Quirk Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options("can_close=0")
@@ -1245,6 +1276,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
 	return bal
+
+/datum/preferences/proc/GetPositiveQuirkCount()
+	. = 0
+	for(var/q in all_quirks)
+		if(SSquirks.quirk_points[q] > 0)
+			.++
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()
@@ -1311,43 +1348,30 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/quirk = href_list["trait"]
 				if(!SSquirks.quirks[quirk])
 					return
+				for(var/V in SSquirks.quirk_blacklist) //V is a list
+					var/list/L = V
+					for(var/Q in all_quirks)
+						if((quirk in L) && (Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
+							return
 				var/value = SSquirks.quirk_points[quirk]
-				if(value == 0)
-					if(quirk in neutral_quirks)
-						neutral_quirks -= quirk
-						all_quirks -= quirk
-					else
-						neutral_quirks += quirk
-						all_quirks += quirk
+				var/balance = GetQuirkBalance()
+				if(quirk in all_quirks)
+					if(balance + value < 0)
+						to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+						return
+					all_quirks -= quirk
 				else
-					var/balance = GetQuirkBalance()
-					if(quirk in positive_quirks)
-						positive_quirks -= quirk
-						all_quirks -= quirk
-					else if(quirk in negative_quirks)
-						if(balance + value < 0)
-							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
-							return
-						negative_quirks -= quirk
-						all_quirks -= quirk
-					else if(value > 0)
-						if(positive_quirks.len >= MAX_QUIRKS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
-							return
-						if(balance - value < 0)
-							to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
-							return
-						positive_quirks += quirk
-						all_quirks += quirk
-					else
-						negative_quirks += quirk
-						all_quirks += quirk
+					if(GetPositiveQuirkCount() >= MAX_QUIRKS)
+						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
+						return
+					if(balance - value < 0)
+						to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
+						return
+					all_quirks += quirk
 				SetQuirks(user)
 			if("reset")
 				all_quirks = list()
-				positive_quirks = list()
-				negative_quirks = list()
-				neutral_quirks = list()
 				SetQuirks(user)
 			else
 				SetQuirks(user)
@@ -1560,10 +1584,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-							update_preview_icon()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-							update_preview_icon()
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1573,10 +1595,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor2"] = pref_species.default_color
-							update_preview_icon()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
-							update_preview_icon()
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1586,10 +1606,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor3"] = pref_species.default_color
-							update_preview_icon()
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
-							update_preview_icon()
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1731,14 +1749,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["body_markings"] = new_body_markings
 						if(new_body_markings != "None")
 							features["mam_body_markings"] = "None"
-						update_preview_icon()
 
 				if("legs")
 					var/new_legs
 					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in GLOB.legs_list
 					if(new_legs)
 						features["legs"] = new_legs
-						update_preview_icon()
 
 				if("insect_wings")
 					var/new_insect_wings
@@ -1757,6 +1773,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_insect_fluff = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.insect_fluffs_list
 					if(new_insect_fluff)
 						features["insect_fluff"] = new_insect_fluff
+
+				if("insect_markings")
+					var/new_insect_markings
+					new_insect_markings = input(user, "Choose your character's markings:", "Character Preference") as null|anything in GLOB.insect_markings_list
+					if(new_insect_markings)
+						features["insect_markings"] = new_insect_markings
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
@@ -1824,7 +1846,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if(new_mam_body_markings == "None")
 							features["mam_body_markings"] = "Plain"
 							features["body_markings"] = "None"
-						update_preview_icon()
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
@@ -1998,6 +2019,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
+				if ("preferred_chaos")
+					var/pickedchaos = input(user, "Choose your preferred level of chaos. This will help with dynamic threat level ratings.", "Character Preference") as null|anything in list(CHAOS_NONE,CHAOS_LOW,CHAOS_MED,CHAOS_HIGH,CHAOS_MAX)
+					preferred_chaos = pickedchaos
 				if ("clientfps")
 					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
@@ -2029,8 +2053,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					features["genitals_use_skintone"] = !features["genitals_use_skintone"]
 				if("arousable")
 					arousable = !arousable
-				if("lewdchem")
-					lewdchem = !lewdchem
 				if("has_cock")
 					features["has_cock"] = !features["has_cock"]
 					if(features["has_cock"] == FALSE)
@@ -2057,13 +2079,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["has_womb"] = FALSE
 				if("has_womb")
 					features["has_womb"] = !features["has_womb"]
-				if("exhibitionist")
-					features["exhibitionist"] = !features["exhibitionist"]
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
 					user.client.change_view(CONFIG_GET(string/default_view))
 				if("autostand")
 					autostand = !autostand
+				if("auto_ooc")
+					auto_ooc = !auto_ooc
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
@@ -2179,6 +2201,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("toggledigestionnoise")
 					cit_toggles ^= DIGESTION_NOISES
+
+				if("breast_enlargement")
+					cit_toggles ^= BREAST_ENLARGEMENT
+
+				if("penis_enlargement")
+					cit_toggles ^= PENIS_ENLARGEMENT
+
+				if("feminization")
+					cit_toggles ^= FORCED_FEM
+
+				if("masculinization")
+					cit_toggles ^= FORCED_MASC
+
+				if("hypno")
+					cit_toggles ^= HYPNO
+
 				//END CITADEL EDIT
 
 				if("ambientocclusion")
@@ -2293,10 +2331,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.shirt_color = shirt_color
 	character.socks_color = socks_color
 
-
-	character.backbag = backbag
-	character.jumpsuit_style = jumpsuit_style
-
 	var/datum/species/chosen_species
 	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))
 		chosen_species = pref_species.type
@@ -2305,8 +2339,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		pref_species = new /datum/species/human
 		save_character()
 
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.features = features.Copy()
+	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species
@@ -2332,9 +2366,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(TRUE)
 
 	//let's be sure the character updates
-	character.update_body()
-	character.update_hair()
-	character.update_body_parts()
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

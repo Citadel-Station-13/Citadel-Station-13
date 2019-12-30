@@ -36,12 +36,12 @@
 		icon_state = "[icon_type]box"
 
 /obj/item/storage/fancy/examine(mob/user)
-	..()
+	. = ..()
 	if(fancy_open)
 		if(length(contents) == 1)
-			to_chat(user, "There is one [icon_type] left.")
+			. += "There is one [icon_type] left."
 		else
-			to_chat(user, "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left.")
+			. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left."
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
@@ -143,8 +143,8 @@
 	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to extract contents.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -157,6 +157,7 @@
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
+	return TRUE
 
 /obj/item/storage/fancy/cigarettes/update_icon()
 	if(fancy_open || !contents.len)
@@ -309,9 +310,10 @@
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
 
-		var/cigar_position = 1 //generate sprites for cigars in the box
+		var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
 		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
-			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
+			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]")
+			cigar_overlay.pixel_x = 3 * cigar_position
 			add_overlay(cigar_overlay)
 			cigar_position++
 

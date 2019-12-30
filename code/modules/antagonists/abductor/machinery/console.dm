@@ -43,12 +43,15 @@
 		dat += "Collected Samples : [points] <br>"
 		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
-		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthesizer (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=shrink_ray'>Shrink Ray Blaster (2 Credits)</a><br>"
+		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet (1 Credit)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest (1 Credit)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer (1 Credit)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool (1 Credit)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=tongue'>Superlingual Matrix (1 Credit)</a><br>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
@@ -101,7 +104,7 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("baton")
-				Dispense(/obj/item/abductor_baton,cost=2)
+				Dispense(/obj/item/abductor/baton,cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
@@ -112,6 +115,12 @@
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 			if("mind_device")
 				Dispense(/obj/item/abductor/mind_device,cost=2)
+			if("chem_dispenser")
+				Dispense(/obj/item/abductor_machine_beacon/chem_dispenser,cost=2)
+			if("tongue")
+				Dispense(/obj/item/organ/tongue/abductor)
+			if("shrink_ray")
+				Dispense(/obj/item/gun/energy/shrink_ray,cost=2)
 	updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
@@ -136,9 +145,9 @@
 
 	var/entry_name
 	if(remote)
-		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2)
+		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2, tooltips = TRUE)
 	else
-		entry_name = show_radial_menu(usr, src, disguises2)
+		entry_name = show_radial_menu(usr, src, disguises2, require_near = TRUE, tooltips = TRUE)
 
 	var/datum/icon_snapshot/chosen = disguises[entry_name]
 	if(chosen && vest && (remote || in_range(usr,src)))
@@ -178,8 +187,8 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(istype(target.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-		say("Subject wearing specialized protective headgear, unable to get a proper scan!")
+	if(target.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name

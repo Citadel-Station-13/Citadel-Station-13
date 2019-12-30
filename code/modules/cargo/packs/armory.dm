@@ -61,7 +61,7 @@
 
 /datum/supply_pack/security/armory/dragnetgun
 	name = "DRAGnet gun Crate"
-	desc = "Contains two DRAGnet gun. A Dynamic Rapid-Apprehension of the Guilty net the revolution in law enforcement technology that YOU Want! Requires Armory access to open."
+	desc = "Contains two DRAGnet guns. A Dynamic Rapid-Apprehension of the Guilty net the revolution in law enforcement technology that YOU Want! Requires Armory access to open."
 	cost = 3250
 	contains = list(/obj/item/gun/energy/e_gun/dragnet,
 					/obj/item/gun/energy/e_gun/dragnet)
@@ -87,7 +87,7 @@
 /datum/supply_pack/security/armory/mindshield
 	name = "Mindshield Implants Crate"
 	desc = "Prevent against radical thoughts with three Mindshield implants. Requires Armory access to open."
-	cost = 3000 //Lowered untill cargo rework MK II is done
+	cost = 4000
 	contains = list(/obj/item/storage/lockbox/loyalty)
 	crate_name = "mindshield implant crate"
 

@@ -324,7 +324,7 @@
 		damtype = "fire"
 		START_PROCESSING(SSobj, src)
 
-/obj/item/flashlight/flare/is_hot()
+/obj/item/flashlight/flare/get_temperature()
 	return on * heat
 
 /obj/item/flashlight/flare/torch
@@ -431,6 +431,7 @@
 	icon_state = "glowstick"
 	item_state = "glowstick"
 	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
+	rad_flags = RAD_NO_CONTAMINATE
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()

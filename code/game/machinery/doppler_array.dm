@@ -22,8 +22,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	return ..()
 
 /obj/machinery/doppler_array/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+	. = ..()
+	. += "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>"
 
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
@@ -114,13 +114,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return
 
 	var/point_gain = 0
-	
+
 	/*****The Point Calculator*****/
-	
+
 	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	else if(orig_light < 4500) 
+	else if(orig_light < 4500)
 		point_gain = (83300 * orig_light) / (orig_light + 3000)
 	else
 		point_gain = TECHWEB_BOMB_POINTCAP

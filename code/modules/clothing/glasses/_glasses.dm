@@ -23,9 +23,9 @@
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/examine(mob/user)
-	..()
+	. = ..()
 	if(glass_colour_type && ishuman(user))
-		to_chat(user, "<span class='notice'>Alt-click to toggle its colors.</span>")
+		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
@@ -43,15 +43,16 @@
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
-		if(!(HAS_TRAIT(H, TRAIT_BLIND)))
-			if(H.glasses == src)
-				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
-				H.flash_act(visual = 1)
-				H.blind_eyes(3)
-				H.blur_eyes(5)
-				H.adjust_eye_damage(5)
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+	if((!HAS_TRAIT(H, TRAIT_BLIND) || !eyes) && H.glasses == src)
+		to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
+		H.flash_act(visual = 1)
+		H.blind_eyes(3)
+		H.blur_eyes(5)
+		eyes.applyOrganDamage(5)
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
@@ -98,7 +99,7 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
-	scan_reagents = TRUE //You can see reagents while wearing science goggles
+	clothing_flags = SCAN_REAGENTS //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
@@ -202,7 +203,7 @@
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	scan_reagents = TRUE
+	clothing_flags = SCAN_REAGENTS
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -362,7 +363,7 @@
 		desc = replacetext(desc, "person", "man")
 	else if(user.gender == FEMALE)
 		desc = replacetext(desc, "person", "woman")
-	..()
+	. = ..()
 	desc = desk
 
 /obj/item/clothing/glasses/thermal/eyepatch
@@ -404,7 +405,7 @@
 	item_state = "godeye"
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
-	scan_reagents = TRUE
+	clothing_flags = SCAN_REAGENTS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
@@ -427,19 +428,17 @@
 	..()
 
 /obj/item/clothing/glasses/AltClick(mob/user)
+	. = ..()
 	if(glass_colour_type && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, "You will now see glasses colors.")
-					else
-						to_chat(H, "You will no longer see glasses colors.")
-					H.update_glasses_color(src, 1)
-	else
-		return ..()
+		if(H.client?.prefs && src == H.glasses)
+			H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
+			if(H.client.prefs.uses_glasses_colour)
+				to_chat(H, "You will now see glasses colors.")
+			else
+				to_chat(H, "You will no longer see glasses colors.")
+			H.update_glasses_color(src, 1)
+		return TRUE
 
 /obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
 	var/old_colour_type = glass_colour_type

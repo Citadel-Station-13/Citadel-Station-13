@@ -79,17 +79,17 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(obj/item/storage/S)
-	..()
-	var/obj/item/storage/belt/sabre/B = S
+/obj/item/melee/sabre/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/B = S.parent
 	if(istype(B))
 		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
-
-/obj/item/melee/sabre/on_enter_storage(obj/item/storage/S)
 	..()
-	var/obj/item/storage/belt/sabre/B = S
+
+/obj/item/melee/sabre/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/B = S.parent
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
 
 /obj/item/melee/sabre/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre")
@@ -265,7 +265,7 @@
 		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		new /obj/effect/gibspawner/generic(get_turf(H), H.dna)
+		H.spawn_gibs()
 		return (BRUTELOSS)
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)

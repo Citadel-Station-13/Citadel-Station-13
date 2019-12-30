@@ -39,23 +39,12 @@
 	if(..())
 		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == INTENT_HARM && stat == DEAD && (butcher_results || guaranteed_butcher_results)) //can we butcher it?
-		var/datum/component/butchering/butchering = I.GetComponent(/datum/component/butchering)
-		if(butchering && butchering.butchering_enabled)
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
-			if(do_mob(user, src, butchering.speed) && Adjacent(I))
-				butchering.Butcher(user, src)
-			return 1
-		else if(I.is_sharp() && !butchering) //give sharp objects butchering functionality, for consistency
-			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
-			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
-			return
 	return I.attack(src, user)
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
+		return
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
@@ -82,7 +71,7 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLossBuffered(getweight()*0.8)//CIT CHANGE - makes attacking things cause stamina loss
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
@@ -121,7 +110,7 @@
 			totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE)
+		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -174,4 +163,3 @@
 
 /obj/item/proc/getweight()
 	return total_mass || w_class * 1.25
-

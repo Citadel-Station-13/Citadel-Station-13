@@ -366,7 +366,42 @@
 	if(m_intent == MOVE_INTENT_RUN)
 		m_intent = MOVE_INTENT_WALK
 	else
+		if (HAS_TRAIT(src,TRAIT_NORUNNING))	// FULPSTATION 7/10/19 So you can't run during fortitude.
+			to_chat(src, "You find yourself unable to run.")
+			return FALSE
 		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_icon(src)
+			selector.update_icon()
+
+/mob/verb/up()
+	set name = "Move Upwards"
+	set category = "IC"
+
+	if(zMove(UP, TRUE))
+		to_chat(src, "<span class='notice'>You move upwards.</span>")
+
+/mob/verb/down()
+	set name = "Move Down"
+	set category = "IC"
+
+	if(zMove(DOWN, TRUE))
+		to_chat(src, "<span class='notice'>You move down.</span>")
+
+/mob/proc/zMove(dir, feedback = FALSE)
+	if(dir != UP && dir != DOWN)
+		return FALSE
+	var/turf/target = get_step_multiz(src, dir)
+	if(!target)
+		if(feedback)
+			to_chat(src, "<span class='warning'>There's nothing in that direction!</span>")
+		return FALSE
+	if(!canZMove(dir, target))
+		if(feedback)
+			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
+		return FALSE
+	forceMove(target)
+	return TRUE
+
+/mob/proc/canZMove(direction, turf/target)
+	return FALSE

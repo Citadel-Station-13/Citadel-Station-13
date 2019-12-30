@@ -81,6 +81,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
+	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
 
 	var/tool_behaviour = NONE
@@ -96,9 +97,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// Needs to be in /obj/item because corgis can wear a lot of
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
-
-	var/datum/rpg_loot/rpg_loot = null
-
 
 	//Tooltip vars
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
@@ -124,7 +122,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	actions_types = null
 
 	if(GLOB.rpg_loot_items)
-		rpg_loot = new(src)
+		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -142,6 +140,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else if (!istype(embedding, /datum/embedding_behavior))
 		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -149,7 +150,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
-	QDEL_NULL(rpg_loot)
 	return ..()
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -187,14 +187,24 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	src.loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
-	..()
-	var/pronoun
-	if(src.gender == PLURAL)
-		pronoun = "They are"
+	. = ..()
+
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
+
+	if(resistance_flags & INDESTRUCTIBLE)
+		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
-	to_chat(user, "[pronoun] a [size] item." )
+		if(resistance_flags & LAVA_PROOF)
+			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
+		if(resistance_flags & FREEZE_PROOF)
+			. += "[src] is made of cold-resistant materials."
+		if(resistance_flags & FIRE_PROOF)
+			. += "[src] is made of fire-retardant materials."
+
+
+
 
 	if(!user.research_scanner)
 		return
@@ -206,7 +216,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/boostable_nodes = techweb_item_boost_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
+			if(!node)
+				continue
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
@@ -229,7 +241,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join())
+	. += research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -385,13 +397,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
-	var/list/directaccess = usr.DirectAccess()
+	var/list/directaccess = usr.DirectAccess()	//This, specifically, is what requires the copypaste. If this were after the adjacency check, then it'd be impossible to use items in your inventory, among other things.
+												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess)))
 		if(!usr.get_active_held_item())
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)
 				melee_attack_chain(usr, over)
-			return
+			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
@@ -557,7 +570,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
 	if(A && !QDELETED(A))
 		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, A, throwingdatum)
-		if(is_hot() && isliving(A))
+		if(get_temperature() && isliving(A))
 			var/mob/living/L = A
 			L.IgniteMob()
 		var/itempush = 1
@@ -624,10 +637,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(flags & ITEM_SLOT_NECK)
 		owner.update_inv_neck()
 
-/obj/item/proc/is_hot()
+/obj/item/proc/get_temperature()
 	return heat
 
-/obj/item/proc/is_sharp()
+/obj/item/proc/get_sharpness()
 	return sharpness
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
@@ -654,7 +667,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		location.hotspot_expose(flame_heat, 1)
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""

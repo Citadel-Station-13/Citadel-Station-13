@@ -1,5 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - rscadd: "Adds Stun Circuit and Pneumatic Cannon Integrated Circuits"
-  - bugfix: "Fixed extinguisher and smoke circuits not accepting any reagents."

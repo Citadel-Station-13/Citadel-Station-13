@@ -1,6 +1,7 @@
 /datum/reagent/drug
 	name = "Drug"
 	id = "drug"
+	value = 12
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
@@ -12,6 +13,7 @@
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
 	id = "space_drugs"
+	value = 6
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -39,6 +41,7 @@
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	id = "nicotine"
+	value = 0
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -162,7 +165,7 @@
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
 	id = "methamphetamine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	description = "Reduces stun times by about 300%, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
@@ -469,7 +472,7 @@
 
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -480,7 +483,7 @@
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L

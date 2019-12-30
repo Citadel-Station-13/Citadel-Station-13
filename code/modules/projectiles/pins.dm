@@ -60,10 +60,10 @@
 
 /obj/item/firing_pin/proc/auth_fail(mob/living/user)
 	if(user)
-		user.show_message(fail_message, 1)
+		user.show_message(fail_message, MSG_VISUAL)
 	if(selfdestruct)
 		if(user)
-			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
+			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
 			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
@@ -135,7 +135,7 @@
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))))
 		return FALSE
 	return TRUE
 

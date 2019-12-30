@@ -31,7 +31,7 @@
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
-	var/list/datum/game_mode/replacementmode = null
+	var/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
@@ -81,6 +81,7 @@
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
+	//finalize_monster_hunters() Disabled for now
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
@@ -258,7 +259,7 @@
 
 /datum/game_mode/proc/send_intercept()
 	if(flipseclevel && !(config_tag == "extended"))//CIT CHANGE - lets the security level be flipped roundstart
-		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", 'sound/ai/commandreport.ogg')
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", "commandreport")
 		return
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
@@ -288,7 +289,7 @@
 			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/ai/intercept.ogg')
+	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", "intercept")
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
@@ -305,48 +306,88 @@
 // The odds become:
 //     Player A: 150 / 250 = 0.6 = 60%
 //     Player B: 100 / 250 = 0.4 = 40%
-/datum/game_mode/proc/antag_pick(list/datum/candidates)
+
+//Use return list if you want a list, with the arg being the number you want returned.
+//WARNING: THIS PROC DOES NOT TAKE INTO ACCOUNT WHAT SSPersistence ALREADY HAS FOR "ADJUST ANTAG REP". If this is used more than once
+//and the person rolls more than once, they will not get even more deduction!
+//More efficient if you use return list instead of calling this multiple times
+//fail_default_pick makes it use pick() instead of antag rep if it can't find anyone
+//allow_zero_if_insufficient allows it to pick people with zero rep if there isn't enough antags
+/datum/game_mode/proc/antag_pick(list/datum/mind/candidates, return_list = FALSE, fail_default_pick = TRUE, allow_zero_if_insufficient = TRUE)
 	if(!CONFIG_GET(flag/use_antag_rep)) // || candidates.len <= 1)
 		return pick(candidates)
 
-	// Tickets start at 100
-	var/DEFAULT_ANTAG_TICKETS = CONFIG_GET(number/default_antag_tickets)
+	//whoever named the config entries is a bad person :(
 
-	// You may use up to 100 extra tickets (double your odds)
-	var/MAX_TICKETS_PER_ROLL = CONFIG_GET(number/max_tickets_per_roll)
-
-
-	var/total_tickets = 0
-
-	MAX_TICKETS_PER_ROLL += DEFAULT_ANTAG_TICKETS
-
-	var/p_ckey
-	var/p_rep
-
-	for(var/datum/mind/mind in candidates)
-		p_ckey = ckey(mind.key)
-		total_tickets += min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
-
-	var/antag_select = rand(1,total_tickets)
-	var/current = 1
-
-	for(var/datum/mind/mind in candidates)
-		p_ckey = ckey(mind.key)
-		p_rep = SSpersistence.antag_rep[p_ckey]
-
-		var/previous = current
-		var/spend = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
-		current += spend
-
-		if(antag_select >= previous && antag_select <= (current-1))
-			SSpersistence.antag_rep_change[p_ckey] = -(spend - DEFAULT_ANTAG_TICKETS)
-
-//			WARNING("AR_DEBUG: Player [mind.key] won spending [spend] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
-
-			return mind
-
-	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
-	return pick(candidates)
+	//Tickets you get for free
+	var/free_tickets = CONFIG_GET(number/default_antag_tickets)
+	//Max extra tickets you can use
+	var/additional_tickets = CONFIG_GET(number/max_tickets_per_roll)
+	
+	var/list/ckey_to_mind = list()		//this is admittedly shitcode but I'm webediting
+	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory. how many tickets someone has stored
+	var/list/curr_tickets = list()				//how many tickets someone has for *this* antag roll, so with the free tickets
+	var/list/datum/mind/insufficient = list()				//who got cucked out of an antag roll due to not having *any* tickets
+	for(var/datum/mind/M in candidates)
+		var/mind_ckey = ckey(M.key)
+		var/can_spend = min(prev_tickets[mind_ckey], additional_tickets)	//they can only spend up to config/max_tickets_per_roll
+		var/amount = can_spend + free_tickets			//but they get config/default_antag_tickets for free
+		if(amount <= 0)		//if they don't have any
+			insufficient += M		//too bad!
+			continue
+		curr_tickets[mind_ckey] = amount
+		ckey_to_mind[mind_ckey] = M			//make sure we can look them up after picking
+	
+	if(!return_list)		//return a single guy
+		var/ckey
+		if(length(curr_tickets))
+			ckey = pickweight(curr_tickets)
+			SSpersistence.antag_rep_change[ckey] = -(curr_tickets[ckey] - free_tickets)		//deduct what they spent
+		var/mind = ckey_to_mind[ckey] || (allow_zero_if_insufficient? pick(insufficient) : null)		//we want their mind
+		if(!mind)		//no mind
+			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			message_admins(warning)
+			log_game(warning)
+			if(fail_default_pick)
+				mind = pick(candidates)
+		return mind
+	else			//the far more efficient and proper use of this, to get a list
+		var/list/rolled = list()
+		var/list/spend_tickets = list()
+		for(var/i in 1 to return_list)
+			if(!length(curr_tickets))		//ah heck, we're out of candidates..
+				break
+			var/ckey = pickweight(curr_tickets)		//pick
+			rolled += ckey		//add
+			spend_tickets[ckey] = curr_tickets[ckey] - free_tickets
+			curr_tickets -= ckey			//don't roll them again
+		var/missing = return_list - length(rolled)
+		var/list/add
+		if((missing > 0) && allow_zero_if_insufficient)		//need more..
+			for(var/i in 1 to missing)
+				if(!length(insufficient))
+					break			//still not enough
+				var/datum/mind/M = pick_n_take(insufficient)
+				add += M
+		if(!length(rolled) && !length(add))		//if no one could normally roll AND no one can zero roll
+			var/warning = "WARNING: No antagonists were successfully picked by /datum/gamemode/proc/antag_pick()![fail_default_pick? " Defaulting to pick()!":""]"
+			message_admins(warning)
+			log_game(warning)
+			var/list/failed = list()
+			if(fail_default_pick)
+				var/list/C = candidates.Copy()
+				for(var/i in 1 to return_list)
+					if(!length(C))
+						break
+					failed += pick_n_take(C)
+			return failed		//Wew, no one qualified!
+		for(var/i in 1 to length(rolled))
+			var/ckey = rolled[i]
+			SSpersistence.antag_rep_change[ckey] = -(spend_tickets[ckey])	//deduct what all of the folks who rolled spent
+			rolled[i] = ckey_to_mind[ckey]		//whoever called us wants minds, not ckeys
+		if(add)
+			rolled += add
+		return rolled
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()

@@ -14,7 +14,7 @@
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 10)
 		return
 
 	var/obj/effect/decal/cleanable/semen/S = locate() in T
@@ -80,7 +80,7 @@
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
 		return
-	if(reac_volume < 3)
+	if(reac_volume < 10)
 		return
 
 	var/obj/effect/decal/cleanable/femcum/S = locate() in T
@@ -100,7 +100,7 @@
 	color = "#FFADFF"//PINK, rgb(255, 173, 255)
 
 /datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && !HAS_TRAIT(M, TRAIT_CROCRIN_IMMUNE))
+	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO))
 		if(prob(33))
 			M.adjustArousalLoss(2)
 		if(prob(5))
@@ -114,15 +114,15 @@
 	name = "Hexacrocin"
 	id = "aphro+"
 	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
-					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a\
-					 permanent increase in libido (commonly referred to as 'bimbofication')."
+					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
+					permanent increase in libido (commonly referred to as 'bimbofication')."
 	taste_description = "liquid desire"
 	color = "#FF2BFF"//dark pink
 	addiction_threshold = 20
 	overdose_threshold = 20
 
 /datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && !HAS_TRAIT(M, TRAIT_CROCRIN_IMMUNE))
+	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO))
 		if(prob(33))
 			M.adjustArousalLoss(6)//not quite six times as powerful, but still considerably more powerful.
 		if(prob(5))
@@ -154,7 +154,7 @@
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.canbearoused && !HAS_TRAIT(M, TRAIT_CROCRIN_IMMUNE) && prob(33))
+	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
 		if(prob(5) && M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
 			if(prob(5)) //Less spam
 				to_chat(M, "<span class='love'>Your libido is going haywire!</span>")

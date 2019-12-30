@@ -92,6 +92,9 @@
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
+			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -422,4 +425,4 @@
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

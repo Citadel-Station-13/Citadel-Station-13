@@ -24,13 +24,13 @@
 	. = ..()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
-	..()
+	. = ..()
 	if(defib)
-		to_chat(user, "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>")
+		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>"
 		if(GLOB.security_level >= SEC_LEVEL_RED)
-			to_chat(user, "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>")
+			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
-			to_chat(user, "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>")
+			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
 
 /obj/machinery/defibrillator_mount/process()
 	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
@@ -38,17 +38,21 @@
 		defib.cell.give(180) //90% efficiency, slightly better than the cell charger's 87.5%
 		update_icon()
 
-/obj/machinery/defibrillator_mount/update_icon()
-	cut_overlays()
-	if(defib)
-		add_overlay("defib")
-		if(defib.powered)
-			add_overlay(defib.safety ? "online" : "emagged")
-			var/ratio = defib.cell.charge / defib.cell.maxcharge
-			ratio = CEILING(ratio * 4, 1) * 25
-			add_overlay("charge[ratio]")
-		if(clamps_locked)
-			add_overlay("clamps")
+/obj/machinery/defibrillator_mount/update_overlays()
+	. = ..()
+	if(!defib)
+		return
+
+	. += "defib"
+
+	if(defib.powered)
+		. += (defib.safety ? "online" : "emagged")
+		var/ratio = defib.cell.charge / defib.cell.maxcharge
+		ratio = CEILING(ratio * 4, 1) * 25
+		. += "charge[ratio]"
+
+	if(clamps_locked)
+		. += "clamps"
 
 /obj/machinery/defibrillator_mount/get_cell()
 	if(defib)
@@ -115,8 +119,10 @@
 	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
+	. = TRUE
 	if(!defib)
 		to_chat(user, "<span class='warning'>It'd be hard to remove a defib unit from a mount that has none.</span>")
 		return

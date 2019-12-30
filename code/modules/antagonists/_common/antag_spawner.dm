@@ -37,6 +37,8 @@
 		dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
 		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_ROBELESS]'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_MARTIAL]'>Martial Artist</a><BR>"
+		dat += "<I>Your apprentice is training in ancient martial arts. They know the Plasmafist and Nuclear Fist.</I><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -56,7 +58,7 @@
 			if(used)
 				to_chat(H, "You already used this contract!")
 				return
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src)
+			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src, ignore_category = POLL_IGNORE_WIZARD)
 			if(LAZYLEN(candidates))
 				if(QDELETED(src))
 					return
@@ -182,6 +184,10 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
+/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
+	name = "syndicate saboteur teleporter"
+	borg_to_spawn = "Saboteur"
+
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -191,6 +197,8 @@
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
+		if("Saboteur")
+			R = new /mob/living/silicon/robot/modules/syndicate/saboteur(T)
 		else
 			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
@@ -235,7 +243,7 @@
 		return
 	if(used)
 		return
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, src)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, src, ignore_category = POLL_IGNORE_DEMON)
 	if(LAZYLEN(candidates))
 		if(used || QDELETED(src))
 			return

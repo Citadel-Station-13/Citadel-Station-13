@@ -158,7 +158,7 @@
 
 /obj/belly/Destroy()
 	SSbellies.belly_list -= src
-	if(owner)
+	if(owner?.vore_organs)
 		owner.vore_organs -= src
 		owner = null
 	. = ..()
@@ -595,7 +595,7 @@
 
 	for(var/mob/living/H in hearing_mobs)
 		if(H && H.client && (isturf(H.loc)))
-			H.show_message(struggle_outer_message, 1) // visible
+			H.show_message(struggle_outer_message, MSG_VISUAL) // visible
 
 	to_chat(R,struggle_user_message)
 

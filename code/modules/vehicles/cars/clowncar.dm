@@ -21,7 +21,7 @@
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
+		if(H.mind && HAS_TRAIT(H.mind, TRAIT_CLOWN_MENTALITY)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
@@ -72,8 +72,8 @@
 	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
-  playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
-  return ..()
+	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	return ..()
 
 /obj/vehicle/sealed/car/clowncar/after_move(direction)
 	. = ..()
