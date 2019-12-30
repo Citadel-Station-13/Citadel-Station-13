@@ -103,7 +103,7 @@
 		new_xeno.notransform = 0
 		new_xeno.invisibility = 0
 
-	var/old_owner = owner
+	var/mob/living/carbon/old_owner = owner
 	if(kill_on_sucess) //ITS TOO LATE
 		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		owner.apply_damage(rand(100,300),BRUTE,zone,FALSE) //Random high damage to torso so health sensors don't metagame.
