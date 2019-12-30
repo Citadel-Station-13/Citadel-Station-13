@@ -19,7 +19,7 @@
 
 	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_RAD, MODE_RAD = MODE_NONE)
 	var/mode = MODE_NONE
-	var/range = 6
+	var/range = 1
 
 /obj/item/clothing/glasses/meson/engine/prescription
 	name = "prescription engineering scanner goggles"
@@ -90,7 +90,7 @@
 
 	for(var/i in rad_places)
 		var/turf/place = i
-		if(get_dist(user, place) >= range*2)	//Rads are easier to see than wires under the floor
+		if(get_dist(user, place) >= range*8)	//Rads are easier to see than wires under the floor
 			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
 		var/image/pic = new(loc = place)
@@ -139,7 +139,6 @@
 	item_state = "trayson-t-ray"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
-
 	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_NONE)
 
 /obj/item/clothing/glasses/meson/engine/tray/prescription
@@ -152,7 +151,6 @@
 	icon_state = "trayson-shuttle"
 	item_state = "trayson-shuttle"
 	desc = "Used to see the boundaries of shuttle regions."
-
 	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
 
 #undef MODE_NONE
