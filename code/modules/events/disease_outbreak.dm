@@ -37,7 +37,7 @@
 			continue
 		if(!H.client)
 			continue
-		if(H.exempt_from_health_events)
+		if(HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
 			continue
 		if(H.stat == DEAD)
 			continue

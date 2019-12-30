@@ -15,7 +15,7 @@
 			continue
 		if(H.stat == DEAD)
 			continue
-		if (H.exempt_from_health_events)
+		if (HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
 			continue
 		if(!H.getorgan(/obj/item/organ/appendix)) //Don't give the disease to some who lacks it, only for it to be auto-cured
 			continue
