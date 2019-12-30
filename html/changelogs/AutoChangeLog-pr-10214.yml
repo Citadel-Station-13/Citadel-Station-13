@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "dextrous simplemobs can now swap action intent with 1, 2, 3, 4 now. Just like humies, ayys and monkys."

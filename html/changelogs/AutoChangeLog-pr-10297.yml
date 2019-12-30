@@ -1,0 +1,4 @@
+author: "Narcissisko (ported by Hatterhat)"
+delete-after: True
+changes: 
+  - rscadd: "Luxury Bar Capsule, at 10,000 points. Comes with no medical supplies, a bar, and a bunch of cigars. Ported from tgstation/tgstation#45547."

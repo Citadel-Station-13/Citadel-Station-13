@@ -1,0 +1,5 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - rscadd: "Ghost cafe spawner. For letting people spawn as their own character in the ninja holding facility. It bypasses the usual check, so people who have suicided/ghosted/cryod may use it."
+  - rscadd: "Dorms in the ninja holding facility."

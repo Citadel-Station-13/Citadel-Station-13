@@ -781,6 +781,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					S = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
 				if("insect_fluff")
 					S = GLOB.insect_fluffs_list[H.dna.features["insect_fluff"]]
+				if("insect_markings")
+					S = GLOB.insect_markings_list[H.dna.features["insect_markings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 				if("ipc_screen")
@@ -1279,6 +1281,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT(H, TRAIT_FAT))//I share your pain, past coder.
@@ -1585,20 +1589,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.adjustStaminaLossBuffered(3)
 		return FALSE
 	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
+			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
+			return FALSE
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
 		user.adjustStaminaLossBuffered(3)
-		if(HAS_TRAIT(target, TRAIT_ASSBLASTUSA))
-			var/hit_zone = (user.held_index_to_dir(user.active_hand_index) == "l" ? "l_":"r_") + "arm"
-			user.adjustStaminaLoss(20, affected_zone = hit_zone)
-			user.visible_message(\
-				"<span class='danger'>\The [user] slaps \the [target]'s ass, but their hand bounces off like they hit metal!</span>",\
-				"<span class='danger'>You slap [user == target ? "your" : "\the [target]'s"] ass, but feel an intense amount of pain as you realise their buns are harder than steel!</span>",\
-				"You hear a slap."
-			)
-			playsound(target.loc, 'sound/weapons/tap.ogg', 50, 1, -1)
-			user.emote("scream")
-			return FALSE
-
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message(\
 			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\

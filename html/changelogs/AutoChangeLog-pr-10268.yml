@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscdel: "Removed the old (almost) unused roboticist encryption key and headset."

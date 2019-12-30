@@ -380,3 +380,15 @@
 	icon_state = "colour"
 	item_color = "colour"
 	dog_fashion = /datum/dog_fashion/head/colour
+
+/obj/item/clothing/head/christmashat
+	name = "red santa hat"
+	desc = "A red Christmas Hat! How festive!"
+	icon_state = "christmashat"
+	item_state = "christmashat"
+
+/obj/item/clothing/head/christmashatg
+	name = "green santa hat"
+	desc = "A green Christmas Hat! How festive!"
+	icon_state = "christmashatg"
+	item_state = "christmashatg"

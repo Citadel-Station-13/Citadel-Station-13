@@ -57,9 +57,9 @@
 #define BALLS_SACK_SIZE_DEF	8
 #define BALLS_SACK_SIZE_MAX 40
 
-#define CUM_RATE			0.035
+#define CUM_RATE			2 // holy shit what a really shitty define name - relates to units per arbitrary measure of time?
 #define CUM_RATE_MULT		1
-#define CUM_EFFICIENCY		1//amount of nutrition required per life()
+#define CUM_EFFICIENCY		1 //amount of nutrition required per life()
 
 #define EGG_GIRTH_MIN		1//inches
 #define EGG_GIRTH_DEF		6
@@ -109,8 +109,16 @@
 #define MEDIHOUND_SLEEPER	(1<<0)
 #define EATING_NOISES		(1<<1)
 #define DIGESTION_NOISES	(1<<2)
+#define BREAST_ENLARGEMENT	(1<<3)
+#define PENIS_ENLARGEMENT	(1<<4)
+#define FORCED_FEM			(1<<5)
+#define FORCED_MASC			(1<<6)
+#define HYPNO				(1<<7)
+#define NEVER_HYPNO			(1<<8)
+#define NO_APHRO			(1<<9)
+#define NO_ASS_SLAP			(1<<9)
 
-#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
+#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)

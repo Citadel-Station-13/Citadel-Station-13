@@ -1,0 +1,4 @@
+author: "ItzGabby"
+delete-after: True
+changes: 
+  - bugfix: "Fixed AltClick on polychromic collars so they actually work now."

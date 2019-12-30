@@ -50,6 +50,7 @@ Difficulty: Normal
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
+	blood_volume = 0
 	speed = 1
 	move_to_delay = 11
 	ranged = 1
@@ -593,12 +594,15 @@ Difficulty: Normal
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
+	var/list/nohurt
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once)
+/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once, list/donthurt = null)
 	. = ..()
 	if(only_hit_once)
 		hit_things = only_hit_once
 	friendly_fire_check = friendly_fire
+	if(donthurt)
+		hit_things += donthurt
 	if(new_caster)
 		hit_things += new_caster
 	if(ismineralturf(loc)) //drill mineral turfs
