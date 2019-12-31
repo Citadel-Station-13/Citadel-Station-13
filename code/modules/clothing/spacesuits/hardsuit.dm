@@ -207,7 +207,7 @@
 	//Radiation
 /obj/item/clothing/head/helmet/space/hardsuit/engine/rad
 	name = "radiation hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
+	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
 	icon_state = "cespace_helmet"
 	item_state = "nothing"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
@@ -218,7 +218,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/engine/rad
 	name = "radiation hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
 	icon_state = "hardsuit-rad"
 	item_state = "nothing"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
