@@ -17,7 +17,7 @@
 	name = "Loot Box"
 	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
 	contraband = TRUE
-	cost = 10000
+	cost = 15000
 	contains = list(/obj/structure/closet/crate/secure/loot)
 	crate_name = "abandoned crate"
 	crate_type = /obj/structure/closet/crate/large
