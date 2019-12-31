@@ -279,8 +279,9 @@
 		current_code = numeric_input
 	while(length(current_code) < 5)
 		current_code = "[current_code]-"
-	var/first_status = null
-	var/second_status = null
+
+	var/first_status
+	var/second_status
 	switch(ui_mode)
 		if(NUKEUI_AWAIT_DISK)
 			first_status = "DEVICE LOCKED"
@@ -303,6 +304,10 @@
 		if(NUKEUI_EXPLODED)
 			first_status = "DEVICE DEPLOYED"
 			second_status = "THANK YOU"
+
+	data["status1"] = first_status
+	data["status2"] = second_status
+	data["anchored"] = anchored
 
 	return data
 

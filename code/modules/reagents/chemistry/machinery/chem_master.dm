@@ -32,7 +32,7 @@
 	for(var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
-		SL["className"] = assets.icon_class_name("pill[x]")
+		SL["className"] = assets.icon_tag("pill[x]")
 		pillStyles += list(SL)
 
 	. = ..()
@@ -444,19 +444,19 @@
 		var/amount = text2num(params["amount"])
 		var/to_container = params["to"]
 		// Custom amount
-		if (amount == -1)
+		if(amount == -1)
 			amount = text2num(input(
 				"Enter the amount you want to transfer:",
 				name, ""))
-		if (amount == null || amount <= 0)
+		if(amount == null || amount <= 0)
 			return FALSE
-		if (to_container == "buffer")
+		if(to_container == "buffer")
 			beaker.reagents.trans_id_to(src, reagent, amount)
 			return TRUE
-		if (to_container == "beaker" && mode)
+		if(to_container == "beaker" && mode)
 			reagents.trans_id_to(beaker, reagent, amount)
 			return TRUE
-		if (to_container == "beaker" && !mode)
+		if(to_container == "beaker" && !mode)
 			reagents.remove_reagent(reagent, amount)
 			return TRUE
 		return FALSE
@@ -565,7 +565,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = CLAMP(round(vol_each), 0, vol_each_max)
+		vol_each = CLAMP(vol_each, 0, vol_each_max)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
