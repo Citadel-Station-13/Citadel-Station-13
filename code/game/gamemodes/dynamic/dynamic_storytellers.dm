@@ -182,7 +182,7 @@ Property weights are:
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 3, "trust" = 5)
 
-/datum/dynamic_storyteller/team/get_injection_chance(dry_run = false)
+/datum/dynamic_storyteller/team/get_injection_chance(dry_run = FALSE)
 	return (mode.current_players[CURRENT_LIVING_ANTAGS].len ? 0 : ..())
 
 /datum/dynamic_storyteller/classic
