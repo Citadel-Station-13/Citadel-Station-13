@@ -204,6 +204,31 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	tauric = TRUE		//Citadel Add for tauric hardsuits
 
+	//Radiation
+/obj/item/clothing/head/helmet/space/hardsuit/engine/rad
+	name = "radiation hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
+	icon_state = "cespace_helmet"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	item_color = "engineering"
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	actions_types = list()
+
+/obj/item/clothing/suit/space/hardsuit/engine/rad
+	name = "radiation hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	icon_state = "hardsuit-rad"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/rad
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	tauric = FALSE		//Citadel Add for tauric hardsuits
+
+/obj/item/clothing/head/helmet/space/hardsuit/engine/rad/attack_self()
+	return //Sprites required for flashlight
 
 	//Chief Engineer's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
