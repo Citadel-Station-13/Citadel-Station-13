@@ -15,6 +15,7 @@
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
+	var/needs_init = TRUE //done to prevent race conditions where dna gets updated before it actually gets initialized, resulting in uni blocks being randomized, such as with player spawning.
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -193,16 +194,21 @@
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
+	if(needs_init)
+		initialize_dna()
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
 /datum/dna/proc/initialize_dna(newblood_type)
 	if(newblood_type)
 		blood_type = newblood_type
+	if(!needs_init)
+		return
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
 	features = random_features()
+	needs_init = FALSE
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
