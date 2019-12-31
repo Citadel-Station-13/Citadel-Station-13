@@ -211,7 +211,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
-	property_weights = list("extended" = 1, "trust" = -2, "valid" = 1)
+	property_weights = list("story_potential" = 2, "extended" = 2, "trust" = -2, "valid" = 1)
 	requirements = list(70,65,60,55,50,45,40,35,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE

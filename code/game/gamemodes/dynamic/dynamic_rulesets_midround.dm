@@ -434,7 +434,7 @@
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
-	property_weights = list("story_potential" = -1, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
+	property_weights = list("story_potential" = -1, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/vents = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
@@ -536,7 +536,7 @@
 	weight = 4
 	cost = 5
 	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
-	property_weights = list("story_potential" = 2, "extended" = 2, "valid" = -2)
+	property_weights = list("story_potential" = 1, "extended" = 1, "valid" = -2)
 	high_population_requirement = 5
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
@@ -571,7 +571,7 @@
 	cost = 5
 	requirements = list(30,30,30,30,20,15,15,15,15,15)
 	high_population_requirement = 15
-	property_weights = list("story_potential" = -2, "extended" = 1, "integrity" = 1)
+	property_weights = list("story_potential" = -2, "extended" = -1)
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population = 0,threat = 0)
@@ -680,7 +680,7 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
-	property_weights = list("story_potential" = 2, "extended" = -2, "valid" = 1, "trust" = -2, "chaos" = 2)
+	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 1, "trust" = -1, "chaos" = 2)
 	repeatable_weight_decrease = 4
 	repeatable = TRUE
 

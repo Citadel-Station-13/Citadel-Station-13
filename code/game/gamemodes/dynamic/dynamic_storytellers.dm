@@ -185,6 +185,15 @@ Property weights are:
 /datum/dynamic_storyteller/team/get_injection_chance(dry_run = FALSE)
 	return (mode.current_players[CURRENT_LIVING_ANTAGS].len ? 0 : ..())
 
+/datum/dynamic_storyteller/conversion
+	name = "Conversion"
+	desc = "Chaos: high. Variation: medium. Likely antags: cults, bloodsuckers, revs."
+	curve_centre = 3
+	curve_width = 1
+	weight = 2
+	flags = WAROPS_ALWAYS_ALLOWED
+	property_weights = list("valid" = 1, "conversion" = 20)
+
 /datum/dynamic_storyteller/classic
 	name = "Random"
 	desc = "Chaos: medium. Variation: highest. No special weights attached."
@@ -199,7 +208,6 @@ Property weights are:
 /datum/dynamic_storyteller/suspicion
 	name = "Intrigue"
 	desc = "Chaos: low. Variation: high. Likely antags: traitor, bloodsucker. Rare: revs, blood cult."
-	curve_centre = -2
 	curve_width = 4
 	property_weights = list("trust" = -5, "extended" = 3)
 
