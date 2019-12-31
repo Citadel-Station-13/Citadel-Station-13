@@ -7,7 +7,6 @@
 	var/brightness_on = 3
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 
-
 /obj/item/melee/transforming/energy/Initialize()
 	. = ..()
 	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
@@ -61,6 +60,17 @@
 	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
+
+/obj/item/melee/transforming/energy/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(active)
+		active = FALSE
+		w_class = w_class_off
+		return
+	else
+		return
 
 /obj/item/melee/transforming/energy/axe
 	name = "energy axe"
