@@ -50,12 +50,6 @@
 	for(var/i in 1 to 3)
 		new /obj/item/multitool(src)
 
-/obj/structure/closet/secure_closet/engineering_electrical_empty
-	name = "electrical supplies locker"
-	req_access = list(ACCESS_ENGINE_EQUIP)
-	icon_state = "eng"
-	icon_door = "eng_elec"
-
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
@@ -84,11 +78,6 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 
-/obj/structure/closet/secure_closet/engineering_personal_empty
-	name = "engineer's locker"
-	req_access = list(ACCESS_ENGINE_EQUIP)
-	icon_state = "eng_secure"
-
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
 	req_access = list(ACCESS_ATMOSPHERICS)
@@ -107,3 +96,34 @@
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
+
+/*
+ * Empty lockers
+ * Some of the lockers are filled with junk, and sometimes its nice to just fill it with your own set-up for your own map gimmicks.
+ */
+
+/obj/structure/closet/secure_closet/engineering_chief/empty
+
+/obj/structure/closet/secure_closet/engineering_electrical/empty
+
+/obj/structure/closet/secure_closet/engineering_welding/empty
+
+/obj/structure/closet/secure_closet/engineering_personal/empty
+
+/obj/structure/closet/secure_closet/atmospherics/empty
+
+
+/obj/structure/closet/secure_closet/engineering_chief/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/engineering_electrical/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/engineering_welding/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/engineering_personal/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/atmospherics/empty/PopulateContents()
+	return
