@@ -20,30 +20,16 @@
 			var/obj/item/I = new path
 			mannequin.equip_to_slot_if_possible(I, SLOT_HANDS, TRUE, TRUE, TRUE, TRUE)
 
-	COMPILE_OVERLAYS(mannequin)
-	CHECK_TICK
-	mannequin.setDir(NORTH)
-	var/icon/north = getFlatIcon(mannequin)
-	CHECK_TICK
-	mannequin.setDir(SOUTH)
-	var/icon/south = getFlatIcon(mannequin)
-	CHECK_TICK
-	mannequin.setDir(EAST)
-	var/icon/east = getFlatIcon(mannequin)
-	CHECK_TICK
-	mannequin.setDir(WEST)
-	var/icon/west = getFlatIcon(mannequin)
-	CHECK_TICK
 
 	var/icon/combined = new
-	combined.Insert(north, dir = NORTH)
-	CHECK_TICK
-	combined.Insert(south, dir = SOUTH)
-	CHECK_TICK
-	combined.Insert(east, dir = EAST)
-	CHECK_TICK
-	combined.Insert(west, dir = WEST)
-	CHECK_TICK
+	for(var/d in GLOB.cardinals)
+		mannequin.setDir(d)
+		COMPILE_OVERLAYS(mannequin)
+		CHECK_TICK
+		var/icon/capture = getFlatIcon(mannequin)
+		CHECK_TICK
+		combined.Insert(capture, dir = d)
+		CHECK_TICK
 
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HOLOFORM)
 	return combined

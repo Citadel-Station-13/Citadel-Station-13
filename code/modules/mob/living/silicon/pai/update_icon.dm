@@ -1,4 +1,4 @@
-/mob/living/silicon/pai/proc/update_icon()
+/mob/living/silicon/pai/update_icon()
 	if(chassis == "custom")			//Make sure custom exists if it's set to custom
 		custom_holoform_icon = client?.prefs?.get_filtered_holoform(HOLOFORM_FILTER_PAI)
 		if(!custom_holoform_icon)
