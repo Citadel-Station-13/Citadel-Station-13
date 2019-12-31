@@ -69,6 +69,16 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/aformal
 
+/datum/gear/coat/runed
+	name = "Runed winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/narsie/fake
+
+/datum/gear/coat/brass
+	name = "Brass winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
+
 /* Commented out until it is "balanced"
 /datum/gear/coat/sec
 	name = "Security winter coat"

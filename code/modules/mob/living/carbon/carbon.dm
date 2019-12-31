@@ -157,6 +157,7 @@
 	if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
+	var/random_turn = a_intent == INTENT_HARM
 	//END OF CIT CHANGES
 
 	var/obj/item/I = src.get_active_held_item()
@@ -204,7 +205,7 @@
 		do_attack_animation(target, no_effect = 1)
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
 		newtonian_move(get_dir(target, src))
-		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
+		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, random_turn)
 
 
 
@@ -977,3 +978,14 @@
 	if(combatmode)
 		toggle_combat_mode(TRUE, TRUE)
 	return ..()
+
+/mob/living/carbon/can_see_reagents()
+	. = ..()
+	if(.) //No need to run through all of this if it's already true.
+		return
+	if(isclothing(head))
+		var/obj/item/clothing/H = head
+		if(H.clothing_flags & SCAN_REAGENTS)
+			return TRUE
+	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
+		return TRUE
