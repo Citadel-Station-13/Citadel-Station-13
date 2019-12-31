@@ -61,17 +61,6 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 
-/obj/item/melee/transforming/energy/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(active)
-		active = FALSE
-		w_class = w_class_off
-		return
-	else
-		return
-
 /obj/item/melee/transforming/energy/axe
 	name = "energy axe"
 	desc = "An energized battle axe."
@@ -94,6 +83,16 @@
 	light_color = "#40ceff"
 	total_mass = null
 
+/obj/item/melee/transforming/energy/axe/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!active)
+		return
+	else
+		transform_weapon()
+		return
+
 /obj/item/melee/transforming/energy/axe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|FIRELOSS)
@@ -114,6 +113,16 @@
 	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
 	armour_penetration = 35
 	block_chance = 50
+
+/obj/item/melee/transforming/energy/sword/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!active)
+		return
+	else
+		transform_weapon()
+		return
 
 /obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()

@@ -17,9 +17,6 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
-
-
-
 /*
  * Twohanded
  */
@@ -298,6 +295,16 @@
 	var/spinnable = TRUE
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 	var/total_mass_on = 3.4
+
+/obj/item/twohanded/dualsaber/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!wielded)
+		return
+	else
+		unwield()
+		return
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
