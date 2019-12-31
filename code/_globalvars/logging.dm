@@ -38,6 +38,9 @@ GLOBAL_PROTECT(lastsignalers)
 GLOBAL_LIST_EMPTY(lawchanges) //Stores who uploaded laws to which silicon-based lifeform, and what the law was
 GLOBAL_PROTECT(lawchanges)
 
+GLOBAL_VAR(tgui_log)
+GLOBAL_PROTECT(tgui_log)
+
 GLOBAL_LIST_EMPTY(combatlog)
 GLOBAL_PROTECT(combatlog)
 GLOBAL_LIST_EMPTY(IClog)

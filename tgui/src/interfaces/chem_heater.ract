@@ -16,14 +16,9 @@
   <ui-section label='Contents'>
     {{#if data.isBeakerLoaded}}
       <span>Temperature: {{Math.round(adata.currentTemp)}} K</span>
-	  <br />
-      <span>pH: {{Math.round(adata.currentpH*adata.partRating)/adata.partRating}}</span>
       <br />
       {{#each adata.beakerContents}}
-		<span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br />
-		{{#if data.showPurity}}
-			<span class='highlight' intro-outro='fade'>Purity: {{Math.fixed(purity, 2)}}</span><br />
-		{{/if}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
       {{else}}
         <span class='bad'>Beaker Empty</span>
       {{/each}}
