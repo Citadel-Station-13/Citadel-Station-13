@@ -996,4 +996,3 @@
 			return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
->>>>>>> 8ac23f41e62ae8cff0c4b7993b19775b4a8a3b21
