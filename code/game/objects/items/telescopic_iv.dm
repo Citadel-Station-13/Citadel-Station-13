@@ -9,7 +9,7 @@
 
 /obj/item/tele_iv/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(proximity|| isopenturf(target))
+	if(proximity && isopenturf(target) && user.CanReach(target))
 		deploy_iv(user, target)
 
 /obj/item/tele_iv/proc/deploy_iv(mob/user, atom/location)
