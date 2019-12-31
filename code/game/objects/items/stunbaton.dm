@@ -133,7 +133,7 @@
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 	add_fingerprint(user)
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/melee/baton/canswing(mob/M, mob/living/carbon/human/user)
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 		return
@@ -145,7 +145,6 @@
 	if(iscyborg(M))
 		..()
 		return
-
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
@@ -161,13 +160,20 @@
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
-	else
-		if(status)
-			baton_stun(M, user)
-		..()
+			return FALSE
 
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	if(status)
+		if(baton_stun_check(M, user))
+			var/stunpwr = baton_stun_check(M, user)) // someone remind me to unfuck this later thx
+			baton_stun(M, user, stunpwr)
+	..()
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/melee/baton/pre_altattackby(atom/A, mob/living/user, params) // how the fuck do i get this to whack limbs
+	. = ..()
+	
+
+/obj/item/melee/baton/proc/baton_stun_check(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
@@ -188,8 +194,9 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
+		return stunpwr
 
-
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, var/stunpwr)
 	L.Knockdown(stunpwr)
 	L.adjustStaminaLoss(stunpwr*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
@@ -207,8 +214,9 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-
 	return TRUE
+
+/obj/item/melee/baton/proc/baton_stun_limb(mob/living/L, mob/user, var/stunpwr)
 
 /obj/item/melee/baton/proc/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
