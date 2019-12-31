@@ -98,7 +98,7 @@
 	return S
 
 obj/item/seeds/proc/is_gene_forbidden(typepath)
-	return (locate(typepath) in forbiddengenes)
+	return (typepath in forbiddengenes)
 
 
 /obj/item/seeds/proc/get_gene(typepath)
