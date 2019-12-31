@@ -63,9 +63,10 @@
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 
 		if(I.use_tool(src, user, 40, volume=50))
+			var/range = I.digrange //Store the current digrange so people don't cheese digspeed swapping for faster mining
 			if(ismineralturf(src))
 				if(I.digrange > 0)
-					for(var/turf/closed/mineral/M in range(user,I.digrange))
+					for(var/turf/closed/mineral/M in range(user,range))
 						if(get_dir(user,M)&user.dir)
 							M.gets_drilled()
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
