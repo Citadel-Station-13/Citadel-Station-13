@@ -104,26 +104,25 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/empty
 
-/obj/structure/closet/secure_closet/engineering_electrical/empty
-
-/obj/structure/closet/secure_closet/engineering_welding/empty
-
-/obj/structure/closet/secure_closet/engineering_personal/empty
-
-/obj/structure/closet/secure_closet/atmospherics/empty
-
-
 /obj/structure/closet/secure_closet/engineering_chief/empty/PopulateContents()
 	return
+
+/obj/structure/closet/secure_closet/engineering_electrical/empty
 
 /obj/structure/closet/secure_closet/engineering_electrical/empty/PopulateContents()
 	return
 
+/obj/structure/closet/secure_closet/engineering_welding/empty
+
 /obj/structure/closet/secure_closet/engineering_welding/empty/PopulateContents()
 	return
 
+/obj/structure/closet/secure_closet/engineering_personal/empty
+
 /obj/structure/closet/secure_closet/engineering_personal/empty/PopulateContents()
 	return
+
+/obj/structure/closet/secure_closet/atmospherics/empty
 
 /obj/structure/closet/secure_closet/atmospherics/empty/PopulateContents()
 	return
