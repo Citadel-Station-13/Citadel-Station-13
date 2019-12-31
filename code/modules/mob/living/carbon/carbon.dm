@@ -157,6 +157,7 @@
 	if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
+	var/random_turn = a_intent == INTENT_HARM
 	//END OF CIT CHANGES
 
 	var/obj/item/I = src.get_active_held_item()
@@ -204,7 +205,7 @@
 		do_attack_animation(target, no_effect = 1)
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
 		newtonian_move(get_dir(target, src))
-		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
+		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, random_turn)
 
 
 
@@ -630,6 +631,7 @@
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = max(see_in_dark, 8)
+
 	if(see_override)
 		see_invisible = see_override
 	. = ..()
@@ -994,3 +996,4 @@
 			return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
+>>>>>>> 8ac23f41e62ae8cff0c4b7993b19775b4a8a3b21
