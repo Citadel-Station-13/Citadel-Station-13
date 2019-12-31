@@ -366,9 +366,6 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
-			if((vote_type in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[vote_type]))
-				voted[C.ckey] = SSpersistence.saved_votes[vote_type][C.ckey]
-				saved += C.ckey
 			if(forced)
 				var/datum/browser/popup = new(C, "vote", "Voting Panel",nwidth=600,nheight=700)
 				popup.set_window_options("can_close=0")
@@ -432,6 +429,8 @@ SUBSYSTEM_DEF(vote)
 					. += "(<a href='?src=[REF(src)];vote=save'>Save vote</a>)"
 				else
 					. += "(Saved!)"
+				if((mode in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[mode]))
+					. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
 				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
@@ -498,6 +497,10 @@ SUBSYSTEM_DEF(vote)
 				if(!(mode in SSpersistence.saved_votes))
 					SSpersistence.saved_votes[mode] = list()
 				SSpersistence.saved_votes[mode][usr.ckey] = voted[usr.ckey]
+				saved += usr.ckey
+		if("load")
+			if((mode in SSpersistence.saved_votes) && (usr.ckey in SSpersistence.saved_votes[mode]))
+				voted[usr.ckey] = SSpersistence.saved_votes[mode][usr.ckey]
 				saved += usr.ckey
 		else
 			submit_vote(round(text2num(href_list["vote"])))
