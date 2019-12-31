@@ -38,14 +38,14 @@
 		var/coin_mat = MINERAL_MATERIAL_AMOUNT
 
 		for(var/sheets in 1 to 2)
-			if(materials.use_amount_mat(coin_mat, chosen))
+			if(materials.use_amount_type(coin_mat, chosen))
 				for(var/coin_to_make in 1 to 5)
 					create_coins()
 					produced_coins++
 			else 
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
-					var/amount = materials.get_material_amount(inserted_material)
+					var/amount = materials.get_item_material_amount(inserted_material)
 
 					if(amount)
 						chosen = inserted_material
@@ -68,7 +68,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	for(var/datum/material/inserted_material in materials.materials)
-		var/amount = materials.get_material_amount(inserted_material)
+		var/amount = materials.get_item_material_amount(inserted_material)
 		
 		if(!amount)
 			continue
@@ -88,26 +88,23 @@
 
 /obj/machinery/mineral/mint/ui_act(action, params, datum/tgui/ui)
 	switch(action)
-		if ("startpress")
-			if (!processing)
+		if("startpress")
+			if(!processing)
 				produced_coins = 0
 			processing = TRUE
-		if ("stoppress")
+		if("stoppress")
 			processing = FALSE
-		if ("changematerial")
+		if("changematerial")
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			for(var/datum/material/mat in materials.materials)
-				if (params["material_name"] == mat.name)
+				if(params["material_name"] == mat.name)
 					chosen = mat
 
 /obj/machinery/mineral/mint/proc/create_coins()
-	var/turf/T = get_step(src,output_dir)
-	var/temp_list = list()
-	temp_list[chosen] = 400
+	var/turf/T = get_step(src, output_dir)
 	if(T)
 		var/obj/item/O = new /obj/item/coin(src)
 		var/obj/item/storage/bag/money/B = locate(/obj/item/storage/bag/money, T)
-		O.set_custom_materials(temp_list)
 		if(!B)
 			B = new /obj/item/storage/bag/money(src)
 			unload_mineral(B)
