@@ -443,7 +443,7 @@ SUBSYSTEM_DEF(vote)
 			if(RANKED_CHOICE_VOTING)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
 			if(SCORE_VOTING)
-				. += "<h3>Grade the candidates by how much you like them, 1-5 least-most.</h3>"
+				. += "<h3>Grade the candidates by how much you like them.</h3>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)
@@ -488,9 +488,9 @@ SUBSYSTEM_DEF(vote)
 					for(var/r in 1 to SCORE_OPTIONS)
 						. += " <a href='?src=[REF(src)];vote=[i];score=[r]'>"
 						if((choices[i] in myvote) && myvote[choices[i]] == r)
-							. +="<b>([r])</b>"
+							. +="<b>([r-3])</b>"
 						else
-							. +="[r]"
+							. +="[r-3]"
 						. += "</a>"
 					. += "</li>"
 					if(choice_descs.len >= i)
