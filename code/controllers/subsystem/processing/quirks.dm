@@ -85,7 +85,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				our_quirks -= i
 				cut += i
 				pointscut += quirk_points_by_name(i)
-			if (pointscut == 0)
+			if (pointscut <= 0)
 				break
 	/*	//Code to automatically reduce positive quirks until balance is even.
 	var/points_used = total_points(our_quirks)
