@@ -209,7 +209,7 @@ Property weights are:
 	name = "Intrigue"
 	desc = "Chaos: low. Variation: high. Likely antags: traitor, bloodsucker. Rare: revs, blood cult."
 	curve_width = 4
-	property_weights = list("trust" = -5, "extended" = 3)
+	property_weights = list("trust" = -5)
 
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
