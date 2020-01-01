@@ -663,6 +663,4 @@
 	new /obj/item/clothing/head/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
 	new /obj/item/storage/backpack/chameleon(src)
-	new /obj/item/radio/headset/chameleon(src)
-	new /obj/item/stamp/chameleon(src)
 	new /obj/item/clothing/neck/cloak/chameleon(src)
