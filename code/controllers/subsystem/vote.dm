@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(vote)
 			var/median_pos = max(1,round(score.len/2))
 			score.Cut(median_pos,median_pos+1)
 			choices[score_name]++
-	choices[choices[scores_by_choice[1]]] += 100 // hardcoded make-sure-this-guy-is-winner
+	choices[scores_by_choice[1]] += 100 // hardcoded make-sure-this-guy-is-winner
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
