@@ -183,7 +183,7 @@
 	BuyPower(new /datum/action/bloodsucker/masquerade)
 	BuyPower(new /datum/action/bloodsucker/veil)
 	// Traits
-	for (var/T in defaultTraits)
+	for(var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, "bloodsucker")
 	if(HAS_TRAIT(owner.current, TRAIT_TOXINLOVER)) //No slime bonuses here, no thank you
 		had_toxlover = TRUE
@@ -200,10 +200,10 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		S.brutemod *= 0.5											//  <--------------------  Start small, but burn mod increases based on rank!
-		S.coldmod = 0
-		S.stunmod *= 0.25
-		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
+		H.physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
+		H.physiology.cold_mod = 0
+		H.physiology.stun_mod *= 0.35
+		H.physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
@@ -319,12 +319,10 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
-		S.burnmod *= 0.025 			// Slightly more burn damage
-		S.stunmod *= 0.95			// Slightly less stun time.
 		S.punchdamagelow += 0.5
 		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.
 	// More Health
-	owner.current.setMaxHealth(owner.current.maxHealth + 5)
+	owner.current.setMaxHealth(owner.current.maxHealth + 10)
 	// Vamp Stats
 	regenRate += 0.05			// Points of brute healed (starts at 0.3)
 	feedAmount += 2				// Increase how quickly I munch down vics (15)

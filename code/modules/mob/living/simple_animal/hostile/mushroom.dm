@@ -166,7 +166,9 @@
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
-	..()
+	. = ..()
+	if(.) // the attack was blocked
+		return
 	if(M.a_intent == INTENT_HARM)
 		Bruise()
 
