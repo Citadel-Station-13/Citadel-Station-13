@@ -369,9 +369,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/proc/GetIconForProduct(datum/data/vending_product/P)
 	if(vending_cache[P.product_path])
 		return vending_cache[P.product_path]
-	var/product = new P.product_path()
-	vending_cache[P.product_path] = icon2base64(getFlatIcon(product, no_anim = TRUE))
-	qdel(product)
+	var/product = P.product_path
+	vending_cache[P.product_path] = icon2base64(initial(product.icon))
 	return vending_cache[P.product_path]
 
 /obj/machinery/vending/Topic(href, href_list)
