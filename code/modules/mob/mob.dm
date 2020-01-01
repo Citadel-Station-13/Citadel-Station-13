@@ -380,14 +380,10 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		spintime -= speed
 
 /mob/proc/update_pull_hud_icon()
-	if(hud_used)
-		if(hud_used.pull_icon)
-			hud_used.pull_icon.update_icon(src)
+	hud_used?.pull_icon?.update_icon()
 
 /mob/proc/update_rest_hud_icon()
-	if(hud_used)
-		if(hud_used.rest_icon)
-			hud_used.rest_icon.update_icon(src)
+	hud_used?.rest_icon?.update_icon()
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -463,6 +459,11 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(!ckey || !new_mob)
 		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
 	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
+	if (client && client.prefs && client.prefs.auto_ooc)
+		if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
+			client.prefs.chat_toggles ^= CHAT_OOC
+		if (!(client.prefs.chat_toggles & CHAT_OOC) && isdead(new_mob))
+			client.prefs.chat_toggles ^= CHAT_OOC
 	new_mob.ckey = ckey
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)

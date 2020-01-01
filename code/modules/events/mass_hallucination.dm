@@ -35,4 +35,6 @@
 												/datum/hallucination/delusion,
 												/datum/hallucination/oh_yeah)
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
+				if (HAS_TRAIT(C,TRAIT_EXEMPT_HEALTH_EVENTS))
+					continue
 				new picked_hallucination(C, TRUE)
