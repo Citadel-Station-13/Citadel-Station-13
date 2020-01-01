@@ -170,12 +170,12 @@ SUBSYSTEM_DEF(vote)
 				scores_by_choice -= score_name
 		for(var/score_name in scores_by_choice) // after removals
 			var/list/score = scores_by_choice[score_name]
-			var/median_pos = max(1,round(score.len/2))
-			score.Cut(median_pos,median_pos+1)
-			choices[score_name]++
 			if(score.len == 0)
 				choices[score_name] += 100 // we're in a tie situation--just go with the first one
 				return
+			var/median_pos = max(1,round(score.len/2))
+			score.Cut(median_pos,median_pos+1)
+			choices[score_name]++
 	choices[choices[scores_by_choice[1]]] += 100 // hardcoded make-sure-this-guy-is-winner
 
 /datum/controller/subsystem/vote/proc/announce_result()
