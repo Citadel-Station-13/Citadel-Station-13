@@ -134,10 +134,10 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon("[t_color]", UNIFORM_LAYER, alt_worn, FALSE, U.fitted, variant_flag, FALSE)
+				uniform_overlay = U.build_worn_icon(t_color, UNIFORM_LAYER, alt_worn, FALSE, U.fitted, variant_flag, FALSE)
 
 		if(!uniform_overlay)
-			uniform_overlay = U.build_worn_icon("[t_color]", UNIFORM_LAYER, alt_worn, FALSE, NO_FEMALE_UNIFORM, variant_flag, FALSE)
+			uniform_overlay = U.build_worn_icon(t_color, UNIFORM_LAYER, alt_worn, FALSE, NO_FEMALE_UNIFORM, variant_flag, FALSE)
 
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
@@ -289,7 +289,7 @@ There are several things that need to be remembered:
 		var/t_state = shoes.item_state
 		if (!t_state)
 			t_state = shoes.icon_state
-		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(t_state, SHOES_LAYER, alt_icon, NO_FEMALE_UNIFORM, variation_flag, FALSE)
+		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(t_state, SHOES_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
@@ -338,7 +338,7 @@ There are several things that need to be remembered:
 			alt_icon = 'icons/mob/head_muzzled.dmi'
 			variation_flag |= STYLE_MUZZLE
 
-		overlays_standing[HEAD_LAYER] = H.build_worn_icon(H.icon_state, HEAD_LAYER, alt_icon, NO_FEMALE_UNIFORM, variation_flag, FALSE)
+		overlays_standing[HEAD_LAYER] = H.build_worn_icon(H.icon_state, HEAD_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
 		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
 
 		if(OFFSET_HEAD in dna.species.offset_features)
@@ -419,7 +419,7 @@ There are several things that need to be remembered:
 				worn_icon = 'icons/mob/suit_digi.dmi'
 				variation_flag |= STYLE_DIGITIGRADE
 
-		overlays_standing[SUIT_LAYER] = S.build_worn_icon(wear_suit.icon_state, SUIT_LAYER, worn_icon, NO_FEMALE_UNIFORM, variation_flag, FALSE)
+		overlays_standing[SUIT_LAYER] = S.build_worn_icon(wear_suit.icon_state, SUIT_LAYER, worn_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
@@ -472,7 +472,7 @@ There are several things that need to be remembered:
 			alt_icon = 'icons/mob/mask_muzzled.dmi'
 			variation_flag |= STYLE_MUZZLE
 
-		overlays_standing[FACEMASK_LAYER] = M.build_worn_icon(wear_mask.icon_state, FACEMASK_LAYER, alt_icon, NO_FEMALE_UNIFORM, variation_flag, FALSE)
+		overlays_standing[FACEMASK_LAYER] = M.build_worn_icon(wear_mask.icon_state, FACEMASK_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
 		var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
 
 		if(OFFSET_FACEMASK in dna.species.offset_features)
@@ -494,11 +494,11 @@ There are several things that need to be remembered:
 		apply_overlay(BACK_LAYER)
 
 /proc/wear_female_version(t_color, icon, layer, type)
-	var/index = "[t_color]-[file2text(icon)]"
+	var/index = "[t_color]-[icon]"
 	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
 		generate_female_clothing(index,t_color,icon,type)
-	return mutable_appearance(GLOB.female_clothing_icons[t_color], layer = -layer)
+	return mutable_appearance(GLOB.female_clothing_icons[index], layer = -layer)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
