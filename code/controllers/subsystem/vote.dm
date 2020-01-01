@@ -142,8 +142,14 @@ SUBSYSTEM_DEF(vote)
 		scores_by_choice[choice] = list()
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
+		var/list/pretty_vote = list()
 		for(var/choice in this_vote)
 			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
+			// START BALLOT GATHERING
+			pretty_vote += choice
+			pretty_vote[choice] = GLOB.vote_score_options[this_vote[choice]]
+		SSblackbox.record_feedback("associative","voting_ballots",1,pretty_vote)
+		// END BALLOT GATHERING
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
 		for(var/indiv_score in score)
@@ -381,7 +387,7 @@ SUBSYSTEM_DEF(vote)
 					for(var/i in SSpersistence.saved_storytellers.len)
 						if(SSpersistence.saved_storytellers[i] == initial(S.name))
 							recent_rounds++
-					if(recent_rounds<initial(S.weight))
+					if(recent_rounds < initial(S.weight))
 						choices.Add(initial(S.name))
 						choice_descs.Add(initial(S.desc))
 				choices.Add("Secret")

@@ -410,6 +410,7 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
+	saved_storytellers.len = 5
 	saved_storytellers[5] = saved_storytellers[4]
 	saved_storytellers[4] = saved_storytellers[3]
 	saved_storytellers[3] = saved_storytellers[2]
