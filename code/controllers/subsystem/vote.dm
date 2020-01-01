@@ -446,6 +446,7 @@ SUBSYSTEM_DEF(vote)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
 			if(SCORE_VOTING)
 				. += "<h3>Grade the candidates by how much you like them.</h3>"
+				. += "<h3>No-votes have no power--your opinion is only heard if you vote!</h3>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)
