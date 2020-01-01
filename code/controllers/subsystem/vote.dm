@@ -384,7 +384,7 @@ SUBSYSTEM_DEF(vote)
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
 					var/recent_rounds = 0
-					for(var/i in SSpersistence.saved_storytellers.len)
+					for(var/i in 1 to SSpersistence.saved_storytellers.len)
 						if(SSpersistence.saved_storytellers[i] == initial(S.name))
 							recent_rounds++
 					if(recent_rounds < initial(S.weight))
@@ -498,7 +498,7 @@ SUBSYSTEM_DEF(vote)
 			if(SCORE_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
-					. += "<li>[choices[i]]"
+					. += "<li><b>[choices[i]]</b>"
 					for(var/r in 1 to GLOB.vote_score_options.len)
 						. += " <a href='?src=[REF(src)];vote=[i];score=[r]'>"
 						if((choices[i] in myvote) && myvote[choices[i]] == r)
