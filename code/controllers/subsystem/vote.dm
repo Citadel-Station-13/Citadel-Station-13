@@ -333,7 +333,7 @@ SUBSYSTEM_DEF(vote)
 					saved -= usr.ckey
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE,vote_time = -1)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
 	vote_system = votesystem
 	if(!mode)
 		if(started_time)
@@ -399,7 +399,9 @@ SUBSYSTEM_DEF(vote)
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		var/vp = CONFIG_GET(number/vote_period)
+		var/vp = vote_time
+		if(vp == -1)
+			vp = CONFIG_GET(number/vote_period)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		end_time = started_time+vp
 		for(var/c in GLOB.clients)
