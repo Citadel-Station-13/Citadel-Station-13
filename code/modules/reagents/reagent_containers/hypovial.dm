@@ -27,8 +27,8 @@
 	for(var/R in comes_with)
 		reagents.add_reagent(R,comes_with[R])
 	update_icon()
-	beaker_weakness_bitflag |= PH_WEAK // fuck you if you're using these like beakers
-	beaker_weakness_bitflag |= TEMP_WEAK
+//	beaker_weakness_bitflag |= PH_WEAK // fuck you if you're using these like beakers
+//	beaker_weakness_bitflag |= TEMP_WEAK
 
 
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
@@ -62,11 +62,11 @@
 /obj/item/reagent_containers/glass/bottle/vial/small
 	name = "hypovial"
 	volume = 60
-	possible_transfer_amounts = list(1)
+	possible_transfer_amounts = list(1,2,5,10,20,30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/bluespace
 	volume = 120
-	possible_transfer_amounts = list(1)
+	possible_transfer_amounts = list(1,2,5,10,20,30,40)
 	name = "bluespace hypovial"
 	icon_state = "hypovialbs"
 	unique_reskin = null
@@ -76,7 +76,7 @@
 	desc = "A large hypovial, for deluxe hypospray models."
 	icon_state = "hypoviallarge"
 	volume = 120
-	possible_transfer_amounts = list(1)
+	possible_transfer_amounts = list(1,2,5,10,20,30,40,60)
 	unique_reskin = list("large hypovial" = "hypoviallarge",
 						"large red hypovial" = "hypoviallarge-b",
 						"large blue hypovial" = "hypoviallarge-d",
@@ -108,7 +108,7 @@
 		add_overlay(filling)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
-	possible_transfer_amounts = list(1)
+	possible_transfer_amounts = list(1,2,5,10,20,30,40,60)
 	name = "bluespace large hypovial"
 	volume = 240
 	icon_state = "hypoviallargebs"
