@@ -135,6 +135,43 @@ SUBSYSTEM_DEF(vote)
 					choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
 					// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
 
+/datum/controller/subsystem/vote/proc/calculate_majority_judgement_vote(var/blackbox_text)
+	// https://en.wikipedia.org/wiki/Majority_judgment
+	var/list/scores_by_choice = list()
+	for(var/choice in choices)
+		scores_by_choice[choice] = list()
+	for(var/ckey in voted)
+		var/list/this_vote = voted[ckey]
+		for(var/choice in this_vote)
+			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
+	for(var/score_name in scores_by_choice)
+		var/list/score = scores_by_choice[score_name]
+		for(var/i in score.len)
+			SSblackbox.record_feedback("nested_tally","voting",1,list(blackbox_text,"Scores",score_name,score[i])) 
+		if(score.len == 0)
+			scores_by_choice -= score_name
+	while(scores_by_choice.len > 1)
+		var/highest_median = 0
+		for(var/score_name in scores_by_choice)
+			var/list/score = scores_by_choice[score_name]
+			if(!score.len)
+				scores_by_choice -= score_name
+				continue
+			var/median = score[max(1,round(score.len/2))]
+			if(median >= highest_median)
+				highest_median = median
+			else
+				scores_by_choice -= score_name
+		for(var/score_name in scores_by_choice) // after removals
+			var/list/score = scores_by_choice[score_name]
+			var/median_pos = max(1,round(score.len/2))
+			score.Cut(median_pos,median_pos+1)
+			choices[score_name]++
+			if(score.len == 0)
+				choices[score_name] += 100 // we're in a tie situation--just go with the first one
+				return
+	choices[choices[scores_by_choice[1]]] += 100 // hardcoded make-sure-this-guy-is-winner
+
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
 	var/text
@@ -146,6 +183,8 @@ SUBSYSTEM_DEF(vote)
 		vote_title_text = "[capitalize(mode)] Vote"
 	if(vote_system == RANKED_CHOICE_VOTING)
 		calculate_condorcet_votes(vote_title_text)
+	if(vote_system == SCORE_VOTING)
+		calculate_majority_judgement_vote(vote_title_text)
 	var/list/winners = get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -247,7 +286,7 @@ SUBSYSTEM_DEF(vote)
 	
 	return .
 
-/datum/controller/subsystem/vote/proc/submit_vote(vote)
+/datum/controller/subsystem/vote/proc/submit_vote(vote, score = 0)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -285,6 +324,12 @@ SUBSYSTEM_DEF(vote)
 						voted += usr.ckey
 						voted[usr.ckey] = list()
 					voted[usr.ckey] += vote
+					saved -= usr.ckey
+				if(SCORE_VOTING)
+					if(!(usr.ckey in voted))
+						voted += usr.ckey
+						voted[usr.ckey] = list()
+					voted[usr.ckey][choices[vote]] = score
 					saved -= usr.ckey
 	return 0
 
@@ -397,6 +442,8 @@ SUBSYSTEM_DEF(vote)
 				. += "<h3>Vote any number of choices.</h3>"
 			if(RANKED_CHOICE_VOTING)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
+			if(SCORE_VOTING)
+				. += "<h3>Grade the candidates by how much you like them, 1-5 least-most.</h3>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
 		switch(vote_system)
 			if(PLURALITY_VOTING, APPROVAL_VOTING)
@@ -425,12 +472,38 @@ SUBSYSTEM_DEF(vote)
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
 				. += "</ul><hr>"
+				/*
 				if(!(C.ckey in saved))
 					. += "(<a href='?src=[REF(src)];vote=save'>Save vote</a>)"
 				else
 					. += "(Saved!)"
 				if((mode in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[mode]))
 					. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
+				*/
+				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
+			if(SCORE_VOTING)
+				var/list/myvote = voted[C.ckey]
+				for(var/i=1,i<=choices.len,i++)
+					. += "<li>[choices[i]]"
+					for(var/r in 1 to SCORE_OPTIONS)
+						. += " <a href='?src=[REF(src)];vote=[i];score=[r]'>"
+						if((choices[i] in myvote) && myvote[choices[i]] == r)
+							. +="<b>([r])</b>"
+						else
+							. +="[r]"
+						. += "</a>"
+					. += "</li>"
+					if(choice_descs.len >= i)
+						. += "<li>[choice_descs[i]]</li>"
+				. += "</ul><hr>"
+				/*
+				if(!(C.ckey in saved))
+					. += "(<a href='?src=[REF(src)];vote=save'>Save vote</a>)"
+				else
+					. += "(Saved!)"
+				if((mode in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[mode]))
+					. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
+				*/
 				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
@@ -503,7 +576,10 @@ SUBSYSTEM_DEF(vote)
 				voted[usr.ckey] = SSpersistence.saved_votes[mode][usr.ckey]
 				saved += usr.ckey
 		else
-			submit_vote(round(text2num(href_list["vote"])))
+			if(vote_system == SCORE_VOTING)
+				submit_vote(round(text2num(href_list["vote"])),round(text2num(href_list["score"])))
+			else
+				submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
