@@ -336,7 +336,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			display_records = product_records + hidden_records + coin_records
 		dat += "<table>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<tr><td><img src='data:image/jpeg;base64,[GetIconForProduct(R)]'/></td>"
 			dat += "<td style=\"width: 100%\"><b>[sanitize(R.name)]</b></td>"
 			if(R.amount > 0)
 				dat += "<td><b>[R.amount]&nbsp;</b></td><td><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
@@ -365,13 +364,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-
-/obj/machinery/vending/proc/GetIconForProduct(datum/data/vending_product/P)
-	if(vending_cache[P.product_path])
-		return vending_cache[P.product_path]
-	var/atom/product = P.product_path
-	vending_cache[P.product_path] = icon2base64(initial(product.icon))
-	return vending_cache[P.product_path]
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
