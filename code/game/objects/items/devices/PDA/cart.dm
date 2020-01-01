@@ -103,7 +103,6 @@
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-law"
 	access = CART_SECURITY
-	spam_enabled = 1
 
 /obj/item/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
@@ -187,7 +186,6 @@
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
 	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
-	spam_enabled = 1
 
 /obj/item/cartridge/captain/New()
 	..()
