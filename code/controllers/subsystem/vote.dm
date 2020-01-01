@@ -146,8 +146,8 @@ SUBSYSTEM_DEF(vote)
 			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
-		for(var/i in score.len)
-			SSblackbox.record_feedback("nested_tally","voting",1,list(blackbox_text,"Scores",score_name,score[i])) 
+		for(var/indiv_score in score)
+			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score])) 
 		if(score.len == 0)
 			scores_by_choice -= score_name
 	while(scores_by_choice.len > 1)
@@ -493,12 +493,12 @@ SUBSYSTEM_DEF(vote)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
 					. += "<li>[choices[i]]"
-					for(var/r in 1 to SCORE_OPTIONS)
+					for(var/r in 1 to GLOB.vote_score_options.len)
 						. += " <a href='?src=[REF(src)];vote=[i];score=[r]'>"
 						if((choices[i] in myvote) && myvote[choices[i]] == r)
-							. +="<b>([r-3])</b>"
+							. +="<b>([GLOB.vote_score_options[r]])</b>"
 						else
-							. +="[r-3]"
+							. +="[GLOB.vote_score_options[r]]"
 						. += "</a>"
 					. += "</li>"
 					if(choice_descs.len >= i)

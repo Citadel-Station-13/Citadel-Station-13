@@ -3,4 +3,4 @@
 #define RANKED_CHOICE_VOTING 2
 #define SCORE_VOTING 3
 
-#define SCORE_OPTIONS 5
+GLOBAL_LIST_INIT(vote_score_options,list("Bad","Poor","Acceptable","Good","Great"))
