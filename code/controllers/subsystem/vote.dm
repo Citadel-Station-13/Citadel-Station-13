@@ -485,14 +485,11 @@ SUBSYSTEM_DEF(vote)
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
 				. += "</ul><hr>"
-				/*
 				if(!(C.ckey in saved))
 					. += "(<a href='?src=[REF(src)];vote=save'>Save vote</a>)"
 				else
 					. += "(Saved!)"
-				if((mode in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[mode]))
-					. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
-				*/
+				. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
 				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
 			if(SCORE_VOTING)
 				var/list/myvote = voted[C.ckey]
@@ -509,14 +506,11 @@ SUBSYSTEM_DEF(vote)
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
 				. += "</ul><hr>"
-				/*
 				if(!(C.ckey in saved))
 					. += "(<a href='?src=[REF(src)];vote=save'>Save vote</a>)"
 				else
 					. += "(Saved!)"
-				if((mode in SSpersistence.saved_votes) && (C.ckey in SSpersistence.saved_votes[mode]))
-					. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
-				*/
+				. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
 				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
@@ -580,14 +574,21 @@ SUBSYSTEM_DEF(vote)
 				voted -= usr.ckey
 		if("save")
 			if(usr.ckey in voted)
-				if(!(mode in SSpersistence.saved_votes))
-					SSpersistence.saved_votes[mode] = list()
-				SSpersistence.saved_votes[mode][usr.ckey] = voted[usr.ckey]
+				if(!(usr.ckey in SSpersistence.saved_votes))
+					SSpersistence.saved_votes[usr.ckey] = list()
+				SSpersistence.saved_votes[usr.ckey][mode] = voted[usr.ckey]
 				saved += usr.ckey
 		if("load")
-			if((mode in SSpersistence.saved_votes) && (usr.ckey in SSpersistence.saved_votes[mode]))
-				voted[usr.ckey] = SSpersistence.saved_votes[mode][usr.ckey]
-				saved += usr.ckey
+			if(!(usr.ckey in SSpersistence.saved_votes))
+				SSpersistence.LoadSavedVote(usr.ckey)
+				if(!(usr.ckey in SSpersistence.saved_votes))
+					SSpersistence.saved_votes[usr.ckey] = list()
+					if(usr.ckey in voted)
+						SSpersistence.saved_votes[usr.ckey][mode] = voted[usr.ckey]
+					else
+						SSpersistence.saved_votes[usr.ckey][mode] = list()
+			voted[usr.ckey] = SSpersistence.saved_votes[usr.ckey][mode]
+			saved += usr.ckey
 		else
 			if(vote_system == SCORE_VOTING)
 				submit_vote(round(text2num(href_list["vote"])),round(text2num(href_list["score"])))

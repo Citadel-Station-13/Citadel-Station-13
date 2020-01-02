@@ -34,7 +34,8 @@ SUBSYSTEM_DEF(persistence)
 	LoadRecentRulesets()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
-	LoadSavedVotes()
+	for(var/client/C in GLOB.clients)
+		LoadSavedVote(C.ckey)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
@@ -209,14 +210,14 @@ SUBSYSTEM_DEF(persistence)
 		return
 	antag_rep = json_decode(json)
 
-/datum/controller/subsystem/persistence/proc/LoadSavedVotes()
-	var/json_file = file("data/SavedVotes.json")
+/datum/controller/subsystem/persistence/proc/LoadSavedVote(var/ckey)
+	var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
-	saved_votes = json["data"]
+	saved_votes[ckey] = json["data"]
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -500,8 +501,9 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/SaveSavedVotes()
-	var/json_file = file("data/SavedVotes.json")
-	var/list/file_data = list()
-	file_data["data"] = saved_votes
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	for(var/ckey in saved_votes)
+		var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+		var/list/file_data = list()
+		file_data["data"] = saved_votes[ckey]
+		fdel(json_file)
+		WRITE_FILE(json_file, json_encode(file_data))
