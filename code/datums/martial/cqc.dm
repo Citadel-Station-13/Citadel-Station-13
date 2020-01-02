@@ -209,7 +209,7 @@
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
 /datum/martial_art/cqc/captainship
-	name = " Close Quarters Captaincy"
+	name = "Close Quarters Captaincy"
 
 ///Prevents use if the person is not in the assigned area.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work in kitchen
