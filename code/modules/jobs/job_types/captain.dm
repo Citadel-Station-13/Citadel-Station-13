@@ -65,8 +65,8 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-    ..()
-    if(visualsOnly)
-        return
+	..()
+	if(visualsOnly)
+		return
 	var/datum/martial_art/cqc/captainship/bossman = new
 		bossman.teach(H)
