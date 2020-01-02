@@ -1,4 +1,5 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
+#define TOPIC_LENGTH_LIMIT 256
 
 GLOBAL_VAR(restart_counter)
 
@@ -140,6 +141,10 @@ GLOBAL_VAR(restart_counter)
 	log_runtime(GLOB.revdata.get_log_message())
 
 /world/Topic(T, addr, master, key)
+	if(length(T) >= TOPIC_LENGTH_LIMIT)
+		log_topic("Oversized topic, not processing. from:[addr]")
+		return
+
 	TGS_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
