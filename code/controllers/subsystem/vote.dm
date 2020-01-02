@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(vote)
 			scores_by_choice -= score_name
 	while(scores_by_choice.len > 1)
 		var/highest_median = 0
-		for(var/score_name in scores_by_choice)
+		for(var/score_name in scores_by_choice) // first get highest median
 			var/list/score = scores_by_choice[score_name]
 			if(!score.len)
 				scores_by_choice -= score_name
@@ -166,7 +166,10 @@ SUBSYSTEM_DEF(vote)
 			var/median = score[max(1,round(score.len/2))]
 			if(median >= highest_median)
 				highest_median = median
-			else
+		for(var/score_name in scores_by_choice) // then, remove
+			var/list/score = scores_by_choice[score_name]
+			var/median = score[max(1,round(score.len/2))]
+			if(median < highest_median)
 				scores_by_choice -= score_name
 		for(var/score_name in scores_by_choice) // after removals
 			var/list/score = scores_by_choice[score_name]
