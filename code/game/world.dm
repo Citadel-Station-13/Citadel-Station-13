@@ -1,5 +1,6 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 #define TOPIC_LENGTH_LIMIT 256
+#define TOPIC_COOLDOWN 1 //90% sure there isnt anything that does multiple topic calls in a single decisecond.
 
 GLOBAL_VAR(restart_counter)
 
@@ -141,9 +142,23 @@ GLOBAL_VAR(restart_counter)
 	log_runtime(GLOB.revdata.get_log_message())
 
 /world/Topic(T, addr, master, key)
-	if(length(T) >= TOPIC_LENGTH_LIMIT)
-		log_topic("Oversized topic, not processing. from:[addr]")
+	var/static/list/bannedsourceaddrs = list()
+	var/static/list/lasttimeaddr = list()
+
+	if(addr in bannedsourceaddrs)
 		return
+
+	if(length(T) >= TOPIC_LENGTH_LIMIT)
+		log_topic("Oversized topic, banning address. from:[addr]")
+		bannedsourceaddrs |= addr
+		return
+	
+	if(addr in lasttimeaddr && world.time < (lasttimeaddr["[addr]"] + TOPIC_COOLDOWN))
+		log_topic("Too many topic calls from address in [TOPIC_COOLDOWN] ds, banning address. from:[addr]")
+		bannedsourceaddrs |= addr
+		return
+	
+	lasttimeaddr["[addr]"] = world.time
 
 	TGS_TOPIC	//redirect to server tools if necessary
 
