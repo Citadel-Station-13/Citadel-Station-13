@@ -208,7 +208,7 @@
 ///Subtype of CQCs.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-/datum/martual_art/cqc/captainship
+/datum/martial_art/cqc/captainship
 	name = "Captains Quarters Combat"
 
 ///Prevents use if the person is not in the assigned area.
@@ -218,7 +218,7 @@
 	return ..()
 	
 /datum/martial_art/cqc/captainship/can_use(mob/living/carbon/human/H) //this is used to make captain CQC only work in captain quarters
-	if(!istype(get_area(H), /area/crew_quarters/captain's office))
+	if(!istype(get_area(H), /area/crew_quarters/heads/captain))
 		return FALSE
 	return ..()
 
