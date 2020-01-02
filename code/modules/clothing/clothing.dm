@@ -22,7 +22,6 @@
 	var/cooldown = 0
 	var/obj/item/flashlight/F = null
 	var/can_flashlight = 0
-	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
 
@@ -47,6 +46,17 @@
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects.
 
+	//Polychrome stuff:
+	var/hasprimary = FALSE	//These vars allow you to choose which overlays a clothing has
+	var/hassecondary = FALSE
+	var/hastertiary = FALSE
+	var/primary_color = "#FFFFFF" //RGB in hexcode
+	var/secondary_color = "#FFFFFF"
+	var/tertiary_color = "#808080"
+
+	//No idea what this is but eh	-tori
+	var/force_alternate_icon = FALSE
+
 
 /obj/item/clothing/Initialize()
 	. = ..()
@@ -54,6 +64,8 @@
 		actions_types += /datum/action/item_action/toggle_voice_box
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
+	if(hasprimary | hassecondary | hastertiary)	//Checks if polychrome is enabled
+		update_icon()	//Applies the overlays and default colors onto the clothes on spawn.
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()
@@ -138,6 +150,8 @@
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
+	if(hasprimary | hassecondary | hastertiary)	//Checks if polychrome is enabled
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
@@ -260,6 +274,56 @@ BLIND     // can't see anything
 		remove_accessory(user)
 	else
 		rolldown()
+	// Polychrome stuff:
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+	return TRUE
+
+/obj/item/clothing/neck/AltClick(mob/user)
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	// Polychrome stuff:
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
 	return TRUE
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
@@ -377,3 +441,18 @@ BLIND     // can't see anything
 				return FALSE
 
 	return TRUE
+
+/obj/item/clothing/update_icon()	// Polychrome stuff
+	..()
+	if(hasprimary)	//Checks if the overlay is enabled
+		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary")	//Automagically picks overlays
+		primary_overlay.color = primary_color	//Colors the greyscaled overlay
+		add_overlay(primary_overlay)	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
+	if(hassecondary)
+		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary")
+		secondary_overlay.color = secondary_color
+		add_overlay(secondary_overlay)
+	if(hastertiary)
+		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary")
+		tertiary_overlay.color = tertiary_color
+		add_overlay(tertiary_overlay)

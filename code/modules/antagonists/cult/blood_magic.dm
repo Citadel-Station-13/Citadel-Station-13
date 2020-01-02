@@ -585,6 +585,12 @@
 				new /obj/item/stack/sheet/runed_metal(T,quantity)
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		if(istype(target, /obj/item/clothing/suit/hooded/wintercoat) && target.type != /obj/item/clothing/suit/hooded/wintercoat/narsie)
+			if (do_after(user,30,target=target))
+				new /obj/item/clothing/suit/hooded/wintercoat/narsie(T)
+				qdel(target)
+				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [target], transforming it into a narsian winter coat!</span>")
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
 			if(candidate.mmi)
