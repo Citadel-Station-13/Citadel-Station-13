@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "You shouldn't be able to target objects you can't see (excluding darkness) with the ARCD and RLD"
+  - tweak: "The admin RCD is ranged too, just like the ARCD."

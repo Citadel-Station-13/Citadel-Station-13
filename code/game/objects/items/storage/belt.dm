@@ -61,7 +61,6 @@
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
-		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler
 		))
 	STR.can_hold = can_hold
@@ -459,7 +458,8 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/holosign_creator,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
 		/obj/item/lightreplacer,
@@ -571,7 +571,6 @@
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/holosign_creator,
-		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
@@ -583,7 +582,7 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding ammunition."
+	desc = "A bandolier for holding shotgun ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
 
@@ -593,7 +592,7 @@
 	STR.max_items = 18
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
-		/obj/item/ammo_casing
+		/obj/item/ammo_casing/shotgun
 		))
 
 /obj/item/storage/belt/bandolier/durathread

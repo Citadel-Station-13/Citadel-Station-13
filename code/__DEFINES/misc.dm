@@ -528,5 +528,3 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
 
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
-
-#define CANT_REENTER_ROUND -1

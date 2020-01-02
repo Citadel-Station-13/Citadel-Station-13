@@ -48,42 +48,41 @@
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
-/mob/living/carbon/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
-	. = ..()
-	if(!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) && !skip_throw_mode_check && !in_throw_mode)
+/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
+	. = FALSE
+	if(mind)
+		if(mind.martial_art && mind.martial_art.dodge_chance == 100)
+			return TRUE
+	if(!skip_throw_mode_check && !in_throw_mode)
 		return
-	if(get_active_held_item() || restrained())
+	if(get_active_held_item())
 		return
-	I.attack_hand(src)
-	if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-		visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-		throw_mode_off()
-		return TRUE
+	if(restrained())
+		return
+	return TRUE
 
-/mob/living/carbon/embed_item(obj/item/I)
-	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-	var/obj/item/bodypart/L = pick(bodyparts)
-	L.embedded_objects |= I
-	I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-	I.forceMove(src)
-	L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
-	visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
+	if(!skipcatch)	//ugly, but easy
+		if(can_catch_item())
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				if (mind)
+					if (mind.martial_art && mind.martial_art.dodge_chance == 100) //autocatch for rising bass
+						if (get_active_held_item())
+							visible_message("<span class='warning'>[I] falls to the ground as [src] chops it out of the air!</span>")
+							return 1
+						if(!in_throw_mode)
+							throw_mode_on()
+				if(isturf(I.loc))
+					I.attack_hand(src)
+					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+						visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+						throw_mode_off()
+						return 1
+	..()
+
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	//CIT CHANGES START HERE - combatmode and resting checks
-	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
-	if(user.resting)
-		totitemdamage *= 0.5
-	if(!combatmode)
-		totitemdamage *= 1.5
-	//CIT CHANGES END HERE
-	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
-		return FALSE
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
@@ -94,6 +93,17 @@
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
+		//CIT CHANGES START HERE - combatmode and resting checks
+		var/totitemdamage = I.force
+		if(iscarbon(user))
+			var/mob/living/carbon/tempcarb = user
+			if(!tempcarb.combatmode)
+				totitemdamage *= 0.5
+		if(user.resting)
+			totitemdamage *= 0.5
+		if(!combatmode)
+			totitemdamage *= 1.5
+	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			var/basebloodychance = affecting.brute_dam + totitemdamage
@@ -127,9 +137,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
-	. = ..()
-	if(.) //was the attack blocked?
-		return
+
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
@@ -144,7 +152,8 @@
 		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user, user.a_intent))
-					return TRUE
+					return 1
+	return 0
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
@@ -164,8 +173,7 @@
 		help_shake_act(M)
 		return 0
 
-	. = ..()
-	if(.) //successful monkey bite.
+	if(..()) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
@@ -173,27 +181,26 @@
 
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
-	. = ..()
-	if(!.)
-		return
-	if(M.powerlevel > 0)
-		var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-		if(prob(stunprob))
-			M.powerlevel -= 3
-			if(M.powerlevel < 0)
-				M.powerlevel = 0
+	if(..()) //successful slime attack
+		if(M.powerlevel > 0)
+			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+			if(prob(stunprob))
+				M.powerlevel -= 3
+				if(M.powerlevel < 0)
+					M.powerlevel = 0
 
-			visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-			"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
+				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
 
-			do_sparks(5, TRUE, src)
-			var/power = M.powerlevel + rand(0,3)
-			Knockdown(power*20)
-			if(stuttering < power)
-				stuttering = power
-			if (prob(stunprob) && M.powerlevel >= 8)
-				adjustFireLoss(M.powerlevel * rand(6,10))
-				updatehealth()
+				do_sparks(5, TRUE, src)
+				var/power = M.powerlevel + rand(0,3)
+				Knockdown(power*20)
+				if(stuttering < power)
+					stuttering = power
+				if (prob(stunprob) && M.powerlevel >= 8)
+					adjustFireLoss(M.powerlevel * rand(6,10))
+					updatehealth()
+		return 1
 
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)
@@ -325,12 +332,12 @@
 
 			else
 				return
-
+		
 		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
 				"<span class='notice'>You shake [src]'s hand.</span>", )
-
+		
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")

@@ -56,8 +56,8 @@
 
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
-	//If they've opted out, then route processing though liver.
-	if(!(H.client?.prefs.cit_toggles & BREAST_ENLARGEMENT))
+	//If they have Acute hepatic pharmacokinesis, then route processing though liver.
+	if(HAS_TRAIT(H, TRAIT_PHARMA) || !H.canbearoused)
 		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
 			L.swelling += 0.05
@@ -94,7 +94,9 @@
 	return ..()
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
-	if(!(M.client?.prefs.cit_toggles & FORCED_FEM))
+
+	//Acute hepatic pharmacokinesis.
+	if(HAS_TRAIT(M, TRAIT_PHARMA) || !M.canbearoused)
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 		L.swelling+= 0.05
 		return ..()
@@ -131,10 +133,15 @@
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
-	if(!(M.client?.prefs.cit_toggles & BREAST_ENLARGEMENT) || !B)
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.swelling-= 0.05
-		return ..()
+	if(!B)
+		//Acute hepatic pharmacokinesis.
+		if(HAS_TRAIT(M, TRAIT_PHARMA) || !M.canbearoused)
+			var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+			L.swelling-= 0.05
+			return ..()
+
+		//otherwise proceed as normal
+		return..()
 	B.modify_size(-0.05)
 	return ..()
 
@@ -214,7 +221,8 @@
 		return ..()
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
-	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT))
+	//If they have Acute hepatic pharmacokinesis, then route processing though liver.
+	if(HAS_TRAIT(H, TRAIT_PHARMA) || !H.canbearoused)
 		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
 			L.swelling += 0.05
@@ -244,7 +252,8 @@
 /datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/human/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 	if(!istype(M))
 		return ..()
-	if(!(M.client?.prefs.cit_toggles & FORCED_MASC))
+	//Acute hepatic pharmacokinesis.
+	if(HAS_TRAIT(M, TRAIT_PHARMA) || !M.canbearoused)
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 		L.swelling+= 0.05
 		return..()
@@ -283,9 +292,11 @@
 		return ..()
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
-	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT) || !P)
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.swelling-= 0.05
+	if(!P)
+		//Acute hepatic pharmacokinesis.
+		if(HAS_TRAIT(M, TRAIT_PHARMA))
+			var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+			L.swelling-= 0.05
 		return..()
 
 	P.modify_size(-0.1)

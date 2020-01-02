@@ -26,10 +26,11 @@ Borg Hypospray
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin", "salglu_solution", "insulin")
+	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin", "salglu_solution")
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
+
 
 /obj/item/reagent_containers/borghypo/Initialize()
 	. = ..()
@@ -39,9 +40,11 @@ Borg Hypospray
 
 	START_PROCESSING(SSobj, src)
 
+
 /obj/item/reagent_containers/borghypo/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
 
 /obj/item/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
 	charge_tick++
@@ -159,7 +162,7 @@ Borg Hypospray
 	icon_state = "borghypo_s"
 	charge_cost = 20
 	recharge_time = 2
-	reagent_ids = list("syndicate_nanites", "potass_iodide", "morphine", "insulin")
+	reagent_ids = list("syndicate_nanites", "potass_iodide", "morphine")
 	bypass_protection = 1
 	accepts_reagent_upgrades = FALSE
 
@@ -175,6 +178,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
+
 	reagent_ids = list("beer", "orangejuice", "grenadine", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale", "milk", "coffee", "banana", "lemonjuice")
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
@@ -230,21 +234,23 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
+
 	reagent_ids = list("fakebeer", "fernet")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
-	reagent_ids = list("dizzysolution", "tiresolution", "synthpax", "insulin")
+
+	reagent_ids = list("dizzysolution","tiresolution","synthpax")
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list("dizzysolution", "tiresolution", "synthpax", "tirizene", "sulfonal", "sodium_thiopental", "cyanide", "fentanyl")
+	reagent_ids = list("dizzysolution","tiresolution","synthpax","tirizene","sulfonal","sodium_thiopental","cyanide","fentanyl")
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/epi
-	name = "Stabilizer injector"
+	name = "epinephrine injector"
 	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
-	reagent_ids = list("epinephrine", "insulin")
+	reagent_ids = list("epinephrine")
 	accepts_reagent_upgrades = FALSE

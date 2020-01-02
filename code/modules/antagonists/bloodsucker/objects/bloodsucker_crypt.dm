@@ -275,7 +275,7 @@
 			// All done!
 			if(convert_progress <= 0)
 				// FAIL: Can't be Vassal
-				if(!SSticker.mode.can_make_vassal(target, user, display_warning=FALSE) || HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
+				if(!SSticker.mode.can_make_vassal(target, user, display_warning=FALSE) && HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
 					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you, they either have a mindshield or their external loyalties are too difficult for you to break.<i>\[ALT+click to release\]</span>")
 					convert_progress ++ // Pop it back up some. Avoids wasting Blood on a lost cause.
 				// SUCCESS: All done!

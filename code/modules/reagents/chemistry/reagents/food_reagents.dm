@@ -622,7 +622,7 @@
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0, TRUE) //heals TOXINLOVERs
+		M.adjustToxLoss(-1*REM, 0)
 	..()
 
 /datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)

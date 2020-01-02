@@ -52,7 +52,6 @@
 				/obj/item/clothing/mask/muzzle = 4,
 				/obj/item/clothing/under/stripper_pink = 3,
 				/obj/item/clothing/under/stripper_green = 3,
-				/obj/item/clothing/under/corset = 3,
 				/obj/item/clothing/under/gear_harness = 10,
 				/obj/item/dildo/custom = 5,
 				/obj/item/electropack/shockcollar = 3,
@@ -72,8 +71,7 @@
 				)
 	premium = list(
 				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
-				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10,
-				/obj/item/clothing/under/pants/chaps = 5
+				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10
 				)
 	refill_canister = /obj/item/vending_refill/kink
 

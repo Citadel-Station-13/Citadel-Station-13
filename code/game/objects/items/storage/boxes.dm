@@ -1259,12 +1259,3 @@
 	var/obj/item/stack/sheet/cardboard/I = new(user.drop_location())
 	qdel(src)
 	user.put_in_hands(I)
-
-/obj/item/storage/box/marshmallow
-	name = "box of marshmallows"
-	desc = "A box of marshmallows."
-	illustration = "marshmallow"
-
-/obj/item/storage/box/marshmallow/PopulateContents()
-	for (var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/marshmallow(src)

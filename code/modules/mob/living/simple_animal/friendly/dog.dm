@@ -643,9 +643,9 @@
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
-		if(INTENT_HELP)
+		if("help")
 			wuv(1,M)
-		if(INTENT_HARM)
+		if("harm")
 			wuv(-1,M)
 
 /mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)

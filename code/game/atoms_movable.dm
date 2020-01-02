@@ -515,10 +515,10 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback, messy_throw = TRUE)
-	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, messy_throw)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback, messy_throw = TRUE) //If this returns FALSE then callback will not be called.
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
 	if (!target || speed <= 0)
 		return

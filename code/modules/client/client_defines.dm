@@ -80,7 +80,3 @@
 	var/next_keysend_reset = 0
 	var/next_keysend_trip_reset = 0
 	var/keysend_tripped = FALSE
-
-	// stops players from coming back through ghost/midround roles after suicide/cryo
-	// for a duration set by CONFIG_GET(number/suicide_reenter_round_timer) and CONFIG_GET(number/roundstart_suicide_time_limit)
-	var/reenter_round_timeout = 0

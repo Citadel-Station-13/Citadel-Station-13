@@ -545,20 +545,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-
-		if(H.socks && H.get_num_legs(FALSE) >= 2)
-			if(H.hidden_socks)
-				H.socks = "Nude"
-			else
-				H.socks = H.saved_socks
-				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
-				if(S)
-					var/digilegs = ((DIGITIGRADE in species_traits) && S.has_digitigrade) ? "_d" : ""
-					var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
-					if(S.has_color)
-						MA.color = "#[H.socks_color]"
-					standing += MA
-
 		if(H.underwear)
 			if(H.hidden_underwear)
 				H.underwear = "Nude"
@@ -566,9 +552,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.underwear = H.saved_underwear
 				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
 				if(B)
-					var/digilegs = ((DIGITIGRADE in species_traits) && B.has_digitigrade) ? "_d" : ""
-					var/mutable_appearance/MA = mutable_appearance(B.icon, "[B.icon_state][digilegs]", -BODY_LAYER)
-					if(B.has_color)
+					var/mutable_appearance/MA = mutable_appearance(B.icon, B.icon_state, -BODY_LAYER)
+					if(UNDIE_COLORABLE(B))
 						MA.color = "#[H.undie_color]"
 					standing += MA
 
@@ -579,14 +564,26 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.undershirt = H.saved_undershirt
 				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
 				if(T)
-					var/state = "[T.icon_state][((DIGITIGRADE in species_traits) && T.has_digitigrade) ? "_d" : ""]"
 					var/mutable_appearance/MA
 					if(H.dna.species.sexes && H.gender == FEMALE)
-						MA = wear_female_version(state, T.icon, BODY_LAYER)
+						MA = wear_female_version(T.icon_state, T.icon, BODY_LAYER)
 					else
-						MA = mutable_appearance(T.icon, state, -BODY_LAYER)
-					if(T.has_color)
+						MA = mutable_appearance(T.icon, T.icon_state, -BODY_LAYER)
+					if(UNDIE_COLORABLE(T))
 						MA.color = "#[H.shirt_color]"
+					standing += MA
+
+		if(H.socks && H.get_num_legs(FALSE) >= 2)
+			if(H.hidden_socks)
+				H.socks = "Nude"
+			else
+				H.socks = H.saved_socks
+				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
+				if(S)
+					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
+					var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
+					if(UNDIE_COLORABLE(S))
+						MA.color = "#[H.socks_color]"
 					standing += MA
 
 	if(standing.len)
@@ -1592,11 +1589,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.adjustStaminaLossBuffered(3)
 		return FALSE
 	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
-		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
-			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
-			return FALSE
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
 		user.adjustStaminaLossBuffered(3)
+		if(HAS_TRAIT(target, TRAIT_ASSBLASTUSA))
+			var/hit_zone = (user.held_index_to_dir(user.active_hand_index) == "l" ? "l_":"r_") + "arm"
+			user.adjustStaminaLoss(20, affected_zone = hit_zone)
+			user.visible_message(\
+				"<span class='danger'>\The [user] slaps \the [target]'s ass, but their hand bounces off like they hit metal!</span>",\
+				"<span class='danger'>You slap [user == target ? "your" : "\the [target]'s"] ass, but feel an intense amount of pain as you realise their buns are harder than steel!</span>",\
+				"You hear a slap."
+			)
+			playsound(target.loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+			user.emote("scream")
+			return FALSE
+
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message(\
 			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
@@ -1685,6 +1691,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		attacker_style = M.mind.martial_art
 		if(attacker_style?.pacifism_check && HAS_TRAIT(M, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
 			attacker_style = null
+	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
+		log_combat(M, H, "attempted to touch")
+		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
+		return 0
+	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
 	switch(M.a_intent)
 		if("help")
 			help(M, H, attacker_style)

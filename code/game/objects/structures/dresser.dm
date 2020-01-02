@@ -30,11 +30,11 @@
 		return
 
 	var/list/undergarment_choices = list("Underwear", "Underwear Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")
-	if(!(GLOB.underwear_list[H.underwear]?.has_color))
+	if(!UNDIE_COLORABLE(GLOB.underwear_list[H.underwear]))
 		undergarment_choices -= "Underwear Color"
-	if(!(GLOB.undershirt_list[H.undershirt]?.has_color))
+	if(!UNDIE_COLORABLE(GLOB.undershirt_list[H.undershirt]))
 		undergarment_choices -= "Undershirt Color"
-	if(!(GLOB.socks_list[H.socks]?.has_color))
+	if(!UNDIE_COLORABLE(GLOB.socks_list[H.socks]))
 		undergarment_choices -= "Socks Color"
 
 	var/choice = input(H, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in undergarment_choices

@@ -26,14 +26,13 @@
 			fold_in(force = 1)
 			Knockdown(200)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
-		if(INTENT_HELP)
+		if("help")
 			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
-		if(INTENT_DISARM)
+		if("disarm")
 			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
-		if(INTENT_HARM)
+		if("harm")
 			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
@@ -42,19 +41,14 @@
 					if(user.put_in_hands(card))
 						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
 			else
-				if(HAS_TRAIT(user, TRAIT_PACIFISM))
-					to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
-					return
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 				take_holo_damage(2)
-		else
-			grabbedby(user)
 
-/mob/living/silicon/pai/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.stun)
+/mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
+	if(Proj.stun)
 		fold_in(force = TRUE)
-		visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
-	. = ..()
+		src.visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
+	. = ..(Proj)
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")

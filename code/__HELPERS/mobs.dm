@@ -20,6 +20,8 @@
 		else
 			return "000"
 
+#define UNDIE_COLORABLE(U) (U?.has_color)
+
 /proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
