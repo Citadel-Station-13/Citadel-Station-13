@@ -60,6 +60,10 @@ SUBSYSTEM_DEF(dbcore)
 		return FALSE
 	return ..()
 
+/datum/controller/subsystem/dbcore/proc/DebugKeepDisconnected()
+	Disconnect()
+	failed_connections = INFINITY
+
 /datum/controller/subsystem/dbcore/proc/Connect()
 	if(IsConnected())
 		return TRUE
