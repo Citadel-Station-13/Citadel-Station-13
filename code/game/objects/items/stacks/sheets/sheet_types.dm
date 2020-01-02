@@ -81,6 +81,21 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
+		new /datum/stack_recipe_list("chess pieces", list( \
+		new /datum/stack_recipe("White Pawn", /obj/structure/chess/WhitePawn, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Rook", /obj/structure/chess/WhiteRook, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Knight", /obj/structure/chess/WhiteKnight, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Bishop", /obj/structure/chess/WhiteBishop, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Queen", /obj/structure/chess/WhiteQueen, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White King", /obj/structure/chess/WhiteKing, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Pawn", /obj/structure/chess/BlackPawn, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Rook", /obj/structure/chess/BlackRook, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Knight", /obj/structure/chess/BlackKnight, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Bishop", /obj/structure/chess/BlackBishop, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Queen", /obj/structure/chess/BlackQueen, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black King", /obj/structure/chess/BlackKing, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+	)), \
+	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2), \
 	new/datum/stack_recipe("small light fixture frame", /obj/item/wallframe/light_fixture/small, 1), \
