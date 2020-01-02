@@ -195,6 +195,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
+	
+	var/sprint_spacebar = FALSE
+	var/sprint_toggle = FALSE
 
 	var/list/exp = list()
 	var/list/menuoptions
@@ -722,13 +725,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Clothing & Equipment</h2>"
 			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
-			if(UNDIE_COLORABLE(GLOB.underwear_list[underwear]))
+			if(GLOB.underwear_list[underwear]?.has_color)
 				dat += "<b>Underwear Color:</b> <span style='border:1px solid #161616; background-color: #[undie_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=undie_color;task=input'>Change</a><BR>"
 			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
-			if(UNDIE_COLORABLE(GLOB.undershirt_list[undershirt]))
+			if(GLOB.undershirt_list[undershirt]?.has_color)
 				dat += "<b>Undershirt Color:</b> <span style='border:1px solid #161616; background-color: #[shirt_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=shirt_color;task=input'>Change</a><BR>"
 			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
-			if(UNDIE_COLORABLE(GLOB.socks_list[socks]))
+			if(GLOB.socks_list[socks]?.has_color)
 				dat += "<b>Socks Color:</b> <span style='border:1px solid #161616; background-color: #[socks_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=socks_color;task=input'>Change</a><BR>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
@@ -837,6 +840,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Auto OOC:</b> <a href='?_src_=prefs;preference=auto_ooc'>[auto_ooc ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
@@ -888,6 +892,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</a><br>"
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
+			dat += "<b>Sprint Key:</b> <a href='?_src_=prefs;preference=sprint_key'>[sprint_spacebar ? "Space" : "Shift"]</a><br>"
+			dat += "<b>Toggle Sprint:</b> <a href='?_src_=prefs;preference=sprint_toggle'>[sprint_toggle ? "Enabled" : "Disabled"]</a><br>"
 
 			if (CONFIG_GET(flag/maprotation) && CONFIG_GET(flag/tgstyle_maprotation))
 				var/p_map = preferred_map
@@ -1002,9 +1008,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Other content prefs</h2>"
 			dat += "<b>Breast Enlargement:</b> <a href='?_src_=prefs;preference=breast_enlargement'>[(cit_toggles & BREAST_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Penis Enlargement:</b> <a href='?_src_=prefs;preference=penis_enlargement'>[(cit_toggles & PENIS_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
-			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[(cit_toggles & NEVER_HYPNO) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=never_hypno'>[(cit_toggles & NEVER_HYPNO) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<b>Aphrodisiacs:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_APHRO) ? "Disallowed" : "Allowed"]</a><br>"
-			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=ass_slap'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<br>"
 
 
@@ -2083,6 +2089,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					user.client.change_view(CONFIG_GET(string/default_view))
 				if("autostand")
 					autostand = !autostand
+				if("auto_ooc")
+					auto_ooc = !auto_ooc
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
@@ -2214,6 +2222,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hypno")
 					cit_toggles ^= HYPNO
 
+				if("never_hypno")
+					cit_toggles ^= NEVER_HYPNO
+				
+				if("aphro")
+					cit_toggles ^= NO_APHRO
+
+				if("ass_slap")
+					cit_toggles ^= NO_ASS_SLAP
+					
 				//END CITADEL EDIT
 
 				if("ambientocclusion")
@@ -2226,6 +2243,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					auto_fit_viewport = !auto_fit_viewport
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
+
+				if("sprint_key")
+					sprint_spacebar = !sprint_spacebar
+
+				if("sprint_toggle")
+					sprint_toggle = !sprint_toggle
 
 				if("save")
 					save_preferences()

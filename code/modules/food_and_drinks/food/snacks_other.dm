@@ -610,3 +610,67 @@
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
 	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/marshmallow
+	name = "marshmallow"
+	desc = "A marshmallow filled with fluffy marshmallow fluff."
+	icon_state = "marshmallow"
+	list_reagents = list("sugar" = 5, "nutriment" = 2)
+	filling_color = "#fafafa"
+	w_class = WEIGHT_CLASS_TINY
+	tastes = list("marshmallow" = 2)
+	foodtype = SUGAR | JUNKFOOD
+	var/burned = 0
+
+/obj/item/reagent_containers/food/snacks/marshmallow/attackby(obj/item/I, mob/user)
+	switch (I.get_temperature())
+		if (355 to 1500)
+			if (prob(30))
+				burnmallow()
+		if (1500 to 2000)
+			if (prob(50))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (2000 to 3000)
+			if (prob(10))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (3000 to INFINITY)
+			burnmallow(TRUE)
+	return ..()
+
+/obj/item/reagent_containers/food/snacks/marshmallow/proc/burnmallow(reallyburned = FALSE)
+	if (reallyburned && burned == 1)
+		icon_state = "marshmallowrburned"
+	else if (burned == 0)
+		icon_state = "marshmallowburned"
+
+/obj/item/reagent_containers/food/snacks/marshmallow/examine(mob/user)
+	. = ..()
+	if (burned == 2)
+		. += "It looks very burned."
+	if (burned == 1)
+		. += "It looks just right for eating!"
+
+/obj/item/reagent_containers/food/snacks/marshmallow/fire_act(temp,volume)
+	switch (temp)
+		if (355 to 1500)
+			if (prob(30))
+				burnmallow()
+		if (1500 to 2000)
+			if (prob(50))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (2000 to 3000)
+			if (prob(10))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (3000 to 7000)
+			burnmallow(TRUE)
+		if (7000 to INFINITY)
+			burn()
+	..()

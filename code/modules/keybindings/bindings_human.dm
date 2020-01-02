@@ -58,13 +58,23 @@
 				return
 	switch(_key)
 		if("Shift")
-			sprint_hotkey(TRUE)
+			if(!user.prefs.sprint_spacebar)
+				user.prefs.sprint_toggle ? togglesprint() : sprint_hotkey(TRUE) //Yes, this looks hacky. Yes, this works.
+			return
+		if("Space")
+			if(user.prefs.sprint_spacebar)
+				user.prefs.sprint_toggle ? togglesprint() : sprint_hotkey(TRUE)
 			return
 	return ..()
 
 /mob/living/carbon/human/key_up(_key, client/user)
 	switch(_key)
 		if("Shift")
-			sprint_hotkey(FALSE)
+			if(!user.prefs.sprint_spacebar && !user.prefs.sprint_toggle)
+				sprint_hotkey(FALSE)
+			return
+		if("Space")
+			if(user.prefs.sprint_spacebar && !user.prefs.sprint_toggle)
+				sprint_hotkey(FALSE)
 			return
 	return ..()
