@@ -205,12 +205,20 @@
 
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 
-///Subtype of CQC. Only used for the chef.
+///Subtype of CQCs.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
+/datum/martual_art/cqc/captainship
+	name = "Captains Quarters Combat"
 
-///Prevents use if the cook is not in the kitchen.
+///Prevents use if the person is not in the assigned area.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work in kitchen
 	if(!istype(get_area(H), /area/crew_quarters/kitchen))
 		return FALSE
 	return ..()
+	
+/datum/martial_art/cqc/captainship/can_use(mob/living/carbon/human/H) //this is used to make captain CQC only work in captain quarters
+	if(!istype(get_area(H), /area/crew_quarters/captain's office))
+		return FALSE
+	return ..()
+
