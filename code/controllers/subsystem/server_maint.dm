@@ -2,12 +2,15 @@
 
 SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
-	wait = 6
+	wait = 10
 	flags = SS_POST_FIRE_TIMING
 	priority = FIRE_PRIORITY_SERVER_MAINT
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+
+	var/last_isbanned_flood_prune = 0
+	var/isbanned_flood_prune_delay = 60 SECONDS
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
@@ -45,6 +48,10 @@ SUBSYSTEM_DEF(server_maint)
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
 
+	if((last_isbanned_flood_prune + isbanned_flood_prune_delay) < world.time)
+		last_isbanned_flood_prune = world.time
+		prune_isbanned_floodcheck_list()
+
 /datum/controller/subsystem/server_maint/Shutdown()
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", TRUE) //second parameter ensures only afk clients are kicked
 	var/server = CONFIG_GET(string/server)
@@ -60,5 +67,26 @@ SUBSYSTEM_DEF(server_maint)
 	var/tgsversion = world.TgsVersion()
 	if(tgsversion)
 		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion)
+
+/datum/controller/subsystem/server_maint/proc/prune_isbanned_floodcheck_list()
+	set waitfor = FALSE
+	for(var/key in GLOB.isbanned_key_floodcheck)
+		if(GLOB.isbanned_key_floodcheck[key])
+			var/msg = "SERVER MAINTENANCE: Lingering key in GLOB.isbanned_key_floodcheck: [key]. Contact a coder!"
+			message_admins(msg)
+			log_admin(msg)
+	GLOB.isbanned_key_floodcheck.len = 0		//Is this the best way/is it even necessary to prune these lists?
+	for(var/cid in GLOB.isbanned_cid_floodcheck)
+		if(GLOB.isbanned_cid_floodcheck[cid])
+			var/msg = "SERVER MAINTENANCE: Lingering cid in GLOB.isbanned_key_floodcheck: [cid]. Contact a coder!"
+			message_admins(msg)
+			log_admin(msg)
+	GLOB.isbanned_cid_floodcheck.len = 0		//ditto
+	for(var/ip in GLOB.isbanned_ip_floodcheck)
+		if(GLOB.isbanned_ip_floodcheck[ip])
+			var/msg = "SERVER MAINTENANCE: Lingering ip in GLOB.isbanned_key_floodcheck: [ip]. Contact a coder!"
+			message_admins(msg)
+			log_admin(msg)
+	GLOB.isbanned_ip_floodcheck.len = 0			//ditto
 
 #undef PING_BUFFER_TIME
