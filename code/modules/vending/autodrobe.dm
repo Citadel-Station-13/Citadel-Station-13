@@ -131,6 +131,12 @@
 					/obj/item/clothing/suit/drfreeze_coat = 1,
 					/obj/item/clothing/suit/gothcoat = 2,
 					/obj/item/clothing/under/draculass = 1,
+					/obj/item/clothing/under/christmas/christmasmaler = 3,
+					/obj/item/clothing/under/christmas/christmasmaleg = 3,
+					/obj/item/clothing/under/christmas/christmasfemaler = 3,
+					/obj/item/clothing/under/christmas/christmasfemaleg = 3,
+					/obj/item/clothing/head/christmashat = 3,
+					/obj/item/clothing/head/christmashatg = 3,
 					/obj/item/clothing/under/drfreeze = 1)    //End of Cit Changes
 	refill_canister = /obj/item/vending_refill/autodrobe
 
