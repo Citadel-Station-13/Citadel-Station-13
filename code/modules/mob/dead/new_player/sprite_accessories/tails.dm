@@ -370,6 +370,22 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
+/datum/sprite_accessory/tails/human/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+
+/datum/sprite_accessory/tails_animated/human/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+
+/datum/sprite_accessory/tails/human/spikes
+	name = "Spikes"
+	icon_state = "spikes"
+
+/datum/sprite_accessory/tails_animated/human/spikes
+	name = "Spikes"
+	icon_state = "spikes"
+
 /datum/sprite_accessory/tails/human/shark
 	name = "Shark"
 	icon_state = "shark"
@@ -437,6 +453,22 @@
 	icon_state = "tiger"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
+/datum/sprite_accessory/tails/human/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/tails_animated/human/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/tails/human/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/tails_animated/human/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
 
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
@@ -693,6 +725,30 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Skunk"
 	icon_state = "skunk"
 
+/datum/sprite_accessory/mam_tails/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/spikes
+	name = "Spikes"
+	icon_state = "spikes"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/spikes
+	name = "Spikes"
+	icon_state = "spikes"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
 /datum/sprite_accessory/mam_tails/shark
 	name = "Shark"
 	icon_state = "shark"
@@ -740,6 +796,30 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_tails_animated/tiger
 	name = "Tiger"
 	icon_state = "tiger"
+
+/datum/sprite_accessory/mam_tails/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
+	color_src = MUTCOLORS
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_tails/wolf
 	name = "Wolf"
