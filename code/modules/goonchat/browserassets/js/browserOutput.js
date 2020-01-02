@@ -421,8 +421,8 @@ function handleClientData(ckey, ip, compid) {
 				return; //Record already exists
 			}
 		}
-		//Lets make sure we obey our limit (can connect from server with higher limit)
-		while (opts.clientData.length >= opts.clientDataLimit) {
+
+		if (opts.clientData.length >= opts.clientDataLimit) {
 			opts.clientData.shift();
 		}
 	} else {
