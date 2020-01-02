@@ -5,6 +5,8 @@
 	icon_state = "toilet00"
 	density = FALSE
 	anchored = TRUE
+	can_buckle = 1
+	buckle_lying = 0
 	var/open = FALSE			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
