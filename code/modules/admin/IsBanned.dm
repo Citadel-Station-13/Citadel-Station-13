@@ -7,16 +7,16 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)
 #define MAX_CONCURRENT_IP_CONNECTIONS 2
 
 #define CLEAR_FLOOD \
-	GLOB.isbanned_key_floodcheck[key] = FALSE; \
-	GLOB.isbanned_cid_floodcheck[computer_id] = FALSE; \
-	GLOB.isbanned_ip_floodcheck[address] = max(0, GLOB.isbanned_ip_floodcheck[address] - 1)
+	GLOB.isbanned_key_floodcheck["[key]"] = FALSE; \
+	GLOB.isbanned_cid_floodcheck["[computer_id]"] = FALSE; \
+	GLOB.isbanned_ip_floodcheck["[address]"] = max(0, GLOB.isbanned_ip_floodcheck["[address]"] - 1)
 
 #define SET_FLOOD \
-	GLOB.isbanned_key_floodcheck[key] = TRUE; \
-	GLOB.isbanned_cid_floodcheck[computer_id] = TRUE; \
-	GLOB.isbanned_ip_floodcheck[address] = GLOB.isbanned_ip_floodcheck[address]? (GLOB.isbanned_ip_floodcheck[address] + 1) : 1
+	GLOB.isbanned_key_floodcheck["[key]"] = TRUE; \
+	GLOB.isbanned_cid_floodcheck["[computer_id]"] = TRUE; \
+	GLOB.isbanned_ip_floodcheck["[address]"] = GLOB.isbanned_ip_floodcheck["[address]"]? (GLOB.isbanned_ip_floodcheck["[address]"] + 1) : 1
 
-#define CHECK_FLOOD ((GLOB.isbanned_key_floodcheck[key]) || (GLOB.isbanned_cid_floodcheck[computer_id]) || (GLOB.isbanned_ip_floodcheck[address] > MAX_CONCURRENT_IP_CONNECTIONS))
+#define CHECK_FLOOD ((GLOB.isbanned_key_floodcheck["[key]"]) || (GLOB.isbanned_cid_floodcheck["[computer_id]"]) || (GLOB.isbanned_ip_floodcheck["[address]"] > MAX_CONCURRENT_IP_CONNECTIONS))
 
 //How many new ckey matches before we revert the stickyban to it's roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)
 /world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE,bypass_floodcheck=FALSE)
 	if(!real_bans_only && !bypass_floodcheck)
 		if(CHECK_FLOOD)
-			return list("reason"="concurrent connection attempts", "desc"="You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck[key]],[GLOB.isbanned_cid_floodcheck[computer_id]],[GLOB.isbanned_ip_floodcheck[address]])")
+			return list("reason"="concurrent connection attempts", "desc"="You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck["[key]"]],[GLOB.isbanned_cid_floodcheck["["[computer_id]"]"]],[GLOB.isbanned_ip_floodcheck["[address]"]])")
 		SET_FLOOD
 	if (!key || !address || !computer_id)
 		if(real_bans_only)
