@@ -15,12 +15,12 @@
 	suffix = "Box/Engine/engine_sm_1x3.dmm"
 	name = "Engine SM 1x3"
 
-/datum/map_template/ruin/station/box/engine/5x5
+/datum/map_template/ruin/station/box/engine/fivebyfive
 	id = "engine_sm_5x5"
 	suffix = "Box/Engine/engine_sm_5x5.dmm"
 	name = "Engine SM 5x5"
 
-/datum/map_template/ruin/station/box/engine/3x
+/datum/map_template/ruin/station/box/engine/threesm
 	id = "engine_sm_3x"
 	suffix = "Box/Engine/engine_sm_3x.dmm"
 	name = "Engine SM 3x"

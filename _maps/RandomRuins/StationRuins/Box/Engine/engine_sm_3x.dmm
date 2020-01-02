@@ -413,11 +413,11 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "js" = (
-/obj/structure/sign/warning/electricshock,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
 /area/engine/supermatter)
 "jB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -514,17 +514,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"mW" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "mX" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -832,22 +821,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"ti" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"tn" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "tw" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -859,9 +832,9 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "un" = (
-/obj/structure/sign/warning/fire,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
 /area/engine/supermatter)
 "uC" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -878,6 +851,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
+/obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "vN" = (
@@ -1246,6 +1220,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"FL" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 "Gl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -1811,12 +1789,6 @@
 "Uu" = (
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"UM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "UN" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -2422,7 +2394,7 @@ JL
 Bk
 Bk
 Bk
-JL
+FL
 JK
 WT
 Ef
@@ -2447,7 +2419,7 @@ ZO
 yZ
 qA
 iJ
-UM
+so
 uR
 ey
 js
@@ -2475,7 +2447,7 @@ YX
 Qu
 aV
 jp
-UM
+so
 uR
 ey
 NU
@@ -2503,7 +2475,7 @@ LE
 Gz
 lE
 CT
-UM
+so
 uR
 ey
 un
