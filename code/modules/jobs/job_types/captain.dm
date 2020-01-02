@@ -69,4 +69,4 @@
     if(visualsOnly)
         return
 		var/datum/martial_art/cqc/captainship/bossman = new
-    	bossman.teach(H)
+		bossman.teach(H)
