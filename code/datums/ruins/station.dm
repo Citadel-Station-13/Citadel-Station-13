@@ -20,10 +20,10 @@
 	suffix = "Box/Engine/engine_sm_5x5.dmm"
 	name = "Engine SM 5x5"
 
-/datum/map_template/ruin/station/box/engine/x3
-	id = "engine_sm_x3"
-	suffix = "Box/Engine/engine_sm_x3.dmm"
-	name = "Engine SM x3"
+/datum/map_template/ruin/station/box/engine/3x
+	id = "engine_sm_3x"
+	suffix = "Box/Engine/engine_sm_3x.dmm"
+	name = "Engine SM 3x"
 
 /datum/map_template/ruin/station/box/engine/singulo
 	id = "engine_singulo"
