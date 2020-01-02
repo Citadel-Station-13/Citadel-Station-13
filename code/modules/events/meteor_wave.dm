@@ -21,7 +21,7 @@
 
 /datum/round_event/meteor_wave/setup()
 	announceWhen = 1
-	startWhen = rand(60, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
+	startWhen = rand(180, 360) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
 	if(GLOB.singularity_counter)
 		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
 	endWhen = startWhen + 60
@@ -35,9 +35,9 @@
 /datum/round_event/meteor_wave/proc/determine_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"normal" = 50,
+			"normal" = 45,
 			"threatening" = 40,
-			"catastrophic" = 10))
+			"catastrophic" = 15))
 	switch(wave_name)
 		if("normal")
 			wave_type = GLOB.meteors_normal
@@ -71,7 +71,7 @@
 	weight = 5
 	min_players = 20
 	max_occurrences = 3
-	earliest_start = 35 MINUTES
+	earliest_start = 45 MINUTES
 
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
@@ -80,9 +80,9 @@
 	name = "Meteor Wave: Catastrophic"
 	typepath = /datum/round_event/meteor_wave/catastrophic
 	weight = 7
-	min_players = 25
-	max_occurrences = 3
-	earliest_start = 45 MINUTES
+	min_players = 30
+	max_occurrences = 2
+	earliest_start = 60 MINUTES
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
