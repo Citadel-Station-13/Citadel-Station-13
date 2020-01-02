@@ -7,13 +7,13 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)
 #define MAX_CONCURRENT_IP_CONNECTIONS 2
 
 #define CLEAR_FLOOD \
-	GLOB.isbanned_key_floodcheck[key] = FALSE \
-	GLOB.isbanned_cid_floodcheck[computer_id] = FALSE \
+	GLOB.isbanned_key_floodcheck[key] = FALSE; \
+	GLOB.isbanned_cid_floodcheck[computer_id] = FALSE; \
 	GLOB.isbanned_ip_floodcheck[address] = max(0, GLOB.isbanned_ip_floodcheck[address] - 1)
 
 #define SET_FLOOD \
-	GLOB.isbanned_key_floodcheck[key] = TRUE \
-	GLOB.isbanned_cid_floodcheck[computer_id] = TRUE \
+	GLOB.isbanned_key_floodcheck[key] = TRUE; \
+	GLOB.isbanned_cid_floodcheck[computer_id] = TRUE; \
 	GLOB.isbanned_ip_floodcheck[address] = GLOB.isbanned_ip_floodcheck[address]? (GLOB.isbanned_ip_floodcheck[address] + 1) : 1
 
 #define CHECK_FLOOD ((GLOB.isbanned_key_floodcheck[key]) || (GLOB.isbanned_cid_floodcheck[computer_id]) || (GLOB.isbanned_ip_floodcheck[address] > MAX_CONCURRENT_IP_CONNECTIONS))
