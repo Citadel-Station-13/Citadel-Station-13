@@ -139,8 +139,6 @@
 
 //Adds flavoursome dogborg items to dogborg variants without mechanical benefits
 /obj/item/robot_module/proc/dogborg_equip()
-	if(istype(src, /obj/item/robot_module/k9))
-		return //Bandaid fix to prevent stacking until I merge these two modules into their base types
 	var/obj/item/I = new /obj/item/analyzer/nose/flavour(src)
 	basic_modules += I
 	I = new /obj/item/soap/tongue/flavour(src)
@@ -361,6 +359,7 @@
 		if("Medihound")
 			cyborg_base_icon = "medihound"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			sleeper_overlay = "msleeper"
 			moduleselect_icon = "medihound"
 			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			has_snowflake_deadsprite = TRUE
@@ -528,7 +527,10 @@
 
 /obj/item/robot_module/security/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads", "Heavy", "Sleek", "Can", "Marina", "Spider")
+	var/list/secmodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Can", "Marina", "Spider", "K9", "K9 Dark", "Vale")
+	if(R.client && R.client.ckey in list("nezuli"))
+		secmodels += "Alina"
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in secmodels
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -553,60 +555,39 @@
 		if("Heavy")
 			cyborg_base_icon = "heavysec"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
-	return ..()
-
-/obj/item/robot_module/k9
-	name = "Security K-9 Unit"
-	basic_modules = list(
-		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/storage/bag/borgdelivery,
-		/obj/item/dogborg/jaws/big,
-		/obj/item/dogborg/pounce,
-		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/soap/tongue,
-		/obj/item/analyzer/nose,
-		/obj/item/dogborg/sleeper/K9,
-		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/pinpointer/crew)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "k9"
-	moduleselect_icon = "k9"
-	moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
-	hat_offset = INFINITY
-	sleeper_overlay = "ksleeper"
-	cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
-	has_snowflake_deadsprite = TRUE
-	dogborg = TRUE
-	cyborg_pixel_offset = -16
-
-/obj/item/robot_module/k9/do_transform_animation()
-	..()
-	to_chat(loc,"<span class='userdanger'>While you have picked the Security K-9 module, you still have to follow your laws, NOT Space Law. \
-	For Crewsimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-
-/obj/item/robot_module/k9/be_transformed_to(obj/item/robot_module/old_module)
-	var/mob/living/silicon/robot/R = loc
-	var/list/sechoundmodels = list("Default", "Dark", "Vale")
-	if(R.client && R.client.ckey in list("nezuli"))
-		sechoundmodels += "Alina"
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sechoundmodels
-	if(!borg_icon)
-		return FALSE
-	switch(borg_icon)
-		if("Default")
+		if("K9")
 			cyborg_base_icon = "k9"
+			sleeper_overlay = "ksleeper"
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
 		if("Alina")
 			cyborg_base_icon = "alina-sec"
 			special_light_key = "alina"
 			sleeper_overlay = "alinasleeper"
-		if("Dark")
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
+		if("K9 Dark")
 			cyborg_base_icon = "k9dark"
 			sleeper_overlay = "k9darksleeper"
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
 		if("Vale")
 			cyborg_base_icon = "valesec"
 			sleeper_overlay = "valesecsleeper"
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
 	return ..()
 
 /obj/item/robot_module/security/Initialize()
