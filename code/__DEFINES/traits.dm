@@ -118,6 +118,7 @@
 #define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
+#define TRAIT_DISK_VERIFIER     "disk-verifier"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
@@ -133,6 +134,7 @@
 #define TRAIT_NORUNNING			"norunning"		// You walk!
 #define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
+#define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 
 
  //non-mob traits
@@ -159,17 +161,16 @@
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
-#define TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
 #define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
-#define TRAIT_PHARMA            "hepatic_pharmacokinesis"
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
-#define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
+#define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
 
 
@@ -192,6 +193,7 @@
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+#define GHOSTROLE_TRAIT "ghostrole"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -225,5 +227,9 @@
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
+#define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
+#define NUKEOP_ANTAGONIST "nukeop-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define NUKEOP_TRAIT "nuke-op"
+#define DEATHSQUAD_TRAIT "deathsquad"

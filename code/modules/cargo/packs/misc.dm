@@ -13,17 +13,16 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/* I did it Kevin
 /datum/supply_pack/misc/abandonedcrate
-	name = "Abandoned Crate"
-	desc = "Someone keeps finding these locked crates out in the boonies. How about you take a crack at it, we've had our fill. WARNING: EXPLOSIVE"
+	name = "Loot Box"
+	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
 	contraband = TRUE
-	cost = 12800
+	cost = 15000
 	contains = list(/obj/structure/closet/crate/secure/loot)
 	crate_name = "abandoned crate"
 	crate_type = /obj/structure/closet/crate/large
 	dangerous = TRUE
-*/
+
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"

@@ -247,6 +247,23 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/coconutmilk
+	name = "Coconut Milk"
+	id = "coconutmilk"
+	description = "A transparent white liquid extracted from coconuts. Rich in taste."
+	color = "#DFDFDF" // rgb: 223, 223, 223
+	taste_description = "sweet milk"
+	quality = DRINK_GOOD
+	glass_icon_state = "glass_white"
+	glass_name = "glass of coconut milk"
+	glass_desc = "White and nutritious goodness!"
+
+/datum/reagent/consumable/coconutmilk/on_mob_life(mob/living/carbon/M)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(2,0, 0)
+		. = 1
+	..()
+
 /datum/reagent/consumable/cream
 	name = "Cream"
 	id = "cream"
@@ -515,7 +532,7 @@
 	name = "Buzz Fuzz"
 	description = "~A Hive of Flavour!~ NOTICE: Addicting."
 	id = "buzz_fuzz"
-	addiction_threshold = 14
+	addiction_threshold = 26 //A can and a sip
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "carbonated honey and pollen"
 	glass_icon_state = "buzz_fuzz"
@@ -523,8 +540,8 @@
 	glass_desc = "Stinging with flavour."
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent("sugar",2)
-	if(prob(25))
+	M.reagents.add_reagent("sugar",1)
+	if(prob(5))
 		M.reagents.add_reagent("honey",1)
 	..()
 
@@ -950,4 +967,22 @@
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
 	M.adjustArousalLoss(5)
+	..()
+
+/datum/reagent/consumable/monkey_energy
+	name = "Monkey Energy"
+	id = "monkey_energy"
+	description = "The only drink that will make you unleash the ape."
+	color = "#f39b03" // rgb: 243, 155, 3
+	taste_description = "barbecue and nostalgia"
+	glass_icon_state = "monkey_energy_glass"
+	glass_name = "glass of Monkey Energy"
+	glass_desc = "You can unleash the ape, but without the pop of the can?"
+
+/datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
