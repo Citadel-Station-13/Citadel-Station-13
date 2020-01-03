@@ -1408,7 +1408,7 @@
 	var/our_level = area.nightshift_public_area
 	var/public_requires_auth = CONFIG_GET(flag/nightshift_toggle_public_requires_auth)
 	var/normal_requires_auth = CONFIG_GET(flag/nightshift_toggle_requires_auth)
-	return (configured_level && our_level && (our_level <= configured_level))? public_requires_auth : normal_requires_auth)
+	return (configured_level && our_level && ((our_level <= configured_level)? public_requires_auth : normal_requires_auth))
 
 #undef UPSTATE_CELL_IN
 #undef UPSTATE_OPENED1

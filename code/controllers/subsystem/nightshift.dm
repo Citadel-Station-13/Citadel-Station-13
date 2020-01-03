@@ -41,13 +41,19 @@ SUBSYSTEM_DEF(nightshift)
 	if(nightshift_active != night_time)
 		update_nightshift(night_time, announcing)
 
-/datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, max_level = (!active? INFINITY : CONFIG_GET(number/night_shift_public_area_only)))
+/datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, max_level_override)
 	nightshift_active = active
 	if(announce)
 		if (active)
 			announce("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
 		else
-	var/public_only = CONFIG_GET(number/night_shift_public_area_only)
+			announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
+	var/max_level
+	var/configured_level = CONFIG_GET(number/night_shift_public_areas_only)
+	if(isnull(max_level_override))
+		max_level = active? configured_level : INFINITY		//by default, deactivating shuts off nightshifts everywhere.
+	else
+		max_level = max_level_override
 	for(var/A in GLOB.apcs_list)
 		var/obj/machinery/power/apc/APC = A
 		if(APC.area && (!max_level || !APC.area.nightshift_public_area || (APC.area.nightshift_public_area <= max_level)) && (APC.area.type in GLOB.the_station_areas))
