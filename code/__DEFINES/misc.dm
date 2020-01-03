@@ -530,3 +530,9 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
 
 #define CANT_REENTER_ROUND -1
+
+//Nightshift levels.
+#define NIGHTSHIFT_AREA_NONE				0		//default
+#define NIGHTSHIFT_AREA_PUBLIC				1		//hallways
+#define NIGHTSHIFT_AREA_RECREATION			2		//dorms common areas, etc
+#define NIGHTSHIFT_AREA_DEPARTMENT_HALLS	3		//interior hallways, etc
