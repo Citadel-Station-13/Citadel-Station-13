@@ -188,7 +188,7 @@
 				M.uninstall(src)
 			R.module.remove_module(KA, TRUE)
 
-		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/pickaxe/drill/cyborg/diamond(R.module)
+		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg(R.module)
 		R.module.basic_modules += PKA
 		R.module.add_module(PKA, FALSE, TRUE)
 
