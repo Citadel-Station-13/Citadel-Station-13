@@ -1404,7 +1404,7 @@
 /obj/machinery/power/apc/proc/nightshift_toggle_requires_auth()
 	if(!area)
 		return FALSE
-	var/configured_level = CONFIG_GET(number/nightshift_public_areas_only)
+	var/configured_level = CONFIG_GET(number/night_shift_public_areas_only)
 	var/our_level = area.nightshift_public_area
 	var/public_requires_auth = CONFIG_GET(flag/nightshift_toggle_public_requires_auth)
 	var/normal_requires_auth = CONFIG_GET(flag/nightshift_toggle_requires_auth)
