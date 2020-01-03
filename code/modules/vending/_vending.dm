@@ -373,6 +373,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	try
 		vending_cache[P.product_path] = icon2base64(getFlatIcon(product, no_anim = TRUE))
 	catch
+		// this is a fucking stupid try/catch and it DOESN'T WORK WITHOUT IT BUT IT WORKS PERFECTLY AND NEVER REACHES THIS CATCH LOCALLY ? ? ?
 		vending_cache[P.product_path] = icon2base64(icon('icons/obj/aicards.dmi',"aicard-404"))
 	qdel(product)
 	return vending_cache[P.product_path]
