@@ -1,22 +1,44 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
-GLOBAL_LIST_EMPTY(isbanned_key_floodcheck)
-GLOBAL_LIST_EMPTY(isbanned_cid_floodcheck)
-GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)
+GLOBAL_LIST_EMPTY(isbanned_key_floodcheck)		//string = TRUE
+GLOBAL_LIST_EMPTY(isbanned_cid_floodcheck)		//string = TRUE (BESURE TO CONVERT TO STRING WHEN MANIPULATING THIS LIST, CID IS A NUMBER BY DEFAULT)
+GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connections, for concurrent connections from the same house/network/whatever
 
 #define MAX_CONCURRENT_IP_CONNECTIONS 2
+#define MAX_FLOODCHECK_LIST_LENGTH 1024
 
-#define CLEAR_FLOOD \
-	GLOB.isbanned_key_floodcheck["[key]"] = FALSE; \
-	GLOB.isbanned_cid_floodcheck["[computer_id]"] = FALSE; \
-	GLOB.isbanned_ip_floodcheck["[address]"] = max(0, GLOB.isbanned_ip_floodcheck["[address]"] - 1)
+//returns ban desc if fail, returns FALSE if success
+/world/proc/set_isbanned_flood(key, cid, ip)
+	if((length(GLOB.isbanned_key_floodcheck) > MAX_FLOODCHECK_LIST_LENGTH) || (length(GLOB.isbanned_cid_floodcheck) > MAX_FLOODCHECK_LIST_LENGTH) || (length(GLOB.isbanned_ip_floodcheck) > MAX_FLOODCHECK_LIST_LENGTH))
+		return "Abnormal amount of connections detected on server. Try again in 10 seconds."
+	GLOB.isbanned_key_floodcheck[key] = TRUE
+	GLOB.isbanned_cid_floodcheck["[cid]"] = TRUE		//CID is a number
+	var/ip_connections = GLOB.isbanned_ip_floodcheck[ip]
+	if(ip_connections)
+		GLOB.isbanned_ip_floodcheck[ip] = (ip_connections + 1)
+	else
+		GLOB.isbanned_ip_floodcheck[ip] = 1
+	return FALSE
 
-#define SET_FLOOD \
-	GLOB.isbanned_key_floodcheck["[key]"] = TRUE; \
-	GLOB.isbanned_cid_floodcheck["[computer_id]"] = TRUE; \
-	GLOB.isbanned_ip_floodcheck["[address]"] = GLOB.isbanned_ip_floodcheck["[address]"]? (GLOB.isbanned_ip_floodcheck["[address]"] + 1) : 1
+/world/proc/check_isbanned_flood(key, cid, ip)
+	if(GLOB.isbanned_key_floodcheck[key] || GLOB.isbanned_cid_floodcheck["[cid]"] || GLOB.isbanned_ip_floodcheck[ip])
+		return "You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck["[key]"]],[GLOB.isbanned_cid_floodcheck["[computer_id]"]],[GLOB.isbanned_ip_floodcheck["[address]"]])"
+	return FALSE
 
-#define CHECK_FLOOD ((GLOB.isbanned_key_floodcheck["[key]"]) || (GLOB.isbanned_cid_floodcheck["[computer_id]"]) || (GLOB.isbanned_ip_floodcheck["[address]"] > MAX_CONCURRENT_IP_CONNECTIONS))
+/world/proc/clear_isbanned_flood(key, cid, ip)
+	GLOB.isbanned_key_floodcheck -= key
+	GLOB.isbanned_cid_floodcheck -= "[cid]"
+	var/ip_connections = GLOB.isbanned_ip_floodcheck[ip]
+	if(ip_connections == 1)
+		GLOB.isbanned_ip_floodcheck -= ip
+	else
+		GLOB.isbanned_ip_floodcheck = (ip_connections - 1)
+
+#define CLEAR_FLOOD clear_isbanned_flood(key, computer_id, address)
+
+#define SET_FLOOD set_isbanned_flood(key, computer_id, address)
+
+#define CHECK_FLOOD check_isbanned_flood(key, computer_id, address)
 
 //How many new ckey matches before we revert the stickyban to it's roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
@@ -26,9 +48,9 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)
 
 /world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE,bypass_floodcheck=FALSE)
 	if(!real_bans_only && !bypass_floodcheck)
-		if(CHECK_FLOOD)
-			return list("reason"="concurrent connection attempts", "desc"="You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck["[key]"]],[GLOB.isbanned_cid_floodcheck["[computer_id]"]],[GLOB.isbanned_ip_floodcheck["[address]"]])")
-		SET_FLOOD
+		var/returneddesc = CHECK_FLOOD || SET_FLOOD
+		if(returneddesc)
+			return list("reason"="concurrent connection attempts", "desc"=returneddesc)
 	if (!key || !address || !computer_id)
 		if(real_bans_only)
 			CLEAR_FLOOD
@@ -239,6 +261,7 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)
 #undef STICKYBAN_MAX_ADMIN_MATCHES
 
 #undef MAX_CONCURRENT_IP_CONNECTIONS
+#undef MAX_FLOODCHECK_LIST_LENGTH
 
 #undef CLEAR_FLOOD
 #undef SET_FLOOD

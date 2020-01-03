@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/list/currentrun
 
 	var/last_isbanned_flood_prune = 0
-	var/isbanned_flood_prune_delay = 60 SECONDS
+	var/isbanned_flood_prune_delay = 10 SECONDS
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
@@ -71,22 +71,19 @@ SUBSYSTEM_DEF(server_maint)
 /datum/controller/subsystem/server_maint/proc/prune_isbanned_floodcheck_list()
 	set waitfor = FALSE
 	for(var/key in GLOB.isbanned_key_floodcheck)
-		if(GLOB.isbanned_key_floodcheck[key])
-			var/msg = "SERVER MAINTENANCE: Lingering key in GLOB.isbanned_key_floodcheck: [key]. Contact a coder!"
-			message_admins(msg)
-			log_admin(msg)
+		var/msg = "SERVER MAINTENANCE: Lingering key in GLOB.isbanned_key_floodcheck: [key] - [GLOB.isbanned_key_floodcheck[key]]. Contact a coder!"
+		message_admins(msg)
+		log_admin(msg)
 	GLOB.isbanned_key_floodcheck.len = 0		//Is this the best way/is it even necessary to prune these lists?
 	for(var/cid in GLOB.isbanned_cid_floodcheck)
-		if(GLOB.isbanned_cid_floodcheck[cid])
-			var/msg = "SERVER MAINTENANCE: Lingering cid in GLOB.isbanned_key_floodcheck: [cid]. Contact a coder!"
-			message_admins(msg)
-			log_admin(msg)
+		var/msg = "SERVER MAINTENANCE: Lingering cid in GLOB.isbanned_key_floodcheck: [cid] - [GLOB.isbanned_key_floodchec[cid]]. Contact a coder!"
+		message_admins(msg)
+		log_admin(msg)
 	GLOB.isbanned_cid_floodcheck.len = 0		//ditto
 	for(var/ip in GLOB.isbanned_ip_floodcheck)
-		if(GLOB.isbanned_ip_floodcheck[ip])
-			var/msg = "SERVER MAINTENANCE: Lingering ip in GLOB.isbanned_key_floodcheck: [ip]. Contact a coder!"
-			message_admins(msg)
-			log_admin(msg)
+		var/msg = "SERVER MAINTENANCE: Lingering ip in GLOB.isbanned_key_floodcheck: [ip] - [GLOB.isbanned_ip_floodcheck[ip]]. Contact a coder!"
+		message_admins(msg)
+		log_admin(msg)
 	GLOB.isbanned_ip_floodcheck.len = 0			//ditto
 
 #undef PING_BUFFER_TIME
