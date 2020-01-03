@@ -219,7 +219,7 @@
 	name = "space cola snowcone"
 	desc = "Space Cola drizzled over a snowball in a paper cup."
 	icon_state = "soda_sc"
-	list_reagents = list("nutriment" = 1, "space_cola" = 5)
+	list_reagents = list("nutriment" = 1, "cola" = 5)
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
 
 /obj/item/reagent_containers/food/snacks/snowcones/spacemountainwind
