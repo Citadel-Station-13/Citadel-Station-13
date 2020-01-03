@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(server_maint)
 		log_admin(msg)
 	GLOB.isbanned_key_floodcheck.len = 0		//Is this the best way/is it even necessary to prune these lists?
 	for(var/cid in GLOB.isbanned_cid_floodcheck)
-		var/msg = "SERVER MAINTENANCE: Lingering cid in GLOB.isbanned_key_floodcheck: [cid] - [GLOB.isbanned_key_floodchec[cid]]. Contact a coder!"
+		var/msg = "SERVER MAINTENANCE: Lingering cid in GLOB.isbanned_key_floodcheck: [cid] - [GLOB.isbanned_key_floodcheck[cid]]. Contact a coder!"
 		message_admins(msg)
 		log_admin(msg)
 	GLOB.isbanned_cid_floodcheck.len = 0		//ditto

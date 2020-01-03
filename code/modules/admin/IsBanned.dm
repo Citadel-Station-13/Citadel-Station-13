@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 
 /world/proc/check_isbanned_flood(key, cid, ip)
 	if(GLOB.isbanned_key_floodcheck[key] || GLOB.isbanned_cid_floodcheck["[cid]"] || GLOB.isbanned_ip_floodcheck[ip])
-		return "You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck["[key]"]],[GLOB.isbanned_cid_floodcheck["[computer_id]"]],[GLOB.isbanned_ip_floodcheck["[address]"]])"
+		return "You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck[key]],[GLOB.isbanned_cid_floodcheck["[cid]"]],[GLOB.isbanned_ip_floodcheck[address]])"
 	return FALSE
 
 /world/proc/clear_isbanned_flood(key, cid, ip)
