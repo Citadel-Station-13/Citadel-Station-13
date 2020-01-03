@@ -1,5 +1,5 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
-#define TOPIC_LENGTH_LIMIT 256
+#define TOPIC_LENGTH_LIMIT 1024
 #define TOPIC_COOLDOWN 1 //90% sure there isnt anything that does multiple topic calls in a single decisecond.
 
 GLOBAL_VAR(restart_counter)
