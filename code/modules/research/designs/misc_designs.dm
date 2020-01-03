@@ -434,7 +434,7 @@
 	desc = "A tool that can construct and deconstruct walls, airlocks and floors on the fly."
 	id = "rcd_loaded"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 60000, /datum/material/glass = 5000)  // costs more than what it did in the autolathe, this one comes loaded.
+	materials = list(MAT_METAL = 60000, MAT_GLASS = 5000)  // costs more than what it did in the autolathe, this one comes loaded.
 	build_path = /obj/item/construction/rcd/loaded
 	category = list("Equipment")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING
@@ -444,7 +444,7 @@
 	desc = "A tool that can construct and deconstruct pipes on the fly."
 	id = "rpd"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
+	materials = list(MAT_METAL = 75000, MAT_GLASS = 37500)
 	build_path = /obj/item/construction/rcd/loaded
 	category = list("Equipment")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING
