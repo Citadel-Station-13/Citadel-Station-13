@@ -444,7 +444,7 @@
 	desc = "A tool that can construct and deconstruct pipes on the fly."
 	id = "rpd"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)  // costs more than what it did in the autolathe, this one comes loaded.
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
 	build_path = /obj/item/construction/rcd/loaded
 	category = list("Equipment")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING
