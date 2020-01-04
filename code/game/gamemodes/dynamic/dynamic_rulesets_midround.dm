@@ -108,8 +108,12 @@
 
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become a [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 
-	if(!candidates || candidates.len <= required_candidates)
+	if(!candidates || candidates.len < required_candidates)
 		message_admins("The ruleset [name] did not receive enough applications.")
+		if(candidates)
+			message_admins("Only received [candidates.len], needed [required_candidates].")
+		else
+			message_admins("There were no candidates.")
 		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
 		return FALSE
 
@@ -180,6 +184,7 @@
 	repeatable = TRUE
 	high_population_requirement = 15
 	flags = TRAITOR_RULESET
+	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
 	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
@@ -214,6 +219,8 @@
 	living_players -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
+	log_admin("[M] was made into a traitor by dynamic.")
+	message_admins("[M] was made into a traitor by dynamic.")
 	return TRUE
 
 
@@ -237,6 +244,7 @@
 	requirements = list(101,101,70,50,50,50,40,30,30,30)
 	high_population_requirement = 30
 	required_type = /mob/living/silicon/ai
+	property_weights = list("story_potential" = 2, "trust" = 1, "chaos" = 2)
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
 
@@ -261,6 +269,8 @@
 	var/datum/antagonist/traitor/AI = new
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(AI)
+	log_admin("[M] was made into a malf AI by dynamic.")
+	message_admins("[M] was made into a malf AI by dynamic.")
 	if(prob(ion_announce))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "ionstorm")
 		if(prob(removeDontImproveChance))
@@ -289,6 +299,7 @@
 	requirements = list(90,90,70,50,50,50,50,40,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE
+	property_weights = list("story_potential" = 2, "trust" = 1, "chaos" = 2, "extended" = -2)
 	var/datum/mind/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -337,6 +348,7 @@
 	cost = 35
 	requirements = list(90,90,90,80,70,60,50,40,40,40)
 	high_population_requirement = 40
+	property_weights = list("story_potential" = 2, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
@@ -390,6 +402,7 @@
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
+	property_weights = list("story_potential" = -1, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
@@ -421,6 +434,7 @@
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
+	property_weights = list("story_potential" = -1, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/vents = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
@@ -476,6 +490,7 @@
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
+	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 2)
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
@@ -521,6 +536,7 @@
 	weight = 4
 	cost = 5
 	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
+	property_weights = list("story_potential" = 1, "extended" = 1, "valid" = -2)
 	high_population_requirement = 5
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
@@ -555,14 +571,18 @@
 	cost = 5
 	requirements = list(30,30,30,30,20,15,15,15,15,15)
 	high_population_requirement = 15
+	property_weights = list("story_potential" = -2, "extended" = -1)
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready(forced = FALSE)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population = 0,threat = 0)
 	var/deadMobs = 0
 	for(var/mob/M in GLOB.dead_mob_list)
 		deadMobs++
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready(forced = FALSE)
 	if(required_candidates > (dead_players.len + list_observers.len))
 		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
@@ -607,6 +627,7 @@
 	weight = 4
 	cost = 15
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
+	property_weights = list("story_potential" = -2, "extended" = -2, "integrity" = 2, "valid" = 2, "trust" = 2)
 	high_population_requirement = 30
 	var/list/spawn_locs = list()
 
@@ -659,6 +680,7 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
+	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 1, "trust" = -1, "chaos" = 2)
 	repeatable_weight_decrease = 4
 	repeatable = TRUE
 
@@ -699,6 +721,7 @@
 	cost = 15
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
 	high_population_requirement = 30
+	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 2)
 	var/list/spawn_locs = list()
 	var/spawn_loc
 
@@ -745,31 +768,3 @@
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
-
-//////////////////////////////////////////////
-//                                          //
-//               BLOODSUCKERS               //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/latejoin/bloodsucker
-  name = "Bloodsucker Infiltrator"
-  config_tag = "latejoin_bloodsucker"
-  antag_datum = ANTAG_DATUM_BLOODSUCKER
-  antag_flag = ROLE_TRAITOR
-  restricted_roles = list("AI", "Cyborg")
-  protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-  required_candidates = 1
-  weight = 3
-  cost = 10
-  requirements = list(90,80,70,60,55,50,45,40,35,30)
-  high_population_requirement = 30
-  repeatable = TRUE
-
-/datum/dynamic_ruleset/latejoin/bloodsucker/execute()
-  var/mob/M = pick(candidates)
-  assigned += M.mind
-  M.mind.special_role = antag_flag
-  if(mode.make_bloodsucker(M.mind))
-    mode.bloodsuckers += M
-  return TRUE

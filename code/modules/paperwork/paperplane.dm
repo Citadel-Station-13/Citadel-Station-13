@@ -102,7 +102,7 @@
 /obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
-		if(C.can_catch_item(TRUE))
+		if(!C.get_active_held_item() && !C.restrained())
 			var/datum/action/innate/origami/origami_action = locate() in C.actions
 			if(origami_action?.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
 				C.throw_mode_on()
