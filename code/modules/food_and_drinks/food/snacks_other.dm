@@ -47,6 +47,7 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -90,6 +91,7 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -99,6 +101,7 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -109,6 +112,7 @@
 	filling_color = "#DEB887"
 	tastes = list("soy" = 1)
 	foodtype = VEGETABLES
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/cheesyfries
 	name = "cheesy fries"
@@ -128,6 +132,7 @@
 	list_reagents = list("bad_food" = 30)
 	filling_color = "#8B4513"
 	foodtype = GROSS
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/carrotfries
 	name = "carrot fries"
@@ -401,7 +406,6 @@
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
-
 /obj/item/reagent_containers/food/snacks/powercrepe
 	name = "Powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
@@ -583,6 +587,7 @@
 	filling_color = "#ffdf26"
 	tastes = list("strawberries" = 5, "chocolate" = 3)
 	foodtype = FRUIT | SUGAR
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/chocolatebanana
 	name = "Chocolate dipped banana"
@@ -592,3 +597,80 @@
 	filling_color = "#ffdf26"
 	tastes = list("banana" = 5, "chocolate" = 3)
 	foodtype = FRUIT | SUGAR
+	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/cornchips
+	name = "boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
+	icon_state = "boritos"
+	trash = /obj/item/trash/boritos
+	bitesize = 2
+	list_reagents = list("nutriment" = 3, "cooking_oil" = 2, "sodiumchloride" = 3)
+	filling_color = "#ECA735"
+	tastes = list("fried corn" = 1)
+	foodtype = JUNKFOOD | FRIED
+	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/marshmallow
+	name = "marshmallow"
+	desc = "A marshmallow filled with fluffy marshmallow fluff."
+	icon_state = "marshmallow"
+	list_reagents = list("sugar" = 5, "nutriment" = 2)
+	filling_color = "#fafafa"
+	w_class = WEIGHT_CLASS_TINY
+	tastes = list("marshmallow" = 2)
+	foodtype = SUGAR | JUNKFOOD
+	var/burned = 0
+
+/obj/item/reagent_containers/food/snacks/marshmallow/attackby(obj/item/I, mob/user)
+	switch (I.get_temperature())
+		if (355 to 1500)
+			if (prob(30))
+				burnmallow()
+		if (1500 to 2000)
+			if (prob(50))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (2000 to 3000)
+			if (prob(10))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (3000 to INFINITY)
+			burnmallow(TRUE)
+	return ..()
+
+/obj/item/reagent_containers/food/snacks/marshmallow/proc/burnmallow(reallyburned = FALSE)
+	if (reallyburned && burned == 1)
+		icon_state = "marshmallowrburned"
+	else if (burned == 0)
+		icon_state = "marshmallowburned"
+
+/obj/item/reagent_containers/food/snacks/marshmallow/examine(mob/user)
+	. = ..()
+	if (burned == 2)
+		. += "It looks very burned."
+	if (burned == 1)
+		. += "It looks just right for eating!"
+
+/obj/item/reagent_containers/food/snacks/marshmallow/fire_act(temp,volume)
+	switch (temp)
+		if (355 to 1500)
+			if (prob(30))
+				burnmallow()
+		if (1500 to 2000)
+			if (prob(50))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (2000 to 3000)
+			if (prob(10))
+				burnmallow()
+			else
+				burnmallow(TRUE)
+		if (3000 to 7000)
+			burnmallow(TRUE)
+		if (7000 to INFINITY)
+			burn()
+	..()

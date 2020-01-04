@@ -29,6 +29,7 @@
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
 	var/ghost_usable = TRUE
+	var/skip_reentry_check = FALSE //Skips the ghost role blacklist time for people who ghost/suicide/cryo
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user, latejoinercalling)
@@ -44,7 +45,7 @@
 		return
 	if(isobserver(user))
 		var/mob/dead/observer/O = user
-		if(!O.can_reenter_round())
+		if(!O.can_reenter_round() && !skip_reentry_check)
 			return FALSE
 	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
