@@ -261,6 +261,7 @@
 		position = (position == vending_names_paths.len) ? 1 : (position + 1)
 		var/typepath = vending_names_paths[position]
 		set_type(typepath)
+		to_chat(user, "<span class='notice'>You set the board to \"[vending_names_paths[typepath]]\".</span>")
 	else
 		return ..()
 
