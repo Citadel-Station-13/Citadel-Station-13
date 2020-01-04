@@ -504,7 +504,7 @@
 	name = "secretcatchem"
 	id = "secretcatchem"
 	results = list("secretcatchem" = 5)
-	required_reagents = list("stable_plasma" = 1, "sugar" = 1, "cream" = 1, "clonexadone" = 1)//Yes this will make a kitty if you don't lucky guess. It'll eat all your reagents too.
+	required_reagents = list("stable_plasma" = 1, "caramel" = 1, "cream" = 1, "clonexadone" = 1)//Yes this will make a kitty if you don't lucky guess. It'll eat all your reagents too.
 	required_catalysts = list("SDGF" = 1)
 	required_temp = 500
 	mix_message = "the reaction gives off a meow!"
