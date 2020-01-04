@@ -57,6 +57,27 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/medical/chemical
+	name = "Chemical Starter Kit Crate"
+	desc = "Contains twelve different chemicals, for all the fun experiments you can make."
+	cost = 1700
+	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
+					/obj/item/reagent_containers/glass/bottle/carbon,
+					/obj/item/reagent_containers/glass/bottle/nitrogen,
+					/obj/item/reagent_containers/glass/bottle/oxygen,
+					/obj/item/reagent_containers/glass/bottle/fluorine,
+					/obj/item/reagent_containers/glass/bottle/phosphorus,
+					/obj/item/reagent_containers/glass/bottle/silicon,
+					/obj/item/reagent_containers/glass/bottle/chlorine,
+					/obj/item/reagent_containers/glass/bottle/radium,
+					/obj/item/reagent_containers/glass/bottle/sacid,
+					/obj/item/reagent_containers/glass/bottle/ethanol,
+					/obj/item/reagent_containers/glass/bottle/potassium,
+					/obj/item/clothing/glasses/science,
+					/obj/item/reagent_containers/dropper,
+					/obj/item/storage/box/beakers)
+	crate_name = "chemical crate"
+
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
 	desc = "Contains two defibrillators for bringing the recently deceased back to life."
@@ -246,24 +267,3 @@
 					/obj/item/storage/box/beakers)
 	crate_name = "virus containment unit crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-
-/datum/supply_pack/medical/chemical
-	name = "Chemical Starter Kit Crate"
-	desc = "Contains twelve different chemicals, for all the fun experiments you can make."
-	cost = 1700
-	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
-					/obj/item/reagent_containers/glass/bottle/carbon,
-					/obj/item/reagent_containers/glass/bottle/nitrogen,
-					/obj/item/reagent_containers/glass/bottle/oxygen,
-					/obj/item/reagent_containers/glass/bottle/fluorine,
-					/obj/item/reagent_containers/glass/bottle/phosphorus,
-					/obj/item/reagent_containers/glass/bottle/silicon,
-					/obj/item/reagent_containers/glass/bottle/chlorine,
-					/obj/item/reagent_containers/glass/bottle/radium,
-					/obj/item/reagent_containers/glass/bottle/sacid,
-					/obj/item/reagent_containers/glass/bottle/ethanol,
-					/obj/item/reagent_containers/glass/bottle/potassium,
-					/obj/item/clothing/glasses/science,
-					/obj/item/reagent_containers/dropper,
-					/obj/item/storage/box/beakers)
-	crate_name = "chemical crate"
