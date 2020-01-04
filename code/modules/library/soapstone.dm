@@ -117,6 +117,7 @@
 	anchored = TRUE
 	max_integrity = 30
 	layer = LATTICE_LAYER
+	light_power = 0.3
 
 	var/hidden_message
 	var/creator_key
@@ -153,7 +154,6 @@
 	var/newcolor = copytext(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
 	light_color = "#[newcolor]"
-	light_power = 0.3
 	set_light(1)
 
 /obj/structure/chisel_message/proc/pack()
