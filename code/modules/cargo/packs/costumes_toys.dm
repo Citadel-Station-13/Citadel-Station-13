@@ -367,3 +367,10 @@
 	contraband = TRUE
 	contains = list(/obj/item/vending_refill/kink, /obj/item/circuitboard/machine/kinkmate)
 	crate_name = "Kinkmate construction kit"
+
+/datum/supply_pack/costumes_toys/barkbox
+	name = "Bark Box construction kit"
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/item/vending_refill/pet, /obj/item/circuitboard/machine/pet)
+	crate_name = "Bark Box construction kit"
