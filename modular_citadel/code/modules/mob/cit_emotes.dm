@@ -114,12 +114,12 @@
 	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap3/run_emote(mob/living/user, params)
-	if(iscarbon(user) || ispAI(user))
-		if(user.nextsoundemote >= world.time)
-			return
-		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/snap3.ogg', 50, 1, -1)
-	. = ..()
+	if(!(. = ..()))
+		return
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	playsound(user, 'modular_citadel/sound/voice/snap3.ogg', 50, 1, -1)
 
 /datum/emote/living/awoo
 	key = "awoo"
