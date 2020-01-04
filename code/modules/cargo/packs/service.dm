@@ -130,7 +130,7 @@
 /datum/supply_pack/service/replacementdb
 	name = "Replacement Defensive Bar Shotgun"
 	desc = "Someone stole the Bartender's twin-barreled possession? Give them another one at a significant markup. Comes with one unused double-barrel shotgun, shells not included. Requires bartender access to open."
-	cost = 3300
+	cost = 2200
 	access = ACCESS_BAR
 	contraband = TRUE
 	contains = list(/obj/item/gun/ballistic/revolver/doublebarrel)
