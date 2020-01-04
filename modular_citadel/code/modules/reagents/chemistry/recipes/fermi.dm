@@ -105,7 +105,7 @@
 	name = "Eigenstasium"
 	id = "eigenstate"
 	results = list("eigenstate" = 1)
-	required_reagents = list("bluespace" = 1, "stable_plasma" = 1, "sugar" = 1)
+	required_reagents = list("bluespace" = 1, "stable_plasma" = 1, "caramel" = 1)
 	mix_message = "the reaction zaps suddenly!"
 	//FermiChem vars:
 	OptimalTempMin 		= 350 // Lower area of bell curve for determining heat based rate reactions
