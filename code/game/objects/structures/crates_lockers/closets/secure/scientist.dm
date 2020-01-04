@@ -31,4 +31,5 @@
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/RD(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/rd(src)
+	new /obj/item/coin/iron(src)
 

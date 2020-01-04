@@ -14,6 +14,7 @@
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/tank/jetpack/suit(src)
 	new /obj/item/cartridge/ce(src)
+	new /obj/item/coin/iron(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/areaeditor/blueprints(src)
