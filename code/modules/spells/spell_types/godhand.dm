@@ -186,7 +186,7 @@
 /obj/item/melee/touch_attack/nuclearfist
 	name = "\improper PURE MANLINESS"
 	desc = "SHOW THEM RAW POWER"
-	catchphrase = "I CAST FIST!"
+	catchphrase = "VIBE CHECK!!"
 	on_use_sound = 'sound/weapons/nuclear_fist.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
