@@ -13,11 +13,7 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 		return "Abnormal amount of connections detected on server. Try again in 10 seconds."
 	GLOB.isbanned_key_floodcheck[key] = TRUE
 	GLOB.isbanned_cid_floodcheck["[cid]"] = TRUE		//CID is a number
-	var/ip_connections = GLOB.isbanned_ip_floodcheck[ip]
-	if(ip_connections)
-		GLOB.isbanned_ip_floodcheck[ip] = (ip_connections + 1)
-	else
-		GLOB.isbanned_ip_floodcheck[ip] = 1
+	GLOB.isbanned_ip_floodcheck[ip] = GLOB.isbanned_ip_floodcheck[ip] + 1
 	return FALSE
 
 /world/proc/check_isbanned_flood(key, cid, ip)
@@ -28,11 +24,9 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 /world/proc/clear_isbanned_flood(key, cid, ip)
 	GLOB.isbanned_key_floodcheck.Remove(key)
 	GLOB.isbanned_cid_floodcheck.Remove("[cid]")
-	var/ip_connections = GLOB.isbanned_ip_floodcheck[ip]
-	if(ip_connections == 1)
+	GLOB.isbanned_ip_floodcheck[ip] = GLOB.isbanned_ip_floodcheck[ip] - 1
+	if(GLOB.isbanned_ip_floodcheck[ip] == 0)
 		GLOB.isbanned_ip_floodcheck.Remove(ip)
-	else
-		GLOB.isbanned_ip_floodcheck[ip] = (ip_connections - 1)
 
 #define CLEAR_FLOOD clear_isbanned_flood(key, computer_id, address)
 
