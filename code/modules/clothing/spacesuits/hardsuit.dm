@@ -629,7 +629,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | IMMUTABLE_SLOW
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	flags_1 = TESLA_IGNORE_1
 
 /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
@@ -644,9 +643,8 @@
 	tint = 1
 	var/obj/machinery/doppler_array/integrated/bomb_radar
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS | IMMUTABLE_SLOW
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	flags_1 = TESLA_IGNORE_1
 
 /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/Initialize()
