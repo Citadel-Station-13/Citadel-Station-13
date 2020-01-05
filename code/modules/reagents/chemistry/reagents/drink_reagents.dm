@@ -247,6 +247,23 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/coconutmilk
+	name = "Coconut Milk"
+	id = "coconutmilk"
+	description = "A transparent white liquid extracted from coconuts. Rich in taste."
+	color = "#DFDFDF" // rgb: 223, 223, 223
+	taste_description = "sweet milk"
+	quality = DRINK_GOOD
+	glass_icon_state = "glass_white"
+	glass_name = "glass of coconut milk"
+	glass_desc = "White and nutritious goodness!"
+
+/datum/reagent/consumable/coconutmilk/on_mob_life(mob/living/carbon/M)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(2,0, 0)
+		. = 1
+	..()
+
 /datum/reagent/consumable/cream
 	name = "Cream"
 	id = "cream"
@@ -407,10 +424,6 @@
 	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 
-/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
-	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
-
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(id)
 	..()
@@ -483,7 +496,6 @@
 	glass_name = "glass of lemon-lime"
 	glass_desc = "You're pretty certain a real fruit has never actually touched this."
 
-
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
@@ -514,6 +526,51 @@
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/buzz_fuzz
+	name = "Buzz Fuzz"
+	description = "~A Hive of Flavour!~ NOTICE: Addicting."
+	id = "buzz_fuzz"
+	addiction_threshold = 26 //A can and a sip
+	color = "#8CFF00" // rgb: 135, 255, 0
+	taste_description = "carbonated honey and pollen"
+	glass_icon_state = "buzz_fuzz"
+	glass_name = "honeycomb of Buzz Fuzz"
+	glass_desc = "Stinging with flavour."
+
+/datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
+	M.reagents.add_reagent("sugar",1)
+	if(prob(5))
+		M.reagents.add_reagent("honey",1)
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.1, S.success_multiplier) // +10% success probability on each step, compared to bacchus' blessing's ~46%
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage1(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "A Hive of Flavour")]</span>")
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage2(mob/living/M)
+	if(prob(10))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "A Hive of Flavour", "The Queen approved it!")]</span>")
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage3(mob/living/M)
+	if(prob(15))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Ideal of the worker drone", "A Hive of Flavour", "The Queen approved it!")]</span>")
+	..()
+
+/datum/reagent/consumable/buzz_fuzz/addiction_act_stage4(mob/living/M)
+	if(prob(25))
+		to_chat(M, "<span class = 'notice'>[pick("Buzz Buzz.", "Stinging with flavour.", "Ideal of the worker drone", "A Hive of Flavour", "Sap back that missing energy!", "Got Honey?", "The Queen approved it!")]</span>")
 	..()
 
 /datum/reagent/consumable/grey_bull
@@ -768,7 +825,6 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
-
 /datum/reagent/consumable/milk/chocolate_milk
 	name = "Chocolate Milk"
 	id = "chocolate_milk"
@@ -911,4 +967,22 @@
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
 	M.adjustArousalLoss(5)
+	..()
+
+/datum/reagent/consumable/monkey_energy
+	name = "Monkey Energy"
+	id = "monkey_energy"
+	description = "The only drink that will make you unleash the ape."
+	color = "#f39b03" // rgb: 243, 155, 3
+	taste_description = "barbecue and nostalgia"
+	glass_icon_state = "monkey_energy_glass"
+	glass_name = "glass of Monkey Energy"
+	glass_desc = "You can unleash the ape, but without the pop of the can?"
+
+/datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()

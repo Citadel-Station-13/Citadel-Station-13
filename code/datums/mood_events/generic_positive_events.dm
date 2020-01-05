@@ -116,3 +116,59 @@
 
 /datum/mood_event/happy_empath/add_effects(var/mob/happytarget)
 	description = "<span class='nicegreen'>[happytarget.name]'s happiness is infectious!</span>\n"
+
+/datum/mood_event/headpat
+	description = "<span class='nicegreen'>Headpats are nice.</span>\n"
+	mood_change = 2
+	timeout = 2 MINUTES
+
+/datum/mood_event/hugbox
+	description = "<span class='nicegreen'>I hugged a box of hugs recently.</span>\n"
+	mood_change = 1
+	timeout = 2 MINUTES
+
+/datum/mood_event/plushpet
+	description = "<span class='nicegreen'>I pet a plush recently.</span>\n"
+	mood_change = 1
+	timeout = 3000
+
+/datum/mood_event/plushplay
+	description = "<span class='nicegreen'>I've played with plushes recently.</span>\n"
+	mood_change = 3
+	timeout = 3000
+
+/datum/mood_event/breakfast
+	description = "<span class='nicegreen'>Nothing like a hearty breakfast to start the shift.</span>\n"
+	mood_change = 2
+	timeout = 15 MINUTES
+
+//Power gamer stuff below
+/datum/mood_event/drankblood
+	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
+	mood_change = 10
+	timeout = 900
+
+/datum/mood_event/coffinsleep
+	description = "<span class='nicegreen'>I slept in a coffin during the day. I feel whole again.</span>\n"
+	mood_change = 8
+	timeout = 1200
+
+//Cursed stuff below.
+
+/datum/mood_event/orgasm
+	description = "<span class='userlove'>I came!</span>\n" //funny meme haha
+	mood_change = 3
+	timeout = 100 SECONDS
+
+/datum/mood_event/fedpred
+	description = "<span class='nicegreen'>I've devoured someone!</span>\n"
+	mood_change = 3
+
+/datum/mood_event/fedprey
+	description = "<span class='nicegreen'>It feels quite cozy in here.</span>\n"
+	mood_change = 3
+
+/datum/mood_event/hope_lavaland
+	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
+	mood_change = 5
+

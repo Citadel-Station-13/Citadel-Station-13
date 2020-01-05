@@ -12,6 +12,8 @@
 	layer = ABOVE_MOB_LAYER
 	breach_time = 100 //ten seconds till all goes to shit
 	recharge_rate = 100
+	internals_req_access = list()
+	add_req_access = 0
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
 	spawn_tracked = FALSE
 
@@ -47,7 +49,7 @@
 	for(var/mob/M in src)
 		to_chat(M, "<span class='brass'>You are consumed by the fires raging within Neovgre...</span>")
 		M.dust()
-	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, 0)
+	playsound(src, 'sound/effects/neovgre_exploding.ogg', 100, 0)
 	src.visible_message("<span class = 'userdanger'>The reactor has gone critical, its going to blow!</span>")
 	addtimer(CALLBACK(src,.proc/go_critical),breach_time)
 

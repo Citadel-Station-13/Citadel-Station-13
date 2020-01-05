@@ -25,6 +25,20 @@
 	program_type = /datum/nanite_program/viral
 	category = list("Utility Nanites")
 
+/datum/design/nanites/research
+	name = "Distributed Computing"
+	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
+	id = "research_nanites"
+	program_type = /datum/nanite_program/research
+	category = list("Utility Nanites")
+
+/datum/design/nanites/researchplus
+	name = "Neural Network"
+	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. Can be overloaded to increase research output."
+	id = "researchplus_nanites"
+	program_type = /datum/nanite_program/researchplus
+	category = list("Utility Nanites")
+
 /datum/design/nanites/monitoring
 	name = "Monitoring"
 	desc = "The nanites monitor the host's vitals and location, sending them to the suit sensor network."
@@ -39,11 +53,27 @@
 	program_type = /datum/nanite_program/triggered/self_scan
 	category = list("Utility Nanites")
 
+/datum/design/nanites/dermal_button
+	name = "Dermal Button"
+	desc = "Displays a button on the host's skin, which can be used to send a signal to the nanites."
+	id = "dermal_button_nanites"
+	program_type = /datum/nanite_program/dermal_button
+	category = list("Utility Nanites")
+
 /datum/design/nanites/stealth
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."
 	id = "stealth_nanites"
 	program_type = /datum/nanite_program/stealth
+	category = list("Utility Nanites")
+
+
+/datum/design/nanites/reduced_diagnostics
+	name = "Reduced Diagnostics"
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
+	id = "red_diag_nanites"
+	program_type = /datum/nanite_program/reduced_diagnostics
 	category = list("Utility Nanites")
 
 /datum/design/nanites/access

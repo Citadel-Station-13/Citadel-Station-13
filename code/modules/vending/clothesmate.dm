@@ -70,14 +70,22 @@
 					/obj/item/clothing/under/skirt/red = 3,
 					/obj/item/clothing/under/skirt/purple = 3,
 					/obj/item/clothing/under/sundress = 4,
+					/obj/item/clothing/under/sundresswhite = 4,
 					/obj/item/clothing/under/stripeddress = 3,
 					/obj/item/clothing/under/sailordress = 3,
+					/obj/item/clothing/under/sweptskirt = 3,
+					/obj/item/clothing/under/greendress = 3,
+					/obj/item/clothing/under/pinkdress = 3,
 					/obj/item/clothing/under/redeveninggown = 3,
 					/obj/item/clothing/under/blacktango = 3,
+					/obj/item/clothing/under/westernbustle = 3,
+					/obj/item/clothing/under/flamenco = 3,
+					/obj/item/clothing/under/flowerdress = 3,
 					/obj/item/clothing/under/plaid_skirt = 3,
 					/obj/item/clothing/under/plaid_skirt/blue = 3,
 					/obj/item/clothing/under/plaid_skirt/purple = 3,
 					/obj/item/clothing/under/plaid_skirt/green = 3,
+					/obj/item/clothing/under/croptop = 3,
 					/obj/item/clothing/glasses/regular = 2,
 					/obj/item/clothing/glasses/regular/jamjar = 2,
 					/obj/item/clothing/head/sombrero = 3,
@@ -115,8 +123,18 @@
 					/obj/item/clothing/ears/headphones = 10,
 					/obj/item/clothing/suit/apron/purple_bartender = 4,
 					/obj/item/clothing/under/rank/bartender/purple = 4,
-					/obj/item/clothing/accessory/attrocious_pokadots = 8,
-					/obj/item/clothing/accessory/black_white_pokadots = 8)
+					/obj/item/clothing/under/christmas/christmasmaler = 3,
+					/obj/item/clothing/under/christmas/christmasmaleg = 3,
+					/obj/item/clothing/under/christmas/christmasfemaler = 3,
+					/obj/item/clothing/under/christmas/christmasfemaleg = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/christmascoatr = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/christmascoatg = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg = 3,
+					/obj/item/clothing/head/christmashat = 3,
+					/obj/item/clothing/head/christmashatg = 3,
+					/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
+					/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
+					/obj/item/clothing/shoes/winterboots/santaboots = 3)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
@@ -126,8 +144,7 @@
 					/obj/item/clothing/suit/jacket/letterman_syndie = 5,
 					/obj/item/clothing/under/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
-					/obj/item/clothing/under/geisha = 4,
-					/obj/item/clothing/accessory/syndi_pokadots = 4,
+					/obj/item/clothing/under/geisha = 4,,
 					/obj/item/clothing/under/keyholesweater = 3)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered = 4,
 					/obj/item/clothing/head/mailman = 2,
@@ -136,8 +153,7 @@
 					/obj/item/clothing/suit/jacket/leather/overcoat = 4,
 					/obj/item/clothing/under/pants/mustangjeans = 3,
 					/obj/item/clothing/neck/necklace/dope = 5,
-					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
-					/obj/item/clothing/accessory/nt_pokadots = 5)
+					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5)
 	refill_canister = /obj/item/vending_refill/clothing
 
 /obj/item/vending_refill/clothing

@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
 	id = "blood"
 	value = 1
@@ -30,7 +30,7 @@
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
-		if((blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if((HAS_TRAIT(C, TRAIT_NOMARROW) || blood_id == "blood" || blood_id == "jellyblood") && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM * C.blood_ratio)
 			// we don't care about bloodtype here, we're just refilling the mob
 
@@ -38,6 +38,8 @@
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return //We dont want vampires getting toxed from blood
 	var/blood_id = C.get_blood_id()
 	if((blood_id == "blood" || blood_id == "jellyblood"))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
@@ -1116,6 +1118,8 @@
 	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
+	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
+		return
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
 		C.blood_volume += 0.01 //we'll have synthetics from medbay.
 	..()
@@ -1654,7 +1658,7 @@
 	description = "Cheap and extremely common type of plant nutriment."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 10
-	pH = 2
+	pH = 2.5
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1662,7 +1666,7 @@
 	description = "Unstable nutriment that makes plants mutate more often than usual."
 	color = "#1A1E4D" // RBG: 26, 30, 77
 	tox_prob = 25
-	pH = 1.5
+	pH = 3.5
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1670,7 +1674,7 @@
 	description = "Very potent nutriment that prevents plants from mutating."
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 15
-	pH = 1
+	pH = 2.5
 
 // GOON OTHERS
 
@@ -1866,133 +1870,82 @@
 	reagent_state = LIQUID
 	color = "#b51d05"
 	taste_description = "carpet" // Your tounge feels furry.
+	var/carpet_type = /turf/open/floor/carpet
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet)
+		F.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/carpet/black
 	name = "Liquid Black Carpet"
 	id = "blackcarpet"
 	color = "#363636"
-
-/datum/reagent/carpet/black/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/black)
-	..()
+	carpet_type = /turf/open/floor/carpet/black
 
 /datum/reagent/carpet/blackred
 	name = "Liquid Red Black Carpet"
 	id = "blackredcarpet"
 	color = "#342125"
-
-/datum/reagent/carpet/blackred/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/blackred)
-	..()
+	carpet_type = /turf/open/floor/carpet/blackred
 
 /datum/reagent/carpet/monochrome
 	name = "Liquid Monochrome Carpet"
 	id = "monochromecarpet"
 	color = "#b4b4b4"
-
-/datum/reagent/carpet/monochrome/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/monochrome)
-	..()
+	carpet_type = /turf/open/floor/carpet/monochrome
 
 /datum/reagent/carpet/blue
 	name = "Liquid Blue Carpet"
 	id = "bluecarpet"
 	color = "#1256ff"
-
-/datum/reagent/carpet/blue/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/blue)
-	..()
+	carpet_type = /turf/open/floor/carpet/blue
 
 /datum/reagent/carpet/cyan
 	name = "Liquid Cyan Carpet"
 	id = "cyancarpet"
 	color = "#3acfb9"
-
-/datum/reagent/carpet/cyan/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/cyan)
-	..()
+	carpet_type = /turf/open/floor/carpet/cyan
 
 /datum/reagent/carpet/green
 	name = "Liquid Green Carpet"
 	id = "greencarpet"
 	color = "#619b62"
-
-/datum/reagent/carpet/green/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/green)
-	..()
+	carpet_type = /turf/open/floor/carpet/green
 
 /datum/reagent/carpet/orange
 	name = "Liquid Orange Carpet"
 	id = "orangecarpet"
 	color = "#cc7900"
-
-/datum/reagent/carpet/orange/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/orange)
-	..()
+	carpet_type = /turf/open/floor/carpet/orange
 
 /datum/reagent/carpet/purple
 	name = "Liquid Purple Carpet"
 	id = "purplecarpet"
 	color = "#6d3392"
+	carpet_type = /turf/open/floor/carpet/purple
 
-/datum/reagent/carpet/purple/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/purple)
-	..()
 
 /datum/reagent/carpet/red
 	name = "Liquid Red Carpet"
 	id = "redcarpet"
 	color = "#871515"
+	carpet_type = /turf/open/floor/carpet/red
 
-/datum/reagent/carpet/red/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/red)
-	..()
 
 /datum/reagent/carpet/royalblack
 	name = "Liquid Royal Black Carpet"
 	id = "royalblackcarpet"
 	color = "#483d05"
+	carpet_type = /turf/open/floor/carpet/royalblack
 
-/datum/reagent/carpet/royalblack/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/royalblack)
-	..()
 
 /datum/reagent/carpet/royalblue
 	name = "Liquid Royal Blue Carpet"
 	id = "royalbluecarpet"
 	color = "#24227e"
-
-/datum/reagent/carpet/royalblue/reaction_turf(turf/T, reac_volume)
-	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
-		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet/royalblue)
-	..()
+	carpet_type = /turf/open/floor/carpet/royalblue
 
 
 // Virology virus food chems.

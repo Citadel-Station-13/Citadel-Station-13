@@ -14,23 +14,31 @@
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 4, 2)
-	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
-		bang(get_turf(M), M)
+	flashbang_mobs(flashbang_turf, flashbang_range)
 	qdel(src)
 
-/obj/item/grenade/flashbang/proc/bang(turf/T , mob/living/M)
+/obj/item/grenade/flashbang/proc/flashbang_mobs(turf/source, range)
+	var/list/banged = get_hearers_in_view(range, source)
+	var/list/flashed = viewers(range, source)
+	for(var/mob/living/l in banged)
+		bang(l, source)
+	for(var/mob/living/l in flashed)
+		flash(l, source)
+
+/obj/item/grenade/flashbang/proc/bang(mob/living/M, turf/source)
 	if(M.stat == DEAD)	//They're dead!
 		return
-	M.show_message("<span class='warning'>BANG</span>", 2)
-	var/distance = max(0,get_dist(get_turf(src),T))
-
-//Flash
-	if(M.flash_act(affect_silicon = 1))
-		M.Knockdown(max(200/max(1,distance), 60))
-//Bang
+	M.show_message("<span class='warning'>BANG</span>", MSG_AUDIBLE)
+	var/distance = get_dist(get_turf(M), source)
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
-
 	else
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
+
+/obj/item/grenade/flashbang/proc/flash(mob/living/M, turf/source)
+	if(M.stat == DEAD)	//They're dead!
+		return
+	var/distance = get_dist(get_turf(M), source)
+	if(M.flash_act(affect_silicon = 1))
+		M.Knockdown(max(200/max(1,distance), 60))

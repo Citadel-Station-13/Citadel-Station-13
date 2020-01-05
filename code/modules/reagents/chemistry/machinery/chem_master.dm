@@ -58,14 +58,14 @@
 	if(bottle)
 		bottle.ex_act(severity, target)
 
-/obj/machinery/chem_master/handle_atom_del(atom/A)
-	..()
+/obj/machinery/chem_master/Exited(atom/movable/A, atom/newloc)
+	. = ..()
 	if(A == beaker)
 		beaker = null
-		reagents.clear_reagents()
 		update_icon()
-	else if(A == bottle)
+	if(A == bottle)
 		bottle = null
+		update_icon()
 
 /obj/machinery/chem_master/update_icon()
 	cut_overlays()
@@ -103,6 +103,10 @@
 		updateUsrDialog()
 		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
+		. = TRUE // no afterattack
+		if(panel_open)
+			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
+			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		replace_pillbottle(user, I)
@@ -112,40 +116,40 @@
 		return ..()
 
 /obj/machinery/chem_master/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	replace_beaker(user)
-	return
+	if(beaker)
+		replace_beaker(user)
+	else if(bottle)
+		replace_pillbottle(user)
+	return TRUE
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		var/obj/item/reagent_containers/B = beaker
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
-	return TRUE
 
 /obj/machinery/chem_master/proc/replace_pillbottle(mob/living/user, obj/item/storage/pill_bottle/new_bottle)
 	if(bottle)
-		bottle.forceMove(drop_location())
+		var/obj/item/storage/pill_bottle/B = bottle
+		B.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+			user.put_in_hands(B)
 		else
-			adjust_item_drop_location(bottle)
+			adjust_item_drop_location(B)
 	if(new_bottle)
 		bottle = new_bottle
-	else
-		bottle = null
-	update_icon()
-	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
-	replace_beaker(usr)
-	replace_pillbottle(usr)
+	var/atom/A = drop_location()
+	beaker.forceMove(A)
+	bottle.forceMove(A)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -256,19 +260,20 @@
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+				var/name = html_decode(stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
-				var/target_loc = bottle ? bottle : drop_location()
+				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
 					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
+						target_loc = bottle
 
 				for(var/i in 1 to amount)
-					if(i < drop_threshold)
+					if(i <= drop_threshold)
 						P = new(target_loc)
 					else
 						P = new(drop_location())
@@ -282,7 +287,7 @@
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
-				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
+				var/name = html_decode(stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN))
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
@@ -308,7 +313,7 @@
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
-			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			var/name = html_decode(stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 			var/obj/item/reagent_containers/pill/P
@@ -326,7 +331,7 @@
 				return
 
 			if(condi)
-				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
@@ -339,7 +344,7 @@
 				if(text2num(many))
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
-				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 
@@ -367,7 +372,7 @@
 			if(text2num(many))
 				amount_full = round(reagents.total_volume / 60)
 				vol_part = reagents.total_volume % 60
-			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+			var/name = html_decode(stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 
@@ -402,7 +407,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 20)
 
-			var/name = stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			var/name = html_decode(stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 
