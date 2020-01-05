@@ -127,29 +127,6 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
 
-/datum/supply_pack/service/party
-	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, and a bottle of patron, goldschlager, and shaker!"
-	cost = 2000
-	contains = list(/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker,
-					/obj/item/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/flashlight/glowstick,
-					/obj/item/flashlight/glowstick/red,
-					/obj/item/flashlight/glowstick/blue,
-					/obj/item/flashlight/glowstick/cyan,
-					/obj/item/flashlight/glowstick/orange,
-					/obj/item/flashlight/glowstick/yellow,
-					/obj/item/flashlight/glowstick/pink)
-	crate_name = "party equipment crate"
-
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Janitor //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -252,52 +229,6 @@
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/service/carpet
-	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty)
-	crate_name = "premium carpet crate"
-
-/datum/supply_pack/service/carpet2
-	name = "Premium Carpet Crate #2"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate #2"
-
-/datum/supply_pack/service/carpet_exotic
-	name = "Exotic Carpet Crate"
-	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 7000
-	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "exotic carpet crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vendor Refills //////////////////////////////////
