@@ -142,9 +142,9 @@
 /datum/chemical_reaction/fermis_plush
 	name = "Fermis plush"
 	id = "fermis_plush"
-	required_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/blood = 10, /datum/reagent/stable_plasma = 10)
+	required_reagents = list(/datum/reagent/consumable/caramel = 10, /datum/reagent/blood = 10, /datum/reagent/stable_plasma = 10)
 	mob_react = FALSE
-	required_temp = 400
+	required_temp = 300
 
 /datum/chemical_reaction/fermis_plush/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)

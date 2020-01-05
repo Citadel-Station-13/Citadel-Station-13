@@ -106,7 +106,7 @@
 	name = "Eigenstasium"
 	id = /datum/reagent/fermi/eigenstate
 	results = list(/datum/reagent/fermi/eigenstate = 1)
-	required_reagents = list(/datum/reagent/bluespace = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/bluespace = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/consumable/caramel = 1)
 	mix_message = "the reaction zaps suddenly!"
 	//FermiChem vars:
 	OptimalTempMin 		= 350 // Lower area of bell curve for determining heat based rate reactions
@@ -507,7 +507,7 @@
 	name = "secretcatchem"
 	id = /datum/reagent/fermi/secretcatchem
 	results = list(/datum/reagent/fermi/secretcatchem = 5)
-	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/medicine/clonexadone = 1)//Yes this will make a kitty if you don't lucky guess. It'll eat all your reagents too.
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/consumable/caramel = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/medicine/clonexadone = 1)//Yes this will make a kitty if you don't lucky guess. It'll eat all your reagents too.
 	required_catalysts = list(/datum/reagent/fermi/SDGF = 1)
 	required_temp = 500
 	mix_message = "the reaction gives off a meow!"

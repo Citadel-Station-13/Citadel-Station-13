@@ -57,7 +57,6 @@
 	//No idea what this is but eh	-tori
 	var/force_alternate_icon = FALSE
 
-
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
