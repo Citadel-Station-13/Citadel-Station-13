@@ -783,7 +783,7 @@
 	attack_verb = list("gored")
 	var/clonechance = 50
 	var/clonedamage = 12
-	var/clonespeed = 0.5
+	var/clonespeed = 0
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
