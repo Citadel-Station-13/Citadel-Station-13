@@ -21,18 +21,18 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 	return FALSE
 
 /world/proc/check_isbanned_flood(key, cid, ip)
-	if(GLOB.isbanned_key_floodcheck[key] || GLOB.isbanned_cid_floodcheck["[cid]"] || GLOB.isbanned_ip_floodcheck[ip])
+	if(GLOB.isbanned_key_floodcheck[key] || GLOB.isbanned_cid_floodcheck["[cid]"] || (GLOB.isbanned_ip_floodcheck[ip] > MAX_CONCURRENT_IP_CONNECTIONS))
 		return "You are attempting to connect too fast. Try again. ([GLOB.isbanned_key_floodcheck[key]],[GLOB.isbanned_cid_floodcheck["[cid]"]],[GLOB.isbanned_ip_floodcheck[address]])"
 	return FALSE
 
 /world/proc/clear_isbanned_flood(key, cid, ip)
-	GLOB.isbanned_key_floodcheck -= key
-	GLOB.isbanned_cid_floodcheck -= "[cid]"
+	GLOB.isbanned_key_floodcheck.Remove(key)
+	GLOB.isbanned_cid_floodcheck.Remove("[cid]")
 	var/ip_connections = GLOB.isbanned_ip_floodcheck[ip]
 	if(ip_connections == 1)
-		GLOB.isbanned_ip_floodcheck -= ip
+		GLOB.isbanned_ip_floodcheck.Remove(ip)
 	else
-		GLOB.isbanned_ip_floodcheck = (ip_connections - 1)
+		GLOB.isbanned_ip_floodcheck[ip] = (ip_connections - 1)
 
 #define CLEAR_FLOOD clear_isbanned_flood(key, computer_id, address)
 
