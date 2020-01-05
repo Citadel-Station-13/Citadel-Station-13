@@ -784,6 +784,8 @@
 	var/clonechance = 50
 	var/clonedamage = 12
 	var/clonespeed = 0
+	var/clone_replication_chance = 30
+	var/clone_lifespan = 100
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -797,9 +799,8 @@
 		if(!L.stat && prob(clonechance))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
-			M.melee_damage_upper = M.melee_damage_lower = clonedamage
 			M.set_varspeed(clonespeed)
-			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+			M.Copy_Parent(user, clone_lifespan, user.health/2.5, clonedamage, clone_replication_chance)
 			M.GiveTarget(L)
 
 /obj/item/twohanded/pitchfork
