@@ -341,6 +341,7 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
@@ -357,6 +358,7 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
