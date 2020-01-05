@@ -116,10 +116,8 @@ SUBSYSTEM_DEF(vote)
 				var/opposite_pref = d[j][i]
 				if(pref_number>opposite_pref)
 					p[i][j] = d[i][j]
-					p[j][i] = 0
 				else
 					p[i][j] = 0
-					p[j][i] = d[i][j]
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
 			if(i != j)
@@ -248,6 +246,10 @@ SUBSYSTEM_DEF(vote)
 			if("roundtype") //CIT CHANGE - adds the roundstart extended/secret vote
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
+				if(choices["secret"] > choices["extended"])
+					. = "secret"
+				else
+					. = "extended"
 				GLOB.master_mode = .
 				SSticker.save_mode(.)
 				message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
@@ -382,6 +384,12 @@ SUBSYSTEM_DEF(vote)
 					choices |= M
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
+				var/list/modes_to_add = config.votable_modes
+				var/list/probabilities = CONFIG_GET(keyed_list/probability)
+				for(var/tag in modes_to_add)
+					if(probabilities[tag] <= 0)
+						modes_to_add -= tag
+				choices.Add(modes_to_add)
 			if("dynamic")
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T

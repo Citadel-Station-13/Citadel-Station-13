@@ -392,3 +392,6 @@
 
 /datum/config_entry/flag/allow_clockwork_marauder_on_station
 	config_entry_value = TRUE
+
+/datum/config_entry/number/dropped_modes
+	config_entry_value = 3
