@@ -31,6 +31,7 @@
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/firing_burst = FALSE				//Prevent the weapon from firing again while already firing
+	var/busy_action = FALSE				//whoever thought making the suicide/shoot self action semicd is a horrible person but since it's done let's rename the var i guess
 	var/last_fire = 0					//last time it was fired by user, for burst fire this means start of burst
 	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
 	var/spread = 0						//Spread induced by the gun itself.
