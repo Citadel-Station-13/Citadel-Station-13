@@ -14,7 +14,7 @@
 /////////////////////////////// Food /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/organic/randomised/candy
+/datum/supply_pack/organic/candy/randomised
 	name = "Candy Crate"
 	desc = "For people that have an insatiable sweet tooth! Has ten candies to be eaten up.."
 	cost = 2500
@@ -47,7 +47,7 @@
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
 
-/datum/supply_pack/organic/randomised/candy/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/organic/candy/randomised/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
