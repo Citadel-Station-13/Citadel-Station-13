@@ -54,7 +54,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 /datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/fakespace)
+		F.PlaceOnTop(/turf/open/floor/fakespace, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/fermi/astral/reaction_obj(obj/O, reac_volume)
