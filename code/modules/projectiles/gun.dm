@@ -30,8 +30,8 @@
 	var/sawn_off = FALSE
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
-	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
-	var/semicd = 0						//cooldown handler
+	var/firing_burst = FALSE				//Prevent the weapon from firing again while already firing
+	var/last_fire = 0					//last time it was fired by user, for burst fire this means start of burst
 	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
 	var/spread = 0						//Spread induced by the gun itself.
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
@@ -263,9 +263,10 @@
 	return TRUE
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	set waitfor = FALSE
 	add_fingerprint(user)
 
-	if(semicd)
+	if(cooling_down())
 		return
 
 	var/sprd = 0
@@ -282,7 +283,9 @@
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
+			if(!process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, i))
+				break
+			sleep(fire_delay)
 	else
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -299,8 +302,6 @@
 			return
 		process_chamber()
 		update_icon()
-		semicd = TRUE
-		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
 
 	if(user)
 		user.update_inv_hands()
@@ -310,10 +311,6 @@
 
 /obj/item/gun/update_icon()
 	..()
-
-
-/obj/item/gun/proc/reset_semicd()
-	semicd = FALSE
 
 /obj/item/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
@@ -430,11 +427,14 @@
 		return FALSE
 	return ..()
 
+/obj/item/gun/proc/cooling_down()
+	return (last_fire > (world.time + fire_delay)) || busy_action
+
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
 		return
 
-	if(semicd)
+	if(cooling_down())
 		return
 
 	if(user == target)
@@ -444,7 +444,7 @@
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
 
-	semicd = TRUE
+	busy_action = TRUE
 
 	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
@@ -452,10 +452,10 @@
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
 			else if(target && target.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
-		semicd = FALSE
+		busy_action = FALSE
 		return
 
-	semicd = FALSE
+	busy_action = FALSE
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
