@@ -21,7 +21,7 @@
 	gib_types = list(/obj/effect/gibspawner/lizard, /obj/effect/gibspawner/lizard/bodypartless)
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = JUNKFOOD | FRIED
+	disliked_food = JUNKFOOD | FRIED | DAIRY
 	liked_food = GROSS | MEAT
 
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
