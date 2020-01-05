@@ -11,6 +11,12 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 /world/proc/set_isbanned_flood(key, cid, ip)
 	if((length(GLOB.isbanned_key_floodcheck) > MAX_FLOODCHECK_LIST_LENGTH) || (length(GLOB.isbanned_cid_floodcheck) > MAX_FLOODCHECK_LIST_LENGTH) || (length(GLOB.isbanned_ip_floodcheck) > MAX_FLOODCHECK_LIST_LENGTH))
 		return "Abnormal amount of connections detected on server. Try again in 10 seconds."
+	if(isnull(key))
+		return "ERROR: Null key"
+	if(isnull(cid))
+		return "ERROR: Null cid"
+	if(isnull(ip))
+		return "ERROR: null ip"
 	GLOB.isbanned_key_floodcheck[key] = TRUE
 	GLOB.isbanned_cid_floodcheck["[cid]"] = TRUE		//CID is a number
 	GLOB.isbanned_ip_floodcheck[ip] = GLOB.isbanned_ip_floodcheck[ip] + 1
@@ -28,11 +34,13 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 	if(GLOB.isbanned_ip_floodcheck[ip] == 0)
 		GLOB.isbanned_ip_floodcheck.Remove(ip)
 
-#define CLEAR_FLOOD clear_isbanned_flood(key, computer_id, address)
+#define DO_FLOODCHECK (!real_bans_only && !bypass_floodcheck)
 
-#define SET_FLOOD set_isbanned_flood(key, computer_id, address)
+#define CLEAR_FLOOD if(DO_FLOODCHECK) clear_isbanned_flood(ckey(key), computer_id, address)
 
-#define CHECK_FLOOD check_isbanned_flood(key, computer_id, address)
+#define SET_FLOOD set_isbanned_flood(ckey(key), computer_id, address)
+
+#define CHECK_FLOOD check_isbanned_flood(ckey(key), computer_id, address)
 
 //How many new ckey matches before we revert the stickyban to it's roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
@@ -40,22 +48,24 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 2
 
-/world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE,bypass_floodcheck=FALSE)
-	if(!real_bans_only && !bypass_floodcheck)
+/world/IsBanned(key, address, computer_id, type, real_bans_only = FALSE, bypass_floodcheck = FALSE)
+	if(!bypass_floodcheck)
 		var/returneddesc = CHECK_FLOOD || SET_FLOOD
 		if(returneddesc)
-			return list("reason"="concurrent connection attempts", "desc"=returneddesc)
+			return list("reason" = "IsBanned flood detection", "desc" = "IsBanned flood detection | [returneddesc]")
+	. = _IsBanned(key, address, computer_id, type, real_bans_only, bypass_floodcheck)			//Even if this runtimes, we are 100% sure to clear the flood prevention system.
+	if(!bypass_floodcheck)
+		CLEAR_FLOOD
+
+/world/proc/_IsBanned(key, address, computer_id, type, real_bans_only = FALSE, bypass_floodcheck = FALSE)
 	if (!key || !address || !computer_id)
 		if(real_bans_only)
-			CLEAR_FLOOD
 			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
-		CLEAR_FLOOD
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
 	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
-		CLEAR_FLOOD
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 	var/admin = 0
 	var/ckey = ckey(key)
@@ -71,25 +81,21 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
 			else
 				log_access("Failed Login: [key] - Not on whitelist")
-				CLEAR_FLOOD
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
 	//Guest Checking
 	if(!real_bans_only && IsGuestKey(key))
 		if (CONFIG_GET(flag/guest_ban))
 			log_access("Failed Login: [key] - Guests not allowed")
-			CLEAR_FLOOD
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
-			CLEAR_FLOOD
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
 	if(!real_bans_only && extreme_popcap && living_player_count() >= extreme_popcap && !admin)
 		log_access("Failed Login: [key] - Population cap reached")
-		CLEAR_FLOOD
 		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
 	if(CONFIG_GET(flag/ban_legacy_system))
@@ -103,7 +109,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [.["key"]]</span>")
 			else
 				log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
-				CLEAR_FLOOD
 				return .
 
 	else
@@ -111,7 +116,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 			var/msg = "Ban database connection failure. Key [ckey] not checked"
 			log_world(msg)
 			message_admins(msg)
-			CLEAR_FLOOD
 			return
 
 		var/ipquery = ""
@@ -125,7 +129,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey), reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckey]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_ban_check.Execute(async = TRUE))
 			qdel(query_ban_check)
-			CLEAR_FLOOD
 			return
 		while(query_ban_check.NextRow())
 			var/pkey = query_ban_check.item[1]
@@ -164,7 +167,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 
 			log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
 			qdel(query_ban_check)
-			CLEAR_FLOOD
 			return .
 		qdel(query_ban_check)
 
@@ -180,7 +182,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 
 		//rogue ban in the process of being reverted.
 		if (cachedban && cachedban["reverting"])
-			CLEAR_FLOOD
 			return null
 
 		if (cachedban && ckey != bannedckey)
@@ -208,7 +209,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
 				)
 				if (cachedban["reverting"])
-					CLEAR_FLOOD
 					return null
 				cachedban["reverting"] = TRUE
 
@@ -226,7 +226,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 					cachedban["admin_matches_this_round"] = list()
 					cachedban -= "reverting"
 					world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
-				CLEAR_FLOOD
 				return null
 
 		//byond will not trigger isbanned() for "global" host bans,
@@ -236,7 +235,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
 			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
 			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
-			CLEAR_FLOOD
 			return null
 
 		if (C) //user is already connected!.
@@ -246,7 +244,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
 
-	CLEAR_FLOOD
 	return .
 
 
