@@ -119,9 +119,9 @@
 
 /obj/item/projectile/beam/emitter/hitscan
 	hitscan = TRUE
-	muzzle_effect_type = /obj/effect/temp_visual/impact_effect/emitter
-	tracer_effect_type = /obj/effect/temp_visual/tracer_effect/emitter
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/emitter
+	muzzle_effect_type = /obj/effect/projectile/muzzle/laser/emitter
+	tracer_effect_type = /obj/effect/projectile/tracer/laser/emitter
+	impact_effect_type = /obj/effect/projectile/impact/laser/emitter
 
 /obj/item/projectile/beam/lasertag
 	name = "laser tag beam"
