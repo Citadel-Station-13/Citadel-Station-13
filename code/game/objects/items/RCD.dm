@@ -599,6 +599,7 @@ RLD
 	energyfactor = 66
 
 /obj/item/construction/rcd/loaded
+	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	matter = 160
 
 /obj/item/construction/rcd/loaded/upgraded
