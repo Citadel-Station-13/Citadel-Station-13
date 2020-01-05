@@ -16,8 +16,16 @@
 	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
-	var/admin = 0
+
+	if (type == "world")
+		return ..() //shunt world topic banchecks to purely to byond's internal ban system
+
 	var/ckey = ckey(key)
+	var/client/C = GLOB.directory[ckey]
+	if (C && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		return //don't recheck connected clients.
+
+	var/admin = FALSE
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = 1
 
