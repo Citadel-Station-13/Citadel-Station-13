@@ -200,49 +200,6 @@
 					/obj/item/circuitboard/computer/slot_machine)
 	crate_name = "casino crate"
 
-/datum/supply_pack/misc/candlelitdinner
-	name = "Candlelit Dinner Crate"
-	desc = "Need to organise a date night? Set up a fancy room for it with this luxurious crate filled with romance! Contains 40 tiles of classic, blue, black, and green carpeting, materials to build chairs, several boxes of candles, eight bottles of wine, two boxes of drinking glasses, ten metal rods, twenty wood, and twenty metal."
-	cost = 3200 // 200 for each wine bottle, 450 for metal/wood, 800 + 700 + 450 = 2750.
-	contains = list(/obj/item/storage/fancy/candle_box,
-				/obj/item/storage/fancy/candle_box,
-				/obj/item/storage/fancy/candle_box,
-				/obj/item/storage/fancy/candle_box,
-				/obj/item/stack/tile/carpet/twenty,
-				/obj/item/stack/tile/carpet/twenty,
-				/obj/item/stack/tile/carpet/blue/twenty,
-				/obj/item/stack/tile/carpet/blue/twenty,
-				/obj/item/stack/tile/carpet/royalblack/twenty,
-				/obj/item/stack/tile/carpet/royalblack/twenty,
-				/obj/item/stack/tile/carpet/green/twenty,
-				/obj/item/stack/tile/carpet/green/twenty,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/stack/rods/ten,
-				/obj/item/stack/sheet/metal/twenty,
-				/obj/item/stack/sheet/mineral/wood/twenty,
-				/obj/item/storage/box/drinkingglasses,
-				/obj/item/storage/box/drinkingglasses)
-	crate_name = "romance crate"
-
-/datum/supply_pack/misc/cbtpack
-	name = "CBT Equipment"
-	desc = "(*!&@#CBT is a special term coined by high ranking syndicate operatives for a special form of information extraction. While the training required to use this shipment is highly classified, the distribution of it's contents are not. In addition to this crates unusual contents, we have added a bar of soap.#@*$"
-	hidden = TRUE
-	cost = 2400
-	contains = list(/mob/living/simple_animal/chicken,
-					/obj/item/toy/beach_ball/holoball,
-					/obj/item/melee/baton/cattleprod,
-					/obj/item/soap/syndie)
-	crate_name = "cbt crate"
-	crate_type = /obj/structure/closet/crate/large
-
 /datum/supply_pack/misc/coincrate
 	name = "Coin Crate"
 	desc = "Psssst, hey, you. Yes, you. I've heard that coins can do some special things on your station, give you access to some pretty cool stuff. Here's the deal, you give me some credits, and I give so some coins. Sound like a deal? I'll give you 10 for 10000 creds."
