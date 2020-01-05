@@ -398,22 +398,21 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
  * Cardboard
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
-	new /datum/stack_recipe("box", /obj/item/storage/box), \
-	new /datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), 				\
-	new /datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), 				\
-	new /datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), 					\
-	new /datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), 				\
-	new /datum/stack_recipe("pizza box", /obj/item/pizzabox), 									\
-	new /datum/stack_recipe("folder", /obj/item/folder), 										\
+	new/datum/stack_recipe("box", /obj/item/storage/box),										\
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3),				\
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg),				\
+	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4),					\
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5),					\
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
+	new/datum/stack_recipe("folder", /obj/item/folder),											\
 	// holy fuck why are there so many boxes
-	new /datum/stack_recipe_list("fancy boxes", list(
+	new/datum/stack_recipe_list("fancy boxes", list ( \
 		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), 				\
 		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), 					\
 		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets), 		\
 		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes), 			\
 		new /datum/stack_recipe("box (internals)", /obj/item/storage/box/otwo), 				\
 		null, 																					\
-		
 		new /datum/stack_recipe("security-styled box", /obj/item/storage/box/seclooking), 		\
 		new /datum/stack_recipe("buckshot shell box", /obj/item/storage/box/lethalshot),		\
 		new /datum/stack_recipe("rubber shot shell box", /obj/item/storage/box/rubbershot),		\
@@ -424,33 +423,29 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), 		\
 		new /datum/stack_recipe("loose ammo box", /obj/item/storage/box/ammoshells), 			\
 		new /datum/stack_recipe("firing pins box", /obj/item/storage/box/firingpins), 			\
-		null,
-
+		null,																					\
 		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs),				\
 		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
 		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
 		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
 		new /datum/stack_recipe("PDA box", /obj/item/storage/box/PDAs),							\
 		null,																					\
-
-		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles),			\
+		new /datum/stack_recipe("pill bottle box", /obj/item/storage/box/pillbottles),			\
 		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers),					\
 		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
 		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
 		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("prescription glasses box", /obj/item/storage/box/rxglasses),	\
-		null,
-		
+		null,																					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
 		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
 		new /datum/stack_recipe("power cell box", /obj/item/storage/box/cells), 				\
 		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
-		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box)				\
-		null,
-
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box),				\
+		null,																					\
 		new /datum/stack_recipe("box (brown)", /obj/item/storage/box/brown), 					\
 		new /datum/stack_recipe("box (green)", /obj/item/storage/box/green), 					\
 		new /datum/stack_recipe("box (blue)", /obj/item/storage/box/blue), 						\
@@ -459,8 +454,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("box (pink)", /obj/item/storage/box/pink), 						\
 		new /datum/stack_recipe("box (purple)", /obj/item/storage/box/purple), 					\
 		)),
-
-	null,
+	null,																						\
 ))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
@@ -487,7 +481,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		var/atom/droploc = drop_location()
 		if(use(1))
 			playsound(I, 'sound/items/bikehorn.ogg', 50, 1, -1)
-			to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
+			to_chat(user, "<span class='notice'>You stamp the cardboard! It's a clown box! Honk!</span>")
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix
 	else
@@ -552,31 +546,30 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
  */
 GLOBAL_LIST_INIT(brass_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass pinion airlock - windowed", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass reflector", /obj/structure/destructible/clockwork/reflector, 10, time = 100, one_per_turf = TRUE, on_floor = TRUE, window_checks = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass window - directional", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("brass window - fulltile", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("brass chair", /obj/structure/chair/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass bar stool",  /obj/structure/chair/stool/bar/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass stool", /obj/structure/chair/stool/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("sender - pressure sensor", /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("sender - mech sensor", /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("sender - lever", /obj/structure/destructible/clockwork/trap/trigger/lever, 1, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("sender - repeater", /obj/structure/destructible/clockwork/trap/trigger/repeater, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("receiver - brass skewer", /obj/structure/destructible/clockwork/trap/brass_skewer, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_ADJACENT), \
 	new/datum/stack_recipe("receiver - steam vent", /obj/structure/destructible/clockwork/trap/steam_vent, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
 	new/datum/stack_recipe("receiver - power nullifier", /obj/structure/destructible/clockwork/trap/power_nullifier, 5, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass flask", /obj/item/reagent_containers/food/drinks/bottle/holyoil/empty), \
-
 ))
 
 /obj/item/stack/tile/brass
