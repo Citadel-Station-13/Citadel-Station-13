@@ -284,7 +284,7 @@
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			if(!process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, i))
+			if(!process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i))
 				break
 			sleep(fire_delay)
 	else
