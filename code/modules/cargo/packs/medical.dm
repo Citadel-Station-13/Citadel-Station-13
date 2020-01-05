@@ -183,18 +183,6 @@
 					/obj/item/roller)
 	crate_name = "surgical supplies crate"
 
-/datum/supply_pack/medical/bloodpackssynth
-	name = "Synthetics Blood Pack Crate"
-	desc = "Contains five synthetics blood packs for reintroducing blood to patients."
-	cost = 3000
-	contains = list(/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics,
-					/obj/item/reagent_containers/blood/synthetics)
-	crate_name = "blood freezer"
-	crate_type = /obj/structure/closet/crate/freezer
-
 /datum/supply_pack/medical/firstaidtoxins
 	name = "Toxin Treatment Kit Crate"
 	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
