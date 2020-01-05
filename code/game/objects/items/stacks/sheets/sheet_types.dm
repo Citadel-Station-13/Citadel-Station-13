@@ -398,43 +398,70 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
  * Cardboard
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
-	new/datum/stack_recipe("box", /obj/item/storage/box), \
-	new/datum/stack_recipe("sec box", /obj/item/storage/box/seclooking), \
-	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
-	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
-	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
-	new/datum/stack_recipe("power cell", /obj/item/storage/box/cells), \
-	new/datum/stack_recipe("box (o2 supplies)", /obj/item/storage/box/otwo), \
-	null, \
-	new/datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
-	new/datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
-	new/datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
-	new/datum/stack_recipe("12g ammo box", /obj/item/storage/box/lethalslugs), \
-	new/datum/stack_recipe("stun slug ammo box", /obj/item/storage/box/stunslug), \
-	new/datum/stack_recipe("tech shell ammo box", /obj/item/storage/box/techsslug), \
-	new/datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), \
-	new/datum/stack_recipe("firing pins", /obj/item/storage/box/firingpins), \
-	new/datum/stack_recipe("loose ammo", /obj/item/storage/box/ammoshells), \
-	null, \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
-	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
-	new/datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), \
-	new/datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), \
-	new/datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box), \
-	new/datum/stack_recipe("folder", /obj/item/folder), \
-	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
-	null, \
-	new/datum/stack_recipe("box (brown)", /obj/item/storage/box/brown), \
-	new/datum/stack_recipe("box (green)", /obj/item/storage/box/green), \
-	new/datum/stack_recipe("box (blue)", /obj/item/storage/box/blue), \
-	new/datum/stack_recipe("box (red)", /obj/item/storage/box/red), \
-	new/datum/stack_recipe("box (yellow)", /obj/item/storage/box/yellow), \
-	new/datum/stack_recipe("box (pink)", /obj/item/storage/box/pink), \
-	new/datum/stack_recipe("box (purple)", /obj/item/storage/box/purple), \
-	))
+	new /datum/stack_recipe("box", /obj/item/storage/box), \
+	new /datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), 				\
+	new /datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), 				\
+	new /datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), 					\
+	new /datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), 				\
+	new /datum/stack_recipe("pizza box", /obj/item/pizzabox), 									\
+	new /datum/stack_recipe("folder", /obj/item/folder), 										\
+	// holy fuck why are there so many boxes
+	new /datum/stack_recipe_list("fancy boxes", list(
+		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), 				\
+		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), 					\
+		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets), 			\
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes), 			\
+		new /datum/stack_recipe("box (internals)", /obj/item/storage/box/otwo), 				\
+		null, 																					\
+		
+		new /datum/stack_recipe("security-styled box", /obj/item/storage/box/seclooking), 		\
+		new /datum/stack_recipe("buckshot shell box", /obj/item/storage/box/lethalshot),		\
+		new /datum/stack_recipe("rubber shot shell box", /obj/item/storage/box/rubbershot),		\
+		new /datum/stack_recipe("beanbag shell box", /obj/item/storage/box/beanbag),			\
+		new /datum/stack_recipe("slug shell box", /obj/item/storage/box/lethalslugs), 			\
+		new /datum/stack_recipe("stunslug shell box", /obj/item/storage/box/stunslug), 			\
+		new /datum/stack_recipe("tech shell box", /obj/item/storage/box/techsslug), 			\
+		new /datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), 		\
+		new /datum/stack_recipe("loose ammo box", /obj/item/storage/box/ammoshells), 			\
+		new /datum/stack_recipe("firing pins box", /obj/item/storage/box/firingpins), 			\
+		null,
+
+		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs),				\
+		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
+		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
+		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/PDAs),							\
+		null,																					\
+
+		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles),			\
+		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers),					\
+		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
+		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
+		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
+		new /datum/stack_recipe("prescription glasses box", /obj/item/storage/box/rxglasses),	\
+		null,
+		
+		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
+		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
+		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
+		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
+		new /datum/stack_recipe("power cell box", /obj/item/storage/box/cells), 				\
+		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box)				\
+		null,
+
+		new /datum/stack_recipe("box (brown)", /obj/item/storage/box/brown), 					\
+		new /datum/stack_recipe("box (green)", /obj/item/storage/box/green), 					\
+		new /datum/stack_recipe("box (blue)", /obj/item/storage/box/blue), 						\
+		new /datum/stack_recipe("box (red)", /obj/item/storage/box/red), 						\
+		new /datum/stack_recipe("box (yellow)", /obj/item/storage/box/yellow), 					\
+		new /datum/stack_recipe("box (pink)", /obj/item/storage/box/pink), 						\
+		new /datum/stack_recipe("box (purple)", /obj/item/storage/box/purple), 					\
+		)),
+
+	null,
+))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
