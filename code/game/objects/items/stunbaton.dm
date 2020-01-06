@@ -188,7 +188,7 @@
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
 
-	L.Knockdown(stunpwr)
+	L.DefaultCombatKnockdown(stunpwr)
 	L.adjustStaminaLoss(stunpwr*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
@@ -212,7 +212,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stunforce*3)
+	user.DefaultCombatKnockdown(stunforce*3)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 

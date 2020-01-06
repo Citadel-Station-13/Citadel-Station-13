@@ -332,7 +332,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Knockdown(20)
+				C.DefaultCombatKnockdown(20)
 		smash(user)
 
 /obj/item/chair/stool

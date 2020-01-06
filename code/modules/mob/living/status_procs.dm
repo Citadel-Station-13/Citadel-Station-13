@@ -237,7 +237,7 @@
 //Blanket
 /mob/living/proc/AllImmobility(amount, updating)
 	Paralyze(amount, FALSE)
-	Knockdown(amount, FALSE)
+	DefaultCombatKnockdown(amount, FALSE)
 	Stun(amount, FALSE)
 	Immobilize(amount, FALSE)
 	if(updating)

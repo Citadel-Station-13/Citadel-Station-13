@@ -3,7 +3,7 @@
 	amount = dna.species.spec_stun(src,amount)
 	return ..()
 
-/mob/living/carbon/human/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+/mob/living/carbon/human/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	amount = dna.species.spec_stun(src,amount)
 	return ..()
 

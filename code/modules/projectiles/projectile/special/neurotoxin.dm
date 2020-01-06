@@ -10,5 +10,5 @@
 		nodamage = TRUE
 	else if(iscarbon(target))
 		var/mob/living/L = target
-		L.Knockdown(100, TRUE, FALSE, 30, 25)
+		L.DefaultCombatKnockdown(100, TRUE, FALSE, 30, 25)
 	return ..()

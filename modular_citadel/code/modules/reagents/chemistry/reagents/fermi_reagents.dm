@@ -96,7 +96,7 @@
 	if(method == INJECT)
 		var/turf/T = get_turf(M)
 		M.adjustOxyLoss(15)
-		M.Knockdown(50)
+		M.DefaultCombatKnockdown(50)
 		M.Stun(50)
 		M.emote("cough")
 		var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))

@@ -128,7 +128,7 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(40)
+	pushed_mob.DefaultCombatKnockdown(40)
 	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
 								"<span class='userdanger'>[user] slams you onto [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
@@ -139,7 +139,7 @@
 
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
 	if(!target.resting)
-		target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+		target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_TABLE)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 	target.forceMove(src.loc)
@@ -249,7 +249,7 @@
 		debris -= AM
 		if(istype(AM, /obj/item/shard))
 			AM.throw_impact(L)
-	L.Knockdown(100)
+	L.DefaultCombatKnockdown(100)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)

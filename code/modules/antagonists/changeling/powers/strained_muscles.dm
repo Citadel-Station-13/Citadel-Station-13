@@ -26,7 +26,7 @@
 		changeling.chem_recharge_slowdown -= 0.5
 		if(stacks >= 20)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
-			user.Knockdown(60)
+			user.DefaultCombatKnockdown(60)
 			user.emote("gasp")
 
 	INVOKE_ASYNC(src, .proc/muscle_loop, user)
@@ -40,7 +40,7 @@
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
-			user.Knockdown(40)
+			user.DefaultCombatKnockdown(40)
 			user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
 			changeling.chem_recharge_slowdown -= 0.5
 			break

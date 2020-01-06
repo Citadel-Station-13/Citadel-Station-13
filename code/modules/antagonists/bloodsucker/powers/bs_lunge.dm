@@ -70,7 +70,7 @@
 	if(target.Adjacent(owner))
 		// LEVEL 2: If behind target, mute or unconscious!
 		if(do_knockdown) // && level_current >= 1)
-			target.Knockdown(15 + 10 * level_current,1)
+			target.DefaultCombatKnockdown(15 + 10 * level_current,1)
 			target.adjustStaminaLoss(40 + 10 * level_current)
 		// Cancel Walk (we were close enough to contact them)
 		walk(owner, 0)

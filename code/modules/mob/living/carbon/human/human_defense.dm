@@ -176,7 +176,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(100)
+			DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -225,9 +225,9 @@
 		else
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(!lying)				//CITADEL EDIT
-				Knockdown(100, TRUE, FALSE, 30, 25)
+				DefaultCombatKnockdown(100, TRUE, FALSE, 30, 25)
 			else
-				Knockdown(100)
+				DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -294,10 +294,10 @@
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 35) // durand and other heavy mechas
-						Knockdown(50)
+						DefaultCombatKnockdown(50)
 						src.throw_at(throw_target, rand(1,5), 7)
 					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
-						Knockdown(30)
+						DefaultCombatKnockdown(30)
 						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)

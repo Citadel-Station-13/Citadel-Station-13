@@ -258,7 +258,7 @@
 		if(H.get_num_arms() == 0)
 			if(H.get_num_legs() != 0)
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
-				H.Knockdown(20)
+				H.DefaultCombatKnockdown(20)
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
@@ -362,7 +362,7 @@
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
-		L.Knockdown(200)
+		L.DefaultCombatKnockdown(200)
 
 /datum/emote/living/sway
 	key = "sway"

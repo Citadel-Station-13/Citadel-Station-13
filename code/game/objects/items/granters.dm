@@ -294,7 +294,7 @@
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(40)
+	user.DefaultCombatKnockdown(40)
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

@@ -55,7 +55,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		var/cachedstam = M.getStaminaLoss()
 		var/totalstuntime = cachedstam * stamtostunconversion * (M.lying ? 2 : 1)
 		if(!M.resting)
-			M.Knockdown(cachedstam*2) //BORK BORK. GET DOWN.
+			M.DefaultCombatKnockdown(cachedstam*2) //BORK BORK. GET DOWN.
 		M.Stun(totalstuntime)
 		user.do_attack_animation(A, ATTACK_EFFECT_BITE)
 		user.start_pulling(M, TRUE) //Yip yip. Come with.
@@ -284,7 +284,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				to_chat(R, "Insufficent Power!")
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
-			L.Knockdown(80)
+			L.DefaultCombatKnockdown(80)
 			L.apply_effect(EFFECT_STUTTER, 4)
 			L.visible_message("<span class='danger'>[R] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[R] has shocked you with its tongue!</span>")
@@ -426,13 +426,13 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			var/mob/living/L = A
 			if(!L.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
+				L.DefaultCombatKnockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 				log_combat(src, L, "borg pounced")
 			else
-				Knockdown(15, 1, 1)
+				DefaultCombatKnockdown(15, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
@@ -440,7 +440,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
 			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
-			Knockdown(15, 1, 1)
+			DefaultCombatKnockdown(15, 1, 1)
 
 		if(leaping)
 			leaping = 0

@@ -1466,7 +1466,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 			if(prob(20))
 				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
-				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+				M.DefaultCombatKnockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)

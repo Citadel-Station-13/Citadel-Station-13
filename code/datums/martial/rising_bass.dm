@@ -43,7 +43,7 @@
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
-		D.Knockdown(60)
+		D.DefaultCombatKnockdown(60)
 		var/L = H
 		for(var/obj/i in H.contents)
 			if(!istype(i,/mob) && i.density == 1)
@@ -68,7 +68,7 @@
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 		D.Sleeping(60)
-		D.Knockdown(300)
+		D.DefaultCombatKnockdown(300)
 		D.forceMove(L)
 		log_combat(A, D, "shoulder flipped (Rising Bass)")
 		return 1
@@ -83,7 +83,7 @@
 		var/atom/F = get_edge_target_turf(D, get_dir(A, get_step_away(D, A)))
 		D.throw_at(F, 10, 1)
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
-		D.Knockdown(90)
+		D.DefaultCombatKnockdown(90)
 		log_combat(A, D, "repulse punched (Rising Bass)")
 		return 1
 	return basic_hit(A,D)

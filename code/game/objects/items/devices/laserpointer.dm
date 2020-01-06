@@ -108,7 +108,7 @@
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Knockdown(rand(100,200))
+			S.DefaultCombatKnockdown(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at [S.p_their()] sensors.</span>"
 		else

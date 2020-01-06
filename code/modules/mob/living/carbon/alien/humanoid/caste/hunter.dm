@@ -65,16 +65,16 @@
 			var/mob/living/L = A
 			if(!L.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(100)
+				L.DefaultCombatKnockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Knockdown(40, 1, 1)
+				DefaultCombatKnockdown(40, 1, 1)
 
 			toggle_leap(0)
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Knockdown(40, 1, 1)
+			DefaultCombatKnockdown(40, 1, 1)
 
 		if(leaping)
 			leaping = 0

@@ -196,7 +196,7 @@
 			if(!iscultist(L))
 				L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
 				"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-				L.Knockdown(15, TRUE, FALSE, 15)
+				L.DefaultCombatKnockdown(15, TRUE, FALSE, 15)
 				L.apply_status_effect(STATUS_EFFECT_KINDLE)
 				L.flash_act(1, 1)
 				if(issilicon(target))

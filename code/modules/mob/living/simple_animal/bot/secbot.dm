@@ -254,11 +254,11 @@ Auto Patrol: []"},
 	var/threat = 5
 	if(ishuman(C))
 		C.stuttering = 5
-		C.Knockdown(100)
+		C.DefaultCombatKnockdown(100)
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	else
-		C.Knockdown(100)
+		C.DefaultCombatKnockdown(100)
 		C.stuttering = 5
 		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 

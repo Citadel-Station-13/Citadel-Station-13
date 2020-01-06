@@ -272,7 +272,7 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Knockdown(60 * power_multiplier)
+			L.DefaultCombatKnockdown(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
@@ -1215,7 +1215,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					L.Knockdown(30 * power_multiplier * E.phase)
+					L.DefaultCombatKnockdown(30 * power_multiplier * E.phase)
 					E.cooldown += 8
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly drop to the ground!</b></span>"), 5)
 					to_chat(user, "<span class='notice'><i>You encourage [L] to drop down to the ground.</i></span>")

@@ -70,7 +70,7 @@
 			if (newtarget && newtarget != target && !(newtarget in foundtargets))//!newtarget.IsKnockdown())
 				if (rand(0, 5) < level_current)
 					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
-					newtarget.Knockdown(10 + level_current * 5)
+					newtarget.DefaultCombatKnockdown(10 + level_current * 5)
 				if(newtarget.IsStun())
 					newtarget.spin(10,1)
 					if (rand(0,4))

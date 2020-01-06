@@ -225,7 +225,7 @@
 	if(iscarbon(M))
 		M.visible_message("[src] bursts out of [M]!</span>")
 		M.emote("scream")
-		M.Knockdown(40)
+		M.DefaultCombatKnockdown(40)
 		M.adjustBruteLoss(60)
 		Expand()
 	return ..()

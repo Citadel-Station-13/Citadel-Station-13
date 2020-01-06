@@ -336,7 +336,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 	update_icon()
 
 /obj/item/storage/bag/tray/update_icon()

@@ -97,7 +97,7 @@
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
 		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-			owner.Knockdown(stuns_blocked)
+			owner.DefaultCombatKnockdown(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 300)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"

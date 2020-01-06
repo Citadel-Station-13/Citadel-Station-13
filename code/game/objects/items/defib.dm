@@ -473,7 +473,7 @@
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
 		M.adjustStaminaLoss(50)
-		M.Knockdown(100)
+		M.DefaultCombatKnockdown(100)
 		M.updatehealth() //forces health update before next life tick
 		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 		M.emote("gasp")
@@ -530,7 +530,7 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			log_combat(user, H, "overloaded the heart of", defib)
-			H.Knockdown(100)
+			H.DefaultCombatKnockdown(100)
 			H.Jitter(100)
 			if(req_defib)
 				defib.deductcharge(revivecost)

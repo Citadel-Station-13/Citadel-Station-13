@@ -83,7 +83,7 @@
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
-	L.Knockdown(100)
+	L.DefaultCombatKnockdown(100)
 
 /obj/structure/trap/fire
 	name = "flame trap"
@@ -92,7 +92,7 @@
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
-	L.Knockdown(20)
+	L.DefaultCombatKnockdown(20)
 
 /obj/structure/trap/fire/flare()
 	..()
@@ -106,7 +106,7 @@
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
-	L.Knockdown(20)
+	L.DefaultCombatKnockdown(20)
 	L.adjust_bodytemperature(-300)
 	L.apply_status_effect(/datum/status_effect/freon)
 
@@ -119,7 +119,7 @@
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
-	L.Knockdown(100)
+	L.DefaultCombatKnockdown(100)
 	L.adjustBruteLoss(35)
 
 /obj/structure/trap/damage/flare()

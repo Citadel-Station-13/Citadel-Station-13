@@ -179,7 +179,7 @@
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(chargecost = 0) && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
-				owner.Knockdown(20)
+				owner.DefaultCombatKnockdown(20)
 			if(iscultist(owner))
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_L_LEG)
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_R_LEG)
@@ -526,7 +526,7 @@
 	var/old_oxyloss
 
 /datum/status_effect/kindle/tick()
-	owner.Knockdown(15, TRUE, FALSE, 15)
+	owner.DefaultCombatKnockdown(15, TRUE, FALSE, 15)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.silent = max(2, C.silent)

@@ -188,7 +188,7 @@
 
 			do_sparks(5, TRUE, src)
 			var/power = M.powerlevel + rand(0,3)
-			Knockdown(power*20)
+			DefaultCombatKnockdown(power*20)
 			if(stuttering < power)
 				stuttering = power
 			if (prob(stunprob) && M.powerlevel >= 8)
@@ -262,7 +262,7 @@
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-			Knockdown(60)
+			DefaultCombatKnockdown(60)
 	if(override)
 		return override
 	else
@@ -415,7 +415,7 @@
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
-			Knockdown(stun_pwr*effect_amount)
+			DefaultCombatKnockdown(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount

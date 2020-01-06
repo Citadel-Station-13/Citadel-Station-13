@@ -47,7 +47,7 @@
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
-		D.Knockdown(120)
+		D.DefaultCombatKnockdown(120)
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
 
@@ -152,7 +152,7 @@
 							"<span class='userdanger'>[A] leg sweeps you!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
-		D.Knockdown(60)
+		D.DefaultCombatKnockdown(60)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
 

@@ -222,7 +222,7 @@
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+/mob/living/simple_animal/drone/cogscarab/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	. = ..()
 	if(.)
 		update_icons()

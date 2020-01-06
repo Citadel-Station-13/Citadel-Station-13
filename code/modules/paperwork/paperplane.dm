@@ -118,7 +118,7 @@
 		H.adjust_blurriness(6)
 		if(eyes)
 			eyes.applyOrganDamage(rand(6,8))
-		H.Knockdown(40)
+		H.DefaultCombatKnockdown(40)
 		H.emote("scream")
 
 /obj/item/paper/examine(mob/user)

@@ -529,7 +529,7 @@
 	else
 		used = 1
 		victim.take_overall_damage(30,30)
-		victim.Knockdown(60)
+		victim.DefaultCombatKnockdown(60)
 		explosion(src, -1, -1, -1, -1, FALSE, FALSE, 5)
 
 /obj/item/projectile/magic/nuclear/Destroy()

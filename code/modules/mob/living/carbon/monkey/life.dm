@@ -33,7 +33,7 @@
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 			if(!IsKnockdown())
 				emote("collapse")
-			Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
+			DefaultCombatKnockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
 		if(radiation > RAD_MOB_MUTATE)
 			if(prob(1))
