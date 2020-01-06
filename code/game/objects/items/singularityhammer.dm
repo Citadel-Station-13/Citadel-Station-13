@@ -17,6 +17,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	sprint_knockdown = SPRINT_KNOCKDOWN_FORCED
 
 /obj/item/twohanded/singularityhammer/New()
 	..()
@@ -86,6 +87,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	sprint_knockdown = SPRINT_KNOCKDOWN_FORCED
 
 /obj/item/twohanded/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)

@@ -15,6 +15,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 12
 	total_mass = TOTAL_MASS_NORMAL_ITEM // average toolbox
+	sprint_knockdown = SPRINT_KNOCKDOWN_FORCED
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/awakened = FALSE

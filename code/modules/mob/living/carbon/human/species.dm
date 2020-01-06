@@ -1744,6 +1744,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
+	//Knocks this spaceman down if they're actively moving.
+	if(iscarbon(H) && !H.resting && H.sprinting && H.client?.move_delay <= world.time + 2 && CAN_SPRINT_KNOCKDOWN(I))
+		H.Knockdown(I.getweight() * SPRINT_KNOCKDOWN_STRENGTH)
+		H.visible_message("<span class='danger'>[H] loses balance and falls!</span>", "<span class='userdanger'>You lose balance and fall!</span>")
+
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)

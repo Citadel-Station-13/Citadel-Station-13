@@ -34,6 +34,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
+	var/sprint_knockdown = SPRINT_KNOCKDOWN_DEFAULT //Controls whether or not this item is capable of knocking down sprinting spacemen.
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
