@@ -3528,7 +3528,6 @@
 	pixel_x = -22
 	},
 /obj/structure/rack,
-/obj/item/storage/fancy/donut_box,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/neutral{
@@ -4004,8 +4003,7 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/gun/energy/pumpaction/blaster,
-/obj/item/gun/energy/pumpaction/blaster,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "ahJ" = (
@@ -83381,16 +83379,6 @@
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
-"kwg" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "permahydro";
-	name = "Recreation Module"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "kwI" = (
 /obj/item/wrench,
 /obj/item/clothing/suit/apron,
@@ -83493,13 +83481,6 @@
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"lmg" = (
-/obj/machinery/computer/arcade{
-	icon_state = "arcade";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "lsv" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
@@ -83803,13 +83784,6 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/engine/cult,
 /area/library)
-"oba" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "obb" = (
 /obj/structure/target_stake,
 /obj/effect/turf_decal/stripes/line{
@@ -84495,15 +84469,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"uHA" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "uJU" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84829,6 +84794,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xIi" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -104574,7 +104548,7 @@ cia
 cia
 cpX
 cia
-vPN
+lWL
 cia
 ceu
 dyg
@@ -107047,11 +107021,11 @@ aaa
 aaf
 aaf
 aay
-xcb
-uHA
+rLV
+xIi
 abC
-kwg
-uHA
+jhu
+xIi
 abC
 abC
 acr
@@ -107305,10 +107279,10 @@ aaf
 aaa
 aax
 abl
-oba
-lmg
+roa
+ram
 aax
-kRT
+iCn
 aaR
 aaR
 aaI
