@@ -485,8 +485,8 @@
 		for(var/mob/living/carbon/human/H in viewers(7, src))
 			var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 			if(!isvamp(H) || !T) //We dont want vassals or vampires affected by this
-			H.hallucination = 20
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
+				H.hallucination = 20
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood
 
