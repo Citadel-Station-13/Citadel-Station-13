@@ -111,6 +111,7 @@
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(!G.aroused_state && prob(current_cycle*G.sensitivity))
 					G.aroused_state = TRUE
+					G.update_appearance()
 					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
 	..()
 
@@ -145,6 +146,7 @@
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(!G.aroused_state)
 					G.aroused_state = TRUE
+					G.update_appearance()
 					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
 	..()
 
@@ -188,6 +190,7 @@
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(G.aroused_state)
 					G.aroused_state = FALSE
+					G.update_appearance()
 					unboner = TRUE
 			if(unboner)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
@@ -211,6 +214,7 @@
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(G.aroused_state)
 					G.aroused_state = FALSE
+					G.update_appearance()
 					unboner = TRUE
 			if(unboner)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")

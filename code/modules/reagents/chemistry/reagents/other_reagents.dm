@@ -2285,5 +2285,6 @@
 		for(var/obj/item/organ/genital/G in H.internal_organs)
 			if(!G.aroused_state && prob(2*G.sensitivity))
 				G.aroused_state = TRUE
+				G.update_appearance()
 				to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!")
 	..()
