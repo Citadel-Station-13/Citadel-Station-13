@@ -84,14 +84,6 @@
 	required_temp = 413
 	mob_react = FALSE
 
-/datum/chemical_reaction/caramel_burned
-	name = "Caramel burned"
-	id = "caramel_burned"
-	results = list("carbon" = 1)
-	required_reagents = list("caramel" = 1)
-	required_temp = 483
-	mob_react = FALSE
-
 /datum/chemical_reaction/cheesewheel
 	name = "Cheesewheel"
 	id = "cheesewheel"

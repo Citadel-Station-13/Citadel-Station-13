@@ -171,7 +171,7 @@
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
-
+#define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

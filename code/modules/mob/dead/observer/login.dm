@@ -18,6 +18,3 @@
 
 	update_icon(preferred_form)
 	updateghostimages()
-
-	client.reenter_round_timeout = max(client.reenter_round_timeout, clientless_round_timeout)
-	clientless_round_timeout = client.reenter_round_timeout
