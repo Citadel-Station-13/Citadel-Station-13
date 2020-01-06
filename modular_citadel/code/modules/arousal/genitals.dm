@@ -6,7 +6,8 @@
 	var/genital_flags //see citadel_defines.dm
 	var/masturbation_verb = "masturbate"
 	var/orgasm_verb = "cumming" //present continous
-	var/arousal_verb = "feel aroused"
+	var/arousal_verb = "You feel aroused"
+	var/unarousal_verb = "You no longer feel aroused"
 	var/fluid_transfer_factor = 0 //How much would a partner get in them if they climax using this?
 	var/size = 2 //can vary between num or text, just used in icon_state strings
 	var/fluid_id = null
@@ -37,6 +38,11 @@
 	if(owner)
 		Remove(owner, TRUE)//this should remove references to it, so it can be GCd correctly
 	return ..()
+
+/obj/item/organ/genital/proc/set_aroused_state(new_state)
+	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
+		aroused_state = new_state
+	return aroused_state
 
 /obj/item/organ/genital/proc/update(removing = FALSE)
 	if(QDELETED(src))
@@ -126,8 +132,12 @@
 	var/obj/item/organ/genital/picked_organ
 	picked_organ = input(src, "Choose which genitalia to toggle arousal on", "Set genital arousal", null) in genital_list
 	if(picked_organ)
-		picked_organ.aroused_state = !picked_organ.aroused_state
-		to_chat(src,"<span class='userlove'>You [picked_organ.arousal_verb].")
+		var/original_state = picked_organ.aroused_state
+		picked_organ.set_aroused_state(!picked_organ.aroused_state)
+		if(original_state != picked_organ.aroused_state)
+			to_chat(src,"<span class='userlove'>[picked_organ.aroused_state ? picked_organ.arousal_verb : picked_organ.unarousal_verb].</span>")
+		else
+			to_chat(src,"<span class='userlove'>You can't make that genital [picked_organ.aroused_state ? "unaroused" : "aroused"]!</span>")
 		picked_organ.update_appearance()
 	return
 

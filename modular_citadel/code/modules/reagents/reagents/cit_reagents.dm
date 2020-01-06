@@ -110,9 +110,10 @@
 			var/mob/living/carbon/human/H = M
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(!G.aroused_state && prob(current_cycle*G.sensitivity))
-					G.aroused_state = TRUE
+					G.set_aroused_state(TRUE)
 					G.update_appearance()
-					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
+					if(G.aroused_state)
+						to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus
@@ -145,9 +146,10 @@
 			var/mob/living/carbon/human/H = M
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(!G.aroused_state)
-					G.aroused_state = TRUE
+					G.set_aroused_state(TRUE)
 					G.update_appearance()
-					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
+					if(G.aroused_state)
+						to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
@@ -166,9 +168,9 @@
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
 	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
-		if(prob(5) && ishuman(M) && M.has_dna())
-			if(prob(5)) //Less spam
-				to_chat(M, "<span class='love'>Your libido is going haywire!</span>")
+		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
+			if(!HAS_TRAIT(M,TRAIT_PERMABONER)) //Less spam
+				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
 			ADD_TRAIT(M,TRAIT_PERMABONER,"aphro")
 	..()
 
@@ -189,9 +191,9 @@
 			var/mob/living/carbon/human/H = M
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(G.aroused_state)
-					G.aroused_state = FALSE
+					G.set_aroused_state(FALSE)
 					G.update_appearance()
-					unboner = TRUE
+					unboner = (G.aroused_state == FALSE)
 			if(unboner)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
@@ -213,9 +215,9 @@
 			var/mob/living/carbon/human/H = M
 			for(var/obj/item/organ/genital/G in H.internal_organs)
 				if(G.aroused_state)
-					G.aroused_state = FALSE
+					G.set_aroused_state(FALSE)
 					G.update_appearance()
-					unboner = TRUE
+					unboner = (G.aroused_state == FALSE)
 			if(unboner)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
