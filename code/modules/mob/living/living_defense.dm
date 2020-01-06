@@ -149,6 +149,9 @@
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)
+			if(iscarbon(src) && !resting && sprinting && client?.move_delay <= world.time + 2 && CAN_SPRINT_KNOCKDOWN(I))
+				Knockdown(I.getweight() * SPRINT_KNOCKDOWN_STRENGTH)
+				visible_message("<span class='danger'>[src] loses balance and falls!</span>", "<span class='userdanger'>You lose balance and fall!</span>")
 		else
 			return 1
 	else
