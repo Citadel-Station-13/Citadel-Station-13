@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(vote)
 	var/vote_system = PLURALITY_VOTING
 	var/question = null
 	var/list/choices = list()
+	var/list/scores = list()
 	var/list/choice_descs = list() // optional descriptions
 	var/list/voted = list()
 	var/list/voting = list()
@@ -54,6 +55,7 @@ SUBSYSTEM_DEF(vote)
 	choice_descs.Cut()
 	voted.Cut()
 	voting.Cut()
+	scores.Cut()
 	obfuscated = FALSE //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
 
@@ -178,6 +180,22 @@ SUBSYSTEM_DEF(vote)
 			score.Cut(median_pos,median_pos+1)
 			choices[score_name]++
 
+/datum/controller/subsystem/vote/proc/calculate_scores(var/blackbox_text)
+	var/list/scores_by_choice = list()
+	for(var/choice in choices)
+		scores_by_choice[choice] = list()
+	for(var/ckey in voted)
+		var/list/this_vote = voted[ckey]
+		for(var/choice in this_vote)
+			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
+	var/middle_score = round(GLOB.vote_score_options.len/2,1)
+	for(var/score_name in scores_by_choice)
+		var/list/score = scores_by_choice[score_name]
+		for(var/S in score)
+			scores[score_name] += S-middle_score
+		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
+
+
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
 	var/text
@@ -191,6 +209,7 @@ SUBSYSTEM_DEF(vote)
 		calculate_condorcet_votes(vote_title_text)
 	if(vote_system == SCORE_VOTING)
 		calculate_majority_judgement_vote(vote_title_text)
+		calculate_scores(vote_title_text)
 	var/list/winners = get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
