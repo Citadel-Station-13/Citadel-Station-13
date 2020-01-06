@@ -606,9 +606,8 @@
 /obj/item/clothing/under/croptop
 	name = "crop top"
 	desc = "We've saved money by giving you half a shirt!"
-	icon_state = "sailor_dress"
-	item_state = "sailordress"
-	item_color = "sailor_dress"
+	icon_state = "croptop"
+	item_color = "croptop"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
