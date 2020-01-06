@@ -109,11 +109,13 @@
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. It can hold up to 50 units. Unable to withstand extreme pHes"
+	desc = "A beaker. It can hold up to 60 units. Unable to withstand extreme pHes."
 	icon = 'icons/obj/chemical.dmi'
+	volume = 60
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
 	beaker_weakness_bitflag = PH_WEAK
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
@@ -156,28 +158,28 @@
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 50 units of sweet delight. Unable to withstand reagents of an extreme pH."
+	desc = "A jar for honey. It can hold up to 60 units of sweet delight. Unable to withstand reagents of an extreme pH."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 100 units. Unable to withstand reagents of an extreme pH."
+	desc = "A large beaker. Can hold up to 120 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
 	materials = list(MAT_GLASS=2500)
-	volume = 100
+	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120)
 	container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
-	desc = "An extra-large beaker. Can hold up to 150 units. Is able to resist acid and alkaline solutions, but melts at 444K"
+	desc = "An extra-large beaker. Can hold up to 180 units. Is able to resist acid and alkaline solutions, but melts at 444 K."
 	icon_state = "beakerwhite"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
-	volume = 150
+	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/plastic/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -191,14 +193,14 @@
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
-	desc = "A large beaker. Can hold up to 200 units. Is able to withstand all chemical situations."
+	desc = "A large beaker. Can hold up to 240 units, and is able to withstand all chemical situations."
 	icon_state = "beakergold"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
-	volume = 200
+	volume = 240
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,200)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
 
-/obj/item/reagent_containers/glass/beaker/meta/Initialize()
+/obj/item/reagent_containers/glass/beaker/meta/Initialize() // why the fuck can't you just set the beaker weakness bitflags to nothing? fuck you
 	beaker_weakness_bitflag &= ~PH_WEAK
 	. = ..()
 
@@ -228,7 +230,7 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
-	container_HP = 4
+	container_HP = 5
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -339,6 +341,7 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
@@ -355,6 +358,7 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
