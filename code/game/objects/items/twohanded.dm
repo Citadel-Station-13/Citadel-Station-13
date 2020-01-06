@@ -587,6 +587,7 @@
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	sprint_knockdown = SPRINT_KNOCKDOWN_DISABLED
 	force_unwielded = 10
 	force_wielded = 18
 	throwforce = 20
