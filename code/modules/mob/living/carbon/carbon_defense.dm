@@ -342,16 +342,14 @@
 				else if (mood.sanity >= SANITY_DISTURBED)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 
-		AdjustStun(-60)
-		AdjustKnockdown(-60)
-		AdjustUnconscious(-60)
-		AdjustSleeping(-100)
+		AdjustAllImmobility(-60, FALSE)
+		AdjustUnconscious(-60, FALSE)
+		AdjustSleeping(-100, FALSE)
 		if(recoveringstam)
 			adjustStaminaLoss(-15)
 		else if(resting)
-			resting = 0
-			update_canmove()
-
+			set_resting(FALSE, FALSE)
+		update_mobility()
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 

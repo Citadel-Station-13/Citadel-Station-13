@@ -235,32 +235,32 @@
 		return P
 
 //Blanket
-/mob/living/proc/AllImmobility(amount, updating)
-	Paralyze(amount, FALSE)
-	DefaultCombatKnockdown(amount, FALSE)
-	Stun(amount, FALSE)
-	Immobilize(amount, FALSE)
+/mob/living/proc/AllImmobility(amount, updating, ignore_canstun = FALSE)
+	_MOBILITYFLAGTEMPORARY_Paralyze(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_Knockdown(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_Stun(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_Immobilize(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
-/mob/living/proc/SetAllImmobility(amount, updating)
-	SetParalyzed(amount, FALSE)
-	SetKnockdown(amount, FALSE)
-	SetStun(amount, FALSE)
-	SetImmobilized(amount, FALSE)
+/mob/living/proc/SetAllImmobility(amount, updating, ignore_canstun = FALSE)
+	_MOBILITYFLAGTEMPORARY_SetParalyzed(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_SetKnockdown(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_SetStun(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_SetImmobilized(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
-/mob/living/proc/AdjustAllImmobility(amount, updating)
-	AdjustParalyzed(amount, FALSE)
-	AdjustKnockdown(amount, FALSE)
-	AdjustStun(amount, FALSE)
-	AdjustImmobilized(amount, FALSE)
+/mob/living/proc/AdjustAllImmobility(amount, updating, ignore_canstun = FALSE)
+	_MOBILITYFLAGTEMPORARY_AdjustParalyzed(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_AdjustKnockdown(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_AdjustStun(amount, FALSE, ignore_canstun)
+	_MOBILITYFLAGTEMPORARY_AdjustImmobilized(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
 //////////////////UNCONSCIOUS
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_IsUnconscious() //If we're unconscious
+/mob/living/proc/IsUnconscious() //If we're unconscious
 	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 
 /mob/living/proc/_MOBILITYFLAGTEMPORARY_AmountUnconscious() //How many deciseconds remain in our unconsciousness
@@ -269,7 +269,7 @@
 		return U.duration - world.time
 	return 0
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_Unconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))  || ignore_canstun)
@@ -280,7 +280,7 @@
 			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
 		return U
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_SetUnconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+/mob/living/proc/SetUnconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
@@ -294,7 +294,7 @@
 			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
 		return U
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_AdjustUnconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
@@ -307,16 +307,16 @@
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_IsSleeping() //If we're asleep
+/mob/living/proc/IsSleeping() //If we're asleep
 	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_AmountSleeping() //How many deciseconds remain in our sleep
+/mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
 		return S.duration - world.time
 	return 0
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_Sleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Sleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
@@ -327,7 +327,7 @@
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 		return S
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_SetSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+/mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
@@ -341,7 +341,7 @@
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 		return S
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_AdjustSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)

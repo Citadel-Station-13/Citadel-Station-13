@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/Move(NewLoc, direct)
 	. = ..()
-	if(. && sprinting && !(movement_type & FLYING) && canmove && !resting)
+	if(. && sprinting && !(movement_type & FLYING) && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND | MOBILITY_MOVE)))
 		if(!(cell?.use(25)))
 			togglesprint(TRUE)
 
