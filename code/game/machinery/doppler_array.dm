@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon_state = "tdoppler"
 	density = TRUE
 	var/integrated = FALSE
+	var/list_limit = 100
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
@@ -40,7 +41,6 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/datum/browser/popup = new(user, "computer", name, 400, 500)
 	popup.set_content(dat.Join(" "))
 	popup.open()
-	return
 
 /obj/machinery/doppler_array/Topic(href, href_list)
 	if(..())
@@ -108,6 +108,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
+		if(LAZYLEN(message_log) > list_limit)
+			say("Storage buffer is full! Clearing buffers...")
+			LAZYCLEARLIST(message_log)
 		LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
