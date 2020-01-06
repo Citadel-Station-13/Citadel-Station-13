@@ -100,14 +100,18 @@
 	color = "#FFADFF"//PINK, rgb(255, 173, 255)
 
 /datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO))
-		if(prob(33))
-			M.adjustArousalLoss(2)
-		if(prob(5))
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
+		if((prob(min(current_cycle/2,5))))
 			M.emote(pick("moan","blush"))
-		if(prob(5))
+		if(prob(min(current_cycle/4,10)))
 			var/aroused_message = pick("You feel frisky.", "You're having trouble suppressing your urges.", "You feel in the mood.")
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/organ/genital/G in H.internal_organs)
+				if(!G.aroused_state && prob(current_cycle))
+					G.aroused_state = TRUE
+					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus
@@ -122,21 +126,26 @@
 	overdose_threshold = 20
 
 /datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO))
-		if(prob(33))
-			M.adjustArousalLoss(6)//not quite six times as powerful, but still considerably more powerful.
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
 		if(prob(5))
-			if(M.getArousalLoss() > 75)
+			if(prob(current_cycle))
 				M.say(pick("Hnnnnngghh...", "Ohh...", "Mmnnn..."))
 			else
 				M.emote(pick("moan","blush"))
 		if(prob(5))
 			var/aroused_message
-			if(M.getArousalLoss() > 90)
+			if(current_cycle>25)
 				aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
 			else
 				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+			REMOVE_TRAIT(M,TRAIT_NEVERBONER,"aphro")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/organ/genital/G in H.internal_organs)
+				if(!G.aroused_state)
+					G.aroused_state = TRUE
+					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
@@ -154,15 +163,11 @@
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
-		if(prob(5) && M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
+		if(prob(5) && ishuman(M) && M.has_dna())
 			if(prob(5)) //Less spam
 				to_chat(M, "<span class='love'>Your libido is going haywire!</span>")
-		if(M.min_arousal < 50)
-			M.min_arousal += 1
-		if(M.min_arousal < M.max_arousal)
-			M.min_arousal += 1
-		M.adjustArousalLoss(2)
+			ADD_TRAIT(M,TRAIT_PERMABONER,"aphro")
 	..()
 
 /datum/reagent/drug/anaphrodisiac
@@ -176,8 +181,16 @@
 	reagent_state = SOLID
 
 /datum/reagent/drug/anaphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && prob(33))
-		M.adjustArousalLoss(-2)
+	if(M && M.client?.prefs.arousable && prob(16))
+		if(ishuman(M))
+			var/unboner = FALSE
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/organ/genital/G in H.internal_organs)
+				if(G.aroused_state)
+					G.aroused_state = FALSE
+					unboner = TRUE
+			if(unboner)
+				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
 
 /datum/reagent/drug/anaphrodisiacplus
@@ -190,17 +203,22 @@
 	overdose_threshold = 20
 
 /datum/reagent/drug/anaphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && prob(33))
-		M.adjustArousalLoss(-4)
+	if(M && M.client?.prefs.arousable)
+		REMOVE_TRAIT(M,TRAIT_PERMABONER,"aphro")
+		if(ishuman(M))
+			var/unboner = FALSE
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/organ/genital/G in H.internal_organs)
+				if(G.aroused_state)
+					G.aroused_state = FALSE
+					unboner = TRUE
+			if(unboner)
+				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
 
 /datum/reagent/drug/anaphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.canbearoused && prob(33))
-		if(M.min_arousal > 0)
-			M.min_arousal -= 1
-		if(M.min_arousal > 50)
-			M.min_arousal -= 1
-		M.adjustArousalLoss(-2)
+	if(M && M.client?.prefs.arousable && prob(5))
+		ADD_TRAIT(M,TRAIT_NEVERBONER,"aphro")
 	..()
 
 //recipes

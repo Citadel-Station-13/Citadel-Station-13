@@ -2280,5 +2280,10 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
-	M.adjustArousalLoss(2)
+	if(M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO && ishuman(M)))
+		var/mob/living/carbon/human/H = M
+		for(var/obj/item/organ/genital/G in H.internal_organs)
+			if(!G.aroused_state && prob(2))
+				G.aroused_state = TRUE
+				to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!")
 	..()

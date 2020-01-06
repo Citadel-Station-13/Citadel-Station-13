@@ -109,11 +109,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 
-	if(current_version < 24 && S["feature_exhibitionist"])
-		var/datum/quirk/exhibitionism/E
-		var/quirk_name = initial(E.name)
-		all_quirks += quirk_name
-
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
