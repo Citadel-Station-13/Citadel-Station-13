@@ -118,7 +118,7 @@
 		if(bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
 			if(mult == 0)
 				return TRUE
-			if(stat >= UNCONSCIOUS) //Faster regeneration while unconcious, so you dont have to wait all day
+			if(stat) //Faster regeneration while unconcious, so you dont have to wait all day
 				mult *= 2  
 			// We have damage. Let's heal (one time)
 			C.adjustBruteLoss(-bruteheal * mult, forced = TRUE)// Heal BRUTE / BURN in random portions throughout the body.
