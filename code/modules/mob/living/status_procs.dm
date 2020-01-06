@@ -31,7 +31,7 @@
 		return S.duration - world.time
 	return 0
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
@@ -260,10 +260,10 @@
 		update_mobility()
 
 //////////////////UNCONSCIOUS
-/mob/living/proc/IsUnconscious() //If we're unconscious
+/mob/living/proc/_MOBILITYFLAGTEMPORARY_IsUnconscious() //If we're unconscious
 	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 
-/mob/living/proc/_MOBILITYFLAGTEMPORARY_AmountUnconscious() //How many deciseconds remain in our unconsciousness
+/mob/living/proc/AmountUnconscious() //How many deciseconds remain in our unconsciousness
 	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 	if(U)
 		return U.duration - world.time
@@ -307,7 +307,7 @@
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/living/proc/IsSleeping() //If we're asleep
+/mob/living/proc/_MOBILITYFLAGTEMPORARY_IsSleeping() //If we're asleep
 	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep

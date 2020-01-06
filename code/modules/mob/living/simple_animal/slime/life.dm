@@ -140,12 +140,12 @@
 			stat = UNCONSCIOUS
 			powerlevel = 0
 			rabid = 0
-			update_canmove()
+			update_mobility()
 			regenerate_icons()
 		else if(stat == UNCONSCIOUS && !stasis)
 			to_chat(src, "<span class='notice'>You wake up from the stasis.</span>")
 			stat = CONSCIOUS
-			update_canmove()
+			update_mobility()
 			regenerate_icons()
 
 	updatehealth()
@@ -272,15 +272,8 @@
 			if(prob(25-powerlevel*5))
 				powerlevel++
 
-
-
-
 /mob/living/simple_animal/slime/proc/handle_targets()
-	if(Tempstun)
-		if(!buckled) // not while they're eating!
-			canmove = 0
-	else
-		canmove = 1
+	update_mobility()
 
 	if(attacked > 50)
 		attacked = 50
@@ -298,7 +291,7 @@
 			Discipline--
 
 	if(!client)
-		if(!canmove)
+		if(!CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
 			return
 
 		if(buckled)
@@ -383,13 +376,13 @@
 			if (Leader)
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
-				else if(canmove && isturf(loc))
+				else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc))
 					step_to(src, Leader)
 
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
-				else if(canmove && isturf(loc) && prob(50))
+				else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc) && prob(50))
 					step(src, pick(GLOB.cardinals))
 
 			else
@@ -397,7 +390,7 @@
 					holding_still = max(holding_still - 1, 0)
 				else if (docile && pulledby)
 					holding_still = 10
-				else if(canmove && isturf(loc) && prob(33))
+				else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
 			INVOKE_ASYNC(src, .proc/AIprocess)

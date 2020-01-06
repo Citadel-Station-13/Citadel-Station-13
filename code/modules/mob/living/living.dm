@@ -1203,3 +1203,6 @@
 	update_canmove()
 	for(var/chem in healing_chems)
 		reagents.add_reagent(chem, healing_chems[chem])
+
+/mob/living/canface()
+	return ..() && CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE)

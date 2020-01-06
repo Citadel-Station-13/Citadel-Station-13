@@ -46,6 +46,8 @@
 	var/progression = list() //Keep track of where people are in the story.
 	var/active = TRUE //Turn this to false to keep normal mob behavour
 	var/cached_z
+	/// I'm busy chatting, don't move.
+	var/busy_chatting = FALSE
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
@@ -76,9 +78,9 @@
 		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
-		canmove = FALSE
+		busy_chatting = FALSE
 		chit_chat(M)
-		canmove = TRUE
+		busy_chatting = TRUE
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
@@ -86,9 +88,9 @@
 		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
-		canmove = FALSE
+		busy_chatting = FALSE
 		chit_chat(M)
-		canmove = TRUE
+		busy_chatting = TRUE
 	..()
 
 /mob/living/simple_animal/jacq/proc/poof()
@@ -99,7 +101,7 @@
 	s.set_up(R, 0, loc)
 	s.start()
 	visible_message("<b>[src]</b> disappears in a puff of smoke!")
-	canmove = TRUE
+	busy_chatting = TRUE
 	health = 25
 
 	//Try to go to populated areas
@@ -376,6 +378,12 @@
 	visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"There, that aught tae be worth a candy.\"</span>")
 	sleep(20)
 	poof()
+
+/mob/living/simple_animal/jacq/update_mobility()
+	. = ..()
+	if(busy_chatting)
+		DISABLE_BITFIELD(., MOBILITY_MOVE)
+		mobility_flags = .
 
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 	name = "Jacq o' latern"

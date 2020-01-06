@@ -49,11 +49,11 @@
 			throw_alert("blind", /obj/screen/alert/blind)
 		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		// You are blind why should you be able to make out details like color, only shapes near you
-		add_client_colour(/datum/client_colour/monochrome/blind)
+		// add_client_colour(/datum/client_colour/monochrome/blind)
 	else // CONSCIOUS no blind trait, no blindness
 		clear_alert("blind")
 		clear_fullscreen("blind")
-		remove_client_colour(/datum/client_colour/monochrome/blind)
+		// remove_client_colour(/datum/client_colour/monochrome/blind)
 /**
   * Make the mobs vision blurry
   */
