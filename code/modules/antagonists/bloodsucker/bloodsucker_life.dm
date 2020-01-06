@@ -217,6 +217,7 @@
 	if(owner.current.stat >= DEAD)
 		Torpor_Begin()
 		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor.</span>")
+		sleep(30) //To avoid spam
 		if (poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
 	// End Torpor:
@@ -228,7 +229,6 @@
 		// Fake Unconscious
 		if(poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
 			owner.current.Unconscious(20,1)
-
 	//HEALTH_THRESHOLD_CRIT 0
 	//HEALTH_THRESHOLD_FULLCRIT -30
 	//HEALTH_THRESHOLD_DEAD -100
