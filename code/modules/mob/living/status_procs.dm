@@ -37,7 +37,7 @@
 	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
+		var/datum/status_effect/incapacitating/stun/S = _MOBILITYFLAGTEMPORARY_IsStun()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)
 		else if(amount > 0)
@@ -48,7 +48,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
+		var/datum/status_effect/incapacitating/stun/S = _MOBILITYFLAGTEMPORARY_IsStun()
 		if(amount <= 0)
 			if(S)
 				qdel(S)
@@ -67,7 +67,7 @@
 	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
+		var/datum/status_effect/incapacitating/stun/S = _MOBILITYFLAGTEMPORARY_IsStun()
 		if(S)
 			S.duration += amount
 		else if(amount > 0)
@@ -80,7 +80,7 @@
 	return has_status_effect(STATUS_EFFECT_KNOCKDOWN)
 
 /mob/living/proc/_MOBILITYFLAGTEMPORARY_AmountKnockdown() //How many deciseconds remain in our knockdown
-	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	var/datum/status_effect/incapacitating/knockdown/K = _MOBILITYFLAGTEMPORARY_IsKnockdown()
 	if(K)
 		return K.duration - world.time
 	return 0
@@ -91,7 +91,7 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+		var/datum/status_effect/incapacitating/knockdown/K = _MOBILITYFLAGTEMPORARY_IsKnockdown()
 		if(K)
 			K.duration = max(world.time + amount, K.duration)
 		else if(amount > 0)
@@ -102,7 +102,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+		var/datum/status_effect/incapacitating/knockdown/K = _MOBILITYFLAGTEMPORARY_IsKnockdown()
 		if(amount <= 0)
 			if(K)
 				qdel(K)
@@ -121,7 +121,7 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+		var/datum/status_effect/incapacitating/knockdown/K = _MOBILITYFLAGTEMPORARY_IsKnockdown()
 		if(K)
 			K.duration += amount
 		else if(amount > 0)
@@ -256,6 +256,19 @@
 	_MOBILITYFLAGTEMPORARY_AdjustKnockdown(amount, FALSE, ignore_canstun)
 	_MOBILITYFLAGTEMPORARY_AdjustStun(amount, FALSE, ignore_canstun)
 	_MOBILITYFLAGTEMPORARY_AdjustImmobilized(amount, FALSE, ignore_canstun)
+	if(updating)
+		update_mobility()
+
+//makes sure nothing is longer
+/mob/living/proc/HealAllImmobilityupto(amount, updating, ignore_canstun = FALSE)
+	if(AmountStun() > amount)
+		SetStun(amount, FALSE, ignore_canstun)
+	if(AmountKnockdown() > amount)
+		SetKnockdown(amount, FALSE, ignore_canstun)
+	if(AmountParalyzed() > amount)
+		SetParalyzed(amount, FALSE, ignore_canstun)
+	if(AmountImmobilized() > amount)
+		SetImmobilized(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
