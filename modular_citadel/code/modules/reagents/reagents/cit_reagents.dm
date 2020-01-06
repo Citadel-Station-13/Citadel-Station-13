@@ -109,7 +109,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			for(var/obj/item/organ/genital/G in H.internal_organs)
-				if(!G.aroused_state && prob(current_cycle))
+				if(!G.aroused_state && prob(current_cycle*G.sensitivity))
 					G.aroused_state = TRUE
 					to_chat(M, "<span class='userlove'>You suddenly [G.arousal_verb]!")
 	..()
