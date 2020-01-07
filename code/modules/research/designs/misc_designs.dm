@@ -386,7 +386,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
 	build_path = /obj/item/rcd_upgrade/frames
-	category = list("Tool Designs")
+	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/simple_circuits
