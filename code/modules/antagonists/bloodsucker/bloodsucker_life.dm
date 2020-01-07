@@ -97,7 +97,7 @@
 		var/fireheal = 0 	// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
-			mult *= 3 // Increase multiplier if we're sleeping in a coffin.
+			mult *= 4 // Increase multiplier if we're sleeping in a coffin.
 			fireheal = min(C.getFireLoss_nonProsthetic(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
 			C.ExtinguishMob()
@@ -118,7 +118,7 @@
 		if(bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
 			if(mult == 0)
 				return TRUE
-			if(stat) //Faster regeneration while unconcious, so you dont have to wait all day
+			if(owner.current.stat >= UNCONSCIOUS) //Faster regeneration while unconcious, so you dont have to wait all day
 				mult *= 2  
 			// We have damage. Let's heal (one time)
 			C.adjustBruteLoss(-bruteheal * mult, forced = TRUE)// Heal BRUTE / BURN in random portions throughout the body.
