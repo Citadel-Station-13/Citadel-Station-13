@@ -261,8 +261,9 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	penalize = suiciding || penalize // suicide squad.
+	voluntary_ghosted = voluntary
 	if(!key || cmptext(copytext(key,1,2),"@") || (SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize) & COMPONENT_BLOCK_GHOSTING))
 		return //mob has no key, is an aghost or some component hijacked.
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
