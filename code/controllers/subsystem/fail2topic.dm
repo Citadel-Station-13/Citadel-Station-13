@@ -1,7 +1,8 @@
 SUBSYSTEM_DEF(fail2topic)
 	name = "Fail2Topic"
-	init_order = SS_INIT_MISC_FIRST
-	flags = SS_FIRE_IN_LOBBY | SS_BACKGROUND
+	init_order = INIT_ORDER_FAIL2TOPIC
+	flags = SS_BACKGROUND
+	runlevels = ALL
 
 	var/list/rate_limiting = list()
 	var/list/fail_counts = list()
@@ -47,8 +48,13 @@ SUBSYSTEM_DEF(fail2topic)
 /datum/controller/subsystem/fail2topic/proc/IsRateLimited(ip)
 	var/last_attempt = rate_limiting[ip]
 
-	if (config?.api_rate_limit_whitelist[ip])
-		return FALSE
+	var/static/datum/config_entry/keyed_list/topic_rate_limit_whitelist/cached_whitelist_entry
+	if(!istype(cached_whitelist_entry))
+		cached_whitelist_entry = CONFIG_GET(keyed_list/topic_rate_limit_whitelist)
+
+	if(istype(cached_whitelist_entry))
+		if(cached_whitelist_entry.config_entry_value[ip])
+			return FALSE
 
 	if (active_bans[ip])
 		return TRUE
