@@ -461,6 +461,7 @@
 	anchored = TRUE
 	var/status = 0
 	var/delay = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
 	. = ..()
