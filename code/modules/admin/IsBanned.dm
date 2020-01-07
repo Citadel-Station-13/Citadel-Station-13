@@ -54,7 +54,8 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 		if(returneddesc)
 			return list("reason" = "IsBanned flood detection", "desc" = "IsBanned flood detection | [returneddesc]")
 	if(type == "world")
-		CLEAR_FLOOD
+		if(!bypass_floodcheck)
+			CLEAR_FLOOD
 		return ..()
 	. = _IsBanned(key, address, computer_id, type, real_bans_only, bypass_floodcheck)			//Even if this runtimes, we are 100% sure to clear the flood prevention system.
 	if(!bypass_floodcheck)
