@@ -15,5 +15,5 @@
 	config_entry_value = 8192
 
 /datum/config_entry/keyed_list/topic_rate_limit_whitelist
-	key_type = KEY_MODE_TEXT
-	value_type = VALUE_MODE_FLAG
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
