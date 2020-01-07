@@ -18135,7 +18135,7 @@
 /area/centcom/holding)
 "VL" = (
 /obj/machinery/button/crematorium{
-	id = crematoriumGhostDojo;
+	id = "crematoriumGhostDojo";
 	pixel_x = -25
 	},
 /turf/open/indestructible/hotelwood,
@@ -18223,7 +18223,7 @@
 "Ww" = (
 /obj/structure/bodycontainer/crematorium{
 	dir = 4;
-	id = crematoriumGhostDojo
+	id = "crematoriumGhostDojo"
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
