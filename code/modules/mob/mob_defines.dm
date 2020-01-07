@@ -34,7 +34,7 @@
 	var/eye_blurry = 0		//Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
-	var/resting = 0			//Carbon
+	var/_MOBILITYFLAGTEMPORARY_resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 

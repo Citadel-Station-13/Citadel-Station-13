@@ -41,7 +41,7 @@
 /mob/living/simple_animal/pet/cat/update_canmove()
 	..()
 	if(client && stat != DEAD)
-		if (resting)
+		if(!CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
 		else
@@ -173,27 +173,24 @@
 			emote("me", EMOTE_VISIBLE, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			emote("me", EMOTE_VISIBLE, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			if (resting)
 				emote("me", EMOTE_VISIBLE, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				collar_type = "[initial(collar_type)]"
-				resting = 0
-				update_canmove()
+				set_resting(FALSE)
 			else
 				emote("me", EMOTE_VISIBLE, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
+		if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat && Adjacent(M))
 					emote("me", EMOTE_VISIBLE, "splats \the [M]!")
@@ -210,7 +207,7 @@
 
 	make_babies()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -320,7 +317,6 @@
 	if (pseudo_death == TRUE) //secret cat chem
 		icon_state = "custom_cat_dead"
 		Stun(1000)
-		canmove = 0
 		friendly = "deads at"
 		return
 	else

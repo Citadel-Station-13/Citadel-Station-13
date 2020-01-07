@@ -236,10 +236,10 @@
 
 //Blanket
 /mob/living/proc/AllImmobility(amount, updating, ignore_canstun = FALSE)
-	_MOBILITYFLAGTEMPORARY_Paralyze(amount, FALSE, ignore_canstun)
+	Paralyze(amount, FALSE, ignore_canstun)
 	_MOBILITYFLAGTEMPORARY_Knockdown(amount, FALSE, ignore_canstun)
-	_MOBILITYFLAGTEMPORARY_Stun(amount, FALSE, ignore_canstun)
-	_MOBILITYFLAGTEMPORARY_Immobilize(amount, FALSE, ignore_canstun)
+	Stun(amount, FALSE, ignore_canstun)
+	Immobilize(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -277,7 +277,7 @@
 	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 
 /mob/living/proc/AmountUnconscious() //How many deciseconds remain in our unconsciousness
-	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
+	var/datum/status_effect/incapacitating/unconscious/U = _MOBILITYFLAGTEMPORARY_IsUnconscious()
 	if(U)
 		return U.duration - world.time
 	return 0
@@ -297,7 +297,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
+		var/datum/status_effect/incapacitating/unconscious/U = _MOBILITYFLAGTEMPORARY_IsUnconscious()
 		if(amount <= 0)
 			if(U)
 				qdel(U)
@@ -311,7 +311,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
+		var/datum/status_effect/incapacitating/unconscious/U = _MOBILITYFLAGTEMPORARY_IsUnconscious()
 		if(U)
 			U.duration += amount
 		else if(amount > 0)
@@ -324,7 +324,7 @@
 	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
-	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	var/datum/status_effect/incapacitating/sleeping/S = _MOBILITYFLAGTEMPORARY_IsSleeping()
 	if(S)
 		return S.duration - world.time
 	return 0
@@ -333,7 +333,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+		var/datum/status_effect/incapacitating/sleeping/S = _MOBILITYFLAGTEMPORARY_IsSleeping()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)
 		else if(amount > 0)
@@ -358,7 +358,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+		var/datum/status_effect/incapacitating/sleeping/S = _MOBILITYFLAGTEMPORARY_IsSleeping()
 		if(S)
 			S.duration += amount
 		else if(amount > 0)

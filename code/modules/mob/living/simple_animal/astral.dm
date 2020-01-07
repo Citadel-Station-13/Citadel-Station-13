@@ -32,7 +32,6 @@
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
 	Stun(1000)
-	canmove = 0
 	friendly = "deads at"
 	pseudo_death = TRUE
 	incorporeal_move = 0

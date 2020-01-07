@@ -16,7 +16,7 @@
 		icon_state = "larva[state]_cuff"
 	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "larva[state]_sleep"
-	else if(IsStun())
+	else if(_MOBILTIYFLAGTEMPORARY_IsStun() || _MOBILITYFLAGTEMPORARY_IsParalyzed())
 		icon_state = "larva[state]_stun"
 	else
 		icon_state = "larva[state]"

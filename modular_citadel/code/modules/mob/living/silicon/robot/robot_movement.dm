@@ -14,7 +14,7 @@
 	if(!shutdown && (!cell || cell.charge < 25) || !cansprint)
 		return FALSE
 	sprinting = shutdown ? FALSE : !sprinting
-	if(!resting && canmove)
+	if(CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE))
 		if(sprinting)
 			playsound_local(src, 'sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 		else

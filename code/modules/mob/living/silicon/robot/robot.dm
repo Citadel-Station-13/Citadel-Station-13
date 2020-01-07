@@ -1021,7 +1021,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || IsParalyze() || getOxyLoss() > maxHealth*0.5)
+		if(_MOBILITYFLAGTEMPORARY_IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || _MOBILITYFLAGTEMPORARY_IsParalyze() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

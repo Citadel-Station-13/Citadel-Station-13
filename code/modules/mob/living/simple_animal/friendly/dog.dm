@@ -421,7 +421,7 @@
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -621,7 +621,7 @@
 
 	make_babies()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		if(prob(1))
 			emote("me", EMOTE_VISIBLE, pick("dances around.","chases her tail."))
 			spawn(0)
@@ -631,8 +631,7 @@
 
 /mob/living/simple_animal/pet/dog/pug/Life()
 	..()
-
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		if(prob(1))
 			emote("me", EMOTE_VISIBLE, pick("chases its tail."))
 			spawn(0)

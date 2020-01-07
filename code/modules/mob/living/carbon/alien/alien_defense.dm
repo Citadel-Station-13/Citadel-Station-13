@@ -23,8 +23,7 @@ In all, this is a lot like the monkey code. /N
 		if (INTENT_HELP)
 			if(!recoveringstam)
 				resting = 0
-			AdjustStun(-60)
-			AdjustKnockdown(-60)
+			AdjustAllImmobility(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")

@@ -72,9 +72,9 @@
 ///Set the mobs blurriness of vision to an amount
 /mob/proc/set_blurriness(amount)
 	eye_blurry = max(amount, 0)
-	update_eye_blur()
+	update_eyeblur()
 
-/mob/proc/update_eye_blur()
+/mob/proc/update_eyeblur()
 	remove_eyeblur()
 	add_eyeblur()
 

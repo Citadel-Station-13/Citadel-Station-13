@@ -359,6 +359,12 @@
 
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
+	if(stat)
+		return TRUE
+	if(!CHECK_BITFIELD(mobility_flags, MOBILITY_FLAGS_ANY_INTERACTION))
+	if(!ignore_restraints && restrained(ignore_grab))
+		return TRUE
+	return FALSE
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return TRUE
 

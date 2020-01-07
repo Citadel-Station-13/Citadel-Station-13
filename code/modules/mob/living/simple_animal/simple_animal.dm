@@ -152,7 +152,7 @@
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
-		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(src.loc) || allow_movement_on_non_turfs) && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled

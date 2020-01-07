@@ -347,7 +347,7 @@
 		AdjustSleeping(-100, FALSE)
 		if(recoveringstam)
 			adjustStaminaLoss(-15)
-		else if(resting)
+		else
 			set_resting(FALSE, FALSE)
 		update_mobility()
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

@@ -67,8 +67,7 @@
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
-	if(resting)
-		lay_down()
+	set_resting(FALSE, TRUE)
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
