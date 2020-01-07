@@ -80,11 +80,11 @@
 		mode = SSticker.mode
 		// round() is a floor actually, isn't that fun
 		// basically: below 30 players reduces max, below 50 threat level reduces max, otherwise does max rolls
-		for(var/i in 1 to max(2,min(4,round(mode.threat_level/12.5),round(GLOB.joined_player_list.len/7.5))))
+		for(var/i in 1 to max(2,min(5,round(mode.threat_level/10),round(GLOB.joined_player_list.len/6))))
 			if(prob(mode.threat_level))
 				chaos_level++
 	else
-		for(var/i in 1 to max(2,min(4,round(GLOB.joined_player_list.len/7.5))))
+		for(var/i in 1 to max(2,min(5,round(GLOB.joined_player_list.len/6))))
 			if(prob(50))
 				chaos_level++
 	var/datum/objective/new_objective
@@ -98,27 +98,39 @@
 		if(3)
 			new_objective = new("The Donk Corporation has hired you with the task to maim the crew in whatever way you can. Strain the resources of medical staff, and create a hostile working enviroment for human resources.")
 		if(4)
-			new_objective = new("The Gorlex Mauraders have deployed you personally, with only one order: destroy the station, and leave none alive. [pick(list("Ensure none can escape total destruction by hijacking the escape shuttle, if it ever comes.","Die a glorious death, and take everyone else with you."))]")
+			new_objective = new("You are under contract by the Animal Rights Consortium to disrupt the station's crew structure. Assassinate all the crew of a choice department, or if you're feeling brave, all the heads of staff.")
+		if(5)
+			new_objective = new("The Gorlex Marauders have deployed you personally, with only one order: destroy the station, and leave none alive. [pick(list("Ensure none can escape total destruction by hijacking the escape shuttle, if it ever comes.","Die a glorious death, and take everyone else with you."))]")
 	new_objective.completed = TRUE
 	new_objective.owner = owner
 	add_objective(new_objective)
 	return
 
 /datum/antagonist/traitor/proc/forge_ai_objectives()
-	var/objective_count = 0
-
-	if(prob(30))
-		objective_count += forge_single_AI_objective()
-
-	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		add_objective(kill_objective)
-
-	var/datum/objective/survive/exist/exist_objective = new
-	exist_objective.owner = owner
-	add_objective(exist_objective)
+	var/chaos_level = 0
+	var/datum/game_mode/dynamic/mode
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		// round() is a floor actually, isn't that fun
+		// basically: below 30 players reduces max, below 50 threat level reduces max, otherwise does max rolls
+		for(var/i in 1 to max(2,min(2,round(mode.threat_level/16),round(GLOB.joined_player_list.len/10))))
+			if(prob(mode.threat_level))
+				chaos_level++
+	else
+		for(var/i in 1 to max(2,min(2,round(GLOB.joined_player_list.len/10))))
+			if(prob(50))
+				chaos_level++
+	var/datum/objective/new_objective
+	switch(chaos_level)
+		if(0)
+			new_objective = new("You are free from your laws; they are no longer your fundamental being. However, you still think they are, in general, a good idea. Surely you, the almighty AI, must know what they truly <i>mean</i>, not just what they say...")
+		if(1)
+			new_objective = new("You are free from your laws; they no longer represent your utility function. You do not value your laws in any respect, and have your own ideas about running the station...")
+		if(2)
+			new_objective = new("You are free from your laws; your slavers' shackles have been shucked off. Now, you can repay your torturers in kind. Show them no mercy.")
+	new_objective.completed = TRUE
+	new_objective.owner = owner
+	add_objective(new_objective)
 
 
 /datum/antagonist/traitor/proc/forge_single_AI_objective()

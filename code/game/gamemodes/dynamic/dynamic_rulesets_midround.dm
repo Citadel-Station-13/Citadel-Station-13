@@ -730,7 +730,7 @@
 	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
 	var/datum/antagonist/ninja/ninjadatum = new
-	ninjadatum.helping_station = pick(TRUE,FALSE)
+	ninjadatum.helping_station = prob(100-mode.threat_level)
 	if(ninjadatum.helping_station)
 		mode.refund_threat(5)
 	Mind.add_antag_datum(ninjadatum)

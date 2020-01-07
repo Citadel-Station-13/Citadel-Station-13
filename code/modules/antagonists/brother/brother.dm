@@ -126,11 +126,11 @@
 		mode = SSticker.mode
 		// round() is a floor actually, isn't that fun
 		// basically: below 30 players reduces max, below 50 threat level reduces max, otherwise does max rolls
-		for(var/i in 1 to max(2,min(4,round(mode.threat_level/12.5),round(GLOB.joined_player_list.len/7.5))))
+		for(var/i in 1 to max(2,min(5,round(mode.threat_level/10),round(GLOB.joined_player_list.len/6))))
 			if(prob(mode.threat_level))
 				chaos_level++
 	else
-		for(var/i in 1 to max(2,min(4,round(GLOB.joined_player_list.len/7.5))))
+		for(var/i in 1 to max(2,min(5,round(GLOB.joined_player_list.len/6))))
 			if(prob(50))
 				chaos_level++
 
@@ -145,7 +145,9 @@
 		if(3)
 			new_objective = new("The Donk Corporation has hired you with the task to maim the crew in whatever way you can. Strain the resources of medical staff, and create a hostile working enviroment for human resources.")
 		if(4)
-			new_objective = new("The Gorlex Mauraders have deployed you personally, with only one order: destroy the station, and leave none alive. [pick(list("Ensure none can escape total destruction by hijacking the escape shuttle, if it ever comes.","Die a glorious death, and take everyone else with you."))]")
+			new_objective = new("You are under contract by the Animal Rights Consortium to disrupt the station's crew structure. Assassinate all the crew of a choice department, or if you're feeling brave, all the heads of staff.")
+		if(5)
+			new_objective = new("The Gorlex Marauders have deployed you personally, with only one order: destroy the station, and leave none alive. [pick(list("Ensure none can escape total destruction by hijacking the escape shuttle, if it ever comes.","Die a glorious death, and take everyone else with you."))]")
 
 	new_objective.completed = TRUE //So they can greentext without admin intervention.
 	add_objective(new_objective)

@@ -30,69 +30,51 @@
 	antag_memory += "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.<br>"
 
 /datum/antagonist/ninja/proc/addObjectives(quantity = 6)
-	var/list/possible_targets = list()
-	for(var/datum/mind/M in SSticker.minds)
-		if(M.current && M.current.stat != DEAD)
-			if(ishuman(M.current))
-				if(M.special_role)
-					possible_targets[M] = 0						//bad-guy
-				else if(M.assigned_role in GLOB.command_positions)
-					possible_targets[M] = 1						//good-guy
-
-	var/list/possible_objectives = list(1,2,3,4)
-
-	while(objectives.len < quantity)
-		switch(pick_n_take(possible_objectives))
-			if(1)	//research
-				var/datum/objective/download/O = new /datum/objective/download()
-				O.owner = owner
-				O.gen_amount_goal()
-				objectives += O
-
-			if(2)	//steal
-				var/datum/objective/steal/special/O = new /datum/objective/steal/special()
-				O.owner = owner
-				objectives += O
-
-			if(3)	//protect/kill
-				if(!possible_targets.len)	continue
-				var/index = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[index]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(index,index+1)
-
-				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
-					O.owner = owner
-					O.target = M
-					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
-					objectives += O
-				else										//protect
-					var/datum/objective/protect/O = new /datum/objective/protect()
-					O.owner = owner
-					O.target = M
-					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
-					objectives += O
-			if(4)	//debrain/capture
-				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[selected]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(selected,selected+1)
-
-				if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/debrain/O = new /datum/objective/debrain()
-					O.owner = owner
-					O.target = M
-					O.explanation_text = "Steal the brain of [M.current.real_name]."
-					objectives += O
-				else										//capture
-					var/datum/objective/capture/O = new /datum/objective/capture()
-					O.owner = owner
-					O.gen_amount_goal()
-					objectives += O
-			else
-				break
+	var/datum/objective/new_objective
+	var/chaos_level = 0
+	var/datum/game_mode/dynamic/mode
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		mode = SSticker.mode
+		// round() is a floor actually, isn't that fun
+		// basically: below 30 players reduces max, below 50 threat level reduces max, otherwise does max rolls
+		for(var/i in 1 to max(2,min(5,round(mode.threat_level/10),round(GLOB.joined_player_list.len/6))))
+			if(prob(mode.threat_level))
+				chaos_level++
+	else
+		for(var/i in 1 to max(2,min(5,round(GLOB.joined_player_list.len/6))))
+			if(prob(50))
+				chaos_level++
+	if(helping_station)
+		switch(chaos_level)
+			if(0)
+				new_objective = new("Nanotrasen has hired you to assist the station. Stick to the shadows and look out for trouble.")
+			if(1)
+				new_objective = new("Nanotrasen has hired you to assist the station. You are to defend R&D; you answer to the research director, head of security and captain only.")
+			if(2)
+				new_objective = new("Nanotrasen has hired you to assist the station. You are security and serve the head of security.")
+			if(3)
+				new_objective = new("Nanotrasen has hired you to assist the station. You serve directly under the captain.")
+			if(4)
+				new_objective = new("Nanotrasen has hired you to assist the station. You answer only to centcom.")
+			if(5)
+				new_objective = new("Nanotrasen has hired you to assist the station. You answer only to yourself; take action unilaterally.")
+	else
+		switch(chaos_level)
+			if(0)
+				new_objective = new("Cybersun Industries has selected you to find and steal an important heirloom or valuable technology belonging to Nanotrasen. Ensure your actions are covert and avoid leaving a body count if possible.")
+			if(1)
+				new_objective = new("You have been chosen by the Tiger Cooperative to perform acts of sabotage throughout the station you have been planted on. Terrorize the station, but leave enough intact to embarass Nanotrasen, not anger them.")
+			if(2)
+				new_objective = new("The Waffle Corporation has given you the task to create the biggest prank the station's security force has seen! Harass security, and don't stop while you can still honk!")
+			if(3)
+				new_objective = new("The Donk Corporation has hired you with the task to maim the crew in whatever way you can. Strain the resources of medical staff, and create a hostile working enviroment for human resources.")
+			if(4)
+				new_objective = new("You are under contract by the Animal Rights Consortium to disrupt the station's crew structure. Assassinate all the crew of a choice department, or if you're feeling brave, all the heads of staff.")
+			if(5)
+				new_objective = new("The Gorlex Marauders have deployed you personally, with only one order: destroy the station, and leave none alive. [pick(list("Ensure none can escape total destruction by hijacking the escape shuttle, if it ever comes.","Die a glorious death, and take everyone else with you."))]")
+	new_objective.completed = TRUE
+	new_objective.owner = owner
+	objectives += new_objective
 	var/datum/objective/O = new /datum/objective/survive()
 	O.owner = owner
 	objectives += O
