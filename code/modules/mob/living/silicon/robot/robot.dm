@@ -1265,11 +1265,11 @@
 			aicamera.stored[i] = TRUE
 
 /mob/living/silicon/robot/lay_down()
-	..()
-	update_canmove()
+	. = ..()
+	update_mobility()
 
-/mob/living/silicon/robot/update_canmove()
-	..()
+/mob/living/silicon/robot/update_mobility()
+	. = ..()
 	if(client && stat != DEAD && dogborg == FALSE)
 		if(resting)
 			cut_overlays()

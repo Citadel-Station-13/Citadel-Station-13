@@ -261,10 +261,10 @@
 
 /// Makes sure all 4 of the non-knockout immobilizing status effects are lower or equal to amount.
 /mob/living/proc/HealAllImmobilityupto(amount, updating, ignore_canstun = FALSE)
-	if(_MOBILTIYFLAGTEMPORARY_AmountStun() > amount)
-		_MOBILTIYFLAGTEMPORARY_SetStun(amount, FALSE, ignore_canstun)
-	if(_MOBILTIYFLAGTEMPORARY_AmountKnockdown() > amount)
-		_MOBILTIYFLAGTEMPORARY_SetKnockdown(amount, FALSE, ignore_canstun)
+	if(_MOBILITYFLAGTEMPORARY_AmountStun() > amount)
+		_MOBILITYFLAGTEMPORARY_SetStun(amount, FALSE, ignore_canstun)
+	if(_MOBILITYFLAGTEMPORARY_AmountKnockdown() > amount)
+		_MOBILITYFLAGTEMPORARY_SetKnockdown(amount, FALSE, ignore_canstun)
 	if(AmountParalyzed() > amount)
 		SetParalyzed(amount, FALSE, ignore_canstun)
 	if(AmountImmobilized() > amount)
@@ -286,7 +286,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))  || ignore_canstun)
-		var/datum/status_effect/incapacitating/unconscious/U = _MOBILTIYFLAGTEMPORARY_IsUnconscious()
+		var/datum/status_effect/incapacitating/unconscious/U = _MOBILITYFLAGTEMPORARY_IsUnconscious()
 		if(U)
 			U.duration = max(world.time + amount, U.duration)
 		else if(amount > 0)
@@ -344,7 +344,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = _MOBILTIYFLAGTEMPORARY_IsSleeping()
+		var/datum/status_effect/incapacitating/sleeping/S = _MOBILITYFLAGTEMPORARY_IsSleeping()
 		if(amount <= 0)
 			if(S)
 				qdel(S)

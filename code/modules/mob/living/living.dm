@@ -362,11 +362,10 @@
 	if(stat)
 		return TRUE
 	if(!CHECK_BITFIELD(mobility_flags, MOBILITY_FLAGS_ANY_INTERACTION))
+		return TRUE
 	if(!ignore_restraints && restrained(ignore_grab))
 		return TRUE
 	return FALSE
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
-		return TRUE
 
 /mob/living/canUseStorage()
 	if (get_num_arms() <= 0)
@@ -1077,7 +1076,7 @@
 	if(.)
 		if(client)
 			reset_perspective()
-		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+		update_mobility() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
 	if(isnull(new_z) && audiovisual_redirect)

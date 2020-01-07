@@ -315,13 +315,13 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()

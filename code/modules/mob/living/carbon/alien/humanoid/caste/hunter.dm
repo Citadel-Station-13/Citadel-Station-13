@@ -31,7 +31,7 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(!canmove || leaping)
+	if(!CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || leaping)
 		return
 
 	if(pounce_cooldown > world.time)

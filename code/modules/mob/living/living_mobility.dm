@@ -25,13 +25,13 @@
 	set category = "IC"
 	if(client?.prefs?.autostand)
 		intentionalresting = !intentionalresting
-		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_MOBILTIYFLAGTEMPORARY_resting ? "lay down and ": ""]stay down" : "[_MOBILTIYFLAGTEMPORARY_resting ? "get up and ": ""]stay up"].</span>")
+		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_MOBILITYFLAGTEMPORARY_resting ? "lay down and ": ""]stay down" : "[_MOBILITYFLAGTEMPORARY_resting ? "get up and ": ""]stay up"].</span>")
 		if(intentionalresting && !resting)
 			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
 	else
-		if(!_MOBILTIYFLAGTEMPORARY_resting)
+		if(!_MOBILITYFLAGTEMPORARY_resting)
 			set_resting(TRUE, FALSE)
 			to_chat(src, "<span class='notice'>You are now laying down.</span>")
 		else

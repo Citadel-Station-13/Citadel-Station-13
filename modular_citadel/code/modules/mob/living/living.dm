@@ -19,7 +19,7 @@
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
-	if(resting)
+	if(!CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
 		. += 6
 
 /atom

@@ -816,7 +816,7 @@
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
-		update_canmove()
+		update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()

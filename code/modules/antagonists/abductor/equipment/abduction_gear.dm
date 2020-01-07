@@ -111,14 +111,13 @@
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
+		M.SetAllImmobility(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
-	if(combat_cooldown==initial(combat_cooldown))
+	if(combat_cooldown == initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/Destroy()

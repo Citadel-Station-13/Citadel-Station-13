@@ -75,7 +75,7 @@
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
-	if(!mob.canmove)
+	if(!CHECK_BITFIELD(mob, MOBILITY_MOVE))
 		return FALSE
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
