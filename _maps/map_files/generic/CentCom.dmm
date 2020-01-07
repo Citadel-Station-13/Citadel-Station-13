@@ -16736,6 +16736,10 @@
 	smooth = 1
 	},
 /area/centcom/holding)
+"Nf" = (
+/obj/machinery/autoylathe,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "Ni" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -18166,6 +18170,13 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"VL" = (
+/obj/machinery/button/crematorium{
+	id = crematoriumGhostDojo;
+	pixel_x = -25
+	},
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "VO" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/supplypod)
@@ -18248,7 +18259,8 @@
 /area/centcom/holding)
 "Ww" = (
 /obj/structure/bodycontainer/crematorium{
-	dir = 4
+	dir = 4;
+	id = crematoriumGhostDojo
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
@@ -43145,7 +43157,7 @@ CT
 oV
 CT
 Nd
-Sd
+VL
 Ww
 Sd
 Nd
@@ -45169,7 +45181,7 @@ aa
 aa
 aa
 Nd
-Sd
+Nf
 Sd
 Rh
 Mm
