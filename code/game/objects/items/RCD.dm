@@ -47,7 +47,11 @@ RLD
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
+	. += "\It currently holds [matter]/[max_matter] matter-units."
+	if(upgrade & RCD_UPGRADE_FRAMES)
+		. += "\It contains the design for machine frames, computer frames and deconstruction."
+	if(upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		. += "\It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
