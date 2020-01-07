@@ -259,7 +259,7 @@
 	if(updating)
 		update_mobility()
 
-//makes sure nothing is longer
+/// Makes sure all 4 of the non-knockout immobilizing status effects are lower or equal to amount.
 /mob/living/proc/HealAllImmobilityupto(amount, updating, ignore_canstun = FALSE)
 	if(AmountStun() > amount)
 		SetStun(amount, FALSE, ignore_canstun)
