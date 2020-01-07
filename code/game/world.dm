@@ -147,7 +147,7 @@ GLOBAL_VAR(restart_counter)
 
 	if(!SSfail2topic)
 		return "Server not initialized."
-	else if(!SSfail2topic.IsRateLimited(addr))
+	else if(SSfail2topic.IsRateLimited(addr))
 		return "Rate limited."
 
 	if(length(T) > CONFIG_GET(number/topic_max_size))
