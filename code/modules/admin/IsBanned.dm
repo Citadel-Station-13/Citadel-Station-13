@@ -53,6 +53,9 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 		var/returneddesc = CHECK_FLOOD || SET_FLOOD
 		if(returneddesc)
 			return list("reason" = "IsBanned flood detection", "desc" = "IsBanned flood detection | [returneddesc]")
+	if(type == "world")
+		CLEAR_FLOOD
+		return ..()
 	. = _IsBanned(key, address, computer_id, type, real_bans_only, bypass_floodcheck)			//Even if this runtimes, we are 100% sure to clear the flood prevention system.
 	if(!bypass_floodcheck)
 		CLEAR_FLOOD
@@ -67,9 +70,6 @@ GLOBAL_LIST_EMPTY(isbanned_ip_floodcheck)		//string = number of stored connectio
 	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
-
-	if (type == "world")
-		return ..() //shunt world topic banchecks to purely to byond's internal ban system
 
 	var/ckey = ckey(key)
 	var/client/C = GLOB.directory[ckey]
