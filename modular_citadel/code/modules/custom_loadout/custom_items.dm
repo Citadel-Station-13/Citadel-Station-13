@@ -556,3 +556,20 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/mask/gas/combine
+	name = "combine helmet"
+	desc = "Standard issue helmet for Nova Prospekt prison guards. Features a built in radio module with particle filteration."
+	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
+	icon_state = "combine_helm"
+	item_state = "combine_helm"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/combine
+	name = "nova prospekt"
+	desc = "Standard issue armored uniform for Nova Prospekt prison guards."
+	icon_state = "combine_suit"
+	item_state = "combine_suit"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
