@@ -294,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 		penalty = CANT_REENTER_ROUND
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, penalize, (stat == DEAD)? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, (stat == DEAD)? penalty : 0, (stat == DEAD)? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
 
 	if(stat != DEAD)
