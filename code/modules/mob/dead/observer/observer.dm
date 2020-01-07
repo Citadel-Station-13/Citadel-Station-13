@@ -287,15 +287,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
-		return
-
 	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 	if(world.time < roundstart_quit_limit)
 		penalty += roundstart_quit_limit - world.time
 	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 		penalty = CANT_REENTER_ROUND
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, penalize, (stat == DEAD)? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
+		return
 
 	if(stat != DEAD)
 		succumb()
@@ -309,7 +309,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/obj/machinery/cryopod/C = loc
 			C.despawn_occupant()
 		else
-			ghostize(0, penalize = TRUE) //0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+			ghostize(0, penalize = TRUE, voluntary = TRUE) //0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 			suicide_log(TRUE)
 
 /mob/camera/verb/ghost()
