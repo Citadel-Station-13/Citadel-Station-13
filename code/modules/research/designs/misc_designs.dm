@@ -394,7 +394,7 @@
 	desc = "Adds the simple circuits to the RCD."
 	id = "rcd_upgrade_simple_circuits"
 	build_type = PROTOLATHE
-	materials = list(AT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
 	build_path = /obj/item/rcd_upgrade/simple_circuits
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
