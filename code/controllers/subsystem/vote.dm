@@ -27,6 +27,8 @@ SUBSYSTEM_DEF(vote)
 
 	var/list/stored_gamemode_votes = list() //Basically the last voted gamemode is stored here for end-of-round use.
 
+	var/list/stored_modetier_results = list() // The aggregated tier list of the modes available in secret.
+
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		if(end_time < world.time)
@@ -34,7 +36,8 @@ SUBSYSTEM_DEF(vote)
 			SSpersistence.SaveSavedVotes()
 			for(var/client/C in voting)
 				C << browse(null, "window=vote;can_close=0")
-			reset()
+			if(end_time < world.time) // result() can change this
+				reset()
 		else if(next_pop < world.time)
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
@@ -209,7 +212,6 @@ SUBSYSTEM_DEF(vote)
 		calculate_condorcet_votes(vote_title_text)
 	if(vote_system == SCORE_VOTING)
 		calculate_majority_judgement_vote(vote_title_text)
-		calculate_scores(vote_title_text)
 	var/list/winners = get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -251,6 +253,8 @@ SUBSYSTEM_DEF(vote)
 		var/admintext = "Obfuscated results"
 		if(vote_system == RANKED_CHOICE_VOTING)
 			admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
+		else if(vote_system == SCORE_VOTING)
+			admintext += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			admintext += "\n<b>[choices[i]]:</b> [votes]"
@@ -265,14 +269,16 @@ SUBSYSTEM_DEF(vote)
 			if("roundtype") //CIT CHANGE - adds the roundstart extended/secret vote
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				if(choices["secret"] > choices["extended"])
-					. = "secret"
-				else
-					. = "extended"
 				GLOB.master_mode = .
 				SSticker.save_mode(.)
 				message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
 				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
+				if(CONFIG_GET(flag/modetier_voting))
+					reset()
+					started_time = 0
+					initiate_vote("mode tiers","server",hideresults=FALSE,votesystem=RANKED_CHOICE_VOTING,forced=TRUE, vote_time = 30 MINUTES)
+					to_chat(world,"<b>The vote will end right as the round starts.</b>")
+					return .
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
@@ -283,6 +289,8 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("mode tiers")
+				stored_modetier_results = choices.Copy()
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
@@ -403,6 +411,7 @@ SUBSYSTEM_DEF(vote)
 					choices |= M
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
+			if("mode tiers")
 				var/list/modes_to_add = config.votable_modes
 				var/list/probabilities = CONFIG_GET(keyed_list/probability)
 				for(var/tag in modes_to_add)
