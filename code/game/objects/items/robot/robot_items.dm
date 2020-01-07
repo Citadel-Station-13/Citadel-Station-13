@@ -846,10 +846,18 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_clamp"
 	tool_behaviour = TOOL_RETRACTOR
+	item_flags = NOBLUDGEON
+	flags_1 = NONE
 	var/cargo_capacity = 8
 	var/cargo = list()
 
-/obj/item/cyborg_clamp/afterattack(atom/target, mob/user, proximity)
+/obj/item/cyborg_clamp/attack(mob/M, mob/user, def_zone)
+	return
+
+/obj/item/cyborg_clamp/afterattack(atom/movable/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return FALSE
 	if(isobj(target))
 		var/obj/O = target
 		if(!O.anchored)
@@ -857,15 +865,24 @@
 				user.visible_message("[user] lifts [target] and starts to load it into its cargo compartment.")
 				O.anchored = TRUE
 				if(do_mob(user, O, 20))
-					for(var/mob/chump in target.contents)
+					for(var/mob/chump in target.GetAllContents())
 						to_chat(user, "<span class='warning'>Error: Living entity detected in [target]. Cannot load.</span>")
 						O.anchored = initial(O.anchored)
 						return
-					cargo += O
-					O.forceMove(src)
-					O.anchored = FALSE
-					to_chat(user, "<span class='notice'>[target] successfully loaded.</span>")
-					playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
+					for(var/obj/item/disk/nuclear/diskie in target.GetAllContents())
+						to_chat(user, "<span class='warning'>Error: Nuclear class authorization device detected in [target]. Cannot load.</span>")
+						O.anchored = initial(O.anchored)
+						return
+					if(contents.len < cargo_capacity) //check both before and after
+						cargo += O
+						O.forceMove(src)
+						O.anchored = FALSE
+						to_chat(user, "<span class='notice'>[target] successfully loaded.</span>")
+						playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
+					else
+						to_chat(user, "<span class='warning'>Not enough room in cargo compartment! Maximum of [cargo_capacity] objects!</span>")
+						O.anchored = initial(O.anchored)
+						return
 				else
 					O.anchored = initial(O.anchored)
 			else

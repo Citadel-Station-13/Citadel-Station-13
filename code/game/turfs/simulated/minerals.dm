@@ -48,6 +48,7 @@
 
 
 /turf/closed/mineral/attackby(obj/item/pickaxe/I, mob/user, params)
+	var/stored_dir = user.dir
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -67,7 +68,7 @@
 			if(ismineralturf(src))
 				if(I.digrange > 0)
 					for(var/turf/closed/mineral/M in range(user,range))
-						if(get_dir(user,M)&user.dir)
+						if(get_dir(user,M)&stored_dir)
 							M.gets_drilled()
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
