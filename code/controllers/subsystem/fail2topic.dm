@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(fail2topic)
 
 		if (isnull(failures))
 			fail_counts[ip] = 1
-			return FALSE
+			return TRUE
 		else if (failures > max_fails)
 			BanFromFirewall(ip)
 			return TRUE
