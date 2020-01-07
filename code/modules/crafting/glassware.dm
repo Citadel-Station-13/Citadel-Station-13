@@ -289,7 +289,7 @@
 	name = "Metled glass"
 	desc = "A blob of metled glass on the end of a blowing rod. Needs to be cut off with some tools."
 	icon_state = "blowing_rods_inuse"
-	next_step = /obj/item/reagent_containers/glass/beaker/flask_large
+	next_step = /obj/item/reagent_containers/glass/beaker/flask_small/flask_large
 
 /obj/item/glasswork/glass_base/flask_large_part2/attackby(obj/item/I, mob/user, params)
 	..()

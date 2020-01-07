@@ -107,6 +107,7 @@
 	cost = 300
 	unit_name = "small glass dish"
 	export_types = list(/obj/item/reagent_containers/glass/beaker/glass_dish)
+	include_subtypes = FALSE
 
 /datum/export/glasswork_lens
 	cost = 1800
@@ -117,13 +118,16 @@
 	cost = 1200
 	unit_name = "flask with spout"
 	export_types = list(/obj/item/reagent_containers/glass/beaker/flaskspouty)
+	include_subtypes = FALSE
 
 /datum/export/glasswork_smallflask
 	cost = 600
 	unit_name = "small flask"
 	export_types = list(/obj/item/reagent_containers/glass/beaker/flask_small)
+	include_subtypes = FALSE
 
 /datum/export/glasswork_largeflask
 	cost = 1000
 	unit_name = "large flask"
-	export_types = list(/obj/item/reagent_containers/glass/beaker/flask_large)
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask_small/flask_large)
+	include_subtypes = FALSE

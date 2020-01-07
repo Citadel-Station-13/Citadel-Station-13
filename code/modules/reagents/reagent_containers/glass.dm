@@ -156,7 +156,7 @@
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 50 units of sweet delight. Unable to withstand reagents of an extreme pH."
+	desc = "A jar for honey. It can hold up to 60 units of sweet delight. Unable to withstand reagents of an extreme pH."
 	icon_state = "honey"
 
 /obj/item/reagent_containers/glass/beaker/glass_dish
@@ -168,18 +168,16 @@
 	volume = 3
 
 /obj/item/reagent_containers/glass/beaker/glass_dish/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
 	. = ..()
 
-/obj/item/reagent_containers/glass/beaker/flask_large
+/obj/item/reagent_containers/glass/beaker/flask_small/flask_large
 	name = "large flask"
 	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
 	materials = list(MAT_GLASS=2500)
 	icon_state = "flasklarge"
 	volume = 80
 
-/obj/item/reagent_containers/glass/beaker/flask_large/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
+/obj/item/reagent_containers/glass/beaker/flask_small/flask_large/Initialize()
 	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/flask_small
@@ -190,7 +188,6 @@
 	volume = 40
 
 /obj/item/reagent_containers/glass/beaker/flask_small/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
 	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/flaskspouty
@@ -202,7 +199,6 @@
 	volume = 120
 
 /obj/item/reagent_containers/glass/beaker/flaskspouty/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
 	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/large
