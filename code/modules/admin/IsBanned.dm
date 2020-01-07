@@ -25,8 +25,16 @@
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
 		key_cache[key] = 0
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
-	var/admin = 0
+
+	if (type == "world")
+		return ..() //shunt world topic banchecks to purely to byond's internal ban system
+
 	var/ckey = ckey(key)
+	var/client/C = GLOB.directory[ckey]
+	if (C && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		return //don't recheck connected clients.
+
+	var/admin = FALSE
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = 1
 
@@ -143,7 +151,6 @@
 			bannedckey = ban["ckey"]
 
 		var/newmatch = FALSE
-		var/client/C = GLOB.directory[ckey]
 		var/cachedban = SSstickyban.cache[bannedckey]
 
 		//rogue ban in the process of being reverted.
