@@ -3,10 +3,10 @@
 	if(!stat)
 		if(!resting)
 			newflags |= MOBILITY_STAND
-			if(!lockcharge)
+			if(!locked_down)
 				newflags |= MOBILITY_MOVE
 				newflags |= MOBILITY_PULL
-		if(!lockcharge)
+		if(!locked_down)
 			newflags |= (MOBILITY_UI | MOBILITY_STORAGE)
 	mobility_flags = newflags
 	update_transform()

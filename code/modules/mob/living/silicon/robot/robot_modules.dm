@@ -250,7 +250,7 @@
 
 /obj/item/robot_module/proc/do_transform_delay()
 	var/mob/living/silicon/robot/R = loc
-	var/prev_lockcharge = R.lockcharge
+	var/prev_locked_down = R.locked_down
 	sleep(1)
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
@@ -260,7 +260,7 @@
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(7)
-	if(!prev_lockcharge)
+	if(!prev_locked_down)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
 	R.anchored = FALSE

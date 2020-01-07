@@ -317,7 +317,7 @@
 			O.robot_suit = src
 
 			if(!locomotion)
-				O.lockcharge = 1
+				O.locked_down = 1
 				O.update_canmove()
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
@@ -356,7 +356,7 @@
 			forceMove(O)
 			O.robot_suit = src
 			if(!locomotion)
-				O.lockcharge = TRUE
+				O.locked_down = TRUE
 				O.update_canmove()
 
 	else if(istype(W, /obj/item/pen))

@@ -557,7 +557,7 @@
 			return FALSE
 
 		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
+		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -567,7 +567,7 @@
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 			sleep(12)
-		if(!prev_lockcharge)
+		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
 		R.notransform = FALSE

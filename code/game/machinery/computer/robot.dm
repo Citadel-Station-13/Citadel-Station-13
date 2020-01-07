@@ -120,10 +120,10 @@
 				if(choice == "Confirm" && can_control(usr, R) && !..())
 					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] [R.canmove ? "locked down" : "released"] [key_name(R, R.client)][ADMIN_LOOKUPFLW(R)]!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
-					R.SetLockdown(!R.lockcharge)
-					to_chat(R, "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>")
+					R.SetLockdown(!R.locked_down)
+					to_chat(R, "[!R.locked_down ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>")
 					if(R.connected_ai)
-						to_chat(R.connected_ai, "[!R.lockcharge ? "<span class='notice'>NOTICE - Cyborg lockdown lifted" : "<span class='alert'>ALERT - Cyborg lockdown detected"]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a></span><br>")
+						to_chat(R.connected_ai, "[!R.locked_down ? "<span class='notice'>NOTICE - Cyborg lockdown lifted" : "<span class='alert'>ALERT - Cyborg lockdown detected"]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a></span><br>")
 
 		else
 			to_chat(usr, "<span class='danger'>Access Denied.</span>")

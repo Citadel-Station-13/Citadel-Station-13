@@ -64,7 +64,7 @@
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
-	var/lockcharge //Boolean of whether the borg is locked down or not
+	var/locked_down //Boolean of whether the borg is locked down or not
 
 	var/toner = 0
 	var/tonermax = 40
@@ -489,7 +489,7 @@
 		update_icons()
 
 	else if(istype(W, /obj/item/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
-		if(!lockcharge)
+		if(!locked_down)
 			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
 			spark_system.start()
 			return
@@ -754,7 +754,7 @@
 		throw_alert("locked", /obj/screen/alert/locked)
 	else
 		clear_alert("locked")
-	lockcharge = state
+	locked_down = state
 	update_canmove()
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
@@ -944,7 +944,7 @@
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
-	if(stat || lockcharge || low_power_mode)
+	if(stat || locked_down || low_power_mode)
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
