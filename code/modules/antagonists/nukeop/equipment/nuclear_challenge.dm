@@ -76,10 +76,9 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(!(mode.storyteller.flags & WAROPS_ALWAYS_ALLOWED))
-			var/threat_spent = CONFIG_GET(number/dynamic_warops_cost)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("Nuke ops spent [threat_spent] on war ops.")
+		var/threat_spent = CONFIG_GET(number/dynamic_warops_cost)
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Nuke ops spent [threat_spent] on war ops.")
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
 	qdel(src)
@@ -102,13 +101,12 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 			return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(!(mode.storyteller.flags & WAROPS_ALWAYS_ALLOWED))
-			if(mode.threat_level < CONFIG_GET(number/dynamic_warops_requirement))
-				to_chat(user, "Due to the dynamic space in which the station resides, you are too deep into Nanotrasen territory to reasonably go loud.")
-				return FALSE
-			else if(mode.threat < CONFIG_GET(number/dynamic_warops_cost))
-				to_chat(user, "Due to recent threats on the station, Nanotrasen is looking too closely for a war declaration to be wise.")
-				return FALSE
+		if(mode.threat_level < CONFIG_GET(number/dynamic_warops_requirement))
+			to_chat(user, "Due to the dynamic space in which the station resides, you are too deep into Nanotrasen territory to reasonably go loud.")
+			return FALSE
+		else if(mode.threat < CONFIG_GET(number/dynamic_warops_cost))
+			to_chat(user, "Due to recent threats on the station, Nanotrasen is looking too closely for a war declaration to be wise.")
+			return FALSE
 	return TRUE
 
 /obj/item/nuclear_challenge/clownops

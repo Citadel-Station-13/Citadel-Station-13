@@ -3528,6 +3528,7 @@
 	pixel_x = -22
 	},
 /obj/structure/rack,
+/obj/item/storage/fancy/donut_box,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/neutral{
@@ -4003,7 +4004,8 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/storage/fancy/donut_box,
+/obj/item/gun/energy/pumpaction/blaster,
+/obj/item/gun/energy/pumpaction/blaster,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "ahJ" = (
@@ -27114,10 +27116,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
-	},
-/obj/structure/sign/departments/custodian{
-	pixel_x = 32;
-	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -83446,10 +83444,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"iCn" = (
-/obj/machinery/vr_sleeper,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "iLj" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -83468,16 +83462,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"jhu" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "permahydro";
-	name = "Recreation Module"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "jwW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
@@ -83535,6 +83519,16 @@
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
+"kwg" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "permahydro";
+	name = "Recreation Module"
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "kwI" = (
 /obj/item/wrench,
 /obj/item/clothing/suit/apron,
@@ -83595,6 +83589,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"kRT" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "kVo" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -83614,6 +83612,13 @@
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"lmg" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcade";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "lsv" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
@@ -83662,10 +83667,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"lWL" = (
-/obj/machinery/smartfridge/organ/preloaded,
-/turf/closed/wall,
-/area/medical/surgery)
 "lWY" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
@@ -83787,6 +83788,13 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/engine/cult,
 /area/library)
+"oba" = (
+/obj/structure/chair/stool,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "obb" = (
 /obj/structure/target_stake,
 /obj/effect/turf_decal/stripes/line{
@@ -84055,20 +84063,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
-"ram" = (
-/obj/machinery/computer/arcade{
-	icon_state = "arcade";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
-"roa" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "rzX" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -84082,17 +84076,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"rLV" = (
-/obj/structure/table,
-/obj/item/folder,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/item/pen,
-/obj/item/storage/crayons,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "rMS" = (
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
@@ -84288,6 +84271,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"uHA" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "uJU" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84372,6 +84364,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"vPN" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "wdu" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -84444,6 +84440,17 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"xcb" = (
+/obj/structure/table,
+/obj/item/folder,
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/pen,
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "xeC" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -84500,15 +84507,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"xIi" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -104239,7 +104237,7 @@ cia
 cia
 cpX
 cia
-lWL
+vPN
 cia
 ceu
 dyg
@@ -106712,11 +106710,11 @@ aaa
 aaf
 aaf
 aay
-rLV
-xIi
+xcb
+uHA
 abC
-jhu
-xIi
+kwg
+uHA
 abC
 abC
 acr
@@ -106970,10 +106968,10 @@ aaf
 aaa
 aax
 abl
-roa
-ram
+oba
+lmg
 aax
-iCn
+kRT
 aaR
 aaR
 aaI

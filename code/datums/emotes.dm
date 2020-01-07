@@ -136,10 +136,9 @@
 /datum/emote/sound
 	var/sound //Sound to play when emote is called
 	var/vary = FALSE	//used for the honk borg emote
-	var/volume = 50
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 
 /datum/emote/sound/run_emote(mob/user, params)
 	. = ..()
 	if(.)
-		playsound(user.loc, sound, volume, vary)
+		playsound(user.loc, sound, 50, vary)

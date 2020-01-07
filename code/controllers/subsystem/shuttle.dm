@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
-	var/passive_supply_points_per_minute = 500
+	var/passive_supply_points_per_minute = 750
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()

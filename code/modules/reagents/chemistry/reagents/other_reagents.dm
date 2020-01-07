@@ -1870,82 +1870,133 @@
 	reagent_state = LIQUID
 	color = "#b51d05"
 	taste_description = "carpet" // Your tounge feels furry.
-	var/carpet_type = /turf/open/floor/carpet
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
+		F.PlaceOnTop(/turf/open/floor/carpet)
 	..()
 
 /datum/reagent/carpet/black
 	name = "Liquid Black Carpet"
 	id = "blackcarpet"
 	color = "#363636"
-	carpet_type = /turf/open/floor/carpet/black
+
+/datum/reagent/carpet/black/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/black)
+	..()
 
 /datum/reagent/carpet/blackred
 	name = "Liquid Red Black Carpet"
 	id = "blackredcarpet"
 	color = "#342125"
-	carpet_type = /turf/open/floor/carpet/blackred
+
+/datum/reagent/carpet/blackred/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/blackred)
+	..()
 
 /datum/reagent/carpet/monochrome
 	name = "Liquid Monochrome Carpet"
 	id = "monochromecarpet"
 	color = "#b4b4b4"
-	carpet_type = /turf/open/floor/carpet/monochrome
+
+/datum/reagent/carpet/monochrome/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/monochrome)
+	..()
 
 /datum/reagent/carpet/blue
 	name = "Liquid Blue Carpet"
 	id = "bluecarpet"
 	color = "#1256ff"
-	carpet_type = /turf/open/floor/carpet/blue
+
+/datum/reagent/carpet/blue/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/blue)
+	..()
 
 /datum/reagent/carpet/cyan
 	name = "Liquid Cyan Carpet"
 	id = "cyancarpet"
 	color = "#3acfb9"
-	carpet_type = /turf/open/floor/carpet/cyan
+
+/datum/reagent/carpet/cyan/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/cyan)
+	..()
 
 /datum/reagent/carpet/green
 	name = "Liquid Green Carpet"
 	id = "greencarpet"
 	color = "#619b62"
-	carpet_type = /turf/open/floor/carpet/green
+
+/datum/reagent/carpet/green/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/green)
+	..()
 
 /datum/reagent/carpet/orange
 	name = "Liquid Orange Carpet"
 	id = "orangecarpet"
 	color = "#cc7900"
-	carpet_type = /turf/open/floor/carpet/orange
+
+/datum/reagent/carpet/orange/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/orange)
+	..()
 
 /datum/reagent/carpet/purple
 	name = "Liquid Purple Carpet"
 	id = "purplecarpet"
 	color = "#6d3392"
-	carpet_type = /turf/open/floor/carpet/purple
 
+/datum/reagent/carpet/purple/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/purple)
+	..()
 
 /datum/reagent/carpet/red
 	name = "Liquid Red Carpet"
 	id = "redcarpet"
 	color = "#871515"
-	carpet_type = /turf/open/floor/carpet/red
 
+/datum/reagent/carpet/red/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/red)
+	..()
 
 /datum/reagent/carpet/royalblack
 	name = "Liquid Royal Black Carpet"
 	id = "royalblackcarpet"
 	color = "#483d05"
-	carpet_type = /turf/open/floor/carpet/royalblack
 
+/datum/reagent/carpet/royalblack/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/royalblack)
+	..()
 
 /datum/reagent/carpet/royalblue
 	name = "Liquid Royal Blue Carpet"
 	id = "royalbluecarpet"
 	color = "#24227e"
-	carpet_type = /turf/open/floor/carpet/royalblue
+
+/datum/reagent/carpet/royalblue/reaction_turf(turf/T, reac_volume)
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.PlaceOnTop(/turf/open/floor/carpet/royalblue)
+	..()
 
 
 // Virology virus food chems.

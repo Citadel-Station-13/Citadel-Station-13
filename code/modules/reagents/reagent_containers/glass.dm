@@ -115,7 +115,7 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60)
 	beaker_weakness_bitflag = PH_WEAK
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
@@ -169,7 +169,7 @@
 	materials = list(MAT_GLASS=2500)
 	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,60,120)
 	container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/plastic
@@ -179,7 +179,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
 	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/plastic/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -198,7 +198,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
 	volume = 240
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,60,120,200,240)
 
 /obj/item/reagent_containers/glass/beaker/meta/Initialize() // why the fuck can't you just set the beaker weakness bitflags to nothing? fuck you
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -341,7 +341,6 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
@@ -358,7 +357,6 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty

@@ -14,7 +14,7 @@
 	circuit = /obj/item/circuitboard/machine/sleeper
 	req_access = list(ACCESS_CMO) //Used for reagent deletion and addition of non medicines
 	var/efficiency = 1
-	var/min_health = 30
+	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(

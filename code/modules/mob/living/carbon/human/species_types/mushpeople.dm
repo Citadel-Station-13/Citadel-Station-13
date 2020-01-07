@@ -37,16 +37,11 @@
 			H.dna.features["caps"] = "Round"
 			handle_mutant_bodyparts(H)
 		H.faction |= "mushroom"
-		mush = new()
-		mush.teach(H, TRUE)
-	RegisterSignal(C, COMSIG_MOB_ON_NEW_MIND, .proc/on_new_mind)
-
-/datum/species/mush/proc/on_new_mind(mob/owner)
-	mush.teach(owner, TRUE) //make_temporary TRUE as it shouldn't carry over to other mobs on mind transfer_to.
+		mush = new(null)
+		mush.teach(H)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_ON_NEW_MIND)
 	C.faction -= "mushroom"
 	mush.remove(C)
 	QDEL_NULL(mush)

@@ -78,8 +78,8 @@
 	hand_path = /obj/item/melee/touch_attack/nuclearfist
 
 	school = "evocation"
-	charge_max = 100
+	charge_max = 200
 	clothes_req = 0
-	cooldown_min = 20
+	cooldown_min = 40
 
 	action_icon_state = "nuclearfist"

@@ -1303,11 +1303,3 @@
 /mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_health = 1)
 	if(istype(cell))
 		cell.charge -= amount*5
-
-/mob/living/silicon/robot/verb/viewmanifest()
-	set category = "Robot Commands"
-	set name = "View Crew Manifest"
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	ai_roster()

@@ -40,7 +40,7 @@
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
-	rotate_on_lying = TRUE
+	var/rotate_on_lying = 1
 
 	var/tinttotal = 0	// Total level of visualy impairing items
 

@@ -19,6 +19,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
+	var/clientless_round_timeout = 0 //mobs will lack a client as long as their player is disconnected. See client_defines.dm "reenter_round_timeout"
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -134,7 +135,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		AA.onNewMob(src)
 
 	. = ..()
-	AddElement(/datum/element/ghost_role_eligibility)
+
 	grant_all_languages()
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
@@ -269,12 +270,23 @@ Works together with spawning an observer, noted above.
 	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
+	if(penalize) //penalizing them from making a ghost role / midround antag comeback right away.
+		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+			penalty += roundstart_quit_limit - world.time
+		if(penalty)
+			penalty += world.realtime
+			if(penalty - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+				penalty = CANT_REENTER_ROUND
+			if(client)
+				client.reenter_round_timeout = penalty
+			else //A disconnected player (quite likely for cryopods)
+				ghost.clientless_round_timeout = penalty
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
-	ghost.AddElement(/datum/element/ghost_role_eligibility,penalize) // technically already run earlier, but this adds the penalty
-	// needs to be done AFTER the ckey transfer, too
 	return ghost
 
 /*
@@ -331,7 +343,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	ghostize(0, penalize = TRUE)
 
-
+/mob/dead/observer/proc/can_reenter_round(silent = FALSE)
+	var/timeout = clientless_round_timeout
+	if(client)
+		timeout = client.reenter_round_timeout
+	if(timeout != CANT_REENTER_ROUND && timeout <= world.realtime)
+		return TRUE
+	if(!silent && client)
+		to_chat(src, "<span class='warning'>You are unable to reenter the round[timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(timeout - world.realtime)]" : ""].</span>")
+	return FALSE
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)

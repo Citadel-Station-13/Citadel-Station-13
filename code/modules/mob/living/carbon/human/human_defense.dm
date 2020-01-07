@@ -333,7 +333,7 @@
 	switch (severity)
 		if (1)
 			if(bomb_armor)
-				b_loss = (350*bomb_armor)+150
+				b_loss = 500*bomb_armor
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
 				damage_clothes(400*bomb_armor, BRUTE, "bomb")

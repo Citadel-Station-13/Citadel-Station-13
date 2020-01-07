@@ -8,10 +8,9 @@
 		return
 	take_holo_damage(50/severity)
 	Knockdown(400/severity)
-	silent = max((3 MINUTES)/severity, silent)
+	silent = max(30/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
-	emitter_next_use = world.time + emitter_emp_cd
 	//Need more effects that aren't instadeath or permanent law corruption.
 
 /mob/living/silicon/pai/ex_act(severity, target)

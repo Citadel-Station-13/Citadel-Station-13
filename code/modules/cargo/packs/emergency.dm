@@ -23,21 +23,6 @@
 	crate_name = "Biker Kit"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/emergency/bio
-	name = "Biological Emergency Crate"
-	desc = "This crate holds 2 full bio suits which will protect you from viruses, along with a bio bag and two spaceacillin syringes."
-	cost = 2000
-	contains = list(/obj/item/clothing/head/bio_hood,
-					/obj/item/clothing/head/bio_hood,
-					/obj/item/clothing/suit/bio_suit,
-					/obj/item/clothing/suit/bio_suit,
-					/obj/item/storage/bag/bio,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/clothing/gloves/color/latex/nitrile,
-					/obj/item/clothing/gloves/color/latex/nitrile)
-	crate_name = "bio suit crate"
-
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Bot/Internals Crate"
 	desc = "Explosions got you down? These supplies are guaranteed to patch up holes, in stations and people alike! Comes with two floorbots, two medbots, five oxygen masks and five small oxygen tanks."
@@ -127,8 +112,8 @@
 	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/soft_suit
-	name = "Emergency Space Suit"
-	desc = "Are there bombs going off left and right? Are there meteors shooting around the station? Well then! Here's two fragile space suits for emergencies. Comes with air and masks."
+	name = "Emergency Space Suit "
+	desc = "Are there bombs going off left and right? Are there meteors shooting around the station? Well then! Here's two fragile space suit for emergencies. Comes with air and masks."
 	cost = 1200
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
@@ -140,18 +125,6 @@
 					/obj/item/clothing/head/helmet/space/fragile)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
-
-/datum/supply_pack/emergency/bomb
-	name = "Explosive Emergency Crate"
-	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (Time not included.)"
-	cost = 1500
-	contains = list(/obj/item/clothing/head/bomb_hood,
-					/obj/item/clothing/suit/bomb_suit,
-					/obj/item/clothing/mask/gas,
-					/obj/item/screwdriver,
-					/obj/item/wirecutters,
-					/obj/item/multitool)
-	crate_name = "bomb suit crate"
 
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
@@ -334,3 +307,4 @@
 					/obj/item/reagent_containers/spray/plantbgone)
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
+
