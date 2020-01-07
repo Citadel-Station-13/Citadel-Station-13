@@ -18,11 +18,13 @@
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 
 	if (type == "world")
+		key_cache[key] = 0
 		return ..() //shunt world topic banchecks to purely to byond's internal ban system
 
 	var/ckey = ckey(key)
 	var/client/C = GLOB.directory[ckey]
 	if (C && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		key_cache[key] = 0
 		return //don't recheck connected clients.
 
 	var/admin = FALSE
