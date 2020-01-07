@@ -17,7 +17,6 @@
 		return FALSE
 
 	emitter_next_use = world.time + emittercd
-	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -37,6 +36,7 @@
 		C.push_data()
 	forceMove(get_turf(card))
 	card.forceMove(src)
+	update_mobility()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
@@ -63,11 +63,11 @@
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	canmove = FALSE
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
-	set_resting(FALSE, TRUE)
+	set_resting(FALSE, TRUE, FALSE)
+	update_mobility()
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
@@ -100,7 +100,7 @@
 /mob/living/silicon/pai/lay_down()
 	. = ..()
 	if(loc != card)
-		visible_message("<span class='notice'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
+		visible_message("<span class='notice'>[src] [_MOBILITYFLAGTEMPORARY_resting? "lays down for a moment..." : "perks up from the ground"]</span>")
 	update_icon()
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM, gs)

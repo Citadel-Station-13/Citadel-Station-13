@@ -672,11 +672,11 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(canmove)
+	else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 			return
-		if(resting) //cit change - allows resisting out of resting
+		if(_MOBILTIYFLAGTEMPORARY_resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
 			return
 		if(resist_embedded()) //Citadel Change for embedded removal memes

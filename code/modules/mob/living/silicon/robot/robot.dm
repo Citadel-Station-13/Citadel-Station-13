@@ -675,7 +675,7 @@
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
 		pixel_x = initial(pixel_x)
-	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(_MOBILITYFLAGTEMPORARY_IsUnconscious() ||_MOBILITYFLAGTEMPORARY_IsStun() || _MOBILITYFLAGTEMPORARY_IsKnockdown() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -699,7 +699,7 @@
 	update_fire()
 
 	if(client && stat != DEAD && module.dogborg == TRUE)
-		if(resting)
+		if(_MOBILITYFLAGTEMPORARY_resting)
 			if(sitting)
 				icon_state = "[module.cyborg_base_icon]-sit"
 			if(bellyup)
@@ -724,8 +724,6 @@
 		connected_ai.connected_robots -= src
 		src.connected_ai = null
 	lawupdate = 0
-	lockcharge = 0
-	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
@@ -734,6 +732,7 @@
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
 		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
+	update_mobility()
 
 /mob/living/silicon/robot/mode()
 	set name = "Activate Held Object"
@@ -1021,7 +1020,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(_MOBILITYFLAGTEMPORARY_IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || _MOBILITYFLAGTEMPORARY_IsParalyze() || getOxyLoss() > maxHealth*0.5)
+		if(_MOBILITYFLAGTEMPORARY_IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

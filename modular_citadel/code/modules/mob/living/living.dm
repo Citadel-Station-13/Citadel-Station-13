@@ -52,17 +52,17 @@
 	if(total_health)
 		if(!recoveringstam && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			resting = TRUE
+			set_resting(TRUE, FALSE, FALSE)
 			if(combatmode)
 				toggle_combat_mode(TRUE)
 			recoveringstam = TRUE
 			filters += CIT_FILTER_STAMINACRIT
-			update_canmove()
+			update_mobility()
 	if(recoveringstam && total_health <= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
 		recoveringstam = FALSE
 		filters -= CIT_FILTER_STAMINACRIT
-		update_canmove()
+		update_mobility()
 	update_health_hud()
 
 /mob/living/proc/update_hud_sprint_bar()

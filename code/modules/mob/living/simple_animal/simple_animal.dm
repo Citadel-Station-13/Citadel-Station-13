@@ -417,17 +417,17 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_canmove(value_otherwise = TRUE)
-	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
+/mob/living/simple_animal/update_mobility(value_otherwise = MOBILITY_FLAGS_DEFAULT)
+	if(_MOBILITYFLAGTEMPORARY_IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || IsParalyzed() || stat || resting)
 		drop_all_held_items()
-		canmove = FALSE
+		mobility_flags = NONE
 	else if(buckled)
-		canmove = FALSE
+		mobility_flags = ~MOBILITY_MOVE
 	else
-		canmove = value_otherwise
+		mobility_flags = MOBILITY_FLAGS_DEFAUTL
 	update_transform()
 	update_action_buttons_icon()
-	return canmove
+	return mobility_flags
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

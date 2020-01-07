@@ -20,37 +20,28 @@
 	if(disarm_items)
 		drop_all_held_items()
 
-
-
-
-
-
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
-
-	if(client && client.prefs && client.prefs.autostand)
+	if(client?.prefs?.autostand)
 		intentionalresting = !intentionalresting
-		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
+		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_MOBILTIYFLAGTEMPORARY_resting ? "lay down and ": ""]stay down" : "[_MOBILTIYFLAGTEMPORARY_resting ? "get up and ": ""]stay up"].</span>")
 		if(intentionalresting && !resting)
-			resting = TRUE
-			update_canmove()
+			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
 	else
-		if(!resting)
-			resting = TRUE
+		if(!_MOBILTIYFLAGTEMPORARY_resting)
+			set_resting(TRUE, FALSE)
 			to_chat(src, "<span class='notice'>You are now laying down.</span>")
-			update_canmove()
 		else
 			resist_a_rest()
 
 /mob/living/proc/resist_a_rest(automatic = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
-	if(!resting || stat || attemptingstandup)
+	if(!_MOBILITYFLAGTEMPORARY_resting || stat || attemptingstandup)
 		return FALSE
 	if(ignoretimer)
-		resting = FALSE
-		update_canmove()
+		set_resting(FALSE, FALSE)
 		return TRUE
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
@@ -77,9 +68,8 @@
 		var/usernotice = automatic ? "<span class='notice'>You are now getting up. (Auto)</span>" : "<span class='notice'>You are now getting up.</span>"
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
 		if(do_after(src, totaldelay, target = src))
-			resting = FALSE
+			set_resting(FALSE, FALSE)
 			attemptingstandup = FALSE
-			update_canmove()
 			return TRUE
 		else
 			visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
@@ -91,18 +81,72 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_mobility()
-/*
 	var/stat_softcrit = stat == SOFT_CRIT
 	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
-	var/conscious = !IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
+
+	var/conscious = !_MOBILITYFLAGTEMPORARY_IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
+
+	var/has_arms = get_num_arms()
+	var/has_legs = get_num_legs()
+	var/ignore_legs = get_leg_ignore()
+	var/stun = _MOBILITYFLAGTEMPORARY_IsStun()
+	var/paralyze = IsParalyzed()
+	var/knockdown = _MOBILITYFLAGTEMPORARY_IsKnockdown()
+	var/immobilize = IsImmobilized()
+
+
+
+/*
+	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (HAS_TRAIT(src, TRAIT_DEATHCOMA))
+	var/move_and_fall = stat == SOFT_CRIT && !pulledby
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/buckle_lying = !(buckled && !buckled.buckle_lying)
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
+	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
+		drop_all_held_items()
+		unset_machine()
+		if(pulling)
+			stop_pulling()
+	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
+		unset_machine() //CIT CHANGE - Ditto!
+		if(pulling) //CIT CHANGE - Ditto.
+			stop_pulling() //CIT CHANGE - Ditto...
+	else if(has_legs || ignore_legs)
+		lying = 0
+		if (pulledby)
+			var/mob/living/L = pulledby
+			L.update_pull_movespeed()
+	if(buckled)
+		lying = 90*buckle_lying
+	else if(!lying)
+		if(resting)
+			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
+			if(has_gravity()) // Cit change - Ditto
+				playsound(src, "bodyfall", 50, 1) // Cit change - Ditto!
+		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
+			fall(forced = 1)
+	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
+	density = !lying
+	if(lying)
+		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
+	else
+		if(layer == LYING_MOB_LAYER)
+			layer = initial(layer)
+	update_transform()
+	if(!lying && lying_prev)
+		if(client)
+			client.move_delay = world.time + movement_delay()
+	lying_prev = lying
+	if(canmove && !intentionalresting && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
+		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
+	return canmove
+*/
+
+
+/*
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
-	var/has_legs = get_num_legs()
-	var/has_arms = get_num_arms()
-	var/paralyzed = IsParalyzed()
-	var/stun = IsStun()
-	var/knockdown = IsKnockdown()
-	var/ignore_legs = get_leg_ignore()
 	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs)
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
@@ -172,55 +216,3 @@
 			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
 */
 
-//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-//Robots, animals and brains have their own version so don't worry about them
-/mob/living/proc/update_canmove()
-/*
-	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (HAS_TRAIT(src, TRAIT_DEATHCOMA))
-	var/move_and_fall = stat == SOFT_CRIT && !pulledby
-	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/buckle_lying = !(buckled && !buckled.buckle_lying)
-	var/has_legs = get_num_legs()
-	var/has_arms = get_num_arms()
-	var/ignore_legs = get_leg_ignore()
-	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
-	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
-		drop_all_held_items()
-		unset_machine()
-		if(pulling)
-			stop_pulling()
-	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
-		unset_machine() //CIT CHANGE - Ditto!
-		if(pulling) //CIT CHANGE - Ditto.
-			stop_pulling() //CIT CHANGE - Ditto...
-	else if(has_legs || ignore_legs)
-		lying = 0
-		if (pulledby)
-			var/mob/living/L = pulledby
-			L.update_pull_movespeed()
-	if(buckled)
-		lying = 90*buckle_lying
-	else if(!lying)
-		if(resting)
-			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
-			if(has_gravity()) // Cit change - Ditto
-				playsound(src, "bodyfall", 50, 1) // Cit change - Ditto!
-		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
-			fall(forced = 1)
-	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
-	density = !lying
-	if(lying)
-		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	else
-		if(layer == LYING_MOB_LAYER)
-			layer = initial(layer)
-	update_transform()
-	if(!lying && lying_prev)
-		if(client)
-			client.move_delay = world.time + movement_delay()
-	lying_prev = lying
-	if(canmove && !intentionalresting && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
-		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
-	return canmove
-*/
