@@ -2,6 +2,15 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
+/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel,
+/area/engine/storage_shared)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -59217,11 +59226,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"qXw" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
-/turf/open/floor/plasteel,
-/area/engine/storage_shared)
 "qXH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -95901,7 +95905,7 @@ qiB
 bLS
 uQg
 oKH
-qXw
+aab
 bPL
 fYs
 uQg
