@@ -580,7 +580,7 @@
 	icon_state = "flower_dress"
 	item_state = "sailordress"
 	item_color = "flower_dress"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
