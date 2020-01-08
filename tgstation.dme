@@ -3065,7 +3065,6 @@
 #include "modular_citadel\code\_onclick\hud\screen_objects.dm"
 #include "modular_citadel\code\_onclick\hud\sprint.dm"
 #include "modular_citadel\code\_onclick\hud\stamina.dm"
-#include "modular_citadel\code\datums\components\material_container.dm"
 #include "modular_citadel\code\datums\components\souldeath.dm"
 #include "modular_citadel\code\datums\status_effects\chems.dm"
 #include "modular_citadel\code\datums\status_effects\debuffs.dm"
