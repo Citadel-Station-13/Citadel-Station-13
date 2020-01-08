@@ -50066,7 +50066,6 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctH" = (
@@ -50091,7 +50090,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctJ" = (
@@ -58552,7 +58550,8 @@
 	dir = 5
 	},
 /obj/machinery/camera{
-	c_tag = "Bar Backroom"
+	c_tag = "Bar Backroom";
+	dir = 2
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
