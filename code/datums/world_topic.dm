@@ -103,7 +103,7 @@
 /datum/world_topic/server_hop/Run(list/input, addr)
 	var/expected_key = input[keyword]
 	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == expected_key && O?.client.address == addr)
+		if(O.key == expected_key && O.client?.address == addr)
 			if(O.client)
 				new /obj/screen/splash(O.client, TRUE)
 			break
