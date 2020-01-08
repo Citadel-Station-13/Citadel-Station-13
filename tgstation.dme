@@ -663,6 +663,7 @@
 #include "code\game\machinery\syndicatebeacon.dm"
 #include "code\game\machinery\syndicatebomb.dm"
 #include "code\game\machinery\teleporter.dm"
+#include "code\game\machinery\toylathe.dm"
 #include "code\game\machinery\transformer.dm"
 #include "code\game\machinery\turnstile.dm"
 #include "code\game\machinery\washing_machine.dm"
