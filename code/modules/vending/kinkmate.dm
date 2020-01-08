@@ -41,3 +41,8 @@
 				/obj/item/clothing/under/pants/chaps = 5
 				)
 	refill_canister = /obj/item/vending_refill/kink
+
+/obj/item/vending_refill/kink
+	machine_name 	= "KinkMate"
+	icon			= 'modular_citadel/icons/vending_restock.dmi'
+	icon_state 		= "refill_kink"
