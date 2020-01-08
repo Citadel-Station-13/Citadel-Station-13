@@ -108,12 +108,10 @@
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			for(var/obj/item/organ/genital/G in H.internal_organs)
-				if(!G.aroused_state && prob(current_cycle*G.sensitivity))
-					G.set_aroused_state(TRUE)
-					G.update_appearance()
-					if(G.aroused_state)
-						to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
+			var/list/genits = H.adjust_arousal(current_cycle, aphro = TRUE) // redundant but should still be here
+			for(var/g in genits)
+				var/obj/item/organ/genital/G = g
+				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus
@@ -144,12 +142,10 @@
 			REMOVE_TRAIT(M,TRAIT_NEVERBONER,"aphro")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			for(var/obj/item/organ/genital/G in H.internal_organs)
-				if(!G.aroused_state)
-					G.set_aroused_state(TRUE)
-					G.update_appearance()
-					if(G.aroused_state)
-						to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
+			var/list/genits = H.adjust_arousal(100, aphro = TRUE) // redundant but should still be here
+			for(var/g in genits)
+				var/obj/item/organ/genital/G = g
+				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
@@ -169,9 +165,9 @@
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
 	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
 		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
-			if(!HAS_TRAIT(M,TRAIT_PERMABONER)) //Less spam
+			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
 				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
-			ADD_TRAIT(M,TRAIT_PERMABONER,"aphro")
+				ADD_TRAIT(M,TRAIT_PERMABONER,"aphro")
 	..()
 
 /datum/reagent/drug/anaphrodisiac
@@ -187,14 +183,9 @@
 /datum/reagent/drug/anaphrodisiac/on_mob_life(mob/living/M)
 	if(M && M.client?.prefs.arousable && prob(16))
 		if(ishuman(M))
-			var/unboner = FALSE
 			var/mob/living/carbon/human/H = M
-			for(var/obj/item/organ/genital/G in H.internal_organs)
-				if(G.aroused_state)
-					G.set_aroused_state(FALSE)
-					G.update_appearance()
-					unboner = (G.aroused_state == FALSE)
-			if(unboner)
+			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
+			if(genits.len)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
 
@@ -211,19 +202,16 @@
 	if(M && M.client?.prefs.arousable)
 		REMOVE_TRAIT(M,TRAIT_PERMABONER,"aphro")
 		if(ishuman(M))
-			var/unboner = FALSE
 			var/mob/living/carbon/human/H = M
-			for(var/obj/item/organ/genital/G in H.internal_organs)
-				if(G.aroused_state)
-					G.set_aroused_state(FALSE)
-					G.update_appearance()
-					unboner = (G.aroused_state == FALSE)
-			if(unboner)
+			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
+			if(genits.len)
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
+
 	..()
 
 /datum/reagent/drug/anaphrodisiacplus/overdose_process(mob/living/M)
 	if(M && M.client?.prefs.arousable && prob(5))
+		to_chat(M, "<span class='userlove'>You feel like you'll never feel aroused again...</span>")
 		ADD_TRAIT(M,TRAIT_NEVERBONER,"aphro")
 	..()
 

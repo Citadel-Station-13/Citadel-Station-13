@@ -163,6 +163,8 @@
 #define TRAIT_MUSICIAN			"musician"
 #define TRAIT_PERMABONER		"permanent_arousal"
 #define TRAIT_NEVERBONER		"never_aroused"
+#define TRAIT_NYMPHO			"nymphomania"
+#define TRAIT_MASO              "masochism"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"

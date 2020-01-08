@@ -633,6 +633,9 @@
 
 			//Shocking truth!
 			else if (lowertext(customTriggers[trigger]) == "shock")
+				if (lewd && ishuman(C))
+					var/mob/living/carbon/human/H = C
+					H.adjust_arousal(5)
 				C.jitteriness += 100
 				C.stuttering += 25
 				C.Knockdown(60)

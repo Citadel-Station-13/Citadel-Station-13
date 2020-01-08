@@ -2280,12 +2280,11 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
-	if(M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO && ishuman(M)))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/obj/item/organ/genital/G in H.internal_organs)
-			if(!G.aroused_state && prob(2*G.sensitivity))
-				G.set_aroused_state(TRUE)
-				G.update_appearance()
-				if(G.aroused_state)
-					to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
+		var/list/adjusted = H.adjust_arousal(2,aphro = TRUE)
+		for(var/g in adjusted)
+			var/obj/item/organ/genital/G = g
+			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
+
 	..()
