@@ -525,7 +525,7 @@
 		if(!objective)
 			to_chat(usr,"Invalid objective.")
 			return
-		//qdel(objective) Needs cleaning objective destroys
+		qdel(objective) //TODO: Needs cleaning objective destroys (whatever that means)
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
 
