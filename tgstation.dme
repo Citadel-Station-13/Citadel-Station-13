@@ -3068,7 +3068,6 @@
 #include "modular_citadel\code\datums\components\souldeath.dm"
 #include "modular_citadel\code\datums\status_effects\chems.dm"
 #include "modular_citadel\code\datums\status_effects\debuffs.dm"
-#include "modular_citadel\code\game\machinery\toylathe.dm"
 #include "modular_citadel\code\game\machinery\wishgranter.dm"
 #include "modular_citadel\code\game\objects\cit_screenshake.dm"
 #include "modular_citadel\code\game\objects\items.dm"
