@@ -145,7 +145,7 @@
 		partners += pulledby
 	//Now we got both of them, let's check if they're proper
 	for(var/mob/living/L in partners)
-		if(!L?.client || !L?.mind) // can't consent, not a partner
+		if(!L.client || !L.mind) // can't consent, not a partner
 			partners -= L
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
