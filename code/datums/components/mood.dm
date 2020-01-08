@@ -258,7 +258,10 @@
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			add_event(null, "nutrition", /datum/mood_event/fat)
+			if(HAS_TRAIT(L, TRAIT_VORACIOUS))
+				add_event(null, "nutrition", /datum/mood_event/fathappy)
+			else
+				add_event(null, "nutrition", /datum/mood_event/fat)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
 			add_event(null, "nutrition", /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)

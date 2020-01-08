@@ -171,7 +171,7 @@
 
 /datum/quirk/voracious
 	name = "Voracious"
-	desc = "Nothing gets between you and your food. You eat twice as fast as everyone else!"
+	desc = "Nothing gets between you and your food. You eat twice as fast as everyone else, and overeating makes you happy!"
 	value = 1
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
