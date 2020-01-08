@@ -138,6 +138,9 @@
 	keyword = "status"
 
 /datum/world_topic/status/Run(list/input)
+	if(GLOB.topic_status_lastcache <= world.time + 5)
+		return GLOB.topic_status_cache
+	GLOB.topic_status_lastcache = world.time
 	. = list()
 	.["version"] = GLOB.game_version
 	.["mode"] = "hidden"	//CIT CHANGE - hides the gamemode in topic() calls to prevent meta'ing the gamemode
@@ -180,4 +183,5 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-	
+
+	GLOB.topic_status_cache = .
