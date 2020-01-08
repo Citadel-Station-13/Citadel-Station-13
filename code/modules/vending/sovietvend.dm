@@ -25,3 +25,7 @@
 	premium = list()
 
 	refill_canister = /obj/item/vending_refill/soviet
+
+/obj/item/vending_refill/soviet
+	machine_name 	= "sovietvend"
+	icon_state 		= "refill_soviet"
