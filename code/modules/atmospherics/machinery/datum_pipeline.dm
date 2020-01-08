@@ -57,10 +57,10 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z]).")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be suppressed")
+										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -154,11 +154,6 @@
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 	var/target_temperature
 	var/target_heat_capacity
-	// first calculate heat from radiation. there's an implied "* 1 tick" here.
-	// 0.05 magic multiplicand is, first, 0.1 deciseconds; second, half of the radiation's going right back into the gas.
-	var/share_constant = STEFANBOLTZMANN*(share_volume**(2/3))*0.05
-	// Minimizing temp to 4 billion is mostly to prevent -infinity temperatures.
-	var/heat = share_constant*(min(air.temperature,4000000000)**4)
 
 	if(isopenturf(target))
 
@@ -170,8 +165,8 @@
 
 			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
 				var/delta_temperature = air.temperature - target_temperature
-				heat -= share_constant*(min(target_temperature,4000000000)**4)
-				heat += thermal_conductivity*delta_temperature* \
+
+				var/heat = thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
 
 				air.temperature -= heat/total_heat_capacity
@@ -188,8 +183,7 @@
 			var/sharer_temperature_delta = 0
 
 			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
-				heat -= share_constant*(min(target_temperature,4000000000)**4)
-				heat += thermal_conductivity*delta_temperature* \
+				var/heat = thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
 
 				self_temperature_delta = -heat/total_heat_capacity
@@ -205,12 +199,10 @@
 		if((target.heat_capacity>0) && (partial_heat_capacity>0))
 			var/delta_temperature = air.temperature - target.temperature
 
-			heat -= share_constant*(min(target.temperature,4000000000)**4)
-			heat += thermal_conductivity*delta_temperature* \
+			var/heat = thermal_conductivity*delta_temperature* \
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
 			air.temperature -= heat/total_heat_capacity
-	air.temperature = CLAMP(air.temperature,TCMB,INFINITY) // i have no idea why TCMB needs to be the min but i ain't changing it
 	update = TRUE
 
 /datum/pipeline/proc/return_air()
