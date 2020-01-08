@@ -84,8 +84,8 @@
 	//It is called from your coffin on close (by you only)
 	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-	owner.current.adjustStaminaLoss(-2 + (regenRate * -10) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
-	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
+	owner.current.adjustStaminaLoss(-2 + (regenRate * 8) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
 	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
@@ -97,7 +97,7 @@
 		var/fireheal = 0 	// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
-			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
+			mult *= 4 // Increase multiplier if we're sleeping in a coffin.
 			fireheal = min(C.getFireLoss_nonProsthetic(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
 			C.ExtinguishMob()
@@ -118,6 +118,8 @@
 		if(bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
 			if(mult == 0)
 				return TRUE
+			if(owner.current.stat >= UNCONSCIOUS) //Faster regeneration while unconcious, so you dont have to wait all day
+				mult *= 2  
 			// We have damage. Let's heal (one time)
 			C.adjustBruteLoss(-bruteheal * mult, forced = TRUE)// Heal BRUTE / BURN in random portions throughout the body.
 			C.adjustFireLoss(-fireheal * mult, forced = TRUE)
@@ -187,19 +189,19 @@
 /datum/antagonist/bloodsucker/proc/HandleDeath()
 	// 	FINAL DEATH
 	// Fire Damage? (above double health)
-	if (owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 2)
+	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 1.5)
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep
-	if (owner.current.StakeCanKillMe() && owner.current.AmStaked())
+	if(owner.current.StakeCanKillMe() && owner.current.AmStaked())
 		FinalDeath()
 		return
 	// Not "Alive"?
-	if (!owner.current || !isliving(owner.current) || isbrain(owner.current) || !get_turf(owner.current))
+	if(!owner.current || !isliving(owner.current) || isbrain(owner.current) || !get_turf(owner.current))
 		FinalDeath()
 		return
 	// Missing Brain or Heart?
-	if (!owner.current.HaveBloodsuckerBodyparts())
+	if(!owner.current.HaveBloodsuckerBodyparts())
 		FinalDeath()
 		return
 				// Disable Powers: Masquerade	* NOTE * This should happen as a FLAW!
@@ -212,21 +214,21 @@
 	var/total_toxloss = owner.current.getToxLoss() //This is neater than just putting it in total_damage
 	var/total_damage = total_brute + total_burn + total_toxloss
 	// Died? Convert to Torpor (fake death)
-	if (owner.current.stat >= DEAD)
+	if(owner.current.stat >= DEAD)
 		Torpor_Begin()
 		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor.</span>")
+		sleep(30) //To avoid spam
 		if (poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
 	// End Torpor:
 	else	// No damage, OR toxin healed AND brute healed and NOT in coffin (since you cannot heal burn)
-		if (total_damage <= 0 || total_toxloss <= 0 && total_brute <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+		if(total_damage <= 0 || total_toxloss <= 0 && total_brute <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			// Not Daytime, Not in Torpor
-			if (!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
+			if(!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 				Torpor_End()
 		// Fake Unconscious
-		if (poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
+		if(poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
 			owner.current.Unconscious(20,1)
-
 	//HEALTH_THRESHOLD_CRIT 0
 	//HEALTH_THRESHOLD_FULLCRIT -30
 	//HEALTH_THRESHOLD_DEAD -100
@@ -241,8 +243,8 @@
 	owner.current.update_sight()
 	owner.current.reload_fullscreen()
 	// Disable ALL Powers
-	for (var/datum/action/bloodsucker/power in powers)
-		if (power.active && !power.can_use_in_torpor)
+	for(var/datum/action/bloodsucker/power in powers)
+		if(power.active && !power.can_use_in_torpor)
 			power.DeactivatePower()
 
 
@@ -281,7 +283,7 @@
 	// Free my Vassals!
 	FreeAllVassals()
 	// Elders get Dusted
-	if (vamplevel >= 4) // (vamptitle)
+	if(vamplevel >= 4) // (vamptitle)
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a dry, crackling sound.</span>")
@@ -306,7 +308,7 @@
 	if (!isliving(src))
 		return
 	var/mob/living/L = src
-	if (!L.AmBloodsucker())
+	if(!L.AmBloodsucker())
 		return
 	// We're a vamp? Try to eat food...
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
@@ -315,7 +317,7 @@
 
 /datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
 	set waitfor = FALSE
-	if (!owner.current || !iscarbon(owner.current))
+	if(!owner.current || !iscarbon(owner.current))
 		return
 	var/mob/living/carbon/C = owner.current
 	// Remove Nutrition, Give Bad Food
