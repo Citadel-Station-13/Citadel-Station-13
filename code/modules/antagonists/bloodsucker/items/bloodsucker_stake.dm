@@ -78,7 +78,7 @@
 	var/mob/living/carbon/C = target
 	// Needs to be Down/Slipped in some way to Stake.
 	if(!C.can_be_staked() || target == user)
-		to_chat(user, "<span class='danger'>You cant stake [target] when they are moving moving about! They have to be laying down or grabbed by the neck!</span>")
+		to_chat(user, "<span class='danger'>You can't stake [target] when they are moving about! They have to be laying down or grabbed by the neck!</span>")
 		return
 			// Oops! Can't.
 	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
