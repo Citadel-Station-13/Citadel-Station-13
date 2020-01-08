@@ -488,3 +488,15 @@ datum/gear/darksabresheath
 	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sneakers/mikuleggings
 	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/combine_suit
+	name = "combine uniform"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/combine
+	ckeywhitelist = list("jayehh")
+
+/datum/gear/combine_mask
+	name = "combine mask"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/mask/gas/combine
+	ckeywhitelist = list("jayehh")
