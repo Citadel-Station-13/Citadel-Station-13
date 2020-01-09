@@ -362,7 +362,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /*
  * Silk
  */
-
 /obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
