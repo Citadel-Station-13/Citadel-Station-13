@@ -19,7 +19,7 @@
 	desc = "Motorcycle not included."
 	icon_state = "ek"
 	item_state = "ek"
-	item_color = "ek"f
+	item_color = "ek"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/scratch
