@@ -638,6 +638,7 @@
 /obj/item/clothing/neck/cloak/chameleon
 	name = "black tie"
 	desc = "A neosilk clip-on tie."
+	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "blacktie"
 	item_color = "blacktie"
 	resistance_flags = NONE
