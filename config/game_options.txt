@@ -579,3 +579,9 @@ DYNAMIC_VOTING
 BOX_RANDOM_ENGINE Engine SM
 BOX_RANDOM_ENGINE Engine Tesla
 BOX_RANDOM_ENGINE Engine Singulo
+
+## Whether or not there's a mode tier list vote after the secret/extended vote.
+MODETIER_VOTING
+
+## Number of modes dropped by the modetier vote during mode selection, after vote.
+DROPPED_MODES 3
