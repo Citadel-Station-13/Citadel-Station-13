@@ -471,6 +471,7 @@
 	name = "white sundress"
 	desc = "Makes you want to frolic in a field of lillies."
 	icon_state = "sundress_white"
+	item_state = "sundress"
 	item_color = "sundress_white"
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
