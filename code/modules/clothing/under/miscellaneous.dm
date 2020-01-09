@@ -19,7 +19,7 @@
 	desc = "Motorcycle not included."
 	icon_state = "ek"
 	item_state = "ek"
-	item_color = "ek"
+	item_color = "ek"f
 	can_adjust = FALSE
 
 /obj/item/clothing/under/scratch
@@ -474,6 +474,7 @@
 	item_state = "sundress"
 	item_color = "sundress_white"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
