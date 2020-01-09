@@ -212,6 +212,7 @@ SUBSYSTEM_DEF(vote)
 		calculate_condorcet_votes(vote_title_text)
 	if(vote_system == SCORE_VOTING)
 		calculate_majority_judgement_vote(vote_title_text)
+		calculate_scores(vote_title_text)
 	var/list/winners = get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -219,13 +220,20 @@ SUBSYSTEM_DEF(vote)
 			stored_gamemode_votes = list()
 		if(!obfuscated && vote_system == RANKED_CHOICE_VOTING)
 			text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
-		for(var/i=1,i<=choices.len,i++)
-			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
-			if(was_roundtype_vote)
-				stored_gamemode_votes[choices[i]] = votes
-			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
+		if(mode == "mode tiers")
+			for(var/score_name in scores)
+				var/score = scores[score_name]
+				if(!score)
+					score = 0
+				text = "\n<b>[score_name]:</b> [obfuscated ? "???" : score]"
+		else
+			for(var/i=1,i<=choices.len,i++)
+				var/votes = choices[choices[i]]
+				if(!votes)
+					votes = 0
+				if(was_roundtype_vote)
+					stored_gamemode_votes[choices[i]] = votes
+				text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
@@ -276,7 +284,7 @@ SUBSYSTEM_DEF(vote)
 				if(CONFIG_GET(flag/modetier_voting))
 					reset()
 					started_time = 0
-					initiate_vote("mode tiers","server",hideresults=FALSE,votesystem=RANKED_CHOICE_VOTING,forced=TRUE, vote_time = 30 MINUTES)
+					initiate_vote("mode tiers","server",hideresults=FALSE,votesystem=SCORE_VOTING,forced=TRUE, vote_time = 30 MINUTES)
 					to_chat(world,"<b>The vote will end right as the round starts.</b>")
 					return .
 			if("restart")
@@ -290,7 +298,13 @@ SUBSYSTEM_DEF(vote)
 					else
 						GLOB.master_mode = .
 			if("mode tiers")
-				stored_modetier_results = choices.Copy()
+				var/list/raw_score_numbers = list()
+				for(var/score_name in scores)
+					sorted_insert(raw_score_numbers,scores[score_name],/proc/cmp_numeric_asc)
+				stored_modetier_results = scores.Copy()
+				for(var/score_name in stored_modetier_results)
+					if(stored_modetier_results[score_name] <= raw_score_numbers[CONFIG_GET(number/dropped_modes)])
+						stored_modetier_results -= score_name
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
