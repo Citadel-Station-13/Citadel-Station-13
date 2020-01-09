@@ -9,8 +9,9 @@
 	bloodsucker_can_buy = TRUE
 	amToggle = TRUE
 	warn_constant_cost = TRUE
+	var/was_running
 
-	var/light_min = 0.5 	// If lum is above this, no good.
+	var/light_min = 0.2  	// If lum is above this, no good.
 
 /datum/action/bloodsucker/cloak/CheckCanUse(display_error)
 	. = ..()
@@ -26,18 +27,16 @@
 /datum/action/bloodsucker/cloak/ActivatePower()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
-	var/was_running = (user.m_intent == MOVE_INTENT_RUN)
+	was_running = (user.m_intent == MOVE_INTENT_RUN)
 	if(was_running)
 		user.toggle_move_intent()
 	ADD_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 	while(bloodsuckerdatum && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
 		// Pay Blood Toll (if awake)
-		owner.alpha = max(0, owner.alpha - min(75, 20 + 15 * level_current))
+		owner.alpha = max(20, owner.alpha - min(75, 10 + 5 * level_current))
 		bloodsuckerdatum.AddBloodVolume(-0.2)
 		sleep(5) // Check every few ticks that we haven't disabled this power
 	// Return to Running (if you were before)
-	if(was_running && user.m_intent != MOVE_INTENT_RUN)
-		user.toggle_move_intent()
 
 /datum/action/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
 	if (!..())
@@ -55,3 +54,5 @@
 	..()
 	REMOVE_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 	user.alpha = 255
+	if(was_running && user.m_intent != MOVE_INTENT_RUN)
+		user.toggle_move_intent()
