@@ -9,6 +9,8 @@
 				return "slurs"
 			if(50 to INFINITY)
 				return "garbles"
+	if (message_mode != MODE_CUSTOM_SAY && message_mode != MODE_WHISPER_CRIT && forcednormalspeech)
+		return "says"
 
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))

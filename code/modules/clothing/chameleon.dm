@@ -444,7 +444,7 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 
 	var/vchange = 1
-
+	var/voicemod = FALSE
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/clothing/mask/chameleon/Initialize()
@@ -454,6 +454,39 @@
 	chameleon_action.chameleon_name = "Mask"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/mask/chameleon/AltClick(mob/living/user)
+	. = ..()
+	var/mob/living/carbon/C = user
+	if (!istype(C))
+		return
+	if (voicemod == FALSE)
+		voicemod = TRUE
+		if (C.wear_mask == src)
+			C.forcednormalspeech = TRUE
+		to_chat(user,"<span class='notice'>You toggle the voice regulator on.</span>")
+	else
+		if (C.wear_mask == src)
+			C.forcednormalspeech = FALSE
+		voicemod = FALSE
+		to_chat(user,"<span class='notice'>You toggle the voice regulator off.</span>")
+
+/obj/item/clothing/mask/chameleon/Destroy()
+	. = ..()
+	var/mob/living/L = loc
+	if (istype(L))
+		L.forcednormalspeech = FALSE
+
+/obj/item/clothing/mask/chameleon/equipped(mob/living/M,slot)
+	. = ..()
+	if (slot != SLOT_WEAR_MASK)
+		return
+	if (voicemod)
+		M.forcednormalspeech = TRUE
+
+/obj/item/clothing/mask/chameleon/dropped(mob/living/M)
+	. = ..()
+	M.forcednormalspeech = FALSE
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
 	. = ..()
