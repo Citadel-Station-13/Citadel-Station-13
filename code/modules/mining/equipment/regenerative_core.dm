@@ -74,6 +74,9 @@
 		if(inert)
 			to_chat(user, "<span class='notice'>[src] has decayed and can no longer be used to heal.</span>")
 			return
+		if(isvamp(user))
+			to_chat(user, "<span class='notice'>[src] breaks down as it fails to heal your unholy self</span>")
+			return
 		else
 			if(H.stat == DEAD)
 				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")

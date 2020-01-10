@@ -30,6 +30,8 @@ GLOBAL_VAR(world_virus_log)
 GLOBAL_PROTECT(world_virus_log)
 GLOBAL_VAR(world_map_error_log)
 GLOBAL_PROTECT(world_map_error_log)
+GLOBAL_VAR(subsystem_log)
+GLOBAL_PROTECT(subsystem_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

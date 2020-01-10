@@ -24,7 +24,7 @@
 			add_overlay(M)
 	..()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(!isinhands && worn_overlays)
 		for(var/obj/item/I in contents)
