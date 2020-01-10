@@ -6,12 +6,6 @@
 	caliber = "laser"
 	max_ammo = 20
 
-/obj/item/ammo_box/magazine/recharge/heavy
-	name = "heavy power pack"
-	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles. This one fires heavy shots, very lethal."
-	icon_state = "oldrifle-20"
-	ammo_type = /obj/item/ammo_casing/caseless/laser/heavy
-
 /obj/item/ammo_box/magazine/recharge/weak
 	name = "weak power pack"
 	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles. This one fires weaker shots, but still is lethal."
@@ -35,6 +29,13 @@
 	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles. This one fires weak disabling bolts"
 	icon_state = "oldrifle-20"
 	ammo_type = /obj/item/ammo_casing/caseless/laser/disabler/weak
+
+//These three below are admin only
+/obj/item/ammo_box/magazine/recharge/heavy
+	name = "heavy power pack"
+	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles. This one fires heavy shots, very lethal."
+	icon_state = "oldrifle-20"
+	ammo_type = /obj/item/ammo_casing/caseless/laser/heavy
 
 /obj/item/ammo_box/magazine/recharge/pulse
 	name = "pulse power pack"
@@ -64,5 +65,5 @@
 		stored_ammo = 0
 		update_icon()
 		name = "fried power pack"
-		desc = "A once rechargeable, detachable cell, now fryed and useless. It has 0 shots left."
+		desc = "A once rechargeable, detachable cell, now fried and useless. It has 0 shots left."
 		return
