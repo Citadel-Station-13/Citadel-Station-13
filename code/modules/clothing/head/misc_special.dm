@@ -282,7 +282,7 @@
 	if(target.get_item_by_slot(SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
-	if(!target._MOBILITYFLAGTEMPORARY_IsUnconscious())
+	if(!target._REFACTORING_IsUnconscious())
 		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
 /obj/item/clothing/head/foilhat/attack_hand(mob/user)

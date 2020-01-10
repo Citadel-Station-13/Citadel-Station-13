@@ -4,7 +4,7 @@
 	for(var/I in overlays_standing)
 		add_overlay(I)
 
-	var/asleep = _MOBILITYFLAGTEMPORARY_IsSleeping()
+	var/asleep = _REFACTORING_IsSleeping()
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)

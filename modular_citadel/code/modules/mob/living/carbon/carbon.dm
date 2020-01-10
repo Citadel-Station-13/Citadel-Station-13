@@ -33,7 +33,7 @@
 		if(combatmode)
 			if(world.time >= combatmessagecooldown)
 				if(a_intent != INTENT_HELP)
-					visible_message("<span class='warning'>[src] [_MOBILITYFLAGTEMPORARY_resting ? "tenses up" : (prob(95)? "drops into a combative stance" : (prob(95)? "poses aggressively" : "asserts dominance with their pose"))].</span>")
+					visible_message("<span class='warning'>[src] [_REFACTORING_resting ? "tenses up" : (prob(95)? "drops into a combative stance" : (prob(95)? "poses aggressively" : "asserts dominance with their pose"))].</span>")
 				else
 					visible_message("<span class='notice'>[src] [pick("looks","seems","goes")] [pick("alert","attentive","vigilant")].</span>")
 			playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!

@@ -79,7 +79,7 @@
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 					"<span class='userdanger'>[M] has attempted to punch [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		if(INTENT_DISARM)
-			if(!_MOBILITYFLAGTEMPORARY_IsUnconscious())
+			if(!_REFACTORING_IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
 					DefaultCombatKnockdown(40)

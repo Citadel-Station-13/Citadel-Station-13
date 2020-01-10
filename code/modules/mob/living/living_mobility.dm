@@ -25,20 +25,20 @@
 	set category = "IC"
 	if(client?.prefs?.autostand)
 		intentionalresting = !intentionalresting
-		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_MOBILITYFLAGTEMPORARY_resting ? "lay down and ": ""]stay down" : "[_MOBILITYFLAGTEMPORARY_resting ? "get up and ": ""]stay up"].</span>")
+		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_REFACTORING_resting ? "lay down and ": ""]stay down" : "[_REFACTORING_resting ? "get up and ": ""]stay up"].</span>")
 		if(intentionalresting && !resting)
 			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
 	else
-		if(!_MOBILITYFLAGTEMPORARY_resting)
+		if(!_REFACTORING_resting)
 			set_resting(TRUE, FALSE)
 			to_chat(src, "<span class='notice'>You are now laying down.</span>")
 		else
 			resist_a_rest()
 
 /mob/living/proc/resist_a_rest(automatic = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
-	if(!_MOBILITYFLAGTEMPORARY_resting || stat || attemptingstandup)
+	if(!_REFACTORING_resting || stat || attemptingstandup)
 		return FALSE
 	if(ignoretimer)
 		set_resting(FALSE, FALSE)
@@ -84,14 +84,14 @@
 	var/stat_softcrit = stat == SOFT_CRIT
 	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
 
-	var/conscious = !_MOBILITYFLAGTEMPORARY_IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
+	var/conscious = !_REFACTORING_IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
 
 	var/has_arms = get_num_arms()
 	var/has_legs = get_num_legs()
 	var/ignore_legs = get_leg_ignore()
-	var/stun = _MOBILITYFLAGTEMPORARY_IsStun()
+	var/stun = _REFACTORING_IsStun()
 	var/paralyze = IsParalyzed()
-	var/knockdown = _MOBILITYFLAGTEMPORARY_IsKnockdown()
+	var/knockdown = _REFACTORING_IsKnockdown()
 	var/daze = IsDazed()
 	var/immobilize = IsImmobilized()
 
