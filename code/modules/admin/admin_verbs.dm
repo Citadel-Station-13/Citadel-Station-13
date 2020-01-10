@@ -437,6 +437,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
+	if(!check_rights(R_STEALTH, 0))
+		return
 	if(holder)
 		if(holder.fakekey)
 			holder.fakekey = null
