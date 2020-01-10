@@ -794,7 +794,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	..()
 
 /datum/reagent/medicine/atropine
-  name "Atropine"
+	name = "Atropine"
 	value = 2.5
 	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
 	reagent_state = LIQUID
