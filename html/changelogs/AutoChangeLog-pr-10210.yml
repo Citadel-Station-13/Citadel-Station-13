@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Cargo shuttle now silently ignores slaughter demons/revenants instead of being blocked even while they are jaunted. A drawback is that manifested ones can't block it either, any more."

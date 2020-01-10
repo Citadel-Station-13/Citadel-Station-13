@@ -2,17 +2,6 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
-"aab" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
-/obj/structure/table,
-/obj/structure/bedsheetbin/towel,
-/turf/open/floor/plasteel/freezer,
-/area/crew_quarters/toilet/restrooms)
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -3063,7 +3052,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/gun/energy/e_gun/advtaser,
-/obj/item/gun/energy/e_gun/advtaser,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3540,7 +3528,6 @@
 	pixel_x = -22
 	},
 /obj/structure/rack,
-/obj/item/storage/fancy/donut_box,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/neutral{
@@ -3613,6 +3600,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/gun/energy/e_gun,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "agV" = (
@@ -3895,6 +3883,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/shield/riot,
+/obj/item/shield/riot,
+/obj/item/shield/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/suit/armor/riot,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "ahD" = (
@@ -3993,12 +3986,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "ahI" = (
-/obj/structure/rack,
-/obj/item/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/shield/riot,
 /obj/machinery/button/door{
 	id = "armory";
 	name = "Armory Shutters";
@@ -4015,6 +4002,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/rack,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "ahJ" = (
@@ -14669,15 +14658,12 @@
 /area/security/nuke_storage)
 "aCh" = (
 /obj/structure/safe,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/backpack/duffelbag/syndie/hitman{
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
 	},
-/obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/card/id/silver/reaper,
 /obj/item/lazarus_injector,
 /obj/item/gun/energy/e_gun/advtaser,
-/obj/item/gun/ballistic/revolver/russian,
-/obj/item/ammo_box/a357,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/book{
 	desc = "An undeniably handy book.";
@@ -27128,6 +27114,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
+	},
+/obj/structure/sign/departments/custodian{
+	pixel_x = 32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -80878,6 +80868,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
+"dhD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
+/obj/structure/table,
+/obj/structure/bedsheetbin/towel,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet/restrooms)
 "dhE" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -83288,13 +83289,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
-"ghT" = (
-/obj/machinery/computer/arcade{
-	icon_state = "arcade";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "gnZ" = (
 /obj/item/radio/intercom{
 	pixel_y = -30
@@ -83409,15 +83403,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"hYs" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -83461,6 +83446,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"iCn" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "iLj" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -83479,6 +83468,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
+"jhu" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "permahydro";
+	name = "Recreation Module"
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "jwW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
@@ -83529,10 +83528,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"jVj" = (
-/obj/machinery/vr_sleeper,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "kfu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -83667,6 +83662,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"lWL" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "lWY" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
@@ -83824,17 +83823,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"odR" = (
-/obj/structure/table,
-/obj/item/folder,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/item/pen,
-/obj/item/storage/crayons,
-/turf/open/floor/plasteel,
-/area/security/prison)
 "ohj" = (
 /obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
@@ -83940,13 +83928,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"pzu" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "pCV" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84002,10 +83983,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"qnB" = (
-/obj/machinery/smartfridge/organ/preloaded,
-/turf/closed/wall,
-/area/medical/surgery)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -84078,6 +84055,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
+"ram" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcade";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
+"roa" = (
+/obj/structure/chair/stool,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "rzX" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -84091,6 +84082,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"rLV" = (
+/obj/structure/table,
+/obj/item/folder,
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/pen,
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "rMS" = (
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
@@ -84268,16 +84270,6 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"uEa" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "permahydro";
-	name = "Recreation Module"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "uGW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -84508,6 +84500,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xIi" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -104238,7 +104239,7 @@ cia
 cia
 cpX
 cia
-qnB
+lWL
 cia
 ceu
 dyg
@@ -106711,11 +106712,11 @@ aaa
 aaf
 aaf
 aay
-odR
-hYs
+rLV
+xIi
 abC
-uEa
-hYs
+jhu
+xIi
 abC
 abC
 acr
@@ -106969,10 +106970,10 @@ aaf
 aaa
 aax
 abl
-pzu
-ghT
+roa
+ram
 aax
-jVj
+iCn
 aaR
 aaR
 aaI
@@ -118826,7 +118827,7 @@ aBu
 aCB
 aDU
 aFg
-aab
+dhD
 axC
 axC
 axC
