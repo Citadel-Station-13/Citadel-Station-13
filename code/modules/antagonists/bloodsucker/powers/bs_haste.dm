@@ -53,7 +53,7 @@
 	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	var/safety = 20
 	while(get_turf(owner) != T && safety > 0 && !(isliving(target) && target.Adjacent(owner)))
-		user.canmove = FALSE //Dont move while doing the thing, or itll break
+		user.mobility_flags = NONE
 		safety --
 		// Did I get knocked down?
 		if(owner && owner.incapacitated(ignore_restraints=TRUE, ignore_grab=TRUE))// owner.incapacitated())
@@ -77,8 +77,7 @@
 						newtarget.drop_all_held_items()
 				foundtargets += newtarget
 		sleep(1)
-	if(user)
-		user.update_canmove() //Let the poor guy move again
+	user?.update_mobility() //Let the poor guy move again
 
 /datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE

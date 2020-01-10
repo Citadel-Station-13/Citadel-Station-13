@@ -180,7 +180,7 @@
 			collar_type = "[initial(collar_type)]_sit"
 			set_resting(TRUE)
 		else if (prob(1))
-			if (resting)
+			if (_REFACTORING_resting)
 				emote("me", EMOTE_VISIBLE, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				collar_type = "[initial(collar_type)]"

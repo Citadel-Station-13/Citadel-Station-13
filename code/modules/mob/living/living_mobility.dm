@@ -26,7 +26,7 @@
 	if(client?.prefs?.autostand)
 		intentionalresting = !intentionalresting
 		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_REFACTORING_resting ? "lay down and ": ""]stay down" : "[_REFACTORING_resting ? "get up and ": ""]stay up"].</span>")
-		if(intentionalresting && !resting)
+		if(intentionalresting && !_REFACTORING_resting)
 			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
@@ -97,15 +97,15 @@
 
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
-	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
-	var/canmove = !IsImmobilized() && !stun && conscious && !paralyze && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs) && !pinned
+	var/pinned = _REFACTORING_resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
+	var/canmove = !IsImmobilized() && !stun && conscious && !paralyze && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs) && !pinned
 
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
 	else
 		mobility_flags &= ~MOBILITY_MOVE
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
-	var/canstand = canstand_involuntary && !resting
+	var/canstand = canstand_involuntary && !_REFACTORING_resting
 
 	var/should_be_lying = !canstand
 	if(buckled)
@@ -128,11 +128,23 @@
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
 
-	var/canitem = !paralyze && !stun && conscious && !chokehold && !restrained && has_arms
-	if(canitem)
-		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
+	var/canitem_general = !paralyze && !stun && conscious && !chokehold && !restrained && has_arms
+	if(canitem_general)
+		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE | MOBILITY_HOLD)
 	else
-		mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
+		mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE | MOBILITY_HOLD)
+
+	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOMOVE))
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
+	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOPICKUP))
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_PICKUP)
+	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOUSE))
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)
+
+	if(daze)
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)
+
+	//Handle update-effects.
 	if(!(mobility_flags & MOBILITY_HOLD))
 		drop_all_held_items()
 	if(!(mobility_flags & MOBILITY_PULL))
@@ -162,10 +174,3 @@
 		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
 
 	return mobility_flags
-
-	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOMOVE))
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
-	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOPICKUP))
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_PICKUP)
-	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOUSE))
-		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)

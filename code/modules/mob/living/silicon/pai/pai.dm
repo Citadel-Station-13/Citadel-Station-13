@@ -80,7 +80,7 @@
 	var/radio_short_cooldown = 5 MINUTES
 	var/radio_short_timerid
 
-	canmove = FALSE
+	mobility_flags = NONE
 	var/silent = FALSE
 	var/brightness_power = 5
 
@@ -100,7 +100,6 @@
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = P
 		P = new /obj/item/paicard(newcardloc)

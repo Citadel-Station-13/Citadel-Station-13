@@ -22,7 +22,7 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 		if (INTENT_HELP)
 			if(!recoveringstam)
-				resting = 0
+				SetResting(FALSE, TRUE)
 			AdjustAllImmobility(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)

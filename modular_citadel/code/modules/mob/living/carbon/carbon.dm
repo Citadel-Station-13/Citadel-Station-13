@@ -13,7 +13,7 @@
 	if(.)
 		var/mob/living/mobdude = mover
 		if(istype(mobdude))
-			if(!resting && mobdude.resting)
+			if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && !CHECK_BITFIELD(mobdude.mobility_flags, MOBILITY_STAND))
 				if(!(mobdude.pass_flags & PASSMOB))
 					return FALSE
 	return .

@@ -1201,7 +1201,7 @@
 		stuttering = 0
 	updatehealth()
 	update_stamina()
-	update_canmove()
+	update_mobility()
 	for(var/chem in healing_chems)
 		reagents.add_reagent(chem, healing_chems[chem])
 

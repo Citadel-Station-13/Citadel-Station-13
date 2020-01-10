@@ -547,8 +547,8 @@
 			break
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
-	pushed_mob.resting = 1
+	pushed_mob.forceMove(loc)
+	pushed_mob.set_resting(TRUE, TRUE)
 	pushed_mob.update_canmove()
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
 	check_patient()
