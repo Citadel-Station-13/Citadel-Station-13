@@ -173,32 +173,64 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/soh
-	name = "mining cyborg satchel of holding"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+/obj/item/borg/upgrade/premiumka
+	name = "mining cyborg premium KA"
+	desc = "A premium kinetic accelerator replacement for the mining module's standard kinetic accelerator."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
 
-/obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/premiumka/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/storage/bag/ore/cyborg/S in R.module)
-			R.module.remove_module(S, TRUE)
+		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module)
+			for(var/obj/item/borg/upgrade/modkit/M in KA.modkits)
+				M.uninstall(src)
+			R.module.remove_module(KA, TRUE)
 
-		var/obj/item/storage/bag/ore/holding/H = new /obj/item/storage/bag/ore/holding(R.module)
-		R.module.basic_modules += H
-		R.module.add_module(H, FALSE, TRUE)
+		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg(R.module)
+		R.module.basic_modules += PKA
+		R.module.add_module(PKA, FALSE, TRUE)
 
-/obj/item/borg/upgrade/soh/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/premiumka/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/storage/bag/ore/holding/H in R.module)
-			R.module.remove_module(H, TRUE)
+		for(var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA in R.module)
+			for(var/obj/item/borg/upgrade/modkit/M in PKA.modkits)
+				M.uninstall(src)
+			R.module.remove_module(PKA, TRUE)
 
-		var/obj/item/storage/bag/ore/cyborg/S = new (R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
+		var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA = new (R.module)
+		R.module.basic_modules += KA
+		R.module.add_module(KA, FALSE, TRUE)
+		
+
+/obj/item/borg/upgrade/advcutter
+	name = "mining cyborg advanced plasma cutter"
+	desc = "An upgrade for the mining cyborgs plasma cutter, bringing it to advanced operation."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/miner)
+
+/obj/item/borg/upgrade/advcutter/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/gun/energy/plasmacutter/cyborg/C in R.module)
+			C.name = "advanced cyborg plasma cutter"
+			C.desc = "An improved version of the cyborg plasma cutter. Baring functionality identical to the standard hand held version."
+			C.icon_state = "adv_plasmacutter"
+			for(var/obj/item/ammo_casing/energy/plasma/weak/L in C.ammo_type)
+				L.projectile_type = /obj/item/projectile/plasma/adv
+
+/obj/item/borg/upgrade/advcutter/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		for(var/obj/item/gun/energy/plasmacutter/cyborg/C in R.module)
+			C.name = initial(name)
+			C.desc = initial(desc)
+			C.icon_state = initial(icon_state)
+			for(var/obj/item/ammo_casing/energy/plasma/weak/L in C.ammo_type)
+				L.projectile_type = initial(L.projectile_type)
 
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
@@ -434,15 +466,15 @@
 	name = "medical cyborg expanded hypospray"
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
-	additional_reagents = list("mannitol", "oculine", "inacusiate",
-		"mutadone", "haloperidol")
+	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
+		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol)
 
 /obj/item/borg/upgrade/hypospray/high_strength
 	name = "medical cyborg high-strength hypospray"
 	desc = "An upgrade to the Medical module's hypospray, containing \
 		stronger versions of existing chemicals."
-	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
-		"pen_acid")
+	additional_reagents = list(/datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
+								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"

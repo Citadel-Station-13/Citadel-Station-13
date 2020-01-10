@@ -236,7 +236,6 @@
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
-				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
 				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
@@ -340,6 +339,9 @@
 			qdel(M)
 			continue
 		if(probabilities[M.config_tag]<=0)
+			qdel(M)
+			continue
+		if(M.config_tag in SSvote.stored_modetier_results && SSvote.stored_modetier_results[M.config_tag] < Get(/datum/config_entry/number/dropped_modes))
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])

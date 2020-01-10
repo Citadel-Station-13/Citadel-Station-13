@@ -8,7 +8,7 @@
 	yield = 6
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list("vitamin" = 0.02, "nutriment" = 0.15, "cooking_oil" = 0.03)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.15, /datum/reagent/consumable/cooking_oil = 0.03)
 
 /obj/item/reagent_containers/food/snacks/grown/peanut
 	seed = /obj/item/seeds/peanutseed
@@ -26,5 +26,5 @@
 	desc = "A handful of roasted peanuts, with or without salt."
 	icon_state = "roasted_peanuts"
 	foodtype = VEGETABLES
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
-	juice_results = list("peanut_butter" = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
+	juice_results = list(/datum/reagent/consumable/peanut_butter = 3)

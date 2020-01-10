@@ -5,7 +5,6 @@
 
 /datum/reagent/medicine/macrocillin
 	name = "Macrocillin"
-	id = "macrocillin"
 	description = "Glowing yellow liquid."
 	reagent_state = LIQUID
 	color = "#FFFF00" // rgb: 255, 255, 0
@@ -17,13 +16,12 @@
 			M.sizescale(size)
 			M << "<font color='green'>You grow!</font>"
 			break
-	if(M.reagents.has_reagent("macrocillin"))
-		M.reagents.remove_reagent("macrocillin", 20)
+	if(M.reagents.has_reagent(/datum/reagent/medicine/macrocillin))
+		M.reagents.remove_reagent(/datum/reagent/medicine/macrocillin, 20)
 	..()
 
 /datum/reagent/medicine/microcillin
 	name = "Microcillin"
-	id = "microcillin"
 	description = "Murky purple liquid."
 	reagent_state = LIQUID
 	color = "#800080"
@@ -35,14 +33,13 @@
 			M.sizescale(size)
 			M << "<span class='alert'>You shrink!</span>"
 			break;
-	if(M.reagents.has_reagent("microcillin"))
-		M.reagents.remove_reagent("microcillin", 20)
+	if(M.reagents.has_reagent(/datum/reagent/medicine/microcillin))
+		M.reagents.remove_reagent(/datum/reagent/medicine/microcillin, 20)
 
 	..()
 
 /datum/reagent/medicine/normalcillin
 	name = "Normalcillin"
-	id = "normalcillin"
 	description = "Translucent cyan liquid."
 	reagent_state = LIQUID
 	color = "#00FFFF"
@@ -62,14 +59,13 @@
 		M.sizescale(SIZESCALE_SMALL)
 		M << "<font color='green'>You grow!</font>"
 
-	if(M.reagents.has_reagent("normalcillin"))
-		M.reagents.remove_reagent("normalcillin", 20)
+	if(M.reagents.has_reagent(/datum/reagent/medicine/normalcillin))
+		M.reagents.remove_reagent(/datum/reagent/medicine/normalcillin, 20)
 	..()
 
 
 /datum/reagent/medicine/sizeoxadone
 	name = "Sizeoxadone"
-	id = "sizeoxadone"
 	description = "A volatile liquid used as a precursor to size-altering chemicals. Causes dizziness if taken unprocessed."
 	reagent_state = LIQUID
 	color = "#1E90FF"
@@ -93,7 +89,6 @@
 
 /datum/reagent/medicine/ickypak
 	name = "Ickypak"
-	id = "ickypak"
 	description = "A foul-smelling green liquid, for inducing muscle contractions to expel accidentally ingested things."
 	reagent_state = LIQUID
 	color = "#0E900E"
