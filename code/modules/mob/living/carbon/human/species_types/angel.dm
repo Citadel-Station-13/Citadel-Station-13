@@ -81,12 +81,12 @@
 		if(H.movement_type & FLYING)
 			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
-			H.update_canmove()
+			H.update_mobility()
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
-			H.resting = 0
+			H.set_resting(FALSE, TRUE)
 			A.ToggleFlight(H,1)
-			H.update_canmove()
+			H.update_mobility()
 
 /datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj

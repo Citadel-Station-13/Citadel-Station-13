@@ -691,7 +691,7 @@
 /mob/living/resist_grab(moving_resist)
 	. = 1
 	if(pulledby.grab_state)
-		if(!resting && prob(30/pulledby.grab_state))
+		if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()

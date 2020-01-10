@@ -109,8 +109,7 @@
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.resting = TRUE
-	pushed_mob.update_canmove()
+	pushed_mob.set_resting(TRUE, FALSE)
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	log_combat(user, pushed_mob, "placed")
@@ -138,11 +137,11 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
-	if(!target.resting)
+	if(CHECK_BITFIELD(target.mobility_flags, MOBILITY_STAND))
 		target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_TABLE)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	target.forceMove(src.loc)
+	target.forceMove(loc)
 	log_combat(user, target, "shoved", "onto [src] (table)")
 	return TRUE
 
@@ -557,14 +556,12 @@
 /obj/structure/table/optable/proc/check_patient()
 	var/mob/M = locate(/mob/living/carbon/human, loc)
 	if(M)
-		if(M.resting)
+		if(!CHECK_BITFIELD(M.mobility_flags, MOBILITY_STAND))
 			patient = M
 			return 1
 	else
 		patient = null
 		return 0
-
-
 
 /*
  * Racks
@@ -624,7 +621,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.IsKnockdown() || user.resting || user.lying || user.get_num_legs() < 2)
+	if(CHECK_MULTIPLE_BITFIELDS(user.mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) || user.get_num_legs() < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
