@@ -734,7 +734,7 @@
 	name = "pink glitter from white"
 	id = "pink_glitter_white"
 	results = list(/datum/reagent/glitter/pink = 2)
-	required_reagents = list("white_glitter" = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
+	required_reagents = list(/datum/reagent/glitter/white = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
 
 /datum/chemical_reaction/blue_glitter/pink
 	name = "blue glitter from pink"
