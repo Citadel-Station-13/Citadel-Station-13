@@ -123,11 +123,23 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
 	created = text2num(recipe_data["timestamp"])
-	required_reagents = SANITIZE_LIST(recipe_data["required_reagents"])
-	required_catalysts = SANITIZE_LIST(recipe_data["required_catalysts"])
+	var/req_reag = unwrap_reagent_list(recipe_data["required_reagents"])
+	if(!req_reag)
+		return FALSE
+	required_reagents = req_reag
+
+	var/req_catalysts = unwrap_reagent_list(recipe_data["required_catalysts"])
+	if(!req_catalysts)
+		return FALSE
+	required_catalysts = req_catalysts
+
 	required_temp = recipe_data["required_temp"]
 	is_cold_recipe = recipe_data["is_cold_recipe"]
-	results = SANITIZE_LIST(recipe_data["results"])
+
+	var/temp_results = unwrap_reagent_list(recipe_data["results"])
+	if(!temp_results)
+		return FALSE
+	results = temp_results
 	var/containerpath = text2path(recipe_data["required_container"])
 	if(!containerpath)
 		return FALSE
@@ -136,13 +148,13 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /datum/chemical_reaction/randomized/secret_sauce
 	name = "secret sauce creation"
-	id = "secretsauce"
+	id = /datum/reagent/consumable/secretsauce
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
 	possible_containers = list(/obj/item/reagent_containers/glass/bucket) //easy way to ensure no common conflicts
 	randomize_req_temperature = TRUE
-	results = list("secret_sauce" =1)
+	results = list(/datum/reagent/consumable/secretsauce =1)
 
 /datum/chemical_reaction/randomized/secret_sauce/GetPossibleReagents(kind)
 	switch(kind)

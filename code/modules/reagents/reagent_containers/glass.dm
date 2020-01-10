@@ -27,7 +27,7 @@
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
+					R += A.type + " ("
 					R += num2text(A.volume) + "),"
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
@@ -115,7 +115,7 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
-	possible_transfer_amounts = list(5,10,15,20,25,30,60)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
 	beaker_weakness_bitflag = PH_WEAK
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
@@ -169,7 +169,7 @@
 	materials = list(MAT_GLASS=2500)
 	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,40,60,120)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120)
 	container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/plastic
@@ -179,7 +179,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
 	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,40,60,120,180)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/plastic/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -198,7 +198,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
 	volume = 240
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,40,60,120,200,240)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
 
 /obj/item/reagent_containers/glass/beaker/meta/Initialize() // why the fuck can't you just set the beaker weakness bitflags to nothing? fuck you
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -233,32 +233,32 @@
 	container_HP = 5
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
-	list_reagents = list("cryoxadone" = 30)
+	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/styptic
 	name = "styptic reserve tank"
-	list_reagents = list("styptic_powder" = 50)
+	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
 	name = "silver sulfadiazine reserve tank"
-	list_reagents = list("silver_sulfadiazine" = 50)
+	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
 	name = "charcoal reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
-	list_reagents = list("epinephrine" = 50)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list("synthflesh" = 50)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
@@ -337,10 +337,11 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
@@ -354,9 +355,10 @@
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	materials = list(MAT_GLASS=0)
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
