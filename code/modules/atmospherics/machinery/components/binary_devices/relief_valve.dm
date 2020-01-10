@@ -1,40 +1,50 @@
-/obj/machinery/atmospherics/components/unary/relief_valve
-	name = "pressure relief valve"
-	desc = "A valve that opens to the air at a certain pressure, then closes once it goes below another."
+/obj/machinery/atmospherics/components/binary/relief_valve
+	name = "binary pressure relief valve"
+	desc = "Like a manual valve, but opens at a certain pressure rather than being toggleable."
 	icon = 'icons/obj/atmospherics/components/relief_valve.dmi'
-	icon_state = "relief_valve-e-map"
+	icon_state = "relief_valve-t-map"
 	can_unwrench = TRUE
+	construction_type = /obj/item/pipe/binary
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE
-	pipe_state = "relief_valve-e"
+	pipe_state = "relief_valve-t"
 
-/obj/machinery/atmospherics/components/unary/relief_valve/layer1
+/obj/machinery/atmospherics/components/binary/relief_valve/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
 	pixel_y = -PIPING_LAYER_P_Y
 
-/obj/machinery/atmospherics/components/unary/relief_valve/layer3
+/obj/machinery/atmospherics/components/binary/relief_valve/layer3
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
 
-/obj/machinery/atmospherics/components/unary/relief_valve/atmos
-	close_pressure = ONE_ATMOSPHERE * 2
-
-/obj/machinery/atmospherics/components/unary/relief_valve/atmos/atmos_waste
-	name = "atmos waste relief valve"
-
-/obj/machinery/atmospherics/components/unary/relief_valve/update_icon_nopipes()
+/obj/machinery/atmospherics/components/binary/relief_valve/update_icon_nopipes()
+	if(dir==SOUTH)
+		setDir(NORTH)
+	else if(dir==WEST)
+		setDir(EAST)
 	cut_overlays()
 
 	if(!nodes[1] || !opened || !is_operational())
-		icon_state = "relief_valve-e"
+		icon_state = "relief_valve-t"
 		return
 
-	icon_state = "relief_valve-e-blown"
+	icon_state = "relief_valve-t-blown"
 
-/obj/machinery/atmospherics/components/unary/relief_valve/process_atmos()
+/obj/machinery/atmospherics/components/binary/relief_valve/proc/open()
+	opened = TRUE
+	update_icon_nopipes()
+	update_parents()
+	var/datum/pipeline/parent1 = parents[1]
+	parent1.reconcile_air()
+
+/obj/machinery/atmospherics/components/binary/relief_valve/proc/close()
+	opened = FALSE
+	update_icon_nopipes()
+
+/obj/machinery/atmospherics/components/binary/relief_valve/process_atmos()
 	..()
 
 	if(!is_operational())
@@ -43,38 +53,25 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/our_pressure = air_contents.return_pressure()
 	if(opened && our_pressure < close_pressure)
-		opened = FALSE
-		update_icon_nopipes()
+		close()
 	else if(!opened && our_pressure >= open_pressure)
-		opened = TRUE
-		update_icon_nopipes()
-	if(opened && air_contents.temperature > 0)
-		var/datum/gas_mixture/environment = loc.return_air()
-		var/pressure_delta = our_pressure - environment.return_pressure()
-		var/transfer_moles = pressure_delta*200/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-		if(transfer_moles > 0)
-			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+		open()
 
-			loc.assume_air(removed)
-			air_update_turf()
-
-			update_parents()
-
-/obj/machinery/atmospherics/components/unary/relief_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/machinery/atmospherics/components/binary/relief_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_relief", name, 335, 115, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/unary/relief_valve/ui_data()
+/obj/machinery/atmospherics/components/binary/relief_valve/ui_data()
 	var/data = list()
 	data["open_pressure"] = round(open_pressure)
 	data["close_pressure"] = round(close_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
-/obj/machinery/atmospherics/components/unary/relief_valve/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/relief_valve/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
