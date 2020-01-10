@@ -136,6 +136,15 @@
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 
+// mobility flag traits
+
+/// Disallow movement
+#define TRAIT_MOBILITY_NOMOVE		"mobility_nomove"
+/// Disallow pickup
+#define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
+/// Disallow item use
+#define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it

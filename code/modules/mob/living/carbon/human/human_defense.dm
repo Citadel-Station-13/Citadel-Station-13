@@ -296,7 +296,7 @@
 					if(M.force > 35) // durand and other heavy mechas
 						DefaultCombatKnockdown(50)
 						src.throw_at(throw_target, rand(1,5), 7)
-					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
+					else if(M.force >= 20 && CHECK_BITFIELD(mobility_flags, MOBILITY_STAND)) // lightweight mechas like gygax
 						DefaultCombatKnockdown(30)
 						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)

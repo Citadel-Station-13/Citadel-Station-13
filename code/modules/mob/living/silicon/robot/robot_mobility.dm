@@ -11,4 +11,4 @@
 	mobility_flags = newflags
 	update_transform()
 	update_action_buttons_icon()
-	return canmove
+	return mobility_flags

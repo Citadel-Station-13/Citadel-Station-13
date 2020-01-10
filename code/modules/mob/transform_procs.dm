@@ -407,7 +407,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -440,7 +440,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)

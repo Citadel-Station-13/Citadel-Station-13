@@ -92,61 +92,14 @@
 	var/stun = _MOBILITYFLAGTEMPORARY_IsStun()
 	var/paralyze = IsParalyzed()
 	var/knockdown = _MOBILITYFLAGTEMPORARY_IsKnockdown()
+	var/daze = IsDazed()
 	var/immobilize = IsImmobilized()
 
-
-/*
-	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (HAS_TRAIT(src, TRAIT_DEATHCOMA))
-	var/move_and_fall = stat == SOFT_CRIT && !pulledby
-	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/buckle_lying = !(buckled && !buckled.buckle_lying)
-	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
-	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
-		drop_all_held_items()
-		unset_machine()
-		if(pulling)
-			stop_pulling()
-	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
-		unset_machine() //CIT CHANGE - Ditto!
-		if(pulling) //CIT CHANGE - Ditto.
-			stop_pulling() //CIT CHANGE - Ditto...
-	else if(has_legs || ignore_legs)
-		lying = 0
-		if (pulledby)
-			var/mob/living/L = pulledby
-			L.update_pull_movespeed()
-	if(buckled)
-		lying = 90*buckle_lying
-	else if(!lying)
-		if(resting)
-			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
-			if(has_gravity()) // Cit change - Ditto
-				playsound(src, "bodyfall", 50, 1) // Cit change - Ditto!
-		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
-			fall(forced = 1)
-	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
-	density = !lying
-	if(lying)
-		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	else
-		if(layer == LYING_MOB_LAYER)
-			layer = initial(layer)
-	update_transform()
-	if(!lying && lying_prev)
-		if(client)
-			client.move_delay = world.time + movement_delay()
-	lying_prev = lying
-	if(canmove && !intentionalresting && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
-		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
-	return canmove
-*/
-
-
-/*
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
-	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs)
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
+	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs) && !pinned
+
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
 	else
@@ -175,24 +128,27 @@
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
 
-
-
 	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
 	if(canitem)
 		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
 	else
 		mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
-	if(!(mobility_flags & MOBILITY_USE))
+	if(!(mobility_flags & MOBILITY_HOLD))
 		drop_all_held_items()
 	if(!(mobility_flags & MOBILITY_PULL))
 		if(pulling)
 			stop_pulling()
 	if(!(mobility_flags & MOBILITY_UI))
 		unset_machine()
+
+	if(pulledby)
+		pulledby.update_pull_movespeed()
+
+	//Handle lying down, voluntary or involuntary
 	density = !lying
 	if(lying)
 		if(!lying_prev)
-			fall(!canstand_involuntary)
+			set_resting(TRUE, TRUE, FALSE)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
 			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	else
@@ -201,17 +157,15 @@
 	update_transform()
 	lying_prev = lying
 
-	// Movespeed mods based on arms/legs quantity
-	if(!get_leg_ignore())
-		var/limbless_slowdown = 0
-		// These checks for <2 should be swapped out for something else if we ever end up with a species with more than 2
-		if(has_legs < 2)
-			limbless_slowdown += 6 - (has_legs * 3)
-			if(!has_legs && has_arms < 2)
-				limbless_slowdown += 6 - (has_arms * 3)
-		if(limbless_slowdown)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, movetypes=GROUND)
-		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
-*/
+	//Handle citadel autoresist
+	if((mobility_flags & MOBILITY_MOVE) && !intentionalresting && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
+		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
 
+	return mobility_flags
+
+	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOMOVE))
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
+	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOPICKUP))
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_PICKUP)
+	if(HAS_TRAIT(src, TRAIT_MOBILITY_NOUSE))
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)

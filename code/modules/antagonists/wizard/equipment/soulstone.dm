@@ -83,8 +83,8 @@
 /obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
-		A.canmove = TRUE
 		A.forceMove(get_turf(user))
+		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.cancel_camera()
 		icon_state = "soulstone"
 		name = initial(name)
@@ -173,7 +173,7 @@
 			else
 				T.forceMove(src) //put shade in stone
 				T.status_flags |= GODMODE
-				T.canmove = FALSE
+				T.mobility_flags = NONE
 				T.health = T.maxHealth
 				icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"

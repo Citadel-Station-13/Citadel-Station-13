@@ -33,12 +33,17 @@
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
 
+//PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 
 /datum/status_effect/incapacitating/paralyzed/tick()
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
+//DAZED
+/datum/status_effect/incapacitating/dazed
+	id = "dazed"
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious

@@ -234,12 +234,66 @@
 			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
 		return P
 
+///////////////////////////////// DAZED ////////////////////////////////////
+/mob/living/proc/IsDazed() //If we're Dazed
+	return has_status_effect(STATUS_EFFECT_DAZED)
+
+/mob/living/proc/AmountDazed() //How many deciseconds remain in our Dazed status effect
+	var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+	if(I)
+		return I.duration - world.time
+	return 0
+
+/mob/living/proc/Daze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+		if(I)
+			I.duration = max(world.time + amount, I.duration)
+		else if(amount > 0)
+			I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
+		return I
+
+/mob/living/proc/SetDazed(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+		if(amount <= 0)
+			if(I)
+				qdel(I)
+		else
+			if(absorb_stun(amount, ignore_canstun))
+				return
+			if(I)
+				I.duration = world.time + amount
+			else
+				I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
+		return I
+
+/mob/living/proc/AdjustDazed(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+		if(I)
+			I.duration += amount
+		else if(amount > 0)
+			I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
+		return I
+
 //Blanket
 /mob/living/proc/AllImmobility(amount, updating, ignore_canstun = FALSE)
 	Paralyze(amount, FALSE, ignore_canstun)
 	_MOBILITYFLAGTEMPORARY_Knockdown(amount, FALSE, ignore_canstun)
 	Stun(amount, FALSE, ignore_canstun)
 	Immobilize(amount, FALSE, ignore_canstun)
+	Daze(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -248,6 +302,7 @@
 	_MOBILITYFLAGTEMPORARY_SetKnockdown(amount, FALSE, ignore_canstun)
 	_MOBILITYFLAGTEMPORARY_SetStun(amount, FALSE, ignore_canstun)
 	SetImmobilized(amount, FALSE, ignore_canstun)
+	SetDazed(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -256,10 +311,11 @@
 	_MOBILITYFLAGTEMPORARY_AdjustKnockdown(amount, FALSE, ignore_canstun)
 	_MOBILITYFLAGTEMPORARY_AdjustStun(amount, FALSE, ignore_canstun)
 	AdjustImmobilized(amount, FALSE, ignore_canstun)
+	AdjustDazed(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
-/// Makes sure all 4 of the non-knockout immobilizing status effects are lower or equal to amount.
+/// Makes sure all 5 of the non-knockout immobilizing status effects are lower or equal to amount.
 /mob/living/proc/HealAllImmobilityUpTo(amount, updating, ignore_canstun = FALSE)
 	if(_MOBILITYFLAGTEMPORARY_AmountStun() > amount)
 		_MOBILITYFLAGTEMPORARY_SetStun(amount, FALSE, ignore_canstun)
@@ -268,6 +324,8 @@
 	if(AmountParalyzed() > amount)
 		SetParalyzed(amount, FALSE, ignore_canstun)
 	if(AmountImmobilized() > amount)
+		SetImmobilized(amount, FALSE, ignore_canstun)
+	if(AmountDazed() > amount)
 		SetImmobilized(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()

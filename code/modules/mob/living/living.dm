@@ -486,7 +486,7 @@
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
-		update_canmove()
+		update_mobility()
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -520,7 +520,7 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
-	update_canmove()
+	update_mobility()
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if (mood)
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
