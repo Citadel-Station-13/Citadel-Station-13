@@ -1,8 +1,9 @@
 /obj/machinery/atmospherics/components/unary/relief_valve
 	name = "pressure relief valve"
 	desc = "A valve that opens to the air at a certain pressure, then closes once it goes below another."
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
+	icon = 'icons/obj/atmospherics/components/relief_valve.dmi'
 	icon_state = "relief_valve-e"
+	can_unwrench = TRUE
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE
@@ -19,11 +20,10 @@
 	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/relief_valve/atmos
-	var/close_pressure = ONE_ATMOSPHERE * 2
+	close_pressure = ONE_ATMOSPHERE * 2
 
 /obj/machinery/atmospherics/components/unary/relief_valve/atmos/atmos_waste
 	name = "atmos waste relief valve"
-	id =  ATMOS_GAS_MONITOR_WASTE_ATMOS
 
 /obj/machinery/atmospherics/components/unary/relief_valve/update_icon_nopipes()
 	cut_overlays()
@@ -34,7 +34,7 @@
 
 	icon_state = "relief_valve-e-blown"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
+/obj/machinery/atmospherics/components/unary/relief_valve/process_atmos()
 	..()
 
 	if(!is_operational())
@@ -44,12 +44,14 @@
 	var/our_pressure = air_contents.return_pressure()
 	if(opened && our_pressure < close_pressure)
 		opened = FALSE
+		update_icon_nopipes()
 	else if(!opened && our_pressure >= open_pressure)
 		opened = TRUE
+		update_icon_nopipes()
 	if(opened && air_contents.temperature > 0)
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/pressure_delta = our_pressure - environment.return_pressure()
-		var/transfer_moles = pressure_delta*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure_delta*200/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -57,3 +59,53 @@
 			air_update_turf()
 
 			update_parents()
+
+/obj/machinery/atmospherics/components/unary/relief_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "atmos_relief", name, 335, 115, master_ui, state)
+		ui.open()
+
+/obj/machinery/atmospherics/components/unary/relief_valve/ui_data()
+	var/data = list()
+	data["open_pressure"] = round(open_pressure)
+	data["close_pressure"] = round(close_pressure)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	return data
+
+/obj/machinery/atmospherics/components/unary/relief_valve/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("open_pressure")
+			var/pressure = params["open_pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, open_pressure) as num|null
+				if(!isnull(pressure) && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				open_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("open pressure was set to [open_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
+		if("close_pressure")
+			var/pressure = params["close_pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, close_pressure) as num|null
+				if(!isnull(pressure) && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				close_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("close pressure was set to [close_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
+	update_icon()

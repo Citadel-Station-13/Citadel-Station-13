@@ -227,11 +227,6 @@
 				if(V.on)
 					PL |= V.parents[1]
 					PL |= V.parents[2]
-			else if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/gated_valve)) // i hate this
-				var/obj/machinery/atmospherics/components/binary/gated_valve/V = atmosmch
-				if(V.cur_open)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
 			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
 				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
 				if(C.connected_device)
