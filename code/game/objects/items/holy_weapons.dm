@@ -308,7 +308,7 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands)
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
@@ -789,7 +789,7 @@
 
 	praying = TRUE
 	if(do_after(user, 20, target = M))
-		M.reagents?.add_reagent("holywater", 5)
+		M.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
 		to_chat(M, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
 		M.adjustToxLoss(-5, TRUE, TRUE)
 		M.adjustOxyLoss(-5)
