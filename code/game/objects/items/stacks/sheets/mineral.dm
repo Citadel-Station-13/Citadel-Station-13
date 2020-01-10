@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	singular_name = "snow block"
 	force = 1
 	throwforce = 2
-	grind_results = list("ice" = 20)
+	grind_results = list(/datum/reagent/consumable/ice = 20)
 	merge_type = /obj/item/stack/sheet/mineral/snow
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
