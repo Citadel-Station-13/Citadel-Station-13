@@ -16,6 +16,34 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
+/obj/item/ammo_casing/caseless/laser/heavy
+	name = "heavy laser casing"
+	projectile_type = /obj/item/projectile/beam/laser/heavylaser
+
+/obj/item/ammo_casing/caseless/laser/weak
+	name = "weak laser casing"
+	projectile_type = /obj/item/projectile/beam/weak
+
+/obj/item/ammo_casing/caseless/laser/weak/ap
+	name = "weak penetrator laser casing"
+	projectile_type = /obj/item/projectile/beam/weak/penetrator
+
+/obj/item/ammo_casing/caseless/laser/disabler
+	name = "disabler laser casing"
+	projectile_type = /obj/item/projectile/beam/disabler
+
+/obj/item/ammo_casing/caseless/laser/disabler/weak
+	name = "weak disabler laser casing"
+	projectile_type = /obj/item/projectile/beam/disabler/weak
+
+/obj/item/ammo_casing/caseless/laser/pulse
+	name = "pulse laser casing"
+	projectile_type = /obj/item/projectile/beam/pulse
+
+/obj/item/ammo_casing/caseless/laser/xray
+	name = "xray laser casing"
+	projectile_type = /obj/item/projectile/beam/xray
+
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/item/projectile/beam/weak/penetrator
 	variance = 0.8

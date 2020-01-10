@@ -427,6 +427,11 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = FALSE
 
+/obj/item/gun/ballistic/automatic/laser/nopin
+	name = "outdated laser rifle"
+	pin = null
+	spawnwithmagazine = FALSE
+
 /obj/item/gun/ballistic/automatic/laser/update_icon()
 	..()
 	icon_state = "oldrifle[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"

@@ -47,6 +47,60 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+///////////////
+//Power Packs//
+///////////////
+
+/datum/design/power_pack_weak
+	name = "Weak Power Pack (Laser Rifle)"
+	desc = "Designed to be a light weight portable ammo pack that is able to recharge. Still weak to EMPs."
+	id = "weak_power_pack"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 3600, MAT_GOLD = 3600, MAT_TITANIUM = 1800)
+	build_path = /obj/item/ammo_box/magazine/recharge/weak
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/power_pack_weak_ap
+	name = "Weak Penetrator Power Pack (Laser Rifle)"
+	desc = "Designed to be a light weight portable ammo pack that is able to recharge. Still weak to EMPs."
+	id = "weak_power_pack_ap"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 3600, MAT_GOLD = 3600, MAT_TITANIUM = 1800, MAT_BLUESPACE = 800)
+	build_path = /obj/item/ammo_box/magazine/recharge/weak/ap
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/power_pack
+	name = "Power Pack (Laser Rifle)"
+	desc = "Designed to be a light weight portable ammo pack that is able to recharge. Still weak to EMPs."
+	id = "power_pack"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 3600, MAT_GOLD = 3600, MAT_TITANIUM = 1800, MAT_DIAMOND = 500)
+	build_path = /obj/item/ammo_box/magazine/recharge
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/power_pack_disabler
+	name = "Disabler Power Pack (Laser Rifle)"
+	desc = "Designed to be a light weight portable ammo pack that is able to recharge. Still weak to EMPs."
+	id = "power_pack_disabler"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 3600, MAT_GOLD = 3600, MAT_TITANIUM = 1800, MAT_DIAMOND = 500)
+	build_path = /obj/item/ammo_box/magazine/recharge/disabler
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/power_pack_disabler_weak
+	name = "Weak Disabler Power Pack (Laser Rifle)"
+	desc = "Designed to be a light weight portable ammo pack that is able to recharge. Still weak to EMPs."
+	id = "power_pack_disabler_weak"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_SILVER = 3600, MAT_GOLD = 3600, MAT_TITANIUM = 1800)
+	build_path = /obj/item/ammo_box/magazine/recharge/disabler/weak
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 //////////////
 //WT550 Mags//
 //////////////
@@ -196,8 +250,18 @@
 	desc = "Beefed up version of a standard laser gun."
 	id = "lasercarbine"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500)
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500, MAT_PLASMA = 5000)
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/laserrifle
+	name = "Laser Rifle"
+	desc = "An outdated verson of the standard laser gun that takes packs of power rather then an internal cell."
+	id = "laserrifle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 75000, MAT_GLASS = 1000, MAT_GOLD = 5500, MAT_SILVER = 5500, MAT_TITANIUM = 5000)
+	build_path = /obj/item/gun/ballistic/automatic/laser/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 

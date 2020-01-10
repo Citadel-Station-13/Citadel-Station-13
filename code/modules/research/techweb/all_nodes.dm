@@ -646,7 +646,7 @@
 	display_name = "Weapon Development Technology"
 	description = "Our researchers have found new to weaponize just about everything now."
 	prereq_ids = list("engineering")
-	design_ids = list("pin_testing", "tele_shield", "lasercarbine")
+	design_ids = list("pin_testing", "tele_shield")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	export_price = 5000
 
@@ -654,9 +654,27 @@
 	id = "adv_weaponry"
 	display_name = "Advanced Weapon Development Technology"
 	description = "Our weapons are breaking the rules of reality by now."
-	prereq_ids = list("adv_engi", "weaponry")
-	design_ids = list("pin_loyalty")
+	prereq_ids = list("adv_engi", "laserrifle")
+	design_ids = list("pin_loyalty", "lasercarbine")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	export_price = 5000
+
+/datum/techweb_node/laserrifle
+	id = "laserrifle"
+	display_name = "Out Dated Laser Weaponery"
+	description = "Looking back on older designs, will allow the furcher to not make the same misstakes."
+	prereq_ids = list("weaponry")
+	design_ids = list("laserrifle", "weak_power_pack", "power_pack_disabler_weak")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/improved_laserrifle
+	id = "improved_laserrifle"
+	display_name = "Refitted Laser Weaponery"
+	description = "Looking back on older designs, their still can be improvements made."
+	prereq_ids = list("beam_weapons", "laserrifle", "emp_super")
+	design_ids = list("power_pack", "power_pack_disabler", "weak_power_pack_ap")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
 /datum/techweb_node/electric_weapons

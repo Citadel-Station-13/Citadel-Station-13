@@ -81,6 +81,11 @@
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
 
+/obj/item/projectile/beam/disabler/weak
+	name = "weak disabler beam"
+	icon_state = "omnilaser"
+	damage = 14 // Used in Laser rifle
+
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"
