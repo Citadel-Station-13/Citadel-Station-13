@@ -684,3 +684,33 @@
 	item_state = "fermis"
 	attack_verb = list("cuddled", "petpatted", "wigglepurred")
 	squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
+
+/obj/item/toy/plush/xeno
+	name = "xenohybrid plushie"
+	desc = "An adorable stuffed toy that resmembles a xenomorphic crewmember."
+	squeak_override = list('sound/voice/hiss2.ogg' = 1)
+
+/obj/item/toy/plush/bird
+	name = "bird plushie"
+	desc = "An adorable stuffed plushie that resembles an avian."
+	attack_verb = list("peeped", "beeped", "poofed")
+	squeak_override = list('modular_citadel/sound/voice/peep.ogg' = 1)
+
+/obj/item/toy/plush/sergal
+	name = "sergal plushie"
+	desc = "An adorable stuffed plushie that resembles a sagaru."
+	squeak_override = list('modular_citadel/sound/voice/merp.ogg' = 1)
+
+/obj/item/toy/plush/mammal/dog
+	desc = "An adorable stuffed toy that resembles a canine."
+	attack_verb = list("barked", "boofed", "borked")
+	squeak_override = list(
+	'modular_citadel/sound/voice/bark1.ogg' = 1,
+	'modular_citadel/sound/voice/bark2.ogg' = 1
+	)
+
+/obj/item/toy/plush/catgirl
+	name = "feline plushie"
+	desc = "An adorable stuffed toy that resembles a feline."
+	attack_verb = list("headbutt", "scritched", "bit")
+	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
