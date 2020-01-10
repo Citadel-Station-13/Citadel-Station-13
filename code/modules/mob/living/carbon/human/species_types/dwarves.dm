@@ -7,18 +7,18 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
-	inherent_traits = list() 
+	inherent_traits = list()
 	default_features = list("mcolor" = "FFF", "wings" = "None")
 	limbs_id = "human"
 	use_skintones = 1
 	say_mod = "bellows" //high energy, EXTRA BIOLOGICAL FUEL
-	damage_overlay_type = "human" 
+	damage_overlay_type = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	liked_food = ALCOHOL | MEAT | DAIRY //Dwarves like alcohol, meat, and dairy products.
 	disliked_food = JUNKFOOD | FRIED //Dwarves hate foods that have no nutrition other than alcohol.
 	mutant_organs = list(/obj/item/organ/dwarfgland) //Dwarven alcohol gland, literal gland warrior
 	mutantliver = /obj/item/organ/liver/dwarf //Dwarven super liver (Otherwise they r doomed)
-	
+
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.
 
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 /datum/species/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	var/dwarf_hair = pick("Beard (Dwarf)", "Beard (Very Long)", "Beard (Long)") //beard roullette
-	var/mob/living/carbon/human/H = C 
+	var/mob/living/carbon/human/H = C
 	H.facial_hair_style = dwarf_hair
 	H.update_hair()
 	H.transform = H.transform.Scale(1, 0.8) //We use scale, and yeah. Dwarves can become gnomes with DWARFISM.
@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 
 /obj/item/organ/dwarfgland/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("ethanol", stored_alcohol/10)
+	S.reagents.add_reagent(/datum/reagent/consumable/ethanol, stored_alcohol/10)
 	return S
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
@@ -108,8 +108,8 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 		return //We make sure they are not dead, so they don't increment any tickers.
 	dwarf_eth_ticker++
 	dwarf_filth_ticker++
-	
-	if(dwarf_filth_ticker >= 4) //Should be around 4-8 seconds since a tick is around 2 seconds. 
+
+	if(dwarf_filth_ticker >= 4) //Should be around 4-8 seconds since a tick is around 2 seconds.
 		dwarf_filth_cycle()		//On_life will adjust regarding other factors, so we are along for the ride.
 		dwarf_filth_ticker = 0 //We set the ticker back to 0 to go again.
 	if(dwarf_eth_ticker >= 1) //Alcohol reagent check should be around 2 seconds, since a tick is around 2 seconds.

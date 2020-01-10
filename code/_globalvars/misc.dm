@@ -23,6 +23,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
 GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
 
+GLOBAL_LIST_EMPTY(clientless_round_timeouts)	// ckey -> time that ckey can rejoin round
+
 // All religion stuff
 GLOBAL_VAR(religion)
 GLOBAL_VAR(deity)

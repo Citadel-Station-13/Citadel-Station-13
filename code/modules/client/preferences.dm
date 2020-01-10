@@ -21,6 +21,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_ip
 	var/last_id
 
+	var/icon/custom_holoform_icon
+	var/list/cached_holoform_icons
+	var/last_custom_holoform = 0
+
 	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
 	var/saveprefcooldown
 	var/loadprefcooldown
@@ -195,6 +199,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
+	
+	var/sprint_spacebar = FALSE
+	var/sprint_toggle = FALSE
 
 	var/list/exp = list()
 	var/list/menuoptions
@@ -889,6 +896,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</a><br>"
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
+			dat += "<b>Sprint Key:</b> <a href='?_src_=prefs;preference=sprint_key'>[sprint_spacebar ? "Space" : "Shift"]</a><br>"
+			dat += "<b>Toggle Sprint:</b> <a href='?_src_=prefs;preference=sprint_toggle'>[sprint_toggle ? "Enabled" : "Disabled"]</a><br>"
 
 			if (CONFIG_GET(flag/maprotation) && CONFIG_GET(flag/tgstyle_maprotation))
 				var/p_map = preferred_map
@@ -2239,6 +2248,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
 
+				if("sprint_key")
+					sprint_spacebar = !sprint_spacebar
+
+				if("sprint_toggle")
+					sprint_toggle = !sprint_toggle
+
 				if("save")
 					save_preferences()
 					save_character()
@@ -2411,3 +2426,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+/datum/preferences/proc/get_filtered_holoform(filter_type)
+	if(!custom_holoform_icon)
+		return
+	LAZYINITLIST(cached_holoform_icons)
+	if(!cached_holoform_icons[filter_type])
+		cached_holoform_icons[filter_type] = process_holoform_icon_filter(custom_holoform_icon, filter_type)
+	return cached_holoform_icons[filter_type]

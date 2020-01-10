@@ -605,7 +605,7 @@
 	rank = "Gunner"
 
 /obj/effect/mob_spawn/human/ghostcafe
-	name = "ghost cafe sleeper"
+	name = "Ghost Cafe Sleeper"
 	uses = -1
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -626,13 +626,20 @@
 		O.equip(new_spawn, FALSE, new_spawn.client)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
+		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+		to_chat(new_spawn,"<span class='boldwarning'>You maybe sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
+		to_chat(new_spawn,"<span class='boldwarning'>You can turn yourself into a ghost and freely reenter your body with the ghost action.</span>")
+		var/datum/action/ghost/G = new(new_spawn)
+		G.Grant(new_spawn)
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	id = /obj/item/card/id
+	r_hand = /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 
 
 /datum/outfit/ghostcafe/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
@@ -649,3 +656,17 @@
 		else
 			uniform = /obj/item/clothing/under/skirt/color/random
 
+/obj/item/storage/box/syndie_kit/chameleon/ghostcafe
+	name = "ghost cafe costuming kit"
+	desc = "Look just the way you did in life - or better!"
+
+/obj/item/storage/box/syndie_kit/chameleon/ghostcafe/PopulateContents() // Doesn't contain a PDA, for isolation reasons.
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/suit/chameleon(src)
+	new /obj/item/clothing/gloves/chameleon(src)
+	new /obj/item/clothing/shoes/chameleon(src)
+	new /obj/item/clothing/glasses/chameleon(src)
+	new /obj/item/clothing/head/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/storage/backpack/chameleon(src)
+	new /obj/item/clothing/neck/cloak/chameleon(src)

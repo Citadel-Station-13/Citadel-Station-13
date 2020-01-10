@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	24
+#define SAVEFILE_VERSION_MAX	25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -113,6 +113,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/quirk/exhibitionism/E
 		var/quirk_name = initial(E.name)
 		all_quirks += quirk_name
+	if(current_version < 25)
+		var/digi
+		S["feature_lizard_legs"] >> digi
+		if(digi == "Digitigrade Legs")
+			WRITE_FILE(S["feature_lizard_legs"], "Digitigrade")
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -167,6 +172,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["ambientocclusion"]	>> ambientocclusion
 	S["auto_fit_viewport"]	>> auto_fit_viewport
+	S["sprint_spacebar"]	>> sprint_spacebar
+	S["sprint_toggle"]		>> sprint_toggle
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
@@ -204,6 +211,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
+	sprint_spacebar	= sanitize_integer(sprint_spacebar, 0, 1, initial(sprint_spacebar))
+	sprint_toggle	= sanitize_integer(sprint_toggle, 0, 1, initial(sprint_toggle))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -264,6 +273,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parallax"], parallax)
 	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
+	WRITE_FILE(S["sprint_spacebar"], sprint_spacebar)
+	WRITE_FILE(S["sprint_toggle"], sprint_toggle)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
@@ -503,7 +514,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["frills"]				= sanitize_inlist(features["frills"], GLOB.frills_list)
 	features["spines"]				= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"]		= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list)
+	features["legs"]				= sanitize_inlist(features["legs"], GLOB.legs_list, "Plantigrade")
 	features["deco_wings"] 			= sanitize_inlist(features["deco_wings"], GLOB.deco_wings_list, "None")
 	features["insect_fluff"]		= sanitize_inlist(features["insect_fluff"], GLOB.insect_fluffs_list)
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
