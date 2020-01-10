@@ -68,7 +68,7 @@
 	var/data = list()
 	data["open_pressure"] = round(open_pressure)
 	data["close_pressure"] = round(close_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	data["max_pressure"] = round(50*ONE_ATMOSPHERE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/relief_valve/ui_act(action, params)
@@ -78,31 +78,31 @@
 		if("open_pressure")
 			var/pressure = params["open_pressure"]
 			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+				pressure = 50*ONE_ATMOSPHERE
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, open_pressure) as num|null
+				pressure = input("New output pressure ([close_pressure]-[50*ONE_ATMOSPHERE] kPa):", name, open_pressure) as num|null
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				open_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				open_pressure = CLAMP(pressure, close_pressure, 50*ONE_ATMOSPHERE)
 				investigate_log("open pressure was set to [open_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("close_pressure")
 			var/pressure = params["close_pressure"]
 			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+				pressure = open_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, close_pressure) as num|null
+				pressure = input("New output pressure (0-[open_pressure] kPa):", name, close_pressure) as num|null
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				close_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				close_pressure = CLAMP(pressure, 0, open_pressure)
 				investigate_log("close pressure was set to [close_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
