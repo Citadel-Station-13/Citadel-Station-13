@@ -970,7 +970,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/antihol
 	name = "Antihol"
-  value = 0.5
+	value = 0.5
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
 	taste_description = "raw egg"
