@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/metal
-	grind_results = list("iron" = 20)
+	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
 	tableVariant = /obj/structure/table
 
@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	grind_results = list("iron" = 20, "plasma" = 20)
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
 
@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
-	grind_results = list("carbon" = 20)
+	grind_results = list(/datum/reagent/carbon = 20)
 
 
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
-	grind_results = list("carbon" = 5)
+	grind_results = list(/datum/reagent/carbon = 5)
 
 /obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.bamboo_recipes
@@ -511,7 +511,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
-	grind_results = list("iron" = 5, "blood" = 15)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -586,7 +586,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 5, "teslium" = 15, "holyoil" = 1)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/teslium = 15, /datum/reagent/fuel/holyoil = 1)
 	merge_type = /obj/item/stack/tile/brass
 	tableVariant = /obj/structure/table/reinforced/brass
 
@@ -639,7 +639,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
-	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
 	tableVariant = /obj/structure/table/bronze
 
@@ -693,7 +693,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	grind_results = list("carbon" = 10)
+	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(

@@ -30,7 +30,7 @@
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY","viruses"= list(F))
-		reagents.add_reagent("blood", disease_amount, data)
+		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 	add_initial_reagents()
 
 /obj/item/reagent_containers/examine(mob/user)
@@ -127,7 +127,7 @@
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		for(var/datum/reagent/A in reagents.reagent_list)
-			R += A.id + " ("
+			R += A.type + " ("
 			R += num2text(A.volume) + "),"
 
 		if(thrownby)
