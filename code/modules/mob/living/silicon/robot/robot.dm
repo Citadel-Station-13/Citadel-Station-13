@@ -1271,7 +1271,7 @@
 /mob/living/silicon/robot/update_mobility()
 	. = ..()
 	if(client && stat != DEAD && dogborg == FALSE)
-		if(resting)
+		if(_REFACTORING_resting)
 			cut_overlays()
 			icon_state = "[module.cyborg_base_icon]-rest"
 		else

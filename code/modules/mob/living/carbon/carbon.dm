@@ -574,9 +574,9 @@
 	if(stam > DAMAGE_PRECISION)
 		var/total_health = (health - stam)
 		if(total_health <= crit_threshold && !stat)
-			if(!IsKnockdown())
+			if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			DefaultCombatKnockdown(100)
+			KnockToFloor(TRUE)
 			update_health_hud()
 
 /mob/living/carbon/update_sight()

@@ -21,7 +21,7 @@
 		rotate_on_lying = TRUE
 	else
 		icon = initial(icon)
-		icon_state = "[chassis][resting? "_rest" : (stat == DEAD? "_dead" : "")]"
+		icon_state = "[chassis][_REFACTORING_resting? "_rest" : (stat == DEAD? "_dead" : "")]"
 		rotate_on_lying = FALSE
 	pixel_x = ((chassis == "dynamic") && chassis_pixel_offsets_x[dynamic_chassis]) || 0
 	update_transform()
