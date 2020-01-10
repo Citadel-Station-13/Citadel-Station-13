@@ -8,6 +8,7 @@
 	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
+	APTFT_altclick = FALSE
 	volume = 5
 	spillable = FALSE
 	var/wipe_sound

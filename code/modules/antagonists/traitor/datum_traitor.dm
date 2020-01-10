@@ -182,7 +182,7 @@
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
 			add_objective(destroy_objective)
-		else if(prob(30) || (mode.storyteller.flags & NO_ASSASSIN))
+		else if(prob(30) || (is_dynamic && (mode.storyteller.flags & NO_ASSASSIN)))
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			maroon_objective.find_target()

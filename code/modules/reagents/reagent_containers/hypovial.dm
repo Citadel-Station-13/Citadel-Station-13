@@ -7,6 +7,7 @@
 	spillable = FALSE
 	volume = 10
 	possible_transfer_amounts = list(1,2,5,10)
+	APTFT_altclick = FALSE
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("hypovial" = "hypovial",
 						"red hypovial" = "hypovial-b",
@@ -59,11 +60,11 @@
 /obj/item/reagent_containers/glass/bottle/vial/small
 	name = "hypovial"
 	volume = 60
-	possible_transfer_amounts = list(1,2,5,10,20,30)
+	possible_transfer_amounts = list(1,2,5,10,20)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/bluespace
 	volume = 120
-	possible_transfer_amounts = list(1,2,5,10,20,30,40)
+	possible_transfer_amounts = list(1,2,5,10,20)
 	name = "bluespace hypovial"
 	icon_state = "hypovialbs"
 	unique_reskin = null
@@ -73,7 +74,7 @@
 	desc = "A large hypovial, for deluxe hypospray models."
 	icon_state = "hypoviallarge"
 	volume = 120
-	possible_transfer_amounts = list(1,2,5,10,20,30,40,60)
+	possible_transfer_amounts = list(1,2,5,10,20)
 	unique_reskin = list("large hypovial" = "hypoviallarge",
 						"large red hypovial" = "hypoviallarge-b",
 						"large blue hypovial" = "hypoviallarge-d",
@@ -105,7 +106,7 @@
 		add_overlay(filling)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
-	possible_transfer_amounts = list(1,2,5,10,20,30,40,60)
+	possible_transfer_amounts = list(1,2,5,10,20)
 	name = "bluespace large hypovial"
 	volume = 240
 	icon_state = "hypoviallargebs"
