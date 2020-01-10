@@ -662,7 +662,7 @@
 /datum/techweb_node/laserrifle
 	id = "laserrifle"
 	display_name = "Out Dated Laser Weaponery"
-	description = "Looking back on older designs, will allow the furcher to not make the same misstakes."
+	description = "Looking back on older designs will allow the future to not make the same misstakes."
 	prereq_ids = list("weaponry")
 	design_ids = list("laserrifle", "weak_power_pack", "power_pack_disabler_weak")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -671,7 +671,7 @@
 /datum/techweb_node/improved_laserrifle
 	id = "improved_laserrifle"
 	display_name = "Refitted Laser Weaponery"
-	description = "Looking back on older designs, their still can be improvements made."
+	description = "Well looking back on older designs they can be improved."
 	prereq_ids = list("beam_weapons", "laserrifle", "emp_super")
 	design_ids = list("power_pack", "power_pack_disabler", "weak_power_pack_ap")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
