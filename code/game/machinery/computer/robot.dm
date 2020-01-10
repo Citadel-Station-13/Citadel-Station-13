@@ -37,12 +37,11 @@
 		dat += "[R.name] |"
 		if(R.stat)
 			dat += " Not Responding |"
-		else if (!R.canmove)
+		else if(R.locked_down)
 			dat += " Locked Down |"
 		else
 			dat += " Operating Normally |"
-		if (!R.canmove)
-		else if(R.cell)
+		if(R.cell)
 			dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
 		else
 			dat += " No Cell Installed |"
@@ -62,7 +61,7 @@
 				dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
 		else if(IsAdminGhost(user) && !R.emagged)
 			dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
-		dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
+		dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[R.locked_down? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
 		dat += "<BR>"
 

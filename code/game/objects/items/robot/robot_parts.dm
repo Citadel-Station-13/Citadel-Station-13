@@ -318,7 +318,7 @@
 
 			if(!locomotion)
 				O.locked_down = 1
-				O.update_canmove()
+				O.update_mobility()
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else

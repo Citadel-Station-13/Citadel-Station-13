@@ -72,7 +72,7 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
+	if(QDELETED(src) || !choice || !CHECK_BITFIELD(M.mobility_flags, MOBILITY_USE) || !in_range(M, src) || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)

@@ -26,7 +26,7 @@
 	return has_status_effect(STATUS_EFFECT_STUN)
 
 /mob/living/proc/_MOBILITYFLAGTEMPORARY_AmountStun() //How many deciseconds remain in our stun
-	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	var/datum/status_effect/incapacitating/stun/S = _MOBILITYFLAGTEMPORARY_IsStun()
 	if(S)
 		return S.duration - world.time
 	return 0
@@ -260,7 +260,7 @@
 		update_mobility()
 
 /// Makes sure all 4 of the non-knockout immobilizing status effects are lower or equal to amount.
-/mob/living/proc/HealAllImmobilityupto(amount, updating, ignore_canstun = FALSE)
+/mob/living/proc/HealAllImmobilityUpTo(amount, updating, ignore_canstun = FALSE)
 	if(_MOBILITYFLAGTEMPORARY_AmountStun() > amount)
 		_MOBILITYFLAGTEMPORARY_SetStun(amount, FALSE, ignore_canstun)
 	if(_MOBILITYFLAGTEMPORARY_AmountKnockdown() > amount)

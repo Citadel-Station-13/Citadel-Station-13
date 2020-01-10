@@ -418,13 +418,13 @@
 		..()
 
 /mob/living/simple_animal/update_mobility(value_otherwise = MOBILITY_FLAGS_DEFAULT)
-	if(_MOBILITYFLAGTEMPORARY_IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || IsParalyzed() || stat || resting)
+	if(_MOBILITYFLAGTEMPORARY_IsUnconscious() || _MOBILITYFLAGTEMPORARY_IsStun() || IsParalyzed() || stat || _MOBILITYFLAGTEMPORARY_resting)
 		drop_all_held_items()
 		mobility_flags = NONE
 	else if(buckled)
 		mobility_flags = ~MOBILITY_MOVE
 	else
-		mobility_flags = MOBILITY_FLAGS_DEFAUTL
+		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	update_transform()
 	update_action_buttons_icon()
 	return mobility_flags
