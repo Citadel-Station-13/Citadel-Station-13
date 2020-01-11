@@ -527,6 +527,16 @@
 	item_color = "assistant_formal"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/staffassistant
+	name = "staff assistant's jumpsuit"
+	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
+	icon = 'goon/icons/obj/item_js_rank.dmi'
+	alternate_worn_icon = 'goon/icons/mob/worn_js_rank.dmi'
+	icon_state = "assistant"
+	item_state = "gy_suit"
+	item_color = "assistant"
+	mutantrace_variation = NONE
+
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
 	desc = "Filled with Latin fire."

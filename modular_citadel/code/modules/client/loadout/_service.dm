@@ -4,6 +4,12 @@
 	path = /obj/item/clothing/under/color/grey
 	restricted_roles = list("Assistant")
 
+/datum/gear/staffassistanttide
+	name "Staff Assistant's jumpsuit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/staffassistant
+	restricted_roles = list("Assistant")
+
 /datum/gear/neetsuit
 	name = "D.A.B. suit"
 	category = SLOT_WEAR_SUIT
