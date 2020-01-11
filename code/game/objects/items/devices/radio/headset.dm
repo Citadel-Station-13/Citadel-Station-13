@@ -267,7 +267,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
-
+	if (istype(W,/obj/item/headsetupgrader))
+		if (!("bowman" in name) && !("syndicate" in name) && !("alien" in name))
+			to_chat(user,"<span class='notice'>You upgrade [src].</span>")
+			bowmanize()
+			qdel(W)
 	if(istype(W, /obj/item/screwdriver))
 		if(keyslot || keyslot2)
 			for(var/ch_name in channels)
@@ -335,3 +339,23 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		use_command = !use_command
 		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
 		return TRUE
+
+/obj/item/radio/headset/proc/bowmanize()
+	cut_overlays()
+	var/icon/yeas = icon(icon,icon_state)
+	icon_state = "antenna_alt"
+	var/mutable_appearance/center = mutable_appearance(icon,"center_alt")
+	center.color = yeas.GetPixel(15,18)
+	var/mutable_appearance/centeralt = mutable_appearance(icon,"centeralt_alt")
+	centeralt.color = yeas.GetPixel(14,22)
+	var/mutable_appearance/centercenter = mutable_appearance(icon,"centercenter_alt")
+	centercenter.color = yeas.GetPixel(13,19)
+	var/mutable_appearance/centerpixel = mutable_appearance(icon,"centerpixel_alt")
+	centerpixel.color = yeas.GetPixel(13,21)
+	add_overlay(center)
+	add_overlay(centeralt)
+	add_overlay(centercenter)
+	add_overlay(centerpixel)
+	name = replacetext(name,"headset", "bowman headset")
+	desc = "[desc] Protects ears from flashbangs."
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
