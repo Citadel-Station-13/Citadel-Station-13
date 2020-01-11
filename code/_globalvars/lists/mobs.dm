@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(clients)							//all clients
 GLOBAL_LIST_EMPTY(admins)							//all clients whom are admins
 GLOBAL_PROTECT(admins)
+GLOBAL_LIST_EMPTY(mentors)							//all clients whom are mentors
+GLOBAL_PROTECT(mentors)
 GLOBAL_LIST_EMPTY(deadmins)							//all ckeys who have used the de-admin verb.
 
 GLOBAL_LIST_EMPTY(directory)							//all ckeys with associated client
@@ -58,26 +60,6 @@ GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traito
 	for(var/i in GLOB.mob_list)
 		var/mob/M = i
 		M.update_config_movespeed()
-
-GLOBAL_LIST_INIT(noodle_taurs, list(
-		"Naga",
-		"Tentacle"
-		))
-
-GLOBAL_LIST_INIT(paw_taurs, list(
-		"Fox",
-		"Wolf",
-		"Otie",
-		"Drake",
-		"Lab",
-		"Shepherd",
-		"Husky",
-		"Eevee",
-		"Panther",
-		"Horse",
-		"Cow",
-		"Tiger"
-		))
 
 	//blood types
 GLOBAL_LIST_INIT(regular_bloods,list(

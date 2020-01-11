@@ -194,28 +194,28 @@
 	ckeywhitelist = list("technicalmagi")
 
 /datum/gear/gladiator
-    name = "Gladiator Armor"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/under/gladiator
-    ckeywhitelist = list("aroche")
+	name = "Gladiator Armor"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/gladiator
+	ckeywhitelist = list("aroche")
 
 /datum/gear/bloodredtie
-    name = "Blood Red Tie"
-    category = SLOT_NECK
-    path = /obj/item/clothing/neck/tie/bloodred
-    ckeywhitelist = list("kyutness")
+	name = "Blood Red Tie"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/tie/bloodred
+	ckeywhitelist = list("kyutness")
 
 /datum/gear/puffydress
-    name = "Puffy Dress"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/suit/puffydress
-    ckeywhitelist = list("stallingratt")
+	name = "Puffy Dress"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/puffydress
+	ckeywhitelist = list("stallingratt")
 
 /datum/gear/labredblack
-    name = "Black and Red Coat"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/suit/toggle/labcoat/labredblack
-    ckeywhitelist = list("blakeryan", "durandalphor")
+	name = "Black and Red Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/toggle/labcoat/labredblack
+	ckeywhitelist = list("blakeryan", "durandalphor")
 
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
@@ -458,3 +458,33 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/necklace/onion
 	ckeywhitelist = list("cdrcross")
+
+/datum/gear/mikubikini
+	name = "starlight singer bikini"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mikubikini
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikujacket
+	name = "starlight singer jacket"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/mikujacket
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikuhair
+	name = "starlight singer hair"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/head/mikuhair
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikugloves
+	name = "starlight singer gloves"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/mikugloves
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikuleggings
+	name = "starlight singer leggings"
+	category = SLOT_SHOES
+	path = /obj/item/clothing/shoes/sneakers/mikuleggings
+	ckeywhitelist = list("grandvegeta")

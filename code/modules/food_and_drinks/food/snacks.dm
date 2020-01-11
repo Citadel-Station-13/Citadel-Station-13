@@ -19,11 +19,9 @@ Here is an example of the new formatting for anyone who wants to add more food i
 	name = "Xenoburger"													//Name that displays in the UI.
 	desc = "Smells caustic. Tastes like heresy."						//Duh
 	icon_state = "xburger"												//Refers to an icon in food.dmi
-/obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
-	. = ..()														//Same here.
-	reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-	reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
-	bitesize = 3													//This is the amount each bite consumes.
+	list_reagents = list(/datum/reagent/xenomicrobes = 10,
+						/datum/reagent/consumable/nutriment = 2) 		//What's inside the snack.
+	bitesize = 3														//This is the amount each bite consumes.
 ```
 
 All foods are distributed among various categories. Use common sense.
@@ -52,6 +50,8 @@ All foods are distributed among various categories. Use common sense.
 	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
+	var/dunkable = FALSE // for dunkable food, make true
+	var/dunk_amount = 10 // how much reagent is transferred per dunk
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
@@ -60,7 +60,7 @@ All foods are distributed among various categories. Use common sense.
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
-				if(rid == "nutriment" || rid == "vitamin")
+				if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 					reagents.add_reagent(rid, amount, tastes.Copy())
 				else
 					reagents.add_reagent(rid, amount)
@@ -151,15 +151,15 @@ All foods are distributed among various categories. Use common sense.
 	return 0
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
-	..()
+	. = ..()
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
-		to_chat(user, "[src] was bitten by someone!")
+		. += "[src] was bitten by someone!"
 	else if(bitecount <= 3)
-		to_chat(user, "[src] was bitten [bitecount] times!")
+		. += "[src] was bitten [bitecount] times!"
 	else
-		to_chat(user, "[src] was bitten multiple times!")
+		. += "[src] was bitten multiple times!"
 
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
@@ -181,7 +181,7 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	var/sharp = W.is_sharp()
+	var/sharp = W.get_sharpness()
 	if(sharp)
 		if(slice(sharp, W, user))
 			return 1
@@ -206,7 +206,7 @@ All foods are distributed among various categories. Use common sense.
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
-			if(r_id == "nutriment" || r_id == "vitamin")
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
 				reagents.add_reagent(r_id, amount, tastes)
 			else
 				reagents.add_reagent(r_id, amount)
@@ -267,7 +267,7 @@ All foods are distributed among various categories. Use common sense.
 			trash = null
 			return
 
-/obj/item/reagent_containers/food/snacks/proc/update_overlays(obj/item/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
@@ -285,7 +285,7 @@ All foods are distributed among various categories. Use common sense.
 	if(S.bonus_reagents && S.bonus_reagents.len)
 		for(var/r_id in S.bonus_reagents)
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			if(r_id == "nutriment" || r_id == "vitamin")
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
 				S.reagents.add_reagent(r_id, amount, tastes)
 			else
 				S.reagents.add_reagent(r_id, amount)
@@ -319,14 +319,32 @@ All foods are distributed among various categories. Use common sense.
 		if(iscorgi(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
-				M.emote("me", 1, "nibbles away at \the [src]")
+				M.emote("me", EMOTE_VISIBLE, "nibbles away at \the [src]")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 				if(sattisfaction_text)
-					M.emote("me", 1, "[sattisfaction_text]")
+					M.emote("me", EMOTE_VISIBLE, "[sattisfaction_text]")
 				qdel(src)
+
+//////////////////////////////////////////Dunking///////////////////////////////////////////
+
+/obj/item/reagent_containers/food/snacks/afterattack(obj/item/reagent_containers/M, mob/user, proximity)
+	. = ..()
+	if(!dunkable || !proximity)
+		return
+	if(istype(M, /obj/item/reagent_containers/glass) || istype(M, /obj/item/reagent_containers/food/drinks))	//you can dunk dunkable snacks into beakers or drinks
+		if(!M.is_drainable())
+			to_chat(user, "<span class='warning'>[M] is unable to be dunked in!</span>")
+			return
+		if(M.reagents.trans_to(src, dunk_amount))	//if reagents were transfered, show the message
+			to_chat(user, "<span class='notice'>You dunk the [M].</span>")
+			return
+		if(!M.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[M] is empty!</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] is full!</span>")
 
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.
@@ -337,7 +355,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.is_sharp())
+		if(W.get_sharpness())
 			return 0
 		if(stored_item)
 			return 0

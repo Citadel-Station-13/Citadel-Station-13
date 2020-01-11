@@ -63,28 +63,28 @@
 	current_tick_amount = 0
 
 /obj/item/geiger_counter/examine(mob/user)
-	..()
+	. = ..()
 	if(!scanning)
-		return 1
-	to_chat(user, "<span class='info'>Alt-click it to clear stored radiation levels.</span>")
+		return
+	. += "<span class='info'>Alt-click it to clear stored radiation levels.</span>"
 	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The display seems to be incomprehensible.</span>")
-		return 1
+		. += "<span class='warning'>The display seems to be incomprehensible.</span>"
+		return
 	switch(radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
-			to_chat(user, "<span class='notice'>Ambient radiation level count reports that all is well.</span>")
+			. += "<span class='notice'>Ambient radiation level count reports that all is well.</span>"
 		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
-			to_chat(user, "<span class='disarm'>Ambient radiation levels slightly above average.</span>")
+			. += "<span class='disarm'>Ambient radiation levels slightly above average.</span>"
 		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
-			to_chat(user, "<span class='warning'>Ambient radiation levels above average.</span>")
+			. += "<span class='warning'>Ambient radiation levels above average.</span>"
 		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
-			to_chat(user, "<span class='danger'>Ambient radiation levels highly above average.</span>")
+			. += "<span class='danger'>Ambient radiation levels highly above average.</span>"
 		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
-			to_chat(user, "<span class='suicide'>Ambient radiation levels nearing critical level.</span>")
+			. += "<span class='suicide'>Ambient radiation levels nearing critical level.</span>"
 		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
-			to_chat(user, "<span class='boldannounce'>Ambient radiation levels above critical level!</span>")
+			. += "<span class='boldannounce'>Ambient radiation levels above critical level!</span>"
 
-	to_chat(user, "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>")
+	. += "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>"
 
 /obj/item/geiger_counter/update_icon()
 	if(!scanning)
@@ -182,14 +182,16 @@
 		return ..()
 
 /obj/item/geiger_counter/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
-		return ..()
+		return
 	if(!scanning)
 		to_chat(usr, "<span class='warning'>[src] must be on to reset its radiation level!</span>")
-		return 0
+		return TRUE
 	radiation_count = 0
 	to_chat(usr, "<span class='notice'>You flush [src]'s radiation counts, resetting it to normal.</span>")
 	update_icon()
+	return TRUE
 
 /obj/item/geiger_counter/emag_act(mob/user)
 	. = ..()

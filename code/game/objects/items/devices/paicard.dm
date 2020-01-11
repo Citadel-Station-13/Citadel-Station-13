@@ -8,7 +8,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	var/mob/living/silicon/pai/pai
-	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	max_integrity = 200
 
 /obj/item/paicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!</span>")
@@ -45,6 +46,8 @@
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "Transmit: <A href='byond://?src=[REF(src)];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
 			dat += "Receive: <A href='byond://?src=[REF(src)];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			if(pai.radio_short)
+				dat += "<font color='red'>Reset radio short: <a href='byond://?src=[REF(src)];reset_radio_short=1'>\[RESET\]</a><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
@@ -82,7 +85,6 @@
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
 				to_chat(pai, "<span class='notice'>You have been bound to a new master.</span>")
-				pai.emittersemicd = FALSE
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
@@ -96,6 +98,8 @@
 			var/wire = text2num(href_list["wires"])
 			if(pai.radio)
 				pai.radio.wires.cut(wire)
+		if(href_list["reset_radio_short"])
+			pai.unshort_radio()
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
@@ -148,9 +152,11 @@
 			if(10)
 				src.add_overlay("pai-null")
 			if(11)
-				src.add_overlay(mutable_appearance('modular_citadel/icons/obj/aicards.dmi', "pai-exclamation")) // CITADEL EDIT
+				src.add_overlay("pai-exclamation")
 			if(12)
-				src.add_overlay(mutable_appearance('modular_citadel/icons/obj/aicards.dmi', "pai-question")) // CITADEL EDIT
+				src.add_overlay("pai-question")
+			if(13)
+				src.add_overlay("pai-sunglasses")
 
 /obj/item/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")

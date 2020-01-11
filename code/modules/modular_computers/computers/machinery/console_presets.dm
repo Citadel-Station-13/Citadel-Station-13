@@ -47,8 +47,8 @@
 	_has_ai = TRUE
 
 /obj/machinery/modular_computer/console/preset/research/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to eject the intelliCard.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to eject the intelliCard.</span>"
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
@@ -67,8 +67,8 @@
 	_has_printer = TRUE
 
 /obj/machinery/modular_computer/console/preset/command/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to eject the identification card.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to eject the identification card.</span>"
 
 /obj/machinery/modular_computer/console/preset/command/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]

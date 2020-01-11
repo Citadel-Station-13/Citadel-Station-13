@@ -2,7 +2,7 @@
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "signmaker_engi"
+	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
@@ -52,9 +52,9 @@
 			qdel(F)
 
 /obj/item/forcefield_projector/examine(mob/user)
-	..()
+	. = ..()
 	var/percent_charge = round((shield_integrity/max_shield_integrity)*100)
-	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
+	. += "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>"
 
 /obj/item/forcefield_projector/Initialize(mapload)
 	. = ..()

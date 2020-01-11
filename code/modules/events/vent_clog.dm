@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/vent_clog
 	weight = 10
 	max_occurrences = 3
+	gamemode_blacklist = list("dynamic")
 	min_players = 25
 
 /datum/round_event/vent_clog
@@ -14,48 +15,46 @@
 	var/randomProbability = 1
 	var/reagentsAmount = 100
 	var/list/saferChems = list(
-		"water",
-		"carbon",
-		"flour",
-		"cleaner",
-		"nutriment",
-		"condensedcapsaicin",
-		"mushroomhallucinogen",
-		"lube",
-		"pink_glitter",
-		"cryptobiolin",
-		"plantbgone",
-		"blood",
-		"charcoal",
-		"space_drugs",
-		"morphine",
-		"holywater",
-		"ethanol",
-		"hot_coco",
-		"sacid",
-		"mindbreaker",
-		"rotatium",
-		"bluespace",
-		"pax",
-		"laughter",
-		"concentrated_barbers_aid",
-		"colorful_reagent",
-		"dizzysolution",
-		"tiresolution",
-		"sodiumchloride",
-		"beer",
-		"hair_dye",
-		"sugar",
-		"white_glitter",
-		"growthserum",
-		"cornoil",
-		"uranium",
-		"carpet",
-		"firefighting_foam",
-		"semen",
-		"femcum",
-		"tearjuice",
-		"strange_reagent"
+		/datum/reagent/water,
+		/datum/reagent/carbon,
+		/datum/reagent/consumable/flour,
+		/datum/reagent/space_cleaner,
+		/datum/reagent/consumable/nutriment,
+		/datum/reagent/consumable/condensedcapsaicin,
+		/datum/reagent/drug/mushroomhallucinogen,
+		/datum/reagent/lube,
+		/datum/reagent/glitter/pink,
+		/datum/reagent/cryptobiolin,
+		/datum/reagent/toxin/plantbgone,
+		/datum/reagent/blood,
+		/datum/reagent/medicine/charcoal,
+		/datum/reagent/drug/space_drugs,
+		/datum/reagent/medicine/morphine,
+		/datum/reagent/water/holywater,
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/consumable/hot_coco,
+		/datum/reagent/toxin/acid,
+		/datum/reagent/toxin/mindbreaker,
+		/datum/reagent/toxin/rotatium,
+		/datum/reagent/bluespace,
+		/datum/reagent/pax,
+		/datum/reagent/consumable/laughter,
+		/datum/reagent/concentrated_barbers_aid,
+		/datum/reagent/colorful_reagent,
+		/datum/reagent/peaceborg_confuse,
+		/datum/reagent/peaceborg_tire,
+		/datum/reagent/consumable/sodiumchloride,
+		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/hair_dye,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/glitter/white,
+		/datum/reagent/growthserum,
+		/datum/reagent/consumable/cornoil,
+		/datum/reagent/uranium,
+		/datum/reagent/carpet,
+		/datum/reagent/firefighting_foam,
+		/datum/reagent/consumable/tearjuice,
+		/datum/reagent/medicine/strange_reagent
 
 	)
 	//needs to be chemid unit checked at some point
@@ -164,7 +163,7 @@
 		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent("beer", reagentsAmount)
+			R.add_reagent(/datum/reagent/consumable/ethanol/beer, reagentsAmount)
 
 			var/datum/effect_system/foam_spread/foam = new
 			foam.set_up(200, get_turf(vent), R)
@@ -179,7 +178,7 @@
 		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent("semen", reagentsAmount)
+			R.add_reagent(/datum/reagent/consumable/semen, reagentsAmount)
 
 			var/datum/effect_system/foam_spread/foam = new
 			foam.set_up(200, get_turf(vent), R)
@@ -194,7 +193,7 @@
 		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent("femcum", reagentsAmount)
+			R.add_reagent(/datum/reagent/consumable/femcum, reagentsAmount)
 
 			var/datum/effect_system/foam_spread/foam = new
 			foam.set_up(200, get_turf(vent), R)

@@ -7,26 +7,51 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon_state = "tdoppler"
 	density = TRUE
 	var/integrated = FALSE
+	var/list_limit = 100
+	var/cooldown = 10
+	var/next_announce = 0
 	var/max_dist = 150
 	verb_say = "states coldly"
+	var/list/message_log = list()
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
 
 /obj/machinery/doppler_array/Destroy()
 	GLOB.doppler_arrays -= src
 	return ..()
 
-/obj/machinery/doppler_array/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+/obj/machinery/doppler_array/ui_interact(mob/user)
+	. = ..()
+	if(stat)
+		return FALSE
 
-/obj/machinery/doppler_array/process()
-	return PROCESS_KILL
+	var/list/dat = list()
+	for(var/i in 1 to LAZYLEN(message_log))
+		dat += "Log recording #[i]: [message_log[i]]<br/><br>"
+	dat += "<A href='?src=[REF(src)];delete_log=1'>Delete logs</A><br>"
+	dat += "<hr>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
+	dat += "</body></html>"
+	var/datum/browser/popup = new(user, "computer", name, 400, 500)
+	popup.set_content(dat.Join(" "))
+	popup.open()
+
+/obj/machinery/doppler_array/Topic(href, href_list)
+	if(..())
+		return
+	if(href_list["delete_log"])
+		LAZYCLEARLIST(message_log)
+	if(href_list["refresh"])
+		updateUsrDialog()
+
+	updateUsrDialog()
+	return
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
@@ -46,14 +71,17 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 
-/obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
-												  took,orig_dev_range,orig_heavy_range,orig_light_range)
+/obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
+												  took, orig_dev_range, orig_heavy_range, orig_light_range)
 	if(stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)
-
 	if(zone.z != epicenter.z)
 		return FALSE
+
+	if(next_announce > world.time)
+		return FALSE
+	next_announce = world.time + cooldown
 
 	var/distance = get_dist(epicenter, zone)
 	var/direct = get_dir(zone, epicenter)
@@ -80,7 +108,18 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
+		if(LAZYLEN(message_log) > list_limit)
+			say("Storage buffer is full! Clearing buffers...")
+			LAZYCLEARLIST(message_log)
+		LAZYADD(message_log, messages.Join(" "))
 	return TRUE
+
+/obj/machinery/doppler_array/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>"
+
+/obj/machinery/doppler_array/process()
+	return PROCESS_KILL
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)
@@ -114,13 +153,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return
 
 	var/point_gain = 0
-	
+
 	/*****The Point Calculator*****/
-	
+
 	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	else if(orig_light < 4500) 
+	else if(orig_light < 4500)
 		point_gain = (83300 * orig_light) / (orig_light + 3000)
 	else
 		point_gain = TECHWEB_BOMB_POINTCAP

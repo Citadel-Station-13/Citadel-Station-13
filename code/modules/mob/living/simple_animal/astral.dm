@@ -27,6 +27,7 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = 100000
+	blood_volume = 0
 
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
@@ -43,7 +44,7 @@
 		if(isliving(A))
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.reagents.has_reagent("astral") && !H.mind)
+				if(H.reagents.has_reagent(/datum/reagent/fermi/astral) && !H.mind)
 					var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in H.reagents.reagent_list
 					if(As.originalmind == src.mind && As.current_cycle < 10 && H.stat != DEAD) //So you can return to your body.
 						to_chat(src, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
@@ -57,3 +58,9 @@
 				return
 			to_chat(A, "[src] projects into your mind, <b><i> \"[message]\"</b></i>")
 			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")
+
+//Delete the mob if there's no mind! Pay that mob no mind.
+/mob/living/simple_animal/astral/Life()
+	if(!mind)
+		qdel(src)
+	. = ..()

@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 /mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
 		return
+	. = TRUE //return value to stop the client from being shown the turf contents stat tab on alt-click.
 	if(stat)
 		to_chat(src, "You must be conscious to do this!")
 		return

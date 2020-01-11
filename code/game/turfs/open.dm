@@ -16,6 +16,22 @@
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
 
+//direction is direction of travel of A
+/turf/open/zPassIn(atom/movable/A, direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of A
+/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
+	return (direction == UP)
+
+//direction is direction of travel of air
+/turf/open/zAirIn(direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of air
+/turf/open/zAirOut(direction, turf/source)
+	return (direction == UP)
+
 /turf/open/MouseDrop_T(atom/dropping, mob/user)
 	. = ..()
 	if(dropping == user && isliving(user))
@@ -42,7 +58,7 @@
 /turf/open/indestructible/singularity_act()
 	return
 
-/turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
 /turf/open/indestructible/sound
@@ -95,7 +111,7 @@
 		icon_state = "necro[rand(2,3)]"
 
 /turf/open/indestructible/necropolis/air
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss //you put stone tiles on this and use it as a base
 	name = "necropolis floor"
@@ -105,7 +121,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss/air
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
@@ -184,43 +200,14 @@
 	update_visuals()
 
 	current_cycle = times_fired
-
-	//cache some vars
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-
-	for(var/direction in GLOB.cardinals)
-		var/turf/open/enemy_tile = get_step(src, direction)
-		if(!istype(enemy_tile))
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= enemy_tile
-			continue
+	ImmediateCalculateAdjacentTurfs()
+	for(var/i in atmos_adjacent_turfs)
+		var/turf/open/enemy_tile = i
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-
-		//only check this turf, if it didn't check us when it was initalized
-		if(enemy_tile.current_cycle < times_fired)
-			if(CANATMOSPASS(src, enemy_tile))
-				LAZYINITLIST(atmos_adjacent_turfs)
-				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
-				atmos_adjacent_turfs[enemy_tile] = TRUE
-				enemy_tile.atmos_adjacent_turfs[src] = TRUE
-			else
-				if (atmos_adjacent_turfs)
-					atmos_adjacent_turfs -= enemy_tile
-				if (enemy_tile.atmos_adjacent_turfs)
-					enemy_tile.atmos_adjacent_turfs -= src
-				UNSETEMPTY(enemy_tile.atmos_adjacent_turfs)
-				continue
-		else
-			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
-				continue
-
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
 			SSair.active_turfs |= src
-	UNSETEMPTY(atmos_adjacent_turfs)
-	if (atmos_adjacent_turfs)
-		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -267,14 +254,15 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(lube&SLIP_WHEN_CRAWLING) && (C.lying || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
-				return 0
-			if(ishuman(C) && (lube&NO_SLIP_WHEN_WALKING))
-				var/mob/living/carbon/human/H = C
-				if(!H.sprinting && H.getStaminaLoss() <= 20)
+			if(lube & NO_SLIP_WHEN_WALKING)
+				if(C.m_intent == MOVE_INTENT_WALK)
 					return 0
+				if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING))
+					var/mob/living/carbon/human/H = C
+					if(!H.sprinting && H.getStaminaLoss() <= 20)
+						return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)

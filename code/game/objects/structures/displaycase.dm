@@ -38,14 +38,14 @@
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
-	..()
+	. = ..()
 	if(alert)
-		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
+		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+		. += "<span class='notice'>There's [showpiece] inside.</span>"
 	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
+		. += "The plaque reads:"
+		. += trophy_message
 
 
 /obj/structure/displaycase/proc/dump()
@@ -236,6 +236,12 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
+
+/obj/structure/displaycase/clown
+	desc = "In the event of clown, honk glass."
+	alert = TRUE
+	start_showpiece_type = /obj/item/bikehorn
+	req_access = list(ACCESS_CENT_GENERAL)
 
 /obj/structure/displaycase/trophy
 	name = "trophy display case"

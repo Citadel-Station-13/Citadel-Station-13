@@ -35,7 +35,6 @@
 
 /datum/antagonist/cult/proc/add_objectives()
 	objectives |= cult_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -129,7 +128,8 @@
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
-		H.eye_color = initial(H.eye_color)
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		H.eye_color = eyes?.eye_color || initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()

@@ -308,7 +308,7 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands)
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
@@ -479,10 +479,10 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
@@ -755,3 +755,47 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/rosary
+	icon_state = "rosary"
+	item_state = null
+	name = "prayer beads"
+	desc = "A set of prayer beads used by many of the more traditional religions in space"
+	force = 4
+	throwforce = 0
+	attack_verb = list("whipped", "repented", "lashed", "flagellated")
+	var/praying = FALSE
+	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
+
+/obj/item/nullrod/rosary/Initialize()
+	.=..()
+	if(GLOB.deity)
+		deity_name = GLOB.deity
+
+/obj/item/nullrod/rosary/attack(mob/living/M, mob/living/user)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+
+	if(!user.mind || user.mind.assigned_role != "Chaplain")
+		to_chat(user, "<span class='notice'>You are not close enough with [deity_name] to use [src].</span>")
+		return
+
+	if(praying)
+		to_chat(user, "<span class='notice'>You are already using [src].</span>")
+		return
+
+	user.visible_message("<span class='info'>[user] kneels[M == user ? null : " next to [M]"] and begins to utter a prayer to [deity_name].</span>", \
+		"<span class='info'>You kneel[M == user ? null : " next to [M]"] and begin a prayer to [deity_name].</span>")
+
+	praying = TRUE
+	if(do_after(user, 20, target = M))
+		M.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
+		to_chat(M, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
+		M.adjustToxLoss(-5, TRUE, TRUE)
+		M.adjustOxyLoss(-5)
+		M.adjustBruteLoss(-5)
+		M.adjustFireLoss(-5)
+		praying = FALSE
+	else
+		to_chat(user, "<span class='notice'>Your prayer to [deity_name] was interrupted.</span>")
+		praying = FALSE

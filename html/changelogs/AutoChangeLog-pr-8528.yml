@@ -1,7 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "fixed prosthetic hands being invisible"
-  - bugfix: "male foxes exist again"
-  - bugfix: "female chest markings improved from being too dark in comparison to their other colors, blending better"
-  - bugfix: "Markings behave better on non-organic limbs."

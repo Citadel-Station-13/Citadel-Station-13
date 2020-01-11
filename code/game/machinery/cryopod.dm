@@ -307,7 +307,6 @@
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
-		if(!istype(R)) return ..()
 
 		R.contents -= R.mmi
 		qdel(R.mmi)
@@ -370,16 +369,14 @@
 					O.find_target()
 					O.update_explanation_text()
 					if(!(O.target))
-						O.owner.objectives -= O
 						qdel(O)
 
-	if(mob_occupant.mind && mob_occupant.mind.assigned_role)
+	if(mob_occupant.mind)
 		//Handle job slot/tater cleanup.
-		var/job = mob_occupant.mind.assigned_role
-		SSjob.FreeRole(job)
-		if(mob_occupant.mind.objectives.len)
-			mob_occupant.mind.objectives.Cut()
-			mob_occupant.mind.special_role = null
+		if(mob_occupant.mind.assigned_role)
+			var/job = mob_occupant.mind.assigned_role
+			SSjob.FreeRole(job)
+		mob_occupant.mind.special_role = null
 
 	// Delete them from datacore.
 
@@ -411,7 +408,7 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(0) // Players who cryo out may not re-enter the round
+		mob_occupant.ghostize(FALSE, penalize = TRUE)
 
 	QDEL_NULL(occupant)
 	open_machine()

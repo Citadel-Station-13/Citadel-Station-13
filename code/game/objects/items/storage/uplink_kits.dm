@@ -381,3 +381,19 @@
 	new /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
+
+
+/obj/item/storage/box/strange_seeds_10pack
+
+/obj/item/storage/box/strange_seeds_10pack/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/seeds/random(src)
+
+	if(prob(50))
+		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box
+
+/obj/item/storage/box/syndie_kit/revolver
+
+/obj/item/storage/box/syndie_kit/revolver/PopulateContents()
+	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/ammo_box/a357(src)

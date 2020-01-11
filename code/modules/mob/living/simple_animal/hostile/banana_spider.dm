@@ -33,7 +33,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
 /mob/living/simple_animal/banana_spider/attack_ghost(mob/user)
 	if(key)			//please stop using src. without a good reason.
@@ -41,11 +41,18 @@
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
 		if(!isnum(user.client.player_age))
 			return
+	if(isobserver(user))
+		var/mob/dead/observer/O = user
+		if(!O.can_reenter_round())
+			return
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a banana spider before the game has started.")
 		return
 	var/be_spider = alert("Become a banana spider? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
+		return
+	if(key)
+		to_chat(user, "<span class='notice'>Someone else already took this banana spider.</span>")
 		return
 	sentience_act()
 	user.transfer_ckey(src, FALSE)
@@ -89,10 +96,10 @@
 	icon_state = "bananaspider"
 	bitesize = 3
 	eatverb = "devours"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
-	juice_results = list("banana" = 0)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	juice_results = list(/datum/reagent/consumable/banana = 0)
 
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()

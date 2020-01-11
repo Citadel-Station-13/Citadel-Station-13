@@ -44,7 +44,7 @@
 	update_icon()
 	PopulateContents()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		take_contents()
+		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	if(secure)
 		lockerelectronics = new(src)
 		lockerelectronics.accesses = req_access
@@ -84,22 +84,22 @@
 		add_overlay("unlocked")
 
 /obj/structure/closet/examine(mob/user)
-	..()
+	. = ..()
 	if(welded)
-		to_chat(user, "<span class='notice'>It's <b>welded</b> shut.</span>")
+		. += "<span class='notice'>It's <b>welded</b> shut.</span>"
 	if(anchored)
-		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
+		. += "<span class='notice'>It is <b>bolted</b> to the ground.</span>"
 	if(opened)
-		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
+		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
 	else if(broken)
-		to_chat(user, "<span class='notice'>The lock is <b>screwed</b> in.</span>")
+		. += "<span class='notice'>The lock is <b>screwed</b> in.</span>"
 	else if(secure)
-		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
+		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
-			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
+			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
@@ -342,25 +342,21 @@
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
+			var/welder = FALSE
 			if(istype(W, /obj/item/weldingtool))
 				if(!W.tool_start_check(user, amount=0))
 					return
-
-				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
-				if(W.use_tool(src, user, 40, volume=50))
-					if(eigen_teleport)
-						to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to cut!</span>")
-						return
-					if(!opened)
-						return
-					user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
-									"<span class='notice'>You cut \the [src] apart with \the [W].</span>",
-									"<span class='italics'>You hear welding.</span>")
-					deconstruct(TRUE)
-				return
-			else // for example cardboard box is cut with wirecutters
-				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
-									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
+				to_chat(user, "<span class='notice'>You begin [welder ? "slicing" : "deconstructing"] \the [src] apart...</span>")
+				welder = TRUE
+			if(W.use_tool(src, user, 40, volume=50))
+				if(eigen_teleport)
+					to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to [welder ? "slice" : "deconstruct"]!</span>")
+					return
+				if(!opened)
+					return
+				user.visible_message("<span class='notice'>[user] [welder ? "slice" : "deconstruct"]s apart \the [src].</span>",
+								"<span class='notice'>You [welder ? "slice" : "deconstruct"] \the [src] apart with \the [W].</span>",
+								"<span class='italics'>You hear [welder ? "welding" : "rustling of screws and metal"].</span>")
 				deconstruct(TRUE)
 				return
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
@@ -526,11 +522,12 @@
 			to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
 
 /obj/structure/closet/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, be_close=TRUE) || !isturf(loc))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
+		return TRUE
 	togglelock(user)
+	return TRUE
 
 /obj/structure/closet/CtrlShiftClick(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_SKITTISH))

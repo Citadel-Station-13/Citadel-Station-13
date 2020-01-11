@@ -34,6 +34,7 @@
 
 /datum/round_event_control/wizard
 	wizardevent = 1
+	var/can_be_midround_wizard = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
@@ -53,6 +54,13 @@
 	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
 	return TRUE
+
+/datum/round_event_control/wizard/canSpawnEvent(var/players_amt, var/gamemode)
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if (locate(/datum/dynamic_ruleset/midround/from_ghosts/wizard) in mode.executed_rules)
+			return can_be_midround_wizard && ..()
+	return ..()
 
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath, /datum/round_event))
