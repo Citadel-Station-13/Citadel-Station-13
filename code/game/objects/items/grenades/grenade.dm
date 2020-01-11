@@ -122,3 +122,6 @@
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
 		return TRUE //It hit the grenade, not them
+
+/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
+	return
