@@ -42,7 +42,7 @@
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
-	if(!D.stat || !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[A] slams [D] into the ground!</span>", \
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
@@ -62,7 +62,7 @@
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, BRUTE)
 		log_combat(A, D, "kicked (CQC)")
-	if(D.IsKnockdown() && !D.stat)
+	if(!CHECK_MOBILITY(D, MOBILITY_STAND) && !D.stat)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking [D.p_them()] out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")

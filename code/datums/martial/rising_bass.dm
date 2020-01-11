@@ -36,7 +36,7 @@
 
 
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || D.lying == 0)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/turf/H = get_step(D, A.dir & (NORTH | SOUTH) ? pick(EAST, WEST) : pick(NORTH, SOUTH))
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the side, sliding them over!</span>", \
@@ -54,7 +54,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/turf/H = get_step(A, get_dir(D,A))
 		var/L = H
 		for(var/obj/i in H.contents)
@@ -75,7 +75,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
 						  "<span class='userdanger'>[A] smashes you in the chest, repelling you away!</span>")
@@ -89,7 +89,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/footSmash(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] smashes their foot down on [D]'s foot!</span>", \
 						  "<span class='userdanger'>[A] smashes your foot!</span>")
@@ -101,7 +101,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/deftSwitch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		if (D.get_active_held_item())
 			var/obj/item/G = D.get_active_held_item()
 			if (G && !(G.item_flags & (ABSTRACT|DROPDEL)) && D.temporarilyRemoveItemFromInventory(G))
