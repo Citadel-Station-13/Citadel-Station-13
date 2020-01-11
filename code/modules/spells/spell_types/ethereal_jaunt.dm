@@ -40,7 +40,7 @@
 		return
 	mobloc = get_turf(target.loc)
 	jaunt_steam(mobloc)
-	ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE)
+	ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
 	target.update_mobility()
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
@@ -56,7 +56,7 @@
 				if(T)
 					if(target.Move(T))
 						break
-		REMOVE_TRAIT(target, TRAIT_MOBILITY_NOMOVE)
+		REMOVE_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
 		target.update_mobility()
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
