@@ -186,13 +186,13 @@
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
 		data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
+			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
@@ -214,34 +214,34 @@
 
 		if("transferToBuffer")
 			if(beaker)
-				var/id = params["id"]
+				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
 					end_fermi_reaction()
-					beaker.reagents.trans_id_to(src, id, amount)
+					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
 						end_fermi_reaction()
-						beaker.reagents.trans_id_to(src, id, useramount)
+						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
 		if("transferFromBuffer")
-			var/id = params["id"]
+			var/reagent = GLOB.name2reagent[params["id"]]
 			var/amount = text2num(params["amount"])
 			if (amount > 0)
 				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
+					reagents.trans_id_to(beaker, reagent, amount)
 					. = TRUE
 				else
-					reagents.remove_reagent(id, amount)
+					reagents.remove_reagent(reagent, amount)
 					. = TRUE
 			else if (amount == -1) // -1 means custom amount
 				useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 				if (useramount > 0)
 					end_fermi_reaction()
-					reagents.trans_id_to(beaker, id, useramount)
+					reagents.trans_id_to(beaker, reagent, useramount)
 					. = TRUE
 
 		if("toggleMode")
@@ -423,7 +423,7 @@
 
 		//END CITADEL ADDITIONS
 		if("analyzeBeak")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
@@ -434,11 +434,11 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.type)
 				if(Rcr && Rcr.FermiChem)
 					fermianalyze = TRUE
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
+					var/datum/reagent/targetReagent = beaker.reagents.has_reagent(R.type)
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
@@ -450,7 +450,7 @@
 				return
 
 		if("analyzeBuff")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
@@ -463,9 +463,9 @@
 				var/T = initial(R.metabolization_rate) * (60 / P)
 				if(istype(R, /datum/reagent/fermi))
 					fermianalyze = TRUE
-					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.type)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = reagents.has_reagent("[R.id]")
+					var/datum/reagent/targetReagent = reagents.has_reagent(R.type)
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")

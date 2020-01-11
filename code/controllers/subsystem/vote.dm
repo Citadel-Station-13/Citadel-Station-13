@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(vote)
 	var/vote_system = PLURALITY_VOTING
 	var/question = null
 	var/list/choices = list()
+	var/list/scores = list()
 	var/list/choice_descs = list() // optional descriptions
 	var/list/voted = list()
 	var/list/voting = list()
@@ -26,6 +27,8 @@ SUBSYSTEM_DEF(vote)
 
 	var/list/stored_gamemode_votes = list() //Basically the last voted gamemode is stored here for end-of-round use.
 
+	var/list/stored_modetier_results = list() // The aggregated tier list of the modes available in secret.
+
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		if(end_time < world.time)
@@ -33,7 +36,8 @@ SUBSYSTEM_DEF(vote)
 			SSpersistence.SaveSavedVotes()
 			for(var/client/C in voting)
 				C << browse(null, "window=vote;can_close=0")
-			reset()
+			if(end_time < world.time) // result() can change this
+				reset()
 		else if(next_pop < world.time)
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
@@ -54,6 +58,7 @@ SUBSYSTEM_DEF(vote)
 	choice_descs.Cut()
 	voted.Cut()
 	voting.Cut()
+	scores.Cut()
 	obfuscated = FALSE //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
 
@@ -116,10 +121,8 @@ SUBSYSTEM_DEF(vote)
 				var/opposite_pref = d[j][i]
 				if(pref_number>opposite_pref)
 					p[i][j] = d[i][j]
-					p[j][i] = 0
 				else
 					p[i][j] = 0
-					p[j][i] = d[i][j]
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
 			if(i != j)
@@ -180,6 +183,22 @@ SUBSYSTEM_DEF(vote)
 			score.Cut(median_pos,median_pos+1)
 			choices[score_name]++
 
+/datum/controller/subsystem/vote/proc/calculate_scores(var/blackbox_text)
+	var/list/scores_by_choice = list()
+	for(var/choice in choices)
+		scores_by_choice[choice] = list()
+	for(var/ckey in voted)
+		var/list/this_vote = voted[ckey]
+		for(var/choice in this_vote)
+			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
+	var/middle_score = round(GLOB.vote_score_options.len/2,1)
+	for(var/score_name in scores_by_choice)
+		var/list/score = scores_by_choice[score_name]
+		for(var/S in score)
+			scores[score_name] += S-middle_score
+		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
+
+
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
 	var/text
@@ -234,6 +253,8 @@ SUBSYSTEM_DEF(vote)
 		var/admintext = "Obfuscated results"
 		if(vote_system == RANKED_CHOICE_VOTING)
 			admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
+		else if(vote_system == SCORE_VOTING)
+			admintext += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			admintext += "\n<b>[choices[i]]:</b> [votes]"
@@ -252,6 +273,12 @@ SUBSYSTEM_DEF(vote)
 				SSticker.save_mode(.)
 				message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
 				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
+				if(CONFIG_GET(flag/modetier_voting))
+					reset()
+					started_time = 0
+					initiate_vote("mode tiers","server",hideresults=FALSE,votesystem=RANKED_CHOICE_VOTING,forced=TRUE, vote_time = 30 MINUTES)
+					to_chat(world,"<b>The vote will end right as the round starts.</b>")
+					return .
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
@@ -262,6 +289,8 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("mode tiers")
+				stored_modetier_results = choices.Copy()
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
@@ -382,6 +411,13 @@ SUBSYSTEM_DEF(vote)
 					choices |= M
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
+			if("mode tiers")
+				var/list/modes_to_add = config.votable_modes
+				var/list/probabilities = CONFIG_GET(keyed_list/probability)
+				for(var/tag in modes_to_add)
+					if(probabilities[tag] <= 0)
+						modes_to_add -= tag
+				choices.Add(modes_to_add)
 			if("dynamic")
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T

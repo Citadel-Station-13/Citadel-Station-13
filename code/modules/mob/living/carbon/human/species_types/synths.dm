@@ -36,9 +36,9 @@
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "synthflesh")
+	if(chem.type == /datum/reagent/medicine/synthflesh)
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 	else
 		return ..()
