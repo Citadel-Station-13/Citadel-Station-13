@@ -102,17 +102,18 @@ SUBSYSTEM_DEF(vote)
 	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
-		for(var/a in 1 to choices.len)
-			for(var/b in a+1 to choices.len)
-				var/a_rank = this_vote.Find(a)
-				var/b_rank = this_vote.Find(b)
-				a_rank = a_rank ? a_rank : choices.len+1
-				b_rank = b_rank ? b_rank : choices.len+1
-				if(a_rank<b_rank)
-					d[a][b]++
-				else if(b_rank<a_rank)
-					d[b][a]++
-				//if equal, do nothing
+		if(islist(this_vote))
+			for(var/a in 1 to choices.len)
+				for(var/b in a+1 to choices.len)
+					var/a_rank = this_vote.Find(a)
+					var/b_rank = this_vote.Find(b)
+					a_rank = a_rank ? a_rank : choices.len+1
+					b_rank = b_rank ? b_rank : choices.len+1
+					if(a_rank<b_rank)
+						d[a][b]++
+					else if(b_rank<a_rank)
+						d[b][a]++
+					//if equal, do nothing
 	var/list/p[][] = new/list(choices.len,choices.len) //matrix of shortest path from a to b
 	for(var/i in 1 to choices.len)
 		for(var/j in 1 to choices.len)
@@ -530,7 +531,7 @@ SUBSYSTEM_DEF(vote)
 			if(RANKED_CHOICE_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
-					var/vote = (myvote ? (myvote.Find(i)) : 0)
+					var/vote = (islist(myvote) ? (myvote.Find(i)) : 0)
 					if(vote)
 						. += "<li><b><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([vote])</b></li>"
 					else
@@ -629,8 +630,12 @@ SUBSYSTEM_DEF(vote)
 			if(usr.ckey in voted)
 				if(!(usr.ckey in SSpersistence.saved_votes))
 					SSpersistence.saved_votes[usr.ckey] = list()
-				SSpersistence.saved_votes[usr.ckey][mode] = voted[usr.ckey]
-				saved += usr.ckey
+				if(islist(voted[usr.ckey]))
+					SSpersistence.saved_votes[usr.ckey][mode] = voted[usr.ckey]
+					saved += usr.ckey
+				else
+					voted[usr.ckey] = list()
+					to_chat(usr,"Your vote was malformed! Start over!")
 		if("load")
 			if(!(usr.ckey in SSpersistence.saved_votes))
 				SSpersistence.LoadSavedVote(usr.ckey)
@@ -641,7 +646,10 @@ SUBSYSTEM_DEF(vote)
 					else
 						SSpersistence.saved_votes[usr.ckey][mode] = list()
 			voted[usr.ckey] = SSpersistence.saved_votes[usr.ckey][mode]
-			saved += usr.ckey
+			if(islist(voted[usr.ckey]))
+				saved += usr.ckey
+			else
+				to_chat(usr,"Your saved vote was malformed! Start over!")
 		else
 			if(vote_system == SCORE_VOTING)
 				submit_vote(round(text2num(href_list["vote"])),round(text2num(href_list["score"])))
