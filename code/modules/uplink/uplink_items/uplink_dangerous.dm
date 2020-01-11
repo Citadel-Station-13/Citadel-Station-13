@@ -135,6 +135,14 @@
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/dangerous/eswitchblade
+	name = "Energy Switchblade"
+	desc = "The energy switchblade has the same blade of energy a normal esword has, but this one has less power. \
+			Activating it produces a sharp, distinctive noise. The swtichblade also tends not to enbed itself when thrown."
+	item = /obj/item/switchblade/energy
+	cost = 6 //Less harm, less block, less throw, cant enbed
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/dangerous/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \

@@ -337,6 +337,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
+/obj/item/switchblade/energy
+	name = "energy switchblade"
+	icon_state = "e_switchblade"
+	desc = "A heavy, fancy short energy based blade handle."
+	flags_1 = CONDUCT_1
+	force = 8
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 12
+	throw_range = 12
+	materials = list()
+	sharpness = IS_SHARP_ACCURATE
+	block_chance = 5
+	embedding = list("embed_chance" = 0)
+
+/obj/item/switchblade/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 5 //small odds
+	return ..()
+
+/obj/item/switchblade/energy/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	if(extended)
+		force = 20
+		w_class = WEIGHT_CLASS_NORMAL
+		throwforce = 23
+		armour_penetration = 25
+		icon_state = "e_switchblade_ext"
+		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+		hitsound = 'sound/weapons/bladeslice.ogg'
+		set_light(3)
+		block_chance = 30
+	else
+		force = 8
+		w_class = WEIGHT_CLASS_TINY
+		throwforce = 12
+		icon_state = "e_switchblade"
+		attack_verb = list("stubbed", "poked")
+		hitsound = 'sound/weapons/genhit.ogg'
+		block_chance = 5
+		set_light(0)
+
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
