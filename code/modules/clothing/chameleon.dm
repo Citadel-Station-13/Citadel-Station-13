@@ -220,10 +220,14 @@
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)
-		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
-			var/obj/item/clothing/CL = I
-			var/obj/item/clothing/PCL = picked_item
-			CL.flags_cover = initial(PCL.flags_cover)
+	var/obj/item/clothing/CL = target
+	var/obj/item/clothing/PCL = new picked_item
+	if(istype(CL) && istype(PCL))
+		CL.flags_cover = PCL.flags_cover
+		CL.flags_inv = PCL.flags_inv
+		CL.mutantrace_variation = PCL.mutantrace_variation
+		CL.alternate_worn_icon = PCL.alternate_worn_icon
+		qdel(PCL)
 	target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/pda/picked_item)
@@ -634,6 +638,7 @@
 /obj/item/clothing/neck/cloak/chameleon
 	name = "black tie"
 	desc = "A neosilk clip-on tie."
+	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "blacktie"
 	item_color = "blacktie"
 	resistance_flags = NONE
