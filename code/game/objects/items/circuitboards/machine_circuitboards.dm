@@ -260,9 +260,8 @@
 		var/position = vending_names_paths.Find(build_path)
 		position = (position == vending_names_paths.len) ? 1 : (position + 1)
 		var/typepath = vending_names_paths[position]
-
-		to_chat(user, "<span class='notice'>You set the board to \"[vending_names_paths[typepath]]\".</span>")
 		set_type(typepath)
+		to_chat(user, "<span class='notice'>You set the board to \"[vending_names_paths[typepath]]\".</span>")
 	else
 		return ..()
 
@@ -1001,3 +1000,16 @@
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/reagent_containers/glass/beaker = 6) //So it can hold lots of chems
+
+/obj/item/circuitboard/machine/kinkmate
+	name = "Kinkmate Vendor (Machine Board)"
+	build_path = /obj/machinery/vending/kink
+	req_components = list(/obj/item/vending_refill/kink = 1)
+
+/obj/item/circuitboard/machine/autoylathe
+	name = "Autoylathe (Machine Board)"
+	build_path = /obj/machinery/autoylathe
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 3,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/glass = 1)

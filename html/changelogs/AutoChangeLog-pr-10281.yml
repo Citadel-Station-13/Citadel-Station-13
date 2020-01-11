@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: ".357 speedloaders can now be printed with the Advanced Illegal Ballistics node on the tech tree!"
-  - balance: "okay so i may have given the .357 an extra speedloader at the same cost but it comes in a box now"
