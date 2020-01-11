@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
 #include "code\_compile_options.dm"
+#include "code\init.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\__513_compatibility.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -3061,7 +3062,6 @@
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
-#include "modular_citadel\code\init.dm"
 #include "modular_citadel\code\__HELPERS\list2list.dm"
 #include "modular_citadel\code\__HELPERS\lists.dm"
 #include "modular_citadel\code\__HELPERS\mobs.dm"
