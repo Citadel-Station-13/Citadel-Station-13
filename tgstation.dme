@@ -3081,7 +3081,6 @@
 #include "modular_citadel\code\game\objects\items.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\souldeath.dm"
 #include "modular_citadel\code\game\objects\items\stunsword.dm"
-#include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"
 #include "modular_citadel\code\modules\admin\admin.dm"
 #include "modular_citadel\code\modules\admin\chat_commands.dm"
 #include "modular_citadel\code\modules\admin\holder2.dm"
