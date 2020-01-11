@@ -9,7 +9,7 @@
 	disease_amount = 0
 	volume = 10
 	amount_per_transfer_from_this = 0
-	list_reagents = list("honey" = 5)
+	list_reagents = list(/datum/reagent/consumable/honey = 5)
 	grind_results = list()
 	var/honey_color = ""
 
@@ -31,10 +31,10 @@
 
 /obj/item/reagent_containers/honeycomb/proc/set_reagent(reagent)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
-	if(istype(R))
+	if(R)
 		name = "honeycomb ([R.name])"
 		honey_color = R.color
-		reagents.add_reagent(R.id,5)
+		reagents.add_reagent(reagent,5)
 	else
 		honey_color = ""
 	update_icon()
