@@ -36,7 +36,50 @@
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return
 
+/mob/living/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	var/block_chance_modifier = round(damage / -3)
+	for(var/obj/item/I in held_items)
+		if(!istype(I, /obj/item/clothing))
+			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+				return TRUE
+	return FALSE
+
+/mob/living/proc/check_reflect(def_zone) //Reflection checks for anything in your hands, based on the reflection chance of the object(s)
+	for(var/obj/item/I in held_items)
+		if(I.IsReflect(def_zone))
+			return TRUE
+	return FALSE
+
+/mob/living/proc/reflect_bullet_check(obj/item/projectile/P, def_zone)
+	if(P.is_reflectable && check_reflect(def_zone)) // Checks if you've passed a reflection% check
+		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+						"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
+		// Find a turf near or on the original location to bounce to
+		if(P.starting)
+			var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+			var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+			var/turf/curloc = get_turf(src)
+			// redirect the projectile
+			P.original = locate(new_x, new_y, P.z)
+			P.starting = curloc
+			P.firer = src
+			P.yo = new_y - curloc.y
+			P.xo = new_x - curloc.x
+			var/new_angle_s = P.Angle + rand(120,240)
+			while(new_angle_s > 180)	// Translate to regular projectile degrees
+				new_angle_s -= 360
+			P.setAngle(new_angle_s)
+		return TRUE
+	return FALSE
+
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
+		if(reflect_bullet_check(P, def_zone))
+			return -1 // complete projectile permutation
+		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
@@ -55,9 +98,32 @@
 		else
 				return 0
 
+/mob/living/proc/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
+	return FALSE
+
+/mob/living/proc/embed_item(obj/item/I)
+	return
+
+/mob/living/proc/can_embed(obj/item/I)
+	return FALSE
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
+	var/obj/item/I
+	var/throwpower = 30
+	if(isitem(AM))
+		I = AM
+		throwpower = I.throwforce
+	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
+		hitpush = FALSE
+		skipcatch = TRUE
+		blocked = TRUE
+	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
+		embed_item(I)
+		hitpush = FALSE
+		skipcatch = TRUE //can't catch the now embedded item
+	if(I)
+		if(!skipcatch && isturf(I.loc) && catch_item(I))
+			return TRUE
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
@@ -214,6 +280,24 @@
 					Move(user.loc)
 		return 1
 
+/mob/living/attack_hand(mob/user)
+	..() //Ignoring parent return value here.
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
+	if((user != src) && user.a_intent != INTENT_HELP && check_shields(user, 0, user.name, attack_type = UNARMED_ATTACK))
+		log_combat(user, src, "attempted to touch")
+		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>")
+		return TRUE
+
+/mob/living/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	if(user.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
+			return TRUE
+		var/hulk_verb = pick("smash","pummel")
+		if(user != src && check_shields(user, 15, "the [hulk_verb]ing"))
+			return TRUE
+		..()
+	return FALSE
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
 	if(!SSticker.HasRoundStarted())
@@ -227,6 +311,12 @@
 
 	if(HAS_TRAIT(src, TRAIT_PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
+		return FALSE
+
+	var/damage = rand(5, 35)
+	if(M.is_adult)
+		damage = rand(20, 40)
+	if(check_shields(M, damage, "the [M.name]"))
 		return FALSE
 
 	if (stat != DEAD)
@@ -245,7 +335,8 @@
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
+		if(check_shields(M, rand(M.melee_damage_lower, M.melee_damage_upper), "the [M.name]", MELEE_ATTACK, M.armour_penetration))
+			return FALSE
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -256,10 +347,6 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
-
 	if (M.a_intent == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
@@ -267,6 +354,8 @@
 
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
+			return FALSE
+		if(check_shields(M, 0, "the [M.name]"))
 			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
@@ -282,15 +371,16 @@
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 			return FALSE
 
 		else
 			if(HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
-				return
-
+				return FALSE
+			if(L != src && check_shields(L, rand(1, 3), "the [L.name]"))
+				return FALSE
 			L.do_attack_animation(src)
 			if(prob(90))
 				log_combat(L, src, "attacked")
@@ -301,24 +391,29 @@
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if((M != src) && M.a_intent != INTENT_HELP && check_shields(M, 0, "the [M.name]"))
+		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
+		return FALSE
 	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+		if (INTENT_HELP)
+			if(!isalien(src)) //I know it's ugly, but the alien vs alien attack_alien behaviour is a bit different.
+				visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 			return FALSE
-		if ("grab")
+		if (INTENT_GRAB)
 			grabbedby(M)
 			return FALSE
-		if("harm")
+		if(INTENT_HARM)
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
-			M.do_attack_animation(src)
+			if(!isalien(src))
+				M.do_attack_animation(src)
 			return TRUE
-		if("disarm")
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+		if(INTENT_DISARM)
+			if(!isalien(src))
+				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
 
 /mob/living/ex_act(severity, target, origin)
@@ -369,7 +464,7 @@
 		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
 		adjustBruteLoss(35)
 		if(src && reagents)
-			reagents.add_reagent("heparin", 5)
+			reagents.add_reagent(/datum/reagent/toxin/heparin, 5)
 		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.souls_needed -= src

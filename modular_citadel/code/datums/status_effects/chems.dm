@@ -179,7 +179,7 @@
 
 /datum/status_effect/chem/astral_insurance/tick(mob/living/carbon/M)
 	. = ..()
-	if(owner.reagents.has_reagent("astral"))
+	if(owner.reagents.has_reagent(/datum/reagent/fermi/astral))
 		return
 	if(owner.mind == originalmind) //If they're home, let the chem deal with deletion.
 		return
@@ -284,15 +284,15 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest"))
+	if(!owner.reagents.has_reagent(/datum/chemical_reaction/fermi/enthrall) && !owner.reagents.has_reagent(/datum/reagent/fermi/enthrall/test))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(5))
 				to_chat(owner, "<span class='notice'><i>Your mind starts to restore some of it's clarity as you feel the effects of the drug wain.</i></span>")
 	if (mental_capacity <= 500 || phase == 4)
-		if (owner.reagents.has_reagent("mannitol"))
+		if (owner.reagents.has_reagent(/datum/reagent/medicine/mannitol))
 			mental_capacity += 5
-		if (owner.reagents.has_reagent("neurine"))
+		if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 			mental_capacity += 10
 
 	//mindshield check
@@ -369,7 +369,7 @@
 			if(lewd && prob(1) && !customEcho)
 				to_chat(owner, "<span class='love'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
-			if (mental_capacity >= 499 && (owner.getOrganLoss(ORGAN_SLOT_BRAIN) <=0 || HAS_TRAIT(M, TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
+			if (mental_capacity >= 499 && (owner.getOrganLoss(ORGAN_SLOT_BRAIN) <=0 || HAS_TRAIT(M, TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent(/datum/reagent/fermi/enthrall))
 				phase = 2
 				mental_capacity = 500
 				customTriggers = list()
@@ -739,18 +739,18 @@
 		deltaResist*= 0.5-(((2/200)*M.arousalloss)/1)//more aroused you are, the weaker resistance you can give, the less you are, the more you gain. (+/- 0.5)
 
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
-	if (owner.reagents.has_reagent("mannitol"))
+	if (owner.reagents.has_reagent(/datum/reagent/medicine/mannitol))
 		deltaResist *= 1.25
-	if (owner.reagents.has_reagent("neurine"))
+	if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 		deltaResist *= 1.5
 	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && M.canbearoused && lewd)
-		if (owner.reagents.has_reagent("anaphro"))
+		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiac))
 			deltaResist *= 1.5
-		if (owner.reagents.has_reagent("anaphro+"))
+		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiacplus))
 			deltaResist *= 2
-		if (owner.reagents.has_reagent("aphro"))
+		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiac))
 			deltaResist *= 0.75
-		if (owner.reagents.has_reagent("aphro+"))
+		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiacplus))
 			deltaResist *= 0.5
 	//Antag resistance
 	//cultists are already brainwashed by their god
