@@ -433,6 +433,7 @@ SUBSYSTEM_DEF(vote)
 				for(var/tag in modes_to_add)
 					if(probabilities[tag] <= 0)
 						modes_to_add -= tag
+				modes_to_add -= "traitor" // makes it so that traitor is always available
 				choices.Add(modes_to_add)
 			if("dynamic")
 				for(var/T in config.storyteller_cache)
