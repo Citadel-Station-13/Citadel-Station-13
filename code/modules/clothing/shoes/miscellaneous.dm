@@ -355,3 +355,13 @@
 	name = "blue leg wraps"
 	desc = "Ankle coverings. Hang ten, brother."
 	icon_state = "bluecuffs"
+
+/obj/item/clothing/shoes/cowboyboots
+	name = "cowboy boots"
+	desc = "A standard pair of brown cowboy boots."
+	icon_state = "cowboyboots"
+
+/obj/item/clothing/shoes/cowboyboots/black
+	name = "black cowboy boots"
+	desc = "A pair of black cowboy boots, pretty easy to scuff up."
+	icon_state = "cowboyboots_black"

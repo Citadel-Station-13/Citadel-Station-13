@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	24
+#define SAVEFILE_VERSION_MAX	25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -108,6 +108,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				job_preferences["[initial(J.title)]"] = new_value
 	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
+
+	if(current_version < 25)
+		var/digi
+		S["feature_lizard_legs"] >> digi
+		if(digi == "Digitigrade Legs")
+			WRITE_FILE(S["feature_lizard_legs"], "Digitigrade")
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -504,7 +510,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["frills"]				= sanitize_inlist(features["frills"], GLOB.frills_list)
 	features["spines"]				= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"]		= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list)
+	features["legs"]				= sanitize_inlist(features["legs"], GLOB.legs_list, "Plantigrade")
 	features["deco_wings"] 			= sanitize_inlist(features["deco_wings"], GLOB.deco_wings_list, "None")
 	features["insect_fluff"]		= sanitize_inlist(features["insect_fluff"], GLOB.insect_fluffs_list)
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
