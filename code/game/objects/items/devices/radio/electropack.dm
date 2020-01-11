@@ -136,6 +136,7 @@ Turned [on ? "On" : "Off"] - <A href='?src=[REF(src)];set=power'>Toggle</A><BR>
 Frequency:
 [format_frequency(src.frequency)]
 <A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
+
 Code:
 [src.code]
 <A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
@@ -213,6 +214,7 @@ Code:
 Frequency:
 [format_frequency(src.frequency)]
 <A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
+
 Code:
 [src.code]
 <A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
