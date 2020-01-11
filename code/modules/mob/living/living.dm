@@ -118,7 +118,7 @@
 					return 1
 
 	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
-		if(resting && !L.resting)
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(L, MOBILITY_STAND))
 			var/origtargetloc = L.loc
 			if(!pulledby)
 				if(attemptingcrawl)
@@ -416,7 +416,7 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(IsSleeping())
+	if(_REFACTORING_IsSleeping())
 		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
@@ -675,7 +675,7 @@
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 			return
-		if(_MOBILTIYFLAGTEMPORARY_resting) //cit change - allows resisting out of resting
+		if(_REFACTORING_resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
 			return
 		if(resist_embedded()) //Citadel Change for embedded removal memes

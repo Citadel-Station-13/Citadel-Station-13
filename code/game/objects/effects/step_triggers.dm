@@ -64,7 +64,8 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		if(immobilize)
-			M.canmove = 0
+			ADD_TRAIT(M, TRAIT_MOBILITY_NOMOVE, src)
+			M.update_mobility()
 
 	affecting.Add(AM)
 	while(AM && !stopthrow)
@@ -101,7 +102,8 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		if(immobilize)
-			M.canmove = 1
+			REMOVE_TRAIT(M, TRAIT_MOBILITY_NOMOVE, src)
+			M.update_mobility()
 
 /* Stops things thrown by a thrower, doesn't do anything */
 

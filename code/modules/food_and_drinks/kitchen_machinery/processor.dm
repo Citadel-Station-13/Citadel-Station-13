@@ -127,8 +127,9 @@
 	set name = "Eject Contents"
 	set src in oview(1)
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+		return ..()
 	empty()
 	add_fingerprint(usr)
 

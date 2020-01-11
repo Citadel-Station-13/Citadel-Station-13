@@ -27,7 +27,7 @@
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
 				if(!recoveringstam)
-					resting = 0
+					set_resting(FALSE, TRUE)
 				adjust_blindness(-1)
 				update_mobility()
 	update_damage_hud()

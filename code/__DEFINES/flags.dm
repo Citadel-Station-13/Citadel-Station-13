@@ -93,6 +93,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RAD_NO_CONTAMINATE (1<<1)
 
 //Mob mobility var flags
+/// any flag
+#define CHECK_MOBILITY(target, flags) CHECK_BITFIELD(target.mobility_flags, flags)
+#define CHECK_ALL_MOBILITY(target, flags) CHECK_MULTIPLE_BITFIELDS(target.mobility_flags, flags)
+
 /// can move
 #define MOBILITY_MOVE			(1<<0)
 /// can, and is, standing up.

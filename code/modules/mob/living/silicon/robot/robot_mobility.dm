@@ -1,7 +1,7 @@
 /mob/living/silicon/robot/update_mobility()
 	var/newflags = NONE
 	if(!stat)
-		if(!resting)
+		if(!_REFACTORING_resting)
 			newflags |= MOBILITY_STAND
 			if(!locked_down)
 				newflags |= MOBILITY_MOVE
