@@ -151,7 +151,8 @@ SUBSYSTEM_DEF(vote)
 			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
 			// START BALLOT GATHERING
 			pretty_vote += choice
-			pretty_vote[choice] = GLOB.vote_score_options[this_vote[choice]]
+			if(this_vote[choice] in GLOB.vote_score_options)
+				pretty_vote[choice] = GLOB.vote_score_options[this_vote[choice]]
 		SSblackbox.record_feedback("associative","voting_ballots",1,pretty_vote)
 		// END BALLOT GATHERING
 	for(var/score_name in scores_by_choice)
@@ -191,7 +192,8 @@ SUBSYSTEM_DEF(vote)
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		for(var/choice in this_vote)
-			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
+			if(choice in scores_by_choice)
+				sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
 	var/middle_score = round(GLOB.vote_score_options.len/2,1)
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
