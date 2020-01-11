@@ -217,6 +217,9 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
+/proc/_file(name)
+	return file(name)
+
 /proc/_instantiate_at(thing, location)
 	new thing(location)
 
