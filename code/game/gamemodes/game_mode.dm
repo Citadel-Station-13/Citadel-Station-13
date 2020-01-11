@@ -51,10 +51,22 @@
 	var/setup_error		//What stopepd setting up the mode.
 	var/flipseclevel = FALSE //CIT CHANGE - adds a 10% chance for the alert level to be the opposite of what the gamemode is supposed to have
 
+	//LATEJOIN SCALING
+	/// Whether or not we scale with latejoins
+	var/latejoin_scaling_enabled = FALSE
+	/// The last time a latejoin scaling action happened
+	var/latejoin_scaling_last_action = 0
+	/// Grouping - If this is 0, do_latejoin_scaling(list/candidates, immediate = FALSE) is called the moment someone latejoins. Otherwise, it waits for x people to join, OR--
+	var/latejoin_scaling_grouping = 0
+	/// Max delay - If this is not 0, and grouping is active, after this time elapses from the last action latejoin scaling is forced.
+	var/latejoin_scaling_max_delay = 0
+	/// Candidates held in memory
+	var/list/datum/mind/latejoin_scaling_queue = list()
+	//
+
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
 	to_chat(world, "<b>[announce_text]</b>")
-
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
@@ -194,12 +206,13 @@
 
 ///Called by the gameSSticker
 /datum/game_mode/process()
-	return 0
+	if(latejoin_scaling_enabled)
+		if(latejoin_scaling_max_delay && latejoin_scaling_grouping && (latejoin_scaling_last_action + latejoin_scaling_max_delay < world.time) && length(latejoin_scaling_queue))
+			do_latejoin_scaling(latejoin_scaling_queue, immediate = FALSE)
 
 //For things that do not die easily
 /datum/game_mode/proc/are_special_antags_dead()
 	return TRUE
-
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(!SSticker.setup_done || !gamemode_ready)
@@ -323,7 +336,7 @@
 	var/free_tickets = CONFIG_GET(number/default_antag_tickets)
 	//Max extra tickets you can use
 	var/additional_tickets = CONFIG_GET(number/max_tickets_per_roll)
-	
+
 	var/list/ckey_to_mind = list()		//this is admittedly shitcode but I'm webediting
 	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory. how many tickets someone has stored
 	var/list/curr_tickets = list()				//how many tickets someone has for *this* antag roll, so with the free tickets
@@ -337,7 +350,7 @@
 			continue
 		curr_tickets[mind_ckey] = amount
 		ckey_to_mind[mind_ckey] = M			//make sure we can look them up after picking
-	
+
 	if(!return_list)		//return a single guy
 		var/ckey
 		if(length(curr_tickets))
@@ -604,3 +617,24 @@
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()
 	return
+
+/// Called by a hook when someone latejoins
+/datum/gamemode/proc/on_latejoin(datum/mind/latejoin)
+	AAA
+
+/// Does the actual scaling. Immediate
+/datum/gamemode/proc/do_latejoin_scaling(list/datum/mind/latejoins, immediate)
+
+	//LATEJOIN SCALING
+	/// Whether or not we scale with latejoins
+	var/latejoin_scaling_enabled = FALSE
+	/// The last time a latejoin scaling action happened
+	var/latejoin_scaling_last_action = 0
+	/// Grouping - If this is 0, do_latejoin_scaling(list/candidates, immediate = FALSE) is called the moment someone latejoins. Otherwise, it waits for x people to join, OR--
+	var/latejoin_scaling_grouping = 0
+	/// Max delay - If this is not 0, and grouping is active, after this time elapses from the last action latejoin scaling is forced.
+	var/latejoin_scaling_max_delay = 0
+	/// Candidates held in memory
+	var/list/datum/mind/latejoin_scaling_queue = list()
+	//
+
