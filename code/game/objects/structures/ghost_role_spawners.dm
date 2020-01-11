@@ -629,7 +629,7 @@
 	if(!..())
 		return 0
 	var/mob/M = target
-	if(HAS_TRAIT(M,TRAIT_SIXTHSENSE))
+	if(HAS_TRAIT_FROM(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT))
 		REMOVE_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
 		to_chat(M,"<span class='notice'>You're no longer hearing deadchat.</span>")
 	else
