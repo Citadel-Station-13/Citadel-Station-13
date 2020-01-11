@@ -467,33 +467,6 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/sundresswhite
-	name = "white sundress"
-	desc = "Makes you want to frolic in a field of lillies."
-	icon_state = "sundress_white"
-	item_color = "sundress_white"
-	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/greendress
-	name = "green dress"
-	desc = "A tight green dress"
-	icon_state = "dress_green"
-	item_color = "dress_green"
-	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/pinkdress
-	name = "pink dress"
-	desc = "A tight pink dress"
-	icon_state = "dress_pink"
-	item_color = "dress_pink"
-	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
 /obj/item/clothing/under/captainparade
 	name = "captain's parade uniform"
 	desc = "A captain's luxury-wear, for special occasions."
@@ -536,24 +509,6 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/westernbustle
-	name = "western bustle dress"
-	desc = "Filled with Western fire."
-	icon_state = "western_bustle"
-	item_state = "wcoat"
-	item_color = "western_bustle"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/flamenco
-	name = "flamenco dress"
-	desc = "Filled with Latin fire."
-	icon_state = "flamenco"
-	item_state = "wcoat"
-	item_color = "flamenco"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
 /obj/item/clothing/under/stripeddress
 	name = "striped dress"
 	desc = "Fashion in space."
@@ -567,44 +522,6 @@
 /obj/item/clothing/under/sailordress
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
-	icon_state = "sailor_dress"
-	item_state = "sailordress"
-	item_color = "sailor_dress"
-	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/flowerdress
-	name = "flower dress"
-	desc = "Lovely dress"
-	icon_state = "flower_dress"
-	item_state = "sailordress"
-	item_color = "flower_dress"
-	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/sweptskirt
-	name = "swept skirt"
-	desc = "Formal skirt"
-	icon_state = "skirt_swept"
-	item_color = "skirt_swept"
-	body_parts_covered = GROIN
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/corset
-	name = "black corset"
-	desc = "Nanotrasen is not resposible for any organ damage"
-	icon_state = "corset"
-	item_color = "corset"
-	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
-
-/obj/item/clothing/under/croptop
-	name = "crop top"
-	desc = "We've saved money by giving you half a shirt!"
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
 	item_color = "sailor_dress"
@@ -750,7 +667,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
 	slowdown = 1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	mutantrace_variation = NONE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
 	strip_delay = 80
 	var/next_extinguish = 0

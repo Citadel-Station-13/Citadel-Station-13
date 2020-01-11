@@ -80,8 +80,6 @@
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		if(mode.storyteller.flags & NO_ASSASSIN)
-			is_hijacker = FALSE
 		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
 			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
 		else
@@ -182,7 +180,7 @@
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
 			add_objective(destroy_objective)
-		else if(prob(30) || (is_dynamic && (mode.storyteller.flags & NO_ASSASSIN)))
+		else if(prob(30))
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			maroon_objective.find_target()

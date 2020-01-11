@@ -54,9 +54,6 @@
 		H.blur_eyes(5)
 		eyes.applyOrganDamage(5)
 
-/obj/item/clothing/glasses/proc/ranged_attack(mob/living/carbon/human/user,atom/A, params)
-	return FALSE
-
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
@@ -303,7 +300,7 @@
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc

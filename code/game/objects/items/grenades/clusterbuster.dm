@@ -94,11 +94,11 @@
 		var/chem = pick(slime_chems)
 		var/amount = 5
 		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = /datum/reagent/toxin/plasma
+			chem = "plasma"
 			amount = 4
 		if(chem == "holy water and uranium")
-			chem = /datum/reagent/uranium
-			reagents.add_reagent(/datum/reagent/water/holywater)
+			chem = "uranium"
+			reagents.add_reagent("holywater")
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)

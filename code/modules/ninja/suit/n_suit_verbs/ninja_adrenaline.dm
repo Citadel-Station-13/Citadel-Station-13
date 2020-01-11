@@ -4,7 +4,7 @@
 
 	if(!ninjacost(0,N_ADRENALINE))
 		var/mob/living/carbon/human/H = affecting
-		H.do_adrenaline(150, TRUE, 0, 0, TRUE, list(/datum/reagent/medicine/inaprovaline = 3, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/omnizine = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
+		H.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 
 		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 
@@ -15,5 +15,5 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost_after()
 	var/mob/living/carbon/human/H = affecting
-	H.reagents.add_reagent(/datum/reagent/radium, a_transfer)
+	H.reagents.add_reagent("radium", a_transfer)
 	to_chat(H, "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>")

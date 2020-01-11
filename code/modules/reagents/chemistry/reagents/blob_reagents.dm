@@ -47,6 +47,7 @@
 //does brute damage but can replicate when damaged and has a chance of expanding again
 /datum/reagent/blob/replicating_foam
 	name = "Replicating Foam"
+	id = "replicating_foam"
 	description = "will do medium brute damage and occasionally expand again when expanding."
 	shortdesc = "will do medium brute damage."
 	effectdesc = "will also expand when attacked with burn damage, but takes more brute damage."
@@ -77,6 +78,7 @@
 //does massive brute and burn damage, but can only expand manually
 /datum/reagent/blob/networked_fibers
 	name = "Networked Fibers"
+	id = "networked_fibers"
 	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually."
 	shortdesc = "will do high brute and burn damage."
 	taste_description = "efficiency"
@@ -110,6 +112,7 @@
 //does brute damage, shifts away when damaged
 /datum/reagent/blob/shifting_fragments
 	name = "Shifting Fragments"
+	id = "shifting_fragments"
 	description = "will do medium brute damage."
 	effectdesc = "will also cause blob parts to shift away when attacked."
 	taste_description = "something other-dimensional"
@@ -131,7 +134,7 @@
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage > 0 && B.obj_integrity - damage > 0 && prob(60-damage))
 		var/list/blobstopick = list()
 		for(var/obj/structure/blob/OB in orange(1, B))
-			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.type == B.overmind.blob_reagent_datum.type)
+			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
 				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
 			var/obj/structure/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
@@ -143,6 +146,7 @@
 //sets you on fire, does burn damage, explodes into flame when burnt, weak to water
 /datum/reagent/blob/blazing_oil
 	name = "Blazing Oil"
+	id = "blazing_oil"
 	description = "will do medium burn damage and set targets on fire."
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
 	taste_description = "burning oil"
@@ -170,7 +174,7 @@
 	if(damage_type == BURN && damage_flag != "energy")
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
-			if(!(C && C.overmind && C.overmind.blob_reagent_datum.type == B.overmind.blob_reagent_datum.type) && prob(80))
+			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
 				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
 		return 0
@@ -179,6 +183,7 @@
 //does toxin damage, hallucination, targets think they're not hurt at all
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"
+	id = "regenerative_materia"
 	description = "will do toxin damage and cause targets to believe they are fully healed."
 	analyzerdescdamage = "Does toxin damage and injects a toxin that causes the target to believe they are fully healed."
 	taste_description = "heaven"
@@ -190,8 +195,8 @@
 	reac_volume = ..()
 	M.adjust_drugginess(reac_volume)
 	if(M.reagents)
-		M.reagents.add_reagent(/datum/reagent/blob/regenerative_materia, 0.2*reac_volume)
-		M.reagents.add_reagent(/datum/reagent/toxin/spore, 0.2*reac_volume)
+		M.reagents.add_reagent("regenerative_materia", 0.2*reac_volume)
+		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	M.apply_damage(0.7*reac_volume, TOX)
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/C)
@@ -208,6 +213,7 @@
 //kills sleeping targets and turns them into blob zombies, produces fragile spores when killed or on expanding
 /datum/reagent/blob/zombifying_pods
 	name = "Zombifying Pods"
+	id = "zombifying_pods"
 	description = "will do very low toxin damage and harvest sleeping targets for additional resources and a blob zombie."
 	effectdesc = "will also produce fragile spores when killed and on expanding."
 	taste_description = "fungi"
@@ -251,6 +257,7 @@
 //does tons of oxygen damage and a little stamina, immune to tesla bolts, weak to EMP
 /datum/reagent/blob/energized_jelly
 	name = "Energized Jelly"
+	id = "energized_jelly"
 	description = "will cause low stamina and high oxygen damage, and cause targets to be unable to breathe."
 	taste_description = "gelatin"
 	effectdesc = "will also conduct electricity, but takes damage from EMPs."
@@ -282,6 +289,7 @@
 //does aoe brute damage when hitting targets, is immune to explosions
 /datum/reagent/blob/explosive_lattice
 	name = "Explosive Lattice"
+	id = "explosive_lattice"
 	description = "will do brute damage in an area around targets."
 	taste_description = "the bomb"
 	effectdesc = "will also resist explosions, but takes increased damage from fire and other energy sources."
@@ -318,6 +326,7 @@
 //does brute, burn, and toxin damage, and cools targets down
 /datum/reagent/blob/cryogenic_poison
 	name = "Cryogenic Poison"
+	id = "cryogenic_poison"
 	description = "will inject targets with a freezing poison that does high damage over time."
 	analyzerdescdamage = "Injects targets with a freezing poison that will gradually solidify the target's internal organs."
 	color = "#8BA6E9"
@@ -330,9 +339,9 @@
 /datum/reagent/blob/cryogenic_poison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(M.reagents)
-		M.reagents.add_reagent(/datum/reagent/consumable/frostoil, 0.3*reac_volume)
-		M.reagents.add_reagent(/datum/reagent/consumable/ice, 0.3*reac_volume)
-		M.reagents.add_reagent(/datum/reagent/blob/cryogenic_poison, 0.3*reac_volume)
+		M.reagents.add_reagent("frostoil", 0.3*reac_volume)
+		M.reagents.add_reagent("ice", 0.3*reac_volume)
+		M.reagents.add_reagent("cryogenic_poison", 0.3*reac_volume)
 	M.apply_damage(0.2*reac_volume, BRUTE)
 
 /datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/M)
@@ -345,6 +354,7 @@
 //does burn damage and EMPs, slightly fragile
 /datum/reagent/blob/electromagnetic_web
 	name = "Electromagnetic Web"
+	id = "electromagnetic_web"
 	description = "will do high burn damage and EMP targets."
 	taste_description = "pop rocks"
 	effectdesc = "will also take massively increased damage and release an EMP when killed."
@@ -381,6 +391,7 @@
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
 /datum/reagent/blob/synchronous_mesh
 	name = "Synchronous Mesh"
+	id = "synchronous_mesh"
 	description = "will do massively increased brute damage for each blob near the target."
 	effectdesc = "will also spread damage between each blob near the attacked blob."
 	taste_description = "toxic mold"
@@ -404,10 +415,10 @@
 	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") //the cause isn't fire or bombs, so split the damage
 		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
 		for(var/obj/structure/blob/C in orange(1, B))
-			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blob_reagent_datum.type == B.overmind.blob_reagent_datum.type) //if it doesn't have the same chemical or is a core or node, don't split damage to it
+			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical or is a core or node, don't split damage to it
 				damagesplit += 1
 		for(var/obj/structure/blob/C in orange(1, B))
-			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blob_reagent_datum.type == B.overmind.blob_reagent_datum.type) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
+			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
 				C.take_damage(damage/damagesplit, CLONE, 0, 0)
 		return damage / damagesplit
 	else
@@ -416,6 +427,7 @@
 //does brute damage through armor and bio resistance
 /datum/reagent/blob/reactive_spines
 	name = "Reactive Spines"
+	id = "reactive_spines"
 	description = "will do medium brute damage through armor and bio resistance."
 	taste_description = "rock"
 	effectdesc = "will also react when attacked with brute damage, attacking all near the attacked blob."
@@ -442,6 +454,7 @@
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
 	name = "Pressurized Slime"
+	id = "pressurized_slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	effectdesc = "will also wet tiles near blobs that are attacked or killed."
 	taste_description = "a sponge"

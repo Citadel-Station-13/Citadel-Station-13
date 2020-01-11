@@ -50,7 +50,9 @@
 /area/survivalpod)
 "l" = (
 /obj/structure/tubes,
-/obj/machinery/recharge_station,
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
 /turf/open/floor/pod,
 /area/survivalpod)
 "m" = (

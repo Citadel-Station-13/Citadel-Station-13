@@ -308,7 +308,7 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
@@ -479,10 +479,10 @@
 
 	possessed = TRUE
 
-	var/list/mob/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
-		var/mob/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
@@ -789,7 +789,7 @@
 
 	praying = TRUE
 	if(do_after(user, 20, target = M))
-		M.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
+		M.reagents?.add_reagent("holywater", 5)
 		to_chat(M, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
 		M.adjustToxLoss(-5, TRUE, TRUE)
 		M.adjustOxyLoss(-5)

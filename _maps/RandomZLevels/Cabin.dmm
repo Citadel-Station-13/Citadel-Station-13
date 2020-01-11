@@ -967,6 +967,10 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
+"dw" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/closed/indestructible/rock/snow,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -1223,7 +1227,7 @@ aa
 aa
 aa
 aa
-aa
+dw
 "}
 (2,1,1) = {"
 aa

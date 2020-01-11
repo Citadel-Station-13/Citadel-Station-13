@@ -109,16 +109,8 @@
 #define MEDIHOUND_SLEEPER	(1<<0)
 #define EATING_NOISES		(1<<1)
 #define DIGESTION_NOISES	(1<<2)
-#define BREAST_ENLARGEMENT	(1<<3)
-#define PENIS_ENLARGEMENT	(1<<4)
-#define FORCED_FEM			(1<<5)
-#define FORCED_MASC			(1<<6)
-#define HYPNO				(1<<7)
-#define NEVER_HYPNO			(1<<8)
-#define NO_APHRO			(1<<9)
-#define NO_ASS_SLAP			(1<<10)
 
-#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
+#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)

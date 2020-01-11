@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	disease_flags = CURABLE
 	cure_text = "Holy Water."
-	cures = list(/datum/reagent/water/holywater)
+	cures = list("holywater")
 	cure_chance = 20
 	agent = "Avian Vengence"
 	viable_mobtypes = list(/mob/living/carbon/human)

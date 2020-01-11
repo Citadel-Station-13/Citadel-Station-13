@@ -3,7 +3,6 @@
 	var/turf/master_turf //The center of the wave
 	var/steps=0 //How far we've moved
 	var/intensity //How strong it was originaly
-	var/remaining_contam //How much contaminated material it still has
 	var/range_modifier //Higher than 1 makes it drop off faster, 0.5 makes it drop off half etc
 	var/move_dir //The direction of movement
 	var/list/__dirs //The directions to the side of the wave, stored for easy looping
@@ -19,7 +18,6 @@
 	__dirs+=turn(dir, -90)
 
 	intensity = _intensity
-	remaining_contam = intensity
 	range_modifier = _range_modifier
 	can_contaminate = _can_contaminate
 
@@ -48,9 +46,8 @@
 		qdel(src)
 		return
 
-	if(radiate(atoms, FLOOR(min(strength,remaining_contam), 1)))
-		//oof ow ouch
-		remaining_contam = max(0,remaining_contam-((min(strength,remaining_contam)-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT))
+	radiate(atoms, FLOOR(strength, 1))
+
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 
 /datum/radiation_wave/proc/get_rad_atoms()
@@ -92,8 +89,7 @@
 			intensity *= (1-((1-thing.rad_insulation)/width))
 
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
-	var/can_contam = strength >= RAD_MINIMUM_CONTAMINATION
-	var/list/contam_atoms = list()
+	var/contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1, 1/(steps*range_modifier))
 	for(var/k in 1 to atoms.len)
 		var/atom/thing = atoms[k]
 		if(!thing)
@@ -113,14 +109,8 @@
 			))
 		if(!can_contaminate || blacklisted[thing.type])
 			continue
-		if(CHECK_BITFIELD(thing.rad_flags, RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
-			continue
-		contam_atoms += thing
-	var/did_contam = 0
-	if(length(can_contam))
-		var/rad_strength = ((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT)/contam_atoms.len
-		for(var/k in 1 to contam_atoms.len)
-			var/atom/thing = contam_atoms[k]
+		if(prob(contamination_chance)) // Only stronk rads get to have little baby rads
+			if(CHECK_BITFIELD(thing.rad_flags, RAD_NO_CONTAMINATE) || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+				continue
+			var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
 			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
-			did_contam = 1
-	return did_contam

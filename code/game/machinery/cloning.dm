@@ -155,8 +155,6 @@
 		mess = TRUE
 		update_icon()
 		return FALSE
-	if(isvamp(clonemind)) //If the mind is a bloodsucker
-		return FALSE
 
 	attempting = TRUE //One at a time!!
 	countdown.start()

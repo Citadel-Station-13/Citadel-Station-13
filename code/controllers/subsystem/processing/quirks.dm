@@ -17,7 +17,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
 		SetupQuirks()
-		quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic"),list("Ageusia","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"),list("Alcohol Tolerance","Alcohol Intolerance"),list("Alcohol Intolerance","Drunken Resilience"))
+		quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic"),list("Ageusia","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"))
 	return ..()
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
@@ -46,8 +46,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			badquirk = TRUE
 	if(badquirk)
 		cli.prefs.save_character()
-	if (!silent && LAZYLEN(cut))
-		to_chat(to_chat_target || user, "<span class='boldwarning'>Some quirks have been cut from your character because of these quirks conflicting with your job assignment: [english_list(cut)].</span>")
+	if(!silent && LAZYLEN(cut))
+		to_chat(to_chat_target || user, "<span class='boldwarning'>All of your non-neutral character quirks have been cut due to these quirks conflicting with your job assignment: [english_list(cut)].</span>")
 
 /datum/controller/subsystem/processing/quirks/proc/quirk_path_by_name(name)
 	return quirks[name]
@@ -66,7 +66,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/proc/filter_quirks(list/our_quirks, datum/job/job)
 	var/list/cut = list()
 	var/list/banned_names = list()
-	var/pointscut = 0
 	for(var/i in job.blacklisted_quirks)
 		var/name = quirk_name_by_path(i)
 		if(name)
@@ -76,17 +75,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		for(var/i in blacklisted)
 			our_quirks -= i
 			cut += i
-			pointscut += quirk_points_by_name(i)
-	if (pointscut != 0)
-		for (var/i in shuffle(our_quirks))
-			if (quirk_points_by_name(i) < pointscut || (pointscut < 0) ? quirk_points_by_name(i) <= 0 : quirk_points_by_name(i) >= 0)
-				continue
-			else
-				our_quirks -= i
-				cut += i
-				pointscut += quirk_points_by_name(i)
-			if (pointscut >= 0) //with how it works, it needs to be above zero, not below, as points for positive is positive, and negative is negative, we only want it to break if it's above zero, ie. we cut more positive than negative
-				break
+
 	/*	//Code to automatically reduce positive quirks until balance is even.
 	var/points_used = total_points(our_quirks)
 	if(points_used > 0)
@@ -102,11 +91,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	*/
 
 	//Nah, let's null all non-neutrals out.
-	if (pointscut != 0)// only if the pointscutting didn't work.
-		if(cut.len)
-			for(var/i in our_quirks)
-				if(quirk_points_by_name(i) != 0)
-					//cut += i		-- Commented out: Only show the ones that triggered the quirk purge.
-					our_quirks -= i
+	if(cut.len)
+		for(var/i in our_quirks)
+			if(quirk_points_by_name(i) != 0)
+				//cut += i		-- Commented out: Only show the ones that triggered the quirk purge.
+				our_quirks -= i
 
 	return cut

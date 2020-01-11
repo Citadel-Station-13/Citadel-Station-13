@@ -364,16 +364,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/holosignfirelock
-	name = "ATMOS Holofirelock Projector"
-	desc = "A holographic projector that creates holographic barriers that prevent changes in temperature conditions."
-	id = "holosignfirelock"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
-	build_path = /obj/item/holosign_creator/firelock
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/forcefield_projector
 	name = "Forcefield Projector"
 	desc = "A device which can project temporary forcefields to seal off an area."

@@ -21,7 +21,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/extinguisher, /obj/item/crowbar)
 	slowdown = 1
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAUR
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -30,12 +30,11 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
 	item_state = "firefighter"
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAUR
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 
 /obj/item/clothing/suit/fire/heavy
@@ -51,8 +50,6 @@
 	icon_state = "atmos_firesuit"
 	item_state = "firesuit_atmos"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAUR
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 /*
  * Bomb protection
@@ -74,7 +71,7 @@
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
-	mutantrace_variation = STYLE_MUZZLE
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -97,7 +94,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 
 /obj/item/clothing/head/bomb_hood/security
@@ -134,7 +131,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	mutantrace_variation = STYLE_MUZZLE
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -154,4 +151,4 @@
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	resistance_flags = NONE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_ALL_TAURIC
+	tauric = TRUE		//Citadel Add for tauric hardsuits

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed missing digi versions fishnet sprites and wrong digitigrade left dir purple stockings sprite."
-  - imageadd: "Add digitigrade versions for boxers and the long johns."

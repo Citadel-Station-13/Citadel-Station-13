@@ -150,9 +150,7 @@
 	if(!.)
 		return
 	ADD_TRAIT(H, TRAIT_NOGUNS, RISING_BASS_TRAIT)
-	ADD_TRAIT(H, TRAIT_AUTO_CATCH_ITEM, RISING_BASS_TRAIT)
 
 /datum/martial_art/the_rising_bass/on_remove(mob/living/carbon/human/H)
 	. = ..()
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, RISING_BASS_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_AUTO_CATCH_ITEM, RISING_BASS_TRAIT)

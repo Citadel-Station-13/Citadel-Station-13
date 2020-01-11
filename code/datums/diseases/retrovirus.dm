@@ -17,7 +17,7 @@
 	..()
 	agent = "Virus class [pick("A","B","C","D","E","F")][pick("A","B","C","D","E","F")]-[rand(50,300)]"
 	if(prob(40))
-		cures = list(/datum/reagent/medicine/mutadone)
+		cures = list("mutadone")
 	else
 		restcure = 1
 

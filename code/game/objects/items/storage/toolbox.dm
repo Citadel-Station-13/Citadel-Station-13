@@ -225,31 +225,16 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
-	new /obj/item/storage/crayons(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil/red(src)
-	new /obj/item/stack/cable_coil/yellow(src)
-	new /obj/item/stack/cable_coil/blue(src)
-	new /obj/item/stack/cable_coil/green(src)
-	new /obj/item/stack/cable_coil/pink(src)
-	new /obj/item/stack/cable_coil/orange(src)
-	new /obj/item/stack/cable_coil/cyan(src)
-	new /obj/item/stack/cable_coil/white(src)
-
-/obj/item/storage/toolbox/ammo
-	name = "ammo box"
-	desc = "It contains a few clips."
-	icon_state = "ammobox"
-	item_state = "ammobox"
-
-/obj/item/storage/toolbox/ammo/PopulateContents()
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
+	new/obj/item/storage/crayons(src)
+	new/obj/item/crowbar(src)
+	new/obj/item/stack/cable_coil/red(src)
+	new/obj/item/stack/cable_coil/yellow(src)
+	new/obj/item/stack/cable_coil/blue(src)
+	new/obj/item/stack/cable_coil/green(src)
+	new/obj/item/stack/cable_coil/pink(src)
+	new/obj/item/stack/cable_coil/orange(src)
+	new/obj/item/stack/cable_coil/cyan(src)
+	new/obj/item/stack/cable_coil/white(src)
 
 /obj/item/storage/toolbox/gold_real
 	name = "golden toolbox"

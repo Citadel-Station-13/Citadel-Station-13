@@ -13,9 +13,9 @@
 	exotic_bloodtype = "BUG"
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == /datum/reagent/toxin/pestkiller)
+	if(chem.id == "pestkiller")
 		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
 

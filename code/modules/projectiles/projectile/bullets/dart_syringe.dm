@@ -31,9 +31,9 @@
 
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/aluminium, 15)
-	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
-	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
+	reagents.add_reagent("aluminium", 15)
+	reagents.add_reagent("foaming_agent", 5)
+	reagents.add_reagent("facid", 5)
 
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
@@ -52,19 +52,20 @@
 		if(blocked != 100)
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..(target, blocked, TRUE)
-				for(var/datum/reagent/medicine/R in reagents.reagent_list) //OD prevention time!
-					if(M.reagents.has_reagent(R.type))
-						if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
-							M.reagents.add_reagent(R.type, R.volume)
+				for(var/datum/reagent/R in reagents.reagent_list) //OD prevention time!
+					if(istype(R, /datum/reagent/medicine)) //Is this a medicine?
+						if(M.reagents.has_reagent(R.id))
+							if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
+								M.reagents.add_reagent(R.id, R.volume)
+							else
+								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1)
+								M.reagents.add_reagent(R.id, transVol)
 						else
-							var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.type)) -1)
-							M.reagents.add_reagent(R.type, transVol)
-					else
-						if(!R.overdose_threshold == 0)
-							var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
-							M.reagents.add_reagent(R.type, transVol)
-						else
-							M.reagents.add_reagent(R.type, R.volume)
+							if(!R.overdose_threshold == 0)
+								var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
+								M.reagents.add_reagent(R.id, transVol)
+							else
+								M.reagents.add_reagent(R.id, R.volume)
 
 
 

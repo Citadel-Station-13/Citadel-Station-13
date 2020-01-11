@@ -3571,6 +3571,14 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"Wt" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/laborcamp/security)
+"Wz" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "WA" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -3622,6 +3630,26 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"WF" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"WH" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/eva)
+"WI" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/production)
+"WJ" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall/r_wall,
+/area/mine/maintenance)
+"WK" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -3878,7 +3906,7 @@ aj
 aj
 aj
 aj
-aj
+Wz
 "}
 (2,1,1) = {"
 aa
@@ -8723,7 +8751,7 @@ aq
 WB
 aq
 bi
-aq
+WF
 WC
 aq
 bZ
@@ -8984,7 +9012,7 @@ az
 az
 aq
 ca
-ca
+Wt
 ca
 aj
 aj
@@ -12074,7 +12102,7 @@ ai
 cQ
 dk
 dA
-cQ
+WJ
 ed
 er
 eM
@@ -13106,7 +13134,7 @@ dR
 ef
 es
 dZ
-cM
+WK
 fg
 cM
 cM
@@ -20292,9 +20320,9 @@ bt
 bH
 bV
 cq
-bf
+WH
 bq
-bq
+WI
 db
 bP
 bP

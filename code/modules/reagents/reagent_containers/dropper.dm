@@ -67,7 +67,7 @@
 			var/R
 			if(reagents)
 				for(var/datum/reagent/A in src.reagents.reagent_list)
-					R += A.type + " ("
+					R += A.id + " ("
 					R += num2text(A.volume) + "),"
 			log_combat(user, M, "squirted", R)
 

@@ -9,7 +9,7 @@
 	// A list will be created in initialization that figures out the baseturf's baseturf etc.
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
-	var/list/baseturfs = /turf/baseturf_bottom
+	var/list/baseturfs = /turf/open/space
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -391,7 +391,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	ScrapeAway()
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -554,12 +554,14 @@
 			clear_reagents_to_vomit_pool(C,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	for(var/datum/reagent/consumable/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(R.nutriment_factor > 0)
-			M.reagents.del_reagent(R.type)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(istype(R, /datum/reagent/consumable))
+			var/datum/reagent/consumable/nutri_check = R
+			if(nutri_check.nutriment_factor >0)
+				M.reagents.remove_reagent(R.id,R.volume)
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
-	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return ScrapeAway()

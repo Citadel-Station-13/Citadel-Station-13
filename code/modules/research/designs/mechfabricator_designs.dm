@@ -624,21 +624,12 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_advcutter
-	name = "Cyborg Upgrade (Advanced Plasma Cutter)"
-	id = "borg_upgrade_advcutter"
+/datum/design/borg_upgrade_holding
+	name = "Cyborg Upgrade (Ore Satchel of Holding)"
+	id = "borg_upgrade_holding"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/advcutter
-	materials = list(MAT_METAL=8000, MAT_PLASMA=2000, MAT_GOLD= 2000)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_premiumka
-	name = "Cyborg Upgrade (Premium Kinetic Accelerator)"
-	id = "borg_upgrade_premiumka"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/premiumka
-	materials = list(MAT_METAL=8000, MAT_GLASS=4000, MAT_TITANIUM=2000)
+	build_path = /obj/item/borg/upgrade/soh
+	materials = list(MAT_METAL = 10000, MAT_GOLD = 250, MAT_URANIUM = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

@@ -19,9 +19,11 @@ Here is an example of the new formatting for anyone who wants to add more food i
 	name = "Xenoburger"													//Name that displays in the UI.
 	desc = "Smells caustic. Tastes like heresy."						//Duh
 	icon_state = "xburger"												//Refers to an icon in food.dmi
-	list_reagents = list(/datum/reagent/xenomicrobes = 10,
-						/datum/reagent/consumable/nutriment = 2) 		//What's inside the snack.
-	bitesize = 3														//This is the amount each bite consumes.
+/obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+	. = ..()														//Same here.
+	reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
+	reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
+	bitesize = 3													//This is the amount each bite consumes.
 ```
 
 All foods are distributed among various categories. Use common sense.
@@ -60,7 +62,7 @@ All foods are distributed among various categories. Use common sense.
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
-				if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
+				if(rid == "nutriment" || rid == "vitamin")
 					reagents.add_reagent(rid, amount, tastes.Copy())
 				else
 					reagents.add_reagent(rid, amount)
@@ -206,7 +208,7 @@ All foods are distributed among various categories. Use common sense.
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
+			if(r_id == "nutriment" || r_id == "vitamin")
 				reagents.add_reagent(r_id, amount, tastes)
 			else
 				reagents.add_reagent(r_id, amount)
@@ -285,7 +287,7 @@ All foods are distributed among various categories. Use common sense.
 	if(S.bonus_reagents && S.bonus_reagents.len)
 		for(var/r_id in S.bonus_reagents)
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
+			if(r_id == "nutriment" || r_id == "vitamin")
 				S.reagents.add_reagent(r_id, amount, tastes)
 			else
 				S.reagents.add_reagent(r_id, amount)

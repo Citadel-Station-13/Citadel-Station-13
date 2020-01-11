@@ -11,9 +11,11 @@
 	var/charge_cost = 30
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
-	if(M.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
-		playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
-		return FALSE
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+			playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
+			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell.use(charge_cost))
@@ -814,93 +816,3 @@
 			return
 		else
 			to_chat(user, "<span class='danger'>Your gripper cannot hold \the [target].</span>")
-
-/obj/item/weapon/gripper/mining
-	name = "shelter capsule deployer"
-	desc = "A simple grasping tool for carrying and deploying shelter capsules."
-	icon_state = "gripper_mining"
-	can_hold = list(
-		/obj/item/survivalcapsule
-		)
-
-/obj/item/weapon/gripper/mining/attack_self()
-	if(wrapped)
-		wrapped.forceMove(get_turf(wrapped))
-		wrapped.attack_self()
-		wrapped = null
-	return
-
-/obj/item/gun/energy/plasmacutter/cyborg
-	name = "cyborg plasma cutter"
-	desc = "A basic variation of the plasma cutter, compressed into a cyborg chassis. Less effective than normal plasma cutters."
-	force = 15
-	ammo_type = list(/obj/item/ammo_casing/energy/plasma/weak)
-	can_charge = FALSE
-	selfcharge = EGUN_SELFCHARGE_BORG
-	cell_type = /obj/item/stock_parts/cell/secborg
-	charge_delay = 5
-
-/obj/item/cyborg_clamp
-	name = "cyborg loading clamp"
-	desc = "Equipment for supply cyborgs. Lifts objects and loads them into cargo. Will not carry living beings."
-	icon = 'icons/mecha/mecha_equipment.dmi'
-	icon_state = "mecha_clamp"
-	tool_behaviour = TOOL_RETRACTOR
-	item_flags = NOBLUDGEON
-	flags_1 = NONE
-	var/cargo_capacity = 8
-	var/cargo = list()
-
-/obj/item/cyborg_clamp/attack(mob/M, mob/user, def_zone)
-	return
-
-/obj/item/cyborg_clamp/afterattack(atom/movable/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return FALSE
-	if(isobj(target))
-		var/obj/O = target
-		if(!O.anchored)
-			if(contents.len < cargo_capacity)
-				user.visible_message("[user] lifts [target] and starts to load it into its cargo compartment.")
-				O.anchored = TRUE
-				if(do_mob(user, O, 20))
-					for(var/mob/chump in target.GetAllContents())
-						to_chat(user, "<span class='warning'>Error: Living entity detected in [target]. Cannot load.</span>")
-						O.anchored = initial(O.anchored)
-						return
-					for(var/obj/item/disk/nuclear/diskie in target.GetAllContents())
-						to_chat(user, "<span class='warning'>Error: Nuclear class authorization device detected in [target]. Cannot load.</span>")
-						O.anchored = initial(O.anchored)
-						return
-					if(contents.len < cargo_capacity) //check both before and after
-						cargo += O
-						O.forceMove(src)
-						O.anchored = FALSE
-						to_chat(user, "<span class='notice'>[target] successfully loaded.</span>")
-						playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
-					else
-						to_chat(user, "<span class='warning'>Not enough room in cargo compartment! Maximum of [cargo_capacity] objects!</span>")
-						O.anchored = initial(O.anchored)
-						return
-				else
-					O.anchored = initial(O.anchored)
-			else
-				to_chat(user, "<span class='warning'>Not enough room in cargo compartment! Maximum of eight objects!</span>")
-		else
-			to_chat(user, "<span class='warning'>[target] is firmly secured!</span>")
-
-/obj/item/cyborg_clamp/attack_self(mob/user)
-	var/obj/chosen_cargo = input(user, "Drop what?") as null|anything in cargo
-	if(!chosen_cargo)
-		return
-	chosen_cargo.forceMove(get_turf(chosen_cargo))
-	cargo -= chosen_cargo
-	user.visible_message("[user] unloads [chosen_cargo] from its cargo.")
-	playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
-
-/obj/item/card/id/miningborg
-	name = "mining point card"
-	desc = "A robotic ID strip used for claiming and transferring mining points. Must be held in an active slot to transfer points."
-	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
-	icon_state = "data_1"

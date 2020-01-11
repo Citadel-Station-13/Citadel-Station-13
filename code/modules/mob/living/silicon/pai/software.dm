@@ -283,10 +283,7 @@
 	dat += "<A href='byond://?src=[REF(src)];software=refresh'>Refresh</A><br>"
 	// Built-in
 	dat += "<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>"
-	if(radio_short)
-		dat += "\[RADIO SHORTED - Recalibrating!\]"
-	else
-		dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
 	dat += "<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"

@@ -152,16 +152,6 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/telescopiciv
-	name = "Telescopic IV Drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
-	id = "telescopiciv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 3500, MAT_SILVER = 1000)
-	build_path = /obj/item/tele_iv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
 /datum/design/holobarrier_med
 	name = "PENLITE holobarrier projector"
 	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."

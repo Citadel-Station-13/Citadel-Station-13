@@ -20,7 +20,7 @@ Consuming extracts:
 		if(last_produced + cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!<span>")
 			return
-		var/datum/reagent/N = O.reagents.has_reagent(/datum/reagent/consumable/nutriment)
+		var/datum/reagent/N = O.reagents.has_reagent("nutriment")
 		if(N)
 			nutriment_eaten += N.volume
 			to_chat(user, "<span class='notice'>[src] opens up and swallows [O] whole!</span>")
@@ -73,7 +73,7 @@ Consuming extracts:
 		to_chat(M, "Tastes like [taste].")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
 		if(nutrition)
-			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
+			M.reagents.add_reagent("nutriment",nutrition)
 		do_effect(M, user)
 		qdel(src)
 		return
@@ -199,7 +199,7 @@ Consuming extracts:
 	nutrition = 0 //We don't want normal nutriment
 
 /obj/item/slime_cookie/silver/do_effect(mob/living/M, mob/user)
-	M.reagents.add_reagent(/datum/reagent/consumable/nutriment/stabilized, 10)
+	M.reagents.add_reagent("stabilizednutriment",10)
 
 /obj/item/slimecross/consuming/bluespace
 	colour = "bluespace"

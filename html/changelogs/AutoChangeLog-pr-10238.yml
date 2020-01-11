@@ -1,7 +1,0 @@
-author: "SpaceManiac, bobbahbrown, ShizCalev, SpaceManiac (ported by Ghommie)"
-delete-after: True
-changes: 
-  - code_imp: "It is now possible to set a different most-base-turf per z-level."
-  - spellcheck: "Removed unlawful reference to Disney's Star Wars franchise in map logging."
-  - tweak: "Moved mapping related errors to their own log file."
-  - bugfix: "Destruction on Lavaland will no longer reveal space in rare situations."

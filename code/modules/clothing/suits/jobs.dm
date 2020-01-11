@@ -207,7 +207,7 @@
 	item_state = "techpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
-	mutantrace_variation = NONE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/hooded/techpriest
 	name = "techpriest's hood"
@@ -216,4 +216,4 @@
 	item_state = "techpriesthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
-	mutantrace_variation = STYLE_MUZZLE
+	mutantrace_variation = MUTANTRACE_VARIATION

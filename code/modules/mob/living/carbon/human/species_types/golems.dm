@@ -305,9 +305,9 @@
 		H.take_overall_damage(2,0)
 
 /datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == /datum/reagent/toxin/plantbgone)
+	if(chem.id == "plantbgone")
 		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
 //Radioactive
@@ -619,14 +619,14 @@
 		C.RemoveSpell(dominate)
 
 /datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == /datum/reagent/water/holywater)
+	if(chem.id == "holywater")
 		H.adjustFireLoss(4)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
-	if(chem.type == /datum/reagent/fuel/unholywater)
+	if(chem.id == "unholywater")
 		H.adjustBruteLoss(-4)
 		H.adjustFireLoss(-4)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
 
 /datum/species/golem/clockwork

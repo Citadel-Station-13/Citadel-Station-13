@@ -35,6 +35,7 @@
 /*
 /datum/reagent/medicine/ickypak
 	name = "Ickypak"
+	id = "ickypak"
 	description = "A foul-smelling green liquid, for inducing muscle contractions to expel accidentally ingested things."
 	reagent_state = LIQUID
 	color = "#0E900E"
@@ -56,6 +57,6 @@
 
 /datum/chemical_reaction/ickypak
 	name = "Ickypak"
-	id = /datum/reagent/medicine/ickypak
-	results = list(/datum/reagent/medicine/ickypak = 2)
-	required_reagents = list(/datum/reagent/chlorine = 2 , /datum/reagent/oil = 1) */
+	id = "ickypak"
+	results = list("ickypak" = 2)
+	required_reagents = list("chlorine" = 2 , "oil" = 1) */

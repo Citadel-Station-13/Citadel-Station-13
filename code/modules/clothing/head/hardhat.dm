@@ -91,7 +91,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-	mutantrace_variation = STYLE_MUZZLE
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
@@ -125,7 +125,7 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_icon()
 
-/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands)
 		. += mutable_appearance('icons/mob/head.dmi', "weldhelmet")

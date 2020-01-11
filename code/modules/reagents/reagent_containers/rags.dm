@@ -8,7 +8,6 @@
 	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
-	APTFT_altclick = FALSE
 	volume = 5
 	spillable = FALSE
 	var/wipe_sound
@@ -74,9 +73,9 @@
 				if(M.fire_stacks)
 					var/minus_plus = M.fire_stacks < 0 ? 1 : -1
 					var/amount = min(abs(M.fire_stacks), soak_efficiency)
-					var/r_id = /datum/reagent/fuel
+					var/r_id = "fuel"
 					if(M.fire_stacks < 0)
-						r_id = /datum/reagent/water
+						r_id = "water"
 					reagents.add_reagent(r_id, amount * 0.3)
 					M.adjust_fire_stacks(minus_plus * amount)
 				M.wash_cream()

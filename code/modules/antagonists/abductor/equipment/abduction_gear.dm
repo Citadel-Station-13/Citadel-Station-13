@@ -484,9 +484,11 @@
 
 	user.do_attack_animation(L)
 
-	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return FALSE
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+			playsound(H, 'sound/weapons/genhit.ogg', 50, TRUE)
+			return FALSE
 
 	switch (mode)
 		if(BATON_STUN)
@@ -795,7 +797,7 @@
 	icon_state = "bed"
 	can_buckle = 1
 
-	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
+	var/static/list/injected_reagents = list("corazone")
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()

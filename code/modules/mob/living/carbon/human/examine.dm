@@ -255,7 +255,7 @@
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 
-	if(reagents.has_reagent(/datum/reagent/teslium))
+	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
@@ -278,7 +278,7 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	if(reagents.has_reagent(/datum/reagent/fermi/astral))
+	if(reagents.has_reagent("astral"))
 		if(mind)
 			msg += "[t_He] has wild, spacey eyes and they have a strange, abnormal look to them.\n"
 		else
@@ -308,7 +308,7 @@
 	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
 		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
-			if(client.prefs.cit_toggles & HYPNO)
+			if(client?.prefs.lewdchem)
 				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
 
 

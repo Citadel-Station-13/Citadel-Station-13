@@ -1,5 +1,6 @@
 /datum/reagent/syndicateadrenals
 	name = "Syndicate Adrenaline"
+	id = "syndicateadrenals"
 	description = "Regenerates your stamina and increases your reaction time."
 	color = "#E62111"
 	overdose_threshold = 6

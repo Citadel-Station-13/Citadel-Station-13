@@ -12,7 +12,7 @@
 /datum/bounty/reagent/applies_to(obj/O)
 	if(!istype(O, /obj/item/reagent_containers))
 		return FALSE
-	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.type))
+	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.id))
 		return FALSE
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
@@ -21,7 +21,7 @@
 /datum/bounty/reagent/ship(obj/O)
 	if(!applies_to(O))
 		return
-	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.type)
+	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.id)
 	if(shipped_volume > required_volume)
 		shipped_volume = required_volume
 
@@ -29,7 +29,7 @@
 	if(!istype(other_bounty, /datum/bounty/reagent))
 		return TRUE
 	var/datum/bounty/reagent/R = other_bounty
-	return wanted_reagent.type != R.wanted_reagent.type
+	return wanted_reagent.id != R.wanted_reagent.id
 
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"

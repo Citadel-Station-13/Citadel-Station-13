@@ -556,7 +556,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
@@ -781,11 +781,6 @@
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
-	var/clonechance = 50
-	var/clonedamage = 12
-	var/clonespeed = 0
-	var/clone_replication_chance = 30
-	var/clone_lifespan = 100
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -796,11 +791,10 @@
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
-		if(!L.stat && prob(clonechance))
+		if(!L.stat && prob(50))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
-			M.set_varspeed(clonespeed)
-			M.Copy_Parent(user, clone_lifespan, user.health/2.5, clonedamage, clone_replication_chance)
+			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
 
 /obj/item/twohanded/pitchfork
@@ -878,7 +872,7 @@
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
-		W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		W.ScrapeAway()
 		return
 
 //HF blade

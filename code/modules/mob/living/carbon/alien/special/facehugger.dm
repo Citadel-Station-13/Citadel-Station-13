@@ -21,7 +21,7 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
 	max_integrity = 100
-	mutantrace_variation = STYLE_MUZZLE
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 

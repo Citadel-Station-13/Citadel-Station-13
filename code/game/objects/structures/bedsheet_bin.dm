@@ -252,7 +252,7 @@ LINEN BINS
 	add_overlay(g_mouth)
 	add_overlay(g_eyes)
 
-/obj/item/bedsheet/gondola/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/bedsheet/gondola/worn_overlays(isinhands = FALSE, icon_file)
 	. = ..()
 	if(!isinhands)
 		. += mutable_appearance(icon_file, g_mouth)

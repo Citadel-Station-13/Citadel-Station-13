@@ -135,12 +135,8 @@
 		if(L.client && L.client.prefs)
 			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
 			L.update_arousal_hud() //Removes the old icon
-			if (L.client.prefs.auto_ooc)
-				if (L.client.prefs.chat_toggles & CHAT_OOC)
-					L.client.prefs.chat_toggles ^= CHAT_OOC
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
-	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
 
 /datum/mind/proc/store_memory(new_text)
 	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
@@ -525,7 +521,7 @@
 		if(!objective)
 			to_chat(usr,"Invalid objective.")
 			return
-		qdel(objective) //TODO: Needs cleaning objective destroys (whatever that means)
+		//qdel(objective) Needs cleaning objective destroys
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
 
@@ -748,7 +744,6 @@
 	else
 		mind = new /datum/mind(key)
 		SSticker.minds += mind
-		SEND_SIGNAL(src, COMSIG_MOB_ON_NEW_MIND)
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src

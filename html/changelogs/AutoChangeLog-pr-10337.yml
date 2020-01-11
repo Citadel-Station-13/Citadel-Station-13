@@ -1,5 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - rscadd: "Auto ooc"
-  - admin: "changed \"assume direct control\" from m.ckey = src.ckey to adminmob.transfer_ckey(M) so it works with auto ooc"

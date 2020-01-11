@@ -33,12 +33,14 @@
 
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
-					var/thisamount = C.reagents.get_reagent_amount(T.type)
-					if (thisamount && thisamount <= toxTolerance)
-						C.reagents.remove_reagent(T.type, 1)
-					else
-						damage += (thisamount*toxLethality)
+				for(var/I in C.reagents.reagent_list)
+					var/datum/reagent/pickedreagent = I
+					if(istype(pickedreagent, /datum/reagent/toxin))
+						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
+						if (thisamount <= toxTolerance && thisamount)
+							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
+						else
+							damage += (thisamount*toxLethality)
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
@@ -54,7 +56,7 @@
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/iron, 5)
+	S.reagents.add_reagent("iron", 5)
 	return S
 
 //Just in case

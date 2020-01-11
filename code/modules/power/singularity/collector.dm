@@ -45,8 +45,8 @@
 			eject()
 		else
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
-			loaded_tank.air_contents.gases[/datum/gas/plasma] -= 2.7 * gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/tritium] += 	2.7 * gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/plasma] -= gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/tritium] += gasdrained
 			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
 
 			var/power_produced = RAD_COLLECTOR_OUTPUT

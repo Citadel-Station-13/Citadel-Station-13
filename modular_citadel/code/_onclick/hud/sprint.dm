@@ -14,7 +14,7 @@
 
 /obj/screen/sprintbutton/update_icon_state()
 	var/mob/living/user = hud?.mymob
-	if(!istype(user))
+	if(istype(user))
 		return
 	if(user.sprinting)
 		icon_state = "act_sprint_on"

@@ -8,26 +8,18 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/list/attributes
 	var/target_path
 
-/world/proc/preloader_setup(list/the_attributes, path)
+/datum/map_preloader/proc/setup(list/the_attributes, path)
 	if(the_attributes.len)
 		GLOB.use_preloader = TRUE
-		var/datum/map_preloader/preloader_local = GLOB._preloader
-		preloader_local.attributes = the_attributes
-		preloader_local.target_path = path
+		attributes = the_attributes
+		target_path = path
 
-/world/proc/preloader_load(atom/what)
+/datum/map_preloader/proc/load(atom/what)
 	GLOB.use_preloader = FALSE
-	var/datum/map_preloader/preloader_local = GLOB._preloader
-	for(var/attribute in preloader_local.attributes)
-		var/value = preloader_local.attributes[attribute]
+	for(var/attribute in attributes)
+		var/value = attributes[attribute]
 		if(islist(value))
 			value = deepCopyList(value)
-		#ifdef TESTING
-		if(what.vars[attribute] == value)
-			var/message = "<font color=green>[what.type]</font> at [AREACOORD(what)] - <b>VAR:</b> <font color=red>[attribute] = [isnull(value) ? "null" : (isnum(value) ? value : "\"[value]\"")]</font>"
-			log_mapping("DIRTY VAR: [message]")
-			GLOB.dirty_vars += message
-		#endif
 		what.vars[attribute] = value
 
 /area/template_noop

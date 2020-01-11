@@ -47,9 +47,3 @@
 	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-
-/obj/item/projectile/plasma/weak
-	dismemberment = 0
-	damage = 10
-	range = 4
-	mine_range = 0

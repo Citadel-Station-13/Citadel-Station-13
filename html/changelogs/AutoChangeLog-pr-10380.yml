@@ -1,6 +1,0 @@
-author: "Unit2E & JMoldy, ported by Hatterhat"
-delete-after: True
-changes: 
-  - balance: "the powerfist now punches people away at high velocity depending on setting."
-  - rscadd: "the powerfist now leaks the gas it uses onto the tile you're on."
-  - tweak: "Adds weak punch variations for empty and near-empty punching."
