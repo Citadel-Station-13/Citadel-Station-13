@@ -4,8 +4,8 @@
  *		Plasma glass
  *		Reinforced glass sheets
  *		Reinforced plasma glass
- *		Titanium glass
- *		Plastitanium glass
+ *		Titanium glass - NT Glass
+ *		Plastitanium glass - Sydi Glass
  *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
