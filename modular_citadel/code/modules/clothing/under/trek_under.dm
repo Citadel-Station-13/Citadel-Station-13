@@ -14,7 +14,7 @@
 	desc = "Oooh... right."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
-	force_alternate_icon = TRUE
+	mutantrace_variation = NONE
 	item_state = ""
 	can_adjust = FALSE	//to prevent you from "wearing it casually"
 
@@ -95,10 +95,9 @@
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	icon_state = "trek_ds9_coat"
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
-	force_alternate_icon = TRUE
 	item_state = "trek_ds9_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	permeability_coefficient = 0.50
 	allowed = list(
 		/obj/item/flashlight, /obj/item/analyzer,
@@ -140,11 +139,9 @@
 	desc = "A uniform jacket from the United Federation. Set phasers to awesome."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
-	force_alternate_icon = TRUE
 	icon_state = "fedcoat"
 	item_state = "fedcoat"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
-
+	mutantrace_variation = NONE
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
@@ -207,7 +204,6 @@
 	desc = "A modern uniform jacket from the United Federation."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
-	force_alternate_icon = TRUE
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -240,7 +236,6 @@
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	icon_state = "fedcapofficer"
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
-	force_alternate_icon = TRUE
 	item_state = "fedcapofficer"
 
 	//Variants

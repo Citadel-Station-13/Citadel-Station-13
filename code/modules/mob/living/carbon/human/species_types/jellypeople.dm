@@ -12,7 +12,7 @@
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
-	exotic_blood = "jellyblood"
+	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs

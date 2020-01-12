@@ -121,3 +121,30 @@
 	mob_trait = TRAIT_EXHIBITIONIST
 	gain_text = "<span class='notice'>You feel like exposing yourself to the world.</span>"
 	lose_text = "<span class='notice'>Indecent exposure doesn't sound as charming to you anymore.</span>"
+
+/datum/quirk/coldblooded
+	name = "Cold-blooded"
+	desc = "Your body doesn't create its own internal heat, requiring external heat regulation."
+	value = 0
+	medical_record_text = "Patient is ectothermic."
+	mob_trait = TRAIT_COLDBLOODED
+	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
+	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
+
+/datum/quirk/alcohol_intolerance
+	name = "Alcohol Intolerance"
+	desc = "You take toxin damage from alcohol rather than getting drunk."
+	value = 0
+	mob_trait = TRAIT_NO_ALCOHOL
+	medical_record_text = "Patient's body does not react properly to ethyl alcohol."
+
+/datum/quirk/alcohol_intolerance/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.disliked_food |= ALCOHOL
+
+/datum/quirk/alcohol_intolerance/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~ALCOHOL

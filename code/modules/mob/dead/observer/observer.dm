@@ -19,7 +19,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
-	var/clientless_round_timeout = 0 //mobs will lack a client as long as their player is disconnected. See client_defines.dm "reenter_round_timeout"
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -135,7 +134,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		AA.onNewMob(src)
 
 	. = ..()
-
+	AddElement(/datum/element/ghost_role_eligibility)
 	grant_all_languages()
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
@@ -270,23 +269,12 @@ Works together with spawning an observer, noted above.
 	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
-	if(penalize) //penalizing them from making a ghost role / midround antag comeback right away.
-		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
-		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
-		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
-			penalty += roundstart_quit_limit - world.time
-		if(penalty)
-			penalty += world.realtime
-			if(penalty - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
-				penalty = CANT_REENTER_ROUND
-			if(client)
-				client.reenter_round_timeout = penalty
-			else //A disconnected player (quite likely for cryopods)
-				ghost.clientless_round_timeout = penalty
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
+	ghost.AddElement(/datum/element/ghost_role_eligibility,penalize) // technically already run earlier, but this adds the penalty
+	// needs to be done AFTER the ckey transfer, too
 	return ghost
 
 /*
@@ -343,15 +331,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	ghostize(0, penalize = TRUE)
 
-/mob/dead/observer/proc/can_reenter_round(silent = FALSE)
-	var/timeout = clientless_round_timeout
-	if(client)
-		timeout = client.reenter_round_timeout
-	if(timeout != CANT_REENTER_ROUND && timeout <= world.realtime)
-		return TRUE
-	if(!silent && client)
-		to_chat(src, "<span class='warning'>You are unable to reenter the round[timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(timeout - world.realtime)]" : ""].</span>")
-	return FALSE
+
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
@@ -496,6 +476,32 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//restart our floating animation after orbit is done.
 	pixel_y = 0
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+	set category = "Ghost"
+
+	var/list/creatures = getpois()
+
+	reset_perspective(null)
+
+	var/eye_name = null
+
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+
+	if (!eye_name)
+		return
+
+	var/mob/mob_eye = creatures[eye_name]
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
+		client.eye = mob_eye
+		if(mob_eye.hud_used)
+			client.screen = list()
+			LAZYINITLIST(mob_eye.observers)
+			mob_eye.observers |= src
+			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
+			observetarget = mob_eye
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -826,32 +832,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(hud_used)
 			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
-
-/mob/dead/observer/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
-
-	var/list/creatures = getpois()
-
-	reset_perspective(null)
-
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
-
-	if (!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
-		client.eye = mob_eye
-		if(mob_eye.hud_used)
-			client.screen = list()
-			LAZYINITLIST(mob_eye.observers)
-			mob_eye.observers |= src
-			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
-			observetarget = mob_eye
 
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"

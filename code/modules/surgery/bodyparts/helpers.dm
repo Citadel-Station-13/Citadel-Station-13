@@ -287,51 +287,19 @@
 			. = "ffc905"
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
-	var/body_plan_changed = FALSE
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = X
-		var/obj/item/bodypart/N
-		if((!O.use_digitigrade && swap_back == FALSE) || (O.use_digitigrade && swap_back == TRUE))
-			if(O.body_part == LEG_LEFT)
-				if(swap_back == TRUE)
-					N = new /obj/item/bodypart/l_leg
-				else
-					N = new /obj/item/bodypart/l_leg/digitigrade
-			else if(O.body_part == LEG_RIGHT)
-				if(swap_back == TRUE)
-					N = new /obj/item/bodypart/r_leg
-				else
-					N = new /obj/item/bodypart/r_leg/digitigrade
-		if(!N)
-			continue
-		body_plan_changed = TRUE
-		O.drop_limb(1)
-		qdel(O)
-		N.attach_limb(src)
+		if((O.body_part == LEG_LEFT || O.body_part == LEG_RIGHT) && ((!O.use_digitigrade && !swap_back) || (O.use_digitigrade && swap_back)))
+			O.use_digitigrade = swap_back ? NOT_DIGITIGRADE : FULL_DIGITIGRADE
+			O.update_limb(FALSE, src)
 
-	if(body_plan_changed && ishuman(src))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.w_uniform)
-			var/obj/item/clothing/under/U = H.w_uniform
-			if(U.mutantrace_variation)
-				if(swap_back)
-					U.suit_style = NORMAL_SUIT_STYLE
-				else
-					U.suit_style = DIGITIGRADE_SUIT_STYLE
-				H.update_inv_w_uniform()
+			H.update_inv_w_uniform()
 		if(H.shoes)
-			var/obj/item/clothing/shoes/S = H.shoes
-			if(swap_back)
-				S.adjusted = NORMAL_STYLE
-			else
-				S.adjusted = ALT_STYLE
 			H.update_inv_shoes()
 		if(H.wear_suit)
-			var/obj/item/clothing/suit/S = H.wear_suit
-			if(swap_back)
-				S.adjusted = NORMAL_STYLE
-			else
-				S.adjusted = ALT_STYLE
 			H.update_inv_wear_suit()
 
 /mob/living/carbon/proc/get_body_parts_flags()

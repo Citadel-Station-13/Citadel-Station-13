@@ -131,7 +131,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/enthrall
 	name = "MKUltra"
-	id = "enthrall"
 	description = "A forbidden deep red mixture that increases a person's succeptability to another's words. When taken by the creator, it will enhance the draw of their voice to those affected by it."
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
@@ -149,7 +148,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/enthrall/test
 	name = "MKUltraTest"
-	id = "enthrallTest"
 	description = "A forbidden deep red mixture that makes you like Fermis a little too much. Unobtainable and due to be removed from the wiki."
 	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
 	creatorID  = "honkatonkbramblesnatch"//ckey
@@ -158,7 +156,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	purity = 1
 
 /datum/reagent/fermi/enthrall/test/on_new()
-	id = "enthrall"
 	..()
 	creator = get_mob_by_key(creatorID)
 
@@ -171,7 +168,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(M.client?.prefs.cit_toggles & NEVER_HYPNO) // Just in case people are opting out of this
-		holder.remove_reagent(id, 10000000)
+		holder.del_reagent(type)
 		return
 	if(!ishuman(M))//Just to make sure screwy stuff doesn't happen.
 		return
@@ -221,7 +218,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 			if(LAZYLEN(seen))
 				return
-			M.reagents.remove_reagent(id, volume)
+			M.reagents.del_reagent(type)
 			FallInLove(M, pick(seen))
 			return
 
@@ -230,7 +227,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
 			if((C in viewers(7, get_turf(M))) && (C.client))
-				M.reagents.remove_reagent(id, volume)
+				M.reagents.del_reagent(type)
 				FallInLove(C, M)
 			return
 	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth. NEVERMIND ADD THIS LATER I CAN'T GET IT TO WORK
@@ -282,7 +279,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
 /datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
 	name = "Gaseous MKUltra"
-	id = "enthrallExplo"
 	description = "A forbidden deep red gas that overwhelms a foreign body, causing the person they next lay their eyes on to become more interesting. Studies have shown that people are 66% more likely to make friends with this in the air. Produced when MKUltra explodes."
 	color = "#2C051A" // rgb: , 0, 255
 	metabolization_rate = 0.1

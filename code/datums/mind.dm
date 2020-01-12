@@ -140,6 +140,7 @@
 					L.client.prefs.chat_toggles ^= CHAT_OOC
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
+	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
 
 /datum/mind/proc/store_memory(new_text)
 	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
@@ -524,7 +525,7 @@
 		if(!objective)
 			to_chat(usr,"Invalid objective.")
 			return
-		//qdel(objective) Needs cleaning objective destroys
+		qdel(objective) //TODO: Needs cleaning objective destroys (whatever that means)
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
 
@@ -747,6 +748,7 @@
 	else
 		mind = new /datum/mind(key)
 		SSticker.minds += mind
+		SEND_SIGNAL(src, COMSIG_MOB_ON_NEW_MIND)
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
