@@ -13,6 +13,7 @@
 	var/id = 0
 	max_integrity = 150
 	integrity_failure = 50
+	var/glass_effect = 1 //Different types of glass makes collects more power then others
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -51,7 +52,24 @@
 	else
 		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
-		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
+		max_integrity *= 1.2								 //this need to be placed here, because panels already on the map don't have an assembly linked to
+		glass_effect = 1.2
+		obj_integrity = max_integrity
+	if(S.glass_type == /obj/item/stack/sheet/plasmaglass) //if the panel is in plasma glass
+		max_integrity *= 1.4
+		glass_effect = 1.4
+		obj_integrity = max_integrity
+	if(S.glass_type == /obj/item/stack/sheet/plasmarglass) //if the panel is in reinforced plasma glass
+		max_integrity *= 1.6
+		glass_effect = 1.6
+		obj_integrity = max_integrity
+	if(S.glass_type == /obj/item/stack/sheet/titaniumglass) //if the panel is in titanium glass
+		max_integrity *= 1.8
+		glass_effect = 1.8
+		obj_integrity = max_integrity
+	if(S.glass_type == /obj/item/stack/sheet/plastitaniumglass) //if the panel is in evil plastitanium glass
+		max_integrity *= 2
+		glass_effect = 2
 		obj_integrity = max_integrity
 	update_icon()
 
@@ -131,7 +149,7 @@
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
 			if(obscured) //get no light from the sun, so don't generate power
 				return
-			var/sgen = SOLARGENRATE * sunfrac
+			var/sgen = glass_effect * SOLARGENRATE * sunfrac
 			add_avail(sgen)
 			control.gen += sgen
 		else //if we're no longer on the same powernet, remove from control computer
@@ -169,7 +187,6 @@
 
 	obscured = 0		// if hit the edge or stepped 20 times, not obscured
 	update_solar_exposure()
-
 
 //
 // Solar Assembly - For construction of solar arrays.
@@ -213,7 +230,7 @@
 			W.play_tool_sound(src, 75)
 		return 1
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/plasmaglass) || istype(W, /obj/item/stack/sheet/plasmarglass) || istype(W, /obj/item/stack/sheet/titaniumglass) || istype(W, /obj/item/stack/sheet/plastitaniumglass))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
@@ -470,13 +487,9 @@
 
 	update_icon()
 
-
 /obj/machinery/power/solar_control/power_change()
 	..()
 	update_icon()
-
-
-
 
 //
 // MISC
