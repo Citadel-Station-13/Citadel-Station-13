@@ -2,15 +2,45 @@
 /////////////////Tools///////////////////
 /////////////////////////////////////////
 
-/datum/design/rcd_upgrade
-	name = "Advanced RCD designs upgrade"
-	desc = "Adds the computer frame and machine frame designs to the RCD."
-	id = "rcd_upgrade"
+/datum/design/rcd_upgrade/frames
+	name = "RCD frames designs upgrade"
+	desc = "Adds the computer frame and machine frame to the RCD."
+	id = "rcd_upgrade_frames"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
-	build_path = /obj/item/rcd_upgrade
+	build_path = /obj/item/rcd_upgrade/frames
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_upgrade/simple_circuits
+	name = "RCD simple circuits designs upgrade"
+	desc = "Adds the simple circuits to the RCD."
+	id = "rcd_upgrade_simple_circuits"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 1500, MAT_TITANIUM = 2000)
+	build_path = /obj/item/rcd_upgrade/simple_circuits
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_loaded
+	name = "Rapid Construction Device"
+	desc = "A tool that can construct and deconstruct walls, airlocks and floors on the fly."
+	id = "rcd_loaded"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)  // costs more than what it did in the autolathe, this one comes loaded.
+	build_path = /obj/item/construction/rcd/loaded
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rpd
+	name = "Rapid Pipe Dispenser"
+	desc = "A tool that can construct and deconstruct pipes on the fly."
+	id = "rpd"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 75000, MAT_GLASS = 37500)
+	build_path = /obj/item/pipe_dispenser
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/handdrill
 	name = "Hand Drill"
