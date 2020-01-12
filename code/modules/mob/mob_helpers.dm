@@ -253,8 +253,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	var/recoil_x = -sin(angle)*4*strength + rand(-strength, strength)
 	var/recoil_y = -cos(angle)*4*strength + rand(-strength, strength)
 	animate(C, pixel_x=recoil_x, pixel_y=recoil_y, time=1, easing=SINE_EASING|EASE_OUT, flags=ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	sleep(2)
-	animate(C, pixel_x=0, pixel_y=0, time=3, easing=SINE_EASING|EASE_IN)
+	addtimer(CALLBACK(GLOBAL_PROC, .animate, C, pixel_x=0, pixel_y=0, time=3, easing=SINE_EASING|EASE_IN), 2)
 
 /proc/findname(msg)
 	if(!istext(msg))
