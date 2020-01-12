@@ -2757,7 +2757,7 @@
 #include "code\modules\research\designs\autolathe_desings\autolathe_designs_tcomms_and_misc.dm"
 #include "code\modules\research\designs\autolathe_desings\autolathe_designs_tools.dm"
 #include "code\modules\research\designs\comp_board_designs\comp_board_designs_all_misc.dm"
-#include "code\modules\research\designs\comp_board_designs\comp_board_designs_cargo.dm"
+#include "code\modules\research\designs\comp_board_designs\comp_board_designs_cargo .dm"
 #include "code\modules\research\designs\comp_board_designs\comp_board_designs_engi.dm"
 #include "code\modules\research\designs\comp_board_designs\comp_board_designs_medical.dm"
 #include "code\modules\research\designs\comp_board_designs\comp_board_designs_sci.dm"
