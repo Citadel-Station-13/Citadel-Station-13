@@ -341,7 +341,7 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
-		if(!(M.config_tag in SSvote.stored_modetier_results))
+		if(CONFIG_GET(flag/modetier_voting) && !(M.config_tag in SSvote.stored_modetier_results))
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])
