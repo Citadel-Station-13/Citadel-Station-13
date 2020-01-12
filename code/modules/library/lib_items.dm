@@ -113,14 +113,14 @@
 				return ..()
 
 
-/obj/structure/bookcase/attack_hand(mob/user)
+/obj/structure/bookcase/attack_hand(mob/living/user)
 	. = ..()
-	if(.)
+	if(. || !istype(user))
 		return
 	if(contents.len)
 		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(!CHECK_MOBILITY(user, MOBILITY_USE) || !in_range(loc, user))
 				return
 			if(ishuman(user))
 				if(!user.get_active_held_item())

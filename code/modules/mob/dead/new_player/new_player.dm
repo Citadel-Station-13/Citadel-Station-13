@@ -10,7 +10,6 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
 
 	anchored = TRUE	//  don't get pushed around
 

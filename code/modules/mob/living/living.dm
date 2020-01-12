@@ -1195,8 +1195,7 @@
 	if(scale_stamina_loss_recovery)
 		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)
-		resting = FALSE
-		lying = FALSE
+		set_resting(FALSE, TRUE, FALSE)
 	if(reset_misc)
 		stuttering = 0
 	updatehealth()

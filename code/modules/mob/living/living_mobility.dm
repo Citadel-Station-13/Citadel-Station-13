@@ -2,9 +2,9 @@
 
 //Force-set resting variable, without needing to resist/etc.
 /mob/living/proc/set_resting(new_resting, silent = FALSE, updating = TRUE)
-	resting = new_resting
+	_REFACTORING_resting = new_resting
 	if(!silent)
-		to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
+		to_chat(src, "<span class='notice'>You are now [_REFACTORING_resting? "resting" : "getting up"].</span>")
 	update_resting(updating)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)

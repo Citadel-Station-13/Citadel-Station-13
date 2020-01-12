@@ -58,7 +58,7 @@
 		// Did I get knocked down?
 		if(owner && owner.incapacitated(ignore_restraints=TRUE, ignore_grab=TRUE))// owner.incapacitated())
 			// We're gonna cancel. But am I on the ground? Spin me!
-			if(!CHECK_MOBILTIY(user, MOBILITY_STAND))
+			if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 				var/send_dir = get_dir(owner, T)
 				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
 				owner.spin(10)
@@ -71,7 +71,7 @@
 				if (rand(0, 5) < level_current)
 					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 					newtarget.DefaultCombatKnockdown(10 + level_current * 5)
-				if(_REFACTORING_newtarget.IsStun())
+				if(newtarget._REFACTORING_IsStun())
 					newtarget.spin(10,1)
 					if (rand(0,4))
 						newtarget.drop_all_held_items()

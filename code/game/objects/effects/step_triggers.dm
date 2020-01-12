@@ -61,8 +61,8 @@
 		if(AM in T.affecting)
 			return
 
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(immobilize)
 			ADD_TRAIT(M, TRAIT_MOBILITY_NOMOVE, src)
 			M.update_mobility()
@@ -99,8 +99,8 @@
 
 	affecting.Remove(AM)
 
-	if(ismob(AM))
-		var/mob/M = AM
+	if(living(AM))
+		var/mob/living/M = AM
 		if(immobilize)
 			REMOVE_TRAIT(M, TRAIT_MOBILITY_NOMOVE, src)
 			M.update_mobility()

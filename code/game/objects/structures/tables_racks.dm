@@ -549,12 +549,11 @@
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	pushed_mob.update_canmove()
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
-	var/mob/M = locate(/mob/living/carbon/human, loc)
+	var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
 	if(M)
 		if(!CHECK_BITFIELD(M.mobility_flags, MOBILITY_STAND))
 			patient = M

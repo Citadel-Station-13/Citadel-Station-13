@@ -43,10 +43,10 @@
 
 
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
-	if(!user.canmove || user.stat || user.restrained())
+/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/living/user)
+	if(!istype(user) || !CHECK_MOBILLITY(user, MOBILITY_USE))
 		return
-	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
+	if(!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		return //no fun allowed

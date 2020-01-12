@@ -474,8 +474,9 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+		return FALSE
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		return attack_hand(usr)

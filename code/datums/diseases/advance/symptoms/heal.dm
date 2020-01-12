@@ -253,11 +253,11 @@
 	var/mob/living/M = A.affected_mob
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
-	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+	else if(M._REFACTORING_IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
 	else if(M.stat == SOFT_CRIT)
 		return power * 0.5
-	else if(M.IsSleeping())
+	else if(M._REFACTORING_IsSleeping())
 		return power * 0.25
 	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
@@ -269,7 +269,7 @@
 		M.emote("deathgasp")
 	M.fakedeath("regenerative_coma")
 	M.update_stat()
-	M.update_canmove()
+	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
@@ -278,7 +278,7 @@
 	active_coma = FALSE
 	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
-	M.update_canmove()
+	M.update_mobility()
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power

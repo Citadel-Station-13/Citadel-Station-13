@@ -74,7 +74,7 @@
 			target.adjustStaminaLoss(40 + 10 * level_current)
 		// Cancel Walk (we were close enough to contact them)
 		walk(owner, 0)
-		target._REFACTORING_Stun(10,1) //Without this the victim can just walk away
+		target.Stun(10,1) //Without this the victim can just walk away
 		target.grabbedby(owner) 										// Taken from mutations.dm under changelings
 		target.grippedby(owner, instant = TRUE) //instant aggro grab
 

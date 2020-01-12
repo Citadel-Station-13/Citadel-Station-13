@@ -406,7 +406,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(!user.resting)
+	if(!user._REFACTORING_resting)
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"

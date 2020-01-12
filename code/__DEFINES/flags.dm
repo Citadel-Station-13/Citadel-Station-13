@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_STAND			(1<<1)
 /// can pickup items
 #define MOBILITY_PICKUP			(1<<2)
-/// can use items
+/// can use items and interact with world objects like opening closets/etc
 #define MOBILITY_USE			(1<<3)
 /// can use interfaces like consoles
 #define MOBILITY_UI				(1<<4)

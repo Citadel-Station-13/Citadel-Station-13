@@ -252,7 +252,7 @@
 	disabled = new_disabled
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-	owner.update_canmove()
+	owner.update_mobility()
 	return TRUE
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
