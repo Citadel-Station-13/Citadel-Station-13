@@ -350,6 +350,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = IS_SHARP_ACCURATE
 	block_chance = 5
 	embedding = list("embed_chance" = 0)
+	damtype = brute
 
 /obj/item/switchblade/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -369,6 +370,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		set_light(3)
 		block_chance = 30
+		damtype = BURN
 	else
 		force = 8
 		w_class = WEIGHT_CLASS_TINY
@@ -378,6 +380,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		hitsound = 'sound/weapons/genhit.ogg'
 		block_chance = 5
 		set_light(0)
+		damtype = brute
 
 /obj/item/phone
 	name = "red phone"
