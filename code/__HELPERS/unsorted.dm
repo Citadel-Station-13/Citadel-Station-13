@@ -41,6 +41,9 @@
 	else if(dx<0)
 		.+=360
 
+/proc/get_angle(atom/a, atom/b)
+	return ATAN2(b.y - a.y, b.x - a.x)
+
 /proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
 	if(!y)
 		return (x>=0)?90:270
