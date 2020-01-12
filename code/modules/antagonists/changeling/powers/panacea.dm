@@ -28,10 +28,10 @@
 			C.vomit(0, toxic = TRUE)
 		O.forceMove(get_turf(user))
 
-	user.reagents.add_reagent("mutadone", 10)
-	user.reagents.add_reagent("pen_jelly", 20)
-	user.reagents.add_reagent("antihol", 10)
-	user.reagents.add_reagent("mannitol", 25)
+	user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
+	user.reagents.add_reagent(/datum/reagent/medicine/pen_acid/pen_jelly, 20)
+	user.reagents.add_reagent(/datum/reagent/medicine/antihol, 10)
+	user.reagents.add_reagent(/datum/reagent/medicine/mannitol, 25)
 
 	if(isliving(user))
 		var/mob/living/L = user

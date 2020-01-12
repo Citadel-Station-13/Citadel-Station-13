@@ -18,10 +18,10 @@
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
-		list("omnizine")
+		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane),
+		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
+		list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/pen_acid),
+		list(/datum/reagent/medicine/omnizine)
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
@@ -106,7 +106,7 @@
 		return
 	if(is_operational() && occupant)
 		var/datum/reagent/R = pick(reagents.reagent_list)
-		inject_chem(R.id, occupant)
+		inject_chem(R.type, occupant)
 		open_machine()
 	//Is this too much?
 	if(severity == EMP_HEAVY)
@@ -217,9 +217,9 @@
 	for(var/chem in available_chems)
 		var/datum/reagent/R = reagents.has_reagent(chem)
 		R = GLOB.chemical_reagents_list[chem]
-		data["synthchems"] += list(list("name" = R.name, "id" = R.id, "synth_allowed" = synth_allowed(chem)))
+		data["synthchems"] += list(list("name" = R.name, "id" = R.type, "synth_allowed" = synth_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.id)))
+		data["chems"] += list(list("name" = R.name, "id" = R.type, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.type)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -289,23 +289,23 @@
 				open_machine()
 			. = TRUE
 		if("inject")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			var/amount = text2num(params["volume"])
-			if(!is_operational() || !mob_occupant)
+			if(!is_operational() || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && chem != "epinephrine")
+			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
 				return
 			if(inject_chem(chem, usr, amount))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 		if("synth")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			if(!is_operational())
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 		if("purge")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			if(allowed(usr))
 				if(!is_operational())
 					return
@@ -342,7 +342,7 @@
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
+	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/synth_allowed(chem)
@@ -373,7 +373,7 @@
 /obj/machinery/sleeper/syndie/Initialize()
 	. = ..()
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
+	component_parts += new /obj/item/circuitboard/machine/sleeper/syndie(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/super(null)
 	component_parts += new /obj/item/stock_parts/manipulator/pico(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
@@ -384,7 +384,7 @@
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
+	component_parts += new /obj/item/circuitboard/machine/sleeper/syndie(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
 	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)

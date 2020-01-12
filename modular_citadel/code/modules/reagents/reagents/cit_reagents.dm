@@ -1,7 +1,6 @@
 //body bluids
 /datum/reagent/consumable/semen
 	name = "Semen"
-	id = "semen"
 	description = "Sperm from some animal. I bet you'll drink this out of a bucket someday."
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
@@ -45,7 +44,6 @@
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
-	id = "femcum"
 	description = "Vaginal lubricant found in most mammals and other animals of similar nature. Where you found this is your own business."
 	taste_description = "something with a tang" // wew coders who haven't eaten out a girl.
 	taste_mult = 2
@@ -93,7 +91,6 @@
 
 /datum/reagent/drug/aphrodisiac
 	name = "Crocin"
-	id = "aphro"
 	description = "Naturally found in the crocus and gardenia flowers, this drug acts as a natural and safe aphrodisiac."
 	taste_description = "strawberry roofies"
 	taste_mult = 2 //Hide the roofies in stronger flavors
@@ -112,7 +109,6 @@
 
 /datum/reagent/drug/aphrodisiacplus
 	name = "Hexacrocin"
-	id = "aphro+"
 	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
 					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
 					permanent increase in libido (commonly referred to as 'bimbofication')."
@@ -167,7 +163,6 @@
 
 /datum/reagent/drug/anaphrodisiac
 	name = "Camphor"
-	id = "anaphro"
 	description = "Naturally found in some species of evergreen trees, camphor is a waxy substance. When injested by most animals, it acts as an anaphrodisiac\
 					, reducing libido and calming them. Non-habit forming and not addictive."
 	taste_description = "dull bitterness"
@@ -182,7 +177,6 @@
 
 /datum/reagent/drug/anaphrodisiacplus
 	name = "Hexacamphor"
-	id = "anaphro+"
 	description = "Chemically condensed camphor. Causes an extreme reduction in libido and a permanent one if overdosed. Non-addictive."
 	taste_description = "tranquil celibacy"
 	color = "#D9D9D9"//rgb(217, 217, 217)
@@ -206,32 +200,32 @@
 //recipes
 /datum/chemical_reaction/aphro
 	name = "crocin"
-	id = "aphro"
-	results = list("aphro" = 6)
-	required_reagents = list("carbon" = 2, "hydrogen" = 2, "oxygen" = 2, "water" = 1)
+	id = /datum/reagent/drug/aphrodisiac
+	results = list(/datum/reagent/drug/aphrodisiac = 6)
+	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/oxygen = 2, /datum/reagent/water = 1)
 	required_temp = 400
 	mix_message = "The mixture boils off a pink vapor..."//The water boils off, leaving the crocin
 
 /datum/chemical_reaction/aphroplus
 	name = "hexacrocin"
-	id = "aphro+"
-	results = list("aphro+" = 1)
-	required_reagents = list("aphro" = 6, "phenol" = 1)
+	id = /datum/reagent/drug/aphrodisiacplus
+	results = list(/datum/reagent/drug/aphrodisiacplus = 1)
+	required_reagents = list(/datum/reagent/drug/aphrodisiac = 6, /datum/reagent/phenol = 1)
 	required_temp = 400
 	mix_message = "The mixture rapidly condenses and darkens in color..."
 
 /datum/chemical_reaction/anaphro
 	name = "camphor"
-	id = "anaphro"
-	results = list("anaphro" = 6)
-	required_reagents = list("carbon" = 2, "hydrogen" = 2, "oxygen" = 2, "sulfur" = 1)
+	id = /datum/reagent/drug/anaphrodisiac
+	results = list(/datum/reagent/drug/anaphrodisiac = 6)
+	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/oxygen = 2, /datum/reagent/sulfur = 1)
 	required_temp = 400
 	mix_message = "The mixture boils off a yellow, smelly vapor..."//Sulfur burns off, leaving the camphor
 
 /datum/chemical_reaction/anaphroplus
 	name = "pentacamphor"
-	id = "anaphro+"
-	results = list("anaphro+" = 1)
-	required_reagents = list("anaphro" = 5, "acetone" = 1)
+	id = /datum/reagent/drug/anaphrodisiacplus
+	results = list(/datum/reagent/drug/anaphrodisiacplus = 1)
+	required_reagents = list(/datum/reagent/drug/aphrodisiac = 5, /datum/reagent/acetone = 1)
 	required_temp = 300
 	mix_message = "The mixture thickens and heats up slighty..."
