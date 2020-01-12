@@ -312,6 +312,7 @@ SUBSYSTEM_DEF(vote)
 				for(var/score_name in stored_modetier_results)
 					if(stored_modetier_results[score_name] <= raw_score_numbers[CONFIG_GET(number/dropped_modes)])
 						stored_modetier_results -= score_name
+				stored_modetier_results += "traitor"
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
