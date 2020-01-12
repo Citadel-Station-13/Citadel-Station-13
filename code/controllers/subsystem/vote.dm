@@ -143,16 +143,18 @@ SUBSYSTEM_DEF(vote)
 	// https://en.wikipedia.org/wiki/Majority_judgment
 	var/list/scores_by_choice = list()
 	for(var/choice in choices)
+		scores_by_choice += choice
 		scores_by_choice[choice] = list()
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
-		for(var/choice in this_vote)
-			sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
-			// START BALLOT GATHERING
-			pretty_vote += choice
-			if(this_vote[choice] in GLOB.vote_score_options)
-				pretty_vote[choice] = GLOB.vote_score_options[this_vote[choice]]
+		for(var/choice in choices)
+			if(choice in this_vote && choice in scores_by_choice)
+				sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
+				// START BALLOT GATHERING
+				pretty_vote += choice
+				if(this_vote[choice] in GLOB.vote_score_options)
+					pretty_vote[choice] = GLOB.vote_score_options[this_vote[choice]]
 		SSblackbox.record_feedback("associative","voting_ballots",1,pretty_vote)
 		// END BALLOT GATHERING
 	for(var/score_name in scores_by_choice)
@@ -188,11 +190,12 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/calculate_scores(var/blackbox_text)
 	var/list/scores_by_choice = list()
 	for(var/choice in choices)
+		scores_by_choice += choice
 		scores_by_choice[choice] = list()
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
-		for(var/choice in this_vote)
-			if(choice in scores_by_choice)
+		for(var/choice in choices)
+			if(choice in this_vote && choice in scores_by_choice)
 				sorted_insert(scores_by_choice[choice],this_vote[choice],/proc/cmp_numeric_asc)
 	var/middle_score = round(GLOB.vote_score_options.len/2,1)
 	for(var/score_name in scores_by_choice)
