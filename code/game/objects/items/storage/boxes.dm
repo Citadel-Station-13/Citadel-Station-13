@@ -901,7 +901,7 @@
 #undef HEART
 #undef SMILEY
 
-/obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
 	var/theme_name
@@ -1259,3 +1259,12 @@
 	var/obj/item/stack/sheet/cardboard/I = new(user.drop_location())
 	qdel(src)
 	user.put_in_hands(I)
+
+/obj/item/storage/box/marshmallow
+	name = "box of marshmallows"
+	desc = "A box of marshmallows."
+	illustration = "marshmallow"
+
+/obj/item/storage/box/marshmallow/PopulateContents()
+	for (var/i in 1 to 5)
+		new /obj/item/reagent_containers/food/snacks/marshmallow(src)

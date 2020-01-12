@@ -742,6 +742,7 @@
 	name = "assistant's formal winter coat"
 	icon_state = "coataformal"
 	item_state = "coataformal"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter,/obj/item/clothing/gloves/color/yellow)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/aformal
 
 /obj/item/clothing/head/hooded/winterhood/aformal
@@ -762,7 +763,10 @@
 	name = "ratvarian winter coat"
 	icon_state = "coatratvar"
 	item_state = "coatratvar"
+	armor = list("melee" = 30, "bullet" = 45, "laser" = -10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/clockwork/replica_fabricator, /obj/item/clockwork/integration_cog, /obj/item/clockwork/slab, /obj/item/clockwork/weapon/ratvarian_spear)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/ratvar
+	var/real = TRUE
 
 /obj/item/clothing/head/hooded/winterhood/ratvar
 	icon_state = "winterhood_ratvar"
@@ -770,14 +774,58 @@
 	light_power = 1
 	light_color = "#B18B25" //clockwork slab background top color
 
+/obj/item/clothing/suit/hooded/wintercoat/ratvar/equipped(mob/living/user,slot)
+	..()
+	if (slot != SLOT_WEAR_SUIT || !real)
+		return
+	if (is_servant_of_ratvar(user))
+		return
+	else
+		user.dropItemToGround(src)
+		to_chat(user,"<span class='large_brass'>\"Amusing that you think you are fit to wear this.\"</span>")
+		to_chat(user,"<span class='userdanger'>Your skin burns where the coat touched your skin!</span>")
+		user.adjustFireLoss(rand(10,16))
+
 /obj/item/clothing/suit/hooded/wintercoat/narsie
 	name = "narsian winter coat"
 	icon_state = "coatnarsie"
 	item_state = "coatnarsie"
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 30,"energy" = 10, "bomb" = 30, "bio" = 10, "rad" = 10, "fire" = 30, "acid" = 30)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/restraints/legcuffs/bola/cult,/obj/item/melee/cultblade,/obj/item/melee/cultblade/dagger,/obj/item/reagent_containers/glass/beaker/unholywater,/obj/item/cult_shift,/obj/item/flashlight/flare/culttorch,/obj/item/twohanded/cult_spear)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/narsie
+	var/real = TRUE
+
+/obj/item/clothing/suit/hooded/wintercoat/narsie/equipped(mob/living/user,slot)
+	..()
+	if (slot != SLOT_WEAR_SUIT || !real)
+		return
+	if (iscultist(user))
+		return
+	else
+		user.dropItemToGround(src)
+		to_chat(user,"<span class='cultlarge'>\"You are not fit to wear my follower's coat!\"</span>")
+		to_chat(user,"<span class='userdanger'>Sharp spines jab you from within the coat!</span>")
+		user.adjustBruteLoss(rand(10,16))
 
 /obj/item/clothing/head/hooded/winterhood/narsie
 	icon_state = "winterhood_narsie"
+
+/obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
+	name = "brass winter coat"
+	icon_state = "coatratvar"
+	item_state = "coatratvar"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	real = FALSE
+
+/obj/item/clothing/suit/hooded/wintercoat/narsie/fake
+	name = "runed winter coat"
+	icon_state = "coatnarsie"
+	item_state = "coatnarsie"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	real = FALSE
+
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
@@ -816,7 +864,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	resistance_flags = NONE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
 
 /obj/item/clothing/suit/assu_suit
@@ -828,3 +876,33 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+
+/obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+	name = "red christmas coat"
+	desc = "A festive red Christmas coat! Smells like Candy Cane!"
+	icon_state = "christmascoatr"
+	item_state = "christmascoatr"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodr
+
+/obj/item/clothing/head/hooded/winterhood/christmashoodr
+	icon_state = "christmashoodr"
+
+/obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+	name = "green christmas coat"
+	desc = "A festive green Christmas coat! Smells like Candy Cane!"
+	icon_state = "christmascoatg"
+	item_state = "christmascoatg"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodg
+
+/obj/item/clothing/head/hooded/winterhood/christmashoodg
+	icon_state = "christmashoodg"
+
+/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
+	name = "red and green christmas coat"
+	desc = "A festive red and green Christmas coat! Smells like Candy Cane!"
+	icon_state = "christmascoatrg"
+	item_state = "christmascoatrg"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodrg
+
+/obj/item/clothing/head/hooded/winterhood/christmashoodrg
+	icon_state = "christmashoodrg"

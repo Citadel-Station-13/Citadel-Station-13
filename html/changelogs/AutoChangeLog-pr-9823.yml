@@ -1,6 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - rscadd: "Added nine winter coats"
-  - imageadd: "added images for the winter coats"
-  - tweak: "adds the mining winter coat to mining wardrobes and mining lockers"
