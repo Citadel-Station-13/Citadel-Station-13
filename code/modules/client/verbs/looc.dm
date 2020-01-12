@@ -10,9 +10,7 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 		to_chat(usr, "<span class='danger'> Speech is currently admin-disabled.</span>")
 		return
 
-	if(!mob)	return
-	if(IsGuestKey(key))
-		to_chat(src, "Guests may not use OOC.")
+	if(!mob)
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)

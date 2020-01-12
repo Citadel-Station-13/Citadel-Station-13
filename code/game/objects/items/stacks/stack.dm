@@ -197,6 +197,7 @@
 			if(!isturf(T))
 				return
 			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
+		else
 			O = new R.result_type(usr.drop_location())
 		if(O)
 			O.setDir(usr.dir)
