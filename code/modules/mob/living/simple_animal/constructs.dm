@@ -167,9 +167,9 @@
 					new_angle_s -= 360
 				P.setAngle(new_angle_s)
 
-			return -1 // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	return (..(P))
+	return ..()
 
 
 

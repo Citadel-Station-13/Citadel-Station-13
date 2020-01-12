@@ -43,7 +43,7 @@
 	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
