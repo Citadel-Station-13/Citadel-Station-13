@@ -137,7 +137,7 @@
 
 /datum/uplink_item/dangerous/eswitchblade
 	name = "Energy Switchblade"
-	desc = "The energy switchblade has the same blade of energy a normal esword has, but this one has less power. \
+	desc = "The energy switchblade has a less dense energy blade making it burn when active rather then cleanly cut through flesh and bone, none the less still deadly and useful. \
 			Activating it produces a sharp, distinctive noise. The swtichblade also tends not to enbed itself when thrown."
 	item = /obj/item/switchblade/energy
 	cost = 6 //Less harm, less block, less throw, cant enbed
