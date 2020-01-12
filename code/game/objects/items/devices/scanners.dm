@@ -466,7 +466,7 @@ SLIME SCANNER
 				msg += "<span class='notice'>Subject is not addicted to any reagents.</span>\n"
 
 			var/datum/reagent/impure/fermiTox/F = M.reagents.has_reagent(/datum/reagent/impure/fermiTox)
-			if(istype(F))
+			if(istype(F,/datum/reagent/impure/fermiTox))
 				switch(F.volume)
 					if(5 to 10)
 						msg += "<span class='notice'>Subject contains a low amount of toxic isomers.</span>\n"
