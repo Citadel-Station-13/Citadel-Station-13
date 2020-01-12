@@ -128,7 +128,7 @@
 
 /mob/living/carbon/human/ShowAsPaleExamine()
 	// Check for albino, as per human/examine.dm's check.
-	if(skin_tone == "albino")
+	if(dna.species.use_skintones && skin_tone == "albino")
 		return TRUE
 
 	return ..() // Return vamp check
