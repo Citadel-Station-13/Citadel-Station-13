@@ -176,12 +176,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		src.log_talk(message, LOG_SAY, forced_by=forced)
 
 	message = treat_message(message) // unfortunately we still need this
-	if (!forcednormalspeech)
-		var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
-		if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
-			message = uppertext(message)
+	var/oldmessage = message
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
+	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
 	if(!message)
 		return
+	if (forcednormalspeech)
+		message = oldmessage
 
 	last_words = message
 
