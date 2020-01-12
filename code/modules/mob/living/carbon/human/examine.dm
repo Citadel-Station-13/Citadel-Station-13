@@ -392,6 +392,13 @@
 			. += "...?"
 		else
 			. += "[print_flavor_text()]"
+	if(print_flavor_text_2())
+		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
+			. += "...?"
+		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
+			. += "...?"
+		else
+			. += "[print_flavor_text_2()]"
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

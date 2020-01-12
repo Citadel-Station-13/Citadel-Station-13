@@ -295,9 +295,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"fK" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "fW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -427,9 +424,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"iU" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "jg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -531,16 +525,19 @@
 /obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"mE" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 1
+"mG" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
 	},
 /turf/open/floor/engine,
-/area/engine/engineering)
+/area/engine/supermatter)
 "mH" = (
 /obj/structure/sign/poster/official/safety_eye_protection,
 /turf/closed/wall/r_wall,
@@ -552,12 +549,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"mW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "mX" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable{
@@ -588,10 +579,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"ni" = (
-/obj/machinery/status_display/ai,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "nz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -770,6 +757,19 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"qP" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "re" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -870,12 +870,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"ti" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "tn" = (
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -1288,14 +1282,6 @@
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"EX" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
 "Fr" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -1451,13 +1437,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"JK" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"JL" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "JV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -1898,26 +1877,12 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"UP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "Vg" = (
 /obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "Vn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"VN" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "VP" = (
@@ -1928,12 +1893,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"Wf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "Ws" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -1966,9 +1925,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"Xy" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "XA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -2426,7 +2382,7 @@ Ne
 yd
 bW
 VP
-EX
+rt
 Vg
 px
 px
@@ -2454,14 +2410,14 @@ MP
 zh
 QD
 Hj
-EX
+rt
 un
 CT
 na
 na
+mG
 KX
-KX
-Xy
+vO
 Ml
 Ef
 iD
@@ -2482,14 +2438,14 @@ MP
 aC
 ey
 TO
-Xy
+vO
 OR
-UP
-UP
-UP
-UP
-UP
-Xy
+Bk
+Bk
+Bk
+Bk
+Bk
+vO
 WT
 UM
 MP
@@ -2573,7 +2529,7 @@ tn
 tn
 tn
 tn
-JL
+jB
 Nx
 aw
 iD
@@ -2593,15 +2549,15 @@ yf
 MP
 Bl
 jp
-Xy
-JL
+vO
+jB
 OR
-Wf
-Wf
-Wf
-Wf
-Wf
-Xy
+RA
+RA
+RA
+RA
+RA
+vO
 WT
 UM
 MP
@@ -2620,16 +2576,16 @@ yf
 (21,1,1) = {"
 MP
 nV
-mE
+hy
 Ws
-VN
+Pa
 wz
 Dj
 tE
 tE
+qP
 NU
-NU
-Xy
+vO
 Np
 YD
 iD
@@ -2648,9 +2604,9 @@ yf
 (22,1,1) = {"
 iD
 fa
-mE
+hy
 js
-VN
+Pa
 xB
 Nw
 Nw

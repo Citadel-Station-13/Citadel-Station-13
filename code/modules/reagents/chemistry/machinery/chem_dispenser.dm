@@ -92,8 +92,15 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	for(var/list/L in list(dispensable_reagents, emagged_reagents, upgrade_reagents, upgrade_reagents2, upgrade_reagents3))
-		L = sortList(L, /proc/cmp_reagents_asc)
+	if(emagged_reagents)
+		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
+	if(upgrade_reagents)
+		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+	if(upgrade_reagents2)
+		upgrade_reagents2 = sortList(upgrade_reagents2, /proc/cmp_reagents_asc)
+	if(upgrade_reagents3)
+		upgrade_reagents3 = sortList(upgrade_reagents3, /proc/cmp_reagents_asc)
+	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
