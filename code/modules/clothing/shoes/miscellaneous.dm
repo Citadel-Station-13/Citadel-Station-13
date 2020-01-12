@@ -327,6 +327,13 @@
 		lightCycle = 0
 		active = FALSE
 
+/obj/item/clothing/shoes/russian
+	name = "russian boots"
+	desc = "Comfy shoes."
+	icon_state = "rus_shoes"
+	item_state = "rus_shoes"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
 // kevin is into feet
 /obj/item/clothing/shoes/wraps
 	name = "gilded leg wraps"
@@ -348,3 +355,13 @@
 	name = "blue leg wraps"
 	desc = "Ankle coverings. Hang ten, brother."
 	icon_state = "bluecuffs"
+
+/obj/item/clothing/shoes/cowboyboots
+	name = "cowboy boots"
+	desc = "A standard pair of brown cowboy boots."
+	icon_state = "cowboyboots"
+
+/obj/item/clothing/shoes/cowboyboots/black
+	name = "black cowboy boots"
+	desc = "A pair of black cowboy boots, pretty easy to scuff up."
+	icon_state = "cowboyboots_black"
