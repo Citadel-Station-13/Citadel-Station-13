@@ -13,7 +13,7 @@
 	var/chargelevel = -1
 	var/charge_rate = 500
 
-/obj/machinery/cell_charger/proc/updateicon()
+/obj/machinery/cell_charger/update_icon()
 	cut_overlays()
 	if(charging)
 		add_overlay(image(charging.icon, charging.icon_state))
@@ -24,10 +24,10 @@
 			add_overlay("ccharger-o[newlevel]")
 
 /obj/machinery/cell_charger/examine(mob/user)
-	..()
-	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+	. = ..()
+	. += "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
-		to_chat(user, "Current charge: [round(charging.percent(), 1)]%.")
+		. += "Current charge: [round(charging.percent(), 1)]%."
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -53,7 +53,7 @@
 			charging = W
 			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
-			updateicon()
+			update_icon()
 	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
@@ -76,7 +76,7 @@
 	charging.update_icon()
 	charging = null
 	chargelevel = -1
-	updateicon()
+	update_icon()
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()
@@ -127,4 +127,4 @@
 	use_power(charge_rate)
 	charging.give(charge_rate)	//this is 2558, efficient batteries exist
 
-	updateicon()
+	update_icon()

@@ -15,10 +15,10 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 	if(!has_buckled_mobs())
-		to_chat(user, "<span class='notice'>Drag your sprite to sit in it.</span>")
+		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -87,6 +87,28 @@
 		qdel(src)
 	else
 		return ..()
+
+/obj/structure/chair/alt_attack_hand(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		if(!item_chair || !user.can_hold_items() || !has_buckled_mobs() || buckled_mobs.len > 1 || dir != user.dir || flags_1 & NODECONSTRUCT_1)
+			return TRUE
+		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return TRUE
+		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
+			return TRUE
+		var/mob/living/poordude = buckled_mobs[1]
+		if(!istype(poordude))
+			return TRUE
+		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
+		var/C = new item_chair(loc)
+		user.put_in_hands(C)
+		poordude.Knockdown(20)//rip in peace
+		user.adjustStaminaLoss(5)
+		unbuckle_all_mobs(TRUE)
+		qdel(src)
+		return TRUE
 
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
@@ -449,6 +471,9 @@
 	item_chair = null
 	var/turns = 0
 
+/obj/structure/chair/brass/ComponentInitialize()
+	return //it spins with the power of ratvar, not components.
+
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
@@ -464,6 +489,7 @@
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
+	. = ..()
 	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
@@ -475,6 +501,7 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+	return TRUE
 
 /obj/structure/chair/bronze
 	name = "brass chair"
@@ -498,7 +525,7 @@
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/sofa/Initialize()
-	armrest = mutable_appearance(icon, "[icon_state]_armrest")
+	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
 	return ..()
 
 /obj/structure/chair/sofa/post_buckle_mob(mob/living/M)

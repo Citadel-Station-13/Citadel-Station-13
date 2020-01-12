@@ -18,8 +18,8 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
-	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
@@ -35,15 +35,15 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
-	..()
-	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
-	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
+	. = ..()
+	. += "The power light is [(stat & NOPOWER) ? "off" : "on"]."
+	. += "The safety-mode light is [safety_mode ? "on" : "off"]."
+	. += "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -83,20 +83,24 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/Bumped(atom/movable/AM)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
+/obj/machinery/recycler/CanPass(atom/movable/AM)
+	. = ..()
 	if(!anchored)
-		return
-	if(safety_mode)
 		return
 
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
-		eat(AM)
+		return TRUE
+
+/obj/machinery/recycler/Crossed(atom/movable/AM)
+	eat(AM)
+	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(safety_mode)
+		return
 	var/list/to_eat
 	if(isitem(AM0))
 		to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
@@ -194,9 +198,6 @@
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
-	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

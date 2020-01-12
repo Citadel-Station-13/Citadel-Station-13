@@ -37,9 +37,9 @@ other types of metals and chemistry for reagents).
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = null				//The file path of the object that gets created
-	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
+	var/list/make_reagents = list()			//Reagents produced. Format: type = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
-	var/list/reagents_list = list()			//List of reagents. Format: "id" = amount.
+	var/list/reagents_list = list()			//List of reagents. Format: type = amount.
 	var/maxstack = 1
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.

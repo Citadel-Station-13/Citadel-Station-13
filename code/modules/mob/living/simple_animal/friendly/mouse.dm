@@ -10,6 +10,7 @@
 	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
+	blood_volume = 250
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
@@ -25,6 +26,7 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	can_be_held = TRUE
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
@@ -34,7 +36,7 @@
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
-
+	can_be_held = "mouse_[body_color]"
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -87,14 +89,17 @@
 /mob/living/simple_animal/mouse/white
 	body_color = "white"
 	icon_state = "mouse_white"
+	can_be_held = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
 	body_color = "gray"
 	icon_state = "mouse_gray"
+	can_be_held = "mouse_gray"
 
 /mob/living/simple_animal/mouse/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
+	can_be_held = "mouse_brown"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
@@ -112,9 +117,14 @@
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
 	eatverb = "devour"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()
+
+/mob/living/simple_animal/mouse/generate_mob_holder()
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
+	holder.w_class = WEIGHT_CLASS_TINY
+	return holder

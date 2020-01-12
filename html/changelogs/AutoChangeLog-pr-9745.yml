@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Certain objects shouldn't be able to become radioactive because of a bitflag that previously was checked nowhere in the code anymore."

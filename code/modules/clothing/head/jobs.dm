@@ -51,6 +51,11 @@
 
 	dog_fashion = null
 
+/obj/item/clothing/head/caphat/beret/white
+	name = "captain's white beret"
+	desc = "A white beret fit for a leader."
+	icon_state = "beret_captain_white"
+
 //Head of Personnel
 /obj/item/clothing/head/hopcap
 	name = "head of personnel's cap"
@@ -66,6 +71,11 @@
 	dynamic_hair_suffix = ""
 
 	dog_fashion = null
+
+/obj/item/clothing/head/hopcap/beret/white
+	name = "head of personnel's white beret"
+	desc = "The symbol of true bureaucratic micromanagement, although in a fancy form."
+	icon_state = "beret_white_hop"
 
 //Chaplain
 /obj/item/clothing/head/nun_hood
@@ -90,20 +100,20 @@
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		..()
-		if(loc == user)
-			if(candy_cooldown < world.time)
-				var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
-				user.put_in_hands(CC)
-				to_chat(user, "You slip a candy corn from your hat.")
-				candy_cooldown = world.time+1200
-			else
-				to_chat(user, "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
+	. = ..()
+	if(loc == user && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(candy_cooldown < world.time)
+			var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
+			user.put_in_hands(CC)
+			to_chat(user, "You slip a candy corn from your hat.")
+			candy_cooldown = world.time+1200
+		else
+			to_chat(user, "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
+		return TRUE
 
 
 //Mime
@@ -118,6 +128,16 @@
 	name = "black beret"
 	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
 	icon_state = "beretblack"
+
+/obj/item/clothing/head/beret/purple
+	name = "purple beret"
+	desc = "A purple beret."
+	icon_state = "beret_purple"
+
+/obj/item/clothing/head/beret/blue
+	name = "blue beret"
+	desc = "A blue beret"
+	icon_state = "beret_blue"
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
@@ -145,6 +165,11 @@
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+
+/obj/item/clothing/head/HoS/beret/officer
+	name = "head of security officer beret"
+	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
+	icon_state = "beret_centcom_officer"
 
 /obj/item/clothing/head/HoS/beret/syndicate
 	name = "syndicate beret"
@@ -242,8 +267,11 @@
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "wardenberet"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	strip_delay = 60
+
+/obj/item/clothing/head/beret/sec/corporatewarden
+	name = "warden's corporate beret"
+	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
+	icon_state = "beret_corporate_warden"
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
@@ -261,17 +289,70 @@
 	desc = "A fancy beret with a green cross, signifying your status in the station's medbay."
 	icon_state = "cmoberet"
 
+/obj/item/clothing/head/beret/cmo/blue
+	name = "chief medical officer's blue beret"
+	desc = "A fancy beret with a blue and white cross, try not to be chief malpractice officer in it."
+	icon_state = "beret_blue_cmo"
+
+//Medical
+/obj/item/clothing/head/beret/med
+	name = "medical officer's beret"
+	desc = "A fancy beret with a blue cross, smells sterile"
+	icon_state = "beret_med"
+
+/obj/item/clothing/head/beret/chem
+	name = "chemist's beret"
+	desc = "A fancy beret with a orange beaker, you're not sure if you should smell it"
+	icon_state = "beret_chem"
+
+/obj/item/clothing/head/beret/viro
+	name = "virologist's beret"
+	desc = "A fancy beret with a green gross, hopefully it's virus free!"
+	icon_state = "beret_viro"
+
 //Research Director
 /obj/item/clothing/head/beret/rd
 	name = "research director's beret"
 	desc = "A beret worn only by highly intelligent people."
 	icon_state = "rdberet"
 
+
+
+//Scientist
+/obj/item/clothing/head/beret/sci
+	name = "scientist's beret"
+	desc = "A Scientist's beret, looks like it's covered in slime."
+	icon_state = "beret_sci"
+
+//Roboticist
+/obj/item/clothing/head/beret/robo
+	name = "roboticist's beret"
+	desc = "A Roboticist's beret, almost more oil than hat."
+	icon_state = "beret_robot"
+
+
 //Chief Engineer
 /obj/item/clothing/head/beret/ce
 	name = "chief engineer's beret"
 	desc = "A beret that will surely make you look way cooler than a hard hat, although lack of protection is the price."
 	icon_state = "ceberet"
+
+/obj/item/clothing/head/beret/ce/white
+	name = "chief engineer's white beret"
+	desc = "A beret that will surely make you look way cooler than a hard hat, although lack of protection is the price."
+	icon_state = "beret_ce_white"
+
+//Atmos
+/obj/item/clothing/head/beret/atmos
+	name = "atmospheric technician's beret"
+	desc = "An Atmospheric Technician's beret. Smells like plasma fire."
+	icon_state = "beret_atmos"
+
+//Engineer
+/obj/item/clothing/head/beret/eng
+	name = "engineer's beret"
+	desc = "An Engineer's beret, try not to lose it to space wind."
+	icon_state = "beret_engineering"
 
 //Quartermaster
 /obj/item/clothing/head/beret/qm

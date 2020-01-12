@@ -104,12 +104,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/examine(mob/user)
 	. = ..()
-	var/dat = id ? "<span class='notice'>Alt-click to remove the id.</span>" : ""
+	. += id ? "<span class='notice'>Alt-click to remove the id.</span>" : ""
 	if(inserted_item && (!isturf(loc)))
-		dat += "\n<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
+		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
 	if(LAZYLEN(GLOB.pda_reskins))
-		dat += "\n<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
-	to_chat(user, dat)
+		. += "<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -163,31 +162,33 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
-	if(equipped)
+	if(equipped || !user.client)
 		return
-	if(user.client)
-		background_color = user.client.prefs.pda_color
-		switch(user.client.prefs.pda_style)
-			if(MONO)
-				font_index = MODE_MONO
-				font_mode = FONT_MONO
-			if(SHARE)
-				font_index = MODE_SHARE
-				font_mode = FONT_SHARE
-			if(ORBITRON)
-				font_index = MODE_ORBITRON
-				font_mode = FONT_ORBITRON
-			if(VT)
-				font_index = MODE_VT
-				font_mode = FONT_VT
-			else
-				font_index = MODE_MONO
-				font_mode = FONT_MONO
-		var/pref_skin = GLOB.pda_reskins[user.client.prefs.pda_skin]
-		if(icon != pref_skin)
-			icon = pref_skin
-			update_icon(FALSE, TRUE)
-		equipped = TRUE
+	update_style(user.client)
+
+/obj/item/pda/proc/update_style(client/C)
+	background_color = C.prefs.pda_color
+	switch(C.prefs.pda_style)
+		if(MONO)
+			font_index = MODE_MONO
+			font_mode = FONT_MONO
+		if(SHARE)
+			font_index = MODE_SHARE
+			font_mode = FONT_SHARE
+		if(ORBITRON)
+			font_index = MODE_ORBITRON
+			font_mode = FONT_ORBITRON
+		if(VT)
+			font_index = MODE_VT
+			font_mode = FONT_VT
+		else
+			font_index = MODE_MONO
+			font_mode = FONT_MONO
+	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]
+	if(icon != pref_skin)
+		icon = pref_skin
+		update_icon(FALSE, TRUE)
+	equipped = TRUE
 
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -706,10 +707,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		U << browse(null, "window=pda")
 	return
 
-/obj/item/pda/proc/remove_id()
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+/obj/item/pda/proc/remove_id(mob/user)
+	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	do_remove_id(usr)
+	do_remove_id(user)
 
 /obj/item/pda/proc/do_remove_id(mob/user)
 	if(!id)
@@ -839,23 +840,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/create_message(mob/living/U, obj/item/pda/P)
 	send_message(U,list(P))
 
-/obj/item/pda/AltClick()
-	..()
-
+/obj/item/pda/AltClick(mob/user)
+	. = ..()
 	if(id)
-		remove_id()
+		remove_id(user)
 		playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 	else
-		remove_pen()
+		remove_pen(user)
 		playsound(src, 'sound/machines/button4.ogg', 50, 1)
+	return TRUE
 
-/obj/item/pda/CtrlClick()
+/obj/item/pda/CtrlClick(mob/user)
 	..()
 
 	if(isturf(loc)) //stops the user from dragging the PDA by ctrl-clicking it.
 		return
 
-	remove_pen()
+	remove_pen(user)
 
 /obj/item/pda/verb/verb_toggle_light()
 	set category = "Object"
@@ -869,7 +870,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	set src in usr
 
 	if(id)
-		remove_id()
+		remove_id(usr)
 	else
 		to_chat(usr, "<span class='warning'>This PDA does not have an ID in it!</span>")
 
@@ -908,7 +909,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
 		if(id && (src in user.contents))
-			remove_id()
+			remove_id(user)
 			return TRUE
 		else
 			var/obj/item/card/id/C = user.get_active_held_item()
@@ -1056,7 +1057,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", 1)
+		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", MSG_VISUAL, "<span class='warning'>You hear a loud *pop*!</span>", MSG_AUDIBLE)
 	else
 		visible_message("<span class='danger'>[src] explodes!</span>", "<span class='warning'>You hear a loud *pop*!</span>")
 

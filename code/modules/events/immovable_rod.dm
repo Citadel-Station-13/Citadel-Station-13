@@ -45,6 +45,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	throwforce = 100
 	density = TRUE
 	anchored = TRUE
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/mob/living/wizard
 	var/z_original = 0
 	var/destination
@@ -99,9 +100,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
-
-/obj/structure/closet/supplypod/prevent_content_explosion()
-	return TRUE
 
 /obj/effect/immovablerod/singularity_act()
 	return

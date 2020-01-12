@@ -39,7 +39,7 @@
 
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	. += "Its transmitter seems to be [active? "on" : "off"]."
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)

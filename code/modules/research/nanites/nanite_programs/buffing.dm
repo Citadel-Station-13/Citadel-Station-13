@@ -35,7 +35,7 @@
 	host_mob.adjustStaminaLoss(-10) //stimulants give stamina heal now
 	host_mob.lying = 0
 	host_mob.update_canmove()
-	host_mob.reagents.add_reagent("stimulants", 1.5)
+	host_mob.reagents.add_reagent(/datum/reagent/medicine/stimulants, 1.5)
 
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"

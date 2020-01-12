@@ -81,8 +81,8 @@
 	return boolets
 
 /obj/item/gun/ballistic/revolver/examine(mob/user)
-	..()
-	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+	. = ..()
+	. += "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -273,6 +273,7 @@
 						"Maple" = "dshotgun-l",
 						"Rosewood" = "dshotgun-p"
 						)
+	pb_knockback = 3 // it's a super shotgun!
 
 /obj/item/gun/ballistic/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
 	..()
@@ -352,7 +353,7 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((HAS_TRAIT(user, TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) || (user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY)))
 		return ..()
 	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")

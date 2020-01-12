@@ -16,9 +16,9 @@
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
-	..()
+	. = ..()
 	if(inspiration_available)
-		to_chat(user, "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>")
+		. += "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>"
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(!inspiration_available)
@@ -98,7 +98,7 @@
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
 	H.adjustToxLoss(-15)
 	H.setOxyLoss(0)
-	H.reagents.add_reagent("inaprovaline", 5)
+	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"

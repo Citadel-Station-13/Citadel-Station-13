@@ -373,10 +373,10 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -486,10 +486,7 @@ Difficulty: Very Hard
 				if(isturf(Stuff))
 					var/turf/T = Stuff
 					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
+						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
 						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
@@ -651,7 +648,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE)
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
 	. = ..()
 	if(.)
 		death()

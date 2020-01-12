@@ -154,7 +154,7 @@
 //liquid plasma!!!!!!//
 
 /turf/open/floor/plasteel/dark/snowdin
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = 1
 	temperature = 180
 
@@ -175,7 +175,7 @@
 	if(C.reagents.total_volume >= C.volume)
 		to_chat(user, "<span class='danger'>[C] is full.</span>")
 		return
-	C.reagents.add_reagent("plasma", rand(5, 10))
+	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
 	user.visible_message("[user] scoops some plasma from the [src] with \the [C].", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
 
 /turf/open/lava/plasma/burn_stuff(AM)
@@ -488,8 +488,7 @@
 				/obj/item/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
 				/obj/item/clothing/shoes/chameleon/noslip = 10,
-				/obj/item/borg/upgrade/ddrill = 3,
-				/obj/item/borg/upgrade/soh = 3)
+				/obj/item/borg/upgrade/ddrill = 3)
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonmid
 	name = "dungeon mid"

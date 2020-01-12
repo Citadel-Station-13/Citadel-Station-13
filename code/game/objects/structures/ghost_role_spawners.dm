@@ -30,6 +30,8 @@
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/carbon/human/new_spawn)
+	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker
@@ -151,6 +153,9 @@
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
+		if(has_owner)
+			var/datum/species/golem/G = H.dna.species
+			G.owner = owner
 		H.set_cloned_appearance()
 		if(!name)
 			if(has_owner)
@@ -248,6 +253,9 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
+/obj/effect/mob_spawn/human/hermit/special(mob/living/carbon/human/new_spawn)
+	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
 	name = "broken rejuvenation pod"
@@ -321,8 +329,9 @@
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/telegram
 	shoes = /obj/item/clothing/shoes/laceup
+	head = /obj/item/clothing/head/hotel
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield)
@@ -348,6 +357,9 @@
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+
+/obj/effect/mob_spawn/human/hotel_staff/special(mob/living/carbon/human/new_spawn)
+	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
 
 /obj/effect/mob_spawn/human/demonic_friend
 	name = "Essence of friendship"
@@ -422,7 +434,7 @@
 	implants = list(/obj/item/implant/weapons_auth)
 	id = /obj/item/card/id/syndicate
 
-/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
@@ -591,3 +603,91 @@
 
 /obj/effect/mob_spawn/human/pirate/gunner
 	rank = "Gunner"
+
+/obj/effect/mob_spawn/human/ghostcafe
+	name = "Ghost Cafe Sleeper"
+	uses = -1
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_name = "a ghost cafe visitor"
+	roundstart = FALSE
+	anchored = TRUE
+	density = FALSE
+	death = FALSE
+	assignedrole = "Ghost Cafe Visitor"
+	flavour_text = "Is this what life after death is like?"
+	skip_reentry_check = TRUE
+	banType = "ghostcafe"
+
+/datum/action/toggle_dead_chat_mob
+	icon_icon = 'icons/mob/mob.dmi'
+	button_icon_state = "ghost"
+	name = "Toggle deadchat"
+	desc = "Turn off or on your ability to hear ghosts."
+
+/datum/action/toggle_dead_chat_mob/Trigger()
+	if(!..())
+		return 0
+	var/mob/M = target
+	if(HAS_TRAIT_FROM(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT))
+		REMOVE_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
+		to_chat(M,"<span class='notice'>You're no longer hearing deadchat.</span>")
+	else
+		ADD_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
+		to_chat(M,"<span class='notice'>You're once again longer hearing deadchat.</span>")
+
+
+/obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
+	if(new_spawn.client)
+		new_spawn.client.prefs.copy_to(new_spawn)
+		var/datum/outfit/O = new /datum/outfit/ghostcafe()
+		O.equip(new_spawn, FALSE, new_spawn.client)
+		SSjob.equip_loadout(null, new_spawn, FALSE)
+		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
+		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
+		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+		ADD_TRAIT(new_spawn,TRAIT_PACIFISM,GHOSTROLE_TRAIT)
+		to_chat(new_spawn,"<span class='boldwarning'>You may be sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
+		to_chat(new_spawn,"<span class='boldwarning'>You can turn yourself into a ghost and freely reenter your body with the ghost action.</span>")
+		var/datum/action/ghost/G = new(new_spawn)
+		G.Grant(new_spawn)
+		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
+		D.Grant(new_spawn)
+
+/datum/outfit/ghostcafe
+	name = "ID, jumpsuit and shoes"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id
+	r_hand = /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
+
+
+/datum/outfit/ghostcafe/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+	..()
+	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
+	if (CONFIG_GET(flag/grey_assistants))
+		if(suited)
+			uniform = /obj/item/clothing/under/color/grey
+		else
+			uniform = /obj/item/clothing/under/skirt/color/grey
+	else
+		if(suited)
+			uniform = /obj/item/clothing/under/color/random
+		else
+			uniform = /obj/item/clothing/under/skirt/color/random
+
+/obj/item/storage/box/syndie_kit/chameleon/ghostcafe
+	name = "ghost cafe costuming kit"
+	desc = "Look just the way you did in life - or better!"
+
+/obj/item/storage/box/syndie_kit/chameleon/ghostcafe/PopulateContents() // Doesn't contain a PDA, for isolation reasons.
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/suit/chameleon(src)
+	new /obj/item/clothing/gloves/chameleon(src)
+	new /obj/item/clothing/shoes/chameleon(src)
+	new /obj/item/clothing/glasses/chameleon(src)
+	new /obj/item/clothing/head/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/storage/backpack/chameleon(src)
+	new /obj/item/clothing/neck/cloak/chameleon(src)

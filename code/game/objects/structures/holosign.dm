@@ -9,11 +9,13 @@
 	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
 
-/obj/structure/holosign/New(loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
+	. = ..()
 	if(source_projector)
 		projector = source_projector
 		projector.signs += src
-	..()
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, alpha, RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	alpha = 0
 
 /obj/structure/holosign/Destroy()
 	if(projector)
@@ -67,19 +69,29 @@
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo firelock"
-	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
-	icon_state = "holo_firelock"
+	name = "holo fan"
+	desc = "A holographic barrier resembling a tiny fan. Though it does not prevent solid objects from passing through, gas is kept out. Somehow."
+	icon_state = "holo_fan"
 	density = FALSE
-	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
-	layer = ABOVE_MOB_LAYER
 	alpha = 150
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
+
+/obj/structure/holosign/barrier/firelock
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects or gas from passing through, temperature changes are kept out."
+	icon_state = "holo_firelock"
+	density = FALSE
+	anchored = TRUE
+	alpha = 150
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/firelock/blocksTemperature()
+	return TRUE
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
@@ -100,13 +112,12 @@
 	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
-	layer = ABOVE_MOB_LAYER
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
-	..()
-	to_chat(user,"<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
 
 /obj/structure/holosign/barrier/medical/CanPass(atom/movable/mover, turf/target)
 	icon_state = "holo_medical"

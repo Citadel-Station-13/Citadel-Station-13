@@ -29,8 +29,8 @@
 
 
 /obj/item/taperecorder/examine(mob/user)
-	..()
-	to_chat(user, "The wire panel is [open_panel ? "opened" : "closed"].")
+	. = ..()
+	. += "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
 /obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
@@ -94,7 +94,7 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	. = ..()
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity

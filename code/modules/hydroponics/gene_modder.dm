@@ -201,9 +201,9 @@
 			if(!G)
 				continue
 			dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-			if(can_extract)
+			if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-			if(can_insert && istype(disk.gene, G.type))
+			if(can_insert && istype(disk.gene, G.type) && G.mutability_flags & PLANT_GENE_REMOVABLE)
 				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
 			dat += "</td></tr>"
 		dat += "</table></div>"
@@ -232,14 +232,15 @@
 				for(var/a in trait_genes)
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-					if(can_extract)
+					if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+						if(G.mutability_flags & PLANT_GENE_REMOVABLE)
+							dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"
-			if(can_insert && istype(disk.gene, /datum/plant_gene/trait))
+			if(can_insert && istype(disk.gene, /datum/plant_gene/trait) && !seed.is_gene_forbidden(disk.gene.type))
 				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
@@ -439,7 +440,7 @@
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/disk/plantgene/examine(mob/user)
-	..()
+	. = ..()
 	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
-		to_chat(user,"<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>")
-	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."

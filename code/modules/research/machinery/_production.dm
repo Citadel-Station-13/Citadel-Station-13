@@ -81,13 +81,14 @@
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins, mob/user)
 	if(notify_admins)
-		investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
-		var/obj/item/I = new path(get_turf(src))
-		if(efficient_with(I.type))
+		var/obj/O = new path(get_turf(src))
+		if(efficient_with(O.type) && isitem(O))
+			var/obj/item/I = O
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
+	investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
@@ -221,7 +222,7 @@
 	l += "<h3>Chemical Storage:</h3>"
 	for(var/datum/reagent/R in reagents.reagent_list)
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];dispose=[R.id]'>Purge</A>"
+		l += "<A href='?src=[REF(src)];dispose=[R.type]'>Purge</A>"
 	l += "</div>"
 	return l
 

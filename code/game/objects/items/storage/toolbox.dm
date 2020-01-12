@@ -225,22 +225,37 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
-	new/obj/item/storage/crayons(src)
-	new/obj/item/crowbar(src)
-	new/obj/item/stack/cable_coil/red(src)
-	new/obj/item/stack/cable_coil/yellow(src)
-	new/obj/item/stack/cable_coil/blue(src)
-	new/obj/item/stack/cable_coil/green(src)
-	new/obj/item/stack/cable_coil/pink(src)
-	new/obj/item/stack/cable_coil/orange(src)
-	new/obj/item/stack/cable_coil/cyan(src)
-	new/obj/item/stack/cable_coil/white(src)
+	new /obj/item/storage/crayons(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/stack/cable_coil/red(src)
+	new /obj/item/stack/cable_coil/yellow(src)
+	new /obj/item/stack/cable_coil/blue(src)
+	new /obj/item/stack/cable_coil/green(src)
+	new /obj/item/stack/cable_coil/pink(src)
+	new /obj/item/stack/cable_coil/orange(src)
+	new /obj/item/stack/cable_coil/cyan(src)
+	new /obj/item/stack/cable_coil/white(src)
+
+/obj/item/storage/toolbox/ammo
+	name = "ammo box"
+	desc = "It contains a few clips."
+	icon_state = "ammobox"
+	item_state = "ammobox"
+
+/obj/item/storage/toolbox/ammo/PopulateContents()
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
 
 /obj/item/storage/toolbox/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
-	item_state = "gold"
 	icon_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 16 // Less then a spear
 	throwforce = 14
@@ -266,7 +281,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "golden toolbox"
 	desc = "A gold plated toolbox, fancy and harmless due to the gold plating being on cardboard!"
 	icon_state = "gold"
-	item_state = "gold"
+	item_state = "toolbox_gold"
 	has_latches = FALSE
 	force = 0
 	throwforce = 0
