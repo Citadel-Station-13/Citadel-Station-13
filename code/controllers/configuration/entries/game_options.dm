@@ -396,7 +396,6 @@
 	config_entry_value = TRUE
 
 /datum/config_entry/flag/modetier_voting
-	config_entry_value = TRUE
 
 /datum/config_entry/number/dropped_modes
 	config_entry_value = 3
