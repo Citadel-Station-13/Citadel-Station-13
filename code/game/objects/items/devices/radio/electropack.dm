@@ -214,7 +214,6 @@ Code:
 Frequency:
 [format_frequency(src.frequency)]
 <A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
-
 Code:
 [src.code]
 <A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
