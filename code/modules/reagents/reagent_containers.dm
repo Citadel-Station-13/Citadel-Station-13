@@ -35,9 +35,10 @@
 
 /obj/item/reagent_containers/examine(mob/user)
 	. = ..()
-	. += "Currently transferring [amount_per_transfer_from_this] units per use."
-	if(possible_transfer_amounts && user.Adjacent(src))
-		. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
+	if(length(possible_transfer_amounts) > 1)
+		. += "Currently transferring [amount_per_transfer_from_this] units per use."
+		if(APTFT_altclick && user.Adjacent(src))
+			. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
 
 /obj/item/reagent_containers/AltClick(mob/user)
 	. = ..()
