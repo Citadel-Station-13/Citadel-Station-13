@@ -49,8 +49,7 @@
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetKnockdown(0, 0)
-	M.SetStun(0, 0)
+	M.SetAllImmobility(0, 0)
 	M.SetUnconscious(0, 0)
 	M.silent = FALSE
 	M.dizziness = 0
@@ -92,8 +91,7 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
@@ -866,8 +864,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustStun(-20, 0)
-		M.AdjustKnockdown(-20, 0)
+		M.AdjustAllImmobility(-20, 0)
 		M.AdjustUnconscious(-20, 0)
 	..()
 
@@ -1345,8 +1342,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	M.AdjustUnconscious(-20, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, 0)
 	M.AdjustSleeping(-20, 0)
 	M.adjustStaminaLoss(-30, 0)
 	..()
@@ -1433,8 +1429,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
-		M.AdjustStun(-5, 0)
-		M.AdjustKnockdown(-5, 0)
+		M.AdjustAllImmobility(-5, 0)
 		M.AdjustUnconscious(-5, 0)
 		M.adjustStaminaLoss(-1*REM, 0)
 		M.Jitter(1)
