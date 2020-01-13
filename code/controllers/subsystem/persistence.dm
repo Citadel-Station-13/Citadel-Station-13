@@ -13,13 +13,14 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
-	var/list/saved_threat_levels = list(1,1,1)
+	var/list/saved_storytellers = list("foo","bar","baz","foo again","bar again")
 	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
 	var/list/picture_logging_information = list()
+	var/list/saved_votes = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
 
@@ -29,9 +30,12 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
-	LoadRecentThreats()
+	LoadRecentStorytellers()
+	LoadRecentRulesets()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
+	for(var/client/C in GLOB.clients)
+		LoadSavedVote(C.ckey)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
@@ -169,14 +173,23 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
-/datum/controller/subsystem/persistence/proc/LoadRecentThreats()
-	var/json_file = file("data/RecentThreatLevels.json")
+/datum/controller/subsystem/persistence/proc/LoadRecentRulesets()
+	var/json_file = file("data/RecentRulesets.json")
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
-	saved_threat_levels = json["data"]
+	saved_dynamic_rules = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentStorytellers()
+	var/json_file = file("data/RecentStorytellers.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_storytellers = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/json_file = file("data/RecentMaps.json")
@@ -196,6 +209,15 @@ SUBSYSTEM_DEF(persistence)
 			return
 		return
 	antag_rep = json_decode(json)
+
+/datum/controller/subsystem/persistence/proc/LoadSavedVote(var/ckey)
+	var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_votes[ckey] = json["data"]
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -230,7 +252,7 @@ SUBSYSTEM_DEF(persistence)
 	CollectRoundtype()
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		CollectThreatLevel(mode)
+		CollectStoryteller(mode)
 		CollectRulesets(mode)
 	RecordMaps()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
@@ -388,13 +410,16 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/datum/controller/subsystem/persistence/proc/CollectThreatLevel(var/datum/game_mode/dynamic/mode)
-	saved_threat_levels[3] = saved_threat_levels[2]
-	saved_threat_levels[2] = saved_threat_levels [1]
-	saved_threat_levels[1] = mode.threat_level
-	var/json_file = file("data/RecentThreatLevels.json")
+/datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
+	saved_storytellers.len = 5
+	saved_storytellers[5] = saved_storytellers[4]
+	saved_storytellers[4] = saved_storytellers[3]
+	saved_storytellers[3] = saved_storytellers[2]
+	saved_storytellers[2] = saved_storytellers[1]
+	saved_storytellers[1] = mode.storyteller.name
+	var/json_file = file("data/RecentStorytellers.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_threat_levels
+	file_data["data"] = saved_storytellers
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -402,8 +427,9 @@ SUBSYSTEM_DEF(persistence)
 	saved_dynamic_rules[3] = saved_dynamic_rules[2]
 	saved_dynamic_rules[2] = saved_dynamic_rules[1]
 	saved_dynamic_rules[1] = list()
-	for(var/datum/dynamic_ruleset/ruleset in mode.executed_rules)
-		saved_dynamic_rules[1] += ruleset.config_tag
+	for(var/r in mode.executed_rules)
+		var/datum/dynamic_ruleset/rule = r
+		saved_dynamic_rules[1] += rule.config_tag
 	var/json_file = file("data/RecentRulesets.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_dynamic_rules
@@ -473,3 +499,11 @@ SUBSYSTEM_DEF(persistence)
 
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/SaveSavedVotes()
+	for(var/ckey in saved_votes)
+		var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+		var/list/file_data = list()
+		file_data["data"] = saved_votes[ckey]
+		fdel(json_file)
+		WRITE_FILE(json_file, json_encode(file_data))

@@ -435,7 +435,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 //------Station Rooms Landmarks------------//
 /obj/effect/landmark/stationroom
-	var/list/template_names = list()
+	var/list/templates = list()
 	layer = BULLET_HOLE_LAYER
 
 /obj/effect/landmark/stationroom/New()
@@ -452,11 +452,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(!T)
 		return FALSE
 	if(!template_name)
-		for(var/t in template_names)
+		for(var/t in templates)
 			if(!SSmapping.station_room_templates[t])
 				log_world("Station room spawner placed at ([T.x], [T.y], [T.z]) has invalid ruin name of \"[t]\" in its list")
-				template_names -= t
-		template_name = safepick(template_names)
+				templates -= t
+		template_name = pickweight(templates)
 	if(!template_name)
 		GLOB.stationroom_landmarks -= src
 		qdel(src)
@@ -474,10 +474,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 // The landmark for the Engine on Box
 
 /obj/effect/landmark/stationroom/box/engine
-	template_names = list("Engine SM", "Engine Singulo", "Engine Tesla")
+	templates = list("Engine SM" = 3, "Engine Singulo" = 3, "Engine Tesla" = 3)
 	icon = 'icons/rooms/box/engine.dmi'
 
 
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()
-	template_names = CONFIG_GET(keyed_list/box_random_engine)
+	templates = CONFIG_GET(keyed_list/box_random_engine)
