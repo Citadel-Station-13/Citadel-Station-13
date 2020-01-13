@@ -627,6 +627,7 @@
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
 		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		new_spawn.AddElement(/datum/element/dusts_on_catatonia)
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
 		to_chat(new_spawn,"<span class='boldwarning'>You maybe sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
