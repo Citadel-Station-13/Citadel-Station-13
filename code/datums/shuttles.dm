@@ -380,8 +380,13 @@
 /datum/map_template/shuttle/emergency/gorilla
 	suffix = "gorilla"
 	name = "Gorilla Cargo Freighter"
-	description = "A rustic, barely excuseable shuttle transporting important cargo. Not for crew who are about to go ape."
+	description = "(Emag only) A rustic, barely excuseable shuttle transporting important cargo. Not for crew who are about to go ape."
 	credit_cost = 2000
+
+/datum/map_template/shuttle/emergency/gorilla/prerequisites_met()
+	if("emagged" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
