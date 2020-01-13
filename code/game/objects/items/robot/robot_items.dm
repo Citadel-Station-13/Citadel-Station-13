@@ -886,7 +886,7 @@
 				else
 					O.anchored = initial(O.anchored)
 			else
-				to_chat(user, "<span class='warning'>Not enough room in cargo compartment! Maximum of eight objects!</span>")
+				to_chat(user, "<span class='warning'>Not enough room in cargo compartment! Maximum of [cargo_capacity] objects!</span>")
 		else
 			to_chat(user, "<span class='warning'>[target] is firmly secured!</span>")
 
@@ -898,6 +898,12 @@
 	cargo -= chosen_cargo
 	user.visible_message("[user] unloads [chosen_cargo] from its cargo.")
 	playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
+
+/obj/item/cyborg_clamp/Destroy()
+	for(var/atom/movable/target in cargo)
+		target.forceMove(get_turf(src))
+	playsound(loc, 'sound/effects/bin_close.ogg', 50, 0)
+	return ..()
 
 /obj/item/card/id/miningborg
 	name = "mining point card"
