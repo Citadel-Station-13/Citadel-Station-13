@@ -53,7 +53,7 @@
 	base_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_overlay)
 
-/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
+/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands && random_color)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
