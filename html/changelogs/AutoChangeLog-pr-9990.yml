@@ -1,5 +1,0 @@
-author: "Linzolle"
-delete-after: True
-changes: 
-  - bugfix: "strange reagent being unable to revive simplemobs"
-  - rscadd: "jitter animation and more clear text to strange reagent revival"

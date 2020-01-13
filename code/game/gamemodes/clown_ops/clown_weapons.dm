@@ -8,7 +8,7 @@
 	spray_range = 1
 	stream_range = 1
 	volume = 30
-	list_reagents = list("lube" = 30)
+	list_reagents = list(/datum/reagent/lube = 30)
 
 //COMBAT CLOWN SHOES
 //Clown shoes with combat stats and noslip. Of course they still squeak.
@@ -165,7 +165,7 @@
 	customfoodfilling = FALSE
 	seed = null
 	tastes = list("explosives" = 10)
-	list_reagents = list("vitamin" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
 /obj/item/grown/bananapeel/bombanana
 	desc = "A peel from a banana. Why is it beeping?"
@@ -265,6 +265,7 @@
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 50, "energy" = 35, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 35000
 	operation_req_access = list(ACCESS_SYNDICATE)
+	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
 	spawn_tracked = FALSE

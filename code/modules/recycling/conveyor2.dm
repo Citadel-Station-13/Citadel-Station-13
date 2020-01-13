@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/inverted/Initialize(mapload)
 	. = ..()
 	if(mapload && !(dir in GLOB.diagonals))
-		log_game("### MAPPING ERROR: [src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
+		log_mapping("[src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
 
 // Auto conveyour is always on unless unpowered
 
@@ -135,6 +135,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
+	var/turf/T = get_step(src, movedir)
+	if(length(T.contents) > 150)
+		return
 	for(var/atom/movable/A in affecting)
 		if((A.loc == loc) && A.has_gravity())
 			A.ConveyorMove(movedir)

@@ -163,26 +163,7 @@
 	name = "Cosmic Winter Coat"
 	result = /obj/item/clothing/suit/hooded/wintercoat/cosmic
 	reqs = list(/obj/item/clothing/suit/hooded/wintercoat = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/captain = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/hop = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/hos = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/rd = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/ce = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/cmo = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/qm = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/robotics = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/engineering = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/science = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/genetics = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/chemistry = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/viro = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/janitor = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/security = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
-				/obj/item/clothing/suit/hooded/wintercoat/miner = 1)
+				/obj/item/bedsheet/cosmos = 1)
 	time = 60
 	always_availible = TRUE
 	category = CAT_CLOTHING

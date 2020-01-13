@@ -399,13 +399,14 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		if(state_open)
 			close_machine()
 		else
 			open_machine()
 		update_icon()
-	return ..()
+		return TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.

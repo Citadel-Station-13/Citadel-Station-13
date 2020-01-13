@@ -162,9 +162,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-/obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	. = ..()
-
 /obj/item/analyzer/nose/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -356,15 +353,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state= "kibble"
 
-//Defibs
-
-/obj/item/twohanded/shockpaddles/cyborg/hound
-	name = "Paws of Life"
-	desc = "MediHound specific shock paws."
-	icon = 'icons/mob/dogborg.dmi'
-	icon_state = "defibpaddles0"
-	item_state = "defibpaddles0"
-
 // Pounce stuff for K-9
 
 /obj/item/dogborg/pounce
@@ -436,12 +424,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	if(A)
 		if(isliving(A))
 			var/mob/living/L = A
-			var/blocked = 0
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
-				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
-					blocked = 1
-			if(!blocked)
+			if(!L.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 				L.Knockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
