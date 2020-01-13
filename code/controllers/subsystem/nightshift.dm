@@ -56,6 +56,8 @@ SUBSYSTEM_DEF(nightshift)
 		max_level = max_level_override
 	for(var/A in GLOB.apcs_list)
 		var/obj/machinery/power/apc/APC = A
-		if(APC.area && (!max_level || !APC.area.nightshift_public_area || (APC.area.nightshift_public_area <= max_level)) && (APC.area.type in GLOB.the_station_areas))
-			APC.set_nightshift(active)
-			CHECK_TICK
+		if(APC.area?.type in GLOB.the_station_areas)
+			var/their_level = APC.area.nightshift_public_area
+			if(!max_level || (their_level <= max_level))		//if max level is 0, it means public area-only config is disabled so hit everything. if their level is 0, it means they have nightshift forced.
+				APC.set_nightshift(active)
+				CHECK_TICK
