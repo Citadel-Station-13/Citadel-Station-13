@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 						else
 							SSshuttle.emergency.modTimer(1.5)
 				GLOB.security_level = SEC_LEVEL_BLUE
-				sound_to_playing_players('sound/misc/voybluealert.ogg') // Citadel change - Makes alerts play a sound
+				sound_to_playing_players('sound/misc/voybluealert.ogg', volume = 50) // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -66,7 +66,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(1.6)
 				GLOB.security_level = SEC_LEVEL_AMBER
-				sound_to_playing_players('sound/effects/alert.ogg') // Citadel change - Makes alerts play a sound
+				sound_to_playing_players('sound/effects/alert.ogg', volume = 50) // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -83,7 +83,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
-				sound_to_playing_players('sound/misc/voyalert.ogg') // Citadel change - Makes alerts play a sound
+				sound_to_playing_players('sound/misc/voyalert.ogg', volume = 50) // Citadel change - Makes alerts play a sound
 
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
