@@ -84,7 +84,7 @@
 	//It is called from your coffin on close (by you only)
 	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-	owner.current.adjustStaminaLoss(-2 + (regenRate * 8) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustStaminaLoss(-2 + (regenRate * -8) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding

@@ -52,7 +52,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 	//Citadel Edit for digitigrade stuff
-	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
+	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
 
 	var/item_color = null //this needs deprecating, soonish
 
