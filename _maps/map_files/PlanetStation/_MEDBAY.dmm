@@ -1,14 +1,460 @@
-"a" = (/turf/open/space/basic,/area/space)
+"aa" = (/turf/open/floor/planetstation_topsoil,/area/space)
+"ab" = (/turf/open/floor/plasteel,/area/space)
+"ac" = (/turf/closed/wall,/area/medical/genetics/cloning)
+"ad" = (/turf/open/floor/plasteel,/area/medical/storage)
+"ae" = (/turf/closed/wall,/area/space)
+"af" = (/turf/open/floor/circuit,/area/medical/storage)
+"ag" = (/turf/open/floor/plasteel/white/side,/area/medical/storage)
+"ah" = (/turf/closed/wall,/area/medical/medbay/lobby)
+"ai" = (/turf/closed/wall,/area/crew_quarters/heads/cmo)
+"aj" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/medical/genetics/cloning)
+"ak" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/medical/medbay/lobby)
+"al" = (/turf/closed/wall,/area/medical/chemistry)
+"am" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/machinery/disposal/bin,/obj/effect/turf_decal/bot,/obj/structure/disposalpipe/trunk,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"an" = (/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"ao" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"ap" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 4},/turf/open/floor/plating,/area/medical/genetics/cloning)
+"aq" = (/obj/structure/chair,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"ar" = (/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/structure/table,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"as" = (/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/effect/turf_decal/tile/yellow{dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"at" = (/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"au" = (/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"av" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"aw" = (/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/machinery/firealarm{pixel_y = 28},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"ax" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"ay" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plating,/area/medical/chemistry)
+"az" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aA" = (/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aB" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aC" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/chemistry)
+"aD" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue,/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aE" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aF" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aG" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/structure/window/reinforced{dir = 1; pixel_y = 2},/obj/structure/table/reinforced,/obj/item/storage/fancy/donut_box,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 5},/area/medical/medbay/lobby)
+"aH" = (/obj/structure/window/reinforced{dir = 1; pixel_y = 2},/obj/machinery/computer/crew,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 5},/area/medical/medbay/lobby)
+"aI" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 5},/area/medical/medbay/lobby)
+"aJ" = (/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"aK" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 4},/area/medical/medbay/lobby)
+"aL" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/structure/bed/roller,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aM" = (/obj/machinery/door/airlock/medical/glass{id_tag = "MedbayFoyer"; name = "Medbay"; req_access_txt = "5"},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/effect/mapping_helpers/airlock/unres{dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"aN" = (/obj/structure/table/reinforced,/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/structure/window/reinforced,/turf/open/floor/plasteel/white/side,/area/medical/medbay/lobby)
+"aO" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"aP" = (/turf/closed/wall,/area/medical/cryo)
+"aQ" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/medical/cryo)
+"aR" = (/turf/open/floor/plasteel/white,/area/medical/chemistry)
+"aS" = (/obj/structure/window/reinforced,/obj/machinery/computer/med_data{dir = 1},/turf/open/floor/plasteel/white/side,/area/medical/medbay/lobby)
+"aT" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white/side,/area/medical/medbay/lobby)
+"aU" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 6},/area/medical/medbay/lobby)
+"aV" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aW" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aX" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aY" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"aZ" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"ba" = (/obj/effect/turf_decal/stripes/line{dir = 9},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/floor/plasteel,/area/medical/cryo)
+"bb" = (/obj/machinery/atmospherics/components/unary/cryo_cell,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/medical/cryo)
+"bc" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/medical/cryo)
+"bd" = (/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plasteel,/area/medical/cryo)
+"be" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"bf" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"bg" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/cryo)
+"bh" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 4},/turf/open/floor/plasteel,/area/medical/cryo)
+"bi" = (/obj/machinery/atmospherics/pipe/manifold/general/visible,/turf/open/floor/plasteel,/area/medical/cryo)
+"bj" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 9},/turf/open/floor/plasteel,/area/medical/cryo)
+"bk" = (/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/cryo)
+"bl" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"bm" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 6},/turf/open/floor/plasteel,/area/medical/cryo)
+"bn" = (/obj/machinery/atmospherics/pipe/manifold4w/general/visible,/turf/open/floor/plasteel,/area/medical/cryo)
+"bo" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 10},/turf/open/floor/plasteel,/area/medical/cryo)
+"bp" = (/obj/effect/landmark/start/medical_doctor,/turf/open/floor/plasteel,/area/medical/cryo)
+"bq" = (/obj/effect/turf_decal/stripes/line{dir = 10},/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/floor/plasteel,/area/medical/cryo)
+"br" = (/obj/effect/turf_decal/stripes/line,/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/floor/plasteel,/area/medical/cryo)
+"bs" = (/obj/effect/turf_decal/stripes/line,/obj/machinery/atmospherics/components/unary/thermomachine/freezer{dir = 1},/obj/machinery/power/apc/auto_name/south,/obj/machinery/light,/turf/open/floor/plasteel,/area/medical/cryo)
+"bt" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/medical/cryo)
+"bu" = (/obj/effect/turf_decal/stripes/line,/obj/structure/table/glass,/obj/item/crowbar,/obj/item/screwdriver,/obj/item/wrench/medical,/obj/item/clothing/neck/stethoscope,/turf/open/floor/plasteel,/area/medical/cryo)
+"bv" = (/obj/effect/turf_decal/stripes/line{dir = 6},/obj/structure/table/glass,/obj/item/reagent_containers/glass/beaker/cryoxadone,/obj/item/reagent_containers/glass/beaker/cryoxadone,/obj/item/reagent_containers/glass/beaker/cryoxadone,/obj/item/reagent_containers/glass/beaker/cryoxadone,/obj/item/reagent_containers/glass/beaker/cryoxadone,/obj/item/reagent_containers/syringe/epinephrine,/obj/item/reagent_containers/dropper,/turf/open/floor/plasteel,/area/medical/cryo)
+"bw" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/cryo)
+"bx" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"by" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"bz" = (/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"bA" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/medical/sleeper)
+"bB" = (/obj/structure/table,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"bC" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/disposal/bin,/obj/effect/turf_decal/bot,/obj/structure/disposalpipe/trunk,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"bD" = (/obj/machinery/vending/cola/random,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"bE" = (/obj/machinery/vending/snack/random,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"bF" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/medical/chemistry)
+"bG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/structure/table/reinforced,/turf/open/floor/plating,/area/medical/chemistry)
+"bH" = (/turf/open/floor/plating,/area/medical/chemistry)
+"bI" = (/obj/machinery/door/firedoor,/obj/structure/table/reinforced,/turf/open/floor/plasteel/white,/area/medical/chemistry)
+"bJ" = (/turf/closed/wall,/area/medical/medbay/central)
+"bK" = (/turf/closed/wall,/area/medical/genetics)
+"bL" = (/turf/open/floor/plasteel/white,/area/medical/genetics)
+"bM" = (/obj/machinery/firealarm{dir = 1; pixel_x = 0; pixel_y = -28},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"bN" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"bO" = (/turf/open/floor/plasteel,/area/medical/sleeper)
+"bP" = (/turf/open/floor/plasteel/white,/area/medical/storage)
+"bQ" = (/turf/closed/wall,/area/medical/storage)
+"bR" = (/turf/closed/wall,/area/security/checkpoint/medical)
+"bS" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/security/checkpoint/medical)
+"bT" = (/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"bU" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plating,/area/medical/genetics/cloning)
+"bV" = (/turf/closed/wall,/area/medical/sleeper)
+"bW" = (/obj/effect/turf_decal/stripes/line,/obj/machinery/firealarm{dir = 1; pixel_x = 0; pixel_y = -28},/turf/open/floor/plasteel,/area/medical/cryo)
+"bX" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/airalarm{pixel_y = 28},/turf/open/floor/plasteel,/area/medical/cryo)
+"bY" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"bZ" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 4},/turf/open/floor/plasteel,/area/medical/cryo)
+"ca" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/medical/cryo)
+"cb" = (/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"cc" = (/obj/machinery/door/airlock/medical/glass{id_tag = "MedbayFoyer"; name = "Medbay"; req_access_txt = "5"},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/effect/mapping_helpers/airlock/unres{dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cd" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 8},/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"ce" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cf" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cg" = (/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/fullgrass,/obj/structure/window/reinforced{dir = 1; pixel_y = 2},/obj/structure/window/reinforced{dir = 8},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"ch" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"ci" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"cj" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"ck" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cl" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cm" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cn" = (/turf/closed/wall,/area/maintenance/port/aft)
+"co" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cp" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/closed/wall,/area/medical/medbay/central)
+"cq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cr" = (/obj/effect/turf_decal/tile/blue,/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cs" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 5},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"ct" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cu" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cv" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cw" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"cx" = (/obj/machinery/atmospherics/pipe/manifold/general/visible{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"cy" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/shower{name = "emergency shower"; pixel_y = 32},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"cz" = (/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1,/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cA" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cB" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 8},/obj/machinery/airalarm{dir = 4; pixel_x = -23},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cC" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cD" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cE" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 1},/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cF" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cH" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cI" = (/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white/side{dir = 8},/area/medical/medbay/lobby)
+"cJ" = (/obj/machinery/door/airlock/medical/glass{name = "Medbay Desk"; req_access_txt = "5"},/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"cK" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"cL" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cM" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cN" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"cO" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cP" = (/obj/effect/turf_decal/tile/blue,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cQ" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cR" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cS" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cT" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"cU" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/cryo)
+"cV" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 4},/turf/open/floor/plasteel,/area/medical/sleeper)
+"cW" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/sleeper)
+"cX" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"cZ" = (/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"da" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"db" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dc" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dd" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"de" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 6},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"df" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dg" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dh" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 8},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"di" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"dj" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 9},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dl" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dm" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/storage)
+"dn" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"do" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plating,/area/security/checkpoint/medical)
+"dp" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dq" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dr" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 10},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"ds" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dt" = (/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white/side{dir = 8},/area/medical/medbay/lobby)
+"du" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 9},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dv" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dw" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 5},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dx" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 9},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dy" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 6},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dz" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 10},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dA" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dB" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"dC" = (/obj/structure/table/glass,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 8},/obj/item/clipboard,/obj/item/toy/figure/cmo,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"dD" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plating,/area/crew_quarters/heads/cmo)
+"dE" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dF" = (/turf/open/floor/plating,/area/medical/genetics)
+"dG" = (/obj/structure/chair/office/light{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/status_display/ai{pixel_y = 32},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"dH" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plating,/area/crew_quarters/heads/cmo)
+"dI" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"dJ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dK" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dL" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/storage)
+"dM" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"dN" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/open/floor/plating,/area/security/checkpoint/medical)
+"dO" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"dP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/chemistry)
+"dQ" = (/obj/machinery/sleeper{icon_state = "sleeper"; dir = 1},/obj/effect/turf_decal/stripes/end{dir = 1},/turf/open/floor/plasteel,/area/medical/sleeper)
+"dR" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/medical/sleeper)
+"dS" = (/obj/structure/bed/roller,/obj/machinery/power/apc{dir = 1; name = "Abandoned Gambling Den APC"; areastring = "/area/crew_quarters/abandoned_gambling_den"; pixel_y = 24},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"dT" = (/obj/structure/bed/roller,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"dU" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/medical/sleeper)
+"dV" = (/obj/machinery/power/apc{dir = 8; name = "Security Post - Medical APC"; areastring = "/area/security/checkpoint/medical"; pixel_x = -26},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"dW" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/sleeper)
+"dX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"dY" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/structure/sink{pixel_y = 30},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"dZ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"ea" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/medical/sleeper)
+"eb" = (/obj/structure/table,/obj/item/folder,/obj/item/folder,/obj/item/pen,/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/light,/obj/item/defibrillator/loaded,/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"ec" = (/obj/structure/table,/obj/item/clothing/neck/stethoscope,/obj/effect/turf_decal/tile/blue,/obj/item/stack/medical/gauze,/obj/item/stack/medical/bruise_pack,/obj/machinery/airalarm{dir = 1; pixel_y = -22},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"ed" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/medical/sleeper)
+"ee" = (/obj/machinery/firealarm{pixel_y = 28},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/machinery/bloodbankgen,/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"ef" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"eg" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"eh" = (/obj/structure/bed/roller,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"ei" = (/obj/structure/chair/office/light{dir = 4},/obj/effect/landmark/start/medical_doctor,/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"ej" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/obj/item/pen,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 4},/area/medical/medbay/lobby)
+"ek" = (/obj/structure/table/reinforced,/obj/item/folder/white,/obj/item/folder/white,/obj/item/folder/white,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 4},/area/medical/medbay/lobby)
+"el" = (/obj/machinery/power/apc/auto_name/west,/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"em" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"en" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"eo" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"ep" = (/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"eq" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"er" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"es" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"et" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"eu" = (/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/machinery/door/airlock/security{name = "Security Post - Medical"; req_access_txt = "63"},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"ev" = (/turf/closed/wall,/area/crew_quarters/heads/cmo/private)
+"ew" = (/turf/open/floor/plating{icon_state = "platingdmg3"},/area/medical/chemistry)
+"ex" = (/obj/structure/dresser,/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"ey" = (/obj/structure/sign/poster/official/no_erp{pixel_y = 32},/obj/machinery/light{dir = 1},/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"ez" = (/obj/structure/closet/secure_closet/CMO,/obj/item/clothing/under/rank/nursesuit,/obj/item/clothing/head/nursehat,/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"eA" = (/obj/item/bedsheet/cmo,/obj/structure/bed,/obj/effect/landmark/start/chief_medical_officer,/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"eB" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"eC" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"eD" = (/obj/machinery/door/airlock/medical/glass{name = "Cloning"; req_access_txt = "0"; req_one_access_txt = "5;9"},/obj/effect/mapping_helpers/airlock/unres{dir = 8},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"eE" = (/obj/structure/chair/office/light{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/landmark/start/chief_medical_officer,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"eF" = (/obj/machinery/door/airlock/medical/glass{name = "Chemistry Lab"; req_access_txt = "5; 33"},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/white,/area/medical/chemistry)
+"eG" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/bot,/obj/structure/disposalpipe/trunk{dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"eH" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/bot,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/structure/disposalpipe/trunk{dir = 1},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"eI" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/bot,/obj/structure/disposalpipe/trunk{dir = 1},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"eJ" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 6},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"eK" = (/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"eL" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/crew_quarters/heads/cmo/private)
+"eM" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/obj/machinery/newscaster{pixel_x = -32},/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"eN" = (/obj/structure/table/wood,/obj/machinery/airalarm{dir = 4; pixel_x = -23},/obj/machinery/computer/med_data/laptop{dir = 4; pixel_x = 3; pixel_y = 2},/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"eO" = (/obj/structure/sign/nanotrasen{pixel_y = -32},/obj/machinery/light,/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"eP" = (/obj/machinery/door/airlock/command{name = "Chief Medical Officer's Quarters"; req_access_txt = "40"},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel,/area/crew_quarters/heads/cmo/private)
+"eQ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"eR" = (/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"eS" = (/turf/open/floor/plating,/area/maintenance/port/aft)
+"eT" = (/turf/open/floor/plating{icon_state = "panelscorched"},/area/maintenance/port/aft)
+"eU" = (/turf/open/floor/plating{icon_state = "platingdmg3"},/area/maintenance/port/aft)
+"eV" = (/turf/open/floor/plating{icon_state = "platingdmg2"},/area/maintenance/port/aft)
+"eW" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/maintenance/port/aft)
+"eX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 6},/turf/open/floor/plating,/area/maintenance/port/aft)
+"eY" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/obj/machinery/power/apc/auto_name/east,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"eZ" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/power/apc/auto_name/north,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fa" = (/obj/machinery/power/apc/auto_name/south,/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"fb" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/airalarm{dir = 1; pixel_y = -22},/obj/machinery/light,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fc" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/airalarm{dir = 1; pixel_y = -22},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fd" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/airalarm{dir = 1; pixel_y = -22},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fe" = (/obj/machinery/airalarm{dir = 8; pixel_x = 23},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"ff" = (/obj/machinery/airalarm{dir = 4; pixel_x = -23},/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"fg" = (/obj/structure/table,/obj/machinery/airalarm{dir = 1; pixel_y = -22},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"fh" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/machinery/airalarm{dir = 8; pixel_x = 23},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"fi" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/structure/bed/dogbed/runtime,/obj/machinery/requests_console{announcementConsole = 1; department = "Chief Medical Officer's Desk"; departmentType = 5; name = "Chief Medical Officer RC"; pixel_y = 30},/mob/living/simple_animal/pet/cat/Runtime,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fj" = (/obj/structure/table/glass,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/firealarm{dir = 1; pixel_x = 0; pixel_y = -28},/obj/item/storage/firstaid/regular,/obj/item/clothing/glasses/hud/health,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/firealarm{dir = 1; pixel_x = 0; pixel_y = -28},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fl" = (/obj/machinery/firealarm{dir = 8; pixel_x = 24},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fm" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"fn" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/firealarm{dir = 4; pixel_x = -24},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fo" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/machinery/firealarm{dir = 1; pixel_x = 0; pixel_y = -28},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"fp" = (/obj/machinery/firealarm{dir = 4; pixel_x = -24},/turf/open/floor/plasteel,/area/medical/medbay/lobby)
+"fq" = (/obj/machinery/door/airlock/maintenance{name = "CMO Maintenance"; req_access_txt = "40"},/turf/open/floor/plating,/area/maintenance/port/aft)
+"fr" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/firealarm{dir = 8; pixel_x = 24},/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"fs" = (/obj/machinery/door/airlock/maintenance{name = "Medbay Maintenance"; req_one_access_txt = "12;45;5;9"},/turf/open/floor/plating,/area/maintenance/port/aft)
+"ft" = (/obj/structure/table/glass,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/computer/med_data/laptop{dir = 8; pixel_y = 1},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fu" = (/obj/structure/table/glass,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/item/folder/blue,/obj/item/folder/white{pixel_x = 4; pixel_y = 5},/obj/item/pen,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fv" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 6},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 5},/turf/open/floor/carpet/cyan,/area/crew_quarters/heads/cmo/private)
+"fw" = (/obj/machinery/suit_storage_unit/cmo,/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"fx" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,/turf/open/floor/carpet/cyan,/area/crew_quarters/heads/cmo/private)
+"fy" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fz" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 1},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fA" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 1},/turf/open/floor/carpet/cyan,/area/crew_quarters/heads/cmo/private)
+"fB" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/carpet/royalblue,/area/crew_quarters/heads/cmo/private)
+"fC" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fD" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plating,/area/crew_quarters/heads/cmo/private)
+"fE" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fF" = (/obj/structure/table/glass,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/item/paper_bin,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 10},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/item/stamp/cmo,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fG" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/machinery/holopad,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fH" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 9},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fI" = (/obj/structure/chair/office/light{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fJ" = (/obj/machinery/clonepod,/obj/structure/window/reinforced{dir = 4; layer = 2.9},/obj/machinery/status_display/ai{pixel_x = -32},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/medical/genetics/cloning)
+"fK" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/obj/machinery/computer/crew{dir = 4},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fL" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/computer/security/telescreen/cmo{pixel_y = 28},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fM" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/machinery/newscaster{pixel_y = -32},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fN" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fO" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/structure/filingcabinet/chestdrawer,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"fP" = (/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fQ" = (/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel,/area/medical/sleeper)
+"fR" = (/obj/effect/landmark/start/medical_doctor,/turf/open/floor/plasteel,/area/medical/sleeper)
+"fS" = (/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fT" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"fU" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/fullgrass,/obj/structure/window/reinforced{dir = 4; layer = 2.9},/obj/structure/window/reinforced{dir = 1; pixel_y = 2},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"fV" = (/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/leafybush,/obj/structure/flora/junglebush/large,/obj/structure/window/reinforced{dir = 8},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"fW" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{icon_state = "manifold"; dir = 8},/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/leafybush,/obj/structure/flora/junglebush/large,/obj/structure/window/reinforced{dir = 4; layer = 2.9},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"fX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/leafybush,/obj/structure/flora/junglebush/large,/obj/structure/window/reinforced{dir = 4; layer = 2.9},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"fY" = (/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/fullgrass,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"fZ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/fullgrass,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4; layer = 2.9},/turf/open/floor/grass,/area/medical/medbay/lobby)
+"ga" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/structure/chair,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"gb" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"gc" = (/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"gd" = (/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"ge" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 5},/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
+"gf" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gg" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gh" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gi" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gj" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gk" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gl" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gm" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 5},/obj/structure/closet/crate/freezer/surplus_limbs,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gn" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 6},/turf/open/floor/plasteel/white,/area/medical/genetics)
+"go" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gp" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 4},/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 10},/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gr" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gs" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gt" = (/obj/machinery/door/window/eastleft,/obj/structure/sink{dir = 8; pixel_x = -12},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/medical/genetics/cloning)
+"gu" = (/obj/machinery/status_display/ai,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"gv" = (/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gw" = (/obj/machinery/computer/cloning,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gx" = (/obj/machinery/dna_scannernew,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gy" = (/obj/machinery/shower{dir = 4; name = "emergency shower"},/obj/structure/mirror{pixel_x = -32},/obj/machinery/door/window/eastright,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/medical/genetics/cloning)
+"gz" = (/obj/structure/table/glass,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gA" = (/obj/structure/filingcabinet/chestdrawer,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gB" = (/obj/structure/closet/secure_closet/personal/patient,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gC" = (/obj/machinery/door/airlock/command{name = "Chief Medical Officer's Office"; req_access_txt = "40"},/obj/effect/turf_decal/tile/blue{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/cafeteria,/area/crew_quarters/heads/cmo)
+"gD" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/obj/machinery/door/airlock/research/glass{name = "Genetics Lab"; req_access_txt = "5; 9; 68"},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gE" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{icon_state = "manifold"; dir = 8},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"gF" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 8},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"gG" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"gH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,/obj/structure/sign/nanotrasen{pixel_x = -32},/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"gI" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/window/reinforced{dir = 4; layer = 2.9},/turf/open/floor/plasteel/dark,/area/medical/genetics/cloning)
+"gJ" = (/obj/structure/sign/departments/medbay/alt,/turf/closed/wall,/area/crew_quarters/heads/cmo)
+"gK" = (/obj/structure/sign/departments/medbay/alt,/turf/closed/wall,/area/medical/medbay/central)
+"gL" = (/obj/structure/sign/departments/medbay/alt,/turf/closed/wall,/area/medical/medbay/lobby)
+"gM" = (/obj/structure/chair,/obj/effect/landmark/start/assistant,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"gN" = (/obj/structure/chair{dir = 1},/obj/effect/landmark/start/assistant,/turf/open/floor/plasteel/white,/area/medical/medbay/lobby)
+"gO" = (/obj/effect/landmark/start/geneticist,/turf/open/floor/plasteel/white,/area/medical/genetics/cloning)
+"gP" = (/obj/machinery/dna_scannernew,/obj/effect/turf_decal/stripes/end{dir = 4},/turf/open/floor/plasteel,/area/medical/genetics)
+"gQ" = (/obj/machinery/computer/scan_consolenew,/obj/effect/turf_decal/stripes/end{dir = 4},/turf/open/floor/plasteel,/area/medical/genetics)
+"gR" = (/obj/machinery/computer/scan_consolenew,/obj/effect/turf_decal/stripes/end{dir = 8},/turf/open/floor/plasteel,/area/medical/genetics)
+"gS" = (/obj/machinery/dna_scannernew,/obj/effect/turf_decal/stripes/end{dir = 8},/turf/open/floor/plasteel,/area/medical/genetics)
+"gT" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/obj/machinery/door/firedoor,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/medical/medbay/central)
+"gU" = (/obj/structure/table/glass,/turf/open/floor/plasteel/white,/area/medical/genetics)
+"gV" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{icon_state = "scrub_map_on"; dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"gW" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{icon_state = "vent_map_on"; dir = 4},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"gX" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 6},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"gY" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"gZ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"ha" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 8},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"hb" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{icon_state = "intact"; dir = 10},/turf/open/floor/plasteel,/area/security/checkpoint/medical)
+"hc" = (/obj/structure/chair/office/light{dir = 1},/turf/open/floor/plasteel/white,/area/medical/genetics)
 
 (1,1,1) = {"
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
+abababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababababababababababababababababababababababababababababababababababababababababababababab
+abababababababababababababababababababababababababababababababababababababababababababababababababab
+aaaaaaaacncneScncncncncncncncncncncneSbQbQbQbQbQbQbQbQbQbQbQbQbQbQcneScnaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaacncneScneSeTeSeSeSeSeSeSeUcneSbQadafafafafafafafafafadadbQeSeScnaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaacneSeScneSeSeSeVeSeSeSeSeSeSeSbQadafafafafafafafafafadadbQeSeUcnaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaacneSeSeSeWeSeSeSeSeSeSeSeScneSeSadafafafafafafafafafadadeSeSeScnaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaacneTeScncncncncncncncncncncneSbQadafafafafafafafafafadadbQeTeScnaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaacneSeSeSeSeSeSeSeSeSeSeSeSeSeSbQadafafafafafafafafadadadbQeSeScnalalalalalalalalalalalababab
+aaaaaaaacneSeSbKbKbKbKbKbKbKbKbKbKbKeTbRbRbRbSbSbSbSbSbRbRagagagbQcneSeSbHbHbHewbHbHbHbHewbHbHababab
+aaaaaaaacneSeSbKgUgRgPbLbLbLgSgQgUbKeSbRdMepepepepepepesbRdmdLbPbQeSeSeValalalalalalalalalalalababab
+aaaaaaaacneSeSbKgUhcbLbLgnglgghcgUbKeSeSdnbTbTbTgXgYgVfhbRdmdLbPbQeSeWeSalaRaRaRaRaRaRaRaRaRbFababab
+aaaaaaaacneTeSbKgUbLbLbLghbLbLbLgUbKeSbRdVgWhahbgZbTbTeqbRdmdLbPbQcncneSeSaRaRaRaRaRaRaRaRaRbIababab
+aaaaaaaacneSeSbKgUbLbLbLghbLbLbLgUcneSbRetfoemeneoememerbRdmdLbPbQeScnalalaRaRaRaRaRaRaRaRaRbFababab
+aaaaaaaacneSeSdFbLbLgfgpgqbLbLbLbLdFeSbReubRbSdNdobSbSbRbRdmdLbPbQalalalaRaRaRaRaRaRaRaRaRaRalababab
+aaaaaaaacneSeSbKbLbLbLbLgrbLbLbLbLbKeSeXcococobydpcocococidpczctcvbGdPaRaRaRaRaRaRaRaRaRaRaRbFababab
+aaaaaaaacneSeSacacacacbKgDacajajajacbJcpatatchatcOatatatdicOclcqateFaRaRaRaRaRaRaRaRaRaRaRaRbFababab
+aaaaaaaacneSeSacfJgwgxgvgsgAgzgzgzacbJbCatdebMdfcAdfdffdeQcAdfcYdfayaCaRaRaRaRaRaRaRaRaRaRaRalababab
+aaaaaaaacneSeSacgtgOdIgogkgogogoaoapdJdKdJddaPaQaQaPaPaPaQaQaPavflalalalbFbFbFbFalbFbIbFalalalababab
+aaaaaaaacneSeScngyananangjanfmananeDatcqfPcPaQbabbbXbbbcbbbdaQcuatcrbJamaqaqaqgMarasasasawaxgLababab
+aaaaaaaacneSeSacgIgBgBgBgmbNgibNbNbUdOeRcvcQbecwcxbYbibhbjbkbgdgdfbxaMcMcNdqdrcNcNcNcNdBcNdsdtababab
+aaaaaaaacneSevevevevevaiaiaiaiaiaiaigJcqatcRblbmbnbobpbZcTcUbwdhcvbfcccFcGgbcCcGcGcGcfdvcGcHcIababab
+aaaaaaaacneSevexeyezevfifLftdGeZfNfNaicBcmcSaQbqbrbsbtbWbubvaQcXatbzgKaDaEaEaEaFaAaAdwdxaAaBahababab
+aaaaaaaacneSeveAfxeKeLgueEfufyaOeJeBdHdlateYaPaPaPaPcaaPaQaQaPgEgFgGbJaGaHaIaIazaAaZcLaAaAaxakababab
+aaaaaaaacneSeveMfvfBfDfKfEfFfIfGfHaOgCcqatcObAcydYeecbdSdTehbAavatatbJelaJeiejazaAcgfUaAaAaLakababab
+aaaaaaaacneSeveNfAfwevfOaOdCfCfCfCeCdDdEdfddcWefbOfRfQcVdRdXdUcZcvcvcJcKcdaJekgcaAfVfWceaAaLakababab
+aaaaaaaacneSfqeKeOfaePaOaOfzfbfMfjeHaifnatdjdWdZegcbcbcbcbcbeaavfPfebJffaJaJaKazaAfVfXaAgdaLakababab
+aaaaaaaacneSevevevevevaifqaiaiaiaiaiaigHgGgTbAdQdQebcbecdQdQbAavatatbJfpaJeiejazaAfYfZaAaAaLakababab
+aaaaaaaacneSeSeSeSeSeSeSeSeSeSeSeSeSfscqcjddbVbAbAbVedbVbAbAbVavatflbJaNaSaTaUazaAaqgaaAaAaxakababab
+aaaaaaaacncncncncncncncncncncncncncnbJcqatcOatatatatatatatatatavataugKaVaWaWaWaXaAdydzaAaAfrahababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabJcqatcOatatatfPatatatckatdacvbfcccFcGcGcDgbcGdvcEcGcGcHcIababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabJgecvcsdbfkdbdbfcdbdbdcdbdkdfbxaMcMcNdqducNcNdAcNcNcNdsdtababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabJbJbJbJbJbJbJbJbJbJbJbJbJeGfSfTbJaYaZgNaZaZbBfgeIbDbEaxgLababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabJbJbJbJbJahahahahahahahahahahahahababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababab
 "}
