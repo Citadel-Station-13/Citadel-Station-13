@@ -19,7 +19,8 @@
 		STOP_PROCESSING(SSprocessing,src)
 
 /datum/element/dusts_on_catatonia/process()
-	for(var/mob/M in attached_mobs)
+	for(var/m in attached_mobs)
+		var/mob/M = m
 		if(!M.key && !M.get_ghost())
 			M.dust(force = TRUE)
 			Detach(M)
