@@ -92,7 +92,7 @@
 		target.silent = 45 //Shhhh little lamb
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 45) //So you cant rotate with combat mode, plus fancy status alert
 
-	if(do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
+	if(do_mob(user, target, 40, 0, TRUE, extra_checks = CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
 		var/power_time = 90 + level_current * 12
 		target.silent = power_time + 20

@@ -99,6 +99,14 @@
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
 
+/datum/status_effect/no_combat_mode/mesmerize/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+
+/datum/status_effect/no_combat_mode/mesmerize/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
 	desc = "You cant tear your sight from who is in front of you...Their gaze is simply too enthralling.."
