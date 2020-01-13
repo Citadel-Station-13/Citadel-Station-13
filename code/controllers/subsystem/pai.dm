@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(pai)
 	var/spam_delay = 100
 	var/list/pai_card_list = list()
 
-/datum/controller/subsystem/pai/Topic(href, href_list[])
+/datum/controller/subsystem/pai/Topic(href, href_list)
 	if(href_list["download"])
 		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
 		var/obj/item/paicard/card = locate(href_list["device"]) in pai_card_list
