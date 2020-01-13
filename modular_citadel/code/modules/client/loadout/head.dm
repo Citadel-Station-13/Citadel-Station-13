@@ -104,3 +104,30 @@
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/christmashatg
 */
+
+/datum/gear/cowboyhat
+	name = "Cowboy Hat, Brown"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/cowboyhat
+
+/datum/gear/cowboyhat/black
+	name = "Cowboy Hat, Black"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/cowboyhat/black
+
+/datum/gear/cowboyhat/white
+	name = "Cowboy Hat, White"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/cowboyhat/white
+
+/datum/gear/cowboyhat/pink
+	name = "Cowboy Hat, Pink"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/cowboyhat/pink
+
+/datum/gear/cowboyhat/sec
+	name = "Cowboy Hat, Security"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/cowboyhat/sec
+	restricted_desc = "Security"
+	restricted_roles = list("Warden","Detective","Security Officer","Head of Security")

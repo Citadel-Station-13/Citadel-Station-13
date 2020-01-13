@@ -1,6 +1,5 @@
 /datum/reagent/drug
 	name = "Drug"
-	id = "drug"
 	value = 12
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
@@ -8,11 +7,10 @@
 
 /datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
-	id = "space_drugs"
 	value = 6
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
@@ -31,7 +29,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -40,7 +38,6 @@
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
-	id = "nicotine"
 	value = 0
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
@@ -64,7 +61,6 @@
 
 /datum/reagent/drug/crank
 	name = "Crank"
-	id = "crank"
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#FA00C8"
@@ -112,7 +108,6 @@
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
-	id = "krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#0064B4"
@@ -164,7 +159,6 @@
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
-	id = "methamphetamine"
 	description = "Reduces stun times by about 300%, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -178,10 +172,10 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.ignore_slowdown(id)
+	L.ignore_slowdown(type)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(id)
+	L.unignore_slowdown(type)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
@@ -252,7 +246,6 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine/changeling
-	id = "changelingmeth"
 	name = "Changeling Adrenaline"
 	addiction_threshold = 35
 	overdose_threshold = 35
@@ -261,7 +254,6 @@
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
-	id = "bath_salts"
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -273,16 +265,16 @@
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -362,7 +354,6 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-	id = "aranesp"
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
@@ -382,7 +373,6 @@
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
-	id = "happiness"
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
 	color = "#FFF378"
@@ -392,11 +382,11 @@
 
 /datum/reagent/drug/happiness/on_mob_add(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_FEARLESS, id)
+	ADD_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
 
 /datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_FEARLESS, id)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
 	..()
 
@@ -460,7 +450,6 @@
 
 /datum/reagent/drug/skooma
 	name = "Skooma"
-	id = "skooma"
 	description = "An ancient, highly-addictive drug of long-forgotten times. It greatly improves the user's speed and strength, but heavily impedes their intelligence and agility."
 	reagent_state = LIQUID
 	color = "#F3E0F9"
@@ -472,7 +461,7 @@
 
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -483,7 +472,7 @@
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	L.remove_movespeed_modifier(id)
+	L.remove_movespeed_modifier(type)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
