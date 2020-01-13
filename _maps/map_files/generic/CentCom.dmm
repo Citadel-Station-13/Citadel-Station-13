@@ -6418,15 +6418,6 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
-"oV" = (
-/obj/machinery/vr_sleeper{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible/hotelwood,
-/area/centcom/holding)
 "oX" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light{
@@ -12460,12 +12451,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
-"CT" = (
-/obj/machinery/vr_sleeper{
-	dir = 4
-	},
-/turf/open/indestructible/hotelwood,
-/area/centcom/holding)
 "CV" = (
 /obj/structure/chair/stool,
 /turf/open/indestructible/hotelwood,
@@ -12658,12 +12643,6 @@
 "Di" = (
 /turf/closed/indestructible/riveted,
 /area/ai_multicam_room)
-"Dj" = (
-/obj/machinery/vr_sleeper{
-	dir = 8
-	},
-/turf/open/indestructible/hotelwood,
-/area/centcom/holding)
 "Dk" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
@@ -13266,7 +13245,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "ED" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat/all_access,
 /turf/closed/indestructible{
 	icon = 'icons/turf/walls/wood_wall.dmi';
 	icon_state = "wood";
@@ -16736,6 +16715,10 @@
 	smooth = 1
 	},
 /area/centcom/holding)
+"Nf" = (
+/obj/machinery/autoylathe,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "Ni" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -16799,13 +16782,6 @@
 "Nw" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/white,
-/area/centcom/holding)
-"Ny" = (
-/obj/machinery/modular_computer/console/preset/research,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Nz" = (
 /obj/effect/turf_decal/tile/brown{
@@ -17123,15 +17099,6 @@
 "PD" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/syndicate_mothership)
-"PF" = (
-/obj/machinery/vr_sleeper{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/indestructible/hotelwood,
-/area/centcom/holding)
 "PG" = (
 /obj/structure/table/reinforced,
 /obj/item/camera,
@@ -17786,6 +17753,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/stack/sheet/plastic/fifty,
 /obj/item/multitool,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
@@ -18166,6 +18134,13 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"VL" = (
+/obj/machinery/button/crematorium{
+	id = "crematoriumGhostDojo";
+	pixel_x = -25
+	},
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "VO" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/supplypod)
@@ -18248,7 +18223,8 @@
 /area/centcom/holding)
 "Ww" = (
 /obj/structure/bodycontainer/crematorium{
-	dir = 4
+	dir = 4;
+	id = "crematoriumGhostDojo"
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
@@ -43137,15 +43113,15 @@ UV
 CV
 Sd
 NT
-CT
-oV
-CT
-CT
-CT
-oV
-CT
-Nd
 Sd
+Sd
+Sd
+Sd
+Sd
+Sd
+Sd
+Nd
+VL
 Ww
 Sd
 Nd
@@ -43651,13 +43627,13 @@ UV
 CV
 Sd
 NT
-Dj
-PF
-Dj
 Sd
-Dj
-PF
-Dj
+MR
+Sd
+Sd
+Sd
+MR
+Sd
 Nd
 Sd
 Sd
@@ -45169,7 +45145,7 @@ aa
 aa
 aa
 Nd
-Sd
+Nf
 Sd
 Rh
 Mm
@@ -47225,7 +47201,7 @@ aa
 aa
 aa
 Nd
-Ny
+Gs
 Sd
 Sd
 Sd
