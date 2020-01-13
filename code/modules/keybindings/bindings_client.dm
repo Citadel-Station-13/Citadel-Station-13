@@ -25,7 +25,7 @@
 		else
 			log_admin("Client [ckey] was just autokicked for flooding keysends; likely abuse but potentially lagspike.")
 			message_admins("Client [ckey] was just autokicked for flooding keysends; likely abuse but potentially lagspike.")
-			QDEL_IN(src, 1)
+			qdel(src)
 			return
 
 	///Check if the key is short enough to even be a real key

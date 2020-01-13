@@ -390,6 +390,7 @@
 	path = /obj/item/clothing/under/gear_harness
 
 //Christmas
+/*Commenting out Until next Christmas or made automatic
 /datum/gear/christmasmaler
 	name = "Red Masculine Christmas Suit"
 	category = SLOT_W_UNIFORM
@@ -415,6 +416,7 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_pink
 	cost = 3
+*/
 
 /datum/gear/greenstripper
 	name = "Green stripper outfit"
