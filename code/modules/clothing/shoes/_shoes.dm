@@ -15,9 +15,7 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
-	//CITADEL EDIT Enables digitigrade shoe styles
-	var/adjusted = NORMAL_STYLE
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_DIGITIGRADE
 	var/last_bloodtype = ""	//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
 	var/last_blood_DNA = ""	//same as last one
 
@@ -51,7 +49,7 @@
 		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
 		last_blood_DNA = blood_dna[blood_dna.len]
 
-/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		var/bloody = FALSE
@@ -63,22 +61,11 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			if(adjusted == NORMAL_STYLE)
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_DNA_to_color())
-			else
-				. += mutable_appearance('icons/mob/feet_digi.dmi', "shoeblood", color = blood_DNA_to_color())
+			var/file2use = style_flags & STYLE_DIGITIGRADE ? 'icons/mob/feet_digi.dmi' : 'icons/effects/blood.dmi'
+			. += mutable_appearance(file2use, "shoeblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
-
-	if(mutantrace_variation && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.species_traits)
-			adjusted = ALT_STYLE
-			H.update_inv_shoes()
-		else if(adjusted == ALT_STYLE)
-			adjusted = NORMAL_STYLE
-			H.update_inv_shoes()
 
 	if(offset && slot_flags & slotdefine2slotbit(slot))
 		user.pixel_y += offset
