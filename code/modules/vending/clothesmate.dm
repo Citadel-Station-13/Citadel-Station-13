@@ -123,15 +123,19 @@
 					/obj/item/clothing/ears/headphones = 10,
 					/obj/item/clothing/suit/apron/purple_bartender = 4,
 					/obj/item/clothing/under/rank/bartender/purple = 4,
+					/* Commenting out until next Christmas or made automatic
 					/obj/item/clothing/under/christmas/christmasmaler = 3,
 					/obj/item/clothing/under/christmas/christmasmaleg = 3,
 					/obj/item/clothing/under/christmas/christmasfemaler = 3,
 					/obj/item/clothing/under/christmas/christmasfemaleg = 3,
+					*/
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatr = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatg = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg = 3,
+					/*Commenting out until next Christmas or made automatic
 					/obj/item/clothing/head/christmashat = 3,
 					/obj/item/clothing/head/christmashatg = 3,
+					*/
 					/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
 					/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
 					/obj/item/clothing/shoes/winterboots/santaboots = 3,
