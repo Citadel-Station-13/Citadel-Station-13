@@ -1225,7 +1225,7 @@
 			clamp_unconscious_to = 0,
 			clamp_immobility_to = 0,
 			reset_misc = TRUE,
-			healing_chems = list("inaprovaline" = 3, "synaptizine" = 10, "regen_jelly" = 10, "stimulants" = 10),
+			healing_chems = list(/datum/reagent/medicine/inaprovaline = 3, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/regen_jelly = 10, /datum/reagent/medicine/stimulants = 10),
 			message = "<span class='boldnotice'>You feel a surge of energy!</span>",
 			stamina_buffer_boost = 0,				//restores stamina buffer rather than just health
 			scale_stamina_loss_recovery,			//defaults to null. if this is set, restores loss * this stamina. make sure it's a fraction.
@@ -1252,5 +1252,5 @@
 	updatehealth()
 	update_stamina()
 	update_canmove()
-	for(var/chem in healing_chems)
-		reagents.add_reagent(chem, healing_chems[chem])
+	if(healing_chems)
+		reagents.add_reagent_list(healing_chems)
