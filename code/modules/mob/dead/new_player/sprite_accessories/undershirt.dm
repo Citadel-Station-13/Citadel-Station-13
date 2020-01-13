@@ -311,3 +311,39 @@
 	icon_state = "tubetop"
 	has_color = TRUE
 	gender = FEMALE
+
+/datum/sprite_accessory/underwear/top/cowboyshirt
+	name = "Cowboy Shirt Black"
+	icon_state = "cowboyshirt"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/s
+	name = "Cowboy Shirt Shortsleeved Black"
+	icon_state = "cowboyshirt_s"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/white
+	name = "Cowboy Shirt White"
+	icon_state = "cowboyshirt_white"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/white/s
+	name = "Cowboy Shirt Shortsleeved White"
+	icon_state = "cowboyshirt_whites"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/navy
+	name = "Cowboy Shirt Navy"
+	icon_state = "cowboyshirt_navy"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/navy/s
+	name = "Cowboy Shirt Shortsleeved Navy"
+	icon_state = "cowboyshirt_navys"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/red
+	name = "Cowboy Shirt Red"
+	icon_state = "cowboyshirt_red"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/red/s
+	name = "Cowboy Shirt Shortsleeved Red"
+	icon_state = "cowboyshirt_reds"
+
+
+
+
