@@ -43,6 +43,13 @@
 	var/static/blacklisted_areas = typecacheof(list(
 		/area/space,
 		))
+
+	if(creator)
+		if(creator.create_area_cooldown >= world.time)
+			to_chat(creator, "<span class='warning'>You're trying to create a new area a little too fast.</span>")
+			return
+		creator.create_area_cooldown = world.time + 10
+
 	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types)
 	if(!turfs)
 		to_chat(creator, "<span class='warning'>The new area must be completely airtight and not a part of a shuttle.</span>")

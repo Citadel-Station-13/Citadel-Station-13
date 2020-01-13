@@ -378,9 +378,9 @@
 
 /datum/config_entry/keyed_list/box_random_engine
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_FLAG
+	value_mode = VALUE_MODE_NUM
 	lowercase = FALSE
-	splitter = "-"
+	splitter = ","
 
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
@@ -394,3 +394,9 @@
 
 /datum/config_entry/flag/allow_clockwork_marauder_on_station
 	config_entry_value = TRUE
+
+/datum/config_entry/flag/modetier_voting
+	config_entry_value = TRUE
+
+/datum/config_entry/number/dropped_modes
+	config_entry_value = 3
