@@ -709,3 +709,41 @@
 	id = /datum/reagent/carpet/royalblue
 	results = list(/datum/reagent/carpet/royalblue = 2)
 	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/medicine/clonexadone = 1)
+
+//////////////////////////////////// Glitter ///////////////////////////////////////////
+
+/datum/chemical_reaction/white_glitter/blue
+	name = "white glitter from blue"
+	id = "white_glitter_blue"
+	results = list(/datum/reagent/glitter/white = 2)
+	required_reagents = list(/datum/reagent/glitter/blue = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
+
+/datum/chemical_reaction/white_glitter/pink
+	name = "white glitter from pink"
+	id = "white_glitter_pink"
+	results = list(/datum/reagent/glitter/white = 2)
+	required_reagents = list(/datum/reagent/glitter/pink = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
+
+/datum/chemical_reaction/pink_glitter/blue
+	name = "pink glitter from blue"
+	id = "pink_glitter_blue"
+	results = list(/datum/reagent/glitter/pink = 2)
+	required_reagents = list(/datum/reagent/glitter/blue = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
+
+/datum/chemical_reaction/pink_glitter/white
+	name = "pink glitter from white"
+	id = "pink_glitter_white"
+	results = list(/datum/reagent/glitter/pink = 2)
+	required_reagents = list(/datum/reagent/glitter/white = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
+
+/datum/chemical_reaction/blue_glitter/pink
+	name = "blue glitter from pink"
+	id = "blue_glitter_pink"
+	results = list(/datum/reagent/glitter/blue = 2)
+	required_reagents = list(/datum/reagent/glitter/pink = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
+
+/datum/chemical_reaction/blue_glitter/white
+	name = "blue glitter from white"
+	id = "blue_glitter_white"
+	results = list(/datum/reagent/glitter/blue  = 2)
+	required_reagents = list(/datum/reagent/glitter/white = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
