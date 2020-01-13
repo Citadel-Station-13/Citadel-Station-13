@@ -16,7 +16,7 @@
 	icon_dead = "cocoapod-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod, /obj/item/seeds/cocoapod/bungotree)
-	reagents_add = list("cocoa" = 0.25, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/coco = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/cocoapod
 	seed = /obj/item/seeds/cocoapod
@@ -27,7 +27,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	tastes = list("cocoa" = 1)
-	distill_reagent = "creme_de_cacao"
+	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -39,7 +39,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/vanillapod
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list()
-	reagents_add = list("vanilla" = 0.25, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/vanilla = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/vanillapod
 	seed = /obj/item/seeds/cocoapod/vanillapod
@@ -49,7 +49,7 @@
 	filling_color = "#FFD700"
 	foodtype = FRUIT
 	tastes = list("vanilla" = 1)
-	distill_reagent = "vanilla" //Takes longer, but you can get even more vanilla from it.
+	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
 
 /obj/item/seeds/cocoapod/bungotree
 	name = "pack of bungo tree seeds"
@@ -64,7 +64,7 @@
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list()
-	reagents_add = list("enzyme" = 0.1, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "bungotree-grow"
@@ -79,6 +79,7 @@
 	trash = /obj/item/reagent_containers/food/snacks/grown/bungopit
 	filling_color = "#E8C22F"
 	foodtype = FRUIT
+	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
 	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
 	distill_reagent = null
 
@@ -97,7 +98,7 @@
 /obj/item/reagent_containers/food/snacks/grown/bungopit/Initialize()
 	. =..()
 	reagents.clear_reagents()
-	reagents.add_reagent("bungotoxin", seed.potency * 0.10) //More than this will kill at too low potency
-	reagents.add_reagent("nutriment", seed.potency * 0.04)
+	reagents.add_reagent(/datum/reagent/toxin/bungotoxin, seed.potency * 0.10) //More than this will kill at too low potency
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, seed.potency * 0.04)
 
 

@@ -99,6 +99,12 @@
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
 
+/datum/status_effect/no_combat_mode/mesmerize/on_apply()
+	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+
+/datum/status_effect/no_combat_mode/mesmerize/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
 	desc = "You cant tear your sight from who is in front of you...Their gaze is simply too enthralling.."
@@ -301,7 +307,7 @@
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
-		owner.reagents.del_reagent("holywater") //can't be deconverted
+		owner.reagents.del_reagent(/datum/reagent/water/holywater) //can't be deconverted
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
@@ -407,6 +413,19 @@
 		owner.adjustBruteLoss(bleed_damage)
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
+
+/datum/status_effect/neck_slice
+	id = "neck_slice"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	duration = -1
+
+/datum/status_effect/neck_slice/tick()
+	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD || H.bleed_rate <= 8)
+		H.remove_status_effect(/datum/status_effect/neck_slice)
+	if(prob(10))
+		H.emote(pick("gasp", "gag", "choke"))
 
 /mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)

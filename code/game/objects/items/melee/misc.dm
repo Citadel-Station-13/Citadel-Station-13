@@ -216,10 +216,11 @@
 			return
 	else
 		if(last_hit < world.time)
+			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
+				return
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-					return
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)

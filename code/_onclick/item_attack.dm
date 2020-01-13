@@ -98,17 +98,19 @@
 	take_damage(I.force, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
+	//CIT CHANGES START HERE - combatmode and resting checks
+	var/totitemdamage = I.force
+	if(iscarbon(user))
+		var/mob/living/carbon/tempcarb = user
+		if(!tempcarb.combatmode)
+			totitemdamage *= 0.5
+	if(user.resting)
+		totitemdamage *= 0.5
+	//CIT CHANGES END HERE
+	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+		return FALSE
 	send_item_attack_message(I, user)
 	if(I.force)
-	//CIT CHANGES START HERE - combatmode and resting checks
-		var/totitemdamage = I.force
-		if(iscarbon(user))
-			var/mob/living/carbon/tempcarb = user
-			if(!tempcarb.combatmode)
-				totitemdamage *= 0.5
-		if(user.resting)
-			totitemdamage *= 0.5
-	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
 			if(prob(33))
