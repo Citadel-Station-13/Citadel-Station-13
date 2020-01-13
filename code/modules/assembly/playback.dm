@@ -24,7 +24,7 @@
 	recorded = raw_message
 	listening = FALSE
 	languages = message_language
-	say("Activation message is '[recorded]'.", language = message_language)
+	say("The recorded message is '[recorded]'.", language = message_language)
 
 /obj/item/assembly/playback/activate()
 	if(recorded == "") // Why say anything when there isn't anything to say
