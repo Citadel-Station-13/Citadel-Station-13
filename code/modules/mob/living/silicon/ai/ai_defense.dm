@@ -1,15 +1,9 @@
-
 /mob/living/silicon/ai/attacked_by(obj/item/I, mob/living/user, def_zone)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	return ..()
-
-
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(!SSticker.HasRoundStarted())
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-	..()
 
 /mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
 	return //immune to slimes

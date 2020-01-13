@@ -12,7 +12,8 @@
 	var/cleaning = FALSE
 	var/cleaning_cycles = 10
 	var/patient_laststat = null
-	var/list/injection_chems = list("antitoxin", "epinephrine", "salbutamol", "bicaridine", "kelotane")
+	var/list/injection_chems = list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/epinephrine,
+								/datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane)
 	var/eject_port = "ingestion"
 	var/escape_in_progress = FALSE
 	var/message_cooldown
@@ -153,6 +154,7 @@
 		playsound(loc, voracious ? 'sound/effects/splat.ogg' : 'sound/effects/bin_close.ogg', 50, 1)
 	items_preserved.Cut()
 	cleaning = FALSE
+	patient = null
 	if(hound)
 		update_gut(hound)
 
@@ -182,7 +184,7 @@
 		data["chem"] = list()
 		for(var/chem in injection_chems)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-			data["chem"] += list(list("name" = R.name, "id" = R.id))
+			data["chem"] += list(list("name" = R.name, "id" = R.type))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = patient
@@ -226,8 +228,8 @@
 			go_out(null, usr)
 			. = TRUE
 		if("inject")
-			var/chem = params["chem"]
-			if(!patient)
+			var/chem = text2path(params["chem"])
+			if(!patient || !chem)
 				return
 			inject_chem(chem, usr)
 			. = TRUE
@@ -525,5 +527,5 @@
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
 
 /obj/item/dogborg/sleeper/K9/flavour
-	name = "Mobile Sleeper"
+	name = "Recreational Sleeper"
 	desc = "A mounted, underslung sleeper, intended for holding willing occupants for leisurely purposes."

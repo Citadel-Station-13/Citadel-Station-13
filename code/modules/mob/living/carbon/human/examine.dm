@@ -15,6 +15,13 @@
 
 	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
+	var/vampDesc = ReturnVampExamine(user) // Vamps recognize the names of other vamps.
+	var/vassDesc = ReturnVassalExamine(user) // Vassals recognize each other's marks.
+	if (vampDesc != "") // If we don't do it this way, we add a blank space to the string...something to do with this -->  . += ""
+		. += vampDesc
+	if (vassDesc != "")
+		. += vassDesc
+
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
@@ -113,7 +120,7 @@
 				. += "[dicc.desc]"
 
 	var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
-	if(!isnull(cursed_stuff))
+	if(cursed_stuff)
 		. += cursed_stuff
 //END OF CIT CHANGES
 
@@ -169,7 +176,7 @@
 	var/r_limbs_missing = 0
 	for(var/t in missing)
 		if(t==BODY_ZONE_HEAD)
-			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
+			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
 		if(t == BODY_ZONE_L_ARM || t == BODY_ZONE_L_LEG)
 			l_limbs_missing++
@@ -237,18 +244,18 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < (BLOOD_VOLUME_SAFE*blood_ratio))
+	if(ShowAsPaleExamine())
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	else if(bleed_rate)
-		if(reagents.has_reagent("heparin"))
+		if(bleed_rate >= 8) //8 is the rate at which heparin causes you to bleed
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
@@ -271,12 +278,11 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	if(reagents.has_reagent("astral"))
-		msg += "[t_He] has wild, spacey eyes"
+	if(reagents.has_reagent(/datum/reagent/fermi/astral))
 		if(mind)
-			msg += " and they have a strange, abnormal look to them.\n"
+			msg += "[t_He] has wild, spacey eyes and they have a strange, abnormal look to them.\n"
 		else
-			msg += " and they don't look like they're all there.\n"
+			msg += "[t_He] has wild, spacey eyes and they don't look like they're all there.\n"
 
 	if(isliving(user))
 		var/mob/living/L = user
@@ -287,7 +293,7 @@
 				msg += "[t_He] seem[p_s()] winded.\n"
 			if (getToxLoss() >= 10)
 				msg += "[t_He] seem[p_s()] sickly.\n"
-			var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+			var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 			if(mood.sanity <= SANITY_DISTURBED)
 				msg += "[t_He] seem[p_s()] distressed.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
@@ -299,12 +305,10 @@
 			if (HAS_TRAIT(src, TRAIT_DEAF))
 				msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
 
-	msg += "</span>"
-
 	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
 		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
-			if(client?.prefs.lewdchem)
+			if(client.prefs.cit_toggles & HYPNO)
 				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
 
 
@@ -360,7 +364,7 @@
 					if(R)
 						. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a>"
 					if(traitstring)
-						. += "<span class='info'>Detected physiological traits:\n[traitstring]"
+						. += "<span class='info'>Detected physiological traits:\n[traitstring]</span>"
 
 
 
@@ -388,6 +392,13 @@
 			. += "...?"
 		else
 			. += "[print_flavor_text()]"
+	if(print_flavor_text_2())
+		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
+			. += "...?"
+		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
+			. += "...?"
+		else
+			. += "[print_flavor_text_2()]"
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

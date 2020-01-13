@@ -1,14 +1,3 @@
-#define CURRENT_LIVING_PLAYERS	1
-#define CURRENT_LIVING_ANTAGS	2
-#define CURRENT_DEAD_PLAYERS	3
-#define CURRENT_OBSERVERS	    4
-
-#define ONLY_RULESET       1
-#define HIGHLANDER_RULESET 2
-#define TRAITOR_RULESET    4
-#define MINOR_RULESET      8
-
-#define RULESET_STOP_PROCESSING 1
 
 // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (10 MINUTES))
@@ -52,6 +41,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
+GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
+
 /datum/game_mode/dynamic
 	name = "dynamic mode"
 	config_tag = "dynamic"
@@ -60,7 +51,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	announce_text = "Dynamic mode!" // This needs to be changed maybe
 
 	reroll_friendly = FALSE;
-
+	// Current storyteller
+	var/datum/dynamic_storyteller/storyteller = null
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
@@ -164,6 +156,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
+	dat += "Storyteller: <b>[storyteller.name]</b><br/>"
 	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
@@ -178,7 +171,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
+	dat += "<br>Injection Timers: (<b>[storyteller.get_injection_chance(TRUE)]%</b> chance)<BR>"
 	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	dat += "Event: [(event_injection_cooldown-world.time)>60*10 ? "[round((event_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(event_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];forceevent=1'>\[Now!\]</a><BR>"
@@ -235,6 +228,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.flags & HIGHLANDER_RULESET)
 			return rule.round_result()
 	return ..()
+
+/datum/game_mode/dynamic/generate_report()
+	return "Mysterious signals that demonstrate strange dynamics have been detected in your sector. Watch out for oddities."
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
@@ -297,6 +293,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/proc/log_threat(var/log_str,var/verbose = FALSE)
 	threat_log_verbose += ("[worldtime2text()]: "+log_str)
+	SSblackbox.record_feedback("tally","dynamic_threat_log",1,log_str)
 	if(!verbose)
 		threat_log += log_str
 
@@ -326,8 +323,15 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
 	threat = threat_level
+	SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Initial threat level")
+	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_centre,"Curve centre")
+	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_width,"Curve width")
+	SSblackbox.record_feedback("tally","dynamic_threat",peaceful_percentage,"Percent of same-vote rounds that are more peaceful")
 
 /datum/game_mode/dynamic/can_start()
+	storyteller = new GLOB.dynamic_storyteller_type // this is where all the initialization happens
+	storyteller.on_start()
+	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
 	message_admins("Dynamic mode parameters for the round:")
 	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
@@ -337,18 +341,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 		threat = threat_level
+		SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Threat level (forced)")
 	else
 		generate_threat()
 
-	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
-	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
+	storyteller.start_injection_cooldowns()
 
-	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
-	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
-	
-	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
-	
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	initial_threat_level = threat_level
 	return TRUE
@@ -381,7 +379,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (roundstart_rules.len <= 0)
 		log_game("DYNAMIC: [roundstart_rules.len] rules.")
 		return TRUE
-
+	SSblackbox.record_feedback("tally","dynamic",roundstart_rules.len,"Roundstart rules considered")
+	SSblackbox.record_feedback("tally","dynamic",roundstart_pop_ready,"Players readied up")
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
 	else
@@ -419,13 +418,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
 		return TRUE
-	var/list/drafted_rules = list()
-	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
-			rule.candidates = candidates.Copy()
-			rule.trim_candidates()
-			if (rule.ready() && rule.candidates.len > 0)
-				drafted_rules[rule] = rule.weight
+	var/list/drafted_rules = storyteller.roundstart_draft()
 	if(!drafted_rules.len)
 		message_admins("Not enough threat level for roundstart antags!")
 		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
@@ -510,7 +503,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 	if (starting_rule.pre_execute())
 		spend_threat(starting_rule.cost + added_threat)
-		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> -[starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat")
+		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> -[starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -534,6 +527,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(rule.execute())
 		if(rule.persistent)
 			current_rules += rule
+		SSblackbox.record_feedback("associative","dynamic_rulesets",1,rule.get_blackbox_info())
 		return TRUE
 	rule.clean_up()	// Refund threat, delete teams and so on.
 	executed_rules -= rule
@@ -605,13 +599,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
 			spend_threat(new_rule.cost)
-			log_threat("[new_rule.ruletype] - <b>[new_rule.name]</b> -[new_rule.cost] threat")
+			log_threat("[new_rule.ruletype] - <b>[new_rule.name]</b> -[new_rule.cost] threat", verbose = TRUE)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGHLANDER_RULESET)
 					highlander_executed = TRUE
 				else if(new_rule.flags & ONLY_RULESET)
 					only_ruleset_executed = TRUE
 				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
+				SSblackbox.record_feedback("associative","dynamic_rulesets",1,new_rule.get_blackbox_info())
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
@@ -626,7 +621,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		spend_threat(rule.cost)
-		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]")
+		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]", verbose = TRUE)
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
@@ -636,11 +631,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 		executed_rules += rule
+		SSblackbox.record_feedback("associative","dynamic_rulesets",1,rule.get_blackbox_info())
 		rule.candidates.Cut()
 		if (rule.persistent)
 			current_rules += rule
 		return TRUE
-	rule.clean_up()
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
@@ -652,56 +647,45 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
-
+			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
+			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
+	
+	storyteller.do_process()
+	
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
 			return
 
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
-		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
+		midround_injection_cooldown = storyteller.get_midround_cooldown() + world.time
 
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
+			return
+		if((world.realtime - SSshuttle.realtimeofstart) > SSshuttle.auto_call) // no rules after shuttle is auto-called
 			return
 		message_admins("DYNAMIC: Checking for midround injection.")
 		log_game("DYNAMIC: Checking for midround injection.")
 
 		update_playercounts()
-		if (get_injection_chance())
-			var/cur_threat_frac = threat/threat_level
-			var/list/drafted_rules = list()
-			var/antag_num = current_players[CURRENT_LIVING_ANTAGS].len
-			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
-				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
-					// Classic secret : only autotraitor/minor roles
-					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-						continue
-					rule.trim_candidates()
-					if (rule.ready())
-						if(!antag_num)
-							drafted_rules[rule] = round(rule.get_weight() + (rule.cost * cur_threat_frac))
-						else
-							drafted_rules[rule] = rule.get_weight()
+		if (prob(storyteller.get_injection_chance()))
+			SSblackbox.record_feedback("tally","dynamic",1,"Attempted midround injections")
+			var/list/drafted_rules = storyteller.midround_draft()
 			if (drafted_rules.len > 0)
+				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
 				picking_midround_latejoin_rule(drafted_rules)
-		else
-			midround_injection_cooldown = (midround_injection_cooldown + world.time)/2
+		// get_injection_chance can do things on fail
 
 	if(event_injection_cooldown < world.time)
-		var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-		event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
+		SSblackbox.record_feedback("tally","dynamic",1,"Attempted event injections")
+		event_injection_cooldown = storyteller.get_event_cooldown() + world.time
 		message_admins("DYNAMIC: Doing event injection.")
 		log_game("DYNAMIC: Doing event injection.")
 		update_playercounts()
-		var/list/drafted_rules = list()
-		for(var/datum/dynamic_ruleset/event/rule in events)
-			if(rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
-				if(rule.ready())
-					drafted_rules[rule] = rule.get_weight()
+		var/list/drafted_rules = storyteller.event_draft()
 		if(drafted_rules.len > 0)
+			SSblackbox.record_feedback("tally","dynamic",1,"Successful event injections")
 			picking_midround_latejoin_rule(drafted_rules)
 
 /// Updates current_players.
@@ -718,37 +702,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > 0))
 				current_players[CURRENT_LIVING_ANTAGS].Add(M)
 		else
-			if (istype(M,/mob/dead/observer))
+			if (isobserver(M))
 				var/mob/dead/observer/O = M
 				if (O.started_as_observer) // Observers
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
-
-/// Gets the chance for latejoin and midround injection, the dry_run argument is only used for forced injection.
-/datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
-	if(forced_injection)
-		forced_injection = !dry_run
-		return 100
-	var/chance = 0
-	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
-	if (!current_players[CURRENT_LIVING_ANTAGS].len)
-		chance += 80 // No antags at all? let's boost those odds!
-	else
-		var/current_pop_per_antag = current_players[CURRENT_LIVING_PLAYERS].len / current_players[CURRENT_LIVING_ANTAGS].len
-		if (current_pop_per_antag > max_pop_per_antag)
-			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
-		else
-			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (current_players[CURRENT_DEAD_PLAYERS].len > current_players[CURRENT_LIVING_PLAYERS].len)
-		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (threat > 70)
-		chance += 15
-	if (threat < 30)
-		chance -= 15
-	return round(max(0,chance))
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
@@ -780,7 +739,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
 		return
-
+	if((world.realtime - SSshuttle.realtimeofstart) > SSshuttle.auto_call) // no rules after shuttle is auto-called
+		return
 	update_playercounts()
 
 	if (forced_latejoin_rule)
@@ -791,40 +751,32 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			picking_midround_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
 		forced_latejoin_rule = null
 
-	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
-		var/list/drafted_rules = list()
-		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
-			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
-				// Classic secret : only autotraitor/minor roles
-				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-					continue
-				// No stacking : only one round-ender, unless threat level > stacking_limit.
-				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
-						continue
-
-				rule.candidates = list(newPlayer)
-				rule.trim_candidates()
-				if (rule.ready())
-					drafted_rules[rule] = rule.get_weight()
-
+	else if (latejoin_injection_cooldown < world.time && prob(storyteller.get_injection_chance()))
+		SSblackbox.record_feedback("tally","dynamic",1,"Attempted latejoin injections")
+		var/list/drafted_rules = storyteller.latejoin_draft(newPlayer)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
-			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
+			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
 	threat = min(threat_level,threat+regain)
+	SSblackbox.record_feedback("tally","dynamic_threat",regain,"Refunded threat")
+	log_threat("[regain] refunded. Threat is now [threat].", verbose = TRUE)
 
 /// Generate threat and increase the threat_level if it goes beyond, capped at 100
 /datum/game_mode/dynamic/proc/create_threat(gain)
 	threat = min(100, threat+gain)
 	if(threat > threat_level)
 		threat_level = threat
+	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Created threat")
+	log_threat("[gain] created. Threat is now [threat] and threat level is now [threat_level].", verbose = TRUE)
 
 /// Expend threat, can't fall under 0.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
 	threat = max(threat-cost,0)
+	SSblackbox.record_feedback("tally","dynamic_threat",cost,"Threat spent")
+	log_threat("[cost] spent. Threat is now [threat].", verbose = TRUE)
 
 /// Turns the value generated by lorentz distribution to threat value between 0 and 100.
 /datum/game_mode/dynamic/proc/lorentz_to_threat(x)

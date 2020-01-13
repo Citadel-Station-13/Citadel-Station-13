@@ -376,6 +376,27 @@
 
 /datum/config_entry/flag/disable_stambuffer
 
+/datum/config_entry/keyed_list/box_random_engine
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+	lowercase = FALSE
+	splitter = ","
+
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
+
+/datum/config_entry/flag/pai_custom_holoforms
+
+/datum/config_entry/number/marauder_delay_non_reebe
+	config_entry_value = 1800
+	min_val = 0
+
+/datum/config_entry/flag/allow_clockwork_marauder_on_station
+	config_entry_value = TRUE
+
+/datum/config_entry/flag/modetier_voting
+	config_entry_value = TRUE
+
+/datum/config_entry/number/dropped_modes
+	config_entry_value = 3

@@ -123,12 +123,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "eng_headset"
 	keyslot = new /obj/item/encryptionkey/headset_eng
 
-/obj/item/radio/headset/headset_rob
-	name = "robotics radio headset"
-	desc = "Made specifically for the roboticists, who cannot decide between departments."
-	icon_state = "rob_headset"
-	keyslot = new /obj/item/encryptionkey/headset_rob
-
 /obj/item/radio/headset/headset_med
 	name = "medical radio headset"
 	desc = "A headset for the trained staff of the medbay."
@@ -230,6 +224,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "srv_headset"
 	keyslot = new /obj/item/encryptionkey/headset_service
 
+/obj/item/radio/headset/headset_clown
+	name = "clown's headset"
+	desc = "A headset for the clown. Finally. A megaphone you can't take away."
+	icon_state = "srv_headset"
+	keyslot = new /obj/item/encryptionkey/headset_service
+	command = TRUE
+	commandspan = SPAN_CLOWN
+
 /obj/item/radio/headset/headset_cent
 	name = "\improper CentCom headset"
 	desc = "A headset used by the upper echelons of Nanotrasen."
@@ -326,8 +328,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/radio/headset/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
 		return
 	if (command)
 		use_command = !use_command
 		to_chat(user, "<span class='notice'>You toggle high-volume mode [use_command ? "on" : "off"].</span>")
+		return TRUE

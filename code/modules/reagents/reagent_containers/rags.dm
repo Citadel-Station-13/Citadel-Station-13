@@ -5,9 +5,10 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
+	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
+	APTFT_altclick = FALSE
 	volume = 5
 	spillable = FALSE
 	var/wipe_sound
@@ -23,7 +24,7 @@
 /obj/item/reagent_containers/rag/examine(mob/user)
 	. = ..()
 	if(reagents.total_volume)
-		. += "<span class='notice'>Alt-Click to squeeze the liquids out of it.</span>"
+		. += "<span class='notice'>It's soaked. Alt-Click to squeeze it dry, and perhaps gather the liquids into another held open container.</span>"
 
 /obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
 	. = ..()
@@ -73,9 +74,9 @@
 				if(M.fire_stacks)
 					var/minus_plus = M.fire_stacks < 0 ? 1 : -1
 					var/amount = min(abs(M.fire_stacks), soak_efficiency)
-					var/r_id = "fuel"
+					var/r_id = /datum/reagent/fuel
 					if(M.fire_stacks < 0)
-						r_id = "water"
+						r_id = /datum/reagent/water
 					reagents.add_reagent(r_id, amount * 0.3)
 					M.adjust_fire_stacks(minus_plus * amount)
 				M.wash_cream()
@@ -85,15 +86,27 @@
 /obj/item/reagent_containers/rag/AltClick(mob/user)
 	. = ..()
 	if(reagents.total_volume && user.canUseTopic(src, BE_CLOSE))
-		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]...</span>")
+		to_chat(user, "<span class='notice'>You start squeezing \the [src] dry...</span>")
 		if(do_after(user, action_speed, TRUE, src))
-			to_chat(user, "<span class='notice'>You squeeze \the [src] dry.</span>")
-			var/atom/react_loc = get_turf(src)
-			if(ismob(react_loc))
-				react_loc = react_loc.loc
-			if(react_loc)
-				reagents.reaction(react_loc, TOUCH)
-			reagents.clear_reagents()
+			var/msg = "You squeeze \the [src]"
+			var/obj/item/target
+			if(Adjacent(user)) //Allows the user to drain the reagents into a beaker if adjacent (no telepathy).
+				for(var/obj/item/I in user.held_items)
+					if(I == src)
+						continue
+					if(I.is_open_container() && !I.reagents.holder_full())
+						target = I
+						break
+			if(!target)
+				msg += " dry"
+				reagents.reaction(get_turf(src), TOUCH)
+				reagents.clear_reagents()
+			else
+				msg += "'s liquids into \the [target]"
+				reagents.trans_to(target, reagents.total_volume)
+			to_chat(user, "<span class='notice'>[msg].</span>")
+		return TRUE
+
 
 /obj/item/reagent_containers/rag/towel
 	name = "towel"

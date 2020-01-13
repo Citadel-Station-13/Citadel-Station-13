@@ -44,7 +44,7 @@
 	C.play_tool_sound(src, 80)
 	return remove_tile(user, silent, (C.tool_behaviour == TOOL_SCREWDRIVER))
 
-/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, forced = FALSE)
 	if(broken || burnt)
 		broken = 0
 		burnt = 0
@@ -104,6 +104,47 @@
 	light_range = 2
 	light_power = 0.80
 	light_color = "#33CCFF"
+	color = "#33CCFF"
+
+/turf/open/floor/grass/fairy/white
+	name = "white fairygrass patch"
+	light_color = "#FFFFFF"
+	color = "#FFFFFF"
+	floor_tile = /obj/item/stack/tile/fairygrass/white
+
+/turf/open/floor/grass/fairy/red
+	name = "red fairygrass patch"
+	light_color = "#FF3333"
+	color = "#FF3333"
+	floor_tile = /obj/item/stack/tile/fairygrass/red
+
+/turf/open/floor/grass/fairy/yellow
+	name = "yellow fairygrass patch"
+	light_color = "#FFFF66"
+	color = "#FFFF66"
+	floor_tile = /obj/item/stack/tile/fairygrass/yellow
+
+/turf/open/floor/grass/fairy/green
+	name = "green fairygrass patch"
+	light_color = "#99FF99"
+	color = "#99FF99"
+	floor_tile = /obj/item/stack/tile/fairygrass/green
+
+/turf/open/floor/grass/fairy/blue
+	name = "blue fairygrass patch"
+	floor_tile = /obj/item/stack/tile/fairygrass/blue
+
+/turf/open/floor/grass/fairy/purple
+	name = "purple fairygrass patch"
+	light_color = "#D966FF"
+	color = "#D966FF"
+	floor_tile = /obj/item/stack/tile/fairygrass/purple
+
+/turf/open/floor/grass/fairy/pink
+	name = "pink fairygrass patch"
+	light_color = "#FFB3DA"
+	color = "#FFB3DA"
+	floor_tile = /obj/item/stack/tile/fairygrass/pink
 
 /turf/open/floor/grass/snow
 	gender = PLURAL

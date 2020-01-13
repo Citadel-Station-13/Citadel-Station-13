@@ -93,6 +93,7 @@
 	var/list/all_eyes = list()
 	var/max_multicams = 6
 	var/display_icon_override
+	var/emote_display = "Neutral" //text string of the current emote we set for the status displays, to prevent logins resetting it.
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -201,6 +202,7 @@
 
 	if(!ai_core_icon || incapacitated())
 		return
+
 	display_icon_override = ai_core_icon
 	set_core_display_icon(ai_core_icon)
 
@@ -257,15 +259,6 @@
 
 	viewalerts = 1
 	src << browse(dat, "window=aialerts&can_close=0")
-
-/mob/living/silicon/ai/proc/ai_roster()
-	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
-
-	dat += GLOB.data_core.get_manifest()
-	dat += "</body></html>"
-
-	src << browse(dat, "window=airoster")
-	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
@@ -599,12 +592,15 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/n_emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	if(!n_emote)
+		return
+	emote_display = n_emote
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
-		M.emotion = emote
+		M.emotion = emote_display
 		M.update()
-	if (emote == "Friend Computer")
+	if (emote_display == "Friend Computer")
 		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 		if(!frequency)
@@ -676,18 +672,23 @@
 				"green face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/ai.dmi',
-				"creature" = 'icons/mob/ai.dmi'
+				"creature" = 'icons/mob/ai.dmi',
+				"custom"
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("xeno queen")
+					if("custom")
+						if(client?.prefs?.custom_holoform_icon)
+							holo_icon = client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
+						else
+							holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
+					else if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
-	return
 
 /mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
@@ -826,7 +827,7 @@
 
 	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
 
-	show_message(rendered, 2)
+	show_message(rendered, MSG_AUDIBLE)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
 	..()
