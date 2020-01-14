@@ -3,13 +3,18 @@
  * Metal
  * Plasteel
  * Wood
+ * Bamboo
  * Cloth
- * Plastic
+ * Silk
+ * Durathread
  * Cardboard
- * Paper Frames
  * Runed Metal (cult)
  * Brass (clockwork cult)
  * Bronze (bake brass)
+ * Gems
+ * Bones
+ * Plastic
+ * Paper Frames
  * Cotton/Duracotton
  */
 
@@ -106,7 +111,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/metal
-	grind_results = list("iron" = 20)
+	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
 	tableVariant = /obj/structure/table
 
@@ -168,7 +173,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	grind_results = list("iron" = 20, "plasma" = 20)
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
 
@@ -238,8 +243,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
-	grind_results = list("carbon" = 20)
-
+	grind_results = list(/datum/reagent/carbon = 20)
 
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
 	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
@@ -296,12 +300,11 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
-	grind_results = list("carbon" = 5)
+	grind_results = list(/datum/reagent/carbon = 5)
 
 /obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.bamboo_recipes
 	return ..()
-
 
 /*
  * Cloth
@@ -356,6 +359,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/thirty
 	amount = 30
 
+/*
+ * Silk
+ */
 /obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
@@ -369,7 +375,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 //	recipes = GLOB.silk_recipes
 //	return ..()
 
-//Durathread fuck slash-asterisk comments
+/*
+ * Durathread
+ */
 	GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
@@ -391,8 +399,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/durathread/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.durathread_recipes
 	return ..()
-
-
 
 /*
  * Cardboard
@@ -487,7 +493,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	else
 		. = ..()
 
-
 /*
  * Runed Metal
  */
@@ -511,7 +516,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
-	grind_results = list("iron" = 5, "blood" = 15)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -586,7 +591,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 5, "teslium" = 15, "holyoil" = 1)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/teslium = 15, /datum/reagent/fuel/holyoil = 1)
 	merge_type = /obj/item/stack/tile/brass
 	tableVariant = /obj/structure/table/reinforced/brass
 
@@ -639,7 +644,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
-	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
 	tableVariant = /obj/structure/table/bronze
 
@@ -693,7 +698,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	grind_results = list("carbon" = 10)
+	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
@@ -712,6 +717,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	item_state = "sheet-plastic"
 	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
+	grind_results = list(/datum/reagent/glitter/white = 60)
 	merge_type = /obj/item/stack/sheet/plastic
 
 /obj/item/stack/sheet/plastic/fifty
@@ -747,7 +753,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
-
 
 //durathread and cotton raw
 /obj/item/stack/sheet/cotton

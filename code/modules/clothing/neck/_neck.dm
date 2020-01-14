@@ -6,7 +6,7 @@
 	strip_delay = 40
 	equip_delay_other = 40
 
-/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE, icon_flag, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
@@ -192,7 +192,7 @@
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
-/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file)
+/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
