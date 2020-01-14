@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
 	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
 	var/supplyBlocked = FALSE
+	var/emergency_shuttle_stat_text
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -117,6 +118,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/point_gain = (fire_time_diff / 600) * passive_supply_points_per_minute
 	points += point_gain
 	//Cargo stuff end
+
+	var/esETA = emergency?.getModeStr()
+	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
 
 	if(!SSmapping.clearing_reserved_turfs)
 		while(transit_requesters.len)

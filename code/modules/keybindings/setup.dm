@@ -1,8 +1,6 @@
 /client
-	/// A rolling buffer of any keys held currently
+	/// Keys currently held
 	var/list/keys_held = list()
-	///used to keep track of the current rolling buffer position
-	var/current_key_address = 0
 	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
 	/// Because discarding that input makes the game less responsive.
  	/// On next move, add this dir to the move that would otherwise be done
