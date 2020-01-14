@@ -474,7 +474,6 @@
 	item_state = "sundress"
 	item_color = "sundress_white"
 	body_parts_covered = CHEST|GROIN
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -601,7 +600,6 @@
 	icon_state = "corset"
 	item_color = "corset"
 	body_parts_covered = CHEST|GROIN
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -878,7 +876,6 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	body_parts_covered = CHEST|GROIN
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
 
 /obj/item/clothing/under/telegram
@@ -939,4 +936,4 @@
 	item_state = "christmasfemaleg"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	
+
