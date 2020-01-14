@@ -129,24 +129,23 @@
 /obj/machinery/computer/pandemic/ui_data(mob/user)
 	var/list/data = list()
 	data["is_ready"] = !wait
-	data["mode"] = mode
-	switch(mode)
-		if(MAIN_SCREEN)
-			if(beaker)
-				data["has_beaker"] = TRUE
-				if(!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
-					data["beaker_empty"] = TRUE
-				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
-				if(B)
-					data["has_blood"] = TRUE
-					data[/datum/reagent/blood] = list()
-					data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
-					data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
-					data["viruses"] = get_viruses_data(B)
-					data["resistances"] = get_resistance_data(B)
-		if(SYMPTOM_DETAILS)
-			data["symptom"] = get_symptom_data(selected_symptom)
-
+	if(beaker)
+		data["has_beaker"] = TRUE
+		if(!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+			data["beaker_empty"] = TRUE
+		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
+		if(B)
+			data["has_blood"] = TRUE
+			data[/datum/reagent/blood] = list()
+			data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
+			data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
+			data["viruses"] = get_viruses_data(B)
+			data["resistances"] = get_resistance_data(B)
+		else
+			data["has_blood"] = FALSE
+	else
+		data["has_beaker"] = FALSE
+		data["has_blood"] = FALSE
 
 	return data
 
