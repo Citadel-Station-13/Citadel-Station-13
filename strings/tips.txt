@@ -149,7 +149,6 @@ As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic see
 As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen or, as an alternative, crude radioactives from chemistry to get special variations.
 As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
 As a Botanist, you can combine production trait chemicals just like a Chemist. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
-As a Botanist, plants have different reactions to different chemicals, think logical like how many gardeners use ash as a mulch.
 As a Cook, you can load your food into snack vending machines.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
