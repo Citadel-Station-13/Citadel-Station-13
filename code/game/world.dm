@@ -51,8 +51,6 @@ GLOBAL_LIST(topic_status_cache)
 	if(NO_INIT_PARAMETER in params)
 		return
 
-	cit_initialize()
-
 	Master.Initialize(10, FALSE, TRUE)
 
 	if(TEST_RUN_PARAMETER in params)
