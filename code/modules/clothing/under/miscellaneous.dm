@@ -471,8 +471,10 @@
 	name = "white sundress"
 	desc = "Makes you want to frolic in a field of lillies."
 	icon_state = "sundress_white"
+	item_state = "sundress"
 	item_color = "sundress_white"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -580,7 +582,7 @@
 	icon_state = "flower_dress"
 	item_state = "sailordress"
 	item_color = "flower_dress"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -599,15 +601,15 @@
 	icon_state = "corset"
 	item_color = "corset"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/croptop
 	name = "crop top"
 	desc = "We've saved money by giving you half a shirt!"
-	icon_state = "sailor_dress"
-	item_state = "sailordress"
-	item_color = "sailor_dress"
+	icon_state = "croptop"
+	item_color = "croptop"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -876,6 +878,7 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
 
 /obj/item/clothing/under/telegram
@@ -936,3 +939,4 @@
 	item_state = "christmasfemaleg"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
+	
