@@ -159,6 +159,14 @@
 	always_availible = TRUE
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/durathread_wintercoat
+	name = "Durathread Winter Coat"
+	result = /obj/item/clothing/suit/hooded/wintercoat/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 12,
+				/obj/item/stack/sheet/leather = 10)
+	time = 70
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/wintercoat_cosmic
 	name = "Cosmic Winter Coat"
 	result = /obj/item/clothing/suit/hooded/wintercoat/cosmic
