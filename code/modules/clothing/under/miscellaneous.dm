@@ -876,7 +876,6 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	body_parts_covered = CHEST|GROIN
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
 
 /obj/item/clothing/under/telegram
