@@ -73,6 +73,7 @@
 #define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
 #define ADMIN_PUNISHMENT_PIE "Cream Pie"
+#define ADMIN_PUNISHMENT_CUSTOM_PIE "Custom Cream Pie"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
