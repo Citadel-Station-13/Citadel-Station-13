@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_categories = list()		//category name = list(node.id = TRUE)
 	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
 	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
+
 	var/list/techweb_point_items = list(		//path = list(point type = value)
 	/obj/item/assembly/signaler/anomaly            = list(TECHWEB_POINT_TYPE_GENERIC = 10000),
 	//   -   Slime Extracts!   - Basics
@@ -278,134 +279,7 @@ SUBSYSTEM_DEF(research)
 	/obj/item/slimecross/recurring/black           = list(TECHWEB_POINT_TYPE_GENERIC = 4000),
 	/obj/item/slimecross/recurring/lightpink       = list(TECHWEB_POINT_TYPE_GENERIC = 4000),
 	/obj/item/slimecross/recurring/adamantine      = list(TECHWEB_POINT_TYPE_GENERIC = 4000),
-	/obj/item/slimecross/recurring/rainbow         = list(TECHWEB_POINT_TYPE_GENERIC = 4250),
-		//  Seed Packs (Vender Stuff) -  2050 points
-	/obj/item/seeds/ambrosia                       = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/apple                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/banana                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/berry                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/cabbage                        = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/carrot                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/cherry                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/chanter                        = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/chili                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/cocoapod                       = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/coconut                        = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/coffee                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/cotton                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/corn                           = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/eggplant                       = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/grape                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/grass                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/lemon                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/lime                           = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/onion                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/orange                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/peach                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/peanutseed                     = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/pineapple                      = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/potato                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/poppy                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/pumpkin                        = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/replicapod                     = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/wheat/rice                     = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/soya                           = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/sugarcane                      = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/sunflower                      = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/strawberry                     = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/tea                            = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/tobacco                        = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/tomato                         = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/tower                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/watermelon                     = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/wheat                          = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-	/obj/item/seeds/whitebeet                      = list(TECHWEB_POINT_TYPE_GENERIC = 50),
-		//  Seed Packs (Weeds/Hacked) -  675 points
-	/obj/item/seeds/amanita                        = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/glowshroom                     = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/liberty                        = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/nettle                         = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/plump                          = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/reishi                         = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/cannabis                       = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/starthistle                    = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/random                         = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-	/obj/item/seeds/amanita                        = list(TECHWEB_POINT_TYPE_GENERIC = 75),
-		//  Seed Packs (Mutations) From Basic -> Mutation 1
-	/obj/item/seeds/ambrosia/deus                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/berry/poison                   = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/berry/glow                     = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/apple/gold                     = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/banana/mime                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/banana/bluespace               = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/banana/exotic_banana           = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/soya/koi                       = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cherry/blue                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cherry/bulb                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/grape/green                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cannabis/rainbow               = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cannabis/death                 = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cannabis/white                 = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cannabis/ultimate              = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/wheat/oat                      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/wheat/meat                     = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/chili/ice                      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/chili/ghost                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/lime/electric                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/orange_3d                      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/firelemon                      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cocoapod/vanillapod            = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cocoapod/bungotree             = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/corn/snapcorn                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cotton/durathread              = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/eggplant/eggy                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/poppy/geranium                 = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/poppy/lily                     = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/sunflower/novaflower           = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/sunflower/moonflower           = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/grass/carpet                   = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/grass/fairy                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/watermelon/holy                = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/starthistle/corpse_flower      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/galaxythistle                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/cherry/bomb                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/angel                          = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/plump/walkingmushroom          = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/chanterelle/jupitercup         = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/glowshroom/glowcap             = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/glowshroom/shadowshroom        = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/nettle/death                   = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/onion/red                      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/potato/sweet                   = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/pumpkin/blumpkin               = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/carrot/parsnip                 = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/redbeet                        = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/tea/astra                      = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/coffee/robusta                 = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/tobacco/space                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/tomato/blue                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/tomato/blood                   = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/tomato/killer                  = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-	/obj/item/seeds/tower/steel                    = list(TECHWEB_POINT_TYPE_GENERIC = 100),
-		//  Seed Packs (Mutations) Mutation 1 -> Mutation 2
-	/obj/item/seeds/ambrosia/gaia                  = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-	/obj/item/seeds/berry/death                    = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-	/obj/item/seeds/bee_balm                       = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-	/obj/item/seeds/poppy/lily/trumpet             = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-	/obj/item/seeds/berry/death                    = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-	/obj/item/seeds/tea/catnip                     = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-	/obj/item/seeds/tomato/blue/bluespace          = list(TECHWEB_POINT_TYPE_GENERIC = 125),
-		// Seed Packs (Mutations) Mutation 2 -> Mutation 4
-	/obj/item/seeds/bee_balm                       = list(TECHWEB_POINT_TYPE_GENERIC = 150),
-		// Seed Packs (Mutations) Mutation 3 -> Mutation 5 + Lava Land Plants
-	/obj/item/seeds/bee_balm/honey                 = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/lavaland/cactus                = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/gatfruit                       = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/lavaland/polypore              = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/lavaland/porcini               = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/lavaland/inocybe               = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/lavaland/ember                 = list(TECHWEB_POINT_TYPE_GENERIC = 175),
-	/obj/item/seeds/kudzu                          = list(TECHWEB_POINT_TYPE_GENERIC = 175) //Placing here do to all its mutations
+	/obj/item/slimecross/recurring/rainbow         = list(TECHWEB_POINT_TYPE_GENERIC = 4250)
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
@@ -428,6 +302,13 @@ SUBSYSTEM_DEF(research)
 	autosort_categories()
 	error_design = new
 	error_node = new
+
+	for(var/A in subtypesof(/obj/item/seeds))
+		var/obj/item/seeds/S = A
+		var/list/L = list()
+		L[TECHWEB_POINT_TYPE_GENERIC] = 50 + initial(S.rarity) * 2
+		techweb_point_items[S] = L
+
 	return ..()
 
 /datum/controller/subsystem/research/fire()
